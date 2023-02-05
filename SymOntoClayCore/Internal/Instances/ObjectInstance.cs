@@ -84,6 +84,12 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
+        protected override void RunPreConstructors()
+        {
+            //Do nothing! Constructors will be called in general executor after instantiating.
+        }
+
+        /// <inheritdoc/>
         protected override void RunConstructors()
         {
             //Do nothing! Constructors will be called in general executor after instantiating.

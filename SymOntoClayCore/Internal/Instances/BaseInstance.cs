@@ -49,6 +49,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             Name = codeItem.Name;
             _context = context;
+            _parentStorage = parentStorage;
 
             var dataResolversFactory = context.DataResolversFactory;
 
@@ -102,6 +103,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         protected readonly IEngineContext _context;
         private readonly ITriggersStorage _globalTriggersStorage;
+        private readonly IStorage _parentStorage;
         protected readonly IStorage _storage;
         protected readonly LocalCodeExecutionContext _localCodeExecutionContext;
 
@@ -140,6 +142,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             ApplyCodeDirectives();
 
+            RunPreConstructors();
             RunConstructors();
 
             RunInitialTriggers();
@@ -242,13 +245,14 @@ namespace SymOntoClay.Core.Internal.Instances
 #if DEBUG
                     //Log($"keysForRemoving = {keysForRemoving.WriteListToString()}");
 #endif
+
                     if(keysForAdding.Any())
                     {
                         //var parentStorage = _storage;
 
                         foreach (var key in keysForAdding)
                         {
-                            var localStorageSettings = RealStorageSettingsHelper.Create(_context);
+                            var localStorageSettings = RealStorageSettingsHelper.Create(_context, _parentStorage);
 
                             var storage = new SuperClassStorage(localStorageSettings, key);
 
@@ -383,6 +387,61 @@ namespace SymOntoClay.Core.Internal.Instances
             RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger.Enter);
         }
 
+        protected virtual void RunPreConstructors()
+        {
+            var preConstructors = _constructorsResolver.ResolvePreConstructors(Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+
+            if (preConstructors.Any())
+            {
+                var storagesList = _constructorsResolver.GetStoragesList(_localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
+
+#if DEBUG
+                foreach (var tmpStorage in storagesList)
+                {
+                    Log($"tmpStorage.Storage.Kind = {tmpStorage.Storage.Kind}");
+                }
+#endif
+
+                var superClassesStoragesDict = storagesList.Select(p => p.Storage).Where(p => p.Kind == KindOfStorage.SuperClass).ToDictionary(p => p.TargetClassName, p => p);
+
+                var processInitialInfoList = new List<ProcessInitialInfo>();
+
+                foreach (var preConstructor in preConstructors)
+                {
+                    var targetHolder = preConstructor.Holder;
+
+#if DEBUG
+                    Log($"targetHolder = {targetHolder}");
+#endif
+
+                    var targetStorage = superClassesStoragesDict[targetHolder];
+
+                    var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
+                    localCodeExecutionContext.Storage = targetStorage;
+                    localCodeExecutionContext.Holder = targetHolder;
+
+                    var processInitialInfo = new ProcessInitialInfo();
+                    processInitialInfo.CompiledFunctionBody = preConstructor.CompiledFunctionBody;
+                    processInitialInfo.LocalContext = localCodeExecutionContext;
+                    processInitialInfo.Metadata = preConstructor;
+                    processInitialInfo.Instance = this;
+                    processInitialInfo.ExecutionCoordinator = _executionCoordinator;
+
+                    processInitialInfoList.Add(processInitialInfo);
+                }
+
+#if DEBUG
+                //Log($"processInitialInfoList = {processInitialInfoList.WriteListToString()}");
+#endif
+
+                var taskValue = _context.CodeExecutor.ExecuteBatchSync(processInitialInfoList);
+
+#if DEBUG
+                //Log($"taskValue = {taskValue}");
+#endif
+            }
+        }
+
         protected virtual void RunConstructors()
         {
             var constructors = _constructorsResolver.Resolve(Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
@@ -390,8 +449,6 @@ namespace SymOntoClay.Core.Internal.Instances
             if(constructors.Any())
             {
                 var processInitialInfoList = new List<ProcessInitialInfo>();
-
-                constructors.Reverse();
 
                 foreach (var constructor in constructors)
                 {

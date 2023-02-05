@@ -6335,6 +6335,9 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.ObjectInstance.GetVarValue(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.ObjectInstance.RunPreConstructors">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.ObjectInstance.RunConstructors">
             <inheritdoc/>
         </member>

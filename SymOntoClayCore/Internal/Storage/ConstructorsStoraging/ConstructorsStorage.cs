@@ -16,14 +16,16 @@ namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
         { 
         }
 
-        private readonly object _lockObj = new object();
-
+        private readonly object _constructorsLockObj = new object();
         private readonly Dictionary<StrongIdentifierValue, Dictionary<int, List<Constructor>>> _constructorsDict = new Dictionary<StrongIdentifierValue, Dictionary<int, List<Constructor>>>();
+
+        private readonly object _preConstructorsLockObj = new object();
+        private readonly Dictionary<StrongIdentifierValue, Constructor> _preConstructorsDict = new Dictionary<StrongIdentifierValue, Constructor>();
 
         /// <inheritdoc/>
         public void Append(Constructor constructor)
         {
-            lock(_lockObj)
+            lock(_constructorsLockObj)
             {
 #if DEBUG
                 //Log($"constructor = {constructor}");
@@ -88,7 +90,7 @@ namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
         /// <inheritdoc/>
         public IList<WeightedInheritanceResultItem<Constructor>> GetConstructorsDirectly(int paramsCount, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
-            lock (_lockObj)
+            lock (_constructorsLockObj)
             {
 #if DEBUG
                 //Log($"GetHashCode() = {GetHashCode()}");
@@ -126,9 +128,52 @@ namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
         }
 
         /// <inheritdoc/>
+        public void AppendPreConstructor(Constructor preConstructor)
+        {
+            lock(_preConstructorsLockObj)
+            {
+#if DEBUG
+                //Log($"preConstructor = {preConstructor}");
+#endif
+
+                preConstructor.CheckDirty();
+
+                _preConstructorsDict[preConstructor.Holder] = preConstructor;
+            }
+        }
+
+        /// <inheritdoc/>
+        public IList<WeightedInheritanceResultItem<Constructor>> GetPreConstructorsDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems)
+        {
+            lock (_preConstructorsLockObj)
+            {
+                var result = new List<WeightedInheritanceResultItem<Constructor>>();
+
+                foreach (var weightedInheritanceItem in weightedInheritanceItems)
+                {
+                    var targetHolder = weightedInheritanceItem.SuperName;
+
+#if DEBUG
+                    //Log($"targetHolder = {targetHolder}");
+#endif
+
+                    if(_preConstructorsDict.ContainsKey(targetHolder))
+                    {
+                        var targetVal = _preConstructorsDict[targetHolder];
+
+                        result.Add(new WeightedInheritanceResultItem<Constructor>(targetVal, weightedInheritanceItem));
+                    }
+                }
+
+                return result;
+            }
+        }
+
+        /// <inheritdoc/>
         protected override void OnDisposed()
         {
             _constructorsDict.Clear();
+            _preConstructorsDict.Clear();
 
             base.OnDisposed();
         }

@@ -7594,6 +7594,12 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.ConstructorsStorage.GetConstructorsDirectly(System.Int32,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.ConstructorsStorage.AppendPreConstructor(SymOntoClay.Core.Internal.CodeModel.Constructor)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.ConstructorsStorage.GetPreConstructorsDirectly(System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.ConstructorsStorage.OnDisposed">
             <inheritdoc/>
         </member>
@@ -7601,6 +7607,12 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.EmptyConstructorsStorage.GetConstructorsDirectly(System.Int32,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.EmptyConstructorsStorage.AppendPreConstructor(SymOntoClay.Core.Internal.CodeModel.Constructor)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.EmptyConstructorsStorage.GetPreConstructorsDirectly(System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.FuzzyLogic.EmptyFuzzyLogicStorage.Append(SymOntoClay.Core.Internal.CodeModel.LinguisticVariable)">

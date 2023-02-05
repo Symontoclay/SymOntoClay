@@ -11,5 +11,7 @@ namespace SymOntoClay.Core
     {
         void Append(Constructor constructor);
         IList<WeightedInheritanceResultItem<Constructor>> GetConstructorsDirectly(int paramsCount, IList<WeightedInheritanceItem> weightedInheritanceItems);
+        void AppendPreConstructor(Constructor preConstructor);
+        IList<WeightedInheritanceResultItem<Constructor>> GetPreConstructorsDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems);
     }
 }

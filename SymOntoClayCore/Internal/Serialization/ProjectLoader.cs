@@ -586,7 +586,7 @@ namespace SymOntoClay.Core.Internal.Serialization
         private void GeneratePreConstructor(CodeItem codeItem, IStorage targetStorage)
         {
 #if DEBUG
-            Log($"codeItem = {codeItem}");
+            //Log($"codeItem = {codeItem}");
 #endif
 
             var subItems = codeItem.SubItems;
@@ -601,10 +601,18 @@ namespace SymOntoClay.Core.Internal.Serialization
 
 #if DEBUG
                     //Log($"compiledBody = {compiledBody}");
-                    Log($"compiledBody = {compiledBody.ToDbgString()}");
+                    //Log($"compiledBody = {compiledBody.ToDbgString()}");
 #endif
 
-                    //throw new NotImplementedException();
+                    var preConstructor = new Constructor();
+                    preConstructor.CompiledFunctionBody = compiledBody;
+                    preConstructor.Holder = codeItem.Name;
+
+#if DEBUG
+                    //Log($"preConstructor = {preConstructor}");
+#endif
+
+                    targetStorage.ConstructorsStorage.AppendPreConstructor(preConstructor);
                 }
             }
         }

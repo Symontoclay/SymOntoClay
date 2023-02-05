@@ -66,7 +66,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _storage = storageFactory.CreateStorage(localStorageSettings);
 
 #if DEBUG
-            Log($"_storage.Kind = {_storage.Kind}");
+            //Log($"_storage.Kind = {_storage.Kind}");
 #endif
 
             _localCodeExecutionContext.Storage = _storage;
@@ -234,13 +234,13 @@ namespace SymOntoClay.Core.Internal.Instances
                     var keysForAdding = superClassesList.Except(existingKeys);
 
 #if DEBUG
-                    Log($"keysForAdding = {keysForAdding.WriteListToString()}");
+                    //Log($"keysForAdding = {keysForAdding.WriteListToString()}");
 #endif
 
                     var keysForRemoving = existingKeys.Except(superClassesList);
 
 #if DEBUG
-                    Log($"keysForRemoving = {keysForRemoving.WriteListToString()}");
+                    //Log($"keysForRemoving = {keysForRemoving.WriteListToString()}");
 #endif
                     if(keysForAdding.Any())
                     {
@@ -269,11 +269,11 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
 
 #if DEBUG
-                var storagesList = _inheritanceResolver.GetStoragesList(_storage, KindOfStoragesList.CodeItems);
-                foreach (var tmpStorage in storagesList)
-                {
-                    Log($"tmpStorage.Storage.Kind = {tmpStorage.Storage.Kind}");
-                }
+                //var storagesList = _inheritanceResolver.GetStoragesList(_storage, KindOfStoragesList.CodeItems);
+                //foreach (var tmpStorage in storagesList)
+                //{
+                //    Log($"tmpStorage.Storage.Kind = {tmpStorage.Storage.Kind}");
+                //}
 #endif
             }
         }

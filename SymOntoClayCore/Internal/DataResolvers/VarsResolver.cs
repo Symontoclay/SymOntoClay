@@ -63,7 +63,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var varPtr = Resolve(varName, localCodeExecutionContext, options);
 
 #if DEBUG
-            //Log($"varPtr = {varPtr}");
+            Log($"varPtr = {varPtr}");
 #endif
 
             if(varPtr == null)
@@ -76,7 +76,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            //Log($"varPtr (after) = {varPtr}");
+            Log($"varPtr (after) = {varPtr}");
 #endif
 
             CheckFitVariableAndValue(varPtr, value, localCodeExecutionContext, options);
@@ -215,7 +215,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public Var Resolve(StrongIdentifierValue varName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            //Log($"varName = {varName}");
+            Log($"varName = {varName}");
+            Log($"localCodeExecutionContext.Owner = {localCodeExecutionContext.Owner}");
 #endif
 
             var storage = localCodeExecutionContext.Storage;
@@ -223,10 +224,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
 
 #if DEBUG
-            //foreach (var tmpStorage in storagesList)
-            //{
-            //    Log($"tmpStorage = {tmpStorage}");
-            //}
+            foreach (var tmpStorage in storagesList)
+            {
+                //Log($"tmpStorage = {tmpStorage}");
+                Log($"tmpStorage.Storage.Kind = {tmpStorage.Storage.Kind}");
+            }
 #endif
 
             var optionsForInheritanceResolver = options.Clone();
@@ -288,7 +290,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private List<WeightedInheritanceResultItemWithStorageInfo<Var>> GetRawVarsList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
-            //Log($"name = {name}");
+            Log($"name = {name}");
 #endif
 
             if (!storagesList.Any())
@@ -302,13 +304,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
 #if DEBUG
                 //Log($"storageItem = {storageItem}");
+                Log($"storageItem.Storage.Kind = {storageItem.Storage.Kind}");
                 //Log($"storageItem.Storage.VarStorage.GetHashCode() = {storageItem.Storage.VarStorage.GetHashCode()}; storageItem.Storage.VarStorage.Kind = {storageItem.Storage.VarStorage.Kind}");
 #endif
 
                 var itemsList = storageItem.Storage.VarStorage.GetVarDirectly(name, weightedInheritanceItems);
 
 #if DEBUG
-                //Log($"itemsList = {itemsList.WriteListToString()}");
+                Log($"itemsList = {itemsList.WriteListToString()}");
 #endif
 
                 if (!itemsList.Any())

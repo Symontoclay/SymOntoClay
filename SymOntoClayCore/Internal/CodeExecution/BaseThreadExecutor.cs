@@ -314,7 +314,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
                 //Log($"currentCommand = {currentCommand}");
-                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 switch (currentCommand.OperationCode)
@@ -983,6 +983,25 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var varPtr = new Var();
 
+            var annotatioValue = annotation.AsAnnotationValue;
+            var annotatedItem = annotatioValue.AnnotatedItem;
+
+#if DEBUG
+            //Log($"annotatedItem = {annotatedItem}");
+#endif
+
+            if(annotatedItem is Field)
+            {
+                var field = (Field)annotatedItem;
+
+#if DEBUG
+                //Log($"field = {field}");
+#endif
+
+                varPtr.Holder = field.Holder;
+                varPtr.TypeOfAccess = field.TypeOfAccess;
+            }
+
             while (typesCount > 0)
             {
                 var typeName = valueStack.Pop();
@@ -1016,6 +1035,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
             //Log($"varPtr = {varPtr}");
+            //Log($"_currentVarStorage.Kind = {_currentVarStorage.Kind}");
+            //Log($"_currentVarStorage.Storage.TargetClassName = {_currentVarStorage.Storage.TargetClassName}");
 #endif
 
             _currentVarStorage.Append(varPtr);
@@ -1890,7 +1911,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            //Log($"method = {method}");
+            Log($"method = {method}");
 #endif
 
             if(method == null)

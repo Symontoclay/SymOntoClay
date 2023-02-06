@@ -110,6 +110,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public LocalCodeExecutionContext OwnLocalCodeExecutionContext => null;
 
         /// <inheritdoc/>
+        public StrongIdentifierValue Holder => null;
+
+        /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
         {
             return CloneValue(context);

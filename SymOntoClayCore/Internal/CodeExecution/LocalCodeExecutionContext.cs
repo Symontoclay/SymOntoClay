@@ -44,6 +44,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         public StrongIdentifierValue Holder { get; set; }
         public IStorage Storage { get; set; }
+
+        public StrongIdentifierValue Owner { get; set; }
+        public IStorage OwnerStorage { get; set; }
+
         public KindOfLocalCodeExecutionContext Kind { get; set; } = KindOfLocalCodeExecutionContext.Usual;
         public KindOfAddFactOrRuleResult KindOfAddFactResult { get; set; }
         public MutablePartOfRuleInstance MutablePart { get; set; }
@@ -69,7 +73,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             sb.PrintBriefObjProp(n, nameof(Parent), Parent);
             sb.PrintObjProp(n, nameof(Holder), Holder);
-            sb.AppendLine($"{spaces}{nameof(Storage)} = {Storage?.Kind}");
+            sb.AppendLine($"{spaces}{nameof(Storage)}.Kind = {Storage?.Kind}");
+            sb.PrintObjProp(n, nameof(Owner), Owner);
+            sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.Kind = {OwnerStorage?.Kind}");
+            sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.TargetClassName = {OwnerStorage?.TargetClassName}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfAddFactResult)} = {KindOfAddFactResult}");
             sb.PrintObjProp(n, nameof(MutablePart), MutablePart);
@@ -98,7 +105,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             sb.PrintBriefObjProp(n, nameof(Parent), Parent);
             sb.PrintShortObjProp(n, nameof(Holder), Holder);
-            sb.AppendLine($"{spaces}{nameof(Storage)} = {Storage?.Kind}");
+            sb.AppendLine($"{spaces}{nameof(Storage)}.Kind = {Storage?.Kind}");
+            sb.PrintShortObjProp(n, nameof(Owner), Owner);
+            sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.Kind = {OwnerStorage?.Kind}");
+            sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.TargetClassName = {OwnerStorage?.TargetClassName}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfAddFactResult)} = {KindOfAddFactResult}");
             sb.PrintShortObjProp(n, nameof(MutablePart), MutablePart);
@@ -127,7 +137,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             sb.PrintExisting(n, nameof(Parent), Parent);
             sb.PrintBriefObjProp(n, nameof(Holder), Holder);
-            sb.AppendLine($"{spaces}{nameof(Storage)} = {Storage?.Kind}");
+            sb.AppendLine($"{spaces}{nameof(Storage)}.Kind = {Storage?.Kind}");
+            sb.PrintBriefObjProp(n, nameof(Owner), Owner);
+            sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.Kind = {OwnerStorage?.Kind}");
+            sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.TargetClassName = {OwnerStorage?.TargetClassName}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfAddFactResult)} = {KindOfAddFactResult}");
             sb.PrintBriefObjProp(n, nameof(MutablePart), MutablePart);

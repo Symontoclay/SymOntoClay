@@ -36,6 +36,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public LocalCodeExecutionContext OwnLocalCodeExecutionContext => _localCodeExecutionContext;
 
         /// <inheritdoc/>
+        public StrongIdentifierValue Holder => _executable.Holder;
+
+        /// <inheritdoc/>
         public IExecutionCoordinator TryActivate(IEngineContext context)
         {
             return _executable.TryActivate(context);

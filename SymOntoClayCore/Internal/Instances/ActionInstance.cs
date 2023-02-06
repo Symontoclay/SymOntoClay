@@ -79,5 +79,8 @@ namespace SymOntoClay.Core.Internal.Instances
 
         /// <inheritdoc/>
         public LocalCodeExecutionContext OwnLocalCodeExecutionContext => null;
+
+        /// <inheritdoc/>
+        public StrongIdentifierValue Holder => null;
     }
 }

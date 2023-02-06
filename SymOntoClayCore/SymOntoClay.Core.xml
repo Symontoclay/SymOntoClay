@@ -432,6 +432,9 @@
         <member name="P:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.OwnLocalCodeExecutionContext">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.Holder">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.TryActivate(SymOntoClay.Core.Internal.IEngineContext)">
             <inheritdoc/>
         </member>
@@ -696,6 +699,9 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.OwnLocalCodeExecutionContext">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.Holder">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
@@ -739,6 +745,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionPtr.OwnLocalCodeExecutionContext">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionPtr.Holder">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionPtr.WhereSection">
@@ -2878,6 +2887,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.OwnLocalCodeExecutionContext">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.Holder">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.ToString">
@@ -5910,6 +5922,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.ActionInstance.OwnLocalCodeExecutionContext">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.ActionInstance.Holder">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.AddingFactConditionalTriggerInstance.LogicalStorage_OnAddingFact(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">

@@ -39,5 +39,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         ISystemHandler SystemHandler { get; }
         bool ContainsArgument(StrongIdentifierValue name);
         LocalCodeExecutionContext OwnLocalCodeExecutionContext { get; }
+        StrongIdentifierValue Holder { get; }
     }
 }

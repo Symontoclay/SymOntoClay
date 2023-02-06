@@ -79,6 +79,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public LocalCodeExecutionContext OwnLocalCodeExecutionContext => null;
 
         /// <inheritdoc/>
+        public StrongIdentifierValue Holder => _action.Holder;
+
+        /// <inheritdoc/>
         public override IList<Value> WhereSection 
         { 
             get

@@ -98,6 +98,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterCodeItems<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, LocalCodeExecutionContext localCodeExecutionContext)
             where T : CodeItem
         {
+            return FilterCodeItems<T>(source, localCodeExecutionContext.Holder, localCodeExecutionContext);
+        }
+
+        protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterCodeItems<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, StrongIdentifierValue holder, LocalCodeExecutionContext localCodeExecutionContext)
+            where T : CodeItem
+        {
             if (!source.Any())
             {
                 return new List<WeightedInheritanceResultItemWithStorageInfo<T>>();
@@ -111,8 +117,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             var result = new List<WeightedInheritanceResultItemWithStorageInfo<T>>();
-
-            var holder = localCodeExecutionContext.Holder;
 
 #if DEBUG
             //Log($"holder = {holder}");

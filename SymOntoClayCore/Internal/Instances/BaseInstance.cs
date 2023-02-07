@@ -396,10 +396,10 @@ namespace SymOntoClay.Core.Internal.Instances
                 var storagesList = _constructorsResolver.GetStoragesList(_localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
 #if DEBUG
-                foreach (var tmpStorage in storagesList)
-                {
-                    Log($"tmpStorage.Storage.Kind = {tmpStorage.Storage.Kind}");
-                }
+                //foreach (var tmpStorage in storagesList)
+                //{
+                //    Log($"tmpStorage.Storage.Kind = {tmpStorage.Storage.Kind}");
+                //}
 #endif
 
                 var superClassesStoragesDict = storagesList.Select(p => p.Storage).Where(p => p.Kind == KindOfStorage.SuperClass).ToDictionary(p => p.TargetClassName, p => p);
@@ -419,6 +419,8 @@ namespace SymOntoClay.Core.Internal.Instances
                     var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
                     localCodeExecutionContext.Storage = targetStorage;
                     localCodeExecutionContext.Holder = targetHolder;
+                    localCodeExecutionContext.Owner = targetHolder;
+                    localCodeExecutionContext.OwnerStorage= targetStorage;
 
                     var processInitialInfo = new ProcessInitialInfo();
                     processInitialInfo.CompiledFunctionBody = preConstructor.CompiledFunctionBody;

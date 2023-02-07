@@ -63,7 +63,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var varPtr = Resolve(varName, localCodeExecutionContext, options);
 
 #if DEBUG
-            Log($"varPtr = {varPtr}");
+            //Log($"varPtr = {varPtr}");
 #endif
 
             if(varPtr == null)
@@ -76,7 +76,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            Log($"varPtr (after) = {varPtr}");
+            //Log($"varPtr (after) = {varPtr}");
 #endif
 
             CheckFitVariableAndValue(varPtr, value, localCodeExecutionContext, options);
@@ -215,20 +215,48 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public Var Resolve(StrongIdentifierValue varName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Log($"varName = {varName}");
-            Log($"localCodeExecutionContext.Owner = {localCodeExecutionContext.Owner}");
+            //Log($"varName = {varName}");
+            //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
 #endif
 
-            var storage = localCodeExecutionContext.Storage;
+            Var varPtr = null;
+
+            if (localCodeExecutionContext.OwnerStorage != null)
+            {
+                varPtr = NResolve(varName, localCodeExecutionContext.Owner, localCodeExecutionContext.OwnerStorage, true, localCodeExecutionContext, options);
+            }
+
+#if DEBUG
+            //Log($"varPtr = {varPtr}");
+#endif
+
+            if(varPtr != null)
+            {
+                return varPtr;
+            }
+
+            return NResolve(varName, localCodeExecutionContext.Holder, localCodeExecutionContext.Storage, false, localCodeExecutionContext, options);
+        }
+
+        private Var NResolve(StrongIdentifierValue varName, StrongIdentifierValue holder, IStorage storage, bool privateOnly, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+#if DEBUG
+            //Log($"varName = {varName}");
+            //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
+            //Log($"holder = {holder}");
+            //Log($"privateOnly = {privateOnly}");
+#endif
+
+            //var storage = localCodeExecutionContext.Storage;
 
             var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
 
 #if DEBUG
-            foreach (var tmpStorage in storagesList)
-            {
+            //foreach (var tmpStorage in storagesList)
+            //{
                 //Log($"tmpStorage = {tmpStorage}");
-                Log($"tmpStorage.Storage.Kind = {tmpStorage.Storage.Kind}");
-            }
+                //Log($"tmpStorage.Storage.Kind = {tmpStorage.Storage.Kind}");
+            //}
 #endif
 
             var optionsForInheritanceResolver = options.Clone();
@@ -251,7 +279,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return null;
             }
 
-            var filteredList = FilterCodeItems(rawList, localCodeExecutionContext);
+            if(privateOnly)
+            {
+                rawList = rawList.Where(p => p.ResultItem.TypeOfAccess == TypeOfAccess.Private).ToList();
+
+#if DEBUG
+                //Log($"rawList (after) = {rawList.WriteListToString()}");
+#endif
+            }
+
+            var filteredList = FilterCodeItems(rawList, holder, localCodeExecutionContext);
 
 #if DEBUG
             //Log($"filteredList = {filteredList.WriteListToString()}");
@@ -262,7 +299,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return null;
             }
 
-            if(filteredList.Count == 1)
+            if (filteredList.Count == 1)
             {
                 return filteredList.Single().ResultItem;
             }
@@ -290,7 +327,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private List<WeightedInheritanceResultItemWithStorageInfo<Var>> GetRawVarsList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
-            Log($"name = {name}");
+            //Log($"name = {name}");
 #endif
 
             if (!storagesList.Any())
@@ -304,14 +341,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
 #if DEBUG
                 //Log($"storageItem = {storageItem}");
-                Log($"storageItem.Storage.Kind = {storageItem.Storage.Kind}");
+                //Log($"storageItem.Storage.Kind = {storageItem.Storage.Kind}");
                 //Log($"storageItem.Storage.VarStorage.GetHashCode() = {storageItem.Storage.VarStorage.GetHashCode()}; storageItem.Storage.VarStorage.Kind = {storageItem.Storage.VarStorage.Kind}");
 #endif
 
                 var itemsList = storageItem.Storage.VarStorage.GetVarDirectly(name, weightedInheritanceItems);
 
 #if DEBUG
-                Log($"itemsList = {itemsList.WriteListToString()}");
+                //Log($"itemsList = {itemsList.WriteListToString()}");
 #endif
 
                 if (!itemsList.Any())

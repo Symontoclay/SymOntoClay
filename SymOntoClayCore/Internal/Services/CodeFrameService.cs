@@ -19,9 +19,11 @@ namespace SymOntoClay.Core.Internal.Services
             : base(context.Logger)
         {
             _context = context;
+            _baseResolver = context.DataResolversFactory.GetBaseResolver();
         }
 
         private readonly IMainStorageContext _context;
+        private readonly BaseResolver _baseResolver;
 
         /// <inheritdoc/>
         public CodeFrame ConvertCompiledFunctionBodyToCodeFrame(CompiledFunctionBody compiledFunctionBody, LocalCodeExecutionContext parentLocalCodeExecutionContext)
@@ -92,6 +94,23 @@ namespace SymOntoClay.Core.Internal.Services
             var newStorage = new LocalStorage(localStorageSettings);
 
             localCodeExecutionContext.Storage = newStorage;
+
+            var functionHolder = function.Holder;
+
+#if DEBUG
+            //Log($"functionHolder = {functionHolder}");
+#endif
+
+            if(functionHolder != null)
+            {
+                localCodeExecutionContext.Owner = functionHolder;
+
+                localCodeExecutionContext.OwnerStorage = storagesList.SingleOrDefault(p => p.Kind == KindOfStorage.SuperClass && p.TargetClassName == functionHolder);
+            }
+
+#if DEBUG
+            //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
+#endif
 
 #if DEBUG
             //Log($"localCodeExecutionContext.Storage.VarStorage.GetHashCode() = {localCodeExecutionContext.Storage.VarStorage.GetHashCode()}");

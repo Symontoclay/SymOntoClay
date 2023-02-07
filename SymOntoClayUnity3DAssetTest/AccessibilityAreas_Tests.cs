@@ -534,5 +534,91 @@ private:
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case6()
+        {
+            var text = @"class cls0
+{
+    fun SomeFun0()
+    {
+        @b >> @>log;
+    }
+
+    private:
+        @b = 0;
+}
+
+class cls1 is cls0
+{
+    fun SomeFun1()
+    {
+        @b >> @>log;
+
+        SomeFun0();
+    }
+
+    private:
+        @b = 1;
+}
+
+class cls2 is cls0
+{
+    fun SomeFun2()
+    {
+        @b >> @>log;
+
+        SomeFun0();
+    }
+
+    private:
+        @b = 2;
+}
+
+app PeaceKeeper is cls1, cls2
+{
+    on Enter
+    {
+        @b >> @>log;
+
+        SomeFun1();
+        SomeFun2();
+    }
+
+    private:
+        @b = 3;
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("3", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("1", message);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual("0", message);
+                            break;
+
+                        case 4:
+                            Assert.AreEqual("2", message);
+                            break;
+
+                        case 5:
+                            Assert.AreEqual("0", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
     }
 }

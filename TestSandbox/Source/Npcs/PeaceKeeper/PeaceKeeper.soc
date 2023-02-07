@@ -13,6 +13,11 @@
 
 class cls0
 {
+    fun SomeFun0()
+    {
+        @b >> @>log;
+    }
+
     private:
         @b = 0;
 }
@@ -22,6 +27,8 @@ class cls1 is cls0
     fun SomeFun1()
     {
         @b >> @>log;
+
+        SomeFun0();
     }
 
     private:
@@ -30,6 +37,13 @@ class cls1 is cls0
 
 class cls2 is cls0
 {
+    fun SomeFun2()
+    {
+        @b >> @>log;
+
+        SomeFun0();
+    }
+
     private:
         @b = 2;
 }
@@ -41,6 +55,7 @@ app PeaceKeeper is cls1, cls2
         @b >> @>log;
 
         SomeFun1();
+        SomeFun2();
     }
 
     private:

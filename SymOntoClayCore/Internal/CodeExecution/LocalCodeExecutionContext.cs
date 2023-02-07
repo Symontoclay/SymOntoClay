@@ -76,7 +76,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.AppendLine($"{spaces}{nameof(Storage)}.Kind = {Storage?.Kind}");
             sb.PrintObjProp(n, nameof(Owner), Owner);
             sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.Kind = {OwnerStorage?.Kind}");
-            sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.TargetClassName = {OwnerStorage?.TargetClassName}");
+            sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.TargetClassName = {OwnerStorage?.TargetClassName?.NameValue}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfAddFactResult)} = {KindOfAddFactResult}");
             sb.PrintObjProp(n, nameof(MutablePart), MutablePart);
@@ -108,7 +108,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.AppendLine($"{spaces}{nameof(Storage)}.Kind = {Storage?.Kind}");
             sb.PrintShortObjProp(n, nameof(Owner), Owner);
             sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.Kind = {OwnerStorage?.Kind}");
-            sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.TargetClassName = {OwnerStorage?.TargetClassName}");
+            sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.TargetClassName = {OwnerStorage?.TargetClassName?.NameValue}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfAddFactResult)} = {KindOfAddFactResult}");
             sb.PrintShortObjProp(n, nameof(MutablePart), MutablePart);
@@ -140,7 +140,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.AppendLine($"{spaces}{nameof(Storage)}.Kind = {Storage?.Kind}");
             sb.PrintBriefObjProp(n, nameof(Owner), Owner);
             sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.Kind = {OwnerStorage?.Kind}");
-            sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.TargetClassName = {OwnerStorage?.TargetClassName}");
+            sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.TargetClassName = {OwnerStorage?.TargetClassName?.NameValue}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.AppendLine($"{spaces}{nameof(KindOfAddFactResult)} = {KindOfAddFactResult}");
             sb.PrintBriefObjProp(n, nameof(MutablePart), MutablePart);

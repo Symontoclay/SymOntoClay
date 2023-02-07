@@ -1,21 +1,19 @@
-﻿/*app PeaceKeeper
+﻿class cls0
 {
-    on Enter
+    constructor(@param: string)
     {
-        'Begin' >> @>log;        
-        var @a = {
-            @b = 1;
-        };
-        @a.@b >> @>log;
-        'End' >> @>log;
-    }
-}*/
-
-class cls0
-{
-    fun SomeFun0()
-    {
+        'Begin ctor 1 of cls0' >> @>log;
+        @param >> @>log;
         @b >> @>log;
+        'End ctor 1 of cls0' >> @>log;
+    }
+
+    constructor(@param: number)
+    {
+        'Begin ctor 2 of cls0' >> @>log;
+        @param >> @>log;
+        @b >> @>log;
+        'End ctor 2 of cls0' >> @>log;
     }
 
     private:
@@ -24,11 +22,13 @@ class cls0
 
 class cls1 is cls0
 {
-    fun SomeFun1()
+    constructor(@param: string)
+        : cls0('Cool!')
     {
+        'Begin ctor of cls1' >> @>log;
+        @param >> @>log;
         @b >> @>log;
-
-        SomeFun0();
+        'End ctor of cls1' >> @>log;
     }
 
     private:
@@ -37,11 +37,13 @@ class cls1 is cls0
 
 class cls2 is cls0
 {
-    fun SomeFun2()
+    constructor(@param: number)
+        : cls0(16)
     {
+        'Begin ctor of ' >> @>log;
+        @param >> @>log;
         @b >> @>log;
-
-        SomeFun0();
+        'End ctor of ' >> @>log;
     }
 
     private:
@@ -50,14 +52,25 @@ class cls2 is cls0
 
 app PeaceKeeper is cls1, cls2
 {
-    on Enter
+    constructor()
+        : ('Hi')
     {
+        'Begin ctor 1 of PeaceKeeper' >> @>log;
         @b >> @>log;
+        'End ctor 1 of PeaceKeeper' >> @>log;
+    }
 
-        SomeFun1();
-        SomeFun2();
+    constructor(@param: string)
+        : cls1('The Beatles!'),
+        cls2(12)
+    {
+        'Begin ctor 2 of PeaceKeeper' >> @>log;
+        @param >> @>log;
+        @b >> @>log;
+        'End ctor 2 of PeaceKeeper' >> @>log;
     }
 
     private:
         @b = 3;
 }
+

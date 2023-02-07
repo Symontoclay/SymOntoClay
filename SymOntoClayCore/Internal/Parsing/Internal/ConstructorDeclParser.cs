@@ -12,6 +12,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Init,
             GotConstructorMark,
             GotParameters,
+            WaitForSuperClassContructorItem,
+            GotSuperClassContructorItem,
             WaitForAction,
             GotAction
         }
@@ -42,8 +44,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");            
 #endif
 
@@ -93,6 +95,41 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             _state = State.WaitForAction;
                             break;
 
+                        case TokenKind.Colon:
+                            _state = State.WaitForSuperClassContructorItem;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.WaitForSuperClassContructorItem:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                        case TokenKind.OpenRoundBracket:
+                            {
+                                //_context.Recovery(_currToken);
+                                //var parser = new AstExpressionParser(_context/*, TokenKind.CloseRoundBracket*/);
+                                //parser.Run();
+
+#if DEBUG
+                                //Log($"parser.Result = {parser.Result}");
+#endif
+
+                                throw new NotImplementedException();
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotSuperClassContructorItem:
+                    switch (_currToken.TokenKind)
+                    {
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

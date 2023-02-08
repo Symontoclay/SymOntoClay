@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.Compiling;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -44,8 +45,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"_currToken = {_currToken}");
+            //Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");            
 #endif
 
@@ -110,15 +111,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Word:
                         case TokenKind.OpenRoundBracket:
                             {
-                                //_context.Recovery(_currToken);
-                                //var parser = new AstExpressionParser(_context/*, TokenKind.CloseRoundBracket*/);
-                                //parser.Run();
+                                _context.Recovery(_currToken);
+                                var parser = new AstExpressionParser(_context, TokenKind.Comma, TokenKind.OpenFigureBracket);
+                                parser.Run();
 
 #if DEBUG
                                 //Log($"parser.Result = {parser.Result}");
 #endif
 
-                                throw new NotImplementedException();
+                                Result.CallSuperClassContructorsExpressions.Add(parser.Result);
+
+                                _state = State.GotSuperClassContructorItem;
                             }
                             break;
 
@@ -130,6 +133,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotSuperClassContructorItem:
                     switch (_currToken.TokenKind)
                     {
+                        case TokenKind.OpenFigureBracket:
+                            _context.Recovery(_currToken);
+                            _state = State.WaitForAction;
+                            break;
+
+                        case TokenKind.Comma:
+                            _state = State.WaitForSuperClassContructorItem;
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -146,7 +158,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var statementsList = parser.Result;
 
                                 Result.Statements = statementsList;
-                                Result.CompiledFunctionBody = _context.Compiler.Compile(statementsList);
+                                Result.CompiledFunctionBody = _context.Compiler.Compile(statementsList, Result.CallSuperClassContructorsExpressions, KindOfCompilation.Constructor);
                                 _state = State.GotAction;
                             }
                             break;

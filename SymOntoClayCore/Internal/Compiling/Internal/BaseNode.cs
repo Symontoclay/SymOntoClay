@@ -54,7 +54,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         {
             _result.AddRange(commands);
         }
-
+        
         protected void CompileValue(Value value)
         {
 #if DEBUG

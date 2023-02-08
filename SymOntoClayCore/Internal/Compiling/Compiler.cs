@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.Compiling.Internal;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
@@ -51,8 +52,20 @@ namespace SymOntoClay.Core.Internal.Compiling
             //Log($"statements = {statements.WriteListToString()}");
 #endif
 
+            return Compile(statements, null, KindOfCompilation.Usual);
+        }
+
+        /// <inheritdoc/>
+        public CompiledFunctionBody Compile(List<AstStatement> statements, List<AstExpression> callSuperClassContructorsExpressions, KindOfCompilation kindOfCompilation)
+        {
+#if DEBUG
+            Log($"kindOfCompilation = {kindOfCompilation}");
+            //Log($"statements = {statements.WriteListToString()}");
+            //Log($"callSuperClassContructorsExpressions = {callSuperClassContructorsExpressions.WriteListToString()}");
+#endif
+
             var node = new CodeBlockNode(_context);
-            node.Run(statements, null);
+            node.Run(statements, null, callSuperClassContructorsExpressions, kindOfCompilation);
 
             return ConvertToCompiledFunctionBody(node.Result);
         }

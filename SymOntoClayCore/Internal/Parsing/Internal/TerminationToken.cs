@@ -34,6 +34,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
         }
 
+        public TerminationToken(TokenKind tokenKind, bool needRecovery)
+            : this(tokenKind, KeyWordTokenKind.Unknown, needRecovery)
+        {
+        }
+
         public TerminationToken(TokenKind tokenKind, KeyWordTokenKind keyWordTokenKind)
             : this(tokenKind, keyWordTokenKind, DefaultNeedRecovery)
         {

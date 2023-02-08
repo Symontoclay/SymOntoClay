@@ -2468,6 +2468,15 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Constructor.CloneFunction(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Constructor.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Constructor.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Constructor.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.EntityConditionExpressionNode.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
             <inheritdoc/>
         </member>
@@ -4887,6 +4896,9 @@
         <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.Compile(System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstStatement})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.Compile(System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstStatement},System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.AstExpression},SymOntoClay.Core.Internal.Compiling.KindOfCompilation)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.Compile(System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Field})">
             <inheritdoc/>
         </member>
@@ -5795,6 +5807,11 @@
         <member name="F:SymOntoClay.Core.Internal.IndexedData.ScriptingData.OperationCode.CallBinOp">
             <summary>
             Calls a binary operator.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.IndexedData.ScriptingData.OperationCode.CallDefaultCtors">
+            <summary>
+            Call default constructors
             </summary>
         </member>
         <member name="F:SymOntoClay.Core.Internal.IndexedData.ScriptingData.OperationCode.JumpTo">

@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using System;
@@ -32,6 +33,7 @@ namespace SymOntoClay.Core.Internal.Compiling
     public interface ICompiler
     {
         CompiledFunctionBody Compile(List<AstStatement> statements);
+        CompiledFunctionBody Compile(List<AstStatement> statements, List<AstExpression> callSuperClassContructorsExpressions, KindOfCompilation kindOfCompilation);
         CompiledFunctionBody Compile(List<Field> fields);
     }
 }

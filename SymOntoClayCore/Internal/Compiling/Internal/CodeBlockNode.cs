@@ -21,8 +21,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -37,9 +40,39 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             : base(context)
         {
         }
-        
+
         public void Run(List<AstStatement> statements, LoopCompilingContext loopCompilingContext)
         {
+            Run(statements, loopCompilingContext, null, KindOfCompilation.Usual);
+        }
+
+        public void Run(List<AstStatement> statements, LoopCompilingContext loopCompilingContext, List<AstExpression> callSuperClassContructorsExpressions, KindOfCompilation kindOfCompilation)
+        {
+#if DEBUG
+            Log($"kindOfCompilation = {kindOfCompilation}");
+#endif
+
+#if DEBUG
+            //Log($"callSuperClassContructorsExpressions = {callSuperClassContructorsExpressions.WriteListToToHumanizedString()}");
+            //Log($"callSuperClassContructorsExpressions = {callSuperClassContructorsExpressions.WriteListToString()}");
+#endif
+
+            if (kindOfCompilation == KindOfCompilation.Constructor)
+            {
+                if(!callSuperClassContructorsExpressions.IsNullOrEmpty())
+                {
+                    throw new NotImplementedException();
+                }
+
+                AddCommand(new IntermediateScriptCommand() { OperationCode = OperationCode.CallDefaultCtors });
+
+#if DEBUG
+                DbgPrintCommands();
+#endif
+
+                throw new NotImplementedException();
+            }
+
 #if DEBUG
             //Log($"statements = {statements.WriteListToToHumanizedString()}");
             //Log($"statements = {statements.WriteListToString()}");

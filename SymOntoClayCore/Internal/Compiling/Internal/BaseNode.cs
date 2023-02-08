@@ -193,6 +193,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 case OperationCode.Exec:
                 case OperationCode.CodeItemDecl:
                 case OperationCode.Instantiate:
+                case OperationCode.CallDefaultCtors:
                     return $"{operationCode}";
 
                 case OperationCode.PushVal:

@@ -209,6 +209,9 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 case OperationCode.AsyncCall:
                 case OperationCode.AsyncCall_N:
                 case OperationCode.AsyncCall_P:
+                case OperationCode.CallCtor:
+                case OperationCode.CallCtor_N:
+                case OperationCode.CallCtor_P:
                     return $"{operationCode} {commandItem.CountParams}";
 
                 case OperationCode.Wait:

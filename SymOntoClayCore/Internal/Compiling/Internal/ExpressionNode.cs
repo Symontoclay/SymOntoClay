@@ -41,7 +41,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             //Log($"expression = {expression?.ToHumanizedString()}");
             //Log($"expression = {expression}");
 #endif
-
+            
             var kind = expression.Kind;
 
             switch(kind)

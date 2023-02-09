@@ -30,6 +30,7 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Compiling.Internal
@@ -49,7 +50,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         public void Run(List<AstStatement> statements, LoopCompilingContext loopCompilingContext, List<AstExpression> callSuperClassContructorsExpressions, KindOfCompilation kindOfCompilation)
         {
 #if DEBUG
-            Log($"kindOfCompilation = {kindOfCompilation}");
+            //Log($"kindOfCompilation = {kindOfCompilation}");
 #endif
 
 #if DEBUG
@@ -61,16 +62,33 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             {
                 if(!callSuperClassContructorsExpressions.IsNullOrEmpty())
                 {
-                    throw new NotImplementedException();
+                    foreach(var callCtorExpr in callSuperClassContructorsExpressions)
+                    {
+#if DEBUG
+                        //Log($"callCtorExpr = {callCtorExpr.ToHumanizedString()}");
+                        //Log($"callCtorExpr = {callCtorExpr}");
+#endif
+
+                        var node = new CallingFunctionNode(_context);
+                        node.Run(callCtorExpr as CallingFunctionAstExpression, true);
+                        AddCommands(node.Result);
+
+#if DEBUG
+                        //DbgPrintCommands();
+#endif
+                    }
                 }
 
                 AddCommand(new IntermediateScriptCommand() { OperationCode = OperationCode.CallDefaultCtors });
 
-#if DEBUG
-                DbgPrintCommands();
-#endif
+                AddCommand(new IntermediateScriptCommand()
+                {
+                    OperationCode = OperationCode.ClearStack
+                });
 
-                throw new NotImplementedException();
+#if DEBUG
+                //DbgPrintCommands();
+#endif
             }
 
 #if DEBUG

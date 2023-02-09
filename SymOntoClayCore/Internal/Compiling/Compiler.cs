@@ -59,7 +59,7 @@ namespace SymOntoClay.Core.Internal.Compiling
         public CompiledFunctionBody Compile(List<AstStatement> statements, List<AstExpression> callSuperClassContructorsExpressions, KindOfCompilation kindOfCompilation)
         {
 #if DEBUG
-            Log($"kindOfCompilation = {kindOfCompilation}");
+            //Log($"kindOfCompilation = {kindOfCompilation}");
             //Log($"statements = {statements.WriteListToString()}");
             //Log($"callSuperClassContructorsExpressions = {callSuperClassContructorsExpressions.WriteListToString()}");
 #endif

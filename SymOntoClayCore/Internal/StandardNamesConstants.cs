@@ -47,6 +47,7 @@ namespace SymOntoClay.Core.Internal
         public const string HostSystemVarName = "@@host";
         public const string RandomConstraintName = "random";
         public const string NearestConstraintName = "nearest";
+        public const string DefaultCtorName = "__ctor";
         #endregion
     }
 }

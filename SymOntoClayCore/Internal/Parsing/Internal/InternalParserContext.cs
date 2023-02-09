@@ -37,7 +37,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private InternalParserContext()
         {
         }
-
+        
         public InternalParserContext(string text, CodeFile codeFile, IBaseCoreContext context)
         {
             _context = context;

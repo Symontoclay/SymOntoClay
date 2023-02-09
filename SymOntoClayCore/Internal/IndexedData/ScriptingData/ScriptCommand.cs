@@ -210,6 +210,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                 case OperationCode.Exec:
                 case OperationCode.CodeItemDecl:
                 case OperationCode.Instantiate:
+                case OperationCode.CallDefaultCtors:
                     return $"{spaces}{OperationCode}";
 
                 case OperationCode.PushVal:
@@ -228,6 +229,9 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                 case OperationCode.AsyncChildCall:
                 case OperationCode.AsyncChildCall_N:
                 case OperationCode.AsyncChildCall_P:
+                case OperationCode.CallCtor:
+                case OperationCode.CallCtor_N:
+                case OperationCode.CallCtor_P:
                     return $"{spaces}{OperationCode} {CountParams}";
 
                 case OperationCode.Wait:

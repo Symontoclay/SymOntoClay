@@ -67,6 +67,9 @@ namespace SymOntoClay.Core.Internal.CommonNames
         public StrongIdentifierValue SelfName { get; private set; }
 
         /// <inheritdoc/>
+        public StrongIdentifierValue DefaultCtor { get; private set; }
+
+        /// <inheritdoc/>
         public StrongIdentifierValue RandomConstraintName { get; private set; }
 
         /// <inheritdoc/>
@@ -91,6 +94,8 @@ namespace SymOntoClay.Core.Internal.CommonNames
             HostSystemVarName = NameHelper.CreateName(StandardNamesConstants.HostSystemVarName);
 
             SelfName = NameHelper.CreateName(_context.Id);
+
+            DefaultCtor = NameHelper.CreateName(StandardNamesConstants.DefaultCtorName);
 
             RandomConstraintName = NameHelper.CreateName(StandardNamesConstants.RandomConstraintName);
 

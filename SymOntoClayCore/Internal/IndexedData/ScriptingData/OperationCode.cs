@@ -56,6 +56,9 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         AsyncChildCall,
         AsyncChildCall_N,
         AsyncChildCall_P,
+        CallCtor,
+        CallCtor_N,
+        CallCtor_P,
         /// <summary>
         /// Call default constructors
         /// </summary>

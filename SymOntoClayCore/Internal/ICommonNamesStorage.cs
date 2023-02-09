@@ -48,6 +48,8 @@ namespace SymOntoClay.Core.Internal
 
         StrongIdentifierValue SelfName { get; }
 
+        StrongIdentifierValue DefaultCtor { get; }
+
         StrongIdentifierValue RandomConstraintName { get; }
         StrongIdentifierValue NearestConstraintName { get; }
     }

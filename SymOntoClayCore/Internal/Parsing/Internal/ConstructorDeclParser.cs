@@ -108,10 +108,38 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.WaitForSuperClassContructorItem:
                     switch (_currToken.TokenKind)
                     {
-                        case TokenKind.Word:
-                        case TokenKind.OpenRoundBracket:
+                        case TokenKind.Word:                        
                             {
                                 _context.Recovery(_currToken);
+                                var parser = new AstExpressionParser(_context, TokenKind.Comma, TokenKind.OpenFigureBracket);
+                                parser.Run();
+
+#if DEBUG
+                                //Log($"parser.Result = {parser.Result}");
+#endif
+
+                                Result.CallSuperClassContructorsExpressions.Add(parser.Result);
+
+                                _state = State.GotSuperClassContructorItem;
+                            }
+                            break;
+
+                        case TokenKind.OpenRoundBracket:
+                            {
+                                var token = new Token() 
+                                { 
+                                    TokenKind = TokenKind.Word,
+                                    Content = StandardNamesConstants.DefaultCtorName,
+                                    Line = _currToken.Line, 
+                                    Pos= _currToken.Pos
+                                };
+
+#if DEBUG
+                                //Log($"token = {token}");
+#endif
+                                _context.Recovery(_currToken);
+                                _context.Recovery(token);
+
                                 var parser = new AstExpressionParser(_context, TokenKind.Comma, TokenKind.OpenFigureBracket);
                                 parser.Run();
 

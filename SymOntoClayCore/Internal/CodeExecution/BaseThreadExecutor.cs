@@ -42,6 +42,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -75,6 +76,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _strongIdentifierLinearResolver = dataResolversFactory.GetStrongIdentifierLinearResolver();
             _varsResolver = dataResolversFactory.GetVarsResolver();
             _methodsResolver = dataResolversFactory.GetMethodsResolver();
+            _constructorsResolver = dataResolversFactory.GetConstructorsResolver();
             _logicalSearchResolver = dataResolversFactory.GetLogicalSearchResolver();
             _statesResolver = dataResolversFactory.GetStatesResolver();
             _annotationsResolver = dataResolversFactory.GetAnnotationsResolver();
@@ -83,6 +85,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             _converterFactToImperativeCode = context.ConvertersFactory.GetConverterFactToImperativeCode();
             _dateTimeProvider = context.DateTimeProvider;
+
+            var commonNamesStorage = _context.CommonNamesStorage;
+
+            _timeoutName = commonNamesStorage.TimeoutAttributeName;
+            _priorityName = commonNamesStorage.PriorityAttributeName;
         }
 
         private readonly IEngineContext _context;
@@ -101,6 +108,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly StrongIdentifierLinearResolver _strongIdentifierLinearResolver;
         private readonly VarsResolver _varsResolver;
         private readonly MethodsResolver _methodsResolver;
+        private readonly ConstructorsResolver _constructorsResolver;
         private readonly LogicalSearchResolver _logicalSearchResolver;
         private readonly StatesResolver _statesResolver;
         private readonly AnnotationsResolver _annotationsResolver;
@@ -121,6 +129,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private long? _endOfTargetDuration;
         private List<Task> _waitedTasksList;
+
+        private readonly StrongIdentifierValue _timeoutName;
+        private readonly StrongIdentifierValue _priorityName;
 
         public Value ExternalReturn { get; private set; }
 
@@ -348,7 +359,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     case OperationCode.Call:
-                        CallFunction(KindOfFunctionParameters.NoParameters, currentCommand.CountParams, SyncOption.Sync);
+                        CallFunction(KindOfFunctionParameters.NoParameters, 0, SyncOption.Sync);
                         break;
 
                     case OperationCode.Call_P:
@@ -360,7 +371,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     case OperationCode.AsyncCall:
-                        CallFunction(KindOfFunctionParameters.NoParameters, currentCommand.CountParams, SyncOption.IndependentAsync);
+                        CallFunction(KindOfFunctionParameters.NoParameters, 0, SyncOption.IndependentAsync);
                         break;
 
                     case OperationCode.AsyncCall_P:
@@ -372,7 +383,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     case OperationCode.AsyncChildCall:
-                        CallFunction(KindOfFunctionParameters.NoParameters, currentCommand.CountParams, SyncOption.ChildAsync);
+                        CallFunction(KindOfFunctionParameters.NoParameters, 0, SyncOption.ChildAsync);
                         break;
 
                     case OperationCode.AsyncChildCall_P:
@@ -381,6 +392,22 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     case OperationCode.AsyncChildCall_N:
                         CallFunction(KindOfFunctionParameters.NamedParameters, currentCommand.CountParams, SyncOption.ChildAsync);
+                        break;
+
+                    case OperationCode.CallCtor:
+                        CallConstructor(KindOfFunctionParameters.NoParameters, 0);
+                        break;
+
+                    case OperationCode.CallCtor_N:
+                        CallConstructor(KindOfFunctionParameters.NamedParameters, currentCommand.CountParams);
+                        break;
+
+                    case OperationCode.CallCtor_P:
+                        CallConstructor(KindOfFunctionParameters.PositionedParameters, currentCommand.CountParams);
+                        break;
+
+                    case OperationCode.CallDefaultCtors:
+                        CallDefaultCtors();
                         break;
 
                     case OperationCode.Exec:
@@ -1605,6 +1632,99 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             return result;
         }
 
+        private void CallConstructor(KindOfFunctionParameters kindOfParameters, int parametersCount)
+        {
+#if DEBUG
+            Log($"kindOfParameters = {kindOfParameters}");
+            Log($"parametersCount = {parametersCount}");
+            Log($"_currentCodeFrame.LocalContext.Owner = {_currentCodeFrame.LocalContext.Owner}");
+#endif
+
+            var valueStack = _currentCodeFrame.ValuesStack;
+
+            var annotation = valueStack.Pop();
+
+#if DEBUG
+            //Log($"annotation = {annotation}");
+            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+
+            var caller = TryResolveFromVarOrExpr(valueStack.Pop());
+
+#if DEBUG
+            Log($"caller = {caller}");
+            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+
+            Dictionary<StrongIdentifierValue, Value> namedParameters = null;
+            List<Value> positionedParameters = null;
+
+            switch (kindOfParameters)
+            {
+                case KindOfFunctionParameters.NoParameters:
+                    break;
+
+                case KindOfFunctionParameters.NamedParameters:
+                    namedParameters = TakeNamedParameters(parametersCount, true);
+                    break;
+
+                case KindOfFunctionParameters.PositionedParameters:
+                    positionedParameters = TakePositionedParameters(parametersCount, true);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+            }
+
+#if DEBUG
+            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+            Log($"namedParameters = {namedParameters?.WriteDict_1_ToString()}");
+            Log($"positionedParameters = {positionedParameters.WriteListToString()}");
+#endif
+
+            var constructorName = caller.AsStrongIdentifierValue;
+
+#if DEBUG
+            Log($"constructorName = {constructorName}");
+#endif
+
+            IExecutable constructor = null;
+
+            //if(constructorName == _timeoutName)
+            //{
+
+            //}
+
+            //switch (kindOfParameters)
+            //{
+            //    case KindOfFunctionParameters.NoParameters:
+            //        constructor = _constructorsResolver.ResolveOnlyOwn(constructorName, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+            //        break;
+
+            //    case KindOfFunctionParameters.NamedParameters:
+            //        constructor = _constructorsResolver.ResolveOnlyOwn(constructorName, namedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+            //        break;
+
+            //    case KindOfFunctionParameters.PositionedParameters:
+            //        constructor = _constructorsResolver.ResolveOnlyOwn(constructorName, positionedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+            //        break;
+
+            //    default:
+            //        throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+            //}
+
+#if DEBUG
+            Log($"constructor = {constructor}");
+#endif
+
+            throw new NotImplementedException();
+        }
+
+        private void CallDefaultCtors()
+        {
+            throw new NotImplementedException();
+        }
+
         private enum SyncOption
         {
             Sync,
@@ -1944,9 +2064,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             ExecuteCodeFrame(codeFrame, null, SyncOption.Sync);
         }
-
-        private StrongIdentifierValue _timeoutName = NameHelper.CreateName("timeout");
-        private StrongIdentifierValue _priorityName = NameHelper.CreateName("priority");
 
         private long? GetTimeoutFromAnnotation(Value annotation)
         {

@@ -4896,6 +4896,12 @@
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.NearestConstraintName">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.TimeoutAttributeName">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.PriorityAttributeName">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.Compile(System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstStatement})">
             <inheritdoc/>
         </member>

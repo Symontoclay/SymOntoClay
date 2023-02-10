@@ -446,20 +446,40 @@ namespace SymOntoClay.Core.Internal.Instances
 
         protected virtual void RunConstructors()
         {
-            var constructors = _constructorsResolver.Resolve(Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+            var constructorsList = _constructorsResolver.ResolveListWithSelfAndDirectInheritance(Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
-            if(constructors.Any())
+            if (constructorsList.Any())
             {
+                var storagesList = _constructorsResolver.GetStoragesList(_localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
+
+#if DEBUG
+                //foreach (var tmpStorage in storagesList)
+                //{
+                //    Log($"tmpStorage.Storage.Kind = {tmpStorage.Storage.Kind}");
+                //}
+#endif
+
+                var superClassesStoragesDict = storagesList.Select(p => p.Storage).Where(p => p.Kind == KindOfStorage.SuperClass).ToDictionary(p => p.TargetClassName, p => p);
+
                 var processInitialInfoList = new List<ProcessInitialInfo>();
 
-                foreach (var constructor in constructors)
+                foreach (var constructor in constructorsList)
                 {
+                    var targetHolder = constructor.Holder;
+
+#if DEBUG
+                    Log($"targetHolder = {targetHolder}");
+#endif
+
+                    var targetStorage = superClassesStoragesDict[targetHolder];
+
                     var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
 
                     var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
                     localCodeExecutionContext.Storage = new LocalStorage(localStorageSettings);
-
                     localCodeExecutionContext.Holder = Name;
+                    localCodeExecutionContext.Owner = targetHolder;
+                    localCodeExecutionContext.OwnerStorage = targetStorage;
 
                     var processInitialInfo = new ProcessInitialInfo();
                     processInitialInfo.CompiledFunctionBody = constructor.CompiledFunctionBody;

@@ -75,6 +75,12 @@ namespace SymOntoClay.Core.Internal.CommonNames
         /// <inheritdoc/>
         public StrongIdentifierValue NearestConstraintName { get; private set; }
 
+        /// <inheritdoc/>
+        public StrongIdentifierValue TimeoutAttributeName { get; private set; }
+
+        /// <inheritdoc/>
+        public StrongIdentifierValue PriorityAttributeName { get; private set; }
+
         public void LoadFromSourceCode()
         {
             WorldName = NameHelper.CreateName(StandardNamesConstants.WorldTypeName);
@@ -100,6 +106,9 @@ namespace SymOntoClay.Core.Internal.CommonNames
             RandomConstraintName = NameHelper.CreateName(StandardNamesConstants.RandomConstraintName);
 
             NearestConstraintName = NameHelper.CreateName(StandardNamesConstants.NearestConstraintName);
+
+            TimeoutAttributeName = NameHelper.CreateName(StandardNamesConstants.TimeoutAttributeName);
+            PriorityAttributeName = NameHelper.CreateName(StandardNamesConstants.PriorityAttributeName);
         }
     }
 }

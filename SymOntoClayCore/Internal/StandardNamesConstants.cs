@@ -48,6 +48,8 @@ namespace SymOntoClay.Core.Internal
         public const string RandomConstraintName = "random";
         public const string NearestConstraintName = "nearest";
         public const string DefaultCtorName = "__ctor";
+        public const string TimeoutAttributeName = "timeout";
+        public const string PriorityAttributeName = "priority";
         #endregion
     }
 }

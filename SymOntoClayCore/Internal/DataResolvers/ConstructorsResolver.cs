@@ -21,7 +21,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly InheritanceResolver _inheritanceResolver;
         private readonly List<Constructor> _emptyConstructorsList = new List<Constructor>();
 
-        public List<Constructor> Resolve(StrongIdentifierValue holder, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public Constructor ResolveOnlyOwn(StrongIdentifierValue holder)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Constructor> ResolveListWithSelfAndDirectInheritance(StrongIdentifierValue holder, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"holder = {holder}");
@@ -38,7 +43,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
 
             var optionsForInheritanceResolver = options.Clone();
-            optionsForInheritanceResolver.AddSelf = true;
+            optionsForInheritanceResolver.AddSelf = false;
+            optionsForInheritanceResolver.AddTopType = false;
+            optionsForInheritanceResolver.OnlyDirectInheritance= true;
 
             var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(holder, localCodeExecutionContext, optionsForInheritanceResolver);
 
@@ -68,7 +75,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return _emptyConstructorsList;
             }
 
-            return filteredList.OrderByDescending(p => p.Distance).Select(p => p.ResultItem).ToList();
+            return filteredList.Select(p => p.ResultItem).ToList();
         }
 
         private List<WeightedInheritanceResultItemWithStorageInfo<Constructor>>  GetRawList(int paramsCount, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)

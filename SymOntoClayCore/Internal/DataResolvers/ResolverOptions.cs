@@ -31,6 +31,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
     {
         public bool AddSelf { get; set; }
         public bool AddTopType { get; set; }
+        public bool OnlyDirectInheritance { get; set; }
         public bool JustDistinct { get; set; }
         public bool SkipRealSearching { get; set; }
 
@@ -40,6 +41,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             result.AddSelf = AddSelf;
             result.JustDistinct = JustDistinct;
             result.AddTopType = AddTopType;
+            result.OnlyDirectInheritance = OnlyDirectInheritance;
             result.SkipRealSearching = SkipRealSearching;
 
             return result;
@@ -71,6 +73,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.AppendLine($"{spaces}{nameof(AddSelf)} = {AddSelf}");
             sb.AppendLine($"{spaces}{nameof(JustDistinct)} = {JustDistinct}");
             sb.AppendLine($"{spaces}{nameof(AddTopType)} = {AddTopType}");
+            sb.AppendLine($"{spaces}{nameof(OnlyDirectInheritance)} = {OnlyDirectInheritance}");
             sb.AppendLine($"{spaces}{nameof(SkipRealSearching)} = {SkipRealSearching}");
 
             return sb.ToString();
@@ -102,6 +105,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.AppendLine($"{spaces}{nameof(AddSelf)} = {AddSelf}");
             sb.AppendLine($"{spaces}{nameof(JustDistinct)} = {JustDistinct}");
             sb.AppendLine($"{spaces}{nameof(AddTopType)} = {AddTopType}");
+            sb.AppendLine($"{spaces}{nameof(OnlyDirectInheritance)} = {OnlyDirectInheritance}");
             sb.AppendLine($"{spaces}{nameof(SkipRealSearching)} = {SkipRealSearching}");
 
             return sb.ToString();
@@ -133,6 +137,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.AppendLine($"{spaces}{nameof(AddSelf)} = {AddSelf}");
             sb.AppendLine($"{spaces}{nameof(JustDistinct)} = {JustDistinct}");
             sb.AppendLine($"{spaces}{nameof(AddTopType)} = {AddTopType}");
+            sb.AppendLine($"{spaces}{nameof(OnlyDirectInheritance)} = {OnlyDirectInheritance}");
             sb.AppendLine($"{spaces}{nameof(SkipRealSearching)} = {SkipRealSearching}");
 
             return sb.ToString();

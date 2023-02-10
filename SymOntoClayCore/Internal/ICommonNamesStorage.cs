@@ -52,5 +52,8 @@ namespace SymOntoClay.Core.Internal
 
         StrongIdentifierValue RandomConstraintName { get; }
         StrongIdentifierValue NearestConstraintName { get; }
+
+        StrongIdentifierValue TimeoutAttributeName { get; }
+        StrongIdentifierValue PriorityAttributeName { get; }
     }
 }

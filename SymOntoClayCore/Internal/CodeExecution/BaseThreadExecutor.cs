@@ -80,6 +80,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _logicalSearchResolver = dataResolversFactory.GetLogicalSearchResolver();
             _statesResolver = dataResolversFactory.GetStatesResolver();
             _annotationsResolver = dataResolversFactory.GetAnnotationsResolver();
+            _inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
 
             _valueResolvingHelper = dataResolversFactory.GetValueResolvingHelper();
 
@@ -113,8 +114,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly LogicalSearchResolver _logicalSearchResolver;
         private readonly StatesResolver _statesResolver;
         private readonly AnnotationsResolver _annotationsResolver;
-        private readonly ValueResolvingHelper _valueResolvingHelper;
+        private readonly InheritanceResolver _inheritanceResolver;
 
+        private readonly ValueResolvingHelper _valueResolvingHelper;
+        
         private readonly ConverterFactToImperativeCode _converterFactToImperativeCode;
         private readonly IDateTimeProvider _dateTimeProvider;
 
@@ -327,7 +330,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
                 //Log($"currentCommand = {currentCommand}");
-                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 switch (currentCommand.OperationCode)
@@ -1690,6 +1693,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"constructorName = {constructorName}");
 #endif
 
+            _currentCodeFrame.CalledCtorsList.Add(constructorName);
+
             if (constructorName == _defaultCtorName)
             {
                 constructorName = _currentCodeFrame.LocalContext.Owner;
@@ -1728,6 +1733,67 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void CallDefaultCtors()
         {
+#if DEBUG
+            Log($"_currentCodeFrame.CalledCtorsList = {_currentCodeFrame.CalledCtorsList.WriteListToString()}");
+#endif
+
+            var optionsForInheritanceResolver = new ResolverOptions();
+            optionsForInheritanceResolver.AddSelf = false;
+            optionsForInheritanceResolver.AddTopType = false;
+            optionsForInheritanceResolver.OnlyDirectInheritance = true;
+
+            var superClassesList = _inheritanceResolver.GetSuperClassesKeysList(_currentCodeFrame.LocalContext.Owner, _currentCodeFrame.LocalContext, optionsForInheritanceResolver);
+
+#if DEBUG
+            Log($"superClassesList = {superClassesList.WriteListToString()}");
+#endif
+
+            if(!superClassesList.Any())
+            {
+                _currentCodeFrame.CurrentPosition++;
+                return;
+            }
+
+            var targetSuperClassesList = superClassesList.Except(_currentCodeFrame.CalledCtorsList);
+
+#if DEBUG
+            Log($"targetSuperClassesList = {targetSuperClassesList.WriteListToString()}");
+#endif
+
+            if (!targetSuperClassesList.Any())
+            {
+                _currentCodeFrame.CurrentPosition++;
+                return;
+            }
+
+            var executionsList = new List<(CodeFrame, IExecutionCoordinator)>();
+
+            foreach(var targetSuperClass in targetSuperClassesList)
+            {
+                var constructor = _constructorsResolver.ResolveOnlyOwn(targetSuperClass, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+
+#if DEBUG
+                Log($"constructor = {constructor}");
+#endif
+
+                if(constructor == null)
+                {
+                    continue;
+                }
+
+                throw new NotImplementedException();
+            }
+
+#if DEBUG
+            Log($"executionsList.Count = {executionsList.Count}");
+#endif
+
+            if(!executionsList.Any())
+            {
+                _currentCodeFrame.CurrentPosition++;
+                return;
+            }
+
             //_currentCodeFrame.CurrentPosition++;//tmp
 
             throw new NotImplementedException();
@@ -2141,16 +2207,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 throw new ArgumentNullException(nameof(executable));
             }
 
-            var coordinator = executable.TryActivate(_context);
-
-            var timeout = GetTimeoutFromAnnotation(annotation);
-            var priority = GetPriorityFromAnnotation(annotation);
 #if DEBUG
             //Log($"executable.IsSystemDefined = {executable.IsSystemDefined}");
-            //Log($"coordinator != null = {coordinator != null}");
             //Log($"annotation = {annotation}");
-            //Log($"timeout = {timeout}");
-            //Log($"priority = {priority}");
             //Log($"syncOption = {syncOption}");
             //Log($"ownLocalCodeExecutionContext?.Storage.VarStorage.GetHashCode() = {ownLocalCodeExecutionContext?.Storage.VarStorage.GetHashCode()}");
 #endif
@@ -2199,6 +2258,17 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
             else
             {
+                var coordinator = executable.TryActivate(_context);
+
+                var timeout = GetTimeoutFromAnnotation(annotation);
+                var priority = GetPriorityFromAnnotation(annotation);
+
+#if DEBUG
+                //Log($"coordinator != null = {coordinator != null}");
+                //Log($"timeout = {timeout}");
+                //Log($"priority = {priority}");
+#endif
+
                 ConversionExecutableToCodeFrameAdditionalSettings additionalSettings = null;
 
                 if (timeout.HasValue || priority.HasValue)

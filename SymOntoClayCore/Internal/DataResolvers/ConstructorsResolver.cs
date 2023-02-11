@@ -25,6 +25,33 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             Log($"holder = {holder}");
 #endif
 
+            var storagesList = GetStoragesList(localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
+
+#if DEBUG
+            //Log($"storagesList.Count = {storagesList.Count}");
+            //foreach (var tmpStorage in storagesList)
+            //{
+            //    Log($"tmpStorage.Key = {tmpStorage.Key}; tmpStorage.Value.Kind = '{tmpStorage.Value.Kind}'");
+            //}
+#endif
+
+            var rawList = GetRawList(0, storagesList, new List<WeightedInheritanceItem>() { InheritanceResolver.GetSelfWeightedInheritanceItem(holder) });
+
+#if DEBUG
+            Log($"rawList = {rawList.WriteListToString()}");
+#endif
+
+            if (!rawList.Any())
+            {
+                return null;
+            }
+
+            var filteredList = Filter(rawList);
+
+#if DEBUG
+            Log($"filteredList = {filteredList.WriteListToString()}");
+#endif
+
             throw new NotImplementedException();
         }
 

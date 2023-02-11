@@ -468,7 +468,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     var targetHolder = constructor.Holder;
 
 #if DEBUG
-                    Log($"targetHolder = {targetHolder}");
+                    //Log($"targetHolder = {targetHolder}");
 #endif
 
                     var targetStorage = superClassesStoragesDict[targetHolder];

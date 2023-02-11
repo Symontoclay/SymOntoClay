@@ -22,7 +22,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public Constructor ResolveOnlyOwn(StrongIdentifierValue holder, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Log($"holder = {holder}");
+            //Log($"holder = {holder}");
 #endif
 
             var storagesList = GetStoragesList(localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
@@ -38,7 +38,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var rawList = GetRawList(0, storagesList, new List<WeightedInheritanceItem>() { InheritanceResolver.GetSelfWeightedInheritanceItem(holder) });
 
 #if DEBUG
-            Log($"rawList = {rawList.WriteListToString()}");
+            //Log($"rawList = {rawList.WriteListToString()}");
 #endif
 
             if (!rawList.Any())
@@ -49,10 +49,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var filteredList = Filter(rawList);
 
 #if DEBUG
-            Log($"filteredList = {filteredList.WriteListToString()}");
+            //Log($"filteredList = {filteredList.WriteListToString()}");
 #endif
 
-            throw new NotImplementedException();
+            if (!filteredList.Any())
+            {
+                return null;
+            }
+
+            if (filteredList.Count == 1)
+            {
+                return filteredList.Single().ResultItem;
+            }
+
+            return GetTargetValueFromList(filteredList, 0, localCodeExecutionContext, options);
         }
 
         public Constructor ResolveOnlyOwn(StrongIdentifierValue holder, Dictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)

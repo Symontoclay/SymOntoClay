@@ -327,7 +327,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
                 //Log($"currentCommand = {currentCommand}");
-                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 switch (currentCommand.OperationCode)
@@ -1637,9 +1637,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void CallConstructor(KindOfFunctionParameters kindOfParameters, int parametersCount)
         {
 #if DEBUG
-            Log($"kindOfParameters = {kindOfParameters}");
-            Log($"parametersCount = {parametersCount}");
-            Log($"_currentCodeFrame.LocalContext.Owner = {_currentCodeFrame.LocalContext.Owner}");
+            //Log($"kindOfParameters = {kindOfParameters}");
+            //Log($"parametersCount = {parametersCount}");
+            //Log($"_currentCodeFrame.LocalContext.Owner = {_currentCodeFrame.LocalContext.Owner}");
 #endif
 
             var valueStack = _currentCodeFrame.ValuesStack;
@@ -1654,7 +1654,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var caller = TryResolveFromVarOrExpr(valueStack.Pop());
 
 #if DEBUG
-            Log($"caller = {caller}");
+            //Log($"caller = {caller}");
             //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
@@ -1680,14 +1680,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
             //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-            Log($"namedParameters = {namedParameters?.WriteDict_1_ToString()}");
-            Log($"positionedParameters = {positionedParameters.WriteListToString()}");
+            //Log($"namedParameters = {namedParameters?.WriteDict_1_ToString()}");
+            //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
 #endif
 
             var constructorName = caller.AsStrongIdentifierValue;
 
 #if DEBUG
-            Log($"constructorName = {constructorName}");
+            //Log($"constructorName = {constructorName}");
 #endif
 
             if (constructorName == _defaultCtorName)
@@ -1695,7 +1695,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 constructorName = _currentCodeFrame.LocalContext.Owner;
 
 #if DEBUG
-                Log($"constructorName = {constructorName}");
+                //Log($"constructorName = {constructorName}");
 #endif
             }
 
@@ -1720,7 +1720,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            Log($"constructor = {constructor}");
+            //Log($"constructor = {constructor}");
 #endif
 
             CallExecutable(constructor, null, kindOfParameters, namedParameters, positionedParameters, annotation, SyncOption.Ctor);
@@ -2151,7 +2151,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"annotation = {annotation}");
             //Log($"timeout = {timeout}");
             //Log($"priority = {priority}");
-            Log($"syncOption = {syncOption}");
+            //Log($"syncOption = {syncOption}");
             //Log($"ownLocalCodeExecutionContext?.Storage.VarStorage.GetHashCode() = {ownLocalCodeExecutionContext?.Storage.VarStorage.GetHashCode()}");
 #endif
 
@@ -2235,21 +2235,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
 #if DEBUG
             //Log($"codeFrame = {codeFrame}");
-            Log($"codeFrame.LocalContext}} = {codeFrame.LocalContext}");
+            //Log($"codeFrame.LocalContext.Owner = {codeFrame.LocalContext.Owner}");
 #endif
 
             _context.InstancesStorage.AppendProcessInfo(codeFrame.ProcessInfo);
 
 #if DEBUG
-            Log($"syncOption = {syncOption}");
-
-            if(syncOption == SyncOption.Ctor)
-            {
-                throw new NotImplementedException();
-            }
+            //Log($"syncOption = {syncOption}");
 #endif
 
-            if (syncOption == SyncOption.Sync)
+            if (syncOption == SyncOption.Sync || syncOption == SyncOption.Ctor)
             {
                 if (coordinator != null)
                 {

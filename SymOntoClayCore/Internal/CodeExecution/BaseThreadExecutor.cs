@@ -1728,9 +1728,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void CallDefaultCtors()
         {
-            _currentCodeFrame.CurrentPosition++;//tmp
+            //_currentCodeFrame.CurrentPosition++;//tmp
 
-            //throw new NotImplementedException();
+            throw new NotImplementedException();
         }
 
         private enum SyncOption

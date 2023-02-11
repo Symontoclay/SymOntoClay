@@ -254,7 +254,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return item;
         }
 
-        private WeightedInheritanceItem GetSelfWeightedInheritanceItem(StrongIdentifierValue subName)
+        public static WeightedInheritanceItem GetSelfWeightedInheritanceItem(StrongIdentifierValue subName)
         {
             var item = new WeightedInheritanceItem();
             item.SuperName = subName;

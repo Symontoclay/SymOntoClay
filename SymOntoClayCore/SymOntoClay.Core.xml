@@ -4887,7 +4887,7 @@
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.SelfName">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.DefaultCtor">
+        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.DefaultCtorName">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.RandomConstraintName">

@@ -88,6 +88,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var commonNamesStorage = _context.CommonNamesStorage;
 
+            _defaultCtorName = commonNamesStorage.DefaultCtorName;
             _timeoutName = commonNamesStorage.TimeoutAttributeName;
             _priorityName = commonNamesStorage.PriorityAttributeName;
         }
@@ -130,6 +131,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private long? _endOfTargetDuration;
         private List<Task> _waitedTasksList;
 
+        private readonly StrongIdentifierValue _defaultCtorName;
         private readonly StrongIdentifierValue _timeoutName;
         private readonly StrongIdentifierValue _priorityName;
 
@@ -1688,48 +1690,55 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             Log($"constructorName = {constructorName}");
 #endif
 
+            if (constructorName == _defaultCtorName)
+            {
+                constructorName = _currentCodeFrame.LocalContext.Owner;
+
+#if DEBUG
+                Log($"constructorName = {constructorName}");
+#endif
+            }
+
             IExecutable constructor = null;
 
-            //if(constructorName == _timeoutName)
-            //{
+            switch (kindOfParameters)
+            {
+                case KindOfFunctionParameters.NoParameters:
+                    constructor = _constructorsResolver.ResolveOnlyOwn(constructorName, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                    break;
 
-            //}
+                case KindOfFunctionParameters.NamedParameters:
+                    constructor = _constructorsResolver.ResolveOnlyOwn(constructorName, namedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                    break;
 
-            //switch (kindOfParameters)
-            //{
-            //    case KindOfFunctionParameters.NoParameters:
-            //        constructor = _constructorsResolver.ResolveOnlyOwn(constructorName, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
-            //        break;
+                case KindOfFunctionParameters.PositionedParameters:
+                    constructor = _constructorsResolver.ResolveOnlyOwn(constructorName, positionedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                    break;
 
-            //    case KindOfFunctionParameters.NamedParameters:
-            //        constructor = _constructorsResolver.ResolveOnlyOwn(constructorName, namedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
-            //        break;
-
-            //    case KindOfFunctionParameters.PositionedParameters:
-            //        constructor = _constructorsResolver.ResolveOnlyOwn(constructorName, positionedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
-            //        break;
-
-            //    default:
-            //        throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
-            //}
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+            }
 
 #if DEBUG
             Log($"constructor = {constructor}");
 #endif
 
-            throw new NotImplementedException();
+            CallExecutable(constructor, null, kindOfParameters, namedParameters, positionedParameters, annotation, SyncOption.Ctor);
         }
 
         private void CallDefaultCtors()
         {
-            throw new NotImplementedException();
+            _currentCodeFrame.CurrentPosition++;//tmp
+
+            //throw new NotImplementedException();
         }
 
         private enum SyncOption
         {
             Sync,
             IndependentAsync,
-            ChildAsync
+            ChildAsync,
+            Ctor
         }
 
         private void CallFunction(KindOfFunctionParameters kindOfParameters, int parametersCount, SyncOption syncOption)
@@ -2142,7 +2151,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"annotation = {annotation}");
             //Log($"timeout = {timeout}");
             //Log($"priority = {priority}");
-            //Log($"syncOption = {syncOption}");
+            Log($"syncOption = {syncOption}");
             //Log($"ownLocalCodeExecutionContext?.Storage.VarStorage.GetHashCode() = {ownLocalCodeExecutionContext?.Storage.VarStorage.GetHashCode()}");
 #endif
 
@@ -2226,12 +2235,18 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
 #if DEBUG
             //Log($"codeFrame = {codeFrame}");
+            Log($"codeFrame.LocalContext}} = {codeFrame.LocalContext}");
 #endif
 
             _context.InstancesStorage.AppendProcessInfo(codeFrame.ProcessInfo);
 
 #if DEBUG
-            //Log($"syncOption = {syncOption}");
+            Log($"syncOption = {syncOption}");
+
+            if(syncOption == SyncOption.Ctor)
+            {
+                throw new NotImplementedException();
+            }
 #endif
 
             if (syncOption == SyncOption.Sync)

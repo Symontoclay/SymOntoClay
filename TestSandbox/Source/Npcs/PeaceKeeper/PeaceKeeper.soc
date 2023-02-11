@@ -40,10 +40,10 @@ class cls2 is cls0
     constructor(@param: number)
         : cls0(16)
     {
-        'Begin ctor of ' >> @>log;
+        'Begin ctor of cls2' >> @>log;
         @param >> @>log;
         @b >> @>log;
-        'End ctor of ' >> @>log;
+        'End ctor of cls2' >> @>log;
     }
 
     private:

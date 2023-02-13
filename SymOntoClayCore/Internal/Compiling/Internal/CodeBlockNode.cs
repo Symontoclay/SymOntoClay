@@ -40,7 +40,10 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         public CodeBlockNode(IMainStorageContext context)
             : base(context)
         {
+            _defaultCtorName = context.CommonNamesStorage.DefaultCtorName;
         }
+
+        private readonly StrongIdentifierValue _defaultCtorName;
 
         public void Run(List<AstStatement> statements, LoopCompilingContext loopCompilingContext)
         {
@@ -60,9 +63,15 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
             if (kindOfCompilation == KindOfCompilation.Constructor)
             {
+                var callsSelf = false;
+
                 if(!callSuperClassContructorsExpressions.IsNullOrEmpty())
                 {
-                    foreach(var callCtorExpr in callSuperClassContructorsExpressions)
+                    var targetCtorsExprsList = callSuperClassContructorsExpressions.Select(p => p as CallingFunctionAstExpression);
+
+                    callsSelf = targetCtorsExprsList.Any(p => (p.Left as ConstValueAstExpression).Value.AsStrongIdentifierValue == _defaultCtorName);
+
+                    foreach (var callCtorExpr in targetCtorsExprsList)
                     {
 #if DEBUG
                         //Log($"callCtorExpr = {callCtorExpr.ToHumanizedString()}");
@@ -70,7 +79,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 #endif
 
                         var node = new CallingFunctionNode(_context);
-                        node.Run(callCtorExpr as CallingFunctionAstExpression, true);
+                        node.Run(callCtorExpr, true);
                         AddCommands(node.Result);
 
 #if DEBUG
@@ -79,7 +88,10 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     }
                 }
 
-                AddCommand(new IntermediateScriptCommand() { OperationCode = OperationCode.CallDefaultCtors });
+                if(!callsSelf)
+                {
+                    AddCommand(new IntermediateScriptCommand() { OperationCode = OperationCode.CallDefaultCtors });
+                }                
 
                 AddCommand(new IntermediateScriptCommand()
                 {

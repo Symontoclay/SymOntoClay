@@ -864,7 +864,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
                         }
 
-                        if (string.Compare(content, "constructor", true) == 0)
+                        if (string.Compare(content, "ctor", true) == 0)
                         {
                             kindOfKeyWord = KeyWordTokenKind.Constructor;
                             break;

@@ -330,7 +330,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
                 //Log($"currentCommand = {currentCommand}");
-                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 switch (currentCommand.OperationCode)
@@ -1734,7 +1734,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void CallDefaultCtors()
         {
 #if DEBUG
-            Log($"_currentCodeFrame.CalledCtorsList = {_currentCodeFrame.CalledCtorsList.WriteListToString()}");
+            //Log($"_currentCodeFrame.CalledCtorsList = {_currentCodeFrame.CalledCtorsList.WriteListToString()}");
 #endif
 
             var optionsForInheritanceResolver = new ResolverOptions();
@@ -1745,7 +1745,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var superClassesList = _inheritanceResolver.GetSuperClassesKeysList(_currentCodeFrame.LocalContext.Owner, _currentCodeFrame.LocalContext, optionsForInheritanceResolver);
 
 #if DEBUG
-            Log($"superClassesList = {superClassesList.WriteListToString()}");
+            //Log($"superClassesList = {superClassesList.WriteListToString()}");
 #endif
 
             if(!superClassesList.Any())
@@ -1757,7 +1757,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var targetSuperClassesList = superClassesList.Except(_currentCodeFrame.CalledCtorsList);
 
 #if DEBUG
-            Log($"targetSuperClassesList = {targetSuperClassesList.WriteListToString()}");
+            //Log($"targetSuperClassesList = {targetSuperClassesList.WriteListToString()}");
 #endif
 
             if (!targetSuperClassesList.Any())
@@ -1773,7 +1773,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var constructor = _constructorsResolver.ResolveOnlyOwn(targetSuperClass, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
 
 #if DEBUG
-                Log($"constructor = {constructor}");
+                //Log($"constructor = {constructor}");
 #endif
 
                 if(constructor == null)
@@ -1781,11 +1781,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     continue;
                 }
 
-                throw new NotImplementedException();
+                var coordinator = ((IExecutable)constructor).TryActivate(_context);
+
+                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(constructor, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, null);
+
+#if DEBUG
+                //Log($"newCodeFrame = {newCodeFrame}");
+#endif
+
+                executionsList.Add((newCodeFrame, coordinator));
             }
 
 #if DEBUG
-            Log($"executionsList.Count = {executionsList.Count}");
+            //Log($"executionsList.Count = {executionsList.Count}");
 #endif
 
             if(!executionsList.Any())
@@ -1794,9 +1802,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 return;
             }
 
-            //_currentCodeFrame.CurrentPosition++;//tmp
+            _currentCodeFrame.CurrentPosition++;
 
-            throw new NotImplementedException();
+            foreach (var item in executionsList)
+            {
+                var codeFrame = item.Item1;
+                var coordinator = item.Item2;
+
+                _context.InstancesStorage.AppendProcessInfo(codeFrame.ProcessInfo);
+
+                PrepareCodeFrameToSyncExecution(codeFrame, coordinator);
+
+                SetCodeFrame(codeFrame);
+            }
         }
 
         private enum SyncOption
@@ -2260,36 +2278,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 var coordinator = executable.TryActivate(_context);
 
-                var timeout = GetTimeoutFromAnnotation(annotation);
-                var priority = GetPriorityFromAnnotation(annotation);
-
-#if DEBUG
-                //Log($"coordinator != null = {coordinator != null}");
-                //Log($"timeout = {timeout}");
-                //Log($"priority = {priority}");
-#endif
-
-                ConversionExecutableToCodeFrameAdditionalSettings additionalSettings = null;
-
-                if (timeout.HasValue || priority.HasValue)
-                {
-                    additionalSettings = new ConversionExecutableToCodeFrameAdditionalSettings()
-                    {
-                        Timeout = timeout,
-                        Priority = priority,
-                        AllowParentLocalStorages = ownLocalCodeExecutionContext == null ? false : true
-                    };
-                }
-                else
-                {
-                    if(ownLocalCodeExecutionContext != null)
-                    {
-                        additionalSettings = new ConversionExecutableToCodeFrameAdditionalSettings()
-                        {
-                            AllowParentLocalStorages = true
-                        };
-                    }
-                }
+                var additionalSettings = GetAdditionalSettingsFromAnnotation(annotation, ownLocalCodeExecutionContext);
 
                 var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(executable, kindOfParameters, namedParameters, positionedParameters, targetLocalContext, additionalSettings);
 
@@ -2299,6 +2288,42 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 ExecuteCodeFrame(newCodeFrame, coordinator, syncOption);
             }
+        }
+
+        private ConversionExecutableToCodeFrameAdditionalSettings GetAdditionalSettingsFromAnnotation(Value annotation, LocalCodeExecutionContext ownLocalCodeExecutionContext)
+        {
+            var timeout = GetTimeoutFromAnnotation(annotation);
+            var priority = GetPriorityFromAnnotation(annotation);
+
+#if DEBUG
+            //Log($"coordinator != null = {coordinator != null}");
+            //Log($"timeout = {timeout}");
+            //Log($"priority = {priority}");
+#endif
+
+            ConversionExecutableToCodeFrameAdditionalSettings additionalSettings = null;
+
+            if (timeout.HasValue || priority.HasValue)
+            {
+                additionalSettings = new ConversionExecutableToCodeFrameAdditionalSettings()
+                {
+                    Timeout = timeout,
+                    Priority = priority,
+                    AllowParentLocalStorages = ownLocalCodeExecutionContext == null ? false : true
+                };
+            }
+            else
+            {
+                if (ownLocalCodeExecutionContext != null)
+                {
+                    additionalSettings = new ConversionExecutableToCodeFrameAdditionalSettings()
+                    {
+                        AllowParentLocalStorages = true
+                    };
+                }
+            }
+
+            return additionalSettings;
         }
 
         private void ExecuteCodeFrame(CodeFrame codeFrame, IExecutionCoordinator coordinator, SyncOption syncOption)
@@ -2316,27 +2341,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (syncOption == SyncOption.Sync || syncOption == SyncOption.Ctor)
             {
-                if (coordinator != null)
-                {
-                    var instance = coordinator.Instance;
-
-#if DEBUG
-                    //Log($"instance?.Name = {instance?.Name}");                        
-                    //Log($"_currentInstance?.Name = {_currentInstance?.Name}");
-                    //Log($"coordinator.KindOfInstance = {coordinator.KindOfInstance}");
-#endif
-
-                    if (_currentInstance != null && instance != null)
-                    {
-                        SetSpecialMarkOfCodeFrame(codeFrame, coordinator);
-
-                        _currentInstance.AddChildInstance(instance);
-                    }
-                }
+                PrepareCodeFrameToSyncExecution(codeFrame, coordinator);
 
                 _currentCodeFrame.CurrentPosition++;
-
-                codeFrame.ExecutionCoordinator = coordinator;
 
                 SetCodeFrame(codeFrame);
             }
@@ -2362,6 +2369,29 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 _currentCodeFrame.ValuesStack.Push(task);
             }
+        }
+
+        private void PrepareCodeFrameToSyncExecution(CodeFrame codeFrame, IExecutionCoordinator coordinator)
+        {
+            if (coordinator != null)
+            {
+                var instance = coordinator.Instance;
+
+#if DEBUG
+                //Log($"instance?.Name = {instance?.Name}");                        
+                //Log($"_currentInstance?.Name = {_currentInstance?.Name}");
+                //Log($"coordinator.KindOfInstance = {coordinator.KindOfInstance}");
+#endif
+
+                if (_currentInstance != null && instance != null)
+                {
+                    SetSpecialMarkOfCodeFrame(codeFrame, coordinator);
+
+                    _currentInstance.AddChildInstance(instance);
+                }
+            }
+
+            codeFrame.ExecutionCoordinator = coordinator;
         }
 
         private void SetSpecialMarkOfCodeFrame(CodeFrame codeFrame, IExecutionCoordinator coordinator)

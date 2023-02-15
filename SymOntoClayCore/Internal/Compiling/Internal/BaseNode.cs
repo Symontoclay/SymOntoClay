@@ -191,8 +191,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 case OperationCode.BreakStateVal:
                 case OperationCode.Reject:
                 case OperationCode.Exec:
-                case OperationCode.CodeItemDecl:
-                case OperationCode.Instantiate:
+                case OperationCode.CodeItemDecl:                
                 case OperationCode.CallDefaultCtors:
                     return $"{operationCode}";
 
@@ -212,6 +211,9 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 case OperationCode.CallCtor:
                 case OperationCode.CallCtor_N:
                 case OperationCode.CallCtor_P:
+                case OperationCode.Instantiate:
+                case OperationCode.Instantiate_N:
+                case OperationCode.Instantiate_P:
                     return $"{operationCode} {commandItem.CountParams}";
 
                 case OperationCode.Wait:

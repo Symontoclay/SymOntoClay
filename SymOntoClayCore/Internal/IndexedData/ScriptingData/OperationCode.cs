@@ -99,6 +99,8 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         BreakState,
         BreakStateVal,
         Reject,
-        Instantiate
+        Instantiate,
+        Instantiate_N,
+        Instantiate_P
     }
 }

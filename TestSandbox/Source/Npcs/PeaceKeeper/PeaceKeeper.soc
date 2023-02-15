@@ -35,54 +35,13 @@ class cls1 is cls0
         @b = 1;
 }
 
-class cls2 is cls0
+app PeaceKeeper
 {
-    ctor(@param: number)
-        : cls0(16)
+    on Enter
     {
-        'Begin ctor of cls2' >> @>log;
-        @param >> @>log;
-        @b >> @>log;
-        'End ctor of cls2' >> @>log;
+        'Begin' >> @>log;
+        @a = new cls1('Hi!');
+        @a.@b >> @>log;
+        'End' >> @>log;
     }
-
-    private:
-        @b = 2;
-}
-
-class cls3
-{
-    ctor()
-    {
-        'Begin ctor of cls3' >> @>log;
-        @b >> @>log;
-        'End ctor of cls3' >> @>log;
-    }
-
-    private:
-        @b = 3;
-}
-
-app PeaceKeeper is cls1, cls2, cls3
-{
-    ctor()
-        : ('Hi')
-    {
-        'Begin ctor 1 of PeaceKeeper' >> @>log;
-        @b >> @>log;
-        'End ctor 1 of PeaceKeeper' >> @>log;
-    }
-
-    ctor(@param: string)
-        : cls1('The Beatles!'),
-        cls2(12)
-    {
-        'Begin ctor 2 of PeaceKeeper' >> @>log;
-        @param >> @>log;
-        @b >> @>log;
-        'End ctor 2 of PeaceKeeper' >> @>log;
-    }
-
-    private:
-        @b = 4;
 }

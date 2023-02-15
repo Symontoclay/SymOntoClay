@@ -59,24 +59,24 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Word:
-                            {
+                            {                           
+                                var node = new ConstValueAstExpression();
+                                node.Value = NameHelper.CreateName(_currToken.Content);
+
+                                Result.PrototypeExpression = node;
+
                                 var nextToken = _context.GetToken();
 
 #if DEBUG
                                 //Log($"nextToken = {nextToken}");
 #endif
 
-                                if(nextToken.TokenKind == TokenKind.OpenRoundBracket)
-                                {
-                                    throw new UnexpectedTokenException(nextToken);
-                                }
-
                                 _context.Recovery(nextToken);
 
-                                var node = new ConstValueAstExpression();
-                                node.Value = NameHelper.CreateName(_currToken.Content);
-
-                                Result.Expression = node;
+                                if (nextToken.TokenKind == TokenKind.OpenRoundBracket)
+                                {
+                                    ProcessParameters();
+                                }
 
                                 Exit();
                             }
@@ -84,25 +84,25 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.Var:
                             {
+                                var value = NameHelper.CreateName(_currToken.Content);
+
+                                var node = new VarAstExpression();
+                                node.Name = value;
+
+                                Result.PrototypeExpression = node;
+
                                 var nextToken = _context.GetToken();
 
 #if DEBUG
                                 //Log($"nextToken = {nextToken}");
 #endif
 
-                                if (nextToken.TokenKind == TokenKind.OpenRoundBracket)
-                                {
-                                    throw new UnexpectedTokenException(nextToken);
-                                }
-
                                 _context.Recovery(nextToken);
 
-                                var value = NameHelper.CreateName(_currToken.Content);
-
-                                var node = new VarAstExpression();
-                                node.Name = value;
-
-                                Result.Expression = node;
+                                if (nextToken.TokenKind == TokenKind.OpenRoundBracket)
+                                {
+                                    ProcessParameters();
+                                }
 
                                 Exit();
                             }
@@ -116,6 +116,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
+        }
+
+        private void ProcessParameters()
+        {
+            var parser = new CallingFunctionExpressionParser(_context);
+            parser.Run();
+
+#if DEBUG
+            //Log($"parser.Result = {parser.Result}");
+#endif
+
+            Result.Parameters = parser.Result.Parameters;
         }
     }
 }

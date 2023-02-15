@@ -17,10 +17,13 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         {
 #if DEBUG
             //Log($"expression = {expression}");
+            Log($"expression = {expression.ToHumanizedString()}");
 #endif
 
+            throw new NotImplementedException();
+
             var node = new ExpressionNode(_context);
-            node.Run(expression.Expression);
+            node.Run(expression.PrototypeExpression);
 
             AddCommands(node.Result);
 

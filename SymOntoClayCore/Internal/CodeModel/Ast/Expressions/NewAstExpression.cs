@@ -1,7 +1,9 @@
 ﻿using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
@@ -17,7 +19,9 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         /// <inheritdoc/>
         public override NewAstExpression AsNewAstExpression => this;
 
-        public AstExpression Expression { get; set; }
+        public AstExpression PrototypeExpression { get; set; }
+
+        public List<CallingParameter> Parameters { get; set; } = new List<CallingParameter>();
 
         /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
@@ -36,7 +40,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             var result = new NewAstExpression();
             context[this] = result;
 
-            result.Expression = Expression.CloneAstExpression(context);
+            result.PrototypeExpression = PrototypeExpression.CloneAstExpression(context);
+            result.Parameters = Parameters?.Select(p => p.Clone(context)).ToList();
 
             result.AppendAnnotations(this, context);
 
@@ -57,7 +62,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjProp(n, nameof(Expression), Expression);
+            sb.PrintObjProp(n, nameof(PrototypeExpression), PrototypeExpression);
 
             sb.Append(base.PropertiesToString(n));
 
@@ -70,7 +75,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjProp(n, nameof(Expression), Expression);
+            sb.PrintShortObjProp(n, nameof(PrototypeExpression), PrototypeExpression);
 
             sb.Append(base.PropertiesToShortString(n));
 
@@ -83,7 +88,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjProp(n, nameof(Expression), Expression);
+            sb.PrintBriefObjProp(n, nameof(PrototypeExpression), PrototypeExpression);
 
             sb.Append(base.PropertiesToBriefString(n));
 
@@ -96,9 +101,21 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             var sb = new StringBuilder();
             sb.Append("new ");
 
-            if (Expression != null)
+            if (PrototypeExpression != null)
             {
-                sb.Append(Expression.ToHumanizedString(options));
+                sb.Append(PrototypeExpression.ToHumanizedString(options));
+            }
+
+            if(!Parameters.IsNullOrEmpty())
+            {
+                var paramsStrList = new List<string>();
+
+                foreach(var item in Parameters)
+                {
+                    paramsStrList.Add(item.ToHumanizedString(options));
+                }
+
+                sb.Append($"({string.Join(', ', paramsStrList)})");
             }
 
             return sb.ToString();

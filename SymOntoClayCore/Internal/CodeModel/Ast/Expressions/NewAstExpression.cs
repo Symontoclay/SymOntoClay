@@ -115,7 +115,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
                     paramsStrList.Add(item.ToHumanizedString(options));
                 }
 
-                sb.Append($"({string.Join(', ', paramsStrList)})");
+                sb.Append($"({string.Join(", ", paramsStrList)})");
             }
 
             return sb.ToString();

@@ -100,8 +100,8 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
                 case KindOfAstExpression.New:
                     {
-                        var node = new NewNode(_context);
-                        node.Run(expression.AsNewAstExpression);
+                        var node = new CallingFunctionNode(_context);
+                        node.Run(expression as CallingFunctionAstExpression, CallingFunctionNode.KindOfCallingFunction.New);
                         AddCommands(node.Result);
                     }
                     break;

@@ -93,7 +93,13 @@ namespace SymOntoClay.Core.Internal.Storage
         public KindOfStorage Kind => KindOfStorage.WorldPublicFacts;
 
         /// <inheritdoc/>
-        public StrongIdentifierValue TargetClassName => StrongIdentifierValue.Empty;
+        public StrongIdentifierValue TargetClassName => null;
+
+        /// <inheritdoc/>
+        public StrongIdentifierValue InstanceName => null;
+
+        /// <inheritdoc/>
+        public IInstance Instance => null;
 
         /// <inheritdoc/>
         public ILogicalStorage LogicalStorage => _logicalStorage;

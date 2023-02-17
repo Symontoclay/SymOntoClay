@@ -8,7 +8,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
 {
-    public class NewAstExpression : AstExpression
+    public class NewAstExpression : CallingFunctionAstExpression
     {
         /// <inheritdoc/>
         public override KindOfAstExpression Kind => KindOfAstExpression.New;
@@ -18,10 +18,6 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
 
         /// <inheritdoc/>
         public override NewAstExpression AsNewAstExpression => this;
-
-        public AstExpression PrototypeExpression { get; set; }
-
-        public List<CallingParameter> Parameters { get; set; } = new List<CallingParameter>();
 
         /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
@@ -40,10 +36,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             var result = new NewAstExpression();
             context[this] = result;
 
-            result.PrototypeExpression = PrototypeExpression.CloneAstExpression(context);
-            result.Parameters = Parameters?.Select(p => p.Clone(context)).ToList();
-
-            result.AppendAnnotations(this, context);
+            result.FillUpCallingFunctionAstExpression(this, context);
 
             return result;
         }
@@ -57,53 +50,14 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         }
 
         /// <inheritdoc/>
-        protected override string PropertiesToString(uint n)
-        {
-            var spaces = DisplayHelper.Spaces(n);
-            var sb = new StringBuilder();
-
-            sb.PrintObjProp(n, nameof(PrototypeExpression), PrototypeExpression);
-
-            sb.Append(base.PropertiesToString(n));
-
-            return sb.ToString();
-        }
-
-        /// <inheritdoc/>
-        protected override string PropertiesToShortString(uint n)
-        {
-            var spaces = DisplayHelper.Spaces(n);
-            var sb = new StringBuilder();
-
-            sb.PrintShortObjProp(n, nameof(PrototypeExpression), PrototypeExpression);
-
-            sb.Append(base.PropertiesToShortString(n));
-
-            return sb.ToString();
-        }
-
-        /// <inheritdoc/>
-        protected override string PropertiesToBriefString(uint n)
-        {
-            var spaces = DisplayHelper.Spaces(n);
-            var sb = new StringBuilder();
-
-            sb.PrintBriefObjProp(n, nameof(PrototypeExpression), PrototypeExpression);
-
-            sb.Append(base.PropertiesToBriefString(n));
-
-            return sb.ToString();
-        }
-
-        /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
             var sb = new StringBuilder();
             sb.Append("new ");
 
-            if (PrototypeExpression != null)
+            if (Left != null)
             {
-                sb.Append(PrototypeExpression.ToHumanizedString(options));
+                sb.Append(Left.ToHumanizedString(options));
             }
 
             if(!Parameters.IsNullOrEmpty())

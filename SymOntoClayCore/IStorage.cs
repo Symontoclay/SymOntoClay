@@ -35,8 +35,9 @@ namespace SymOntoClay.Core
     {
         KindOfStorage Kind { get; }
         StrongIdentifierValue TargetClassName { get; }
+        StrongIdentifierValue InstanceName { get; }
+        IInstance Instance { get; }
 
-        //string Owner { get; }
         ILogicalStorage LogicalStorage { get; }
         IRelationsStorage RelationsStorage { get; }
         IMethodsStorage MethodsStorage { get; }

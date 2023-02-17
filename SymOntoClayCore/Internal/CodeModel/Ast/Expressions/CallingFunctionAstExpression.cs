@@ -60,20 +60,25 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             {
                 return (AstExpression)context[this];
             }
-
+            
             var result = new CallingFunctionAstExpression();
             context[this] = result;
 
-            result.Left = Left.CloneAstExpression(context);
-
-            result.Parameters = Parameters?.Select(p => p.Clone(context)).ToList();
-
-            result.IsAsync = IsAsync;
-            result.IsChild = IsChild;
-
-            result.AppendAnnotations(this, context);
+            result.FillUpCallingFunctionAstExpression(this, context);
 
             return result;
+        }
+
+        protected void FillUpCallingFunctionAstExpression(CallingFunctionAstExpression source, Dictionary<object, object> cloneContext)
+        {
+            Left = source.Left.CloneAstExpression(cloneContext);
+            
+            Parameters = source.Parameters?.Select(p => p.Clone(cloneContext)).ToList();
+
+            IsAsync = source.IsAsync;
+            IsChild = source.IsChild;
+
+            AppendAnnotations(source, cloneContext);
         }
 
         /// <inheritdoc/>

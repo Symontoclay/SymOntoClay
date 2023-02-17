@@ -32,6 +32,13 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 {
     public class CallingFunctionNode : BaseNode
     {
+        public enum KindOfCallingFunction
+        {
+            Usual,
+            CallConstructor,
+            New
+        }
+
         private enum KindOfParameters
         {
             NoParameters,
@@ -46,10 +53,10 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(CallingFunctionAstExpression expression)
         {
-            Run(expression, false);
+            Run(expression, KindOfCallingFunction.Usual);
         }
 
-        public void Run(CallingFunctionAstExpression expression, bool isConstructor)
+        public void Run(CallingFunctionAstExpression expression, KindOfCallingFunction kindOfCallingFunction)
         {
 #if DEBUG
             //Log($"expression = {expression}");
@@ -118,98 +125,136 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             //Log($"kindOfParameters = {kindOfParameters}");
 #endif
 
-            if(isConstructor)
+            switch(kindOfCallingFunction)
             {
-                if (expression.IsAsync)
-                {
-                    throw new NotImplementedException();
-                }
-                else
-                {
-                    switch (kindOfParameters)
+                case KindOfCallingFunction.Usual:
                     {
-                        case KindOfParameters.NoParameters:
-                            command.OperationCode = OperationCode.CallCtor;
-                            break;
-
-                        case KindOfParameters.NamedParameters:
-                            command.OperationCode = OperationCode.CallCtor_N;
-                            break;
-
-                        case KindOfParameters.PositionedParameters:
-                            command.OperationCode = OperationCode.CallCtor_P;
-                            break;
-
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
-                    }
-                }
-            }
-            else
-            {
-                if (expression.IsAsync)
-                {
-                    if (expression.IsChild)
-                    {
-                        switch (kindOfParameters)
+                        if (expression.IsAsync)
                         {
-                            case KindOfParameters.NoParameters:
-                                command.OperationCode = OperationCode.AsyncChildCall;
-                                break;
+                            if (expression.IsChild)
+                            {
+                                switch (kindOfParameters)
+                                {
+                                    case KindOfParameters.NoParameters:
+                                        command.OperationCode = OperationCode.AsyncChildCall;
+                                        break;
 
-                            case KindOfParameters.NamedParameters:
-                                command.OperationCode = OperationCode.AsyncChildCall_N;
-                                break;
+                                    case KindOfParameters.NamedParameters:
+                                        command.OperationCode = OperationCode.AsyncChildCall_N;
+                                        break;
 
-                            case KindOfParameters.PositionedParameters:
-                                command.OperationCode = OperationCode.AsyncChildCall_P;
-                                break;
+                                    case KindOfParameters.PositionedParameters:
+                                        command.OperationCode = OperationCode.AsyncChildCall_P;
+                                        break;
 
-                            default:
-                                throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                                    default:
+                                        throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                                }
+                            }
+                            else
+                            {
+                                switch (kindOfParameters)
+                                {
+                                    case KindOfParameters.NoParameters:
+                                        command.OperationCode = OperationCode.AsyncCall;
+                                        break;
+
+                                    case KindOfParameters.NamedParameters:
+                                        command.OperationCode = OperationCode.AsyncCall_N;
+                                        break;
+
+                                    case KindOfParameters.PositionedParameters:
+                                        command.OperationCode = OperationCode.AsyncCall_P;
+                                        break;
+
+                                    default:
+                                        throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            switch (kindOfParameters)
+                            {
+                                case KindOfParameters.NoParameters:
+                                    command.OperationCode = OperationCode.Call;
+                                    break;
+
+                                case KindOfParameters.NamedParameters:
+                                    command.OperationCode = OperationCode.Call_N;
+                                    break;
+
+                                case KindOfParameters.PositionedParameters:
+                                    command.OperationCode = OperationCode.Call_P;
+                                    break;
+
+                                default:
+                                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                            }
                         }
                     }
-                    else
+                    break;
+
+                case KindOfCallingFunction.CallConstructor:
                     {
-                        switch (kindOfParameters)
+                        if (expression.IsAsync)
                         {
-                            case KindOfParameters.NoParameters:
-                                command.OperationCode = OperationCode.AsyncCall;
-                                break;
+                            throw new NotImplementedException();
+                        }
+                        else
+                        {
+                            switch (kindOfParameters)
+                            {
+                                case KindOfParameters.NoParameters:
+                                    command.OperationCode = OperationCode.CallCtor;
+                                    break;
 
-                            case KindOfParameters.NamedParameters:
-                                command.OperationCode = OperationCode.AsyncCall_N;
-                                break;
+                                case KindOfParameters.NamedParameters:
+                                    command.OperationCode = OperationCode.CallCtor_N;
+                                    break;
 
-                            case KindOfParameters.PositionedParameters:
-                                command.OperationCode = OperationCode.AsyncCall_P;
-                                break;
+                                case KindOfParameters.PositionedParameters:
+                                    command.OperationCode = OperationCode.CallCtor_P;
+                                    break;
 
-                            default:
-                                throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                                default:
+                                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                            }
                         }
                     }
-                }
-                else
-                {
-                    switch (kindOfParameters)
+                    break;
+
+                case KindOfCallingFunction.New:
                     {
-                        case KindOfParameters.NoParameters:
-                            command.OperationCode = OperationCode.Call;
-                            break;
+                        if (expression.IsAsync)
+                        {
+                            throw new NotImplementedException();
+                        }
+                        else
+                        {
+                            switch (kindOfParameters)
+                            {
+                                case KindOfParameters.NoParameters:
+                                    command.OperationCode = OperationCode.Instantiate;
+                                    break;
 
-                        case KindOfParameters.NamedParameters:
-                            command.OperationCode = OperationCode.Call_N;
-                            break;
+                                case KindOfParameters.NamedParameters:
+                                    command.OperationCode = OperationCode.Instantiate_N;
+                                    break;
 
-                        case KindOfParameters.PositionedParameters:
-                            command.OperationCode = OperationCode.Call_P;
-                            break;
+                                case KindOfParameters.PositionedParameters:
+                                    command.OperationCode = OperationCode.Instantiate_P;
+                                    break;
 
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                                default:
+                                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                            }
+                        }
                     }
-                }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfCallingFunction), kindOfCallingFunction, null);
             }
 
 #if DEBUG

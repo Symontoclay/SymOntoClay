@@ -500,7 +500,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     case OperationCode.Instantiate:
-                        ProcessInstantiate();
+                        ProcessInstantiate(KindOfFunctionParameters.NoParameters, 0);
+                        break;
+
+                    case OperationCode.Instantiate_N:
+                        ProcessInstantiate(KindOfFunctionParameters.NamedParameters, currentCommand.CountParams);
+                        break;
+
+                    case OperationCode.Instantiate_P:
+                        ProcessInstantiate(KindOfFunctionParameters.PositionedParameters, currentCommand.CountParams);
                         break;
 
                     default:
@@ -519,11 +527,17 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
         }
 
-        private void ProcessInstantiate()
+        private void ProcessInstantiate(KindOfFunctionParameters kindOfParameters, int parametersCount)
         {
 #if DEBUG
             //var stopWatch = new Stopwatch();
             //stopWatch.Start();
+#endif
+
+#if DEBUG
+            Log($"kindOfParameters = {kindOfParameters}");
+            Log($"parametersCount = {parametersCount}");
+            //Log($"_currentCodeFrame.LocalContext.Owner = {_currentCodeFrame.LocalContext.Owner}");
 #endif
 
             var valuesStack = _currentCodeFrame.ValuesStack;
@@ -537,7 +551,33 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var prototypeValue = valuesStack.Pop();
 
 #if DEBUG
-            //Log($"prototypeValue = {prototypeValue}");
+            Log($"prototypeValue = {prototypeValue}");
+#endif
+
+            Dictionary<StrongIdentifierValue, Value> namedParameters = null;
+            List<Value> positionedParameters = null;
+
+            switch (kindOfParameters)
+            {
+                case KindOfFunctionParameters.NoParameters:
+                    break;
+
+                case KindOfFunctionParameters.NamedParameters:
+                    namedParameters = TakeNamedParameters(parametersCount, true);
+                    break;
+
+                case KindOfFunctionParameters.PositionedParameters:
+                    positionedParameters = TakePositionedParameters(parametersCount, true);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+            }
+
+#if DEBUG
+            Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+            Log($"namedParameters = {namedParameters?.WriteDict_1_ToString()}");
+            Log($"positionedParameters = {positionedParameters.WriteListToString()}");
 #endif
 
             var instanceValue = CreateInstance(prototypeValue);
@@ -546,9 +586,52 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"instanceValue = {instanceValue}");
 #endif
 
-            _currentCodeFrame.ValuesStack.Push(instanceValue);
+            var newInstance = instanceValue.AsInstanceValue.InstanceInfo;
 
-            _currentCodeFrame.CurrentPosition++;
+            var superClassesStoragesDict = _inheritanceResolver.GetSuperClassStoragesDict(newInstance.LocalCodeExecutionContext.Storage, newInstance);
+
+#if DEBUG
+            Log($"superClassesStoragesDict.Keys = {superClassesStoragesDict.Keys.ToList().WriteListToString()}");
+#endif
+
+            var preConstructors = _constructorsResolver.ResolvePreConstructors(newInstance.Name, newInstance.LocalCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+
+#if DEBUG
+            Log($"preConstructors.Count = {preConstructors.Count}");
+#endif
+
+            var executionsList = new List<(CodeFrame, IExecutionCoordinator)>();
+
+            if (preConstructors.Any())
+            {
+                foreach (var preConstructor in preConstructors)
+                {
+                    var targetHolder = preConstructor.Holder;
+
+#if DEBUG
+                    Log($"targetHolder = {targetHolder}");
+#endif
+
+                    var targetStorage = superClassesStoragesDict[targetHolder];
+
+                    var localCodeExecutionContext = new LocalCodeExecutionContext(newInstance.LocalCodeExecutionContext);
+                    localCodeExecutionContext.Storage = targetStorage;
+                    localCodeExecutionContext.Holder = targetHolder;
+                    localCodeExecutionContext.Owner = targetHolder;
+                    localCodeExecutionContext.OwnerStorage = targetStorage;
+
+
+                }
+
+                throw new NotImplementedException();
+            }
+
+            throw new NotImplementedException();
+
+
+            //            _currentCodeFrame.ValuesStack.Push(instanceValue);
+
+            //            _currentCodeFrame.CurrentPosition++;
 
 #if DEBUG
             //stopWatch.Stop();

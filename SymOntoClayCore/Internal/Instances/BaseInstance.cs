@@ -72,7 +72,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _localCodeExecutionContext.Storage = _storage;
             _localCodeExecutionContext.Holder = Name;
-
+            
 #if DEBUG
             //Log($"_localCodeExecutionContext = {_localCodeExecutionContext}");
 #endif
@@ -127,6 +127,9 @@ namespace SymOntoClay.Core.Internal.Instances
 
         /// <inheritdoc/>
         public IExecutionCoordinator ExecutionCoordinator => _executionCoordinator;
+
+        /// <inheritdoc/>
+        public LocalCodeExecutionContext LocalCodeExecutionContext => _localCodeExecutionContext;
 
         /// <inheritdoc/>
         public void CancelExecution()
@@ -254,7 +257,7 @@ namespace SymOntoClay.Core.Internal.Instances
                         {
                             var localStorageSettings = RealStorageSettingsHelper.Create(_context, _parentStorage);
 
-                            var storage = new SuperClassStorage(localStorageSettings, key);
+                            var storage = new SuperClassStorage(localStorageSettings, key, this);
 
                             _superClassesStorages[key] = storage;
 
@@ -393,16 +396,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if (preConstructors.Any())
             {
-                var storagesList = _constructorsResolver.GetStoragesList(_localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
-
-#if DEBUG
-                //foreach (var tmpStorage in storagesList)
-                //{
-                //    Log($"tmpStorage.Storage.Kind = {tmpStorage.Storage.Kind}");
-                //}
-#endif
-
-                var superClassesStoragesDict = storagesList.Select(p => p.Storage).Where(p => p.Kind == KindOfStorage.SuperClass).ToDictionary(p => p.TargetClassName, p => p);
+                var superClassesStoragesDict = _constructorsResolver.GetSuperClassStoragesDict(_localCodeExecutionContext.Storage, this);
 
                 var processInitialInfoList = new List<ProcessInitialInfo>();
 
@@ -450,16 +444,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if (constructorsList.Any())
             {
-                var storagesList = _constructorsResolver.GetStoragesList(_localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
-
-#if DEBUG
-                //foreach (var tmpStorage in storagesList)
-                //{
-                //    Log($"tmpStorage.Storage.Kind = {tmpStorage.Storage.Kind}");
-                //}
-#endif
-
-                var superClassesStoragesDict = storagesList.Select(p => p.Storage).Where(p => p.Kind == KindOfStorage.SuperClass).ToDictionary(p => p.TargetClassName, p => p);
+                var superClassesStoragesDict = _constructorsResolver.GetSuperClassStoragesDict(_localCodeExecutionContext.Storage, this);
 
                 var processInitialInfoList = new List<ProcessInitialInfo>();
 

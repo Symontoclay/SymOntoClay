@@ -456,7 +456,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         KindOfStorage IStorage.Kind => KindOfStorage.Sentence;
 
         /// <inheritdoc/>
-        StrongIdentifierValue IStorage.TargetClassName => StrongIdentifierValue.Empty;
+        StrongIdentifierValue IStorage.TargetClassName => null;
+
+        /// <inheritdoc/>
+        StrongIdentifierValue IStorage.InstanceName => null;
+
+        /// <inheritdoc/>
+        IInstance IStorage.Instance => null;
 
         /// <inheritdoc/>
         ILogicalStorage IStorage.LogicalStorage => this;

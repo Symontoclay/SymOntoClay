@@ -130,7 +130,13 @@ namespace SymOntoClay.Core.Internal.Storage
         public KindOfStorage Kind => _kind;
 
         /// <inheritdoc/>
-        public virtual StrongIdentifierValue TargetClassName => StrongIdentifierValue.Empty;
+        public virtual StrongIdentifierValue TargetClassName => null;
+
+        /// <inheritdoc/>
+        public virtual StrongIdentifierValue InstanceName => null;
+
+        /// <inheritdoc/>
+        public virtual IInstance Instance => null;
 
         private readonly RealStorageContext _realStorageContext;
         private readonly object _lockObj = new object();

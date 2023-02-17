@@ -1314,15 +1314,6 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.NewAstExpression.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.NewAstExpression.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.NewAstExpression.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.NewAstExpression.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.NewAstExpression.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
@@ -4252,6 +4243,12 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#TargetClassName">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#InstanceName">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#Instance">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#LogicalStorage">
             <inheritdoc/>
         </member>
@@ -6025,6 +6022,9 @@
         <member name="P:SymOntoClay.Core.Internal.Instances.BaseInstance.ExecutionCoordinator">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.BaseInstance.LocalCodeExecutionContext">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.CancelExecution">
             <inheritdoc/>
         </member>
@@ -7521,6 +7521,12 @@
         <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.TargetClassName">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.InstanceName">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.Instance">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.LogicalStorage">
             <inheritdoc/>
         </member>
@@ -7929,6 +7935,12 @@
         <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.TargetClassName">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.InstanceName">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.Instance">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.LogicalStorage">
             <inheritdoc/>
         </member>
@@ -8167,6 +8179,12 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.SuperClassStorage.TargetClassName">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.SuperClassStorage.InstanceName">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.SuperClassStorage.Instance">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.SynonymsStoraging.EmptySynonymsStorage.Append(SymOntoClay.Core.Internal.CodeModel.Synonym)">

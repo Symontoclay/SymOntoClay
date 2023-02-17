@@ -63,7 +63,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var node = new ConstValueAstExpression();
                                 node.Value = NameHelper.CreateName(_currToken.Content);
 
-                                Result.PrototypeExpression = node;
+                                Result.Left = node;
 
                                 var nextToken = _context.GetToken();
 
@@ -89,7 +89,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var node = new VarAstExpression();
                                 node.Name = value;
 
-                                Result.PrototypeExpression = node;
+                                Result.Left = node;
 
                                 var nextToken = _context.GetToken();
 

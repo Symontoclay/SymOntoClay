@@ -42,6 +42,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         protected readonly IMainStorageContext _context;
 
+        public Dictionary<StrongIdentifierValue, IStorage> GetSuperClassStoragesDict(IStorage storage, IInstance instance)
+        {
+            return GetStoragesList(storage, KindOfStoragesList.CodeItems).Select(p => p.Storage).Where(p => p.Kind == KindOfStorage.SuperClass && p.Instance == instance).ToDictionary(p => p.TargetClassName, p => p);
+        }
+
         public List<StorageUsingOptions> GetStoragesList(IStorage storage, KindOfStoragesList kindOfStoragesList = KindOfStoragesList.Full)
         {
             return GetStoragesList(storage, null, kindOfStoragesList);

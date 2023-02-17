@@ -36,6 +36,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         StrongIdentifierValue Name { get; }
         float Priority { get; }
         IExecutionCoordinator ExecutionCoordinator { get; }
+        LocalCodeExecutionContext LocalCodeExecutionContext { get; }
         void CancelExecution();
         void AddChildInstance(IInstance instance);
         void RemoveChildInstance(IInstance instance);

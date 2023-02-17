@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using static SymOntoClay.Core.Internal.Compiling.Internal.CallingFunctionNode;
 
 namespace SymOntoClay.Core.Internal.Compiling.Internal
 {
@@ -79,7 +80,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 #endif
 
                         var node = new CallingFunctionNode(_context);
-                        node.Run(callCtorExpr, true);
+                        node.Run(callCtorExpr, KindOfCallingFunction.CallConstructor);
                         AddCommands(node.Result);
 
 #if DEBUG

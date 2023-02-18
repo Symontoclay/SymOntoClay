@@ -331,7 +331,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
                 //Log($"currentCommand = {currentCommand}");
-                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 switch (currentCommand.OperationCode)
@@ -663,7 +663,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if(constructor != null)
             {
-                throw new NotImplementedException();
+                var coordinator = ((IExecutable)constructor).TryActivate(_context);
+
+                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(constructor, kindOfParameters, namedParameters, positionedParameters, _currentCodeFrame.LocalContext, null);
+
+#if DEBUG
+                //Log($"newCodeFrame = {newCodeFrame}");
+#endif
+
+                executionsList.Add((newCodeFrame, coordinator));
             }            
 
             if(executionsList.Any())

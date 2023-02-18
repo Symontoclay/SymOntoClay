@@ -637,7 +637,34 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 }
             }
 
-            throw new NotImplementedException();
+            IExecutable constructor = null;
+
+            switch (kindOfParameters)
+            {
+                case KindOfFunctionParameters.NoParameters:
+                    constructor = _constructorsResolver.ResolveWithSelfAndDirectInheritance(newInstance.Name, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                    break;
+
+                case KindOfFunctionParameters.NamedParameters:
+                    constructor = _constructorsResolver.ResolveWithSelfAndDirectInheritance(newInstance.Name, namedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                    break;
+
+                case KindOfFunctionParameters.PositionedParameters:
+                    constructor = _constructorsResolver.ResolveWithSelfAndDirectInheritance(newInstance.Name, positionedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+            }
+
+#if DEBUG
+            Log($"constructor = {constructor}");
+#endif
+
+            if(constructor != null)
+            {
+                throw new NotImplementedException();
+            }            
 
             if(executionsList.Any())
             {

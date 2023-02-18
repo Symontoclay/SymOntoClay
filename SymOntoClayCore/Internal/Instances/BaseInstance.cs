@@ -221,6 +221,10 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void RebuildSuperClassesStorages()
         {
+#if DEBUG
+            //Log($"Name = {Name}");
+#endif
+
             var superClassesList = _inheritanceResolver.GetSuperClassesKeysList(Name, _localCodeExecutionContext);
 
 #if DEBUG

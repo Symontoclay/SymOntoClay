@@ -48,6 +48,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public long? TargetDuration { get; set; }
         public long? EndOfTargetDuration { get; set; }
         public List<StrongIdentifierValue> CalledCtorsList { get; set; } = new List<StrongIdentifierValue>();
+        public Value PutToValueStackArterReturningBack { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -89,6 +90,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.AppendLine($"{spaces}{nameof(TargetDuration)} = {TargetDuration}");
             sb.AppendLine($"{spaces}{nameof(EndOfTargetDuration)} = {EndOfTargetDuration}");
             sb.PrintObjListProp(n, nameof(CalledCtorsList), CalledCtorsList);
+            sb.PrintObjProp(n, nameof(PutToValueStackArterReturningBack), PutToValueStackArterReturningBack);
 
             return sb.ToString();
         }
@@ -133,6 +135,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.AppendLine($"{spaces}{nameof(TargetDuration)} = {TargetDuration}");
             sb.AppendLine($"{spaces}{nameof(EndOfTargetDuration)} = {EndOfTargetDuration}");
             sb.PrintShortObjListProp(n, nameof(CalledCtorsList), CalledCtorsList);
+            sb.PrintShortObjProp(n, nameof(PutToValueStackArterReturningBack), PutToValueStackArterReturningBack);
 
             return sb.ToString();
         }
@@ -177,6 +180,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.AppendLine($"{spaces}{nameof(TargetDuration)} = {TargetDuration}");
             sb.AppendLine($"{spaces}{nameof(EndOfTargetDuration)} = {EndOfTargetDuration}");
             sb.PrintBriefObjListProp(n, nameof(CalledCtorsList), CalledCtorsList);
+            sb.PrintBriefObjProp(n, nameof(PutToValueStackArterReturningBack), PutToValueStackArterReturningBack);
 
             return sb.ToString();
         }

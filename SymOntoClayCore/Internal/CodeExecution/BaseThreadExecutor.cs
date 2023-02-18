@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using Newtonsoft.Json.Linq;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution.Helpers;
 using SymOntoClay.Core.Internal.CodeModel;
@@ -588,6 +589,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var newInstance = instanceValue.AsInstanceValue.InstanceInfo;
 
+#if DEBUG
+            Log($"newInstance.Name = {newInstance.Name}");
+#endif
+
             var superClassesStoragesDict = _inheritanceResolver.GetSuperClassStoragesDict(newInstance.LocalCodeExecutionContext.Storage, newInstance);
 
 #if DEBUG
@@ -620,18 +625,33 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     localCodeExecutionContext.Owner = targetHolder;
                     localCodeExecutionContext.OwnerStorage = targetStorage;
 
+                    var coordinator = ((IExecutable)preConstructor).TryActivate(_context);
 
+                    var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(preConstructor, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, null);
+
+#if DEBUG
+                    //Log($"newCodeFrame = {newCodeFrame}");
+#endif
+
+                    executionsList.Add((newCodeFrame, coordinator));
                 }
-
-                throw new NotImplementedException();
             }
 
             throw new NotImplementedException();
 
+            if(executionsList.Any())
+            {
+                _currentCodeFrame.PutToValueStackArterReturningBack = instanceValue;
 
-            //            _currentCodeFrame.ValuesStack.Push(instanceValue);
+                ExecuteCodeFramesBatch(executionsList);
+            }
+            else
+            {
 
-            //            _currentCodeFrame.CurrentPosition++;
+                _currentCodeFrame.ValuesStack.Push(instanceValue);
+
+                _currentCodeFrame.CurrentPosition++;
+            }
 
 #if DEBUG
             //stopWatch.Stop();
@@ -1576,6 +1596,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _executionCoordinator = _currentCodeFrame.ExecutionCoordinator;
             _currentInstance = _currentCodeFrame.Instance;
             _currentVarStorage = _currentCodeFrame.LocalContext.Storage.VarStorage;
+
+            if(_currentCodeFrame.PutToValueStackArterReturningBack != null)
+            {
+                _currentCodeFrame.ValuesStack.Push(_currentCodeFrame.PutToValueStackArterReturningBack);
+                _currentCodeFrame.PutToValueStackArterReturningBack = null;
+            }
         }
 
         private void GoBackToPrevCodeFrame()
@@ -1879,25 +1905,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"executionsList.Count = {executionsList.Count}");
 #endif
 
-            if(!executionsList.Any())
-            {
-                _currentCodeFrame.CurrentPosition++;
-                return;
-            }
-
-            _currentCodeFrame.CurrentPosition++;
-
-            foreach (var item in executionsList)
-            {
-                var codeFrame = item.Item1;
-                var coordinator = item.Item2;
-
-                _context.InstancesStorage.AppendProcessInfo(codeFrame.ProcessInfo);
-
-                PrepareCodeFrameToSyncExecution(codeFrame, coordinator);
-
-                SetCodeFrame(codeFrame);
-            }
+            ExecuteCodeFramesBatch(executionsList);
         }
 
         private enum SyncOption
@@ -2370,6 +2378,29 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #endif
 
                 ExecuteCodeFrame(newCodeFrame, coordinator, syncOption);
+            }
+        }
+
+        private void ExecuteCodeFramesBatch(List<(CodeFrame, IExecutionCoordinator)> executionsList)
+        {
+            if (!executionsList.Any())
+            {
+                _currentCodeFrame.CurrentPosition++;
+                return;
+            }
+
+            _currentCodeFrame.CurrentPosition++;
+
+            foreach (var item in executionsList)
+            {
+                var codeFrame = item.Item1;
+                var coordinator = item.Item2;
+
+                _context.InstancesStorage.AppendProcessInfo(codeFrame.ProcessInfo);
+
+                PrepareCodeFrameToSyncExecution(codeFrame, coordinator);
+
+                SetCodeFrame(codeFrame);
             }
         }
 

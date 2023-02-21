@@ -536,8 +536,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #endif
 
 #if DEBUG
-            Log($"kindOfParameters = {kindOfParameters}");
-            Log($"parametersCount = {parametersCount}");
+            //Log($"kindOfParameters = {kindOfParameters}");
+            //Log($"parametersCount = {parametersCount}");
             //Log($"_currentCodeFrame.LocalContext.Owner = {_currentCodeFrame.LocalContext.Owner}");
 #endif
 
@@ -552,7 +552,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var prototypeValue = valuesStack.Pop();
 
 #if DEBUG
-            Log($"prototypeValue = {prototypeValue}");
+            //Log($"prototypeValue = {prototypeValue}");
 #endif
 
             Dictionary<StrongIdentifierValue, Value> namedParameters = null;
@@ -576,9 +576,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-            Log($"namedParameters = {namedParameters?.WriteDict_1_ToString()}");
-            Log($"positionedParameters = {positionedParameters.WriteListToString()}");
+            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+            //Log($"namedParameters = {namedParameters?.WriteDict_1_ToString()}");
+            //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
 #endif
 
             var instanceValue = CreateInstance(prototypeValue);
@@ -590,52 +590,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var newInstance = instanceValue.AsInstanceValue.InstanceInfo;
 
 #if DEBUG
-            Log($"newInstance.Name = {newInstance.Name}");
+            //Log($"newInstance.Name = {newInstance.Name}");
 #endif
 
             var superClassesStoragesDict = _inheritanceResolver.GetSuperClassStoragesDict(newInstance.LocalCodeExecutionContext.Storage, newInstance);
 
 #if DEBUG
-            Log($"superClassesStoragesDict.Keys = {superClassesStoragesDict.Keys.ToList().WriteListToString()}");
-#endif
-
-            var preConstructors = _constructorsResolver.ResolvePreConstructors(newInstance.Name, newInstance.LocalCodeExecutionContext, ResolverOptions.GetDefaultOptions());
-
-#if DEBUG
-            Log($"preConstructors.Count = {preConstructors.Count}");
+            //Log($"superClassesStoragesDict.Keys = {superClassesStoragesDict.Keys.ToList().WriteListToString()}");
 #endif
 
             var executionsList = new List<(CodeFrame, IExecutionCoordinator)>();
-
-            if (preConstructors.Any())
-            {
-                foreach (var preConstructor in preConstructors)
-                {
-                    var targetHolder = preConstructor.Holder;
-
-#if DEBUG
-                    Log($"targetHolder = {targetHolder}");
-#endif
-
-                    var targetStorage = superClassesStoragesDict[targetHolder];
-
-                    var localCodeExecutionContext = new LocalCodeExecutionContext(newInstance.LocalCodeExecutionContext);
-                    localCodeExecutionContext.Storage = targetStorage;
-                    localCodeExecutionContext.Holder = targetHolder;
-                    localCodeExecutionContext.Owner = targetHolder;
-                    localCodeExecutionContext.OwnerStorage = targetStorage;
-
-                    var coordinator = ((IExecutable)preConstructor).TryActivate(_context);
-
-                    var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(preConstructor, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, null);
-
-#if DEBUG
-                    //Log($"newCodeFrame = {newCodeFrame}");
-#endif
-
-                    executionsList.Add((newCodeFrame, coordinator));
-                }
-            }
 
             IExecutable constructor = null;
 
@@ -658,10 +622,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            Log($"constructor = {constructor}");
+            //Log($"constructor = {constructor}");
 #endif
 
-            if(constructor != null)
+            if (constructor != null)
             {
                 var coordinator = ((IExecutable)constructor).TryActivate(_context);
 
@@ -672,7 +636,44 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #endif
 
                 executionsList.Add((newCodeFrame, coordinator));
-            }            
+            }
+
+            var preConstructors = _constructorsResolver.ResolvePreConstructors(newInstance.Name, newInstance.LocalCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+
+#if DEBUG
+            //Log($"preConstructors.Count = {preConstructors.Count}");
+#endif
+
+            if (preConstructors.Any())
+            {
+                foreach (var preConstructor in preConstructors)
+                {
+                    var targetHolder = preConstructor.Holder;
+
+#if DEBUG
+                    //Log($"targetHolder = {targetHolder}");
+#endif
+
+                    var targetStorage = superClassesStoragesDict[targetHolder];
+
+                    var localCodeExecutionContext = new LocalCodeExecutionContext(newInstance.LocalCodeExecutionContext);
+                    localCodeExecutionContext.Storage = targetStorage;
+                    localCodeExecutionContext.Holder = targetHolder;
+                    localCodeExecutionContext.Owner = targetHolder;
+                    localCodeExecutionContext.OwnerStorage = targetStorage;
+
+                    var coordinator = ((IExecutable)preConstructor).TryActivate(_context);
+
+                    var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(preConstructor, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, null);
+                    newCodeFrame.SpecialMark = SpecialMarkOfCodeFrame.PreConstructor;
+
+#if DEBUG
+                    //Log($"newCodeFrame = {newCodeFrame}");
+#endif
+
+                    executionsList.Add((newCodeFrame, coordinator));
+                }
+            }
 
             if(executionsList.Any())
             {

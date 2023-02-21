@@ -1,6 +1,6 @@
 ﻿class cls0
 {
-    ctor(@param: string)
+    /*ctor(@param: string)
     {
         'Begin ctor 1 of cls0' >> @>log;
         @param >> @>log;
@@ -14,7 +14,7 @@
         @param >> @>log;
         @b >> @>log;
         'End ctor 2 of cls0' >> @>log;
-    }
+    }*/
 
     private:
         @b = 0;
@@ -22,14 +22,14 @@
 
 class cls1 is cls0
 {
-    ctor(@param: string)
+    /*ctor(@param: string)
         : cls0('Cool!')
     {
         'Begin ctor of cls1' >> @>log;
         @param >> @>log;
         @b >> @>log;
         'End ctor of cls1' >> @>log;
-    }
+    }*/
 
     private:
         @b = 1;
@@ -39,9 +39,9 @@ app PeaceKeeper
 {
     on Enter
     {
-        'Begin' >> @>log;
+        //'Begin' >> @>log;
         @a = new cls1('Hi!');
         @a.@b >> @>log;
-        'End' >> @>log;
+        //'End' >> @>log;
     }
 }

@@ -29,6 +29,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     public enum SpecialMarkOfCodeFrame
     {
         None,
-        MainFrameOfActionInstance
+        MainFrameOfActionInstance,
+        PreConstructor
     }
 }

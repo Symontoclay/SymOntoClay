@@ -113,6 +113,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 codeFrame.Instance = processInitialInfo.Instance;
                 codeFrame.ExecutionCoordinator = processInitialInfo.ExecutionCoordinator;
 
+                if(processInitialInfo.IsPreConstructor)
+                {
+                    codeFrame.SpecialMark = SpecialMarkOfCodeFrame.PreConstructor;
+                }
+
                 var processInfo = new ProcessInfo();
 
                 var metadata = processInitialInfo.Metadata;

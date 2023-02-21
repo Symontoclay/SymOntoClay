@@ -51,8 +51,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public void SetVarValue(StrongIdentifierValue varName, Value value, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            //Log($"varName = {varName}");
-            //Log($"value = {value}");
+            Log($"varName = {varName}");
+            Log($"value = {value}");
 #endif
 
             if (varName.KindOfName != KindOfName.Var)
@@ -63,7 +63,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var varPtr = Resolve(varName, localCodeExecutionContext, options);
 
 #if DEBUG
-            //Log($"varPtr = {varPtr}");
+            Log($"varPtr = {varPtr}");
 #endif
 
             if(varPtr == null)
@@ -76,7 +76,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            //Log($"varPtr (after) = {varPtr}");
+            Log($"varPtr (after) = {varPtr}");
 #endif
 
             CheckFitVariableAndValue(varPtr, value, localCodeExecutionContext, options);
@@ -191,13 +191,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private Value GetUsualVarValue(StrongIdentifierValue varName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            //Log($"varName = {varName}");
+            Log($"varName = {varName}");
 #endif
 
             var varPtr = Resolve(varName, localCodeExecutionContext, _defaultOptions);
 
 #if DEBUG
-            //Log($"varPtr = {varPtr}");
+            Log($"varPtr = {varPtr}");
 #endif
 
             if (varPtr == null)
@@ -206,7 +206,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            //Log($"varPtr (after) = {varPtr}");
+            Log($"varPtr (after) = {varPtr}");
 #endif
 
             return varPtr.Value;
@@ -217,6 +217,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #if DEBUG
             //Log($"varName = {varName}");
             //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
+            Log($"localCodeExecutionContext.OwnerStorage == null = {localCodeExecutionContext.OwnerStorage == null}");
 #endif
 
             Var varPtr = null;
@@ -227,7 +228,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            //Log($"varPtr = {varPtr}");
+            Log($"varPtr = {varPtr}");
 #endif
 
             if(varPtr != null)
@@ -241,9 +242,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private Var NResolve(StrongIdentifierValue varName, StrongIdentifierValue holder, IStorage storage, bool privateOnly, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            //Log($"varName = {varName}");
+            Log($"varName = {varName}");
             //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
-            //Log($"holder = {holder}");
+            Log($"holder = {holder}");
             //Log($"privateOnly = {privateOnly}");
 #endif
 
@@ -327,7 +328,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private List<WeightedInheritanceResultItemWithStorageInfo<Var>> GetRawVarsList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
-            //Log($"name = {name}");
+            Log($"name = {name}");
 #endif
 
             if (!storagesList.Any())
@@ -341,14 +342,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
 #if DEBUG
                 //Log($"storageItem = {storageItem}");
-                //Log($"storageItem.Storage.Kind = {storageItem.Storage.Kind}");
+                Log($"storageItem.Storage.Kind = {storageItem.Storage.Kind}");
+                Log($"storageItem.Storage.TargetClassName = {storageItem.Storage.TargetClassName}");
+                Log($"storageItem.Storage.InstanceName = {storageItem.Storage.InstanceName}");
                 //Log($"storageItem.Storage.VarStorage.GetHashCode() = {storageItem.Storage.VarStorage.GetHashCode()}; storageItem.Storage.VarStorage.Kind = {storageItem.Storage.VarStorage.Kind}");
 #endif
 
                 var itemsList = storageItem.Storage.VarStorage.GetVarDirectly(name, weightedInheritanceItems);
 
 #if DEBUG
-                //Log($"itemsList = {itemsList.WriteListToString()}");
+                Log($"itemsList = {itemsList.WriteListToString()}");
 #endif
 
                 if (!itemsList.Any())

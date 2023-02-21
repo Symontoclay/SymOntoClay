@@ -426,6 +426,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     processInitialInfo.Metadata = preConstructor;
                     processInitialInfo.Instance = this;
                     processInitialInfo.ExecutionCoordinator = _executionCoordinator;
+                    processInitialInfo.IsPreConstructor = true;
 
                     processInitialInfoList.Add(processInitialInfo);
                 }

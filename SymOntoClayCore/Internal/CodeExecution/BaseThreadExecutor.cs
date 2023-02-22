@@ -661,14 +661,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     localCodeExecutionContext.Holder = targetHolder;
                     localCodeExecutionContext.Owner = targetHolder;
                     localCodeExecutionContext.OwnerStorage = targetStorage;
+                    localCodeExecutionContext.Kind = KindOfLocalCodeExecutionContext.PreConstructor;
 
                     var coordinator = ((IExecutable)preConstructor).TryActivate(_context);
 
-                    var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(preConstructor, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, null);
-                    newCodeFrame.SpecialMark = SpecialMarkOfCodeFrame.PreConstructor;
+#if DEBUG
+                    //Log($"localCodeExecutionContext.Kind = {localCodeExecutionContext.Kind}");
+#endif
+
+                    var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(preConstructor, KindOfFunctionParameters.NoParameters, null, null, localCodeExecutionContext, null, true);
 
 #if DEBUG
                     //Log($"newCodeFrame = {newCodeFrame}");
+                    //Log($"newCodeFrame.LocalContext.Kind = {newCodeFrame.LocalContext.Kind}");
 #endif
 
                     executionsList.Add((newCodeFrame, coordinator));

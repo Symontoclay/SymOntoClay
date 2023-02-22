@@ -45,6 +45,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         public Value Call(Value rightOperand, Value leftOperand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
+            //Log($"localCodeExecutionContext.Kind = {localCodeExecutionContext.Kind}");
             //Log($"leftOperand = {leftOperand}");
             //Log($"rightOperand = {rightOperand}");
             //Log($"annotation = {annotation}");

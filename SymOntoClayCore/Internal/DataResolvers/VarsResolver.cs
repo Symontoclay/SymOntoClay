@@ -51,8 +51,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public void SetVarValue(StrongIdentifierValue varName, Value value, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Log($"varName = {varName}");
-            Log($"value = {value}");
+            //Log($"varName = {varName}");
+            //Log($"value = {value}");
 #endif
 
             if (varName.KindOfName != KindOfName.Var)
@@ -63,7 +63,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var varPtr = Resolve(varName, localCodeExecutionContext, options);
 
 #if DEBUG
-            Log($"varPtr = {varPtr}");
+            //Log($"varPtr = {varPtr}");
 #endif
 
             if(varPtr == null)
@@ -76,7 +76,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            Log($"varPtr (after) = {varPtr}");
+            //Log($"varPtr (after) = {varPtr}");
 #endif
 
             CheckFitVariableAndValue(varPtr, value, localCodeExecutionContext, options);
@@ -217,7 +217,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #if DEBUG
             //Log($"varName = {varName}");
             //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
-            Log($"localCodeExecutionContext.OwnerStorage == null = {localCodeExecutionContext.OwnerStorage == null}");
+            //Log($"localCodeExecutionContext.OwnerStorage == null = {localCodeExecutionContext.OwnerStorage == null}");
 #endif
 
             Var varPtr = null;
@@ -228,7 +228,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            Log($"varPtr = {varPtr}");
+            //Log($"varPtr = {varPtr}");
 #endif
 
             if(varPtr != null)
@@ -242,9 +242,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private Var NResolve(StrongIdentifierValue varName, StrongIdentifierValue holder, IStorage storage, bool privateOnly, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Log($"varName = {varName}");
+            //Log($"varName = {varName}");
             //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
-            Log($"holder = {holder}");
+            //Log($"holder = {holder}");
             //Log($"privateOnly = {privateOnly}");
 #endif
 
@@ -341,7 +341,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             foreach (var storageItem in storagesList)
             {
 #if DEBUG
-                //Log($"storageItem = {storageItem}");
+                Log($"storageItem = {storageItem}");
                 Log($"storageItem.Storage.Kind = {storageItem.Storage.Kind}");
                 Log($"storageItem.Storage.TargetClassName = {storageItem.Storage.TargetClassName}");
                 Log($"storageItem.Storage.InstanceName = {storageItem.Storage.InstanceName}");

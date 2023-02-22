@@ -419,6 +419,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     localCodeExecutionContext.Holder = targetHolder;
                     localCodeExecutionContext.Owner = targetHolder;
                     localCodeExecutionContext.OwnerStorage= targetStorage;
+                    localCodeExecutionContext.Kind = KindOfLocalCodeExecutionContext.PreConstructor;
 
                     var processInitialInfo = new ProcessInitialInfo();
                     processInitialInfo.CompiledFunctionBody = preConstructor.CompiledFunctionBody;
@@ -426,7 +427,6 @@ namespace SymOntoClay.Core.Internal.Instances
                     processInitialInfo.Metadata = preConstructor;
                     processInitialInfo.Instance = this;
                     processInitialInfo.ExecutionCoordinator = _executionCoordinator;
-                    processInitialInfo.IsPreConstructor = true;
 
                     processInitialInfoList.Add(processInitialInfo);
                 }

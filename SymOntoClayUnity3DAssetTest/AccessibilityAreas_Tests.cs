@@ -620,5 +620,55 @@ app PeaceKeeper is cls1, cls2
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case7()
+        {
+            var text = @"class cls0
+{
+    private:
+        @b = 0;
+}
+
+class cls1 is cls0
+{
+    private:
+        @b = 1;
+}
+
+app PeaceKeeper
+{
+    on Enter
+    {
+        'Begin' >> @>log;
+        @a = new cls1;
+        @a.@b >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("1", message);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual("End", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
     }
 }

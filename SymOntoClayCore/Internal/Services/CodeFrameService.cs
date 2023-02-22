@@ -67,7 +67,7 @@ namespace SymOntoClay.Core.Internal.Services
         /// <inheritdoc/>
         public CodeFrame ConvertExecutableToCodeFrame(IExecutable function, KindOfFunctionParameters kindOfParameters,
             Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
-            LocalCodeExecutionContext parentLocalCodeExecutionContext, ConversionExecutableToCodeFrameAdditionalSettings additionalSettings = null)
+            LocalCodeExecutionContext parentLocalCodeExecutionContext, ConversionExecutableToCodeFrameAdditionalSettings additionalSettings = null, bool useParentLocalCodeExecutionContextDirectly = false)
         {
 #if DEBUG
             //Log($"kindOfParameters = {kindOfParameters}");
@@ -75,78 +75,88 @@ namespace SymOntoClay.Core.Internal.Services
             //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
             //Log($"parentLocalCodeExecutionContext.Storage.VarStorage.GetHashCode() = {parentLocalCodeExecutionContext.Storage.VarStorage.GetHashCode()}");
             //Log($"additionalSettings = {additionalSettings}");
-#endif
-
-            var storagesList = parentLocalCodeExecutionContext.Storage.GetStorages();
-
-#if DEBUG
-            //Log($"storagesList.Count = {storagesList.Count}");
-            //foreach(var tmpStorage in storagesList)
-            //{
-            //    Log($"tmpStorage.Kind = {tmpStorage.Kind}");
-            //    Log($"tmpStorage = {tmpStorage.VarStorage.GetHashCode()}");
-            //}
-#endif
-
-            var localCodeExecutionContext = new LocalCodeExecutionContext(parentLocalCodeExecutionContext);
-            var localStorageSettings = RealStorageSettingsHelper.Create(_context, storagesList.ToList(), additionalSettings?.AllowParentLocalStorages ?? false);
-
-            var newStorage = new LocalStorage(localStorageSettings);
-
-            localCodeExecutionContext.Storage = newStorage;
-
-            var functionHolder = function.Holder;
-
-#if DEBUG
-            //Log($"functionHolder = {functionHolder}");
-#endif
-
-            if(functionHolder != null)
-            {
-                localCodeExecutionContext.Owner = functionHolder;
-
-                localCodeExecutionContext.OwnerStorage = storagesList.SingleOrDefault(p => p.Kind == KindOfStorage.SuperClass && p.TargetClassName == functionHolder);
-            }
-
-#if DEBUG
-            //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
-#endif
-
-#if DEBUG
-            //Log($"localCodeExecutionContext.Storage.VarStorage.GetHashCode() = {localCodeExecutionContext.Storage.VarStorage.GetHashCode()}");
-#endif
-
-            switch (kindOfParameters)
-            {
-                case KindOfFunctionParameters.NoParameters:
-                    if (function.Arguments.Any())
-                    {
-                        throw new NotImplementedException();
-                    }
-                    break;
-
-                case KindOfFunctionParameters.PositionedParameters:
-                    FillUpPositionedParameters(localCodeExecutionContext, function, positionedParameters);
-                    break;
-
-                case KindOfFunctionParameters.NamedParameters:
-                    FillUpNamedParameters(localCodeExecutionContext, function, namedParameters);
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
-            }
-
-            localCodeExecutionContext.Holder = parentLocalCodeExecutionContext.Holder;
-
-#if DEBUG
-            //Log($"localCodeExecutionContext = {localCodeExecutionContext.GetHashCode()}");
-            //Log($"additionalSettings = {additionalSettings}");
+            //Log($"useParentLocalCodeExecutionContextDirectly = {useParentLocalCodeExecutionContextDirectly}");
 #endif
 
             var codeFrame = new CodeFrame();
             codeFrame.CompiledFunctionBody = function.CompiledFunctionBody;
-            codeFrame.LocalContext = localCodeExecutionContext;
+
+            if(useParentLocalCodeExecutionContextDirectly)
+            {
+                codeFrame.LocalContext = parentLocalCodeExecutionContext;
+            }
+            else
+            {
+                var storagesList = parentLocalCodeExecutionContext.Storage.GetStorages();
+
+#if DEBUG
+                //Log($"storagesList.Count = {storagesList.Count}");
+                //foreach(var tmpStorage in storagesList)
+                //{
+                //    Log($"tmpStorage.Kind = {tmpStorage.Kind}");
+                //    Log($"tmpStorage = {tmpStorage.VarStorage.GetHashCode()}");
+                //}
+#endif
+
+                var localCodeExecutionContext = new LocalCodeExecutionContext(parentLocalCodeExecutionContext);
+                var localStorageSettings = RealStorageSettingsHelper.Create(_context, storagesList.ToList(), additionalSettings?.AllowParentLocalStorages ?? false);
+
+                var newStorage = new LocalStorage(localStorageSettings);
+
+                localCodeExecutionContext.Storage = newStorage;
+
+                var functionHolder = function.Holder;
+
+#if DEBUG
+                //Log($"functionHolder = {functionHolder}");
+#endif
+
+                if (functionHolder != null)
+                {
+                    localCodeExecutionContext.Owner = functionHolder;
+
+                    localCodeExecutionContext.OwnerStorage = storagesList.SingleOrDefault(p => p.Kind == KindOfStorage.SuperClass && p.TargetClassName == functionHolder);
+                }
+
+#if DEBUG
+                //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
+#endif
+
+#if DEBUG
+                //Log($"localCodeExecutionContext.Storage.VarStorage.GetHashCode() = {localCodeExecutionContext.Storage.VarStorage.GetHashCode()}");
+#endif
+
+                switch (kindOfParameters)
+                {
+                    case KindOfFunctionParameters.NoParameters:
+                        if (function.Arguments.Any())
+                        {
+                            throw new NotImplementedException();
+                        }
+                        break;
+
+                    case KindOfFunctionParameters.PositionedParameters:
+                        FillUpPositionedParameters(localCodeExecutionContext, function, positionedParameters);
+                        break;
+
+                    case KindOfFunctionParameters.NamedParameters:
+                        FillUpNamedParameters(localCodeExecutionContext, function, namedParameters);
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+                }
+
+                localCodeExecutionContext.Holder = parentLocalCodeExecutionContext.Holder;
+
+#if DEBUG
+                //Log($"localCodeExecutionContext = {localCodeExecutionContext.GetHashCode()}");
+                //Log($"additionalSettings = {additionalSettings}");
+#endif
+
+
+                codeFrame.LocalContext = localCodeExecutionContext;
+            }
 
             var processInfo = new ProcessInfo();
 

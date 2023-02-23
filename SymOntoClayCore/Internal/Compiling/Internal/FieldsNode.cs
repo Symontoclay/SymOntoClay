@@ -30,6 +30,11 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
                 CompileVarDecl(field);
 
+                if(field.Value == null)
+                {
+                    continue;
+                }
+
                 var node = new ExpressionNode(_context);
                 node.Run(field.Value);
 

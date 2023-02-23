@@ -41,15 +41,37 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         private readonly List<List<Var>> EmptyVarsList = new List<List<Var>>();
+        private List<RuleInstance> _processedItems = new List<RuleInstance>();
+        private readonly object _checkProcessedItemsLockObj = new object();
 
         /// <inheritdoc/>
         protected override IAddFactOrRuleResult LogicalStorage_OnAddingFact(RuleInstance ruleInstance)
         {
+            lock(_checkProcessedItemsLockObj)
+            {
+                if (_processedItems.Contains(ruleInstance))
+                {
+                    return null;
+                }
+
+                _processedItems.Add(ruleInstance);
+            }
+
 #if DEBUG
+            //Log($"ruleInstance.GetHashCode() = {ruleInstance.GetHashCode()}; GetHashCode() = {GetHashCode()}");
             //Log($"ruleInstance = {ruleInstance.ToHumanizedString()}");
 #endif
 
             return ProcessAction(EmptyVarsList, ruleInstance);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            _processedItems.Clear();
+            _processedItems = null;
+
+            base.OnDisposed();
         }
     }
 }

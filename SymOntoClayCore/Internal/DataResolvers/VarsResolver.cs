@@ -191,13 +191,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private Value GetUsualVarValue(StrongIdentifierValue varName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Log($"varName = {varName}");
+            //Log($"varName = {varName}");
 #endif
 
             var varPtr = Resolve(varName, localCodeExecutionContext, _defaultOptions);
 
 #if DEBUG
-            Log($"varPtr = {varPtr}");
+            //Log($"varPtr = {varPtr}");
 #endif
 
             if (varPtr == null)
@@ -206,7 +206,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            Log($"varPtr (after) = {varPtr}");
+            //Log($"varPtr (after) = {varPtr}");
 #endif
 
             return varPtr.Value;
@@ -328,7 +328,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private List<WeightedInheritanceResultItemWithStorageInfo<Var>> GetRawVarsList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
-            Log($"name = {name}");
+            //Log($"name = {name}");
 #endif
 
             if (!storagesList.Any())
@@ -341,17 +341,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             foreach (var storageItem in storagesList)
             {
 #if DEBUG
-                Log($"storageItem = {storageItem}");
-                Log($"storageItem.Storage.Kind = {storageItem.Storage.Kind}");
-                Log($"storageItem.Storage.TargetClassName = {storageItem.Storage.TargetClassName}");
-                Log($"storageItem.Storage.InstanceName = {storageItem.Storage.InstanceName}");
+                //Log($"storageItem = {storageItem}");
+                //Log($"storageItem.Storage.Kind = {storageItem.Storage.Kind}");
+                //Log($"storageItem.Storage.TargetClassName = {storageItem.Storage.TargetClassName}");
+                //Log($"storageItem.Storage.InstanceName = {storageItem.Storage.InstanceName}");
                 //Log($"storageItem.Storage.VarStorage.GetHashCode() = {storageItem.Storage.VarStorage.GetHashCode()}; storageItem.Storage.VarStorage.Kind = {storageItem.Storage.VarStorage.Kind}");
 #endif
 
                 var itemsList = storageItem.Storage.VarStorage.GetVarDirectly(name, weightedInheritanceItems);
 
 #if DEBUG
-                Log($"itemsList = {itemsList.WriteListToString()}");
+                //Log($"itemsList = {itemsList.WriteListToString()}");
 #endif
 
                 if (!itemsList.Any())

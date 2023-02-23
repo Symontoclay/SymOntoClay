@@ -47,10 +47,22 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private readonly TriggerConditionNodeObserverContext _triggerConditionNodeObserverContext;
         private readonly LogicConditionalTriggerExecutor _setConditionalTriggerExecutor;
+        private List<RuleInstance> _processedItems = new List<RuleInstance>();
+        private readonly object _checkProcessedItemsLockObj = new object();
 
         /// <inheritdoc/>
         protected override IAddFactOrRuleResult LogicalStorage_OnAddingFact(RuleInstance ruleInstance)
         {
+            lock (_checkProcessedItemsLockObj)
+            {
+                if (_processedItems.Contains(ruleInstance))
+                {
+                    return null;
+                }
+
+                _processedItems.Add(ruleInstance);
+            }
+
 #if DEBUG
             //Log($"ruleInstance = {ruleInstance.ToHumanizedString()}");
             //Log($"_trigger.SetCondition = {_trigger.SetCondition}");
@@ -69,6 +81,15 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
             return ProcessAction(varsList, ruleInstance);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            _processedItems.Clear();
+            _processedItems = null;
+
+            base.OnDisposed();
         }
     }
 }

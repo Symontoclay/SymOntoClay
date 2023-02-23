@@ -5953,7 +5953,13 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.AddingFactConditionalTriggerInstance.LogicalStorage_OnAddingFact(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.AddingFactConditionalTriggerInstance.OnDisposed">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.AddingFactNonConditionalTriggerInstance.LogicalStorage_OnAddingFact(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.AddingFactNonConditionalTriggerInstance.OnDisposed">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.AppInstance.KindOfInstance">

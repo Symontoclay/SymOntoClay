@@ -429,5 +429,103 @@ app PeaceKeeper is cls1, cls2, cls3
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case4()
+        {
+            var text = @"class cls0
+{
+    ctor(@param: string)
+    {
+        'Begin ctor of cls0' >> @>log;
+        @param >> @>log;
+        @b >> @>log;
+        'End ctor of cls0' >> @>log;
+    }
+
+    private:
+        @b = 0;
+}
+
+class cls1 is cls0
+{
+    ctor(@param: string)
+        : cls0('Cool!')
+    {
+        'Begin ctor of cls1' >> @>log;
+        @param >> @>log;
+        @b >> @>log;
+        'End ctor of cls1' >> @>log;
+    }
+
+    private:
+        @b = 1;
+}
+
+app PeaceKeeper
+{
+    on Enter
+    {
+        'Begin' >> @>log;
+        @a = new cls1('Hi!');
+        @a.@b >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("Begin ctor of cls0", message);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual("Cool!", message);
+                            break;
+
+                        case 4:
+                            Assert.AreEqual("0", message);
+                            break;
+
+                        case 5:
+                            Assert.AreEqual("End ctor of cls0", message);
+                            break;
+
+                        case 6:
+                            Assert.AreEqual("Begin ctor of cls1", message);
+                            break;
+
+                        case 7:
+                            Assert.AreEqual("Hi!", message);
+                            break;
+
+                        case 8:
+                            Assert.AreEqual("1", message);
+                            break;
+
+                        case 9:
+                            Assert.AreEqual("End ctor of cls1", message);
+                            break;
+
+                        case 10:
+                            Assert.AreEqual("1", message);
+                            break;
+
+                        case 11:
+                            Assert.AreEqual("End", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
     }
 }

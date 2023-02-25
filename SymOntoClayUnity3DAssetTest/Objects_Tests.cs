@@ -373,6 +373,50 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
         [Test]
         [Parallelizable]
+        public void Case4_b()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter
+    {
+        @a = 1;
+
+        'Begin' >> @>log;
+        OtherFun(param: {
+            @b = @a;
+        });
+        'End' >> @>log;
+    }
+    fun OtherFun(@param)
+    {
+        @param.@b >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "1");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
         public void Case5()
         {
             var text = @"class class1
@@ -553,6 +597,100 @@ app PeaceKeeper
         @a = new @b;
         @a.@b >> @>log;
         'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "1");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case8()
+        {
+            var text = @"class class1
+{
+   @b = 1;
+}
+
+app PeaceKeeper
+{
+    on Enter
+    {
+        'Begin' >> @>log;
+
+        OtherFun(param: new class1);
+        'End' >> @>log;
+    }
+    fun OtherFun(@param)
+    {
+        @param.@b >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "1");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case8_a()
+        {
+            var text = @"class class1
+{
+   @b = 1;
+}
+
+app PeaceKeeper
+{
+    on Enter
+    {
+        'Begin' >> @>log;
+
+        @a = class1;
+
+        OtherFun(param: new @a);
+        'End' >> @>log;
+    }
+    fun OtherFun(@param)
+    {
+        @param.@b >> @>log;
     }
 }";
 

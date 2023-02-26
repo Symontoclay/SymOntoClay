@@ -9,7 +9,7 @@
     <RootNamespace>SymOntoClay.ProjectFiles</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>SymOntoClayProjectFiles.xml</DocumentationFile>
+    <DocumentationFile>SymOntoClay.ProjectFiles.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />

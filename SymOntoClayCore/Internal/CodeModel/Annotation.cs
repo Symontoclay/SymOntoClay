@@ -34,6 +34,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public List<RuleInstance> Facts { get; set; } = new List<RuleInstance>();
         public List<StrongIdentifierValue> MeaningRolesList { get; set; } = new List<StrongIdentifierValue>();
         public Dictionary<StrongIdentifierValue, Value> SettingsDict { get; set; } = new Dictionary<StrongIdentifierValue, Value>();
+        public Dictionary<KindOfAnnotationSystemEvent, AnnotationSystemEvent> AnnotationSystemEventsDict { get; set; } = new Dictionary<KindOfAnnotationSystemEvent, AnnotationSystemEvent>();
 
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
@@ -96,6 +97,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.Facts = Facts?.Select(p => p.Clone(context)).ToList();
             result.MeaningRolesList = MeaningRolesList?.Select(p => p.Clone(context)).ToList();
             result.SettingsDict = SettingsDict?.ToDictionary(p => p.Key.Clone(context), p => p.Value.CloneValue(context));
+            result.AnnotationSystemEventsDict?.ToDictionary(p => p.Key, p => p.Value.Clone(context));
 
             return result;
         }
@@ -126,6 +128,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjListProp(n, nameof(Facts), Facts);
             sb.PrintObjListProp(n, nameof(MeaningRolesList), MeaningRolesList);
             sb.PrintObjDict_1_Prop(n, nameof(SettingsDict), SettingsDict);
+            sb.PrintObjDict_2_Prop(n, nameof(AnnotationSystemEventsDict), AnnotationSystemEventsDict);
 
             return sb.ToString();
         }
@@ -151,6 +154,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjListProp(n, nameof(Facts), Facts);
             sb.PrintShortObjListProp(n, nameof(MeaningRolesList), MeaningRolesList);
             sb.PrintShortObjDict_1_Prop(n, nameof(SettingsDict), SettingsDict);
+            sb.PrintShortObjDict_2_Prop(n, nameof(AnnotationSystemEventsDict), AnnotationSystemEventsDict);
 
             return sb.ToString();
         }
@@ -176,6 +180,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintBriefObjListProp(n, nameof(Facts), Facts);
             sb.PrintBriefObjListProp(n, nameof(MeaningRolesList), MeaningRolesList);
             sb.PrintBriefObjDict_1_Prop(n, nameof(SettingsDict), SettingsDict);
+            sb.PrintBriefObjDict_2_Prop(n, nameof(AnnotationSystemEventsDict), AnnotationSystemEventsDict);
 
             return sb.ToString();
         }

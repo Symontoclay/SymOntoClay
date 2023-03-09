@@ -33,5 +33,10 @@ namespace SymOntoClay.Core.Internal.Parsing
             : base($"Unexpected token {token.ToDebugString()}.")
         {
         }
+
+        public UnexpectedTokenException(Token token, string message)
+            : base($"{message} Unexpected token {token.ToDebugString()}.")
+        {
+        }
     }
 }

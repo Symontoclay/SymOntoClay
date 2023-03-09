@@ -331,7 +331,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
                 //Log($"currentCommand = {currentCommand}");
-                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 switch (currentCommand.OperationCode)
@@ -2362,6 +2362,32 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"annotation = {annotation}");
             //Log($"syncOption = {syncOption}");
             //Log($"ownLocalCodeExecutionContext?.Storage.VarStorage.GetHashCode() = {ownLocalCodeExecutionContext?.Storage.VarStorage.GetHashCode()}");
+#endif
+
+            AnnotationSystemEvent completeAnnotationSystemEvent = null;
+
+            if (annotation != null)
+            {
+                var annotatedItem = annotation.AsAnnotationValue.AnnotatedItem;
+
+#if DEBUG
+                //Log($"annotatedItem = {annotatedItem}");
+#endif
+
+                var annotationSystemEventsDict = annotatedItem.Annotations.SelectMany(p => p.AnnotationSystemEventsDict).GroupBy(p => p.Key).ToDictionary(p => p.Key, p => p.Last().Value);
+
+#if DEBUG
+                //Log($"annotationSystemEventsDict = {annotationSystemEventsDict.WriteDict_2_ToString()}");
+#endif
+
+                if(annotationSystemEventsDict.ContainsKey(KindOfAnnotationSystemEvent.Complete))
+                {
+                    completeAnnotationSystemEvent = annotationSystemEventsDict[KindOfAnnotationSystemEvent.Complete];
+                }
+            }
+
+#if DEBUG
+            Log($"completeAnnotationSystemEvent = {completeAnnotationSystemEvent}");
 #endif
 
             var targetLocalContext = ownLocalCodeExecutionContext == null? _currentCodeFrame.LocalContext : ownLocalCodeExecutionContext;

@@ -85,25 +85,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         case TokenKind.Word:
                         case TokenKind.Identifier:
-                            {
-                                var nextToken = _context.GetToken();
-                                _context.Recovery(nextToken);
-
-#if DEBUG
-                                //Log($"nextToken = {nextToken}");
-#endif
-
-                                if(nextToken.TokenKind == TokenKind.Assign)
-                                {
-                                    _settingsKey = ParseName(_currToken.Content);
-                                    _state = State.GotSettingsKey;
-                                    break;
-                                }
-
-                                Result.MeaningRolesList.Add(ParseName(_currToken.Content));
-
-                                _state = State.GotItem;
-                            }
+                            ProcessWaitForItem();
                             break;
 
                         default:
@@ -157,6 +139,56 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
+        }
+
+        private void ProcessWaitForItem()
+        {
+            var nextToken = _context.GetToken();
+            _context.Recovery(nextToken);
+
+#if DEBUG
+            //Log($"nextToken = {nextToken}");
+#endif
+
+            switch(nextToken.TokenKind)
+            {
+                case TokenKind.Word:
+                    switch(nextToken.KeyWordTokenKind)
+                    {
+                        case KeyWordTokenKind.Complete:
+                            {
+                                if(Result.AnnotationSystemEventsDict.ContainsKey(KindOfAnnotationSystemEvent.Complete))
+                                {
+                                    throw new UnexpectedTokenException(_currToken, "Event `Complete` already exists.");
+                                }
+
+                                _context.Recovery(_currToken);
+
+                                var parser = new AnnotationSystemEventParser(_context);
+                                parser.Run();
+
+                                Result.AnnotationSystemEventsDict[KindOfAnnotationSystemEvent.Complete] = parser.Result;
+
+                                _state = State.GotItem;
+                            }
+                            return;
+
+                        default:
+                            break;
+                    }
+                    break;
+
+                case TokenKind.Assign:
+                    _settingsKey = ParseName(_currToken.Content);
+                    _state = State.GotSettingsKey;
+                    return;
+
+                default:
+                    break;
+            }
+
+            Result.MeaningRolesList.Add(ParseName(_currToken.Content));
+            _state = State.GotItem;
         }
     }
 }

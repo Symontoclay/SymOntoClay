@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using System;
@@ -59,7 +60,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         public void Run(CallingFunctionAstExpression expression, KindOfCallingFunction kindOfCallingFunction)
         {
 #if DEBUG
-            //Log($"expression = {expression}");
+            Log($"expression = {expression}");
             //Log($"isConstructor = {isConstructor}");
 #endif
 
@@ -262,6 +263,24 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 #endif
 
             AddCommand(command);
+
+            var annotationSystemEventsDict = AnnotationsHelper.GetAnnotationSystemEventsDict(expression);
+
+#if DEBUG
+            Log($"annotationSystemEventsDict?.Count = {annotationSystemEventsDict?.Count}");
+#endif
+
+            if (annotationSystemEventsDict.Any())
+            {
+                AddCommand(new IntermediateScriptCommand()
+                {
+                    OperationCode = OperationCode.ExecCallEvent
+                });
+
+#if DEBUG
+                //DbgPrintCommands();
+#endif
+            }
         }
     }
 }

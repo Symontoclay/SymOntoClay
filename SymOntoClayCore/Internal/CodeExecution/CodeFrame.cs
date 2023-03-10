@@ -50,6 +50,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public List<StrongIdentifierValue> CalledCtorsList { get; set; } = new List<StrongIdentifierValue>();
         public Value PutToValueStackArterReturningBack { get; set; }
 
+        public bool NeedsExecCallEvent { get; set; }
+        public ProcessStatus? LastProcessStatus { get; set; }
+        public AnnotationSystemEvent CompleteAnnotationSystemEvent { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -91,6 +95,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.AppendLine($"{spaces}{nameof(EndOfTargetDuration)} = {EndOfTargetDuration}");
             sb.PrintObjListProp(n, nameof(CalledCtorsList), CalledCtorsList);
             sb.PrintObjProp(n, nameof(PutToValueStackArterReturningBack), PutToValueStackArterReturningBack);
+
+            sb.AppendLine($"{spaces}{nameof(NeedsExecCallEvent)} = {NeedsExecCallEvent}");
+            sb.AppendLine($"{spaces}{nameof(LastProcessStatus)} = {LastProcessStatus}");
+            sb.PrintObjProp(n, nameof(CompleteAnnotationSystemEvent), CompleteAnnotationSystemEvent);
 
             return sb.ToString();
         }
@@ -137,6 +145,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintShortObjListProp(n, nameof(CalledCtorsList), CalledCtorsList);
             sb.PrintShortObjProp(n, nameof(PutToValueStackArterReturningBack), PutToValueStackArterReturningBack);
 
+            sb.AppendLine($"{spaces}{nameof(NeedsExecCallEvent)} = {NeedsExecCallEvent}");
+            sb.AppendLine($"{spaces}{nameof(LastProcessStatus)} = {LastProcessStatus}");
+            sb.PrintShortObjProp(n, nameof(CompleteAnnotationSystemEvent), CompleteAnnotationSystemEvent);
+
             return sb.ToString();
         }
 
@@ -181,6 +193,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.AppendLine($"{spaces}{nameof(EndOfTargetDuration)} = {EndOfTargetDuration}");
             sb.PrintBriefObjListProp(n, nameof(CalledCtorsList), CalledCtorsList);
             sb.PrintBriefObjProp(n, nameof(PutToValueStackArterReturningBack), PutToValueStackArterReturningBack);
+
+            sb.AppendLine($"{spaces}{nameof(NeedsExecCallEvent)} = {NeedsExecCallEvent}");
+            sb.AppendLine($"{spaces}{nameof(LastProcessStatus)} = {LastProcessStatus}");
+            sb.PrintExisting(n, nameof(CompleteAnnotationSystemEvent), CompleteAnnotationSystemEvent);
 
             return sb.ToString();
         }

@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
+﻿using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class AnnotationSystemEvent: IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class AnnotationSystemEvent: IExecutable, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public KindOfAnnotationSystemEvent Kind { get; set; } = KindOfAnnotationSystemEvent.Unknown;
         public bool IsSync { get; set; } = true;

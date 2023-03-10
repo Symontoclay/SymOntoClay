@@ -64,6 +64,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         /// </summary>
         CallDefaultCtors,
         Exec,
+        ExecCallEvent,
         ClearStack,
         Return,
         ReturnVal,

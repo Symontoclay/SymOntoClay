@@ -85,6 +85,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessFunctionBody();
                             break;
 
+                        case TokenKind.Lambda:
+                            _state = State.WaitForAction;
+                            break;
+
+                        case TokenKind.AsyncMarker:
+                            Result.IsSync = false;
+                            _state = State.GotAsyncMark;
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -93,6 +102,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotAsyncMark:
                     switch (_currToken.TokenKind)
                     {
+                        case TokenKind.OpenFigureBracket:
+                            ProcessFunctionBody();
+                            break;
+
+                        case TokenKind.Lambda:
+                            _state = State.WaitForAction;
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -101,6 +118,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.WaitForAction:
                     switch (_currToken.TokenKind)
                     {
+                        case TokenKind.OpenFigureBracket:
+                            ProcessFunctionBody();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

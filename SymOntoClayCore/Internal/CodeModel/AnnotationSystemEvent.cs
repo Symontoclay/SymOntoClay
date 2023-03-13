@@ -11,10 +11,44 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class AnnotationSystemEvent: IExecutable, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
+        private static List<IFunctionArgument> EmptyArgumentsList = new List<IFunctionArgument>();
+
         public KindOfAnnotationSystemEvent Kind { get; set; } = KindOfAnnotationSystemEvent.Unknown;
         public bool IsSync { get; set; } = true;
         public List<AstStatement> Statements { get; set; } = new List<AstStatement>();
+
+        /// <inheritdoc/>
         public CompiledFunctionBody CompiledFunctionBody { get; set; }
+
+        /// <inheritdoc/>
+        public bool IsSystemDefined => true;
+
+        /// <inheritdoc/>
+        public IList<IFunctionArgument> Arguments => EmptyArgumentsList;
+
+        /// <inheritdoc/>
+        public CodeItem CodeItem => null;
+
+        /// <inheritdoc/>
+        public ISystemHandler SystemHandler => null;
+
+        /// <inheritdoc/>
+        public IExecutionCoordinator TryActivate(IEngineContext context)
+        {
+            return null;
+        }
+
+        /// <inheritdoc/>
+        public bool ContainsArgument(StrongIdentifierValue name)
+        {
+            return false;
+        }
+
+        /// <inheritdoc/>
+        public LocalCodeExecutionContext OwnLocalCodeExecutionContext => null;
+
+        /// <inheritdoc/>
+        public StrongIdentifierValue Holder => null;
 
         /// <summary>
         /// Clones the instance and returns cloned instance.

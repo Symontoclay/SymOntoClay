@@ -8,7 +8,7 @@
     on Enter =>
     {
         'Begin' >> @>log;
-        a()[:on complete { 'on complete' >> @>log; } :];
+        a~()[:on complete { 'on complete' >> @>log; } :];
         'End' >> @>log;
     }
 }

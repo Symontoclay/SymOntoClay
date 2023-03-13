@@ -85,6 +85,9 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            //TstWaitAsync();
+            //TstWaitAsync_2();
+            //TstWaitAsync_1();
             //TstWorldSpaceFilesSearcher();
             //TstSynonymsHandler();
             //TstGetFullBaseTypesListInCSharpReflection();
@@ -157,6 +160,88 @@ namespace TestSandbox
             //Thread.Sleep(10000);
         }
 
+        private static void TstWaitAsync()
+        {
+            _logger.Log("Begin");
+
+            var source1 = new CancellationTokenSource();
+            var token1 = source1.Token;
+
+            var task = Task.Run(() => {
+                _logger.Log("Hi!");
+
+                Thread.Sleep(10000);
+
+                _logger.Log("End Hi!");
+            }, token1);
+
+            var taskValue = new TaskValue(task, source1);
+
+            taskValue.OnComplete += () => 
+            {
+                _logger.Log("taskValue.OnComplete!!!!!");
+            };
+
+            taskValue.OnComplete += () =>
+            {
+                _logger.Log("(2) taskValue.OnComplete!!!!!");
+            };
+
+            Thread.Sleep(20000);
+
+            _logger.Log("End");
+        }
+
+        private static void TstWaitAsync_2()
+        {
+            _logger.Log("Begin");
+
+            var source1 = new CancellationTokenSource();
+            var token1 = source1.Token;
+
+            var task = Task.Run(() => {
+                _logger.Log("Hi!");
+
+                Thread.Sleep(10000);
+
+                _logger.Log("End Hi!");
+            }, token1);
+
+            Task.Run(() => {
+                var waitingTask = task.WaitAsync(token1);
+
+                waitingTask.Wait();
+
+                _logger.Log($"Finished!!!! task.Status = {task.Status}");
+            });
+
+            Thread.Sleep(20000);
+
+            _logger.Log("End");
+        }
+
+        private static void TstWaitAsync_1()
+        {
+            _logger.Log("Begin");
+
+            var source1 = new CancellationTokenSource();
+            var token1 = source1.Token;
+
+            var task = Task.Run(() => {
+                _logger.Log("Hi!");
+
+                Thread.Sleep(10000);
+
+                _logger.Log("End Hi!");
+            }, token1);
+
+            var waitingTask = task.WaitAsync(token1);
+
+            waitingTask.Wait();
+
+            _logger.Log("End");
+        }
+
         private static void TstWorldSpaceFilesSearcher()
         {
             _logger.Log("Begin");
@@ -176,8 +261,6 @@ namespace TestSandbox
 
             _logger.Log("End");
         }
-
-        //
 
         private static void TstSynonymsHandler()
         {

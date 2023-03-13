@@ -212,7 +212,7 @@ namespace SymOntoClay.Core.Internal.Services
             }
             else
             {
-                var codeItemPriority = codeItem.Priority;
+                var codeItemPriority = codeItem?.Priority;
 
                 if (codeItemPriority != null)
                 {
@@ -233,7 +233,6 @@ namespace SymOntoClay.Core.Internal.Services
                     }
                 }
             }
-
 
 #if DEBUG
             //Log($"processInfo = {processInfo}");

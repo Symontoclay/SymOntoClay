@@ -8,7 +8,7 @@ namespace SymOntoClay.Core.Internal.Helpers
 {
     public static class AnnotationsHelper
     {
-        private static Dictionary<KindOfAnnotationSystemEvent, AnnotationSystemEvent> EmptyAnnotationSystemEventsDict;
+        private static Dictionary<KindOfAnnotationSystemEvent, AnnotationSystemEvent> EmptyAnnotationSystemEventsDict = new Dictionary<KindOfAnnotationSystemEvent, AnnotationSystemEvent>();
 
         public static Dictionary<KindOfAnnotationSystemEvent, AnnotationSystemEvent> GetAnnotationSystemEventsDictFromAnnotaion(Value annotation)
         {

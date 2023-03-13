@@ -134,6 +134,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private long? _endOfTargetDuration;
         private List<Task> _waitedTasksList;
+        private Task _pseudoSyncTask;
 
         private readonly StrongIdentifierValue _defaultCtorName;
         private readonly StrongIdentifierValue _timeoutName;
@@ -331,7 +332,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
                 //Log($"currentCommand = {currentCommand}");
-                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 switch (currentCommand.OperationCode)
@@ -1662,7 +1663,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void GoBackToPrevCodeFrame(ActionExecutionStatus targetActionExecutionStatus)
         {
 #if DEBUG
-            Log($"targetActionExecutionStatus = {targetActionExecutionStatus}");
+            //Log($"targetActionExecutionStatus = {targetActionExecutionStatus}");
 #endif
             
             if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus == ActionExecutionStatus.Executing)
@@ -1724,7 +1725,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            Log($"lastProcessStatus = {lastProcessStatus}");
+            //Log($"lastProcessStatus = {lastProcessStatus}");
 #endif
 
             _codeFrames.Pop();
@@ -1974,45 +1975,72 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             var currentCodeFrame = _currentCodeFrame;
 
-            if(!currentCodeFrame.NeedsExecCallEvent)
+#if DEBUG
+            //Log($"_pseudoSyncTask == null = {_pseudoSyncTask == null}");
+#endif
+
+            if (_pseudoSyncTask == null)
+            {
+                if (!currentCodeFrame.NeedsExecCallEvent)
+                {
+                    return;
+                }
+
+                var lastProcessStatus = currentCodeFrame.LastProcessStatus.Value;
+
+#if DEBUG
+                //Log($"lastProcessStatus = {lastProcessStatus}");
+#endif
+
+                switch (lastProcessStatus)
+                {
+                    case ProcessStatus.Completed:
+                        {
+                            var completeAnnotationSystemEvent = currentCodeFrame.CompleteAnnotationSystemEvent;
+
+                            if (completeAnnotationSystemEvent == null)
+                            {
+                                break;
+                            }
+
+                            var coordinator = ((IExecutable)completeAnnotationSystemEvent).TryActivate(_context);
+
+                            var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(completeAnnotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, null, true);
+
+#if DEBUG
+                            //Log($"newCodeFrame = {newCodeFrame}");
+#endif
+
+                            if(completeAnnotationSystemEvent.IsSync)
+                            {
+                                ExecuteCodeFrame(newCodeFrame, coordinator, SyncOption.PseudoSync);
+                            }
+                            else
+                            {
+                                ExecuteCodeFrame(newCodeFrame, coordinator, SyncOption.ChildAsync);
+                            }
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+
+                currentCodeFrame.NeedsExecCallEvent = false;
+                currentCodeFrame.LastProcessStatus = null;
+                currentCodeFrame.CompleteAnnotationSystemEvent = null;
+
+                return;
+            }
+
+            if(_pseudoSyncTask.Status == TaskStatus.Running)
             {
                 return;
             }
 
-            var lastProcessStatus = currentCodeFrame.LastProcessStatus.Value;
+            _pseudoSyncTask = null;
 
-#if DEBUG
-            Log($"lastProcessStatus = {lastProcessStatus}");
-#endif
-
-            switch(lastProcessStatus)
-            {
-                case ProcessStatus.Completed:
-                    {
-                        var completeAnnotationSystemEvent = currentCodeFrame.CompleteAnnotationSystemEvent;
-
-                        if (completeAnnotationSystemEvent == null)
-                        {
-                            break;
-                        }
-
-                        var coordinator = ((IExecutable)completeAnnotationSystemEvent).TryActivate(_context);
-
-                        var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(completeAnnotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, null);
-
-#if DEBUG
-                        Log($"newCodeFrame = {newCodeFrame}");
-#endif
-
-                        throw new NotImplementedException();
-                    }
-                    break;
-
-                default:
-                    break;
-            }
-
-            throw new NotImplementedException();
+            _currentCodeFrame.CurrentPosition++;
         }
 
         private enum SyncOption
@@ -2020,7 +2048,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             Sync,
             IndependentAsync,
             ChildAsync,
-            Ctor
+            Ctor,
+            PseudoSync
         }
 
         private void CallFunction(KindOfFunctionParameters kindOfParameters, int parametersCount, SyncOption syncOption)
@@ -2447,7 +2476,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            Log($"completeAnnotationSystemEvent = {completeAnnotationSystemEvent}");
+            //Log($"completeAnnotationSystemEvent = {completeAnnotationSystemEvent}");
 #endif
 
             var targetLocalContext = ownLocalCodeExecutionContext == null? _currentCodeFrame.LocalContext : ownLocalCodeExecutionContext;
@@ -2580,46 +2609,77 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"syncOption = {syncOption}");
 #endif
 
-            if (syncOption == SyncOption.Sync || syncOption == SyncOption.Ctor)
+            switch(syncOption)
             {
-                PrepareCodeFrameToSyncExecution(codeFrame, coordinator);
+                case SyncOption.Sync:
+                case SyncOption.Ctor:
+                    PrepareCodeFrameToSyncExecution(codeFrame, coordinator);
 
-                _currentCodeFrame.CurrentPosition++;
-                
-                if(completeAnnotationSystemEvent != null)
-                {
-                    _currentCodeFrame.NeedsExecCallEvent = true;
-                    _currentCodeFrame.CompleteAnnotationSystemEvent = completeAnnotationSystemEvent;
-                }
+                    _currentCodeFrame.CurrentPosition++;
 
-                SetCodeFrame(codeFrame);
-            }
-            else
-            {
-                _currentCodeFrame.CurrentPosition++;
+                    if (completeAnnotationSystemEvent != null)
+                    {
+                        _currentCodeFrame.NeedsExecCallEvent = true;
+                        _currentCodeFrame.CompleteAnnotationSystemEvent = completeAnnotationSystemEvent;
+                    }
 
-                if (syncOption == SyncOption.ChildAsync)
-                {
+                    SetCodeFrame(codeFrame);
+                    break;
+
+                case SyncOption.IndependentAsync:
+                case SyncOption.ChildAsync:
+                    {
+                        _currentCodeFrame.CurrentPosition++;
+
+                        if (syncOption == SyncOption.ChildAsync)
+                        {
 #if DEBUG
-                    //Log($"codeFrame = {codeFrame}");
-                    //Log($"codeFrame.ProcessInfo.Id = {codeFrame.ProcessInfo.Id}");
-                    //Log($"_currentCodeFrame = {_currentCodeFrame}");
+                            //Log($"codeFrame = {codeFrame}");
+                            //Log($"codeFrame.ProcessInfo.Id = {codeFrame.ProcessInfo.Id}");
+                            //Log($"_currentCodeFrame = {_currentCodeFrame}");
 #endif
 
-                    _currentCodeFrame.ProcessInfo.AddChild(codeFrame.ProcessInfo);
-                }
+                            _currentCodeFrame.ProcessInfo.AddChild(codeFrame.ProcessInfo);
+                        }
 
-                var threadExecutor = new AsyncThreadExecutor(_context);
-                threadExecutor.SetCodeFrame(codeFrame);
+                        var threadExecutor = new AsyncThreadExecutor(_context);
+                        threadExecutor.SetCodeFrame(codeFrame);
 
-                var task = threadExecutor.Start();
+                        var task = threadExecutor.Start();
 
-                if(completeAnnotationSystemEvent != null)
-                {
-                    throw new NotImplementedException();
-                }
+                        if (completeAnnotationSystemEvent != null)
+                        {
+                            task.AsTaskValue.OnComplete += () =>
+                            {
+                                var completeAnnotationSystemEventCoordinator = ((IExecutable)completeAnnotationSystemEvent).TryActivate(_context);
 
-                _currentCodeFrame.ValuesStack.Push(task);
+                                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(completeAnnotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, null, true);
+
+#if DEBUG
+                                //Log($"newCodeFrame = {newCodeFrame}");
+#endif
+
+                                ExecuteCodeFrame(newCodeFrame, completeAnnotationSystemEventCoordinator, SyncOption.ChildAsync);
+                            };
+                        }
+
+                        _currentCodeFrame.ValuesStack.Push(task);
+                    }
+                    break;
+
+                case SyncOption.PseudoSync:
+                    {
+                        var threadExecutor = new AsyncThreadExecutor(_context);
+                        threadExecutor.SetCodeFrame(codeFrame);
+
+                        var task = threadExecutor.Start();
+
+                        _pseudoSyncTask = task.AsTaskValue.SystemTask;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(syncOption), syncOption, null);
             }
         }
 

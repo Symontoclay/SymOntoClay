@@ -60,7 +60,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         public void Run(CallingFunctionAstExpression expression, KindOfCallingFunction kindOfCallingFunction)
         {
 #if DEBUG
-            Log($"expression = {expression}");
+            //Log($"expression = {expression}");
             //Log($"isConstructor = {isConstructor}");
 #endif
 
@@ -267,7 +267,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             var annotationSystemEventsDict = AnnotationsHelper.GetAnnotationSystemEventsDict(expression);
 
 #if DEBUG
-            Log($"annotationSystemEventsDict?.Count = {annotationSystemEventsDict?.Count}");
+            //Log($"annotationSystemEventsDict?.Count = {annotationSystemEventsDict?.Count}");
 #endif
 
             if (annotationSystemEventsDict.Any())

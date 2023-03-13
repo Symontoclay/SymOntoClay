@@ -62,6 +62,55 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public Task SystemTask { get; set; }
         private readonly CancellationTokenSource _cancellationTokenSource;
 
+        public event Action OnComplete
+        {
+            add
+            {
+                InternalOnComplete += value;
+
+                CheckTaskEventWatcher();
+            }
+
+            remove 
+            { 
+                InternalOnComplete -= value; 
+            }
+        }
+
+        private event Action InternalOnComplete;
+        private object _checkTaskEventWatcherLockObj = new object();
+        private Task _checkTaskEventWatcher;
+
+        private void CheckTaskEventWatcher()
+        {
+            lock(_checkTaskEventWatcherLockObj)
+            {
+                if(SystemTask == null)
+                {
+                    return;
+                }
+
+                if(_checkTaskEventWatcher != null)
+                {
+                    return;
+                }
+
+                _checkTaskEventWatcher = Task.Run(() => {
+                    SystemTask.Wait();
+
+                    switch(SystemTask.Status)
+                    {
+                        case TaskStatus.RanToCompletion:
+                            InternalOnComplete?.Invoke();
+                            break;
+
+                        default:
+                            break;
+                    }
+                });
+            }
+        }
+
         public void Wait()
         {
             SystemTask?.Wait();

@@ -69,6 +69,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //Log($"rightOperand = {rightOperand}");
 #endif
 
+                if(leftOperand.IsHostValue)
+                {
+                    return operand;
+                }
+
                 leftOperand = TryResolveFromVarOrExpr(leftOperand, localCodeExecutionContext);
 
 #if DEBUG

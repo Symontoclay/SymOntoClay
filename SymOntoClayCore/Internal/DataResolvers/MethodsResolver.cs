@@ -54,7 +54,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var method = ResolveMethod(name, localCodeExecutionContext, options);
 
-            if(method == null)
+#if DEBUG
+            Log($"method = {method}");
+#endif
+
+            if (method == null)
             {
                 return ResolveAction(name, localCodeExecutionContext, options);
             }
@@ -174,7 +178,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private IExecutable ResolveMethod(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            //Log($"name = {name}");
+            Log($"name = {name}");
 #endif
 
             var storage = localCodeExecutionContext.Storage;
@@ -184,6 +188,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #if DEBUG
             //Log($"name = {name}");
             //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
+            Log($"localCodeExecutionContext.Holder = {localCodeExecutionContext.Holder}");
             //Log($"storagesList.Count = {storagesList.Count}");
             //foreach (var tmpStorage in storagesList)
             //{
@@ -197,13 +202,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
 
 #if DEBUG
-            //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
+            Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
 #endif
 
             var rawList = GetRawMethodsList(name, 0, storagesList, weightedInheritanceItems);
 
 #if DEBUG
-            //Log($"rawList = {rawList.WriteListToString()}");
+            Log($"rawList = {rawList.WriteListToString()}");
 #endif
 
             if (!rawList.Any())
@@ -639,7 +644,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>> GetRawMethodsList(StrongIdentifierValue name, int paramsCount, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
-            //Log($"name = {name}");
+            Log($"name = {name}");
             //Log($"paramsCount = {paramsCount}");
 #endif
 
@@ -654,7 +659,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var itemsList = NGetRawMethodsList(name, paramsCount, storagesList, weightedInheritanceItems);
 
 #if DEBUG
-            //Log($"itemsList?.Count = {itemsList?.Count}");
+            Log($"itemsList?.Count = {itemsList?.Count}");
 #endif
 
             if(!itemsList.IsNullOrEmpty())
@@ -682,7 +687,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>> NGetRawMethodsList(StrongIdentifierValue name, int paramsCount, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
 #if DEBUG
-            //Log($"name = {name}");
+            Log($"name = {name}");
             //Log($"paramsCount = {paramsCount}");
 #endif
 
@@ -690,10 +695,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var storageItem in storagesList)
             {
+#if DEBUG
+                Log($"storageItem.Storage.Kind = {storageItem.Storage.Kind}");
+                Log($"storageItem.Storage.TargetClassName = {storageItem.Storage.TargetClassName}");
+                Log($"storageItem.Storage.InstanceName = {storageItem.Storage.InstanceName}");
+#endif
+
                 var itemsList = storageItem.Storage.MethodsStorage.GetNamedFunctionsDirectly(name, paramsCount, weightedInheritanceItems);
 
 #if DEBUG
-                //Log($"itemsList = {itemsList?.WriteListToString()}");
+                Log($"itemsList = {itemsList?.WriteListToString()}");
 #endif
 
                 if (!itemsList.Any())

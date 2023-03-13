@@ -86,7 +86,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public bool IsSystemDefined => ActionInstance.IsSystemDefined;
+        public bool IsSystemDefined => false;
 
         /// <inheritdoc/>
         public IList<IFunctionArgument> Arguments => ActionInstance.Arguments;

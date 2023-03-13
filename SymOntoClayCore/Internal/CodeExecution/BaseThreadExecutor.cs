@@ -332,7 +332,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
                 //Log($"currentCommand = {currentCommand}");
-                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 switch (currentCommand.OperationCode)
@@ -2005,6 +2005,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                             var coordinator = ((IExecutable)completeAnnotationSystemEvent).TryActivate(_context);
 
+#if DEBUG
+                            Log($"coordinator == null = {coordinator == null}");
+                            Log($"_currentCodeFrame.ExecutionCoordinator = {_currentCodeFrame.ExecutionCoordinator}");
+#endif
+
+                            throw new NotImplementedException();
+
                             var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(completeAnnotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, null, true);
 
 #if DEBUG
@@ -2351,7 +2358,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            //Log($"method = {method}");
+            Log($"method = {method}");
 #endif
 
             if(method == null)

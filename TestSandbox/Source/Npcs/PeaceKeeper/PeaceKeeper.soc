@@ -1,14 +1,52 @@
 ﻿app PeaceKeeper
 {
-    fun a() => 
-    {
-        '`a` has been called!' >> @>log;
-    }
-
     on Enter =>
     {
         'Begin' >> @>log;
-        a~()[:on complete { 'on complete' >> @>log; } :];
+
+        Go();
+
         'End' >> @>log;
+    }
+}
+
+action Go
+{
+    on Enter =>
+    {
+        'Enter Go' >> @>log;
+    }
+
+    op () => 
+    {
+        'Begin Go' >> @>log;
+        
+        a();
+
+        //@a = 10;
+
+        //repeat
+        //{
+        //    @a >> @>log;
+        //    @a = @a - 1;
+
+        //    a()[:on complete { complete action; } :];
+
+        //    if(@a > 5)
+        //    {
+        //        continue;
+        //    }
+
+        //    'End of while iteration' >> @>log;
+
+        //    break;
+        //}
+
+        'End Go' >> @>log;
+    }
+
+    fun a() => 
+    {
+        '`a` has been called!' >> @>log;
     }
 }

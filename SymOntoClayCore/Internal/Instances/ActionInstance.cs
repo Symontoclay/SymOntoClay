@@ -34,8 +34,8 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class ActionInstance : BaseInstance, IExecutable
     {
-        public ActionInstance(ActionPtr actionPtr, IEngineContext context, IStorage parentStorage)
-            : base(actionPtr.Action, context, parentStorage, null, new ActionStorageFactory(), null)
+        public ActionInstance(CodeItem codeItem, ActionPtr actionPtr, IEngineContext context, IStorage parentStorage, LocalCodeExecutionContext parentCodeExecutionContext)
+            : base(codeItem, context, parentStorage, parentCodeExecutionContext, new ActionStorageFactory(), null)
         {
             _action = actionPtr.Action;
             _operator = actionPtr.Operator;
@@ -51,9 +51,15 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly IExecutable _iOp;
 
         /// <inheritdoc/>
-        IExecutionCoordinator IExecutable.TryActivate(IEngineContext context)
+        IExecutionCoordinator IExecutable.GetCoordinator(IEngineContext context, LocalCodeExecutionContext localCodeExecutionContext)
         {
-            return null;
+            return ExecutionCoordinator;
+        }
+
+        /// <inheritdoc/>
+        IExecutable IExecutable.Activate(IEngineContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return this;
         }
 
         /// <inheritdoc/>
@@ -78,9 +84,29 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        public LocalCodeExecutionContext OwnLocalCodeExecutionContext => null;
+        public LocalCodeExecutionContext OwnLocalCodeExecutionContext => _localCodeExecutionContext;
 
         /// <inheritdoc/>
         public StrongIdentifierValue Holder => null;
+
+        /// <inheritdoc/>
+        public bool NeedActivation => true;
+
+        /// <inheritdoc/>
+        public bool IsActivated => true;
+
+        /// <inheritdoc/>
+        public UsingLocalCodeExecutionContextPreferences UsingLocalCodeExecutionContextPreferences => UsingLocalCodeExecutionContextPreferences.UseBothOwnAndCallerAsParent;
+
+        /// <inheritdoc/>
+        public bool IsInstance => true;
+
+        /// <inheritdoc/>
+        public IInstance AsInstance => this;
+
+        public ulong GetLongHashCode()
+        {
+            return _action.GetLongHashCode();
+        }
     }
 }

@@ -54,9 +54,15 @@ namespace SymOntoClay.Core.Internal.CodeModel.Handlers
         public ISystemHandler SystemHandler => this;
 
         /// <inheritdoc/>
-        public IExecutionCoordinator TryActivate(IEngineContext context)
+        public IExecutionCoordinator GetCoordinator(IEngineContext context, LocalCodeExecutionContext localCodeExecutionContext)
         {
             return null;
+        }
+
+        /// <inheritdoc/>
+        public IExecutable Activate(IEngineContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return this;
         }
 
         /// <inheritdoc/>
@@ -70,6 +76,21 @@ namespace SymOntoClay.Core.Internal.CodeModel.Handlers
 
         /// <inheritdoc/>
         public StrongIdentifierValue Holder => null;
+
+        /// <inheritdoc/>
+        public bool NeedActivation => false;
+
+        /// <inheritdoc/>
+        public bool IsActivated => false;
+
+        /// <inheritdoc/>
+        public UsingLocalCodeExecutionContextPreferences UsingLocalCodeExecutionContextPreferences => UsingLocalCodeExecutionContextPreferences.Default;
+
+        /// <inheritdoc/>
+        public bool IsInstance => false;
+
+        /// <inheritdoc/>
+        public IInstance AsInstance => null;
 
         /// <inheritdoc/>
         public override string ToString()

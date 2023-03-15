@@ -61,9 +61,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public StrongIdentifierValue Holder => _executable.Holder;
 
         /// <inheritdoc/>
-        public IExecutionCoordinator TryActivate(IEngineContext context)
+        IExecutionCoordinator IExecutable.GetCoordinator(IEngineContext context, LocalCodeExecutionContext localCodeExecutionContext)
         {
-            return _executable.TryActivate(context);
+            return _executable.GetCoordinator(context, localCodeExecutionContext);
+        }
+
+        /// <inheritdoc/>
+        IExecutable IExecutable.Activate(IEngineContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return _executable.Activate(context, localCodeExecutionContext);
         }
 
         /// <inheritdoc/>
@@ -71,6 +77,21 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             return _executable.ContainsArgument(name);
         }
+
+        /// <inheritdoc/>
+        public bool NeedActivation => _executable.NeedActivation;
+
+        /// <inheritdoc/>
+        public bool IsActivated => _executable.IsActivated;
+
+        /// <inheritdoc/>
+        public UsingLocalCodeExecutionContextPreferences UsingLocalCodeExecutionContextPreferences => _executable.UsingLocalCodeExecutionContextPreferences;
+
+        /// <inheritdoc/>
+        public bool IsInstance => _executable.IsInstance;
+
+        /// <inheritdoc/>
+        public IInstance AsInstance => _executable.AsInstance;
 
         /// <inheritdoc/>
         public string ToString(uint n)

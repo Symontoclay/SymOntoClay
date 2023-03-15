@@ -437,10 +437,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (filteredList.Count == 1)
             {
-                return ConvertToActionInstance(filteredList.Single().ResultItem, localCodeExecutionContext, options);
+                return filteredList.Single().ResultItem;
             }
 
-            return ConvertToActionInstance(GetTargetValueFromList(filteredList, 0, localCodeExecutionContext, options), localCodeExecutionContext, options);
+            return GetTargetValueFromList(filteredList, 0, localCodeExecutionContext, options);
         }
 
         private IExecutable ResolveAction(StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
@@ -512,10 +512,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (filteredList.Count == 1)
             {
-                return ConvertToActionInstance(filteredList.Single().ResultItem, localCodeExecutionContext, options);
+                return filteredList.Single().ResultItem;
             }
 
-            return ConvertToActionInstance(GetTargetValueFromList(filteredList, namedParameters.Count, localCodeExecutionContext, options), localCodeExecutionContext, options);
+            return GetTargetValueFromList(filteredList, namedParameters.Count, localCodeExecutionContext, options);
         }
 
         private IExecutable ResolveAction(StrongIdentifierValue name, List<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
@@ -585,23 +585,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (filteredList.Count == 1)
             {
-                return ConvertToActionInstance(filteredList.Single().ResultItem, localCodeExecutionContext, options);
+                return filteredList.Single().ResultItem;
             }
 
-            return ConvertToActionInstance(GetTargetValueFromList(filteredList, positionedParameters.Count, localCodeExecutionContext, options), localCodeExecutionContext, options);
-        }
-
-        private ActionInstanceValue ConvertToActionInstance(ActionPtr actionPtr, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
-        {
-#if DEBUG
-            //Log($"actionPtr = {actionPtr}");
-#endif
-
-            var result = new ActionInstanceValue(actionPtr, localCodeExecutionContext.Storage);
-
-            result.CheckDirty();
-            
-            return result;
+            return GetTargetValueFromList(filteredList, positionedParameters.Count, localCodeExecutionContext, options);
         }
 
         private Dictionary<StrongIdentifierValue, Value> NormalizeNamedParameters(IDictionary<StrongIdentifierValue, Value> source)

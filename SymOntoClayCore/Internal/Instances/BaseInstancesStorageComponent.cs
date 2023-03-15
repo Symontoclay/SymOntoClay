@@ -186,6 +186,12 @@ namespace SymOntoClay.Core.Internal.Instances
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
+        public virtual Value CreateInstance(ActionPtr actionPtr, LocalCodeExecutionContext executionContext)
+        {
+            throw new NotImplementedException();
+        }
+
 #if DEBUG
         /// <inheritdoc/>
         public virtual void PrintProcessesList()

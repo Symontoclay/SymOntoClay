@@ -33,10 +33,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class ActionInstanceValue: Value, IExecutable
     {
-        public ActionInstanceValue(ActionPtr actionPtr, IStorage parentStorage)
+        public ActionInstanceValue(ActionInstance actionInstance)
         {
-            _actionPtr = actionPtr;
-            _parentStorage = parentStorage;
+             ActionInstance = actionInstance;
         }
 
         /// <inheritdoc/>
@@ -50,19 +49,38 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public ActionInstance ActionInstance { get; private set; }
 
-        private readonly ActionPtr _actionPtr;
-        private readonly IStorage _parentStorage;
+        ///// <inheritdoc/>
+        //public IExecutionCoordinator TryActivate(IEngineContext context)
+        //{
+        //    lock(_tryActivateLockObj)
+        //    {
+        //        if(ActionInstance == null)
+        //        {
+        //            var actionInstance = new ActionInstance(_actionPtr, context, _parentStorage);
+
+        //            actionInstance.Init();
+
+        //            ActionInstance = actionInstance;
+
+        //            IsActivated = true;
+        //        }
+        //    }
+
+        //    return ActionInstance.ExecutionCoordinator;
+        //}
+
+        //private object _tryActivateLockObj = new object();
 
         /// <inheritdoc/>
-        public IExecutionCoordinator TryActivate(IEngineContext context)
+        public IExecutionCoordinator GetCoordinator(IEngineContext context, LocalCodeExecutionContext localCodeExecutionContext)
         {
-            var actionInstance = new ActionInstance(_actionPtr, context, _parentStorage);
+            throw new NotImplementedException();
+        }
 
-            actionInstance.Init();
-
-            ActionInstance = actionInstance;
-
-            return actionInstance.ExecutionCoordinator;
+        /// <inheritdoc/>
+        public IExecutable Activate(IEngineContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
@@ -80,9 +98,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            _actionPtr.CheckDirty();
-
-            return base.CalculateLongHashCode(options) ^ _actionPtr.GetLongHashCode();
+            return base.CalculateLongHashCode(options) ^ ActionInstance.GetLongHashCode();
         }
 
         /// <inheritdoc/>
@@ -107,10 +123,25 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public LocalCodeExecutionContext OwnLocalCodeExecutionContext => null;
+        public LocalCodeExecutionContext OwnLocalCodeExecutionContext => ActionInstance.OwnLocalCodeExecutionContext;
 
         /// <inheritdoc/>
         public StrongIdentifierValue Holder => null;
+
+        /// <inheritdoc/>
+        public bool NeedActivation => true;
+
+        /// <inheritdoc/>
+        public bool IsActivated => true;
+
+        /// <inheritdoc/>
+        public bool IsInstance => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        public IInstance AsInstance => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        public UsingLocalCodeExecutionContextPreferences UsingLocalCodeExecutionContextPreferences => ActionInstance?.UsingLocalCodeExecutionContextPreferences ?? UsingLocalCodeExecutionContextPreferences.UseBothOwnAndCallerAsParent;
 
         /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
@@ -126,7 +157,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 return (Value)cloneContext[this];
             }
 
-            var result = new ActionInstanceValue(_actionPtr, _parentStorage);
+            var result = new ActionInstanceValue(ActionInstance);
             cloneContext[this] = result;
 
             result.AppendAnnotations(this, cloneContext);
@@ -140,7 +171,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjProp(n, nameof(_actionPtr), _actionPtr);
+            sb.PrintObjProp(n, nameof(ActionInstance), ActionInstance);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -152,7 +183,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjProp(n, nameof(_actionPtr), _actionPtr);
+            sb.PrintShortObjProp(n, nameof(ActionInstance), ActionInstance);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -164,7 +195,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjProp(n, nameof(_actionPtr), _actionPtr);
+            sb.PrintBriefObjProp(n, nameof(ActionInstance), ActionInstance);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
@@ -185,7 +216,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private string NToHumanizedString()
         {
-            return $"ref: {_actionPtr.Name.NameValue}";
+            return $"ref: {ActionInstance.Name.NameValue}";
         }
     }
 }

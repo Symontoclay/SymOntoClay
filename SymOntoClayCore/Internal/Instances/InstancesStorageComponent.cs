@@ -534,6 +534,31 @@ namespace SymOntoClay.Core.Internal.Instances
             return instanceValue;
         }
 
+        /// <inheritdoc/>
+        public override Value CreateInstance(ActionPtr actionPtr, LocalCodeExecutionContext executionContext)
+        {
+            var action = actionPtr.Action;
+
+#if DEBUG
+            Log($"action.Name = {action.Name}");
+#endif
+
+            var targetCodeItem = CreateAndSaveInstanceCodeItem(action, NameHelper.CreateEntityName());
+
+#if DEBUG
+            Log($"targetCodeItem = {targetCodeItem}");
+#endif
+
+            var actionInstance = new ActionInstance(targetCodeItem, actionPtr, _context, executionContext.Storage, executionContext);
+
+            actionInstance.Init();
+
+            var instanceValue = new ActionInstanceValue(actionInstance);
+            instanceValue.CheckDirty();
+
+            return instanceValue;
+        }
+
 #if DEBUG
         /// <inheritdoc/>
         public override void PrintProcessesList()

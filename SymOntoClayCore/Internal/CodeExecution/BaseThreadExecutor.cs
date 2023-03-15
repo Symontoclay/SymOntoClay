@@ -331,6 +331,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var currentCommand = compiledFunctionBodyCommands[currentPosition];
 
 #if DEBUG
+                Log($"_currentCodeFrame.LocalContext.Holder = {_currentCodeFrame.LocalContext.Holder}");
                 //Log($"currentCommand = {currentCommand}");
                 Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
@@ -632,7 +633,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (constructor != null)
             {
-                var coordinator = ((IExecutable)constructor).TryActivate(_context);
+                var coordinator = ((IExecutable)constructor).GetCoordinator(_context, newInstance.LocalCodeExecutionContext);
 
                 var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(constructor, kindOfParameters, namedParameters, positionedParameters, newInstance.LocalCodeExecutionContext, null);
 
@@ -668,7 +669,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     localCodeExecutionContext.OwnerStorage = targetStorage;
                     localCodeExecutionContext.Kind = KindOfLocalCodeExecutionContext.PreConstructor;
 
-                    var coordinator = ((IExecutable)preConstructor).TryActivate(_context);
+                    var coordinator = ((IExecutable)preConstructor).GetCoordinator(_context, newInstance.LocalCodeExecutionContext);
 
 #if DEBUG
                     //Log($"localCodeExecutionContext.Kind = {localCodeExecutionContext.Kind}");
@@ -1953,7 +1954,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     continue;
                 }
 
-                var coordinator = ((IExecutable)constructor).TryActivate(_context);
+                var coordinator = ((IExecutable)constructor).GetCoordinator(_context, _currentCodeFrame.LocalContext);
 
                 var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(constructor, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, null);
 
@@ -2003,7 +2004,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                 break;
                             }
 
-                            var coordinator = ((IExecutable)completeAnnotationSystemEvent).TryActivate(_context);
+                            var coordinator = ((IExecutable)completeAnnotationSystemEvent).GetCoordinator(_context, _currentCodeFrame.LocalContext);
 
 #if DEBUG
                             Log($"coordinator == null = {coordinator == null}");
@@ -2530,7 +2531,29 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
             else
             {
-                var coordinator = executable.TryActivate(_context);
+#if DEBUG
+                Log($"executable.GetType().FullName = {executable.GetType().FullName}");
+                Log($"executable.NeedActivation = {executable.NeedActivation}");
+                Log($"executable.IsActivated = {executable.IsActivated}");
+                Log($"executable.UsingLocalCodeExecutionContextPreferences = {executable.UsingLocalCodeExecutionContextPreferences}");
+#endif
+
+                if (executable.NeedActivation && !executable.IsActivated)
+                {
+                    executable = executable.Activate(_context, _currentCodeFrame.LocalContext);
+                }
+
+                var coordinator = executable.GetCoordinator(_context, _currentCodeFrame.LocalContext);
+
+#if DEBUG
+                Log($"executable.OwnLocalCodeExecutionContext = {executable.OwnLocalCodeExecutionContext}");
+                Log($"targetLocalContext = {targetLocalContext}");
+
+                if(executable.UsingLocalCodeExecutionContextPreferences == UsingLocalCodeExecutionContextPreferences.UseOwnAsParent || executable.UsingLocalCodeExecutionContextPreferences == UsingLocalCodeExecutionContextPreferences.UseBothOwnAndCallerAsParent)
+                {
+                    targetLocalContext = executable.OwnLocalCodeExecutionContext;//tmp
+                }
+#endif
 
                 var additionalSettings = GetAdditionalSettingsFromAnnotation(annotation, ownLocalCodeExecutionContext);
 
@@ -2658,7 +2681,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         {
                             task.AsTaskValue.OnComplete += () =>
                             {
-                                var completeAnnotationSystemEventCoordinator = ((IExecutable)completeAnnotationSystemEvent).TryActivate(_context);
+                                var completeAnnotationSystemEventCoordinator = ((IExecutable)completeAnnotationSystemEvent).GetCoordinator(_context, _currentCodeFrame.LocalContext);
 
                                 var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(completeAnnotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, null, true);
 

@@ -31,7 +31,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public interface IExecutable: IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        IExecutionCoordinator TryActivate(IEngineContext context);
+        IExecutionCoordinator GetCoordinator(IEngineContext context, LocalCodeExecutionContext localCodeExecutionContext);
         bool IsSystemDefined { get; }
         IList<IFunctionArgument> Arguments { get; }
         CompiledFunctionBody CompiledFunctionBody { get; }
@@ -40,5 +40,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         bool ContainsArgument(StrongIdentifierValue name);
         LocalCodeExecutionContext OwnLocalCodeExecutionContext { get; }
         StrongIdentifierValue Holder { get; }
+        bool NeedActivation { get; }
+        bool IsActivated { get; }
+        UsingLocalCodeExecutionContextPreferences UsingLocalCodeExecutionContextPreferences { get; }
+        IExecutable Activate(IEngineContext context, LocalCodeExecutionContext localCodeExecutionContext);
+        bool IsInstance { get; }
+        IInstance AsInstance { get; }
     }
 }

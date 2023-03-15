@@ -183,7 +183,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 throw new ArgumentNullException(nameof(executable));
             }
 
-            var coordinator = executable.TryActivate(_context);
+            var coordinator = executable.GetCoordinator(_context, parentLocalCodeExecutionContext);
 
 #if DEBUG
             //Log($"executable.IsSystemDefined = {executable.IsSystemDefined}");

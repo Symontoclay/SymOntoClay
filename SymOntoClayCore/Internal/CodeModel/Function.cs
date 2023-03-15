@@ -84,13 +84,34 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        IExecutionCoordinator IExecutable.TryActivate(IEngineContext context)
+        IExecutionCoordinator IExecutable.GetCoordinator(IEngineContext context, LocalCodeExecutionContext localCodeExecutionContext)
         {
             return null;
         }
 
         /// <inheritdoc/>
+        IExecutable IExecutable.Activate(IEngineContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return this;
+        }
+
+        /// <inheritdoc/>
         public LocalCodeExecutionContext OwnLocalCodeExecutionContext => null;
+
+        /// <inheritdoc/>
+        public bool NeedActivation => false;
+
+        /// <inheritdoc/>
+        public bool IsActivated => false;
+
+        /// <inheritdoc/>
+        public UsingLocalCodeExecutionContextPreferences UsingLocalCodeExecutionContextPreferences => UsingLocalCodeExecutionContextPreferences.Default;
+
+        /// <inheritdoc/>
+        public bool IsInstance => false;
+
+        /// <inheritdoc/>
+        public IInstance AsInstance => null;
 
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)

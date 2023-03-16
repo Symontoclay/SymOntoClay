@@ -331,9 +331,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var currentCommand = compiledFunctionBodyCommands[currentPosition];
 
 #if DEBUG
-                Log($"_currentCodeFrame.LocalContext.Holder = {_currentCodeFrame.LocalContext.Holder}");
+                //Log($"_currentCodeFrame.LocalContext.Holder = {_currentCodeFrame.LocalContext.Holder}");
                 //Log($"currentCommand = {currentCommand}");
-                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 switch (currentCommand.OperationCode)
@@ -2532,10 +2532,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             else
             {
 #if DEBUG
-                Log($"executable.GetType().FullName = {executable.GetType().FullName}");
-                Log($"executable.NeedActivation = {executable.NeedActivation}");
-                Log($"executable.IsActivated = {executable.IsActivated}");
-                Log($"executable.UsingLocalCodeExecutionContextPreferences = {executable.UsingLocalCodeExecutionContextPreferences}");
+                //Log($"executable.GetType().FullName = {executable.GetType().FullName}");
+                //Log($"executable.NeedActivation = {executable.NeedActivation}");
+                //Log($"executable.IsActivated = {executable.IsActivated}");
+                //Log($"executable.UsingLocalCodeExecutionContextPreferences = {executable.UsingLocalCodeExecutionContextPreferences}");
 #endif
 
                 if (executable.NeedActivation && !executable.IsActivated)
@@ -2546,19 +2546,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var coordinator = executable.GetCoordinator(_context, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-                Log($"executable.OwnLocalCodeExecutionContext = {executable.OwnLocalCodeExecutionContext}");
-                Log($"targetLocalContext = {targetLocalContext}");
+                //Log($"executable.OwnLocalCodeExecutionContext = {executable.OwnLocalCodeExecutionContext}");
+                //Log($"targetLocalContext = {targetLocalContext}");
+#endif
 
-                if(executable.UsingLocalCodeExecutionContextPreferences == UsingLocalCodeExecutionContextPreferences.UseOwnAsParent || executable.UsingLocalCodeExecutionContextPreferences == UsingLocalCodeExecutionContextPreferences.UseBothOwnAndCallerAsParent)
+                if (executable.UsingLocalCodeExecutionContextPreferences == UsingLocalCodeExecutionContextPreferences.UseOwnAsParent || executable.UsingLocalCodeExecutionContextPreferences == UsingLocalCodeExecutionContextPreferences.UseBothOwnAndCallerAsParent)
                 {
 #if DEBUG
-                    Log($"executable.OwnLocalCodeExecutionContext = {executable.OwnLocalCodeExecutionContext}");
-                    Log($"executable.OwnLocalCodeExecutionContext.Parent = {executable.OwnLocalCodeExecutionContext.Parent}");
+                    //Log($"executable.OwnLocalCodeExecutionContext = {executable.OwnLocalCodeExecutionContext}");
+                    //Log($"executable.OwnLocalCodeExecutionContext.Parent = {executable.OwnLocalCodeExecutionContext.Parent}");
 #endif
-                    
-                    targetLocalContext = executable.OwnLocalCodeExecutionContext;//tmp
+
+                    targetLocalContext = executable.OwnLocalCodeExecutionContext;
                 }
-#endif
 
                 var additionalSettings = GetAdditionalSettingsFromAnnotation(annotation, ownLocalCodeExecutionContext);
 

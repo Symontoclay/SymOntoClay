@@ -56,13 +56,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         protected T EnumerableLocalCodeExecutionContext<T>(ILocalCodeExecutionContext localCodeExecutionContext, KindOfEnumerableLocalCodeExecutionContext kindOfEnumerableLocalCodeExecutionContext, Func<ILocalCodeExecutionContext, T> func)
         {
 #if DEBUG
-            Log($"kindOfEnumerableLocalCodeExecutionContext = {kindOfEnumerableLocalCodeExecutionContext}");
+            //Log($"kindOfEnumerableLocalCodeExecutionContext = {kindOfEnumerableLocalCodeExecutionContext}");
 #endif
 
             var result = func(localCodeExecutionContext);
 
 #if DEBUG
-            Log($"result = {result}");
+            //Log($"result = {result}");
 #endif
 
             if(kindOfEnumerableLocalCodeExecutionContext == KindOfEnumerableLocalCodeExecutionContext.NoEnumeration)
@@ -80,7 +80,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 localCodeExecutionContext = GetParentLocalCodeExecutionContext(localCodeExecutionContext, kindOfEnumerableLocalCodeExecutionContext);
 
 #if DEBUG
-                Log($"localCodeExecutionContext (next) = {localCodeExecutionContext}");
+                //Log($"localCodeExecutionContext (next) = {localCodeExecutionContext}");
 #endif
 
                 if(localCodeExecutionContext == null)
@@ -100,7 +100,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private ILocalCodeExecutionContext GetParentLocalCodeExecutionContext(ILocalCodeExecutionContext localCodeExecutionContext, KindOfEnumerableLocalCodeExecutionContext kindOfEnumerableLocalCodeExecutionContext)
         {
 #if DEBUG
-            Log($"kindOfEnumerableLocalCodeExecutionContext = {kindOfEnumerableLocalCodeExecutionContext}");
+            //Log($"kindOfEnumerableLocalCodeExecutionContext = {kindOfEnumerableLocalCodeExecutionContext}");
 #endif
 
             switch (kindOfEnumerableLocalCodeExecutionContext)
@@ -115,20 +115,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         while((localCodeExecutionContext = localCodeExecutionContext.Parent) != null)
                         {
 #if DEBUG
-                            Log($"localCodeExecutionContext (1) = {localCodeExecutionContext}");
+                            //Log($"localCodeExecutionContext (1) = {localCodeExecutionContext}");
 #endif
 
                             if(localCodeExecutionContext.Holder == initialHolder)
                             {
 #if DEBUG
-                                Log($"continue");
+                                //Log($"continue");
 #endif
 
                                 continue;
                             }
 
 #if DEBUG
-                            Log($"Yes!!!!!");
+                            //Log($"Yes!!!!!");
 #endif
 
                             return localCodeExecutionContext;

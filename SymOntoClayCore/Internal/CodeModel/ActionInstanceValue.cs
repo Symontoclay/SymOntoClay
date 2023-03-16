@@ -49,36 +49,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public ActionInstance ActionInstance { get; private set; }
 
-        ///// <inheritdoc/>
-        //public IExecutionCoordinator TryActivate(IEngineContext context)
-        //{
-        //    lock(_tryActivateLockObj)
-        //    {
-        //        if(ActionInstance == null)
-        //        {
-        //            var actionInstance = new ActionInstance(_actionPtr, context, _parentStorage);
-
-        //            actionInstance.Init();
-
-        //            ActionInstance = actionInstance;
-
-        //            IsActivated = true;
-        //        }
-        //    }
-
-        //    return ActionInstance.ExecutionCoordinator;
-        //}
-
-        //private object _tryActivateLockObj = new object();
-
         /// <inheritdoc/>
-        public IExecutionCoordinator GetCoordinator(IEngineContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        public IExecutionCoordinator GetCoordinator(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public IExecutable Activate(IEngineContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        public IExecutable Activate(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             throw new NotImplementedException();
         }
@@ -123,7 +101,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public LocalCodeExecutionContext OwnLocalCodeExecutionContext => ActionInstance.OwnLocalCodeExecutionContext;
+        public ILocalCodeExecutionContext OwnLocalCodeExecutionContext => ActionInstance.OwnLocalCodeExecutionContext;
 
         /// <inheritdoc/>
         public StrongIdentifierValue Holder => null;

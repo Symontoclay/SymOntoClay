@@ -45,12 +45,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly InheritanceResolver _inheritanceResolver;
         private readonly ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
 
-        public List<IdleActionItem> Resolve(LocalCodeExecutionContext localCodeExecutionContext)
+        public List<IdleActionItem> Resolve(ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Resolve(localCodeExecutionContext, _defaultOptions);
         }
 
-        public List<IdleActionItem> Resolve(LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<IdleActionItem> Resolve(ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 

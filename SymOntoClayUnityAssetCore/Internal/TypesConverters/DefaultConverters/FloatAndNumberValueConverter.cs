@@ -27,6 +27,7 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using SymOntoClay.Core;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters
 {
@@ -46,13 +47,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters
         public override bool CanConvertToCoreType => false;
 
         /// <inheritdoc/>
-        public override object ConvertToCoreType(object platformObject, IEngineContext context, LocalCodeExecutionContext localContext)
+        public override object ConvertToCoreType(object platformObject, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override object ConvertToPlatformType(object coreObject, IEngineContext context, LocalCodeExecutionContext localContext)
+        public override object ConvertToPlatformType(object coreObject, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
             var targetValue = (NumberValue)coreObject;
 

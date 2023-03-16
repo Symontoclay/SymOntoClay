@@ -45,7 +45,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Handlers
         private readonly CancellationTokenSource _cancellationTokenSource;
 
         /// <inheritdoc/>
-        public override Value Call(IList<Value> paramsList, LocalCodeExecutionContext localCodeExecutionContext)
+        public override Value Call(IList<Value> paramsList, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //_gbcLogger.Info($"paramsList?.Count = {paramsList?.Count}");
@@ -55,7 +55,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Handlers
         }
 
         /// <inheritdoc/>
-        public override Value Call(IDictionary<string, Value> paramsDict, Value anotation, LocalCodeExecutionContext localCodeExecutionContext)
+        public override Value Call(IDictionary<string, Value> paramsDict, Value anotation, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //_gbcLogger.Info($"paramsDict?.Count = {paramsDict?.Count}");

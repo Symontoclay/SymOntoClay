@@ -53,7 +53,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         private readonly ILogicalStorage _globalLogicalStorage;        
 
         /// <inheritdoc/>
-        public Value Call(Value operand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
+        public Value Call(Value operand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             operand = TryResolveFromVarOrExpr(operand, localCodeExecutionContext);
 
@@ -87,7 +87,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             }
         }
 
-        private Value ProcessSelect(LogicalQueryOperationValue operand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
+        private Value ProcessSelect(LogicalQueryOperationValue operand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"operand = {operand}");
@@ -141,7 +141,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             return new LogicalSearchResultValue(searchResult);
         }
 
-        private Value ProcessInsert(LogicalQueryOperationValue operand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
+        private Value ProcessInsert(LogicalQueryOperationValue operand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"operand = {operand}");

@@ -26,12 +26,13 @@ using SymOntoClay.Core.Internal.CodeModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using SymOntoClay.Core;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Helpers
 {
     public static class PlatformTypesConverterHelper
     {
-        public static EntityValue GetResolvedEntityValue(StrongIdentifierValue identifier, IEngineContext context, LocalCodeExecutionContext localContext)
+        public static EntityValue GetResolvedEntityValue(StrongIdentifierValue identifier, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
             var entityValue = new EntityValue(identifier, context, localContext);
 
@@ -40,7 +41,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters
             return entityValue;
         }
 
-        public static ConditionalEntityValue GetResolvedConditionalEntityValue(StrongIdentifierValue concept, IEngineContext context, LocalCodeExecutionContext localContext)
+        public static ConditionalEntityValue GetResolvedConditionalEntityValue(StrongIdentifierValue concept, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
             var entityConditionExpression = new EntityConditionExpressionNode() { Kind = KindOfLogicalQueryNode.Concept };
             entityConditionExpression.Name = concept;

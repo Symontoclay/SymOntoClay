@@ -30,12 +30,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class PackedSynonymsResolver: IPackedSynonymsResolver
     {
-        public PackedSynonymsResolver(SynonymsResolver synonymsResolver, LocalCodeExecutionContext localCodeExecutionContext)
+        public PackedSynonymsResolver(SynonymsResolver synonymsResolver, ILocalCodeExecutionContext localCodeExecutionContext)
             : this(synonymsResolver, localCodeExecutionContext, synonymsResolver.DefaultOptions)
         {
         }
 
-        public PackedSynonymsResolver(SynonymsResolver synonymsResolver, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public PackedSynonymsResolver(SynonymsResolver synonymsResolver, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             _synonymsResolver = synonymsResolver;
             _localCodeExecutionContext = localCodeExecutionContext;
@@ -43,7 +43,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         }
 
         private readonly SynonymsResolver _synonymsResolver;
-        private readonly LocalCodeExecutionContext _localCodeExecutionContext;
+        private readonly ILocalCodeExecutionContext _localCodeExecutionContext;
         private readonly ResolverOptions _options;
 
         /// <inheritdoc/>

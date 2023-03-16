@@ -29,28 +29,45 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
 {
-    public class LocalCodeExecutionContext: IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class LocalCodeExecutionContext: ILocalCodeExecutionContext
     {
         public LocalCodeExecutionContext()
         {
         }
 
-        public LocalCodeExecutionContext(LocalCodeExecutionContext parent)
+        public LocalCodeExecutionContext(ILocalCodeExecutionContext parent)
         {
             Parent = parent;
         }
-        
-        public LocalCodeExecutionContext Parent { get;private set; }
 
+        /// <inheritdoc/>
+        public ILocalCodeExecutionContext Parent { get;private set; }
+
+        /// <inheritdoc/>
+        public bool UseParentInResolving { get;set; } = true;
+
+        /// <inheritdoc/>
         public StrongIdentifierValue Holder { get; set; }
+
+        /// <inheritdoc/>
         public IStorage Storage { get; set; }
 
+        /// <inheritdoc/>
         public StrongIdentifierValue Owner { get; set; }
+
+        /// <inheritdoc/>
         public IStorage OwnerStorage { get; set; }
 
+        /// <inheritdoc/>
         public KindOfLocalCodeExecutionContext Kind { get; set; } = KindOfLocalCodeExecutionContext.Usual;
+
+        /// <inheritdoc/>
         public KindOfAddFactOrRuleResult KindOfAddFactResult { get; set; }
+
+        /// <inheritdoc/>
         public MutablePartOfRuleInstance MutablePart { get; set; }
+
+        /// <inheritdoc/>
         public RuleInstance AddedRuleInstance { get; set; }
 
         /// <inheritdoc/>
@@ -72,7 +89,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var sb = new StringBuilder();
 
             sb.PrintBriefObjProp(n, nameof(Parent), Parent);
-            sb.PrintObjProp(n, nameof(Holder), Holder);
+            sb.AppendLine($"{spaces}{nameof(UseParentInResolving)} = {UseParentInResolving}");
+            sb.PrintObjProp(n, nameof(Holder), Holder);            
             sb.AppendLine($"{spaces}{nameof(Storage)}.Kind = {Storage?.Kind}");
             sb.PrintObjProp(n, nameof(Owner), Owner);
             sb.AppendLine($"{spaces}{nameof(OwnerStorage)}.Kind = {OwnerStorage?.Kind}");
@@ -104,6 +122,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var sb = new StringBuilder();
 
             sb.PrintBriefObjProp(n, nameof(Parent), Parent);
+            sb.AppendLine($"{spaces}{nameof(UseParentInResolving)} = {UseParentInResolving}");
             sb.PrintShortObjProp(n, nameof(Holder), Holder);
             sb.AppendLine($"{spaces}{nameof(Storage)}.Kind = {Storage?.Kind}");
             sb.PrintShortObjProp(n, nameof(Owner), Owner);
@@ -136,6 +155,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var sb = new StringBuilder();
 
             sb.PrintExisting(n, nameof(Parent), Parent);
+            sb.AppendLine($"{spaces}{nameof(UseParentInResolving)} = {UseParentInResolving}");
             sb.PrintBriefObjProp(n, nameof(Holder), Holder);
             sb.AppendLine($"{spaces}{nameof(Storage)}.Kind = {Storage?.Kind}");
             sb.PrintBriefObjProp(n, nameof(Owner), Owner);

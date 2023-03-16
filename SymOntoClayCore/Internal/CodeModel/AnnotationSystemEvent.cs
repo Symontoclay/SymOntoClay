@@ -33,13 +33,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public ISystemHandler SystemHandler => null;
 
         /// <inheritdoc/>
-        public IExecutionCoordinator GetCoordinator(IEngineContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        public IExecutionCoordinator GetCoordinator(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return null;
         }
 
         /// <inheritdoc/>
-        public IExecutable Activate(IEngineContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        public IExecutable Activate(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return this;
         }
@@ -51,7 +51,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public LocalCodeExecutionContext OwnLocalCodeExecutionContext => null;
+        public ILocalCodeExecutionContext OwnLocalCodeExecutionContext => null;
 
         /// <inheritdoc/>
         public StrongIdentifierValue Holder => null;

@@ -2453,7 +2453,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             CallExecutable(executable, null, KindOfFunctionParameters.PositionedParameters, null, positionedParameters, null, SyncOption.Sync);
         }
 
-        private void CallExecutable(IExecutable executable, LocalCodeExecutionContext ownLocalCodeExecutionContext, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, Value annotation, SyncOption syncOption)
+        private void CallExecutable(IExecutable executable, ILocalCodeExecutionContext ownLocalCodeExecutionContext, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, Value annotation, SyncOption syncOption)
         {
             if(executable == null)
             {
@@ -2551,6 +2551,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if(executable.UsingLocalCodeExecutionContextPreferences == UsingLocalCodeExecutionContextPreferences.UseOwnAsParent || executable.UsingLocalCodeExecutionContextPreferences == UsingLocalCodeExecutionContextPreferences.UseBothOwnAndCallerAsParent)
                 {
+#if DEBUG
+                    Log($"executable.OwnLocalCodeExecutionContext = {executable.OwnLocalCodeExecutionContext}");
+                    Log($"executable.OwnLocalCodeExecutionContext.Parent = {executable.OwnLocalCodeExecutionContext.Parent}");
+#endif
+                    
                     targetLocalContext = executable.OwnLocalCodeExecutionContext;//tmp
                 }
 #endif
@@ -2590,7 +2595,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
         }
 
-        private ConversionExecutableToCodeFrameAdditionalSettings GetAdditionalSettingsFromAnnotation(Value annotation, LocalCodeExecutionContext ownLocalCodeExecutionContext)
+        private ConversionExecutableToCodeFrameAdditionalSettings GetAdditionalSettingsFromAnnotation(Value annotation, ILocalCodeExecutionContext ownLocalCodeExecutionContext)
         {
             var timeout = GetTimeoutFromAnnotation(annotation);
             var priority = GetPriorityFromAnnotation(annotation);

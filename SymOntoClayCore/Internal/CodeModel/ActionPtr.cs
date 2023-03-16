@@ -70,19 +70,19 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        IExecutionCoordinator IExecutable.GetCoordinator(IEngineContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        IExecutionCoordinator IExecutable.GetCoordinator(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return null;
         }
 
         /// <inheritdoc/>
-        IExecutable IExecutable.Activate(IEngineContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        IExecutable IExecutable.Activate(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return context.InstancesStorage.CreateInstance(this, localCodeExecutionContext).AsActionInstanceValue.ActionInstance;
         }
 
         /// <inheritdoc/>
-        public LocalCodeExecutionContext OwnLocalCodeExecutionContext => null;
+        public ILocalCodeExecutionContext OwnLocalCodeExecutionContext => null;
 
         /// <inheritdoc/>
         public StrongIdentifierValue Holder => _action.Holder;

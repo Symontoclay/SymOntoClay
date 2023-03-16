@@ -33,10 +33,10 @@ namespace SymOntoClay.Core.Internal.CodeModel.Handlers
     public abstract class BaseSpecialHandler : IExecutable, ISystemHandler
     {
         /// <inheritdoc/>
-        public abstract Value Call(IList<Value> paramsList, LocalCodeExecutionContext localCodeExecutionContext);
+        public abstract Value Call(IList<Value> paramsList, ILocalCodeExecutionContext localCodeExecutionContext);
 
         /// <inheritdoc/>
-        public abstract Value Call(IDictionary<string, Value> paramsDict, Value anotation, LocalCodeExecutionContext localCodeExecutionContext);
+        public abstract Value Call(IDictionary<string, Value> paramsDict, Value anotation, ILocalCodeExecutionContext localCodeExecutionContext);
 
         /// <inheritdoc/>
         public bool IsSystemDefined => true;
@@ -54,13 +54,13 @@ namespace SymOntoClay.Core.Internal.CodeModel.Handlers
         public ISystemHandler SystemHandler => this;
 
         /// <inheritdoc/>
-        public IExecutionCoordinator GetCoordinator(IEngineContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        public IExecutionCoordinator GetCoordinator(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return null;
         }
 
         /// <inheritdoc/>
-        public IExecutable Activate(IEngineContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        public IExecutable Activate(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return this;
         }
@@ -72,7 +72,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Handlers
         }
 
         /// <inheritdoc/>
-        public LocalCodeExecutionContext OwnLocalCodeExecutionContext => null;
+        public ILocalCodeExecutionContext OwnLocalCodeExecutionContext => null;
 
         /// <inheritdoc/>
         public StrongIdentifierValue Holder => null;

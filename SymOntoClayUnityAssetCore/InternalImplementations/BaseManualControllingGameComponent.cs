@@ -132,7 +132,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         }
 
         /// <inheritdoc/>
-        public IProcessCreatingResult CreateProcess(ICommand command, IEngineContext context, LocalCodeExecutionContext localContext)
+        public IProcessCreatingResult CreateProcess(ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
 #if DEBUG
             //Log($"command = {command}");

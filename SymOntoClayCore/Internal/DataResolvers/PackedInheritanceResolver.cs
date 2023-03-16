@@ -31,12 +31,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class PackedInheritanceResolver: IPackedInheritanceResolver
     {
-        public PackedInheritanceResolver(InheritanceResolver inheritanceResolver, LocalCodeExecutionContext localCodeExecutionContext)
+        public PackedInheritanceResolver(InheritanceResolver inheritanceResolver, ILocalCodeExecutionContext localCodeExecutionContext)
             : this(inheritanceResolver, localCodeExecutionContext, inheritanceResolver.DefaultOptions)
         {
         }
 
-        public PackedInheritanceResolver(InheritanceResolver inheritanceResolver, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public PackedInheritanceResolver(InheritanceResolver inheritanceResolver, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             _inheritanceResolver = inheritanceResolver;
             _localCodeExecutionContext = localCodeExecutionContext;
@@ -44,7 +44,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         }
 
         private readonly InheritanceResolver _inheritanceResolver;
-        private readonly LocalCodeExecutionContext _localCodeExecutionContext;
+        private readonly ILocalCodeExecutionContext _localCodeExecutionContext;
         private readonly ResolverOptions _options;
 
         /// <inheritdoc/>

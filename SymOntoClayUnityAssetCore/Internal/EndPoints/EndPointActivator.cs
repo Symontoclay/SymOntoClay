@@ -51,7 +51,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         private readonly IPlatformTypesConvertersRegistry _platformTypesConvertorsRegistry;
         private readonly IInvokerInMainThread _invokingInMainThread;
 
-        public IProcessInfo Activate(IEndpointInfo endpointInfo, ICommand command, IEngineContext context, LocalCodeExecutionContext localContext)
+        public IProcessInfo Activate(IEndpointInfo endpointInfo, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
 #if DEBUG
             //Log($"endpointInfo = {endpointInfo}");
@@ -165,7 +165,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             return task;
         }
 
-        private object[] MapParams(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, LocalCodeExecutionContext localContext)
+        private object[] MapParams(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
             var kindOfCommandParameters = command.KindOfCommandParameters;
 
@@ -194,7 +194,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             }
         }
 
-        private object[] MapParamsByParametersByList(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, LocalCodeExecutionContext localContext)
+        private object[] MapParamsByParametersByList(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
             if(endpointInfo.KindOfEndpoint == KindOfEndpointInfo.GenericCall)
             {
@@ -246,7 +246,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             return resultList.ToArray();
         }
 
-        private object[] MapGenericCallParamsByParametersByList(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, LocalCodeExecutionContext localContext)
+        private object[] MapGenericCallParamsByParametersByList(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
             var resultList = new List<object>();
             resultList.Add(cancellationToken);
@@ -262,7 +262,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             return resultList.ToArray();
         }
 
-        private object[] MapParamsByParametersByDict(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, LocalCodeExecutionContext localContext)
+        private object[] MapParamsByParametersByDict(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
             if(endpointInfo.KindOfEndpoint == KindOfEndpointInfo.GenericCall)
             {
@@ -348,7 +348,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             return resultList.ToArray();
         }
 
-        private object[] MapGenericCallParamsByParametersByDict(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, LocalCodeExecutionContext localContext)
+        private object[] MapGenericCallParamsByParametersByDict(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
             var resultList = new List<object>();
             resultList.Add(cancellationToken);

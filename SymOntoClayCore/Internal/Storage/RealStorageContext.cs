@@ -63,7 +63,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public FuzzyLogicStorage FuzzyLogicStorage { get; set; }
         public IdleActionItemsStorage IdleActionItemsStorage { get; set; }
         public RealStorage Storage { get; set; }
-        public LocalCodeExecutionContext ParentCodeExecutionContext { get; set; }
+        public ILocalCodeExecutionContext ParentCodeExecutionContext { get; set; }
         public IList<IStorage> Parents { get; set; }
         public IInheritancePublicFactsReplicator InheritancePublicFactsReplicator { get; set; }
         public KindOfGC KindOfGC { get; set; }

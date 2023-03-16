@@ -32,7 +32,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public class CheckDirtyOptions: IObjectToString
     {
         public IEngineContext EngineContext { get; set; }
-        public LocalCodeExecutionContext LocalContext { get; set; }
+        public ILocalCodeExecutionContext LocalContext { get; set; }
         public bool ConvertWaypointValueFromSource { get; set; }
         public Dictionary<StrongIdentifierValue, StrongIdentifierValue> ReplaceConcepts { get; set; }
         public IList<StrongIdentifierValue> DontConvertConceptsToInhRelations { get; set; }

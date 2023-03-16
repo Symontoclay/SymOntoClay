@@ -33,7 +33,7 @@ namespace SymOntoClay.Core.Internal.Storage
     {
         public IMainStorageContext MainStorageContext { get; set; }
         public IList<IStorage> ParentsStorages { get; set; }
-        public LocalCodeExecutionContext ParentCodeExecutionContext { get; set; }
+        public ILocalCodeExecutionContext ParentCodeExecutionContext { get; set; }
         public DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get; set; }
         public IInheritancePublicFactsReplicator InheritancePublicFactsReplicator { get; set; }
         public KindOfGC KindOfGC { get; set; } = KindOfGC.None;

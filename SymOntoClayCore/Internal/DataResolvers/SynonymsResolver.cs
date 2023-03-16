@@ -39,7 +39,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public readonly ResolverOptions DefaultOptions = ResolverOptions.GetDefaultOptions();
 
-        public List<StrongIdentifierValue> GetSynonyms(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext)
+        public List<StrongIdentifierValue> GetSynonyms(StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"name = {name}");

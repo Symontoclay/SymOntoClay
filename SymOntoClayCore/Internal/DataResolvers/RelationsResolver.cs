@@ -48,12 +48,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly InheritanceResolver _inheritanceResolver;
         private readonly SynonymsResolver _synonymsResolver;
 
-        public RelationDescription GetRelation(StrongIdentifierValue name, int paramsCount, LocalCodeExecutionContext localCodeExecutionContext)
+        public RelationDescription GetRelation(StrongIdentifierValue name, int paramsCount, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return GetRelation(name, paramsCount, localCodeExecutionContext, DefaultOptions);
         }
 
-        public RelationDescription GetRelation(StrongIdentifierValue name, int paramsCount, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public RelationDescription GetRelation(StrongIdentifierValue name, int paramsCount, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"name = {name}");

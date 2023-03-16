@@ -39,12 +39,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
         }
 
-        public LogicalValue Resolve(Value source, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public LogicalValue Resolve(Value source, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             return Resolve(source, localCodeExecutionContext, options, false);
         }
 
-        public LogicalValue Resolve(Value source, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options, bool forInheritance)
+        public LogicalValue Resolve(Value source, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options, bool forInheritance)
         {
 #if DEBUG
             //Log($"source = {source}");

@@ -44,7 +44,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly FuzzyLogicResolver _fuzzyLogicResolver;
         private readonly ToSystemBoolResolver _toSystemBoolResolver;
 
-        public bool IsHigh(Value modalityValue, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool IsHigh(Value modalityValue, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"modalityValue = {modalityValue}");
@@ -69,7 +69,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return _toSystemBoolResolver.Resolve(numberValue);
         }
 
-        public bool IsFit(Value modalityValue, Value queryModalityValue, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool IsFit(Value modalityValue, Value queryModalityValue, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"modalityValue = {modalityValue}");
@@ -100,7 +100,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return _fuzzyLogicResolver.Equals(modalityValue, queryModalityValue, localCodeExecutionContext);
         }
 
-        private bool ProcessBoolExpression(Value modalityValue, LogicalModalityExpressionNode expressionNode, LocalCodeExecutionContext localCodeExecutionContext)
+        private bool ProcessBoolExpression(Value modalityValue, LogicalModalityExpressionNode expressionNode, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"exprValue.Expression = {expressionNode.ToHumanizedString()}");
@@ -122,7 +122,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private Value ProcessValueExpression(Value modalityValue, LogicalModalityExpressionNode expressionNode, LocalCodeExecutionContext localCodeExecutionContext)
+        private Value ProcessValueExpression(Value modalityValue, LogicalModalityExpressionNode expressionNode, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"exprValue.Expression = {expressionNode.ToHumanizedString()}");
@@ -141,12 +141,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private Value ProcessBlankIdentifier(Value modalityValue, LogicalModalityExpressionNode expressionNode, LocalCodeExecutionContext localCodeExecutionContext)
+        private Value ProcessBlankIdentifier(Value modalityValue, LogicalModalityExpressionNode expressionNode, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return modalityValue;
         }
 
-        private bool ProcessBinaryOperator(Value modalityValue, LogicalModalityExpressionNode expressionNode, LocalCodeExecutionContext localCodeExecutionContext)
+        private bool ProcessBinaryOperator(Value modalityValue, LogicalModalityExpressionNode expressionNode, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"expressionNode = {expressionNode.ToHumanizedString()}");
@@ -295,7 +295,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private bool ProcessUnaryOperator(Value modalityValue, LogicalModalityExpressionNode expressionNode, LocalCodeExecutionContext localCodeExecutionContext)
+        private bool ProcessUnaryOperator(Value modalityValue, LogicalModalityExpressionNode expressionNode, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"expressionNode = {expressionNode.ToHumanizedString()}");
@@ -311,12 +311,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private Value ProcessValue(Value modalityValue, LogicalModalityExpressionNode expressionNode, LocalCodeExecutionContext localCodeExecutionContext)
+        private Value ProcessValue(Value modalityValue, LogicalModalityExpressionNode expressionNode, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return expressionNode.Value;
         }
 
-        private bool ProcessGroup(Value modalityValue, LogicalModalityExpressionNode expressionNode, LocalCodeExecutionContext localCodeExecutionContext)
+        private bool ProcessGroup(Value modalityValue, LogicalModalityExpressionNode expressionNode, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return ProcessBoolExpression(modalityValue, expressionNode.Left, localCodeExecutionContext);
         }

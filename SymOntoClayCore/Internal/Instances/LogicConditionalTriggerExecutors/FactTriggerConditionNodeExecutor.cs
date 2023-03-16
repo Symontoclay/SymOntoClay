@@ -35,7 +35,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 {
     public class FactTriggerConditionNodeExecutor: BaseTriggerConditionNodeExecutor
     {
-        public FactTriggerConditionNodeExecutor(IEngineContext engineContext, LocalCodeExecutionContext localCodeExecutionContext, TriggerConditionNode condition, BindingVariables bindingVariables)
+        public FactTriggerConditionNodeExecutor(IEngineContext engineContext, ILocalCodeExecutionContext localCodeExecutionContext, TriggerConditionNode condition, BindingVariables bindingVariables)
             : base(engineContext.Logger)
         {
             _engineContext = engineContext;
@@ -55,7 +55,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 
         private readonly IEngineContext _engineContext;
         private readonly BindingVariables _bindingVariables;
-        private readonly LocalCodeExecutionContext _localCodeExecutionContext;
+        private readonly ILocalCodeExecutionContext _localCodeExecutionContext;
 
         private readonly LogicalSearchOptions _searchOptions;
         private readonly LogicalSearchResolver _searcher;

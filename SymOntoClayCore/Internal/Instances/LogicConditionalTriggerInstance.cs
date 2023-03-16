@@ -43,7 +43,7 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class LogicConditionalTriggerInstance : BaseComponent, INamedTriggerInstance, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public LogicConditionalTriggerInstance(InlineTrigger trigger, BaseInstance parent, IEngineContext context, IStorage parentStorage, LocalCodeExecutionContext parentCodeExecutionContext)
+        public LogicConditionalTriggerInstance(InlineTrigger trigger, BaseInstance parent, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext)
             : base(context.Logger)
         {
             _executionCoordinator = parent.ExecutionCoordinator;
@@ -65,12 +65,14 @@ namespace SymOntoClay.Core.Internal.Instances
             //Log($"_dateTimeProvider.CurrentTiks = {_dateTimeProvider.CurrentTiks}");
 #endif
 
-            _localCodeExecutionContext = new LocalCodeExecutionContext(parentCodeExecutionContext);
+            var localCodeExecutionContext = new LocalCodeExecutionContext(parentCodeExecutionContext);
             var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);
             _storage = new LocalStorage(localStorageSettings);
-            _localCodeExecutionContext.Storage = _storage;
+            localCodeExecutionContext.Storage = _storage;
 
-            _localCodeExecutionContext.Holder = parent.Name;
+            localCodeExecutionContext.Holder = parent.Name;
+
+            _localCodeExecutionContext = localCodeExecutionContext;
 
             _triggerConditionNodeObserverContext = new TriggerConditionNodeObserverContext(context, _storage, parent.Name);
 
@@ -128,7 +130,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly List<RuleInstance> _ruleInstancesList;
         private readonly bool _hasRuleInstancesList;
         private readonly IStorage _storage;
-        private readonly LocalCodeExecutionContext _localCodeExecutionContext;
+        private readonly ILocalCodeExecutionContext _localCodeExecutionContext;
         private readonly LogicConditionalTriggerObserver _setConditionalTriggerObserver;
         private readonly LogicConditionalTriggerObserver _resetConditionalTriggerObserver;
         private readonly LogicConditionalTriggerExecutor _setConditionalTriggerExecutor;
@@ -678,7 +680,7 @@ namespace SymOntoClay.Core.Internal.Instances
 #endif
         }
 
-        private void RunSetHandler(LocalCodeExecutionContext localCodeExecutionContext)
+        private void RunSetHandler(ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"_trigger = {_trigger}");
@@ -700,7 +702,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo);
         }
 
-        private void RunResetHandler(LocalCodeExecutionContext localCodeExecutionContext)
+        private void RunResetHandler(ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"_trigger = {_trigger}");

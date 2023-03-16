@@ -41,7 +41,7 @@ namespace SymOntoClay.Core.Internal.Services
 
         private readonly IMainStorageContext _context;
 
-        private LocalCodeExecutionContext _globalExecutionContext;
+        private ILocalCodeExecutionContext _globalExecutionContext;
         private SynonymsResolver _synonymsResolver;
 
         private StrongIdentifierValue _randomConstraintName;
@@ -64,9 +64,11 @@ namespace SymOntoClay.Core.Internal.Services
 
             var commonNamesStorage = _context.CommonNamesStorage;
 
-            _globalExecutionContext = new LocalCodeExecutionContext();
-            _globalExecutionContext.Storage = _context.Storage.GlobalStorage;
-            _globalExecutionContext.Holder = commonNamesStorage.DefaultHolder;
+            var globalExecutionContext = new LocalCodeExecutionContext();
+            globalExecutionContext.Storage = _context.Storage.GlobalStorage;
+            globalExecutionContext.Holder = commonNamesStorage.DefaultHolder;
+
+            _globalExecutionContext = globalExecutionContext;
 
             _constraintsList = new List<StrongIdentifierValue>();
 

@@ -35,7 +35,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class EntityValue : BaseEntityValue
     {
-        public EntityValue(StrongIdentifierValue identifier, IEngineContext context, LocalCodeExecutionContext localContext)
+        public EntityValue(StrongIdentifierValue identifier, IEngineContext context, ILocalCodeExecutionContext localContext)
             : base(context, localContext)
         {
             Identifier = identifier;
@@ -46,7 +46,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         private IEngineContext _context;
-        private LocalCodeExecutionContext _localContext;
+        private ILocalCodeExecutionContext _localContext;
 
         public StrongIdentifierValue Identifier { get; private set; }
 

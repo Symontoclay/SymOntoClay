@@ -35,7 +35,7 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public abstract class BaseAddingFactTriggerInstance : BaseComponent, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        protected BaseAddingFactTriggerInstance(InlineTrigger trigger, BaseInstance parent, IEngineContext context, IStorage parentStorage, LocalCodeExecutionContext parentCodeExecutionContext, bool allowAddionalVariablesInBinding)
+        protected BaseAddingFactTriggerInstance(InlineTrigger trigger, BaseInstance parent, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext, bool allowAddionalVariablesInBinding)
             : base(context.Logger)
         {
             _executionCoordinator = parent.ExecutionCoordinator;
@@ -110,7 +110,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly IExecutionCoordinator _executionCoordinator;
         private readonly IEngineContext _context;
         protected readonly IStorage _storage;
-        protected readonly LocalCodeExecutionContext _parentCodeExecutionContext;
+        protected readonly ILocalCodeExecutionContext _parentCodeExecutionContext;
         private readonly BaseInstance _parent;
         private readonly InlineTrigger _trigger;
         private BaseResolver _baseResolver;

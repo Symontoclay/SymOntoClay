@@ -41,7 +41,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private readonly List<Constructor> _emptyConstructorsList = new List<Constructor>();
 
-        public Constructor ResolveOnlyOwn(StrongIdentifierValue holder, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public Constructor ResolveOnlyOwn(StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"holder = {holder}");
@@ -66,7 +66,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return FilterRawListAndGetItem(rawList, localCodeExecutionContext, options);
         }
 
-        public Constructor ResolveOnlyOwn(StrongIdentifierValue holder, Dictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public Constructor ResolveOnlyOwn(StrongIdentifierValue holder, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"holder = {holder}");
@@ -92,7 +92,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return FilterRawListAndGetItem(rawList, namedParameters, localCodeExecutionContext, options);
         }
 
-        public Constructor ResolveOnlyOwn(StrongIdentifierValue holder, List<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public Constructor ResolveOnlyOwn(StrongIdentifierValue holder, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"holder = {holder}");
@@ -118,7 +118,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return FilterRawListAndGetItem(rawList, positionedParameters, localCodeExecutionContext, options);
         }
 
-        public Constructor ResolveWithSelfAndDirectInheritance(StrongIdentifierValue holder, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public Constructor ResolveWithSelfAndDirectInheritance(StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"holder = {holder}");
@@ -154,7 +154,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return FilterRawListAndGetItem(rawList, localCodeExecutionContext, options);
         }
 
-        public Constructor ResolveWithSelfAndDirectInheritance(StrongIdentifierValue holder, Dictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public Constructor ResolveWithSelfAndDirectInheritance(StrongIdentifierValue holder, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"holder = {holder}");
@@ -190,7 +190,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return FilterRawListAndGetItem(rawList, namedParameters, localCodeExecutionContext, options);
         }
 
-        public Constructor ResolveWithSelfAndDirectInheritance(StrongIdentifierValue holder, List<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public Constructor ResolveWithSelfAndDirectInheritance(StrongIdentifierValue holder, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"holder = {holder}");
@@ -226,7 +226,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return FilterRawListAndGetItem(rawList, positionedParameters, localCodeExecutionContext, options);
         }
 
-        public List<Constructor> ResolveListWithSelfAndDirectInheritance(StrongIdentifierValue holder, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<Constructor> ResolveListWithSelfAndDirectInheritance(StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"holder = {holder}");
@@ -311,7 +311,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        public List<Constructor> ResolvePreConstructors(StrongIdentifierValue holder, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<Constructor> ResolvePreConstructors(StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"holder = {holder}");
@@ -350,7 +350,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return rawList.OrderByDescending(p => p.Distance).Select(p => p.ResultItem).ToList();
         }
 
-        private Constructor FilterRawListAndGetItem(List<WeightedInheritanceResultItemWithStorageInfo<Constructor>> rawList, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private Constructor FilterRawListAndGetItem(List<WeightedInheritanceResultItemWithStorageInfo<Constructor>> rawList, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             if (!rawList.Any())
             {
@@ -376,7 +376,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return GetTargetValueFromList(filteredList, 0, localCodeExecutionContext, options);
         }
 
-        private Constructor FilterRawListAndGetItem(List<WeightedInheritanceResultItemWithStorageInfo<Constructor>> rawList, Dictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private Constructor FilterRawListAndGetItem(List<WeightedInheritanceResultItemWithStorageInfo<Constructor>> rawList, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             if (!rawList.Any())
             {
@@ -413,7 +413,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return GetTargetValueFromList(filteredList, namedParameters.Count, localCodeExecutionContext, options);
         }
 
-        private Constructor FilterRawListAndGetItem(List<WeightedInheritanceResultItemWithStorageInfo<Constructor>> rawList, List<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private Constructor FilterRawListAndGetItem(List<WeightedInheritanceResultItemWithStorageInfo<Constructor>> rawList, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             if (!rawList.Any())
             {

@@ -71,7 +71,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         private KindOfOnAddingFactEvent _enableOnAddingFactEvent;
 
         private readonly FuzzyLogicResolver _fuzzyLogicResolver;
-        private readonly LocalCodeExecutionContext _localCodeExecutionContext;
+        private readonly ILocalCodeExecutionContext _localCodeExecutionContext;
 
         /// <inheritdoc/>
         public KindOfStorage Kind => KindOfStorage.WorldPublicFacts;

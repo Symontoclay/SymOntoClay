@@ -30,14 +30,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public class ExecutableWithTargetLocalContext: IExecutable
     {
-        public ExecutableWithTargetLocalContext(IExecutable executable, LocalCodeExecutionContext localCodeExecutionContext)
+        public ExecutableWithTargetLocalContext(IExecutable executable, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             _executable = executable;
             _localCodeExecutionContext = localCodeExecutionContext;
         }
 
         private readonly IExecutable _executable;
-        private readonly LocalCodeExecutionContext _localCodeExecutionContext;
+        private readonly ILocalCodeExecutionContext _localCodeExecutionContext;
 
         /// <inheritdoc/>
         public bool IsSystemDefined => _executable.IsSystemDefined;
@@ -55,19 +55,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public ISystemHandler SystemHandler => _executable.SystemHandler;
 
         /// <inheritdoc/>
-        public LocalCodeExecutionContext OwnLocalCodeExecutionContext => _localCodeExecutionContext;
+        public ILocalCodeExecutionContext OwnLocalCodeExecutionContext => _localCodeExecutionContext;
 
         /// <inheritdoc/>
         public StrongIdentifierValue Holder => _executable.Holder;
 
         /// <inheritdoc/>
-        IExecutionCoordinator IExecutable.GetCoordinator(IEngineContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        IExecutionCoordinator IExecutable.GetCoordinator(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return _executable.GetCoordinator(context, localCodeExecutionContext);
         }
 
         /// <inheritdoc/>
-        IExecutable IExecutable.Activate(IEngineContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        IExecutable IExecutable.Activate(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return _executable.Activate(context, localCodeExecutionContext);
         }

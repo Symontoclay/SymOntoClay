@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly IUnaryOperatorHandler _operatorHandler;
 
         /// <inheritdoc/>
-        public Value Call(IList<Value> paramsList, LocalCodeExecutionContext localCodeExecutionContext)
+        public Value Call(IList<Value> paramsList, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var operand = paramsList[0];
             var anotation = paramsList[1];
@@ -49,7 +49,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         /// <inheritdoc/>
-        public Value Call(IDictionary<string, Value> paramsDict, Value anotation, LocalCodeExecutionContext localCodeExecutionContext)
+        public Value Call(IDictionary<string, Value> paramsDict, Value anotation, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var operand = paramsDict[_operandKey];
 

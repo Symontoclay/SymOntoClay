@@ -46,9 +46,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _methodsResolver = dataResolversFactory.GetMethodsResolver();
             _numberValueLinearResolver = dataResolversFactory.GetNumberValueLinearResolver();
 
-            _globalExecutionContext = new LocalCodeExecutionContext();
-            _globalExecutionContext.Storage = context.Storage.GlobalStorage;
-            _globalExecutionContext.Holder = context.CommonNamesStorage.DefaultHolder;
+            var globalExecutionContext = new LocalCodeExecutionContext();
+            globalExecutionContext.Storage = context.Storage.GlobalStorage;
+            globalExecutionContext.Holder = context.CommonNamesStorage.DefaultHolder;
+
+            _globalExecutionContext = globalExecutionContext;
         }
 
         private readonly IEngineContext _context;
@@ -58,7 +60,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly MethodsResolver _methodsResolver;
         private readonly NumberValueLinearResolver _numberValueLinearResolver;
 
-        private readonly LocalCodeExecutionContext _globalExecutionContext;
+        private readonly ILocalCodeExecutionContext _globalExecutionContext;
 
         /// <inheritdoc/>
         public Value ExecuteAsync(ProcessInitialInfo processInitialInfo)
@@ -159,7 +161,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         /// <inheritdoc/>
-        public Value CallOperator(KindOfOperator kindOfOperator, List<Value> paramsList, LocalCodeExecutionContext parentLocalCodeExecutionContext)
+        public Value CallOperator(KindOfOperator kindOfOperator, List<Value> paramsList, ILocalCodeExecutionContext parentLocalCodeExecutionContext)
         {
             var operatorInfo = _operatorsResolver.GetOperator(kindOfOperator, parentLocalCodeExecutionContext);
 
@@ -171,12 +173,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         /// <inheritdoc/>
-        public Value CallExecutableSync(IExecutable executable, List<Value> positionedParameters, LocalCodeExecutionContext parentLocalCodeExecutionContext)
+        public Value CallExecutableSync(IExecutable executable, List<Value> positionedParameters, ILocalCodeExecutionContext parentLocalCodeExecutionContext)
         {
             return CallExecutable(executable, KindOfFunctionParameters.PositionedParameters, null, positionedParameters, true, parentLocalCodeExecutionContext);
         }
 
-        private Value CallExecutable(IExecutable executable, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, bool isSync, LocalCodeExecutionContext parentLocalCodeExecutionContext)
+        private Value CallExecutable(IExecutable executable, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, bool isSync, ILocalCodeExecutionContext parentLocalCodeExecutionContext)
         {
             if (executable == null)
             {
@@ -249,12 +251,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         /// <inheritdoc/>
-        public Value CallFunctionSync(Value caller, KindOfFunctionParameters kindOfParameters, List<Value> parameters, LocalCodeExecutionContext parentLocalCodeExecutionContext)
+        public Value CallFunctionSync(Value caller, KindOfFunctionParameters kindOfParameters, List<Value> parameters, ILocalCodeExecutionContext parentLocalCodeExecutionContext)
         {
             return CallFunction(caller, kindOfParameters, parameters, parentLocalCodeExecutionContext, true);
         }
 
-        private Value CallFunction(Value caller, KindOfFunctionParameters kindOfParameters, List<Value> parameters, LocalCodeExecutionContext parentLocalCodeExecutionContext, bool isSync)
+        private Value CallFunction(Value caller, KindOfFunctionParameters kindOfParameters, List<Value> parameters, ILocalCodeExecutionContext parentLocalCodeExecutionContext, bool isSync)
         {
 #if DEBUG
             //Log($"kindOfparameters = {kindOfParameters}");
@@ -356,7 +358,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private Value CallStrongIdentifierValue(StrongIdentifierValue methodName,
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
-            bool isSync, LocalCodeExecutionContext parentLocalCodeExecutionContext)
+            bool isSync, ILocalCodeExecutionContext parentLocalCodeExecutionContext)
         {
 #if DEBUG
             //Log($"methodName = {methodName}");

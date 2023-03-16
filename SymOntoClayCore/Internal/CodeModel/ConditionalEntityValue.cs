@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class ConditionalEntityValue : BaseEntityValue
     {
-        public ConditionalEntityValue(EntityConditionExpressionNode entityConditionExpression, RuleInstance logicalQuery, StrongIdentifierValue name, IEngineContext context, LocalCodeExecutionContext localContext)
+        public ConditionalEntityValue(EntityConditionExpressionNode entityConditionExpression, RuleInstance logicalQuery, StrongIdentifierValue name, IEngineContext context, ILocalCodeExecutionContext localContext)
             : base(context, localContext)
         {
             _context = context;            
@@ -91,10 +91,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             _searcher = dataResolversFactory.GetLogicalSearchResolver();
 
-            _localCodeExecutionContext = new LocalCodeExecutionContext(localContext);
+            var localCodeExecutionContext = new LocalCodeExecutionContext(localContext);
             var localStorageSettings = RealStorageSettingsHelper.Create(context, new List<IStorage> { localContext.Storage, _worldPublicFactsStorage });
             _storage = new LocalStorage(localStorageSettings);
-            _localCodeExecutionContext.Storage = _storage;
+            localCodeExecutionContext.Storage = _storage;
+
+            _localCodeExecutionContext = localCodeExecutionContext;
 
             _searchOptions = new LogicalSearchOptions();
             _searchOptions.QueryExpression = logicalQuery;
@@ -106,10 +108,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public RuleInstance LogicalQuery { get; private set; }
 
         private IEngineContext _context;
-        private LocalCodeExecutionContext _localContext;
+        private ILocalCodeExecutionContext _localContext;
         private IStorage _worldPublicFactsStorage;
         private readonly LogicalSearchResolver _searcher;
-        private readonly LocalCodeExecutionContext _localCodeExecutionContext;
+        private readonly ILocalCodeExecutionContext _localCodeExecutionContext;
         private readonly IStorage _storage;
         private LogicalSearchOptions _searchOptions;
 

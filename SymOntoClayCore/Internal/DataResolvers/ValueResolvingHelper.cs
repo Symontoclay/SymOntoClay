@@ -42,7 +42,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly IMainStorageContext _context;
         private readonly VarsResolver _varsResolver;
 
-        public Value TryResolveFromVarOrExpr(Value operand, LocalCodeExecutionContext localCodeExecutionContext)
+        public Value TryResolveFromVarOrExpr(Value operand, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"operand = {operand}");

@@ -53,17 +53,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private readonly ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
 
-        public NumberValue Resolve(Value value, LocalCodeExecutionContext localCodeExecutionContext)
+        public NumberValue Resolve(Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Resolve(value, null, localCodeExecutionContext, _defaultOptions);
         }
 
-        public NumberValue Resolve(Value value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        public NumberValue Resolve(Value value, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Resolve(value, reason, localCodeExecutionContext, _defaultOptions);
         }
 
-        public NumberValue Resolve(Value value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public NumberValue Resolve(Value value, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"value = {value}");
@@ -87,17 +87,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             throw new NotImplementedException();
         }
 
-        public NumberValue Resolve(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext)
+        public NumberValue Resolve(StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Resolve(name, null, localCodeExecutionContext, _defaultOptions);
         }
 
-        public NumberValue Resolve(StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        public NumberValue Resolve(StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Resolve(name, reason, localCodeExecutionContext, _defaultOptions);
         }
 
-        public NumberValue Resolve(StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public NumberValue Resolve(StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"name = {name}");
@@ -124,17 +124,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return fuzzyValue;
         }
 
-        public NumberValue Resolve(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, LocalCodeExecutionContext localCodeExecutionContext)
+        public NumberValue Resolve(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Resolve(fuzzyLogicNonNumericSequence, null, localCodeExecutionContext, _defaultOptions);
         }
 
-        public NumberValue Resolve(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        public NumberValue Resolve(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Resolve(fuzzyLogicNonNumericSequence, reason, localCodeExecutionContext, _defaultOptions);
         }
 
-        public NumberValue Resolve(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public NumberValue Resolve(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"fuzzyLogicNonNumericSequence = {fuzzyLogicNonNumericSequence}");
@@ -166,17 +166,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return new NumberValue(fuzzyValue);
         }
         
-        public bool Equals(Value value1, Value value2, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool Equals(Value value1, Value value2, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Equals(value1, value2, null, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool Equals(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool Equals(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Equals(value1, value2, reason, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool Equals(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public bool Equals(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"value1 = {value1}");
@@ -325,17 +325,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             throw new NotImplementedException();
         }
 
-        public bool Equals(StrongIdentifierValue name, NumberValue value, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool Equals(StrongIdentifierValue name, NumberValue value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Equals(name, value, null, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool Equals(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool Equals(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Equals(name, value, reason, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool Equals(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public bool Equals(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"name = {name}");
@@ -362,17 +362,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return FuzzyNumericValueToSystemBool(fuzzyValue);
         }
 
-        public bool Equals(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool Equals(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Equals(fuzzyLogicNonNumericSequence, value, null, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool Equals(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool Equals(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Equals(fuzzyLogicNonNumericSequence, value, reason, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool Equals(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public bool Equals(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"fuzzyLogicNonNumericSequence = {fuzzyLogicNonNumericSequence}");
@@ -418,17 +418,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return FuzzyNumericValueToSystemBool(fuzzyValue);
         }
 
-        public bool More(Value value1, Value value2, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool More(Value value1, Value value2, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return More(value1, value2, null, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool More(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool More(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return More(value1, value2, reason, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool More(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public bool More(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"value1 = {value1}");
@@ -599,17 +599,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             throw new NotImplementedException();
         }
 
-        public bool More(StrongIdentifierValue name, NumberValue value, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool More(StrongIdentifierValue name, NumberValue value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return More(name, value, null, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool More(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool More(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return More(name, value, reason, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool More(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public bool More(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var eqResult = Equals(name, value, localCodeExecutionContext);
 
@@ -641,17 +641,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return systemDeffuzzificatedValue.Value > value.SystemValue.Value;
         }
 
-        public bool More(NumberValue value, StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool More(NumberValue value, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return More(value, name, null, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool More(NumberValue value, StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool More(NumberValue value, StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return More(value, name, reason, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool More(NumberValue value, StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public bool More(NumberValue value, StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var eqResult = Equals(name, value, localCodeExecutionContext);
 
@@ -683,17 +683,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return value.SystemValue.Value > systemDeffuzzificatedValue.Value;
         }
 
-        public bool More(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool More(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return More(fuzzyLogicNonNumericSequence, value, null, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool More(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool More(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return More(fuzzyLogicNonNumericSequence, value, reason, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool More(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public bool More(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var eqResult = Equals(fuzzyLogicNonNumericSequence, value, localCodeExecutionContext);
 
@@ -725,17 +725,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return systemDeffuzzificatedValue.Value > value.SystemValue.Value;
         }
 
-        public bool More(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool More(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return More(value, fuzzyLogicNonNumericSequence, null, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool More(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool More(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return More(value, fuzzyLogicNonNumericSequence, reason, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool More(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public bool More(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var eqResult = Equals(fuzzyLogicNonNumericSequence, value, localCodeExecutionContext);
 
@@ -767,17 +767,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return value.SystemValue.Value > systemDeffuzzificatedValue.Value;
         }
 
-        public bool MoreOrEqual(Value value1, Value value2, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool MoreOrEqual(Value value1, Value value2, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return MoreOrEqual(value1, value2, null, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool MoreOrEqual(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool MoreOrEqual(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return MoreOrEqual(value1, value2, reason, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool MoreOrEqual(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public bool MoreOrEqual(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"value1 = {value1}");
@@ -948,17 +948,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             throw new NotImplementedException();
         }
 
-        public bool MoreOrEqual(StrongIdentifierValue name, NumberValue value, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool MoreOrEqual(StrongIdentifierValue name, NumberValue value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return MoreOrEqual(name, value, null, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool MoreOrEqual(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool MoreOrEqual(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return MoreOrEqual(name, value, reason, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool MoreOrEqual(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public bool MoreOrEqual(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var eqResult = Equals(name, value, localCodeExecutionContext);
 
@@ -990,17 +990,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return systemDeffuzzificatedValue.Value >= value.SystemValue.Value;
         }
 
-        public bool MoreOrEqual(NumberValue value, StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool MoreOrEqual(NumberValue value, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return MoreOrEqual(value, name, null, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool MoreOrEqual(NumberValue value, StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool MoreOrEqual(NumberValue value, StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return MoreOrEqual(value, name, reason, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool MoreOrEqual(NumberValue value, StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public bool MoreOrEqual(NumberValue value, StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var eqResult = Equals(name, value, localCodeExecutionContext);
 
@@ -1032,17 +1032,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return value.SystemValue.Value >= systemDeffuzzificatedValue.Value;
         }
 
-        public bool MoreOrEqual(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool MoreOrEqual(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return MoreOrEqual(fuzzyLogicNonNumericSequence, value, null, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool MoreOrEqual(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool MoreOrEqual(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return MoreOrEqual(fuzzyLogicNonNumericSequence, value, reason, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool MoreOrEqual(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public bool MoreOrEqual(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var eqResult = Equals(fuzzyLogicNonNumericSequence, value, localCodeExecutionContext);
 
@@ -1074,17 +1074,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return systemDeffuzzificatedValue.Value >= value.SystemValue.Value;
         }
 
-        public bool MoreOrEqual(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool MoreOrEqual(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return MoreOrEqual(value, fuzzyLogicNonNumericSequence, null, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool MoreOrEqual(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool MoreOrEqual(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return MoreOrEqual(value, fuzzyLogicNonNumericSequence, reason, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool MoreOrEqual(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public bool MoreOrEqual(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var eqResult = Equals(fuzzyLogicNonNumericSequence, value, localCodeExecutionContext);
 
@@ -1116,17 +1116,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return value.SystemValue.Value >= systemDeffuzzificatedValue.Value;
         }
 
-        public bool Less(Value value1, Value value2, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool Less(Value value1, Value value2, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Less(value1, value2, null, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool Less(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool Less(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Less(value1, value2, reason, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool Less(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public bool Less(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"value1 = {value1}");
@@ -1297,17 +1297,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             throw new NotImplementedException();
         }
 
-        public bool Less(StrongIdentifierValue name, NumberValue value, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool Less(StrongIdentifierValue name, NumberValue value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Less(name, value, null, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool Less(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool Less(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Less(name, value, reason, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool Less(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public bool Less(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var eqResult = Equals(name, value, localCodeExecutionContext);
 
@@ -1339,17 +1339,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return systemDeffuzzificatedValue.Value < value.SystemValue.Value;
         }
 
-        public bool Less(NumberValue value, StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool Less(NumberValue value, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Less(value, name, null, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool Less(NumberValue value, StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool Less(NumberValue value, StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Less(value, name, reason, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool Less(NumberValue value, StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public bool Less(NumberValue value, StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var eqResult = Equals(name, value, localCodeExecutionContext);
 
@@ -1381,17 +1381,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return value.SystemValue.Value < systemDeffuzzificatedValue.Value;
         }
 
-        public bool Less(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool Less(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Less(fuzzyLogicNonNumericSequence, value, null, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool Less(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool Less(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Less(fuzzyLogicNonNumericSequence, value, reason, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool Less(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public bool Less(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var eqResult = Equals(fuzzyLogicNonNumericSequence, value, localCodeExecutionContext);
 
@@ -1423,17 +1423,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return systemDeffuzzificatedValue.Value < value.SystemValue.Value;
         }
 
-        public bool Less(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool Less(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Less(value, fuzzyLogicNonNumericSequence, null, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool Less(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool Less(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Less(value, fuzzyLogicNonNumericSequence, reason, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool Less(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public bool Less(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var eqResult = Equals(fuzzyLogicNonNumericSequence, value, localCodeExecutionContext);
 
@@ -1465,17 +1465,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return value.SystemValue.Value < systemDeffuzzificatedValue.Value;
         }
 
-        public bool LessOrEqual(Value value1, Value value2, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool LessOrEqual(Value value1, Value value2, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return LessOrEqual(value1, value2, null, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool LessOrEqual(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool LessOrEqual(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return LessOrEqual(value1, value2, reason, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool LessOrEqual(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public bool LessOrEqual(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"value1 = {value1}");
@@ -1646,17 +1646,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             throw new NotImplementedException();
         }
 
-        public bool LessOrEqual(StrongIdentifierValue name, NumberValue value, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool LessOrEqual(StrongIdentifierValue name, NumberValue value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return LessOrEqual(name, value, null, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool LessOrEqual(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool LessOrEqual(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return LessOrEqual(name, value, reason, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool LessOrEqual(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public bool LessOrEqual(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var eqResult = Equals(name, value, localCodeExecutionContext);
 
@@ -1688,17 +1688,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return systemDeffuzzificatedValue.Value <= value.SystemValue.Value;
         }
 
-        public bool LessOrEqual(NumberValue value, StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool LessOrEqual(NumberValue value, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return LessOrEqual(value, name, null, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool LessOrEqual(NumberValue value, StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool LessOrEqual(NumberValue value, StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return LessOrEqual(value, name, reason, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool LessOrEqual(NumberValue value, StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public bool LessOrEqual(NumberValue value, StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var eqResult = Equals(name, value, localCodeExecutionContext);
 
@@ -1730,17 +1730,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return value.SystemValue.Value <= systemDeffuzzificatedValue.Value;
         }
 
-        public bool LessOrEqual(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool LessOrEqual(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return LessOrEqual(fuzzyLogicNonNumericSequence, value, null, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool LessOrEqual(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool LessOrEqual(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return LessOrEqual(fuzzyLogicNonNumericSequence, value, reason, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool LessOrEqual(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public bool LessOrEqual(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var eqResult = Equals(fuzzyLogicNonNumericSequence, value, localCodeExecutionContext);
 
@@ -1772,17 +1772,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return systemDeffuzzificatedValue.Value <= value.SystemValue.Value;
         }
 
-        public bool LessOrEqual(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool LessOrEqual(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return LessOrEqual(value, fuzzyLogicNonNumericSequence, null, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool LessOrEqual(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool LessOrEqual(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return LessOrEqual(value, fuzzyLogicNonNumericSequence, reason, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool LessOrEqual(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public bool LessOrEqual(NumberValue value, FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var eqResult = Equals(fuzzyLogicNonNumericSequence, value, localCodeExecutionContext);
 
@@ -1862,7 +1862,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private FuzzyLogicNonNumericValue GetTargetFuzzyLogicNonNumericValue(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private FuzzyLogicNonNumericValue GetTargetFuzzyLogicNonNumericValue(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 

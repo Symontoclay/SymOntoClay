@@ -35,7 +35,7 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public abstract class BaseIndependentInstance : BaseInstance
     {
-        protected BaseIndependentInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage, LocalCodeExecutionContext parentCodeExecutionContext, IStorageFactory storageFactory, List<Var> varList)
+        protected BaseIndependentInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext, IStorageFactory storageFactory, List<Var> varList)
             : base(codeItem, context, parentStorage, parentCodeExecutionContext, storageFactory, varList)
         {
             _idleActionsResolver = context.DataResolversFactory.GetIdleActionsResolver();

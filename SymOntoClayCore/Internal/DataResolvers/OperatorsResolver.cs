@@ -42,12 +42,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private readonly InheritanceResolver _inheritanceResolver;
 
-        public Operator GetOperator(KindOfOperator kindOfOperator, LocalCodeExecutionContext localCodeExecutionContext)
+        public Operator GetOperator(KindOfOperator kindOfOperator, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return GetOperator(kindOfOperator, localCodeExecutionContext, _defaultOptions);
         }
 
-        public Operator GetOperator(KindOfOperator kindOfOperator, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public Operator GetOperator(KindOfOperator kindOfOperator, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"kindOfOperator = {kindOfOperator}");

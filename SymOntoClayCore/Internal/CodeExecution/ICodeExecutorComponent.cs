@@ -33,8 +33,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         Value ExecuteBatchAsync(List<ProcessInitialInfo> processInitialInfoList);
         Value ExecuteBatchSync(List<ProcessInitialInfo> processInitialInfoList);
         Value ExecuteAsync(ProcessInitialInfo processInitialInfo);
-        Value CallOperator(KindOfOperator kindOfOperator, List<Value> paramsList, LocalCodeExecutionContext parentLocalCodeExecutionContext);
-        Value CallExecutableSync(IExecutable executable, List<Value> positionedParameters, LocalCodeExecutionContext parentLocalCodeExecutionContext);
-        Value CallFunctionSync(Value caller, KindOfFunctionParameters kindOfParameters, List<Value> parameters, LocalCodeExecutionContext parentLocalCodeExecutionContext);
+        Value CallOperator(KindOfOperator kindOfOperator, List<Value> paramsList, ILocalCodeExecutionContext parentLocalCodeExecutionContext);
+        Value CallExecutableSync(IExecutable executable, List<Value> positionedParameters, ILocalCodeExecutionContext parentLocalCodeExecutionContext);
+        Value CallFunctionSync(Value caller, KindOfFunctionParameters kindOfParameters, List<Value> parameters, ILocalCodeExecutionContext parentLocalCodeExecutionContext);
     }
 }

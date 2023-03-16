@@ -91,7 +91,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override ConditionalEntitySourceValue AsConditionalEntitySourceValue => this;
 
-        public ConditionalEntityValue ConvertToConditionalEntityValue(IEngineContext context, LocalCodeExecutionContext localContext)
+        public ConditionalEntityValue ConvertToConditionalEntityValue(IEngineContext context, ILocalCodeExecutionContext localContext)
         {
             lock(_recalculatingLongHashCodeWithEngineContextLockObj)
             {

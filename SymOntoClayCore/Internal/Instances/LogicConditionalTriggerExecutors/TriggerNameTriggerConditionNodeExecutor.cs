@@ -33,7 +33,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 {
     public class TriggerNameTriggerConditionNodeExecutor : BaseTriggerConditionNodeExecutor
     {
-        public TriggerNameTriggerConditionNodeExecutor(IEngineContext engineContext, LocalCodeExecutionContext localCodeExecutionContext, TriggerConditionNode condition)
+        public TriggerNameTriggerConditionNodeExecutor(IEngineContext engineContext, ILocalCodeExecutionContext localCodeExecutionContext, TriggerConditionNode condition)
             : base(engineContext.Logger)
         {
             _triggerName = condition.Name;
@@ -48,7 +48,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         }
 
         private readonly StrongIdentifierValue _triggerName;
-        private readonly LocalCodeExecutionContext _localCodeExecutionContext;
+        private readonly ILocalCodeExecutionContext _localCodeExecutionContext;
         private readonly TriggersResolver _triggersResolver;
 
         /// <inheritdoc/>

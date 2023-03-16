@@ -35,6 +35,6 @@ namespace SymOntoClay.Core.Internal
         INLPConverterFactory NLPConverterFactory { get; }
 
         INLPConverterContext GetNLPConverterContext();
-        INLPConverterContext GetNLPConverterContext(LocalCodeExecutionContext localCodeExecutionContext);
+        INLPConverterContext GetNLPConverterContext(ILocalCodeExecutionContext localCodeExecutionContext);
     }
 }

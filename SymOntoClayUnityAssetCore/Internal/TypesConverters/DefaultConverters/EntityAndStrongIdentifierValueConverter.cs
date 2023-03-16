@@ -48,13 +48,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters
         public override bool CanConvertToCoreType => false;
 
         /// <inheritdoc/>
-        public override object ConvertToCoreType(object platformObject, IEngineContext context, LocalCodeExecutionContext localContext)
+        public override object ConvertToCoreType(object platformObject, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override object ConvertToPlatformType(object coreObject, IEngineContext context, LocalCodeExecutionContext localContext)
+        public override object ConvertToPlatformType(object coreObject, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
             var identifier = (StrongIdentifierValue)coreObject;
 
@@ -78,14 +78,14 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters
             }
         }
 
-        private object ConvertEntityToPlatformType(StrongIdentifierValue identifier, IEngineContext context, LocalCodeExecutionContext localContext)
+        private object ConvertEntityToPlatformType(StrongIdentifierValue identifier, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
             var entityValue = PlatformTypesConverterHelper.GetResolvedEntityValue(identifier, context, localContext);
 
             return entityValue;
         }
 
-        private object ConvertConceptToPlatformType(StrongIdentifierValue concept, IEngineContext context, LocalCodeExecutionContext localContext)
+        private object ConvertConceptToPlatformType(StrongIdentifierValue concept, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
 #if DEBUG
             //var logger = context.Logger;

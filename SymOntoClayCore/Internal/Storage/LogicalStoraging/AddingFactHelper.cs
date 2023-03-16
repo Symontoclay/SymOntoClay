@@ -39,7 +39,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
-        public static IAddFactOrRuleResult CallEvent(MulticastDelegate onAddingFactEvent, RuleInstance ruleInstance, FuzzyLogicResolver fuzzyLogicResolver, LocalCodeExecutionContext localCodeExecutionContext, IEntityLogger logger)
+        public static IAddFactOrRuleResult CallEvent(MulticastDelegate onAddingFactEvent, RuleInstance ruleInstance, FuzzyLogicResolver fuzzyLogicResolver, ILocalCodeExecutionContext localCodeExecutionContext, IEntityLogger logger)
         {
             var resultsOfCallList = new List<IAddFactOrRuleResult>();
 

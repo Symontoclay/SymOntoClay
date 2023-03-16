@@ -46,7 +46,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly InheritanceResolver _inheritanceResolver;
         private readonly SynonymsResolver _synonymsResolver;
 
-        public Channel GetChannel(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public Channel GetChannel(StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"name = {name}");

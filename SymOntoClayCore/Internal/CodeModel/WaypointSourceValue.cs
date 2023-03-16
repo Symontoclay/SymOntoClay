@@ -71,7 +71,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public Value HorizontalAngle { get; private set; }
         public StrongIdentifierValue Name { get; private set; }
 
-        public WaypointValue ConvertToWaypointValue(IEngineContext context, LocalCodeExecutionContext localContext)
+        public WaypointValue ConvertToWaypointValue(IEngineContext context, ILocalCodeExecutionContext localContext)
         {
             var numberValueLinearResolver = context.DataResolversFactory.GetNumberValueLinearResolver();
 

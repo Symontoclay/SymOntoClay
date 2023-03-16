@@ -36,7 +36,7 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public abstract class BaseSimpleConditionalTriggerInstance : BaseComponent, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        protected BaseSimpleConditionalTriggerInstance(RuleInstance condition, BaseInstance parent, IEngineContext context, IStorage parentStorage, LocalCodeExecutionContext parentCodeExecutionContext)
+        protected BaseSimpleConditionalTriggerInstance(RuleInstance condition, BaseInstance parent, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext)
             : base(context.Logger)
         {
             _context = context;
@@ -56,12 +56,14 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _searcher = dataResolversFactory.GetLogicalSearchResolver();
 
-            _localCodeExecutionContext = new LocalCodeExecutionContext(parentCodeExecutionContext);
+            var localCodeExecutionContext = new LocalCodeExecutionContext(parentCodeExecutionContext);
             var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);
             _storage = new LocalStorage(localStorageSettings);
-            _localCodeExecutionContext.Storage = _storage;
+            localCodeExecutionContext.Storage = _storage;
 
-            _localCodeExecutionContext.Holder = parent.Name;
+            localCodeExecutionContext.Holder = parent.Name;
+
+            _localCodeExecutionContext = localCodeExecutionContext;
 
             _storage.LogicalStorage.OnChanged += LogicalStorage_OnChanged;
 
@@ -78,7 +80,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly object _lockObj = new object();
         protected readonly IEngineContext _context;
         private readonly IStorage _storage;
-        private readonly LocalCodeExecutionContext _localCodeExecutionContext;
+        private readonly ILocalCodeExecutionContext _localCodeExecutionContext;
         protected BaseInstance _parent;
         private RuleInstance _condition;
         private LogicalSearchOptions _searchOptions;
@@ -96,7 +98,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
         }
 
-        protected abstract void RunHandler(LocalCodeExecutionContext localCodeExecutionContext);
+        protected abstract void RunHandler(ILocalCodeExecutionContext localCodeExecutionContext);
 
         protected virtual BindingVariables GetBindingVariables()
         {

@@ -52,7 +52,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         private readonly FuzzyLogicResolver _fuzzyLogicResolver;
 
         /// <inheritdoc/>
-        public Value Call(Value leftOperand, Value rightOperand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
+        public Value Call(Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"leftOperand = {leftOperand}");
@@ -101,7 +101,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             throw new NotImplementedException();
         }
 
-        private LogicalValue CompareWithFuzzyLogic(Value numOperand, Value fuzzyOperand, LocalCodeExecutionContext localCodeExecutionContext)
+        private LogicalValue CompareWithFuzzyLogic(Value numOperand, Value fuzzyOperand, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"numOperand = {numOperand}");
@@ -168,7 +168,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             return new LogicalValue(leftValue == rightValue);
         }
 
-        private Value GetInheritanceRank(Value leftOperand, Value rightOperand, LocalCodeExecutionContext localCodeExecutionContext)
+        private Value GetInheritanceRank(Value leftOperand, Value rightOperand, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var subName = _strongIdentifierLinearResolver.Resolve(leftOperand, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 

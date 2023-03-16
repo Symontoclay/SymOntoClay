@@ -33,7 +33,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class LogicalSearchStorageContext: BaseLoggedComponent, ILogicalSearchStorageContext
     {
-        public LogicalSearchStorageContext(IMainStorageContext mainStorageContext, LocalCodeExecutionContext localCodeExecutionContext, RuleInstance queryExpression)
+        public LogicalSearchStorageContext(IMainStorageContext mainStorageContext, ILocalCodeExecutionContext localCodeExecutionContext, RuleInstance queryExpression)
             : base(mainStorageContext.Logger)
         {
             _mainStorageContext = mainStorageContext;
@@ -49,7 +49,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         }
 
         private readonly IMainStorageContext _mainStorageContext;
-        private readonly LocalCodeExecutionContext _localCodeExecutionContext;
+        private readonly ILocalCodeExecutionContext _localCodeExecutionContext;
         private readonly Value _obligationModality;
         private readonly bool _hasObligationModality;
         private readonly Value _selfObligationModality;
@@ -117,7 +117,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             SelfObligationModality
         }
 
-        private bool IsFit(ILogicalSearchItem item, Value modalityValue, Value queryModalityValue, LocalCodeExecutionContext localCodeExecutionContext, KindOfCheckedModality kindOfCheckedModality, IDictionary<RuleInstance, IItemWithModalities> additionalModalities)
+        private bool IsFit(ILogicalSearchItem item, Value modalityValue, Value queryModalityValue, ILocalCodeExecutionContext localCodeExecutionContext, KindOfCheckedModality kindOfCheckedModality, IDictionary<RuleInstance, IItemWithModalities> additionalModalities)
         {
 #if DEBUG
             //Log($"item = {item}");

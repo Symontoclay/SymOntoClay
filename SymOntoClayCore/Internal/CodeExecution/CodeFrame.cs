@@ -39,7 +39,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public SEHGroup CurrentSEHGroup { get; set; }
         public Stack<Value> ValuesStack { get; private set; } = new Stack<Value>();
         public Stack<SEHGroup> SEHStack { get; private set; } = new Stack<SEHGroup>();        
-        public LocalCodeExecutionContext LocalContext { get; set; }
+        public ILocalCodeExecutionContext LocalContext { get; set; }
         public ProcessInfo ProcessInfo { get; set; }
         public CodeItem Metadata { get; set; }
         public IInstance Instance { get; set; }

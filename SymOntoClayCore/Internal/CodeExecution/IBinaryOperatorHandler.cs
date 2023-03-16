@@ -30,6 +30,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public interface IBinaryOperatorHandler
     {
-        Value Call(Value leftOperand, Value rightOperand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext);
+        Value Call(Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext);
     }
 }

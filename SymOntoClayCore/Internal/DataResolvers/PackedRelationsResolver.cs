@@ -30,12 +30,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class PackedRelationsResolver: IPackedRelationsResolver
     {
-        public PackedRelationsResolver(RelationsResolver relationsResolver, LocalCodeExecutionContext localCodeExecutionContext)
+        public PackedRelationsResolver(RelationsResolver relationsResolver, ILocalCodeExecutionContext localCodeExecutionContext)
             : this(relationsResolver, localCodeExecutionContext, relationsResolver.DefaultOptions)
         {
         }
         
-        public PackedRelationsResolver(RelationsResolver relationsResolver, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public PackedRelationsResolver(RelationsResolver relationsResolver, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             _relationsResolver = relationsResolver;
             _localCodeExecutionContext = localCodeExecutionContext;
@@ -43,7 +43,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         }
 
         private readonly RelationsResolver _relationsResolver;
-        private readonly LocalCodeExecutionContext _localCodeExecutionContext;
+        private readonly ILocalCodeExecutionContext _localCodeExecutionContext;
         private readonly ResolverOptions _options;
 
         /// <inheritdoc/>

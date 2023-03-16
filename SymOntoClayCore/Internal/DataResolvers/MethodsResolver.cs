@@ -45,33 +45,79 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         #endregion
         
         #region public methods
-        public IExecutable Resolve(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext)
+        public IExecutable Resolve(StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Resolve(name, localCodeExecutionContext, _defaultOptions);
         }
 
-        public IExecutable Resolve(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public IExecutable Resolve(StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-            var method = ResolveMethod(name, localCodeExecutionContext, options);
-
+            var result = EnumerableLocalCodeExecutionContext<IExecutable>(localCodeExecutionContext, (ctx) =>
+            {
 #if DEBUG
-            Log($"method = {method}");
+                Log($"ctx = {ctx}");
 #endif
 
-            if (method == null)
-            {
-                return ResolveAction(name, localCodeExecutionContext, options);
-            }
+                var method = ResolveMethod(name, ctx, options);
 
-            return method;
+#if DEBUG
+                Log($"method = {method}");
+#endif
+
+                if (method == null)
+                {
+                    return ResolveAction(name, ctx, options);
+                }
+
+                return method;
+
+                //return null;
+            });
+
+#if DEBUG
+            Log($"result = {result}");
+#endif
+
+            //throw new NotImplementedException();
+
+//            var method = ResolveMethod(name, localCodeExecutionContext, options);
+
+//#if DEBUG
+//            Log($"method = {method}");
+//#endif
+
+//            if(method == null)
+//            {
+//#if DEBUG
+//                Log($"localCodeExecutionContext?.Parent = {localCodeExecutionContext?.Parent}");
+//                Log($"localCodeExecutionContext?.Parent?.Parent = {localCodeExecutionContext?.Parent?.Parent}");
+//#endif
+//                if(localCodeExecutionContext?.Parent?.Parent != null)
+//                {
+//                    method = ResolveMethod(name, localCodeExecutionContext.Parent.Parent, options);
+//                }
+//            }
+
+//#if DEBUG
+//            Log($"method (2) = {method}");
+//#endif
+
+//            if (method == null)
+//            {
+//                return ResolveAction(name, localCodeExecutionContext, options);
+//            }
+
+//            return method;
+
+            return result;
         }
 
-        public IExecutable Resolve(StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext)
+        public IExecutable Resolve(StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Resolve(name, namedParameters, localCodeExecutionContext, _defaultOptions);
         }
 
-        public IExecutable Resolve(StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public IExecutable Resolve(StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var method = ResolveMethod(name, namedParameters, localCodeExecutionContext, options);
 
@@ -83,12 +129,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return method;
         }
 
-        public IExecutable Resolve(StrongIdentifierValue name, List<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext)
+        public IExecutable Resolve(StrongIdentifierValue name, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Resolve(name, positionedParameters, localCodeExecutionContext, _defaultOptions);
         }
 
-        public IExecutable Resolve(StrongIdentifierValue name, List<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public IExecutable Resolve(StrongIdentifierValue name, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var method = ResolveMethod(name, positionedParameters, localCodeExecutionContext, options);
 
@@ -100,12 +146,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return method;
         }
 
-        public bool IsFit(Function function, KindOfFunctionParameters kindOfParameters, IDictionary<StrongIdentifierValue, Value> namedParameters, IList<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext)
+        public bool IsFit(Function function, KindOfFunctionParameters kindOfParameters, IDictionary<StrongIdentifierValue, Value> namedParameters, IList<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return IsFit(function, kindOfParameters, namedParameters, positionedParameters, localCodeExecutionContext, _defaultOptions);
         }
 
-        public bool IsFit(Function function, KindOfFunctionParameters kindOfParameters, IDictionary<StrongIdentifierValue, Value> namedParameters, IList<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public bool IsFit(Function function, KindOfFunctionParameters kindOfParameters, IDictionary<StrongIdentifierValue, Value> namedParameters, IList<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             if(namedParameters != null)
             {
@@ -175,7 +221,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         #endregion
 
         #region private methods
-        private IExecutable ResolveMethod(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private IExecutable ResolveMethod(StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             Log($"name = {name}");
@@ -235,7 +281,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return GetTargetValueFromList(filteredList, 0, localCodeExecutionContext, options);
         }
 
-        private IExecutable ResolveMethod(StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private IExecutable ResolveMethod(StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"name = {name}");
@@ -310,7 +356,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return GetTargetValueFromList(filteredList, namedParameters.Count, localCodeExecutionContext, options);
         }
 
-        private IExecutable ResolveMethod(StrongIdentifierValue name, List<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private IExecutable ResolveMethod(StrongIdentifierValue name, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"name = {name}");
@@ -382,7 +428,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return GetTargetValueFromList(filteredList, positionedParameters.Count, localCodeExecutionContext, options);
         }
 
-        private IExecutable ResolveAction(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private IExecutable ResolveAction(StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"name = {name}");
@@ -443,7 +489,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return GetTargetValueFromList(filteredList, 0, localCodeExecutionContext, options);
         }
 
-        private IExecutable ResolveAction(StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private IExecutable ResolveAction(StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"name = {name}");
@@ -518,7 +564,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return GetTargetValueFromList(filteredList, namedParameters.Count, localCodeExecutionContext, options);
         }
 
-        private IExecutable ResolveAction(StrongIdentifierValue name, List<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private IExecutable ResolveAction(StrongIdentifierValue name, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"name = {name}");

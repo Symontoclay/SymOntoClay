@@ -58,12 +58,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        public NumberValue Resolve(Value source, LocalCodeExecutionContext localCodeExecutionContext)
+        public NumberValue Resolve(Value source, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Resolve(source, localCodeExecutionContext, _defaultOptions);
         }
 
-        public NumberValue Resolve(Value source, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public NumberValue Resolve(Value source, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"source = {source}");

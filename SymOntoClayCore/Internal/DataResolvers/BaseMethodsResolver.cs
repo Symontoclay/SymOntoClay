@@ -48,7 +48,101 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private static readonly StrongIdentifierValue _fuzzyTypeIdentifier = NameHelper.CreateName(StandardNamesConstants.FuzzyTypeName);
         private static readonly StrongIdentifierValue _numberTypeIdentifier = NameHelper.CreateName(StandardNamesConstants.NumberTypeName);
 
-        protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterByTypeOfParameters<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, Dictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        protected T EnumerableLocalCodeExecutionContext<T>(ILocalCodeExecutionContext localCodeExecutionContext, Func<ILocalCodeExecutionContext, T> func)
+        {
+            return EnumerableLocalCodeExecutionContext(localCodeExecutionContext, KindOfEnumerableLocalCodeExecutionContext.StepBetweenNewHolders, func);
+        }
+
+        protected T EnumerableLocalCodeExecutionContext<T>(ILocalCodeExecutionContext localCodeExecutionContext, KindOfEnumerableLocalCodeExecutionContext kindOfEnumerableLocalCodeExecutionContext, Func<ILocalCodeExecutionContext, T> func)
+        {
+#if DEBUG
+            Log($"kindOfEnumerableLocalCodeExecutionContext = {kindOfEnumerableLocalCodeExecutionContext}");
+#endif
+
+            var result = func(localCodeExecutionContext);
+
+#if DEBUG
+            Log($"result = {result}");
+#endif
+
+            if(kindOfEnumerableLocalCodeExecutionContext == KindOfEnumerableLocalCodeExecutionContext.NoEnumeration)
+            {
+                return result;
+            }
+
+            if(result != null)
+            {
+                return result;
+            }
+
+            while(true)
+            {
+                localCodeExecutionContext = GetParentLocalCodeExecutionContext(localCodeExecutionContext, kindOfEnumerableLocalCodeExecutionContext);
+
+#if DEBUG
+                Log($"localCodeExecutionContext (next) = {localCodeExecutionContext}");
+#endif
+
+                if(localCodeExecutionContext == null)
+                {
+                    return default(T);
+                }
+
+                result = func(localCodeExecutionContext);
+
+                if (result != null)
+                {
+                    return result;
+                }
+            }
+        }
+
+        private ILocalCodeExecutionContext GetParentLocalCodeExecutionContext(ILocalCodeExecutionContext localCodeExecutionContext, KindOfEnumerableLocalCodeExecutionContext kindOfEnumerableLocalCodeExecutionContext)
+        {
+#if DEBUG
+            Log($"kindOfEnumerableLocalCodeExecutionContext = {kindOfEnumerableLocalCodeExecutionContext}");
+#endif
+
+            switch (kindOfEnumerableLocalCodeExecutionContext)
+            {
+                case KindOfEnumerableLocalCodeExecutionContext.Serial:
+                    return localCodeExecutionContext.Parent;
+
+                case KindOfEnumerableLocalCodeExecutionContext.StepBetweenNewHolders:
+                    {
+                        var initialHolder = localCodeExecutionContext.Holder;
+
+                        while((localCodeExecutionContext = localCodeExecutionContext.Parent) != null)
+                        {
+#if DEBUG
+                            Log($"localCodeExecutionContext (1) = {localCodeExecutionContext}");
+#endif
+
+                            if(localCodeExecutionContext.Holder == initialHolder)
+                            {
+#if DEBUG
+                                Log($"continue");
+#endif
+
+                                continue;
+                            }
+
+#if DEBUG
+                            Log($"Yes!!!!!");
+#endif
+
+                            return localCodeExecutionContext;
+                        }
+
+                        return null;
+                    }
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfEnumerableLocalCodeExecutionContext), kindOfEnumerableLocalCodeExecutionContext, null);
+            }
+        }
+
+        protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterByTypeOfParameters<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
             where T : AnnotatedItem, IExecutable
         {
             var result = new List<WeightedInheritanceResultItemWithStorageInfo<T>>();
@@ -74,7 +168,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterByTypeOfParameters<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, List<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterByTypeOfParameters<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
             where T : AnnotatedItem, IExecutable
         {
             var result = new List<WeightedInheritanceResultItemWithStorageInfo<T>>();
@@ -100,7 +194,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        protected List<uint> IsFit(IExecutable function, IDictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        protected List<uint> IsFit(IExecutable function, IDictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
@@ -174,7 +268,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        protected List<uint> IsFit(IExecutable function, IList<Value> positionedParameters, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        protected List<uint> IsFit(IExecutable function, IList<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var positionedParametersEnumerator = positionedParameters.GetEnumerator();
 
@@ -221,7 +315,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        protected Value GetParameterValue(StrongIdentifierValue argumentName, IDictionary<StrongIdentifierValue, Value> namedParameters, LocalCodeExecutionContext localCodeExecutionContext)
+        protected Value GetParameterValue(StrongIdentifierValue argumentName, IDictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"argumentName = {argumentName}");
@@ -300,7 +394,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return null;
         }
 
-        protected T GetTargetValueFromList<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, int paramsCount, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        protected T GetTargetValueFromList<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, int paramsCount, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
             where T : AnnotatedItem, IExecutable
         {
 #if DEBUG

@@ -43,12 +43,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private readonly InheritanceResolver _inheritanceResolver;
 
-        public void SetVarValue(StrongIdentifierValue varName, Value value, LocalCodeExecutionContext localCodeExecutionContext)
+        public void SetVarValue(StrongIdentifierValue varName, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             SetVarValue(varName, value, localCodeExecutionContext, _defaultOptions);
         }
 
-        public void SetVarValue(StrongIdentifierValue varName, Value value, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public void SetVarValue(StrongIdentifierValue varName, Value value, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"varName = {varName}");
@@ -84,12 +84,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             varPtr.Value = value;
         }
 
-        public void CheckFitVariableAndValue(Var varItem, Value value, LocalCodeExecutionContext localCodeExecutionContext)
+        public void CheckFitVariableAndValue(Var varItem, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             CheckFitVariableAndValue(varItem, value, localCodeExecutionContext, _defaultOptions);
         }
 
-        public void CheckFitVariableAndValue(Var varItem, Value value, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public void CheckFitVariableAndValue(Var varItem, Value value, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             if(varItem.TypesList.IsNullOrEmpty())
             {
@@ -115,7 +115,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             throw new Exception($"The value '{value.ToHumanizedString()}' does not fit to variable {varItem.ToHumanizedString()}");
         }
 
-        private Var CreateAndSaveLocalVariable(StrongIdentifierValue varName, LocalCodeExecutionContext localCodeExecutionContext)
+        private Var CreateAndSaveLocalVariable(StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"varName = {varName}");
@@ -134,12 +134,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        public Value GetVarValue(StrongIdentifierValue varName, LocalCodeExecutionContext localCodeExecutionContext)
+        public Value GetVarValue(StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return GetVarValue(varName, localCodeExecutionContext, _defaultOptions);
         }
 
-        public Value GetVarValue(StrongIdentifierValue varName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public Value GetVarValue(StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"varName = {varName}");
@@ -153,7 +153,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return GetUsualVarValue(varName, localCodeExecutionContext, options);
         }
 
-        private Value GetSystemVarValue(StrongIdentifierValue varName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private Value GetSystemVarValue(StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"varName = {varName}");
@@ -188,7 +188,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             throw new NotImplementedException();
         }
 
-        private Value GetUsualVarValue(StrongIdentifierValue varName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private Value GetUsualVarValue(StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"varName = {varName}");
@@ -212,7 +212,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return varPtr.Value;
         }
 
-        public Var Resolve(StrongIdentifierValue varName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public Var Resolve(StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"varName = {varName}");
@@ -239,7 +239,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return NResolve(varName, localCodeExecutionContext.Holder, localCodeExecutionContext.Storage, false, localCodeExecutionContext, options);
         }
 
-        private Var NResolve(StrongIdentifierValue varName, StrongIdentifierValue holder, IStorage storage, bool privateOnly, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private Var NResolve(StrongIdentifierValue varName, StrongIdentifierValue holder, IStorage storage, bool privateOnly, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"varName = {varName}");

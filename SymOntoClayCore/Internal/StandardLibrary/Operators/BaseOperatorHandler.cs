@@ -41,7 +41,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
         private readonly ValueResolvingHelper _valueResolvingHelper;
 
-        protected Value TryResolveFromVarOrExpr(Value operand, LocalCodeExecutionContext localCodeExecutionContext)
+        protected Value TryResolveFromVarOrExpr(Value operand, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return _valueResolvingHelper.TryResolveFromVarOrExpr(operand, localCodeExecutionContext);
         }

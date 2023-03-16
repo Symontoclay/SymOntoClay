@@ -120,7 +120,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         private readonly bool _enableOnAddingFactEvent;
 
         private readonly FuzzyLogicResolver _fuzzyLogicResolver;
-        private readonly LocalCodeExecutionContext _localCodeExecutionContext;
+        private readonly ILocalCodeExecutionContext _localCodeExecutionContext;
 
         private void InitGCByTimeOut()
         {

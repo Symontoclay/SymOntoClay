@@ -312,10 +312,10 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.Dispose">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BinaryOperatorSystemHandler.Call(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BinaryOperatorSystemHandler.Call(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BinaryOperatorSystemHandler.Call(System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BinaryOperatorSystemHandler.Call(System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.ExecuteAsync(SymOntoClay.Core.Internal.CodeExecution.ProcessInitialInfo)">
@@ -327,13 +327,13 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.ExecuteBatchSync(System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeExecution.ProcessInitialInfo})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.CallOperator(SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.KindOfOperator,System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.CallOperator(SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.KindOfOperator,System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.CallExecutableSync(SymOntoClay.Core.Internal.CodeExecution.IExecutable,System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.CallExecutableSync(SymOntoClay.Core.Internal.CodeExecution.IExecutable,System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.CallFunctionSync(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.CallFunctionSync(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrame.ToString">
@@ -435,10 +435,10 @@
         <member name="P:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.Holder">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.SymOntoClay#Core#Internal#CodeExecution#IExecutable#GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.SymOntoClay#Core#Internal#CodeExecution#IExecutable#GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
@@ -490,6 +490,36 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.Helpers.ConversionExecutableToCodeFrameAdditionalSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.Parent">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.UseParentInResolving">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.Holder">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.Storage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.Owner">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.OwnerStorage">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.KindOfAddFactResult">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.MutablePart">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.AddedRuleInstance">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.ToString">
@@ -626,10 +656,10 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.SEHItem.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.UnaryOperatorSystemHandler.Call(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.UnaryOperatorSystemHandler.Call(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.UnaryOperatorSystemHandler.Call(System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.UnaryOperatorSystemHandler.Call(System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionDef.Kind">
@@ -684,10 +714,10 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.AsActionInstanceValue">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.GetSystemValue">
@@ -777,10 +807,10 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.SymOntoClay#Core#Internal#CodeExecution#IExecutable#GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.SymOntoClay#Core#Internal#CodeExecution#IExecutable#GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionPtr.OwnLocalCodeExecutionContext">
@@ -1064,10 +1094,10 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent.SystemHandler">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent.GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent.GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent.Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent.Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
@@ -2811,10 +2841,10 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Function.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Function.SymOntoClay#Core#Internal#CodeExecution#IExecutable#GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Function.SymOntoClay#Core#Internal#CodeExecution#IExecutable#GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Function.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Function.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Function.OwnLocalCodeExecutionContext">
@@ -3016,10 +3046,10 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FuzzyLogicOperator.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.Call(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.Call(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.Call(System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.Call(System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.IsSystemDefined">
@@ -3037,10 +3067,10 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.SystemHandler">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
@@ -3094,10 +3124,10 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.CancellationTokenSourceCancelHandler.Call(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.CancellationTokenSourceCancelHandler.Call(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.CancellationTokenSourceCancelHandler.Call(System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.CancellationTokenSourceCancelHandler.Call(System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.HostValue.KindOfValue">
@@ -4066,10 +4096,10 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.SymOntoClay#Core#Internal#CodeExecution#IExecutable#GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.SymOntoClay#Core#Internal#CodeExecution#IExecutable#GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Operator.OwnLocalCodeExecutionContext">
@@ -5687,7 +5717,7 @@
         <member name="M:SymOntoClay.Core.Internal.EngineContext.GetNLPConverterContext">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.EngineContext.GetNLPConverterContext(SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.EngineContext.GetNLPConverterContext(SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.EngineContext.Die">
@@ -6116,10 +6146,10 @@
         <member name="P:SymOntoClay.Core.Internal.Instances.ActionInstance.KindOfInstance">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.SymOntoClay#Core#Internal#CodeExecution#IExecutable#GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.SymOntoClay#Core#Internal#CodeExecution#IExecutable#GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.ActionInstance.IsSystemDefined">
@@ -6332,16 +6362,16 @@
         <member name="P:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.MainEntity">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.InstanceValue,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.InstanceValue,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.CodeItem,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.CodeItem,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.ActionPtr,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.ActionPtr,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.PrintProcessesList">
@@ -6446,16 +6476,16 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.GetCountOfCurrentProcesses">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.InstanceValue,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.InstanceValue,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.CodeItem,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.CodeItem,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.ActionPtr,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.ActionPtr,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.PrintProcessesList">
@@ -6647,10 +6677,10 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.StateActivator.GetBindingVariables">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.StateActivator.RunHandler(SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.StateActivator.RunHandler(SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.StateDeactivator.RunHandler(SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.StateDeactivator.RunHandler(SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.StateInstance.KindOfInstance">
@@ -7439,10 +7469,10 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Parser.ParseRuleInstance(System.String,System.Boolean)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Services.CodeFrameService.ConvertCompiledFunctionBodyToCodeFrame(SymOntoClay.Core.Internal.IndexedData.ScriptingData.CompiledFunctionBody,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.Services.CodeFrameService.ConvertCompiledFunctionBodyToCodeFrame(SymOntoClay.Core.Internal.IndexedData.ScriptingData.CompiledFunctionBody,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Services.CodeFrameService.ConvertExecutableToCodeFrame(SymOntoClay.Core.Internal.CodeExecution.IExecutable,SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.Dictionary{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value},System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.Helpers.ConversionExecutableToCodeFrameAdditionalSettings,System.Boolean)">
+        <member name="M:SymOntoClay.Core.Internal.Services.CodeFrameService.ConvertExecutableToCodeFrame(SymOntoClay.Core.Internal.CodeExecution.IExecutable,SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.Dictionary{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value},System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.Helpers.ConversionExecutableToCodeFrameAdditionalSettings,System.Boolean)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Services.EntityConstraintsService.Init">
@@ -7466,19 +7496,19 @@
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.LogChannelHandler.GetLongHashCode">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.LogChannelHandler.Read(SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.LogChannelHandler.Read(SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.LogChannelHandler.Write(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.LogChannelHandler.Write(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.SayChannelHandler.GetLongHashCode">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.SayChannelHandler.Read(SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.SayChannelHandler.Read(SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.SayChannelHandler.Write(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.SayChannelHandler.Write(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicMemberFunctionHandler.Kind">
@@ -7642,58 +7672,58 @@
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.VeryFuzzyLogicOperatorHandler.SystemCall(System.Double)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.AddOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.AddOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.AndOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.AndOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.AssignOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.AssignOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.CallLogicalQueryOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.CallLogicalQueryOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.DivOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.DivOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.IsOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.IsOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.LeftRightStreamOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.LeftRightStreamOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.LessOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.LessOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.LessOrEqualOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.LessOrEqualOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.MoreOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.MoreOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.MoreOrEqualOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.MoreOrEqualOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.MulOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.MulOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.NotOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.NotOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.OrOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.OrOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.PointOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.PointOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.SubOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.SubOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.UnaryMinusOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.UnaryMinusOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.UnaryPlusOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.UnaryPlusOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ActionsStoraging.ActionsStorage.Append(SymOntoClay.Core.Internal.CodeModel.ActionDef)">

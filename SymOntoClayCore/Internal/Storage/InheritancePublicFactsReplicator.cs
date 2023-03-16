@@ -53,7 +53,7 @@ namespace SymOntoClay.Core.Internal.Storage
         private readonly InheritanceResolver _inheritanceResolver;
         private readonly ResolverOptions _resolverOptions;
         private List<StrongIdentifierValue> _foundInheritanceKeysList = new List<StrongIdentifierValue>();
-        private LocalCodeExecutionContext _localCodeExecutionContext;
+        private ILocalCodeExecutionContext _localCodeExecutionContext;
         private ILogicQueryParseAndCache _logicQueryParseAndCache;
         //private ulong _selfNameKey;
         private StrongIdentifierValue _selfName;

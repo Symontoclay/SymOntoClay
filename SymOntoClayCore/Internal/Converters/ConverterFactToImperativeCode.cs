@@ -55,7 +55,7 @@ namespace SymOntoClay.Core.Internal.Converters
         private readonly RelationsResolver _relationsResolver;
         private readonly StrongIdentifierValue _actName;
 
-        public CompiledFunctionBody Convert(RuleInstance ruleInstance, LocalCodeExecutionContext localCodeExecutionContext)
+        public CompiledFunctionBody Convert(RuleInstance ruleInstance, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var kindOfRuleInstance = ruleInstance.KindOfRuleInstance;
 
@@ -78,7 +78,7 @@ namespace SymOntoClay.Core.Internal.Converters
             return _compiler.Compile(statements);
         }
 
-        private List<AstStatement> ConvertFact(RuleInstance fact, LocalCodeExecutionContext localCodeExecutionContext)
+        private List<AstStatement> ConvertFact(RuleInstance fact, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"fact = {fact.ToHumanizedString()}");
@@ -115,7 +115,7 @@ namespace SymOntoClay.Core.Internal.Converters
             return result;
         }
 
-        private AstStatement ConvertRelation(LogicalQueryNode relation, RuleInstance fact, LocalCodeExecutionContext localCodeExecutionContext)
+        private AstStatement ConvertRelation(LogicalQueryNode relation, RuleInstance fact, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"relation = {relation.ToHumanizedString()}");
@@ -260,7 +260,7 @@ namespace SymOntoClay.Core.Internal.Converters
             return statement;
         }
 
-        private List<LogicalQueryNode> GetNonActRelationsWithLogicalVarInFirstParameter(StrongIdentifierValue variableName, RuleInstance fact, LogicalQueryNode processedAction, LocalCodeExecutionContext localCodeExecutionContext)
+        private List<LogicalQueryNode> GetNonActRelationsWithLogicalVarInFirstParameter(StrongIdentifierValue variableName, RuleInstance fact, LogicalQueryNode processedAction, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"variableName = {variableName}");
@@ -274,7 +274,7 @@ namespace SymOntoClay.Core.Internal.Converters
             return result;
         }
 
-        private void GetNonActRelationsWithLogicalVarInFirstParameter(StrongIdentifierValue variableName, LogicalQueryNode node, LogicalQueryNode processedAction, List<LogicalQueryNode> result, LocalCodeExecutionContext localCodeExecutionContext)
+        private void GetNonActRelationsWithLogicalVarInFirstParameter(StrongIdentifierValue variableName, LogicalQueryNode node, LogicalQueryNode processedAction, List<LogicalQueryNode> result, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"variableName = {variableName}");
@@ -375,7 +375,7 @@ namespace SymOntoClay.Core.Internal.Converters
             }
         }
 
-        private List<LogicalQueryNode> GetSignificantNodesFromFact(RuleInstance fact, LocalCodeExecutionContext localCodeExecutionContext)
+        private List<LogicalQueryNode> GetSignificantNodesFromFact(RuleInstance fact, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"fact = {fact.ToHumanizedString()}");

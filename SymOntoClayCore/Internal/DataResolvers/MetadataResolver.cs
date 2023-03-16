@@ -44,12 +44,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private readonly SynonymsResolver _synonymsResolver;
 
-        public CodeItem Resolve(StrongIdentifierValue prototypeName, LocalCodeExecutionContext localCodeExecutionContext)
+        public CodeItem Resolve(StrongIdentifierValue prototypeName, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Resolve(prototypeName, localCodeExecutionContext, _defaultOptions);
         }
 
-        public CodeItem Resolve(StrongIdentifierValue prototypeName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public CodeItem Resolve(StrongIdentifierValue prototypeName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"prototypeName = {prototypeName}");

@@ -100,13 +100,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterCodeItems<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, LocalCodeExecutionContext localCodeExecutionContext)
+        protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterCodeItems<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, ILocalCodeExecutionContext localCodeExecutionContext)
             where T : CodeItem
         {
             return FilterCodeItems<T>(source, localCodeExecutionContext.Holder, localCodeExecutionContext);
         }
 
-        protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterCodeItems<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, StrongIdentifierValue holder, LocalCodeExecutionContext localCodeExecutionContext)
+        protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterCodeItems<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext)
             where T : CodeItem
         {
             if (!source.Any())
@@ -166,7 +166,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        public List<T> FilterByTypeOfAccess<T>(IList<T> source, LocalCodeExecutionContext localCodeExecutionContext, bool allowUnknown)
+        public List<T> FilterByTypeOfAccess<T>(IList<T> source, ILocalCodeExecutionContext localCodeExecutionContext, bool allowUnknown)
             where T : IReadOnlyMemberAccess
         {
             var result = new List<T>();
@@ -254,7 +254,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private bool IsFitByTypeOfAccess(IReadOnlyMemberAccess item, StrongIdentifierValue holder, InheritanceResolver inheritanceResolver, LocalCodeExecutionContext localCodeExecutionContext, bool holderIsEntity, bool hasHolderInItems, bool allowUnknown)
+        private bool IsFitByTypeOfAccess(IReadOnlyMemberAccess item, StrongIdentifierValue holder, InheritanceResolver inheritanceResolver, ILocalCodeExecutionContext localCodeExecutionContext, bool holderIsEntity, bool hasHolderInItems, bool allowUnknown)
         {
             var typeOfAccess = item.TypeOfAccess;
 

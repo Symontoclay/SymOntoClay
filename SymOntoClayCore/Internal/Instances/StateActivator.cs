@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class StateActivator : BaseSimpleConditionalTriggerInstance
     {
-        public StateActivator(ActivationInfoOfStateDef activationInfoOfState, AppInstance parent, IEngineContext context, IStorage parentStorage, LocalCodeExecutionContext parentCodeExecutionContext)
+        public StateActivator(ActivationInfoOfStateDef activationInfoOfState, AppInstance parent, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext)
             : base(activationInfoOfState.ActivatingConditions.Condition, parent, context, parentStorage, parentCodeExecutionContext)
         {
             _stateDef = activationInfoOfState.State;
@@ -67,7 +67,7 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        protected override void RunHandler(LocalCodeExecutionContext localCodeExecutionContext)
+        protected override void RunHandler(ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log("Begin");

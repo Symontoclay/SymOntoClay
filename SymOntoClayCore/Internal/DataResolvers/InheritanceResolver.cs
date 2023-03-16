@@ -51,23 +51,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public const uint SelfDistance = 0u;
         public const uint TopTypeDistance = uint.MaxValue;
 
-        public Value GetInheritanceRank(StrongIdentifierValue subName, StrongIdentifierValue superName, LocalCodeExecutionContext localCodeExecutionContext)
+        public Value GetInheritanceRank(StrongIdentifierValue subName, StrongIdentifierValue superName, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return GetInheritanceRank(subName, superName, localCodeExecutionContext, DefaultOptions);
         }
 
-        public Value GetInheritanceRank(StrongIdentifierValue subName, StrongIdentifierValue superName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public Value GetInheritanceRank(StrongIdentifierValue subName, StrongIdentifierValue superName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var result = new LogicalValue(GetRawInheritanceRank(subName, superName, localCodeExecutionContext, options));
             return result;
         }
 
-        public float GetRawInheritanceRank(StrongIdentifierValue subName, StrongIdentifierValue superName, LocalCodeExecutionContext localCodeExecutionContext)
+        public float GetRawInheritanceRank(StrongIdentifierValue subName, StrongIdentifierValue superName, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return GetRawInheritanceRank(subName, superName, localCodeExecutionContext, DefaultOptions);
         }
 
-        public float GetRawInheritanceRank(StrongIdentifierValue subName, StrongIdentifierValue superName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public float GetRawInheritanceRank(StrongIdentifierValue subName, StrongIdentifierValue superName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"subName = {subName}");
@@ -104,27 +104,27 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             throw new NotImplementedException();
         }
 
-        public List<StrongIdentifierValue> GetSuperClassesKeysList(StrongIdentifierValue subName, LocalCodeExecutionContext localCodeExecutionContext)
+        public List<StrongIdentifierValue> GetSuperClassesKeysList(StrongIdentifierValue subName, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return GetSuperClassesKeysList(subName, localCodeExecutionContext, DefaultOptions);
         }
 
-        public List<StrongIdentifierValue> GetSuperClassesKeysList(StrongIdentifierValue subName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<StrongIdentifierValue> GetSuperClassesKeysList(StrongIdentifierValue subName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             return GetWeightedInheritanceItems(subName, localCodeExecutionContext, options).Select(p => p.SuperName).Where(p => !p.IsEmpty).Distinct().ToList();
         }
 
-        public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             return GetWeightedInheritanceItems(localCodeExecutionContext.Holder, localCodeExecutionContext, options);
         }
         
-        public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(StrongIdentifierValue subName, LocalCodeExecutionContext localCodeExecutionContext)
+        public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(StrongIdentifierValue subName, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return GetWeightedInheritanceItems(subName, localCodeExecutionContext, DefaultOptions);
         }
 
-        public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(StrongIdentifierValue subName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(StrongIdentifierValue subName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
@@ -265,12 +265,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return item;
         }
 
-        private List<WeightedInheritanceItem> OrderAndDistinct(List<WeightedInheritanceItem> source, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private List<WeightedInheritanceItem> OrderAndDistinct(List<WeightedInheritanceItem> source, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             return source.OrderByDescending(p => p.IsSelf).ToList();
         }
 
-        private void GetWeightedInheritanceItemsBySubName(StrongIdentifierValue subName, LocalCodeExecutionContext localCodeExecutionContext, Dictionary<StrongIdentifierValue, WeightedInheritanceItem> result, float currentRank, uint currentDistance, List<StorageUsingOptions> storagesList, bool allInheritance)
+        private void GetWeightedInheritanceItemsBySubName(StrongIdentifierValue subName, ILocalCodeExecutionContext localCodeExecutionContext, Dictionary<StrongIdentifierValue, WeightedInheritanceItem> result, float currentRank, uint currentDistance, List<StorageUsingOptions> storagesList, bool allInheritance)
         {
 #if DEBUG
             //Log($"subName = {subName}");
@@ -422,7 +422,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        public bool IsFit(IList<StrongIdentifierValue> typeNamesList, Value value, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public bool IsFit(IList<StrongIdentifierValue> typeNamesList, Value value, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             if(GetDistance(typeNamesList, value, localCodeExecutionContext, options).HasValue)
             {
@@ -432,7 +432,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return false;
         }
 
-        public uint? GetDistance(IList<StrongIdentifierValue> typeNamesList, Value value, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public uint? GetDistance(IList<StrongIdentifierValue> typeNamesList, Value value, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"typeNamesList = {typeNamesList.WriteListToString()}");
@@ -466,7 +466,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return distancesList.Min();
         }
 
-        public uint? GetDistance(StrongIdentifierValue typeName, Value value, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public uint? GetDistance(StrongIdentifierValue typeName, Value value, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"typeName = {typeName}");
@@ -533,12 +533,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             throw new NotImplementedException();
         }
 
-        public uint? GetDistance(StrongIdentifierValue subName, StrongIdentifierValue superName, LocalCodeExecutionContext localCodeExecutionContext)
+        public uint? GetDistance(StrongIdentifierValue subName, StrongIdentifierValue superName, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return GetDistance(subName, superName, localCodeExecutionContext, DefaultOptions);
         }
 
-        public uint? GetDistance(StrongIdentifierValue subName, StrongIdentifierValue superName, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public uint? GetDistance(StrongIdentifierValue subName, StrongIdentifierValue superName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"subName = {subName}");

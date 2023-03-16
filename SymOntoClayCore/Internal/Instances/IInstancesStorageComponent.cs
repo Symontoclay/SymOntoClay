@@ -42,10 +42,10 @@ namespace SymOntoClay.Core.Internal.Instances
 
         AppInstance MainEntity { get; }
 
-        Value CreateInstance(StrongIdentifierValue prototypeName, LocalCodeExecutionContext executionContext);
-        Value CreateInstance(InstanceValue instanceValue, LocalCodeExecutionContext executionContext);
-        Value CreateInstance(CodeItem codeItem, LocalCodeExecutionContext executionContext);
-        Value CreateInstance(ActionPtr actionPtr, LocalCodeExecutionContext executionContext);
+        Value CreateInstance(StrongIdentifierValue prototypeName, ILocalCodeExecutionContext executionContext);
+        Value CreateInstance(InstanceValue instanceValue, ILocalCodeExecutionContext executionContext);
+        Value CreateInstance(CodeItem codeItem, ILocalCodeExecutionContext executionContext);
+        Value CreateInstance(ActionPtr actionPtr, ILocalCodeExecutionContext executionContext);
 
 #if DEBUG
         void PrintProcessesList();

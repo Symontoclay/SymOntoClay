@@ -450,7 +450,7 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        public override Value CreateInstance(StrongIdentifierValue prototypeName, LocalCodeExecutionContext executionContext)
+        public override Value CreateInstance(StrongIdentifierValue prototypeName, ILocalCodeExecutionContext executionContext)
         {
 #if DEBUG
             //Log($"prototypeName = {prototypeName}");
@@ -472,7 +472,7 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        public override Value CreateInstance(InstanceValue instanceValue, LocalCodeExecutionContext executionContext)
+        public override Value CreateInstance(InstanceValue instanceValue, ILocalCodeExecutionContext executionContext)
         {
 #if DEBUG
             //Log($"instanceValue = {instanceValue}");
@@ -493,7 +493,7 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        public override Value CreateInstance(CodeItem codeItem, LocalCodeExecutionContext executionContext)
+        public override Value CreateInstance(CodeItem codeItem, ILocalCodeExecutionContext executionContext)
         {
 #if DEBUG
             //Log($"codeItem = {codeItem}");
@@ -502,7 +502,7 @@ namespace SymOntoClay.Core.Internal.Instances
             return NCreateInstance(codeItem, executionContext, true);
         }
 
-        private Value NCreateInstance(CodeItem codeItem, LocalCodeExecutionContext executionContext, bool loadCodeItem)
+        private Value NCreateInstance(CodeItem codeItem, ILocalCodeExecutionContext executionContext, bool loadCodeItem)
         {
 #if DEBUG
             //Log($"codeItem = {codeItem}");
@@ -535,7 +535,7 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        public override Value CreateInstance(ActionPtr actionPtr, LocalCodeExecutionContext executionContext)
+        public override Value CreateInstance(ActionPtr actionPtr, ILocalCodeExecutionContext executionContext)
         {
             var action = actionPtr.Action;
 

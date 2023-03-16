@@ -35,7 +35,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public abstract class BaseEntityValue: LoggedValue, IEntity, INavTarget
     {
-        protected BaseEntityValue(IEngineContext context, LocalCodeExecutionContext localContext)
+        protected BaseEntityValue(IEngineContext context, ILocalCodeExecutionContext localContext)
             : base(context.Logger)
         {
             _context = context;
@@ -44,7 +44,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         private IEngineContext _context;
-        private LocalCodeExecutionContext _localContext;
+        private ILocalCodeExecutionContext _localContext;
         private IConditionalEntityHostSupport _conditionalEntityHostSupport;
         private readonly Random _random = new Random();
 

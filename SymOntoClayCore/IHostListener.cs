@@ -30,6 +30,6 @@ namespace SymOntoClay.Core
 {
     public interface IHostListener
     {
-        IProcessCreatingResult CreateProcess(ICommand command, IEngineContext context, LocalCodeExecutionContext localContext);
+        IProcessCreatingResult CreateProcess(ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext);
     }
 }

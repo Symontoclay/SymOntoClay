@@ -32,7 +32,7 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class ObjectInstance: BaseIndependentInstance
     {
-        public ObjectInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage, LocalCodeExecutionContext parentCodeExecutionContext)
+        public ObjectInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext)
             : base(codeItem, context, parentStorage, parentCodeExecutionContext, new ObjectStorageFactory(), null)
         {
             var dataResolversFactory = context.DataResolversFactory;

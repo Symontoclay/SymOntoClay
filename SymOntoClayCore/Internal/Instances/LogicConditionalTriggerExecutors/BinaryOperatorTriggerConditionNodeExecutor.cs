@@ -35,7 +35,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 {
     public class BinaryOperatorTriggerConditionNodeExecutor : BaseTriggerConditionNodeExecutor
     {
-        public BinaryOperatorTriggerConditionNodeExecutor(IEngineContext engineContext, LocalCodeExecutionContext localCodeExecutionContext, TriggerConditionNode condition)
+        public BinaryOperatorTriggerConditionNodeExecutor(IEngineContext engineContext, ILocalCodeExecutionContext localCodeExecutionContext, TriggerConditionNode condition)
             : base(engineContext.Logger)
         {
 #if DEBUG
@@ -56,7 +56,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         }
 
         private readonly KindOfOperator _kindOfOperator;
-        private readonly LocalCodeExecutionContext _localCodeExecutionContext;
+        private readonly ILocalCodeExecutionContext _localCodeExecutionContext;
         private readonly OperatorsResolver _operatorsResolver;
         private readonly ICodeExecutorComponent _codeExecutor;
 

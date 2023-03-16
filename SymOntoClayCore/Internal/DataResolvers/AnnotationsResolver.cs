@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private readonly SynonymsResolver _synonymsResolver;
 
-        public Value GetSettings(Value annotatedItem, StrongIdentifierValue key, LocalCodeExecutionContext localCodeExecutionContext)
+        public Value GetSettings(Value annotatedItem, StrongIdentifierValue key, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"key = {key}");

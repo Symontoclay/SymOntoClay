@@ -44,12 +44,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly InheritanceResolver _inheritanceResolver;
         private readonly MetadataResolver _metadataResolver;
 
-        public List<CodeItemDirective> Resolve(LocalCodeExecutionContext localCodeExecutionContext)
+        public List<CodeItemDirective> Resolve(ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Resolve(localCodeExecutionContext, _defaultOptions);
         }
 
-        public List<CodeItemDirective> Resolve(LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<CodeItemDirective> Resolve(ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;

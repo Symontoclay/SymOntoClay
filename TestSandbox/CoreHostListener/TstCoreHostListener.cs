@@ -35,7 +35,7 @@ namespace TestSandbox.CoreHostListener
     {
         private static readonly IEntityLogger _logger = new LoggerImpementation();
 
-        public IProcessCreatingResult CreateProcess(ICommand command, IEngineContext context, LocalCodeExecutionContext localContext)
+        public IProcessCreatingResult CreateProcess(ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
             _logger.Log($"command = {command}");
 

@@ -50,7 +50,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
         }
 
         /// <inheritdoc/>
-        public Value Read(LocalCodeExecutionContext localCodeExecutionContext)
+        public Value Read(ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var result = new NullValue();
 
@@ -58,7 +58,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
         }
 
         /// <inheritdoc/>
-        public Value Write(Value value, LocalCodeExecutionContext localCodeExecutionContext)
+        public Value Write(Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"value = {value}");

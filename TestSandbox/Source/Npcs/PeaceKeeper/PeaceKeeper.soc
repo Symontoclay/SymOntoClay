@@ -8,6 +8,11 @@
 
         'End' >> @>log;
     }
+
+    fun b()
+    {
+        '`b` has been called!' >> @>log;
+    }
 }
 
 action Go
@@ -22,6 +27,7 @@ action Go
         'Begin Go' >> @>log;
         
         a();
+        b();
 
         //@a = 10;
 

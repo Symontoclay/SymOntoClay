@@ -42,7 +42,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         private readonly VarsResolver _varsResolver;
 
         /// <inheritdoc/>
-        public Value Call(Value rightOperand, Value leftOperand, Value annotation, LocalCodeExecutionContext localCodeExecutionContext)
+        public Value Call(Value rightOperand, Value leftOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"localCodeExecutionContext.Kind = {localCodeExecutionContext.Kind}");

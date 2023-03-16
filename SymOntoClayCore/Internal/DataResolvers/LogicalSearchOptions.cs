@@ -37,7 +37,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public bool UseInheritance { get; set; } = true;
         public RuleInstance QueryExpression { get; set; }
         public IStorage TargetStorage { get; set; }
-        public LocalCodeExecutionContext LocalCodeExecutionContext { get; set; }
+        public ILocalCodeExecutionContext LocalCodeExecutionContext { get; set; }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

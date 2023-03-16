@@ -61,7 +61,7 @@ namespace SymOntoClay.Core.Internal
         }
 
         /// <inheritdoc/>
-        public INLPConverterContext GetNLPConverterContext(LocalCodeExecutionContext localCodeExecutionContext)
+        public INLPConverterContext GetNLPConverterContext(ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var dataResolversFactory = DataResolversFactory;
 

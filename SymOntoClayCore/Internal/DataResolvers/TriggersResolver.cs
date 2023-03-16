@@ -46,7 +46,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly InheritanceResolver _inheritanceResolver;
         private readonly SynonymsResolver _synonymsResolver;
 
-        public List<InlineTrigger> ResolveLogicConditionalTriggersList(StrongIdentifierValue holder, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<InlineTrigger> ResolveLogicConditionalTriggersList(StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storagesList = GetStoragesList(localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
@@ -77,7 +77,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return OrderAndDistinct(rawList, localCodeExecutionContext, options).Select(p => p.ResultItem).ToList();
         }
 
-        public List<InlineTrigger> ResolveAddFactTriggersList(StrongIdentifierValue holder, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<InlineTrigger> ResolveAddFactTriggersList(StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storagesList = GetStoragesList(localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
@@ -108,7 +108,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return OrderAndDistinct(rawList, localCodeExecutionContext, options).Select(p => p.ResultItem).ToList();
         }
 
-        public List<InlineTrigger> ResolveSystemEventsTriggersList(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, StrongIdentifierValue holder, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<InlineTrigger> ResolveSystemEventsTriggersList(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"kindOfSystemEvent = {kindOfSystemEvent}");
@@ -143,7 +143,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return OrderAndDistinct(rawList, localCodeExecutionContext, options).Select(p => p.ResultItem).ToList();
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>> OrderAndDistinct(List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>> source, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>> OrderAndDistinct(List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>> source, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var inheritanceOrderOptions = options.Clone();
 
@@ -229,12 +229,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        public INamedTriggerInstance ResolveNamedTriggerInstance(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext)
+        public INamedTriggerInstance ResolveNamedTriggerInstance(StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return ResolveNamedTriggerInstance(name, localCodeExecutionContext, _defaultOptions);
         }
 
-        public INamedTriggerInstance ResolveNamedTriggerInstance(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public INamedTriggerInstance ResolveNamedTriggerInstance(StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"name = {name}");
@@ -271,7 +271,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             throw new NotImplementedException();
         }
 
-        private List<INamedTriggerInstance> GetNamedTriggerInstanceRawList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, LocalCodeExecutionContext localCodeExecutionContext)
+        private List<INamedTriggerInstance> GetNamedTriggerInstanceRawList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var result = NGetNamedTriggerInstanceRawList(name, storagesList);
 
@@ -283,7 +283,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private List<INamedTriggerInstance> GetNamedTriggerInstanceRawListFromSynonyms(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, LocalCodeExecutionContext localCodeExecutionContext)
+        private List<INamedTriggerInstance> GetNamedTriggerInstanceRawListFromSynonyms(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var synonymsList = _synonymsResolver.GetSynonyms(name, localCodeExecutionContext);
 

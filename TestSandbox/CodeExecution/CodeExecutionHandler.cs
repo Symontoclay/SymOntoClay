@@ -103,10 +103,13 @@ namespace TestSandbox.CodeExecution
 
             var codeFrame = new CodeFrame();
             codeFrame.CompiledFunctionBody = compiledFunctionBody;
-            codeFrame.LocalContext = new LocalCodeExecutionContext();
-            codeFrame.LocalContext.Storage = context.Storage.GlobalStorage;
-            codeFrame.LocalContext.Holder = NameHelper.CreateName("PixKeeper");
-            //codeFrame.LocalContext.Holder = new Name();
+
+            var codeFrameLocalContext = new LocalCodeExecutionContext();
+            codeFrameLocalContext.Storage = context.Storage.GlobalStorage;
+            codeFrameLocalContext.Holder = NameHelper.CreateName("PixKeeper");
+            //codeFrameLocalContext.Holder = new Name();
+
+            codeFrame.LocalContext = codeFrameLocalContext;
 
             _logger.Log($"codeFrame = {codeFrame}");
             _logger.Log($"codeFrame = {codeFrame.ToDbgString()}");

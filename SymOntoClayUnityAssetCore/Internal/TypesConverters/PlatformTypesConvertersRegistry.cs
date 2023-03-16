@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
@@ -288,7 +289,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
         }
 
         /// <inheritdoc/>
-        public object Convert(Type sourceType, Type destType, object sourceValue, IEngineContext context, LocalCodeExecutionContext localContext)
+        public object Convert(Type sourceType, Type destType, object sourceValue, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
             if (sourceType == _nullValueType)
             {
@@ -360,7 +361,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
             }
         }
 
-        private (object, bool) NConvert(Type sourceType, Type destType, object sourceValue, IEngineContext context, LocalCodeExecutionContext localContext)
+        private (object, bool) NConvert(Type sourceType, Type destType, object sourceValue, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
 #if DEBUG
             //Log($"sourceType.FullName = {sourceType.FullName}");

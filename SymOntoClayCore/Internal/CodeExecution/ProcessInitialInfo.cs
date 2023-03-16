@@ -32,7 +32,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     public class ProcessInitialInfo: IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public CompiledFunctionBody CompiledFunctionBody { get; set; }
-        public LocalCodeExecutionContext LocalContext { get; set; }
+        public ILocalCodeExecutionContext LocalContext { get; set; }
         public CodeItem Metadata { get; set; }
         public IInstance Instance { get; set; }
         public IExecutionCoordinator ExecutionCoordinator { get; set; }

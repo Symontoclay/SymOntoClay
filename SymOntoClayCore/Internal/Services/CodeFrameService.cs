@@ -48,7 +48,7 @@ namespace SymOntoClay.Core.Internal.Services
         private readonly BaseResolver _baseResolver;
 
         /// <inheritdoc/>
-        public CodeFrame ConvertCompiledFunctionBodyToCodeFrame(CompiledFunctionBody compiledFunctionBody, LocalCodeExecutionContext parentLocalCodeExecutionContext)
+        public CodeFrame ConvertCompiledFunctionBodyToCodeFrame(CompiledFunctionBody compiledFunctionBody, ILocalCodeExecutionContext parentLocalCodeExecutionContext)
         {
             var storagesList = parentLocalCodeExecutionContext.Storage.GetStorages();
 
@@ -89,7 +89,7 @@ namespace SymOntoClay.Core.Internal.Services
         /// <inheritdoc/>
         public CodeFrame ConvertExecutableToCodeFrame(IExecutable function, KindOfFunctionParameters kindOfParameters,
             Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
-            LocalCodeExecutionContext parentLocalCodeExecutionContext, ConversionExecutableToCodeFrameAdditionalSettings additionalSettings = null, bool useParentLocalCodeExecutionContextDirectly = false)
+            ILocalCodeExecutionContext parentLocalCodeExecutionContext, ConversionExecutableToCodeFrameAdditionalSettings additionalSettings = null, bool useParentLocalCodeExecutionContextDirectly = false)
         {
 #if DEBUG
             //Log($"kindOfParameters = {kindOfParameters}");
@@ -176,7 +176,6 @@ namespace SymOntoClay.Core.Internal.Services
                 //Log($"additionalSettings = {additionalSettings}");
 #endif
 
-
                 codeFrame.LocalContext = localCodeExecutionContext;
             }
 
@@ -245,7 +244,7 @@ namespace SymOntoClay.Core.Internal.Services
             return codeFrame;
         }
 
-        private void FillUpPositionedParameters(LocalCodeExecutionContext localCodeExecutionContext, IExecutable function, List<Value> positionedParameters)
+        private void FillUpPositionedParameters(ILocalCodeExecutionContext localCodeExecutionContext, IExecutable function, List<Value> positionedParameters)
         {
             var varsStorage = localCodeExecutionContext.Storage.VarStorage;
 
@@ -278,7 +277,7 @@ namespace SymOntoClay.Core.Internal.Services
             }
         }
 
-        private void FillUpNamedParameters(LocalCodeExecutionContext localCodeExecutionContext, IExecutable function, Dictionary<StrongIdentifierValue, Value> namedParameters)
+        private void FillUpNamedParameters(ILocalCodeExecutionContext localCodeExecutionContext, IExecutable function, Dictionary<StrongIdentifierValue, Value> namedParameters)
         {
             var varsStorage = localCodeExecutionContext.Storage.VarStorage;
 
@@ -363,7 +362,7 @@ namespace SymOntoClay.Core.Internal.Services
             }
         }
 
-        private StrongIdentifierValue CheckParameterName(StrongIdentifierValue parameterName, IExecutable function, SynonymsResolver synonymsResolver, LocalCodeExecutionContext localCodeExecutionContext)
+        private StrongIdentifierValue CheckParameterName(StrongIdentifierValue parameterName, IExecutable function, SynonymsResolver synonymsResolver, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             //Log($"parameterName = {parameterName}");

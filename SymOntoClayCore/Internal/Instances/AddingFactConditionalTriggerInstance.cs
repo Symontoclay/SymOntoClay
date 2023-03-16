@@ -37,7 +37,7 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class AddingFactConditionalTriggerInstance : BaseAddingFactTriggerInstance
     {
-        public AddingFactConditionalTriggerInstance(InlineTrigger trigger, BaseInstance parent, IEngineContext context, IStorage parentStorage, LocalCodeExecutionContext parentCodeExecutionContext)
+        public AddingFactConditionalTriggerInstance(InlineTrigger trigger, BaseInstance parent, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext)
             : base(trigger, parent, context, parentStorage, parentCodeExecutionContext, true)
         {
             _triggerConditionNodeObserverContext = new TriggerConditionNodeObserverContext(context, _storage, parent.Name);

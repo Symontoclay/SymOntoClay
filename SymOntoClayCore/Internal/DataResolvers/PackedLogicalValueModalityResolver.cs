@@ -30,14 +30,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class PackedLogicalValueModalityResolver: IPackedLogicalValueModalityResolver
     {
-        public PackedLogicalValueModalityResolver(LogicalValueModalityResolver logicalValueModalityResolver, LocalCodeExecutionContext localCodeExecutionContext)
+        public PackedLogicalValueModalityResolver(LogicalValueModalityResolver logicalValueModalityResolver, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             _logicalValueModalityResolver = logicalValueModalityResolver;
             _localCodeExecutionContext = localCodeExecutionContext;
         }
 
         private readonly LogicalValueModalityResolver _logicalValueModalityResolver;
-        private readonly LocalCodeExecutionContext _localCodeExecutionContext;
+        private readonly ILocalCodeExecutionContext _localCodeExecutionContext;
 
         /// <inheritdoc/>
         public bool IsHigh(Value modalityValue)

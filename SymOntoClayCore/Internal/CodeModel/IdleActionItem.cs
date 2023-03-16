@@ -54,7 +54,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public List<AstStatement> Statements { get; set; } = new List<AstStatement>();
         public CompiledFunctionBody CompiledFunctionBody { get; set; }        
 
-        public CompiledFunctionBody GetCompiledFunctionBody(IEngineContext context, LocalCodeExecutionContext localCodeExecutionContext)
+        public CompiledFunctionBody GetCompiledFunctionBody(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             if(CompiledFunctionBody != null)
             {

@@ -31,19 +31,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public interface IExecutable: IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        IExecutionCoordinator GetCoordinator(IEngineContext context, LocalCodeExecutionContext localCodeExecutionContext);
+        IExecutionCoordinator GetCoordinator(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext);
         bool IsSystemDefined { get; }
         IList<IFunctionArgument> Arguments { get; }
         CompiledFunctionBody CompiledFunctionBody { get; }
         CodeItem CodeItem { get; }
         ISystemHandler SystemHandler { get; }
         bool ContainsArgument(StrongIdentifierValue name);
-        LocalCodeExecutionContext OwnLocalCodeExecutionContext { get; }
+        ILocalCodeExecutionContext OwnLocalCodeExecutionContext { get; }
         StrongIdentifierValue Holder { get; }
         bool NeedActivation { get; }
         bool IsActivated { get; }
         UsingLocalCodeExecutionContextPreferences UsingLocalCodeExecutionContextPreferences { get; }
-        IExecutable Activate(IEngineContext context, LocalCodeExecutionContext localCodeExecutionContext);
+        IExecutable Activate(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext);
         bool IsInstance { get; }
         IInstance AsInstance { get; }
     }

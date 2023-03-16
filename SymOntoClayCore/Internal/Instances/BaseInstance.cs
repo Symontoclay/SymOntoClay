@@ -38,7 +38,7 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public abstract class BaseInstance : BaseComponent, IInstance, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        protected BaseInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage, LocalCodeExecutionContext parentCodeExecutionContext, IStorageFactory storageFactory, List<Var> varList)
+        protected BaseInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext, IStorageFactory storageFactory, List<Var> varList)
             : base(context.Logger)
         {
 #if DEBUG
@@ -62,7 +62,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _executionCoordinator = new ExecutionCoordinator(this);
             _executionCoordinator.OnFinished += ExecutionCoordinator_OnFinished;
 
-            _localCodeExecutionContext = new LocalCodeExecutionContext(parentCodeExecutionContext);
+            var localCodeExecutionContext = new LocalCodeExecutionContext(parentCodeExecutionContext);
             var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);
             _storage = storageFactory.CreateStorage(localStorageSettings);
 
@@ -70,9 +70,10 @@ namespace SymOntoClay.Core.Internal.Instances
             //Log($"_storage.Kind = {_storage.Kind}");
 #endif
 
-            _localCodeExecutionContext.Storage = _storage;
-            _localCodeExecutionContext.Holder = Name;
-            
+            localCodeExecutionContext.Storage = _storage;
+            localCodeExecutionContext.Holder = Name;
+
+            _localCodeExecutionContext = localCodeExecutionContext;
 #if DEBUG
             //Log($"_localCodeExecutionContext = {_localCodeExecutionContext}");
 #endif
@@ -105,7 +106,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly ITriggersStorage _globalTriggersStorage;
         private readonly IStorage _parentStorage;
         protected readonly IStorage _storage;
-        protected readonly LocalCodeExecutionContext _localCodeExecutionContext;
+        protected readonly ILocalCodeExecutionContext _localCodeExecutionContext;
 
         private readonly TriggersResolver _triggersResolver;
         private readonly ConstructorsResolver _constructorsResolver;
@@ -129,7 +130,7 @@ namespace SymOntoClay.Core.Internal.Instances
         public IExecutionCoordinator ExecutionCoordinator => _executionCoordinator;
 
         /// <inheritdoc/>
-        public LocalCodeExecutionContext LocalCodeExecutionContext => _localCodeExecutionContext;
+        public ILocalCodeExecutionContext LocalCodeExecutionContext => _localCodeExecutionContext;
 
         /// <inheritdoc/>
         public void CancelExecution()

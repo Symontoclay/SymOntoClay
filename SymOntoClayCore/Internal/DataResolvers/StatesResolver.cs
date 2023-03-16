@@ -46,12 +46,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly InheritanceResolver _inheritanceResolver;
         private readonly SynonymsResolver _synonymsResolver;
 
-        public StrongIdentifierValue ResolveDefaultStateName(LocalCodeExecutionContext localCodeExecutionContext)
+        public StrongIdentifierValue ResolveDefaultStateName(ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return ResolveDefaultStateName(localCodeExecutionContext, _defaultOptions);
         }
 
-        public StrongIdentifierValue ResolveDefaultStateName(LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public StrongIdentifierValue ResolveDefaultStateName(ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
@@ -91,12 +91,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return null;
         }
 
-        public StateDef Resolve(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext)
+        public StateDef Resolve(StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Resolve(name, localCodeExecutionContext, _defaultOptions);
         }
 
-        public StateDef Resolve(StrongIdentifierValue name, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public StateDef Resolve(StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
             //Log($"name = {name}");
@@ -153,12 +153,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return OrderAndDistinctByInheritance(filteredList, options).FirstOrDefault()?.ResultItem;
         }
 
-        public List<StateDef> ResolveAllStatesList(LocalCodeExecutionContext localCodeExecutionContext)
+        public List<StateDef> ResolveAllStatesList(ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return ResolveAllStatesList(localCodeExecutionContext, _defaultOptions);
         }
 
-        public List<StateDef> ResolveAllStatesList(LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<StateDef> ResolveAllStatesList(ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
@@ -189,12 +189,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        public List<ActivationInfoOfStateDef> ResolveActivationInfoOfStateList(LocalCodeExecutionContext localCodeExecutionContext)
+        public List<ActivationInfoOfStateDef> ResolveActivationInfoOfStateList(ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return ResolveActivationInfoOfStateList(localCodeExecutionContext, _defaultOptions);
         }
         
-        public List<ActivationInfoOfStateDef> ResolveActivationInfoOfStateList(LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<ActivationInfoOfStateDef> ResolveActivationInfoOfStateList(ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
@@ -233,12 +233,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        public List<MutuallyExclusiveStatesSet> ResolveMutuallyExclusiveStatesSetsList(LocalCodeExecutionContext localCodeExecutionContext)
+        public List<MutuallyExclusiveStatesSet> ResolveMutuallyExclusiveStatesSetsList(ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return ResolveMutuallyExclusiveStatesSetsList(localCodeExecutionContext, _defaultOptions);
         }
 
-        public List<MutuallyExclusiveStatesSet> ResolveMutuallyExclusiveStatesSetsList(LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<MutuallyExclusiveStatesSet> ResolveMutuallyExclusiveStatesSetsList(ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 

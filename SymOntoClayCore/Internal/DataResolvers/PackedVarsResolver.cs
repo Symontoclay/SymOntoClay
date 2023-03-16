@@ -30,12 +30,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class PackedVarsResolver: IPackedVarsResolver
     {
-        public PackedVarsResolver(VarsResolver varsResolver, LocalCodeExecutionContext localCodeExecutionContext)
+        public PackedVarsResolver(VarsResolver varsResolver, ILocalCodeExecutionContext localCodeExecutionContext)
             : this(varsResolver, localCodeExecutionContext, varsResolver.DefaultOptions)
         {
         }
 
-        public PackedVarsResolver(VarsResolver varsResolver, LocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public PackedVarsResolver(VarsResolver varsResolver, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             _varsResolver = varsResolver;
             _localCodeExecutionContext = localCodeExecutionContext;
@@ -43,7 +43,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         }
 
         private readonly VarsResolver _varsResolver;
-        private readonly LocalCodeExecutionContext _localCodeExecutionContext;
+        private readonly ILocalCodeExecutionContext _localCodeExecutionContext;
         private readonly ResolverOptions _options;
 
         /// <inheritdoc/>

@@ -540,13 +540,13 @@ namespace SymOntoClay.Core.Internal.Instances
             var action = actionPtr.Action;
 
 #if DEBUG
-            Log($"action.Name = {action.Name}");
+            //Log($"action.Name = {action.Name}");
 #endif
 
             var targetCodeItem = CreateAndSaveInstanceCodeItem(action, NameHelper.CreateEntityName());
 
 #if DEBUG
-            Log($"targetCodeItem = {targetCodeItem}");
+            //Log($"targetCodeItem = {targetCodeItem}");
 #endif
 
             var actionInstance = new ActionInstance(targetCodeItem, actionPtr, _context, executionContext.Storage, executionContext);

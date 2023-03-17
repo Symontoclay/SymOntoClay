@@ -81,17 +81,28 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
                     switch(_status)
                     {
-                        case ProcessStatus.Canceled:
                         case ProcessStatus.Completed:
-                        case ProcessStatus.Faulted:
                             Task.Run(() => {
-                                OnFinish?.Invoke(this);
+                                OnComplete?.Invoke(this);
                             });
-                            CancelChildren();
+                            ProcessGeneralFinishStatuses();
+                            break;
+
+                        case ProcessStatus.Canceled:
+                        case ProcessStatus.Faulted:
+                            ProcessGeneralFinishStatuses();
                             break;
                     }
                 }
             }
+        }
+
+        private void ProcessGeneralFinishStatuses()
+        {
+            Task.Run(() => {
+                OnFinish?.Invoke(this);
+            });
+            CancelChildren();
         }
 
         /// <inheritdoc/>
@@ -126,6 +137,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
         /// <inheritdoc/>
         public override event ProcessInfoEvent OnFinish;
+
+        /// <inheritdoc/>
+        public override event ProcessInfoEvent OnComplete;
 
         /// <inheritdoc/>
         public override IReadOnlyList<string> Friends => _friends;

@@ -178,7 +178,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             var hostListener = new HostMethods_Tests_HostListener();
 
-            BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(true, BehaviorTestEngineInstance.Run(text,
                 (n, message) => {
                     switch (n)
                     {
@@ -197,7 +197,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, hostListener);
+                }, hostListener));
         }
 
         [Test]

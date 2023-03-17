@@ -114,7 +114,8 @@ namespace SymOntoClay.Core.Tests.Helpers
             var result = true;
 
             _internalInstance.CreateAndStartNPC(message => { logChannel(message); },
-                errorMsg => { result = false; error(errorMsg); }, platformListener);
+                errorMsg => { result = false; error(errorMsg); }, 
+                platformListener);
 
             Thread.Sleep(timeoutToEnd);
 

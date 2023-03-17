@@ -1982,8 +1982,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (_pseudoSyncTask == null)
             {
+#if DEBUG
+                //Log($"currentCodeFrame.NeedsExecCallEvent = {currentCodeFrame.NeedsExecCallEvent}");
+#endif
+
                 if (!currentCodeFrame.NeedsExecCallEvent)
                 {
+                    _currentCodeFrame.CurrentPosition++;
                     return;
                 }
 
@@ -2004,29 +2009,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                 break;
                             }
 
-                            var coordinator = ((IExecutable)completeAnnotationSystemEvent).GetCoordinator(_context, _currentCodeFrame.LocalContext);
-
-#if DEBUG
-                            Log($"coordinator == null = {coordinator == null}");
-                            Log($"_currentCodeFrame.ExecutionCoordinator = {_currentCodeFrame.ExecutionCoordinator}");
-#endif
-
-                            throw new NotImplementedException();
-
-                            var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(completeAnnotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, null, true);
-
-#if DEBUG
-                            //Log($"newCodeFrame = {newCodeFrame}");
-#endif
-
-                            if(completeAnnotationSystemEvent.IsSync)
-                            {
-                                ExecuteCodeFrame(newCodeFrame, coordinator, SyncOption.PseudoSync);
-                            }
-                            else
-                            {
-                                ExecuteCodeFrame(newCodeFrame, coordinator, SyncOption.ChildAsync);
-                            }
+                            ExecCallEvent(completeAnnotationSystemEvent);
                         }
                         break;
 
@@ -2041,7 +2024,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 return;
             }
 
-            if(_pseudoSyncTask.Status == TaskStatus.Running)
+#if DEBUG
+            //Log($"_pseudoSyncTask.Status = {_pseudoSyncTask.Status}");
+#endif
+
+            if (_pseudoSyncTask.Status == TaskStatus.Running)
             {
                 return;
             }
@@ -2049,6 +2036,40 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _pseudoSyncTask = null;
 
             _currentCodeFrame.CurrentPosition++;
+        }
+
+        private void ExecCallEvent(AnnotationSystemEvent annotationSystemEvent)
+        {
+            var coordinator = ((IExecutable)annotationSystemEvent).GetCoordinator(_context, _currentCodeFrame.LocalContext);
+
+#if DEBUG
+            //Log($"coordinator == null = {coordinator == null}");
+            //Log($"_currentCodeFrame.ExecutionCoordinator = {_currentCodeFrame.ExecutionCoordinator}");
+#endif
+
+            if (coordinator == null)
+            {
+                coordinator = _currentCodeFrame.ExecutionCoordinator;
+            }
+
+#if DEBUG
+            //Log($"coordinator == null = {coordinator == null}");
+#endif
+
+            var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(annotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, null, true);
+
+#if DEBUG
+            //Log($"newCodeFrame = {newCodeFrame}");
+#endif
+
+            if (annotationSystemEvent.IsSync)
+            {
+                ExecuteCodeFrame(newCodeFrame, coordinator, SyncOption.PseudoSync);
+            }
+            else
+            {
+                ExecuteCodeFrame(newCodeFrame, coordinator, SyncOption.ChildAsync);
+            }
         }
 
         private enum SyncOption
@@ -2232,6 +2253,26 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             //var packedSynonymsResolver = new PackedSynonymsResolver(_context.DataResolversFactory.GetSynonymsResolver(), _currentCodeFrame.LocalContext);
 
+            AnnotationSystemEvent completeAnnotationSystemEvent = null;
+
+            if (annotation != null)
+            {
+                var annotationSystemEventsDict = AnnotationsHelper.GetAnnotationSystemEventsDictFromAnnotaion(annotation);
+
+#if DEBUG
+                //Log($"annotationSystemEventsDict = {annotationSystemEventsDict.WriteDict_2_ToString()}");
+#endif
+
+                if (annotationSystemEventsDict.ContainsKey(KindOfAnnotationSystemEvent.Complete))
+                {
+                    completeAnnotationSystemEvent = annotationSystemEventsDict[KindOfAnnotationSystemEvent.Complete];
+                }
+            }
+
+#if DEBUG
+            //Log($"completeAnnotationSystemEvent = {completeAnnotationSystemEvent}");
+#endif
+
             var processCreatingResult = _hostListener.CreateProcess(command, _context, _currentCodeFrame.LocalContext);
 
 #if DEBUG
@@ -2240,7 +2281,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if(processCreatingResult.IsSuccessful)
             {
-                var processInfo = processCreatingResult.Process;                
+                var processInfo = processCreatingResult.Process;
 
                 _instancesStorage.AppendAndTryStartProcessInfo(processInfo);
 
@@ -2261,11 +2302,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         executionCoordinators = new List<IExecutionCoordinator>() { _executionCoordinator };
                     }
 
+#if DEBUG
+                    //Log($"NEXT");
+#endif
+
                     ProcessInfoHelper.Wait(executionCoordinators, timeout, _dateTimeProvider, processInfo);
+
+#if DEBUG
+                    //Log($"NEXT NEXT");
+#endif
 
                     //Log($"localExecutionCoordinator = {localExecutionCoordinator}");
 
-                    if(_executionCoordinator != null && _executionCoordinator.ExecutionStatus == ActionExecutionStatus.Broken)
+                    if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus == ActionExecutionStatus.Broken)
                     {
                         ProcessError(_executionCoordinator.RuleInstance);
 
@@ -2282,6 +2331,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     {
                         case ProcessStatus.Completed:
                             _currentCodeFrame.ValuesStack.Push(NullValue.Instance);
+
+                            if(completeAnnotationSystemEvent != null)
+                            {
+                                ExecCallEvent(completeAnnotationSystemEvent);
+                            }
                             break;
 
                         case ProcessStatus.Canceled:
@@ -2303,6 +2357,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     if(syncOption == SyncOption.ChildAsync)
                     {
                         processInfo.ParentProcessInfo = _currentCodeFrame.ProcessInfo;
+                    }
+
+                    if (completeAnnotationSystemEvent != null)
+                    {
+                        processInfo.OnComplete += (procI) =>
+                        {
+
+                        };
+
+                        throw new NotImplementedException();
                     }
                 }
 
@@ -2359,7 +2423,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            Log($"method = {method}");
+            //Log($"method = {method}");
 #endif
 
             if(method == null)
@@ -2704,6 +2768,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 case SyncOption.PseudoSync:
                     {
+                        PrepareCodeFrameToSyncExecution(codeFrame, coordinator);
+
                         var threadExecutor = new AsyncThreadExecutor(_context);
                         threadExecutor.SetCodeFrame(codeFrame);
 
@@ -2758,6 +2824,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 case KindOfInstance.ActionInstance:
                     codeFrame.SpecialMark = SpecialMarkOfCodeFrame.MainFrameOfActionInstance;
+                    break;
+
+                case KindOfInstance.AppInstance:
                     break;
 
                 default:

@@ -58,8 +58,12 @@ namespace SymOntoClay.Core
         /// <inheritdoc/>
         public abstract IReadOnlyList<int> Devices { get; }
 
+        
         /// <inheritdoc/>
         public abstract event ProcessInfoEvent OnFinish;
+
+        /// <inheritdoc/>
+        public abstract event ProcessInfoEvent OnComplete;
 
         /// <inheritdoc/>
         public abstract void Start();

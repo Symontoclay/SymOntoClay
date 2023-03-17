@@ -38,8 +38,9 @@ namespace SymOntoClay.Core
         bool IsFinished { get; }
         IReadOnlyList<int> Devices { get; }
         void Start();
-        void Cancel();
+        void Cancel();        
         event ProcessInfoEvent OnFinish;
+        event ProcessInfoEvent OnComplete;
         float Priority { get; }
         float GlobalPriority { get; }
         IReadOnlyList<string> Friends { get; }

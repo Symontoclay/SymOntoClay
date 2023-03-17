@@ -33,6 +33,7 @@ using TestSandbox.CoreHostListener;
 using TestSandbox.Helpers;
 using TestSandbox.PlatformImplementations;
 using SymOntoClayBaseTestLib.Helpers;
+using SymOntoClay.UnityAsset.Core.Tests.HostListeners;
 
 namespace TestSandbox.Handlers
 {
@@ -45,6 +46,8 @@ namespace TestSandbox.Handlers
             _logger.Log("Begin");
 
             var platformListener = new TstPlatformHostListener();
+            //var platformListener = new HostMethods_Tests_HostListener();
+            //var platformListener = new FullGeneralized_Tests_HostListener();
 
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.HostListener = platformListener;

@@ -3,56 +3,48 @@
     on Enter =>
     {
         'Begin' >> @>log;
+        @@host.`rotate`~(30)[:on complete { 'on complete' >> @>log; } :];
+        'End' >> @>log;
+    }
+}
+
+/*app PeaceKeeper
+{
+    on Enter =>
+    {
+        'Begin' >> @>log;
 
         Go();
 
         'End' >> @>log;
     }
-
-    fun b()
-    {
-        '`b` has been called!' >> @>log;
-    }
 }
 
 action Go
 {
-    on Enter =>
-    {
-        'Enter Go' >> @>log;
-    }
-
     op () => 
     {
         'Begin Go' >> @>log;
         
-        a();
-        b();
+        @a = 10;
 
-        //@a = 10;
+        repeat
+        {
+            @a >> @>log;
+            @a = @a - 1;
 
-        //repeat
-        //{
-        //    @a >> @>log;
-        //    @a = @a - 1;
+            @@host.`rotate`(30)[:on complete { complete action; } :];
 
-        //    a()[:on complete { complete action; } :];
+            if(@a > 5)
+            {
+                continue;
+            }
 
-        //    if(@a > 5)
-        //    {
-        //        continue;
-        //    }
+            'End of while iteration' >> @>log;
 
-        //    'End of while iteration' >> @>log;
-
-        //    break;
-        //}
+            break;
+        }
 
         'End Go' >> @>log;
     }
-
-    fun a() => 
-    {
-        '`a` has been called!' >> @>log;
-    }
-}
+}*/

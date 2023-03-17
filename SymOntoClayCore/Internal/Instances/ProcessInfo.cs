@@ -62,16 +62,27 @@ namespace SymOntoClay.Core.Internal.Instances
                     switch(_status)
                     {
                         case ProcessStatus.Completed:
+                            Task.Run(() => {
+                                OnComplete?.Invoke(this);
+                            });
+                            ProcessGeneralFinishStatuses();
+                            break;
+
                         case ProcessStatus.Canceled:
                         case ProcessStatus.Faulted:
-                            Task.Run(() => {
-                                OnFinish?.Invoke(this);
-                            });
-                            CancelChildren();
+                            ProcessGeneralFinishStatuses();
                             break;
                     }
                 }
             }
+        }
+
+        private void ProcessGeneralFinishStatuses()
+        {
+            Task.Run(() => {
+                OnFinish?.Invoke(this);
+            });
+            CancelChildren();
         }
 
         /// <inheritdoc/>
@@ -84,6 +95,9 @@ namespace SymOntoClay.Core.Internal.Instances
 
         /// <inheritdoc/>
         public override event ProcessInfoEvent OnFinish;
+
+        /// <inheritdoc/>
+        public override event ProcessInfoEvent OnComplete;
 
         /// <inheritdoc/>
         public override void Start()

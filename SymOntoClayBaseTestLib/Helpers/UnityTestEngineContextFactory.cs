@@ -262,16 +262,16 @@ namespace SymOntoClay.Core.Tests.Helpers
                 npcSettings.LogicFile = factorySettings.NPCAppFile;
             }
             
-            if(factorySettings.PlatformLogger == null)
+            if(factorySettings.HostListener == null)
             {
-                if(factorySettings.UseDefaultPlatformLogger)
+                if(factorySettings.UseDefaultHostListener)
                 {
                     npcSettings.HostListener = DefaultPlatformListener;
                 }
             }
             else
             {
-                npcSettings.HostListener = factorySettings.PlatformLogger;
+                npcSettings.HostListener = factorySettings.HostListener;
             }            
 
             if(factorySettings.CurrentAbsolutePosition.HasValue)

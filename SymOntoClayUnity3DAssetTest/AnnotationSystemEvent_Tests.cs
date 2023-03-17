@@ -679,5 +679,86 @@ action Go
                     }
                 }, hostListener));
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case6()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter =>
+    {
+        'Begin' >> @>log;
+
+        Go();
+
+        'End' >> @>log;
+    }
+}
+
+action Go
+{
+    op () => 
+    {
+        'Begin Go' >> @>log;
+        
+        @a = 10;
+
+        repeat
+        {
+            @a >> @>log;
+            @a = @a - 1;
+
+            @@host.`rotate`(30)[:on complete { complete action; } :];
+
+            if(@a > 5)
+            {
+                continue;
+            }
+
+            'End of while iteration' >> @>log;
+
+            break;
+        }
+
+        'End Go' >> @>log;
+    }
+}";
+
+            var hostListener = new FullGeneralized_Tests_HostListener();
+
+            Assert.AreEqual(true, BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("Begin Go", message);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual("10", message);
+                            break;
+
+                        case 4:
+                            Assert.AreEqual("methodName = 'rotate'", message);
+                            break;
+
+                        case 5:
+                            Assert.AreEqual("isNamedParameters = False", message);
+                            break;
+
+                        case 6:
+                            Assert.AreEqual("End", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }, hostListener));
+        }
     }
 }

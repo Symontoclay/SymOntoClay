@@ -3,16 +3,6 @@
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.`rotate`~(30)[:on complete ~ { 'on complete' >> @>log; } :];
-        'End' >> @>log;
-    }
-}
-
-/*app PeaceKeeper
-{
-    on Enter =>
-    {
-        'Begin' >> @>log;
 
         Go();
 
@@ -47,4 +37,4 @@ action Go
 
         'End Go' >> @>log;
     }
-}*/
+}

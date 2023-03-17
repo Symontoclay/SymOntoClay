@@ -45,9 +45,9 @@ namespace TestSandbox.Handlers
         {
             _logger.Log("Begin");
 
-            var platformListener = new TstPlatformHostListener();
+            //var platformListener = new TstPlatformHostListener();
             //var platformListener = new HostMethods_Tests_HostListener();
-            //var platformListener = new FullGeneralized_Tests_HostListener();
+            var platformListener = new FullGeneralized_Tests_HostListener();
 
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.HostListener = platformListener;

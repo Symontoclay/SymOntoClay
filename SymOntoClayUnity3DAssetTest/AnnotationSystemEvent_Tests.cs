@@ -587,5 +587,97 @@ action Go
                     }
                 }, hostListener));
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case5_b()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        @@host.`rotate`~(30)[:on complete { 'on complete' >> @>log; } :];
+        'End' >> @>log;
+    }
+}";
+
+            var hostListener = new FullGeneralized_Tests_HostListener();
+
+            Assert.AreEqual(true, BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual((message == "methodName = 'rotate'" || message == "End"), true);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual((message == "isNamedParameters = False" || message == "End"), true);
+                            break;
+
+                        case 4:
+                            Assert.AreEqual((message == "on complete" || message == "End"), true);
+                            break;
+
+                        case 5:
+                            Assert.AreEqual((message == "on complete" || message == "End"), true);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }, hostListener));
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case5_с()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        @@host.`rotate`~(30)[:on complete ~ { 'on complete' >> @>log; } :];
+        'End' >> @>log;
+    }
+}";
+
+            var hostListener = new FullGeneralized_Tests_HostListener();
+
+            Assert.AreEqual(true, BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual((message == "methodName = 'rotate'" || message == "End"), true);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual((message == "isNamedParameters = False" || message == "End"), true);
+                            break;
+
+                        case 4:
+                            Assert.AreEqual((message == "on complete" || message == "End"), true);
+                            break;
+
+                        case 5:
+                            Assert.AreEqual((message == "on complete" || message == "End"), true);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }, hostListener));
+        }
     }
 }

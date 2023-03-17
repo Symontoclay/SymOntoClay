@@ -2361,12 +2361,35 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     if (completeAnnotationSystemEvent != null)
                     {
+#if DEBUG
+                        //Log($"_currentCodeFrame == null = {_currentCodeFrame == null}");
+#endif
+
+                        var currCodeFrame = _currentCodeFrame;
+
+#if DEBUG
+                        //Log($"processInfo.GetType().FullName = {processInfo.GetType().FullName}");
+                        //Log($"processInfo.GetHashCode() = {processInfo.GetHashCode()}");
+#endif
+
                         processInfo.OnComplete += (procI) =>
                         {
+#if DEBUG
+                            //Log($"processInfo.OnComplete _currentCodeFrame == null = {_currentCodeFrame == null}");
+#endif
 
+                            var completeAnnotationSystemEventCoordinator = ((IExecutable)completeAnnotationSystemEvent).GetCoordinator(_context, currCodeFrame.LocalContext);
+
+                            var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(completeAnnotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, currCodeFrame.LocalContext, null, true);
+
+#if DEBUG
+                            //Log($"newCodeFrame = {newCodeFrame}");
+#endif
+
+                            ExecuteCodeFrame(newCodeFrame, currCodeFrame, completeAnnotationSystemEventCoordinator, SyncOption.ChildAsync);
                         };
 
-                        throw new NotImplementedException();
+                        //throw new NotImplementedException();
                     }
                 }
 
@@ -2697,10 +2720,23 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ExecuteCodeFrame(CodeFrame codeFrame, IExecutionCoordinator coordinator, SyncOption syncOption, AnnotationSystemEvent completeAnnotationSystemEvent = null)
         {
+            ExecuteCodeFrame(codeFrame, null, coordinator, syncOption, completeAnnotationSystemEvent);
+        }
+
+        private void ExecuteCodeFrame(CodeFrame codeFrame, CodeFrame currentCodeFrame, IExecutionCoordinator coordinator, SyncOption syncOption, AnnotationSystemEvent completeAnnotationSystemEvent = null)
+        {
 #if DEBUG
             //Log($"codeFrame = {codeFrame}");
+            //Log($"currentCodeFrame = {currentCodeFrame}");
             //Log($"codeFrame.LocalContext.Owner = {codeFrame.LocalContext.Owner}");
 #endif
+
+            var targetCurrentCodeFrame = _currentCodeFrame;
+
+            if(currentCodeFrame != null)
+            {
+                targetCurrentCodeFrame = currentCodeFrame;
+            }
 
             _context.InstancesStorage.AppendProcessInfo(codeFrame.ProcessInfo);
 
@@ -2714,12 +2750,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 case SyncOption.Ctor:
                     PrepareCodeFrameToSyncExecution(codeFrame, coordinator);
 
-                    _currentCodeFrame.CurrentPosition++;
+                    targetCurrentCodeFrame.CurrentPosition++;
 
                     if (completeAnnotationSystemEvent != null)
                     {
-                        _currentCodeFrame.NeedsExecCallEvent = true;
-                        _currentCodeFrame.CompleteAnnotationSystemEvent = completeAnnotationSystemEvent;
+                        targetCurrentCodeFrame.NeedsExecCallEvent = true;
+                        targetCurrentCodeFrame.CompleteAnnotationSystemEvent = completeAnnotationSystemEvent;
                     }
 
                     SetCodeFrame(codeFrame);
@@ -2728,17 +2764,17 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 case SyncOption.IndependentAsync:
                 case SyncOption.ChildAsync:
                     {
-                        _currentCodeFrame.CurrentPosition++;
+                        targetCurrentCodeFrame.CurrentPosition++;
 
                         if (syncOption == SyncOption.ChildAsync)
                         {
 #if DEBUG
                             //Log($"codeFrame = {codeFrame}");
                             //Log($"codeFrame.ProcessInfo.Id = {codeFrame.ProcessInfo.Id}");
-                            //Log($"_currentCodeFrame = {_currentCodeFrame}");
+                            //Log($"targetCurrentCodeFrame = {targetCurrentCodeFrame}");
 #endif
 
-                            _currentCodeFrame.ProcessInfo.AddChild(codeFrame.ProcessInfo);
+                            targetCurrentCodeFrame.ProcessInfo.AddChild(codeFrame.ProcessInfo);
                         }
 
                         var threadExecutor = new AsyncThreadExecutor(_context);
@@ -2750,9 +2786,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         {
                             task.AsTaskValue.OnComplete += () =>
                             {
-                                var completeAnnotationSystemEventCoordinator = ((IExecutable)completeAnnotationSystemEvent).GetCoordinator(_context, _currentCodeFrame.LocalContext);
+                                var completeAnnotationSystemEventCoordinator = ((IExecutable)completeAnnotationSystemEvent).GetCoordinator(_context, targetCurrentCodeFrame.LocalContext);
 
-                                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(completeAnnotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, null, true);
+                                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(completeAnnotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, targetCurrentCodeFrame.LocalContext, null, true);
 
 #if DEBUG
                                 //Log($"newCodeFrame = {newCodeFrame}");
@@ -2762,7 +2798,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             };
                         }
 
-                        _currentCodeFrame.ValuesStack.Push(task);
+                        targetCurrentCodeFrame.ValuesStack.Push(task);
                     }
                     break;
 

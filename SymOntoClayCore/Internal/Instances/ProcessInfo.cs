@@ -62,9 +62,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     switch(_status)
                     {
                         case ProcessStatus.Completed:
-                            Task.Run(() => {
-                                OnComplete?.Invoke(this);
-                            });
+                            EmitOnComplete();
                             ProcessGeneralFinishStatuses();
                             break;
 
@@ -77,11 +75,23 @@ namespace SymOntoClay.Core.Internal.Instances
             }
         }
 
-        private void ProcessGeneralFinishStatuses()
+        private void EmitOnComplete()
         {
             Task.Run(() => {
-                OnFinish?.Invoke(this);
+                InternalOnComplete?.Invoke(this);
             });
+        }
+
+        private void EmitOnFinish()
+        {
+            Task.Run(() => {
+                InternalOnFinish?.Invoke(this);
+            });
+        }
+
+        private void ProcessGeneralFinishStatuses()
+        {
+            EmitOnFinish();
             CancelChildren();
         }
 
@@ -94,10 +104,46 @@ namespace SymOntoClay.Core.Internal.Instances
         public override IReadOnlyList<int> Devices => _devices;
 
         /// <inheritdoc/>
-        public override event ProcessInfoEvent OnFinish;
+        public override event ProcessInfoEvent OnFinish
+        {
+            add
+            {
+                InternalOnFinish += value;
+
+                if(_status == ProcessStatus.Completed || _status == ProcessStatus.Canceled || _status == ProcessStatus.Faulted)
+                {
+                    EmitOnFinish();
+                }
+            }
+
+            remove
+            {
+                InternalOnFinish -= value;
+            }
+        }
+
+        private event ProcessInfoEvent InternalOnFinish;
 
         /// <inheritdoc/>
-        public override event ProcessInfoEvent OnComplete;
+        public override event ProcessInfoEvent OnComplete
+        {
+            add
+            {
+                InternalOnComplete += value;
+
+                if (_status == ProcessStatus.Completed)
+                {
+                    EmitOnComplete();
+                }
+            }
+
+            remove
+            {
+                InternalOnComplete -= value;
+            }
+        }
+
+        private event ProcessInfoEvent InternalOnComplete;
 
         /// <inheritdoc/>
         public override void Start()

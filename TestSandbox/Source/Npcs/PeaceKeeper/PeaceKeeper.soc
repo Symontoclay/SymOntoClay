@@ -3,7 +3,7 @@
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.`rotate`~(30)[:on complete { 'on complete' >> @>log; } :];
+        @@host.`rotate`~(30)[:on complete ~ { 'on complete' >> @>log; } :];
         'End' >> @>log;
     }
 }

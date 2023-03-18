@@ -23,7 +23,7 @@ action Go
             @a >> @>log;
             @a = @a - 1;
 
-            @@host.`rotate`(30)[:on complete { complete action; } :];
+            @@host.`rotate`(30)[: timeout=1000, on complete { complete action; } :];
 
             if(@a > 5)
             {

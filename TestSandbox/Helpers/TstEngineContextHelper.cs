@@ -221,6 +221,10 @@ namespace TestSandbox.Helpers
             
             npcSettings.PlatformSupport = new PlatformSupportCLIStub();
 
+            //tmp
+            npcSettings.Categories = new List<string>() { "elf" };
+            //tmp
+
             return npcSettings;
         }
 

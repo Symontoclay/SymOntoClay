@@ -36,6 +36,9 @@ namespace SymOntoClay.UnityAsset.Core
         public string HostFile { get; set; }
         public IPlatformSupport PlatformSupport { get; set; }
 
+        public List<string> Categories { get; set; }
+        public bool EnableCategories { get; set; }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
@@ -44,6 +47,9 @@ namespace SymOntoClay.UnityAsset.Core
 
             sb.AppendLine($"{spaces}{nameof(HostFile)} = {HostFile}");
             sb.PrintExisting(n, nameof(PlatformSupport), PlatformSupport);
+
+            sb.PrintPODListProp(n, nameof(Categories), Categories);
+            sb.AppendLine($"{spaces}{nameof(EnableCategories)} = {EnableCategories}");
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();

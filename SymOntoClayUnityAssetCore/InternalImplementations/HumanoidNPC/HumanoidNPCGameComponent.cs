@@ -98,6 +98,9 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 coreEngineSettings.LogicalSearchExplainDumpDir = worldContext.LogicalSearchExplainDumpDir;
                 coreEngineSettings.EnableAddingRemovingFactLoggingInStorages = worldContext.EnableAddingRemovingFactLoggingInStorages;
 
+                coreEngineSettings.Categories = settings.Categories;
+                coreEngineSettings.EnableCategories = settings.EnableCategories;
+
 #if DEBUG
                 //Log($"coreEngineSettings = {coreEngineSettings}");
 #endif
@@ -221,6 +224,28 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         {
             _soundPublisher.PushSoundFact(power, fact);
         }
+
+        public void AddCategory(string category)
+        {
+            _coreEngine.AddCategory(category);
+        }
+
+        public void AddCategories(List<string> categories)
+        {
+            _coreEngine.AddCategories(categories);
+        }
+
+        public void RemoveCategory(string category)
+        {
+            _coreEngine.RemoveCategory(category);
+        }
+
+        public void RemoveCategories(List<string> categories)
+        {
+            _coreEngine.RemoveCategories(categories);
+        }
+
+        public bool EnableCategories { get => _coreEngine.EnableCategories; set => _coreEngine.EnableCategories = value; }
 
         /// <inheritdoc/>
         public override bool CanBeTakenBy(IEntity subject)

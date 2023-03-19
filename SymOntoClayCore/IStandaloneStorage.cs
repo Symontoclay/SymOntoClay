@@ -36,5 +36,10 @@ namespace SymOntoClay.Core
         void RemovePublicFact(string id);
         IStorage PublicFactsStorage { get; }
         IMainStorageContext Context { get; }
+        void AddCategory(string category);
+        void AddCategories(List<string> categories);
+        void RemoveCategory(string category);
+        void RemoveCategories(List<string> categories);
+        bool EnableCategories { get; set; }
     }
 }

@@ -28,21 +28,25 @@ using SymOntoClay.Core.Internal.Parsing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage
 {
     public class StorageComponent: BaseComponent, IStorageComponent
     {
-        public StorageComponent(IMainStorageContext context, IStandaloneStorage parentStorage, KindOfStorage kindGlobalOfStorage)
+        public StorageComponent(IMainStorageContext context, IStandaloneStorage parentStorage, KindOfStorage kindGlobalOfStorage, StorageComponentSettings settings)
             : base(context.Logger)
         {
+            _settings = settings;
+
             _context = context;
 
             _parentStorage = parentStorage;
             _kindGlobalOfStorage = kindGlobalOfStorage;
         }
 
+        private readonly StorageComponentSettings _settings;
         private readonly IMainStorageContext _context;
         private readonly IStandaloneStorage _parentStorage;
         private readonly KindOfStorage _kindGlobalOfStorage;
@@ -441,6 +445,33 @@ namespace SymOntoClay.Core.Internal.Storage
         {
             _worldPublicFactsStorage.RemovePublicFactsStorageOfOtherGameComponent(storage);
         }
+
+        /// <inheritdoc/>
+        public void AddCategory(string category)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public void AddCategories(List<string> categories)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public void RemoveCategory(string category)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public void RemoveCategories(List<string> categories)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public bool EnableCategories { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public void Die()
         {

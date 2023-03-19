@@ -116,7 +116,14 @@ namespace SymOntoClay.Core.Internal.Helpers
 
             context.LogicQueryParseAndCache = settings.LogicQueryParseAndCache;
 
-            context.Storage = new StorageComponent(context, settings.ParentStorage, kindGlobalOfStorage);
+            var storageComponentSettings = new StorageComponentSettings()
+            {
+                Categories = settings.Categories,
+                EnableCategories = settings.EnableCategories
+            };
+
+            context.Storage = new StorageComponent(context, settings.ParentStorage, kindGlobalOfStorage, storageComponentSettings);
+
             context.Parser = new Parser(context);
             context.Compiler = new Compiler(context);
             context.CommonNamesStorage = new CommonNamesStorage(context);

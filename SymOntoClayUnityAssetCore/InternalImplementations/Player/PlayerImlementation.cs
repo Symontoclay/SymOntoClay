@@ -25,6 +25,7 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core.Internal;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
@@ -46,13 +47,38 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
 
         void IDeferredInitialized.Initialize(IWorldCoreGameComponentContext worldContext)
         {
-            if (_gameComponent == null)
+            lock (_initializeLockObj)
             {
-                _gameComponent = new PlayerGameComponent(_settings, worldContext);
+                if (_gameComponent == null)
+                {
+                    _gameComponent = new PlayerGameComponent(_settings, worldContext);
+
+                    if (_addedCategories.Any())
+                    {
+                        _gameComponent.AddCategories(_addedCategories);
+                        _addedCategories = null;
+                    }
+
+                    if (_removedCategories.Any())
+                    {
+                        _gameComponent.RemoveCategories(_removedCategories);
+                        _removedCategories = null;
+                    }
+
+                    if (_enableCategories.HasValue)
+                    {
+                        _gameComponent.EnableCategories = _enableCategories.Value;
+                    }
+                }
             }
         }
 
         private readonly PlayerSettings _settings;
+        private readonly object _initializeLockObj = new object();
+
+        private List<string> _addedCategories = new List<string>();
+        private List<string> _removedCategories = new List<string>();
+        private bool? _enableCategories;
 
         /// <inheritdoc/>
         public IEntityLogger Logger => _gameComponent.Logger;
@@ -97,6 +123,97 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         public void PushSoundFact(float power, RuleInstance fact)
         {
             _gameComponent.PushSoundFact(power, fact);
+        }
+
+        /// <inheritdoc/>
+        public void AddCategory(string category)
+        {
+            lock (_initializeLockObj)
+            {
+                if (_gameComponent == null)
+                {
+                    _addedCategories.Add(category);
+                    return;
+                }
+
+                _gameComponent.AddCategory(category);
+            }
+        }
+
+        /// <inheritdoc/>
+        public void AddCategories(List<string> categories)
+        {
+            lock (_initializeLockObj)
+            {
+                if (_gameComponent == null)
+                {
+                    _addedCategories.AddRange(categories);
+                    return;
+                }
+
+                _gameComponent.AddCategories(categories);
+            }
+        }
+
+        /// <inheritdoc/>
+        public void RemoveCategory(string category)
+        {
+            lock (_initializeLockObj)
+            {
+                if (_gameComponent == null)
+                {
+                    _removedCategories.Add(category);
+                    return;
+                }
+
+                _gameComponent.RemoveCategory(category);
+            }
+        }
+
+        /// <inheritdoc/>
+        public void RemoveCategories(List<string> categories)
+        {
+            lock (_initializeLockObj)
+            {
+                if (_gameComponent == null)
+                {
+                    _removedCategories.AddRange(categories);
+                    return;
+                }
+
+                _gameComponent.RemoveCategories(categories);
+            }
+        }
+
+        /// <inheritdoc/>
+        public bool EnableCategories
+        {
+            get
+            {
+                lock (_initializeLockObj)
+                {
+                    if (_gameComponent == null)
+                    {
+                        return _enableCategories ?? _settings.EnableCategories;
+                    }
+
+                    return _gameComponent.EnableCategories;
+                }
+            }
+
+            set
+            {
+                lock (_initializeLockObj)
+                {
+                    if (_gameComponent == null)
+                    {
+                        _enableCategories = value;
+                        return;
+                    }
+
+                    _gameComponent.EnableCategories = value;
+                }
+            }
         }
 
         /// <inheritdoc/>

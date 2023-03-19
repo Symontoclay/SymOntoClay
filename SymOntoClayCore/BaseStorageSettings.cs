@@ -59,6 +59,9 @@ namespace SymOntoClay.Core
         public string LogicalSearchExplainDumpDir { get; set; }
         public bool EnableAddingRemovingFactLoggingInStorages { get; set; }
 
+        public List<string> Categories { get; set; }
+        public bool EnableCategories { get; set; }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
@@ -75,6 +78,9 @@ namespace SymOntoClay.Core
             sb.AppendLine($"{spaces}{nameof(KindOfLogicalSearchExplain)} = {KindOfLogicalSearchExplain}");
             sb.AppendLine($"{spaces}{nameof(LogicalSearchExplainDumpDir)} = {LogicalSearchExplainDumpDir}");
             sb.AppendLine($"{spaces}{nameof(EnableAddingRemovingFactLoggingInStorages)} = {EnableAddingRemovingFactLoggingInStorages}");
+
+            sb.PrintPODListProp(n, nameof(Categories), Categories);
+            sb.AppendLine($"{spaces}{nameof(EnableCategories)} = {EnableCategories}");
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();

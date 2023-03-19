@@ -54,6 +54,9 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
                 standaloneStorageSettings.LogicalSearchExplainDumpDir = worldContext.LogicalSearchExplainDumpDir;
                 standaloneStorageSettings.EnableAddingRemovingFactLoggingInStorages = worldContext.EnableAddingRemovingFactLoggingInStorages;
 
+                standaloneStorageSettings.Categories = settings.Categories;
+                standaloneStorageSettings.EnableCategories = settings.EnableCategories;
+
 #if DEBUG
                 //Log($"standaloneStorageSettings = {standaloneStorageSettings}");
 #endif
@@ -94,6 +97,21 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             //}
         }
 
+        public string InsertPublicFact(string text)
+        {
+            return HostStorage.InsertPublicFact(text);
+        }
+
+        public string InsertPublicFact(RuleInstance fact)
+        {
+            return HostStorage.InsertPublicFact(fact);
+        }
+
+        public void RemovePublicFact(string id)
+        {
+            HostStorage.RemovePublicFact(id);
+        }
+
         public void PushSoundFact(float power, string text)
         {
             _soundPublisher.PushSoundFact(power, text);
@@ -103,6 +121,28 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         {
             _soundPublisher.PushSoundFact(power, fact);
         }
+
+        public void AddCategory(string category)
+        {
+            HostStorage.AddCategory(category);
+        }
+
+        public void AddCategories(List<string> categories)
+        {
+            HostStorage.AddCategories(categories);
+        }
+
+        public void RemoveCategory(string category)
+        {
+            HostStorage.RemoveCategory(category);
+        }
+
+        public void RemoveCategories(List<string> categories)
+        {
+            HostStorage.RemoveCategories(categories);
+        }
+
+        public bool EnableCategories { get => HostStorage.EnableCategories; set => HostStorage.EnableCategories = value; }
 
         /// <inheritdoc/>
         protected override void OnDisposed()

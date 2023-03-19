@@ -40,7 +40,7 @@ namespace SymOntoClay.UnityAsset.Core
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintExisting(n, nameof(HostListener), HostListener);
+            sb.PrintExisting(n, nameof(HostListener), HostListener);            
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();

@@ -173,5 +173,32 @@ namespace SymOntoClay.Core
         {
             _storageComponent.RemovePublicFact(id);
         }
+
+        /// <inheritdoc/>
+        public void AddCategory(string category)
+        {
+            _storageComponent.AddCategory(category);
+        }
+
+        /// <inheritdoc/>
+        public void AddCategories(List<string> categories)
+        {
+            _storageComponent.AddCategories(categories);
+        }
+
+        /// <inheritdoc/>
+        public void RemoveCategory(string category)
+        {
+            _storageComponent.RemoveCategory(category);
+        }
+
+        /// <inheritdoc/>
+        public void RemoveCategories(List<string> categories)
+        {
+            _storageComponent.RemoveCategories(categories);
+        }
+
+        /// <inheritdoc/>
+        public bool EnableCategories { get => _storageComponent.EnableCategories; set => _storageComponent.EnableCategories = value; }
     }
 }

@@ -198,6 +198,33 @@ namespace SymOntoClay.UnityAsset.Core.World
         public IStandardFactsBuilder StandardFactsBuilder => throw new NotImplementedException();
 
         /// <inheritdoc/>
+        public void AddCategory(string category)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public void AddCategories(List<string> categories)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public void RemoveCategory(string category)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public void RemoveCategories(List<string> categories)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public bool EnableCategories { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        /// <inheritdoc/>
         public void Load(IRunTimeImageInfo imageInfo)
         {
             _context.Load(imageInfo);

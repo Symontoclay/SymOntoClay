@@ -592,6 +592,34 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
             sb.AppendLine($"{spaces}{propName} = {mark}");
         }
 
+        public static string PrintPODListProp<T>(this StringBuilder sb, uint n, string propName, IEnumerable<T> items)
+        {
+            var spaces = Spaces(n);
+            var nextN = n + IndentationStep;
+            var nextNSpaces = Spaces(nextN);
+
+            if (items == null)
+            {
+                return $"{spaces}{propName}NULL";
+            }
+
+            sb.AppendLine($"{spaces}Begin {propName}");
+            if (!items.IsNullOrEmpty())
+            {
+                foreach (var item in items)
+                {
+                    if (item == null)
+                    {
+                        sb.AppendLine($"{nextNSpaces}NULL");
+                        continue;
+                    }
+                    sb.AppendLine($"{nextNSpaces}{item}");
+                }
+            }
+            sb.AppendLine($"{spaces}End {propName}");
+            return sb.ToString();
+        }
+
         public static string WritePODListToString<T>(this IEnumerable<T> items)
         {
             if (items == null)

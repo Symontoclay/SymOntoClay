@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Helpers;
 using System;
+using System.Collections.Generic;
 
 namespace SymOntoClay.Core
 {
@@ -213,6 +214,28 @@ namespace SymOntoClay.Core
         {
             _context.Storage.RemovePublicFactsStorageOfOtherGameComponent(storage);
         }
+        
+        public void AddCategory(string category)
+        {
+            _context.Storage.AddCategory(category);
+        }
+
+        public void AddCategories(List<string> categories)
+        {
+            _context.Storage.AddCategories(categories);
+        }
+
+        public void RemoveCategory(string category)
+        {
+            _context.Storage.RemoveCategory(category);
+        }
+
+        public void RemoveCategories(List<string> categories)
+        {
+            _context.Storage.RemoveCategories(categories);
+        }
+
+        public bool EnableCategories { get => _context.Storage.EnableCategories; set => _context.Storage.EnableCategories = value; }
 
         public void Die()
         {

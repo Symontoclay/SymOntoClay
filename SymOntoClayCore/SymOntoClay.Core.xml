@@ -8437,7 +8437,31 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.RemovePublicFactsStorageOfOtherGameComponent(SymOntoClay.Core.IStorage)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.AddCategory(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.AddCategories(System.Collections.Generic.List{System.String})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.RemoveCategory(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.RemoveCategories(System.Collections.Generic.List{System.String})">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.StorageComponent.EnableCategories">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.OnDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponentSettings.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponentSettings.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponentSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.SuperClassStorage.TargetClassName">
@@ -8699,6 +8723,21 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.StandaloneStorage.RemovePublicFact(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.StandaloneStorage.AddCategory(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.StandaloneStorage.AddCategories(System.Collections.Generic.List{System.String})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.StandaloneStorage.RemoveCategory(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.StandaloneStorage.RemoveCategories(System.Collections.Generic.List{System.String})">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.StandaloneStorage.EnableCategories">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.StandaloneStorageSettings.PropertiesToString(System.UInt32)">

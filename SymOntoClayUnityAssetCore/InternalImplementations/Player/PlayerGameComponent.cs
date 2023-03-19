@@ -37,21 +37,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         {
         }
 
-        public string InsertPublicFact(string text)
-        {
-            return HostStorage.InsertPublicFact(text);
-        }
-
-        public string InsertPublicFact(RuleInstance fact)
-        {
-            return HostStorage.InsertPublicFact(fact);
-        }
-
-        public void RemovePublicFact(string id)
-        {
-            HostStorage.RemovePublicFact(id);
-        }
-
         /// <inheritdoc/>
         public override bool IsWaited => true;
 

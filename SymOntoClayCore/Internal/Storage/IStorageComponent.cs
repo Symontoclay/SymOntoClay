@@ -45,5 +45,10 @@ namespace SymOntoClay.Core.Internal.Storage
         void InsertListenedFact(RuleInstance fact);
         void AddPublicFactsStorageOfOtherGameComponent(IStorage storage);
         void RemovePublicFactsStorageOfOtherGameComponent(IStorage storage);
+        void AddCategory(string category);
+        void AddCategories(List<string> categories);
+        void RemoveCategory(string category);
+        void RemoveCategories(List<string> categories);
+        bool EnableCategories { get; set; }
     }
 }

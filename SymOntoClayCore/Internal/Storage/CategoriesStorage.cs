@@ -111,7 +111,7 @@ namespace SymOntoClay.Core.Internal.Storage
                 return;
             }
 
-            if (_categoriesList.Contains(category))
+            if (!_categoriesList.Contains(category))
             {
                 return;
             }

@@ -61,6 +61,7 @@ namespace SymOntoClay.Core.Internal.Storage
         private ConsolidatedPublicFactsStorage _visibleFactsStorage;
         private ConsolidatedPublicFactsStorage _worldPublicFactsStorage;
         private InheritancePublicFactsReplicator _inheritancePublicFactsReplicator;
+        private CategoriesStorage _categoriesStorage;
 
         private CheckDirtyOptions _checkDirtyOptions;
 
@@ -140,6 +141,17 @@ namespace SymOntoClay.Core.Internal.Storage
                         parentStoragesList.Add(_visibleFactsStorage);
 
                         _worldPublicFactsStorage = new ConsolidatedPublicFactsStorage(_context.Logger);
+
+                        var categoriesStorageSettings = new CategoriesStorageSettings()
+                        {
+                            Categories = _settings.Categories,
+                            EnableCategories = _settings.EnableCategories,
+                            InheritancePublicFactsReplicator = _inheritancePublicFactsReplicator
+                        };
+
+                        _categoriesStorage = new CategoriesStorage(_context, categoriesStorageSettings);
+
+                        parentStoragesList.Add(_categoriesStorage.Storage);
                     }
                     break;
 
@@ -158,6 +170,17 @@ namespace SymOntoClay.Core.Internal.Storage
                         _selfFactsStorage = new RealStorage(KindOfStorage.PublicFacts, publicFactsStorageSettings);
 
                         parentStoragesList.Add(_selfFactsStorage);
+
+                        var categoriesStorageSettings = new CategoriesStorageSettings()
+                        {
+                            Categories = _settings.Categories,
+                            EnableCategories = _settings.EnableCategories,
+                            InheritancePublicFactsReplicator = _inheritancePublicFactsReplicator
+                        };
+
+                        _categoriesStorage = new CategoriesStorage(_context, categoriesStorageSettings);
+
+                        parentStoragesList.Add(_categoriesStorage.Storage);
                     }
                     break;
             }
@@ -449,29 +472,29 @@ namespace SymOntoClay.Core.Internal.Storage
         /// <inheritdoc/>
         public void AddCategory(string category)
         {
-            throw new NotImplementedException();
+            _categoriesStorage.AddCategory(category);
         }
 
         /// <inheritdoc/>
         public void AddCategories(List<string> categories)
         {
-            throw new NotImplementedException();
+            _categoriesStorage.AddCategories(categories);
         }
 
         /// <inheritdoc/>
         public void RemoveCategory(string category)
         {
-            throw new NotImplementedException();
+            _categoriesStorage.RemoveCategory(category);
         }
 
         /// <inheritdoc/>
         public void RemoveCategories(List<string> categories)
         {
-            throw new NotImplementedException();
+            _categoriesStorage.RemoveCategories(categories);
         }
 
         /// <inheritdoc/>
-        public bool EnableCategories { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool EnableCategories { get => _categoriesStorage.EnableCategories; set => _categoriesStorage.EnableCategories = value; }
 
         public void Die()
         {
@@ -481,6 +504,7 @@ namespace SymOntoClay.Core.Internal.Storage
             _listenedFactsStorage.Dispose();
             _visibleFactsStorage.Dispose();
             _worldPublicFactsStorage.Dispose();
+            _categoriesStorage.Dispose();
         }
 
         /// <inheritdoc/>
@@ -493,6 +517,7 @@ namespace SymOntoClay.Core.Internal.Storage
             _listenedFactsStorage.Dispose();
             _visibleFactsStorage.Dispose();
             _worldPublicFactsStorage.Dispose();
+            _categoriesStorage.Dispose();
 
             base.OnDisposed();
         }

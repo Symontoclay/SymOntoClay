@@ -43,6 +43,7 @@ namespace SymOntoClay.Core
         PublicFacts,
         PerceptedFacts,
         WorldPublicFacts,
-        GlobalVisible
+        GlobalVisible,
+        Categories
     }
 }

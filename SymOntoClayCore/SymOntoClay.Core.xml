@@ -7762,6 +7762,15 @@
         <member name="P:SymOntoClay.Core.Internal.Storage.BaseSpecificStorage.Storage">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.CategoriesStorageSettings.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.CategoriesStorageSettings.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.CategoriesStorageSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ChannelsStoraging.ChannelsStorage.Append(SymOntoClay.Core.Internal.CodeModel.Channel)">
             <inheritdoc/>
         </member>

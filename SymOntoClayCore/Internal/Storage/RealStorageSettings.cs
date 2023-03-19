@@ -61,6 +61,7 @@ namespace SymOntoClay.Core.Internal.Storage
             sb.PrintExisting(n, nameof(ParentCodeExecutionContext), ParentCodeExecutionContext);
             sb.PrintObjListProp(n, nameof(ParentsStorages), ParentsStorages);
             sb.PrintObjProp(n, nameof(DefaultSettingsOfCodeEntity), DefaultSettingsOfCodeEntity);
+            sb.PrintExisting(n, nameof(InheritancePublicFactsReplicator), InheritancePublicFactsReplicator);
             sb.AppendLine($"{spaces}{nameof(KindOfGC)} = {KindOfGC}");
             sb.AppendLine($"{spaces}{nameof(EnableOnAddingFactEvent)} = {EnableOnAddingFactEvent}");
             return sb.ToString();

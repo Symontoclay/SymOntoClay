@@ -38,6 +38,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public IInheritancePublicFactsReplicator InheritancePublicFactsReplicator { get; set; }
         public KindOfGC KindOfGC { get; set; } = KindOfGC.None;
         public bool EnableOnAddingFactEvent { get; set; }
+        public bool Enabled { get; set; } = true;
 
         /// <inheritdoc/>
         public override string ToString()
@@ -64,6 +65,7 @@ namespace SymOntoClay.Core.Internal.Storage
             sb.PrintExisting(n, nameof(InheritancePublicFactsReplicator), InheritancePublicFactsReplicator);
             sb.AppendLine($"{spaces}{nameof(KindOfGC)} = {KindOfGC}");
             sb.AppendLine($"{spaces}{nameof(EnableOnAddingFactEvent)} = {EnableOnAddingFactEvent}");
+            sb.AppendLine($"{spaces}{nameof(Enabled)} = {Enabled}");
             return sb.ToString();
         }
     }

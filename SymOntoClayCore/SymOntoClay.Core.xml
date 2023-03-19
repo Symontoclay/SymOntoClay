@@ -7762,6 +7762,9 @@
         <member name="P:SymOntoClay.Core.Internal.Storage.BaseSpecificStorage.Storage">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.CategoriesStorage.OnDisposed">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.CategoriesStorageSettings.ToString">
             <inheritdoc/>
         </member>

@@ -136,6 +136,8 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
             }
         }
 
+        private static List<WeightedInheritanceResultItem<FuzzyLogicNonNumericValue>> _emptyNonNumericValuesList = new List<WeightedInheritanceResultItem<FuzzyLogicNonNumericValue>>();
+
         /// <inheritdoc/>
         public IList<WeightedInheritanceResultItem<FuzzyLogicNonNumericValue>> GetNonNumericValuesDirectly(StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
@@ -145,7 +147,12 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
                 //Log($"name = {name}");
 #endif
 
-                if(_valuesDict.ContainsKey(name))
+                if (_realStorageContext.Disabled)
+                {
+                    return _emptyNonNumericValuesList;
+                }
+
+                if (_valuesDict.ContainsKey(name))
                 {
                     var dict = _valuesDict[name];
 
@@ -169,7 +176,7 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
                     return result;
                 }
 
-                return new List<WeightedInheritanceResultItem<FuzzyLogicNonNumericValue>>();
+                return _emptyNonNumericValuesList;
             }            
         }
 
@@ -187,7 +194,12 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
         {
             lock (_lockObj)
             {
-                if(_defaultOperatorsDict.ContainsKey(name))
+                if (_realStorageContext.Disabled)
+                {
+                    return null;
+                }
+
+                if (_defaultOperatorsDict.ContainsKey(name))
                 {
                     return _defaultOperatorsDict[name];
                 }

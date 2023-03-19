@@ -90,6 +90,11 @@ namespace SymOntoClay.Core.Internal.Storage.SynonymsStoraging
                 //Log($"name = {name}");
 #endif
 
+                if (_realStorageContext.Disabled)
+                {
+                    return null;
+                }
+
                 if (_synonymsDict.ContainsKey(name))
                 {
                     return _synonymsDict[name];

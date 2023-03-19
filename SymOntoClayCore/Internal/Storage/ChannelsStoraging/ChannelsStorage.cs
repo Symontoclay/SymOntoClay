@@ -88,6 +88,8 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStoraging
             }
         }
 
+        private static List<WeightedInheritanceResultItem<Channel>> _emptyChannelsList = new List<WeightedInheritanceResultItem<Channel>>();
+
         /// <inheritdoc/>
         public IList<WeightedInheritanceResultItem<Channel>> GetChannelsDirectly(StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
@@ -96,6 +98,11 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStoraging
 #if DEBUG
                 //Log($"name = {name}");
 #endif
+
+                if (_realStorageContext.Disabled)
+                {
+                    return _emptyChannelsList;
+                }
 
                 if (_nonIndexedInfo.ContainsKey(name))
                 {
@@ -121,7 +128,7 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStoraging
                     return result;
                 }
 
-                return new List<WeightedInheritanceResultItem<Channel>>();
+                return _emptyChannelsList;
             }
         }
 

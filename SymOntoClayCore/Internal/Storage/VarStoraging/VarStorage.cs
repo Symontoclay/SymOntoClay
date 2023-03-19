@@ -88,7 +88,12 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
                 //Log($"varName = {varName}");
 #endif
 
-                if(_systemVariables.ContainsKey(varName))
+                if (_realStorageContext.Disabled)
+                {
+                    return null;
+                }
+
+                if (_systemVariables.ContainsKey(varName))
                 {
                     return _systemVariables[varName];
                 }
@@ -171,6 +176,8 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
             }
         }
 
+        private static List<WeightedInheritanceResultItem<Var>> _emptyVarsList = new List<WeightedInheritanceResultItem<Var>>();
+
         /// <inheritdoc/>
         public IList<WeightedInheritanceResultItem<Var>> GetVarDirectly(StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
@@ -179,6 +186,11 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 #if DEBUG
                 //Log($"name = {name}");
 #endif
+
+                if (_realStorageContext.Disabled)
+                {
+                    return _emptyVarsList;
+                }
 
                 var result = new List<WeightedInheritanceResultItem<Var>>();
 
@@ -226,6 +238,11 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
         {
             lock (_lockObj)
             {
+                if (_realStorageContext.Disabled)
+                {
+                    return null;
+                }
+
                 if (_localVariablesDict.ContainsKey(name))
                 {
                     return _localVariablesDict[name];

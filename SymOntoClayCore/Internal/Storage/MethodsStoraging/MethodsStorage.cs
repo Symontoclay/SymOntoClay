@@ -146,6 +146,8 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStoraging
             }
         }
 
+        private static List<WeightedInheritanceResultItem<NamedFunction>> _emptyNamedFunctionsList = new List<WeightedInheritanceResultItem<NamedFunction>>();
+
         /// <inheritdoc/>
         public IList<WeightedInheritanceResultItem<NamedFunction>> GetNamedFunctionsDirectly(StrongIdentifierValue name, int paramsCount, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
@@ -156,6 +158,11 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStoraging
                 //Log($"name = {name}");
                 //Log($"paramsCount = {paramsCount}");
 #endif
+
+                if (_realStorageContext.Disabled)
+                {
+                    return _emptyNamedFunctionsList;
+                }
 
                 var result = new List<WeightedInheritanceResultItem<NamedFunction>>();
 

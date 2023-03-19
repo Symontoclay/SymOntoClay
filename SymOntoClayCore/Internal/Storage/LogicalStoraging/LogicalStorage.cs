@@ -606,11 +606,18 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             _parentLogicalStoragesList.Remove(logicalStorage);
         }
 
+        private static List<LogicalQueryNode> _emptyLogicalQueryNodesList = new List<LogicalQueryNode>();
+
         /// <inheritdoc/>
         public IList<LogicalQueryNode> GetAllRelations(ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
         {
             lock (_lockObj)
             {
+                if (_realStorageContext.Disabled)
+                {
+                    return _emptyLogicalQueryNodesList;
+                }
+
                 LogicalSearchExplainNode currentExplainNode = null;
 
                 if (parentExplainNode != null)
@@ -674,14 +681,23 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             }
         }
 
+        private static List<RuleInstance> _emptyRuleInstancesList = new List<RuleInstance>();
+
         /// <inheritdoc/>
         public IList<RuleInstance> GetAllOriginFacts()
         {
             lock (_lockObj)
             {
+                if (_realStorageContext.Disabled)
+                {
+                    return _emptyRuleInstancesList;
+                }
+
                 return _factsList.ToList();
             }
         }
+
+        private static List<BaseRulePart> _emptyBaseRulePartsList = new List<BaseRulePart>();
 
         /// <inheritdoc/>
         public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
@@ -697,6 +713,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 //    DbgPrintFactsAndRules();
                 //}
 #endif
+
+                if (_realStorageContext.Disabled)
+                {
+                    return _emptyBaseRulePartsList;
+                }
 
                 LogicalSearchExplainNode currentExplainNode = null;
 
@@ -790,6 +811,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 //    DbgPrintFactsAndRules();
                 //}
 #endif
+
+                if (_realStorageContext.Disabled)
+                {
+                    return _emptyBaseRulePartsList;
+                }
 
                 LogicalSearchExplainNode currentExplainNode = null;
 

@@ -181,6 +181,8 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
             }
         }
 
+        private static List<WeightedInheritanceResultItem<InlineTrigger>> _emptyTriggersList = new List<WeightedInheritanceResultItem<InlineTrigger>>();
+
         /// <inheritdoc/>
         public IList<WeightedInheritanceResultItem<InlineTrigger>> GetSystemEventsTriggersDirectly(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
@@ -190,6 +192,11 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
             lock (_lockObj)
             {
+                if (_realStorageContext.Disabled)
+                {
+                    return _emptyTriggersList;
+                }
+
                 if (_systemEventsInfoDict.ContainsKey(kindOfSystemEvent))
                 {
                     var dict = _systemEventsInfoDict[kindOfSystemEvent];
@@ -214,7 +221,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
                     return result;
                 }
 
-                return new List<WeightedInheritanceResultItem<InlineTrigger>>();
+                return _emptyTriggersList;
             }
         }
 
@@ -223,6 +230,11 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
         {
             lock (_lockObj)
             {
+                if (_realStorageContext.Disabled)
+                {
+                    return _emptyTriggersList;
+                }
+
                 return GetTriggersDirectly(weightedInheritanceItems, _logicConditionalsDict);
             }
         }
@@ -232,6 +244,11 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
         {
             lock (_lockObj)
             {
+                if (_realStorageContext.Disabled)
+                {
+                    return _emptyTriggersList;
+                }
+
                 return GetTriggersDirectly(weightedInheritanceItems, _addFactsDict);
             }                
         }
@@ -362,6 +379,8 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
             }
         }
 
+        private static List<INamedTriggerInstance> _emptyNamedTriggerInstancesList = new List<INamedTriggerInstance>();
+
         /// <inheritdoc/>
         public IList<INamedTriggerInstance> GetNamedTriggerInstancesDirectly(StrongIdentifierValue name)
         {
@@ -371,7 +390,12 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
                 //Log($"name = {name}");
 #endif
 
-                if(_namedTriggerInstancesDict.ContainsKey(name))
+                if (_realStorageContext.Disabled)
+                {
+                    return _emptyNamedTriggerInstancesList;
+                }
+
+                if (_namedTriggerInstancesDict.ContainsKey(name))
                 {
                     return _namedTriggerInstancesDict[name];
                 }

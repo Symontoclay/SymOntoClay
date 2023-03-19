@@ -234,6 +234,8 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
             return fact;
         }
 
+        private static List<WeightedInheritanceResultItem<InheritanceItem>> _emptyItemsList = new List<WeightedInheritanceResultItem<InheritanceItem>>();
+
         /// <inheritdoc/>
         public IList<WeightedInheritanceResultItem<InheritanceItem>> GetItemsDirectly(StrongIdentifierValue subName)
         {
@@ -243,9 +245,14 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
                 //Log($"subName = {subName}");
 #endif
 
-                if(subName == null || subName.IsEmpty)
+                if (_realStorageContext.Disabled)
                 {
-                    return new List<WeightedInheritanceResultItem<InheritanceItem>>();
+                    return _emptyItemsList;
+                }
+
+                if (subName == null || subName.IsEmpty)
+                {
+                    return _emptyItemsList;
                 }
 
 #if DEBUG
@@ -266,7 +273,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
                     return result;
                 }
 
-                return new List<WeightedInheritanceResultItem<InheritanceItem>>();
+                return _emptyItemsList;
             }
         }
 

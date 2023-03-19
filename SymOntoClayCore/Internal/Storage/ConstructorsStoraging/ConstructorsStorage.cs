@@ -109,6 +109,8 @@ namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
             return dict;
         }
 
+        private static List<WeightedInheritanceResultItem<Constructor>> _emptyConstructorsList = new List<WeightedInheritanceResultItem<Constructor>>();
+
         /// <inheritdoc/>
         public IList<WeightedInheritanceResultItem<Constructor>> GetConstructorsDirectly(int paramsCount, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
@@ -118,6 +120,11 @@ namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
                 //Log($"GetHashCode() = {GetHashCode()}");
                 //Log($"paramsCount = {paramsCount}");
 #endif
+
+                if (_realStorageContext.Disabled)
+                {
+                    return _emptyConstructorsList;
+                }
 
                 var result = new List<WeightedInheritanceResultItem<Constructor>>();
 
@@ -169,6 +176,11 @@ namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
         {
             lock (_preConstructorsLockObj)
             {
+                if (_realStorageContext.Disabled)
+                {
+                    return _emptyConstructorsList;
+                }
+
                 var result = new List<WeightedInheritanceResultItem<Constructor>>();
 
                 foreach (var weightedInheritanceItem in weightedInheritanceItems)

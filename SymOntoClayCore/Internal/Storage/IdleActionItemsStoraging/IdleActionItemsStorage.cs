@@ -71,11 +71,18 @@ namespace SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging
             }
         }
 
+        private static List<WeightedInheritanceResultItem<IdleActionItem>> _emptyIdleActionsList = new List<WeightedInheritanceResultItem<IdleActionItem>>();
+
         /// <inheritdoc/>
         public IList<WeightedInheritanceResultItem<IdleActionItem>> GetIdleActionsDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             lock(_lockObj)
             {
+                if(_realStorageContext.Disabled)
+                {
+                    return _emptyIdleActionsList;
+                }
+
                 var result = new List<WeightedInheritanceResultItem<IdleActionItem>>();
 
                 foreach (var weightedInheritanceItem in weightedInheritanceItems)

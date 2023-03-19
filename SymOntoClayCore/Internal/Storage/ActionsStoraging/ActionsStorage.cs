@@ -119,6 +119,8 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStoraging
             }
         }
 
+        private static List<WeightedInheritanceResultItem<ActionPtr>> _emptyActionsList = new List<WeightedInheritanceResultItem<ActionPtr>>();
+
         /// <inheritdoc/>
         public IList<WeightedInheritanceResultItem<ActionPtr>> GetActionsDirectly(StrongIdentifierValue name, int paramsCount, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
@@ -128,6 +130,11 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStoraging
                 //Log($"name = {name}");
                 //Log($"paramsCount = {paramsCount}");
 #endif
+
+                if (_realStorageContext.Disabled)
+                {
+                    return _emptyActionsList;
+                }
 
                 var result = new List<WeightedInheritanceResultItem<ActionPtr>>();
 

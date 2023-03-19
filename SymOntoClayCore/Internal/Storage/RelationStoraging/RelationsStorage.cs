@@ -114,6 +114,8 @@ namespace SymOntoClay.Core.Internal.Storage.RelationStoraging
             }                
         }
 
+        private static List<WeightedInheritanceResultItem<RelationDescription>> _emptyRelationsList = new List<WeightedInheritanceResultItem<RelationDescription>>();
+
         /// <inheritdoc/>
         public IList<WeightedInheritanceResultItem<RelationDescription>> GetRelationsDirectly(StrongIdentifierValue name, int paramsCount, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
@@ -123,6 +125,11 @@ namespace SymOntoClay.Core.Internal.Storage.RelationStoraging
                 //Log($"name = {name}");
                 //Log($"paramsCount = {paramsCount}");
 #endif
+
+                if (_realStorageContext.Disabled)
+                {
+                    return _emptyRelationsList;
+                }
 
                 var result = new List<WeightedInheritanceResultItem<RelationDescription>>();
 

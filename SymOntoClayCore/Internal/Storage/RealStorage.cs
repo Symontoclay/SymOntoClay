@@ -64,6 +64,7 @@ namespace SymOntoClay.Core.Internal.Storage
             _realStorageContext.ParentCodeExecutionContext = settings.ParentCodeExecutionContext;
             _realStorageContext.MainStorageContext = settings.MainStorageContext;
             _realStorageContext.InheritancePublicFactsReplicator = settings.InheritancePublicFactsReplicator;
+            _realStorageContext.Disabled = !settings.Enabled;
 
             DefaultSettingsOfCodeEntity = settings.DefaultSettingsOfCodeEntity;
 
@@ -201,6 +202,8 @@ namespace SymOntoClay.Core.Internal.Storage
 
         /// <inheritdoc/>
         public IIdleActionItemsStorage IdleActionItemsStorage => _idleActionItemsStorage;
+
+        public bool Enabled { get => !_realStorageContext.Disabled; set => _realStorageContext.Disabled = !value; }
 
         /// <inheritdoc/>
         public void AddParentStorage(IStorage storage)

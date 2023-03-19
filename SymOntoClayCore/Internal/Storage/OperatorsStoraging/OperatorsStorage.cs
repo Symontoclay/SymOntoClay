@@ -85,6 +85,8 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStoraging
             }
         }
 
+        private static List<WeightedInheritanceResultItem<Operator>> _emptyOperatorsList = new List<WeightedInheritanceResultItem<Operator>>();
+
         /// <inheritdoc/>
         public IList<WeightedInheritanceResultItem<Operator>> GetOperatorsDirectly(KindOfOperator kindOfOperator, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
@@ -94,7 +96,12 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStoraging
 
             lock (_lockObj)
             {
-                if(_nonIndexedInfo.ContainsKey(kindOfOperator))
+                if (_realStorageContext.Disabled)
+                {
+                    return _emptyOperatorsList;
+                }
+
+                if (_nonIndexedInfo.ContainsKey(kindOfOperator))
                 {
                     var dict = _nonIndexedInfo[kindOfOperator];
 
@@ -118,7 +125,7 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStoraging
                     return result;
                 }
 
-                return new List<WeightedInheritanceResultItem<Operator>>();
+                return _emptyOperatorsList;
             }
         }
 

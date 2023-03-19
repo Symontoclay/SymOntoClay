@@ -125,6 +125,8 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStoraging
             }
         }
 
+        private static List<WeightedInheritanceResultItem<StateDef>> _emptyWeightedStatesList = new List<WeightedInheritanceResultItem<StateDef>>();
+
         /// <inheritdoc/>
         public IList<WeightedInheritanceResultItem<StateDef>> GetStatesDirectly(StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
@@ -133,6 +135,11 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStoraging
 #if DEBUG
                 //Log($"name = {name}");
 #endif
+
+                if (_realStorageContext.Disabled)
+                {
+                    return _emptyWeightedStatesList;
+                }
 
                 var result = new List<WeightedInheritanceResultItem<StateDef>>();
 
@@ -168,20 +175,34 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStoraging
             }
         }
 
+        private static List<StrongIdentifierValue> _emptyAllStateNamesList = new List<StrongIdentifierValue>();
+
         /// <inheritdoc/>
         public List<StrongIdentifierValue> AllStateNames()
         {
             lock (_lockObj)
             {
+                if (_realStorageContext.Disabled)
+                {
+                    return _emptyAllStateNamesList;
+                }
+
                 return _stateNamesList;
             }
         }
+
+        private static List<StateDef> _emptyAllStatesList = new List<StateDef>();
 
         /// <inheritdoc/>
         public List<StateDef> GetAllStatesListDirectly()
         {
             lock (_lockObj)
             {
+                if (_realStorageContext.Disabled)
+                {
+                    return _emptyAllStatesList;
+                }
+
                 return _statesList;
             }
         }
@@ -204,15 +225,27 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStoraging
         {
             lock (_lockObj)
             {
+                if (_realStorageContext.Disabled)
+                {
+                    return null;
+                }
+
                 return _defaultStateName;
             }
         }
+
+        private static List<ActivationInfoOfStateDef> _emptyActivationInfoOfStateList = new List<ActivationInfoOfStateDef>();
 
         /// <inheritdoc/>
         public List<ActivationInfoOfStateDef> GetActivationInfoOfStateListDirectly()
         {
             lock (_lockObj)
             {
+                if (_realStorageContext.Disabled)
+                {
+                    return _emptyActivationInfoOfStateList;
+                }
+
                 return _activationInfoList;
             }
         }
@@ -234,11 +267,18 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStoraging
             }
         }
 
+        private static List<MutuallyExclusiveStatesSet> _emptyMutuallyExclusiveStatesSetsList = new List<MutuallyExclusiveStatesSet>();
+
         /// <inheritdoc/>
         public List<MutuallyExclusiveStatesSet> GetMutuallyExclusiveStatesSetsListDirectly()
         {
             lock (_lockObj)
             {
+                if (_realStorageContext.Disabled)
+                {
+                    return _emptyMutuallyExclusiveStatesSetsList;
+                }
+
                 return _mutuallyExclusiveStatesSetsList;
             }
         }

@@ -105,6 +105,11 @@ namespace SymOntoClay.Core.Internal.Storage.MetadataStoraging
                 //Log($"name = {name}");
 #endif
 
+                if (_realStorageContext.Disabled)
+                {
+                    return null;
+                }
+
                 if (_codeEntitiesDict.ContainsKey(name))
                 {
                     var targetList = _codeEntitiesDict[name];

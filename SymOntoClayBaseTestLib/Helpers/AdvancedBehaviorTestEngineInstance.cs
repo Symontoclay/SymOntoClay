@@ -32,6 +32,7 @@ using NLog;
 using SymOntoClay.SoundBuses;
 using SymOntoClay.UnityAsset.Core;
 using SymOntoClayBaseTestLib.Helpers;
+using SymOntoClay.BaseTestLib.Helpers;
 
 namespace SymOntoClay.Core.Tests.Helpers
 {
@@ -66,7 +67,18 @@ namespace SymOntoClay.Core.Tests.Helpers
         }
 
         public AdvancedBehaviorTestEngineInstance(string rootDir, bool enableNLP)
+            : this(rootDir, enableNLP, null)
         {
+        }
+
+        public AdvancedBehaviorTestEngineInstance(AdvancedBehaviorTestEngineInstanceSettings? advancedBehaviorTestEngineInstanceSettings)
+            : this(RoorDir, false, advancedBehaviorTestEngineInstanceSettings)
+        {
+        }
+
+        public AdvancedBehaviorTestEngineInstance(string rootDir, bool enableNLP, AdvancedBehaviorTestEngineInstanceSettings? advancedBehaviorTestEngineInstanceSettings)
+        {
+            _advancedBehaviorTestEngineInstanceSettings = advancedBehaviorTestEngineInstanceSettings;
             _enableNLP = enableNLP;
             _testDir = UnityTestEngineContextFactory.CreateTestDir(rootDir);
 
@@ -195,12 +207,31 @@ namespace SymOntoClay.Core.Tests.Helpers
 
         public IHumanoidNPC CreateNPC(string npcName, object platformListener, Vector3 currentAbsolutePosition)
         {
+            return CreateNPC(npcName, platformListener, currentAbsolutePosition, null);
+        }
+
+        public IHumanoidNPC CreateNPC(string npcName, object platformListener, Vector3 currentAbsolutePosition, AdvancedBehaviorTestEngineInstanceSettings? advancedBehaviorTestEngineInstanceSettings)
+        {
             var logicFile = Path.Combine(_wSpaceDir, $"Npcs/{npcName}/{npcName}.sobj");
 
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.NPCAppFile = logicFile;
             factorySettings.HostListener = platformListener;
             factorySettings.CurrentAbsolutePosition = currentAbsolutePosition;
+
+            if(advancedBehaviorTestEngineInstanceSettings == null)
+            {
+                if(_advancedBehaviorTestEngineInstanceSettings != null)
+                {
+                    factorySettings.Categories = _advancedBehaviorTestEngineInstanceSettings.Categories;
+                    factorySettings.EnableCategories = _advancedBehaviorTestEngineInstanceSettings.EnableCategories;
+                }
+            }
+            else
+            {
+                factorySettings.Categories = advancedBehaviorTestEngineInstanceSettings.Categories;
+                factorySettings.EnableCategories = advancedBehaviorTestEngineInstanceSettings.EnableCategories;
+            }
 
             return UnityTestEngineContextFactory.CreateHumanoidNPC(_world, factorySettings);
         }
@@ -253,6 +284,11 @@ namespace SymOntoClay.Core.Tests.Helpers
 
         public IGameObject CreateThing(string thingName, object platformListener, Vector3 currentAbsolutePosition)
         {
+            return CreateThing(thingName, platformListener, currentAbsolutePosition, null);
+        }
+
+        public IGameObject CreateThing(string thingName, object platformListener, Vector3 currentAbsolutePosition, AdvancedBehaviorTestEngineInstanceSettings? advancedBehaviorTestEngineInstanceSettings)
+        {
             var settings = new GameObjectSettings();
 
             settings.Id = $"#{Guid.NewGuid():D}";
@@ -265,6 +301,20 @@ namespace SymOntoClay.Core.Tests.Helpers
             settings.HostListener = platformListener;
             settings.PlatformSupport = new PlatformSupportCLIStub(currentAbsolutePosition);
 
+            if (advancedBehaviorTestEngineInstanceSettings == null)
+            {
+                if (_advancedBehaviorTestEngineInstanceSettings != null)
+                {
+                    settings.Categories = _advancedBehaviorTestEngineInstanceSettings.Categories;
+                    settings.EnableCategories = _advancedBehaviorTestEngineInstanceSettings.EnableCategories;
+                }
+            }
+            else
+            {
+                settings.Categories = advancedBehaviorTestEngineInstanceSettings.Categories;
+                settings.EnableCategories = advancedBehaviorTestEngineInstanceSettings.EnableCategories;
+            }
+
             var gameObject = _world.GetGameObject(settings);
 
             return gameObject;
@@ -276,6 +326,7 @@ namespace SymOntoClay.Core.Tests.Helpers
         private readonly bool _enableNLP;
         private readonly string _wSpaceDir;
         private IWorld _world;
+        private readonly AdvancedBehaviorTestEngineInstanceSettings? _advancedBehaviorTestEngineInstanceSettings;
 
         private readonly List<string> _createdNPCsDSLProjects = new List<string>();
         private readonly List<string> _createdThingsDSLProjects = new List<string>();

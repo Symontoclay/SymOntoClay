@@ -21,10 +21,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NUnit.Framework;
+using SymOntoClay.BaseTestLib.Helpers;
 using SymOntoClay.Core.Tests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace SymOntoClay.UnityAsset.Core.Tests
 {
@@ -474,6 +476,14 @@ app PeaceKeeper is [very middle] exampleClass
         [Parallelizable]
         public void Case5()
         {
+            var settings = new AdvancedBehaviorTestEngineInstanceSettings()
+            {
+                Categories = new List<string>() { "elf" },
+                EnableCategories = true
+            };
+
+            var instance = new AdvancedBehaviorTestEngineInstance(settings);
+
             var text = @"app PeaceKeeper
 {
     on Enter =>
@@ -486,23 +496,29 @@ app PeaceKeeper is [very middle] exampleClass
     }
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
-                (n, message) =>
+            instance.WriteFile(text);
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                switch (n)
                 {
-                    switch (n)
-                    {
-                        case 1:
-                            Assert.AreEqual(message, "Begin");
-                            break;
+                    case 1:
+                        Assert.AreEqual(message, "Begin");
+                        break;
 
-                        case 2:
-                            Assert.AreEqual(message, "End");
-                            break;
+                    case 2:
+                        Assert.AreEqual(message, "1");
+                        break;
 
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
-                    }
-                }), true);
+                    case 3:
+                        Assert.AreEqual(message, "End");
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                }
+            });
+
+            Thread.Sleep(2000);
         }
     }
 }

@@ -50,6 +50,9 @@ namespace SymOntoClayBaseTestLib.Helpers
         public bool UseDefaultNLPSettings { get; set; } = true;
         public bool UseStandardLibrary { get; set; }
 
+        public List<string> Categories { get; set; }
+        public bool EnableCategories { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -88,6 +91,9 @@ namespace SymOntoClayBaseTestLib.Helpers
             sb.PrintExistingList(n, nameof(DictsList), DictsList);
             sb.AppendLine($"{spaces}{nameof(UseDefaultNLPSettings)} = {UseDefaultNLPSettings}");
             sb.AppendLine($"{spaces}{nameof(UseStandardLibrary)} = {UseStandardLibrary}");
+
+            sb.PrintPODListProp(n, nameof(Categories), Categories);
+            sb.AppendLine($"{spaces}{nameof(EnableCategories)} = {EnableCategories}");
 
             return sb.ToString();
         }

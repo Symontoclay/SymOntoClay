@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CommonNames;
 using SymOntoClay.Core.Internal.Compiling;
 using SymOntoClay.Core.Internal.Converters;
@@ -45,15 +46,13 @@ namespace SymOntoClay.Core.Internal
         {
         }
 
-        /// <summary>
-        /// Gets or sets unique Id.
-        /// It allows us to identify each item of the game.
-        /// </summary>
+        /// <inheritdoc/>
         public string Id { get; set; }
 
-        /// <summary>
-        /// Gets or sets app file.
-        /// </summary>
+        /// <inheritdoc/>
+        public StrongIdentifierValue SelfName { get; set; }
+
+        /// <inheritdoc/>
         public string AppFile { get; set; }
 
         public ActivePeriodicObjectContext ActivePeriodicObjectContext { get; set; }

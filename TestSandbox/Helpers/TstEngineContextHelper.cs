@@ -189,7 +189,7 @@ namespace TestSandbox.Helpers
             return settings;
         }
 
-        public static HumanoidNPCSettings CreateHumanoidNPCSettings(UnityTestEngineContextFactorySettings factorySettings)/*object hostListener, bool withAppFiles*/
+        public static HumanoidNPCSettings CreateHumanoidNPCSettings(UnityTestEngineContextFactorySettings factorySettings)
         {
             var npcSettings = new HumanoidNPCSettings();
             npcSettings.Id = "#020ED339-6313-459A-900D-92F809CEBDC5";
@@ -221,14 +221,13 @@ namespace TestSandbox.Helpers
             
             npcSettings.PlatformSupport = new PlatformSupportCLIStub();
 
-            //tmp
-            npcSettings.Categories = new List<string>() { "elf" };
-            //tmp
+            npcSettings.Categories = factorySettings.Categories;
+            npcSettings.EnableCategories = factorySettings.EnableCategories;
 
             return npcSettings;
         }
 
-        public static ComplexTestEngineContext CreateContext(UnityTestEngineContextFactorySettings factorySettings)/*object hostListener, bool withAppFiles = true*/
+        public static ComplexTestEngineContext CreateContext(UnityTestEngineContextFactorySettings factorySettings)
         {
             var settings = CreateWorldSettings(factorySettings);
 
@@ -246,7 +245,7 @@ namespace TestSandbox.Helpers
             return CreateAndInitContext(new UnityTestEngineContextFactorySettings());
         }
 
-        public static ComplexTestEngineContext CreateAndInitContext(UnityTestEngineContextFactorySettings factorySettings)/*bool withAppFiles = true*/
+        public static ComplexTestEngineContext CreateAndInitContext(UnityTestEngineContextFactorySettings factorySettings)
         {
             var context = CreateContext(factorySettings);
             context.Start();

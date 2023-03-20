@@ -286,6 +286,9 @@ namespace SymOntoClay.Core.Tests.Helpers
                 }
             }
 
+            npcSettings.Categories = factorySettings.Categories;
+            npcSettings.EnableCategories = factorySettings.EnableCategories;
+
             return npcSettings;
         }
 

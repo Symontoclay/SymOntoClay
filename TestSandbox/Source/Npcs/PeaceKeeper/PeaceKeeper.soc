@@ -4,37 +4,8 @@
     {
         'Begin' >> @>log;
 
-        Go();
+        @@self is elf >> @>log;
 
         'End' >> @>log;
-    }
-}
-
-action Go
-{
-    op () => 
-    {
-        'Begin Go' >> @>log;
-        
-        @a = 10;
-
-        repeat
-        {
-            @a >> @>log;
-            @a = @a - 1;
-
-            @@host.`rotate`(30)[: timeout=1000, on complete { complete action; } :];
-
-            if(@a > 5)
-            {
-                continue;
-            }
-
-            'End of while iteration' >> @>log;
-
-            break;
-        }
-
-        'End Go' >> @>log;
     }
 }

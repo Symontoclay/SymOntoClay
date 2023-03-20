@@ -38,7 +38,16 @@ namespace SymOntoClay.Core.Internal
 {
     public interface IMainStorageContext: IBaseCoreContext
     {
+        /// <summary>
+        /// Gets or sets unique Id.
+        /// It allows us to identify each item of the game.
+        /// </summary>
         string Id { get; }
+        StrongIdentifierValue SelfName { get; }
+
+        /// <summary>
+        /// Gets or sets app file.
+        /// </summary>
         string AppFile { get; }
 
         IActivePeriodicObjectContext ActivePeriodicObjectContext { get; }

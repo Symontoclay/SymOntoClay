@@ -99,7 +99,7 @@ namespace SymOntoClay.Core.Internal.CommonNames
 
             HostSystemVarName = NameHelper.CreateName(StandardNamesConstants.HostSystemVarName);
 
-            SelfName = NameHelper.CreateName(_context.Id);
+            SelfName = _context.SelfName;
 
             DefaultCtorName = NameHelper.CreateName(StandardNamesConstants.DefaultCtorName);
 

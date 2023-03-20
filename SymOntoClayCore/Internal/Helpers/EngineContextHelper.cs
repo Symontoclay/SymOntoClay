@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using NLog;
 using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.CommonNames;
 using SymOntoClay.Core.Internal.Compiling;
 using SymOntoClay.Core.Internal.Converters;
@@ -112,6 +113,7 @@ namespace SymOntoClay.Core.Internal.Helpers
             BaseInitBaseCoreContext(context, settings);
 
             context.Id = settings.Id;
+            context.SelfName = NameHelper.CreateName(settings.Id);
             context.AppFile = settings.AppFile;
 
             context.LogicQueryParseAndCache = settings.LogicQueryParseAndCache;

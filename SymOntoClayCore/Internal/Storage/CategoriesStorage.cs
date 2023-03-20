@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Storage.InheritanceStoraging;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -13,6 +14,8 @@ namespace SymOntoClay.Core.Internal.Storage
         public CategoriesStorage(IMainStorageContext context, CategoriesStorageSettings settings)
             : base(context.Logger)
         {
+            _selfName = context.SelfName;
+
             var storageSettigs = new RealStorageSettings()
             {
                 MainStorageContext = context
@@ -30,6 +33,7 @@ namespace SymOntoClay.Core.Internal.Storage
         }
 
         private readonly object _lockObj = new object();
+        private readonly StrongIdentifierValue _selfName;
         private readonly RealStorage _storage;
         private readonly IInheritanceStorage _inheritanceStorage;
         private readonly List<string> _categoriesList = new List<string>();
@@ -74,7 +78,7 @@ namespace SymOntoClay.Core.Internal.Storage
         private void NAddCategory(string category)
         {
 #if DEBUG
-            Log($"category = {category}");
+            //Log($"category = {category}");
 #endif
 
             if(string.IsNullOrWhiteSpace(category))
@@ -87,15 +91,35 @@ namespace SymOntoClay.Core.Internal.Storage
                 return;
             }
 
-            //_inheritanceStorage
+            var categoryName = NameHelper.CreateName(category);
 
-            throw new NotImplementedException();
+#if DEBUG
+            //Log($"categoryName = {categoryName}");
+            //Log($"_selfName = {_selfName}");
+#endif
+
+            var inheritanceItem = new InheritanceItem()
+            {
+                IsSystemDefined = false
+            };
+
+            inheritanceItem.SubName = _selfName;
+            inheritanceItem.SuperName = categoryName;
+            inheritanceItem.Rank = new LogicalValue(1.0F);
+
+#if DEBUG
+            //Log($"inheritanceItem = {inheritanceItem}");
+#endif
+
+            _categoriesDict.Add(categoryName, inheritanceItem);
+
+            _inheritanceStorage.SetInheritance(inheritanceItem);
         }
 
         private void NAddCategories(List<string> categories)
         {
 #if DEBUG
-            Log($"categories = {categories.WritePODListToString()}");
+            //Log($"categories = {categories.WritePODListToString()}");
 #endif
 
             foreach(var category in categories)
@@ -116,9 +140,14 @@ namespace SymOntoClay.Core.Internal.Storage
                 return;
             }
 
-            //_inheritanceStorage
+            _categoriesList.Remove(category);
 
-            throw new NotImplementedException();
+            var categoryName = NameHelper.CreateName(category);
+
+            var inheritanceItem = _categoriesDict[categoryName];
+            _categoriesDict.Remove(categoryName);
+
+            _inheritanceStorage.RemoveInheritance(inheritanceItem);
         }
 
         private void NRemoveCategories(List<string> categories)

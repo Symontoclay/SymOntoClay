@@ -5729,6 +5729,17 @@
         <member name="M:SymOntoClay.Core.Internal.EngineContext.OnDisposed">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.IMainStorageContext.Id">
+            <summary>
+            Gets or sets unique Id.
+            It allows us to identify each item of the game.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.IMainStorageContext.AppFile">
+            <summary>
+            Gets or sets app file.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalAnnotation.ToString">
             <inheritdoc/>
         </member>
@@ -6711,15 +6722,13 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.MainStorageContext.Id">
-            <summary>
-            Gets or sets unique Id.
-            It allows us to identify each item of the game.
-            </summary>
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.MainStorageContext.SelfName">
+            <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.MainStorageContext.AppFile">
-            <summary>
-            Gets or sets app file.
-            </summary>
+            <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.MainStorageContext.LogicQueryParseAndCache">
             <inheritdoc/>

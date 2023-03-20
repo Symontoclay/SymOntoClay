@@ -34,6 +34,7 @@ using TestSandbox.Helpers;
 using TestSandbox.PlatformImplementations;
 using SymOntoClayBaseTestLib.Helpers;
 using SymOntoClay.UnityAsset.Core.Tests.HostListeners;
+using System.Runtime;
 
 namespace TestSandbox.Handlers
 {
@@ -52,6 +53,9 @@ namespace TestSandbox.Handlers
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.HostListener = platformListener;
             factorySettings.UseDefaultNLPSettings = true;
+
+            factorySettings.Categories = new List<string>() { "elf" };
+            factorySettings.EnableCategories = true;
 
             CreateNPC(factorySettings);
 

@@ -38,7 +38,13 @@ namespace TestSandbox.Handlers
 {
     public class AddingFactTriggerHandler : BaseGeneralStartHandler
     {
-        private static readonly IEntityLogger _logger = new LoggerImpementation();
+        public AddingFactTriggerHandler()
+            : base(new UnityTestEngineContextFactorySettings()
+            {
+                UseDefaultNLPSettings = false
+            })
+        { 
+        }
 
         public void Run()
         {
@@ -48,9 +54,8 @@ namespace TestSandbox.Handlers
 
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.HostListener = platformListener;
-            factorySettings.UseDefaultNLPSettings = false;
 
-            CreateNPC(factorySettings);
+            CreateMainNPC(factorySettings);
 
             _world.Start();
 
@@ -100,22 +105,6 @@ namespace TestSandbox.Handlers
 
             Thread.Sleep(50000);
             //Thread.Sleep(500000);
-
-            _logger.Log("!---");
-
-            _world.Dispose();
-
-            _logger.Log("!(+)---");
-
-            //_npc.InsertFact("{: see(I, #b) :}");
-
-            Thread.Sleep(1000);
-
-            //Thread.Sleep(10000);
-
-            //_npc.RemoveFact(factId);
-
-            //Thread.Sleep(50000);
 
             _logger.Log("End");
         }

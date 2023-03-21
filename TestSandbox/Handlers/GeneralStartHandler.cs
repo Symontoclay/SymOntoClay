@@ -40,8 +40,14 @@ namespace TestSandbox.Handlers
 {
     public class GeneralStartHandler: BaseGeneralStartHandler
     {
-        private static readonly IEntityLogger _logger = new LoggerImpementation();
-        
+        public GeneralStartHandler()
+            : base(new UnityTestEngineContextFactorySettings()
+            {
+                UseDefaultNLPSettings = true
+            })
+        {
+        }
+
         public void Run()
         {
             _logger.Log("Begin");
@@ -52,12 +58,11 @@ namespace TestSandbox.Handlers
 
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.HostListener = platformListener;
-            factorySettings.UseDefaultNLPSettings = true;
 
             factorySettings.Categories = new List<string>() { "elf" };
             factorySettings.EnableCategories = true;
 
-            CreateNPC(factorySettings);
+            CreateMainNPC(factorySettings);
 
             _world.Start();
 
@@ -105,22 +110,6 @@ namespace TestSandbox.Handlers
 
             Thread.Sleep(50000);
             //Thread.Sleep(500000);
-
-            _logger.Log("!---");
-
-            _world.Dispose();
-            
-            _logger.Log("!(+)---");
-
-            //_npc.InsertFact("{: see(I, #b) :}");
-
-            Thread.Sleep(1000);
-
-            //Thread.Sleep(10000);
-
-            //_npc.RemoveFact(factId);
-
-            //Thread.Sleep(50000);
 
             _logger.Log("End");
         }

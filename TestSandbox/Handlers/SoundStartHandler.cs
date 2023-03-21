@@ -39,7 +39,13 @@ namespace TestSandbox.Handlers
 {
     public class SoundStartHandler : BaseGeneralStartHandler
     {
-        private static readonly IEntityLogger _logger = new LoggerImpementation();
+        public SoundStartHandler()
+            : base(new UnityTestEngineContextFactorySettings()
+            {
+                UseDefaultNLPSettings = false
+            })
+        { 
+        }
 
         public void Run()
         {
@@ -49,9 +55,8 @@ namespace TestSandbox.Handlers
 
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.HostListener = platformListener;
-            factorySettings.UseDefaultNLPSettings = false;
 
-            CreateNPC(factorySettings);
+            CreateMainNPC(factorySettings);
 
             var platformListener2 = new TstPlatformHostListener();
 
@@ -75,12 +80,6 @@ namespace TestSandbox.Handlers
             Thread.Sleep(5000);
 
             //gameObject.PushSoundFact(60, "act(M16, shoot)");
-
-            Thread.Sleep(5000);
-
-            _world.Dispose();
-
-            _logger.Log("!---");
 
             Thread.Sleep(5000);
 

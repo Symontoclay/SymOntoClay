@@ -151,10 +151,11 @@ namespace TestSandbox
             //TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();
+            TstPlacesHandler();
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -1770,6 +1771,16 @@ action Go
             _logger.Log("End");
         }
 
+        private static void TstPlacesHandler()
+        {
+            _logger.Log("Begin");
+
+            using var handler = new PlacesHandler();
+            handler.Run();
+
+            _logger.Log("End");
+        }
+
         private static void TstMonoBehaviourTestingHandler()
         {
             _logger.Log("Begin");
@@ -1784,7 +1795,7 @@ action Go
         {
             _logger.Log("Begin");
 
-            var handler = new SoundStartHandler();
+            using var handler = new SoundStartHandler();
             handler.Run();
 
             _logger.Log("End");
@@ -1794,7 +1805,7 @@ action Go
         {
             _logger.Log("Begin");
 
-            var handler = new AddingFactTriggerHandler();
+            using var handler = new AddingFactTriggerHandler();
             handler.Run();
 
             _logger.Log("End");
@@ -1806,7 +1817,7 @@ action Go
 
             //_logger.Log($"Thread.CurrentThread.ManagedThreadId = {Thread.CurrentThread.ManagedThreadId}");
 
-            var handler = new GeneralStartHandler();
+            using var handler = new GeneralStartHandler();
             handler.Run();
 
             _logger.Log("End");

@@ -221,13 +221,13 @@ namespace SymOntoClay.Core.Tests.Helpers
             return settings;
         }
 
-        public static IWorld CreateWorld(UnityTestEngineContextFactorySettings factorySettings)/*string baseDir, string hostFile, IPlatformLogger platformLogger*/
+        public static IWorld CreateWorld(UnityTestEngineContextFactorySettings factorySettings)
         {
             var settings = CreateWorldSettings(factorySettings);
 
             return CreateWorld(settings);
         }
-
+        
         public static IWorld CreateWorld(WorldSettings settings)
         {
             var world = new WorldCore();

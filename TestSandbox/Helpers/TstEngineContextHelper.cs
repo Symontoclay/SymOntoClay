@@ -227,6 +227,24 @@ namespace TestSandbox.Helpers
             return npcSettings;
         }
 
+        public static IWorld CreateWorld(UnityTestEngineContextFactorySettings factorySettings)
+        {
+            var settings = CreateWorldSettings(factorySettings);
+
+            //_logger.Log($"settings = {settings}");
+
+            return UnityTestEngineContextFactory.CreateWorld(settings);
+        }
+
+        public static IHumanoidNPC CreateNPC(IWorld world, UnityTestEngineContextFactorySettings factorySettings)
+        {
+            var npcSettings = CreateHumanoidNPCSettings(factorySettings);
+
+            //_logger.Log($"npcSettings = {npcSettings}");
+
+            return UnityTestEngineContextFactory.CreateHumanoidNPC(world, npcSettings);
+        }
+
         public static ComplexTestEngineContext CreateContext(UnityTestEngineContextFactorySettings factorySettings)
         {
             var settings = CreateWorldSettings(factorySettings);
@@ -239,7 +257,7 @@ namespace TestSandbox.Helpers
 
             return UnityTestEngineContextFactory.CreateTestEngineContext(settings, npcSettings);
         }
-
+        
         public static ComplexTestEngineContext CreateAndInitContext()
         {
             return CreateAndInitContext(new UnityTestEngineContextFactorySettings());

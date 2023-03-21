@@ -37,19 +37,45 @@ using SymOntoClayBaseTestLib.Helpers;
 
 namespace TestSandbox.Handlers
 {
-    public abstract class BaseGeneralStartHandler
+    public abstract class BaseGeneralStartHandler: IDisposable
     {
-        private static readonly IEntityLogger _logger = new LoggerImpementation();
+        protected BaseGeneralStartHandler()
+            : this(new UnityTestEngineContextFactorySettings())
+        {
+        }
+
+        protected BaseGeneralStartHandler(UnityTestEngineContextFactorySettings factorySettings)
+        {
+            _world = TstEngineContextHelper.CreateWorld(factorySettings);
+        }
+
+        protected static readonly IEntityLogger _logger = new LoggerImpementation();
 
         protected IWorld _world;
         protected IHumanoidNPC _npc;
-        
-        protected void CreateNPC(UnityTestEngineContextFactorySettings factorySettings)
-        {
-            var complexContext = TstEngineContextHelper.CreateContext(factorySettings);
 
-            _world = complexContext.World;
-            _npc = complexContext.HumanoidNPC;
+        protected void CreateMainNPC(UnityTestEngineContextFactorySettings factorySettings)
+        {
+            _npc = CreateNPC(factorySettings);       
+        }
+
+        protected IHumanoidNPC CreateNPC(UnityTestEngineContextFactorySettings factorySettings)
+        {
+            return TstEngineContextHelper.CreateNPC(_world, factorySettings);
+        }
+
+        private bool _isDisposed;
+
+        public void Dispose()
+        {
+            if (!_isDisposed)
+            {
+                return;
+            }
+
+            _isDisposed = true;
+
+            _world?.Dispose();
         }
     }
 }

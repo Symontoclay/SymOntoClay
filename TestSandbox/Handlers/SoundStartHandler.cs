@@ -33,7 +33,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using TestSandbox.CoreHostListener;
 using TestSandbox.PlatformImplementations;
-using SymOntoClayBaseTestLib.Helpers;
+using SymOntoClay.BaseTestLib;
 
 namespace TestSandbox.Handlers
 {

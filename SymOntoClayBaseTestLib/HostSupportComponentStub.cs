@@ -21,36 +21,41 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core;
+using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
-namespace SymOntoClay.UnityAsset.Core.Tests.HostListeners
+namespace SymOntoClay.BaseTestLib
 {
-    public class Exec_Tests_HostListener4 : BaseHostListener
+    public class HostSupportComponentStub : IHostSupport
     {
-        [BipedEndpoint("Go", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
-        public void GoToImpl(CancellationToken cancellationToken,
-            [EndpointParam("To", KindOfEndpointParam.Position)] INavTarget navTarget,
-            float speed = 12)
+        public HostSupportComponentStub(IPlatformSupport platformSupport)
         {
-            _logger.Log($"GoToImpl Begin");
-            _logger.Log(navTarget.Kind.ToString());
-            var entity = navTarget.Entity;
-            _logger.Log(entity.InstanceId.ToString());
-            _logger.Log(entity.Id);
-            _logger.Log(entity.Position.ToString());
-            _logger.Log($"GoToImpl End");
+            _platformSupport = platformSupport;
         }
 
-        /*
-         [BipedEndpoint("Go", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
-        public async void GoToImpl(CancellationToken cancellationToken,
-        [EndpointParam("To", KindOfEndpointParam.Position)] INavTarget target,
-        float speed = 12)
-         */
+        private readonly IPlatformSupport _platformSupport;
+
+        /// <inheritdoc/>
+        public Vector3 ConvertFromRelativeToAbsolute(RelativeCoordinate relativeCoordinate)
+        {
+            return _platformSupport.ConvertFromRelativeToAbsolute(relativeCoordinate);
+        }
+
+        /// <inheritdoc/>
+        public Vector3 GetCurrentAbsolutePosition()
+        {
+            return _platformSupport.GetCurrentAbsolutePosition();
+        }
+
+        /// <inheritdoc/>
+        public float GetDirectionToPosition(Vector3 position)
+        {
+            return _platformSupport.GetDirectionToPosition(position);
+        }
     }
 }

@@ -20,42 +20,36 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.Core;
-using SymOntoClay.UnityAsset.Core;
+using SymOntoClay.BaseTestLib;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SymOntoClay.Core.Tests.Helpers
+namespace SymOntoClay.BaseTestLib.HostListeners
 {
-    public class HostSupportComponentStub : IHostSupport
+    public abstract class BaseHostListener: ILoggedTestHostListener
     {
-        public HostSupportComponentStub(IPlatformSupport platformSupport)
+        public void SetLogger(IEntityLogger logger)
         {
-            _platformSupport = platformSupport;
+            _logger = logger;
         }
 
-        private readonly IPlatformSupport _platformSupport;
+        protected IEntityLogger _logger;
 
-        /// <inheritdoc/>
-        public Vector3 ConvertFromRelativeToAbsolute(RelativeCoordinate relativeCoordinate)
-        {
-            return _platformSupport.ConvertFromRelativeToAbsolute(relativeCoordinate);
-        }
+        private static object _lockObj = new object();
 
-        /// <inheritdoc/>
-        public Vector3 GetCurrentAbsolutePosition()
-        {
-            return _platformSupport.GetCurrentAbsolutePosition();
-        }
+        private static int _methodId;
 
-        /// <inheritdoc/>
-        public float GetDirectionToPosition(Vector3 position)
+        protected int GetMethodId()
         {
-            return _platformSupport.GetDirectionToPosition(position);
+            lock (_lockObj)
+            {
+                _methodId++;
+                return _methodId;
+            }
         }
     }
 }

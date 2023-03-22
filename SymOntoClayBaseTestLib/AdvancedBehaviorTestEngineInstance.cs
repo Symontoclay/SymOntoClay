@@ -31,10 +31,8 @@ using System.Numerics;
 using NLog;
 using SymOntoClay.SoundBuses;
 using SymOntoClay.UnityAsset.Core;
-using SymOntoClayBaseTestLib.Helpers;
-using SymOntoClay.BaseTestLib.Helpers;
 
-namespace SymOntoClay.Core.Tests.Helpers
+namespace SymOntoClay.BaseTestLib
 {
     public class AdvancedBehaviorTestEngineInstance : IDisposable
     {
@@ -109,7 +107,7 @@ namespace SymOntoClay.Core.Tests.Helpers
 
         public void WriteThingFile(string thingName, string fileContent)
         {
-            if(!_createdThingsDSLProjects.Contains(thingName))
+            if (!_createdThingsDSLProjects.Contains(thingName))
             {
                 _createdThingsDSLProjects.Add(thingName);
                 CreateThingDSLProject(thingName);
@@ -219,9 +217,9 @@ namespace SymOntoClay.Core.Tests.Helpers
             factorySettings.HostListener = platformListener;
             factorySettings.CurrentAbsolutePosition = currentAbsolutePosition;
 
-            if(advancedBehaviorTestEngineInstanceSettings == null)
+            if (advancedBehaviorTestEngineInstanceSettings == null)
             {
-                if(_advancedBehaviorTestEngineInstanceSettings != null)
+                if (_advancedBehaviorTestEngineInstanceSettings != null)
                 {
                     factorySettings.Categories = _advancedBehaviorTestEngineInstanceSettings.Categories;
                     factorySettings.EnableCategories = _advancedBehaviorTestEngineInstanceSettings.EnableCategories;

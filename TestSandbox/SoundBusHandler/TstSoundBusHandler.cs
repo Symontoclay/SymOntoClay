@@ -21,10 +21,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
-using SymOntoClay.Core.Tests.Helpers;
+using SymOntoClay.BaseTestLib;
 using SymOntoClay.SoundBuses;
 using SymOntoClay.StandardFacts;
-using SymOntoClayBaseTestLib.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

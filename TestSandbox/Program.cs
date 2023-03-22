@@ -66,12 +66,11 @@ using System.Numerics;
 using DictionaryGenerator;
 using SymOntoClay.NLP.CommonDict.Implementations;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
-using SymOntoClay.Core.Tests.Helpers;
 using SymOntoClay.NLP;
 using System.Speech.Synthesis;
-using SymOntoClayBaseTestLib.Helpers;
 using SymOntoClay.Core.DebugHelpers;
-using SymOntoClay.UnityAsset.Core.Tests.HostListeners;
+using SymOntoClay.BaseTestLib.HostListeners;
+using SymOntoClay.BaseTestLib;
 
 namespace TestSandbox
 {

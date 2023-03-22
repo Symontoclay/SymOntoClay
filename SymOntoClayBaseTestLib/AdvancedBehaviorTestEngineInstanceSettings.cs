@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SymOntoClay.BaseTestLib.Helpers
+namespace SymOntoClay.BaseTestLib
 {
     public class AdvancedBehaviorTestEngineInstanceSettings : IObjectToString
     {

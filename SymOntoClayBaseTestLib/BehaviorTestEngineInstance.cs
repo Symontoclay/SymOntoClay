@@ -30,9 +30,9 @@ using System.IO;
 using System.Text;
 using System.Threading;
 
-namespace SymOntoClay.Core.Tests.Helpers
+namespace SymOntoClay.BaseTestLib
 {
-    public class BehaviorTestEngineInstance: IDisposable
+    public class BehaviorTestEngineInstance : IDisposable
     {
         public const int DefaultTimeoutToEnd = 5000;
 
@@ -88,7 +88,7 @@ namespace SymOntoClay.Core.Tests.Helpers
 
         public static bool Run(string fileContent, Action<string> logChannel, Action<string> error, object platformListener, int timeoutToEnd = DefaultTimeoutToEnd)
         {
-            if(string.IsNullOrWhiteSpace(fileContent))
+            if (string.IsNullOrWhiteSpace(fileContent))
             {
                 throw new Exception("Argument 'fileContent' can not be null or empty!");
             }
@@ -114,7 +114,7 @@ namespace SymOntoClay.Core.Tests.Helpers
             var result = true;
 
             _internalInstance.CreateAndStartNPC(message => { logChannel(message); },
-                errorMsg => { result = false; error(errorMsg); }, 
+                errorMsg => { result = false; error(errorMsg); },
                 platformListener);
 
             Thread.Sleep(timeoutToEnd);
@@ -127,7 +127,7 @@ namespace SymOntoClay.Core.Tests.Helpers
         /// <inheritdoc/>
         public void Dispose()
         {
-            if(_isDisposed)
+            if (_isDisposed)
             {
                 return;
             }

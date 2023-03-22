@@ -33,7 +33,7 @@ using System.Threading.Tasks;
 using TestSandbox.PlatformImplementations;
 using TestSandbox.SoundBusHandler;
 using TestSandbox.Helpers;
-using SymOntoClayBaseTestLib.Helpers;
+using SymOntoClay.BaseTestLib;
 
 namespace TestSandbox.Handlers
 {

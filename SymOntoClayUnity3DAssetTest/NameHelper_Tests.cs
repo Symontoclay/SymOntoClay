@@ -21,11 +21,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NUnit.Framework;
+using SymOntoClay.BaseTestLib;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Parsing;
-using SymOntoClay.Core.Tests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;

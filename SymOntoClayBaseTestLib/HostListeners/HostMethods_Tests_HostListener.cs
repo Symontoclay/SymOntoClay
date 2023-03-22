@@ -20,8 +20,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.Core.Tests.Helpers;
 using SymOntoClay.Core;
+using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -31,7 +31,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SymOntoClay.UnityAsset.Core.Tests.HostListeners
+namespace SymOntoClay.BaseTestLib.HostListeners
 {
     public class HostMethods_Tests_HostListener : BaseHostListener
     {

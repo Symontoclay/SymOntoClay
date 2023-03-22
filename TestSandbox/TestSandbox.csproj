@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <Version>0.5.0</Version>
     <AssemblyVersion>0.5.0</AssemblyVersion>
     <FileVersion>0.5.0</FileVersion>
@@ -21,6 +21,7 @@
     <ProjectReference Include="..\SymOntoClayNLPBinaryDict\SymOntoClayNLPBinaryDict.csproj" />
     <ProjectReference Include="..\SymOntoClayNLPCommonDict\SymOntoClayNLPCommonDict.csproj" />
     <ProjectReference Include="..\SymOntoClayNLP\SymOntoClayNLP.csproj" />
+    <ProjectReference Include="..\SymOntoClayPlacesHardTests\SymOntoClayPlacesHardTests.csproj" />
     <ProjectReference Include="..\SymOntoClayProjectFiles\SymOntoClayProjectFiles.csproj" />
     <ProjectReference Include="..\SymOntoClaySoundBuses\SymOntoClaySoundBuses.csproj" />
     <ProjectReference Include="..\SymOntoClayStandardFacts\SymOntoClayStandardFacts.csproj" />
@@ -50,6 +51,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Source\Libs\lib2\someFile.soc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Source\Navs\waypoint\waypoint.sobj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Source\Navs\waypoint\waypoint.soc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Source\SharedLibs\stdlib\LinguisticVariables.soc">
@@ -99,7 +106,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Source\Navs\" />
+    <Folder Include="Source\Navs\waypoint\" />
     <Folder Include="Source\Players\" />
     <Folder Include="Source\Libs\lib1\" />
   </ItemGroup>

@@ -27,9 +27,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Core.Tests.Helpers
+namespace SymOntoClay.BaseTestLib
 {
-    public class UnityTestMainStorageContext: MainStorageContext
+    public class UnityTestMainStorageContext : MainStorageContext
     {
         public UnityTestMainStorageContext()
             : base(new EmptyLogger())

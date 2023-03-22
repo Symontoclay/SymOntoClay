@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,16 +29,16 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SymOntoClay.UnityAsset.Core.Tests.HostListeners
+namespace SymOntoClay.BaseTestLib.HostListeners
 {
-    public class Exec_Tests_HostListener1 : BaseHostListener
+    public class Exec_Tests_HostListener2 : BaseHostListener
     {
         [BipedEndpoint("Go", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
-        public void GoToImpl_2(CancellationToken cancellationToken,
-            [EndpointParam("Direction", KindOfEndpointParam.Position)] Vector3 point,
+        public void GoToImpl(CancellationToken cancellationToken,
+            [EndpointParam("To", KindOfEndpointParam.Position)] Vector3 point,
             float speed = 12)
         {
-            _logger.Log($"GoToImpl_2");
+            _logger.Log($"GoToImpl");
             _logger.Log(point.ToString());
         }
     }

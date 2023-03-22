@@ -21,10 +21,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NUnit.Framework;
+using SymOntoClay.BaseTestLib;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.Helpers;
-using SymOntoClay.Core.Tests.Helpers;
-using SymOntoClayBaseTestLib.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

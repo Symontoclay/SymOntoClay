@@ -21,7 +21,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
-using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
@@ -33,7 +32,6 @@ using SymOntoClay.StandardFacts;
 using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.World;
-using SymOntoClayBaseTestLib.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -44,10 +42,9 @@ using System.Threading.Tasks;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.NLP;
 using SymOntoClay.NLP.CommonDict;
-using SymOntoClayBaseTestLib;
 using SymOntoClay.ProjectFiles;
 
-namespace SymOntoClay.Core.Tests.Helpers
+namespace SymOntoClay.BaseTestLib
 {
     public static class UnityTestEngineContextFactory
     {
@@ -87,7 +84,7 @@ namespace SymOntoClay.Core.Tests.Helpers
             {
                 baseDir = CreateTestDir(CreateRootDir());
             }
-            
+
             var supportBasePath = Path.Combine(baseDir, "SysDirs");
 
             var logDir = Path.Combine(supportBasePath, "NpcLogs");
@@ -107,7 +104,7 @@ namespace SymOntoClay.Core.Tests.Helpers
                 {
                     var assembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(p => p.GetName().Name == "SymOntoClay.BaseTestLib").Location;
 
-                    var assemblyPath = (new FileInfo(assembly)).DirectoryName;
+                    var assemblyPath = new FileInfo(assembly).DirectoryName;
 
                     var builtInStandardLibraryDir = Path.Combine(assemblyPath, "LibsForInstall", "stdlib");
 
@@ -147,13 +144,13 @@ namespace SymOntoClay.Core.Tests.Helpers
 
                 settings.LibsDirs = libsDirs;
 
-                if(factorySettings.UseStandardLibrary)
+                if (factorySettings.UseStandardLibrary)
                 {
-                    if(string.IsNullOrWhiteSpace(targetFiles.SharedLibsDir))
+                    if (string.IsNullOrWhiteSpace(targetFiles.SharedLibsDir))
                     {
                         var assembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(p => p.GetName().Name == "SymOntoClay.BaseTestLib").Location;
 
-                        var assemblyPath = (new FileInfo(assembly)).DirectoryName;
+                        var assemblyPath = new FileInfo(assembly).DirectoryName;
 
                         var builtInStandardLibraryDir = Path.Combine(assemblyPath, "LibsForInstall", "stdlib");
 
@@ -199,19 +196,19 @@ namespace SymOntoClay.Core.Tests.Helpers
             var loggingSettings = new LoggingSettings()
             {
                 LogDir = logDir,
-                RootContractName = "Hi1",      
+                RootContractName = "Hi1",
                 Enable = true,
                 EnableRemoteConnection = true
             };
 
             if (factorySettings.PlatformLogger == null)
             {
-                if(factorySettings.UseDefaultPlatformLogger)
+                if (factorySettings.UseDefaultPlatformLogger)
                 {
-                    loggingSettings.PlatformLoggers = new List<IPlatformLogger>() {new EmptyLogger() };
+                    loggingSettings.PlatformLoggers = new List<IPlatformLogger>() { new EmptyLogger() };
                 }
             }
-            else 
+            else
             {
                 loggingSettings.PlatformLoggers = new List<IPlatformLogger>() { factorySettings.PlatformLogger };
             }
@@ -227,7 +224,7 @@ namespace SymOntoClay.Core.Tests.Helpers
 
             return CreateWorld(settings);
         }
-        
+
         public static IWorld CreateWorld(WorldSettings settings)
         {
             var world = new WorldCore();
@@ -257,14 +254,14 @@ namespace SymOntoClay.Core.Tests.Helpers
             npcSettings.Id = $"#{Guid.NewGuid():D}";
             npcSettings.InstanceId = GetInstanceId();
 
-            if(!string.IsNullOrWhiteSpace(factorySettings.NPCAppFile))
+            if (!string.IsNullOrWhiteSpace(factorySettings.NPCAppFile))
             {
                 npcSettings.LogicFile = factorySettings.NPCAppFile;
             }
-            
-            if(factorySettings.HostListener == null)
+
+            if (factorySettings.HostListener == null)
             {
-                if(factorySettings.UseDefaultHostListener)
+                if (factorySettings.UseDefaultHostListener)
                 {
                     npcSettings.HostListener = DefaultPlatformListener;
                 }
@@ -272,9 +269,9 @@ namespace SymOntoClay.Core.Tests.Helpers
             else
             {
                 npcSettings.HostListener = factorySettings.HostListener;
-            }            
+            }
 
-            if(factorySettings.CurrentAbsolutePosition.HasValue)
+            if (factorySettings.CurrentAbsolutePosition.HasValue)
             {
                 npcSettings.PlatformSupport = new PlatformSupportCLIStub(factorySettings.CurrentAbsolutePosition.Value);
             }

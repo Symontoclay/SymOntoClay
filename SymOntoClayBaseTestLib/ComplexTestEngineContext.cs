@@ -20,59 +20,56 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Core.Internal;
+using SymOntoClay.CoreHelper;
 using SymOntoClay.UnityAsset.Core;
+using SymOntoClay.UnityAsset.Core.Internal;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace SymOntoClay.Core.Tests.Helpers
+namespace SymOntoClay.BaseTestLib
 {
-    public class EmptyLogger : IEntityLogger, IPlatformLogger
+    public class ComplexTestEngineContext : ISymOntoClayDisposable
     {
-        /// <inheritdoc/>
-        public void Error(string message)
+        public ComplexTestEngineContext(IWorld world, IHumanoidNPC humanoidNPC)
+            : this(world, humanoidNPC, string.Empty)
         {
         }
 
-        /// <inheritdoc/>
-        public void LogChannel(string message)
+        public ComplexTestEngineContext(IWorld world, IHumanoidNPC humanoidNPC, string baseDir)
         {
+            World = world;
+            HumanoidNPC = humanoidNPC;
+            _baseDir = baseDir;
+        }
+
+        public IEngineContext EngineContext => HumanoidNPC.EngineContext;
+        public IWorld World { get; private set; }
+        public WorldContext WorldContext => World.WorldContext;
+        public IHumanoidNPC HumanoidNPC { get; private set; }
+        private readonly string _baseDir;
+
+        public void Start()
+        {
+            World.Start();
         }
 
         /// <inheritdoc/>
-        public void Log(string message)
-        {
-        }
+        public bool IsDisposed => World.IsDisposed;
 
         /// <inheritdoc/>
-        public void Warning(string message)
+        public void Dispose()
         {
-        }
+            World.Dispose();
 
-        /// <inheritdoc/>
-        public void WriteLn(string message)
-        {
-        }
-
-        /// <inheritdoc/>
-        public void WriteLnRawLogChannel(string message)
-        {
-        }
-
-        /// <inheritdoc/>
-        public void WriteLnRawLog(string message)
-        {
-        }
-
-        /// <inheritdoc/>
-        public void WriteLnRawWarning(string message)
-        {
-        }
-
-        /// <inheritdoc/>
-        public void WriteLnRawError(string message)
-        {
+            if (!string.IsNullOrWhiteSpace(_baseDir) && Directory.Exists(_baseDir))
+            {
+                Directory.Delete(_baseDir, true);
+            }
         }
     }
 }

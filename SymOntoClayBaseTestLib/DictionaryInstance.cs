@@ -28,7 +28,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SymOntoClayBaseTestLib
+namespace SymOntoClay.BaseTestLib
 {
     public static class DictionaryInstance
     {

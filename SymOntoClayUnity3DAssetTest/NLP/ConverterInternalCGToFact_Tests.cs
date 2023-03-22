@@ -23,7 +23,6 @@ SOFTWARE.*/
 using NUnit.Framework;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Tests.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.ATN;
@@ -31,7 +30,7 @@ using SymOntoClay.NLP.Internal.ConvertingCGToInternal;
 using SymOntoClay.NLP.Internal.ConvertingInternalCGToFact;
 using SymOntoClay.NLP.Internal.PhraseToCGParsing;
 using SymOntoClay.UnityAsset.Core.Tests.NLP.ATN;
-using SymOntoClayBaseTestLib;
+using SymOntoClay.BaseTestLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;

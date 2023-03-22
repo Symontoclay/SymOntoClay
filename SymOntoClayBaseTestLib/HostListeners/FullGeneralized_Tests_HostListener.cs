@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SymOntoClay.UnityAsset.Core.Tests.HostListeners
+namespace SymOntoClay.BaseTestLib.HostListeners
 {
     public class FullGeneralized_Tests_HostListener : BaseHostListener
     {

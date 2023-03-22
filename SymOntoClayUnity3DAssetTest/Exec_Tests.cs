@@ -21,8 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NUnit.Framework;
-using SymOntoClay.Core.Tests.Helpers;
-using SymOntoClay.UnityAsset.Core.Tests.HostListeners;
+using SymOntoClay.BaseTestLib;
+using SymOntoClay.BaseTestLib.HostListeners;
 using System;
 using System.Collections.Generic;
 using System.Linq;

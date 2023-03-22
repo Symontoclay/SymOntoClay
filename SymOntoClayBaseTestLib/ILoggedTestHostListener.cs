@@ -20,36 +20,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.Core.Tests.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace SymOntoClay.UnityAsset.Core.Tests.HostListeners
+namespace SymOntoClay.BaseTestLib
 {
-    public abstract class BaseHostListener: ILoggedTestHostListener
+    public interface ILoggedTestHostListener
     {
-        public void SetLogger(IEntityLogger logger)
-        {
-            _logger = logger;
-        }
-
-        protected IEntityLogger _logger;
-
-        private static object _lockObj = new object();
-
-        private static int _methodId;
-
-        protected int GetMethodId()
-        {
-            lock (_lockObj)
-            {
-                _methodId++;
-                return _methodId;
-            }
-        }
+        void SetLogger(IEntityLogger logger);
     }
 }

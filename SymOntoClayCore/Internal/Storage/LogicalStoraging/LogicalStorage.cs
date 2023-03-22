@@ -613,6 +613,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         {
             lock (_lockObj)
             {
+#if DEBUG
+                //Log($"Kind = {Kind}");
+                //Log($"_realStorageContext.Disabled = {_realStorageContext.Disabled}");
+#endif
+
                 if (_realStorageContext.Disabled)
                 {
                     return _emptyLogicalQueryNodesList;
@@ -688,6 +693,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         {
             lock (_lockObj)
             {
+#if DEBUG
+                //Log($"Kind = {Kind}");
+                //Log($"_realStorageContext.Disabled = {_realStorageContext.Disabled}");
+#endif
+
                 if (_realStorageContext.Disabled)
                 {
                     return _emptyRuleInstancesList;
@@ -707,6 +717,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 #if DEBUG
                 //Log($"name = {name}");
                 //Log($"_kind = {_kind}");
+                //Log($"_realStorageContext.Disabled = {_realStorageContext.Disabled}");
                 //Log($"GetHashCode() = {GetHashCode()}");
                 //if (_kind == KindOfStorage.World)
                 //{
@@ -806,6 +817,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 #if DEBUG
                 //Log($"name = {name}");
                 //Log($"_kind = {_kind}");
+                //Log($"_realStorageContext.Disabled = {_realStorageContext.Disabled}");
                 //if (_kind == KindOfStorage.World)
                 //{
                 //    DbgPrintFactsAndRules();

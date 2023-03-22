@@ -30,7 +30,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SymOntoClayBaseTestLib.Helpers
+namespace SymOntoClay.BaseTestLib
 {
     public class UnityTestEngineContextFactorySettings : IObjectToString
     {

@@ -219,6 +219,8 @@ namespace SymOntoClay.Core.Internal.Storage
 
             _globalStorage.DefaultSettingsOfCodeEntity = CreateDefaultSettingsOfCodeEntity();
 
+            
+
             var localCodeExecutionContext = new LocalCodeExecutionContext();
             localCodeExecutionContext.Storage = _globalStorage;
 
@@ -227,10 +229,10 @@ namespace SymOntoClay.Core.Internal.Storage
             _checkDirtyOptions.EngineContext = engineContext;
             _checkDirtyOptions.ConvertWaypointValueFromSource = true;
 
-#if IMAGINE_WORKING
-            //Log("Do");
-#else
-                throw new NotImplementedException();
+            _categoriesStorage?.Init();
+
+#if DEBUG
+            //Log("End");
 #endif
         }
 

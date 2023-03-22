@@ -26,7 +26,6 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.StandardFacts;
 using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Internal.SoundPerception;
-using SymOntoClayBaseTestLib.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

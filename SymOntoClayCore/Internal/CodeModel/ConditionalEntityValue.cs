@@ -137,7 +137,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             try
             {
 #if DEBUG
-                Log("Begin");
+                //Log("Begin");
 #endif
 
                 _needUpdate = false;

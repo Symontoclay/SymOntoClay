@@ -39,13 +39,12 @@ using System.Threading.Tasks;
 using TestSandbox.CoreHostListener;
 using TestSandbox.PlatformImplementations;
 using SymOntoClay.SoundBuses;
-using SymOntoClay.Core.Tests.Helpers;
 using SymOntoClay.NLP;
 using SymOntoClay.StandardFacts;
-using SymOntoClayBaseTestLib.Helpers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.ProjectFiles;
+using SymOntoClay.BaseTestLib;
 
 namespace TestSandbox.Helpers
 {

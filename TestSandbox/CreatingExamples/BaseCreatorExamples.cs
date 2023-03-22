@@ -34,7 +34,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using TestSandbox.PlatformImplementations;
-using SymOntoClay.Core.Tests.Helpers;
+using SymOntoClay.BaseTestLib;
 
 namespace TestSandbox.CreatingExamples
 {

@@ -25,7 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Core.Tests.Helpers
+namespace SymOntoClay.BaseTestLib
 {
     public class CallBackLogger : IPlatformLogger
     {
@@ -54,10 +54,10 @@ namespace SymOntoClay.Core.Tests.Helpers
         /// <inheritdoc/>
         public void WriteLnRawLog(string message)
         {
-            if(_enableWriteLnRawLog)
+            if (_enableWriteLnRawLog)
             {
                 _logChannel?.Invoke(message);
-            }            
+            }
         }
 
         /// <inheritdoc/>

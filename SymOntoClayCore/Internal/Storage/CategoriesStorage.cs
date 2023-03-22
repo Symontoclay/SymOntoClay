@@ -5,6 +5,7 @@ using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Runtime;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage
@@ -14,6 +15,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public CategoriesStorage(IMainStorageContext context, CategoriesStorageSettings settings)
             : base(context.Logger)
         {
+            _settings = settings;
             _selfName = context.SelfName;
 
             var storageSettigs = new RealStorageSettings()
@@ -22,22 +24,31 @@ namespace SymOntoClay.Core.Internal.Storage
             };
 
             storageSettigs.Enabled = settings.EnableCategories;
+            storageSettigs.InheritancePublicFactsReplicator = settings.InheritancePublicFactsReplicator;
+
+#if DEBUG
+            //Log($"storageSettigs = {storageSettigs}");
+#endif
 
             _storage = new RealStorage(KindOfStorage.Categories, storageSettigs);
             _inheritanceStorage = _storage.InheritanceStorage;
-
-            if (!settings.Categories.IsNullOrEmpty())
-            {
-                NAddCategories(settings.Categories);
-            }
         }
 
+        private readonly CategoriesStorageSettings _settings;
         private readonly object _lockObj = new object();
         private readonly StrongIdentifierValue _selfName;
         private readonly RealStorage _storage;
         private readonly IInheritanceStorage _inheritanceStorage;
         private readonly List<string> _categoriesList = new List<string>();
         private readonly Dictionary<StrongIdentifierValue, InheritanceItem> _categoriesDict = new Dictionary<StrongIdentifierValue, InheritanceItem>();
+
+        public void Init()
+        {
+            if (!_settings.Categories.IsNullOrEmpty())
+            {
+                NAddCategories(_settings.Categories);
+            }
+        }
 
         public IStorage Storage => _storage;
 

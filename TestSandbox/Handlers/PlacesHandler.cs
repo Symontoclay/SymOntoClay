@@ -1,10 +1,11 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.BaseTestLib;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClay.UnityAsset.Core;
-using SymOntoClay.UnityAsset.Core.Tests.HostListeners;
-using SymOntoClayBaseTestLib.Helpers;
+using SymOntoClay.BaseTestLib.HostListeners;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -20,8 +21,8 @@ namespace TestSandbox.Handlers
         {
             _logger.Log("Begin");
 
-            var platformListener = new TstGoHostListener();
-            //var platformListener = new Exec_Tests_HostListener4();
+            //var platformListener = new TstGoHostListener();
+            var platformListener = new Exec_Tests_HostListener4();
             //var platformListener = new FullGeneralized_Tests_HostListener();
 
             var factorySettings = new UnityTestEngineContextFactorySettings();
@@ -36,6 +37,10 @@ namespace TestSandbox.Handlers
             settings.UseStaticPosition = new System.Numerics.Vector3(5, 5, 5);
 
             settings.PlatformSupport = new PlatformSupportCLIStub();
+
+            //settings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Navs\waypoint\waypoint.sobj");
+
+            //_logger.Log($"settings.HostFile = {settings.HostFile}");
 
             settings.Categories = new List<string>() { "waypoint" };
             settings.EnableCategories = true;

@@ -30,7 +30,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SymOntoClay.Core.Tests.Helpers
+namespace SymOntoClay.BaseTestLib
 {
     public class TestSoundReceiver : BaseSoundReceiverComponent
     {

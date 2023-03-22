@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
-using SymOntoClay.Core.Tests.Helpers;
-using SymOntoClay.UnityAsset.Core.Tests.HostListeners;
+using SymOntoClay.BaseTestLib;
+using SymOntoClay.BaseTestLib.HostListeners;
 using System;
 using System.Collections.Generic;
 using System.Linq;

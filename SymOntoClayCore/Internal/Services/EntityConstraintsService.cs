@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -86,6 +87,8 @@ namespace SymOntoClay.Core.Internal.Services
             {
                 _randomConstraintsList.AddRange(synonymsOfRandomConstraintName);
             }
+
+            _constraintsList.AddRange(_randomConstraintsList);
 
             _nearestConstraintName = commonNamesStorage.NearestConstraintName;
 

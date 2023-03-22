@@ -318,6 +318,11 @@ namespace SymOntoClay.BaseTestLib
             return gameObject;
         }
 
+        public IPlace GetPlace(PlaceSettings settings)
+        {
+            return _world.GetPlace(settings);
+        }
+
         //private string _defaultRelativeFileName = @"/Npcs/Example/Example.soc";
         private readonly string _projectName = "Example";
         private readonly string _testDir;

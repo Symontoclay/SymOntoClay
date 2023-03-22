@@ -163,7 +163,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             convertOptions.IgnoreStandaloneConceptsInNormalization= true;
 
-            if(_isLogicalQueryGenerated)
+#if DEBUG
+            //_gbcLogger.Info($"convertOptions = {convertOptions}");
+#endif
+
+            if (_isLogicalQueryGenerated)
             {
                 LogicalQuery = ConverterEntityConditionExpressionToRuleInstance.Convert(Expression, convertOptions);
             }

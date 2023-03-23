@@ -169,9 +169,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public List<T> FilterByTypeOfAccess<T>(IList<T> source, ILocalCodeExecutionContext localCodeExecutionContext, bool allowUnknown)
             where T : IReadOnlyMemberAccess
         {
-            var result = new List<T>();
-
             var holder = localCodeExecutionContext.Holder;
+
+            if(holder == null)
+            {
+                return source.ToList();
+            }
+
+            var result = new List<T>();
 
 #if DEBUG
             //Log($"holder = {holder}");

@@ -76,7 +76,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
                 _soundReceiverComponent = new SoundReceiverComponent(Logger, settings.InstanceId, internalContext, worldContext);
 
-                _backpackStorage = new ConsolidatedPublicFactsStorage(Logger);
+                _backpackStorage = new ConsolidatedPublicFactsStorage(Logger, KindOfStorage.BackpackStorage);
 
                 var coreEngineSettings = new EngineSettings();
                 coreEngineSettings.Id = settings.Id;
@@ -126,18 +126,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
         /// <inheritdoc/>
         public override IStorage PublicFactsStorage => _coreEngine.PublicFactsStorage;
-
-        /// <inheritdoc/>
-        protected override void OnAddPublicFactsStorageOfOtherGameComponent(IStorage storage)
-        {
-            _coreEngine.AddPublicFactsStorageOfOtherGameComponent(storage);
-        }
-
-        /// <inheritdoc/>
-        protected override void OnRemovePublicFactsStorageOfOtherGameComponent(IStorage storage)
-        {
-            _coreEngine.RemovePublicFactsStorageOfOtherGameComponent(storage);
-        }
 
         /// <inheritdoc/>
         public override void LoadFromSourceCode()
@@ -273,12 +261,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             //obj.PublicFactsStorage.DbgPrintFactsAndRules();
 #endif
 
-            _backpackStorage.AddPublicFactsStorageOfOtherGameComponent(obj.PublicFactsStorage);
+            _backpackStorage.AddConsolidatedStorage(obj.PublicFactsStorage);
         }
 
         public void RemoveFromBackpack(IGameObject obj)
         {
-            _backpackStorage.RemovePublicFactsStorageOfOtherGameComponent(obj.PublicFactsStorage);
+            _backpackStorage.RemoveConsolidatedStorage(obj.PublicFactsStorage);
         }
 
         /// <summary>

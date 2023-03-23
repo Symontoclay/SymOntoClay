@@ -36,9 +36,10 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 {
     public class ConsolidatedPublicFactsLogicalStorage : BaseComponent, ILogicalStorage
     {
-        public ConsolidatedPublicFactsLogicalStorage(ConsolidatedPublicFactsStorage parent, IEntityLogger logger, ConsolidatedPublicFactsStorageSettings settings)
+        public ConsolidatedPublicFactsLogicalStorage(ConsolidatedPublicFactsStorage parent, IEntityLogger logger, KindOfStorage kind, ConsolidatedPublicFactsStorageSettings settings)
             : base(logger)
         {
+            _kind = kind;
             _parent = parent;
             _enableOnAddingFactEvent = settings.EnableOnAddingFactEvent;
 
@@ -73,8 +74,10 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         private readonly FuzzyLogicResolver _fuzzyLogicResolver;
         private readonly ILocalCodeExecutionContext _localCodeExecutionContext;
 
+        private readonly KindOfStorage _kind;
+
         /// <inheritdoc/>
-        public KindOfStorage Kind => KindOfStorage.WorldPublicFacts;
+        public KindOfStorage Kind => _kind;
 
         /// <inheritdoc/>
         public IStorage Storage => _parent;
@@ -88,7 +91,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         /// <inheritdoc/>
         public event Func<RuleInstance, IAddFactOrRuleResult> OnAddingFact;
 
-        public void AddPublicFactsStorageOfOtherGameComponent(ILogicalStorage storage)
+        public void AddConsolidatedStorage(ILogicalStorage storage)
         {
             lock(_lockObj)
             {
@@ -113,7 +116,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             }
         }
 
-        public void RemovePublicFactsStorageOfOtherGameComponent(ILogicalStorage storage)
+        public void RemoveConsolidatedStorage(ILogicalStorage storage)
         {
             lock (_lockObj)
             {

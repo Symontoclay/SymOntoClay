@@ -89,7 +89,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     break;
 
                 case KindOfStoragesList.CodeItems:
-                    result = result.Where(p => p.Storage.Kind != KindOfStorage.WorldPublicFacts && p.Storage.Kind != KindOfStorage.Query && p.Storage.Kind != KindOfStorage.PerceptedFacts && p.Storage.Kind != KindOfStorage.PublicFacts && p.Storage.Kind != KindOfStorage.Sentence).ToList();
+                    result = result.Where(p => p.Storage.Kind != KindOfStorage.WorldPublicFacts && p.Storage.Kind != KindOfStorage.AdditionalPublicFacts && p.Storage.Kind != KindOfStorage.VisiblePublicFacts && p.Storage.Kind != KindOfStorage.BackpackStorage && p.Storage.Kind != KindOfStorage.Query && p.Storage.Kind != KindOfStorage.PerceptedFacts && p.Storage.Kind != KindOfStorage.PublicFacts && p.Storage.Kind != KindOfStorage.Sentence).ToList();
                     storage.CodeItemsStoragesList = result;
                     break;
 

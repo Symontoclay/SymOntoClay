@@ -47,6 +47,23 @@ namespace TestSandbox.Handlers
 
             var place = _world.GetPlace(settings);
 
+            //settings = new PlaceSettings();
+            //settings.Id = "#WP2";
+            //settings.InstanceId = 777;
+            //settings.AllowPublicPosition = true;
+            //settings.UseStaticPosition = new System.Numerics.Vector3(5, 5, 5);
+
+            //settings.PlatformSupport = new PlatformSupportCLIStub();
+
+            ////settings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Navs\waypoint\waypoint.sobj");
+
+            ////_logger.Log($"settings.HostFile = {settings.HostFile}");
+
+            //settings.Categories = new List<string>() { "waypoint" };
+            //settings.EnableCategories = true;
+
+            //place = _world.GetPlace(settings);
+
             _world.Start();
 
             Thread.Sleep(50000);

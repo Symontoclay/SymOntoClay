@@ -88,26 +88,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         public string IdForFacts => _idForFacts;
 
         /// <inheritdoc/>
-        void IGameComponent.AddPublicFactsStorageOfOtherGameComponent(IStorage storage)
-        {
-            Task.Run(() => { OnAddPublicFactsStorageOfOtherGameComponent(storage); });
-        }
-
-        protected virtual void OnAddPublicFactsStorageOfOtherGameComponent(IStorage storage)
-        {
-        }
-
-        /// <inheritdoc/>
-        void IGameComponent.RemovePublicFactsStorageOfOtherGameComponent(IStorage storage)
-        {
-            Task.Run(() => { OnRemovePublicFactsStorageOfOtherGameComponent(storage); });
-        }
-
-        protected virtual void OnRemovePublicFactsStorageOfOtherGameComponent(IStorage storage)
-        {
-        }
-
-        /// <inheritdoc/>
         public abstract bool CanBeTakenBy(IEntity subject);
 
         /// <inheritdoc/>

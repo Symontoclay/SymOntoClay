@@ -33,7 +33,7 @@ namespace SymOntoClay.Core.Internal.Storage
         IStorage PublicFactsStorage { get; }
         IStorage PerceptedFactsStorage { get; }
         IStorage ListenedFactsStorage { get; }
-        IStorage WorldPublicFactsStorage { get; }
+        ConsolidatedPublicFactsStorage WorldPublicFactsStorage { get; }
         string InsertPublicFact(string text);
         string InsertPublicFact(RuleInstance fact);
         void RemovePublicFact(string id);
@@ -43,8 +43,6 @@ namespace SymOntoClay.Core.Internal.Storage
         void RemovePerceptedFact(string id);
         void InsertListenedFact(string text);
         void InsertListenedFact(RuleInstance fact);
-        void AddPublicFactsStorageOfOtherGameComponent(IStorage storage);
-        void RemovePublicFactsStorageOfOtherGameComponent(IStorage storage);
         void AddCategory(string category);
         void AddCategories(List<string> categories);
         void RemoveCategory(string category);

@@ -31,23 +31,25 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
 {
     public class ConsolidatedPublicFactsInheritanceStorage : BaseComponent, IInheritanceStorage
     {
-        public ConsolidatedPublicFactsInheritanceStorage(ConsolidatedPublicFactsStorage parent, IEntityLogger logger)
+        public ConsolidatedPublicFactsInheritanceStorage(ConsolidatedPublicFactsStorage parent, IEntityLogger logger, KindOfStorage kind)
             : base(logger)
         {
+            _kind = kind;
             _parent = parent;
         }
 
         private readonly object _lockObj = new object();
         private readonly ConsolidatedPublicFactsStorage _parent;
         private readonly List<IInheritanceStorage> _inheritanceStorages = new List<IInheritanceStorage>();
+        private readonly KindOfStorage _kind;
 
         /// <inheritdoc/>
-        public KindOfStorage Kind => KindOfStorage.WorldPublicFacts;
+        public KindOfStorage Kind => _kind;
 
         /// <inheritdoc/>
         public IStorage Storage => _parent;
 
-        public void AddPublicFactsStorageOfOtherGameComponent(IInheritanceStorage storage)
+        public void AddConsolidatedStorage(IInheritanceStorage storage)
         {
             lock (_lockObj)
             {
@@ -60,7 +62,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
             }
         }
 
-        public void RemovePublicFactsStorageOfOtherGameComponent(IInheritanceStorage storage)
+        public void RemoveConsolidatedStorage(IInheritanceStorage storage)
         {
             lock (_lockObj)
             {

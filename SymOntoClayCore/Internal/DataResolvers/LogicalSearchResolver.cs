@@ -85,6 +85,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //foreach(var tmpStorage in tmpStoragesList)
             //{
             //    Log($"tmpStorage.Storage.Kind = {tmpStorage.Storage.Kind}");
+            //    Log($"tmpStorage.Storage.GetType().FullName = {tmpStorage.Storage.GetType().FullName}");
             //    Log($"tmpStorage = {tmpStorage.ToBriefString()}");
             //    tmpStorage.Storage.DbgPrintFactsAndRules();
             //}

@@ -54,6 +54,24 @@ namespace SymOntoClay.Core
         private IStorageComponent _storageComponent;
         private IStorage _storage;
         private IStorage _publicFactsStorage;
+        private ConsolidatedPublicFactsStorage _worldPublicFactsStorage;
+
+        /// <inheritdoc/>
+        public IStorageComponent StorageComponent
+        {
+            get
+            {
+                lock (_stateLockObj)
+                {
+                    if (_state == ComponentState.Disposed)
+                    {
+                        throw new ObjectDisposedException(null);
+                    }
+
+                    return _storageComponent;
+                }
+            }
+        }
 
         /// <inheritdoc/>
         public IStorage Storage
@@ -90,6 +108,23 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
+        public ConsolidatedPublicFactsStorage WorldPublicFactsStorage
+        {
+            get
+            {
+                lock (_stateLockObj)
+                {
+                    if (_state == ComponentState.Disposed)
+                    {
+                        throw new ObjectDisposedException(null);
+                    }
+
+                    return _worldPublicFactsStorage;
+                }
+            }
+        }
+
+        /// <inheritdoc/>
         public void LoadFromSourceCode()
         {
 #if DEBUG
@@ -113,6 +148,7 @@ namespace SymOntoClay.Core
                 _storageComponent = _context.Storage;
                 _storage = _storageComponent.GlobalStorage;
                 _publicFactsStorage = _storageComponent.PublicFactsStorage;
+                _worldPublicFactsStorage = _storageComponent.WorldPublicFactsStorage;
 
 #if DEBUG
                 //Log("End");

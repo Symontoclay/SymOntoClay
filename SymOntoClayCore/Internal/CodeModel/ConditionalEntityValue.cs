@@ -45,7 +45,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             _context = context;            
             _localContext = localContext;
-            _worldPublicFactsStorage = context.Storage.WorldPublicFactsStorage;
+            //_worldPublicFactsStorage = context.Storage.WorldPublicFactsStorage;
+
+#if DEBUG
+            //Log($"_worldPublicFactsStorage == null = {_worldPublicFactsStorage == null}");
+#endif
 
             Expression = entityConditionExpression;
             LogicalQuery = logicalQuery;
@@ -92,7 +96,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             _searcher = dataResolversFactory.GetLogicalSearchResolver();
 
             var localCodeExecutionContext = new LocalCodeExecutionContext(localContext);
-            var localStorageSettings = RealStorageSettingsHelper.Create(context, new List<IStorage> { localContext.Storage, _worldPublicFactsStorage });
+            var localStorageSettings = RealStorageSettingsHelper.Create(context, new List<IStorage> { localContext.Storage/*, _worldPublicFactsStorage*/ });
             _storage = new LocalStorage(localStorageSettings);
             localCodeExecutionContext.Storage = _storage;
 
@@ -109,7 +113,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private IEngineContext _context;
         private ILocalCodeExecutionContext _localContext;
-        private IStorage _worldPublicFactsStorage;
+        //private IStorage _worldPublicFactsStorage;
         private readonly LogicalSearchResolver _searcher;
         private readonly ILocalCodeExecutionContext _localCodeExecutionContext;
         private readonly IStorage _storage;

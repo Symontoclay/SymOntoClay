@@ -259,15 +259,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             {
                 var publicFactsStorage = component.PublicFactsStorage;
 
-                foreach(var gameComponent in _gameComponentsList)
-                {
-                    if(gameComponent == component)
-                    {
-                        continue;
-                    }
-
-                    gameComponent.AddPublicFactsStorageOfOtherGameComponent(publicFactsStorage);
-                }
+                StandaloneStorage.StandaloneStorage.WorldPublicFactsStorage.AddConsolidatedStorage(publicFactsStorage);
             }
         }
 
@@ -287,10 +279,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
                     var publicFactsStorage = component.PublicFactsStorage;
 
-                    foreach (var gameComponent in _gameComponentsList)
-                    {
-                        gameComponent.RemovePublicFactsStorageOfOtherGameComponent(publicFactsStorage);
-                    }
+                    StandaloneStorage.StandaloneStorage.WorldPublicFactsStorage.RemoveConsolidatedStorage(publicFactsStorage);
                 }
             }
         }

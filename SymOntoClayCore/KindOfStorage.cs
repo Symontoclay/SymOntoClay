@@ -43,7 +43,10 @@ namespace SymOntoClay.Core
         PublicFacts,
         PerceptedFacts,
         WorldPublicFacts,
+        AdditionalPublicFacts,
+        VisiblePublicFacts,
         GlobalVisible,
-        Categories
+        Categories,
+        BackpackStorage
     }
 }

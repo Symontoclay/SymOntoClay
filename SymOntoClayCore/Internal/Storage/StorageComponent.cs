@@ -60,6 +60,7 @@ namespace SymOntoClay.Core.Internal.Storage
         private RealStorage _listenedFactsStorage;
         private ConsolidatedPublicFactsStorage _visibleFactsStorage;
         private ConsolidatedPublicFactsStorage _worldPublicFactsStorage;
+        private ConsolidatedPublicFactsStorage _additionalPublicFactsStorage;
         private InheritancePublicFactsReplicator _inheritancePublicFactsReplicator;
         private CategoriesStorage _categoriesStorage;
 
@@ -78,7 +79,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public IStorage ListenedFactsStorage => _listenedFactsStorage;
 
         /// <inheritdoc/>
-        public IStorage WorldPublicFactsStorage => _worldPublicFactsStorage;
+        public ConsolidatedPublicFactsStorage WorldPublicFactsStorage => _worldPublicFactsStorage;
 
         //private List<RealStorage> _storagesList;
 
@@ -97,8 +98,20 @@ namespace SymOntoClay.Core.Internal.Storage
 
             var parentStoragesList = new List<IStorage>();
 
+#if DEBUG
+            //Log($"_kindGlobalOfStorage = {_kindGlobalOfStorage}");
+#endif
+
             switch (_kindGlobalOfStorage)
             {
+                case KindOfStorage.World:
+                    {
+                        _worldPublicFactsStorage = new ConsolidatedPublicFactsStorage(_context.Logger, KindOfStorage.WorldPublicFacts);
+
+                        parentStoragesList.Add(_worldPublicFactsStorage);
+                    }
+                    break;
+
                 case KindOfStorage.Global:
                     {
                         var publicFactsStorageSettings = new RealStorageSettings();
@@ -137,10 +150,12 @@ namespace SymOntoClay.Core.Internal.Storage
                         visibleFactsStorageSettings.MainStorageContext = _context;
                         visibleFactsStorageSettings.EnableOnAddingFactEvent = KindOfOnAddingFactEvent.Isolated;
 
-                        _visibleFactsStorage = new ConsolidatedPublicFactsStorage(_context.Logger, visibleFactsStorageSettings);
+                        _visibleFactsStorage = new ConsolidatedPublicFactsStorage(_context.Logger, KindOfStorage.VisiblePublicFacts, visibleFactsStorageSettings);
                         parentStoragesList.Add(_visibleFactsStorage);
 
-                        _worldPublicFactsStorage = new ConsolidatedPublicFactsStorage(_context.Logger);
+                        //_additionalPublicFactsStorage = new ConsolidatedPublicFactsStorage(_context.Logger, KindOfStorage.AdditionalPublicFacts);
+
+                        //parentStoragesList.Add(_additionalPublicFactsStorage);
 
                         var categoriesStorageSettings = new CategoriesStorageSettings()
                         {
@@ -184,7 +199,12 @@ namespace SymOntoClay.Core.Internal.Storage
                     }
                     break;
             }
-         
+
+#if DEBUG
+            //Log($"_kindGlobalOfStorage = {_kindGlobalOfStorage}");
+            //Log($"_worldPublicFactsStorage = {_worldPublicFactsStorage}");
+#endif
+
             globalStorageSettings.MainStorageContext = _context;
 
             if (_parentStorage != null && _parentStorage.Storage != null)
@@ -378,13 +398,13 @@ namespace SymOntoClay.Core.Internal.Storage
         public void AddVisibleStorage(IStorage storage)
         {
             //_globalStorage.AddParentStorage(storage);
-            _visibleFactsStorage.AddPublicFactsStorageOfOtherGameComponent(storage);
+            _visibleFactsStorage.AddConsolidatedStorage(storage);
         }
 
         public void RemoveVisibleStorage(IStorage storage)
         {
             //_globalStorage.RemoveParentStorage(storage);
-            _visibleFactsStorage.RemovePublicFactsStorageOfOtherGameComponent(storage);
+            _visibleFactsStorage.RemoveConsolidatedStorage(storage);
         }
 
         /// <inheritdoc/>
@@ -457,18 +477,6 @@ namespace SymOntoClay.Core.Internal.Storage
 #endif
 
             _listenedFactsStorage.LogicalStorage.Append(fact);
-        }
-
-        /// <inheritdoc/>
-        public void AddPublicFactsStorageOfOtherGameComponent(IStorage storage)
-        {
-            _worldPublicFactsStorage.AddPublicFactsStorageOfOtherGameComponent(storage);
-        }
-
-        /// <inheritdoc/>
-        public void RemovePublicFactsStorageOfOtherGameComponent(IStorage storage)
-        {
-            _worldPublicFactsStorage.RemovePublicFactsStorageOfOtherGameComponent(storage);
         }
 
         /// <inheritdoc/>

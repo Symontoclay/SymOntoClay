@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.Storage;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,11 +31,13 @@ namespace SymOntoClay.Core
 {
     public interface IStandaloneStorage
     {
+        IStorageComponent StorageComponent { get; }
         IStorage Storage { get; }
         string InsertPublicFact(string text);
         string InsertPublicFact(RuleInstance fact);
         void RemovePublicFact(string id);
         IStorage PublicFactsStorage { get; }
+        ConsolidatedPublicFactsStorage WorldPublicFactsStorage { get; }
         IMainStorageContext Context { get; }
         void AddCategory(string category);
         void AddCategories(List<string> categories);

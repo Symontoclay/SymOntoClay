@@ -46,16 +46,18 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public class ConsolidatedPublicFactsStorage: BaseComponent, IStorage
     {
-        public ConsolidatedPublicFactsStorage(IEntityLogger logger)
-            : this(logger, new ConsolidatedPublicFactsStorageSettings())
+        public ConsolidatedPublicFactsStorage(IEntityLogger logger, KindOfStorage kind)
+            : this(logger, kind, new ConsolidatedPublicFactsStorageSettings())
         {
         }
 
-        public ConsolidatedPublicFactsStorage(IEntityLogger logger, ConsolidatedPublicFactsStorageSettings settings)
+        public ConsolidatedPublicFactsStorage(IEntityLogger logger, KindOfStorage kind, ConsolidatedPublicFactsStorageSettings settings)
             : base(logger)
         {
-            _logicalStorage = new ConsolidatedPublicFactsLogicalStorage(this, logger, settings);
-            _inheritanceStorage =  new ConsolidatedPublicFactsInheritanceStorage(this, logger);
+            _kind = kind;
+
+            _logicalStorage = new ConsolidatedPublicFactsLogicalStorage(this, logger, kind, settings);
+            _inheritanceStorage =  new ConsolidatedPublicFactsInheritanceStorage(this, logger, kind);
             _triggersStorage = new EmptyTriggersStorage(this, logger);
             _varStorage = new EmptyVarStorage(this, logger);
             _statesStorage = new EmptyStatesStorage(this, logger);
@@ -89,8 +91,10 @@ namespace SymOntoClay.Core.Internal.Storage
         private EmptyFuzzyLogicStorage _fuzzyLogicStorage;
         private EmptyIdleActionItemsStorage _idleActionItemsStorage;
 
+        private readonly KindOfStorage _kind;
+
         /// <inheritdoc/>
-        public KindOfStorage Kind => KindOfStorage.WorldPublicFacts;
+        public KindOfStorage Kind => _kind;
 
         /// <inheritdoc/>
         public StrongIdentifierValue TargetClassName => null;
@@ -152,7 +156,7 @@ namespace SymOntoClay.Core.Internal.Storage
         /// <inheritdoc/>
         public List<StorageUsingOptions> CodeItemsStoragesList { get; set; }
 
-        public void AddPublicFactsStorageOfOtherGameComponent(IStorage storage)
+        public void AddConsolidatedStorage(IStorage storage)
         {
             lock(_lockObj)
             {
@@ -163,12 +167,12 @@ namespace SymOntoClay.Core.Internal.Storage
 
                 _storages.Add(storage);
 
-                _logicalStorage.AddPublicFactsStorageOfOtherGameComponent(storage.LogicalStorage);
-                _inheritanceStorage.AddPublicFactsStorageOfOtherGameComponent(storage.InheritanceStorage);
+                _logicalStorage.AddConsolidatedStorage(storage.LogicalStorage);
+                _inheritanceStorage.AddConsolidatedStorage(storage.InheritanceStorage);
             }
         }
-
-        public void RemovePublicFactsStorageOfOtherGameComponent(IStorage storage)
+        
+        public void RemoveConsolidatedStorage(IStorage storage)
         {
             lock (_lockObj)
             {
@@ -179,8 +183,8 @@ namespace SymOntoClay.Core.Internal.Storage
 
                 _storages.Remove(storage);
 
-                _logicalStorage.RemovePublicFactsStorageOfOtherGameComponent(storage.LogicalStorage);
-                _inheritanceStorage.RemovePublicFactsStorageOfOtherGameComponent(storage.InheritanceStorage);
+                _logicalStorage.RemoveConsolidatedStorage(storage.LogicalStorage);
+                _inheritanceStorage.RemoveConsolidatedStorage(storage.InheritanceStorage);
             }
         }
 

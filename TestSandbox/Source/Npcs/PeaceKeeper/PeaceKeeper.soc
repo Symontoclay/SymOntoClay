@@ -17,9 +17,42 @@
 	fun go()
     {
 	    'Begin go' >> @>log;
+		//`move and check`(#@(waypoint & random));
 		//@@host.go(to: #@(waypoint));
         @@host.go(to: #@(waypoint & random));
 		//@@host.go(to: #WP_43);
 		'End go' >> @>log;
     }
+}
+
+action `move and check`
+{
+    op (@target)
+	{
+	    repeat
+		{
+		    @@host.go(to: @target)[: timeout = 10000, on complete {complete action;} :];
+		    //move(@target)[: timeout = 10000, on complete {complete action;} :];
+			check();
+		}
+	}
+}
+
+action check
+{
+    op ()
+	{
+	    @@host.`stop`();
+	    @@host.`rotate`(30);
+		@@host.`rotate`(-60);
+		@@host.`rotate`(30);
+	}
+}
+
+action move
+{		
+	op (@target)
+	{
+		@@host.go(to: @target);
+	}
 }

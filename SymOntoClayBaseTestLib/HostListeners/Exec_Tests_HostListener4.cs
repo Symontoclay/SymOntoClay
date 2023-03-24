@@ -46,12 +46,5 @@ namespace SymOntoClay.BaseTestLib.HostListeners
             _logger.Log(entity.Position.ToString());
             _logger.Log($"GoToImpl End");
         }
-
-        /*
-         [BipedEndpoint("Go", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
-        public async void GoToImpl(CancellationToken cancellationToken,
-        [EndpointParam("To", KindOfEndpointParam.Position)] INavTarget target,
-        float speed = 12)
-         */
     }
 }

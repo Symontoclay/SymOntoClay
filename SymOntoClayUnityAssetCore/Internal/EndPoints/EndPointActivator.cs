@@ -88,7 +88,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 try
                 {
                     _invokingInMainThread.RunInMainThread(() => {
-                        endpointInfo.MethodInfo.Invoke(platformListener, paramsList);
+                        Invoke(endpointInfo.MethodInfo, platformListener, paramsList);
                     });
 
                     processInfo.Status = ProcessStatus.Completed;
@@ -127,32 +127,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             {
                 try
                 {
-                    var methodInfo = endpointInfo.MethodInfo;
-
 #if DEBUG
                     Log("Pre methodInfo.Invoke");
-                    Log($"Pre methodInfo.ReturnType.FullName = {methodInfo.ReturnType.FullName}");
 #endif
 
-                    var result = methodInfo.Invoke(platformListener, paramsList);
-
-#if DEBUG
-                    Log($"result = {result}");
-#endif
-
-                    if(result != null)
-                    {
-                        if (methodInfo.ReturnType == typeof(Task))
-                        {
-                            var resultTask = (Task)result;
-
-                            resultTask.Wait();
-                        }
-                        else
-                        {
-                            throw new NotSupportedException($"Return type `{methodInfo.ReturnType.FullName}` is not supported.");
-                        }
-                    }
+                    Invoke(endpointInfo.MethodInfo, platformListener, paramsList);
 
 #if DEBUG
                     Log("after methodInfo.Invoke");
@@ -184,6 +163,33 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             }, cancellationToken);
 
             return task;
+        }
+
+        private void Invoke(MethodInfo methodInfo, object platformListener, object[] paramsList)
+        {
+#if DEBUG
+            Log($"Pre methodInfo.ReturnType.FullName = {methodInfo.ReturnType.FullName}");
+#endif
+
+            var result = methodInfo.Invoke(platformListener, paramsList);
+
+#if DEBUG
+            Log($"result = {result}");
+#endif
+
+            if (result != null)
+            {
+                if (methodInfo.ReturnType == typeof(Task))
+                {
+                    var resultTask = (Task)result;
+
+                    resultTask.Wait();
+                }
+                else
+                {
+                    throw new NotSupportedException($"Return type `{methodInfo.ReturnType.FullName}` is not supported.");
+                }
+            }
         }
 
         private object[] MapParams(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext)

@@ -128,13 +128,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 try
                 {
 #if DEBUG
-                    Log("Pre methodInfo.Invoke");
+                    //Log("Pre methodInfo.Invoke");
 #endif
 
                     Invoke(endpointInfo.MethodInfo, platformListener, paramsList);
 
 #if DEBUG
-                    Log("after methodInfo.Invoke");
+                    //Log("after methodInfo.Invoke");
 #endif
 
                     processInfo.Status = ProcessStatus.Completed;
@@ -168,13 +168,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         private void Invoke(MethodInfo methodInfo, object platformListener, object[] paramsList)
         {
 #if DEBUG
-            Log($"Pre methodInfo.ReturnType.FullName = {methodInfo.ReturnType.FullName}");
+            //Log($"Pre methodInfo.ReturnType.FullName = {methodInfo.ReturnType.FullName}");
 #endif
 
             var result = methodInfo.Invoke(platformListener, paramsList);
 
 #if DEBUG
-            Log($"result = {result}");
+            //Log($"result = {result}");
 #endif
 
             if (result != null)

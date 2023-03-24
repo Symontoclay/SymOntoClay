@@ -21,7 +21,8 @@ namespace TestSandbox.Handlers
         {
             _logger.Log("Begin");
 
-            var platformListener = new TstGoHostListener();
+            var platformListener = new TstAsyncGoHostListener();
+            //var platformListener = new TstGoHostListener();
             //var platformListener = new Exec_Tests_HostListener4();
             //var platformListener = new FullGeneralized_Tests_HostListener();
 

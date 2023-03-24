@@ -1,6 +1,6 @@
-﻿using SymOntoClay.Core;
+﻿using SymOntoClay.BaseTestLib.HostListeners;
+using SymOntoClay.Core;
 using SymOntoClay.UnityAsset.Core;
-using SymOntoClay.BaseTestLib.HostListeners;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace TestSandbox.CoreHostListener
 {
-    public class TstGoHostListener : BaseHostListener
+    public class TstAsyncGoHostListener : BaseHostListener
     {
         [BipedEndpoint("Go", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
-        public void GoToImpl(CancellationToken cancellationToken,
+        public async Task GoToImpl(CancellationToken cancellationToken,
             [EndpointParam("To", KindOfEndpointParam.Position)] INavTarget navTarget,
             float speed = 12)
         {
@@ -24,9 +24,14 @@ namespace TestSandbox.CoreHostListener
             _logger.Log($"entity.Id = {entity.Id}");
             _logger.Log($"entity.Position = {entity.Position}");
 
-            Thread.Sleep(10000);
+            await SomeMethod();
 
             _logger.Log($"GoToImpl End");
+        }
+
+        private Task SomeMethod()
+        {
+            return Task.Run(() => { Thread.Sleep(10000); });
         }
 
         /*

@@ -127,14 +127,35 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             {
                 try
                 {
+                    var methodInfo = endpointInfo.MethodInfo;
+
 #if DEBUG
-                    //Log("Pre endpointInfo.MethodInfo.Invoke");
+                    Log("Pre methodInfo.Invoke");
+                    Log($"Pre methodInfo.ReturnType.FullName = {methodInfo.ReturnType.FullName}");
 #endif
 
-                    endpointInfo.MethodInfo.Invoke(platformListener, paramsList);
+                    var result = methodInfo.Invoke(platformListener, paramsList);
 
 #if DEBUG
-                    //Log("after endpointInfo.MethodInfo.Invoke");
+                    Log($"result = {result}");
+#endif
+
+                    if(result != null)
+                    {
+                        if (methodInfo.ReturnType == typeof(Task))
+                        {
+                            var resultTask = (Task)result;
+
+                            resultTask.Wait();
+                        }
+                        else
+                        {
+                            throw new NotSupportedException($"Return type `{methodInfo.ReturnType.FullName}` is not supported.");
+                        }
+                    }
+
+#if DEBUG
+                    Log("after methodInfo.Invoke");
 #endif
 
                     processInfo.Status = ProcessStatus.Completed;

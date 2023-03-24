@@ -1,12 +1,25 @@
 ﻿app PeaceKeeper
 {
-    on Enter =>
+    idle actions
     {
-        'Begin' >> @>log;
+        go();
+    }
+	
+	//on Enter =>
+    //{
+    //    'Begin' >> @>log;
 
+    //    go();
+
+    //    'End' >> @>log;
+    //}
+	
+	fun go()
+    {
+	    'Begin go' >> @>log;
+		//@@host.go(to: #@(waypoint));
         @@host.go(to: #@(waypoint & random));
-        //@@host.go(to: #@(waypoint));
-
-        'End' >> @>log;
+		//@@host.go(to: #WP_43);
+		'End go' >> @>log;
     }
 }

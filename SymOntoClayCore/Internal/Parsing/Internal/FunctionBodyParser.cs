@@ -49,8 +49,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
             //Log($"Result = {Result.WriteListToString()}");          
 #endif
 
@@ -161,6 +161,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.CloseFigureBracket:
+#if DEBUG
+                            Log($"Exit()!!!!!!GetHashCode() = {GetHashCode()}");
+#endif
                             Exit();
                             break;
 

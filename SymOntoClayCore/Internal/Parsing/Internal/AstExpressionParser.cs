@@ -61,12 +61,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_currToken = {_currToken}");
-            //Log($"_hasSomething = {_hasSomething}");
-            //Log($"_lastIsOperator?.ToHumanizedString() = {_lastIsOperator?.ToHumanizedString()}");
-            //Log($"_lastBinaryOperator?.ToHumanizedString() = {_lastBinaryOperator?.ToHumanizedString()}");
+            Log($"_currToken = {_currToken}");
+            Log($"_hasSomething = {_hasSomething}");
+            Log($"_lastIsOperator?.ToHumanizedString() = {_lastIsOperator?.ToHumanizedString()}");
+            Log($"_lastBinaryOperator?.ToHumanizedString() = {_lastBinaryOperator?.ToHumanizedString()}");
             //Log($"_nodePoint = {_nodePoint}");
-            //Log($"_nodePoint.BuildExpr<AstExpression>()?.ToHumanizedString() = {_nodePoint.BuildExpr<AstExpression>()?.ToHumanizedString()}");
+            Log($"_nodePoint.BuildExpr<AstExpression>()?.ToHumanizedString() = {_nodePoint.BuildExpr<AstExpression>()?.ToHumanizedString()}");
 #endif
 
             switch (_currToken.TokenKind)

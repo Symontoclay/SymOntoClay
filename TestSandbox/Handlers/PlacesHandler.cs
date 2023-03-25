@@ -68,7 +68,7 @@ namespace TestSandbox.Handlers
 
             _world.Start();
 
-            Thread.Sleep(50000);
+            Thread.Sleep(100000);
 
             _logger.Log("End");
         }

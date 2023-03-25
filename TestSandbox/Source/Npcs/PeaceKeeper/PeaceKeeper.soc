@@ -33,8 +33,8 @@ action `move and check`
 
 	    repeat
 		{
-		    //@@host.go(to: @target)[: timeout = 1000, on complete {complete action;} :];
-		    move(@target)[: timeout = 10000, on complete { 'on complete move' >> @>log; complete action;} :];
+		    @@host.go(to: @target)[: timeout = 1000, on complete {'on complete move' >> @>log; complete action;} :];
+		    //move(@target)[: timeout = 10000, on complete { 'on complete move' >> @>log; complete action;} :];
 			check();
 
 			'End move and check' >> @>log;
@@ -46,10 +46,12 @@ action check
 {
     op ()
 	{
+	    'Begin check' >> @>log;
 	    @@host.`stop`();
 	    @@host.`rotate`(30);
 		@@host.`rotate`(-60);
 		@@host.`rotate`(30);
+		'End check' >> @>log;
 	}
 }
 

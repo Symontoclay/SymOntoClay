@@ -29,6 +29,7 @@ namespace TestSandbox.CoreHostListener
         private int _wholeDistance = 1000;
         private int _goDelta = 100;
 
+        [DebuggerHidden]
         [BipedEndpoint("Go", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
         public void GoToImpl(CancellationToken cancellationToken,
             [EndpointParam("To", KindOfEndpointParam.Position)] INavTarget navTarget,
@@ -45,7 +46,8 @@ namespace TestSandbox.CoreHostListener
             if (!_remainingDistance.HasValue)
             {
                 _remainingDistance = _wholeDistance;
-                Thread.Sleep(10000);
+                Sleep(10000, cancellationToken);
+                //Thread.Sleep(10000);
             }
             else
             {
@@ -53,7 +55,8 @@ namespace TestSandbox.CoreHostListener
 
                 if (_remainingDistance > 0)
                 {
-                    Thread.Sleep(10000);
+                    //Thread.Sleep(10000);
+                    Sleep(10000, cancellationToken);
                 }
                 else
                 {
@@ -63,7 +66,29 @@ namespace TestSandbox.CoreHostListener
 
             //Thread.Sleep(10000);
 
+            _logger.Log($"cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");
+
             _logger.Log($"GoToImpl End");
+        }
+
+        [DebuggerHidden]
+        private void Sleep(int millisecondsTimeout, CancellationToken cancellationToken)
+        {
+            var delta = 10;
+
+            while(true)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+
+                Thread.Sleep(delta);
+
+                millisecondsTimeout = millisecondsTimeout - delta;
+
+                if(millisecondsTimeout <= 0)
+                {
+                    return;
+                }
+            }
         }
     }
 }

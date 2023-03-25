@@ -225,7 +225,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 if (_currentCodeFrame == null)
                 {
 #if DEBUG
-                    //Log("_currentCodeFrame == null return false;");
+                    Log("_currentCodeFrame == null return false;");
 #endif
 
                     return false;
@@ -333,7 +333,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #if DEBUG
                 //Log($"_currentCodeFrame.LocalContext.Holder = {_currentCodeFrame.LocalContext.Holder}");
                 //Log($"currentCommand = {currentCommand}");
-                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 switch (currentCommand.OperationCode)
@@ -1664,7 +1664,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void GoBackToPrevCodeFrame(ActionExecutionStatus targetActionExecutionStatus)
         {
 #if DEBUG
-            //Log($"targetActionExecutionStatus = {targetActionExecutionStatus}");
+            Log($"targetActionExecutionStatus = {targetActionExecutionStatus}");
 #endif
             
             if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus == ActionExecutionStatus.Executing)
@@ -1726,7 +1726,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            //Log($"lastProcessStatus = {lastProcessStatus}");
+            Log($"lastProcessStatus = {lastProcessStatus}");
 #endif
 
             _codeFrames.Pop();
@@ -1740,7 +1740,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 _currentCodeFrame = _codeFrames.Peek();
 
 #if DEBUG
-                //Log($"_isCanceled = {_isCanceled}");
+                Log($"_isCanceled = {_isCanceled}");
 #endif
 
                 if (_isCanceled)
@@ -2276,7 +2276,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var processCreatingResult = _hostListener.CreateProcess(command, _context, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-            //Log($"processCreatingResult = {processCreatingResult}");
+            Log($"processCreatingResult = {processCreatingResult}");
 #endif
 
             if(processCreatingResult.IsSuccessful)
@@ -2288,7 +2288,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var timeout = GetTimeoutFromAnnotation(annotation);
 
 #if DEBUG
-                //Log($"timeout = {timeout}");
+                Log($"timeout = {timeout}");
 #endif
 
                 if (syncOption == SyncOption.Sync)
@@ -2303,16 +2303,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     }
 
 #if DEBUG
-                    //Log($"NEXT");
+                    Log($"NEXT");
 #endif
 
                     ProcessInfoHelper.Wait(executionCoordinators, timeout, _dateTimeProvider, processInfo);
 
 #if DEBUG
-                    //Log($"NEXT NEXT");
+                    Log($"NEXT NEXT");
+                    Log($"_executionCoordinator?.ExecutionStatus = {_executionCoordinator?.ExecutionStatus}");
 #endif
-
-                    //Log($"localExecutionCoordinator = {localExecutionCoordinator}");
 
                     if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus == ActionExecutionStatus.Broken)
                     {
@@ -2324,7 +2323,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     var status = processInfo.Status;
 
 #if DEBUG
-                    //Log($"status = {status}");
+                    Log($"status = {status}");
 #endif
 
                     switch (status)

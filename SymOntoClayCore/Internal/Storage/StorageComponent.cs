@@ -513,7 +513,7 @@ namespace SymOntoClay.Core.Internal.Storage
             _perceptedFactsStorage.Dispose();
             _listenedFactsStorage.Dispose();
             _visibleFactsStorage.Dispose();
-            _worldPublicFactsStorage.Dispose();
+            _worldPublicFactsStorage?.Dispose();
             _categoriesStorage.Dispose();
         }
 
@@ -526,7 +526,7 @@ namespace SymOntoClay.Core.Internal.Storage
             _perceptedFactsStorage.Dispose();
             _listenedFactsStorage.Dispose();
             _visibleFactsStorage.Dispose();
-            _worldPublicFactsStorage.Dispose();
+            _worldPublicFactsStorage?.Dispose();
             _categoriesStorage.Dispose();
 
             base.OnDisposed();

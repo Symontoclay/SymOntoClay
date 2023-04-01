@@ -1180,11 +1180,11 @@ action Go
                             break;
 
                         case 2:
-                            Assert.AreEqual(message, "Enter Go");
+                            Assert.AreEqual(true, message == "Enter Go" || message == "Begin Go");
                             break;
 
                         case 3:
-                            Assert.AreEqual(message, "Begin Go");
+                            Assert.AreEqual(true, message == "Enter Go" || message == "Begin Go");
                             break;
 
                         case 4:

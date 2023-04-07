@@ -71,24 +71,12 @@ namespace SymOntoClay.Core.Internal.Converters
                     throw new ArgumentOutOfRangeException(nameof(kindOfRuleInstance), kindOfRuleInstance, null);
             }
 
-#if DEBUG
-            //Log($"statements = {statements.WriteListToToHumanizedString()}");
-#endif
-
             return _compiler.Compile(statements);
         }
 
         private List<AstStatement> ConvertFact(RuleInstance fact, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"fact = {fact.ToHumanizedString()}");
-#endif
-
             var nodesList = GetSignificantNodesFromFact(fact, localCodeExecutionContext);
-
-#if DEBUG
-            //Log($"nodesList = {nodesList.WriteListToToHumanizedString()}");
-#endif
 
             if(!nodesList.Any())
             {
@@ -117,13 +105,6 @@ namespace SymOntoClay.Core.Internal.Converters
 
         private AstStatement ConvertRelation(LogicalQueryNode relation, RuleInstance fact, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"relation = {relation.ToHumanizedString()}");
-            //Log($"fact = {fact.ToHumanizedString()}");
-            //Log($"fact = {fact}");
-            //Log($"node = {node}");
-#endif
-
             var statement = new AstExpressionStatement();
             var callExpression = new CallingFunctionAstExpression();
             statement.Expression = callExpression;
@@ -137,11 +118,6 @@ namespace SymOntoClay.Core.Internal.Converters
 
             foreach (var parameter in relation.ParamsList)
             {
-#if DEBUG
-                //Log($"parameter = {parameter.ToHumanizedString()}");
-                //Log($"parameter = {parameter}");
-#endif
-
                 var kindOfParameter = parameter.Kind;
 
                 switch(kindOfParameter)
@@ -169,35 +145,13 @@ namespace SymOntoClay.Core.Internal.Converters
             {
                 foreach(var linkedVar in linkedVars)
                 {
-#if DEBUG
-                    //Log($"linkedVar = {linkedVar.ToHumanizedString()}");
-                    //Log($"linkedVar = {linkedVar}");
-#endif
-
                     var linkedVarName = linkedVar.Name;
-
-#if DEBUG
-                    //Log($"linkedVarName = {linkedVarName}");
-#endif
 
                     var relationParametersList = GetNonActRelationsWithLogicalVarInFirstParameter(linkedVarName, fact, relation, localCodeExecutionContext);
 
-#if DEBUG
-                    //Log($"relationParametersList = {relationParametersList.WriteListToToHumanizedString()}");
-#endif
-
                     foreach(var relationParameter in relationParametersList)
                     {
-#if DEBUG
-                        //Log($"relationParameter = {relationParameter.ToHumanizedString()}");
-#endif
-
                         var secondParameter = relationParameter.ParamsList[1];
-
-#if DEBUG
-                        //Log($"secondParameter = {secondParameter.ToHumanizedString()}");
-                        //Log($"secondParameter = {secondParameter}");
-#endif
 
                         var kindOfSecondParameter = secondParameter.Kind;
 
@@ -252,21 +206,11 @@ namespace SymOntoClay.Core.Internal.Converters
                 }
             }
 
-#if DEBUG
-            //Log($"statement = {statement.ToHumanizedString()}");
-            //Log($"statement = {statement}");
-#endif
-
             return statement;
         }
 
         private List<LogicalQueryNode> GetNonActRelationsWithLogicalVarInFirstParameter(StrongIdentifierValue variableName, RuleInstance fact, LogicalQueryNode processedAction, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"variableName = {variableName}");
-            //Log($"fact = {fact.ToHumanizedString()}");
-#endif
-
             var result = new List<LogicalQueryNode>();
 
             GetNonActRelationsWithLogicalVarInFirstParameter(variableName, fact.PrimaryPart.Expression, processedAction, result, localCodeExecutionContext);
@@ -276,11 +220,6 @@ namespace SymOntoClay.Core.Internal.Converters
 
         private void GetNonActRelationsWithLogicalVarInFirstParameter(StrongIdentifierValue variableName, LogicalQueryNode node, LogicalQueryNode processedAction, List<LogicalQueryNode> result, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"variableName = {variableName}");
-            //Log($"node = {node.ToHumanizedString()}");
-#endif
-
             var kind = node.Kind;
 
             switch(kind)
@@ -306,21 +245,9 @@ namespace SymOntoClay.Core.Internal.Converters
 
                         var paramsCount = paramsList.Count;
 
-#if DEBUG
-                        //Log($"paramsCount = {paramsCount}");
-#endif
-
                         var relationInfo = _relationsResolver.GetRelation(node.Name, paramsCount, localCodeExecutionContext);
 
-#if DEBUG
-                        //Log($"relationInfo = {relationInfo}");
-#endif
-
                         var isAct = relationInfo.InheritanceItems.Any(p => p.SuperName == _actName);
-
-#if DEBUG
-                        //Log($"isAct = {isAct}");
-#endif
 
                         if(isAct)
                         {
@@ -335,10 +262,6 @@ namespace SymOntoClay.Core.Internal.Converters
                             case 2:
                                 {
                                     var firstParam = paramsList[0];
-
-#if DEBUG
-                                    //Log($"firstParam = {firstParam}");
-#endif
 
                                     if(firstParam.Kind == KindOfLogicalQueryNode.LogicalVar && firstParam.Name == variableName)
                                     {
@@ -377,31 +300,15 @@ namespace SymOntoClay.Core.Internal.Converters
 
         private List<LogicalQueryNode> GetSignificantNodesFromFact(RuleInstance fact, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"fact = {fact.ToHumanizedString()}");
-#endif
-
             var result = new List<LogicalQueryNode>();
 
             var rootRelationsList = GetRootRelationsFromFact(fact);
-
-#if DEBUG
-            //Log($"rootRelationsList = {rootRelationsList.WriteListToToHumanizedString()}");
-#endif
 
             foreach (var relation in rootRelationsList)
             {
                 var relationInfo = _relationsResolver.GetRelation(relation.Name, relation.ParamsList.Count, localCodeExecutionContext);
 
-#if DEBUG
-                //Log($"relationInfo = {relationInfo}");
-#endif
-
                 var isAct = relationInfo.InheritanceItems.Any(p => p.SuperName == _actName);
-
-#if DEBUG
-                //Log($"isAct = {isAct}");
-#endif
 
                 if(isAct)
                 {
@@ -414,10 +321,6 @@ namespace SymOntoClay.Core.Internal.Converters
 
         private List<LogicalQueryNode> GetRootRelationsFromFact(RuleInstance fact)
         {
-#if DEBUG
-            //Log($"fact = {fact.ToHumanizedString()}");
-#endif
-
             var result = new List<LogicalQueryNode>();
 
             GetRootRelationsFromFact(fact.PrimaryPart.Expression, result);
@@ -427,10 +330,6 @@ namespace SymOntoClay.Core.Internal.Converters
 
         private void GetRootRelationsFromFact(LogicalQueryNode node, List<LogicalQueryNode> result)
         {
-#if DEBUG
-            //Log($"node = {node.ToHumanizedString()}");
-#endif
-
             var kind = node.Kind;
 
             switch(kind)

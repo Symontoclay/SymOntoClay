@@ -30,10 +30,6 @@ namespace DictionaryGenerator
     {
         public static List<ExceptionCaseItem> Read(string source)
         {
-#if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info($"Read source = {source}");
-#endif
-
             var n = 0;
 
             var result = new List<ExceptionCaseItem>();
@@ -49,10 +45,6 @@ namespace DictionaryGenerator
             {
                 var charNum = (int)ch;
 
-#if DEBUG
-                //NLog.LogManager.GetCurrentClassLogger().Info($"Read ch = {ch} charNum = {charNum}");
-#endif
-
                 if (charNum == 32)
                 {
                     if (lastCharNum != charNum)
@@ -64,9 +56,6 @@ namespace DictionaryGenerator
 
                     strValue = sb.ToString();
 
-#if DEBUG
-                    //NLog.LogManager.GetCurrentClassLogger().Info($"Read strValue = {strValue}");
-#endif
                     switch (n)
                     {
                         case 1:
@@ -80,9 +69,6 @@ namespace DictionaryGenerator
                                 item.ExceptWord = exceptValue;
                                 result.Add(item);
 
-#if DEBUG
-                                //NLog.LogManager.GetCurrentClassLogger().Info($"Read item = {item}");
-#endif
                             }
                             break;
                     }
@@ -99,19 +85,12 @@ namespace DictionaryGenerator
 
             strValue = sb.ToString();
 
-#if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info($"Read strValue = {strValue}");
-#endif
-
             {
                 var item = new ExceptionCaseItem();
                 item.RootWord = strValue.Trim();
                 item.ExceptWord = exceptValue;
                 result.Add(item);
 
-#if DEBUG
-                //NLog.LogManager.GetCurrentClassLogger().Info($"Read item = {item}");
-#endif
             }
 
             return result;

@@ -49,42 +49,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public Operator GetOperator(KindOfOperator kindOfOperator, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"kindOfOperator = {kindOfOperator}");
-#endif
-
             var storage = localCodeExecutionContext.Storage;
 
             var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
-
-#if DEBUG
-            //Log($"storagesList.Count = {storagesList.Count}");
-            //foreach(var tmpStorage in storagesList)
-            //{
-            //    Log($"tmpStorage = {tmpStorage}");
-            //}
-#endif
 
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
             var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
 
-#if DEBUG
-            //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
-#endif
-
             var rawList = GetRawList(kindOfOperator, storagesList, weightedInheritanceItems);
 
-#if DEBUG
-            //Log($"rawList = {rawList.WriteListToString()}");
-#endif
-
             var filteredList = Filter(rawList);
-
-#if DEBUG
-            //Log($"filteredList = {filteredList.WriteListToString()}");
-#endif
 
             var targetOp = ChooseTargetItem(filteredList);
 
@@ -93,10 +69,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private List<WeightedInheritanceResultItemWithStorageInfo<Operator>> GetRawList(KindOfOperator kindOfOperator, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
-#if DEBUG
-            //Log($"kindOfOperator = {kindOfOperator}");
-#endif
-
             if(!storagesList.Any())
             {
                 return new List<WeightedInheritanceResultItemWithStorageInfo<Operator>>();

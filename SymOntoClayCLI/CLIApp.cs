@@ -33,10 +33,6 @@ namespace SymOntoClay.CLI
 {
     public class CLIApp : IDisposable
     {
-#if DEBUG
-        //private readonly Logger _logger = LogManager.GetCurrentClassLogger();
-#endif
-
         public void Run(string[] args)
         {
             if(!args.Any())
@@ -48,10 +44,6 @@ namespace SymOntoClay.CLI
             }
 
             var command = CLICommandParser.Parse(args);
-
-#if DEBUG
-            //_logger.Info($"command = {command}");
-#endif
 
             if (!command.IsValid)
             {

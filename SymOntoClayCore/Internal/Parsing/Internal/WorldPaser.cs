@@ -48,12 +48,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");
-            //Log($"_state = {_state}");
-#endif
-
             switch (_state)
             {
                 case State.Init:

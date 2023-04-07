@@ -28,7 +28,6 @@ using System.Text;
 
 namespace SymOntoClay.NLP.Internal.PhraseStructure
 {
-    //ConjP
     public class ConjunctionPhrase : BaseSentenceItem
     {
         /// <inheritdoc/>
@@ -127,7 +126,6 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
             sb.PrintObjProp(n, nameof(Conj), Conj);
             sb.PrintObjProp(n, nameof(Right), Right);
 
-            //sb.PrintObjProp(n, nameof(), );
 
             sb.Append(base.PropertiesToString(n));
 

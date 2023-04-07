@@ -30,10 +30,6 @@ namespace DictionaryGenerator
     {
         public static RootAdjSourceWordItem Read(string source)
         {
-#if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info($"Read source = {source}");
-#endif
-
             var n = 0;
 
             var result = new RootAdjSourceWordItem();
@@ -45,10 +41,6 @@ namespace DictionaryGenerator
             foreach (var ch in source)
             {
                 var charNum = (int)ch;
-
-#if DEBUG
-                //NLog.LogManager.GetCurrentClassLogger().Info($"Read ch = {ch} charNum = {charNum}");
-#endif
 
                 if (charNum == 32)
                 {

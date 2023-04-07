@@ -210,10 +210,6 @@ namespace SymOntoClay.Core.Internal.Storage
 
             usedStorages.Add(this);
 
-            //if(result.Any(p => p.Storage == this))
-            //{
-            //    return;
-            //}
 
             level++;
 
@@ -260,10 +256,6 @@ namespace SymOntoClay.Core.Internal.Storage
                 return;
             }
 
-#if DEBUG
-            //Log($"_kind = {_kind}");
-#endif
-
             result.Add(this);
         }
 
@@ -277,7 +269,6 @@ namespace SymOntoClay.Core.Internal.Storage
             Log("Begin");
 
             _logicalStorage.DbgPrintFactsAndRules();
-            //_inheritanceStorage.DbgPrintInheritances();
 
             Log("End");
         }
@@ -323,7 +314,6 @@ namespace SymOntoClay.Core.Internal.Storage
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}HashCode = {GetHashCode()}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
-            //sb.AppendLine($"{spaces}Owner = {Owner}");_storages
 
             sb.PrintObjListProp(n, "Storages", _storages);
 
@@ -350,7 +340,6 @@ namespace SymOntoClay.Core.Internal.Storage
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}HashCode = {GetHashCode()}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
-            //sb.AppendLine($"{spaces}Owner = {Owner}");
 
             sb.PrintShortObjListProp(n, "Storages", _storages);
 
@@ -377,7 +366,6 @@ namespace SymOntoClay.Core.Internal.Storage
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}HashCode = {GetHashCode()}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
-            //sb.AppendLine($"{spaces}Owner = {Owner}");
 
             sb.PrintBriefObjListProp(n, "Storages", _storages);
 

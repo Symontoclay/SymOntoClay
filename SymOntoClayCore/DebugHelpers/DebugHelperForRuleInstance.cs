@@ -37,10 +37,6 @@ namespace SymOntoClay.Core.DebugHelpers
     {
         private static readonly CultureInfo _cultureInfo = new CultureInfo("en-GB");
 
-#if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         public static string ToString(RuleInstance source)
         {
             return ToString(source, null, HumanizedOptions.ShowAll);

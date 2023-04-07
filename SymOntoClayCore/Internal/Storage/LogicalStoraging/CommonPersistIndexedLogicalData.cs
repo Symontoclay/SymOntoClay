@@ -35,10 +35,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 {
     public class CommonPersistIndexedLogicalData: BaseLoggedComponent
     {
-#if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         public CommonPersistIndexedLogicalData()
             : this(null)
         {
@@ -54,23 +50,15 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             RelationsList = new List<LogicalQueryNode>();
         }
 
-        //It is temporary public for construction time. It will be private after complete construction.
         public IDictionary<StrongIdentifierValue, RuleInstance> IndexedRuleInstancesDict { get; set; }
         public IDictionary<StrongIdentifierValue, RuleInstance> AdditionalRuleInstancesDict { get; set; }
 
-        //It is temporary public for construction time. It will be private after complete construction.
         public IDictionary<StrongIdentifierValue, IList<BaseRulePart>> IndexedRulePartsOfFactsDict { get; set; }
-        //It is temporary public for construction time. It will be private after complete construction.
         public IDictionary<StrongIdentifierValue, IList<BaseRulePart>> IndexedRulePartsWithOneRelationWithVarsDict { get; set; }
         public IList<LogicalQueryNode> RelationsList { get; set; }
 
         public void NSetIndexedRuleInstanceToIndexData(RuleInstance indexedRuleInstance)
         {
-#if DEBUG
-            //_gbcLogger.Info($"indexedRuleInstance = {indexedRuleInstance}");
-            //_gbcLogger.Info($"indexedRuleInstance = {DebugHelperForRuleInstance.ToString(indexedRuleInstance)}");
-#endif
-
             IndexedRuleInstancesDict[indexedRuleInstance.Name] = indexedRuleInstance;
 
             var kind = indexedRuleInstance.KindOfRuleInstance;
@@ -78,8 +66,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             switch (kind)
             {
                 case KindOfRuleInstance.Fact:
-                //case KindOfRuleInstance.Annotation:
-                //case KindOfRuleInstance.EntityCondition:
                     NAddIndexedRulePartToKeysOfRelationsIndex(IndexedRulePartsOfFactsDict, indexedRuleInstance.PrimaryPart);
                     break;
 
@@ -102,8 +88,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     }
                     break;
 
-                //case KindOfRuleInstance.EntityCondition:
-                //break;
 
                 case KindOfRuleInstance.Question:
                     break;
@@ -118,29 +102,15 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 case KindOfRuleInstance.Question:
                     break;
 
-                //case KindOfRuleInstance.Annotation:
-                //case KindOfRuleInstance.EntityCondition:
-                //AdditionalRuleInstancesDict[indexedRuleInstance.Key] = indexedRuleInstance;
-                //break;
 
                 default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }
 
-            //Log("End");
         }
 
         private void NAddIndexedRulePartToKeysOfRelationsIndex(IDictionary<StrongIdentifierValue, IList<BaseRulePart>> indexData, BaseRulePart indexedRulePart)
         {
-#if DEBUG
-            //var dbgStr = DebugHelperForRuleInstance.BaseRulePartToString(indexedRulePart);
-            //Log($"dbgStr = {dbgStr}");
-#endif
-
             var relationsList = indexedRulePart.RelationsDict.SelectMany(p => p.Value).Distinct().ToList();
-
-#if DEBUG
-            //Log($"relationsList = {relationsList.WriteListToString()}");
-#endif
 
             foreach (var relation in relationsList)
             {
@@ -152,16 +122,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             var keysOfRelationsList = indexedRulePart.RelationsDict.Keys.ToList();
 
-#if DEBUG
-            //Log($"keysOfRelationsList = {keysOfRelationsList.WriteListToString()}");
-#endif
-
             foreach (var keyOfRelation in keysOfRelationsList)
             {
-#if DEBUG
-                //Log($"keyOfRelation = {keyOfRelation}");
-#endif
-
                 if (indexData.ContainsKey(keyOfRelation))
                 {
                     var tmpList = indexData[keyOfRelation];
@@ -180,10 +142,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         public void NRemoveIndexedRuleInstanceFromIndexData(RuleInstance indexedRuleInstance)
         {
-#if DEBUG
-            //Log($"indexedRuleInstance = {indexedRuleInstance}");
-#endif
-
             IndexedRuleInstancesDict.Remove(indexedRuleInstance.Name);
 
             var kind = indexedRuleInstance.KindOfRuleInstance;
@@ -191,8 +149,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             switch (kind)
             {
                 case KindOfRuleInstance.Fact:
-                    //case KindOfRuleInstance.Annotation:
-                    //case KindOfRuleInstance.EntityCondition:
                     NRemoveIndexedRulePartFromKeysOfRelationsIndex(IndexedRulePartsOfFactsDict, indexedRuleInstance.PrimaryPart);
                     break;
 
@@ -215,8 +171,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     }
                     break;
 
-                //case KindOfRuleInstance.EntityCondition:
-                //break;
 
                 case KindOfRuleInstance.Question:
                     break;
@@ -231,29 +185,15 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 case KindOfRuleInstance.Question:
                     break;
 
-                //case KindOfRuleInstance.Annotation:
-                //case KindOfRuleInstance.EntityCondition:
-                //AdditionalRuleInstancesDict[indexedRuleInstance.Key] = indexedRuleInstance;
-                //break;
 
                 default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }
 
-            //Log("End");
         }
 
         private void NRemoveIndexedRulePartFromKeysOfRelationsIndex(IDictionary<StrongIdentifierValue, IList<BaseRulePart>> indexData, BaseRulePart indexedRulePart)
         {
-#if DEBUG
-            //var dbgStr = DebugHelperForRuleInstance.BaseRulePartToString(indexedRulePart.OriginRulePart);
-            //Log($"dbgStr = {dbgStr}");
-#endif
-
             var relationsList = indexedRulePart.RelationsDict.SelectMany(p => p.Value).Distinct().ToList();
-
-#if DEBUG
-            //Log($"relationsList = {relationsList.WriteListToString()}");
-#endif
 
             foreach (var relation in relationsList)
             {
@@ -265,17 +205,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             var keysOfRelationsList = indexedRulePart.RelationsDict.Keys.ToList();
 
-#if DEBUG
-            //Log($" = {relationsList.WriteListToString()}");
-#endif
-
             foreach (var keyOfRelation in keysOfRelationsList)
             {
-#if DEBUG
-                //Log($"keyOfRelation = {keyOfRelation}");
-                //Log($"_entityDictionary.GetName(keyOfRelation) = {_entityDictionary.GetName(keyOfRelation)}");
-#endif
-
                 if (indexData.ContainsKey(keyOfRelation))
                 {
                     var tmpList = indexData[keyOfRelation];
@@ -294,20 +225,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name)
         {
-#if DEBUG
-            //Log($"name = {name}");
-            //Log($"IndexedRulePartsOfFactsDict.Count = {IndexedRulePartsOfFactsDict.Count}");
-            //foreach (var tmpItem in IndexedRulePartsOfFactsDict)
-            //{
-            //    Log($"tmpItem.Key = {tmpItem.Key}");
-            //    foreach (var a in tmpItem.Value)
-            //    {
-            //        var dbgStr = DebugHelperForRuleInstance.BaseRulePartToString(a);
-            //        Log($"dbgStr = {dbgStr}");
-            //    }
-            //}
-#endif
-
             if (IndexedRulePartsOfFactsDict.ContainsKey(name))
             {
                 return IndexedRulePartsOfFactsDict[name];
@@ -318,20 +235,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name)
         {
-#if DEBUG
-            //Log($"name = {name}");
-            //Log($"IndexedRulePartsWithOneRelationWithVarsDict.Count = {IndexedRulePartsWithOneRelationWithVarsDict.Count}");
-            //foreach (var tmpItem in IndexedRulePartsWithOneRelationWithVarsDict)
-            //{
-            //    Log($"tmpItem.Key = {tmpItem.Key}");
-            //    foreach (var a in tmpItem.Value)
-            //    {
-            //        var dbgStr = DebugHelperForRuleInstance.BaseRulePartToString(a);
-            //        Log($"dbgStr = {dbgStr}");
-            //    }
-            //}
-#endif
-
             if (IndexedRulePartsWithOneRelationWithVarsDict.ContainsKey(name))
             {
                 return IndexedRulePartsWithOneRelationWithVarsDict[name];

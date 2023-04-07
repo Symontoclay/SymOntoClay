@@ -188,7 +188,6 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
             sb.PrintObjProp(n, nameof(OtherClauses), OtherClauses);
             sb.PrintObjProp(n, nameof(InfinitivePhrases), InfinitivePhrases);
 
-            //sb.PrintObjProp(n, nameof(), );
 
             sb.Append(base.PropertiesToString(n));
 

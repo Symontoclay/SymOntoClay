@@ -37,10 +37,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class TaskValue : Value
     {
-#if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         public TaskValue(Task systemTask, CancellationTokenSource cancellationTokenSource)
         {
             SystemTask = systemTask;
@@ -138,11 +134,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var methodNameStr = methodName.NormalizedNameValue;
 
-#if DEBUG
-            //_gbcLogger.Info($"methodNameStr = {methodNameStr}");
-            //_gbcLogger.Info($"kindOfParameters = {kindOfParameters}");
-#endif
-
             IExecutable method = null;
 
             switch (methodNameStr)
@@ -165,10 +156,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private IExecutable GetCancelMethod(KindOfFunctionParameters kindOfParameters)
         {
-#if DEBUG
-            //_gbcLogger.Info($"kindOfParameters = {kindOfParameters}");
-#endif
-
             if(kindOfParameters != KindOfFunctionParameters.NoParameters)
             {
                 return null;

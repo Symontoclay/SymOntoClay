@@ -35,15 +35,8 @@ namespace DictionaryGenerator
 
             var rootPath = AppDomain.CurrentDomain.BaseDirectory;
 
-#if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info($"RootNounsWordNetSource rootPath = {rootPath}");
-#endif
-
             mPath = Path.Combine(rootPath, localPath);
 
-#if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info($"RootNounsWordNetSource mPath = {mPath}");
-#endif
         }
 
         private string mPath;
@@ -68,18 +61,8 @@ namespace DictionaryGenerator
                             continue;
                         }
 
-#if DEBUG
-                        //NLog.LogManager.GetCurrentClassLogger().Info($"RootNounsWordNetSource currentLine = {currentLine}");
-#endif
-
                         handler(currentLine);
 
-#if DEBUG
-                        //if (n > 200)
-                        //{
-                        //    break;
-                        //}
-#endif
                     }
                 }
             }

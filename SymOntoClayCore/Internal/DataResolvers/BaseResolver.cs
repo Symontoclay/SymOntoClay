@@ -123,33 +123,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var result = new List<WeightedInheritanceResultItemWithStorageInfo<T>>();
 
-#if DEBUG
-            //Log($"holder = {holder}");
-#endif
-
             var holderIsEntity = holder.KindOfName == KindOfName.Entity;
-
-#if DEBUG
-            //Log($"holderIsEntity = {holderIsEntity}");
-#endif
 
             var hasHolderInItems = source.Any(p => p.ResultItem.Holder == holder);
 
             var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
 
-#if DEBUG
-            //Log($"hasHolderInItems = {hasHolderInItems}");
-#endif
-
             foreach (var item in source)
             {
                 var resultItem = item.ResultItem;
-
-#if DEBUG
-                //Log($"item = {item}");
-                //Log($"resultItem.TypeOfAccess = {resultItem.TypeOfAccess}");
-                //Log($"resultItem.Holder = {resultItem.Holder}");
-#endif
 
                 if (IsFitByTypeOfAccess(resultItem, holder, inheritanceResolver, localCodeExecutionContext, holderIsEntity, hasHolderInItems, false))
                 {
@@ -157,11 +139,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
             }
 
-#if DEBUG
-            //Log($"result.Count = {result.Count}");
-#endif
-
-            //throw new NotImplementedException();
 
             return result;
         }
@@ -178,15 +155,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var result = new List<T>();
 
-#if DEBUG
-            //Log($"holder = {holder}");
-#endif
-
             var holderIsEntity = holder.KindOfName == KindOfName.Entity;
-
-#if DEBUG
-            //Log($"holderIsEntity = {holderIsEntity}");
-#endif
 
             StrongIdentifierValue additionalHolder = null;
             var additionalHolderIsEntity = false;
@@ -194,17 +163,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var hasHolderInItems = source.Any(p => p.Holder == holder);
 
-#if DEBUG
-            //Log($"hasHolderInItems = {hasHolderInItems}");
-#endif
-
             if (!holderIsEntity)
             {
                 var allStateNamesList = _context.Storage.GlobalStorage.StatesStorage.AllStateNames();
-
-#if DEBUG
-                //Log($"allStateNamesList = {allStateNamesList.WriteListToString()}");
-#endif
 
                 if (allStateNamesList.Any(p => p == holder))
                 {
@@ -218,22 +179,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
             }
 
-#if DEBUG
-            //Log($"additionalHolder = {additionalHolder}");
-            //Log($"additionalHolderIsEntity = {additionalHolderIsEntity}");
-            //Log($"hasAdditionalHolderInItems = {hasAdditionalHolderInItems}");
-#endif
-
             var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
 
             foreach (var item in source)
             {
-#if DEBUG
-                //Log($"item = {item}");
-                //Log($"item.TypeOfAccess = {item.TypeOfAccess}");
-                //Log($"item.Holder = {item.Holder}");
-#endif
-
                 if(IsFitByTypeOfAccess(item, holder, inheritanceResolver, localCodeExecutionContext, holderIsEntity, hasHolderInItems, allowUnknown))
                 {
                     result.Add(item);
@@ -250,11 +199,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
             }
 
-#if DEBUG
-            //Log($"result.Count = {result.Count}");
-#endif
-
-            //throw new NotImplementedException();
 
             return result;
         }
@@ -262,11 +206,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private bool IsFitByTypeOfAccess(IReadOnlyMemberAccess item, StrongIdentifierValue holder, InheritanceResolver inheritanceResolver, ILocalCodeExecutionContext localCodeExecutionContext, bool holderIsEntity, bool hasHolderInItems, bool allowUnknown)
         {
             var typeOfAccess = item.TypeOfAccess;
-
-#if DEBUG
-            //Log($"typeOfAccess = {typeOfAccess}");
-            //Log($"holder = {holder}");
-#endif
 
             switch (typeOfAccess)
             {
@@ -286,10 +225,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         {
                             var distance = inheritanceResolver.GetDistance(holder, item.Holder, localCodeExecutionContext);
 
-#if DEBUG
-                            //Log($"distance = {distance}");
-#endif
-
                             if (distance == 1)
                             {
                                 return true;
@@ -304,22 +239,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 case TypeOfAccess.Protected:
                     {
-#if DEBUG
-                        //Log($"inheritanceResolver != null = {inheritanceResolver != null}");
-                        //Log($"holder?.NameValue = {holder?.NameValue}");
-                        //Log($"item.Holder?.NameValue = {item.Holder?.NameValue}");
-#endif
-
                         if(holder == item.Holder)
                         {
                             return true;
                         }
 
                         var rank = inheritanceResolver.GetRawInheritanceRank(holder, item.Holder, localCodeExecutionContext);
-
-#if DEBUG
-                        //Log($"rank = {rank}");
-#endif
 
                         if (rank > 0)
                         {

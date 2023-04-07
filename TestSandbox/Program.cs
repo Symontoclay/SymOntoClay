@@ -84,80 +84,8 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
-            //TstWaitAsync();
-            //TstWaitAsync_2();
-            //TstWaitAsync_1();
-            //TstWorldSpaceFilesSearcher();
-            //TstSynonymsHandler();
-            //TstGetFullBaseTypesListInCSharpReflection();
-            //TstConvertFactToImperativeCode();
-            //TstFactToHtml();
-            //TstStandardFactsBuilder();
-            //TstStandardFactsBuilderGetTargetVarNameHandler();
-            //TstShieldString();
-            //TstSampleSpeechSynthesis();
-            //TstOnAddingFactEventHanler();
-            //TstEventHanler();
-            //TstStrCollectionCombination();
-            //TstIntCollectionCombination();
-            //TstModalitiesHandler();
-            //TstRelationsStorageHandler();
-            //TstGenerateDllDict();
-            //TSTWordsFactory();
-            //TstNLPConverterProvider();
-            //TstNLPHandler();//<=NLP
-            //TstTriggerConditionNodeHandler();
-            //TstSoundBus();
-            //TstNavigationHandler();
-            //TstCreatorExamples();
-            //TstLinguisticVariable_Tests();
-            //TstManageTempProject();
-            //TstAdvancedTestRunnerForMultipleInstances();//<=~
-            //TstAdvancedTestRunner();//<=
-            //TstTestRunnerWithHostListener();//<=t
-            //TstTestRunner();//<=
-            //TstNameHelper();
-            //TstDeffuzzification();
-            //TstRangeValue();
-            //TstFuzzyLogicNonNumericSequenceValue();
-            //TstCalculateTargetAnglesForRayScanner();
-            //TstCopyFilesOnBuilding();
-            //TstGetRootWorldSpaceDir();
-            //TstEnvironmentVariables();
-            //TstCLINewHandler();
-            //TstCLIRunHandler();
-            //TstCLICommandParser();
-            //TstLogicalDatabase();//!
-            //TstProcessInfoChildren();
-            //TstWaitIProcessInfo();
-            //TstKindOfParametersSсaffolder();
-            //TstDateTimeHandler();
-            //TstBaseManualControllingGameComponent();
-            //TstLoadTypesPlatformTypesConvertors();
-            //TstGetTypes();
-            //TstMainThreadSyncThread();
-            //TstCoreHostListenerHandler();
-            //TstNullableArithmetic();
-            //TstInheritanceItemsHandler();
-            //TstDefaultSettingsOfCodeEntityHandler();
-            //TstActivateMainEntity();
-            //TstCompileInlineTrigger();
-            //TstRegOperatorsHandler();
-            //TstCreateEngineContext();
-            //TstAsyncActivePeriodicObjectHandler();
-            //TstSyncActivePeriodicObjectHandler();
-            //TstCodeExecution();
-            //TstCreateName();
-            //TstExprNodeHandler();
-            //TstParsing();
             TstPlacesHandler();
-            //TstMonoBehaviourTestingHandler();//VT<=
-            //TstSoundStartHandler();//<==
-            //TstAddingFactTriggerHandler();
-            //TstGeneralStartHandler();//<=
-            //TstGetParsedFilesInfo();
 
-            //Thread.Sleep(10000);
         }
 
         private static void TstWaitAsync()
@@ -351,7 +279,6 @@ namespace TestSandbox
 
             _logger.Log($"targetItemForSelection = {targetItemForSelection.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
 
-            //_logger.Log($"targetItemForSelection = {targetItemForSelection}");
 
             var options = new DebugHelperOptions();
             options.HumanizedOptions = HumanizedOptions.ShowOnlyMainContent;
@@ -359,7 +286,6 @@ namespace TestSandbox
             options.ItemsForSelection = new List<IObjectToString>() { targetItemForSelection };
 
             _logger.Log($"fact = {DebugHelperForRuleInstance.ToString(fact, options)}");
-            //_logger.Log($"fact = {fact}");
 
             _logger.Log("End");
         }
@@ -407,13 +333,10 @@ namespace TestSandbox
         {
             _logger.Log("Begin");
 
-            // Initialize a new instance of the SpeechSynthesizer.  
             var synth = new SpeechSynthesizer();
 
-            // Configure the audio output.   
             synth.SetOutputToDefaultAudioDevice();
 
-            // Speak a string.  
             synth.Speak("This example demonstrates a basic use of Speech Synthesizer");
             synth.Speak("Go to green place!");
 
@@ -589,10 +512,6 @@ namespace TestSandbox
         {
             _logger.Log("Begin");
 
-            //using var handler = new CreatorExamples_Fun_01_06_2021();
-            //using var handler = new CreatorExamples_Error_Processing_07_06_2021();
-            //using var handler = new CreatorExamples_Actions_22_09_2021();
-            //using var handler = new CreatorExamples_16_03_2022();
             using var handler = new CreatorExamples_States_27_03_2022();
             handler.Run();
 
@@ -721,9 +640,6 @@ linvar age for range (0, 150]
 
 	terms:
         `teenager` = Trapezoid(10, 12, 17, 20);
-	    //`teenager` = L(5, 10);
-	    //`teenager` = S(12, 22);
-	    //`teenager` = S(12, 17, 22);
 }
 
 app PeaceKeeper is [very middle] exampleClass
@@ -734,47 +650,24 @@ app PeaceKeeper is [very middle] exampleClass
 	{: dog(#b) & bird(#f) :}
 	{: cat(#с) :}
 	{: animal(cat) :}
-	//{: focus(I, friend) :}
 	{: age(#Tom, 50) :}
-	//{: value(distance(I, #Tom), 1) :}
 	{: distance(I, #Tom, 12) :}
 
     on Init => {
 	     'Begin from test!!!' >> @>log;
-		 //NULL >> @>log;
 
-		 //use @@self is [very middle] linux;
 
-		 //select {: { cat is animal } :} >> @>log;
-		 //select {: see(I, barrel) :} >> @>log;
 		 select {: son($x, $y) :} >> @>log;
-		 //select {: $z($x, $y) :} >> @>log;
-		 //select {: age(#Tom, `teenager`) :} >> @>log;
 		 select {: age(#Tom, $x) & distance(#Tom, $y) & $x is not $y :} >> @>log;
-		 //select {: value(distance(I, $x), $y) :} >> @>log;
-		 //select {: distance(I, #Tom, $x) :} >> @>log;
-		 //select {: distance(#Tom, $x) & $x is 12 :} >> @>log;
-		 //select {: distance(#Tom, $x) & $x > 5 :} >> @>log;
 
-		 //insert {: >: { bird (#1234) } :};
-		 //insert {: see(I, #a) :};
 
-		 //exampleClass is not human >> @>log;
-		 //exampleClass is human >> @>log;
 
-		 //@@host.`go`(to: #@[10]);
 
 		 'End' >> @>log;
 
     }
 
-        //on {: see(I, $x) & barrel($x) & !focus(I, friend) :} ($x >> @x) => {
-        //     @x >> @>log;
-        //}
 
-        //on {: see(I, #`gun 1`) :} => {
-        //     'D' >> @>log;
-        //}
     }
 ";
 
@@ -879,9 +772,7 @@ app PeaceKeeper is [very middle] exampleClass
 
                 instance.StartWorld();
 
-                //Thread.Sleep(100);
 
-                //gun.PushSoundFact(60, "act(M4A1, shoot)");
 
                 Thread.Sleep(5000);
             }
@@ -1018,15 +909,10 @@ action Go
 
             var veryHandler = new VeryFuzzyLogicOperatorHandler();
 
-            //var lHandler = new LFunctionFuzzyLogicMemberFunctionHandler(0, 0.1);
-            //lHandler.CheckDirty();
 
-            //var defuzzificatedValue = lHandler.Defuzzificate();
 
-            //_logger.Log($"defuzzificatedValue = {defuzzificatedValue}");
 
             var trapezoid = new TrapezoidFuzzyLogicMemberFunctionHandler(0.3, 0.4, 0.6, 0.7);
-            //trapezoid = new TrapezoidFuzzyLogicMemberFunctionHandler(10, 12, 17, 20);
             trapezoid.CheckDirty();
 
             var defuzzificatedValue = trapezoid.Defuzzificate();
@@ -1109,7 +995,6 @@ action Go
             _logger.Log("End");
         }
 
-        //private static float Deg2Rad = 1f;
         private static float Deg2Rad = 0.0174532924F;
 
         private static void TstCalculateTargetAnglesForRayScanner()
@@ -1209,10 +1094,6 @@ action Go
         {
             _logger.Log("Begin");
 
-            //foreach (DictionaryEntry kvpItem in Environment.GetEnvironmentVariables())
-            //{
-            //    _logger.Log($"kvpItem.Key = '{kvpItem.Key}';kvpItem.Value = '{kvpItem.Value}'");
-            //}
 
             var path = Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.User);
 
@@ -1260,8 +1141,6 @@ action Go
 
             var args = new List<string>() {
                  "run"//,
-                 //"%USERPROFILE%/source/repos/SymOntoClay/TestSandbox/Source/Npcs/PeaceKeeper/PeaceKeeper.sobj"
-                 //"%USERPROFILE%/source/repos/SymOntoClay/TestSandbox/Source"
             }.ToArray();
 
             var targetDirectory = EVPath.Normalize("%USERPROFILE%/source/repos/SymOntoClay/TestSandbox/Source");
@@ -1284,7 +1163,6 @@ action Go
 
             _logger.Log($"targetFiles = {targetFiles}");
 
-            //var logDir = Path.Combine(Directory.GetCurrentDirectory(), "NpcLogs");
 
             var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
 
@@ -1304,7 +1182,6 @@ action Go
 
             settings.Logging = new LoggingSettings()
             {
-                //LogDir = logDir,
                 RootContractName = "Hi1",
                 PlatformLoggers = new List<IPlatformLogger>() { new CLIPlatformLogger() },
                 Enable = true,
@@ -1319,7 +1196,6 @@ action Go
 
             var npcSettings = new HumanoidNPCSettings();
             npcSettings.Id = "#020ED339-6313-459A-900D-92F809CEBDC5";
-            //npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.host");
             npcSettings.LogicFile = targetFiles.LogicFile;
             npcSettings.HostListener = platformListener;
             npcSettings.PlatformSupport = new PlatformSupportCLIStub();
@@ -1664,61 +1540,33 @@ action Go
 
             _logger.Log($"{nameof(nameVal1)} = {nameVal1}");
 
-            //var result = ParseName(nameVal1);
 
-            //_logger.Info($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
 
-            //var nameVal2 = "dog (animal)";
 
-            //_logger.Info($"{nameof(nameVal2)} = {nameVal2}");
 
-            //result = ParseName(nameVal2);
 
-            //_logger.Info($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
 
-            //var nameVal3 = "dog (animal | instrument)";
 
-            //_logger.Info($"{nameof(nameVal3)} = {nameVal3}");
 
-            //result = ParseName(nameVal3);
 
-            //_logger.Info($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
 
-            //var nameVal4 = "dog (animal (alive))";
 
-            //_logger.Info($"{nameof(nameVal4)} = {nameVal4}");
 
-            //result = ParseName(nameVal4);
 
-            //_logger.Info($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
 
-            //var nameVal5 = "dog (alive::animal)";
 
-            //_logger.Info($"{nameof(nameVal5)} = {nameVal5}");
 
-            //result = ParseName(nameVal5);
 
-            //_logger.Info($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
 
-            //var nameVal6 = "dog (alive::animal | instrument (big))";
 
-            //_logger.Info($"{nameof(nameVal6)} = {nameVal6}");
 
-            //result = ParseName(nameVal6);
 
-            //_logger.Info($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
 
-            //var nameVal7 = "animal::dog";
 
-            //result = ParseName(nameVal7);
 
-            //_logger.Info($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
 
-            //var nameVal8 = "(animal | instrument)::dog";
 
-            //result = ParseName(nameVal8);
 
-            //_logger.Info($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
 
             var name = NameHelper.CreateName(nameVal1);
 
@@ -1814,7 +1662,6 @@ action Go
         {
             _logger.Log("Begin");
 
-            //_logger.Log($"Thread.CurrentThread.ManagedThreadId = {Thread.CurrentThread.ManagedThreadId}");
 
             using var handler = new GeneralStartHandler();
             handler.Run();

@@ -44,7 +44,6 @@ namespace SymOntoClay.Core
         public ModulesStorage(ModulesStorageSettings settings)
             : base(settings.Logger)
         {
-            //Log($"settings = {settings}");
 
             _libDirs = settings.LibsDirs;
 
@@ -78,10 +77,8 @@ namespace SymOntoClay.Core
                     throw new ObjectDisposedException(null);
                 }
 
-                //throw new NotImplementedException();
 
 #if IMAGINE_WORKING
-                //Log("Do");
 #else
                 throw new NotImplementedException();
 #endif
@@ -99,7 +96,6 @@ namespace SymOntoClay.Core
                 }
 
 #if IMAGINE_WORKING
-                //Log("Do");
 #else
                 throw new NotImplementedException();
 #endif
@@ -117,7 +113,6 @@ namespace SymOntoClay.Core
                 }
 
 #if IMAGINE_WORKING
-                //Log("Do");
 #else
                 throw new NotImplementedException();
 #endif
@@ -137,10 +132,6 @@ namespace SymOntoClay.Core
 
             lock(_lockObj)
             {
-#if DEBUG
-                //Log($"namesList = {namesList.WriteListToString()}");
-#endif
-
                 var result = new List<IStorage>();
 
                 if(!_hasLibDirs)
@@ -152,10 +143,6 @@ namespace SymOntoClay.Core
 
                 foreach (var name in namesList)
                 {
-#if DEBUG
-                    //Log($"name = {name}");
-#endif
-
                     NLoadLib(name, result, loadedLibNames);
                 }
 
@@ -165,15 +152,7 @@ namespace SymOntoClay.Core
 
         private void NLoadLib(StrongIdentifierValue name, List<IStorage> result, List<string> loadedLibNames)
         {
-#if DEBUG
-            //Log($"name = {name}");
-#endif
-
             var strName = name.NameValue;
-
-#if DEBUG
-            //Log($"strName = {strName}");
-#endif
 
             if(loadedLibNames.Contains(strName))
             {
@@ -200,20 +179,12 @@ namespace SymOntoClay.Core
             {
                 var libDirectory = GetLibDirectory(strName);
 
-#if DEBUG
-                //Log($"libDirectory = {libDirectory}");
-#endif
-
                 if (string.IsNullOrWhiteSpace(libDirectory))
                 {
                     throw new FileNotFoundException($"Unable to find lib `{strName}`.");
                 }
 
                 var libFileName = GetLibFileName(libDirectory);
-
-#if DEBUG
-                //Log($"libFileName = {libFileName}");
-#endif
 
                 if (string.IsNullOrWhiteSpace(libFileName))
                 {
@@ -226,10 +197,6 @@ namespace SymOntoClay.Core
                 var storage = new LibStorage(storageSettings);
 
                 var defferedLibsList = _projectLoader.LoadFromSourceFiles(storage, libFileName).Select(p => NameHelper.CreateName(p)).ToList();
-
-#if DEBUG
-                //Log($"defferedLibsList = {defferedLibsList.WritePODListToString()}");
-#endif
 
                 _storagesDict[name] = storage;
 
@@ -249,30 +216,14 @@ namespace SymOntoClay.Core
 
         private string GetLibDirectory(string name)
         {
-#if DEBUG
-            //Log($"name = {name}");
-#endif
-
             name = name.Trim().ToLower();
 
             foreach (var baseDirName in _libDirs)
             {
-#if DEBUG
-                //Log($"baseDirName = {baseDirName}");
-#endif
-
                 var subDirectories = Directory.EnumerateDirectories(baseDirName);
-
-#if DEBUG
-                //Log($"subDirectories = {subDirectories.WritePODListToString()}");
-#endif
 
                 foreach(var subDirectory in subDirectories)
                 {
-#if DEBUG
-                    //Log($"subDirectory = {subDirectory}");
-#endif
-
                     var directoryInfo = new DirectoryInfo(subDirectory);
 
                     if(directoryInfo.Name.ToLower() == name)

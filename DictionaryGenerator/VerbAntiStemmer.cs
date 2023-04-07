@@ -72,10 +72,6 @@ namespace DictionaryGenerator
 
         public List<string> GetPastForms(string baseForm)
         {
-#if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info($"GetPastForms baseForm = {baseForm}");
-#endif
-
             if(baseForm == "be")
             {
                 throw new NotSupportedException("The verb `be` is a very special word");
@@ -93,10 +89,6 @@ namespace DictionaryGenerator
 
         public List<string> GetParticleForms(string baseForm)
         {
-#if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info($"GetParticleForms baseForm = {baseForm}");
-#endif
-
             if (baseForm == "be")
             {
                 throw new NotSupportedException("The verb `be` is a very special word");
@@ -126,19 +118,7 @@ namespace DictionaryGenerator
                 pastForm = $"{baseForm}ed";
             }
 
-#if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info($"GetPastForm pastForm = {pastForm}");
-#endif
-
             var listOfExeptWords = GetExceptionsList(baseForm);
-
-#if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info($"GetPastForm listOfExeptWords.Count = {listOfExeptWords.Count}");
-            //foreach (var exceptWord in listOfExeptWords)
-            //{
-            //    NLog.LogManager.GetCurrentClassLogger().Info($"GetPastForm exceptWord = {exceptWord}");
-            //}
-#endif
 
             if (listOfExeptWords.Count == 0)
             {
@@ -157,10 +137,6 @@ namespace DictionaryGenerator
 
         public string GetIngForm(string baseForm)
         {
-#if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info($"GetIngForm baseForm = {baseForm}");
-#endif
-
             var lastChar = baseForm.Last();
             var targetBaseForm = baseForm;
 
@@ -168,10 +144,6 @@ namespace DictionaryGenerator
             {
                 targetBaseForm = baseForm.Remove(baseForm.Length - 1);
             }
-
-#if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info($"GetIngForm after baseForm = {baseForm}");
-#endif
 
             var ingForm = $"{targetBaseForm}ing";
 
@@ -194,14 +166,7 @@ namespace DictionaryGenerator
 
         public string GetThirdPersonSingularPresent(string baseForm)
         {
-#if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info($"GetThirdPersonSingularPresent baseForm = {baseForm}");
-#endif
             var lastChar = baseForm.Last();
-
-#if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info($"GetThirdPersonSingularPresent lastChar = {lastChar}");
-#endif
 
             var targetForm = string.Empty;
 
@@ -231,14 +196,6 @@ namespace DictionaryGenerator
             {
                 return targetForm;
             }
-
-#if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info($"GetThirdPersonSingularPresent listOfExeptWords.Count = {listOfExeptWords.Count}");
-            //foreach (var exceptWord in listOfExeptWords)
-            //{
-            //    NLog.LogManager.GetCurrentClassLogger().Info($"GetThirdPersonSingularPresent exceptWord = {exceptWord}");
-            //}
-#endif
 
             var sEndsWord = listOfExeptWords.Where(p => p.EndsWith("s")).FirstOrDefault();
 

@@ -33,10 +33,6 @@ namespace SymOntoClay.Core.Internal.Converters
 {
     public static class ConverterEntityConditionExpressionToRuleInstance
     {
-#if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         private enum AdviceForConversionEntityConditionExpressionToRuleInstance
         {
             Root,
@@ -52,10 +48,6 @@ namespace SymOntoClay.Core.Internal.Converters
 
         public static RuleInstance Convert(EntityConditionExpressionNode source, CheckDirtyOptions options, Dictionary<object, object> convertingContext)
         {
-#if DEBUG
-            //_gbcLogger.Info($"source = {source}");
-#endif
-
             if (source == null)
             {
                 return null;
@@ -72,19 +64,11 @@ namespace SymOntoClay.Core.Internal.Converters
 
             primaryRulePart.Expression = ConvertToLogicalQueryNode(source, AdviceForConversionEntityConditionExpressionToRuleInstance.Root, options, convertingContext);
 
-#if DEBUG
-            //_gbcLogger.Info($"result = {DebugHelperForRuleInstance.ToString(result)}");
-#endif
-
             return result;
         }
 
         private static LogicalQueryNode ConvertToLogicalQueryNode(EntityConditionExpressionNode source, AdviceForConversionEntityConditionExpressionToRuleInstance advice, CheckDirtyOptions options, Dictionary<object, object> convertingContext)
         {
-#if DEBUG
-            //_gbcLogger.Info($"source = {source}");
-#endif
-
             switch(advice)
             {
                 case AdviceForConversionEntityConditionExpressionToRuleInstance.Root:
@@ -126,10 +110,6 @@ namespace SymOntoClay.Core.Internal.Converters
 
         private static LogicalQueryNode ConvertGroup(EntityConditionExpressionNode source, CheckDirtyOptions options, Dictionary<object, object> convertingContext)
         {
-#if DEBUG
-            //_gbcLogger.Info($"source = {source}");
-#endif
-
             if (source == null)
             {
                 return null;
@@ -147,19 +127,11 @@ namespace SymOntoClay.Core.Internal.Converters
 
             result.Left = ConvertToLogicalQueryNode(source.Left, AdviceForConversionEntityConditionExpressionToRuleInstance.Root, options, convertingContext);
 
-#if DEBUG
-            //_gbcLogger.Info($"result = {result}");
-#endif
-
             return result;
         }
 
         private static LogicalQueryNode ConvertBinaryOperator(EntityConditionExpressionNode source, CheckDirtyOptions options, Dictionary<object, object> convertingContext)
         {
-#if DEBUG
-            //_gbcLogger.Info($"source = {source}");
-#endif
-
             if (source == null)
             {
                 return null;
@@ -184,19 +156,11 @@ namespace SymOntoClay.Core.Internal.Converters
             result.Left = ConvertToLogicalQueryNode(source.Left, AdviceForConversionEntityConditionExpressionToRuleInstance.Root, options, convertingContext);
             result.Right = ConvertToLogicalQueryNode(source.Right, AdviceForConversionEntityConditionExpressionToRuleInstance.Root, options, convertingContext);
 
-#if DEBUG
-            //_gbcLogger.Info($"result = {result}");
-#endif
-
             return result;
         }
 
         private static LogicalQueryNode ConvertIsOperator(EntityConditionExpressionNode source, CheckDirtyOptions options, Dictionary<object, object> convertingContext)
         {
-#if DEBUG
-            //_gbcLogger.Info($"source = {source}");
-#endif
-
             if (source == null)
             {
                 return null;
@@ -221,19 +185,11 @@ namespace SymOntoClay.Core.Internal.Converters
 
             destParametersList.Add(ConvertToLogicalQueryNode(source.Right, AdviceForConversionEntityConditionExpressionToRuleInstance.InRelation, options, convertingContext));
 
-#if DEBUG
-            //_gbcLogger.Info($"result = {result}");
-#endif
-
             return result;
         }
 
         private static LogicalQueryNode ConvertRelation(EntityConditionExpressionNode source, CheckDirtyOptions options, Dictionary<object, object> convertingContext)
         {
-#if DEBUG
-            //_gbcLogger.Info($"source = {source}");
-#endif
-
             if (source == null)
             {
                 return null;
@@ -259,29 +215,17 @@ namespace SymOntoClay.Core.Internal.Converters
                 destParametersList.Add(ConvertToLogicalQueryNode(sourceParam, AdviceForConversionEntityConditionExpressionToRuleInstance.InRelation, options, convertingContext));
             }
 
-#if DEBUG
-            //_gbcLogger.Info($"result = {result}");
-#endif
-
             return result;
         }
 
         private static LogicalQueryNode ConvertInRelationConceptOrEntityOrValue(EntityConditionExpressionNode source, CheckDirtyOptions options, Dictionary<object, object> convertingContext)
         {
-#if DEBUG
-            //_gbcLogger.Info($"source = {source}");
-#endif
-
             if (source == null)
             {
                 return null;
             }
 
             var nameValue = source.Name?.NameValue;
-
-#if DEBUG
-            //_gbcLogger.Info($"nameValue = {nameValue}");
-#endif
 
             if(!string.IsNullOrWhiteSpace(nameValue))
             {
@@ -304,19 +248,11 @@ namespace SymOntoClay.Core.Internal.Converters
             result.Value = source.Value;
             result.FuzzyLogicNonNumericSequenceValue = source.FuzzyLogicNonNumericSequenceValue;
 
-#if DEBUG
-            //_gbcLogger.Info($"result = {result}");
-#endif
-
             return result;
         }
 
         private static LogicalQueryNode ConvertStandaloneConcept(EntityConditionExpressionNode source, CheckDirtyOptions options, Dictionary<object, object> convertingContext)
         {
-#if DEBUG
-            //_gbcLogger.Info($"source = {source}");
-#endif
-
             if (source == null)
             {
                 return null;
@@ -329,15 +265,7 @@ namespace SymOntoClay.Core.Internal.Converters
 
             var name = source.Name;
 
-#if DEBUG
-            //_gbcLogger.Info($"name = {name}");
-#endif
-
             var dontConvertConceptsToInhRelations = options.DontConvertConceptsToInhRelations ?? new List<StrongIdentifierValue>();
-
-#if DEBUG
-            //_gbcLogger.Info($"dontConvertConceptsToInhRelations = {dontConvertConceptsToInhRelations.WriteListToString()}");
-#endif
 
             var result = new LogicalQueryNode();
             convertingContext[source] = result;
@@ -347,10 +275,6 @@ namespace SymOntoClay.Core.Internal.Converters
             if (dontConvertConceptsToInhRelations.Contains(name))
             {
                 result.Kind = KindOfLogicalQueryNode.Concept;
-
-#if DEBUG
-                //_gbcLogger.Info($"result = {result}");
-#endif
 
                 return result;
             }
@@ -362,10 +286,6 @@ namespace SymOntoClay.Core.Internal.Converters
             result.ParamsList = destParametersList;
 
             destParametersList.Add(CreateEntitySelfVar());
-
-#if DEBUG
-            //_gbcLogger.Info($"result = {result}");
-#endif
 
             return result;
         }

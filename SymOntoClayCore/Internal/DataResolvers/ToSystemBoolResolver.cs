@@ -40,10 +40,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public bool Resolve(Value value)
         {
-#if DEBUG
-            //Log($"value = {value}");
-#endif
-
             var kindOfValue = value.KindOfValue;
 
             switch (kindOfValue)
@@ -66,10 +62,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public bool Resolve(LogicalValue value)
         {
-#if DEBUG
-            //Log($"value = {value}");
-#endif
-
             var systemValue = value.SystemValue;
 
             if(systemValue.HasValue)
@@ -82,10 +74,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public bool Resolve(NumberValue value)
         {
-#if DEBUG
-            //Log($"value = {value}");
-#endif
-
             var systemValue = value.SystemValue;
 
             if (systemValue.HasValue)
@@ -98,19 +86,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public bool Resolve(double value)
         {
-#if DEBUG
-            //Log($"value = {value}");
-#endif
-
             return value >= TruthThreshold;
         }
 
         public bool Resolve(float value)
         {
-#if DEBUG
-            //Log($"value = {value}");
-#endif
-
             return value >= TruthThreshold;
         }
     }

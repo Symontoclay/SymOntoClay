@@ -67,10 +67,6 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public override void LoadFromSourceFiles()
         {
-#if DEBUG
-            //Log("Begin");
-#endif
-
             _namesDict = new Dictionary<StrongIdentifierValue, AppInstance>();
             _rootInstanceInfo = null;
 
@@ -82,7 +78,6 @@ namespace SymOntoClay.Core.Internal.Instances
             globalStorage.VarStorage.SetSystemValue(_context.CommonNamesStorage.HostSystemVarName, new HostValue());
 
 #if IMAGINE_WORKING
-            //Log("End");
 #else
             throw new NotImplementedException();
 #endif
@@ -94,10 +89,6 @@ namespace SymOntoClay.Core.Internal.Instances
             var globalStorage = _context.Storage.GlobalStorage;
 
             var mainEntity = GetOrCreateMainEntity();
-
-#if DEBUG
-            //Log($"NEXT mainEntity = {mainEntity}");
-#endif
 
             if(mainEntity == null)
             {
@@ -126,10 +117,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 globalStorage.VarStorage.SetSystemValue(_context.CommonNamesStorage.SelfSystemVarName, new InstanceValue(instanceInfo));
             }
-
-#if DEBUG
-            //Log($"instanceInfo = {instanceInfo}");
-#endif
 
             instanceInfo.Init();
 
@@ -163,15 +150,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void DispatchIdleActions()
         {
-#if DEBUG
-            //Log("Begin");
-#endif
-
             var count = GetCountOfCurrentProcesses();
-
-#if DEBUG
-            //Log($"count = {count}");
-#endif
 
             if(count > 0)
             {
@@ -179,10 +158,6 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
             var rawListOfTopIndependentInstances = _rootInstanceInfo.GetTopIndependentInstances();
-
-#if DEBUG
-            //Log($"rawListOfTopIndependentInstances = {rawListOfTopIndependentInstances.WriteListToString()}");
-#endif
 
             if(rawListOfTopIndependentInstances.Count == 1)
             {
@@ -213,10 +188,6 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             lock(_processLockObj)
             {
-#if DEBUG
-                //Log($"processInfo = {processInfo}");
-#endif
-
                 NTryAppendProcessInfo(processInfo);
             }
         }
@@ -234,20 +205,12 @@ namespace SymOntoClay.Core.Internal.Instances
 
             lock (_processLockObj)
             {
-#if DEBUG
-                //Log($"processInfo = {processInfo}");
-#endif
-
                 if(!NTryAppendProcessInfo(processInfo))
                 {
                     return;
                 }
 
                 var concurentProcessesInfoList = NGetConcurrentProcessesInfo(processInfo);
-
-#if DEBUG
-                //Log($"concurentProcessesInfoList = {concurentProcessesInfoList.WriteListToString()}");
-#endif
 
                 if(concurentProcessesInfoList.IsNullOrEmpty())
                 {
@@ -257,10 +220,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 if(concurentProcessesInfoList.All(p => p.ParentProcessInfo == processInfo.ParentProcessInfo))
                 {
-#if DEBUG
-                    //Log("concurentProcessesInfoList.All(p => p.ParentProcessInfo == processInfo.ParentProcessInfo)");
-#endif
-
                     NAppendAndTryStartProcessInfoWithDevices(processInfo);
 
                     Task.Run(() => {
@@ -270,10 +229,6 @@ namespace SymOntoClay.Core.Internal.Instances
                         }
                     });
 
-#if DEBUG
-                    //Log("concurentProcessesInfoList.All(p => p.ParentProcessInfo == processInfo.ParentProcessInfo) return;");
-#endif
-
                     return;
                 }
 
@@ -281,10 +236,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 if (concurentProcessesInfoList.All(p => p.GlobalPriority >= globalPriority))
                 {
-#if DEBUG
-                    //Log("concurentProcessesInfoList.All(p => p.GlobalPriority >= globalPriority)");
-#endif
-
                     NAppendAndTryStartProcessInfoWithDevices(processInfo);
 
                     Task.Run(() => { 
@@ -293,10 +244,6 @@ namespace SymOntoClay.Core.Internal.Instances
                             concurentProcessInfo.Cancel();
                         }
                     });
-
-#if DEBUG
-                    //Log("concurentProcessesInfoList.All(p => p.GlobalPriority >= globalPriority) return;");
-#endif
 
                     return;
                 }
@@ -337,10 +284,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void NAppendAndTryStartProcessInfoWithDevices(IProcessInfo processInfo)
         {
-#if DEBUG
-            //Log($"processInfo = {processInfo}");
-#endif
-
             foreach (var device in processInfo.Devices)
             {
                 _processesInfoByDevicesDict[device] = processInfo;
@@ -350,16 +293,10 @@ namespace SymOntoClay.Core.Internal.Instances
 
             processInfo.Start();
 
-#if DEBUG
-            //Log($"processInfo.Start()");
-#endif
         }
 
         private void OnFinishProcessWithDevicesHandler(IProcessInfo sender)
         {
-#if DEBUG
-            //Log($"sender = {sender}");
-#endif
             lock (_processLockObj)
             {
                 foreach (var device in sender.Devices)
@@ -373,22 +310,11 @@ namespace SymOntoClay.Core.Internal.Instances
                 CheckCountOfActiveProcesses();
             }
 
-#if DEBUG
-            //Log("End");
-#endif
         }
 
         private void CheckCountOfActiveProcesses()
         {
-#if DEBUG
-            //Log($"Begin");
-#endif
-
             var count = NGetCountOfCurrentProcesses();
-
-#if DEBUG
-            //Log($"count = {count}");
-#endif
 
             if(count == 0)
             {
@@ -425,19 +351,9 @@ namespace SymOntoClay.Core.Internal.Instances
 
             foreach(var device in processInfo.Devices)
             {
-#if DEBUG
-                //Log($"device = {device}");
-#endif
-
                 if (_processesInfoByDevicesDict.ContainsKey(device))
                 {
                     var otherProcessInfo = _processesInfoByDevicesDict[device];
-
-#if DEBUG
-                    //Log("_processesInfoByDevicesDict.ContainsKey(device)");
-                    //Log($"otherProcessInfo = {otherProcessInfo}");
-                    //Log($"processInfo.IsFriend(otherProcessInfo) = {processInfo.IsFriend(otherProcessInfo)}");
-#endif
 
                     if(!processInfo.IsFriend(otherProcessInfo))
                     {
@@ -452,16 +368,7 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public override Value CreateInstance(StrongIdentifierValue prototypeName, ILocalCodeExecutionContext executionContext)
         {
-#if DEBUG
-            //Log($"prototypeName = {prototypeName}");
-            //Log($"executionContext.Storage.VarStorage.GetHashCode() = {executionContext.Storage.VarStorage.GetHashCode()};executionContext.Storage.VarStorage.Kind = {executionContext.Storage.VarStorage.Kind}");
-#endif
-
             var codeItem = _metadataResolver.Resolve(prototypeName, executionContext);
-
-#if DEBUG
-            //Log($"codeItem = {codeItem}");
-#endif
 
             if(codeItem == null)
             {
@@ -474,15 +381,7 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public override Value CreateInstance(InstanceValue instanceValue, ILocalCodeExecutionContext executionContext)
         {
-#if DEBUG
-            //Log($"instanceValue = {instanceValue}");
-#endif
-
             var codeItem = _metadataResolver.Resolve(instanceValue.InstanceInfo.Name, executionContext);
-
-#if DEBUG
-            //Log($"codeItem = {codeItem}");
-#endif
 
             if (codeItem == null)
             {
@@ -495,25 +394,12 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public override Value CreateInstance(CodeItem codeItem, ILocalCodeExecutionContext executionContext)
         {
-#if DEBUG
-            //Log($"codeItem = {codeItem}");
-#endif
-
             return NCreateInstance(codeItem, executionContext, true);
         }
 
         private Value NCreateInstance(CodeItem codeItem, ILocalCodeExecutionContext executionContext, bool loadCodeItem)
         {
-#if DEBUG
-            //Log($"codeItem = {codeItem}");
-            //Log($"codeItem.Name = {codeItem.Name}");
-#endif
-
             var targetCodeItem = CreateAndSaveInstanceCodeItem(codeItem, NameHelper.CreateEntityName());
-
-#if DEBUG
-            //Log($"targetCodeItem = {targetCodeItem}");
-#endif
 
             var instance = new ObjectInstance(targetCodeItem, _context, executionContext.Storage, executionContext);
 
@@ -521,10 +407,6 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 _projectLoader.LoadCodeItem(codeItem, executionContext.Storage);
             }
-
-#if DEBUG
-            //Log($"instance.Name = {instance.Name}");
-#endif
 
             instance.Init();
 
@@ -539,15 +421,7 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             var action = actionPtr.Action;
 
-#if DEBUG
-            //Log($"action.Name = {action.Name}");
-#endif
-
             var targetCodeItem = CreateAndSaveInstanceCodeItem(action, NameHelper.CreateEntityName());
-
-#if DEBUG
-            //Log($"targetCodeItem = {targetCodeItem}");
-#endif
 
             var actionInstance = new ActionInstance(targetCodeItem, actionPtr, _context, executionContext.Storage, executionContext);
 

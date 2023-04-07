@@ -33,10 +33,6 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class ProcessInfo: BaseProcessInfo
     {
-#if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         /// <inheritdoc/>
         public override ProcessStatus Status 
         { 
@@ -148,16 +144,11 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public override void Start()
         {
-            //throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
         public override void Cancel()
         {
-#if DEBUG
-            //_gbcLogger.Info($"Cancel Id = {Id}");
-#endif
-
             Status = ProcessStatus.Canceled;
 
             base.Cancel();

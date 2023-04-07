@@ -78,11 +78,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Threads
         }
 
         ///// <inheritdoc/>
-        //protected override void OnDispose()
-        //{
-        //    base.OnDispose();
 
-        //    _commonActiveContext.Dispose();
-        //}
     }
 }

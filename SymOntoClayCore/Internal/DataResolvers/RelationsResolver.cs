@@ -55,37 +55,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public RelationDescription GetRelation(StrongIdentifierValue name, int paramsCount, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"name = {name}");
-            //Log($"paramsCount = {paramsCount}");
-#endif
-
             var storage = localCodeExecutionContext.Storage;
 
             var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
-
-#if DEBUG
-            //Log($"storagesList.Count = {storagesList.Count}");
-            //foreach (var tmpStorage in storagesList)
-            //{
-            //    Log($"tmpStorage.Storage = {tmpStorage.Storage}");
-            //}
-#endif
 
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
             var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
 
-#if DEBUG
-            //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
-#endif
-
             var rawList = GetRawList(name, paramsCount, storagesList, weightedInheritanceItems);
-
-#if DEBUG
-            //Log($"rawList = {rawList.WriteListToString()}");
-#endif
 
             if (!rawList.Any())
             {
@@ -93,10 +72,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             var filteredList = Filter(rawList);
-
-#if DEBUG
-            //Log($"filteredList = {filteredList.WriteListToString()}");
-#endif
 
             var targetItem = ChooseTargetItem(filteredList);
 
@@ -136,11 +111,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private List<WeightedInheritanceResultItemWithStorageInfo<RelationDescription>> NGetRawList(StrongIdentifierValue name, int paramsCount, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
-#if DEBUG
-            //Log($"name = {name}");
-            //Log($"paramsCount = {paramsCount}");
-#endif
-
             if (!storagesList.Any())
             {
                 return new List<WeightedInheritanceResultItemWithStorageInfo<RelationDescription>>();

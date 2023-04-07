@@ -57,9 +57,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
                 standaloneStorageSettings.Categories = settings.Categories;
                 standaloneStorageSettings.EnableCategories = settings.EnableCategories;
 
-#if DEBUG
-                //Log($"standaloneStorageSettings = {standaloneStorageSettings}");
-#endif
                 HostStorage = new StandaloneStorage(standaloneStorageSettings);              
             }
             catch (Exception e)
@@ -83,18 +80,10 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         {
             base.LoadFromSourceCode();
 
-            //try
-            //{
                 HostStorage.LoadFromSourceCode();
 
             _worldContext.AddPublicFactsStorage(this);
-            //}
-            //catch (Exception e)
-            //{
-            //    Log(e.ToString());
 
-            //    throw e;
-            //}
         }
 
         public string InsertPublicFact(string text)

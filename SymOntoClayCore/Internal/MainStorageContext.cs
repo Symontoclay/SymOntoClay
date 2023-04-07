@@ -95,7 +95,6 @@ namespace SymOntoClay.Core.Internal
             ActivePeriodicObjectContext.Dispose();
             Storage.Die();
             Parser.Dispose();
-            //DataResolversFactory.Dispose();
             CommonNamesStorage.Dispose();
             InstancesStorage.Dispose();
             LoaderFromSourceCode.Dispose();
@@ -109,7 +108,6 @@ namespace SymOntoClay.Core.Internal
             ActivePeriodicObjectContext.Dispose();
             Storage.Dispose();
             Parser.Dispose();
-            //DataResolversFactory.Dispose();
             CommonNamesStorage.Dispose();
             InstancesStorage.Dispose();
             LoaderFromSourceCode.Dispose();

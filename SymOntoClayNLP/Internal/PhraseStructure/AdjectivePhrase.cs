@@ -28,8 +28,6 @@ using System.Text;
 
 namespace SymOntoClay.NLP.Internal.PhraseStructure
 {
-    //https://en.wikipedia.org/wiki/Adjective_phrase
-    //AP
     public class AdjectivePhrase : BaseSentenceItem
     {
         /// <inheritdoc/>
@@ -116,7 +114,6 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
             sb.PrintObjProp(n, nameof(A), A);
             sb.PrintObjProp(n, nameof(PP), PP);
 
-            //sb.PrintObjProp(n, nameof(), );
 
             sb.Append(base.PropertiesToString(n));
 

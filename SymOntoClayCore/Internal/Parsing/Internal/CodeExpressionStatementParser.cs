@@ -50,9 +50,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_currToken = {_currToken}");
-#endif
             _context.Recovery(_currToken);
 
             var parser = new AstExpressionParser(_context, _terminationTokens);

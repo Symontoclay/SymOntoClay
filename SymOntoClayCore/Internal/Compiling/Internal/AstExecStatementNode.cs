@@ -37,10 +37,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(AstExecStatement statement)
         {
-#if DEBUG
-            //Log($"statement = {statement}");
-#endif
-
             var node = new ExpressionNode(_context);
             node.Run(statement.Expression);
 

@@ -56,10 +56,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _namedFunction = CreateNamedFunctionAndSetAsCurrentCodeItem();
 
-#if DEBUG
-            //Log($"_namedFunction = {_namedFunction}");
-#endif
-
             _namedFunction.TypeOfAccess = _context.CurrentDefaultSetings.TypeOfAccess;
         }
 
@@ -78,12 +74,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");            
-#endif
-
             switch (_state)
             {
                 case State.Init:

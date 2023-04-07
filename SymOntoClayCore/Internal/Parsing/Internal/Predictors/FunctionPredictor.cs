@@ -56,13 +56,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.Predictors
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
-            //Log($"_openRoundBracketsCount = {_openRoundBracketsCount}");
-            //Log($"_openFigureBracketsCount = {_openFigureBracketsCount}");
-#endif
-
             switch (_state)
             {
                 case State.Init:

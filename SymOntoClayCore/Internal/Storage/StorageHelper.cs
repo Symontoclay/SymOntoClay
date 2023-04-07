@@ -36,15 +36,7 @@ namespace SymOntoClay.Core.Internal.Storage
             var targetLongHashCode = item.GetLongHashCode();
             var targetLongConditionalHashCode = item.GetLongConditionalHashCode();
 
-#if DEBUG
-            //Log($"targetLongHashCode = {targetLongHashCode}");
-#endif
-
             var itemsWithTheSameLongHashCodeList = targetList.Where(p => p.GetLongHashCode() == targetLongHashCode && p.GetLongConditionalHashCode() == targetLongConditionalHashCode).ToList();
-
-#if DEBUG
-            //Log($"itemsWithTheSameLongHashCodeList = {itemsWithTheSameLongHashCodeList.WriteListToString()}");
-#endif
 
             foreach (var itemWithTheSameLongHashCode in itemsWithTheSameLongHashCodeList)
             {

@@ -75,13 +75,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");            
-            //Log($"_currentItem = {_currentItem}");
-#endif
-
             switch (_state)
             {
                 case State.Init:
@@ -162,7 +155,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var nextToken = _context.GetToken();
 
 #if DEBUG
-                                //Log($"nextToken = {nextToken}");
 
 #endif
 

@@ -44,11 +44,6 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
             _dateTimeProvider = engineContext.DateTimeProvider;
 
-#if DEBUG
-            //Log($"condition = {condition}");
-            //Log($"_targetDuration = {_targetDuration}");
-#endif
-
             _activeObject = new AsyncActivePeriodicObject(engineContext.ActivePeriodicObjectContext);
             _activeObject.PeriodicMethod = NRun;
             _activeObject.Start();
@@ -64,22 +59,12 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
         {
             Thread.Sleep(100);
 
-#if DEBUG
-            //Log($"_dateTimeProvider.CurrentTiks = {_dateTimeProvider.CurrentTiks}");
-#endif
-
             if (!_context.SetSeconds.HasValue)
             {
                 return true;
             }
 
             var secondsNow = _dateTimeProvider.CurrentTiks * _dateTimeProvider.SecondsMultiplicator;
-
-#if DEBUG
-            //Log($"_context.SetSeconds = {_context.SetSeconds}");
-            //Log($"_dateTimeProvider.CurrentTiks = {_dateTimeProvider.CurrentTiks}");
-            //Log($"secondsNow = {secondsNow}");
-#endif
 
             if(secondsNow > _context.SetSeconds + _targetDuration)
             {

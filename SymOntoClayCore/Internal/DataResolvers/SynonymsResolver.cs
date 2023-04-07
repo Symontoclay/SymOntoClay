@@ -41,10 +41,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public List<StrongIdentifierValue> GetSynonyms(StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"name = {name}");
-#endif
-
             var storage = localCodeExecutionContext.Storage;
 
             return GetSynonyms(name, storage);
@@ -52,10 +48,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public List<StrongIdentifierValue> GetSynonyms(StrongIdentifierValue name, IStorage storage)
         {
-#if DEBUG
-            //Log($"name = {name}");
-#endif
-
             var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
 
             return GetSynonyms(name, storagesList);
@@ -63,18 +55,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public List<StrongIdentifierValue> GetSynonyms(StrongIdentifierValue name, List<StorageUsingOptions> storagesList)
         {
-#if DEBUG
-            //Log($"name = {name}");
-#endif
-            
-#if DEBUG
-            //Log($"storagesList.Count = {storagesList.Count}");
-            //foreach (var tmpStorage in storagesList)
-            //{
-            //    Log($"tmpStorage.Key = {tmpStorage.Key}; tmpStorage.Value.Kind = '{tmpStorage.Value.Kind}'");
-            //}
-#endif
-
             var result = new List<StrongIdentifierValue>();
 
             var currentProcessedList = new List<StrongIdentifierValue>() { name };
@@ -83,17 +63,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 var futureProcessedList = new List<StrongIdentifierValue>();
 
-#if DEBUG
-                //Log($"currentProcessedList = {currentProcessedList.WriteListToString()}");
-#endif
-
                 foreach (var processedItem in currentProcessedList)
                 {
                     var synonymsList = GetSynonymsDirectly(processedItem, storagesList);
-
-#if DEBUG
-                    //Log($"synonymsList = {synonymsList.WriteListToString()}");
-#endif
 
                     if (synonymsList == null)
                     {
@@ -102,10 +74,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                     foreach (var item in synonymsList)
                     {
-#if DEBUG
-                        //Log($"item = {item}");
-#endif
-
                         if (item == name || result.Contains(item))
                         {
                             continue;
@@ -116,10 +84,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     }
                 }
 
-#if DEBUG
-                //Log($"futureProcessedList = {futureProcessedList.WriteListToString()}");
-#endif
-
                 currentProcessedList = futureProcessedList;
             }
 
@@ -128,10 +92,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private List<StrongIdentifierValue> GetSynonymsDirectly(StrongIdentifierValue name, List<StorageUsingOptions> storagesList)
         {
-#if DEBUG
-            //Log($"name = {name}");
-#endif
-
             if (!storagesList.Any())
             {
                 return null;

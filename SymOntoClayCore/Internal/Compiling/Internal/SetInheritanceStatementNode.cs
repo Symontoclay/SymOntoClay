@@ -37,10 +37,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(AstSetInheritanceStatement statement)
         {
-#if DEBUG
-            //Log($"statement = {statement}");
-#endif
-
             CompileValue(statement.SubName);
             CompileValue(statement.SuperName);
             CompileValue(statement.Rank);

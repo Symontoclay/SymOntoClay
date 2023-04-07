@@ -35,10 +35,6 @@ namespace SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr
 {
     public class TriggerConditionNode : AnnotatedItem, IAstNode
     {
-#if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         public KindOfTriggerConditionNode Kind { get; set; } = KindOfTriggerConditionNode.Unknown;
         public KindOfOperator KindOfOperator { get; set; } = KindOfOperator.Unknown;
         public StrongIdentifierValue Name { get; set; }
@@ -53,10 +49,6 @@ namespace SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-#if DEBUG
-            //_gbcLogger.Info($"this = {DebugHelperForTriggerCondition.ToString(this)}");
-#endif
-
             switch (Kind)
             {
                 case KindOfTriggerConditionNode.BinaryOperator:

@@ -32,10 +32,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class MutablePartOfRuleInstanceValue : Value
     {
-#if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         public MutablePartOfRuleInstanceValue(MutablePartOfRuleInstance mutablePartOfRuleInstance)
         {
             MutablePartOfRuleInstance = mutablePartOfRuleInstance;
@@ -72,11 +68,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override void SetPropertyValue(StrongIdentifierValue propertyName, Value value)
         {
-#if DEBUG
-            //_gbcLogger.Info($"propertyName = {propertyName}");
-            //_gbcLogger.Info($"value = {value}");
-#endif
-
             var propertyNameStr = propertyName.NormalizedNameValue;
 
             switch(propertyNameStr)

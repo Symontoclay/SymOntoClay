@@ -54,19 +54,8 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         /// <inheritdoc/>
         public Value Call(Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"leftOperand = {leftOperand}");
-            //Log($"rightOperand = {rightOperand}");
-            //Log($"annotation = {annotation}");
-#endif
-
             leftOperand = TryResolveFromVarOrExpr(leftOperand, localCodeExecutionContext);
             rightOperand = TryResolveFromVarOrExpr(rightOperand, localCodeExecutionContext);
-
-#if DEBUG
-            //Log($"leftOperand (after) = {leftOperand}");
-            //Log($"rightOperand (after) = {rightOperand}");
-#endif
 
             if (leftOperand.IsSystemNull && rightOperand.IsSystemNull)
             {
@@ -103,11 +92,6 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
         private LogicalValue CompareWithFuzzyLogic(Value numOperand, Value fuzzyOperand, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"numOperand = {numOperand}");
-            //Log($"fuzzyOperand = {fuzzyOperand}");
-#endif
-
             NumberValue numVal = null;
 
             var numKindOfValue = numOperand.KindOfValue;
@@ -125,10 +109,6 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                 default:
                     throw new ArgumentOutOfRangeException(nameof(numKindOfValue), numKindOfValue, null);
             }
-
-#if DEBUG
-            //Log($"numVal = {numVal}");
-#endif
 
             var fuzzyKindOfValue = fuzzyOperand.KindOfValue;
 

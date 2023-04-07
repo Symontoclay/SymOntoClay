@@ -46,10 +46,6 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStoraging
         /// <inheritdoc/>
         public void Append(Operator op)
         {
-#if DEBUG
-            //Log($"op = {op}");
-#endif
-
             AnnotatedItemHelper.CheckAndFillUpHolder(op, _realStorageContext.MainStorageContext.CommonNamesStorage);
 
             lock(_lockObj)
@@ -63,11 +59,6 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStoraging
                     if (dict.ContainsKey(op.Holder))
                     {
                         var targetList = dict[op.Holder];
-
-#if DEBUG
-                        //Log($"dict[superName].Count = {dict[op.Holder].Count}");
-                        //Log($"targetList = {targetList.WriteListToString()}");
-#endif
 
                         StorageHelper.RemoveSameItems(targetList, op);
 
@@ -90,10 +81,6 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStoraging
         /// <inheritdoc/>
         public IList<WeightedInheritanceResultItem<Operator>> GetOperatorsDirectly(KindOfOperator kindOfOperator, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
-#if DEBUG
-            //Log($"kindOfOperator = {kindOfOperator}");
-#endif
-
             lock (_lockObj)
             {
                 if (_realStorageContext.Disabled)

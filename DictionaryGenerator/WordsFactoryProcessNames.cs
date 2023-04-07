@@ -42,15 +42,6 @@ namespace DictionaryGenerator
 
         private void ProcessName(string rootWord)
         {
-#if DEBUG
-            //if (rootWord.ToLower() == "britain")
-            //{
-            //    LogInstance.Log($"rootWord = {rootWord}");
-            //    throw new NotImplementedException();
-            //}
-            //LogInstance.Log($"rootWord = {rootWord}");
-#endif
-
             if (mTargetWordsList != null)
             {
                 if (!mTargetWordsList.Contains(rootWord))
@@ -73,16 +64,7 @@ namespace DictionaryGenerator
 
             var logicalMeaning = new List<string>() { "entity" };
 
-            //List<string> logicalMeaning = null;
 
-            //if (mNounClassesDict.ContainsKey(rootWord))
-            //{
-            //    logicalMeaning = mNounClassesDict[rootWord];
-            //}
-            //else
-            //{
-            //    logicalMeaning = new List<string>();
-            //}
 
 #if DEBUG
             NLog.LogManager.GetCurrentClassLogger().Info($"ProcessName logicalMeaning.Count = {logicalMeaning.Count}");

@@ -95,14 +95,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                 _currentPos++;
 
-#if DEBUG
-                //_logger.Log($"tmpChar = {tmpChar}");
-                //_logger.Log($"(int)tmpChar = {(int)tmpChar}");
-                //_logger.Log($"_currentPos = {_currentPos}");
-                //_logger.Log($"_state = {_state}");
-                //_logger.Log($"buffer?.ToString() = {buffer?.ToString()}");
-#endif
-
                 switch (_state)
                 {
                     case State.Init:
@@ -111,10 +103,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         if (char.IsLetterOrDigit(tmpChar) || tmpChar == '_')
                         {
                             var nextChar = _items.Peek();
-
-#if DEBUG
-                            //_logger.Log($"nextChar = {nextChar}");
-#endif
 
                             buffer = new StringBuilder();
                             buffer.Append(tmpChar);
@@ -172,10 +160,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 {
                                     var nextChar = _items.Peek();
 
-#if DEBUG
-                                    //_logger.Log($"nextChar = {nextChar}");
-#endif
-
                                     switch(nextChar)
                                     {
                                         case '~':
@@ -190,10 +174,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 {
                                     var nextChar = _items.Peek();
 
-#if DEBUG
-                                    //_logger.Log($"nextChar = {nextChar}");
-#endif
-
                                     switch(nextChar)
                                     {
                                         case '∞':
@@ -207,10 +187,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             case '-':
                                 {
                                     var nextChar = _items.Peek();
-
-#if DEBUG
-                                    //_logger.Log($"nextChar = {nextChar}");
-#endif
 
                                     switch(nextChar)
                                     {
@@ -242,9 +218,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 {
                                     var nextChar = _items.Peek();
 
-#if DEBUG
-                                    //_logger.Log($"nextChar = {nextChar}");
-#endif
                                     switch(nextChar)
                                     {
                                         case '/':
@@ -272,10 +245,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 {
                                     var nextChar = _items.Peek();
 
-#if DEBUG
-                                    //_logger.Log($"nextChar = {nextChar}");
-#endif
-
                                     switch (nextChar)
                                     {
                                         case '=':
@@ -290,10 +259,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             case '<':
                                 {
                                     var nextChar = _items.Peek();
-
-#if DEBUG
-                                    //_logger.Log($"nextChar = {nextChar}");
-#endif
 
                                     switch (nextChar)
                                     {
@@ -379,10 +344,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         {
                             buffer.Append(tmpChar);
 
-#if DEBUG
-                            //_logger.Log($"case State.InWord: buffer?.ToString() = {buffer?.ToString()}");
-#endif
-
                             if (_items.Count == 0)
                             {
                                 _state = State.Init;
@@ -403,15 +364,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 }
                             }
 
-#if DEBUG
-                            //_logger.Log($"_kindOfPrefix = {_kindOfPrefix}");
-#endif
-
                             var nextChar = _items.Peek();
-
-#if DEBUG
-                            //_logger.Log($"nextChar = {nextChar}");
-#endif
 
                             if (!char.IsLetterOrDigit(nextChar) && nextChar != '_')
                             {
@@ -500,10 +453,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 {
                                     var nextChar = _items.Peek();
 
-#if DEBUG
-                                    //_logger.Log($"nextChar = {nextChar}");
-#endif
-
                                     if(nextChar == '/')
                                     {
                                         _items.Dequeue();
@@ -587,11 +536,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                     var nextChar = _items.Peek();
 
-#if DEBUG
-                                    //_logger.Log($"buffer?.ToString() (2) = {buffer?.ToString()}");
-                                    //_logger.Log($"nextChar = {nextChar}");
-#endif
-
                                     if (nextChar == '`')
                                     {
                                         _state = State.InIdentifier;
@@ -624,10 +568,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     _kindOfPrefix = KindOfPrefix.EntityCondition;
 
                                     var nextChar = _items.Peek();
-
-#if DEBUG
-                                    //_logger.Log($"nextChar = {nextChar}");
-#endif
 
                                     if (nextChar == '`')
                                     {
@@ -759,17 +699,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         {
                             buffer.Append(tmpChar);
 
-#if DEBUG
-                            //_logger.Log($"case State.DollarSign: buffer?.ToString() = {buffer?.ToString()}");
-#endif
-
                             _kindOfPrefix = KindOfPrefix.LogicalVar;
 
                             var nextChar = _items.Peek();
-
-#if DEBUG
-                            //_logger.Log($"nextChar = {nextChar}");
-#endif
 
                             if (nextChar == '`')
                             {
@@ -802,11 +734,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private Token CreateToken(TokenKind kind, string content = "")
         {
-#if DEBUG
-            //_logger.Log($"kind = {kind}");
-            //_logger.Log($"content = '{content}'");
-#endif
-
             var kindOfKeyWord = KeyWordTokenKind.Unknown;
             var contentLength = 0;
 
@@ -1328,12 +1255,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
             }
-
-#if DEBUG
-            //_logger.Log($"kind (2) = {kind}");
-            //_logger.Log($"kindOfKeyWord = {kindOfKeyWord}");
-            //_logger.Log($"contentLength = {contentLength}");
-#endif
 
             var result = new Token();
             result.TokenKind = kind;

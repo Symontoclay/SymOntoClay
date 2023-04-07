@@ -56,10 +56,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
 
-#if DEBUG
-            //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
-#endif
-
             if(!weightedInheritanceItems.Any())
             {
                 return new List<CodeItemDirective>();
@@ -68,33 +64,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var storage = localCodeExecutionContext.Storage;
 
 #if DEBUG
-            //var storagesList = GetStoragesList(storage);
 
-            //foreach (var tmpStorage in storagesList)
-            //{
-            //    Log($"tmpStorage = {tmpStorage}");
-            //}
 #endif
 
             var globalStorage = GetStoragesList(storage, KindOfStoragesList.CodeItems).Single(p => p.Storage.Kind == KindOfStorage.Global).Storage;
-
-#if DEBUG
-            //Log($"globalStorage = {globalStorage}");
-#endif
 
             var resultsDict = new Dictionary<KindOfCodeItemDirective, CodeItemDirective>();
 
             foreach (var weightedInheritanceItem in weightedInheritanceItems)
             {
-#if DEBUG
-                //Log($"weightedInheritanceItem = {weightedInheritanceItem}");
-#endif
-
                 var codeItem = _metadataResolver.Resolve(weightedInheritanceItem.SuperName, localCodeExecutionContext);
-
-#if DEBUG
-                //Log($"codeItem = {codeItem}");
-#endif
 
                 if(codeItem == null)
                 {
@@ -112,11 +91,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 foreach(var directivesKVPItem in directivesDict)
                 {
-#if DEBUG
-                    //Log($"directivesKVPItem.Key = {directivesKVPItem.Key}");
-                    //Log($"directivesKVPItem.Value.Count = {directivesKVPItem.Value.Count}");
-#endif
-
                     if(resultsDict.ContainsKey(directivesKVPItem.Key))
                     {
                         continue;

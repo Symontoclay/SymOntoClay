@@ -46,10 +46,6 @@ namespace DictionaryGenerator
 
         public SplitWordModel Split(string word, GrammaticalPartOfSpeech targetPartOfSpeech)
         {
-#if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info($"Split word = {word} targetPartOfSpeech = {targetPartOfSpeech}");
-#endif
-
             var result = new SplitWordModel();
             result.InitialWord = word;
 
@@ -63,27 +59,14 @@ namespace DictionaryGenerator
 
             foreach(var splittedWord in wordsList)
             {
-#if DEBUG
-                //NLog.LogManager.GetCurrentClassLogger().Info($"Split splittedWord = {splittedWord} n = {n}");
-#endif
-
                 var partOfSpeechesList = GetPartOfSpeechesList(splittedWord);
 
 #if DEBUG
-                //NLog.LogManager.GetCurrentClassLogger().Info($"ProcessNoun partOfSpeechesList.Count = {partOfSpeechesList.Count}");
 
-                //foreach (var partOfSpeech in partOfSpeechesList)
-                //{
-                //    NLog.LogManager.GetCurrentClassLogger().Info($"ProcessNoun partOfSpeech = {partOfSpeech}");
-                //}
 #endif
 
                 if (partOfSpeechesList.Contains(targetPartOfSpeech))
                 {
-#if DEBUG
-                    //NLog.LogManager.GetCurrentClassLogger().Info($"Split !!!!!!!!!!!!! splittedWord = {splittedWord} n = {n}");
-#endif
-
                     litsOfTargetWords.Add(new KeyValuePair<string, int>(splittedWord, n));
                 }
 

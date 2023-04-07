@@ -99,18 +99,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking
                     break;
 
                 case KindOfIntermediateAstNode.Leaf:
-#if DEBUG
-                    //_logger.Info($"node = {node}");
-                    //_logger.Info($"point = {point}");
-#endif
-
                     currentNode.Left = node;
                     node.Parent = currentNode;
                     point.CurrentNode = node;
-
-#if DEBUG
-                    //_logger.Info($"point (after) = {point}");
-#endif
 
                     break;
 
@@ -188,11 +179,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking
 
                         if (oldchildNode != null)
                         {
-#if DEBUG
-                            //_logger.Info($"oldchildNode = {oldchildNode}");
-                            //_logger.Info($"node = {node}");
-#endif
-
                             if(node.Left != null)
                             {
                                 throw new NotImplementedException();
@@ -200,9 +186,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking
 
                             node.Left = oldchildNode;
 
-#if DEBUG
-                            //_logger.Info($"node (after) = {node}");
-#endif
                         }
 
                         node.Parent = possibleCurrentNode;

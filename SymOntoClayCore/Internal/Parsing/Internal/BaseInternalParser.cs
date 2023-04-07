@@ -49,10 +49,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         protected StrongIdentifierValue ParseName(string text)
         {
-#if DEBUG
-            //Log($"text = {text}");
-#endif
-
             var name = NameHelper.CreateName(text);
             return name;
         }
@@ -151,10 +147,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         result.Value = ParseName(_currToken.Content);
 
-#if DEBUG
-                        //Log($"result.Value = {result.Value}");
-#endif
-
                         result.Kind = KindOfValueOnObjDefLevel.ConstLiteral;
                     }
                     break;
@@ -220,10 +212,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case TokenKind.Word:
                     {
                         var nextToken = _context.GetToken();
-
-#if DEBUG
-                        //Log($"nextToken = {nextToken}");
-#endif
 
                         if (nextToken.TokenKind == TokenKind.Or)
                         {
@@ -304,10 +292,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         protected KeyWordTokenKind PredictKeyWordTokenKind(KindOfSpecialPrediction? kindOfSpecialPrediction = null)
         {
-#if DEBUG
-            //Log($"_currToken = {_currToken}");
-#endif
-
             var predictor = new Predictor(_currToken, _context, kindOfSpecialPrediction);
 
             return predictor.Predict();
@@ -319,15 +303,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var parser = new AstExpressionParser(_context, TokenKind.CloseRoundBracket);
             parser.Run();
 
-#if DEBUG
-            //Log($"parser.Result = {parser.Result}");
-#endif
-
             var nextToken = _context.GetToken();
-
-#if DEBUG
-            //Log($"nextToken = {nextToken}");
-#endif
 
             if (nextToken.TokenKind != TokenKind.CloseRoundBracket)
             {
@@ -342,10 +318,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _context.Recovery(_currToken);
             var parser = new FunctionBodyParser(_context);
             parser.Run();
-
-#if DEBUG
-            //Log($"parser.Result.WriteListToString() = {parser.Result.WriteListToString()}");
-#endif
 
             return parser.Result;
         }
@@ -364,18 +336,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         var wordContent = _currToken.Content.ToLower();
 
-#if DEBUG
-                        //Log($"wordContent = {wordContent}");
-#endif
                         switch(wordContent)
                         {
                             case "o":
                                 {
                                     var nextToken = _context.GetToken();
-
-#if DEBUG
-                                    //Log($"nextToken = {nextToken}");
-#endif
 
                                     if(nextToken.TokenKind == TokenKind.Colon)
                                     {
@@ -389,10 +354,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             case "so":
                                 {
                                     var nextToken = _context.GetToken();
-
-#if DEBUG
-                                    //Log($"nextToken = {nextToken}");
-#endif
 
                                     if (nextToken.TokenKind == TokenKind.Colon)
                                     {
@@ -427,19 +388,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         var wordContent = _currToken.Content.ToLower();
 
-#if DEBUG
-                        //Log($"wordContent = {wordContent}");
-#endif
                         switch (wordContent)
                         {
                             case "o":
                                 {
                                     var nextToken = _context.GetToken();
                                     _context.Recovery(nextToken);
-
-#if DEBUG
-                                    //Log($"nextToken = {nextToken}");
-#endif
 
                                     if (nextToken.TokenKind == TokenKind.Colon)
                                     {
@@ -454,10 +408,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 {
                                     var nextToken = _context.GetToken();
                                     _context.Recovery(nextToken);
-
-#if DEBUG
-                                    //Log($"nextToken = {nextToken}");
-#endif
 
                                     if (nextToken.TokenKind == TokenKind.Colon)
                                     {

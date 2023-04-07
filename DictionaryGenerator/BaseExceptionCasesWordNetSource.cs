@@ -38,15 +38,7 @@ namespace DictionaryGenerator
             var resultList = new List<ExceptionCaseItem>();
 
             Read((string currentLine) => {
-#if DEBUG
-                //NLog.LogManager.GetCurrentClassLogger().Info($"Read currentLine = {currentLine}");
-#endif
-
                 var itemsList = ReaderOfExceptionCaseItem.Read(currentLine);
-
-#if DEBUG
-                //NLog.LogManager.GetCurrentClassLogger().Info($"Read itemsList.Count = {itemsList.Count}");
-#endif
 
                 resultList.AddRange(itemsList);
             });

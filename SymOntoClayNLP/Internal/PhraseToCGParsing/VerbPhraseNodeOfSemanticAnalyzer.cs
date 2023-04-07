@@ -48,10 +48,6 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
         public ResultOfNodeOfSemanticAnalyzer Run()
         {
-#if DEBUG
-            //Context.Logger.Log($"_verbPhrase = {_verbPhrase}");
-#endif
-
             var result = new ResultOfNodeOfSemanticAnalyzer();
             var resultPrimaryRolesDict = result.PrimaryRolesDict;
             var resultSecondaryRolesDict = result.SecondaryRolesDict;
@@ -95,12 +91,6 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             verbAndObjectsMixRolesStorage.Assing(_objectsRolesStorage);
             verbAndObjectsMixRolesStorage.Assing(_verbsRolesStorage);
 
-#if DEBUG
-            //Context.Logger.Log($"_objectsRolesStorage = {_objectsRolesStorage}");
-            //Context.Logger.Log($"verbAndObjectsMix = {verbAndObjectsMixRolesStorage}");
-            //Context.Logger.Log($"_verbFullLogicalMeaning = {_verbFullLogicalMeaning.WritePODListToString()}");
-#endif
-
             if (_verbFullLogicalMeaning.Contains("event") || _verbFullLogicalMeaning.Contains("state"))
             {
                 var entitiesList = verbAndObjectsMixRolesStorage.GetByRole("entity");
@@ -109,10 +99,6 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
                 {
                     foreach (var entityConcept in entitiesList)
                     {
-#if DEBUG
-                        //Context.Logger.Log($"entityConcept = {entityConcept}");
-#endif
-
                         CreateObjectRelation(_concept, entityConcept);
                     }
                 }
@@ -146,10 +132,6 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
         {
             var kindOfSentenceItem = sentenceItem.KindOfSentenceItem;
 
-#if DEBUG
-            //Context.Logger.Log($"kindOfSentenceItem = {kindOfSentenceItem}");
-#endif
-
             switch (kindOfSentenceItem)
             {
                 case KindOfSentenceItem.Word:
@@ -163,10 +145,6 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
         private void ProcessVAsWord(Word word, ResultOfNodeOfSemanticAnalyzer result)
         {
-#if DEBUG
-            //Context.Logger.Log($"word = {word}");
-#endif
-
             var conceptualGraph = Context.ConceptualGraph;
 
             _concept = new ConceptCGNode();
@@ -177,20 +155,12 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
             var baseGrammaticalWordFrame = word.WordFrame;
 
-#if DEBUG
-            //Context.Logger.Log($"baseGrammaticalWordFrame = {baseGrammaticalWordFrame}");
-#endif
-
             _verbFullLogicalMeaning = baseGrammaticalWordFrame.FullLogicalMeaning;
 
             var resultPrimaryRolesDict = result.PrimaryRolesDict;
 
             foreach (var logicalMeaning in _verbFullLogicalMeaning)
             {
-#if DEBUG
-                //Context.Logger.Log($"logicalMeaning = {logicalMeaning}");
-#endif
-
                 PrimaryRolesDict.Add(logicalMeaning, _concept);
                 resultPrimaryRolesDict.Add(logicalMeaning, _concept);
                 _verbsRolesStorage.Add(logicalMeaning, _concept);
@@ -200,11 +170,6 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             {
                 var isAct = baseGrammaticalWordFrame.FullLogicalMeaning.Contains("act");
                 var isState = baseGrammaticalWordFrame.FullLogicalMeaning.Contains("state");
-
-#if DEBUG
-                //Context.Logger.Log($"isAct = {isAct}");
-                //Context.Logger.Log($"isState = {isState}");
-#endif
 
                 if (isAct)
                 {
@@ -234,10 +199,6 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
         {
             var kindOfSentenceItem = sentenceItem.KindOfSentenceItem;
 
-#if DEBUG
-            //Context.Logger.Log($"kindOfSentenceItem = {kindOfSentenceItem}");
-#endif
-
             switch (kindOfSentenceItem)
             {
                 case KindOfSentenceItem.NounPhrase:
@@ -251,16 +212,8 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
         private void ProcessObjectAsNounPhrase(NounPhrase nounPhrase, ResultOfNodeOfSemanticAnalyzer result)
         {
-#if DEBUG
-            //Context.Logger.Log($"nounPhrase = {nounPhrase}");
-#endif
-
             var nounPhraseNode = new NounPhraseNodeOfSemanticAnalyzer(Context, nounPhrase);
             var nounResult = nounPhraseNode.Run();
-
-#if DEBUG
-            //Context.Logger.Log($"nounResult = {nounResult}");
-#endif
 
             PrimaryRolesDict.Assing(nounResult.PrimaryRolesDict);
             _objectsRolesStorage.Assing(nounResult.PrimaryRolesDict);
@@ -269,10 +222,6 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
         private void ProcessPPAsBaseSentenceItem(BaseSentenceItem sentenceItem, ResultOfNodeOfSemanticAnalyzer result)
         {
             var kindOfSentenceItem = sentenceItem.KindOfSentenceItem;
-
-#if DEBUG
-            //Context.Logger.Log($"kindOfSentenceItem = {kindOfSentenceItem}");
-#endif
 
             switch (kindOfSentenceItem)
             {
@@ -287,18 +236,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
         private void ProcessPPAsPreOrPostpositionalPhrase(PreOrPostpositionalPhrase pp, ResultOfNodeOfSemanticAnalyzer result)
         {
-#if DEBUG
-            //Context.Logger.Log($"pp = {pp}");
-            //Context.Logger.Log($"pp.RootWordAsString = {pp.RootWordAsString}");
-            //Context.Logger.Log($"_verbPhrase.RootWordAsString = {_verbPhrase.RootWordAsString}");
-            //Context.Logger.Log($"pp.GetConditionalLogicalMeaning(_verbPhrase.RootWordAsString) = {pp.GetConditionalLogicalMeaning(_verbPhrase.RootWordAsString).WritePODListToString()}");
-#endif
-
             var conditionalLogicalMeaning = pp.GetConditionalLogicalMeaningAsSingleString(_verbPhrase.RootWordAsString);
-
-#if DEBUG
-            //Context.Logger.Log($"conditionalLogicalMeaning = {conditionalLogicalMeaning}");
-#endif
 
             if (string.IsNullOrWhiteSpace(conditionalLogicalMeaning))
             {
@@ -312,15 +250,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
             var nounOfPrepositionalResult = ProcessNPOfPPAsBaseSentenceItem(pp.NP);
 
-#if DEBUG
-            //Context.Logger.Log($"nounOfPrepositionalResult = {nounOfPrepositionalResult}");
-#endif
-
             var nounConcept = nounOfPrepositionalResult.RootConcept;
-
-#if DEBUG
-            //Context.Logger.Log($"nounConcept = {nounConcept}");
-#endif
 
             var ppRelation = new RelationCGNode();
             ppRelation.Parent = Context.ConceptualGraph;
@@ -334,10 +264,6 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
         {
             var kindOfSentenceItem = sentenceItem.KindOfSentenceItem;
 
-#if DEBUG
-            //Context.Logger.Log($"kindOfSentenceItem = {kindOfSentenceItem}");
-#endif
-
             switch (kindOfSentenceItem)
             {
                 case KindOfSentenceItem.NounPhrase:
@@ -350,10 +276,6 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
         private ResultOfNodeOfSemanticAnalyzer ProcessNPOfPPAsNounPhrase(NounPhrase nounPhrase)
         {
-#if DEBUG
-            //Context.Logger.Log($"nounPhrase = {nounPhrase}");
-#endif
-
             var nounPhraseNode = new NounPhraseNodeOfSemanticAnalyzer(Context, nounPhrase);
             return nounPhraseNode.Run();
         }

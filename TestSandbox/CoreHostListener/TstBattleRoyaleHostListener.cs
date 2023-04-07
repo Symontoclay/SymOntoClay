@@ -69,7 +69,6 @@ namespace TestSandbox.CoreHostListener
             {
                 _remainingDistance = _wholeDistance;
                 Sleep(10000, cancellationToken);
-                //Thread.Sleep(10000);
             }
             else
             {
@@ -77,7 +76,6 @@ namespace TestSandbox.CoreHostListener
 
                 if (_remainingDistance > 0)
                 {
-                    //Thread.Sleep(10000);
                     Sleep(10000, cancellationToken);
                 }
                 else
@@ -86,7 +84,6 @@ namespace TestSandbox.CoreHostListener
                 }
             }
 
-            //Thread.Sleep(10000);
 
             _logger.Log($"cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");
 

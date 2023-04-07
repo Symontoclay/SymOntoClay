@@ -53,15 +53,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 
         public ResultOfNode Run()
         {
-#if DEBUG
-            //_logger.Log($"_source = {_source}");
-#endif
-
             var kind = _source.Kind;
-
-#if DEBUG
-            //_logger.Log($"kind = {kind}");
-#endif
 
             switch (kind)
             {
@@ -77,15 +69,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
         {
             var conceptName = _source.Name;
 
-#if DEBUG
-            //_logger.Log($"conceptName = '{conceptName}'");
-#endif
-
             var adjectiveWordNode = new AdjectiveWordNode(conceptName, _logger, _wordsDict);
-
-#if DEBUG
-            //_logger.Log($"adjectiveWordNode.GetWord() = {adjectiveWordNode.GetWord()}");
-#endif
 
             return new ResultOfNode()
             {

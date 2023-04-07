@@ -82,10 +82,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var sb = new StringBuilder();
 
             sb.PrintObjProp(n, nameof(RuleInstance), RuleInstance);
-            //sb.PrintObjProp(n, nameof(SuperName), SuperName);
-            //sb.PrintObjProp(n, nameof(Rank), Rank);
 
-            //sb.AppendLine($"{spaces}{nameof(HasNot)} = {HasNot}");
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -98,10 +95,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var sb = new StringBuilder();
 
             sb.PrintShortObjProp(n, nameof(RuleInstance), RuleInstance);
-            //sb.PrintShortObjProp(n, nameof(SuperName), SuperName);
-            //sb.PrintShortObjProp(n, nameof(Rank), Rank);
 
-            //sb.AppendLine($"{spaces}{nameof(HasNot)} = {HasNot}");
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -114,10 +108,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var sb = new StringBuilder();
 
             sb.PrintBriefObjProp(n, nameof(RuleInstance), RuleInstance);
-            //sb.PrintBriefObjProp(n, nameof(SuperName), SuperName);
-            //sb.PrintBriefObjProp(n, nameof(Rank), Rank);
 
-            //sb.AppendLine($"{spaces}{nameof(HasNot)} = {HasNot}");
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

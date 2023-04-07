@@ -44,10 +44,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public Value TryResolveFromVarOrExpr(Value operand, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"operand = {operand}");
-#endif
-
             if (operand.IsStrongIdentifierValue)
             {
                 var identifier = operand.AsStrongIdentifierValue;
@@ -64,21 +60,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var leftOperand = pointRef.LeftOperand;
                 var rightOperand = pointRef.RightOperand;
 
-#if DEBUG
-                //Log($"leftOperand = {leftOperand}");
-                //Log($"rightOperand = {rightOperand}");
-#endif
-
                 if(leftOperand.IsHostValue)
                 {
                     return operand;
                 }
 
                 leftOperand = TryResolveFromVarOrExpr(leftOperand, localCodeExecutionContext);
-
-#if DEBUG
-                //Log($"leftOperand (after) = {leftOperand}");
-#endif
 
                 return leftOperand.GetMemberValue(rightOperand.AsStrongIdentifierValue);
             }

@@ -38,19 +38,8 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         /// <inheritdoc/>
         public Value Call(Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"leftOperand = {leftOperand}");
-            //Log($"rightOperand = {rightOperand}");
-            //Log($"annotation = {annotation}");
-#endif
-
             leftOperand = TryResolveFromVarOrExpr(leftOperand, localCodeExecutionContext);
             rightOperand = TryResolveFromVarOrExpr(rightOperand, localCodeExecutionContext);
-
-#if DEBUG
-            //Log($"leftOperand (after) = {leftOperand}");
-            //Log($"rightOperand (after) = {rightOperand}");
-#endif
 
             if (leftOperand.IsNullValue || rightOperand.IsNullValue)
             {

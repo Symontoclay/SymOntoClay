@@ -38,10 +38,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(CodeItemAstExpression expression)
         {
-#if DEBUG
-            //Log($"expression = {expression}");
-#endif
-
             CompilePushVal(expression.CodeItem);
 
             CompilePushAnnotation(expression);
@@ -69,9 +65,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 });
             }
 
-#if DEBUG
-            //DbgPrintCommands();
-#endif
         }
     }
 }

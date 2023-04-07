@@ -38,15 +38,7 @@ namespace DictionaryGenerator
             var resultList = new List<IrregularComparisonItem>();
 
             Read((string currentLine) => {
-#if DEBUG
-                //NLog.LogManager.GetCurrentClassLogger().Info($"Read currentLine = {currentLine}");
-#endif
-
                 var item = ReaderOfIrregularVerbItem.Read(currentLine);
-
-#if DEBUG
-                //NLog.LogManager.GetCurrentClassLogger().Info($"Read item = {item}");
-#endif
 
                 resultList.Add(new IrregularComparisonItem() {
                     BaseWord = item.RootWord,

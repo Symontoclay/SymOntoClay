@@ -48,16 +48,7 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public override bool ActivateIdleAction()
         {
-#if DEBUG
-            //Log("Begin");
-#endif
-
             var idleActionsList = _idleActionsResolver.Resolve(_localCodeExecutionContext);
-
-#if DEBUG
-            //Log($"idleActionsList.Count = {idleActionsList.Count}");
-            //Log($"idleActionsList = {idleActionsList.WriteListToString()}");
-#endif
 
             if (idleActionsList.IsNullOrEmpty())
             {
@@ -73,10 +64,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
             var index = _idleActionsRandom.Next(0, idleActionsList.Count - 1);
 
-#if DEBUG
-            //Log($"index = {index}");
-#endif
-
             ActivateIdleAction(idleActionsList[index]);
 
             return true;
@@ -84,10 +71,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void ActivateIdleAction(IdleActionItem idleActionItem)
         {
-#if DEBUG
-            //Log($"idleActionItem = {idleActionItem}");
-#endif
-
             var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
 
             var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
@@ -104,9 +87,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
             var taskValue = _context.CodeExecutor.ExecuteAsync(processInitialInfo);
 
-#if DEBUG
-            //Log($"taskValue = {taskValue}");
-#endif
         }
     }
 }

@@ -48,10 +48,6 @@ namespace SymOntoClay.Core.Internal.Storage
             storageSettigs.Enabled = settings.EnableCategories;
             storageSettigs.InheritancePublicFactsReplicator = settings.InheritancePublicFactsReplicator;
 
-#if DEBUG
-            //Log($"storageSettigs = {storageSettigs}");
-#endif
-
             _storage = new RealStorage(KindOfStorage.Categories, storageSettigs);
             _inheritanceStorage = _storage.InheritanceStorage;
         }
@@ -110,10 +106,6 @@ namespace SymOntoClay.Core.Internal.Storage
 
         private void NAddCategory(string category)
         {
-#if DEBUG
-            //Log($"category = {category}");
-#endif
-
             if(string.IsNullOrWhiteSpace(category))
             {
                 return;
@@ -126,11 +118,6 @@ namespace SymOntoClay.Core.Internal.Storage
 
             var categoryName = NameHelper.CreateName(category);
 
-#if DEBUG
-            //Log($"categoryName = {categoryName}");
-            //Log($"_selfName = {_selfName}");
-#endif
-
             var inheritanceItem = new InheritanceItem()
             {
                 IsSystemDefined = false
@@ -140,10 +127,6 @@ namespace SymOntoClay.Core.Internal.Storage
             inheritanceItem.SuperName = categoryName;
             inheritanceItem.Rank = new LogicalValue(1.0F);
 
-#if DEBUG
-            //Log($"inheritanceItem = {inheritanceItem}");
-#endif
-
             _categoriesDict.Add(categoryName, inheritanceItem);
 
             _inheritanceStorage.SetInheritance(inheritanceItem);
@@ -151,10 +134,6 @@ namespace SymOntoClay.Core.Internal.Storage
 
         private void NAddCategories(List<string> categories)
         {
-#if DEBUG
-            //Log($"categories = {categories.WritePODListToString()}");
-#endif
-
             foreach(var category in categories)
             {
                 NAddCategory(category);

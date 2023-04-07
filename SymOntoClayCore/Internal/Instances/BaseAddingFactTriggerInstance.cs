@@ -45,32 +45,17 @@ namespace SymOntoClay.Core.Internal.Instances
             _trigger = trigger;
             _baseResolver = context.DataResolversFactory.GetBaseResolver();
 
-#if DEBUG
-            //Log($"_trigger = {_trigger}");
-#endif
-
             var setBindingVariables = trigger.SetBindingVariables;
 
             if (setBindingVariables != null && setBindingVariables.Any())
             {
-#if DEBUG
-                //Log($"setBindingVariables = {setBindingVariables}");
-#endif
-
                 var varsList = setBindingVariables.GetTargetsList();
 
-#if DEBUG
-                //Log($"varsList = {varsList.WriteListToString()}");
-#endif
                 if(allowAddionalVariablesInBinding)
                 {
                     if (varsList.Any(p => p == StrongIdentifierValue.LogicalVarBlankIdentifier))
                     {
                         _factBindingVariable = setBindingVariables.GetDest(StrongIdentifierValue.LogicalVarBlankIdentifier);
-
-#if DEBUG
-                        //Log($"_factBindingVariable = {_factBindingVariable}");
-#endif
 
                         _hasFactBindingVariable = true;
                     }
@@ -94,10 +79,6 @@ namespace SymOntoClay.Core.Internal.Instances
                     }
 
                     _factBindingVariable = setBindingVariables.GetDest(StrongIdentifierValue.LogicalVarBlankIdentifier);
-
-#if DEBUG
-                    //Log($"_factBindingVariable = {_factBindingVariable}");
-#endif
 
                     _hasFactBindingVariable = true;
                 }
@@ -156,11 +137,6 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 var targetVarsList = varsList.First();
 
-#if DEBUG
-                //Log($"targetVarsList.Count = {targetVarsList.Count}");
-                //Log($"targetVarsList = {targetVarsList.WriteListToString()}");
-#endif
-
                 foreach (var varItem in targetVarsList)
                 {
                     targetVarStorage.Append(varItem);
@@ -174,15 +150,7 @@ namespace SymOntoClay.Core.Internal.Instances
             processInitialInfo.Instance = _parent;
             processInitialInfo.ExecutionCoordinator = _executionCoordinator;
 
-#if DEBUG
-            //Log($"processInitialInfo = {processInitialInfo}");
-#endif
-
             var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo).AsTaskValue;
-
-#if DEBUG
-            //Log($"task = {task}");
-#endif
 
             task.Wait();
 
@@ -190,19 +158,11 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if (result.KindOfResult == KindOfAddFactOrRuleResult.Accept)
             {
-#if DEBUG
-                //Log($"mutablePart = {mutablePart}");
-#endif
-
                 if (mutablePart.ObligationModality != null || mutablePart.SelfObligationModality != null)
                 {
                     result.MutablePart = mutablePart;
                 }
             }
-
-#if DEBUG
-            //Log($"result = {result}");
-#endif
 
             return result;
         }

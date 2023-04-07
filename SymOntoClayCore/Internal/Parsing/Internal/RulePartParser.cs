@@ -42,12 +42,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");
-            //Log($"_state = {_state}");
-#endif
-
             if(_currToken.TokenKind != TokenKind.OpenFigureBracket)
             {
                 _context.Recovery(_currToken);
@@ -57,10 +51,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             var parser = new LogicalExpressionParser(logicalExpressionParserContext, _terminatingTokenKind);
             parser.Run();
-
-#if DEBUG
-            //Log($"parser.Result = {parser.Result}");
-#endif
 
             if(logicalExpressionParserContext.AliasesDict.Any())
             {
@@ -74,11 +64,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _baseRulePart.Expression = parser.Result;
 
             var nextToken = _context.GetToken();
-
-#if DEBUG
-            //Log($"nextToken = {nextToken}");
-            //Log($"_terminatingTokenKind = {_terminatingTokenKind}");
-#endif
 
             if ((nextToken.TokenKind != _terminatingTokenKind) || nextToken.TokenKind == TokenKind.CloseFactBracket)
             {

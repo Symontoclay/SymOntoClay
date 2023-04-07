@@ -53,15 +53,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(List<AstStatement> statements, LoopCompilingContext loopCompilingContext, List<AstExpression> callSuperClassContructorsExpressions, KindOfCompilation kindOfCompilation)
         {
-#if DEBUG
-            //Log($"kindOfCompilation = {kindOfCompilation}");
-#endif
-
-#if DEBUG
-            //Log($"callSuperClassContructorsExpressions = {callSuperClassContructorsExpressions.WriteListToToHumanizedString()}");
-            //Log($"callSuperClassContructorsExpressions = {callSuperClassContructorsExpressions.WriteListToString()}");
-#endif
-
             if (kindOfCompilation == KindOfCompilation.Constructor)
             {
                 var callsSelf = false;
@@ -74,18 +65,10 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
                     foreach (var callCtorExpr in targetCtorsExprsList)
                     {
-#if DEBUG
-                        //Log($"callCtorExpr = {callCtorExpr.ToHumanizedString()}");
-                        //Log($"callCtorExpr = {callCtorExpr}");
-#endif
-
                         var node = new CallingFunctionNode(_context);
                         node.Run(callCtorExpr, KindOfCallingFunction.CallConstructor);
                         AddCommands(node.Result);
 
-#if DEBUG
-                        //DbgPrintCommands();
-#endif
                     }
                 }
 
@@ -99,23 +82,10 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     OperationCode = OperationCode.ClearStack
                 });
 
-#if DEBUG
-                //DbgPrintCommands();
-#endif
             }
-
-#if DEBUG
-            //Log($"statements = {statements.WriteListToToHumanizedString()}");
-            //Log($"statements = {statements.WriteListToString()}");
-#endif
 
             foreach (var statement in statements)
             {
-#if DEBUG
-                //Log($"statement = {statement.ToHumanizedString()}");
-                //Log($"statement = {statement}");
-#endif
-
                 var kind = statement.Kind;
 
                 switch(kind)

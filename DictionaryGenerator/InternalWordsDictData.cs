@@ -64,19 +64,6 @@ namespace DictionaryGenerator
                 sb.AppendLine($"{spaces}End {nameof(WordsDict)}");
             }
 
-            //if (NamesList == null)
-            //{
-            //    sb.AppendLine($"{spaces}{nameof(NamesList)} = null");
-            //}
-            //else
-            //{
-            //    sb.AppendLine($"{spaces}Begin {nameof(NamesList)}");
-            //    foreach (var name in NamesList)
-            //    {
-            //        sb.AppendLine($"{nextNSpaces}{nameof(name)} = {name}");
-            //    }
-            //    sb.AppendLine($"{spaces}End {nameof(NamesList)}");
-            //}
             return sb.ToString();
         }
     }

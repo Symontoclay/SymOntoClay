@@ -168,7 +168,6 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
             sb.PrintObjProp(n, nameof(PP), PP);
             sb.PrintObjProp(n, nameof(CP), CP);
 
-            //sb.PrintObjProp(n, nameof(), );
 
             sb.AppendLine($"{spaces}{nameof(Aspect)} = {Aspect}");
             sb.AppendLine($"{spaces}{nameof(Tense)} = {Tense}");

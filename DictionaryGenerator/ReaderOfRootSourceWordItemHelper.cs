@@ -87,40 +87,24 @@ namespace DictionaryGenerator
         {
             foreach (var item in source)
             {
-#if DEBUG
-                //NLog.LogManager.GetCurrentClassLogger().Info($"SeparateWords item = {item}");
-#endif
-
                 if(item.IsDigit)
                 {
-#if DEBUG
-                    //NLog.LogManager.GetCurrentClassLogger().Info("SeparateWords IsDigit");
-#endif
                     digitsWordsList.Add(item.Word);
                     continue;
                 }
 
                 if (item.IsName)
                 {
-#if DEBUG
-                    //NLog.LogManager.GetCurrentClassLogger().Info("SeparateWords IsName");
-#endif
                     namesWordsList.Add(item.Word);
                     continue;
                 }
 
                 if (item.IsComplex)
                 {
-#if DEBUG
-                    //NLog.LogManager.GetCurrentClassLogger().Info("SeparateWords IsComplex");
-#endif
                     complexWordsList.Add(item.Word);
                     continue;
                 }
 
-#if DEBUG
-                //NLog.LogManager.GetCurrentClassLogger().Info("SeparateWords Usual");
-#endif
                 usualWordsList.Add(item.Word);
             }
 

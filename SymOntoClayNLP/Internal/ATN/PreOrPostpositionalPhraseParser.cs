@@ -76,25 +76,13 @@ namespace SymOntoClay.NLP.Internal.ATN
         /// <inheritdoc/>
         public override void OnEnter()
         {
-#if DEBUG
-            //Log($"Begin");
-#endif
-
             _pp = new PreOrPostpositionalPhrase();
 
-#if DEBUG
-            //Log($"End");
-#endif
         }
 
         /// <inheritdoc/>
         public override void OnRun(ATNToken token)
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"token = {token}");
-#endif
-
             switch (_state)
             {
                 case State.Init:
@@ -114,10 +102,6 @@ namespace SymOntoClay.NLP.Internal.ATN
 
                                     foreach (var item in prepositionsList)
                                     {
-#if DEBUG
-                                        //Log($"item = {item}");
-#endif
-
                                         SetParser(new RunVariantDirective<PreOrPostpositionalPhraseParser>(State.WaitForP, ConvertToConcreteATNToken(token, item)));
                                     }
                                 }
@@ -145,10 +129,6 @@ namespace SymOntoClay.NLP.Internal.ATN
 
                                 var nounWordFramesList = wordFramesList.Where(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Noun);
 
-#if DEBUG
-                                //Log($"nounWordFramesList = {nounWordFramesList.WriteListToString()}");
-#endif
-
                                 if(nounWordFramesList.Any())
                                 {
                                     wasProcessed = true;
@@ -160,10 +140,6 @@ namespace SymOntoClay.NLP.Internal.ATN
                                 }
 
                                 var pronounWordFramesList = wordFramesList.Where(p => p.PartOfSpeech == GrammaticalPartOfSpeech.Pronoun);
-
-#if DEBUG
-                                //Log($"pronounWordFramesList = {pronounWordFramesList.WriteListToString()}");
-#endif
 
                                 if (pronounWordFramesList.Any())
                                 {
@@ -207,20 +183,11 @@ namespace SymOntoClay.NLP.Internal.ATN
         /// <inheritdoc/>
         public override void OnVariant(ConcreteATNToken token)
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"token = {token}");
-#endif
-
             switch (_state)
             {
                 case State.WaitForP:
                     {
                         _pp.P = ConvertToWord(token);
-
-#if DEBUG
-                        //Log($"_pp = {_pp.ToDbgString()}");
-#endif
 
                         _state = State.GotP;
 
@@ -248,11 +215,6 @@ namespace SymOntoClay.NLP.Internal.ATN
         /// <inheritdoc/>
         public override void OnReceiveReturn(BaseSentenceItem phrase)
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"phrase = {phrase.ToDbgString()}");
-#endif
-
             switch (_state)
             {
                 case State.GotNP:

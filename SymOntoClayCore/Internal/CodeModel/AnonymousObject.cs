@@ -79,7 +79,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             return $"{spaces}'AnonymousObject'";
-            //return $"{spaces}'{ToHumanizedString()}'";
         }
 
         /// <inheritdoc/>

@@ -56,10 +56,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
             var mainEntity = globalStorage.MetadataStorage.MainCodeEntity;
 
-#if DEBUG
-            //Log($"mainEntity = {mainEntity}");
-#endif
-
             if(mainEntity == null)
             {
                 return null;
@@ -91,15 +87,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             result.Name = name;
 
-#if DEBUG
-            //Log($"result.Name = {result.Name}");
-#endif
-
             FillUpAndRegisterInstance(result, superCodeEntity);
-
-#if DEBUG
-            //Log($"result = {result}");
-#endif
 
             return result;
         }
@@ -121,10 +109,6 @@ namespace SymOntoClay.Core.Internal.Instances
             inheritanceItem.Rank = new LogicalValue(1.0F);
 
             instance.InheritanceItems.Add(inheritanceItem);
-
-#if DEBUG
-            //Log($"instance = {instance}");
-#endif
 
             var globalStorage = _context.Storage.GlobalStorage;
 

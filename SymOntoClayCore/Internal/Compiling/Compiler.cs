@@ -48,22 +48,12 @@ namespace SymOntoClay.Core.Internal.Compiling
         /// <inheritdoc/>
         public CompiledFunctionBody Compile(List<AstStatement> statements)
         {
-#if DEBUG
-            //Log($"statements = {statements.WriteListToString()}");
-#endif
-
             return Compile(statements, null, KindOfCompilation.Usual);
         }
 
         /// <inheritdoc/>
         public CompiledFunctionBody Compile(List<AstStatement> statements, List<AstExpression> callSuperClassContructorsExpressions, KindOfCompilation kindOfCompilation)
         {
-#if DEBUG
-            //Log($"kindOfCompilation = {kindOfCompilation}");
-            //Log($"statements = {statements.WriteListToString()}");
-            //Log($"callSuperClassContructorsExpressions = {callSuperClassContructorsExpressions.WriteListToString()}");
-#endif
-
             var node = new CodeBlockNode(_context);
             node.Run(statements, null, callSuperClassContructorsExpressions, kindOfCompilation);
 
@@ -73,10 +63,6 @@ namespace SymOntoClay.Core.Internal.Compiling
         /// <inheritdoc/>
         public CompiledFunctionBody Compile(List<Field> fields)
         {
-#if DEBUG
-            //Log($"fields = {fields.WriteListToString()}");
-#endif
-
             var node = new FieldsNode(_context);
             node.Run(fields);
 
@@ -85,15 +71,7 @@ namespace SymOntoClay.Core.Internal.Compiling
 
         private CompiledFunctionBody ConvertToCompiledFunctionBody(List<IntermediateScriptCommand> resultCommandsList)
         {
-#if DEBUG
-            //Log($"resultCommandsList = {resultCommandsList.WriteListToString()}");
-#endif
-
             NumerateSequence(resultCommandsList);
-
-#if DEBUG
-            //Log($"resultCommandsList (2) = {resultCommandsList.WriteListToString()}");
-#endif
 
             var sehIndex = 0;
 
@@ -103,11 +81,6 @@ namespace SymOntoClay.Core.Internal.Compiling
             {
                 result.Commands.Add(command.Position, ConvertIntermediateScriptCommandToScriptCommand(command, result.SEH, ref sehIndex));
             }
-
-#if DEBUG
-            //Log($"result = {result}");
-            //Log($"result = {result.ToDbgString()}");
-#endif
 
             return result;
         }
@@ -125,10 +98,6 @@ namespace SymOntoClay.Core.Internal.Compiling
 
         private ScriptCommand ConvertIntermediateScriptCommandToScriptCommand(IntermediateScriptCommand initialCommand, Dictionary<int, SEHGroup> sehDict, ref int sehIndex)
         {
-#if DEBUG
-            //Log($"initialCommand = {initialCommand}");
-#endif
-
             var result = new ScriptCommand();
 
             result.OperationCode = initialCommand.OperationCode;
@@ -154,10 +123,6 @@ namespace SymOntoClay.Core.Internal.Compiling
 
                 foreach (var initialSEHItem in initialCommand.SEHGroup.Items)
                 {
-#if DEBUG
-                    //Log($"initialSEHItem = {initialSEHItem}");
-#endif
-
                     var sehItem = new SEHItem();
                     sehItemsList.Add(sehItem);
 
@@ -166,20 +131,9 @@ namespace SymOntoClay.Core.Internal.Compiling
                     sehItem.TargetPosition = initialSEHItem.JumpToMe.Position;
                 }
 
-#if DEBUG
-                //Log($"sehItemsList = {sehItemsList.WriteListToString()}");
-#endif
-
                 resultSEHGroup.Items = sehItemsList.OrderByDescending(p => p.Condition != null).ThenByDescending(p => p.VariableName != null && !p.VariableName.IsEmpty).ToList();
 
-#if DEBUG
-                //Log($"resultSEHGroup.Items = {resultSEHGroup.Items.WriteListToString()}");
-#endif
             }
-
-#if DEBUG
-            //Log($"result = {result}");
-#endif
 
             return result;
         }

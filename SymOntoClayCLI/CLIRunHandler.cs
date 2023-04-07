@@ -44,10 +44,6 @@ namespace SymOntoClay.CLI
 {
     public class CLIRunHandler : IDisposable
     {
-#if DEBUG
-        //private readonly Logger _logger = LogManager.GetCurrentClassLogger();
-#endif
-
         private IWorld world;
 
         public void Run(CLICommand command)
@@ -57,10 +53,6 @@ namespace SymOntoClay.CLI
                 ConsoleWrapper.WriteText($"Loading {command.InputFile}...");
             }
 
-#if DEBUG
-            //_logger.Info($"command = {command}");
-#endif
-
             var worldSpaceFilesSearcherOptions = new WorldSpaceFilesSearcherOptions()
             {
                 InputDir = command.InputDir,
@@ -69,10 +61,6 @@ namespace SymOntoClay.CLI
             };
 
             var targetFiles = WorldSpaceFilesSearcher.Run(worldSpaceFilesSearcherOptions);
-
-#if DEBUG
-            //_logger.Info($"targetFiles = {targetFiles}");
-#endif
 
             var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
 
@@ -100,29 +88,13 @@ namespace SymOntoClay.CLI
 
                 var socAssembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(p => p.GetName().Name == "soc").Location;
 
-#if DEBUG
-                //_logger.Info($"socAssembly = {socAssembly}");
-#endif
-
                 var assemblyPath = (new FileInfo(socAssembly)).DirectoryName;
 
-#if DEBUG
-                //_logger.Info($"assemblyPath = {assemblyPath}");
-#endif
-
                 var mainDictPath = Path.Combine(assemblyPath, "Dicts", "BigMainDictionary.dict");
-
-#if DEBUG
-                //_logger.Info($"mainDictPath = {mainDictPath}");
-#endif
 
                 nlpConverterProviderSettings.DictsPaths = new List<string>() { mainDictPath };
 
                 nlpConverterProviderSettings.CreationStrategy = CreationStrategy.Singleton;
-
-#if DEBUG
-                //_logger.Info($"nlpConverterProviderSettings = {nlpConverterProviderSettings}");
-#endif
 
                 var nlpConverterProvider = new NLPConverterProvider(nlpConverterProviderSettings);
 
@@ -140,23 +112,16 @@ namespace SymOntoClay.CLI
                 EnableRemoteConnection = true
             };
 
-#if DEBUG
-            //_logger.Info($"settings = {settings}");
-#endif
             instance.SetSettings(settings);
 
             var platformListener = this;
 
             var npcSettings = new HumanoidNPCSettings();
             npcSettings.Id = "#020ED339-6313-459A-900D-92F809CEBDC5";
-            //npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.host");
             npcSettings.LogicFile = targetFiles.LogicFile;
             npcSettings.HostListener = platformListener;
             npcSettings.PlatformSupport = new PlatformSupportCLIStub();
 
-#if DEBUG
-            //_logger.Info($"npcSettings = {npcSettings}");
-#endif
             var npc = instance.GetHumanoidNPC(npcSettings);
 
             instance.Start();

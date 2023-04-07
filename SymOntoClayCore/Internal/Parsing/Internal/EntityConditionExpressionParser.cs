@@ -81,13 +81,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");
-            //Log($"_state = {_state}");
-            //Log($"_isGroup = {_isGroup}");
-#endif
-
             switch (_state)
             {
                 case State.Init:
@@ -102,10 +95,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Entity:
                             {
                                 var name = NameHelper.CreateName(_currToken.Content);
-
-#if DEBUG
-                                //Log($"name = {name}");
-#endif
 
                                 var node = new EntityConditionExpressionNode();
                                 node.Kind = KindOfLogicalQueryNode.Entity;
@@ -135,10 +124,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var parser = new EntityConditionExpressionParser(_entityConditionExpressionParserContext);
                                 parser.Run();
 
-#if DEBUG
-                                //Log($"parser.Result = {parser.Result}");
-#endif
-
                                 _lastLogicalQueryNode.ParamsList.Add(parser.Result);
 
                                 _state = State.GotPredicateParameter;
@@ -156,10 +141,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                             var parser = new NullParser(_context);
                                             parser.Run();
-
-#if DEBUG
-                                            //Log($"parser.Result = {parser.Result}");
-#endif
 
                                             var node = new EntityConditionExpressionNode();
                                             node.Kind = KindOfLogicalQueryNode.Value;
@@ -182,31 +163,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                                 terminatingTokenKindList.Add(TokenKind.Comma);
                                             }
 
-#if DEBUG
-                                            //if (_currToken.Content == "distance")
-                                            //{
-                                            //throw new NotImplementedException();
-                                            //}
-#endif
-
-#if DEBUG
-                                            //Log($"nextToken = {nextToken}");
-#endif
-
                                             _context.Recovery(nextToken);
                                             _context.Recovery(_currToken);
 
 
                                             var parser = new EntityConditionExpressionParser(_entityConditionExpressionParserContext);
                                             parser.Run();
-
-#if DEBUG
-                                            //Log($"parser.Result = {parser.Result}");
-                                            //if (_currToken.Content == "distance")
-                                            //{
-                                            //    //throw new NotImplementedException();
-                                            //}
-#endif
 
                                             _lastLogicalQueryNode.ParamsList.Add(parser.Result);
 
@@ -225,9 +187,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var parser = new NumberParser(_context);
                                 parser.Run();
 
-#if DEBUG
-                                //Log($"parser.Result = {parser.Result}");
-#endif
                                 var node = new EntityConditionExpressionNode();
                                 node.Kind = KindOfLogicalQueryNode.Value;
                                 node.Value = parser.Result;
@@ -245,11 +204,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var parser = new ConditionalEntityParser(_context);
                                 parser.Run();
 
-#if DEBUG
-                                //Log($"parser.Result = {parser.Result}");
-#endif
-
-                                //throw new NotImplementedException();
 
                                 var node = new EntityConditionExpressionNode();
                                 node.Kind = KindOfLogicalQueryNode.Value;
@@ -298,10 +252,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case TokenKind.CloseRoundBracket:
-                            //if(!_isGroup)
-                            //{
-                            //    _context.Recovery(_currToken);
-                            //}
                             Exit();
                             break;
 
@@ -362,15 +312,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             {
                                 var value = NameHelper.CreateName(_currToken.Content);
 
-#if DEBUG
-                                //Log($"value = {value}");
-#endif
-
                                 _fuzzyLogicNonNumericSequenceValue.AddIdentifier(value);
 
-#if DEBUG
-                                //Log($"_fuzzyLogicNonNumericSequenceValue = {_fuzzyLogicNonNumericSequenceValue}");
-#endif
                             }
                             break;
 
@@ -401,10 +344,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var parser = new EntityConditionExpressionParser(_entityConditionExpressionParserContext, true);
             parser.Run();
 
-#if DEBUG
-            //Log($"parser.Result = {parser.Result}");
-#endif
-
             node.Left = parser.Result;
 
             var intermediateNode = new IntermediateAstNode(node);
@@ -419,24 +358,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var value = NameHelper.CreateName(_currToken.Content);
 
 #if DEBUG
-            //Log($"value = {value}");
 
-            //if(_currToken.Content == "NULL")
-            //{
-            //    throw new NotImplementedException();
-            //}
 #endif
 
             var nextToken = _context.GetToken();
 
 #if DEBUG
-            //Log($"nextToken = {nextToken}");
-            //Log($"value.KindOfName = {value.KindOfName}");
 
-            //if(nextToken.Content == "is")
-            //{
-            //throw new NotImplementedException();
-            //}
 #endif
 
             switch (value.KindOfName)
@@ -474,10 +402,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     break;
 
                                 default:
-#if DEBUG
-                                    //Log($"^)$$$$$");
-#endif
-
                                     _context.Recovery(nextToken);
                                     StartProcessingFuzzyLogicNonNumericSequenceValue(value);
                                     break;
@@ -535,15 +459,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessConceptOrQuestionVar(StrongIdentifierValue value)
         {
-#if DEBUG
-            //Log($"value = {value}");
-#endif
-
             var node = CreateExpressionNodeByStrongIdentifierValue(value);
-
-#if DEBUG
-            //Log($"node = {node}");
-#endif
 
             var intermediateNode = new IntermediateAstNode(node);
 
@@ -597,10 +513,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                 foreach (var unresolvedAlias in _unresolvedAiases)
                 {
-#if DEBUG
-                    //Log($"unresolvedAlias = {unresolvedAlias}");
-#endif
-
                     if (aliasesDict.ContainsKey(unresolvedAlias))
                     {
                         throw new Exception($"Variable {unresolvedAlias.NameValue} has been bound multiple time.");
@@ -613,10 +525,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             }
 
             var priority = OperatorsHelper.GetPriority(KindOfOperator.Predicate);
-
-#if DEBUG
-            //Log($"priority = {priority}");
-#endif
 
             var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.UnaryOperator, priority);
 
@@ -673,10 +581,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             }
 
             var priority = OperatorsHelper.GetPriority(kind);
-
-#if DEBUG
-            //Log($"priority = {priority}");
-#endif
 
             var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.BinaryOperator, priority);
 

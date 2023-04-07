@@ -68,7 +68,6 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         {
             base.DiscoverAllAnnotations(result);
 
-            //Name?.DiscoverAllAnnotations(result);
         }
 
         /// <inheritdoc/>

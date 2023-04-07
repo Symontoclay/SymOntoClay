@@ -40,10 +40,6 @@ namespace SymOntoClay.Core.Internal.Helpers
 {
     public static class EngineContextHelper
     {
-#if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         public static EngineContext CreateAndInitContext(EngineSettings settings)
         {
             var context = new EngineContext(settings.Logger);
@@ -142,11 +138,6 @@ namespace SymOntoClay.Core.Internal.Helpers
 
         private static void BaseInitBaseCoreContext(BaseCoreContext context, BaseCoreSettings settings)
         {
-#if DEBUG
-            //_gbcLogger.Info($"context = {context}");
-            //_gbcLogger.Info($"settings.DateTimeProvider != null = {settings.DateTimeProvider != null}");
-#endif
-
             context.DateTimeProvider = settings.DateTimeProvider;
         }
     }

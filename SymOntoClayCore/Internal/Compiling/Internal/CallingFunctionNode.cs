@@ -59,11 +59,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(CallingFunctionAstExpression expression, KindOfCallingFunction kindOfCallingFunction)
         {
-#if DEBUG
-            //Log($"expression = {expression}");
-            //Log($"isConstructor = {isConstructor}");
-#endif
-
             var kindOfParameters = KindOfParameters.NoParameters;
 
             var command = new IntermediateScriptCommand();
@@ -79,10 +74,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
                 var isNamed = expression.Parameters.Any(p => p.IsNamed);
 
-#if DEBUG
-                //Log($"isNamed = {isNamed}");
-#endif
-
                 if(isNamed)
                 {
                     kindOfParameters = KindOfParameters.NamedParameters;
@@ -94,10 +85,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
                 foreach(var parameter in expression.Parameters)
                 {
-#if DEBUG
-                    //Log($"parameter = {parameter}");
-#endif
-
                     if (isNamed)
                     {
                         var node = new ExpressionNode(_context);
@@ -121,10 +108,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             AddCommands(leftNode.Result);
 
             CompilePushAnnotation(expression);
-
-#if DEBUG
-            //Log($"kindOfParameters = {kindOfParameters}");
-#endif
 
             switch(kindOfCallingFunction)
             {
@@ -258,17 +241,9 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     throw new ArgumentOutOfRangeException(nameof(kindOfCallingFunction), kindOfCallingFunction, null);
             }
 
-#if DEBUG
-            //Log($"command = {command}");
-#endif
-
             AddCommand(command);
 
             var annotationSystemEventsDict = AnnotationsHelper.GetAnnotationSystemEventsDict(expression);
-
-#if DEBUG
-            //Log($"annotationSystemEventsDict?.Count = {annotationSystemEventsDict?.Count}");
-#endif
 
             if (annotationSystemEventsDict.Any())
             {
@@ -277,9 +252,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     OperationCode = OperationCode.ExecCallEvent
                 });
 
-#if DEBUG
-                //DbgPrintCommands();
-#endif
             }
         }
     }

@@ -57,10 +57,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
         public void AddEndpoint(IEndpointInfo endpointInfo)
         {
-#if DEBUG
-            //Log($"endpointInfo = {endpointInfo}");
-#endif
-
             if(endpointInfo.KindOfEndpoint == KindOfEndpointInfo.GenericCall)
             {
                 _generallCallEndPoint = endpointInfo;
@@ -68,10 +64,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             }
 
             var endPointName = endpointInfo.Name;
-
-#if DEBUG
-            //Log($"endPointName = {endPointName}");
-#endif
 
             var paramsCountList = GetParamsCountList(endpointInfo);
 
@@ -91,10 +83,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
                 foreach (var count in paramsCountList)
                 {
-#if DEBUG
-                    //Log($"count = {count}");
-#endif
-
                     List<IEndpointInfo> targetList = null;
 
                     if (targetDict.ContainsKey(count))
@@ -149,25 +137,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"endPointName = '{endPointName}'");
-                //Log($"paramsCount = {paramsCount}");
-#endif
-
                 if (_endPointsDict.ContainsKey(endPointName))
                 {
                     var targetDict = _endPointsDict[endPointName];
 
-#if DEBUG
-                    //Log($"targetDict.Count = {targetDict.Count}");
-#endif
-
                     if (targetDict.ContainsKey(paramsCount))
                     {
-#if DEBUG
-                        //Log($"targetDict.ContainsKey(paramsCount) !!!");
-#endif
-
                         return targetDict[paramsCount];
                     }
                 }

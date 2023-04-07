@@ -69,16 +69,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public float GetRawInheritanceRank(StrongIdentifierValue subName, StrongIdentifierValue superName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"subName = {subName}");
-            //Log($"superName = {superName}");
-#endif
-
             var weightedInheritanceItemsList = GetWeightedInheritanceItems(subName, localCodeExecutionContext, options);
-
-#if DEBUG
-            //Log($"weightedInheritanceItemsList = {weightedInheritanceItemsList.WriteListToString()}");
-#endif
 
             if (!weightedInheritanceItemsList.Any())
             {
@@ -86,10 +77,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             var targetWeightedInheritanceItemsList = weightedInheritanceItemsList.Where(p => p.SuperName.Equals(superName)).ToList();
-
-#if DEBUG
-            //Log($"targetWeightedInheritanceItemsList = {targetWeightedInheritanceItemsList.WriteListToString()}");
-#endif
 
             if (!targetWeightedInheritanceItemsList.Any())
             {
@@ -126,21 +113,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(StrongIdentifierValue subName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
-#endif
-
             var storage = localCodeExecutionContext.Storage;
 
             var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
-
-#if DEBUG
-            //Log($"storagesList.Count = {storagesList.Count}");
-            //foreach (var tmpStorage in storagesList)
-            //{
-            //    Log($"tmpStorage.Storage = {tmpStorage.Storage}");
-            //}
-#endif
 
             var rawResult = new Dictionary<StrongIdentifierValue, WeightedInheritanceItem>();
 
@@ -149,27 +124,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 GetWeightedInheritanceItemsBySubName(subName, localCodeExecutionContext, rawResult, 1, 0, storagesList, !(options?.OnlyDirectInheritance ?? false));
             }
 
-#if DEBUG
-//            Log($"rawResult.Count = {rawResult.Count}");
-//            foreach (var resultItem in rawResult)
-//            {
-//                Log($"resultItem.Key = {resultItem.Key}");
-//                Log($"resultItem.Value.Rank = {resultItem.Value.Rank}");
-//                Log($"resultItem.Value.Distance = {resultItem.Value.Distance}");
-//            }
-#endif
-
             foreach (var resultItem in rawResult.ToList())
             {
-#if DEBUG
-                //Log($"resultItem.Key = {resultItem.Key}");
-#endif
-
                 var synonymsList = _synonymsResolver.GetSynonyms(resultItem.Key, storagesList);
-
-#if DEBUG
-                //Log($"synonymsList = {synonymsList.WriteListToString()}");
-#endif
 
                 if(!synonymsList.IsNullOrEmpty())
                 {
@@ -178,16 +135,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                     foreach (var synonym in synonymsList)
                     {
-#if DEBUG
-                        //Log($"synonym = {synonym}");
-#endif
-
                         if (rawResult.ContainsKey(synonym))
                         {
-#if DEBUG
-                            //Log("rawResult.ContainsKey(synonym)");
-#endif
-
                             var existingResultItem = rawResult[synonym];
 
                             if(existingResultItem.Rank < rank)
@@ -202,10 +151,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         }
                         else
                         {
-#if DEBUG
-                            //Log("not rawResult.ContainsKey(synonym)");
-#endif
-
                             var newResultItem = new WeightedInheritanceItem();
                             newResultItem.Rank = rank;
                             newResultItem.Distance = distance;
@@ -216,16 +161,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     }
                 }
             }
-
-#if DEBUG
-            //Log($"rawResult.Count (after) = {rawResult.Count}");
-            //foreach (var resultItem in rawResult)
-            //{
-            //    Log($"resultItem.Key = {resultItem.Key}");
-            //    Log($"resultItem.Value.Rank = {resultItem.Value.Rank}");
-            //    Log($"resultItem.Value.Distance = {resultItem.Value.Distance}");
-            //}
-#endif
 
             var result = rawResult.Select(p => p.Value).ToList();
 
@@ -272,30 +207,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private void GetWeightedInheritanceItemsBySubName(StrongIdentifierValue subName, ILocalCodeExecutionContext localCodeExecutionContext, Dictionary<StrongIdentifierValue, WeightedInheritanceItem> result, float currentRank, uint currentDistance, List<StorageUsingOptions> storagesList, bool allInheritance)
         {
-#if DEBUG
-            //Log($"subName = {subName}");
-            //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
-            //Log($"currentRank = {currentRank}");
-            //Log($"currentDistance = {currentDistance}");
-            //Log($"result.Count = {result.Count}");
-            //foreach(var resultItem in result)
-            //{
-            //    Log($"resultItem.Key = {resultItem.Key}");
-            //    Log($"resultItem.Value.Rank = {resultItem.Value.Rank}");
-            //    Log($"resultItem.Value.Distance = {resultItem.Value.Distance}");
-            //}
-#endif
-
             currentDistance++;
-#if DEBUG
-            //Log($"currentDistance (after) = {currentDistance}");
-#endif
-
             var rawList = GetRawList(subName, storagesList);
-
-#if DEBUG
-            //Log($"rawList = {rawList.WriteListToString()}");
-#endif
 
             if(!rawList.Any())
             {
@@ -303,10 +216,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             var filteredList = Filter(rawList);
-
-#if DEBUG
-            //Log($"filteredList = {filteredList.WriteListToString()}");
-#endif
 
             if(!filteredList.Any())
             {
@@ -317,15 +226,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 var targetItem = filteredItem.ResultItem;
 
-#if DEBUG
-                //Log($"targetItem = {targetItem}");
-#endif
-
                 var resolvedRankValue = _logicalValueLinearResolver.Resolve(targetItem.Rank, localCodeExecutionContext, ResolverOptions.GetDefaultOptions(), true);
-
-#if DEBUG
-                //Log($"resolvedRankValue = {resolvedRankValue}");
-#endif
 
                 var systemValue = resolvedRankValue.SystemValue;
 
@@ -336,20 +237,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 var calculatedRank = currentRank * systemValue.Value;
 
-#if DEBUG
-                //Log($"calculatedRank = {calculatedRank}");
-#endif
-
                 if(calculatedRank == 0)
                 {
                     continue;
                 }
 
                 var superName = targetItem.SuperName;
-
-#if DEBUG
-                //Log($"superName = {superName}");
-#endif
 
                 if (result.ContainsKey(superName))
                 {
@@ -362,9 +255,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         item.OriginalItem = targetItem;
                     }
 
-#if DEBUG
-                    //Log($"item (w 1)= {item}");
-#endif
                 }
                 else
                 {
@@ -373,10 +263,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     item.Distance = currentDistance;
                     item.Rank = calculatedRank;
                     item.OriginalItem = targetItem;
-
-#if DEBUG
-                    //Log($"item (w 2) = {item}");
-#endif
 
                     result[superName] = item;
                 }
@@ -390,10 +276,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private List<WeightedInheritanceResultItemWithStorageInfo<InheritanceItem>> GetRawList(StrongIdentifierValue subName, List<StorageUsingOptions> storagesList)
         {
-#if DEBUG
-            //Log($"subName = {subName}");
-#endif
-
             if (!storagesList.Any())
             {
                 return new List<WeightedInheritanceResultItemWithStorageInfo<InheritanceItem>>();
@@ -434,11 +316,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public uint? GetDistance(IList<StrongIdentifierValue> typeNamesList, Value value, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"typeNamesList = {typeNamesList.WriteListToString()}");
-            //Log($"value = {value}");
-#endif
-
             if(typeNamesList.IsNullOrEmpty())
             {
                 return TopTypeDistance;
@@ -468,20 +345,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public uint? GetDistance(StrongIdentifierValue typeName, Value value, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"typeName = {typeName}");
-            //Log($"value = {value}");
-            //if(value.KindOfValue == KindOfValue.StrongIdentifierValue)
-            //{
-            //    throw new NotImplementedException();
-            //}
-#endif
-
             var biltInSuperTypesList = value.BuiltInSuperTypes;
-
-#if DEBUG
-            //Log($"biltInSuperTypesList = {biltInSuperTypesList.WriteListToString()}");
-#endif
 
             if(biltInSuperTypesList.Contains(typeName))
             {
@@ -496,20 +360,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var buildInSuperType in biltInSuperTypesList)
             {
-#if DEBUG
-                //Log($"typeName = {typeName}");
-                //Log($"buildInSuperType = {buildInSuperType}");
-#endif
-
-#if DEBUG
-                //Log($"options = {options}");
-#endif
-
                 var weightedInheritanceItemsList = GetWeightedInheritanceItems(buildInSuperType, localCodeExecutionContext, newOptions);
-
-#if DEBUG
-                //Log($"weightedInheritanceItemsList = {weightedInheritanceItemsList.WriteListToString()}");
-#endif
 
                 if(!weightedInheritanceItemsList.Any())
                 {
@@ -517,10 +368,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
                 var targetWeightedInheritanceItemsList = weightedInheritanceItemsList.Where(p => p.SuperName.Equals(typeName)).ToList();
-
-#if DEBUG
-                //Log($"targetWeightedInheritanceItemsList = {targetWeightedInheritanceItemsList.WriteListToString()}");
-#endif
 
                 if (!targetWeightedInheritanceItemsList.Any())
                 {
@@ -540,16 +387,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public uint? GetDistance(StrongIdentifierValue subName, StrongIdentifierValue superName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"subName = {subName}");
-            //Log($"superName = {superName}");
-#endif
-
             var weightedInheritanceItemsList = GetWeightedInheritanceItems(subName, localCodeExecutionContext, options);
-
-#if DEBUG
-            //Log($"weightedInheritanceItemsList = {weightedInheritanceItemsList.WriteListToString()}");
-#endif
 
             if (!weightedInheritanceItemsList.Any())
             {
@@ -557,10 +395,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             var targetWeightedInheritanceItemsList = weightedInheritanceItemsList.Where(p => p.SuperName.Equals(superName)).ToList();
-
-#if DEBUG
-            //Log($"targetWeightedInheritanceItemsList = {targetWeightedInheritanceItemsList.WriteListToString()}");
-#endif
 
             if (!targetWeightedInheritanceItemsList.Any())
             {

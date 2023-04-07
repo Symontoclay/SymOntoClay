@@ -59,12 +59,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");            
-#endif
-
             switch (_state)
             {
                 case State.Init:
@@ -174,10 +168,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var parser = new AnnotationParser(_context);
             parser.Run();
 
-#if DEBUG
-            //Log($"parser.Result = {parser.Result}");
-#endif
-
             _currentItem.RuleInstance.AddAnnotation(parser.Result);
         }
 
@@ -187,20 +177,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var parser = new CodeExpressionStatementParser(_context);
             parser.Run();
 
-#if DEBUG
-            //Log($"parser.Result = {parser.Result}");
-            //Log($"parser.Result = {parser.Result.ToHumanizedString()}");
-#endif
-
             _currentItem = CreateIdleActionItem();
             Result.Add(_currentItem);
 
             _currentItem.Statements.Add(parser.Result);
-
-#if DEBUG
-            //Log($"_currentItem = {_currentItem}");
-            //Log($"_currentItem = {_currentItem.ToHumanizedString()}");
-#endif
 
             _currentItem.CompiledFunctionBody = _context.Compiler.Compile(_currentItem.Statements);
 
@@ -215,11 +195,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             parser.Run();
 
             var ruleInstanceItem = parser.Result;
-
-#if DEBUG
-            //Log($"ruleInstanceItem = {ruleInstanceItem}");
-            //Log($"ruleInstanceItem = {ruleInstanceItem.ToHumanizedString()}");
-#endif
 
             _currentItem = CreateIdleActionItem();
             Result.Add(_currentItem);

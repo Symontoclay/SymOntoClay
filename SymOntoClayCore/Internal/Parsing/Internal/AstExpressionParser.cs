@@ -46,9 +46,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             Result = _nodePoint.BuildExpr<AstExpression>();
 
-#if DEBUG
-            //Log($"Result.Expression = {Result.Expression}");
-#endif
         }
 
         private IntermediateAstNodePoint _nodePoint = new IntermediateAstNodePoint();
@@ -60,15 +57,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_currToken = {_currToken}");
-            //Log($"_hasSomething = {_hasSomething}");
-            //Log($"_lastIsOperator?.ToHumanizedString() = {_lastIsOperator?.ToHumanizedString()}");
-            //Log($"_lastBinaryOperator?.ToHumanizedString() = {_lastBinaryOperator?.ToHumanizedString()}");
-            //Log($"_nodePoint = {_nodePoint}");
-            //Log($"_nodePoint.BuildExpr<AstExpression>()?.ToHumanizedString() = {_nodePoint.BuildExpr<AstExpression>()?.ToHumanizedString()}");
-#endif
-
             switch (_currToken.TokenKind)
             {
                 case TokenKind.Number:
@@ -212,10 +200,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var parser = new AnonymousObjectPaser(_context);
             parser.Run();
 
-#if DEBUG
-            //Log($"parser.Result = {parser.Result}");
-#endif
-
             var node = new CodeItemAstExpression() { CodeItem = parser.Result };
 
             var intermediateNode = new IntermediateAstNode(node);
@@ -225,44 +209,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessAnnotation()
         {
-#if DEBUG
-            //Log($"_nodePoint = {_nodePoint}");
-#endif
-
             _context.Recovery(_currToken);
 
             var parser = new AnnotationParser(_context);
             parser.Run();
 
-#if DEBUG
-            //Log($"parser.Result = {parser.Result}");
-#endif
-
             var currentAstNode = _nodePoint.CurrentNode.AstNode;
-
-#if DEBUG
-            //Log($"currentAstNode = {currentAstNode}");
-#endif
 
             var annotatedItem = (AnnotatedItem)currentAstNode;
 
-#if DEBUG
-            //Log($"annotatedItem = {annotatedItem}");
-#endif
-
             annotatedItem.AddAnnotation(parser.Result);
 
-#if DEBUG
-            //Log($"annotatedItem (after) = {annotatedItem}");
-#endif
         }
 
         private void ProcessRuleOrFact()
         {
-#if DEBUG
-            //Log($"_nodePoint = {_nodePoint}");
-#endif
-
             if (_nodePoint.CurrentNode != null && _nodePoint.CurrentNode.Kind == KindOfIntermediateAstNode.Leaf)
             {
                 throw new UnexpectedTokenException(_currToken);
@@ -278,10 +239,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             parser.Run();
 
             var ruleInstanceItem = parser.Result;
-
-#if DEBUG
-            //Log($"ruleInstanceItem = {ruleInstanceItem}");
-#endif
 
             var node = new ConstValueAstExpression();
             node.Value = ruleInstanceItem;
@@ -319,10 +276,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             var parser = new NullParser(_context);
             parser.Run();
-
-#if DEBUG
-            //Log($"parser.Result = {parser.Result}");
-#endif
 
             var node = new ConstValueAstExpression();
             node.Value = parser.Result;
@@ -369,10 +322,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessWordToken()
         {
-#if DEBUG
-            //Log("Begin");
-#endif
-
             switch (_currToken.KeyWordTokenKind)
             {
                 case KeyWordTokenKind.Unknown:
@@ -398,10 +347,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case KeyWordTokenKind.Insert:
                     {
                         var nextToken = _context.GetToken();
-
-#if DEBUG
-                        //Log($"nextToken = {nextToken}");
-#endif
 
                         switch (nextToken.TokenKind)
                         {
@@ -429,10 +374,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         var predictedKeyWordTokenKind = PredictKeyWordTokenKind();
 
-#if DEBUG
-                        //Log($"predictedKeyWordTokenKind = {predictedKeyWordTokenKind}");
-#endif
-
                         switch (predictedKeyWordTokenKind)
                         {
                             case KeyWordTokenKind.Unknown:
@@ -452,10 +393,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case KeyWordTokenKind.New:
                     {
                         var predictedKeyWordTokenKind = PredictKeyWordTokenKind();
-
-#if DEBUG
-                        //Log($"predictedKeyWordTokenKind = {predictedKeyWordTokenKind}");
-#endif
 
                         switch (predictedKeyWordTokenKind)
                         {
@@ -489,10 +426,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var parser = new NewExpressionParser(_context);
             parser.Run();
 
-#if DEBUG
-            //Log($"parser.Result = {parser.Result}");
-#endif
-
             var intermediateNode = new IntermediateAstNode(parser.Result);
 
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
@@ -504,24 +437,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _lastIsOperator = null;
             _hasSomething = true;
 
-            //_context.Recovery(_currToken);
             var parser = new LogicalQueryOperationParser(_context);
             parser.Run();
 
             var resultItem = parser.Result;
 
-#if DEBUG
-            //Log($"resultItem = {resultItem}");
-#endif
-
             var node = new UnaryOperatorAstExpression();
             node.KindOfOperator = KindOfOperator.CallLogicalQuery;
 
             var priority = OperatorsHelper.GetPriority(node.KindOfOperator);
-
-#if DEBUG
-            //Log($"priority = {priority}");
-#endif
 
             var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.UnaryOperator, priority);
 
@@ -549,19 +473,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var function = parser.Result;
             function.TypeOfAccess = TypeOfAccess.Local;
 
-#if DEBUG
-            //Log($"function = {function}");
-#endif
-
             var expr = new CodeItemAstExpression() { CodeItem = function };
 
             var intermediateNode = new IntermediateAstNode(expr);
 
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
-
-#if DEBUG
-            //Log($"function.IsAnonymous = {function.IsAnonymous}");
-#endif
 
             if (!function.IsAnonymous)
             {
@@ -579,10 +495,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             var parser = new VarDeclParser(_context);
             parser.Run();
-
-#if DEBUG
-            //Log($"parser.Result = {parser.Result}");
-#endif
 
             var intermediateNode = new IntermediateAstNode(parser.Result);
 
@@ -609,11 +521,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             var currentNode = _nodePoint.CurrentNode;
 
-#if DEBUG
-            //Log($"currentNode?.Kind = {currentNode?.Kind}");
-            //Log($"currentNode?.AstNode.GetType().FullName = {currentNode?.AstNode.GetType().FullName}");
-#endif
-
             if (currentNode == null || (currentNode.Kind == KindOfIntermediateAstNode.UnaryOperator && !(currentNode.AstNode is CallingFunctionAstExpression)) || currentNode.Kind == KindOfIntermediateAstNode.BinaryOperator)
             {
                 ProcessGroup();
@@ -632,15 +539,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var parser = new AstExpressionParser(_context, TokenKind.CloseRoundBracket);
             parser.Run();
 
-#if DEBUG
-            //Log($"parser.Result = {parser.Result}");
-#endif
-
             var nextToken = _context.GetToken();
-
-#if DEBUG
-            //Log($"nextToken = {nextToken}");
-#endif
 
             if (nextToken.TokenKind != TokenKind.CloseRoundBracket)
             {
@@ -708,10 +607,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessMinus()
         {
-#if DEBUG
-            //Log($"_lastBinaryOperator = {_lastBinaryOperator}");
-#endif
-
             if (_lastBinaryOperator == null)
             {
                 ProcessUsualBinaryOperator(KindOfOperator.Sub);
@@ -777,10 +672,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             var priority = OperatorsHelper.GetPriority(kindOfOperator);
 
-#if DEBUG
-            //Log($"priority = {priority}");
-#endif
-
             var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.BinaryOperator, priority);
 
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
@@ -816,10 +707,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             var priority = OperatorsHelper.GetPriority(kindOfOperator);
 
-#if DEBUG
-            //Log($"priority = {priority}");
-#endif
-
             var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.UnaryOperator, priority);
 
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
@@ -827,10 +714,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessNot()
         {
-#if DEBUG
-            //Log($"_lastIsOperator = {_lastIsOperator}");
-#endif
-
             if (_lastIsOperator == null)
             {
                 ProcessNotOperator();
@@ -859,10 +742,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             var name = NameHelper.CreateName(_currToken.Content);
 
-#if DEBUG
-            //Log($"name = {name}");
-#endif
-
             var node = new ConstValueAstExpression();
             node.Value = name;
 
@@ -883,15 +762,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             var node = parser.Result;
 
-#if DEBUG
-            //Log($"node = {node}");
-#endif
-
             var priority = OperatorsHelper.GetPriority(KindOfOperator.CallFunction);
-
-#if DEBUG
-            //Log($"priority = {priority}");
-#endif
 
             var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.UnaryOperator, priority);
 

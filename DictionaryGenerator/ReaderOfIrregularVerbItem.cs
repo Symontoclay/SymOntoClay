@@ -30,10 +30,6 @@ namespace DictionaryGenerator
     {
         public static IrregularVerbItem Read(string source)
         {
-#if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info($"Read source = {source}");
-#endif
-
             var n = 0;
 
             var result = new IrregularVerbItem();
@@ -47,10 +43,6 @@ namespace DictionaryGenerator
             {
                 var charNum = (int)ch;
 
-#if DEBUG
-                //NLog.LogManager.GetCurrentClassLogger().Info($"Read ch = {ch} charNum = {charNum}");
-#endif
-
                 if (charNum == 32)
                 {
                     if (lastCharNum != charNum)
@@ -62,9 +54,6 @@ namespace DictionaryGenerator
 
                     strValue = sb.ToString();
 
-#if DEBUG
-                    //NLog.LogManager.GetCurrentClassLogger().Info($"Read strValue = {strValue}");
-#endif
                     switch (n)
                     {
                         case 1:
@@ -87,10 +76,6 @@ namespace DictionaryGenerator
             }
 
             strValue = sb.ToString();
-
-#if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info($"Read strValue = {strValue}");
-#endif
 
             result.ParticleForm = strValue.Trim();
 

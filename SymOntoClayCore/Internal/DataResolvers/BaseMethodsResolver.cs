@@ -55,15 +55,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         protected T EnumerableLocalCodeExecutionContext<T>(ILocalCodeExecutionContext localCodeExecutionContext, KindOfEnumerableLocalCodeExecutionContext kindOfEnumerableLocalCodeExecutionContext, Func<ILocalCodeExecutionContext, T> func)
         {
-#if DEBUG
-            //Log($"kindOfEnumerableLocalCodeExecutionContext = {kindOfEnumerableLocalCodeExecutionContext}");
-#endif
-
             var result = func(localCodeExecutionContext);
-
-#if DEBUG
-            //Log($"result = {result}");
-#endif
 
             if(kindOfEnumerableLocalCodeExecutionContext == KindOfEnumerableLocalCodeExecutionContext.NoEnumeration)
             {
@@ -78,10 +70,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             while(true)
             {
                 localCodeExecutionContext = GetParentLocalCodeExecutionContext(localCodeExecutionContext, kindOfEnumerableLocalCodeExecutionContext);
-
-#if DEBUG
-                //Log($"localCodeExecutionContext (next) = {localCodeExecutionContext}");
-#endif
 
                 if(localCodeExecutionContext == null)
                 {
@@ -99,10 +87,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private ILocalCodeExecutionContext GetParentLocalCodeExecutionContext(ILocalCodeExecutionContext localCodeExecutionContext, KindOfEnumerableLocalCodeExecutionContext kindOfEnumerableLocalCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"kindOfEnumerableLocalCodeExecutionContext = {kindOfEnumerableLocalCodeExecutionContext}");
-#endif
-
             switch (kindOfEnumerableLocalCodeExecutionContext)
             {
                 case KindOfEnumerableLocalCodeExecutionContext.Serial:
@@ -114,22 +98,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                         while((localCodeExecutionContext = localCodeExecutionContext.Parent) != null)
                         {
-#if DEBUG
-                            //Log($"localCodeExecutionContext (1) = {localCodeExecutionContext}");
-#endif
-
                             if(localCodeExecutionContext.Holder == initialHolder)
                             {
-#if DEBUG
-                                //Log($"continue");
-#endif
-
                                 continue;
                             }
-
-#if DEBUG
-                            //Log($"Yes!!!!!");
-#endif
 
                             return localCodeExecutionContext;
                         }
@@ -150,10 +122,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             foreach (var function in source)
             {
                 var rankMatrix = IsFit(function.ResultItem, namedParameters, localCodeExecutionContext, options);
-
-#if DEBUG
-                //Log($"rankMatrix = {rankMatrix.WritePODListToString()}");
-#endif
 
                 if (rankMatrix == null)
                 {
@@ -177,10 +145,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 var rankMatrix = IsFit(function.ResultItem, positionedParameters, localCodeExecutionContext, options);
 
-#if DEBUG
-                //Log($"rankMatrix = {rankMatrix.WritePODListToString()}");
-#endif
-
                 if (rankMatrix == null)
                 {
                     continue;
@@ -196,31 +160,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         protected List<uint> IsFit(IExecutable function, IDictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
-#endif
-
             var result = new List<uint>();
 
             var countOfUsedParameters = 0;
 
             foreach (var argument in function.Arguments)
             {
-#if DEBUG
-                //Log($"argument = {argument}");
-#endif
-
                 var argumentName = argument.Name;
-
-#if DEBUG
-                //Log($"argumentName = {argumentName}");
-#endif
 
                 var parameterValue = GetParameterValue(argumentName, namedParameters, localCodeExecutionContext);
 
 #if DEBUG
 
-                //Log($"parameterValue = {parameterValue}");
 #endif
 
                 if (parameterValue == null)
@@ -242,10 +193,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                     var distance = _inheritanceResolver.GetDistance(argument.TypesList, parameterValue, localCodeExecutionContext, options);
 
-#if DEBUG
-                    //Log($"distance = {distance}");
-#endif
-
                     if (!distance.HasValue)
                     {
                         return null;
@@ -254,11 +201,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     result.Add(distance.Value);
                 }
             }
-
-#if DEBUG
-            //Log($"countOfUsedParameters = {countOfUsedParameters}");
-            //Log($"namedParameters.Count = {namedParameters.Count}");
-#endif
 
             if (countOfUsedParameters < namedParameters.Count)
             {
@@ -276,10 +218,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var argument in function.Arguments)
             {
-#if DEBUG
-                //Log($"argument = {argument}");
-#endif
-
                 if (!positionedParametersEnumerator.MoveNext())
                 {
                     if (argument.HasDefaultValue)
@@ -294,15 +232,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 var parameterItem = positionedParametersEnumerator.Current;
 
-#if DEBUG
-                //Log($"parameterItem = {parameterItem}");
-#endif
-
                 var distance = _inheritanceResolver.GetDistance(argument.TypesList, parameterItem, localCodeExecutionContext, options);
-
-#if DEBUG
-                //Log($"distance = {distance}");
-#endif
 
                 if (!distance.HasValue)
                 {
@@ -317,11 +247,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         protected Value GetParameterValue(StrongIdentifierValue argumentName, IDictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"argumentName = {argumentName}");
-            //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
-#endif
-
             if (namedParameters.ContainsKey(argumentName))
             {
                 return namedParameters[argumentName];
@@ -329,26 +254,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var synonymsList = _synonymsResolver.GetSynonyms(argumentName, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"synonymsList = {synonymsList.WriteListToString()}");
-#endif
-
             foreach (var synonym in synonymsList)
             {
-#if DEBUG
-                //Log($"synonym = {synonym}");
-#endif
-
                 if (namedParameters.ContainsKey(synonym))
                 {
                     return namedParameters[synonym];
                 }
 
                 var alternativeSynonym = NameHelper.CreateAlternativeArgumentName(synonym);
-
-#if DEBUG
-                //Log($"alternativeSynonym = {alternativeSynonym}");
-#endif
 
                 if (namedParameters.ContainsKey(alternativeSynonym))
                 {
@@ -358,32 +271,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var alternativeArgumentName = NameHelper.CreateAlternativeArgumentName(argumentName);
 
-#if DEBUG
-            //Log($"alternativeArgumentName = {alternativeArgumentName}");
-#endif
-
             synonymsList = _synonymsResolver.GetSynonyms(alternativeArgumentName, localCodeExecutionContext);
-
-#if DEBUG
-            //Log($"synonymsList = {synonymsList.WriteListToString()}");
-#endif
 
             foreach (var synonym in synonymsList)
             {
-#if DEBUG
-                //Log($"synonym = {synonym}");
-#endif
-
                 if (namedParameters.ContainsKey(synonym))
                 {
                     return namedParameters[synonym];
                 }
 
                 var alternativeSynonym = NameHelper.CreateAlternativeArgumentName(synonym);
-
-#if DEBUG
-                //Log($"alternativeSynonym = {alternativeSynonym}");
-#endif
 
                 if (namedParameters.ContainsKey(alternativeSynonym))
                 {
@@ -397,10 +294,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         protected T GetTargetValueFromList<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, int paramsCount, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
             where T : AnnotatedItem, IExecutable
         {
-#if DEBUG
-            //Log($"paramsCount = {paramsCount}");
-#endif
-
             CorrectParametersRankMatrixForSpecialCases(source);
 
             IOrderedEnumerable<WeightedInheritanceResultItemWithStorageInfo<T>> orderedList = null;
@@ -556,11 +449,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var parametersRankMatrix = function.ParametersRankMatrix;
                 var argumentsList = function.ResultItem.Arguments;
 
-#if DEBUG
-                //Log($"parametersRankMatrix = {parametersRankMatrix.WritePODListToString()}");
-                //Log($"argumentsList = {argumentsList.WriteListToString()}");
-#endif
-
                 var argumentsDict = ConvertArgumentsListToDictByPosition(argumentsList);
 
                 foreach (var advice in advicesDict)
@@ -569,12 +457,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     var checkedTypeName = advice.Value;
 
                     var argument = argumentsDict[position];
-
-#if DEBUG
-                    //Log($"position = {position}");
-                    //Log($"checkedTypeName = {checkedTypeName}");
-                    //Log($"argument = {argument}");
-#endif
 
                     var typesList = argument.TypesList;
 
@@ -592,15 +474,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     {
                         if (typesList.Contains(_numberTypeIdentifier))
                         {
-#if DEBUG
-                            //Log($"parametersRankMatrix (before) = {parametersRankMatrix.WritePODListToString()}");
-#endif
-
                             parametersRankMatrix[position]++;
-
-#if DEBUG
-                            //Log($"parametersRankMatrix (after) = {parametersRankMatrix.WritePODListToString()}");
-#endif
 
                             continue;
                         }
@@ -638,10 +512,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 var argumentsList = function.ResultItem.Arguments;
 
-#if DEBUG
-                //Log($"argumentsList = {argumentsList.WriteListToString()}");
-#endif
-
                 if (argumentsList.IsNullOrEmpty())
                 {
                     continue;
@@ -652,11 +522,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 foreach (var argument in argumentsList)
                 {
                     i++;
-#if DEBUG
-                    //Log($"i = {i}");
-                    //Log($"argument = {argument}");
-#endif
-
                     var typesList = argument.TypesList;
 
                     if (typesList.IsNullOrEmpty())

@@ -70,19 +70,11 @@ namespace SymOntoClay.Core.Internal.Serialization
 
         public void LoadCodeItem(CodeItem codeItem, IStorage targetStorage)
         {
-#if DEBUG
-            //Log($"codeItem = {codeItem}");
-#endif
-
             var defferedLibsList = new List<string>();
 
             SaveItem(codeItem, targetStorage, defferedLibsList);
 
             var subItems = LinearizeSubItems(codeItem);
-
-#if DEBUG
-            //Log($"subItems.Count = {subItems.Count}");
-#endif
 
             if(subItems.Any())
             {
@@ -101,11 +93,6 @@ namespace SymOntoClay.Core.Internal.Serialization
 
             var filesList = FileHelper.GetParsedFilesInfo(projectFile, id);
 
-#if DEBUG
-            //Log($"filesList.Count = {filesList.Count}");
-            //Log($"filesList = {filesList.WriteListToString()}");
-#endif
-
             var defferedLibsList = new List<string>();
 
             ProcessFilesList(filesList, true, targetStorage, defferedLibsList);
@@ -117,17 +104,10 @@ namespace SymOntoClay.Core.Internal.Serialization
         {
             Init();
 
-#if DEBUG
-            //Log("Begin");
-            //Log($"sourceCodePaths = {sourceCodePaths.WritePODListToString()}");
-#endif
-
             var filesList = FileHelper.GetParsedFilesFromPaths(sourceCodePaths);
 
 #if DEBUG
-            //Log($"filesList.Count = {filesList.Count}");
 
-            //Log($"filesList = {filesList.WriteListToString()}");
 #endif
 
             var defferedLibsList = new List<string>();
@@ -139,26 +119,17 @@ namespace SymOntoClay.Core.Internal.Serialization
 
         private void ProcessFilesList(List<ParsedFileInfo> filesList, bool detectMainCodeEntity, IStorage targetStorage, List<string> defferedLibsList)
         {
-            //var globalStorage = _context.Storage.GlobalStorage;
-
-#if DEBUG
-            //Log($"globalStorage.Kind = {globalStorage.Kind}");
-#endif
 
             var parsedFilesList = _context.Parser.Parse(filesList, _defaultSettingsOfCodeEntity);
 
 #if DEBUG
-            //Log($"parsedFilesList.Count = {parsedFilesList.Count}");
 
-            //Log($"parsedFilesList = {parsedFilesList.WriteListToString()}");
 #endif
 
             var parsedCodeEntitiesList = LinearizeSubItems(parsedFilesList);
 
 #if DEBUG
-            //Log($"parsedCodeEntitiesList.Count = {parsedCodeEntitiesList.Count}");
 
-            //Log($"parsedCodeEntitiesList = {parsedCodeEntitiesList.WriteListToString()}");
 #endif
 
             if (detectMainCodeEntity)
@@ -167,9 +138,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             }
 
 #if DEBUG
-            //Log($"parsedCodeEntitiesList.Count (2) = {parsedCodeEntitiesList.Count}");
 
-            //Log($"parsedCodeEntitiesList (2) = {parsedCodeEntitiesList.WriteListToString()}");
 #endif
 
             CheckHolderAndTypeOfAccess(parsedCodeEntitiesList);
@@ -177,9 +146,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             AddSystemDefinedSettings(parsedCodeEntitiesList);
 
 #if DEBUG
-            //Log($"parsedCodeEntitiesList.Count (3) = {parsedCodeEntitiesList.Count}");
 
-            //Log($"parsedCodeEntitiesList (3) = {parsedCodeEntitiesList.WriteListToString()}");
 #endif
 
             SaveItems(parsedCodeEntitiesList, targetStorage, defferedLibsList);
@@ -192,9 +159,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             var count = possibleMainCodeEntities.Count();
 
 #if DEBUG
-            //Log($"count = {count}");
 
-            //Log($"possibleMainCodeEntities = {possibleMainCodeEntities.WriteListToString()}");
 #endif
 
             if (count == 1)
@@ -264,10 +229,6 @@ namespace SymOntoClay.Core.Internal.Serialization
                 return;
             }
 
-#if DEBUG
-            //Log($"codeEntity = {codeEntity}");
-#endif
-
             if (codeEntity.Holder == null && codeEntity.TypeOfAccess == TypeOfAccess.Protected)
             {
                 codeEntity.TypeOfAccess = TypeOfAccess.Public;
@@ -284,10 +245,6 @@ namespace SymOntoClay.Core.Internal.Serialization
 
         private void AddSystemDefinedSettings(CodeItem codeEntity)
         {
-#if DEBUG
-            //Log($"codeEntity = {codeEntity}");
-#endif
-
             switch (codeEntity.Kind)
             {
                 case KindOfCodeEntity.World:
@@ -359,10 +316,6 @@ namespace SymOntoClay.Core.Internal.Serialization
             inheritanceItem.SuperName = _commonNamesStorage.WorldName;
             inheritanceItem.Rank = new LogicalValue(1.0F);
 
-#if DEBUG
-            //Log($"inheritanceItem = {inheritanceItem}");
-#endif
-
             codeEntity.InheritanceItems.Add(inheritanceItem);
         }
 
@@ -376,10 +329,6 @@ namespace SymOntoClay.Core.Internal.Serialization
             inheritanceItem.SubName = codeEntity.Name;
             inheritanceItem.SuperName = _commonNamesStorage.AppName;
             inheritanceItem.Rank = new LogicalValue(1.0F);
-
-#if DEBUG
-            //Log($"inheritanceItem = {inheritanceItem}");
-#endif
 
             codeEntity.InheritanceItems.Add(inheritanceItem);
         }
@@ -395,10 +344,6 @@ namespace SymOntoClay.Core.Internal.Serialization
             inheritanceItem.SuperName = _commonNamesStorage.ClassName;
             inheritanceItem.Rank = new LogicalValue(1.0F);
 
-#if DEBUG
-            //Log($"inheritanceItem = {inheritanceItem}");
-#endif
-
             codeEntity.InheritanceItems.Add(inheritanceItem);
         }
 
@@ -412,10 +357,6 @@ namespace SymOntoClay.Core.Internal.Serialization
             inheritanceItem.SubName = codeEntity.Name;
             inheritanceItem.SuperName = _commonNamesStorage.ActionName;
             inheritanceItem.Rank = new LogicalValue(1.0F);
-
-#if DEBUG
-            //Log($"inheritanceItem = {inheritanceItem}");
-#endif
 
             codeEntity.InheritanceItems.Add(inheritanceItem);
         }
@@ -431,10 +372,6 @@ namespace SymOntoClay.Core.Internal.Serialization
             inheritanceItem.SuperName = _commonNamesStorage.StateName;
             inheritanceItem.Rank = new LogicalValue(1.0F);
 
-#if DEBUG
-            //Log($"inheritanceItem = {inheritanceItem}");
-#endif
-
             codeEntity.InheritanceItems.Add(inheritanceItem);
         }
 
@@ -448,10 +385,6 @@ namespace SymOntoClay.Core.Internal.Serialization
 
         private void SaveItem(CodeItem codeItem, IStorage targetStorage, List<string> defferedLibsList)
         {
-#if DEBUG
-            //Log($"codeItem = {codeItem}");
-#endif
-
             var codeEntityName = codeItem.Name;
 
             var metadataStorage = targetStorage.MetadataStorage;
@@ -464,10 +397,6 @@ namespace SymOntoClay.Core.Internal.Serialization
             {
                 inheritanceStorage.SetInheritance(inheritanceItem);
             }
-
-#if DEBUG
-            //Log($"codeItem (2) = {codeItem}");
-#endif
 
             var kindOfEntity = codeItem.Kind;
 
@@ -501,11 +430,6 @@ namespace SymOntoClay.Core.Internal.Serialization
                     break;
 
                 case KindOfCodeEntity.RelationDescription:
-#if DEBUG
-                    //Log($"targetStorage.Kind = {targetStorage.Kind}");
-                    //Log($"codeItem.AsRelationDescription.ToHumanizedString() = {codeItem.AsRelationDescription.ToHumanizedString()}");
-#endif
-
                     targetStorage.RelationsStorage.Append(codeItem.AsRelationDescription);
                     break;
 
@@ -513,32 +437,13 @@ namespace SymOntoClay.Core.Internal.Serialization
                     {
                         var ruleInstance = codeItem.AsRuleInstance;
 
-#if DEBUG
-                        //Log($"ruleInstance = {ruleInstance}");
-#endif
-
                         if (ruleInstance.IsParameterized)
                         {
                             throw new Exception($"SymOntoClay does not support parameterized rule or facts on object declaration.");
                         }
 
-#if DEBUG
-                        //if (targetStorage.Kind == KindOfStorage.World)
-                        //{
-                        //    Log($"targetStorage.Kind = {targetStorage.Kind}");
-                        //    Log($"targetStorage.LogicalStorage.GetHashCode() = {targetStorage.LogicalStorage.GetHashCode()}");
-                        //    Log($"ruleInstance = {ruleInstance.ToHumanizedString()}");
-                        //}
-#endif
-
                         targetStorage.LogicalStorage.Append(ruleInstance);
 
-#if DEBUG
-                        //if (globalStorage.Kind == KindOfStorage.World)
-                        //{
-                        //    globalStorage.LogicalStorage.DbgPrintFactsAndRules();
-                        //}
-#endif
                     }
                     break;
 
@@ -600,17 +505,10 @@ namespace SymOntoClay.Core.Internal.Serialization
                 }
             }
 
-#if DEBUG
-            //Log("End");
-#endif
         }
 
         private void GeneratePreConstructor(CodeItem codeItem, IStorage targetStorage)
         {
-#if DEBUG
-            //Log($"codeItem = {codeItem}");
-#endif
-
             var subItems = codeItem.SubItems;
 
             if(!subItems.IsNullOrEmpty())
@@ -621,18 +519,9 @@ namespace SymOntoClay.Core.Internal.Serialization
                 {
                     var compiledBody = _compiler.Compile(fieldsList);
 
-#if DEBUG
-                    //Log($"compiledBody = {compiledBody}");
-                    //Log($"compiledBody = {compiledBody.ToDbgString()}");
-#endif
-
                     var preConstructor = new Constructor();
                     preConstructor.CompiledFunctionBody = compiledBody;
                     preConstructor.Holder = codeItem.Name;
-
-#if DEBUG
-                    //Log($"preConstructor = {preConstructor}");
-#endif
 
                     targetStorage.ConstructorsStorage.AppendPreConstructor(preConstructor);
                 }
@@ -710,11 +599,6 @@ namespace SymOntoClay.Core.Internal.Serialization
 
             var libsList = _context.ModulesStorage.Import(importsList);
 
-#if DEBUG
-            //Log($"libsList.Count = {libsList.Count}");
-            //Log($"targetStorage.Kind = {targetStorage.Kind}");
-#endif
-
             if(!libsList.Any())
             {
                 return;
@@ -722,15 +606,7 @@ namespace SymOntoClay.Core.Internal.Serialization
 
             var existingStorages = targetStorage.GetStorages();
 
-#if DEBUG
-            //Log($"existingStorages.Count = {existingStorages.Count}");
-#endif
-
             var storagesForAdding = libsList.Except(existingStorages);
-
-#if DEBUG
-            //Log($"storagesForAdding.Count() = {storagesForAdding.Count()}");
-#endif
 
             foreach(var storageForAdding in storagesForAdding)
             {

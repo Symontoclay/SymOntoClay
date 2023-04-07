@@ -57,10 +57,6 @@ namespace SymOntoClay.Core.Internal.Services
         /// <inheritdoc/>
         public void Init()
         {
-#if DEBUG
-            //Log("Begin");
-#endif
-
             _synonymsResolver = _context.DataResolversFactory.GetSynonymsResolver();
 
             var commonNamesStorage = _context.CommonNamesStorage;
@@ -79,10 +75,6 @@ namespace SymOntoClay.Core.Internal.Services
 
             var synonymsOfRandomConstraintName = _synonymsResolver.GetSynonyms(_randomConstraintName, _globalExecutionContext);
 
-#if DEBUG
-            //Log($"synonymsOfRandomConstraintName = {synonymsOfRandomConstraintName.WriteListToString()}");
-#endif
-
             if(!synonymsOfRandomConstraintName.IsNullOrEmpty())
             {
                 _randomConstraintsList.AddRange(synonymsOfRandomConstraintName);
@@ -96,10 +88,6 @@ namespace SymOntoClay.Core.Internal.Services
 
             var synonymsOfNearestConstraintName = _synonymsResolver.GetSynonyms(_nearestConstraintName, _globalExecutionContext);
 
-#if DEBUG
-            //Log($"synonymsOfNearestConstraintName = {synonymsOfNearestConstraintName.WriteListToString()}");
-#endif
-
             if (!synonymsOfNearestConstraintName.IsNullOrEmpty())
             {
                 _nearestConstraintsList.AddRange(synonymsOfNearestConstraintName);
@@ -107,29 +95,17 @@ namespace SymOntoClay.Core.Internal.Services
 
             _constraintsList.AddRange(_nearestConstraintsList);
 
-#if DEBUG
-            //Log($"_constraintsList = {_constraintsList.WriteListToString()}");
-            //Log("End");
-#endif
         }
 
         /// <inheritdoc/>
         public IList<StrongIdentifierValue> GetConstraintsList()
         {
-#if DEBUG
-            //Log($"_constraintsList = {_constraintsList.WriteListToString()}");
-#endif
-
             return _constraintsList;
         }
 
         /// <inheritdoc/>
         public EntityConstraints ConvertToEntityConstraint(StrongIdentifierValue name)
         {
-#if DEBUG
-            //Log($"name = {name}");
-#endif
-
             if(_randomConstraintsList.Contains(name))
             {
                 return EntityConstraints.Random;

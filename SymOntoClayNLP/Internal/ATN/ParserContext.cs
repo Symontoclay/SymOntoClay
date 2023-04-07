@@ -84,24 +84,13 @@ namespace SymOntoClay.NLP.Internal.ATN
 
         private ParserContext Fork()
         {
-#if DEBUG
-            //_logger.Log($"Begin");
-#endif
-
             var newContext = new ParserContext(_globalContext, _logger, _contextNum);
             newContext._lexer = _lexer.Fork();
 
             newContext._parsers = new Stack<BaseParser>(_parsers.Select(p => p.Fork(newContext)).Reverse().ToList());
 
 #if DEBUG
-            //_logger.Log($"_parsers = {_parsers.Select(p => p.GetParserName()).WritePODListToString()}");
-            //var tmpStack = new Stack<BaseParser>(_parsers.Reverse().ToList());
-            //if(tmpStack.Count > 0)
-            //{
-            //    var tmpParser = tmpStack.Pop();
 
-            //    _logger.Log($"tmpParser.GetParserName() = {tmpParser.GetParserName()}");
-            //}
 #endif
 
             newContext._currentParser = _currentParser.Fork(newContext);
@@ -111,15 +100,7 @@ namespace SymOntoClay.NLP.Internal.ATN
             newContext._globalCounter = _globalCounter;
             newContext._sentenceCounter = _sentenceCounter;
 
-#if DEBUG
-            //_logger.Log($"_currentToken = {_currentToken}");
-#endif
-
             newContext._currentToken = _currentToken;
-
-#if DEBUG
-            //_logger.Log($"_concreteATNToken = {_concreteATNToken}");
-#endif
 
             newContext._concreteATNToken = _concreteATNToken;
 
@@ -164,10 +145,6 @@ namespace SymOntoClay.NLP.Internal.ATN
 
         private void SetParser(BaseParser parser)
         {
-#if DEBUG
-            //_logger.Log($"Begin");
-#endif
-
             if (_currentParser != null)
             {
                 _parsers.Push(_currentParser);
@@ -200,18 +177,10 @@ namespace SymOntoClay.NLP.Internal.ATN
 
             _currentParser.OnEnter();
 
-#if DEBUG
-            //_logger.Log($"End");
-#endif
         }
 
         private void SetPrevParser()
         {
-#if DEBUG
-            //_logger.Log($"Begin");
-            //_logger.Log($"_parsers.Count = {_parsers.Count}");
-#endif
-
             if (!_parsers.Any())
             {
                 _currentParser = null;
@@ -244,9 +213,6 @@ namespace SymOntoClay.NLP.Internal.ATN
                 LogToInternal(logSb.ToString());
             }
 
-#if DEBUG
-            //_logger.Log($"End");
-#endif
         }
 
         public bool IsActive => _isActive;
@@ -259,16 +225,8 @@ namespace SymOntoClay.NLP.Internal.ATN
 
         public void Run()
         {
-#if DEBUG
-            //_logger.Log($"Begin");
-#endif
-
             try
             {
-#if DEBUG
-                //_logger.Log($"_isActive = {_isActive}");
-#endif
-
                 if (!_parsingDirectives.IsNullOrEmpty())
                 {
                     ProcessParsingDirectives();
@@ -286,18 +244,10 @@ namespace SymOntoClay.NLP.Internal.ATN
                         NExit();
                     }
 
-#if DEBUG
-                    //_logger.Log($"_isActive (after) = {_isActive}");
-#endif
-
                     return;
                 }
 
                 var expectedBehavior = _currentParser.ExpectedBehavior;
-
-#if DEBUG
-                //_logger.Log($"expectedBehavior = {expectedBehavior}");
-#endif
 
                 switch (expectedBehavior)
                 {
@@ -305,10 +255,6 @@ namespace SymOntoClay.NLP.Internal.ATN
                         {
                             _currentToken = _lexer.GetToken();
 
-#if DEBUG
-                            //_logger.Log($"_currentToken = {_currentToken}");
-#endif
-                            
                             if (_currentToken == null)
                             {
                                 if (_dumpToLogDirOnExit)
@@ -322,11 +268,6 @@ namespace SymOntoClay.NLP.Internal.ATN
 
                             _globalCounter++;
                             _sentenceCounter++;
-
-#if DEBUG
-                            //_logger.Log($"_globalCounter = {_globalCounter}");
-                            //_logger.Log($"_sentenceCounter = {_sentenceCounter}");
-#endif
 
                             if (_dumpToLogDirOnExit)
                             {
@@ -354,10 +295,6 @@ namespace SymOntoClay.NLP.Internal.ATN
 
                     case ExpectedBehaviorOfParser.WaitForVariant:
                         {
-#if DEBUG
-                            //_logger.Log($"_concreteATNToken = {_concreteATNToken}");
-#endif
-
                             if (_dumpToLogDirOnExit)
                             {
                                 var currentParserName = _currentParser.GetParserName();
@@ -392,10 +329,6 @@ namespace SymOntoClay.NLP.Internal.ATN
                     LogToInternal(e.ToString());
                 }                
 
-#if DEBUG
-                //_logger.Log(e.ToString());
-#endif
-
                 _result.IsSuccess = false;
 
                 NExit();
@@ -410,9 +343,6 @@ namespace SymOntoClay.NLP.Internal.ATN
                 NExit();
             }
 
-#if DEBUG
-            //_logger.Log($"End");
-#endif
         }
 
         private void ProcessParsingDirectives()
@@ -420,10 +350,6 @@ namespace SymOntoClay.NLP.Internal.ATN
             var directives = _parsingDirectives.ToList();
 
             _parsingDirectives.Clear();
-
-#if DEBUG
-            //_logger.Log($"directives = {directives.WriteListToString()}");
-#endif
 
             if(directives.Count == 1)
             {
@@ -435,19 +361,10 @@ namespace SymOntoClay.NLP.Internal.ATN
 
             directives.Remove(directiveForCurrentContext);
 
-#if DEBUG
-            //_logger.Log($"directiveForCurrentContext = {directiveForCurrentContext}");
-            //_logger.Log($"directives (2) = {directives.WriteListToString()}");
-#endif
-
             var newParserContextsList = new List<ParserContext>();
 
             foreach (var directive in directives)
             {
-#if DEBUG
-                //_logger.Log($"directive = {directive}");
-#endif
-
                 var newParserContext = Fork();
 
                 newParserContext.LogToInternal($"Forked {newParserContext._contextNum} from {_contextNum}");
@@ -470,10 +387,6 @@ namespace SymOntoClay.NLP.Internal.ATN
 
         private void ProcessParsingDirective(IParsingDirective directive)
         {
-#if DEBUG
-            //_logger.Log($"directive = {directive}");
-#endif
-
             if (IsNotParsers())
             {
                 var parser = directive.CreateParser(this);
@@ -484,11 +397,6 @@ namespace SymOntoClay.NLP.Internal.ATN
 
                 return;
             }
-
-#if DEBUG
-            //_logger.Log($"directive.ParserType?.FullName = {directive.ParserType?.FullName}");
-            //_logger.Log($"_currentParser.GetType().FullName = {_currentParser.GetType().FullName}");
-#endif
 
             if (directive.ParserType == _currentParser.GetType())
             {
@@ -511,10 +419,6 @@ namespace SymOntoClay.NLP.Internal.ATN
             {
                 var kindOfParsingDirective = directive.KindOfParsingDirective;
 
-#if DEBUG
-                //_logger.Log($"kindOfParsingDirective = {kindOfParsingDirective}");
-#endif
-
                 switch (kindOfParsingDirective)
                 {
                     case KindOfParsingDirective.RunChild:
@@ -522,9 +426,6 @@ namespace SymOntoClay.NLP.Internal.ATN
                             _currentParser.StateAfterRunChild = directive.StateAfterRunChild;
                             _currentParser.ExpectedBehavior = ExpectedBehaviorOfParser.WaitForReceiveReturn;
 
-#if DEBUG
-                            //_logger.Log($"directive.ConcreteATNToken = {directive.ConcreteATNToken}");
-#endif
                             _lexer.Recovery(ConvertToATNToken(directive.ConcreteATNToken));
 
                             var parser = directive.CreateParser(this);
@@ -537,9 +438,6 @@ namespace SymOntoClay.NLP.Internal.ATN
 
                     case KindOfParsingDirective.ReturnToParent:
                         {
-#if DEBUG
-                            //_logger.Log($"directive.ConcreteATNToken = {directive.ConcreteATNToken}");
-#endif
                             if (directive.ConcreteATNToken != null)
                             {
                                 _lexer.Recovery(ConvertToATNToken(directive.ConcreteATNToken));
@@ -558,11 +456,6 @@ namespace SymOntoClay.NLP.Internal.ATN
 
                                 _sentenceCounter = 0;
 
-#if DEBUG
-                                //_logger.Log($"result = {result}");
-                                //_logger.Log($"result.Phrase = {result.Phrase.ToDbgString()}");
-#endif
-
                                 if (_dumpToLogDirOnExit)
                                 {
                                     var logSb = new StringBuilder();
@@ -575,10 +468,6 @@ namespace SymOntoClay.NLP.Internal.ATN
                             }
                             else
                             {
-#if DEBUG
-                                //_logger.Log($"_currentParser.StateAfterRunChild = {_currentParser.StateAfterRunChild}");
-#endif
-
                                 if (_currentParser.StateAfterRunChild.HasValue)
                                 {
                                     _currentParser.SetStateAsInt32(_currentParser.StateAfterRunChild.Value);
@@ -611,10 +500,6 @@ namespace SymOntoClay.NLP.Internal.ATN
 
         private void NExit()
         {
-#if DEBUG
-            //Log($"Begin");
-#endif
-
             _isActive = false;
 
             _result.CountSteps = _globalCounter;
@@ -666,17 +551,10 @@ namespace SymOntoClay.NLP.Internal.ATN
                 File.WriteAllText(Path.Combine(_logDir, $"{_contextNum}.log"), sb.ToString());
             }
 
-#if DEBUG
-            //_logger.Log($"End");
-#endif
         }
 
         private ATNToken ConvertToATNToken(ConcreteATNToken token)
         {
-#if DEBUG
-            //_logger.Log($"token = {token}");
-#endif
-
             return new ATNToken()
             {
                 Kind = token.Kind,

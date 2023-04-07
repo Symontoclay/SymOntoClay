@@ -40,10 +40,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class LogicalQueryNode: AnnotatedItem, IAstNode, IMemberAccess, IReadOnlyMemberAccess, ILogicalSearchItem, ILogicalQueryNodeParent
     {
-#if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         public KindOfLogicalQueryNode Kind { get; set; } = KindOfLogicalQueryNode.Unknown;
 
         public bool IsExpression => Kind == KindOfLogicalQueryNode.Relation || Kind == KindOfLogicalQueryNode.Group || Kind == KindOfLogicalQueryNode.BinaryOperator || Kind == KindOfLogicalQueryNode.UnaryOperator;
@@ -82,41 +78,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public Value SelfObligationModality => RuleInstance.SelfObligationModality;
 
-        //public bool HasQuestionVars
-        //{
-        //    get
-        //    {
-        //        if(IsQuestion)
-        //        {
-        //            return true;
-        //        }
 
-        //        if(Left != null && Left.HasQuestionVars)
-        //        {
-        //            return true;
-        //        }
 
-        //        if(Right != null && Right.HasQuestionVars)
-        //        {
-        //            return true;
-        //        }
 
-        //        if (ParamsList != null && ParamsList.Any(p => p.HasQuestionVars))
-        //        {
-        //            return true;
-        //        }
 
-        //        return false;
-        //    }
-        //}
 
         public void PrepareDirty(ContextOfConvertingExpressionNode contextOfConvertingExpressionNode, RuleInstance ruleInstance, BaseRulePart rulePart)
         {
-#if DEBUG
-            //_gbcLogger.Info($"this = {this}");
-            //_gbcLogger.Info($"contextOfConvertingExpressionNode = {contextOfConvertingExpressionNode}");
-#endif
-
             RuleInstance = ruleInstance;
             RulePart = rulePart;
 
@@ -196,9 +164,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
             }
 
-#if DEBUG
-            //_gbcLogger.Info($"contextOfConvertingExpressionNode (after) = {contextOfConvertingExpressionNode}");
-#endif
         }
 
         private void FillRelationParams(IList<LogicalQueryNode> sourceParamsList, ContextOfConvertingExpressionNode contextOfConvertingExpressionNode)
@@ -212,10 +177,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             foreach (var param in sourceParamsList)
             {
                 param.CheckDirty();
-
-#if DEBUG
-                //_gbcLogger.Info($"param = {param}");
-#endif               
 
                 var kindOfParam = param.Kind;
                 switch (kindOfParam)
@@ -231,9 +192,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
                             knownInfo.Position = i;
                             knownInfoList.Add(knownInfo);
 
-#if DEBUG
-                            //_gbcLogger.Info($"knownInfo = {knownInfo}");
-#endif
                         }
                         break;
 
@@ -244,10 +202,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
                             knownInfo.Expression = param;
                             knownInfo.Position = i;
                             knownInfoList.Add(knownInfo);
-
-#if DEBUG
-                            //_gbcLogger.Info($"knownInfo = {knownInfo}");
-#endif
 
                             param.CheckDirty();
                         }
@@ -281,10 +235,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                     case KindOfLogicalQueryNode.Relation:
                         {
-#if DEBUG
-                            //_gbcLogger.Info($"param = {param.ToHumanizedString()}");
-#endif
-
                             var additionalKnownInfoExpressions = new List<LogicalQueryNode>();
                             var varNames = new List<StrongIdentifierValue>();
 
@@ -309,18 +259,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                     case KindOfLogicalQueryNode.Group: 
                         {
-#if DEBUG
-                            //_gbcLogger.Info($"param = {param.ToHumanizedString()}");
-#endif
                             var additionalKnownInfoExpressions = new List<LogicalQueryNode>();
                             var varNames = new List<StrongIdentifierValue>();
 
                             LogicalQueryNodeHelper.FillUpInfoAboutComplexExpression(param.Left, additionalKnownInfoExpressions, varNames);
-
-#if DEBUG
-                            //_gbcLogger.Info($"additionalKnownInfoExpressions = {additionalKnownInfoExpressions.Select(p => p.ToHumanizedString()).WritePODListToString()}");
-                            //_gbcLogger.Info($"varNames = {varNames.Select(p => p.NameValue).WritePODListToString()}");
-#endif
 
                             if(varNames.Any())
                             {
@@ -430,15 +372,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                             case KindOfLogicalQueryNode.Var:
                                 {
-#if DEBUG
-                                    //_gbcLogger.Info($"param = {param}");
-#endif
-
                                     var value = varsResolver.GetVarValue(param.Name);
 
-#if DEBUG
-                                    //_gbcLogger.Info($"value = {value}");
-#endif
                                     if(value.IsStrongIdentifierValue)
                                     {
                                         var strVal = value.AsStrongIdentifierValue;
@@ -468,9 +403,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
                                         param.Value = value;
                                     }
 
-#if DEBUG
-                                    //_gbcLogger.Info($"param (after) = {param}");
-#endif
                                 }
                                 break;
 
@@ -778,10 +710,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-#if DEBUG
-            //_gbcLogger.Info($"this = {DebugHelperForRuleInstance.ToString(this)}");
-#endif
-
             switch (Kind)
             {
                 case KindOfLogicalQueryNode.BinaryOperator:

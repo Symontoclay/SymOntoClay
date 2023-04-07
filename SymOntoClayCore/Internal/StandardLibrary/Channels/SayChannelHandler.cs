@@ -60,10 +60,6 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
         /// <inheritdoc/>
         public Value Write(Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"value = {value}");
-#endif
-
             var kindOfValue = value.KindOfValue;
 
             switch(kindOfValue)
@@ -87,24 +83,12 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
 
         private void ProcessRuleInstanceValue(RuleInstance value)
         {
-#if DEBUG
-            //Log($"value = {value}");
-#endif
-
             _soundPublisherProvider?.PushSpeechFact(DefaultSoundPower, value);
         }
 
         private void ProcessStringValue(StringValue value)
         {
-#if DEBUG
-            //Log($"value = {value}");
-#endif
-
             var factValue = value.ToRuleInstance(_engineContext);
-
-#if DEBUG
-            //Log($"factValue = {factValue}");
-#endif
 
             ProcessRuleInstanceValue(factValue);
         }

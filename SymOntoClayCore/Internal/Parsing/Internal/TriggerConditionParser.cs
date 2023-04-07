@@ -57,11 +57,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");            
-#endif
-
             switch (_currToken.TokenKind)
             {
                 case TokenKind.OpenFactBracket:
@@ -234,10 +229,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             var oldHasSomething = _hasSomething;
 
-#if DEBUG
-            //Log($"oldHasSomething = {oldHasSomething}");
-#endif
-
             _lastBinaryOperator = null;
             _lastIsOperator = null;
             _hasSomething = true;
@@ -263,10 +254,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private void ProcessDuration()
         {
             var oldHasSomething = _hasSomething;
-
-#if DEBUG
-            //Log($"oldHasSomething = {oldHasSomething}");
-#endif
 
             _lastBinaryOperator = null;
             _lastIsOperator = null;
@@ -437,15 +424,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var parser = new TriggerConditionParser(_context, TokenKind.CloseRoundBracket);
             parser.Run();
 
-#if DEBUG
-            //Log($"parser.Result = {parser.Result}");
-#endif
-
             var nextToken = _context.GetToken();
-
-#if DEBUG
-            //Log($"nextToken = {nextToken}");
-#endif
 
             if(nextToken.TokenKind != TokenKind.CloseRoundBracket)
             {
@@ -471,15 +450,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var parser = new CallingFunctionInTriggerConditionParser(_context);
             parser.Run();
 
-#if DEBUG
-            //Log($"parser.Result = {parser.Result}");
-#endif
-
             var priority = OperatorsHelper.GetPriority(KindOfOperator.CallFunction);
-
-#if DEBUG
-            //Log($"priority = {priority}");
-#endif
 
             var intermediateNode = new IntermediateAstNode(parser.Result, KindOfIntermediateAstNode.UnaryOperator, priority);
 
@@ -508,10 +479,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessNot()
         {
-#if DEBUG
-            //Log($"_lastIsOperator = {_lastIsOperator}");
-#endif
-
             if (_lastIsOperator == null)
             {
                 ProcessNotOperator();
@@ -541,10 +508,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessMinus()
         {
-#if DEBUG
-            //Log($"_lastBinaryOperator = {_lastBinaryOperator}");
-#endif
-
             if (_lastBinaryOperator == null)
             {
                 ProcessUsualBinaryOperator(KindOfOperator.Sub);
@@ -617,10 +580,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             var priority = OperatorsHelper.GetPriority(kindOfOperator);
 
-#if DEBUG
-            //Log($"priority = {priority}");
-#endif
-
             var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.BinaryOperator, priority);
 
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
@@ -636,10 +595,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             node.KindOfOperator = kindOfOperator;
 
             var priority = OperatorsHelper.GetPriority(kindOfOperator);
-
-#if DEBUG
-            //Log($"priority = {priority}");
-#endif
 
             var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.UnaryOperator, priority);
 

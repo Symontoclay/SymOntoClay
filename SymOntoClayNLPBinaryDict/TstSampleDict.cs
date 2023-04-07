@@ -1,4 +1,4 @@
-﻿using SymOntoClay.NLP.CommonDict;
+using SymOntoClay.NLP.CommonDict;
 using System;
 using System.Collections.Generic;
 

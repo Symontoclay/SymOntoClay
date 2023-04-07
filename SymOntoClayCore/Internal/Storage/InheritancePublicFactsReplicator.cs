@@ -55,7 +55,6 @@ namespace SymOntoClay.Core.Internal.Storage
         private List<StrongIdentifierValue> _foundInheritanceKeysList = new List<StrongIdentifierValue>();
         private ILocalCodeExecutionContext _localCodeExecutionContext;
         private ILogicQueryParseAndCache _logicQueryParseAndCache;
-        //private ulong _selfNameKey;
         private StrongIdentifierValue _selfName;
         private string _selfNameForFacts;
         private Dictionary<string, string> _factsIdDict = new Dictionary<string, string>();
@@ -67,25 +66,15 @@ namespace SymOntoClay.Core.Internal.Storage
             lock(_lockObj)
             {
 #if DEBUG
-                //Log($"subName = {subName}");
-                //Log($"superName = {superName}");
 
                 if (subName.NameValue == "app")
                 {
                     throw new NotImplementedException();
                 }
-                //Log("Next");
 #endif
 
                 if (_foundInheritanceKeysList.Any())
                 {
-                    //var subNameKey = subName.GetIndexed(_context).NameKey;
-                    //var superNameKey = superName.GetIndexed(_context).NameKey;
-
-#if DEBUG
-                    //Log($"subNameKey = {subNameKey}");
-                    //Log($"superNameKey = {superNameKey}");
-#endif
 
                     if(subName != _selfName && !_foundInheritanceKeysList.Contains(subName))
                     {
@@ -108,11 +97,6 @@ namespace SymOntoClay.Core.Internal.Storage
 
         private void Recalculate()
         {
-#if DEBUG
-            //Log($"_context.Id = {_context.Id}");
-            //Log($"_selfName.NameValue = {_selfName.NameValue}");
-#endif
-
             if(_localCodeExecutionContext == null)
             {
                 var commonNamesStorage = _context.CommonNamesStorage;
@@ -129,23 +113,7 @@ namespace SymOntoClay.Core.Internal.Storage
                 };
             }
 
-#if DEBUG
-            //Log($"_selfName = {_selfName}");
-            //Log($"_selfNameForFacts = {_selfNameForFacts}");
-#endif
-
             var weightedInheritanceItemsList = _inheritanceResolver.GetWeightedInheritanceItems(_selfName, _localCodeExecutionContext, _resolverOptions).Where(p => !p.OriginalItem?.IsSystemDefined ?? false);
-
-#if DEBUG
-            //Log($"weightedInheritanceItemsList = {weightedInheritanceItemsList.Select(p => p.OriginalItem).WriteListToString()}");
-            //Log($"weightedInheritanceItemsList = {weightedInheritanceItemsList.WriteListToString()}");
-            //Log($"_context.Id = {_context.Id}");
-#endif
-
-#if DEBUG
-            //Log($"weightedInheritanceItemsList (after) = {weightedInheritanceItemsList.Select(p => p.OriginalItem).WriteListToString()}");
-            //Log($"_context.Id = {_context.Id}");
-#endif
 
             if (!weightedInheritanceItemsList.Any())
             {
@@ -157,47 +125,19 @@ namespace SymOntoClay.Core.Internal.Storage
 
             var idsList = weightedInheritanceItemsList.Select(p => p.SuperName).Distinct().ToList();
 
-#if DEBUG
-            //Log($"idsList = {JsonConvert.SerializeObject(idsList.Select(p => p.NameValue))}");
-#endif
-
             var newIdsList = idsList.Except(_foundInheritanceKeysList);
-
-#if DEBUG
-            //Log($"newIdsList = {JsonConvert.SerializeObject(newIdsList.Select(p => p.NameValue))}");
-#endif
 
             if(newIdsList.Any())
             {
                 foreach(var id in newIdsList)
                 {
-#if DEBUG
-                    //Log($"id = {id}");
-#endif
-
                     var name = id.NameValue;
-
-#if DEBUG
-                    //Log($"name = {name}");
-#endif
 
                     var initialAddedInheritanceItem = inheritanceItemsDict[id];
 
-#if DEBUG
-                    //Log($"initialAddedInheritanceItem = {initialAddedInheritanceItem}");
-#endif
-
                     var factStr = $"{{: >:{{ is({_selfNameForFacts}, {name}, 1) }} :}}";
 
-#if DEBUG
-                    //Log($"factStr = {factStr}");
-#endif
-
                     var fact = _logicQueryParseAndCache.GetLogicRuleOrFact(factStr);
-
-#if DEBUG
-                    //Log($"fact = {fact}");
-#endif
 
                     _publicFactsStorage.Append(fact);
 
@@ -209,10 +149,6 @@ namespace SymOntoClay.Core.Internal.Storage
                     addedInheritanceItem.SubName = _selfName;
                     addedInheritanceItem.Rank = new LogicalValue(1);
 
-#if DEBUG
-                    //Log($"addedInheritanceItem = {addedInheritanceItem}");
-#endif
-
                     _inheritanceItemsDict[name] = addedInheritanceItem;
 
                     _publicInheritanceStorage.SetInheritance(addedInheritanceItem);
@@ -220,10 +156,6 @@ namespace SymOntoClay.Core.Internal.Storage
             }
 
             var oldIdList = _foundInheritanceKeysList.Except(idsList);
-
-#if DEBUG
-            //Log($"oldIdList = {JsonConvert.SerializeObject(oldIdList)}");
-#endif
 
             if (oldIdList.Any())
             {

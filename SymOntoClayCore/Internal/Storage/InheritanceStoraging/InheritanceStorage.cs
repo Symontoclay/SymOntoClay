@@ -63,17 +63,6 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
 
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"kind = {_kind}");
-                //Log($"subItem = {subItem}; superName = {inheritanceItem.SuperName}");
-                //Log($"inheritanceItem = {inheritanceItem}");
-                //Log($"isPrimary = {isPrimary}");
-#endif
-                
-#if DEBUG
-                //Log($"indexedInheritanceItem = {indexedInheritanceItem}");
-#endif
-
                 var subName = inheritanceItem.SubName;
                 var superName = inheritanceItem.SuperName;
 
@@ -89,11 +78,6 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
                     if (dict.ContainsKey(superName))
                     {
                         var targetList = dict[superName];
-
-#if DEBUG
-                        //Log($"dict[superName].Count = {dict[superName].Count}");
-                        //Log($"targetList = {targetList.WriteListToString()}");
-#endif
 
                         StorageHelper.RemoveSameItems(targetList, inheritanceItem);
 
@@ -116,11 +100,6 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
             {
                 var inheritanceFact = CreateInheritanceFact(inheritanceItem);
 
-#if DEBUG
-                //Log($"inheritanceFact = {inheritanceFact}");
-                //inheritanceFact.CheckDirty();
-                //Log($"inheritanceFact = {DebugHelperForRuleInstance.ToString(inheritanceFact)}");
-#endif
                 lock(_factsIdRegistryLockObj)
                 {
                     _factsIdRegistry[inheritanceItem] = inheritanceFact.Name.NameValue;
@@ -134,9 +113,6 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
                 }
             }
 
-#if DEBUG
-            //Log("End");
-#endif
         }
 
         /// <inheritdoc/>
@@ -144,13 +120,6 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"kind = {_kind}");
-                //Log($"subItem = {subItem}; superName = {inheritanceItem.SuperName}");
-                //Log($"inheritanceItem = {inheritanceItem}");
-                //Log($"isPrimary = {isPrimary}");
-#endif
-
                 var subName = inheritanceItem.SubName;
                 var superName = inheritanceItem.SuperName;
 
@@ -195,15 +164,10 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
         {
             var factName = NameHelper.CreateRuleOrFactName();
 
-#if DEBUG
-            //Log($"factName = {factName}");
-#endif
-
             var fact = new RuleInstance();
             fact.KindOfRuleInstance = KindOfRuleInstance.Fact;
             fact.AppendAnnotations(inheritanceItem);
             fact.Name = factName;
-            //fact.KeysOfPrimaryRecords.Add(inheritanceItem.Id);
 
             var primaryPart = new PrimaryRulePart();
             fact.PrimaryPart = primaryPart;
@@ -241,10 +205,6 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"subName = {subName}");
-#endif
-
                 if (_realStorageContext.Disabled)
                 {
                     return _emptyItemsList;
@@ -254,10 +214,6 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
                 {
                     return _emptyItemsList;
                 }
-
-#if DEBUG
-                //Log("Next");
-#endif
 
                 if(_nonIndexedInfo.ContainsKey(subName))
                 {

@@ -48,10 +48,6 @@ namespace SymOntoClay.BaseTestLib
 {
     public static class UnityTestEngineContextFactory
     {
-#if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         public static string CreateRootDir()
         {
             var rootDir = Path.Combine(Environment.GetEnvironmentVariable("TMP"), $"TstTempProjects_{Guid.NewGuid().ToString("D").Replace("-", string.Empty)}");

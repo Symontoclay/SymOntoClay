@@ -28,8 +28,6 @@ using System.Text;
 
 namespace SymOntoClay.NLP.Internal.PhraseStructure
 {
-    //https://en.wikipedia.org/wiki/Adpositional_phrase
-    //PP
     public class PreOrPostpositionalPhrase : BaseSentenceItem
     {
         /// <inheritdoc/>
@@ -125,7 +123,6 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
             sb.PrintObjProp(n, nameof(Adv), Adv);
             sb.PrintObjProp(n, nameof(NP), NP);
 
-            //sb.PrintObjProp(n, nameof(), );
 
             sb.Append(base.PropertiesToString(n));
 

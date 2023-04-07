@@ -58,36 +58,14 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
 
         protected virtual string ConvertQuery(double power, double distance, Vector3 position, string query)
         {
-#if DEBUG
-            //Log($"power = {power}");
-            //Log($"distance = {distance}");
-            //Log($"position = {position}");
-            //Log($"query = {query}");
-#endif
-
             var directionToPosition = GetDirectionToPosition(position);
-
-#if DEBUG
-            //Log($"directionToPosition = {directionToPosition}");
-#endif
 
             return _standardFactsBuilder.BuildSoundFactString(distance, directionToPosition, query);
         }
 
         protected virtual RuleInstance ConvertQuery(double power, double distance, Vector3 position, RuleInstance query)
         {
-#if DEBUG
-            //Log($"power = {power}");
-            //Log($"distance = {distance}");
-            //Log($"position = {position}");
-            //Log($"query = {query.ToHumanizedString()}");
-#endif
-
             var directionToPosition = GetDirectionToPosition(position);
-
-#if DEBUG
-            //Log($"directionToPosition = {directionToPosition}");
-#endif
 
             return _standardFactsBuilder.BuildSoundFactInstance(distance, directionToPosition, query);
         }

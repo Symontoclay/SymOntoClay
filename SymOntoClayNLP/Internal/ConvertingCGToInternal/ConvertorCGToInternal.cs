@@ -46,10 +46,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
         public InternalConceptualGraph Convert(ConceptualGraph source)
         {
-#if DEBUG
-            //LogInstance.Log($"source = {source}");
-#endif
-
             var context = new ContextOfConvertingCGToInternal();
 
             while (IsWrapperGraph(source))
@@ -58,32 +54,16 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                 source = (ConceptualGraph)source.Children.SingleOrDefault(p => p.Kind == KindOfCGNode.Graph);
             }
 
-#if DEBUG
-            //LogInstance.Log($"source = {source}");
-#endif
-
             return ConvertConceptualGraph(source, null, context);
         }
 
         private bool IsWrapperGraph(ConceptualGraph source)
         {
-#if DEBUG
-            //LogInstance.Log($"source = {source}");
-#endif
-
             var countOfConceptualGraphs = source.Children.Count(p => p.Kind == KindOfCGNode.Graph);
-
-#if DEBUG
-            //LogInstance.Log($"countOfConceptualGraphs = {countOfConceptualGraphs}");
-#endif
 
             var kindOfRelationsList = source.Children.Where(p => p.Kind == KindOfCGNode.Relation).Select(p => GrammaticalElementsHelper.GetKindOfGrammaticalRelationFromName(p.Name));
 
             var isGrammaticalRelationsOnly = !kindOfRelationsList.Any(p => p == KindOfGrammaticalRelation.Undefined);
-
-#if DEBUG
-            //LogInstance.Log($"isGrammaticalRelationsOnly = {isGrammaticalRelationsOnly}");
-#endif
 
             if (countOfConceptualGraphs == 1 && isGrammaticalRelationsOnly)
             {
@@ -95,10 +75,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
         private InternalConceptualGraph ConvertConceptualGraph(ConceptualGraph source, InternalConceptualGraph targetParent, ContextOfConvertingCGToInternal context)
         {
-#if DEBUG
-            //LogInstance.Log($"source = {source}");
-#endif
-
             if (context.WrappersList.Contains(source))
             {
                 return null;
@@ -108,12 +84,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
             {
                 return context.ConceptualGraphsDict[source];
             }
-
-#if DEBUG
-            //LogInstance.Log($"NEXT source = {source}");
-            //var dotStr = DotConverter.ConvertToString(source);
-            //LogInstance.Log($"dotStr = {dotStr}");
-#endif
 
             var result = new InternalConceptualGraph();
 
@@ -138,37 +108,15 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
             SetGrammaticalOptions(source, result);
 
-#if DEBUG
-            //LogInstance.Log($"before result = {result}");
-#endif
-
             CreateChildren(source, result, context);
 
-#if DEBUG
-            //LogInstance.Log($"after result = {result}");
-            //dotStr = DotConverter.ConvertToString(result);
-            //LogInstance.Log($"dotStr = {dotStr}");
-#endif
-
             TransformResultToCanonicalView(result, context);
-
-#if DEBUG
-            //LogInstance.Log($"NEXT after result = {result}");
-            //dotStr = DotConverter.ConvertToString(result);
-            //LogInstance.Log($"dotStr = {dotStr}");
-#endif
 
             return result;
         }
 
         private void TransformResultToCanonicalView(InternalConceptualGraph dest, ContextOfConvertingCGToInternal context)
         {
-#if DEBUG
-            //LogInstance.Log($"dest = {dest}");
-            //var dotStr = DotConverter.ConvertToString(dest);
-            //LogInstance.Log($"dotStr = {dotStr}");
-#endif
-
             TransformResultToCanonicalViewForActionConcepts(dest, context);
             TransformResultToCanonicalViewForStateConcepts(dest, context);
         }
@@ -177,39 +125,16 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
         {
             var actionsConceptsList = dest.Children.Where(p => p.IsConceptNode && !p.Inputs.IsNullOrEmpty() && p.Inputs.Any(x => x.Name == SpecialNamesOfRelations.ActionRelationName)).Select(p => p.AsConceptNode).ToList();
 
-#if DEBUG
-            //LogInstance.Log($"actionsConceptsList.Count = {actionsConceptsList.Count}");
-            //foreach(var tmpChild in dest.Children)
-            //{
-            //    LogInstance.Log($"tmpChild = {tmpChild}");
-            //}
-#endif
             foreach (var actionConcept in actionsConceptsList)
             {
-#if DEBUG
-                //LogInstance.Log($"actionConcept = {actionConcept}");
-#endif
-
                 var actionRelationsList = actionConcept.Inputs.Where(p => p.Name == SpecialNamesOfRelations.ActionRelationName).Select(p => p.AsRelationNode).ToList();
-
-#if DEBUG
-                //LogInstance.Log($"actionRelationsList.Count = {actionRelationsList.Count}");
-#endif
 
                 foreach (var actionRelation in actionRelationsList)
                 {
-#if DEBUG
-                    //LogInstance.Log($"actionRelation = {actionRelation}");
-#endif
-
                     if (!actionRelation.Inputs.IsNullOrEmpty())
                     {
                         continue;
                     }
-
-#if DEBUG
-                    //LogInstance.Log("Add stub of subject !!!!");
-#endif
 
                     var stubOfOfSubject = new InternalConceptCGNode();
                     stubOfOfSubject.KindOfGraphOrConcept = KindOfInternalGraphOrConceptNode.Concept;
@@ -232,21 +157,9 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
         {
             var statesConceptsList = dest.Children.Where(p => p.IsConceptNode && !p.Inputs.IsNullOrEmpty() && p.Inputs.Any(x => x.Name == SpecialNamesOfRelations.StateRelationName)).Select(p => p.AsConceptNode).ToList();
 
-#if DEBUG
-            //LogInstance.Log($"statesConceptsList.Count = {statesConceptsList.Count}");
-#endif
-
             foreach (var stateConcept in statesConceptsList)
             {
-#if DEBUG
-                //LogInstance.Log($"stateConcept = {stateConcept}");
-#endif
-
                 var stateRelationsList = stateConcept.Inputs.Where(p => p.Name == SpecialNamesOfRelations.StateRelationName).Select(p => p.AsRelationNode).ToList();
-
-#if DEBUG
-                //LogInstance.Log($"stateRelationsList.Count = {stateRelationsList.Count}");
-#endif
 
                 foreach (var stateRelation in stateRelationsList)
                 {
@@ -254,10 +167,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                     {
                         continue;
                     }
-
-#if DEBUG
-                    //LogInstance.Log("Add stub of subject !!!!");
-#endif
 
                     var stubOfOfSubject = new InternalConceptCGNode();
                     stubOfOfSubject.KindOfGraphOrConcept = KindOfInternalGraphOrConceptNode.Concept;
@@ -275,16 +184,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
             var objectRelationsList = concept.Outputs.Where(p => p.Name == SpecialNamesOfRelations.ObjectRelationName).Select(p => p.AsRelationNode).ToList();
             var parent = concept.Parent;
 
-#if DEBUG
-            //_logger.Log($"objectRelationsList.Count = {objectRelationsList.Count}");
-#endif
-
             if (objectRelationsList.Count == 0)
             {
-#if DEBUG
-                //LogInstance.Log("Add stub of object !!!!");
-#endif
-
                 var objectRelation = new InternalRelationCGNode();
                 objectRelation.Parent = parent;
                 objectRelation.Name = SpecialNamesOfRelations.ObjectRelationName;
@@ -307,42 +208,15 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
         {
             var childrenList = source.Children;
 
-#if DEBUG
-            //LogInstance.Log($"childrenList.Count = {childrenList.Count}");
-#endif
-
             var entitiesConditionsMarksRelationsList = childrenList.Where(p => GrammaticalElementsHelper.IsEntityCondition(p.Name)).ToList();
 
-#if DEBUG
-            //LogInstance.Log($"entitiesConditionsMarksRelationsList.Count = {entitiesConditionsMarksRelationsList.Count}");
-#endif
-
-            //if(entitiesConditionsMarksRelationsList.Count == 0)
-            //{
-            //CreateChildrenByAllNodes(childrenList, null, context);
-            //return;
-            //}
 
             var notDirectlyClonedNodesList = GetNotDirectlyClonedNodesList(entitiesConditionsMarksRelationsList);
 
-#if DEBUG
-            //LogInstance.Log($"notDirectlyClonedNodesList.Count = {notDirectlyClonedNodesList.Count}");
-            //foreach (var notDirectlyClonedNode in notDirectlyClonedNodesList)
-            //{
-            //    LogInstance.Log($"notDirectlyClonedNode = {notDirectlyClonedNode}");
-            //}
-#endif
-
             var clustersOfLinkedNodesDict = GetClastersOfLinkedNodes(notDirectlyClonedNodesList);
 
-#if DEBUG
-            //LogInstance.Log($"clustersOfLinkedNodesDict.Count = {clustersOfLinkedNodesDict.Count}");
-#endif
             foreach (var clustersOfLinkedNodesKVPItem in clustersOfLinkedNodesDict)
             {
-#if DEBUG
-                //LogInstance.Log($"clustersOfLinkedNodesKVPItem.Key = {clustersOfLinkedNodesKVPItem.Key}");
-#endif
                 CreateEntityCondition(result, clustersOfLinkedNodesKVPItem.Value, context);
             }
 
@@ -356,10 +230,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
             foreach (var sourceItem in conceptsSourceItemsList)
             {
-#if DEBUG
-                //LogInstance.Log($"sourceItem = {sourceItem}");
-#endif
-
                 BaseInternalConceptCGNode resultItem = null;
 
                 var kind = sourceItem.Kind;
@@ -377,33 +247,13 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                     default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
                 }
 
-#if DEBUG
-                //LogInstance.Log($"resultItem = {resultItem}");
-#endif
-
                 var inputsNodesList = sourceItem.Inputs.Select(p => (RelationCGNode)p).ToList();
-
-#if DEBUG
-                //LogInstance.Log($"inputsNodesList.Count = {inputsNodesList.Count}");
-#endif
 
                 foreach (var inputNode in inputsNodesList)
                 {
-#if DEBUG
-                    //LogInstance.Log($"Begin inputNode (Relation) = {inputNode}");
-#endif
-
                     var resultRelationItem = context.RelationsDict[inputNode];
 
-#if DEBUG
-                    //LogInstance.Log($"resultRelationItem = {resultRelationItem}");
-#endif
-
                     var relationsInputsNodesList = inputNode.Inputs.Where(p => p.Kind == KindOfCGNode.Concept || p.Kind == KindOfCGNode.Graph).Select(p => (BaseConceptCGNode)p).ToList();
-
-#if DEBUG
-                    //LogInstance.Log($"relationsInputsNodesList.Count = {relationsInputsNodesList.Count}");
-#endif
 
                     if (relationsInputsNodesList.Count == 0)
                     {
@@ -417,15 +267,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                     {
                         foreach (var relationInputNode in relationsInputsNodesList)
                         {
-#if DEBUG
-                            //LogInstance.Log($"relationInputNode = {relationInputNode}");
-#endif
-
                             var resultRelationInputNode = GetBaseConceptCGNodeForMakingCommonRelation(relationInputNode, context);
 
-#if DEBUG
-                            //LogInstance.Log($"resultRelationInputNode = {resultRelationInputNode}");
-#endif
                             if (!relationStorage.ContainsRelation(resultRelationInputNode.Name, resultRelationItem.Name, resultItem.Name))
                             {
                                 resultItem.AddInputNode(resultRelationItem);
@@ -436,47 +279,20 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                         }
                     }
 
-#if DEBUG
-                    //LogInstance.Log($"End inputNode (Relation) = {inputNode}");
-#endif
                 }
 
-                //throw new NotImplementedException();
 
                 var outputsNodesList = sourceItem.Outputs.Select(p => (RelationCGNode)p).ToList();
 
-#if DEBUG
-                //LogInstance.Log($"outputsNodesList.Count = {outputsNodesList.Count}");
-#endif
-
                 foreach (var outputNode in outputsNodesList)
                 {
-#if DEBUG
-                    //LogInstance.Log($"Begin outputNode (Relation) = {outputNode}");
-#endif
-
                     var resultRelationItem = context.RelationsDict[outputNode];
-
-#if DEBUG
-                    //LogInstance.Log($"resultRelationItem = {resultRelationItem}");
-#endif
 
                     var relationsOutputsNodesList = outputNode.Outputs.Where(p => p.Kind == KindOfCGNode.Concept || p.Kind == KindOfCGNode.Graph).Select(p => (BaseConceptCGNode)p).ToList();
 
-#if DEBUG
-                    //LogInstance.Log($"relationsOutputsNodesList.Count = {relationsOutputsNodesList.Count}");
-#endif
-
                     foreach (var relationOutputNode in relationsOutputsNodesList)
                     {
-#if DEBUG
-                        //LogInstance.Log($"relationOutputNode = {relationOutputNode}");
-#endif
                         var resultRelationOutputNode = GetBaseConceptCGNodeForMakingCommonRelation(relationOutputNode, context);
-
-#if DEBUG
-                        //LogInstance.Log($"resultRelationOutputNode = {resultRelationOutputNode}");
-#endif
 
                         if (!relationStorage.ContainsRelation(resultItem.Name, resultRelationItem.Name, resultRelationOutputNode.Name))
                         {
@@ -486,13 +302,9 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                             relationStorage.AddRelation(resultItem.Name, resultRelationItem.Name, resultRelationOutputNode.Name);
                         }
                     }
-#if DEBUG
-                    //LogInstance.Log($"End outputNode (Relation) = {outputNode}");
-#endif
                 }
             }
 
-            //throw new NotImplementedException();
         }
 
         public BaseInternalConceptCGNode GetBaseConceptCGNodeForMakingCommonRelation(BaseConceptCGNode sourceNode, ContextOfConvertingCGToInternal context)
@@ -518,10 +330,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
         private void CreateEntityCondition(InternalConceptualGraph parent, List<BaseCGNode> sourceItems, ContextOfConvertingCGToInternal context)
         {
-#if DEBUG
-            //_logger.Log($"sourceItems.Count = {sourceItems.Count}");
-#endif
-
             var entityCondition = new InternalConceptualGraph();
             entityCondition.Parent = parent;
             entityCondition.KindOfGraphOrConcept = KindOfInternalGraphOrConceptNode.EntityCondition;
@@ -534,10 +342,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
             foreach (var sourceItem in sourceItems)
             {
-#if DEBUG
-                //LogInstance.Log($"sourceItem = {sourceItem}");
-#endif
-
                 entityConditionsDict[sourceItem] = entityCondition;
             }
 
@@ -549,10 +353,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
             foreach (var sourceItem in conceptsSourceItemsList)
             {
-#if DEBUG
-                //LogInstance.Log($"sourceItem (2) = {sourceItem}");
-#endif
-
                 BaseInternalConceptCGNode resultItem = null;
 
                 var kind = sourceItem.Kind;
@@ -570,40 +370,16 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                     default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
                 }
 
-#if DEBUG
-                //LogInstance.Log($"resultItem = {resultItem}");
-#endif
-
                 var inputsNodesList = sourceItem.Inputs.Where(p => sourceItems.Contains(p)).Select(p => (RelationCGNode)p).ToList();
-
-#if DEBUG
-                //LogInstance.Log($"inputsNodesList.Count = {inputsNodesList.Count}");
-#endif
 
                 foreach (var inputNode in inputsNodesList)
                 {
-#if DEBUG
-                    //LogInstance.Log($"inputNode = {inputNode}");
-#endif
-
                     var resultRelationItem = context.RelationsDict[inputNode];
-
-#if DEBUG
-                    //LogInstance.Log($"resultRelationItem = {resultRelationItem}");
-#endif
 
                     var relationsInputsNodesList = inputNode.Inputs.Where(p => (p.Kind == KindOfCGNode.Concept || p.Kind == KindOfCGNode.Graph) && sourceItems.Contains(p)).Select(p => (BaseConceptCGNode)p).ToList();
 
-#if DEBUG
-                    //LogInstance.Log($"relationsInputsNodesList.Count = {relationsInputsNodesList.Count}");
-#endif
-
                     foreach (var relationInputNode in relationsInputsNodesList)
                     {
-#if DEBUG
-                        //LogInstance.Log($"relationInputNode = {relationInputNode}");
-#endif
-
                         BaseInternalConceptCGNode resultRelationInputNode = null;
 
                         var relationInputNodeKind = relationInputNode.Kind;
@@ -621,10 +397,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                             default: throw new ArgumentOutOfRangeException(nameof(relationInputNodeKind), relationInputNodeKind, null);
                         }
 
-#if DEBUG
-                        //LogInstance.Log($"resultRelationInputNode = {resultRelationInputNode}");
-#endif
-
                         if (relationStorage.ContainsRelation(resultRelationInputNode.Name, resultRelationItem.Name, resultItem.Name))
                         {
                             continue;
@@ -639,33 +411,14 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                 var outputsNodesList = sourceItem.Outputs.Where(p => sourceItems.Contains(p)).Select(p => (RelationCGNode)p).ToList();
 
-#if DEBUG
-                //LogInstance.Log($"outputsNodesList.Count = {outputsNodesList.Count}");
-#endif
-
                 foreach (var outputNode in outputsNodesList)
                 {
-#if DEBUG
-                    //LogInstance.Log($"outputNode = {outputNode}");
-#endif
-
                     var resultRelationItem = context.RelationsDict[outputNode];
-
-#if DEBUG
-                    //LogInstance.Log($"resultRelationItem = {resultRelationItem}");
-#endif
 
                     var relationsOutputsNodesList = outputNode.Outputs.Where(p => (p.Kind == KindOfCGNode.Concept || p.Kind == KindOfCGNode.Graph) && sourceItems.Contains(p)).Select(p => (BaseConceptCGNode)p).ToList();
 
-#if DEBUG
-                    //LogInstance.Log($"relationsOutputsNodesList.Count = {relationsOutputsNodesList.Count}");
-#endif
-
                     foreach (var relationOutputNode in relationsOutputsNodesList)
                     {
-#if DEBUG
-                        //LogInstance.Log($"relationOutputNode = {relationOutputNode}");
-#endif
                         BaseInternalConceptCGNode resultRelationOutputNode = null;
 
                         var relationOutputNodeKind = relationOutputNode.Kind;
@@ -683,10 +436,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                             default: throw new ArgumentOutOfRangeException(nameof(relationOutputNodeKind), relationOutputNodeKind, null);
                         }
-
-#if DEBUG
-                        //LogInstance.Log($"resultRelationOutputNode = {resultRelationOutputNode}");
-#endif
 
                         if (relationStorage.ContainsRelation(resultItem.Name, resultRelationItem.Name, resultRelationOutputNode.Name))
                         {
@@ -708,24 +457,12 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
             foreach (var entityConditionMarkRelation in entitiesConditionsMarksRelationsList)
             {
-#if DEBUG
-                //LogInstance.Log($"entityConditionMarkRelation = {entityConditionMarkRelation}");
-#endif
-
                 notDirectlyClonedNodesList.Add(entityConditionMarkRelation);
 
                 var firstOrdersRelationsList = entityConditionMarkRelation.Outputs.Where(p => p.Kind == KindOfCGNode.Relation).Select(p => (RelationCGNode)p).ToList();
 
-#if DEBUG
-                //LogInstance.Log($"firstOrdersRelationsList.Count = {firstOrdersRelationsList.Count}");
-#endif
-
                 foreach (var firstOrderRelation in firstOrdersRelationsList)
                 {
-#if DEBUG
-                    //LogInstance.Log($"firstOrderRelation = {firstOrderRelation}");
-#endif
-
                     if (!notDirectlyClonedNodesList.Contains(firstOrderRelation))
                     {
                         notDirectlyClonedNodesList.Add(firstOrderRelation);
@@ -733,16 +470,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                     var inputConceptsList = firstOrderRelation.Inputs.Where(p => p.Kind == KindOfCGNode.Concept).Select(p => (ConceptCGNode)p).ToList();
 
-#if DEBUG
-                    //LogInstance.Log($"inputConceptsList.Count = {inputConceptsList.Count}");
-#endif
-
                     foreach (var inputConcept in inputConceptsList)
                     {
-#if DEBUG
-                        //LogInstance.Log($"inputConcept = {inputConcept}");
-#endif
-
                         if (!notDirectlyClonedNodesList.Contains(inputConcept))
                         {
                             notDirectlyClonedNodesList.Add(inputConcept);
@@ -751,16 +480,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                     var outputConceptsList = firstOrderRelation.Outputs.Where(p => p.Kind == KindOfCGNode.Concept).Select(p => (ConceptCGNode)p).ToList();
 
-#if DEBUG
-                    //LogInstance.Log($"outputConceptsList.Count = {outputConceptsList.Count}");
-#endif
-
                     foreach (var outputConcept in outputConceptsList)
                     {
-#if DEBUG
-                        //LogInstance.Log($"outputConcept = {outputConcept}");
-#endif
-
                         if (!notDirectlyClonedNodesList.Contains(outputConcept))
                         {
                             notDirectlyClonedNodesList.Add(outputConcept);
@@ -781,10 +502,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
             while (currentTargetNodesList.Count > 0)
             {
                 n++;
-#if DEBUG
-                //LogInstance.Log($"currentTargetNodesList.Count = {currentTargetNodesList.Count} n = {n}");
-#endif
-
                 var nodesForThisN = GetLinkedNodes(currentTargetNodesList);
 
                 if (nodesForThisN.Count == 0)
@@ -814,10 +531,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
         private void NGetLinkedNodes(List<BaseCGNode> source, BaseCGNode targetNode, ref List<BaseCGNode> result)
         {
-#if DEBUG
-            //LogInstance.Log($"targetNode = {targetNode}");
-#endif
-
             if (result.Contains(targetNode))
             {
                 return;
@@ -827,17 +540,9 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
             var inputNodesList = targetNode.Inputs;
 
-#if DEBUG
-            //LogInstance.Log($"inputNodesList.Count = {inputNodesList.Count}");
-#endif
-
             if (inputNodesList.Count > 0)
             {
                 var tmpNodesList = inputNodesList.Where(p => source.Contains(p)).ToList();
-
-#if DEBUG
-                //LogInstance.Log($"tmpNodesList.Count = {tmpNodesList.Count}");
-#endif
 
                 foreach (var tmpNode in tmpNodesList)
                 {
@@ -847,17 +552,9 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
             var outputNodesList = targetNode.Outputs;
 
-#if DEBUG
-            //LogInstance.Log($"outputNodesList.Count = {outputNodesList.Count}");
-#endif
-
             if (outputNodesList.Count > 0)
             {
                 var tmpNodesList = outputNodesList.Where(p => source.Contains(p)).ToList();
-
-#if DEBUG
-                //LogInstance.Log($"tmpNodesList.Count = {tmpNodesList.Count}");
-#endif
 
                 foreach (var tmpNode in tmpNodesList)
                 {
@@ -868,16 +565,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
         private void CreateChildrenByAllNodes(IList<BaseCGNode> childrenList, InternalConceptualGraph targetParent, ContextOfConvertingCGToInternal context)
         {
-#if DEBUG
-            //LogInstance.Log($"childrenList.Count = {childrenList.Count}");
-#endif
-
             foreach (var child in childrenList)
             {
-#if DEBUG
-                //LogInstance.Log($"child = {child}");
-#endif
-
                 var kind = child.Kind;
 
                 switch (kind)
@@ -902,10 +591,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
         private void SetGrammaticalOptions(ConceptualGraph source, InternalConceptualGraph result)
         {
             var outputNodesGroupedDict = source.Outputs.GroupBy(p => GrammaticalElementsHelper.GetKindOfGrammaticalRelationFromName(p.Name)).ToDictionary(p => p.Key, p => p.ToList());
-
-#if DEBUG
-            //LogInstance.Log($"outputNodesGroupedDict.Count = {outputNodesGroupedDict.Count}");
-#endif
 
             foreach (var outputNodesGroupedKVPItem in outputNodesGroupedDict)
             {
@@ -935,16 +620,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                             var outputNodeOfTheRelation = outputNodesOfTheRelation.Single();
 
-#if DEBUG
-                            //LogInstance.Log($"relation = {relation}");
-                            //LogInstance.Log($"outputNodeOfTheRelation = {outputNodeOfTheRelation}");
-#endif
-
                             var aspect = GrammaticalElementsHelper.GetAspectFromName(outputNodeOfTheRelation.Name);
-
-#if DEBUG
-                            //LogInstance.Log($"aspect = {aspect}");
-#endif
 
                             if (aspect == GrammaticalAspect.Undefined)
                             {
@@ -973,16 +649,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                             var outputNodeOfTheRelation = outputNodesOfTheRelation.Single();
 
-#if DEBUG
-                            //LogInstance.Log($"relation = {relation}");
-                            //LogInstance.Log($"outputNodeOfTheRelation = {outputNodeOfTheRelation}");
-#endif
-
                             var tense = GrammaticalElementsHelper.GetTenseFromName(outputNodeOfTheRelation.Name);
-
-#if DEBUG
-                            //LogInstance.Log($"tense = {tense}");
-#endif
 
                             if (tense == GrammaticalTenses.Undefined)
                             {
@@ -1011,16 +678,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                             var outputNodeOfTheRelation = outputNodesOfTheRelation.Single();
 
-#if DEBUG
-                            //LogInstance.Log($"relation = {relation}");
-                            //LogInstance.Log($"outputNodeOfTheRelation = {outputNodeOfTheRelation}");
-#endif
-
                             var voice = GrammaticalElementsHelper.GetVoiceFromName(outputNodeOfTheRelation.Name);
-
-#if DEBUG
-                            //LogInstance.Log($"voice = {voice}");
-#endif
 
                             if (voice == GrammaticalVoice.Undefined)
                             {
@@ -1049,16 +707,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                             var outputNodeOfTheRelation = outputNodesOfTheRelation.Single();
 
-#if DEBUG
-                            //LogInstance.Log($"relation = {relation}");
-                            //LogInstance.Log($"outputNodeOfTheRelation = {outputNodeOfTheRelation}");
-#endif
-
                             var mood = GrammaticalElementsHelper.GetMoodFromName(outputNodeOfTheRelation.Name);
-
-#if DEBUG
-                            //LogInstance.Log($"mood = {mood}");
-#endif
 
                             if (mood == GrammaticalMood.Undefined)
                             {
@@ -1086,11 +735,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                             }
 
                             var outputNodeOfTheRelation = outputNodesOfTheRelation.Single();
-
-#if DEBUG
-                            //LogInstance.Log($"relation = {relation}");
-                            //LogInstance.Log($"outputNodeOfTheRelation = {outputNodeOfTheRelation}");
-#endif
 
                             var modal = GrammaticalElementsHelper.GetAbilityModalityFromName(outputNodeOfTheRelation.Name);
 
@@ -1125,16 +769,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                             var outputNodeOfTheRelation = outputNodesOfTheRelation.Single();
 
-#if DEBUG
-                            //LogInstance.Log($"relation = {relation}");
-                            //LogInstance.Log($"outputNodeOfTheRelation = {outputNodeOfTheRelation}");
-#endif
-
                             var modal = GrammaticalElementsHelper.GetPermissionModalityFromName(outputNodeOfTheRelation.Name);
-
-#if DEBUG
-                            //LogInstance.Log($"modal = {modal}");
-#endif
 
                             if (modal == PermissionModality.Undefined)
                             {
@@ -1163,16 +798,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                             var outputNodeOfTheRelation = outputNodesOfTheRelation.Single();
 
-#if DEBUG
-                            //LogInstance.Log($"relation = {relation}");
-                            //LogInstance.Log($"outputNodeOfTheRelation = {outputNodeOfTheRelation}");
-#endif
-
                             var modal = GrammaticalElementsHelper.GetObligationModalityFromName(outputNodeOfTheRelation.Name);
-
-#if DEBUG
-                            //LogInstance.Log($"modal = {modal}");
-#endif
 
                             if (modal == ObligationModality.Undefined)
                             {
@@ -1201,16 +827,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                             var outputNodeOfTheRelation = outputNodesOfTheRelation.Single();
 
-#if DEBUG
-                            //LogInstance.Log($"relation = {relation}");
-                            //LogInstance.Log($"outputNodeOfTheRelation = {outputNodeOfTheRelation}");
-#endif
-
                             var modal = GrammaticalElementsHelper.GetProbabilityModalityFromName(outputNodeOfTheRelation.Name);
-
-#if DEBUG
-                            //LogInstance.Log($"modal = {modal}");
-#endif
 
                             if (modal == ProbabilityModality.Undefined)
                             {
@@ -1239,16 +856,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
                             var outputNodeOfTheRelation = outputNodesOfTheRelation.Single();
 
-#if DEBUG
-                            //LogInstance.Log($"relation = {relation}");
-                            //LogInstance.Log($"outputNodeOfTheRelation = {outputNodeOfTheRelation}");
-#endif
-
                             var modal = GrammaticalElementsHelper.GetConditionalModalityFromName(outputNodeOfTheRelation.Name);
-
-#if DEBUG
-                            //LogInstance.Log($"modal = {modal}");
-#endif
 
                             if (modal == ConditionalModality.Undefined)
                             {
@@ -1262,10 +870,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                     default: throw new ArgumentOutOfRangeException(nameof(kindOfGrammaticalRelation), kindOfGrammaticalRelation, null);
                 }
             }
-
-#if DEBUG
-            //_logger.Log($"result = {result}");
-#endif
 
             if(result.Tense == GrammaticalTenses.Undefined)
             {
@@ -1320,11 +924,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 
         private InternalConceptCGNode ConvertConcept(ConceptCGNode source, InternalConceptualGraph targetParent, ContextOfConvertingCGToInternal context)
         {
-#if DEBUG
-            //_logger.Log($"source = {source}");
-            //_logger.Log($"targetParent == null = {targetParent == null}");
-#endif
-
             if (context.ConceptsDict.ContainsKey(source))
             {
                 return context.ConceptsDict[source];
@@ -1353,23 +952,11 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                 result.IsRootConceptOfEntitiCondition = true;
             }
 
-#if DEBUG
-            //if(source.Name == "cat")
-            //{
-            //    _logger.Log($"result = {result}");
-            //}
-#endif
-
             return result;
         }
 
         private InternalRelationCGNode ConvertRelation(RelationCGNode source, InternalConceptualGraph targetParent, ContextOfConvertingCGToInternal context)
         {
-#if DEBUG
-            //_logger.Log($"source = {source}");
-            //_logger.Log($"targetParent == null = {targetParent == null}");
-#endif
-
             if (context.RelationsDict.ContainsKey(source))
             {
                 return context.RelationsDict[source];

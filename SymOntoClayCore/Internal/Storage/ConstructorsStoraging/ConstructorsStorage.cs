@@ -49,17 +49,9 @@ namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
         {
             lock(_constructorsLockObj)
             {
-#if DEBUG
-                //Log($"constructor = {constructor}");
-#endif
-
                 constructor.CheckDirty();
 
                 var paramsCountList = StorageHelper.GetParamsCountList(constructor);
-
-#if DEBUG
-                //Log($"paramsCountList = {paramsCountList.WritePODListToString()}");
-#endif
 
                 var targetDict = GetDictByHolders(constructor);
 
@@ -69,17 +61,7 @@ namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
                     {
                         var targetList = targetDict[count];
 
-#if DEBUG
-                        //Log($"targetList.Count = {targetList.Count}");
-                        //Log($"constructor.GetLongHashCode() = {constructor.GetLongHashCode()}");
-                        //Log($"targetList.FirstOrDefault()?.GetLongHashCode() = {targetList.FirstOrDefault()?.GetLongHashCode()}");
-#endif
-
                         StorageHelper.RemoveSameItems(targetList, constructor);
-
-#if DEBUG
-                        //Log($"targetList.Count (after) = {targetList.Count}");
-#endif
 
                         targetList.Add(constructor);
                     }
@@ -94,10 +76,6 @@ namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
         private Dictionary<int, List<Constructor>> GetDictByHolders(Constructor constructor)
         {
             var holder = constructor.Holder;
-
-#if DEBUG
-            //Log($"holder = {holder}");
-#endif
 
             if(_constructorsDict.ContainsKey(holder))
             {
@@ -116,11 +94,6 @@ namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
         {
             lock (_constructorsLockObj)
             {
-#if DEBUG
-                //Log($"GetHashCode() = {GetHashCode()}");
-                //Log($"paramsCount = {paramsCount}");
-#endif
-
                 if (_realStorageContext.Disabled)
                 {
                     return _emptyConstructorsList;
@@ -131,10 +104,6 @@ namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
                 foreach (var weightedInheritanceItem in weightedInheritanceItems)
                 {
                     var targetHolder = weightedInheritanceItem.SuperName;
-
-#if DEBUG
-                    //Log($"targetHolder = {targetHolder}");
-#endif
 
                     if(_constructorsDict.ContainsKey(targetHolder))
                     {
@@ -161,10 +130,6 @@ namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
         {
             lock(_preConstructorsLockObj)
             {
-#if DEBUG
-                //Log($"preConstructor = {preConstructor}");
-#endif
-
                 preConstructor.CheckDirty();
 
                 _preConstructorsDict[preConstructor.Holder] = preConstructor;
@@ -186,10 +151,6 @@ namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
                 foreach (var weightedInheritanceItem in weightedInheritanceItems)
                 {
                     var targetHolder = weightedInheritanceItem.SuperName;
-
-#if DEBUG
-                    //Log($"targetHolder = {targetHolder}");
-#endif
 
                     if(_preConstructorsDict.ContainsKey(targetHolder))
                     {

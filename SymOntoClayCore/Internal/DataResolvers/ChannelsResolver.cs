@@ -48,42 +48,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public Channel GetChannel(StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"name = {name}");
-#endif
-
             var storage = localCodeExecutionContext.Storage;
 
             var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
-
-#if DEBUG
-            //Log($"storagesList.Count = {storagesList.Count}");
-            //foreach (var tmpStorage in storagesList)
-            //{
-            //    Log($"tmpStorage.Key = {tmpStorage.Key}; tmpStorage.Value.Kind = '{tmpStorage.Value.Kind}'");
-            //}
-#endif
 
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
             var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
 
-#if DEBUG
-            //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
-#endif
-
             var rawList = GetRawList(name, storagesList, weightedInheritanceItems);
 
-#if DEBUG
-            //Log($"rawList = {rawList.WriteListToString()}");
-#endif
-
             var filteredList = Filter(rawList);
-
-#if DEBUG
-            //Log($"filteredList = {filteredList.WriteListToString()}");
-#endif
 
             var targetItem = ChooseTargetItem(filteredList);
 
@@ -92,10 +68,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private List<WeightedInheritanceResultItemWithStorageInfo<Channel>> GetRawList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
-#if DEBUG
-            //Log($"name = {name}");
-#endif
-
             var result = NGetRawList(name, storagesList, weightedInheritanceItems);
 
             if(result.IsNullOrEmpty())
@@ -127,10 +99,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private List<WeightedInheritanceResultItemWithStorageInfo<Channel>> NGetRawList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
-#if DEBUG
-            //Log($"name = {name}");
-#endif
-
             if (!storagesList.Any())
             {
                 return new List<WeightedInheritanceResultItemWithStorageInfo<Channel>>();

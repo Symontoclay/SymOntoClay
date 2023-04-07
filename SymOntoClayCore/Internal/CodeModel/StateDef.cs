@@ -75,13 +75,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var result = new StateDef();
             context[this] = result;
 
-            //result._aliasesList = _aliasesList?.Select(p => p.Clone(context)).ToList();
-            //result._namesList = _namesList?.Select(p => p.Clone(context)).ToList();
 
-            //result.Range = Range?.Clone(context);
-            //result.Constraint = Constraint?.Clone(context);
-            //result.Values = Values?.Select(p => p.Clone(context)).ToList();
-            //result._operatorsList = _operatorsList?.Select(p => p.Clone(context)).ToList();
 
             result.AppendCodeItem(this, context);
 
@@ -93,45 +87,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             base.DiscoverAllAnnotations(result);
 
-            //if (!Values.IsNullOrEmpty())
-            //{
-            //    foreach (var value in Values)
-            //    {
-            //        value.DiscoverAllAnnotations(result);
-            //    }
-            //}
 
-            //if (!Operators.IsNullOrEmpty())
-            //{
-            //    foreach (var op in Operators)
-            //    {
-            //        op.DiscoverAllAnnotations(result);
-            //    }
-            //}
         }
 
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            //foreach (var alias in _aliasesList)
-            //{
-            //    alias.CheckDirty(options);
-            //}
 
             var result = base.CalculateLongHashCode(options);
 
-            //_namesList = new List<StrongIdentifierValue>() { Name };
-            //_namesList.AddRange(_aliasesList);
 
-            //if (!Operators.IsNullOrEmpty())
-            //{
-            //    foreach (var op in Operators)
-            //    {
-            //        op.CheckDirty(options);
 
-            //        result ^= op.GetLongHashCode();
-            //    }
-            //}
 
             return result;
         }
@@ -142,10 +108,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.PrintObjProp(n, nameof(Range), Range);
-            //sb.PrintObjProp(n, nameof(Constraint), Constraint);
-            //sb.PrintObjListProp(n, nameof(NamesList), NamesList);
-            //sb.PrintObjListProp(n, nameof(Operators), Operators);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -157,9 +119,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.PrintShortObjProp(n, nameof(Range), Range);
-            //sb.PrintShortObjProp(n, nameof(Constraint), Constraint);
-            //sb.PrintShortObjListProp(n, nameof(NamesList), NamesList);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -171,9 +130,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.PrintExisting(n, nameof(Range), Range);
-            //sb.PrintExisting(n, nameof(Constraint), Constraint);
-            //sb.PrintExistingList(n, nameof(NamesList), NamesList);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

@@ -64,8 +64,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.Name = Name.Clone(context);
             result.TypesList = TypesList?.Select(p => p.Clone(context)).ToList();
             result.MeaningRolesList = MeaningRolesList?.Select(p => p.Clone(context)).ToList();
-            //result.HasDefaultValue = HasDefaultValue;
-            //result.DefaultValue = DefaultValue.CloneValue(context);
 
             return result;
         }
@@ -90,7 +88,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 }
             }
 
-            //DefaultValue?.CheckDirty(options);
 
             var result = Name.GetLongConditionalHashCode(options);
 
@@ -157,8 +154,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjListProp(n, nameof(TypesList), TypesList);
             sb.PrintObjListProp(n, nameof(MeaningRolesList), MeaningRolesList);
 
-            //sb.AppendLine($"{spaces}{nameof(HasDefaultValue)} = {HasDefaultValue}");
-            //sb.PrintObjProp(n, nameof(DefaultValue), DefaultValue);
 
             return sb.ToString();
         }
@@ -185,8 +180,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjListProp(n, nameof(TypesList), TypesList);
             sb.PrintShortObjListProp(n, nameof(MeaningRolesList), MeaningRolesList);
 
-            //sb.AppendLine($"{spaces}{nameof(HasDefaultValue)} = {HasDefaultValue}");
-            //sb.PrintShortObjProp(n, nameof(DefaultValue), DefaultValue);
 
             return sb.ToString();
         }
@@ -212,8 +205,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintBriefObjProp(n, nameof(Name), Name);
             sb.PrintBriefObjListProp(n, nameof(TypesList), TypesList);
             sb.PrintBriefObjListProp(n, nameof(MeaningRolesList), MeaningRolesList);
-            //sb.AppendLine($"{spaces}{nameof(HasDefaultValue)} = {HasDefaultValue}");
-            //sb.PrintBriefObjProp(n, nameof(DefaultValue), DefaultValue);
 
             return sb.ToString();
         }

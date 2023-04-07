@@ -44,7 +44,6 @@ namespace TestSandbox.CreatingExamples
             ImperativeLogicOperators();
             ArithmeticOperators();
             LogicConditionalTriggers();
-            //LogicQueries();
             RepeatStatement();
             WhileStatement();
             ReturnStatement();//in process
@@ -481,16 +480,9 @@ private:
             Example(CreateName(prefix, n), text);
         }
 
-        //private void LogicQueries()
-        //{
-        //    var prefix = "LogicQueries";
 
-        //    var n = 13;
 
-        //    var text = @"";
 
-        //    Example(CreateName(prefix, n), text);
-        //}
 
         private void RepeatStatement()
         {

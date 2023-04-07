@@ -70,7 +70,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     on Enter =>
     {
         'Begin' >> @>log;
-        //@r = @b = 1;
         @bx >> @>log;
         'End' >> @>log;
     }
@@ -334,28 +333,8 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                 }), true);
         }
 
-        //[Test]
-        //[Parallelizable]
-        //public void Case8()
-        //{
-        //    var text = @"app PeaceKeeper
-        //{
-        //    on Enter =>
-        //    {
-        //    }
-        //}";
 
-        //    throw new NotImplementedException();
 
-        //    Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
-        //        (n, message) => {
-        //            switch (n)
-        //            {
-        //                default:
-        //                    throw new ArgumentOutOfRangeException(nameof(n), n, null);
-        //            }
-        //        }), true);
-        //}
 
         /*
 app PeaceKeeper

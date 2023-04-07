@@ -44,10 +44,6 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
         public ResultOfNodeOfSemanticAnalyzer Run()
         {
-#if DEBUG
-            //Context.Logger.Log($"_nounPhrase = {_nounPhrase}");
-#endif
-
             var result = new ResultOfNodeOfSemanticAnalyzer();            
             var resultSecondaryRolesDict = result.SecondaryRolesDict;
             var conceptualGraph = Context.ConceptualGraph;
@@ -117,72 +113,22 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             }
 
             
-            //            var ajectivesList = _nounPhrase.AdjectivePhrasesList;
 
 
 
-            //            if (!ajectivesList.IsEmpty())
-            //            {
-            //#if DEBUG
-            //                Context.Logger.Log($"ajectivesList.Count = {ajectivesList.Count}");
-            //#endif
 
-            //                foreach (var ajective in ajectivesList)
-            //                {
-            //#if DEBUG
-            //                    Context.Logger.Log($"ajective = {ajective}");
-            //#endif
 
-            //                    var ajectiveNode = new AjectivePhraseNodeOfSemanticAnalyzer(Context, _sentence, ajective);
-            //                    var ajectiveNodeResult = ajectiveNode.Run();
 
-            //#if DEBUG
-            //                    Context.Logger.Log($"ajectiveNodeResult = {ajectiveNodeResult}");
-            //#endif
-            //                    var role = ajective.Adjective.LogicalMeaning.FirstOrDefault();
 
-            //#if DEBUG
-            //                    Context.Logger.Log($"role = {role}");
-            //#endif
 
-            //                    if (!string.IsNullOrWhiteSpace(role))
-            //                    {
-            //                        var ajectiveConcept = ajectiveNodeResult.RootConcept;
 
-            //#if DEBUG
-            //                        Context.Logger.Log($"ajectiveConcept = {ajectiveConcept.ToBriefString()}");
-            //#endif
 
-            //                        var ajectiveRelation = new RelationCGNode();
-            //                        ajectiveRelation.Parent = conceptualGraph;
-            //                        ajectiveRelation.Name = role;
 
-            //                        MarkAsEntityCondition(ajectiveRelation);
 
-            //                        ajectiveRelation.AddInputNode(_concept);
-            //                        ajectiveRelation.AddOutputNode(ajectiveConcept);
-            //                    }
-            //                }
-            //            }
 
-            //            var additionalInfoList = _nounPhrase.AdditionalInfoList;
 
-            //            if (!additionalInfoList.IsEmpty())
-            //            {
-            //                throw new NotImplementedException();
-            //            }
 
-            //            var possesiveList = _nounPhrase.PossesiveList;
 
-            //            if (!possesiveList.IsEmpty())
-            //            {
-            //                throw new NotImplementedException();
-            //            }
-
-#if DEBUG
-            //Context.Logger.Log($"PrimaryRolesDict = {PrimaryRolesDict}");
-            //Context.Logger.Log("End");
-#endif
 
             return result;
         }
@@ -190,10 +136,6 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
         private void ProcessNAsBaseSentenceItem(BaseSentenceItem sentenceItem, ResultOfNodeOfSemanticAnalyzer result)
         {
             var kindOfSentenceItem = sentenceItem.KindOfSentenceItem;
-
-#if DEBUG
-            //Context.Logger.Log($"kindOfSentenceItem = {kindOfSentenceItem}");
-#endif
 
             switch (kindOfSentenceItem)
             {
@@ -208,10 +150,6 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
         private void ProcessNAsWord(Word word, ResultOfNodeOfSemanticAnalyzer result)
         {
-#if DEBUG
-            //Context.Logger.Log($"word = {word}");
-#endif
-
             var conceptualGraph = Context.ConceptualGraph;
 
             var baseGrammaticalWordFrame = word.WordFrame;
@@ -254,10 +192,6 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
                 foreach (var logicalMeaning in nounFullLogicalMeaning)
                 {
-#if DEBUG
-                    //Context.Logger.Log($"logicalMeaning = {logicalMeaning}");
-#endif
-
                     PrimaryRolesDict.Add(logicalMeaning, _concept);
                     resultPrimaryRolesDict.Add(logicalMeaning, _concept);
                 }
@@ -267,10 +201,6 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
         private void ProcessDAsBaseSentenceItem(BaseSentenceItem sentenceItem, ResultOfNodeOfSemanticAnalyzer result)
         {
             var kindOfSentenceItem = sentenceItem.KindOfSentenceItem;
-
-#if DEBUG
-            //Context.Logger.Log($"kindOfSentenceItem = {kindOfSentenceItem}");
-#endif
 
             switch (kindOfSentenceItem)
             {
@@ -285,10 +215,6 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
         private void ProcessDAsWord(Word word, ResultOfNodeOfSemanticAnalyzer result)
         {
-#if DEBUG
-            //Context.Logger.Log($"word = {word}");
-#endif
-
             CreateDeterminerMark(_concept, word);
         }
 
@@ -302,15 +228,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
                 return;
             }
 
-#if DEBUG
-            //Context.Logger.Log($"relationName = {relationName}");
-#endif
-
             var determinerConceptName = determiner.RootWordAsString;
-
-#if DEBUG
-            //Context.Logger.Log($"determinerConceptName = {determinerConceptName}");
-#endif
 
             if (Context.RelationStorage.ContainsRelation(concept.Name, determinerConceptName, relationName))
             {
@@ -339,15 +257,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
         {
             var relationName = SpecialNamesOfRelations.PossessName;
 
-#if DEBUG
-            //Context.Logger.Log($"relationName = {relationName}");
-#endif
-
             var determinerConceptName = determiner.RootWordAsString;
-
-#if DEBUG
-            //Context.Logger.Log($"determinerConceptName = {determinerConceptName}");
-#endif
 
             if (Context.RelationStorage.ContainsRelation(determinerConceptName, concept.Name, relationName))
             {
@@ -371,7 +281,6 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
             MarkAsEntityCondition(determinerRelation);
 
-            //throw new NotImplementedException();
         }
 
         public bool IsPossesDeterminer(Word determiner)
@@ -396,10 +305,6 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
         {
             var kindOfSentenceItem = sentenceItem.KindOfSentenceItem;
 
-#if DEBUG
-            //Context.Logger.Log($"kindOfSentenceItem = {kindOfSentenceItem}");
-#endif
-
             switch (kindOfSentenceItem)
             {
                 case KindOfSentenceItem.Word:
@@ -413,15 +318,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
         private void ProcessAPAsWord(Word word, ResultOfNodeOfSemanticAnalyzer result)
         {
-#if DEBUG
-            //Context.Logger.Log($"word = {word}");
-#endif
-
             var role = word.WordFrame.LogicalMeaning.FirstOrDefault();
-
-#if DEBUG
-            //Context.Logger.Log($"role = {role}");
-#endif
 
             if (string.IsNullOrWhiteSpace(role))
             {
@@ -429,10 +326,6 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             }
 
             var ajectiveConceptName = word.RootWordAsString;
-
-#if DEBUG
-            //Context.Logger.Log($"ajectiveConceptName = {ajectiveConceptName}");
-#endif
 
             if (Context.RelationStorage.ContainsRelation(ajectiveConceptName, _concept.Name, role))
             {

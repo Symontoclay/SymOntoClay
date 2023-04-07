@@ -85,34 +85,19 @@ namespace TestSandbox.Threads
             _logger.Log($"activeObject.IsWaited (3) = {activeObject.IsWaited}");
             _logger.Log($"activeObject.IsActive (3) = {activeObject.IsActive}");
 
-            //Thread.Sleep(1000);
 
-            //activeObject.Stop();
 
-            //_logger.Log($"activeObject.IsWaited (4) = {activeObject.IsWaited}");
-            //_logger.Log($"activeObject.IsActive (4) = {activeObject.IsActive}");
 
-            //Thread.Sleep(10000);
 
-            //taskValue = activeObject.Start();
 
-            //_logger.Log($"taskValue = {taskValue}");
 
-            //Thread.Sleep(1000);
 
-            //activeObject.Stop();
 
-            //Thread.Sleep(1000);
 
-            //_logger.Log($"activeObject.TaskValue = {activeObject.TaskValue}");
 
-            //activeObject.Dispose();
 
-            //Thread.Sleep(1000);
 
-            //taskValue = activeObject.Start();
 
-            //_logger.Log($"taskValue = {taskValue}");
 
             Thread.Sleep(1000);
 
@@ -128,10 +113,6 @@ namespace TestSandbox.Threads
 
             _logger.Log($"_n = {_n}");
 
-            //if (_n > 10)
-            //{
-            //    return false;
-            //}
 
             return true;
         }
@@ -142,10 +123,6 @@ namespace TestSandbox.Threads
 
             _logger.Log($"_m = {_m}");
 
-            //if (_n > 10)
-            //{
-            //    return false;
-            //}
 
             return true;
         }

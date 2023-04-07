@@ -50,12 +50,6 @@ namespace SymOntoClay.Core.Internal.Storage
         public RealStorage(KindOfStorage kind, RealStorageSettings settings)
             : base(settings.MainStorageContext.Logger)
         {
-#if DEBUG
-            //Log($"kind = {kind}");
-            //Log($"settings = {settings}");
-            //Log($"settings.ParentsStorages = {settings.ParentsStorages?.Select(p => p.Kind).WritePODListToString()}");
-#endif
-
             _kind = kind;
             _realStorageContext = new RealStorageContext();
             _realStorageContext.KindOfGC = settings.KindOfGC;
@@ -210,10 +204,6 @@ namespace SymOntoClay.Core.Internal.Storage
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"storage.Kind = {storage.Kind}");
-#endif
-
                 var parentsList = _realStorageContext.Parents;
 
                 if(parentsList.Contains(storage))
@@ -238,10 +228,6 @@ namespace SymOntoClay.Core.Internal.Storage
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"storage.Kind = {storage.Kind}");
-#endif
-
                 var parentsList = _realStorageContext.Parents;
 
                 if (parentsList.Contains(storage))
@@ -268,12 +254,6 @@ namespace SymOntoClay.Core.Internal.Storage
         /// <inheritdoc/>
         void IStorage.CollectChainOfStorages(IList<StorageUsingOptions> result, IList<IStorage> usedStorages, int level, CollectChainOfStoragesOptions options)
         {
-#if DEBUG
-            //Log($"Kind = {Kind}");
-            //Log($"result?.Count = {result?.Count}");
-            //Log($"level = {level}");
-#endif
-
             if (usedStorages.Contains(this))
             {
                 return;
@@ -281,10 +261,6 @@ namespace SymOntoClay.Core.Internal.Storage
 
             usedStorages.Add(this);
 
-            //if(result.Any(p => p.Storage == this))
-            //{
-            //    return;
-            //}
 
             level++;
 
@@ -304,10 +280,6 @@ namespace SymOntoClay.Core.Internal.Storage
                     item.UseFacts = options.UseFacts.Value;
                 }
             }
-
-#if DEBUG
-            //Log($"item = {item}");
-#endif
 
             result.Add(item);
 
@@ -337,10 +309,6 @@ namespace SymOntoClay.Core.Internal.Storage
             {
                 return;
             }
-
-#if DEBUG
-            //Log($"_kind = {_kind}");
-#endif
 
             result.Add(this);
 

@@ -42,10 +42,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public Value GetSettings(Value annotatedItem, StrongIdentifierValue key, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"key = {key}");
-#endif
-
             var value = annotatedItem.GetSettings(key);
 
             if (value != null)

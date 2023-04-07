@@ -37,11 +37,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         
         public void Run(AstExpression expression)
         {
-#if DEBUG
-            //Log($"expression = {expression?.ToHumanizedString()}");
-            //Log($"expression = {expression}");
-#endif
-            
             var kind = expression.Kind;
 
             switch(kind)

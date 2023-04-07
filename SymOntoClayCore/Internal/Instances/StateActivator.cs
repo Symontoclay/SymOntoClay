@@ -53,10 +53,6 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         protected override bool ShouldSearch()
         {
-#if DEBUG
-            //Log($"_stateName = {_stateName}");
-#endif
-
             return !_appInstance.IsStateActivated(_stateName);
         }
 
@@ -69,11 +65,6 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         protected override void RunHandler(ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log("Begin");
-            //Log($"_bindingVariables.Any() = {_bindingVariables.Any()}");
-#endif
-
             if (_bindingVariables.Any())
             {
                 var storagesList = _baseResolver.GetStoragesList(localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
@@ -84,24 +75,12 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 var varNamesList = _bindingVariables.GetDestList();
 
-#if DEBUG
-                //Log($"varNamesList = {varNamesList.WriteListToString()}");
-#endif
-
                 var varList = new List<Var>();
 
                 foreach(var varName in varNamesList)
                 {
 
-#if DEBUG
-                    //Log($"varName = {varName}");
-#endif
-
                     var varItem = targetVarStorage.GetLocalVarDirectly(varName);
-
-#if DEBUG
-                    //Log($"varItem = {varItem}");
-#endif
 
                     if(varItem == null)
                     {

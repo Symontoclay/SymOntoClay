@@ -110,28 +110,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
         {
             Thread.Sleep(200);
             
-#if DEBUG
-            //Log("Do");
-#endif
-
             var visibleItemsList = _visionProvider.GetCurrentVisibleItems();
-
-#if DEBUG
-            //Log($"visibleItemsList = {visibleItemsList.WriteListToString()}");
-#endif
 
             var availableInstanceIdList = _worldContext.AvailableInstanceIdList.Where(p => p != _selfInstanceId).ToList();
 
-#if DEBUG
-            //Log($"availableInstanceIdList = [{string.Join(",",availableInstanceIdList)}]");
-#endif
-
             visibleItemsList = visibleItemsList.Where(p => availableInstanceIdList.Contains(p.InstanceId)).ToList();
             var removedInstancesIdList = visibleItemsList.Select(p => p.InstanceId).ToList();
-
-#if DEBUG
-            //Log($"visibleItemsList (after) = {visibleItemsList.WriteListToString()}");
-#endif
 
             var newVisibleItemsList = new List<VisibleItem>();
             var changedAddFocusVisibleItemsList = new List<VisibleItem>();
@@ -154,10 +138,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
 
                         if (currentItem.IsInFocus != visibleItem.IsInFocus)
                         {
-#if DEBUG
-                            //Log("currentItem.IsInFocus != visibleItem.IsInFocus");
-#endif
-
                             if(visibleItem.IsInFocus)
                             {
                                 changedAddFocusVisibleItemsList.Add(visibleItem);
@@ -171,20 +151,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
                         {
                             if(currentItem.MinDistance != visibleItem.MinDistance)
                             {
-#if DEBUG
-                                //Log("currentItem.MinDistance != visibleItem.MinDistance");
-#endif
                                 changedDistanceVisibleItemsList.Add(visibleItem);
                             }
                             else
                             {
                                 if (currentItem.Position != visibleItem.Position)
                                 {
-#if DEBUG
-                                    //Log($"currentItem.Position = {currentItem.Position}");
-                                    //Log($"visibleItem.Position = {visibleItem.Position}");
-                                    //Log("currentItem.Position != visibleItem.Position");
-#endif
                                     lock (_lockObj)
                                     {
                                         _visibleObjectsPositionRegistry[instanceId] = visibleItem.Position;
@@ -214,27 +186,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
                 }
             }
 
-#if DEBUG
-            //Log($"removedInstancesIdList.Count = {removedInstancesIdList.Count}");
-            //Log($"newVisibleItemsList.Count = {newVisibleItemsList.Count}");
-            //Log($"changedAddFocusVisibleItemsList.Count = {changedAddFocusVisibleItemsList.Count}");
-            //Log($"changedRemoveFocusVisibleItemsList.Count = {changedRemoveFocusVisibleItemsList.Count}");
-            //Log($"changedDistanceVisibleItemsList.Count = {changedDistanceVisibleItemsList.Count}");
-#endif
-
             if (removedInstancesIdList.Any())
             {
                 foreach (var removedInstancesId in removedInstancesIdList)
                 {
-#if DEBUG
-                    //Log($"removedInstancesId = {removedInstancesId}");
-#endif
-
                     var lifeCycle = _lifeTimeCycleOfVisibleObjectsRegistry[removedInstancesId];
-
-#if DEBUG
-                    //Log($"lifeCycle = {lifeCycle}");
-#endif
 
                     if (lifeCycle > 0)
                     {
@@ -301,32 +257,19 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
 
                     var seeFactStr = $"see(I, {idForFacts})";
 
-#if DEBUG
-                    //Log($"seeFactStr = {seeFactStr}");
-#endif
-
                     _visibleObjectsSeeFactsIdRegistry[instanceId] = _coreEngine.InsertPerceptedFact(seeFactStr);
 
                     if (newVisibleItem.IsInFocus)
                     {
                         var focusFactStr = $"focus(I, {idForFacts})";
 
-#if DEBUG
-                        //Log($"focusFactStr = {focusFactStr}");
-#endif
-
                         _visibleObjectsFocusFactsIdRegistry[instanceId] = _coreEngine.InsertPerceptedFact(focusFactStr);
                     }
 
                     var distanceFactStr = $"distance(I, {idForFacts}, {newVisibleItem.MinDistance.ToString("G", CultureInfo.InvariantCulture)})";
 
-#if DEBUG
-                    //Log($"distanceFactStr = {distanceFactStr}");
-#endif
-
                     _visibleObjectsDistanceFactsIdRegistry[instanceId] = _coreEngine.InsertPerceptedFact(distanceFactStr);
                 }
-                //throw new NotImplementedException();
             }
 
             if(changedAddFocusVisibleItemsList.Any())
@@ -338,10 +281,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
                     var idForFacts = _visibleObjectsIdForFactsRegistry[instanceId];
 
                     var focusFactStr = $"focus(I, {idForFacts})";
-
-#if DEBUG
-                    //Log($"focusFactStr = {focusFactStr}");
-#endif
 
                     _visibleObjectsFocusFactsIdRegistry[instanceId] = _coreEngine.InsertPerceptedFact(focusFactStr);
                 }
@@ -372,10 +311,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
 
                     var distanceFactStr = $"distance(I, {idForFacts}, {item.MinDistance.ToString("G", CultureInfo.InvariantCulture)})";
 
-#if DEBUG
-                    //Log($"distanceFactStr = {distanceFactStr}");
-#endif
-
                     _visibleObjectsDistanceFactsIdRegistry[instanceId] = _coreEngine.InsertPerceptedFact(distanceFactStr);
                 }
             }
@@ -385,10 +320,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
 
         public bool IsVisible(int instanceId)
         {
-#if DEBUG
-            //Log($"instanceId = {instanceId}");
-#endif
-
             if(_visibleObjectsRegistry.ContainsKey(instanceId))
             {
                 return true;

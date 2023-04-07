@@ -352,7 +352,6 @@ namespace TestSandbox.CreatingExamples
             _logger.Log("End");
         }
 
-        //"ErrorProcessingExample_"
 
         /*text = @"";
 

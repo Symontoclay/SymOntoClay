@@ -36,10 +36,6 @@ namespace SymOntoClay.BaseTestLib
 {
     public class AdvancedBehaviorTestEngineInstance : IDisposable
     {
-#if DEBUG
-        //private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-#endif
-
         static AdvancedBehaviorTestEngineInstance()
         {
             _rootDir = UnityTestEngineContextFactory.CreateRootDir();
@@ -161,16 +157,7 @@ namespace SymOntoClay.BaseTestLib
 
         private void CreateNPCDSLProject(string npcName)
         {
-#if DEBUG
-            //_logger.Info($"npcName = {npcName}");
-            //_logger.Info($"_wSpaceDir = {_wSpaceDir}");
-#endif
-
             var wSpaceFile = WFilesSearcher.FindWSpaceFile(_wSpaceDir);
-
-#if DEBUG
-            //_logger.Info($"wSpaceFile.FullName = {wSpaceFile.FullName}");
-#endif
 
             var worldSpaceCreationSettings = new WorldSpaceCreationSettings() { ProjectName = npcName, KindOfNewCommand = KindOfNewCommand.NPC };
 
@@ -323,7 +310,6 @@ namespace SymOntoClay.BaseTestLib
             return _world.GetPlace(settings);
         }
 
-        //private string _defaultRelativeFileName = @"/Npcs/Example/Example.soc";
         private readonly string _projectName = "Example";
         private readonly string _testDir;
         private readonly bool _enableNLP;

@@ -44,18 +44,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         /// <inheritdoc/>
         public Value Call(Value rightOperand, Value leftOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"localCodeExecutionContext.Kind = {localCodeExecutionContext.Kind}");
-            //Log($"leftOperand = {leftOperand}");
-            //Log($"rightOperand = {rightOperand}");
-            //Log($"annotation = {annotation}");
-#endif
-
             rightOperand = TryResolveFromVarOrExpr(rightOperand, localCodeExecutionContext);
-
-#if DEBUG
-            //Log($"rightOperand (after) = {rightOperand}");
-#endif
 
             var kindOfLeftOperand = leftOperand.KindOfValue;
 

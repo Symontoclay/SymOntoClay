@@ -98,7 +98,6 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
 
             sb.PrintObjListProp(n, nameof(Items), Items);
 
-            //sb.PrintObjProp(n, nameof(), );
 
             sb.Append(base.PropertiesToString(n));
 

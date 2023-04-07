@@ -34,10 +34,6 @@ namespace SymOntoClay.Core.DebugHelpers
 {
     public static class DebugHelperForEntityConditionExpression
     {
-#if DEBUG
-        //private static ILogger _logger = LogManager.GetCurrentClassLogger();
-#endif
-
         private static readonly CultureInfo _cultureInfo = new CultureInfo("en-GB");
 
         private static DebugHelperOptions _defaultOptions = new DebugHelperOptions();
@@ -49,10 +45,6 @@ namespace SymOntoClay.Core.DebugHelpers
 
         public static string ToString(EntityConditionExpressionNode expr, DebugHelperOptions options)
         {
-#if DEBUG
-            //_logger.Info($"expr = {expr}");
-#endif
-
             switch (expr.Kind)
             {
                 case KindOfLogicalQueryNode.Relation:

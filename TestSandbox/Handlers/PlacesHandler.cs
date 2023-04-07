@@ -44,10 +44,6 @@ namespace TestSandbox.Handlers
             _logger.Log("Begin");
 
             var platformListener = new TstBattleRoyaleHostListener();
-            //var platformListener = new TstAsyncGoHostListener();
-            //var platformListener = new TstGoHostListener();
-            //var platformListener = new Exec_Tests_HostListener4();
-            //var platformListener = new FullGeneralized_Tests_HostListener();
 
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.HostListener = platformListener;
@@ -62,31 +58,20 @@ namespace TestSandbox.Handlers
 
             settings.PlatformSupport = new PlatformSupportCLIStub();
 
-            //settings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Navs\waypoint\waypoint.sobj");
 
-            //_logger.Log($"settings.HostFile = {settings.HostFile}");
 
             settings.Categories = new List<string>() { "waypoint" };
             settings.EnableCategories = true;
 
             var place = _world.GetPlace(settings);
 
-            //settings = new PlaceSettings();
-            //settings.Id = "#WP2";
-            //settings.InstanceId = 777;
-            //settings.AllowPublicPosition = true;
-            //settings.UseStaticPosition = new System.Numerics.Vector3(5, 5, 5);
 
-            //settings.PlatformSupport = new PlatformSupportCLIStub();
 
             ////settings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Navs\waypoint\waypoint.sobj");
 
             ////_logger.Log($"settings.HostFile = {settings.HostFile}");
 
-            //settings.Categories = new List<string>() { "waypoint" };
-            //settings.EnableCategories = true;
 
-            //place = _world.GetPlace(settings);
 
             _world.Start();
 
@@ -114,7 +99,6 @@ namespace TestSandbox.Handlers
             settings.PlatformSupport = this;
 
 #if DEBUG
-            //Debug.Log($"BaseElementaryArea Awake ('{name}') GetType().FullName  = {GetType().FullName}");
             Debug.Log($"BaseElementaryArea Awake ('{name}') gameObject.GetInstanceID() = {gameObject.GetInstanceID()}");
             Debug.Log($"BaseElementaryArea Awake ('{name}') Id = {Id}");
             if (GetType() == typeof(Waypoint))

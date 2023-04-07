@@ -29,7 +29,6 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
 {
     public static class OperatorsHelper
     {
-        //I use operator precedence of C and C++. https://en.wikipedia.org/wiki/Operators_in_C_and_C%2B%2B
         public static int GetPriority(KindOfOperator kind)
         {
             switch(kind)

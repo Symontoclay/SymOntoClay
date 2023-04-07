@@ -45,19 +45,10 @@ namespace SymOntoClay.Core.Internal.Storage.SynonymsStoraging
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"synonym = {synonym}");
-#endif
-
                 synonym.CheckDirty();
 
                 var name = synonym.Name;
                 var obj = synonym.Object;
-
-#if DEBUG
-                //Log($"name = {name}");
-                //Log($"obj = {obj}");
-#endif
 
                 AddWord(name, obj);
                 AddWord(obj, name);
@@ -86,10 +77,6 @@ namespace SymOntoClay.Core.Internal.Storage.SynonymsStoraging
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"name = {name}");
-#endif
-
                 if (_realStorageContext.Disabled)
                 {
                     return null;

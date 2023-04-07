@@ -31,10 +31,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class BindingVariables : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-#if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         public BindingVariables()
         {
             _source = new List<BindingVariableItem>();
@@ -72,10 +68,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public StrongIdentifierValue GetDest(StrongIdentifierValue sourceVarName)
         {
-#if DEBUG
-            //_gbcLogger.Info($"sourceVarName = {sourceVarName}");
-#endif
-
             if(_varsDict.ContainsKey(sourceVarName))
             {
                 return _varsDict[sourceVarName];

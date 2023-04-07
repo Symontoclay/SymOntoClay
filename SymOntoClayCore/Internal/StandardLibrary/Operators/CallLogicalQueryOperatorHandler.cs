@@ -57,10 +57,6 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         {
             operand = TryResolveFromVarOrExpr(operand, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"operand (after) = {operand}");
-#endif
-
             if (!operand.IsLogicalQueryOperationValue)
             {
                 throw new NotSupportedException();
@@ -69,10 +65,6 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             var val = operand.AsLogicalQueryOperationValue;
 
             var kindOfLogicalQueryOperation = val.KindOfLogicalQueryOperation;
-
-#if DEBUG
-            //Log($"kindOfLogicalQueryOperation = {kindOfLogicalQueryOperation}");
-#endif
 
             switch(kindOfLogicalQueryOperation)
             {
@@ -89,11 +81,6 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
         private Value ProcessSelect(LogicalQueryOperationValue operand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"operand = {operand}");
-            //Log($"annotation = {annotation}");
-#endif
-
             if(operand.Target == null)
             {
                 throw new NotImplementedException();
@@ -118,37 +105,17 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
             var query = target.AsRuleInstance;
 
-#if DEBUG
-            //Log($"query = {query}");
-            //Log($"query = {DebugHelperForRuleInstance.ToString(query)}");
-#endif
-
             var searchOptions = new LogicalSearchOptions();
             searchOptions.QueryExpression = query;
             searchOptions.LocalCodeExecutionContext = localCodeExecutionContext;
 
-#if DEBUG
-            //Log($"searchOptions = {searchOptions}");
-#endif
-
             var searchResult = _searcher.Run(searchOptions);
-
-#if DEBUG
-            //Log($"searchResult = {searchResult}");
-            //Log($"result = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
-#endif
 
             return new LogicalSearchResultValue(searchResult);
         }
 
         private Value ProcessInsert(LogicalQueryOperationValue operand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"operand = {operand}");
-            //Log($"annotation = {annotation}");
-            //Log($"localCodeExecutionContext.Holder = {localCodeExecutionContext.Holder}");
-#endif
-
             if (operand.Target == null)
             {
                 throw new NotImplementedException();
@@ -173,13 +140,6 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
             var ruleInstance = target.AsRuleInstance;
 
-#if DEBUG
-            //Log($"ruleInstance = {ruleInstance}");
-            //Log($"ruleInstance.Holder = {ruleInstance.Holder}");
-            //Log($"ruleInstance.TypeOfAccess = {ruleInstance.TypeOfAccess}");
-            //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
-#endif
-
             if (ruleInstance.Holder == null)
             {
                 ruleInstance.Holder = localCodeExecutionContext.Holder;
@@ -194,19 +154,9 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             {
                 ruleInstance = ruleInstance.Clone();
 
-#if DEBUG
-                //Log($"queryExpression (1) = {ruleInstance}");
-                //Log($"DebugHelperForRuleInstance.ToString(queryExpression) (1) = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
-#endif
-
                 var packedVarsResolver = new PackedVarsResolver(_varsResolver, localCodeExecutionContext);
 
                 ruleInstance.ResolveVariables(packedVarsResolver);
-
-#if DEBUG
-                //Log($"ruleInstance (2) = {ruleInstance}");
-                //Log($"DebugHelperForRuleInstance.ToString(queryExpression) (2) = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
-#endif
 
                 ruleInstance.CheckDirty();
             }            

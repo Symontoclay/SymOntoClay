@@ -34,7 +34,6 @@ namespace DictionaryGenerator
 #if DEBUG
             NLog.LogManager.GetCurrentClassLogger().Info("Begin ProcessAllNumerals");
 #endif
-            //0 - 10
             var word = "zero";
             var value = 0f;
             var rootWord = word;
@@ -983,7 +982,6 @@ namespace DictionaryGenerator
                 RootWord = rootWord
             });
 
-            //11 - 20
             word = "eleven";
             value = 11f;
             rootWord = word;
@@ -1289,7 +1287,6 @@ namespace DictionaryGenerator
                 RootWord = rootWord
             });
 			
-            //20 - 80
             word = "twenty";
             value = 20f;
             rootWord = word;
@@ -1554,7 +1551,6 @@ namespace DictionaryGenerator
                 RootWord = rootWord
             });
 
-            //>= 100
             word = "hundred";
             value = 100f;
             rootWord = word;

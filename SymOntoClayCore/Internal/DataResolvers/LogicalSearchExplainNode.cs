@@ -69,7 +69,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public IList<QueryExecutingCardAboutVar> VarsInfoList { get; set; }
         public IList<QueryExecutingCardAboutKnownInfo> KnownInfoList { get; set; }
 
-        //LogicalSearchExplainNode.LinkNodes(,);
 
         public static void LinkNodes(LogicalSearchExplainNode parent, LogicalSearchExplainNode child)
         {
@@ -82,16 +81,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             
             child.Parent = parent;
 
-            //var commonParent = parent.CommonParent;
 
-            //var commonChildren = commonParent.CommonChildren;
 
-            //child.CommonParent = commonParent;
 
-            //if(!commonChildren.Contains(child))
-            //{
-            //    commonChildren.Add(child);
-            //}
         }
 
         public static void ResetParent(LogicalSearchExplainNode child)

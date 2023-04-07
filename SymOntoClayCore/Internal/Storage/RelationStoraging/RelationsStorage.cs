@@ -45,10 +45,6 @@ namespace SymOntoClay.Core.Internal.Storage.RelationStoraging
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"relation = {relation}");
-#endif
-
                 if (relation.TypeOfAccess != TypeOfAccess.Local)
                 {
                     AnnotatedItemHelper.CheckAndFillUpHolder(relation, _realStorageContext.MainStorageContext.CommonNamesStorage);
@@ -60,15 +56,7 @@ namespace SymOntoClay.Core.Internal.Storage.RelationStoraging
 
                 var paramsCount = relation.Arguments.Count;
 
-#if DEBUG
-                //Log($"paramsCount = {paramsCount}");
-#endif
-
                 var holder = relation.Holder;
-
-#if DEBUG
-                //Log($"holder = {holder}");
-#endif
 
                 if (_itemsDict.ContainsKey(holder))
                 {
@@ -121,11 +109,6 @@ namespace SymOntoClay.Core.Internal.Storage.RelationStoraging
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"name = {name}");
-                //Log($"paramsCount = {paramsCount}");
-#endif
-
                 if (_realStorageContext.Disabled)
                 {
                     return _emptyRelationsList;
@@ -136,10 +119,6 @@ namespace SymOntoClay.Core.Internal.Storage.RelationStoraging
                 foreach (var weightedInheritanceItem in weightedInheritanceItems)
                 {
                     var targetHolder = weightedInheritanceItem.SuperName;
-
-#if DEBUG
-                    //Log($"targetHolder = {targetHolder}");
-#endif
 
                     if (_itemsDict.ContainsKey(targetHolder))
                     {

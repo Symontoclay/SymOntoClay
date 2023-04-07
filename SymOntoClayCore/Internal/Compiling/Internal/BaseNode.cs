@@ -57,10 +57,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         
         protected void CompileValue(Value value)
         {
-#if DEBUG
-            //Log($"value = {value}");
-#endif
-
             if(value.IsStrongIdentifierValue)
             {
                 var name = value.AsStrongIdentifierValue;
@@ -152,7 +148,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
             foreach (var commandItem in _result)
             {
-                //Log($"commandItem = {commandItem}");
 
                 sb.AppendLine($"{spaces}{n}: {IntermediateScriptCommandToRawDbgString(commandItem, cmdDict)}");
 

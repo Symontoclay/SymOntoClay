@@ -53,11 +53,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
-#endif
-
             switch (_state)
             {
                 case State.Init:
@@ -80,10 +75,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             {
                                 var kindOfRuleInstanceSectionMark = PeekKindOfRuleInstanceSectionMark();
 
-#if DEBUG
-                                //Log($"kindOfRuleInstanceSectionMark = {kindOfRuleInstanceSectionMark}");
-#endif
-
                                 if(kindOfRuleInstanceSectionMark != KindOfRuleInstanceSectionMark.Unknown)
                                 {
                                     throw new UnexpectedTokenException(_currToken);
@@ -92,7 +83,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var nextToken = _context.GetToken();
 
 #if DEBUG
-                                //Log($"nextToken = {nextToken}");
 
 #endif
                                 switch (nextToken.TokenKind)
@@ -123,11 +113,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var parser = new LogicalModalityExpressionParser(_context, TokenKind.CloseFigureBracket);
                                 parser.Run();
 
-#if DEBUG
-                                //Log($"parser.Result = {parser.Result}");
-                                //Log($"parser.Result = {parser.Result.ToHumanizedString()}");
-#endif
-
                                 Result = new LogicalModalityExpressionValue() { Expression = parser.Result };
 
 
@@ -148,10 +133,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             {
                                 var kindOfRuleInstanceSectionMark = PeekKindOfRuleInstanceSectionMark();
 
-#if DEBUG
-                                //Log($"kindOfRuleInstanceSectionMark = {kindOfRuleInstanceSectionMark}");
-#endif
-
                                 if(kindOfRuleInstanceSectionMark == KindOfRuleInstanceSectionMark.Unknown)
                                 {
                                     _fuzzyLogicNonNumericSequenceValue.AddIdentifier(ParseName(_currToken.Content));
@@ -162,10 +143,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 }
 
                                 _context.Recovery(_currToken);
-
-#if DEBUG
-                                //Log($"_fuzzyLogicNonNumericSequenceValue = {_fuzzyLogicNonNumericSequenceValue}");
-#endif
 
                                 if(_fuzzyLogicNonNumericSequenceValue.NonNumericValue != null && _fuzzyLogicNonNumericSequenceValue.Operators.IsNullOrEmpty())
                                 {

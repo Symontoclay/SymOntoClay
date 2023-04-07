@@ -35,10 +35,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public abstract class BaseRulePart: AnnotatedItem, IMemberAccess, IReadOnlyMemberAccess, ILogicalSearchItem, ILogicalQueryNodeParent
     {
-#if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-        
         public RuleInstance Parent { get; set; }
 
         /// <inheritdoc/>
@@ -126,10 +122,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             HasQuestionVars = contextOfConvertingExpressionNode.HasQuestionVars;
             HasVars = contextOfConvertingExpressionNode.HasVars;
             IsParameterized = contextOfConvertingExpressionNode.IsParameterized;
-
-#if DEBUG
-            //_gbcLogger.Info($"HasVars = {HasVars}");
-#endif
 
             RelationsDict = contextOfConvertingExpressionNode.RelationsList.GroupBy(p => p.Name).ToDictionary(p => p.Key, p => (IList<LogicalQueryNode>)p.ToList());
         }

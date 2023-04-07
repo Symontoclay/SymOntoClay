@@ -39,15 +39,7 @@ namespace SymOntoClay.NLP.Internal.ATN
 
         public List<BaseSentenceItem> Run(BaseSentenceItem sentenceItem)
         {
-#if DEBUG
-            //_logger.Log($"sentenceItem = {sentenceItem.ToDbgString()}");
-#endif
-
             var kindOfSentenceItem = sentenceItem.KindOfSentenceItem;
-
-#if DEBUG
-            //_logger.Log($"kindOfSentenceItem = {kindOfSentenceItem}");
-#endif
 
             switch (kindOfSentenceItem)
             {
@@ -61,10 +53,6 @@ namespace SymOntoClay.NLP.Internal.ATN
 
         private List<BaseSentenceItem> ProcessSentence(Sentence sentence)
         {
-#if DEBUG
-            //_logger.Log($"sentence = {sentence.ToDbgString()}");
-#endif
-
             if((sentence.VocativePhrase != null && (sentence.VocativePhrase.IsConjunctionPhrase || sentence.VocativePhrase.IsListPhrase))
                 || (sentence.Subject != null && (sentence.Subject.IsConjunctionPhrase || sentence.Subject.IsListPhrase))
                 || (sentence.Predicate != null && (sentence.Predicate.IsConjunctionPhrase || sentence.Predicate.IsListPhrase)))

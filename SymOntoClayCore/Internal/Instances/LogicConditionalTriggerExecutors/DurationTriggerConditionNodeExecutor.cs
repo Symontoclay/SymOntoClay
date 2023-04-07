@@ -40,9 +40,6 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 
             _targetDuration = TriggerConditionNodeHelper.GetInt32Duration(condition);
 
-#if DEBUG
-            //Log($"_targetDuration = {_targetDuration}");
-#endif
         }
 
         private readonly TriggerConditionNodeObserverContext _context;
@@ -60,12 +57,6 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
             }
 
             var secondsNow = _dateTimeProvider.CurrentTiks * _dateTimeProvider.SecondsMultiplicator;
-
-#if DEBUG
-            //Log($"_context.SetSeconds = {_context.SetSeconds}");
-            //Log($"_dateTimeProvider.CurrentTiks = {_dateTimeProvider.CurrentTiks}");
-            //Log($"secondsNow = {secondsNow}");
-#endif
 
             if (secondsNow > _context.SetSeconds + _targetDuration)
             {

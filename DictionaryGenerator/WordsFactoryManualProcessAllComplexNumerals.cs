@@ -31,7 +31,6 @@ namespace DictionaryGenerator
     {
         private void ProcessAllComplexNumerals()
         {
-            //1
             var word = "one-off";
             var value = 1f;
             var rootWord = "one";
@@ -46,7 +45,6 @@ namespace DictionaryGenerator
                 }
             });
 
-            //21 - 29
             word = "twenty-one";
             value = 21f;
             rootWord = word;

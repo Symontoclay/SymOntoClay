@@ -54,22 +54,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _field = CreateField();
             _field.TypeOfAccess = _context.CurrentDefaultSetings.TypeOfAccess;
-#if DEBUG
-            //Log($"_field = {_field}");
-            //Log($"_context.CurrentDefaultSetings.TypeOfAccess = {_context.CurrentDefaultSetings.TypeOfAccess}");
-#endif
         }
 
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
-            //Log($"_field = {_field}");
-            //Log($"Result = {Result}");
-#endif
-
             switch (_state)
             {
                 case State.Init:
@@ -143,10 +132,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         var parser = new AstExpressionParser(_context, TokenKind.Semicolon);
                         parser.Run();
-
-#if DEBUG
-                        //Log($"parser.Result = {parser.Result}");
-#endif
 
                         _field.Value = parser.Result;
                         _state = State.GotValue;

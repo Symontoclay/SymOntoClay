@@ -41,9 +41,6 @@ namespace TestSandbox.Parsing
             _logger.Info("Begin");
 
             TstParser2();
-            //TstLexer2();
-            //TstParser1();
-            //TstLexer1();
 
             _logger.Info("End");
         }
@@ -73,12 +70,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"parsedFileInfoList = {result.WriteListToString()}");
 
-            //Token token = null;
 
-            //while ((token = internalParserContext.GetToken()) != null)
-            //{
-            //    _logger.Info($"token = {token}");
-            //}
 
             _logger.Info("End");
         }
@@ -130,12 +122,7 @@ namespace TestSandbox.Parsing
 
             _logger.Info($"parsedFileInfoList = {result.WriteListToString()}");
 
-            //Token token = null;
 
-            //while ((token = internalParserContext.GetToken()) != null)
-            //{
-            //    _logger.Info($"token = {token}");
-            //}
 
             _logger.Info("End");
         }

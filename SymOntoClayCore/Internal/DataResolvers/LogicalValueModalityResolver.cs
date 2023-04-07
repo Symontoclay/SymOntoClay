@@ -46,10 +46,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public bool IsHigh(Value modalityValue, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"modalityValue = {modalityValue}");
-#endif
-
             if(modalityValue == null)
             {
                 return false;
@@ -62,20 +58,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var numberValue = _fuzzyLogicResolver.Resolve(modalityValue, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"numberValue = {numberValue}");
-#endif
-
             return _toSystemBoolResolver.Resolve(numberValue);
         }
 
         public bool IsFit(Value modalityValue, Value queryModalityValue, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"modalityValue = {modalityValue}");
-            //Log($"queryModalityValue = {queryModalityValue}");
-#endif
-
             if(modalityValue == null)
             {
                 return false;
@@ -90,10 +77,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 var exprValue = queryModalityValue.AsLogicalModalityExpressionValue;
 
-#if DEBUG
-                //Log($"exprValue.Expression = {exprValue.Expression.ToHumanizedString()}");
-#endif
-
                 return ProcessBoolExpression(modalityValue, exprValue.Expression, localCodeExecutionContext);
             }
 
@@ -102,10 +85,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private bool ProcessBoolExpression(Value modalityValue, LogicalModalityExpressionNode expressionNode, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"exprValue.Expression = {expressionNode.ToHumanizedString()}");
-#endif
-
             switch (expressionNode.Kind)
             {
                 case KindOfLogicalModalityExpressionNode.BinaryOperator:
@@ -124,10 +103,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private Value ProcessValueExpression(Value modalityValue, LogicalModalityExpressionNode expressionNode, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"exprValue.Expression = {expressionNode.ToHumanizedString()}");
-#endif
-
             switch (expressionNode.Kind)
             {
                 case KindOfLogicalModalityExpressionNode.BlankIdentifier:
@@ -148,25 +123,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private bool ProcessBinaryOperator(Value modalityValue, LogicalModalityExpressionNode expressionNode, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"expressionNode = {expressionNode.ToHumanizedString()}");
-#endif
-
             switch (expressionNode.KindOfOperator)
             {
                 case KindOfOperator.Is:
                     {
                         var left = ProcessValueExpression(modalityValue, expressionNode.Left, localCodeExecutionContext);
 
-#if DEBUG
-                        //Log($"left = {left}");
-#endif
-
                         var right = ProcessValueExpression(modalityValue, expressionNode.Right, localCodeExecutionContext);
-
-#if DEBUG
-                        //Log($"right = {right}");
-#endif
 
                         return _fuzzyLogicResolver.Equals(left, right, localCodeExecutionContext);
                     }
@@ -175,15 +138,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     {
                         var left = ProcessValueExpression(modalityValue, expressionNode.Left, localCodeExecutionContext);
 
-#if DEBUG
-                        //Log($"left = {left}");
-#endif
-
                         var right = ProcessValueExpression(modalityValue, expressionNode.Right, localCodeExecutionContext);
-
-#if DEBUG
-                        //Log($"right = {right}");
-#endif
 
                         return !_fuzzyLogicResolver.Equals(left, right, localCodeExecutionContext);
                     }
@@ -192,15 +147,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     {
                         var left = ProcessBoolExpression(modalityValue, expressionNode.Left, localCodeExecutionContext);
 
-#if DEBUG
-                        //Log($"left = {left}");
-#endif
-
                         var right = ProcessBoolExpression(modalityValue, expressionNode.Right, localCodeExecutionContext);
-
-#if DEBUG
-                        //Log($"right = {right}");
-#endif
 
                         return left && right;
                     }
@@ -209,15 +156,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     {
                         var left = ProcessBoolExpression(modalityValue, expressionNode.Left, localCodeExecutionContext);
 
-#if DEBUG
-                        //Log($"left = {left}");
-#endif
-
                         var right = ProcessBoolExpression(modalityValue, expressionNode.Right, localCodeExecutionContext);
-
-#if DEBUG
-                        //Log($"right = {right}");
-#endif
 
                         return left || right;
                     }
@@ -226,15 +165,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     {
                         var left = ProcessValueExpression(modalityValue, expressionNode.Left, localCodeExecutionContext);
 
-#if DEBUG
-                        //Log($"left = {left}");
-#endif
-
                         var right = ProcessValueExpression(modalityValue, expressionNode.Right, localCodeExecutionContext);
-
-#if DEBUG
-                        //Log($"right = {right}");
-#endif
 
                         return _fuzzyLogicResolver.More(left, right, localCodeExecutionContext);
                     }
@@ -243,15 +174,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     {
                         var left = ProcessValueExpression(modalityValue, expressionNode.Left, localCodeExecutionContext);
 
-#if DEBUG
-                        //Log($"left = {left}");
-#endif
-
                         var right = ProcessValueExpression(modalityValue, expressionNode.Right, localCodeExecutionContext);
-
-#if DEBUG
-                        //Log($"right = {right}");
-#endif
 
                         return _fuzzyLogicResolver.MoreOrEqual(left, right, localCodeExecutionContext);
                     }
@@ -260,15 +183,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     {
                         var left = ProcessValueExpression(modalityValue, expressionNode.Left, localCodeExecutionContext);
 
-#if DEBUG
-                        //Log($"left = {left}");
-#endif
-
                         var right = ProcessValueExpression(modalityValue, expressionNode.Right, localCodeExecutionContext);
-
-#if DEBUG
-                        //Log($"right = {right}");
-#endif
 
                         return _fuzzyLogicResolver.Less(left, right, localCodeExecutionContext);
                     }
@@ -277,15 +192,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     {
                         var left = ProcessValueExpression(modalityValue, expressionNode.Left, localCodeExecutionContext);
 
-#if DEBUG
-                        //Log($"left = {left}");
-#endif
-
                         var right = ProcessValueExpression(modalityValue, expressionNode.Right, localCodeExecutionContext);
-
-#if DEBUG
-                        //Log($"right = {right}");
-#endif
 
                         return _fuzzyLogicResolver.LessOrEqual(left, right, localCodeExecutionContext);
                     }
@@ -297,10 +204,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private bool ProcessUnaryOperator(Value modalityValue, LogicalModalityExpressionNode expressionNode, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"expressionNode = {expressionNode.ToHumanizedString()}");
-#endif
-
             switch (expressionNode.KindOfOperator)
             {
                 case KindOfOperator.Not:

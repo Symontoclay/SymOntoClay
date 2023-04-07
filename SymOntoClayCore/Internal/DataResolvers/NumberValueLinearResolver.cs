@@ -65,10 +65,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public NumberValue Resolve(Value source, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"source = {source}");
-#endif
-
             if(source == null)
             {
                 return ValueConverter.ConvertNullValueToNumberValue(NullValue.Instance, _context);

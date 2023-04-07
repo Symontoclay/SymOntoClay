@@ -33,10 +33,6 @@ namespace TestSandbox.NLP
 {
     public class TstSimpleWordsDict: IWordsDict
     {
-#if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         public TstSimpleWordsDict()
         {
             DefineCommonClasses();
@@ -50,11 +46,6 @@ namespace TestSandbox.NLP
 
         public IList<BaseGrammaticalWordFrame> GetWordFramesByWord(string word)
         {
-#if DEBUG
-            //_gbcLogger.Info($"word = {word}");
-            //_gbcLogger.Info($"_wordFramesDict.ContainsKey(word) = {_wordFramesDict.ContainsKey(word)}");
-#endif
-
             if (_wordFramesDict.ContainsKey(word))
             {
                 return _wordFramesDict[word];
@@ -122,19 +113,11 @@ namespace TestSandbox.NLP
 
         private void CalculateFullMeaningsDict()
         {
-#if DEBUG
-            //LogInstance.Log($"mTmpMeaningsDict.Count = {mTmpMeaningsDict.Count}");
-#endif
-
             var mMeaningsDict = new Dictionary<string, IList<string>>();
 
             foreach (var tmpMeaningsDictKVPItem in mTmpMeaningsDict)
             {
                 var word = tmpMeaningsDictKVPItem.Key;
-#if DEBUG
-                //LogInstance.Log($"word = {word}");
-#endif
-
                 var wasVisited = new List<string>();
                 wasVisited.Add(word);
                 var tmplistOfMeanings = tmpMeaningsDictKVPItem.Value;
@@ -142,22 +125,11 @@ namespace TestSandbox.NLP
                 NCalculateFullMeaningsDict(word, ref tmplistOfMeanings, wasVisited);
 
                 tmplistOfMeanings = tmplistOfMeanings.Distinct().ToList();
-#if DEBUG
-                //LogInstance.Log($"tmplistOfMeanings.Count = {tmplistOfMeanings.Count}");
-                //foreach(var meaning in tmplistOfMeanings)
-                //{
-                //    LogInstance.Log($"meaning = {meaning}");
-                //}
-#endif
                 mMeaningsDict[word] = tmplistOfMeanings;
             }
 
             foreach (var grammaticalWordFrame in _wordFramesList)
             {
-#if DEBUG
-                //LogInstance.Log($"grammaticalWordFrame = {grammaticalWordFrame}");
-#endif
-
                 var logicalMeaningsList = grammaticalWordFrame.LogicalMeaning;
 
                 if (logicalMeaningsList.IsNullOrEmpty())
@@ -169,10 +141,6 @@ namespace TestSandbox.NLP
 
                 foreach (var logicalMeaning in logicalMeaningsList)
                 {
-#if DEBUG
-                    //LogInstance.Log($"logicalMeaning = {logicalMeaning}");
-#endif
-
                     completeLogicalMeaningsList.Add(logicalMeaning);
 
                     if (mMeaningsDict.ContainsKey(logicalMeaning))
@@ -183,39 +151,19 @@ namespace TestSandbox.NLP
                 }
 
                 completeLogicalMeaningsList = completeLogicalMeaningsList.Distinct().ToList();
-#if DEBUG
-                //LogInstance.Log($"completeLogicalMeaningsList.Count = {completeLogicalMeaningsList.Count}");
-                //foreach (var meaning in completeLogicalMeaningsList)
-                //{
-                //    LogInstance.Log($"meaning = {meaning}");
-                //}
-#endif
-
                 grammaticalWordFrame.FullLogicalMeaning = completeLogicalMeaningsList;
             }
         }
 
         private void NCalculateFullMeaningsDict(string word, ref List<string> listOfMeanings, List<string> wasVisited)
         {
-#if DEBUG
-            //LogInstance.Log($"word = {word}");
-#endif
-
             var tmpSourceListOfMeanings = listOfMeanings.ToList();
             foreach (var meaning in tmpSourceListOfMeanings)
             {
-#if DEBUG
-                //LogInstance.Log($"meaning = {meaning}");
-#endif
-
                 if (wasVisited.Contains(meaning))
                 {
                     continue;
                 }
-
-#if DEBUG
-                //LogInstance.Log($"NEXT meaning = {meaning}");
-#endif
 
                 if (mTmpMeaningsDict.ContainsKey(meaning))
                 {
@@ -1260,10 +1208,6 @@ namespace TestSandbox.NLP
 
         private void ProcessAllPrepositions()
         {
-#if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info("Begin ProcessAllPrepositions");
-#endif
-
             var word = "aboard";
             AddGrammaticalWordFrame(word, new PrepositionGrammaticalWordFrame()
             {
@@ -2158,7 +2102,6 @@ namespace TestSandbox.NLP
             {
             });
 
-            //------
             word = "ago";
             AddGrammaticalWordFrame(word, new PostpositionGrammaticalWordFrame()
             {
@@ -2201,10 +2144,6 @@ namespace TestSandbox.NLP
 
         private void ProcessAllConjunctions()
         {
-#if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info("Begin ProcessAllConjunctions");
-#endif
-
             var word = "and";
             AddGrammaticalWordFrame(word, new ConjunctionGrammaticalWordFrame()
             {
@@ -2507,10 +2446,6 @@ namespace TestSandbox.NLP
 
         private void ProcessAllNumerals()
         {
-#if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info("Begin ProcessAllNumerals");
-#endif
-            //0 - 10
             var word = "zero";
             var value = 0f;
             var rootWord = word;
@@ -3460,7 +3395,6 @@ namespace TestSandbox.NLP
                 RootWord = rootWord
             });
 
-            //11 - 20
             word = "eleven";
             value = 11f;
             rootWord = word;
@@ -3766,7 +3700,6 @@ namespace TestSandbox.NLP
                 RootWord = rootWord
             });
 
-            //20 - 80
             word = "twenty";
             value = 20f;
             rootWord = word;
@@ -4031,7 +3964,6 @@ namespace TestSandbox.NLP
                 RootWord = rootWord
             });
 
-            //>= 100
             word = "hundred";
             value = 100f;
             rootWord = word;

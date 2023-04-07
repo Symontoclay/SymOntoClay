@@ -62,19 +62,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             Result = _rawStatement;
 
-#if DEBUG
-            //Log($"_rawStatement = {_rawStatement}");
-#endif
         }
 
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
-#endif
-
             switch (_state)
             {
                 case State.Init:

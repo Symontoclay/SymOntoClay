@@ -46,15 +46,7 @@ namespace SymOntoClay.Core.Internal.Storage.MetadataStoraging
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"codeEntity = {codeEntity}");
-#endif
-
                 var name = codeItem.Name;
-
-#if DEBUG
-                //Log($"name = {name}");
-#endif
 
                 if(name == null)
                 {
@@ -101,10 +93,6 @@ namespace SymOntoClay.Core.Internal.Storage.MetadataStoraging
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"name = {name}");
-#endif
-
                 if (_realStorageContext.Disabled)
                 {
                     return null;

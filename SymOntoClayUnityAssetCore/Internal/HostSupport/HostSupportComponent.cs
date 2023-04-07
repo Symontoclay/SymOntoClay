@@ -47,10 +47,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.HostSupport
         /// <inheritdoc/>
         public Vector3 ConvertFromRelativeToAbsolute(RelativeCoordinate relativeCoordinate)
         {
-#if DEBUG
-            //Log($"relativeCoordinate = {relativeCoordinate}");
-#endif
-
             return _platformSupport.ConvertFromRelativeToAbsolute(relativeCoordinate);
         }
 

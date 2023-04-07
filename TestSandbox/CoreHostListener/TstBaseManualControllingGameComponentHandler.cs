@@ -52,13 +52,11 @@ namespace TestSandbox.CoreHostListener
             var context = complexContext.EngineContext;
             var worldContext = complexContext.WorldContext;
 
-            //var dictionary = context.Dictionary;
 
             var platformListener = new TstPlatformHostListener();
 
             var npcSettings = new HumanoidNPCSettings();
             npcSettings.Id = "#020ED339-6313-459A-900D-92F809CEBDC5";
-            //npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.host");
             npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Apps\PeaceKeeper\PeaceKeeper.sobj");
             npcSettings.HostListener = platformListener;
             npcSettings.PlatformSupport = new PlatformSupportCLIStub();
@@ -85,7 +83,6 @@ namespace TestSandbox.CoreHostListener
 
             _logger.Log($"command = {command}");
 
-            //ExecuteCommand(tstBaseManualControllingGameComponent, command);
 
             methodName = NameHelper.CreateName("shoot");
 
@@ -116,7 +113,6 @@ namespace TestSandbox.CoreHostListener
 
             var manualControlledObjectsList = tstBaseManualControllingGameComponent.GetManualControlledObjects();
 
-            //_logger.Log($"manualControlledObjectsList = {manualControlledObjectsList.WriteListToString()}");
             _logger.Log($"manualControlledObjectsList.Count = {manualControlledObjectsList.Count}");
 
             tstBaseManualControllingGameComponent.RemoveFromManualControl(gameObject);

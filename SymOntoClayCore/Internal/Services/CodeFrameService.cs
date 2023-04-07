@@ -52,14 +52,6 @@ namespace SymOntoClay.Core.Internal.Services
         {
             var storagesList = parentLocalCodeExecutionContext.Storage.GetStorages();
 
-#if DEBUG
-            //Log($"storagesList.Count = {storagesList.Count}");
-            //foreach(var tmpStorage in storagesList)
-            //{
-            //    Log($"tmpStorage = {tmpStorage}");
-            //}
-#endif
-
             var localCodeExecutionContext = new LocalCodeExecutionContext(parentLocalCodeExecutionContext);
             var localStorageSettings = RealStorageSettingsHelper.Create(_context, storagesList.ToList(), false);
 
@@ -77,11 +69,6 @@ namespace SymOntoClay.Core.Internal.Services
 
             codeFrame.ProcessInfo = processInfo;
             processInfo.CodeFrame = codeFrame;
-            //codeFrame.Metadata = function.CodeItem;
-
-#if DEBUG
-            //Log($"codeFrame = {codeFrame}");
-#endif
 
             return codeFrame;
         }
@@ -91,15 +78,6 @@ namespace SymOntoClay.Core.Internal.Services
             Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             ILocalCodeExecutionContext parentLocalCodeExecutionContext, ConversionExecutableToCodeFrameAdditionalSettings additionalSettings = null, bool useParentLocalCodeExecutionContextDirectly = false)
         {
-#if DEBUG
-            //Log($"kindOfParameters = {kindOfParameters}");
-            //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
-            //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
-            //Log($"parentLocalCodeExecutionContext.Storage.VarStorage.GetHashCode() = {parentLocalCodeExecutionContext.Storage.VarStorage.GetHashCode()}");
-            //Log($"additionalSettings = {additionalSettings}");
-            //Log($"useParentLocalCodeExecutionContextDirectly = {useParentLocalCodeExecutionContextDirectly}");
-#endif
-
             var codeFrame = new CodeFrame();
             codeFrame.CompiledFunctionBody = function.CompiledFunctionBody;
 
@@ -111,15 +89,6 @@ namespace SymOntoClay.Core.Internal.Services
             {
                 var storagesList = parentLocalCodeExecutionContext.Storage.GetStorages();
 
-#if DEBUG
-                //Log($"storagesList.Count = {storagesList.Count}");
-                //foreach(var tmpStorage in storagesList)
-                //{
-                //    Log($"tmpStorage.Kind = {tmpStorage.Kind}");
-                //    Log($"tmpStorage = {tmpStorage.VarStorage.GetHashCode()}");
-                //}
-#endif
-
                 var localCodeExecutionContext = new LocalCodeExecutionContext(parentLocalCodeExecutionContext);
                 var localStorageSettings = RealStorageSettingsHelper.Create(_context, storagesList.ToList(), additionalSettings?.AllowParentLocalStorages ?? false);
 
@@ -129,24 +98,12 @@ namespace SymOntoClay.Core.Internal.Services
 
                 var functionHolder = function.Holder;
 
-#if DEBUG
-                //Log($"functionHolder = {functionHolder}");
-#endif
-
                 if (functionHolder != null)
                 {
                     localCodeExecutionContext.Owner = functionHolder;
 
                     localCodeExecutionContext.OwnerStorage = storagesList.SingleOrDefault(p => p.Kind == KindOfStorage.SuperClass && p.TargetClassName == functionHolder);
                 }
-
-#if DEBUG
-                //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
-#endif
-
-#if DEBUG
-                //Log($"localCodeExecutionContext.Storage.VarStorage.GetHashCode() = {localCodeExecutionContext.Storage.VarStorage.GetHashCode()}");
-#endif
 
                 switch (kindOfParameters)
                 {
@@ -171,11 +128,6 @@ namespace SymOntoClay.Core.Internal.Services
 
                 localCodeExecutionContext.Holder = parentLocalCodeExecutionContext.Holder;
 
-#if DEBUG
-                //Log($"localCodeExecutionContext = {localCodeExecutionContext.GetHashCode()}");
-                //Log($"additionalSettings = {additionalSettings}");
-#endif
-
                 codeFrame.LocalContext = localCodeExecutionContext;
             }
 
@@ -185,10 +137,6 @@ namespace SymOntoClay.Core.Internal.Services
             processInfo.CodeFrame = codeFrame;
 
             var codeItem = function.CodeItem;
-
-#if DEBUG
-            //Log($"codeItem = {codeItem}");
-#endif
 
             codeFrame.Metadata = codeItem;
 
@@ -201,10 +149,6 @@ namespace SymOntoClay.Core.Internal.Services
 
             var priority = additionalSettings?.Priority;
 
-#if DEBUG
-            //Log($"priority = {priority}");
-#endif
-
             if (priority.HasValue)
             {
                 processInfo.Priority = priority.Value;
@@ -215,16 +159,9 @@ namespace SymOntoClay.Core.Internal.Services
 
                 if (codeItemPriority != null)
                 {
-#if DEBUG
-                    //Log($"codeItemPriority = {codeItemPriority}");
-#endif
                     var numberValueLinearResolver = _context.DataResolversFactory.GetNumberValueLinearResolver();
 
                     var numberValue = numberValueLinearResolver.Resolve(codeItemPriority, parentLocalCodeExecutionContext);
-
-#if DEBUG
-                    //Log($"numberValue = {numberValue}");
-#endif
 
                     if (!(numberValue == null || numberValue.KindOfValue == KindOfValue.NullValue))
                     {
@@ -232,14 +169,6 @@ namespace SymOntoClay.Core.Internal.Services
                     }
                 }
             }
-
-#if DEBUG
-            //Log($"processInfo = {processInfo}");
-#endif
-
-#if DEBUG
-            //Log($"codeFrame = {codeFrame}");
-#endif
 
             return codeFrame;
         }
@@ -252,10 +181,6 @@ namespace SymOntoClay.Core.Internal.Services
 
             foreach (var argument in function.Arguments)
             {
-#if DEBUG
-                //Log($"argument = {argument}");
-#endif
-
                 if (!positionedParametersEnumerator.MoveNext())
                 {
                     if (argument.HasDefaultValue)
@@ -268,10 +193,6 @@ namespace SymOntoClay.Core.Internal.Services
                 }
 
                 var parameterItem = positionedParametersEnumerator.Current;
-
-#if DEBUG
-                //Log($"parameterItem = {parameterItem}");
-#endif
 
                 varsStorage.SetValue(argument.Name, parameterItem);
             }
@@ -289,10 +210,6 @@ namespace SymOntoClay.Core.Internal.Services
             {
                 var parameterName = namedParameter.Key;
 
-#if DEBUG
-                //Log($"parameterName = {parameterName}");
-#endif
-
                 var kindOfParameterName = parameterName.KindOfName;
 
                 switch (kindOfParameterName)
@@ -308,15 +225,7 @@ namespace SymOntoClay.Core.Internal.Services
                         throw new ArgumentOutOfRangeException(nameof(kindOfParameterName), kindOfParameterName, null);
                 }
 
-#if DEBUG
-                //Log($"parameterName (after) = {parameterName}");
-#endif
-
                 parameterName = CheckParameterName(parameterName, function, synonymsResolver, localCodeExecutionContext);
-
-#if DEBUG
-                //Log($"parameterName (after 2) = {parameterName}");
-#endif
 
                 if (parameterName == null)
                 {
@@ -330,10 +239,6 @@ namespace SymOntoClay.Core.Internal.Services
                 }
             }
 
-#if DEBUG
-            //Log($"usedParameters = {usedParameters.WriteListToString()}");
-#endif
-
             var argumentsList = function.Arguments;
 
             if (usedParameters.Count < argumentsList.Count)
@@ -344,10 +249,6 @@ namespace SymOntoClay.Core.Internal.Services
                     {
                         continue;
                     }
-
-#if DEBUG
-                    //Log($"argument = {argument}");
-#endif
 
                     if (argument.HasDefaultValue)
                     {
@@ -364,10 +265,6 @@ namespace SymOntoClay.Core.Internal.Services
 
         private StrongIdentifierValue CheckParameterName(StrongIdentifierValue parameterName, IExecutable function, SynonymsResolver synonymsResolver, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"parameterName = {parameterName}");
-#endif
-
             if (function.ContainsArgument(parameterName))
             {
                 return parameterName;
@@ -375,26 +272,14 @@ namespace SymOntoClay.Core.Internal.Services
 
             var synonymsList = synonymsResolver.GetSynonyms(parameterName, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"synonymsList = {synonymsList.WriteListToString()}");
-#endif
-
             foreach (var synonym in synonymsList)
             {
-#if DEBUG
-                //Log($"synonym = {synonym}");
-#endif
-
                 if (function.ContainsArgument(synonym))
                 {
                     return synonym;
                 }
 
                 var alternativeSynonym = NameHelper.CreateAlternativeArgumentName(synonym);
-
-#if DEBUG
-                //Log($"alternativeSynonym = {alternativeSynonym}");
-#endif
 
                 if (function.ContainsArgument(alternativeSynonym))
                 {
@@ -404,32 +289,16 @@ namespace SymOntoClay.Core.Internal.Services
 
             var alternativeParameterName = NameHelper.CreateAlternativeArgumentName(parameterName);
 
-#if DEBUG
-            //Log($"alternativeParameterName = {alternativeParameterName}");
-#endif
-
             synonymsList = synonymsResolver.GetSynonyms(alternativeParameterName, localCodeExecutionContext);
-
-#if DEBUG
-            //Log($"synonymsList = {synonymsList.WriteListToString()}");
-#endif
 
             foreach (var synonym in synonymsList)
             {
-#if DEBUG
-                //Log($"synonym = {synonym}");
-#endif
-
                 if (function.ContainsArgument(synonym))
                 {
                     return synonym;
                 }
 
                 var alternativeSynonym = NameHelper.CreateAlternativeArgumentName(synonym);
-
-#if DEBUG
-                //Log($"alternativeSynonym = {alternativeSynonym}");
-#endif
 
                 if (function.ContainsArgument(alternativeSynonym))
                 {

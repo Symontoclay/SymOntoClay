@@ -77,7 +77,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var result = new Synonym();
             context[this] = result;
 
-            //result.StateNames = StateNames.Select(p => p.Clone(context)).ToList();
 
             result.AppendCodeItem(this, context);
 

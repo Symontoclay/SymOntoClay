@@ -45,33 +45,17 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 
         public Word GetWord()
         {
-#if DEBUG
-            //_logger.Log($"_word = '{_word}'");
-#endif
-
             var wordFramesList = _wordsDict.GetWordFramesByWord(_word);
-
-#if DEBUG
-            //_logger.Log($"wordFramesList = {wordFramesList.WriteListToString()}");
-#endif
 
             var adjectivesList = wordFramesList.Where(p => p.IsAdjective).Select(p => p.AsAdjective).ToList();
 
             if(adjectivesList.Any())
             {
-#if DEBUG
-                //_logger.Log($"adjectivesList = {adjectivesList.WriteListToString()}");
-#endif
-
                 var result = new Word();
 
                 result.Content = _word;
 
                 result.WordFrame = adjectivesList.Single();
-
-#if DEBUG
-                //_logger.Log($"result = {result}");
-#endif
 
                 return result;
             }

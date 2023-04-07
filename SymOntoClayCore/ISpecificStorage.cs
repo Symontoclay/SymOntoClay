@@ -29,7 +29,6 @@ namespace SymOntoClay.Core
     public interface ISpecificStorage
     {
         KindOfStorage Kind { get; }
-        //string Owner { get; }
         IStorage Storage { get; }
     }
 }

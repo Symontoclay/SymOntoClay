@@ -81,26 +81,16 @@ namespace SymOntoClay.Core.Internal.Storage
         /// <inheritdoc/>
         public ConsolidatedPublicFactsStorage WorldPublicFactsStorage => _worldPublicFactsStorage;
 
-        //private List<RealStorage> _storagesList;
 
         public void LoadFromSourceCode(IEngineContext engineContext = null)
         {
             _logicQueryParseAndCache = _context.LogicQueryParseAndCache;
             _parser = _context.Parser;
 
-#if DEBUG
-            //Log($"_logicQueryParseAndCache == null = {_logicQueryParseAndCache == null}");
-#endif
-
-            //_storagesList = new List<RealStorage>();
 
             var globalStorageSettings = new RealStorageSettings();
 
             var parentStoragesList = new List<IStorage>();
-
-#if DEBUG
-            //Log($"_kindGlobalOfStorage = {_kindGlobalOfStorage}");
-#endif
 
             switch (_kindGlobalOfStorage)
             {
@@ -122,7 +112,6 @@ namespace SymOntoClay.Core.Internal.Storage
                         _inheritancePublicFactsReplicator = new InheritancePublicFactsReplicator(_context, _publicFactsStorage);
                         globalStorageSettings.InheritancePublicFactsReplicator = _inheritancePublicFactsReplicator;
 
-                        //_storagesList.Add(_publicFactsStorage);
 
                         _selfFactsStorage = new RealStorage(KindOfStorage.PublicFacts, publicFactsStorageSettings);
 
@@ -133,7 +122,6 @@ namespace SymOntoClay.Core.Internal.Storage
 
                         _perceptedFactsStorage = new RealStorage(KindOfStorage.PerceptedFacts, perceptedFactsStorageSettings);
 
-                        //_storagesList.Add(_perceptedFactsStorage);
 
                         parentStoragesList.Add(_perceptedFactsStorage);
 
@@ -153,9 +141,7 @@ namespace SymOntoClay.Core.Internal.Storage
                         _visibleFactsStorage = new ConsolidatedPublicFactsStorage(_context.Logger, KindOfStorage.VisiblePublicFacts, visibleFactsStorageSettings);
                         parentStoragesList.Add(_visibleFactsStorage);
 
-                        //_additionalPublicFactsStorage = new ConsolidatedPublicFactsStorage(_context.Logger, KindOfStorage.AdditionalPublicFacts);
 
-                        //parentStoragesList.Add(_additionalPublicFactsStorage);
 
                         var categoriesStorageSettings = new CategoriesStorageSettings()
                         {
@@ -180,7 +166,6 @@ namespace SymOntoClay.Core.Internal.Storage
                         _inheritancePublicFactsReplicator = new InheritancePublicFactsReplicator(_context, _publicFactsStorage);
                         globalStorageSettings.InheritancePublicFactsReplicator = _inheritancePublicFactsReplicator;
 
-                        //_storagesList.Add(_publicFactsStorage);
 
                         _selfFactsStorage = new RealStorage(KindOfStorage.PublicFacts, publicFactsStorageSettings);
 
@@ -199,11 +184,6 @@ namespace SymOntoClay.Core.Internal.Storage
                     }
                     break;
             }
-
-#if DEBUG
-            //Log($"_kindGlobalOfStorage = {_kindGlobalOfStorage}");
-            //Log($"_worldPublicFactsStorage = {_worldPublicFactsStorage}");
-#endif
 
             globalStorageSettings.MainStorageContext = _context;
 
@@ -235,7 +215,6 @@ namespace SymOntoClay.Core.Internal.Storage
                     throw new ArgumentOutOfRangeException(nameof(_kindGlobalOfStorage), _kindGlobalOfStorage, null);
             }
             
-            //_storagesList.Add(_globalStorage);
 
             _globalStorage.DefaultSettingsOfCodeEntity = CreateDefaultSettingsOfCodeEntity();
 
@@ -251,9 +230,6 @@ namespace SymOntoClay.Core.Internal.Storage
 
             _categoriesStorage?.Init();
 
-#if DEBUG
-            //Log("End");
-#endif
         }
 
         private DefaultSettingsOfCodeEntity CreateDefaultSettingsOfCodeEntity()
@@ -265,10 +241,6 @@ namespace SymOntoClay.Core.Internal.Storage
 
         private RuleInstance ParseFact(string text)
         {
-#if DEBUG
-            //Log($"text = {text}");
-#endif
-
             if (string.IsNullOrWhiteSpace(text))
             {
                 return null;
@@ -279,20 +251,12 @@ namespace SymOntoClay.Core.Internal.Storage
                 text = $"{{: {text} :}}";
             }
 
-#if DEBUG
-            //Log($"text = {text}");
-#endif
-
             return _logicQueryParseAndCache.GetLogicRuleOrFact(text);
         }
 
         /// <inheritdoc/>
         public string InsertPublicFact(string text)
         {
-#if DEBUG
-            //Log($"text = {text}");
-#endif
-
             var fact = ParseFact(text);
 
             return InsertPublicFact(fact);
@@ -301,11 +265,6 @@ namespace SymOntoClay.Core.Internal.Storage
         /// <inheritdoc/>
         public string InsertPublicFact(RuleInstance fact)
         {
-#if DEBUG
-            //Log($"fact = {fact}");
-            //Log($"fact = {fact.ToHumanizedString()}");
-#endif
-
             if (fact == null)
             {
                 return string.Empty;
@@ -320,22 +279,9 @@ namespace SymOntoClay.Core.Internal.Storage
 
             fact.CalculateLongHashCodes(checkDirtyOptions);
 
-#if DEBUG
-            //Log($"fact.Normalized = {fact.Normalized}");
-            //Log($"fact.Normalized = {fact.Normalized.ToHumanizedString()}");
-#endif
-
             _publicFactsStorage.LogicalStorage.Append(fact);
 
-#if DEBUG
-            //Log($"NEXT text = {text}");
-#endif
-
             _selfFactsStorage.LogicalStorage.Append(fact);
-
-#if DEBUG
-            //Log($"NEXT (2) text = {text}");
-#endif
 
             return fact.Name.NameValue;
         }
@@ -343,10 +289,6 @@ namespace SymOntoClay.Core.Internal.Storage
         /// <inheritdoc/>
         public void RemovePublicFact(string id)
         {
-#if DEBUG
-            //Log($"id = {id}");
-#endif
-
             if(string.IsNullOrWhiteSpace(id))
             {
                 return;
@@ -354,30 +296,15 @@ namespace SymOntoClay.Core.Internal.Storage
 
             _publicFactsStorage.LogicalStorage.RemoveById(id);
 
-#if DEBUG
-            //Log($"NEXT id = {id}");
-#endif
-
             _selfFactsStorage.LogicalStorage.RemoveById(id);
 
 
-#if DEBUG
-            //Log($"NEXT 2 id = {id}");
-#endif
         }
 
         /// <inheritdoc/>
         public string InsertFact(string text)
         {
-#if DEBUG
-            //Log($"text = {text}");
-#endif
-
             var fact = ParseFact(text);
-
-#if DEBUG
-            //Log($"fact = {fact}");
-#endif
 
             if (fact == null)
             {
@@ -397,23 +324,17 @@ namespace SymOntoClay.Core.Internal.Storage
 
         public void AddVisibleStorage(IStorage storage)
         {
-            //_globalStorage.AddParentStorage(storage);
             _visibleFactsStorage.AddConsolidatedStorage(storage);
         }
 
         public void RemoveVisibleStorage(IStorage storage)
         {
-            //_globalStorage.RemoveParentStorage(storage);
             _visibleFactsStorage.RemoveConsolidatedStorage(storage);
         }
 
         /// <inheritdoc/>
         public string InsertPerceptedFact(string text)
         {
-#if DEBUG
-            //Log($"text = {text}");
-#endif
-
             if (string.IsNullOrWhiteSpace(text))
             {
                 return string.Empty;
@@ -424,15 +345,7 @@ namespace SymOntoClay.Core.Internal.Storage
                 text = $"{{: {text} :}}";
             }
 
-#if DEBUG
-            //Log($"text (after) = {text}");
-#endif
-
             var fact = _logicQueryParseAndCache.GetLogicRuleOrFact(text);
-
-#if DEBUG
-            //Log($"fact = {fact}");
-#endif
 
             _perceptedFactsStorage.LogicalStorage.Append(fact);
 
@@ -442,20 +355,12 @@ namespace SymOntoClay.Core.Internal.Storage
         /// <inheritdoc/>
         public void RemovePerceptedFact(string id)
         {
-#if DEBUG
-            //Log($"id = {id}");
-#endif
-
             _perceptedFactsStorage.LogicalStorage.RemoveById(id);
         }
 
         /// <inheritdoc/>
         public void InsertListenedFact(string text)
         {
-#if DEBUG
-            //Log($"text = {text}");
-#endif
-
             var fact = _parser.ParseRuleInstance(text, false);
 
             InsertListenedFact(fact);
@@ -464,17 +369,7 @@ namespace SymOntoClay.Core.Internal.Storage
         /// <inheritdoc/>
         public void InsertListenedFact(RuleInstance fact)
         {
-#if DEBUG
-            //Log($"fact = {fact}");
-            //Log($"fact = {DebugHelperForRuleInstance.ToString(fact)}");
-#endif
-
             fact.CheckDirty(_checkDirtyOptions);
-
-#if DEBUG
-            //Log($"fact.Normalized = {fact.Normalized}");
-            //Log($"fact.Normalized = {DebugHelperForRuleInstance.ToString(fact.Normalized)}");
-#endif
 
             _listenedFactsStorage.LogicalStorage.Append(fact);
         }

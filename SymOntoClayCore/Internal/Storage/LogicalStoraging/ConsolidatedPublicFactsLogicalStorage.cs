@@ -138,10 +138,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private void EmitOnChanged(IList<StrongIdentifierValue> usedKeysList)
         {
-#if DEBUG
-            //Log($"usedKeysList = {JsonConvert.SerializeObject(usedKeysList)}");
-#endif
-
             Task.Run(() => {
                 OnChanged?.Invoke();
             });
@@ -153,10 +149,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private void LogicalStorage_OnChangedWithKeys(IList<StrongIdentifierValue> changedKeysList)
         {
-#if DEBUG
-            //Log($"changedKeysList = {JsonConvert.SerializeObject(changedKeysList)}");
-#endif
-            
             EmitOnChanged(changedKeysList);
         }
 
@@ -200,10 +192,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private void IsolatedProcessNewFact(RuleInstance ruleInstance)
         {
-#if DEBUG
-            //Log($"ruleInstance = {ruleInstance.ToHumanizedString()}");
-#endif
-
             lock(_onAddingFactLockObj)
             {
                 if(_processedOnAddingFacts.Contains(ruleInstance))
@@ -214,10 +202,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 _processedOnAddingFacts.Add(ruleInstance);
 
                 var approvingRez = AddingFactHelper.CallEvent(OnAddingFact, ruleInstance, _fuzzyLogicResolver, _localCodeExecutionContext, Logger);
-
-#if DEBUG
-                //Log($"approvingRez = {approvingRez}");
-#endif
 
                 if (approvingRez == null)
                 {

@@ -86,7 +86,6 @@ namespace TestSandbox.Handlers
             inheritanceItem.SuperName = NameHelper.CreateName("state");
             inheritanceItem.Rank = LogicalValue.TrueValue;
 
-            //_logger.Log($"relation = {relation}");
             _logger.Log($"relation = {relation.ToHumanizedString()}");
 
             AppendRelationToStorage(relation);
@@ -117,7 +116,6 @@ namespace TestSandbox.Handlers
             inheritanceItem.SuperName = NameHelper.CreateName("state");
             inheritanceItem.Rank = LogicalValue.TrueValue;
 
-            //_logger.Log($"relation = {relation}");
             _logger.Log($"relation = {relation.ToHumanizedString()}");
 
             AppendRelationToStorage(relation);

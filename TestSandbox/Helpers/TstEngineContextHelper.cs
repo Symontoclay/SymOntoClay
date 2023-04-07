@@ -56,11 +56,9 @@ namespace TestSandbox.Helpers
         {
             var appName = AppDomain.CurrentDomain.FriendlyName;
 
-            //_logger.Log($"appName = {appName}");
 
             var supportBasePath = Path.Combine(Environment.GetEnvironmentVariable("APPDATA"), "SymOntoClay", appName);
 
-            //_logger.Log($"supportBasePath = {supportBasePath}");
 
             var logDir = Path.Combine(supportBasePath, "NpcLogs");
 
@@ -68,7 +66,6 @@ namespace TestSandbox.Helpers
 
             var codeDir = Path.Combine(Directory.GetCurrentDirectory(), "Source");
 
-            //_logger.Log($"codeDir = {codeDir}");
 
             var worldSpaceFilesSearcherOptions = new WorldSpaceFilesSearcherOptions()
             {
@@ -77,10 +74,6 @@ namespace TestSandbox.Helpers
             };
 
             var targetFiles = WorldSpaceFilesSearcher.Run(worldSpaceFilesSearcherOptions);
-
-#if DEBUG
-            //_logger.Log($"targetFiles = {targetFiles}");
-#endif 
 
             var settings = new WorldSettings();
             settings.EnableAutoloadingConvertors = true;
@@ -134,19 +127,11 @@ namespace TestSandbox.Helpers
                     {
                         var mainDictPath = Path.Combine(Directory.GetCurrentDirectory(), "Dicts", "BigMainDictionary.dict");
 
-#if DEBUG
-                        //_logger.Log($"mainDictPath = {mainDictPath}");
-#endif
-
                         nlpConverterProviderSettings.DictsPaths = new List<string>() { mainDictPath };
                     }
                 }
                 
                 nlpConverterProviderSettings.CreationStrategy = CreationStrategy.Singleton;
-
-#if DEBUG
-                //_logger.Log($"nlpConverterProviderSettings = {nlpConverterProviderSettings}");
-#endif
 
                 var nlpConverterProvider = new NLPConverterProvider(nlpConverterProviderSettings);
 
@@ -161,7 +146,6 @@ namespace TestSandbox.Helpers
                 RootContractName = "Hi1",
                 Enable = true,
                 EnableRemoteConnection = true,
-                //KindOfLogicalSearchExplain = KindOfLogicalSearchExplain.DumpAlways,
                 KindOfLogicalSearchExplain = KindOfLogicalSearchExplain.None,
                 LogicalSearchExplainDumpDir = Directory.GetCurrentDirectory(),
                 EnableAddingRemovingFactLoggingInStorages = false
@@ -180,10 +164,6 @@ namespace TestSandbox.Helpers
             }
 
             settings.Logging = loggingSettings;
-
-#if DEBUG
-            //_logger.Log($"settings = {settings}");
-#endif
 
             return settings;
         }
@@ -230,7 +210,6 @@ namespace TestSandbox.Helpers
         {
             var settings = CreateWorldSettings(factorySettings);
 
-            //_logger.Log($"settings = {settings}");
 
             return UnityTestEngineContextFactory.CreateWorld(settings);
         }
@@ -239,7 +218,6 @@ namespace TestSandbox.Helpers
         {
             var npcSettings = CreateHumanoidNPCSettings(factorySettings);
 
-            //_logger.Log($"npcSettings = {npcSettings}");
 
             return UnityTestEngineContextFactory.CreateHumanoidNPC(world, npcSettings);
         }
@@ -248,11 +226,9 @@ namespace TestSandbox.Helpers
         {
             var settings = CreateWorldSettings(factorySettings);
 
-            //_logger.Log($"settings = {settings}");
 
             var npcSettings = CreateHumanoidNPCSettings(factorySettings);
 
-            //_logger.Log($"npcSettings = {npcSettings}");
 
             return UnityTestEngineContextFactory.CreateTestEngineContext(settings, npcSettings);
         }

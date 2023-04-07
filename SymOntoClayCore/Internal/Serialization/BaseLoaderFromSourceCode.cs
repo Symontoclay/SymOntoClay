@@ -48,11 +48,6 @@ namespace SymOntoClay.Core.Internal.Serialization
 
         public virtual void LoadFromSourceFiles()
         {
-#if DEBUG
-            //Log("Begin");
-            //Log($"_context.AppFile = {_context.AppFile}");
-#endif
-
             if (string.IsNullOrEmpty(_context.AppFile))
             {
                 return;
@@ -64,18 +59,10 @@ namespace SymOntoClay.Core.Internal.Serialization
 
             instancesStorage.ActivateMainEntity();
 
-#if DEBUG
-            //Log("End");
-#endif
         }
 
         public virtual void LoadFromPaths(IList<string> sourceCodePaths)
         {
-#if DEBUG
-            //Log("Begin");
-            //Log($"sourceCodePaths = {sourceCodePaths.WritePODListToString()}");
-#endif
-
             _projectLoader.LoadFromPaths(_context.Storage.GlobalStorage, sourceCodePaths);
         }
     }

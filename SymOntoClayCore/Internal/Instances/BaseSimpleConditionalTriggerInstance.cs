@@ -42,15 +42,8 @@ namespace SymOntoClay.Core.Internal.Instances
             _context = context;
             _parent = parent;
 
-            //_appInstanceExecutionCoordinator = parent.AppInstanceExecutionCoordinator;
-            //_stateExecutionCoordinator = parent.StateExecutionCoordinator;
-            //_actionExecutionCoordinator = parent.ActionExecutionCoordinator;
 
             _condition = condition;
-
-#if DEBUG
-            //Log($"_condition = {DebugHelperForRuleInstance.ToString(_condition)}");
-#endif
 
             var dataResolversFactory = context.DataResolversFactory;
 
@@ -71,9 +64,6 @@ namespace SymOntoClay.Core.Internal.Instances
             _searchOptions.QueryExpression = _condition;
             _searchOptions.LocalCodeExecutionContext = _localCodeExecutionContext;
 
-#if DEBUG
-            //Log($"searchOptions = {searchOptions}");
-#endif
         }
 
         private readonly LogicalSearchResolver _searcher;
@@ -114,20 +104,12 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             Task.Run(() =>
             {
-#if DEBUG
-                //Log("Begin");
-#endif
-
                 try
                 {
                     if(!ShouldSearch())
                     {
                         return;
                     }
-
-#if DEBUG
-                    //Log("Begin NEXT");
-#endif
 
                     lock (_lockObj)
                     {
@@ -170,21 +152,6 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             var searchResult = _searcher.Run(_searchOptions);
 
-#if DEBUG
-            //Log($"searchResult = {searchResult}");
-            //Log($"_condition = {DebugHelperForRuleInstance.ToString(_condition)}");
-            //Log($"searchResult = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
-            //foreach(var usedKey in searchResult.UsedKeysList)
-            //{
-            //    Log($"usedKey = {usedKey}");
-            //    Log($"_context.Dictionary.GetName(usedKey) = {_context.Dictionary.GetName(usedKey)}");
-            //}
-#endif
-
-#if DEBUG
-            //Log($"searchResult.Items.Count = {searchResult.Items.Count}");
-#endif
-
             if (searchResult.IsSuccess)
             {
                 if (searchResult.Items.Count == 0)
@@ -204,21 +171,12 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void CleansingPreviousResults()
         {
-#if DEBUG
-            //Log("CleansingPreviousResults()");
-#endif
-
             _isOn = false;
             _foundKeys.Clear();
         }
 
         private void ProcessResultWithNoItems()
         {
-#if DEBUG
-            //Log("ProcessResultWithNoItems()");
-            //Log($"_isOn = {_isOn}");
-#endif
-
             if (_isOn)
             {
                 return;
@@ -237,22 +195,12 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void ProcessResultWithItems(LogicalSearchResult searchResult)
         {
-#if DEBUG
-            //Log("ProcessResultWithItems()");
-#endif
-
             var usedKeys = new List<string>();
-            //var keysForAdding = new List<string>();
 
             var bindingVariables = GetBindingVariables();
 
             foreach (var foundResultItem in searchResult.Items)
             {
-#if DEBUG
-                //Log($"foundResultItem = {foundResultItem}");
-                //Log($"foundResultItem.KeyForTrigger = {foundResultItem.KeyForTrigger}");
-#endif
-
                 var keyForTrigger = foundResultItem.KeyForTrigger;
 
                 usedKeys.Add(keyForTrigger);
@@ -262,12 +210,6 @@ namespace SymOntoClay.Core.Internal.Instances
                     continue;
                 }
 
-                //keysForAdding.Add(keyForTrigger);
-                //_foundKeys.Add(keyForTrigger);
-
-#if DEBUG
-                //Log("Next");
-#endif
 
                 var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
                 var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
@@ -281,10 +223,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
                     var resultVarsList = foundResultItem.ResultOfVarOfQueryToRelationList;
 
-#if DEBUG
-                    //Log($"resultVarsList.Count = {resultVarsList.Count}");
-#endif
-
                     if (bindingVariables.Count != resultVarsList.Count)
                     {
                         throw new NotImplementedException();
@@ -292,21 +230,9 @@ namespace SymOntoClay.Core.Internal.Instances
 
                     foreach (var resultVar in resultVarsList)
                     {
-#if DEBUG
-                        //Log($"resultVar = {resultVar}");
-#endif
-
                         var value = LogicalQueryNodeHelper.ToValue(resultVar.FoundExpression);
 
-#if DEBUG
-                        //Log($"value = {value}");
-#endif
-
                         var destVar = bindingVariables.GetDest(resultVar.NameOfVar);
-
-#if DEBUG
-                        //Log($"destVar = {destVar}");
-#endif
 
                         varStorage.SetValue(destVar, value);
                     }
@@ -315,16 +241,9 @@ namespace SymOntoClay.Core.Internal.Instances
                 RunHandler(localCodeExecutionContext);
             }
 
-            //var keysForRemoving = _foundKeys.Except(usedKeys);
 
             _foundKeys = usedKeys;
 
-            //#if DEBUG
-            //            Log($"_foundKeys = {JsonConvert.SerializeObject(_foundKeys)}");
-            //            Log($"usedKeys = {JsonConvert.SerializeObject(usedKeys)}");
-            //            Log($"keysForAdding = {JsonConvert.SerializeObject(keysForAdding)}");
-            //            Log($"keysForRemoving = {JsonConvert.SerializeObject(keysForRemoving)}");
-            //#endif
         }
 
         /// <inheritdoc/>

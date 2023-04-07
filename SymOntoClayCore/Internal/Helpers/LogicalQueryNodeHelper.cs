@@ -54,15 +54,7 @@ namespace SymOntoClay.Core.Internal.Helpers
 
         public static void FillUpInfoAboutComplexExpression(LogicalQueryNode node, List<LogicalQueryNode> additionalKnownInfoExpressions, List<StrongIdentifierValue> varNames)
         {
-#if DEBUG
-            //_gbcLogger.Info($"node = {node.ToHumanizedString()}");
-#endif
-
             var kind = node.Kind;
-
-#if DEBUG
-            //_gbcLogger.Info($"kind = {kind}");
-#endif
 
             switch (kind)
             {

@@ -63,16 +63,9 @@ namespace TestSandbox.SoundBusHandler
 
             Log($"convertedQuery = {convertedQuery}");
 
-            //var factorySettings = new UnityTestEngineContextFactorySettings();
-            //factorySettings.UseDefaultNLPSettings = false;
-            //factorySettings.UseDefaultAppFiles = false;
 
-            //var engineContext = TstEngineContextHelper.CreateAndInitContext(factorySettings).EngineContext;
 
-            //var fact = engineContext.Parser.ParseRuleInstance(convertedQuery);
 
-            //Log($"fact = '{fact.ToHumanizedString()}'");
-            //Log($"fact = {fact}");
         }
 
         /// <inheritdoc/>

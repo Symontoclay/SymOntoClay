@@ -55,11 +55,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");            
-#endif
-
             switch (_currToken.TokenKind)
             {
                 case TokenKind.Word:
@@ -216,10 +211,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessFuzzyLogicNonNumericSequence()
         {
-#if DEBUG
-            //Log($"_lastConceptNode = {_lastConceptNode}");
-#endif
-
             var concept = NameHelper.CreateName(_currToken.Content);
 
             var value = _lastConceptNode.Value;
@@ -234,10 +225,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 sequence.AddIdentifier(concept);
 
                 _lastConceptNode.Value = sequence;
-
-#if DEBUG
-                //Log($"_lastConceptNode = {_lastConceptNode}");
-#endif
 
                 return;
             }
@@ -274,15 +261,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var parser = new LogicalModalityExpressionParser(_context, TokenKind.CloseRoundBracket);
             parser.Run();
 
-#if DEBUG
-            //Log($"parser.Result = {parser.Result}");
-#endif
-
             var nextToken = _context.GetToken();
-
-#if DEBUG
-            //Log($"nextToken = {nextToken}");
-#endif
 
             if (nextToken.TokenKind != TokenKind.CloseRoundBracket)
             {
@@ -359,10 +338,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessNot()
         {
-#if DEBUG
-            //Log($"_lastIsOperator = {_lastIsOperator}");
-#endif
-
             if (_lastIsOperator == null)
             {
                 ProcessNotOperator();
@@ -427,10 +402,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             var priority = OperatorsHelper.GetPriority(kindOfOperator);
 
-#if DEBUG
-            //Log($"priority = {priority}");
-#endif
-
             var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.BinaryOperator, priority);
 
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
@@ -447,10 +418,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             node.KindOfOperator = kindOfOperator;
 
             var priority = OperatorsHelper.GetPriority(kindOfOperator);
-
-#if DEBUG
-            //Log($"priority = {priority}");
-#endif
 
             var intermediateNode = new IntermediateAstNode(node, KindOfIntermediateAstNode.UnaryOperator, priority);
 

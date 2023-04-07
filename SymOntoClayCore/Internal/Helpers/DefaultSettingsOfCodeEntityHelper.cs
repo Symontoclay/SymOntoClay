@@ -38,11 +38,6 @@ namespace SymOntoClay.Core.Internal.Helpers
 
         public static void Mix(DefaultSettingsOfCodeEntity source, DefaultSettingsOfCodeEntity dest)
         {
-#if DEBUG
-            //_gbcLogger.Info($"source = {source}");
-            //_gbcLogger.Info($"dest = {dest}");
-#endif
-
             var context = new Dictionary<object, object>();
 
             if (dest.WhereSection.IsNullOrEmpty() && !source.WhereSection.IsNullOrEmpty())

@@ -261,7 +261,6 @@ namespace TestSandbox.CreatingExamples
 
             _isDisposed = true;
 
-            //Directory.Delete(_rootDir, true);
         }
     }
 }

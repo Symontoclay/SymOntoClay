@@ -41,18 +41,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         /// <inheritdoc/>
         public Value Call(Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"leftOperand = {leftOperand}");
-            //Log($"rightOperand = {rightOperand}");
-            //Log($"annotation = {annotation}");
-            //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
-#endif
-
             leftOperand = TryResolveFromVarOrExpr(leftOperand, localCodeExecutionContext);
-
-#if DEBUG
-            //Log($"leftOperand (after) = {leftOperand}");
-#endif
 
             if ((leftOperand.IsHostValue || leftOperand.IsTaskValue || leftOperand.IsInstanceValue) && rightOperand.IsStrongIdentifierValue/* && rightOperand.AsStrongIdentifierValue.KindOfName == KindOfName.Concept*/)
             {
@@ -71,10 +60,6 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                     {
                         var mutablePartValue = new MutablePartOfRuleInstanceValue(localCodeExecutionContext.MutablePart);
 
-#if DEBUG
-                        //Log($"mutablePartValue = {mutablePartValue}");
-#endif
-
                         var result = new PointRefValue(mutablePartValue, rightOperand);
                         result.CheckDirty();
                         return result;
@@ -85,10 +70,6 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                 throw new NotImplementedException();
             }
-
-#if DEBUG
-            //Log($"leftOperand (after) = {leftOperand}");
-#endif
 
             throw new NotImplementedException();
         }

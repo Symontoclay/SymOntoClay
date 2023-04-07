@@ -68,19 +68,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             {
                 var result = new ConditionalEntitySourceValue(_entityConditionExpression, _name);
 
-#if DEBUG
-                //Log($"result = {result}");
-#endif
-
                 if (_context.NeedCheckDirty)
                 {
                     result.CheckDirty();
                 }
-
-#if DEBUG
-                //Log($"result (after) = {result}");
-                //Log($"result.ToDbgString() (after) = {result.ToDbgString()}");
-#endif
 
                 Result = result;
                 return;
@@ -94,11 +85,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     result.CheckDirty();
                 }
 
-#if DEBUG
-                //Log($"result (after) = {result}");
-                //Log($"result.ToDbgString() (after) = {result.ToDbgString()}");
-#endif
-
                 Result = result;
             }
         }
@@ -106,12 +92,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");
-            //Log($"_state = {_state}");
-#endif
-
             switch (_state)
             {
                 case State.Init:
@@ -120,10 +100,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.EntityCondition:
                             {
                                 var name = NameHelper.CreateName(_currToken.Content);
-
-#if DEBUG
-                                //Log($"name = {name}");
-#endif
 
                                 _name = name;
 
@@ -153,11 +129,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var parser = new EntityConditionParser(_context);
                                 parser.Run();
 
-#if DEBUG
-                                //Log($"parser.Result = {parser.Result}");
-                                //Log($"parser.Result.GetHumanizeDbgString() = {parser.Result.ToHumanizedString()}");
-#endif
-
                                 _entityConditionExpression = parser.Result;
 
                                 Exit();
@@ -173,10 +144,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var parser = new LogicalQueryParser(_context);
                                 parser.Run();
 
-#if DEBUG
-                                //Log($"parser.Result = {parser.Result}");
-                                //Log($"parser.Result.GetHumanizeDbgString() = {parser.Result.ToHumanizedString()}");
-#endif
                                 _entityConditionQuery = parser.Result;
 
                                 Exit();

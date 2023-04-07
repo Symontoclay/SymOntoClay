@@ -53,10 +53,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
         public IProcessInfo Activate(IEndpointInfo endpointInfo, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
-#if DEBUG
-            //Log($"endpointInfo = {endpointInfo}");
-#endif
-
             var cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
 
@@ -127,15 +123,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             {
                 try
                 {
-#if DEBUG
-                    //Log("Pre methodInfo.Invoke");
-#endif
-
                     Invoke(endpointInfo.MethodInfo, platformListener, paramsList);
-
-#if DEBUG
-                    //Log("after methodInfo.Invoke");
-#endif
 
                     processInfo.Status = ProcessStatus.Completed;
                 }
@@ -167,15 +155,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
         private void Invoke(MethodInfo methodInfo, object platformListener, object[] paramsList)
         {
-#if DEBUG
-            //Log($"Pre methodInfo.ReturnType.FullName = {methodInfo.ReturnType.FullName}");
-#endif
-
             var result = methodInfo.Invoke(platformListener, paramsList);
-
-#if DEBUG
-            //Log($"result = {result}");
-#endif
 
             if (result != null)
             {
@@ -195,10 +175,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         private object[] MapParams(CancellationToken cancellationToken, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
             var kindOfCommandParameters = command.KindOfCommandParameters;
-
-#if DEBUG
-            //Log($"kindOfCommandParameters = {kindOfCommandParameters}");
-#endif
 
             switch (kindOfCommandParameters)
             {
@@ -233,31 +209,15 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             var resultList = new List<object>();
             resultList.Add(cancellationToken);
 
-#if DEBUG
-            //Log($"argumentsList.Count() = {argumentsList.Count()}");
-#endif
-
             var commandParamsEnumerator = command.ParamsList.GetEnumerator();
 
             foreach (var targetArgument in argumentsList)
             {
-#if DEBUG
-                //Log($"targetArgument.ParameterInfo.ParameterType.FullName = {targetArgument.ParameterInfo.ParameterType.FullName}");
-#endif
-
                 if(commandParamsEnumerator.MoveNext())
                 {
                     var targetCommandValue = commandParamsEnumerator.Current;
 
-#if DEBUG
-                    //Log($"targetCommandValue.GetType().FullName = {targetCommandValue.GetType().FullName}");
-                    //Log($"targetCommandValue = {targetCommandValue.ToHumanizedString()}");
-#endif
                     var targetValue = _platformTypesConvertorsRegistry.Convert(targetCommandValue.GetType(), targetArgument.ParameterInfo.ParameterType, targetCommandValue, context, localContext);
-
-#if DEBUG
-                    //Log($"targetValue = {targetValue}");
-#endif
 
                     resultList.Add(targetValue);
                 }
@@ -282,10 +242,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             resultList.Add(null);
             resultList.Add(command.ParamsList.Select(p => (object)p).ToList());
 
-#if DEBUG
-            //Log($"resultList = {resultList.WritePODListToString()}");
-#endif
-
             return resultList.ToArray();
         }
 
@@ -308,29 +264,17 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             {
                 var argumentName = argumentItem.Key;
 
-#if DEBUG
-                //Log($"argumentName = {argumentName}");
-#endif
-
                 var argumentInfo = argumentItem.Value;
 
                 var isBound = false;
 
                 if (commandParamsDict.ContainsKey(argumentName))
                 {
-#if DEBUG
-                    //Log("commandParamsDict.ContainsKey(argumentName)");
-#endif
-
                     isBound = true;
                 }
                 else
                 {
                     var synonymsList = synonymsResolver?.GetSynonyms(NameHelper.CreateName(argumentName), localContext).Select(p => p.NameValue).ToList();
-
-#if DEBUG
-                    //Log($"synonymsList = {synonymsList.WritePODListToString()}");
-#endif
 
                     if (!synonymsList.IsNullOrEmpty())
                     {
@@ -349,11 +293,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                         }
                     }
                 }
-
-#if DEBUG
-                //Log($"isBound = {isBound}");
-                //Log($"argumentName = {argumentName}");
-#endif
 
                 if (isBound)
                 {
@@ -383,10 +322,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             resultList.Add(true);
             resultList.Add(command.ParamsDict.ToDictionary(p => p.Key.NameValue, p => (object)(p.Value.ToHumanizedString())));
             resultList.Add(null);
-
-#if DEBUG
-            //Log($"resultList = {resultList.WritePODListToString()}");
-#endif
 
             return resultList.ToArray();
         }

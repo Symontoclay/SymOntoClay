@@ -38,10 +38,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 {
     public class LogicalStorage: BaseSpecificStorage, ILogicalStorage
     {
-#if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         private const int DEFAULT_INITIAL_TIME = 20;
 
         public LogicalStorage(KindOfStorage kind, RealStorageContext realStorageContext)
@@ -174,18 +170,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                 var annotationRuleInstancesList = annotationsList.Where(p => !p.Facts.IsNullOrEmpty()).SelectMany(p => p.Facts);
 
-#if DEBUG
-                //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
-                //Log($"ruleInstance = {ruleInstance}");            
-                //Log($"annotationsList = {annotationsList.WriteListToString()}");
-#endif
-
                 foreach (var annotationRuleInstance in annotationRuleInstancesList)
                 {
                     NAppend(annotationRuleInstance, false);
                 }
 
-                //var indexedRuleInstance = ruleInstance.GetIndexed(_mainStorageContext);
 
                 return ruleInstance.Normalized.UsedKeysList.Concat(annotationRuleInstancesList.SelectMany(p => p.UsedKeysList)).Distinct().ToList();
             }
@@ -196,16 +185,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         private bool NAppend(RuleInstance ruleInstance, bool isPrimary)
         {
 #if DEBUG
-            //if(!DebugHelperForRuleInstance.ToString(ruleInstance).Contains("is"))
-            //{
-            //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
-            //Log($"ruleInstance = {ruleInstance}");
-            //Log($"isPrimary = {isPrimary}");
-            //}
 
-            //Log($"({GetHashCode()}) ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
-            //Log($"ruleInstance = {ruleInstance}");
-            //Log($"isPrimary = {isPrimary}");
 #endif
 
             if(_enableAddingRemovingFactLoggingInStorages)
@@ -234,23 +214,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 return true;
             }
 
-            //ruleInstance = ruleInstance.Clone();
 
-#if DEBUG
-            //Log($"ruleInstance (after) = {ruleInstance}");
-#endif
-
-            //var indexedRuleInstance = ruleInstance.GetIndexed(_realStorageContext.MainStorageContext);
-
-#if DEBUG
-            //Log($"indexedRuleInstance = {indexedRuleInstance}");
-#endif
 
             var ruleInstanceName = ruleInstance.Name;
-
-#if DEBUG
-            //Log($"ruleInstanceName = {ruleInstanceName}");
-#endif
 
             if (_ruleInstancesDict.ContainsKey(ruleInstanceName))
             {
@@ -260,10 +226,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             }
 
             var longHashCode = ruleInstance.GetLongHashCode();
-
-#if DEBUG
-            //Log($"longHashCode = {longHashCode}");
-#endif
 
             if(_ruleInstancesDictByHashCode.ContainsKey(longHashCode))
             {
@@ -277,10 +239,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 if(isPrimary && ruleInstance.KindOfRuleInstance == KindOfRuleInstance.Fact)
                 {
                     var approvingRez = AddingFactHelper.CallEvent(OnAddingFact, ruleInstance, _fuzzyLogicResolver, _localCodeExecutionContext, Logger);
-
-#if DEBUG
-                    //Log($"({GetHashCode()}) approvingRez = {approvingRez}");
-#endif
 
                     if(_enableAddingRemovingFactLoggingInStorages)
                     {
@@ -311,10 +269,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 }
             }
 
-#if DEBUG
-            //Log($"({GetHashCode()}) NEXT ruleInstance = {ruleInstance.ToHumanizedString()}");
-#endif
-
             if(_enableAddingRemovingFactLoggingInStorages)
             {
                 Log($"({GetHashCode()}) NEXT ruleInstance = {ruleInstance.ToHumanizedString()}");
@@ -333,31 +287,14 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             _lifeTimeCycleById[ruleInstanceId] = DEFAULT_INITIAL_TIME;
 
 #if DEBUG
-            //if(_kind == KindOfStorage.World)
-            //{
-            //    Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
-            //    Log($"ruleInstance.Normalized = {DebugHelperForRuleInstance.ToString(ruleInstance.Normalized)}");
-            //}
-            //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
-            //Log($"ruleInstance.Normalized = {DebugHelperForRuleInstance.ToString(ruleInstance.Normalized)}");
 
-            //if(!DebugHelperForRuleInstance.ToString(ruleInstance).Contains("is"))
-            //{
-            //    Log($"ruleInstance.Normalized = {DebugHelperForRuleInstance.ToString(ruleInstance.Normalized)}");
-            //    Log($"ruleInstance.Normalized = {ruleInstance.Normalized}");
-            //}
 #endif            
 
             _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(ruleInstance.Normalized);
 
             if(isPrimary && _kind != KindOfStorage.PublicFacts && _kind != KindOfStorage.PerceptedFacts)
             {
-#if DEBUG
-                //Log($"_kind = {_kind}");
-#endif
-
                 var inheritanceRelationsList = ruleInstance.GetInheritanceRelations();
-                //var ruleInstanceName = ruleInstance.Name.NameValue;
 
                 if (inheritanceRelationsList.Any())
                 {
@@ -365,9 +302,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                     foreach (var inheritanceRelation in inheritanceRelationsList)
                     {
-#if DEBUG
-                        //Log($"inheritanceRelation = {inheritanceRelation}");
-#endif
                         var inheritanceItem = new InheritanceItem();
 
                         if(inheritanceRelation.Name == NameHelper.CreateName("is"))
@@ -418,17 +352,12 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                         }
                         
                         inheritanceItem.KeysOfPrimaryRecords.Add(ruleInstanceName);
-#if DEBUG
-                        //Log($"inheritanceItem = {inheritanceItem}");
-#endif                       
-
                         inheritanceStorage.SetInheritance(inheritanceItem, false);
                     }
                 }
             }
 
 #if IMAGINE_WORKING
-            //Log("End");
 #else
             throw new NotImplementedException();
 #endif
@@ -484,10 +413,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private void NRemoveById(string id)
         {
-#if DEBUG
-            //Log($"id = {id}");
-#endif
-
             if (_ruleInstancesDictById.ContainsKey(id))
             {
                 NRemove(_ruleInstancesDictById[id]);
@@ -496,10 +421,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private void NRemove(RuleInstance ruleInstance)
         {
-#if DEBUG
-            //Log($"ruleInstance = {ruleInstance}");
-#endif
-
             var usedKeysList = NRemoveAndReturnUsedKeysList(ruleInstance);
 
             if(usedKeysList != null)
@@ -556,10 +477,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         protected void EmitOnChanged(IList<StrongIdentifierValue> usedKeysList)
         {
-#if DEBUG
-            //Log($"usedKeysList = {JsonConvert.SerializeObject(usedKeysList)}");
-#endif
-
             Task.Run(() => {
                 OnChanged?.Invoke();
             });
@@ -571,10 +488,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private void LogicalStorage_OnChangedWithKeys(IList<StrongIdentifierValue> changedKeysList)
         {
-#if DEBUG
-            //Log($"changedKeysList = {JsonConvert.SerializeObject(changedKeysList)}");
-#endif
-
             EmitOnChanged(changedKeysList);
         }
 
@@ -613,11 +526,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"Kind = {Kind}");
-                //Log($"_realStorageContext.Disabled = {_realStorageContext.Disabled}");
-#endif
-
                 if (_realStorageContext.Disabled)
                 {
                     return _emptyLogicalQueryNodesList;
@@ -669,19 +577,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     LogicalSearchExplainNode.LinkNodes(intermediateResultExplainNode, currentExplainNode);
                 }
 
-#if DEBUG
-                //Log("GO!!!!");
-                //Log($"source.Count = {source.Count}");
-#endif
-
-#if DEBUG
-                //foreach (var sourceItem in source)
-                //{
-                //    Log($"sourceItem.Name = '{sourceItem.Name.NameValue}'");
-                //    Log($"sourceItem = {sourceItem.ToHumanizedString()}");
-                //}
-#endif
-
                 return logicalSearchStorageContext.Filter(source, true, _mutablePartsDict);
             }
         }
@@ -693,11 +588,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"Kind = {Kind}");
-                //Log($"_realStorageContext.Disabled = {_realStorageContext.Disabled}");
-#endif
-
                 if (_realStorageContext.Disabled)
                 {
                     return _emptyRuleInstancesList;
@@ -714,17 +604,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"name = {name}");
-                //Log($"_kind = {_kind}");
-                //Log($"_realStorageContext.Disabled = {_realStorageContext.Disabled}");
-                //Log($"GetHashCode() = {GetHashCode()}");
-                //if (_kind == KindOfStorage.World)
-                //{
-                //    DbgPrintFactsAndRules();
-                //}
-#endif
-
                 if (_realStorageContext.Disabled)
                 {
                     return _emptyBaseRulePartsList;
@@ -743,10 +622,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 }
 
                 var source = _commonPersistIndexedLogicalData.GetIndexedRulePartOfFactsByKeyOfRelation(name);
-
-#if DEBUG
-                //Log($"source?.Count = {source?.Count}");
-#endif
 
                 if (logicalSearchStorageContext == null || source.IsNullOrEmpty())
                 {
@@ -791,20 +666,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     LogicalSearchExplainNode.LinkNodes(intermediateResultExplainNode, currentExplainNode);
                 }
 
-#if DEBUG
-                //Log($"name = {name}");
-                //Log($"_kind = {_kind}");
-                //Log($"_mutablePartsDict?.Count = {_mutablePartsDict?.Count}");
-                //Log($"source.Count = {source.Count}");
-#endif
-
-#if DEBUG
-                //foreach (var sourceItem in source)
-                //{
-                //    Log($"sourceItem = {sourceItem.ToHumanizedString()}");
-                //}
-#endif
-
                 return logicalSearchStorageContext.Filter(source, true, _mutablePartsDict);
             }
         }
@@ -814,16 +675,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"name = {name}");
-                //Log($"_kind = {_kind}");
-                //Log($"_realStorageContext.Disabled = {_realStorageContext.Disabled}");
-                //if (_kind == KindOfStorage.World)
-                //{
-                //    DbgPrintFactsAndRules();
-                //}
-#endif
-
                 if (_realStorageContext.Disabled)
                 {
                     return _emptyBaseRulePartsList;
@@ -843,10 +694,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                 var source = _commonPersistIndexedLogicalData.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name);
 
-#if DEBUG
-                //Log($"source?.Count = {source?.Count}");
-#endif
-
                 if (logicalSearchStorageContext == null || source.IsNullOrEmpty())
                 {
                     if (parentExplainNode != null)
@@ -856,11 +703,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                     return source;
                 }
-
-#if DEBUG
-                //Log($"name = {name}");
-                //Log($"_kind = {_kind}");
-#endif
 
                 LogicalSearchExplainNode filteringExplainNode = null;
 
@@ -912,45 +754,26 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private void RefreshLifeTime(RuleInstance ruleInstance)
         {
-#if DEBUG
-            //Log($"ruleInstance = {ruleInstance}");
-#endif
             NRefreshLifeTime(ruleInstance.Name.NameValue);
         }
 
         private void RefreshLifeTime(string ruleInstanceId)
         {
-#if DEBUG
-            //Log($"ruleInstanceId = {ruleInstanceId}");
-#endif
-
             NRefreshLifeTime(ruleInstanceId);
         }
 
         private void RefreshLifeTime(StrongIdentifierValue ruleInstanceName)
         {
-#if DEBUG
-            //Log($"ruleInstanceName = {ruleInstanceName}");
-#endif
-
             NRefreshLifeTime(ruleInstanceName.NameValue);
         }
 
         private void RefreshLifeTime(ulong longHashCode)
         {
-#if DEBUG
-            //Log($"longHashCode = {longHashCode}");
-#endif
-
             NRefreshLifeTime(_ruleInstancesDictByHashCode[longHashCode].Name.NameValue);
         }
 
         private void NRefreshLifeTime(string ruleInstanceId)
         {
-#if DEBUG
-            //Log($"ruleInstanceId = {ruleInstanceId}");
-#endif
-
             _lifeTimeCycleById[ruleInstanceId] = DEFAULT_INITIAL_TIME;
 
             if (_enableAddingRemovingFactLoggingInStorages)
@@ -963,28 +786,16 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         {
             Thread.Sleep(200);
 
-#if DEBUG
-            //Log("Do");
-#endif
-
             lock (_lockObj)
             {
                 var itemsList = _lifeTimeCycleById.ToList();
 
                 foreach(var item in itemsList)
                 {
-#if DEBUG
-                    //Log($"item = {item}");
-#endif
-
                     var lifeCycle = item.Value - 1;
 
                     if (lifeCycle == 0)
                     {
-#if DEBUG
-                        //Log($"NEXT item = {item}");
-#endif
-
                         if(_enableAddingRemovingFactLoggingInStorages)
                         {
                             Log($"({GetHashCode()}) Put for deleting by end of life cycle: `{item}`");

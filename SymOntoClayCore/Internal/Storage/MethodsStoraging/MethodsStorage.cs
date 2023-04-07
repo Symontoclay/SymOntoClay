@@ -47,13 +47,6 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStoraging
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"GetHashCode() = {GetHashCode()}");
-                //Log($"namedFunction = {namedFunction}");
-                //Log($"namedFunction.Name = {namedFunction.Name}");
-                //Log($"namedFunction.TypeOfAccess = {namedFunction.TypeOfAccess}");
-#endif
-
                 if (namedFunction.TypeOfAccess != TypeOfAccess.Local)
                 {
                     AnnotatedItemHelper.CheckAndFillUpHolder(namedFunction, _realStorageContext.MainStorageContext.CommonNamesStorage);
@@ -65,10 +58,6 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStoraging
 
                 var paramsCountList = StorageHelper.GetParamsCountList(namedFunction);
 
-#if DEBUG
-                //Log($"paramsCountList = {paramsCountList.WritePODListToString()}");
-#endif
-
                 var targetDict = GetDictByNames(namedFunction);
 
                 foreach (var count in paramsCountList)
@@ -77,17 +66,7 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStoraging
                     {
                         var targetList = targetDict[count];
 
-#if DEBUG
-                        //Log($"targetList.Count = {targetList.Count}");
-                        //Log($"namedFunction.GetLongHashCode() = {namedFunction.GetLongHashCode()}");
-                        //Log($"targetList.FirstOrDefault()?.GetLongHashCode() = {targetList.FirstOrDefault()?.GetLongHashCode()}");
-#endif
-
                         StorageHelper.RemoveSameItems(targetList, namedFunction);
-
-#if DEBUG
-                        //Log($"targetList.Count (after) = {targetList.Count}");
-#endif
 
                         targetList.Add(namedFunction);
                     }
@@ -116,10 +95,6 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStoraging
             }
 
             var holder = namedFunction.Holder;
-
-#if DEBUG
-            //Log($"holder = {holder}");
-#endif
 
             if (_namedFunctionsDict.ContainsKey(holder))
             {
@@ -153,12 +128,6 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStoraging
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"GetHashCode() = {GetHashCode()}");
-                //Log($"name = {name}");
-                //Log($"paramsCount = {paramsCount}");
-#endif
-
                 if (_realStorageContext.Disabled)
                 {
                     return _emptyNamedFunctionsList;
@@ -169,10 +138,6 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStoraging
                 foreach (var weightedInheritanceItem in weightedInheritanceItems)
                 {
                     var targetHolder = weightedInheritanceItem.SuperName;
-
-#if DEBUG
-                    //Log($"targetHolder = {targetHolder}");
-#endif
 
                     if(_namedFunctionsDict.ContainsKey(targetHolder))
                     {

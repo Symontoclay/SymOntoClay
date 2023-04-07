@@ -62,10 +62,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnEnter()
         {
-#if DEBUG
-            //Log("Begin");
-#endif
-
             if(!_inAccessibilityAreas)
             {
                 Result = ObjectFactory(_kindOfCodeEntity);
@@ -73,9 +69,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 SetCurrentCodeItem(Result);
             }
 
-#if DEBUG
-            //Log("End");
-#endif
         }
 
         private CodeItem ObjectFactory(KindOfCodeEntity kind)
@@ -111,15 +104,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnFinish()
         {
-#if DEBUG
-            //Log("Begin");
-#endif
-
             RemoveCurrentCodeEntity();
 
-#if DEBUG
-            //Log("End");
-#endif
         }
 
         protected virtual void OnAddInlineTrigger(InlineTrigger inlineTrigger)
@@ -152,11 +138,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         protected void ProcessGeneralContent()
         {
-#if DEBUG
-            //Log($"_currToken = {_currToken}");
-            //Log($"(_context.CurrentDefaultSetings != null) = {_context.CurrentDefaultSetings != null}");
-#endif
-
             switch (_currToken.TokenKind)
             {
                 case TokenKind.CloseFigureBracket:
@@ -235,10 +216,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var parser = new AccessibilityAreasParser(_context, Result);
                                 parser.Run();
 
-#if DEBUG
-                                //Log($"Result = {Result}");
-#endif
-
                                 Exit();
                             }
                             break;
@@ -249,10 +226,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var parser = new SetDirectiveParser(_context);
                                 parser.Run();
 
-#if DEBUG
-                                //Log($"parser.Result = {parser.Result.WriteListToString()}");
-#endif
-
                                 Result.Directives.AddRange(parser.Result);
                             }
                             break;
@@ -260,10 +233,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case KeyWordTokenKind.Enter:
                             {
                                 var nextToken = _context.GetToken();
-
-#if DEBUG
-                                //Log($"nextToken = {nextToken}");
-#endif
 
                                 switch (nextToken.TokenKind)
                                 {
@@ -277,10 +246,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                                         {
                                                             var parser = new LogicalClausesSectionParser(_context);
                                                             parser.Run();
-
-#if DEBUG
-                                                            //Log($"parser.Result = {parser.Result.WriteListToString()}");
-#endif
 
                                                             Result.ActivatingConditions.AddRange(parser.Result);
                                                         }
@@ -306,10 +271,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             {
                                 var nextToken = _context.GetToken();
 
-#if DEBUG
-                                //Log($"nextToken = {nextToken}");
-#endif
-
                                 switch (nextToken.TokenKind)
                                 {
                                     case TokenKind.Word:
@@ -322,10 +283,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                                         {
                                                             var parser = new LogicalClausesSectionParser(_context);
                                                             parser.Run();
-
-#if DEBUG
-                                                            //Log($"parser.Result = {parser.Result.WriteListToString()}");
-#endif
 
                                                             Result.DeactivatingConditions.AddRange(parser.Result.Select(p => p.Condition));
                                                         }

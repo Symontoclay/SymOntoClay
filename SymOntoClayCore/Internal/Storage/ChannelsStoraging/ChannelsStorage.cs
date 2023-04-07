@@ -49,10 +49,6 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStoraging
 
             lock(_lockObj)
             {
-#if DEBUG
-                //Log($"channel = {channel}");
-#endif
-
                 channel.CheckDirty();
 
                 var name = channel.Name;
@@ -66,11 +62,6 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStoraging
                     if (dict.ContainsKey(holder))
                     {
                         var targetList = dict[holder];
-
-#if DEBUG
-                        //Log($"dict[holder].Count = {dict[holder].Count}");
-                        //Log($"targetList = {targetList.WriteListToString()}");
-#endif
 
                         StorageHelper.RemoveSameItems(targetList, channel);
 
@@ -95,10 +86,6 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStoraging
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"name = {name}");
-#endif
-
                 if (_realStorageContext.Disabled)
                 {
                     return _emptyChannelsList;

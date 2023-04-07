@@ -58,11 +58,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters
         {
             var identifier = (StrongIdentifierValue)coreObject;
 
-#if DEBUG
-            //var logger = context.Logger;
-            //logger.Log($"identifier = {identifier}");
-#endif
-
             var kindOfName = identifier.KindOfName;
 
             switch (kindOfName)
@@ -87,11 +82,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters
 
         private object ConvertConceptToPlatformType(StrongIdentifierValue concept, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
-#if DEBUG
-            //var logger = context.Logger;
-            //logger.Log($"concept = {concept}");
-#endif
-
             var conditionalEntityValue = PlatformTypesConverterHelper.GetResolvedConditionalEntityValue(concept, context, localContext);
 
             return conditionalEntityValue;

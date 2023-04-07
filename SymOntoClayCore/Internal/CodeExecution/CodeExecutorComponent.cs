@@ -71,10 +71,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         /// <inheritdoc/>
         public Value ExecuteBatchAsync(List<ProcessInitialInfo> processInitialInfoList)
         {
-#if DEBUG
-            //Log($"processInitialInfoList = {processInitialInfoList.WriteListToString()}");
-#endif
-
             var codeFramesList = ConvertProcessInitialInfosToCodeFrames(processInitialInfoList);
 
             var threadExecutor = new AsyncThreadExecutor(_context);
@@ -86,10 +82,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         /// <inheritdoc/>
         public Value ExecuteBatchSync(List<ProcessInitialInfo> processInitialInfoList)
         {
-#if DEBUG
-            //Log($"processInitialInfoList = {processInitialInfoList.WriteListToString()}");
-#endif
-
             var codeFramesList = ConvertProcessInitialInfosToCodeFrames(processInitialInfoList);
 
             var threadExecutor = new SyncThreadExecutor(_context);
@@ -100,10 +92,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private List<CodeFrame> ConvertProcessInitialInfosToCodeFrames(List<ProcessInitialInfo> processInitialInfoList)
         {
-#if DEBUG
-            //Log($"processInitialInfoList = {processInitialInfoList.WriteListToString()}");
-#endif
-
             var codeFramesList = new List<CodeFrame>();
 
             foreach (var processInitialInfo in processInitialInfoList)
@@ -125,17 +113,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 var codeItemPriority = metadata.Priority;
 
-#if DEBUG
-                //Log($"codeItemPriority = {codeItemPriority}");
-#endif
-
                 if (codeItemPriority != null)
                 {
                     var numberValue = _numberValueLinearResolver.Resolve(codeItemPriority, _globalExecutionContext);
-
-#if DEBUG
-                    //Log($"numberValue = {numberValue}");
-#endif
 
                     if (!(numberValue == null || numberValue.KindOfValue == KindOfValue.NullValue))
                     {
@@ -143,19 +123,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     }
                 }
 
-#if DEBUG
-                //Log($"processInfo = {processInfo}");
-#endif
-
                 _context.InstancesStorage.AppendProcessInfo(processInfo);
 
                 codeFramesList.Add(codeFrame);
             }
-
-#if DEBUG
-            //_context.InstancesStorage.PrintProcessesList();
-            //Log("L>>>");
-#endif
 
             return codeFramesList;
         }
@@ -164,10 +135,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public Value CallOperator(KindOfOperator kindOfOperator, List<Value> paramsList, ILocalCodeExecutionContext parentLocalCodeExecutionContext)
         {
             var operatorInfo = _operatorsResolver.GetOperator(kindOfOperator, parentLocalCodeExecutionContext);
-
-#if DEBUG
-            //Log($"operatorInfo = {operatorInfo}");
-#endif
 
             return CallExecutableSync(operatorInfo, paramsList, parentLocalCodeExecutionContext);
         }
@@ -187,12 +154,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var coordinator = executable.GetCoordinator(_context, parentLocalCodeExecutionContext);
 
-#if DEBUG
-            //Log($"executable.IsSystemDefined = {executable.IsSystemDefined}");
-            //Log($"coordinator != null = {coordinator != null}");
-            //Log($"isSync = {isSync}");
-#endif
-
             if (executable.IsSystemDefined)
             {
                 Value result = null;
@@ -207,25 +168,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
                 }
 
-#if DEBUG
-                //Log($"result = {result}");
-#endif
-
                 return result;
             }
             else
             {
                 var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(executable, kindOfParameters, namedParameters, positionedParameters, parentLocalCodeExecutionContext);
 
-#if DEBUG
-                //Log($"newCodeFrame = {newCodeFrame.ToDbgString()}");
-#endif
-
                 _context.InstancesStorage.AppendProcessInfo(newCodeFrame.ProcessInfo);
-
-#if DEBUG
-                //Log($"isSync = {isSync}");
-#endif
 
                 if (isSync)
                 {
@@ -258,12 +207,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private Value CallFunction(Value caller, KindOfFunctionParameters kindOfParameters, List<Value> parameters, ILocalCodeExecutionContext parentLocalCodeExecutionContext, bool isSync)
         {
-#if DEBUG
-            //Log($"kindOfparameters = {kindOfParameters}");
-            //Log($"isSync = {isSync}");
-            //Log($"parameters = {parameters.WriteListToString()}");
-#endif
-
             Dictionary<StrongIdentifierValue, Value> namedParameters = null;
             List<Value> positionedParameters = null;
 
@@ -284,13 +227,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
             }
 
-#if DEBUG
-            //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
-            //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
-            //Log($"caller.IsPointRefValue = {caller.IsPointRefValue}");
-            //Log($"caller.IsStrongIdentifierValue = {caller.IsStrongIdentifierValue}");
-#endif
-
             if (caller.IsPointRefValue)
             {
                 return CallPointRefValue(caller.AsPointRefValue, kindOfParameters, namedParameters, positionedParameters, isSync);
@@ -306,33 +242,17 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private Dictionary<StrongIdentifierValue, Value> TakeNamedParameters(List<Value> rawParamsList)
         {
-#if DEBUG
-            //Log($"rawParamsList = {rawParamsList.WriteListToString()}");
-#endif
-
             var result = new Dictionary<StrongIdentifierValue, Value>();
 
             var enumerator = rawParamsList.GetEnumerator();
 
             while (enumerator.MoveNext())
             {
-#if DEBUG
-                //Log($"enumerator.Current = {enumerator.Current}");
-#endif
-
                 var name = enumerator.Current.AsStrongIdentifierValue;
-
-#if DEBUG
-                //Log($"name = {name}");
-#endif
 
                 enumerator.MoveNext();
 
                 var value = enumerator.Current;
-
-#if DEBUG
-                //Log($"value = {value}");
-#endif
 
                 result[name] = value;
             }
@@ -344,10 +264,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             bool isSync)
         {
-#if DEBUG
-            //Log($"caller.LeftOperand = {caller.LeftOperand}");
-#endif
-
             if (caller.LeftOperand.IsHostValue)
             {
                 throw new NotImplementedException();
@@ -360,13 +276,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             bool isSync, ILocalCodeExecutionContext parentLocalCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"methodName = {methodName}");
-            //Log($"kindOfParameters = {kindOfParameters}");
-            //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
-            //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
-            //Log($"isSync = {isSync}");
-#endif
             IExecutable method = null;
 
             switch (kindOfParameters)
@@ -386,10 +295,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
             }
-
-#if DEBUG
-            //Log($"method = {method}");
-#endif
 
             if (method == null)
             {

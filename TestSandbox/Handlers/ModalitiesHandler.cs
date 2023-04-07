@@ -53,7 +53,6 @@ namespace TestSandbox.Handlers
             _logger.Log("Begin");
 
             Case2();
-            //Case1();
 
             _logger.Log("End");
         }
@@ -61,8 +60,6 @@ namespace TestSandbox.Handlers
         private void Case2()
         {
             var factStr = "{: parent(#Piter, #Tom) o: very middle so: 0.5 :}";
-            //var factStr = "{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } so: 0.5 o: 1  :}";
-            //var factStr = "{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 1 :}";
 
             var fact = _engineContext.Parser.ParseRuleInstance(factStr);
 
@@ -80,7 +77,6 @@ namespace TestSandbox.Handlers
             fact.ObligationModality = LogicalValue.TrueValue;
             fact.SelfObligationModality = LogicalValue.FalseValue;
 
-            //_logger.Log($"fact = {fact}");
 
             _logger.Log($"fact (after) = {DebugHelperForRuleInstance.ToString(fact)}");
         }

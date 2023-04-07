@@ -88,12 +88,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");            
-#endif
-
             switch (_state)
             {
                 case State.Init:
@@ -602,10 +596,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var parser = new InlineTriggerActiveRuleContentParser(_context);
                                 parser.Run();
 
-#if DEBUG
-                                //Log($"parser.Result = {parser.Result.WriteListToString()}");
-#endif
-
                                 _inlineTrigger.RuleInstancesList = parser.Result;
 
                                 Exit();
@@ -731,10 +721,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             var parser = new InlineTriggerBindingVariablesParser(_context);
             parser.Run();
-
-#if DEBUG
-            //Log($"parser.Result = {parser.Result.WriteListToString()}");
-#endif
 
             _inlineTrigger.SetBindingVariables = new BindingVariables(parser.Result);
 

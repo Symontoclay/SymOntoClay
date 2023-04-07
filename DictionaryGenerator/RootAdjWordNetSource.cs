@@ -39,15 +39,7 @@ namespace DictionaryGenerator
             var resultList = new List<RootAdjSourceWordItem>();
 
             Read((string currentLine) => {
-#if DEBUG
-                //NLog.LogManager.GetCurrentClassLogger().Info($"Read currentLine = {currentLine}");
-#endif
-
                 var item = ReaderOfRootAdjSourceWordItem.Read(currentLine);
-
-#if DEBUG
-                //NLog.LogManager.GetCurrentClassLogger().Info($"Read item = {item}");
-#endif
 
                 resultList.Add(item);
             });

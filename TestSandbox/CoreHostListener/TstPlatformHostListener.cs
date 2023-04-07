@@ -64,45 +64,17 @@ namespace TestSandbox.CoreHostListener
             _logger.Log($"positionedParameters = {JsonConvert.SerializeObject(positionedParameters, Formatting.Indented)}");
         }
 
-        //[DebuggerHidden]
-        //[BipedEndpoint("Go", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
-        //public void GoToImpl(CancellationToken cancellationToken,
-        //    [EndpointParam("To", KindOfEndpointParam.Position)] Vector3 point,
-        //    float speed = 12)
-        //{
-        //    //var name = NameHelper.GetNewEntityNameString();
-        //    //var name = string.Empty;
-        //    var name = GetMethodId();
 
-        //    _logger.Log($"Begin {name}");
 
-        //    _logger.Log($"{name} point = {point}");
-        //    _logger.Log($"{name} speed = {speed}");
 
-        //    var n = 0;
 
-        //    while (true)
-        //    {
-        //        n++;
 
-        //        if (n > 10/*00*/)
-        //        {
-        //            break;
-        //        }
 
-        //        Thread.Sleep(1000);
 
-        //        _logger.Log($"{name} Hi! n = {n}");
 
-        //        _logger.Log($"{name} Hi! cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");
 
-        //        cancellationToken.ThrowIfCancellationRequested();
-        //    }
 
-        //    //Thread.Sleep(5000);
 
-        //    _logger.Log($"End {name}");
-        //}
 
         [DebuggerHidden]
         [BipedEndpoint("Go2", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
@@ -110,8 +82,6 @@ namespace TestSandbox.CoreHostListener
             [EndpointParam("To", KindOfEndpointParam.Position)] IEntity entity,
             float speed = 12)
         {
-            //var name = NameHelper.GetNewEntityNameString();
-            //var name = string.Empty;
             var name = GetMethodId();
 
             _logger.Log($"Begin {name}");
@@ -141,7 +111,6 @@ namespace TestSandbox.CoreHostListener
                 cancellationToken.ThrowIfCancellationRequested();
             }
 
-            //Thread.Sleep(5000);
 
             _logger.Log($"End {name}");
         }
@@ -152,8 +121,6 @@ namespace TestSandbox.CoreHostListener
             [EndpointParam("To", KindOfEndpointParam.Position)] INavTarget navTarget,
             float speed = 12)
         {
-            //var name = NameHelper.GetNewEntityNameString();
-            //var name = string.Empty;
             var name = GetMethodId();
 
             _logger.Log($"Begin {name}");
@@ -187,50 +154,21 @@ namespace TestSandbox.CoreHostListener
                 cancellationToken.ThrowIfCancellationRequested();
             }
 
-            //Thread.Sleep(5000);
 
             _logger.Log($"End {name}");
         }
 
-        //[DebuggerHidden]
-        //[BipedEndpoint("Go", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
-        //public void GoToImpl_2(CancellationToken cancellationToken,
-        //[EndpointParam("Direction", KindOfEndpointParam.Position)] Vector3 point,
-        //float speed = 12)
-        //{
-        //    //var name = NameHelper.GetNewEntityNameString();
-        //    //var name = string.Empty;
-        //    var name = GetMethodId();
 
-        //    _logger.Log($"Begin {name}");
 
-        //    _logger.Log($"{name} point = {point}");
-        //    _logger.Log($"{name} speed = {speed}");
 
-        //    var n = 0;
 
-        //    while (true)
-        //    {
-        //        n++;
 
-        //        if (n > 10/*00*/)
-        //        {
-        //            break;
-        //        }
 
-        //        Thread.Sleep(1000);
 
-        //        _logger.Log($"{name} Hi! n = {n}");
 
-        //        _logger.Log($"{name} Hi! cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");
 
-        //        cancellationToken.ThrowIfCancellationRequested();
-        //    }
 
-        //    //Thread.Sleep(5000);
 
-        //    _logger.Log($"End {name}");
-        //}
 
         [DebuggerHidden]
         [BipedEndpoint("Take", DeviceOfBiped.RightHand, DeviceOfBiped.LeftHand)]
@@ -266,7 +204,6 @@ namespace TestSandbox.CoreHostListener
             _logger.Log("End");
         }
 
-        //[BipedEndpoint("Aim", true, DeviceOfBiped.LeftHand, DeviceOfBiped.RightHand)]
         [BipedEndpoint("Aim", DeviceOfBiped.LeftHand, DeviceOfBiped.RightHand)]
         private void AimToImpl(CancellationToken cancellationToken)
         {
@@ -276,7 +213,6 @@ namespace TestSandbox.CoreHostListener
         }
 
         [FriendsEndpoints("Aim")]
-        //[BipedEndpoint("Fire", true, DeviceOfBiped.LeftHand, DeviceOfBiped.RightHand)]
         [BipedEndpoint("Fire", DeviceOfBiped.LeftHand, DeviceOfBiped.RightHand)]
         private void FireImpl(CancellationToken cancellationToken)
         {

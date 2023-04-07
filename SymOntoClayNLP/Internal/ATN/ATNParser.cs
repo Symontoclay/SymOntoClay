@@ -48,10 +48,6 @@ namespace SymOntoClay.NLP.Internal.ATN
 
         public List<BaseSentenceItem> Run(string text, bool dumpToLogDirOnExit, string logDir)
         {
-#if DEBUG
-            //_logger.Log($"text = {text}");
-#endif
-
             var globalContext = new GlobalParserContext(_logger, _wordsDict, text, dumpToLogDirOnExit, logDir);
 
             globalContext.Run();

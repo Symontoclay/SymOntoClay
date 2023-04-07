@@ -139,7 +139,6 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
             sb.PrintObjProp(n, nameof(Subject), Subject);
             sb.PrintObjProp(n, nameof(Predicate), Predicate);
 
-            //sb.PrintObjProp(n, nameof(), );
 
             sb.AppendLine($"{spaces}{nameof(Mood)} = {Mood}");
 

@@ -39,11 +39,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(AstWaitStatement statement)
         {
-#if DEBUG
-            //Log($"statement = {statement}");
-            //Log($"statement = {statement.ToHumanizedString()}");
-#endif
-
             foreach(var item in statement.Items)
             {
                 var node = new ExpressionNode(_context);
@@ -60,9 +55,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
             AddCommand(command);
 
-#if DEBUG
-            //DbgPrintCommands();
-#endif
         }
     }
 }

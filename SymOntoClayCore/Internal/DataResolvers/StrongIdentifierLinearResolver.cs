@@ -38,10 +38,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public StrongIdentifierValue Resolve(Value source, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"source = {source}");
-#endif
-
             var sourceKind = source.KindOfValue;
 
             switch (sourceKind)

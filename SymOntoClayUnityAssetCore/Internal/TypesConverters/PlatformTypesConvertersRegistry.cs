@@ -51,10 +51,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"convertor = {convertor}");
-#endif
-
                 Dictionary<Type, IPlatformTypesConverter> targetDict = null;
 
                 if (convertor.CanConvertToCoreType)
@@ -95,39 +91,16 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
             lock (_lockObj)
             {
 #if DEBUG
-                //Log($"source.FullName = {source.FullName}");
-                //Log($"dest.FullName = {dest.FullName}");
-                //Log($"dest.IsGenericType = {dest.IsGenericType}");
-                //Log($"dest.IsNested = {dest.IsNested}");
-                //Log($"dest.IsPrimitive = {dest.IsPrimitive}");
-                //Log($"dest.IsSpecialName = {dest.IsSpecialName}");
-                //Log($"dest.IsClass = {dest.IsClass}");
-                //Log($"dest.IsInterface = {dest.IsInterface}");
 
-                //if (dest.IsGenericType)
-                //{
-                //    foreach(var genericArgument in dest.GenericTypeArguments)
-                //    {
-                //        Log($"genericArgument.FullName = {genericArgument.FullName}");
-                //    }
-                //}
 #endif
 
                 if (source == _nullValueType && (dest.IsClass || dest.IsInterface || (dest.IsGenericType && dest.FullName.StartsWith("System.Nullable"))))
                 {
-#if DEBUG
-                    //Log($"source == _nullValueType && (dest.IsClass || dest.IsInterface || (dest.IsGenericType && dest.FullName.StartsWith(\"System.Nullable\")))");
-#endif
-
                     return true;
                 }
 
                 if(NCanConvert(source, dest))
                 {
-#if DEBUG
-                    //Log($"NCanConvert(source, dest)");
-#endif
-
                     return true;
                 }
 
@@ -135,16 +108,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
 
                 foreach (var baseSourceType in baseSourceTypes)
                 {
-#if DEBUG
-                    //Log($"baseSourceType.FullName = {baseSourceType.FullName}");
-#endif
-
                     if (NCanConvert(baseSourceType, dest))
                     {
-#if DEBUG
-                        //Log($"NCanConvert(baseSourceType, dest)");
-#endif
-
                         return true;
                     }
                 }
@@ -153,32 +118,16 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
 
                 foreach(var baseDestType in baseDestTypes)
                 {
-#if DEBUG
-                    //Log($"baseDestType.FullName = {baseDestType.FullName}");
-#endif
-                        
 
                     if (NCanConvert(source, baseDestType))
                     {
-#if DEBUG
-                        //Log($"NCanConvert(source, baseDestType)");
-#endif
-
                         return true;
                     }
 
                     foreach (var baseSourceType in baseSourceTypes)
                     {
-#if DEBUG
-                        //Log($"baseSourceType.FullName (2) = {baseSourceType.FullName}");
-#endif
-
                         if (NCanConvert(baseSourceType, baseDestType))
                         {
-#if DEBUG
-                            //Log($"NCanConvert(baseSourceType, baseDestType)");
-#endif
-
                             return true;
                         }
                     }
@@ -298,12 +247,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
 
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"sourceType.FullName = {sourceType.FullName}");
-                //Log($"destType.FullName = {destType.FullName}");
-                //Log($"sourceValue = {sourceValue}");
-#endif
-
                 var nConvertResult = NConvert(sourceType, destType, sourceValue, context, localContext);
 
                 if(nConvertResult.Item2)
@@ -315,10 +258,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
 
                 foreach (var baseSourceType in baseSourceTypes)
                 {
-#if DEBUG
-                    //Log($"baseSourceType.FullName = {baseSourceType.FullName}");
-#endif
-
                     nConvertResult = NConvert(baseSourceType, destType, sourceValue, context, localContext);
 
                     if (nConvertResult.Item2)
@@ -331,10 +270,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
 
                 foreach (var baseDestType in baseDestTypes)
                 {
-#if DEBUG
-                    //Log($"baseDestType.FullName = {baseDestType.FullName}");
-#endif
-
                     nConvertResult = NConvert(sourceType, baseDestType, sourceValue, context, localContext);
 
                     if (nConvertResult.Item2)
@@ -344,10 +279,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
 
                     foreach (var baseSourceType in baseSourceTypes)
                     {
-#if DEBUG
-                        //Log($"baseSourceType.FullName (2) = {baseSourceType.FullName}");
-#endif
-
                         nConvertResult = NConvert(baseSourceType, baseDestType, sourceValue, context, localContext);
 
                         if (nConvertResult.Item2)
@@ -363,12 +294,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
 
         private (object, bool) NConvert(Type sourceType, Type destType, object sourceValue, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
-#if DEBUG
-            //Log($"sourceType.FullName = {sourceType.FullName}");
-            //Log($"destType.FullName = {destType.FullName}");
-            //Log($"sourceValue = {sourceValue}");
-#endif
-
             if (_convertorsDict.ContainsKey(sourceType))
             {
                 var targetDict = _convertorsDict[sourceType];
@@ -385,10 +310,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
                     return (convertor.ConvertToCoreType(sourceValue, context, localContext), true);
                 }
             }
-
-#if DEBUG
-            //Log($"!_convertorsDict.ContainsKey(sourceType)");
-#endif
 
             if (destType.IsGenericType && destType.FullName.StartsWith("System.Nullable"))
             {

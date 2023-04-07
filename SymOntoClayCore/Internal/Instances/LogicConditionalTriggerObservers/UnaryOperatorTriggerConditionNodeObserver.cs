@@ -37,10 +37,6 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
         {
             _kindOfOperator = condition.KindOfOperator;
 
-#if DEBUG
-            //Log($"_kindOfOperator = {_kindOfOperator}");
-#endif
-
             if (_kindOfOperator == KindOfOperator.CallFunction)
             {
                 storage.VarStorage.OnChangedWithKeys += VarStorage_OnChangedWithKeys;
@@ -54,11 +50,6 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
         private void VarStorage_OnChangedWithKeys(StrongIdentifierValue varName)
         {
-#if DEBUG
-            //Log($"varName = {varName}");
-            //Log($"_varName = {_varName}");
-#endif
-
             EmitOnChanged();
         }
 

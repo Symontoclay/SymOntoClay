@@ -56,32 +56,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
 
-#if DEBUG
-            //Log($"name = {name}");
-            //Log($"value = {value}");
-            //Log($"reason = {reason}");
-            //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
-            //Log($"storagesList.Count = {storagesList.Count}");
-            //foreach (var tmpStorage in storagesList)
-            //{
-            //    Log($"tmpStorage = {tmpStorage}");
-            //}
-#endif
-
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
             var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
 
-#if DEBUG
-            //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
-#endif
-
             var rawList = GetRawIdleActionItemList(storagesList, weightedInheritanceItems);
-
-#if DEBUG
-            //Log($"rawList = {rawList.WriteListToString()}");
-#endif
 
             if (!rawList.Any())
             {
@@ -89,10 +69,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             var filteredList = FilterCodeItems(rawList, localCodeExecutionContext);
-
-#if DEBUG
-            //Log($"filteredList = {filteredList.WriteListToString()}");
-#endif
 
             return filteredList.Select(p => p.ResultItem).ToList();
         }

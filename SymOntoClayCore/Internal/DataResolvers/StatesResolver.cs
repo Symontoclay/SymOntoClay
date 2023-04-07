@@ -57,14 +57,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
 
-#if DEBUG
-            //Log($"storagesList.Count = {storagesList.Count}");
-            //foreach (var tmpStorage in storagesList)
-            //{
-            //    Log($"tmpStorage = {tmpStorage}");
-            //}
-#endif
-
             if (!storagesList.Any())
             {
                 return null;
@@ -72,15 +64,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var storageItem in storagesList)
             {
-#if DEBUG
-                //Log($"storageItem = {storageItem}");
-#endif
-
                 var item = storageItem.Storage.StatesStorage.GetDefaultStateNameDirectly();
-
-#if DEBUG
-                //Log($"item = {item}");
-#endif
 
                 if(item != null)
                 {
@@ -98,36 +82,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public StateDef Resolve(StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"name = {name}");
-#endif
-
             var storage = localCodeExecutionContext.Storage;
 
             var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
-
-#if DEBUG
-            //Log($"storagesList.Count = {storagesList.Count}");
-            //foreach (var tmpStorage in storagesList)
-            //{
-            //    Log($"tmpStorage = {tmpStorage}");
-            //}
-#endif
 
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
             var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
 
-#if DEBUG
-            //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
-#endif
-
             var rawList = GetRawStatesList(name, storagesList, weightedInheritanceItems);
-
-#if DEBUG
-            //Log($"rawList = {rawList.WriteListToString()}");
-#endif
 
             if (!rawList.Any())
             {
@@ -135,10 +99,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             var filteredList = FilterCodeItems(rawList, localCodeExecutionContext);
-
-#if DEBUG
-            //Log($"filteredList = {filteredList.WriteListToString()}");
-#endif
 
             if (!filteredList.Any())
             {
@@ -173,15 +133,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var storageItem in storagesList)
             {
-#if DEBUG
-                //Log($"storageItem = {storageItem}");
-#endif
-
                 var itemsList = storageItem.Storage.StatesStorage.GetAllStatesListDirectly();
-
-#if DEBUG
-                //Log($"itemsList = {itemsList.WriteListToString()}");
-#endif
 
                 result.AddRange(itemsList);
             }
@@ -200,14 +152,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
 
-#if DEBUG
-            //Log($"storagesList.Count = {storagesList.Count}");
-            //foreach (var tmpStorage in storagesList)
-            //{
-            //    Log($"tmpStorage = {tmpStorage}");
-            //}
-#endif
-
             if (!storagesList.Any())
             {
                 return new List<ActivationInfoOfStateDef>();
@@ -217,15 +161,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var storageItem in storagesList)
             {
-#if DEBUG
-                //Log($"storageItem = {storageItem}");
-#endif
-
                 var itemsList = storageItem.Storage.StatesStorage.GetActivationInfoOfStateListDirectly();
-
-#if DEBUG
-                //Log($"itemsList = {itemsList.WriteListToString()}");
-#endif
 
                 result.AddRange(itemsList);
             }
@@ -244,14 +180,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
 
-#if DEBUG
-            //Log($"storagesList.Count = {storagesList.Count}");
-            //foreach (var tmpStorage in storagesList)
-            //{
-            //    Log($"tmpStorage = {tmpStorage}");
-            //}
-#endif
-
             if (!storagesList.Any())
             {
                 return new List<MutuallyExclusiveStatesSet>();
@@ -261,15 +189,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var storageItem in storagesList)
             {
-#if DEBUG
-                //Log($"storageItem = {storageItem}");
-#endif
-
                 var itemsList = storageItem.Storage.StatesStorage.GetMutuallyExclusiveStatesSetsListDirectly();
-
-#if DEBUG
-                //Log($"itemsList = {itemsList.WriteListToString()}");
-#endif
 
                 result.AddRange(itemsList);
             }
@@ -310,10 +230,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private List<WeightedInheritanceResultItemWithStorageInfo<StateDef>> NGetRawStatesList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
-#if DEBUG
-            //Log($"name = {name}");
-#endif
-
             if (!storagesList.Any())
             {
                 return new List<WeightedInheritanceResultItemWithStorageInfo<StateDef>>();
@@ -323,15 +239,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var storageItem in storagesList)
             {
-#if DEBUG
-                //Log($"storageItem = {storageItem}");
-#endif
-
                 var itemsList = storageItem.Storage.StatesStorage.GetStatesDirectly(name, weightedInheritanceItems);
-
-#if DEBUG
-                //Log($"itemsList = {itemsList.WriteListToString()}");
-#endif
 
                 if (!itemsList.Any())
                 {

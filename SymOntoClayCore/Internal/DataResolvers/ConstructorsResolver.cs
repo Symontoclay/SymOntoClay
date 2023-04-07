@@ -43,96 +43,34 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public Constructor ResolveOnlyOwn(StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"holder = {holder}");
-#endif
-
             var storagesList = GetStoragesList(localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
-#if DEBUG
-            //Log($"storagesList.Count = {storagesList.Count}");
-            //foreach (var tmpStorage in storagesList)
-            //{
-            //    Log($"tmpStorage.Key = {tmpStorage.Key}; tmpStorage.Value.Kind = '{tmpStorage.Value.Kind}'");
-            //}
-#endif
-
             var rawList = GetRawList(0, storagesList, new List<WeightedInheritanceItem>() { InheritanceResolver.GetSelfWeightedInheritanceItem(holder) });
-
-#if DEBUG
-            //Log($"rawList = {rawList.WriteListToString()}");
-#endif
 
             return FilterRawListAndGetItem(rawList, localCodeExecutionContext, options);
         }
 
         public Constructor ResolveOnlyOwn(StrongIdentifierValue holder, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"holder = {holder}");
-            //Log($"namedParameters = {namedParameters.WriteDict_1_ToString()}");
-#endif
-
             var storagesList = GetStoragesList(localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
-#if DEBUG
-            //Log($"storagesList.Count = {storagesList.Count}");
-            //foreach (var tmpStorage in storagesList)
-            //{
-            //    Log($"tmpStorage.Key = {tmpStorage.Key}; tmpStorage.Value.Kind = '{tmpStorage.Value.Kind}'");
-            //}
-#endif
-
             var rawList = GetRawList(namedParameters.Count, storagesList, new List<WeightedInheritanceItem>() { InheritanceResolver.GetSelfWeightedInheritanceItem(holder) });
-
-#if DEBUG
-            //Log($"rawList = {rawList.WriteListToString()}");
-#endif
 
             return FilterRawListAndGetItem(rawList, namedParameters, localCodeExecutionContext, options);
         }
 
         public Constructor ResolveOnlyOwn(StrongIdentifierValue holder, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"holder = {holder}");
-            //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
-#endif
-
             var storagesList = GetStoragesList(localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
-#if DEBUG
-            //Log($"storagesList.Count = {storagesList.Count}");
-            //foreach (var tmpStorage in storagesList)
-            //{
-            //    Log($"tmpStorage.Key = {tmpStorage.Key}; tmpStorage.Value.Kind = '{tmpStorage.Value.Kind}'");
-            //}
-#endif
-
             var rawList = GetRawList(positionedParameters.Count, storagesList, new List<WeightedInheritanceItem>() { InheritanceResolver.GetSelfWeightedInheritanceItem(holder) });
-
-#if DEBUG
-            //Log($"rawList = {rawList.WriteListToString()}");
-#endif
 
             return FilterRawListAndGetItem(rawList, positionedParameters, localCodeExecutionContext, options);
         }
 
         public Constructor ResolveWithSelfAndDirectInheritance(StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"holder = {holder}");
-#endif
-
             var storagesList = GetStoragesList(localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
-
-#if DEBUG
-            //Log($"storagesList.Count = {storagesList.Count}");
-            //foreach (var tmpStorage in storagesList)
-            //{
-            //    Log($"tmpStorage.Key = {tmpStorage.Key}; tmpStorage.Value.Kind = '{tmpStorage.Value.Kind}'");
-            //}
-#endif
 
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = false;
@@ -141,34 +79,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(holder, localCodeExecutionContext, optionsForInheritanceResolver);
 
-#if DEBUG
-            //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
-#endif
-
             var rawList = GetRawList(0, storagesList, weightedInheritanceItems);
-
-#if DEBUG
-            //Log($"rawList = {rawList.WriteListToString()}");
-#endif
 
             return FilterRawListAndGetItem(rawList, localCodeExecutionContext, options);
         }
 
         public Constructor ResolveWithSelfAndDirectInheritance(StrongIdentifierValue holder, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"holder = {holder}");
-#endif
-
             var storagesList = GetStoragesList(localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
-
-#if DEBUG
-            //Log($"storagesList.Count = {storagesList.Count}");
-            //foreach (var tmpStorage in storagesList)
-            //{
-            //    Log($"tmpStorage.Key = {tmpStorage.Key}; tmpStorage.Value.Kind = '{tmpStorage.Value.Kind}'");
-            //}
-#endif
 
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = false;
@@ -177,34 +95,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(holder, localCodeExecutionContext, optionsForInheritanceResolver);
 
-#if DEBUG
-            //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
-#endif
-
             var rawList = GetRawList(namedParameters.Count, storagesList, weightedInheritanceItems);
-
-#if DEBUG
-            //Log($"rawList = {rawList.WriteListToString()}");
-#endif
 
             return FilterRawListAndGetItem(rawList, namedParameters, localCodeExecutionContext, options);
         }
 
         public Constructor ResolveWithSelfAndDirectInheritance(StrongIdentifierValue holder, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"holder = {holder}");
-#endif
-
             var storagesList = GetStoragesList(localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
-
-#if DEBUG
-            //Log($"storagesList.Count = {storagesList.Count}");
-            //foreach (var tmpStorage in storagesList)
-            //{
-            //    Log($"tmpStorage.Key = {tmpStorage.Key}; tmpStorage.Value.Kind = '{tmpStorage.Value.Kind}'");
-            //}
-#endif
 
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = false;
@@ -213,34 +111,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(holder, localCodeExecutionContext, optionsForInheritanceResolver);
 
-#if DEBUG
-            //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
-#endif
-
             var rawList = GetRawList(positionedParameters.Count, storagesList, weightedInheritanceItems);
-
-#if DEBUG
-            //Log($"rawList = {rawList.WriteListToString()}");
-#endif
 
             return FilterRawListAndGetItem(rawList, positionedParameters, localCodeExecutionContext, options);
         }
 
         public List<Constructor> ResolveListWithSelfAndDirectInheritance(StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"holder = {holder}");
-#endif
-
             var storagesList = GetStoragesList(localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
-
-#if DEBUG
-            //Log($"storagesList.Count = {storagesList.Count}");
-            //foreach (var tmpStorage in storagesList)
-            //{
-            //    Log($"tmpStorage.Key = {tmpStorage.Key}; tmpStorage.Value.Kind = '{tmpStorage.Value.Kind}'");
-            //}
-#endif
 
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = false;
@@ -249,15 +127,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(holder, localCodeExecutionContext, optionsForInheritanceResolver);
 
-#if DEBUG
-            //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
-#endif
-
             var rawList = GetRawList(0, storagesList, weightedInheritanceItems);
-
-#if DEBUG
-            //Log($"rawList = {rawList.WriteListToString()}");
-#endif
 
             if (!rawList.Any())
             {
@@ -265,10 +135,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             var filteredList = Filter(rawList);
-
-#if DEBUG
-            //Log($"filteredList = {filteredList.WriteListToString()}");
-#endif
 
             if (!filteredList.Any())
             {
@@ -280,19 +146,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private List<WeightedInheritanceResultItemWithStorageInfo<Constructor>>  GetRawList(int paramsCount, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
-#if DEBUG
-            //Log($"paramsCount = {paramsCount}");
-#endif
-
             var result = new List<WeightedInheritanceResultItemWithStorageInfo<Constructor>>();
 
             foreach (var storageItem in storagesList)
             {
                 var itemsList = storageItem.Storage.ConstructorsStorage.GetConstructorsDirectly(paramsCount, weightedInheritanceItems);
-
-#if DEBUG
-                //Log($"itemsList = {itemsList?.WriteListToString()}");
-#endif
 
                 if (!itemsList.Any())
                 {
@@ -313,34 +171,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public List<Constructor> ResolvePreConstructors(StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"holder = {holder}");
-#endif
-
             var storagesList = GetStoragesList(localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
-
-#if DEBUG
-            //Log($"storagesList.Count = {storagesList.Count}");
-            //foreach (var tmpStorage in storagesList)
-            //{
-            //    Log($"tmpStorage.Key = {tmpStorage.Key}; tmpStorage.Value.Kind = '{tmpStorage.Value.Kind}'");
-            //}
-#endif
 
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
             var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(holder, localCodeExecutionContext, optionsForInheritanceResolver);
 
-#if DEBUG
-            //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
-#endif
-
             var rawList = GetRawPreConstructorsList(storagesList, weightedInheritanceItems);
-
-#if DEBUG
-            //Log($"rawList = {rawList.WriteListToString()}");
-#endif
 
             if (!rawList.Any())
             {
@@ -358,10 +196,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             var filteredList = Filter(rawList);
-
-#if DEBUG
-            //Log($"filteredList = {filteredList.WriteListToString()}");
-#endif
 
             if (!filteredList.Any())
             {
@@ -385,20 +219,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var filteredList = Filter(rawList);
 
-#if DEBUG
-            //Log($"filteredList = {filteredList.WriteListToString()}");
-#endif
-
             if (!filteredList.Any())
             {
                 return null;
             }
 
             filteredList = FilterByTypeOfParameters(filteredList, namedParameters, localCodeExecutionContext, options);
-
-#if DEBUG
-            //Log($"filteredList (2) = {filteredList.WriteListToString()}");
-#endif
 
             if (!filteredList.Any())
             {
@@ -422,20 +248,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var filteredList = Filter(rawList);
 
-#if DEBUG
-            //Log($"filteredList = {filteredList.WriteListToString()}");
-#endif
-
             if (!filteredList.Any())
             {
                 return null;
             }
 
             filteredList = FilterByTypeOfParameters(filteredList, positionedParameters, localCodeExecutionContext, options);
-
-#if DEBUG
-            //Log($"filteredList (2) = {filteredList.WriteListToString()}");
-#endif
 
             if (!filteredList.Any())
             {
@@ -457,10 +275,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             foreach (var storageItem in storagesList)
             {
                 var itemsList = storageItem.Storage.ConstructorsStorage.GetPreConstructorsDirectly(weightedInheritanceItems);
-
-#if DEBUG
-                //Log($"itemsList = {itemsList?.WriteListToString()}");
-#endif
 
                 if (!itemsList.Any())
                 {

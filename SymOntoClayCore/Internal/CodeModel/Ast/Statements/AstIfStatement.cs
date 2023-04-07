@@ -66,7 +66,6 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             result.IfStatements = IfStatements?.Select(p => p.CloneAstStatement(context)).ToList();
             result.ElifStatements = ElifStatements?.Select(p => p.Clone(context)).ToList();
             result.ElseStatements = ElseStatements?.Select(p => p.CloneAstStatement(context)).ToList();
-            //result.EnsureStatements = EnsureStatements?.Select(p => p.CloneAstStatement(context)).ToList();
 
             result.AppendAnnotations(this, context);
 
@@ -110,13 +109,6 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
                 }
             }
 
-            //if (EnsureStatements.IsNullOrEmpty())
-            //{
-            //    foreach (var statement in EnsureStatements)
-            //    {
-            //        statement.CheckDirty(options);
-            //    }
-            //}
 
             base.CalculateLongHashCodes(options);
         }
@@ -132,7 +124,6 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             sb.PrintObjListProp(n, nameof(IfStatements), IfStatements);
             sb.PrintObjListProp(n, nameof(ElifStatements), ElifStatements);
             sb.PrintObjListProp(n, nameof(ElseStatements), ElseStatements);
-            //sb.PrintObjListProp(n, nameof(EnsureStatements), EnsureStatements);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -149,7 +140,6 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             sb.PrintShortObjListProp(n, nameof(IfStatements), IfStatements);
             sb.PrintShortObjListProp(n, nameof(ElifStatements), ElifStatements);
             sb.PrintShortObjListProp(n, nameof(ElseStatements), ElseStatements);
-            //sb.PrintShortObjListProp(n, nameof(EnsureStatements), EnsureStatements);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -166,7 +156,6 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             sb.PrintBriefObjListProp(n, nameof(IfStatements), IfStatements);
             sb.PrintBriefObjListProp(n, nameof(ElifStatements), ElifStatements);
             sb.PrintBriefObjListProp(n, nameof(ElseStatements), ElseStatements);
-            //sb.PrintBriefObjListProp(n, nameof(EnsureStatements), EnsureStatements);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

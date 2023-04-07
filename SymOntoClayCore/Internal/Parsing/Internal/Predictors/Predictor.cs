@@ -31,10 +31,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.Predictors
         public Predictor(Token currToken, InternalParserContext context, KindOfSpecialPrediction? kindOfSpecialPrediction = null)
             : base(context.Logger)
         {
-#if DEBUG
-            //Log($"currToken = {currToken}");
-#endif
-
             if (kindOfSpecialPrediction == null)
             {
                 switch (currToken.TokenKind)

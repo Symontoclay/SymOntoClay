@@ -70,11 +70,6 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
         {
             lock(_lockObj)
             {
-#if DEBUG
-                //Log($"varName = {varName}");
-                //Log($"value = {value}");
-#endif
-
                 _systemVariables[varName] = value;
             }
         }
@@ -84,10 +79,6 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"varName = {varName}");
-#endif
-
                 if (_realStorageContext.Disabled)
                 {
                     return null;
@@ -113,10 +104,6 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
         private void NAppendVar(Var varItem)
         {
-#if DEBUG
-            //Log($"varItem = {varItem}; GetHashCode() = {GetHashCode()}");
-#endif
-
             if(_allVariablesList.Contains(varItem))
             {
                 return;
@@ -183,10 +170,6 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"name = {name}");
-#endif
-
                 if (_realStorageContext.Disabled)
                 {
                     return _emptyVarsList;
@@ -198,17 +181,9 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
                 {
                     var targetHolder = weightedInheritanceItem.SuperName;
 
-#if DEBUG
-                    //Log($"targetHolder = {targetHolder}");
-#endif
-
                     if(_variablesDict.ContainsKey(targetHolder))
                     {
                         var targetDict = _variablesDict[targetHolder];
-
-#if DEBUG
-                        //Log($"targetDict.Count = {targetDict.Count}");
-#endif
 
                         if (targetDict.ContainsKey(name))
                         {
@@ -257,11 +232,6 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"varName = {varName}");
-                //Log($"value = {value}");
-#endif
-
                 if (_localVariablesDict.ContainsKey(varName))
                 {
                     _localVariablesDict[varName].Value = value;
@@ -281,18 +251,11 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
         private void VarItem_OnChanged(StrongIdentifierValue name)
         {
-#if DEBUG
-            //Log($"name = {name}");
-#endif
             EmitOnChanged(name);
         }
 
         protected void EmitOnChanged(StrongIdentifierValue varName)
         {
-#if DEBUG
-            //Log($"varName = {varName}");
-#endif
-
             Task.Run(() => {
                 OnChanged?.Invoke();
             });
@@ -304,10 +267,6 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
         private void VarStorage_OnChangedWithKeys(StrongIdentifierValue varName)
         {
-#if DEBUG
-            //Log($"varName = {varName}");
-#endif
-
             EmitOnChanged(varName);
         }
 

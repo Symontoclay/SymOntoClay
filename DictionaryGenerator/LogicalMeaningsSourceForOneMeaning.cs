@@ -39,15 +39,7 @@ namespace DictionaryGenerator
             var fileName = fileInfo.Name;
             var extension = fileInfo.Extension;
 
-#if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info($"LogicalMeaningsSourceForOneMeaning fileName = {fileName}");
-#endif
-
             fileName = fileName.Replace(extension, string.Empty);
-
-#if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info($"LogicalMeaningsSourceForOneMeaning NEXT fileName = {fileName}");
-#endif
 
             LogicalMeaning = fileName;
 

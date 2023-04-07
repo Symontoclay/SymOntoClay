@@ -47,48 +47,24 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStoraging
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"action = {action}");
-#endif
-
                 AnnotatedItemHelper.CheckAndFillUpHolder(action, _realStorageContext.MainStorageContext.CommonNamesStorage);
 
                 action.CheckDirty();
 
                 var holder = action.Holder;
 
-#if DEBUG
-                //Log($"holder = {holder}");
-#endif
-
                 var namesList = action.NamesList;
-
-#if DEBUG
-                //Log($"namesList = {namesList.WriteListToString()}");
-#endif
 
                 var paramsCountDict = GetParamsCountDict(action);
 
                 var paramsCountList = paramsCountDict.Keys.ToList();
 
-#if DEBUG
-                //Log($"paramsCountList = {paramsCountList.WritePODListToString()}");
-#endif
-
                 foreach(var name in namesList)
                 {
-#if DEBUG
-                    //Log($"name = {name}");
-#endif
-
                     var targetDict = GetDictByNames(holder, name);
 
                     foreach (var count in paramsCountList)
                     {
-#if DEBUG
-                        //Log($"count = {count}");
-#endif
-
                         var operatorsList = paramsCountDict[count];
 
                         List<ActionPtr> targetList = null;
@@ -105,10 +81,6 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStoraging
 
                         foreach(var op in operatorsList)
                         {
-#if DEBUG
-                            //Log($"op = {op}");
-#endif
-
                             if (!targetList.Any(p => p.Action == action && p.Operator == op))
                             {
                                 targetList.Add(new ActionPtr(action, op));
@@ -126,11 +98,6 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStoraging
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"name = {name}");
-                //Log($"paramsCount = {paramsCount}");
-#endif
-
                 if (_realStorageContext.Disabled)
                 {
                     return _emptyActionsList;
@@ -141,10 +108,6 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStoraging
                 foreach (var weightedInheritanceItem in weightedInheritanceItems)
                 {
                     var targetHolder = weightedInheritanceItem.SuperName;
-
-#if DEBUG
-                    //Log($"targetHolder = {targetHolder}");
-#endif
 
                     if (_actionsDict.ContainsKey(targetHolder))
                     {
@@ -177,15 +140,7 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStoraging
 
             foreach(var op in action.Operators)
             {
-#if DEBUG
-                //Log($"op = {op}");
-#endif
-
                 var paramsCountList = GetParamsCountList(op);
-
-#if DEBUG
-                //Log($"paramsCountList = {paramsCountList.WritePODListToString()}");
-#endif
 
                 foreach(var count in paramsCountList)
                 {
@@ -218,10 +173,6 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStoraging
             var result = new List<int>();
 
             var argumentsList = @operator.Arguments;
-
-#if DEBUG
-            //Log($"argumentsList.Count = {argumentsList.Count}");
-#endif
 
             if (!argumentsList.Any())
             {

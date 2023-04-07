@@ -55,16 +55,6 @@ namespace SymOntoClay.Core.Internal.Instances
             _hasNames = !_namesList.IsNullOrEmpty();
             _dateTimeProvider = _context.DateTimeProvider;
 
-#if DEBUG
-            //_trigger.DoubleConditionsStrategy = DoubleConditionsStrategy.PriorReset;
-            //_trigger.DoubleConditionsStrategy = DoubleConditionsStrategy.Equal;
-            //Log($"_trigger = {_trigger}");
-            //Log($"_trigger.SetCondition = {_trigger.SetCondition?.GetHumanizeDbgString()}");
-            //Log($"_trigger.ResetCondition = {_trigger.ResetCondition?.GetHumanizeDbgString()}");
-            //Log($"_trigger.DoubleConditionsStrategy = {_trigger.DoubleConditionsStrategy}");
-            //Log($"_dateTimeProvider.CurrentTiks = {_dateTimeProvider.CurrentTiks}");
-#endif
-
             var localCodeExecutionContext = new LocalCodeExecutionContext(parentCodeExecutionContext);
             var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);
             _storage = new LocalStorage(localStorageSettings);
@@ -168,25 +158,14 @@ namespace SymOntoClay.Core.Internal.Instances
 
         public void Init()
         {
-#if DEBUG
-            //Log("Begin");
-#endif
-
             Observer_OnChanged();
 
-#if DEBUG
-            //Log("End");
-#endif
         }
 
         private void Observer_OnChanged()
         {
             Task.Run(() =>
             {
-#if DEBUG
-                //Log("Begin");
-#endif
-
                 try
                 {
                     lock (_lockObj)
@@ -225,22 +204,10 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
             });
 
-#if DEBUG
-            //Log("End");
-#endif
         }
 
         private void DoSearch()
         {
-#if DEBUG
-            //Log("Begin");
-#endif
-
-#if DEBUG
-            //Log($"_dateTimeProvider.CurrentTiks = {_dateTimeProvider.CurrentTiks}");
-            //Log($"_isOn = {_isOn}");
-#endif
-
             var oldIsOn = _isOn;
 
             if (_hasResetConditions)
@@ -267,10 +234,6 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 DoSearchWithNoResetCondition();
             }
-
-#if DEBUG
-            //Log($"_isOn (after) = {_isOn}");
-#endif
 
             if(_isOn)
             {
@@ -306,24 +269,11 @@ namespace SymOntoClay.Core.Internal.Instances
                 });
             }
 
-#if DEBUG
-            //Log("End");
-#endif
         }
 
         private void DoSearchWithEqualConditions()
         {
-#if DEBUG
-            //Log("Begin");
-#endif
-
             var isSetSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
-
-#if DEBUG
-            //Log($"isSetSuccsess = {isSetSuccsess}");
-            //Log($"setVarList.Count = {setVarList.Count}");
-            //Log($"_setFoundKeys.Count = {_setFoundKeys.Count}");
-#endif
 
             if (isSetSuccsess)
             {
@@ -338,12 +288,6 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
             var isResetSuccsess = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList);
-
-#if DEBUG
-            //Log($"isResetSuccsess = {isResetSuccsess}");
-            //Log($"resetVarList.Count = {resetVarList.Count}");
-            //Log($"_resetFoundKeys.Count = {_resetFoundKeys.Count}");
-#endif
 
             if (isResetSuccsess)
             {
@@ -364,24 +308,11 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
             }
 
-#if DEBUG
-            //Log("End");
-#endif
         }
 
         private void DoSearchWithPriorSetCondition()
         {
-#if DEBUG
-            //Log("Begin");
-#endif
-
             var isSetSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
-
-#if DEBUG
-            //Log($"isSetSuccsess = {isSetSuccsess}");
-            //Log($"setVarList.Count = {setVarList.Count}");
-            //Log($"_setFoundKeys.Count = {_setFoundKeys.Count}");
-#endif
 
             if (isSetSuccsess)
             {
@@ -399,24 +330,11 @@ namespace SymOntoClay.Core.Internal.Instances
                 RunResetCondition();
             }
 
-#if DEBUG
-            //Log("End");
-#endif
         }
 
         private void DoSearchWithPriorResetCondition()
         {
-#if DEBUG
-            //Log("Begin");
-#endif
-
             var isResetSuccsess = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList);
-
-#if DEBUG
-            //Log($"isResetSuccsess = {isResetSuccsess}");
-            //Log($"resetVarList.Count = {resetVarList.Count}");
-            //Log($"_resetFoundKeys.Count = {_resetFoundKeys.Count}");
-#endif
 
             if(isResetSuccsess)
             {
@@ -438,12 +356,6 @@ namespace SymOntoClay.Core.Internal.Instances
                 {
                     var isSetSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
 
-#if DEBUG
-                    //Log($"isSetSuccsess = {isSetSuccsess}");
-                    //Log($"setVarList.Count = {setVarList.Count}");
-                    //Log($"_setFoundKeys.Count = {_setFoundKeys.Count}");
-#endif
-
                     if(isSetSuccsess)
                     {
                         if (setVarList.Any())
@@ -458,29 +370,12 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
             }
 
-#if DEBUG
-            //Log("End");
-#endif
         }
 
         private void RunResetCondition()
         {
-#if DEBUG
-            //Log("Begin");
-#endif
-
-            //if (!_isOn)
-            //{
-            //    return;
-            //}
 
             var isResetSuccsess = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList);
-
-#if DEBUG
-            //Log($"isResetSuccsess = {isResetSuccsess}");
-            //Log($"resetVarList.Count = {resetVarList.Count}");
-            //Log($"_resetFoundKeys.Count = {_resetFoundKeys.Count}");
-#endif
 
             if (isResetSuccsess)
             {
@@ -497,23 +392,11 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
             }
 
-#if DEBUG
-            //Log("End");
-#endif
         }
 
         private void DoSearchWithNoResetCondition()
         {
-#if DEBUG
-            //Log("Begin");
-#endif
-
             var isSetSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
-
-#if DEBUG
-            //Log($"isSetSuccsess = {isSetSuccsess}");
-            //Log($"setVarList.Count = {setVarList.Count}");
-#endif
 
             if (isSetSuccsess)
             {
@@ -528,10 +411,6 @@ namespace SymOntoClay.Core.Internal.Instances
             }
             else
             {
-#if DEBUG
-                //Log($"_hasResetHandler = {_hasResetHandler}");
-#endif
-
                 if (_hasResetHandler)
                 {
                     ProcessResetResultWithNoItems();
@@ -540,18 +419,10 @@ namespace SymOntoClay.Core.Internal.Instances
                 _isOn = false;
             }
 
-#if DEBUG
-            //Log("End");
-#endif
         }
 
         private void ProcessSetResultWithNoItems()
         {
-#if DEBUG
-            //Log("Begin");
-            //Log($"_isOn = {_isOn}");
-#endif
-
             if (_isOn)
             {
                 return;
@@ -572,17 +443,10 @@ namespace SymOntoClay.Core.Internal.Instances
 
             RunSetHandler(localCodeExecutionContext);
 
-#if DEBUG
-            //Log("End");
-#endif
         }
 
         private void ProcessSetResultWithItems(List<List<Var>> varList)
         {
-#if DEBUG
-            //Log("Begin");
-#endif
-
             _isOn = true;
 
             if (_hasRuleInstancesList)
@@ -608,17 +472,10 @@ namespace SymOntoClay.Core.Internal.Instances
                 RunSetHandler(localCodeExecutionContext);
             }
 
-#if DEBUG
-            //Log("End");
-#endif
         }
 
         private void ProcessResetResultWithNoItems()
         {
-#if DEBUG
-            //Log("Begin");
-#endif
-
             if(!_isOn)
             {
                 return;
@@ -639,17 +496,10 @@ namespace SymOntoClay.Core.Internal.Instances
 
             RunResetHandler(localCodeExecutionContext);
 
-#if DEBUG
-            //Log("End");
-#endif
         }
 
         private void ProcessResetResultWithItems(List<List<Var>> varList)
         {
-#if DEBUG
-            //Log("Begin");
-#endif
-
             _isOn = false;
 
             if (_hasRuleInstancesList)
@@ -675,19 +525,10 @@ namespace SymOntoClay.Core.Internal.Instances
                 RunResetHandler(localCodeExecutionContext);
             }
 
-#if DEBUG
-            //Log("End");
-#endif
         }
 
         private void RunSetHandler(ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"_trigger = {_trigger}");
-            //Log($"_trigger.CompiledFunctionBody = {_trigger.CompiledFunctionBody.ToDbgString()}");
-            //Log($"_trigger.Priority = {_trigger.Priority}");
-#endif
-
             var processInitialInfo = new ProcessInitialInfo();
             processInitialInfo.CompiledFunctionBody = _trigger.SetCompiledFunctionBody;
             processInitialInfo.LocalContext = localCodeExecutionContext;
@@ -695,30 +536,17 @@ namespace SymOntoClay.Core.Internal.Instances
             processInitialInfo.Instance = _parent;
             processInitialInfo.ExecutionCoordinator = _executionCoordinator;
 
-#if DEBUG
-            //Log($"processInitialInfo = {processInitialInfo}");
-#endif
-
             var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo);
         }
 
         private void RunResetHandler(ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"_trigger = {_trigger}");
-            //Log($"_trigger.CompiledFunctionBody = {_trigger.CompiledFunctionBody.ToDbgString()}");
-#endif
-
             var processInitialInfo = new ProcessInitialInfo();
             processInitialInfo.CompiledFunctionBody = _trigger.ResetCompiledFunctionBody;
             processInitialInfo.LocalContext = localCodeExecutionContext;
             processInitialInfo.Metadata = _trigger;
             processInitialInfo.Instance = _parent;
             processInitialInfo.ExecutionCoordinator = _executionCoordinator;
-
-#if DEBUG
-            //Log($"processInitialInfo = {processInitialInfo}");
-#endif
 
             var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo);
         }

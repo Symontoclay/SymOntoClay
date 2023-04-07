@@ -157,10 +157,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 _settingsDict = new Dictionary<StrongIdentifierValue, Value>();
 
-#if DEBUG
-                //_gbcLogger.Info($"source = {source}");
-#endif
-
                 foreach (var annotation in Annotations)
                 {
                     var settingsDict = annotation.SettingsDict;

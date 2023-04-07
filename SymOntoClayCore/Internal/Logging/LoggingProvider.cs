@@ -40,11 +40,6 @@ namespace SymOntoClay.Core.Internal.Logging
             _logicalSearchExplainDumpDir = settings.LogicalSearchExplainDumpDir;
             EnableAddingRemovingFactLoggingInStorages = settings.EnableAddingRemovingFactLoggingInStorages;
 
-#if DEBUG
-            //Log($"_id = {_id}");
-            //Log($"_logicalSearchExplainDumpDir = {_logicalSearchExplainDumpDir}");
-            //Log($"KindOfLogicalSearchExplain = {KindOfLogicalSearchExplain}");
-#endif
         }
 
         private readonly string _logicalSearchExplainDumpDir;
@@ -61,13 +56,8 @@ namespace SymOntoClay.Core.Internal.Logging
         {
             var fileName = Path.Combine(_logicalSearchExplainDumpDir, $"{_id}_query_{Guid.NewGuid().ToString("D").Substring(0, 8)}.dot");
 
-#if DEBUG
-            //Log($"fileName = {fileName}");
-#endif
-
             var dotStr = DebugHelperForLogicalSearchExplainNode.ToDot(explainNode);
 
-            //Log($"dotStr = '{dotStr}'");
 
             File.WriteAllText(fileName, dotStr);
 

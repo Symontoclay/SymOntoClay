@@ -42,9 +42,6 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 
             _varsResolver = engineContext.DataResolversFactory.GetVarsResolver();
 
-#if DEBUG
-            //Log($"_varName = {_varName}");
-#endif
         }
 
         private readonly StrongIdentifierValue _varName;

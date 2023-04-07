@@ -28,9 +28,6 @@ using System.Text;
 
 namespace SymOntoClay.NLP.Internal.PhraseStructure
 {
-    //https://theclassicjournal.uga.edu/index.php/2020/10/29/under-the-surface/
-    //CP
-    //It is "she is a teacher" in sentence "I know she is a teacher".
     public class ComplementizerPhrase : BaseSentenceItem
     {
         /// <inheritdoc/>
@@ -109,7 +106,6 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
             sb.PrintObjProp(n, nameof(C), C);
             sb.PrintObjProp(n, nameof(S), S);
 
-            //sb.PrintObjProp(n, nameof(), );
 
             sb.Append(base.PropertiesToString(n));
 

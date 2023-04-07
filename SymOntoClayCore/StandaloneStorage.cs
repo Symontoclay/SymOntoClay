@@ -38,7 +38,6 @@ namespace SymOntoClay.Core
         public StandaloneStorage(StandaloneStorageSettings settings)
             : base(settings.Logger)
         {
-            //Log($"settings = {settings}");
 
             _additionalSourceCodePaths = settings.AdditionalSourceCodePaths;
 
@@ -127,10 +126,6 @@ namespace SymOntoClay.Core
         /// <inheritdoc/>
         public void LoadFromSourceCode()
         {
-#if DEBUG
-            //Log("Begin");
-#endif
-
             lock (_stateLockObj)
             {
                 if (_state == ComponentState.Disposed)
@@ -150,9 +145,6 @@ namespace SymOntoClay.Core
                 _publicFactsStorage = _storageComponent.PublicFactsStorage;
                 _worldPublicFactsStorage = _storageComponent.WorldPublicFactsStorage;
 
-#if DEBUG
-                //Log("End");
-#endif
             }
         }
 
@@ -167,7 +159,6 @@ namespace SymOntoClay.Core
                 }
 
 #if IMAGINE_WORKING
-                //Log("Do");
 #else
                 throw new NotImplementedException();
 #endif
@@ -185,7 +176,6 @@ namespace SymOntoClay.Core
                 }
 
 #if IMAGINE_WORKING
-                //Log("Do");
 #else
                 throw new NotImplementedException();
 #endif

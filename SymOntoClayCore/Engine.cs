@@ -33,10 +33,6 @@ namespace SymOntoClay.Core
         public Engine(EngineSettings settings)
             : base(settings.Logger)
         {
-#if DEBUG
-            //Log($"settings = {settings}");
-#endif
-
             _context = EngineContextHelper.CreateAndInitContext(settings);
         }
 
@@ -82,7 +78,6 @@ namespace SymOntoClay.Core
                 }
 
 #if IMAGINE_WORKING
-                //Log("Do");
 #else
                 throw new NotImplementedException();
 #endif
@@ -100,7 +95,6 @@ namespace SymOntoClay.Core
                 }
 
 #if IMAGINE_WORKING
-                //Log("Do");
 #else
                 throw new NotImplementedException();
 #endif
@@ -118,7 +112,6 @@ namespace SymOntoClay.Core
                 }
 
 #if IMAGINE_WORKING
-                //Log("Do");
 #else
                 throw new NotImplementedException();
 #endif
@@ -138,7 +131,6 @@ namespace SymOntoClay.Core
                     }
 
 #if IMAGINE_WORKING
-                    //Log("Do");
 
                     return true;
 #else

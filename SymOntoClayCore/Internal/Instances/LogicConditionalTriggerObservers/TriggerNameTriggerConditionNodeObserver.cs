@@ -41,10 +41,6 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
         {
             _triggerName = condition.Name;
             
-#if DEBUG
-            //Log($"_triggerName = {_triggerName}");
-#endif
-
             _storage = storage;
             _synonymsResolver = engineContext.DataResolversFactory.GetSynonymsResolver();
 
@@ -60,12 +56,6 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
         private void TriggersStorage_OnNamedTriggerInstanceChangedWithKeys(IList<StrongIdentifierValue> namesList)
         {
-#if DEBUG
-            //Log($"namesList = {namesList.WriteListToString()}");
-            //Log($"_triggerName = {_triggerName}");
-            //Log($"synonymsList = {_synonymsList.WriteListToString()}");
-#endif
-
             if (namesList.Contains(_triggerName))
             {
                 EmitOnChanged();
@@ -74,10 +64,6 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
             {
                 if(_synonymsList?.Intersect(namesList).Any() ?? false)
                 {
-#if DEBUG
-                    //Log("_synonymsList?.Intersect(namesList).Any() ?? false");
-#endif
-
                     EmitOnChanged();
                 }                
             }

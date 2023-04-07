@@ -55,11 +55,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             if (Arguments.IsNullOrEmpty())
             {
-                //_argumentsDict = new Dictionary<StrongIdentifierValue, FunctionArgumentInfo>();
             }
             else
             {
-                //_argumentsDict = Arguments.ToDictionary(p => p.Name, p => p);
 
                 foreach (var argument in Arguments)
                 {
@@ -128,8 +126,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintObjListProp(n, nameof(Arguments), Arguments);
 
-            //sb.PrintObjListProp(n, nameof(Statements), Statements);
-            //sb.PrintObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -143,8 +139,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintShortObjListProp(n, nameof(Arguments), Arguments);
 
-            //sb.PrintShortObjListProp(n, nameof(Statements), Statements);
-            //sb.PrintShortObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -158,8 +152,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintBriefObjListProp(n, nameof(Arguments), Arguments);
 
-            //sb.PrintBriefObjListProp(n, nameof(Statements), Statements);
-            //sb.PrintBriefObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

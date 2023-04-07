@@ -46,10 +46,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 
         public ResultOfNode Run()
         {
-#if DEBUG
-            //_logger.Log($"_value = {_value.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
-#endif
-
             var outerConceptualGraph = new InternalConceptualGraph();
 
             if (_context.ConceptualGraph != null)
@@ -71,15 +67,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
                 var factNode = new RuleInstanceNode(_value.LogicalQuery, context);
                 var factNodeResult = factNode.Run();
 
-#if DEBUG
-                //_logger.Log($"factNodeResult = {factNodeResult}");
-#endif
             }
-
-#if DEBUG
-            //var dotStr = DotConverter.ConvertToString(context.ConceptualGraph);
-            //_logger.Log($"dotStr = {dotStr}");
-#endif
 
             var result = new ResultOfNode() { KindOfResult = KindOfResultOfNode.ProcessConditionalEntity };
             result.CGNode = outerConceptualGraph;

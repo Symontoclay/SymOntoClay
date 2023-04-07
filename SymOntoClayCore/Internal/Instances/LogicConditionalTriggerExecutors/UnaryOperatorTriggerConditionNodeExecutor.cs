@@ -38,17 +38,8 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         public UnaryOperatorTriggerConditionNodeExecutor(IEngineContext engineContext, ILocalCodeExecutionContext localCodeExecutionContext, TriggerConditionNode condition)
             : base(engineContext.Logger)
         {
-#if DEBUG
-            //Log($"condition = {condition}");
-#endif
-
             _kindOfOperator = condition.KindOfOperator;
             _isNamedParameters = condition.IsNamedParameters;
-
-#if DEBUG
-            //Log($"_kindOfOperator = {_kindOfOperator}");
-            //Log($"_isNamedParameters = {_isNamedParameters}");
-#endif
 
             if(_kindOfOperator == KindOfOperator.CallFunction)
             {
@@ -82,10 +73,6 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         /// <inheritdoc/>
         public override Value Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
         {
-#if DEBUG
-            //Log($"_kindOfOperator = {_kindOfOperator}");
-#endif
-
             if(_kindOfOperator == KindOfOperator.CallFunction)
             {
                 return RunCallFunction(varList, processedRuleInstance);
@@ -98,10 +85,6 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         {
             var caller = Left.Run(varList, processedRuleInstance);
 
-#if DEBUG
-            //Log($"caller = {caller}");
-#endif
-
             var paramsList = new List<Value>();
 
             if(!ParamsList.IsNullOrEmpty())
@@ -112,10 +95,6 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
                 }
             }
 
-#if DEBUG
-            //Log($"paramsList = {paramsList.WriteListToString()}");
-#endif
-
             return _codeExecutor.CallFunctionSync(caller, _kindOfparameters, paramsList, _localCodeExecutionContext);
         }
 
@@ -124,10 +103,6 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
             var paramsList = new List<Value>();
             paramsList.Add(Left.Run(varList, processedRuleInstance));
             paramsList.Add(NullValue.Instance);
-
-#if DEBUG
-            //Log($"paramsList = {paramsList.WriteListToString()}");
-#endif
 
             return _codeExecutor.CallOperator(_kindOfOperator, paramsList, _localCodeExecutionContext);
         }

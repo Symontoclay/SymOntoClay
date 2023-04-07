@@ -65,10 +65,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public NumberValue Resolve(Value value, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"value = {value}");
-#endif
-
             if(_numberValueLinearResolver.CanBeResolved(value))
             {
                 return _numberValueLinearResolver.Resolve(value, localCodeExecutionContext, options);
@@ -99,16 +95,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public NumberValue Resolve(StrongIdentifierValue name, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"name = {name}");
-            //Log($"reason = {reason}");
-#endif
-
             var targetItem = GetTargetFuzzyLogicNonNumericValue(name, null, reason, localCodeExecutionContext, options);
-
-#if DEBUG
-            //Log($"targetItem = {targetItem}");
-#endif
 
             if (targetItem == null)
             {
@@ -116,10 +103,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             var fuzzyValue = targetItem.Handler.Defuzzificate();
-
-#if DEBUG
-            //Log($"fuzzyValue = {fuzzyValue}");
-#endif
 
             return fuzzyValue;
         }
@@ -136,15 +119,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public NumberValue Resolve(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"fuzzyLogicNonNumericSequence = {fuzzyLogicNonNumericSequence}");
-#endif
-
             var targetItem = GetTargetFuzzyLogicNonNumericValue(fuzzyLogicNonNumericSequence.NonNumericValue, null, reason, localCodeExecutionContext, options);
-
-#if DEBUG
-            //Log($"targetItem = {targetItem}");
-#endif
 
             if (targetItem == null)
             {
@@ -153,15 +128,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var operatorsList = GetFuzzyLogicOperators(targetItem.Parent, fuzzyLogicNonNumericSequence.Operators).Select(p => p.Handler);
 
-#if DEBUG
-            //Log($"operatorsList.Count = {operatorsList.Count}");
-#endif
-
             var fuzzyValue = targetItem.Handler.Defuzzificate(operatorsList).SystemValue.Value;
-
-#if DEBUG
-            //Log($"fuzzyValue = {fuzzyValue}");
-#endif
 
             return new NumberValue(fuzzyValue);
         }
@@ -178,11 +145,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public bool Equals(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"value1 = {value1}");
-            //Log($"value2 = {value2}");
-#endif
-
             if(value1 == null && value2 == null)
             {
                 return true;
@@ -213,10 +175,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 var value2NumberValue = Resolve(value2StrongIdentifierValue, reason, localCodeExecutionContext, options);
 
-#if DEBUG
-                //Log($"value2NumberValue = {value2NumberValue}");
-#endif
-
                 return Equals(value1StrongIdentifierValue, value2NumberValue, reason, localCodeExecutionContext);
             }
 
@@ -231,10 +189,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
                 var value2NumberValue = Resolve(value2FuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext, options);
-
-#if DEBUG
-                //Log($"value2NumberValue = {value2NumberValue}");
-#endif
 
                 return Equals(value1FuzzyLogicNonNumericSequenceValue, value2NumberValue, reason, localCodeExecutionContext);
             }
@@ -257,11 +211,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         numberValue = value1;
                     }
 
-#if DEBUG
-                    //Log($"conceptValue = {conceptValue}");
-                    //Log($"numberValue = {numberValue}");
-#endif
-
                     return Equals(conceptValue, _numberValueLinearResolver.Resolve(numberValue, localCodeExecutionContext), reason, localCodeExecutionContext);
                 }
 
@@ -280,11 +229,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         fuzzyLogicNonNumericSequence = value2.AsFuzzyLogicNonNumericSequenceValue;
                         numberValue = value1;
                     }
-
-#if DEBUG
-                    //Log($"fuzzyLogicNonNumericSequence = {fuzzyLogicNonNumericSequence}");
-                    //Log($"numberValue = {numberValue}");
-#endif
 
                     return Equals(fuzzyLogicNonNumericSequence, _numberValueLinearResolver.Resolve(numberValue, localCodeExecutionContext), reason, localCodeExecutionContext);
                 }
@@ -308,16 +252,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     fuzzyLogicNonNumericSequence = value1.AsFuzzyLogicNonNumericSequenceValue;
                 }
 
-#if DEBUG
-                //Log($"fuzzyLogicNonNumericSequence = {fuzzyLogicNonNumericSequence}");
-                //Log($"conceptValue = {conceptValue}");
-#endif
-
                 var conceptNumberValue = Resolve(conceptValue, reason, localCodeExecutionContext, options);
-
-#if DEBUG
-                //Log($"conceptNumberValue = {conceptNumberValue}");
-#endif
 
                 return Equals(fuzzyLogicNonNumericSequence, conceptNumberValue, reason, localCodeExecutionContext);
             }
@@ -337,16 +272,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public bool Equals(StrongIdentifierValue name, NumberValue value, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"name = {name}");
-            //Log($"value = {value}");
-#endif
-
             var targetItem = GetTargetFuzzyLogicNonNumericValue(name, value, reason, localCodeExecutionContext, options);
-
-#if DEBUG
-            //Log($"targetItem = {targetItem}");
-#endif
 
             if(targetItem == null)
             {
@@ -354,10 +280,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             var fuzzyValue = targetItem.Handler.SystemCall(value);
-
-#if DEBUG
-            //Log($"fuzzyValue = {fuzzyValue}");
-#endif
 
             return FuzzyNumericValueToSystemBool(fuzzyValue);
         }
@@ -374,16 +296,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public bool Equals(FuzzyLogicNonNumericSequenceValue fuzzyLogicNonNumericSequence, NumberValue value, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"fuzzyLogicNonNumericSequence = {fuzzyLogicNonNumericSequence}");
-            //Log($"value = {value}");
-#endif
-
             var targetItem = GetTargetFuzzyLogicNonNumericValue(fuzzyLogicNonNumericSequence.NonNumericValue, value, reason, localCodeExecutionContext, options);
-
-#if DEBUG
-            //Log($"targetItem = {targetItem}");
-#endif
 
             if (targetItem == null)
             {
@@ -392,28 +305,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var fuzzyValue = targetItem.Handler.SystemCall(value);
 
-#if DEBUG
-            //Log($"fuzzyValue = {fuzzyValue}");
-#endif
-
             var operatorsList = GetFuzzyLogicOperators(targetItem.Parent, fuzzyLogicNonNumericSequence.Operators);
-
-#if DEBUG
-            //Log($"operatorsList.Count = {operatorsList.Count}");
-#endif
 
             foreach (var op in operatorsList)
             {
-#if DEBUG
-                //Log($"op = {op}");
-#endif
-
                 fuzzyValue = op.Handler.SystemCall(fuzzyValue);
             }
-
-#if DEBUG
-            //Log($"fuzzyValue (after) = {fuzzyValue}");
-#endif
 
             return FuzzyNumericValueToSystemBool(fuzzyValue);
         }
@@ -430,11 +327,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public bool More(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"value1 = {value1}");
-            //Log($"value2 = {value2}");
-#endif
-
             if (value1 == null && value2 == null)
             {
                 return false;
@@ -452,18 +344,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var leftNumberValue = numberValueLinearResolver.Resolve(value1, localCodeExecutionContext);
                 var rightNumberValue = numberValueLinearResolver.Resolve(value2, localCodeExecutionContext);
 
-#if DEBUG
-                //Log($"leftNumberValue = {leftNumberValue}");
-                //Log($"rightNumberValue = {rightNumberValue}");
-#endif
-
                 var leftSystemNullaleValue = leftNumberValue.SystemValue;
                 var rightSystemNullaleValue = rightNumberValue.SystemValue;
-
-#if DEBUG
-                //Log($"leftSystemNullaleValue = {leftSystemNullaleValue}");
-                //Log($"rightSystemNullaleValue = {rightSystemNullaleValue}");
-#endif
 
                 if (leftSystemNullaleValue.HasValue && rightSystemNullaleValue.HasValue)
                 {
@@ -492,10 +374,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 var value2NumberValue = Resolve(value2StrongIdentifierValue, reason, localCodeExecutionContext, options);
 
-#if DEBUG
-                //Log($"value2NumberValue = {value2NumberValue}");
-#endif
-
                 return More(value1StrongIdentifierValue, value2NumberValue, reason, localCodeExecutionContext);
             }
 
@@ -511,10 +389,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 var value2NumberValue = Resolve(value2FuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext, options);
 
-#if DEBUG
-                //Log($"value2NumberValue = {value2NumberValue}");
-#endif
-
                 return More(value1FuzzyLogicNonNumericSequenceValue, value2NumberValue, reason, localCodeExecutionContext);
             }
 
@@ -524,10 +398,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var value2FuzzyLogicNonNumericSequenceValue = value2.AsFuzzyLogicNonNumericSequenceValue;
 
                 var value2NumberValue = Resolve(value2FuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext, options);
-
-#if DEBUG
-                //Log($"value2NumberValue = {value2NumberValue}");
-#endif
 
                 return More(value1StrongIdentifierValue, value2NumberValue, reason, localCodeExecutionContext);
             }
@@ -539,20 +409,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 var value2NumberValue = Resolve(value2StrongIdentifierValue, reason, localCodeExecutionContext, options);
 
-#if DEBUG
-                //Log($"value2NumberValue = {value2NumberValue}");
-#endif
-
                 return More(value1FuzzyLogicNonNumericSequenceValue, value2NumberValue, reason, localCodeExecutionContext);
             }
 
             if (numberValueLinearResolver.CanBeResolved(value1))
             {
                 var leftNumberValue = numberValueLinearResolver.Resolve(value1, localCodeExecutionContext);
-
-#if DEBUG
-                //Log($"leftNumberValue = {leftNumberValue}");
-#endif
 
                 if (value2.IsStrongIdentifierValue)
                 {
@@ -574,10 +436,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             if(numberValueLinearResolver.CanBeResolved(value2))
             {
                 var rightNumberValue = numberValueLinearResolver.Resolve(value2, localCodeExecutionContext);
-
-#if DEBUG
-                //Log($"rightNumberValue = {rightNumberValue}");
-#endif
 
                 if(value1.IsStrongIdentifierValue)
                 {
@@ -613,9 +471,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var eqResult = Equals(name, value, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"eqResult = {eqResult}");
-#endif
             if (eqResult)
             {
                 return false;
@@ -623,20 +478,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var deffuzzificatedValue = Resolve(name, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
-#endif
-
             var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
 
             if (!systemDeffuzzificatedValue.HasValue)
             {
                 return false;
             }
-
-#if DEBUG
-            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
-#endif
 
             return systemDeffuzzificatedValue.Value > value.SystemValue.Value;
         }
@@ -655,9 +502,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var eqResult = Equals(name, value, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"eqResult = {eqResult}");
-#endif
             if (eqResult)
             {
                 return false;
@@ -665,20 +509,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var deffuzzificatedValue = Resolve(name, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
-#endif
-
             var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
 
             if (!systemDeffuzzificatedValue.HasValue)
             {
                 return false;
             }
-
-#if DEBUG
-            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
-#endif
 
             return value.SystemValue.Value > systemDeffuzzificatedValue.Value;
         }
@@ -697,9 +533,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var eqResult = Equals(fuzzyLogicNonNumericSequence, value, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"eqResult = {eqResult}");
-#endif
             if (eqResult)
             {
                 return false;
@@ -707,20 +540,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var deffuzzificatedValue = Resolve(fuzzyLogicNonNumericSequence, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
-#endif
-
             var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
 
             if (!systemDeffuzzificatedValue.HasValue)
             {
                 return false;
             }
-
-#if DEBUG
-            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
-#endif
 
             return systemDeffuzzificatedValue.Value > value.SystemValue.Value;
         }
@@ -739,9 +564,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var eqResult = Equals(fuzzyLogicNonNumericSequence, value, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"eqResult = {eqResult}");
-#endif
             if (eqResult)
             {
                 return false;
@@ -749,20 +571,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var deffuzzificatedValue = Resolve(fuzzyLogicNonNumericSequence, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
-#endif
-
             var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
 
             if (!systemDeffuzzificatedValue.HasValue)
             {
                 return false;
             }
-
-#if DEBUG
-            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
-#endif
 
             return value.SystemValue.Value > systemDeffuzzificatedValue.Value;
         }
@@ -779,11 +593,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public bool MoreOrEqual(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"value1 = {value1}");
-            //Log($"value2 = {value2}");
-#endif
-
             if (value1 == null && value2 == null)
             {
                 return true;
@@ -801,18 +610,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var leftNumberValue = numberValueLinearResolver.Resolve(value1, localCodeExecutionContext);
                 var rightNumberValue = numberValueLinearResolver.Resolve(value2, localCodeExecutionContext);
 
-#if DEBUG
-                //Log($"leftNumberValue = {leftNumberValue}");
-                //Log($"rightNumberValue = {rightNumberValue}");
-#endif
-
                 var leftSystemNullaleValue = leftNumberValue.SystemValue;
                 var rightSystemNullaleValue = rightNumberValue.SystemValue;
-
-#if DEBUG
-                //Log($"leftSystemNullaleValue = {leftSystemNullaleValue}");
-                //Log($"rightSystemNullaleValue = {rightSystemNullaleValue}");
-#endif
 
                 if (leftSystemNullaleValue.HasValue && rightSystemNullaleValue.HasValue)
                 {
@@ -841,10 +640,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 var value2NumberValue = Resolve(value2StrongIdentifierValue, reason, localCodeExecutionContext, options);
 
-#if DEBUG
-                //Log($"value2NumberValue = {value2NumberValue}");
-#endif
-
                 return MoreOrEqual(value1StrongIdentifierValue, value2NumberValue, reason, localCodeExecutionContext);
             }
 
@@ -860,10 +655,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 var value2NumberValue = Resolve(value2FuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext, options);
 
-#if DEBUG
-                //Log($"value2NumberValue = {value2NumberValue}");
-#endif
-
                 return MoreOrEqual(value1FuzzyLogicNonNumericSequenceValue, value2NumberValue, reason, localCodeExecutionContext);
             }
 
@@ -873,10 +664,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var value2FuzzyLogicNonNumericSequenceValue = value2.AsFuzzyLogicNonNumericSequenceValue;
 
                 var value2NumberValue = Resolve(value2FuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext, options);
-
-#if DEBUG
-                //Log($"value2NumberValue = {value2NumberValue}");
-#endif
 
                 return MoreOrEqual(value1StrongIdentifierValue, value2NumberValue, reason, localCodeExecutionContext);
             }
@@ -888,20 +675,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 var value2NumberValue = Resolve(value2StrongIdentifierValue, reason, localCodeExecutionContext, options);
 
-#if DEBUG
-                //Log($"value2NumberValue = {value2NumberValue}");
-#endif
-
                 return MoreOrEqual(value1FuzzyLogicNonNumericSequenceValue, value2NumberValue, reason, localCodeExecutionContext);
             }
 
             if (numberValueLinearResolver.CanBeResolved(value1))
             {
                 var leftNumberValue = numberValueLinearResolver.Resolve(value1, localCodeExecutionContext);
-
-#if DEBUG
-                //Log($"leftNumberValue = {leftNumberValue}");
-#endif
 
                 if (value2.IsStrongIdentifierValue)
                 {
@@ -923,10 +702,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             if (numberValueLinearResolver.CanBeResolved(value2))
             {
                 var rightNumberValue = numberValueLinearResolver.Resolve(value2, localCodeExecutionContext);
-
-#if DEBUG
-                //Log($"rightNumberValue = {rightNumberValue}");
-#endif
 
                 if (value1.IsStrongIdentifierValue)
                 {
@@ -962,9 +737,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var eqResult = Equals(name, value, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"eqResult = {eqResult}");
-#endif
             if (eqResult)
             {
                 return true;
@@ -972,20 +744,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var deffuzzificatedValue = Resolve(name, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
-#endif
-
             var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
 
             if (!systemDeffuzzificatedValue.HasValue)
             {
                 return false;
             }
-
-#if DEBUG
-            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
-#endif
 
             return systemDeffuzzificatedValue.Value >= value.SystemValue.Value;
         }
@@ -1004,9 +768,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var eqResult = Equals(name, value, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"eqResult = {eqResult}");
-#endif
             if (eqResult)
             {
                 return true;
@@ -1014,20 +775,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var deffuzzificatedValue = Resolve(name, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
-#endif
-
             var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
 
             if (!systemDeffuzzificatedValue.HasValue)
             {
                 return false;
             }
-
-#if DEBUG
-            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
-#endif
 
             return value.SystemValue.Value >= systemDeffuzzificatedValue.Value;
         }
@@ -1046,9 +799,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var eqResult = Equals(fuzzyLogicNonNumericSequence, value, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"eqResult = {eqResult}");
-#endif
             if (eqResult)
             {
                 return true;
@@ -1056,20 +806,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var deffuzzificatedValue = Resolve(fuzzyLogicNonNumericSequence, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
-#endif
-
             var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
 
             if (!systemDeffuzzificatedValue.HasValue)
             {
                 return false;
             }
-
-#if DEBUG
-            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
-#endif
 
             return systemDeffuzzificatedValue.Value >= value.SystemValue.Value;
         }
@@ -1088,9 +830,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var eqResult = Equals(fuzzyLogicNonNumericSequence, value, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"eqResult = {eqResult}");
-#endif
             if (eqResult)
             {
                 return true;
@@ -1098,20 +837,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var deffuzzificatedValue = Resolve(fuzzyLogicNonNumericSequence, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
-#endif
-
             var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
 
             if (!systemDeffuzzificatedValue.HasValue)
             {
                 return false;
             }
-
-#if DEBUG
-            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
-#endif
 
             return value.SystemValue.Value >= systemDeffuzzificatedValue.Value;
         }
@@ -1128,11 +859,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public bool Less(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"value1 = {value1}");
-            //Log($"value2 = {value2}");
-#endif
-
             if (value1 == null && value2 == null)
             {
                 return false;
@@ -1150,18 +876,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var leftNumberValue = numberValueLinearResolver.Resolve(value1, localCodeExecutionContext);
                 var rightNumberValue = numberValueLinearResolver.Resolve(value2, localCodeExecutionContext);
 
-#if DEBUG
-                //Log($"leftNumberValue = {leftNumberValue}");
-                //Log($"rightNumberValue = {rightNumberValue}");
-#endif
-
                 var leftSystemNullaleValue = leftNumberValue.SystemValue;
                 var rightSystemNullaleValue = rightNumberValue.SystemValue;
-
-#if DEBUG
-                //Log($"leftSystemNullaleValue = {leftSystemNullaleValue}");
-                //Log($"rightSystemNullaleValue = {rightSystemNullaleValue}");
-#endif
 
                 if (leftSystemNullaleValue.HasValue && rightSystemNullaleValue.HasValue)
                 {
@@ -1190,10 +906,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 var value2NumberValue = Resolve(value2StrongIdentifierValue, reason, localCodeExecutionContext, options);
 
-#if DEBUG
-                //Log($"value2NumberValue = {value2NumberValue}");
-#endif
-
                 return Less(value1StrongIdentifierValue, value2NumberValue, reason, localCodeExecutionContext);
             }
 
@@ -1209,10 +921,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 var value2NumberValue = Resolve(value2FuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext, options);
 
-#if DEBUG
-                //Log($"value2NumberValue = {value2NumberValue}");
-#endif
-
                 return Less(value1FuzzyLogicNonNumericSequenceValue, value2NumberValue, reason, localCodeExecutionContext);
             }
 
@@ -1222,10 +930,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var value2FuzzyLogicNonNumericSequenceValue = value2.AsFuzzyLogicNonNumericSequenceValue;
 
                 var value2NumberValue = Resolve(value2FuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext, options);
-
-#if DEBUG
-                //Log($"value2NumberValue = {value2NumberValue}");
-#endif
 
                 return Less(value1StrongIdentifierValue, value2NumberValue, reason, localCodeExecutionContext);
             }
@@ -1237,20 +941,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 var value2NumberValue = Resolve(value2StrongIdentifierValue, reason, localCodeExecutionContext, options);
 
-#if DEBUG
-                //Log($"value2NumberValue = {value2NumberValue}");
-#endif
-
                 return Less(value1FuzzyLogicNonNumericSequenceValue, value2NumberValue, reason, localCodeExecutionContext);
             }
 
             if (numberValueLinearResolver.CanBeResolved(value1))
             {
                 var leftNumberValue = numberValueLinearResolver.Resolve(value1, localCodeExecutionContext);
-
-#if DEBUG
-                //Log($"leftNumberValue = {leftNumberValue}");
-#endif
 
                 if (value2.IsStrongIdentifierValue)
                 {
@@ -1272,10 +968,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             if (numberValueLinearResolver.CanBeResolved(value2))
             {
                 var rightNumberValue = numberValueLinearResolver.Resolve(value2, localCodeExecutionContext);
-
-#if DEBUG
-                //Log($"rightNumberValue = {rightNumberValue}");
-#endif
 
                 if (value1.IsStrongIdentifierValue)
                 {
@@ -1311,9 +1003,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var eqResult = Equals(name, value, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"eqResult = {eqResult}");
-#endif
             if (eqResult)
             {
                 return false;
@@ -1321,20 +1010,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var deffuzzificatedValue = Resolve(name, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
-#endif
-
             var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
 
             if (!systemDeffuzzificatedValue.HasValue)
             {
                 return false;
             }
-
-#if DEBUG
-            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
-#endif
 
             return systemDeffuzzificatedValue.Value < value.SystemValue.Value;
         }
@@ -1353,9 +1034,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var eqResult = Equals(name, value, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"eqResult = {eqResult}");
-#endif
             if (eqResult)
             {
                 return false;
@@ -1363,20 +1041,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var deffuzzificatedValue = Resolve(name, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
-#endif
-
             var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
 
             if (!systemDeffuzzificatedValue.HasValue)
             {
                 return false;
             }
-
-#if DEBUG
-            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
-#endif
 
             return value.SystemValue.Value < systemDeffuzzificatedValue.Value;
         }
@@ -1395,9 +1065,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var eqResult = Equals(fuzzyLogicNonNumericSequence, value, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"eqResult = {eqResult}");
-#endif
             if (eqResult)
             {
                 return false;
@@ -1405,20 +1072,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var deffuzzificatedValue = Resolve(fuzzyLogicNonNumericSequence, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
-#endif
-
             var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
 
             if (!systemDeffuzzificatedValue.HasValue)
             {
                 return false;
             }
-
-#if DEBUG
-            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
-#endif
 
             return systemDeffuzzificatedValue.Value < value.SystemValue.Value;
         }
@@ -1437,9 +1096,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var eqResult = Equals(fuzzyLogicNonNumericSequence, value, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"eqResult = {eqResult}");
-#endif
             if (eqResult)
             {
                 return false;
@@ -1447,20 +1103,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var deffuzzificatedValue = Resolve(fuzzyLogicNonNumericSequence, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
-#endif
-
             var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
 
             if (!systemDeffuzzificatedValue.HasValue)
             {
                 return false;
             }
-
-#if DEBUG
-            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
-#endif
 
             return value.SystemValue.Value < systemDeffuzzificatedValue.Value;
         }
@@ -1477,11 +1125,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public bool LessOrEqual(Value value1, Value value2, ReasonOfFuzzyLogicResolving reason, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-#if DEBUG
-            //Log($"value1 = {value1}");
-            //Log($"value2 = {value2}");
-#endif
-
             if (value1 == null && value2 == null)
             {
                 return true;
@@ -1499,18 +1142,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var leftNumberValue = numberValueLinearResolver.Resolve(value1, localCodeExecutionContext);
                 var rightNumberValue = numberValueLinearResolver.Resolve(value2, localCodeExecutionContext);
 
-#if DEBUG
-                //Log($"leftNumberValue = {leftNumberValue}");
-                //Log($"rightNumberValue = {rightNumberValue}");
-#endif
-
                 var leftSystemNullaleValue = leftNumberValue.SystemValue;
                 var rightSystemNullaleValue = rightNumberValue.SystemValue;
-
-#if DEBUG
-                //Log($"leftSystemNullaleValue = {leftSystemNullaleValue}");
-                //Log($"rightSystemNullaleValue = {rightSystemNullaleValue}");
-#endif
 
                 if (leftSystemNullaleValue.HasValue && rightSystemNullaleValue.HasValue)
                 {
@@ -1539,10 +1172,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 var value2NumberValue = Resolve(value2StrongIdentifierValue, reason, localCodeExecutionContext, options);
 
-#if DEBUG
-                //Log($"value2NumberValue = {value2NumberValue}");
-#endif
-
                 return LessOrEqual(value1StrongIdentifierValue, value2NumberValue, reason, localCodeExecutionContext);
             }
 
@@ -1558,10 +1187,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 var value2NumberValue = Resolve(value2FuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext, options);
 
-#if DEBUG
-                //Log($"value2NumberValue = {value2NumberValue}");
-#endif
-
                 return LessOrEqual(value1FuzzyLogicNonNumericSequenceValue, value2NumberValue, reason, localCodeExecutionContext);
             }
 
@@ -1571,10 +1196,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var value2FuzzyLogicNonNumericSequenceValue = value2.AsFuzzyLogicNonNumericSequenceValue;
 
                 var value2NumberValue = Resolve(value2FuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext, options);
-
-#if DEBUG
-                //Log($"value2NumberValue = {value2NumberValue}");
-#endif
 
                 return LessOrEqual(value1StrongIdentifierValue, value2NumberValue, reason, localCodeExecutionContext);
             }
@@ -1586,20 +1207,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 var value2NumberValue = Resolve(value2StrongIdentifierValue, reason, localCodeExecutionContext, options);
 
-#if DEBUG
-                //Log($"value2NumberValue = {value2NumberValue}");
-#endif
-
                 return LessOrEqual(value1FuzzyLogicNonNumericSequenceValue, value2NumberValue, reason, localCodeExecutionContext);
             }
 
             if (numberValueLinearResolver.CanBeResolved(value1))
             {
                 var leftNumberValue = numberValueLinearResolver.Resolve(value1, localCodeExecutionContext);
-
-#if DEBUG
-                //Log($"leftNumberValue = {leftNumberValue}");
-#endif
 
                 if (value2.IsStrongIdentifierValue)
                 {
@@ -1621,10 +1234,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             if (numberValueLinearResolver.CanBeResolved(value2))
             {
                 var rightNumberValue = numberValueLinearResolver.Resolve(value2, localCodeExecutionContext);
-
-#if DEBUG
-                //Log($"rightNumberValue = {rightNumberValue}");
-#endif
 
                 if (value1.IsStrongIdentifierValue)
                 {
@@ -1660,9 +1269,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var eqResult = Equals(name, value, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"eqResult = {eqResult}");
-#endif
             if (eqResult)
             {
                 return true;
@@ -1670,20 +1276,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var deffuzzificatedValue = Resolve(name, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
-#endif
-
             var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
 
             if (!systemDeffuzzificatedValue.HasValue)
             {
                 return false;
             }
-
-#if DEBUG
-            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
-#endif
 
             return systemDeffuzzificatedValue.Value <= value.SystemValue.Value;
         }
@@ -1702,9 +1300,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var eqResult = Equals(name, value, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"eqResult = {eqResult}");
-#endif
             if (eqResult)
             {
                 return true;
@@ -1712,20 +1307,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var deffuzzificatedValue = Resolve(name, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
-#endif
-
             var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
 
             if (!systemDeffuzzificatedValue.HasValue)
             {
                 return false;
             }
-
-#if DEBUG
-            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
-#endif
 
             return value.SystemValue.Value <= systemDeffuzzificatedValue.Value;
         }
@@ -1744,9 +1331,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var eqResult = Equals(fuzzyLogicNonNumericSequence, value, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"eqResult = {eqResult}");
-#endif
             if (eqResult)
             {
                 return true;
@@ -1754,20 +1338,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var deffuzzificatedValue = Resolve(fuzzyLogicNonNumericSequence, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
-#endif
-
             var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
 
             if (!systemDeffuzzificatedValue.HasValue)
             {
                 return false;
             }
-
-#if DEBUG
-            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
-#endif
 
             return systemDeffuzzificatedValue.Value <= value.SystemValue.Value;
         }
@@ -1786,9 +1362,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var eqResult = Equals(fuzzyLogicNonNumericSequence, value, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"eqResult = {eqResult}");
-#endif
             if (eqResult)
             {
                 return true;
@@ -1796,20 +1369,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var deffuzzificatedValue = Resolve(fuzzyLogicNonNumericSequence, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"deffuzzificatedValue = {deffuzzificatedValue}");
-#endif
-
             var systemDeffuzzificatedValue = deffuzzificatedValue.SystemValue;
 
             if (!systemDeffuzzificatedValue.HasValue)
             {
                 return false;
             }
-
-#if DEBUG
-            //Log($"systemDeffuzzificatedValue = {systemDeffuzzificatedValue}");
-#endif
 
             return value.SystemValue.Value <= systemDeffuzzificatedValue.Value;
         }
@@ -1832,23 +1397,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var op in operatorsIdentifiers)
             {
-#if DEBUG
-                //Log($"op = {op}");
-#endif
-
                 var item = linguisticVariable.GetOperator(op);
-
-#if DEBUG
-                //Log($"item = {item}");
-#endif
 
                 if(item == null)
                 {
                     item = globalFuzzyLogicStorage.GetDefaultOperator(op);
-
-#if DEBUG
-                    //Log($"item (2) = {item}");
-#endif
 
                     if(item == null)
                     {
@@ -1868,42 +1421,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
 
-#if DEBUG
-            //Log($"name = {name}");
-            //Log($"value = {value}");
-            //Log($"reason = {reason}");
-            //Log($"localCodeExecutionContext = {localCodeExecutionContext}");
-            //Log($"storagesList.Count = {storagesList.Count}");
-            //foreach (var tmpStorage in storagesList)
-            //{
-            //    Log($"tmpStorage.Key = {tmpStorage.Key}; tmpStorage.Value.Kind = '{tmpStorage.Value.Kind}'");
-            //}
-#endif
-
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
             if(reason != null && reason.Kind == KindOfReasonOfFuzzyLogicResolving.Inheritance)
             {
-#if DEBUG
-                //Log("^%^%^%^%^%^% reason != null && reason.Kind == KindOfReasonOfFuzzyLogicResolving.Inheritance");
-#endif
-
                 optionsForInheritanceResolver.SkipRealSearching = true;
                 optionsForInheritanceResolver.AddSelf = false;
             }
 
             var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
 
-#if DEBUG
-            //Log($"weightedInheritanceItems = {weightedInheritanceItems.WriteListToString()}");
-#endif
-
             var rawList = GetRawList(name, storagesList, weightedInheritanceItems);
-
-#if DEBUG
-            //Log($"rawList = {rawList.WriteListToString()}");
-#endif
 
             if (!rawList.Any())
             {
@@ -1911,10 +1440,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             var filteredList = Filter(rawList);
-
-#if DEBUG
-            //Log($"filteredList = {filteredList.WriteListToString()}");
-#endif
 
             if (!filteredList.Any())
             {
@@ -1925,10 +1450,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 filteredList = filteredList.Where(p => p.ResultItem.Parent.IsFitByRange(value)).ToList();
 
-#if DEBUG
-                //Log($"filteredList (2) = {filteredList.WriteListToString()}");
-#endif
-
                 if (!filteredList.Any())
                 {
                     return null;
@@ -1938,10 +1459,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             if(reason != null)
             {
                 filteredList = filteredList.Where(p => p.ResultItem.Parent.IsFitByСonstraintOrDontHasСonstraint(reason)).ToList();
-
-#if DEBUG
-                //Log($"filteredList (3) = {filteredList.WriteListToString()}");
-#endif
 
                 if (!filteredList.Any())
                 {
@@ -1981,10 +1498,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var minLengthOfRange = list.Min(p => p.ResultItem.Parent.Range.Length);
 
-#if DEBUG
-            //Log($"minLengthOfRange = {minLengthOfRange}");
-#endif
-
             var targetItem = list.FirstOrDefault(p => p.ResultItem.Parent.Range.Length == minLengthOfRange)?.ResultItem;
 
             return targetItem;
@@ -1992,23 +1505,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private List<WeightedInheritanceResultItemWithStorageInfo<FuzzyLogicNonNumericValue>> GetRawList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
-#if DEBUG
-            //Log($"name = {name}");
-#endif
-
             var synonymsList = _synonymsResolver.GetSynonyms(name, storagesList);
-
-#if DEBUG
-            //Log($"synonymsList = {synonymsList.WriteListToString()}");
-#endif
 
             var result = new List<WeightedInheritanceResultItemWithStorageInfo<FuzzyLogicNonNumericValue>>();
 
             var itemsList = NGetRawList(name, storagesList, weightedInheritanceItems);
-
-#if DEBUG
-            //Log($"itemsList?.Count = {itemsList?.Count}");
-#endif
 
             if (!itemsList.IsNullOrEmpty())
             {
@@ -2018,10 +1519,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             foreach (var synonym in synonymsList)
             {
                 itemsList = NGetRawList(synonym, storagesList, weightedInheritanceItems);
-
-#if DEBUG
-                //Log($"itemsList?.Count = {itemsList?.Count}");
-#endif
 
                 if (!itemsList.IsNullOrEmpty())
                 {
@@ -2034,10 +1531,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private List<WeightedInheritanceResultItemWithStorageInfo<FuzzyLogicNonNumericValue>> NGetRawList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
-#if DEBUG
-            //Log($"name = {name}");
-#endif
-
             if (!storagesList.Any())
             {
                 return new List<WeightedInheritanceResultItemWithStorageInfo<FuzzyLogicNonNumericValue>>();

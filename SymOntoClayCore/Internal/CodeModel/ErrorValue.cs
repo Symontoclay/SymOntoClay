@@ -126,7 +126,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintObjProp(n, nameof(RuleInstance), RuleInstance);
 
-            //sb.AppendLine($"{spaces}{nameof(SystemValue)} = {SystemValue}");
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -140,7 +139,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintShortObjProp(n, nameof(RuleInstance), RuleInstance);
 
-            //sb.AppendLine($"{spaces}{nameof(SystemValue)} = {SystemValue}");
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -154,7 +152,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintBriefObjProp(n, nameof(RuleInstance), RuleInstance);
 
-            //sb.AppendLine($"{spaces}{nameof(SystemValue)} = {SystemValue}");
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

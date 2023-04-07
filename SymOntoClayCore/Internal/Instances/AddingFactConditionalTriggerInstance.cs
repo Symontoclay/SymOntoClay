@@ -63,17 +63,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 _processedItems.Add(ruleInstance);
             }
 
-#if DEBUG
-            //Log($"ruleInstance = {ruleInstance.ToHumanizedString()}");
-            //Log($"_trigger.SetCondition = {_trigger.SetCondition}");
-#endif
-
             var isSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> varsList, ruleInstance);
-
-#if DEBUG
-            //Log($"isSuccsess = {isSuccsess}");
-            //Log($"setVarList.Count = {varsList.Count}");
-#endif
 
             if(!isSuccsess)
             {

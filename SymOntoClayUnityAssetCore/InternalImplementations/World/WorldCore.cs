@@ -55,10 +55,6 @@ namespace SymOntoClay.UnityAsset.Core.World
         {
             lock(_lockObj)
             {
-#if DEBUG
-                //_logger.Info("SetSettings");
-#endif
-
                 _context.SetSettings(settings);
 
                 InitializeDeferred();
@@ -106,10 +102,6 @@ namespace SymOntoClay.UnityAsset.Core.World
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //_logger.Info($"GetHumanoidNPC _context.IsInitialized = {_context.IsInitialized}");
-#endif
-
                 if (_context.IsInitialized)
                 {
                     return new HumanoidNPCImplementation(settings, _context);
@@ -301,10 +293,6 @@ namespace SymOntoClay.UnityAsset.Core.World
         #endregion
 
         #region private members
-#if DEBUG
-        //private readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
-#endif
-
         private readonly object _lockObj = new object();
 
         private readonly WorldContext _context;

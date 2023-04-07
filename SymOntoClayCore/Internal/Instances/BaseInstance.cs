@@ -41,10 +41,6 @@ namespace SymOntoClay.Core.Internal.Instances
         protected BaseInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext, IStorageFactory storageFactory, List<Var> varList)
             : base(context.Logger)
         {
-#if DEBUG
-            //Log($"parentStorage = {parentStorage}");
-#endif
-
             _codeItem = codeItem;
 
             Name = codeItem.Name;
@@ -66,18 +62,10 @@ namespace SymOntoClay.Core.Internal.Instances
             var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);
             _storage = storageFactory.CreateStorage(localStorageSettings);
 
-#if DEBUG
-            //Log($"_storage.Kind = {_storage.Kind}");
-#endif
-
             localCodeExecutionContext.Storage = _storage;
             localCodeExecutionContext.Holder = Name;
 
             _localCodeExecutionContext = localCodeExecutionContext;
-#if DEBUG
-            //Log($"_localCodeExecutionContext = {_localCodeExecutionContext}");
-#endif
-
             RebuildSuperClassesStorages();
 
             if (!varList.IsNullOrEmpty())
@@ -158,26 +146,16 @@ namespace SymOntoClay.Core.Internal.Instances
             RunActivatorsOfStates();
             RunDeactivatorsOfStates();
 
-#if DEBUG
-            //Log($"Name = {Name}");
-#endif
-
             var targetAddingFactTriggersList = _triggersResolver.ResolveAddFactTriggersList(Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
 #if DEBUG
 
-            //Log($"targetAddingFactTriggersList.Count = {targetAddingFactTriggersList.Count}");
-            //Log($"targetAddingFactTriggersList = {targetAddingFactTriggersList.WriteListToString()}");
 #endif
 
             if(targetAddingFactTriggersList.Any())
             {
                 foreach(var targetTrigger in targetAddingFactTriggersList)
                 {
-#if DEBUG
-                    //Log($"targetTrigger = {targetTrigger}");
-#endif
-
                     if(targetTrigger.SetCondition == null)
                     {
                         var triggerInstance = new AddingFactNonConditionalTriggerInstance(targetTrigger, this, _context, _storage, _localCodeExecutionContext);
@@ -195,19 +173,10 @@ namespace SymOntoClay.Core.Internal.Instances
 
             var targetLogicConditionalTriggersList = _triggersResolver.ResolveLogicConditionalTriggersList(Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
-#if DEBUG
-            //Log($"targetLogicConditionalTriggersList.Count = {targetLogicConditionalTriggersList.Count}");
-            //Log($"targetLogicConditionalTriggersList = {targetLogicConditionalTriggersList.WriteListToString()}");
-#endif
-
             if (targetLogicConditionalTriggersList.Any())
             {
                 foreach (var targetTrigger in targetLogicConditionalTriggersList)
                 {
-#if DEBUG
-                    //Log($"targetTrigger = {targetTrigger}");
-#endif
-
                     var triggerInstance = new LogicConditionalTriggerInstance(targetTrigger, this, _context, _storage, _localCodeExecutionContext);
                     _logicConditionalTriggersList.Add(triggerInstance);
 
@@ -222,15 +191,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void RebuildSuperClassesStorages()
         {
-#if DEBUG
-            //Log($"Name = {Name}");
-#endif
-
             var superClassesList = _inheritanceResolver.GetSuperClassesKeysList(Name, _localCodeExecutionContext);
-
-#if DEBUG
-            //Log($"superClassesList = {superClassesList.WriteListToString()}");
-#endif
 
             lock(_superClassesStoragesLockObj)
             {
@@ -238,25 +199,12 @@ namespace SymOntoClay.Core.Internal.Instances
                 {
                     var existingKeys = _superClassesStorages.Keys.ToList();
 
-#if DEBUG
-                    //Log($"existingKeys = {existingKeys.WriteListToString()}");
-#endif
-
                     var keysForAdding = superClassesList.Except(existingKeys);
-
-#if DEBUG
-                    //Log($"keysForAdding = {keysForAdding.WriteListToString()}");
-#endif
 
                     var keysForRemoving = existingKeys.Except(superClassesList);
 
-#if DEBUG
-                    //Log($"keysForRemoving = {keysForRemoving.WriteListToString()}");
-#endif
-
                     if(keysForAdding.Any())
                     {
-                        //var parentStorage = _storage;
 
                         foreach (var key in keysForAdding)
                         {
@@ -280,13 +228,6 @@ namespace SymOntoClay.Core.Internal.Instances
                     throw new NotImplementedException();
                 }
 
-#if DEBUG
-                //var storagesList = _inheritanceResolver.GetStoragesList(_storage, KindOfStoragesList.CodeItems);
-                //foreach (var tmpStorage in storagesList)
-                //{
-                //    Log($"tmpStorage.Storage.Kind = {tmpStorage.Storage.Kind}");
-                //}
-#endif
             }
         }
 
@@ -305,11 +246,6 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public void AddChildInstance(IInstance instance)
         {
-#if DEBUG
-            //Log($"instance = {instance}");
-            //Log($"this = {this}");
-#endif
-
             lock(_childInstancesLockObj)
             {
                 if (_childInstances.Contains(instance))
@@ -326,11 +262,6 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public void RemoveChildInstance(IInstance instance)
         {
-#if DEBUG
-            //Log($"instance = {instance}");
-            //Log($"this = {this}");
-#endif
-
             lock (_childInstancesLockObj)
             {
                 if (!_childInstances.Contains(instance))
@@ -347,11 +278,6 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public void SetParent(IInstance instance)
         {
-#if DEBUG
-            //Log($"instance = {instance}");
-            //Log($"this = {this}");
-#endif
-
             lock (_childInstancesLockObj)
             {
                 if (_parentInstance == instance)
@@ -368,11 +294,6 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public void ResetParent(IInstance instance)
         {
-#if DEBUG
-            //Log($"instance = {instance}");
-            //Log($"this = {this}");
-#endif
-
             lock (_childInstancesLockObj)
             {
                 if (_parentInstance != instance)
@@ -409,10 +330,6 @@ namespace SymOntoClay.Core.Internal.Instances
                 {
                     var targetHolder = preConstructor.Holder;
 
-#if DEBUG
-                    //Log($"targetHolder = {targetHolder}");
-#endif
-
                     var targetStorage = superClassesStoragesDict[targetHolder];
 
                     var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
@@ -432,15 +349,8 @@ namespace SymOntoClay.Core.Internal.Instances
                     processInitialInfoList.Add(processInitialInfo);
                 }
 
-#if DEBUG
-                //Log($"processInitialInfoList = {processInitialInfoList.WriteListToString()}");
-#endif
-
                 var taskValue = _context.CodeExecutor.ExecuteBatchSync(processInitialInfoList);
 
-#if DEBUG
-                //Log($"taskValue = {taskValue}");
-#endif
             }
         }
 
@@ -457,10 +367,6 @@ namespace SymOntoClay.Core.Internal.Instances
                 foreach (var constructor in constructorsList)
                 {
                     var targetHolder = constructor.Holder;
-
-#if DEBUG
-                    //Log($"targetHolder = {targetHolder}");
-#endif
 
                     var targetStorage = superClassesStoragesDict[targetHolder];
 
@@ -482,15 +388,8 @@ namespace SymOntoClay.Core.Internal.Instances
                     processInitialInfoList.Add(processInitialInfo);
                 }
 
-#if DEBUG
-                //Log($"processInitialInfoList = {processInitialInfoList.WriteListToString()}");
-#endif
-
                 var taskValue = _context.CodeExecutor.ExecuteBatchSync(processInitialInfoList);
 
-#if DEBUG
-                //Log($"taskValue = {taskValue}");
-#endif
             }
         }
 
@@ -513,15 +412,6 @@ namespace SymOntoClay.Core.Internal.Instances
             IExecutionCoordinator executionCoordinator, bool normalOrder = true)
         {
             var targetSystemEventsTriggersList = _triggersResolver.ResolveSystemEventsTriggersList(kindOfSystemEvent, holder, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
-
-#if DEBUG
-            //Log($"kindOfSystemEvent = {kindOfSystemEvent}");
-            //if(kindOfSystemEvent == KindOfSystemEventOfInlineTrigger.Leave)
-            //{
-            //    Log($"targetSystemEventsTriggersList = {targetSystemEventsTriggersList.WriteListToString()}");
-            //}
-            //Log($"targetSystemEventsTriggersList = {targetSystemEventsTriggersList.WriteListToString()}");
-#endif
 
             if (targetSystemEventsTriggersList.Any())
             {
@@ -551,15 +441,8 @@ namespace SymOntoClay.Core.Internal.Instances
                     processInitialInfoList.Add(processInitialInfo);
                 }
 
-#if DEBUG
-                //Log($"processInitialInfoList = {processInitialInfoList.WriteListToString()}");
-#endif
-
                 var taskValue = _context.CodeExecutor.ExecuteBatchAsync(processInitialInfoList);
 
-#if DEBUG
-                //Log($"taskValue = {taskValue}");
-#endif
             }
         }
 
@@ -581,27 +464,15 @@ namespace SymOntoClay.Core.Internal.Instances
 
         protected virtual void RunFinalizationTrigges()
         {
-#if DEBUG
-            //Log("Begin");
-#endif
-
             var finalizationExecutionCoordinator = new ExecutionCoordinator(this);
             finalizationExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
 
             RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger.Leave, finalizationExecutionCoordinator, false);
 
-#if DEBUG
-            //Log("End");
-#endif
         }
 
         protected virtual void ExecutionCoordinator_OnFinished()
         {
-#if DEBUG
-            //Log("Begin");
-            //Log($"this = {this}");
-#endif
-
             if (_parentInstance != null)
             {
                 _parentInstance.RemoveChildInstance(this);
@@ -612,25 +483,14 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if(_childInstances.Any())
             {
-#if DEBUG
-                //Log($"_childInstances.Count = {_childInstances.Count}");
-#endif
-
                 foreach(var childInstance in _childInstances.ToList())
                 {
-#if DEBUG
-                    //Log($"childInstance = {childInstance}");
-#endif
-
                     childInstance.CancelExecution();
                 }
             }
 
             Dispose();
 
-#if DEBUG
-            //Log("End");
-#endif
         }
 
         /// <inheritdoc/>
@@ -642,40 +502,24 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public virtual void SetPropertyValue(StrongIdentifierValue propertyName, Value value)
         {
-#if DEBUG
-            //DebugLogger.Instance.Info(this);
-#endif
-
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
         public virtual void SetVarValue(StrongIdentifierValue varName, Value value)
         {
-#if DEBUG
-            //DebugLogger.Instance.Info(this);
-#endif
-
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
         public virtual Value GetPropertyValue(StrongIdentifierValue propertyName)
         {
-#if DEBUG
-            //DebugLogger.Instance.Info(this);
-#endif
-
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
         public virtual Value GetVarValue(StrongIdentifierValue varName)
         {
-#if DEBUG
-            //DebugLogger.Instance.Info(this);
-#endif
-
             throw new NotImplementedException();
         }
 

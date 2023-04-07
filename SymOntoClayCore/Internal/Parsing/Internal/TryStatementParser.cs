@@ -72,11 +72,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
-#endif
-
             switch (_state)
             {
                 case State.Init:
@@ -108,10 +103,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var parser = new FunctionBodyParser(_context);
                                 parser.Run();
                                 var statementsList = parser.Result;
-
-#if DEBUG
-                                //Log($"statementsList = {statementsList.WriteListToString()}");
-#endif
 
                                 _rawStatement.TryStatements = statementsList;
 
@@ -228,10 +219,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 parser.Run();
                                 var statementsList = parser.Result;
 
-#if DEBUG
-                                //Log($"statementsList = {statementsList.WriteListToString()}");
-#endif
-
                                 _rawStatement.ElseStatements = statementsList;
 
                                 _state = State.GotElseBody;
@@ -292,10 +279,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 parser.Run();
                                 var statementsList = parser.Result;
 
-#if DEBUG
-                                //Log($"statementsList = {statementsList.WriteListToString()}");
-#endif
-
                                 _rawStatement.EnsureStatements = statementsList;
 
                                 _state = State.GotEnsureBody;
@@ -350,10 +333,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             var parser = new CatchStatementParser(_context);
             parser.Run();
-
-#if DEBUG
-            //Log($"parser.Result = {parser.Result}");
-#endif
 
             _rawStatement.CatchStatements.Add(parser.Result);
 

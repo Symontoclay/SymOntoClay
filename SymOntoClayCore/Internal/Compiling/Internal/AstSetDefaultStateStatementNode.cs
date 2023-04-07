@@ -37,10 +37,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(AstSetDefaultStateStatement statement)
         {
-#if DEBUG
-            //Log($"statement = {statement}");
-#endif
-
             CompileValue(statement.StateName);
 
             AddCommand(new IntermediateScriptCommand()
@@ -48,9 +44,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 OperationCode = OperationCode.SetDefaultState
             });
 
-#if DEBUG
-            //DbgPrintCommands();
-#endif
         }
     }
 }

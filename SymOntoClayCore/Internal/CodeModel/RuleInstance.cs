@@ -40,14 +40,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class RuleInstance: CodeItem, IStorage, ILogicalStorage
     {
-        //public RuleInstance()
-        //{
-        //    TypeOfAccess = DefaultTypeOfAccess;
-        //}
-
-#if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
 
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.RuleOrFact;
@@ -102,20 +94,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             if (IsSource)
             {
-#if DEBUG
-                //_gbcLogger.Info($"options = {options}");
-                //_gbcLogger.Info($"(options != null) = {options != null}");
-                //_gbcLogger.Info($"this = {DebugHelperForRuleInstance.ToString(this)}");
-#endif
-
                 NPrepareDirty();
 
                 Normalized = ConverterToNormalized.Convert(this, options);
                 Normalized.PrepareDirty(options);
 
-#if DEBUG
-                //_gbcLogger.Info($"Normalized = {DebugHelperForRuleInstance.ToString(Normalized)}");
-#endif               
             }
             else
             {
@@ -207,10 +190,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-#if DEBUG
-            //_gbcLogger.Info($"options = {options}");
-#endif
-
             PrepareDirty(options);
 
             var result = base.CalculateLongHashCode(options) ^ PrimaryPart.GetLongHashCode(options);
@@ -243,10 +222,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     item.SetHolder(Holder);
                 }
             }
-
-#if DEBUG
-            //_gbcLogger.Info($"Normalized != null = {Normalized != null}; Normalized != this = {Normalized != this}");
-#endif
 
             if(Normalized != null && Normalized != this)
             {
@@ -645,10 +620,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         IList<BaseRulePart> ILogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
         {
-#if DEBUG
-            //LogInstance.Log($"key = {key}");
-#endif
-
             LogicalSearchExplainNode currentExplainNode = null;
 
             if(parentExplainNode != null)

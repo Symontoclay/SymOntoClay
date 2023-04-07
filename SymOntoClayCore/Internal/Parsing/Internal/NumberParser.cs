@@ -61,12 +61,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
-            //Log($"buffer = {_buffer}");            
-#endif
-
             switch (_state)
             {
                 case State.Init:
@@ -92,10 +86,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Point:
                             {
                                 var nextToken = _context.GetToken();
-
-#if DEBUG
-                                //Log($"nextToken = {nextToken}");
-#endif
 
                                 if(nextToken.TokenKind == TokenKind.Number)
                                 {
@@ -233,27 +223,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnFinish()
         {
-#if DEBUG
-            //Log($"buffer = {_buffer}");
-#endif
-
             if(_createLogicalValue)
             {
                 var numberValue = float.Parse(_buffer.ToString(), _targetCulture);
-
-#if DEBUG
-                //Log($"numberValue = {numberValue}");
-#endif
 
                 Result = new LogicalValue(numberValue);
             }
             else
             {
                 var numberValue = double.Parse(_buffer.ToString(), _targetCulture);
-
-#if DEBUG
-                //Log($"numberValue = {numberValue}");
-#endif
 
                 Result = new NumberValue(numberValue);
             }

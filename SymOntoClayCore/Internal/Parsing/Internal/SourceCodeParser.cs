@@ -42,10 +42,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_currToken = {_currToken}");
-#endif
-
             switch(_currToken.TokenKind)
             {
                 case TokenKind.Word:

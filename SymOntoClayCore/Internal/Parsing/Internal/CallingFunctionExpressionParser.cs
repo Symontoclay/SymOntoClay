@@ -63,10 +63,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnFinish()
         {
-#if DEBUG
-            //Log($"_currentParameter = {_currentParameter}");
-#endif
-
             if(_currentParameter != null)
             {
                 if(_currentParameter.IsNamed && _currentParameter.Name != null && _currentParameter.Value == null)
@@ -79,12 +75,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");
-#endif
-
             switch (_state)
             {
                 case State.Init:
@@ -121,10 +111,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         var predictedKeyWordTokenKind = PredictKeyWordTokenKind(KindOfSpecialPrediction.NamedParameter);
 
-#if DEBUG
-                        //Log($"predictedKeyWordTokenKind = {predictedKeyWordTokenKind}");
-#endif
-
                         if (predictedKeyWordTokenKind == KeyWordTokenKind.NamedParameter)
                         {
                             _currentParameter = new CallingParameter();
@@ -158,10 +144,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 _context.Recovery(_currToken);
                                 var parser = new AstExpressionParser(_context, TokenKind.Comma, TokenKind.CloseRoundBracket);
                                 parser.Run();
-
-#if DEBUG
-                                //Log($"parser.Result = {parser.Result}");
-#endif
 
                                 _currentParameter.Value = parser.Result;
 
@@ -292,10 +274,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var parser = new AstExpressionParser(_context, TokenKind.Comma, TokenKind.CloseRoundBracket);
                                 parser.Run();
 
-#if DEBUG
-                                //Log($"parser.Result = {parser.Result}");
-#endif
-
                                 _currentParameter.Value = parser.Result;
 
                                 _state = State.GotValueOfNamedMainParameter;
@@ -361,10 +339,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private AstExpression ConvertValueExprToNameExpr(AstExpression expression)
         {
-#if DEBUG
-            //Log($"expression = {expression}");
-#endif
-
             var kind = expression.Kind;
 
             switch(kind)

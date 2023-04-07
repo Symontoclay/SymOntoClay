@@ -45,11 +45,6 @@ namespace SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging
         {
             lock(_lockObj)
             {
-#if DEBUG
-                //Log($"idleActionItem = {item.ToHumanizedString()}");
-                //Log($"idleActionItem = {item}");
-#endif
-
                 AnnotatedItemHelper.CheckAndFillUpHolder(item, _realStorageContext.MainStorageContext.CommonNamesStorage);
 
                 item.CheckDirty();
@@ -60,7 +55,6 @@ namespace SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging
                 {
                     var targetList = _itemsDict[holder];
 
-                    //StorageHelper.RemoveSameItems(targetList, item);
 
                     targetList.Add(item);
                 }
@@ -88,10 +82,6 @@ namespace SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging
                 foreach (var weightedInheritanceItem in weightedInheritanceItems)
                 {
                     var targetHolder = weightedInheritanceItem.SuperName;
-
-#if DEBUG
-                    //Log($"targetHolder = {targetHolder}");
-#endif
 
                     if(_itemsDict.ContainsKey(targetHolder))
                     {

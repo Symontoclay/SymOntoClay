@@ -43,10 +43,6 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
         public ConceptualGraph Run(BaseSentenceItem sentenceItem)
         {
-#if DEBUG
-            //_logger.Log($"sentenceItem = {sentenceItem.ToDbgString()}");
-#endif
-
             var outerConceptualGraph = new ConceptualGraph();
             var context = new ContextOfSemanticAnalyzer();
             context.OuterConceptualGraph = outerConceptualGraph;
@@ -54,10 +50,6 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
             context.Logger = _logger;
 
             var kindOfSentenceItem = sentenceItem.KindOfSentenceItem;
-
-#if DEBUG
-            //_logger.Log($"kindOfSentenceItem = {kindOfSentenceItem}");
-#endif
 
             switch(kindOfSentenceItem)
             {
@@ -74,10 +66,6 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
         private void ProcessSentence(Sentence sentence, ContextOfSemanticAnalyzer context)
         {
-#if DEBUG
-            //_logger.Log($"sentence = {sentence.ToDbgString()}");
-#endif
-
             var sentenceNode = new SentenceNodeOfSemanticAnalyzer(context, sentence);
             sentenceNode.Run();
         }

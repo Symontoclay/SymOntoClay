@@ -110,17 +110,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
-            //Log($"_nameHasBeenParsed = {_nameHasBeenParsed}");
-            //Log($"_primaryPartHasBeenParsed = {_primaryPartHasBeenParsed}");
-            //Log($"_secondaryPartHasBeenParsed = {_secondaryPartHasBeenParsed}");
-            //Log($"_obligationModalityHasBeenParsed = {_obligationModalityHasBeenParsed}");
-            //Log($"_selfObligationModalityHasBeenParsed = {_selfObligationModalityHasBeenParsed}");
-            //Log($"Result = {Result}");
-#endif
-
             switch (_state)
             {
                 case State.Init:
@@ -279,9 +268,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var parser = new PrimaryRulePartParser(_context, terminatingTokenKind);
             parser.Run();
 
-#if DEBUG
-            //Log($"parser.Result = {parser.Result}");
-#endif
             parser.Result.Parent = Result;
             Result.PrimaryPart = parser.Result;
 
@@ -302,10 +288,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var parser = new SecondaryRulePartParser(_context, terminatingTokenKind);
             parser.Run();
 
-#if DEBUG
-            //Log($"parser.Result = {parser.Result}");
-#endif
-
             if (Result.SecondaryParts == null)
             {
                 Result.SecondaryParts = new List<SecondaryRulePart>();
@@ -324,10 +306,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             var kindOfRuleInstanceSectionMark = GetKindOfRuleInstanceSectionMark();
 
-#if DEBUG
-            //Log($"kindOfRuleInstanceSectionMark = {kindOfRuleInstanceSectionMark}");
-#endif
-
             switch (kindOfRuleInstanceSectionMark)
             {
                 case KindOfRuleInstanceSectionMark.ObligationModality:
@@ -339,10 +317,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         var parser = new LogicalModalityValueParser(_context);
                         parser.Run();
-
-#if DEBUG
-                        //Log($"parser.Result = {parser.Result}");
-#endif
 
                         Result.ObligationModality = parser.Result;
 
@@ -361,10 +335,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         var parser = new LogicalModalityValueParser(_context);
                         parser.Run();
-
-#if DEBUG
-                        //Log($"parser.Result = {parser.Result}");
-#endif
 
                         Result.SelfObligationModality = parser.Result;
 

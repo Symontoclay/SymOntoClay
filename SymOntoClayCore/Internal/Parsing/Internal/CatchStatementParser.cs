@@ -68,11 +68,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
-#endif
-
             switch (_state)
             {
                 case State.Init:
@@ -203,10 +198,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _context.Recovery(_currToken);
             var parser = new FunctionBodyParser(_context);
             parser.Run();
-
-#if DEBUG
-            //Log($"parser.Result = {parser.Result.WriteListToString()}");
-#endif
 
             Result.Statements = parser.Result;
 

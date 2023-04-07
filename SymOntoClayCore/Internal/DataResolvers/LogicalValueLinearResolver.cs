@@ -46,10 +46,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public LogicalValue Resolve(Value source, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options, bool forInheritance)
         {
-#if DEBUG
-            //Log($"source = {source}");
-#endif
-
             var sourceKind = source.KindOfValue;
 
             switch(sourceKind)

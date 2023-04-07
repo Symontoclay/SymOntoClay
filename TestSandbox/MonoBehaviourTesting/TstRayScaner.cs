@@ -60,7 +60,6 @@ namespace TestSandbox.MonoBehaviourTesting
 
         public void Scan()
         {
-            //_logger.Log("Begin");
 
             var targetFakeIdsList = new List<int>();
 
@@ -79,8 +78,6 @@ namespace TestSandbox.MonoBehaviourTesting
 
             targetFakeIdsList = targetFakeIdsList.Distinct().ToList();
 
-            //_logger.Log($"targetFakeIdsList = {JsonConvert.SerializeObject(targetFakeIdsList, Formatting.Indented)}");
-            //_logger.Log($"targetFakeIdsPositions = {JsonConvert.SerializeObject(targetFakeIdsPositions, Formatting.Indented)}");
 
             var newRawVisibleItemsList = new List<TstUVisibleItem>();
 
@@ -88,7 +85,6 @@ namespace TestSandbox.MonoBehaviourTesting
 
             for (var i = 1; i <= 1000; i++)
             {
-                //_logger.Log($"i = {i}");
 
                 var visibleItem = new TstUVisibleItem();
                 var targetFakeId = targetFakeIdsList[_random.Next(0, targetFakeIdsList.Count - 1)];
@@ -100,7 +96,6 @@ namespace TestSandbox.MonoBehaviourTesting
                 newRawVisibleItemsList.Add(visibleItem);
             }
 
-            //_logger.Log($"newRawVisibleItemsList = {newRawVisibleItemsList.WriteListToString()}");
 
             lock (_lockObj)
             {
@@ -108,7 +103,6 @@ namespace TestSandbox.MonoBehaviourTesting
                 _isRawVisibleItemsListChanged = true;
             }
 
-            //_logger.Log("End");
         }
 
         public IList<VisibleItem> GetCurrentVisibleItems()

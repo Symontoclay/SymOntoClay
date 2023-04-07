@@ -44,12 +44,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         {
             try
             {
-#if DEBUG
-                //Log($"settings = {settings}");
-                //Log($"worldContext.TmpDir = {worldContext.TmpDir}");
-                //Log($"worldContext.LogicQueryParseAndCache == null = {worldContext.LogicQueryParseAndCache == null}");
-#endif
-
                 var internalContext = new HumanoidNPCGameComponentContext();
 
                 _allowPublicPosition = settings.AllowPublicPosition;
@@ -101,9 +95,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 coreEngineSettings.Categories = settings.Categories;
                 coreEngineSettings.EnableCategories = settings.EnableCategories;
 
-#if DEBUG
-                //Log($"coreEngineSettings = {coreEngineSettings}");
-#endif
                 _coreEngine = new Engine(coreEngineSettings);
                 internalContext.CoreEngine = _coreEngine;
             }
@@ -132,20 +123,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         {
             base.LoadFromSourceCode();
 
-            //try
-            //{
             _visionComponent?.LoadFromSourceCode();
             _soundReceiverComponent.LoadFromSourceCode();
             _coreEngine.LoadFromSourceCode();
 
             _worldContext.AddPublicFactsStorage(this);
-            //}
-            //catch(Exception e)
-            //{
-            //Log(e.ToString());
 
-            //    throw e;
-            //}
         }
 
         /// <inheritdoc/>
@@ -256,11 +239,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
         public void AddToBackpack(IGameObject obj)
         {
-#if DEBUG
-            //Log($"Hi!");
-            //obj.PublicFactsStorage.DbgPrintFactsAndRules();
-#endif
-
             _backpackStorage.AddConsolidatedStorage(obj.PublicFactsStorage);
         }
 

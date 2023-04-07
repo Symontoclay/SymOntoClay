@@ -55,12 +55,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result.WriteListToString()}");            
-#endif
-
             switch (_state)
             {
                 case State.Init:
@@ -151,10 +145,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         var parsingResult = ParseValueOnObjDefLevel();
 
-#if DEBUG
-                        //Log($"parsingResult = {parsingResult}");
-#endif
-
                         var kindOfValueOnObjDefLevel = parsingResult.Kind;
 
                         switch (kindOfValueOnObjDefLevel)
@@ -171,44 +161,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                    //switch (_currToken.TokenKind)
-                    //{
-                    //    case TokenKind.String:
-                    //        {
-                    //            _curentFunctionArgumentInfo.DefaultValue = new StringValue(_currToken.Content);
-                    //            _curentFunctionArgumentInfo.HasDefaultValue = true;
-                    //            _state = State.GotDefaultValue;
-                    //        }
-                    //        break;
 
-                    //    case TokenKind.Number:
-                    //        {
-                    //            _context.Recovery(_currToken);
 
-                    //            var parser = new NumberParser(_context);
-                    //            parser.Run();
 
-                    //            _curentFunctionArgumentInfo.DefaultValue = parser.Result;
 
-                    //            _curentFunctionArgumentInfo.HasDefaultValue = true;
-                    //            _state = State.GotDefaultValue;
-                    //        }
-                    //        break;
 
-                    //    case TokenKind.Identifier:
-                    //    case TokenKind.Word:
-                    //        {
-                    //            _curentFunctionArgumentInfo.DefaultValue = ParseName(_currToken.Content);
 
-                    //            _curentFunctionArgumentInfo.HasDefaultValue = true;
-                    //            _state = State.GotDefaultValue;
-                    //        }
-                    //        break;
 
-                    //    default:
-                    //        throw new UnexpectedTokenException(_currToken);
-                    //}
-                    //break;
 
                 case State.GotDefaultValue:
                     switch (_currToken.TokenKind)

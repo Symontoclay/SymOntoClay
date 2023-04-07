@@ -34,35 +34,15 @@ namespace SymOntoClay.CLI
 {
     public static class CLICommandParser
     {
-#if DEBUG
-        //private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-#endif
-
         public static CLICommand Parse(string[] args)
         {
-#if DEBUG
-            //_logger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
-#endif
-
             var argsList = args.ToList();
 
             var command = new CLICommand();
 
             while(argsList.Any())
             {
-#if DEBUG
-                //_logger.Info($"argsList.Count = {argsList.Count}");
-#endif
-
                 var firstArg = argsList.First();
-
-#if DEBUG
-                //_logger.Info($"firstArg = {firstArg}");
-#endif
-
-#if DEBUG
-                //_logger.Info($"command = {command}");
-#endif
 
                 var reallyUsedArgs = 0;
 
@@ -91,26 +71,15 @@ namespace SymOntoClay.CLI
 
                             var inputFile = string.Empty;
 
-#if DEBUG
-                            //_logger.Info($"argsList.Count = {argsList.Count}");
-#endif
-
                             if(argsList.Count > 1)
                             {
                                 var secondArg = argsList[1];
 
-#if DEBUG
-                                //_logger.Info($"secondArg = {secondArg}");
-#endif
                                 if(!IsAdditionalOptions(secondArg))
                                 {
                                     inputFile = secondArg;
                                 }                                
                             }
-
-#if DEBUG
-                            //_logger.Info($"inputFile = {inputFile}");
-#endif
 
                             if(string.IsNullOrWhiteSpace(inputFile))
                             {
@@ -141,10 +110,6 @@ namespace SymOntoClay.CLI
 
                             var secondArg = argsList[1];
 
-#if DEBUG
-                            //_logger.Info($"secondArg = {secondArg}");
-#endif
-
                             if (IsAdditionalOptions(secondArg))
                             {
                                 throw new Exception(NewPureArgs);
@@ -159,10 +124,6 @@ namespace SymOntoClay.CLI
                                 else
                                 {
                                     var thirdArg = argsList[2];
-
-#if DEBUG
-                                    //_logger.Info($"thirdArg = {thirdArg}");
-#endif
 
                                     if(IsNewCommandClarification(thirdArg) || IsAdditionalOptions(thirdArg))
                                     {
@@ -234,10 +195,6 @@ namespace SymOntoClay.CLI
                             {
                                 var secondArg = argsList[1];
 
-#if DEBUG
-                                //_logger.Info($"secondArg = {secondArg}");
-#endif
-
                                 if(int.TryParse(secondArg, out int timeout))
                                 {
                                     command.Timeout = timeout;
@@ -266,10 +223,6 @@ namespace SymOntoClay.CLI
                             {
                                 var secondArg = argsList[1];
 
-#if DEBUG
-                                //_logger.Info($"secondArg = {secondArg}");
-#endif
-
                                 CheckCommandAsUnknown(command);
 
                                 command.Kind = KindOfCLICommand.Install;
@@ -287,10 +240,6 @@ namespace SymOntoClay.CLI
 
                 argsList = argsList.Skip(reallyUsedArgs).ToList();
             }
-
-#if DEBUG
-            //_logger.Info($"command = {command}");
-#endif
 
             return command;
         }

@@ -55,7 +55,6 @@ namespace TestSandbox.Navigations
             wayPointsList.Add(d_Point);
             LinkWayPoints(b_Point, d_Point);
             LinkWayPoints(c_Point, d_Point);
-            //-------------
             var e_Point = new WayPoint() { Name = "E" };
             wayPointsList.Add(e_Point);
             LinkWayPoints(d_Point, e_Point);
@@ -97,7 +96,6 @@ namespace TestSandbox.Navigations
             LinkWayPoints(i_Point, j_Point);
             LinkWayPoints(a_Point, j_Point);
             LinkWayPoints(e_Point, j_Point);
-            //-------------
             var k_Point = new WayPoint() { Name = "K" };
             wayPointsList.Add(k_Point);
 
@@ -143,7 +141,6 @@ namespace TestSandbox.Navigations
             var stopWatch = new Stopwatch();
             stopWatch.Start();
 
-            //var pathsList = CalculateNavPathsDFS(wayPointsList);
             var pathsList = CalculateNavPathsBFS(wayPointsList);
 
             stopWatch.Stop();
@@ -152,10 +149,6 @@ namespace TestSandbox.Navigations
 
             _logger.Info($"pathsList.Count = {pathsList.Count}");
 
-            //foreach (var path in pathsList)
-            //{
-            //    _logger.Info($"path = {path}");
-            //}
 
             _logger.Info("End");
         }
@@ -181,9 +174,6 @@ namespace TestSandbox.Navigations
 
                 while (targetWayPointsList.Any())
                 {
-                    //_logger.Info($"targetWayPointsList.Count = {targetWayPointsList.Count}");
-                    //_logger.Info($"targetWayPointsList = {string.Join(",", targetWayPointsList.Select(p => p.Name))}");
-                    //_logger.Info($"visitedWayPointsList = {string.Join(",", visitedWayPointsList.Select(p => p.Name))}");
 
                     var newTargetWayPointsList = new List<WayPoint>();
 
@@ -200,7 +190,6 @@ namespace TestSandbox.Navigations
 
                 if (!wayPointsList.Any())
                 {
-                    //_logger.Info("!wayPointsList.Any()");
 
                     break;
                 }
@@ -220,7 +209,6 @@ namespace TestSandbox.Navigations
                 return newTargetWayPointsList;
             }
 
-            //_logger.Info($"wayPoint = {wayPoint}");
 
             visitedWayPointsList.Add(wayPoint);
 
@@ -236,7 +224,6 @@ namespace TestSandbox.Navigations
                 cache[wayPoint] = targetCacheDict;
             }
 
-            //_logger.Info($"targetCacheDict.Count = {targetCacheDict.Count}");
 
             foreach (var link in wayPoint.Links)
             {
@@ -251,40 +238,28 @@ namespace TestSandbox.Navigations
                     targetWayPoint = link.A;
                 }
 
-                //_logger.Info($"targetWayPoint = {targetWayPoint}");
 
                 if (visitedWayPointsList.Contains(targetWayPoint))
                 {
-                    //_logger.Info($"targetWayPoint = {targetWayPoint} has been visited!");
 
-                    //var prevWayPointsList = targetCacheDict[targetWayPoint];
 
-                    //_logger.Info($"prevWayPointsList.Count = {prevWayPointsList.Count}");
 
-                    //foreach(var targetPrevWayPointsList in prevWayPointsList)
-                    //{
-                    //    _logger.Info($"chain = {string.Join("<->", targetPrevWayPointsList.Select(p => p.Name))}");
-                    //}
 
                     if (cache.ContainsKey(targetWayPoint))
                     {
                         var reverceTargetCacheDict = cache[targetWayPoint];
 
-                        //_logger.Info($"reverceTargetCacheDict.Count = {reverceTargetCacheDict.Count}");
 
                         var prevWayPointsList = reverceTargetCacheDict.SelectMany(p => p.Value).Where(p => !p.Contains(wayPoint)).ToList();
 
-                        //_logger.Info($"prevWayPointsList.Count = {prevWayPointsList.Count}");
 
                         foreach (var targetPrevWayPointsList in prevWayPointsList)
                         {
                             var chain = targetPrevWayPointsList.ToList();
 
-                            //_logger.Info($"chain = {string.Join("<->", chain.Select(p => p.Name))}");
 
                             chain.Add(wayPoint);
 
-                            //_logger.Info($"chain (next) = {string.Join("<->", chain.Select(p => p.Name))}");
 
                             if (targetCacheDict.ContainsKey(targetWayPoint))
                             {
@@ -417,17 +392,7 @@ namespace TestSandbox.Navigations
 
             _logger.Info($"n = {n}");
 
-            //var initResultList = result.ToList();
 
-            //foreach (var initResult in initResultList)
-            //{
-            //    var additionalResult = new NavPath();
-            //    additionalResult.Start = initResult.End;
-            //    additionalResult.End = initResult.Start;
-            //    additionalResult.Corners = initResult.Corners.ToList();
-            //    additionalResult.Corners.Reverse();
-            //    result.Add(additionalResult);
-            //}
 
             return result;
         }
@@ -443,7 +408,6 @@ namespace TestSandbox.Navigations
             {
                 _logger.Info($"wayPoint = {wayPoint} has been visited!");
 
-                //return;
             }
 
             visitedWayPointsList.Add(wayPoint);
@@ -473,15 +437,7 @@ namespace TestSandbox.Navigations
                     continue;
                 }
 
-                //if(cache.ContainsKey(wayPoint))
-                //{
-                //    var cacheEntry = cache[wayPoint];
 
-                //    if(cacheEntry.ContainsKey(targetWayPoint))
-                //    {
-                //        _logger.Info($"hit into cache = wayPoint = {wayPoint}");
-                //    }
-                //}
 
                 var newChain = chain.ToList();
 

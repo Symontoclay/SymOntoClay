@@ -52,20 +52,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
             var paramsCount = command.ParamsCount;
             
-#if DEBUG
-            //Log($"endPointName = {endPointName}");
-            //Log($"paramsCount = {paramsCount}");
-#endif
-
             var synonymsList = synonymsResolver?.GetSynonyms(NameHelper.CreateName(endPointName)).Select(p => p.NameValue).ToList();
 
             foreach (var endpointsRegistry in endpointsRegistries.ToList())
             {
                 var targetEndPointsList = endpointsRegistry.GetEndpointsInfoListDirectly(endPointName, paramsCount);
-
-#if DEBUG
-                //Log($"targetEndPointsList?.Count = {targetEndPointsList?.Count}");
-#endif
 
                 if (targetEndPointsList != null)
                 {
@@ -78,10 +69,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     {
                         targetEndPointsList = endpointsRegistry.GetEndpointsInfoListDirectly(synonym, paramsCount);
 
-#if DEBUG
-                        //Log($"targetEndPointsList?.Count (2) = {targetEndPointsList?.Count}");
-#endif
-
                         if (targetEndPointsList != null)
                         {
                             endPointsList.AddRange(targetEndPointsList);
@@ -91,10 +78,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             }
 
             endPointsList = endPointsList.Where(p => p != null).Distinct().ToList();
-
-#if DEBUG
-            //Log($"endPointsList = {endPointsList.WriteListToString()}");
-#endif
 
             if (endPointsList == null)
             {
@@ -107,10 +90,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             }
 
             var kindOfCommandParameters = command.KindOfCommandParameters;
-
-#if DEBUG
-            //Log($"kindOfCommandParameters = {kindOfCommandParameters}");
-#endif
 
             switch (kindOfCommandParameters)
             {
@@ -130,27 +109,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
         private IEndpointInfo NGetEndpointInfoByParametersByList(IList<IEndpointInfo> endPointsList, ICommand command)
         {
-#if DEBUG
-            //Log($"command = {command}");
-#endif
-
             var resultList = new List<IEndpointInfo>();
-
-#if DEBUG
-            //Log($"endPointsList.Count = {endPointsList.Count}");
-#endif
 
             foreach (var endPointInfo in endPointsList)
             {
-#if DEBUG
-                //Log($"endPointInfo.Name = {endPointInfo.Name}");
-#endif
-
                 var argumentsList = endPointInfo.Arguments.Where(p => !p.IsSystemDefiend);
-
-#if DEBUG
-                //Log($"argumentsList.Count() = {argumentsList.Count()}");
-#endif
 
                 var isFitEndpoint = true;
 
@@ -158,11 +121,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
                 foreach (var commandParamItem in command.ParamsList)
                 {
-#if DEBUG
-                    //Log($"commandParamItem.GetType().FullName = {commandParamItem.GetType().FullName}");
-                    //Log($"commandParamItem = {commandParamItem.ToHumanizedString()}");
-#endif
-
                     if(!argumentsListEnumerator.MoveNext())
                     {
                         isFitEndpoint = false;
@@ -171,20 +129,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
                     var targetArgument = argumentsListEnumerator.Current;
 
-#if DEBUG
-                    //Log($"targetArgument.ParameterInfo.ParameterType.FullName = {targetArgument.ParameterInfo.ParameterType.FullName}");
-#endif
-
                     if (!_platformTypesConvertorsRegistry.CanConvert(commandParamItem.GetType(), targetArgument.ParameterInfo.ParameterType))
                     {
                         isFitEndpoint = false;
                         break;
                     }
                 }
-
-#if DEBUG
-                //Log($"isFitEndpoint = {isFitEndpoint}");
-#endif
 
                 if (isFitEndpoint)
                 {
@@ -201,26 +151,14 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
             var commandParamsDict = command.ParamsDict.ToDictionary(p => p.Key.NameValue.ToLower(), p => p.Value);
 
-#if DEBUG
-            //Log($"endPointsList.Count = {endPointsList.Count}");
-#endif
-
             foreach (var endPointInfo in endPointsList)
             {
-#if DEBUG
-                //Log($"endPointInfo = {endPointInfo}");
-#endif
-
                 var argumentsDict = endPointInfo.Arguments.Where(p => !p.IsSystemDefiend).ToDictionary(p => p.Name, p => p);
 
                 var isFitEndpoint = true;
 
                 foreach (var commandParamItem in commandParamsDict)
                 {
-#if DEBUG
-                    //Log($"commandParamItem.Key = {commandParamItem.Key}");
-#endif
-
                     var realParamName = commandParamItem.Key;
 
                     if (!isFitEndpoint)
@@ -230,15 +168,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
                     if (!argumentsDict.ContainsKey(commandParamItem.Key))
                     {
-#if DEBUG
-                        //Log($"!argumentsDict.ContainsKey(commandParamItem.Key)");
-#endif
-
                         var synonymsList = synonymsResolver?.GetSynonyms(NameHelper.CreateName(commandParamItem.Key)).Select(p => p.NameValue).ToList();
-
-#if DEBUG
-                        //Log($"synonymsList = {synonymsList.WritePODListToString()}");
-#endif
 
                         var isSynonymFit = false;
 
@@ -259,10 +189,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                             }
                         }
 
-#if DEBUG
-                        //Log($"isSynonymFit = {isSynonymFit}");
-#endif
-
                         if(!isSynonymFit)
                         {
                             isFitEndpoint = false;
@@ -272,27 +198,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
                     var targetCommandValue = commandParamItem.Value;
 
-#if DEBUG
-                    //Log($"targetCommandValue = {targetCommandValue}");
-#endif
-
                     var targetArgument = argumentsDict[realParamName];
-
-#if DEBUG
-                    //Log($"targetArgument = {targetArgument}");
-                    //Log($"targetCommandValue.GetType() = {targetCommandValue.GetType()}");
-                    //Log($"targetArgument.ParameterInfo.ParameterType = {targetArgument.ParameterInfo.ParameterType}");
-#endif
 
                     if (!_platformTypesConvertorsRegistry.CanConvert(targetCommandValue.GetType(), targetArgument.ParameterInfo.ParameterType))
                     {
                         isFitEndpoint = false;
                     }
                 }
-
-#if DEBUG
-                //Log($"isFitEndpoint = {isFitEndpoint}");
-#endif
 
                 if (!isFitEndpoint)
                 {

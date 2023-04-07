@@ -34,7 +34,6 @@ namespace SymOntoClay.StandardFacts
 {
     public class StandardFactsBuilder : IStandardFactsBuilder
     {
-        //private static readonly IEntityLogger _logger = new LoggerImpementation();
 
         /// <inheritdoc/>
         public virtual string BuildSayFactString(string selfId, string factStr)

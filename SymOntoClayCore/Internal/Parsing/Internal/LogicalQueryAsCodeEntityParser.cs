@@ -41,32 +41,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_currToken = {_currToken}");
-#endif
-
             _context.Recovery(_currToken);
             var parser = new LogicalQueryParser(_context);
             parser.Run();
 
             _ruleInstance = parser.Result;
 
-#if DEBUG
-            //Log($"DebugHelperForRuleInstance.ToString(_ruleInstance) = {DebugHelperForRuleInstance.ToString(_ruleInstance)}");
-            //Log($"_context.CurrentDefaultSetings?.TypeOfAccess = {_context.CurrentDefaultSetings?.TypeOfAccess}");
-            //Log($"_context.CurrentDefaultSetings?.Holder = {_context.CurrentDefaultSetings?.Holder}");
-#endif
-
             if (_context.CurrentDefaultSetings != null)
             {
                 _ruleInstance.TypeOfAccess = _context.CurrentDefaultSetings.TypeOfAccess;
                 _ruleInstance.Holder = _context.CurrentDefaultSetings.Holder;
             }
-
-#if DEBUG
-            //Log($"DebugHelperForRuleInstance.ToString(_ruleInstance) = {DebugHelperForRuleInstance.ToString(_ruleInstance)}");
-            //Log($"_ruleInstance = {_ruleInstance}");
-#endif
 
             Exit();            
         }

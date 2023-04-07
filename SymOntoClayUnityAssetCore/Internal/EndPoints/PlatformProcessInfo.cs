@@ -37,10 +37,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 {
     public class PlatformProcessInfo : BaseProcessInfo
     {
-#if DEBUG
-        //private static ILogger _logger = LogManager.GetCurrentClassLogger();
-#endif
-
         public PlatformProcessInfo(CancellationTokenSource cancellationTokenSource, string endPointName, IReadOnlyList<int> devices, IReadOnlyList<string> friends)
         {
             _cancellationTokenSource = cancellationTokenSource;
@@ -78,10 +74,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     }
 
                     _status = value;
-
-#if DEBUG
-                    //_logger.Info($"_status = {_status};InternalOnComplete == null = {InternalOnComplete == null};InternalOnFinish == null = {InternalOnFinish == null}; GetHashCode() = {GetHashCode()}");
-#endif
 
                     switch (_status)
                     {
@@ -195,12 +187,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         /// <inheritdoc/>
         public override bool IsFriend(IProcessInfo other)
         {
-#if DEBUG
-            //_logger.Info($"other.EndPointName = {other.EndPointName}");
-            //_logger.Info($"other.Friends = {JsonConvert.SerializeObject(other.Friends)}");
-            //_logger.Info($"EndPointName = {EndPointName}");
-            //_logger.Info($"Friends = {JsonConvert.SerializeObject(Friends)}");
-#endif
             if ((!other.Friends.IsNullOrEmpty() && other.Friends.Any(p => p == EndPointName)) || (!Friends.IsNullOrEmpty() && Friends.Any(p => p == other.EndPointName)))
             {
                 return true;

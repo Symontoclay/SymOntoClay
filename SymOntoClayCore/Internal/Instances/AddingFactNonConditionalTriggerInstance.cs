@@ -57,11 +57,6 @@ namespace SymOntoClay.Core.Internal.Instances
                 _processedItems.Add(ruleInstance);
             }
 
-#if DEBUG
-            //Log($"ruleInstance.GetHashCode() = {ruleInstance.GetHashCode()}; GetHashCode() = {GetHashCode()}");
-            //Log($"ruleInstance = {ruleInstance.ToHumanizedString()}");
-#endif
-
             return ProcessAction(EmptyVarsList, ruleInstance);
         }
 

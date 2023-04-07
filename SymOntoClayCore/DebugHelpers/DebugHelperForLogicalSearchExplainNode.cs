@@ -44,10 +44,6 @@ namespace SymOntoClay.Core.DebugHelpers
 
         public static string ToDot(LogicalSearchExplainNode source)
         {
-#if DEBUG
-            //_gbcLogger.Info($"source = {source}");
-#endif
-
             if(source.Kind != KindOfLogicalSearchExplainNode.Root)
             {
                 throw new Exception($"`{source.Kind}` node can not be converted to dot. Node should be {nameof(KindOfLogicalSearchExplainNode.Root)}.");
@@ -72,22 +68,12 @@ namespace SymOntoClay.Core.DebugHelpers
 
         private static void ProcessNodeContent(LogicalSearchExplainNode source, DebugHelperForLogicalSearchExplainNodeContext context)
         {
-#if DEBUG
-            //_gbcLogger.Info($"source = {source}");
-#endif
-
             var processedNodesList = context.ProcessedNodesList;
 
             processedNodesList.Add(source);
 
             var name = context.GetNodeName(source);
 
-#if DEBUG
-            //_gbcLogger.Info($"name = {name}");
-#endif
-
-            //Dot supports html https://graphviz.org/doc/info/shapes.html but the html can not contain '&' and '<>'.
-            //So you should create huamnized string generation in html style.
 
             var nodeBuilder = new StringBuilder();
             nodeBuilder.Append($"{name} [shape=box label=<");
@@ -189,10 +175,6 @@ namespace SymOntoClay.Core.DebugHelpers
                             foreach(var item in resultsOfQueryToRelationList)
                             {
                                 sb.AppendLine("<TR>");
-
-#if DEBUG
-                                //_gbcLogger.Info($"item.ResultOfVarOfQueryToRelationList = {item.ResultOfVarOfQueryToRelationList.WriteListToString()}");
-#endif
 
                                 var itemVarDict = item.ResultOfVarOfQueryToRelationList.GroupBy(p => p.NameOfVar).ToDictionary(p => p.Key, p => p.Select(x => x.FoundExpression));
 
@@ -303,19 +285,13 @@ namespace SymOntoClay.Core.DebugHelpers
                                     sb.AppendLine("<TR><TD>");
 
                                     sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"1\">");
-                                    //sb.AppendLine("<TR><TD>Rule part</TD><TD>Parent fact</TD></TR>");
 
                                     foreach (var item in baseRulePartList)
                                     {
                                         sb.AppendLine("<TR>");
                                         sb.AppendLine($"<TD>{item.ToHumanizedString(toHumanizedStringOptions)}</TD>");
 
-                                        //var rulePartHumanizedStringOptions = new DebugHelperOptions();
-                                        //rulePartHumanizedStringOptions.HumanizedOptions = HumanizedOptions.ShowAll;
-                                        //rulePartHumanizedStringOptions.IsHtml = true;
-                                        //rulePartHumanizedStringOptions.ItemsForSelection = new List<IObjectToString> { item };
 
-                                        //sb.AppendLine($"<TD>{item.Parent.ToHumanizedString(rulePartHumanizedStringOptions)}</TD>");
                                         sb.AppendLine("</TR>");
                                     }
 
@@ -796,7 +772,6 @@ namespace SymOntoClay.Core.DebugHelpers
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
-                    //return string.Empty;
             }
 
             /*

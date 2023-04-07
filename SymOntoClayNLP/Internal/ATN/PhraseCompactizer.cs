@@ -47,16 +47,7 @@ namespace SymOntoClay.NLP.Internal.ATN
 
         private void NRun(BaseSentenceItem sentenceItem, PhraseCompactizerVerbChain verbChain)
         {
-#if DEBUG
-            //_logger.Log($"sentenceItem = {sentenceItem.ToDbgString()}");
-            //_logger.Log($"verbChain = {verbChain}");
-#endif
-
             var kindOfSentenceItem = sentenceItem.KindOfSentenceItem;
-
-#if DEBUG
-            //_logger.Log($"kindOfSentenceItem = {kindOfSentenceItem}");
-#endif
 
             switch(kindOfSentenceItem)
             {
@@ -75,10 +66,6 @@ namespace SymOntoClay.NLP.Internal.ATN
 
         private void ProcessSentence(Sentence sentence)
         {
-#if DEBUG
-            //_logger.Log($"sentence = {sentence.ToDbgString()}");
-#endif
-
             if (sentence.Condition != null)
             {
                 throw new NotImplementedException();
@@ -95,10 +82,6 @@ namespace SymOntoClay.NLP.Internal.ATN
                 NRun(sentence.Predicate, verbChain);
             }
 
-#if DEBUG
-            //_logger.Log($"verbChain = {verbChain}");
-#endif
-
             var verbChainState = verbChain.State;
 
             VerbPhrase targetVerbPhrase = null;
@@ -111,10 +94,6 @@ namespace SymOntoClay.NLP.Internal.ATN
                         targetVerbPhrase = verbPhrase;
 
                         var verb = verbPhrase.V.WordFrame.AsVerb;
-
-#if DEBUG
-                        //_logger.Log($"verb = {verb}");
-#endif
 
                         if(verb.Number != GrammaticalNumberOfWord.Neuter)
                         {
@@ -191,9 +170,6 @@ namespace SymOntoClay.NLP.Internal.ATN
                 sentence.Mood = GrammaticalMood.Indicative;
             }
 
-#if DEBUG
-            //_logger.Log($"sentence = {sentence}");
-#endif
         }
 
         private void ProcessVerbPhrase(VerbPhrase verbPhrase, PhraseCompactizerVerbChain verbChain)
@@ -208,12 +184,6 @@ namespace SymOntoClay.NLP.Internal.ATN
 
         private void NProcessVerbPhrase(VerbPhrase verbPhrase, PhraseCompactizerVerbChain verbChain)
         {
-#if DEBUG
-            //_logger.Log($"sentenceItem = {verbPhrase.ToDbgString()}");
-            //_logger.Log($"verbChain = {verbChain}");
-            //_logger.Log($"verbPhrase.V = {verbPhrase.V}");
-#endif
-
             var verb = verbPhrase.V.WordFrame.AsVerb;
 
             if (verb.IsModal)

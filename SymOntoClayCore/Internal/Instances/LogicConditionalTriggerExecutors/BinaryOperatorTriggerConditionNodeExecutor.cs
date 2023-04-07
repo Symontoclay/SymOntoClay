@@ -38,15 +38,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         public BinaryOperatorTriggerConditionNodeExecutor(IEngineContext engineContext, ILocalCodeExecutionContext localCodeExecutionContext, TriggerConditionNode condition)
             : base(engineContext.Logger)
         {
-#if DEBUG
-            //Log($"condition = {condition}");
-#endif
-
             _kindOfOperator = condition.KindOfOperator;
-
-#if DEBUG
-            //Log($"_kindOfOperator = {_kindOfOperator}");
-#endif
 
             _localCodeExecutionContext = localCodeExecutionContext;
 
@@ -73,18 +65,10 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
                 kindOfOperator = KindOfOperator.Is;
             }
 
-#if DEBUG
-            //Log($"kindOfOperator = {kindOfOperator}");
-#endif
-
             var paramsList = new List<Value>();
             paramsList.Add(Left.Run(varList, processedRuleInstance));
             paramsList.Add(Right.Run(varList, processedRuleInstance));
             paramsList.Add(NullValue.Instance);
-
-#if DEBUG
-            //Log($"paramsList = {paramsList.WriteListToString()}");
-#endif
 
             return _codeExecutor.CallOperator(kindOfOperator, paramsList, _localCodeExecutionContext);
         }

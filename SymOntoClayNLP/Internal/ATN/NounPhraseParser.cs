@@ -92,25 +92,13 @@ namespace SymOntoClay.NLP.Internal.ATN
         /// <inheritdoc/>
         public override void OnEnter()
         {
-#if DEBUG
-            //Log($"Begin");
-#endif
-
             _nounPhrase = new NounPhrase();
 
-#if DEBUG
-            //Log($"End");
-#endif
         }
 
         /// <inheritdoc/>
         public override void OnRun(ATNToken token)
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"token = {token}");
-#endif
-
             switch (_state)
             {
                 case State.Init:
@@ -130,10 +118,6 @@ namespace SymOntoClay.NLP.Internal.ATN
 
                                     foreach (var item in nounsList)
                                     {
-#if DEBUG
-                                        //Log($"item = {item}");
-#endif
-
                                         SetParser(new RunVariantDirective<NounPhraseParser>(State.WaitForN, ConvertToConcreteATNToken(token, item)));
                                     }
                                 }
@@ -146,10 +130,6 @@ namespace SymOntoClay.NLP.Internal.ATN
 
                                     foreach(var item in subjectsPronounsList)
                                     {
-#if DEBUG
-                                        //Log($"item = {item}");
-#endif
-
                                         SetParser(new RunVariantDirective<NounPhraseParser>(State.WaitForN, ConvertToConcreteATNToken(token, item)));
                                     }
                                 }
@@ -163,10 +143,6 @@ namespace SymOntoClay.NLP.Internal.ATN
 
                                     foreach (var item in articlesList)
                                     {
-#if DEBUG
-                                        //Log($"item = {item}");
-#endif
-
                                         SetParser(new RunVariantDirective<NounPhraseParser>(State.WaitForD, ConvertToConcreteATNToken(token, item))); ;
                                     }
                                 }
@@ -212,10 +188,6 @@ namespace SymOntoClay.NLP.Internal.ATN
 
                                     foreach(var item in nounsList)
                                     {
-#if DEBUG
-                                        //Log($"item = {item}");
-#endif
-
                                         SetParser(new RunVariantDirective<NounPhraseParser>(State.WaitForN, ConvertToConcreteATNToken(token, item)));
                                     }
                                 }
@@ -249,10 +221,6 @@ namespace SymOntoClay.NLP.Internal.ATN
 
                                     foreach (var item in nounsList)
                                     {
-#if DEBUG
-                                        //Log($"item = {item}");
-#endif
-
                                         SetParser(new RunVariantDirective<NounPhraseParser>(State.WaitForN, ConvertToConcreteATNToken(token, item)));
                                     }
                                 }
@@ -278,10 +246,6 @@ namespace SymOntoClay.NLP.Internal.ATN
 
                                 var wordFramesList = token.WordFrames;
 
-#if DEBUG
-                                //Log($"_roleOfNounPhrase = {_roleOfNounPhrase}");
-#endif
-
                                 if (_roleOfNounPhrase == RoleOfNounPhrase.Subject)
                                 {
                                     var subject = _nounPhrase.N.AsWord.WordFrame;
@@ -294,10 +258,6 @@ namespace SymOntoClay.NLP.Internal.ATN
 
                                         foreach (var item in verbsList)
                                         {
-#if DEBUG
-                                            //Log($"item = {item}");
-#endif
-
                                             SetParser(new ReturnToParentDirective(_nounPhrase, ConvertToConcreteATNToken(token, item)));
                                         }
                                     }
@@ -328,20 +288,11 @@ namespace SymOntoClay.NLP.Internal.ATN
         /// <inheritdoc/>
         public override void OnVariant(ConcreteATNToken token)
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"token = {token}");
-#endif
-
             switch (_state)
             {
                 case State.WaitForD:
                     {
                         _nounPhrase.D = ConvertToWord(token);
-
-#if DEBUG
-                        //Log($"_nounPhrase.ToDbgString() = {_nounPhrase.ToDbgString()}");
-#endif
 
                         _state = State.GotD;
 
@@ -352,10 +303,6 @@ namespace SymOntoClay.NLP.Internal.ATN
                 case State.WaitForN:
                     {
                         _nounPhrase.N = ConvertToWord(token);
-
-#if DEBUG
-                        //Log($"_nounPhrase.ToDbgString() = {_nounPhrase.ToDbgString()}");
-#endif
 
                         _state = State.GotN;
 
@@ -381,11 +328,6 @@ namespace SymOntoClay.NLP.Internal.ATN
         /// <inheritdoc/>
         public override void OnReceiveReturn(BaseSentenceItem phrase)
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"phrase = {phrase}");
-#endif
-
             throw new NotImplementedException();
         }
 

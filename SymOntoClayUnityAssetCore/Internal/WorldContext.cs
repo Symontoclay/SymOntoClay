@@ -49,7 +49,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 {
     public class WorldContext: IWorldCoreContext, IWorldCoreGameComponentContext, ISymOntoClayDisposable
     {
-        //TODO: fix me!
         public void SetSettings(WorldSettings settings)
         {
             WorldSettingsValidator.Validate(settings);
@@ -63,7 +62,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                 LoadTypesPlatformTypesConvertors();
             }
 
-            //throw new NotImplementedException();
 
             _isInitialized = true;
         }

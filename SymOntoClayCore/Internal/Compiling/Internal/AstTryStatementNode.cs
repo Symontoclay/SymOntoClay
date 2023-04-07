@@ -39,10 +39,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(AstTryStatement statement, LoopCompilingContext loopCompilingContext)
         {
-#if DEBUG
-            //Log($"statement = {statement}");
-#endif
-
             IntermediateScriptCommand firstElseCommand = null;
             IntermediateScriptCommand firstEnsureComand = null;
             var afterCommand = new IntermediateScriptCommand() { OperationCode = OperationCode.Nop };

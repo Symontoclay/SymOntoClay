@@ -38,10 +38,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(AstIfStatement statement, LoopCompilingContext loopCompilingContext)
         {
-#if DEBUG
-            //Log($"statement = {statement}");
-#endif
-
             var hasElifs = !statement.ElifStatements.IsNullOrEmpty();
             var hasElse = !statement.ElseStatements.IsNullOrEmpty();
 
@@ -96,10 +92,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 AddCommand(ifFinalJumpCommand);
             }
 
-#if DEBUG
-            //DbgPrintCommands();
-#endif
-
             if (hasElifs)
             {
                 var n = 1;
@@ -112,11 +104,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     var elifConditionCodeBlockNode = new ExpressionNode(_context);
                     elifConditionCodeBlockNode.Run(elifStatement.Condition);
                     AddCommands(elifConditionCodeBlockNode.Result);
-
-#if DEBUG
-                    //Log($"n = {n}");
-                    //Log($"elifsTotalCount = {elifsTotalCount}");
-#endif
 
                     var elifJumpCommand = new IntermediateScriptCommand() { OperationCode = OperationCode.JumpToIfFalse };
 
@@ -166,11 +153,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
             AddCommand(afterCommand);
 
-#if DEBUG
-            //DbgPrintCommands();
-#endif
-
-            //throw new NotImplementedException();
         }
     }
 }

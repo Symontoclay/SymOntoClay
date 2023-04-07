@@ -89,7 +89,6 @@ namespace DictionaryGenerator
 
         private WordSplitter mWordSplitter;
 
-        //private Dictionary<string, List<string>> mNounClassesDict;
 
         private int mTotalCount;
 
@@ -113,8 +112,6 @@ namespace DictionaryGenerator
 
             var rootNounsList = mRootNounsSource.ReadAll();
 
-            //var rootNounClassesFactory = new RootNounClassesFactory(rootNounsList);
-            //mNounClassesDict = rootNounClassesFactory.Result;
 
 #if DEBUG
             _logger.Info($"rootNounsList.Count = {rootNounsList.Count}");
@@ -185,11 +182,9 @@ namespace DictionaryGenerator
 
             mWordsDictData = new InternalWordsDictData();
             mWordsDictData.WordsDict = new Dictionary<string, WordFrame>();
-            //mWordsDictData.NamesList = new List<string>();
 
             mWordsDictDataOfName = new InternalWordsDictData();
             mWordsDictDataOfName.WordsDict = new Dictionary<string, WordFrame>();
-            //mWordsDictDataOfName.NamesList = new List<string>();
 
             var usualTargetWordsList = new List<string>();
             var namesTargetWordsList = new List<string>();
@@ -207,13 +202,6 @@ namespace DictionaryGenerator
                         namesWordsList.AddRange(notFoundTargetNamesList);
                     }
 
-#if DEBUG
-                    //NLog.LogManager.GetCurrentClassLogger().Info($"Run notFoundTargetNamesList.Count = {notFoundTargetNamesList.Count}");
-                    //foreach(var notFoundTargetName in notFoundTargetNamesList)
-                    //{
-                    //    LogInstance.Log($"notFoundTargetName = {notFoundTargetName}");
-                    //}
-#endif
                 }
             }
 
@@ -225,7 +213,6 @@ namespace DictionaryGenerator
 
             ProcessUsualWords(usualWordsList);
             ProcessNames(namesWordsList);
-            //ProcessDigits(digitsWordsList);
             ProcessComplexPhrases(complexWordsList);
 
             if (!mTargetWordsList.IsNullOrEmpty())
@@ -266,23 +253,17 @@ namespace DictionaryGenerator
             SimpleSaveDict(mNameOfNamesDict, wordsDictDataOfNameToExport);
 
 #if DEBUG
-            //_logger.Info($"Run mTotalCount = {mTotalCount}");
             _logger.Info($"Run mWordsDictData.WordsDict.Count = {mWordsDictData.WordsDict.Count}");
-            //_logger.Info($"Run mWordsDictData = {mWordsDictData}");
             _logger.Info($"Run mWordsDictDataOfName.WordsDict.Count = {mWordsDictDataOfName.WordsDict.Count}");
-            //_logger.Info($"Run mWordsDictDataOfName = {mWordsDictDataOfName}");
 
             var tmpWordFrame = wordsDictDataToExport["ought"];
             _logger.Info($"Run tmpWordFrame = {tmpWordFrame.WriteListToString()}");
-            //WordsDictData
             tmpWordFrame = wordsDictDataToExport["go"];
             _logger.Info($"Run tmpWordFrame = {tmpWordFrame.WriteListToString()}");
 
             tmpWordFrame = wordsDictDataToExport["went"];
             _logger.Info($"Run tmpWordFrame = {tmpWordFrame.WriteListToString()}");
 
-            //tmpWordFrame = mWordsDictDataOfName.WordsDict["Tim"];
-            //_logger.Info($"Run tmpWordFrame = {tmpWordFrame}");
 #endif
         }
 
@@ -368,10 +349,6 @@ namespace DictionaryGenerator
 
                 var word = wordFrame.Word;
 
-#if DEBUG
-                //_logger.Info($"SimpleSaveDict word = {word}");
-#endif
-
                 var grammaticalWordFrames = wordFrame.GrammaticalWordFrames;
 
                 foreach(var grammaticalWordFrame in grammaticalWordFrames)
@@ -402,51 +379,13 @@ namespace DictionaryGenerator
             var serializationEngine = new WordsDictJSONSerializationEngine();//new WordsDictSerializationEngine();
             serializationEngine.SaveToFile(dict, fullPath);
 
-            //localPath = $"{localPath}.fs";
 
-            //fullPath = Path.Combine(rootPath, localPath);
 
-#if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info($"SimpleSaveDict fullPath = {fullPath}");
-#endif
 
-            //var jsonSerializer = new DataContractJsonSerializer(typeof(WordsDictData), new List<Type> {
-            //    typeof(PronounGrammaticalWordFrame),
-            //    typeof(AdjectiveGrammaticalWordFrame),
-            //    typeof(AdverbGrammaticalWordFrame),
-            //    typeof(ArticleGrammaticalWordFrame),
-            //    typeof(ConjunctionGrammaticalWordFrame),
-            //    typeof(NounGrammaticalWordFrame),
-            //    typeof(NumeralGrammaticalWordFrame),
-            //    typeof(PostpositionGrammaticalWordFrame),
-            //    typeof(PrepositionGrammaticalWordFrame),
-            //    typeof(PronounGrammaticalWordFrame),
-            //    typeof(VerbGrammaticalWordFrame)
-            //});
 
-            //if (File.Exists(fullPath))
-            //{
-            //    File.Delete(fullPath);
-            //}
 
-            //using (var fs = File.OpenWrite(fullPath))
-            //{
-            //    jsonSerializer.WriteObject(fs, dict);
-            //    fs.Flush();
-            //}
 
-            //if(File.Exists(fullPath))
-            //{
-            //    File.Delete(fullPath);
-            //}
 
-            //var binaryFormatter = new BinaryFormatter();
-
-            //using (var fs = File.OpenWrite(fullPath))
-            //{
-            //    binaryFormatter.Serialize(fs, dict);
-            //    fs.Flush();
-            //}
         }
 
         /*
@@ -547,10 +486,6 @@ to have (when it means "to possess")*
                 throw new ArgumentNullException(nameof(grammaticalWordFrame));
             }
 
-#if DEBUG
-            //NLog.LogManager.GetCurrentClassLogger().Info($"AddGrammaticalWordFrame word = {word}");
-#endif
-
             var wordFrame = GetWordFrame(word);
 
             if(grammaticalWordFrame.PartOfSpeech == GrammaticalPartOfSpeech.Noun || grammaticalWordFrame.PartOfSpeech == GrammaticalPartOfSpeech.Pronoun)
@@ -586,11 +521,6 @@ to have (when it means "to possess")*
         private void ProcessRootWordName(string rootWord)
         {
 #if DEBUG
-            //if (rootWord.ToLower() == "britain")
-            //{
-            //    NLog.LogManager.GetCurrentClassLogger().Info($"ProcessRootWordName rootWord = {rootWord}");
-            //    throw new NotImplementedException();
-            //}
             NLog.LogManager.GetCurrentClassLogger().Info($"ProcessRootWordName rootWord = '{rootWord}'");
 #endif
 
@@ -677,16 +607,7 @@ to have (when it means "to possess")*
 
             var logicalMeaning = new List<string>() { "entity" };
 
-            //List<string> logicalMeaning = null;
 
-            //if(mNounClassesDict.ContainsKey(rootWord))
-            //{
-            //    logicalMeaning = mNounClassesDict[rootWord];
-            //}
-            //else
-            //{
-            //    logicalMeaning = new List<string>();
-            //}
 
 #if DEBUG
             NLog.LogManager.GetCurrentClassLogger().Info($"ProcessNoun logicalMeaning.Count = {logicalMeaning.Count}");

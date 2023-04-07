@@ -34,10 +34,6 @@ namespace SymOntoClay.Core.Internal.Converters
 {
     public static class ConverterToNormalized
     {
-#if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         public static RuleInstance Convert(RuleInstance source, CheckDirtyOptions options)
         {
             var convertingContext = new Dictionary<object, object>();
@@ -47,11 +43,6 @@ namespace SymOntoClay.Core.Internal.Converters
 
         public static RuleInstance Convert(RuleInstance source, CheckDirtyOptions options, Dictionary<object, object> convertingContext)
         {
-#if DEBUG
-            //_gbcLogger.Info($"source = {source}");
-            //_gbcLogger.Info($"source = {source.ToHumanizedString()}");
-#endif
-
             if (source == null)
             {
                 return null;
@@ -122,29 +113,13 @@ namespace SymOntoClay.Core.Internal.Converters
                 }
             }
 
-#if DEBUG
-            //_gbcLogger.Info($"source.TypeOfAccess = {source.TypeOfAccess}");
-            //_gbcLogger.Info($"result.TypeOfAccess = {result.TypeOfAccess}");
-            //_gbcLogger.Info($"source.Holder = {source.Holder}");
-            //_gbcLogger.Info($"result.Holder = {result.Holder}");
-#endif
-
             FillAnnotationsModalitiesAndSections(source, result, options, convertingContext);
-
-#if DEBUG
-            //_gbcLogger.Info($"result = {result}");
-            //_gbcLogger.Info($"result = {result.ToHumanizedString()}");
-#endif
 
             return result;
         }
 
         private static PrimaryRulePart ConvertPrimaryRulePart(PrimaryRulePart source, RuleInstance ruleInstance, CheckDirtyOptions options, Dictionary<object, object> convertingContext, List<RuleInstance> processedRuleInstances)
         {
-#if DEBUG
-            //_gbcLogger.Info($"source = {source}");
-#endif
-
             if (source == null)
             {
                 return null;
@@ -168,19 +143,11 @@ namespace SymOntoClay.Core.Internal.Converters
                 }
             }
 
-#if DEBUG
-            //_gbcLogger.Info($"result = {result}");
-#endif
-
             return result;
         }
 
         private static SecondaryRulePart ConvertSecondaryRulePart(SecondaryRulePart source, RuleInstance ruleInstance, CheckDirtyOptions options, Dictionary<object, object> convertingContext, List<RuleInstance> processedRuleInstances)
         {
-#if DEBUG
-            //_gbcLogger.Info($"source = {source}");
-#endif
-
             if (source == null)
             {
                 return null;
@@ -197,10 +164,6 @@ namespace SymOntoClay.Core.Internal.Converters
             FillBaseRulePart(source, result, ruleInstance, options, convertingContext, processedRuleInstances);
 
             result.PrimaryPart = ConvertPrimaryRulePart(source.PrimaryPart, ruleInstance, options, convertingContext, processedRuleInstances);
-
-#if DEBUG
-            //_gbcLogger.Info($"result = {result}");
-#endif
 
             return result;
         }
@@ -220,10 +183,6 @@ namespace SymOntoClay.Core.Internal.Converters
 
         private static LogicalQueryNode ConvertLogicalQueryNode(LogicalQueryNode source, CheckDirtyOptions options, Dictionary<object, object> convertingContext, Dictionary<StrongIdentifierValue, LogicalQueryNode> aliasesDict, List<RuleInstance> processedRuleInstances)
         {
-#if DEBUG
-            //_gbcLogger.Info($"source = {source}");
-#endif
-            
             switch (source.Kind)
             {
                 case KindOfLogicalQueryNode.BinaryOperator:
@@ -296,11 +255,6 @@ namespace SymOntoClay.Core.Internal.Converters
 
         private static LogicalQueryNode ConvertUnaryPredicateToFullIsPredicate(LogicalQueryNode source, Dictionary<object, object> convertingContext, Dictionary<StrongIdentifierValue, LogicalQueryNode> aliasesDict)
         {
-#if DEBUG
-            //_gbcLogger.Info($"source = {source}");
-            //_gbcLogger.Info($"source.ToHumanizedString() = {source.ToHumanizedString()}");
-#endif
-
             if (source == null)
             {
                 return null;
@@ -323,10 +277,6 @@ namespace SymOntoClay.Core.Internal.Converters
             var superNameNode = new LogicalQueryNode();
 
             var kindOfSourceName = source.Name.KindOfName;
-
-#if DEBUG
-            //_gbcLogger.Info($"kindOfSourceName = {kindOfSourceName}");
-#endif
 
             switch(kindOfSourceName)
             {
@@ -351,21 +301,11 @@ namespace SymOntoClay.Core.Internal.Converters
             rankNode.Kind = KindOfLogicalQueryNode.Value;
             rankNode.Value = new LogicalValue(1);
 
-#if DEBUG
-            //_gbcLogger.Info($"result = {result}");
-            //_gbcLogger.Info($"result.ToHumanizedString() = {result.ToHumanizedString()}");
-#endif
-
             return result;
         }
 
         private static LogicalQueryNode ConvertFactLogicalQueryNode(LogicalQueryNode source, CheckDirtyOptions options, Dictionary<object, object> convertingContext, Dictionary<StrongIdentifierValue, LogicalQueryNode> aliasesDict, List<RuleInstance> processedRuleInstances)
         {
-#if DEBUG
-            //_gbcLogger.Info($"source = {source}");
-            //_gbcLogger.Info($"source.ToHumanizedString() = {source.ToHumanizedString()}");
-#endif
-
             if (source == null)
             {
                 return null;
@@ -382,18 +322,8 @@ namespace SymOntoClay.Core.Internal.Converters
 
             var targetExpr = fact.PrimaryPart.Expression;
 
-#if DEBUG
-            //_gbcLogger.Info($"targetExpr = {targetExpr}");
-            //_gbcLogger.Info($"targetExpr.ToHumanizedString() = {targetExpr.ToHumanizedString()}");
-#endif
-
             var groupNode = new LogicalQueryNode() { Kind = KindOfLogicalQueryNode.Group };
             groupNode.Left = ConvertLogicalQueryNode(targetExpr, options, convertingContext, aliasesDict, processedRuleInstances);
-
-#if DEBUG
-            //_gbcLogger.Info($"groupNode = {groupNode}");
-            //_gbcLogger.Info($"groupNode.ToHumanizedString() = {groupNode.ToHumanizedString()}");
-#endif
 
             convertingContext[source] = groupNode;
 
@@ -402,34 +332,15 @@ namespace SymOntoClay.Core.Internal.Converters
 
         private static LogicalQueryNode ConvertAndLogicalQueryNode(LogicalQueryNode source, CheckDirtyOptions options, Dictionary<object, object> convertingContext, Dictionary<StrongIdentifierValue, LogicalQueryNode> aliasesDict, List<RuleInstance> processedRuleInstances)
         {
-#if DEBUG
-            //_gbcLogger.Info("ConvertAndLogicalQueryNode!!!!!");
-            //_gbcLogger.Info($"source = {source}");
-            //_gbcLogger.Info($"source.Kind = {source.Kind}");
-            //_gbcLogger.Info($"source = {source.ToHumanizedString()}");
-            //_gbcLogger.Info($"(options != null) = {options != null}");
-#endif
-
             if(!(options?.IgnoreStandaloneConceptsInNormalization ?? false))
             {
                 return ConvertLogicalQueryNodeInDefaultWay(source, options, convertingContext, aliasesDict, processedRuleInstances);
             }
 
-#if DEBUG
-            //_gbcLogger.Info("ConvertAndLogicalQueryNode NEXT");
-            //_gbcLogger.Info($"source = {source}");
-            //_gbcLogger.Info($"source = {source.ToHumanizedString()}");
-#endif
-
             var result = ConvertLogicalQueryNodeInDefaultWay(source, options, convertingContext, aliasesDict, processedRuleInstances);
 
             var leftOperand = result.Left;
             var rightOperand = result.Right;
-
-#if DEBUG
-            //_gbcLogger.Info($"leftOperand = {leftOperand}");
-            //_gbcLogger.Info($"rightOperand = {rightOperand}");
-#endif
 
             if (leftOperand.Kind == KindOfLogicalQueryNode.Concept)
             {
@@ -446,14 +357,6 @@ namespace SymOntoClay.Core.Internal.Converters
 
         private static LogicalQueryNode ConvertLogicalQueryNodeInDefaultWay(LogicalQueryNode source, CheckDirtyOptions options, Dictionary<object, object> convertingContext, Dictionary<StrongIdentifierValue, LogicalQueryNode> aliasesDict, List<RuleInstance> processedRuleInstances)
         {
-#if DEBUG
-            //_gbcLogger.Info("ConvertLogicalQueryNodeInDefaultWay!!!!!");
-            //_gbcLogger.Info($"source = {source}");
-            //_gbcLogger.Info($"source.Kind = {source.Kind}");
-            //_gbcLogger.Info($"source = {source.ToHumanizedString()}");
-            //_gbcLogger.Info($"(options != null) = {options != null}");
-#endif
-
             if (source == null)
             {
                 return null;
@@ -501,10 +404,6 @@ namespace SymOntoClay.Core.Internal.Converters
 
             if (!sourceParamsList.IsNullOrEmpty())
             {
-#if DEBUG
-                //_gbcLogger.Info($"sourceParamsList.Count = {sourceParamsList.Count}");
-#endif
-
                 var destParametersList = new List<LogicalQueryNode>();
 
                 foreach (var param in sourceParamsList)
@@ -537,11 +436,6 @@ namespace SymOntoClay.Core.Internal.Converters
             result.IsQuestion = source.IsQuestion;
 
             FillAnnotationsModalitiesAndSections(source, result, options, convertingContext);
-
-#if DEBUG
-            //_gbcLogger.Info($"result = {result.ToHumanizedString()}");
-            //_gbcLogger.Info($"result = {result}");
-#endif
 
             return result;
         }
@@ -588,19 +482,10 @@ namespace SymOntoClay.Core.Internal.Converters
 
         private static void PackRulePart(BaseRulePart rulePart)
         {
-#if DEBUG
-            //_gbcLogger.Info($"rulePart = {rulePart.ToHumanizedString()}");
-            //_gbcLogger.Info($"rulePart = {rulePart}");
-#endif
-
             while(NPackRulePart(rulePart))
             {
             }
 
-#if DEBUG
-            //_gbcLogger.Info($"rulePart (after) = {rulePart.ToHumanizedString()}");
-            //_gbcLogger.Info($"rulePart (after) = {rulePart}");
-#endif
         }
 
         private static bool NPackRulePart(BaseRulePart rulePart)
@@ -613,11 +498,6 @@ namespace SymOntoClay.Core.Internal.Converters
 
         private static bool PackNode(LogicalQueryNode node, Stack<ILogicalQueryNodeParent> parents)
         {
-#if DEBUG
-            //_gbcLogger.Info($"node = {node.ToHumanizedString()}");
-            //_gbcLogger.Info($"node = {node}");
-#endif
-
             switch (node.Kind)
             {
                 case KindOfLogicalQueryNode.BinaryOperator:
@@ -653,11 +533,6 @@ namespace SymOntoClay.Core.Internal.Converters
 
         private static bool PackBinaryOperatorNode(LogicalQueryNode node, Stack<ILogicalQueryNodeParent> parents)
         {
-#if DEBUG
-            //_gbcLogger.Info($"node = {node.ToHumanizedString()}");
-            //_gbcLogger.Info($"node = {node}");
-#endif
-
             if(node.Left != null && node.Right != null)
             {
                 parents.Push(node);
@@ -695,11 +570,6 @@ namespace SymOntoClay.Core.Internal.Converters
 
         private static bool PackUnaryOperatorNode(LogicalQueryNode node, Stack<ILogicalQueryNodeParent> parents)
         {
-#if DEBUG
-            //_gbcLogger.Info($"node = {node.ToHumanizedString()}");
-            //_gbcLogger.Info($"node = {node}");
-#endif
-
             if(node.Left == null)
             {
                 var parent = parents.Peek();
@@ -719,11 +589,6 @@ namespace SymOntoClay.Core.Internal.Converters
 
         private static bool PackRelationNode(LogicalQueryNode node, Stack<ILogicalQueryNodeParent> parents)
         {
-#if DEBUG
-            //_gbcLogger.Info($"node = {node.ToHumanizedString()}");
-            //_gbcLogger.Info($"node = {node}");
-#endif
-
             if(!node.ParamsList.Any(p => p == null))
             {
                 return false;

@@ -43,17 +43,9 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
 
             RunBaseSentenceItem(sentenceItem, sb);
 
-#if DEBUG
-            //_logger.Log($"sb = '{sb}'");
-#endif
-
             sb[0] = char.ToUpper(sb[0]);
 
             sb.Append(".");
-
-#if DEBUG
-            //_logger.Log($"sb (2) = '{sb}'");
-#endif
 
             return sb.ToString();
         }
@@ -61,10 +53,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
         private void RunBaseSentenceItem(BaseSentenceItem sentenceItem, StringBuilder sb)
         {
             var kindOfSentenceItem = sentenceItem.KindOfSentenceItem;
-
-#if DEBUG
-            //_logger.Log($"kindOfSentenceItem = {kindOfSentenceItem}");
-#endif
 
             switch(kindOfSentenceItem)
             {
@@ -95,10 +83,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
 
         private void RunSentence(Sentence sentence, StringBuilder sb)
         {
-#if DEBUG
-            //_logger.Log($"sentence = {sentence.ToDbgString()}");
-#endif
-
             if(sentence.VocativePhrase != null)
             {
                 throw new NotImplementedException();
@@ -114,26 +98,15 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
                 RunBaseSentenceItem(sentence.Subject, sb);
             }
 
-#if DEBUG
-            //_logger.Log($"sb = '{sb}'");
-#endif
-
             if (sentence.Predicate != null)
             {
                 RunBaseSentenceItem(sentence.Predicate, sb);
             }
 
-#if DEBUG
-            //_logger.Log($"sb = '{sb}'");
-#endif
         }
 
         private void RunVerbPhrase(VerbPhrase verbPhrase, StringBuilder sb)
         {
-#if DEBUG
-            //_logger.Log($"verbPhrase = {verbPhrase.ToDbgString()}");
-#endif
-
             if(verbPhrase.Intrusion != null)
             {
                 throw new NotImplementedException();
@@ -143,10 +116,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
             {
                 RunBaseSentenceItem(verbPhrase.V, sb);
             }
-
-#if DEBUG
-            //_logger.Log($"sb = '{sb}'");
-#endif
 
             if (verbPhrase.VP != null)
             {
@@ -173,25 +142,14 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
                 throw new NotImplementedException();
             }
 
-#if DEBUG
-            //_logger.Log($"sb = '{sb}'");
-#endif
         }
 
         private void RunNounPhrase(NounPhrase nounPhrase, StringBuilder sb)
         {
-#if DEBUG
-            //_logger.Log($"nounPhrase = {nounPhrase.ToDbgString()}");
-#endif
-
             if (nounPhrase.D != null)
             {
                 RunBaseSentenceItem(nounPhrase.D, sb);
             }
-
-#if DEBUG
-            //_logger.Log($"sb = '{sb}'");
-#endif
 
             if (nounPhrase.AP != null)
             {
@@ -202,10 +160,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
             {
                 RunBaseSentenceItem(nounPhrase.N, sb);
             }
-
-#if DEBUG
-            //_logger.Log($"sb = '{sb}'");
-#endif
 
             if (nounPhrase.QP != null)
             {
@@ -254,25 +208,14 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
                 throw new NotImplementedException();
             }
 
-#if DEBUG
-            //_logger.Log($"sb = '{sb}'");
-#endif
         }
 
         private void RunPreOrPostpositionalPhrase(PreOrPostpositionalPhrase preOrPostpositionalPhrase, StringBuilder sb)
         {
-#if DEBUG
-            //_logger.Log($"preOrPostpositionalPhrase = {preOrPostpositionalPhrase.ToDbgString()}");
-#endif
-
             if(preOrPostpositionalPhrase.P != null)
             {
                 RunBaseSentenceItem(preOrPostpositionalPhrase.P, sb);
             }
-
-#if DEBUG
-            //_logger.Log($"sb = '{sb}'");
-#endif
 
             if (preOrPostpositionalPhrase.P2 != null)
             {
@@ -289,18 +232,10 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
                 RunBaseSentenceItem(preOrPostpositionalPhrase.NP, sb);
             }
 
-#if DEBUG
-            //_logger.Log($"sb = '{sb}'");
-#endif
         }
 
         private void RunWord(Word word, StringBuilder sb)
         {
-#if DEBUG
-            //_logger.Log($"word = {word.ToDbgString()}");
-            //_logger.Log($"sb.Length = {sb.Length}");
-#endif
-
             if (sb.Length > 0)
             {
                 sb.Append(" ");
@@ -308,9 +243,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
 
             sb.Append(word.Content);
 
-#if DEBUG
-            //_logger.Log($"sb = '{sb}'");
-#endif
         }
     }
 }

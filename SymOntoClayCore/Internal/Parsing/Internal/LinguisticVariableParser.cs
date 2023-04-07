@@ -76,26 +76,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnFinish()
         {
-#if DEBUG
-            //Log("Begin");
-#endif
-
             RemoveCurrentCodeEntity();
 
-#if DEBUG
-            //Log("End");
-#endif
         }
 
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");           
-#endif
-
             switch (_state)
             {
                 case State.Init:
@@ -162,10 +149,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                         var parser = new InlineRangeParser(_context);
                                         parser.Run();
 
-#if DEBUG
-                                        //Log($"parser.Result = {parser.Result}");
-#endif
-
                                         _linguisticVariable.Range = parser.Result;
                                         _state = State.GotRange;                                        
                                     }
@@ -208,10 +191,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     {
                                         var nextToken = _context.GetToken();
 
-#if DEBUG
-                                        //Log($"nextToken = {nextToken}");
-#endif
-
                                         if(nextToken.TokenKind == TokenKind.Colon)
                                         {
                                             _state = State.WaitTerm;
@@ -227,10 +206,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 case KeyWordTokenKind.Constraints:
                                     {
                                         var nextToken = _context.GetToken();
-
-#if DEBUG
-                                        //Log($"nextToken = {nextToken}");
-#endif
 
                                         if (nextToken.TokenKind == TokenKind.Colon)
                                         {
@@ -266,10 +241,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 case KeyWordTokenKind.Constraints:
                                     {
                                         var nextToken = _context.GetToken();
-
-#if DEBUG
-                                        //Log($"nextToken = {nextToken}");
-#endif
 
                                         if (nextToken.TokenKind == TokenKind.Colon)
                                         {
@@ -350,10 +321,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var parser = new NumberParser(_context);
                                 parser.Run();
 
-#if DEBUG
-                                //Log($"parser.Result = {parser.Result}");
-#endif
-
                                 _parametersOfPredefinedMembershipFunction.Add(parser.Result.AsNumberValue);
 
                                 _state = State.GotParameterOfMembershipFunction;
@@ -374,10 +341,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.CloseRoundBracket:
                             _currentFuzzyLogicNonNumericValue.Handler = CreateMembershipPredefinedHandler();
-
-#if DEBUG
-                            //Log($"_currentFuzzyLogicNonNumericValue = {_currentFuzzyLogicNonNumericValue}");
-#endif
 
                             _state = State.GotPredefinedMembershipFunction;
                             break;
@@ -417,10 +380,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 case KeyWordTokenKind.Terms:
                                     {
                                         var nextToken = _context.GetToken();
-
-#if DEBUG
-                                        //Log($"nextToken = {nextToken}");
-#endif
 
                                         if (nextToken.TokenKind == TokenKind.Colon)
                                         {
@@ -515,11 +474,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private IFuzzyLogicMemberFunctionHandler CreateMembershipPredefinedHandler()
         {
-#if DEBUG
-            //Log($"_nameOfPredefinedMembershipFunction = {_nameOfPredefinedMembershipFunction}");
-            //Log($"_parametersOfPredefinedMembershipFunction.Result = {_parametersOfPredefinedMembershipFunction.WriteListToString()}");
-#endif
-
             var linguisticVariableName = _linguisticVariable.Name.NameValue;
             var termName = _currentFuzzyLogicNonNumericValue.Name.NameValue;
 

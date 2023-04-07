@@ -55,38 +55,19 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
             lock (_lockObj)
             {
 #if DEBUG
-                //Log($"linguisticVariable = {linguisticVariable}");
 
-                //if(linguisticVariable.Name.NameValue == "age")
-                //{
-                    //var constraintItem = new LinguisticVariableConstraintItem();
-                    //constraintItem.Kind = KindOfLinguisticVariableСonstraintItem.Inheritance;
 
-                    //Log($"constraintItem.ToDbgString() = {constraintItem.ToDbgString()}");
 
-                    //linguisticVariable.Constraint.Items.Add(constraintItem);
 
-                    //constraintItem = new LinguisticVariableConstraintItem();
-                    //constraintItem.Kind = KindOfLinguisticVariableСonstraintItem.Relation;
-                    //constraintItem.RelationName = NameHelper.CreateName("age");
 
-                    //Log($"constraintItem.ToDbgString() = {constraintItem.ToDbgString()}");
 
-                    //linguisticVariable.Constraint.Items.Add(constraintItem);
 
-                    //Log($"linguisticVariable (2) = {linguisticVariable}");
-                //}
 #endif
 
                 linguisticVariable.CheckDirty();
 
 #if DEBUG
-                //if (linguisticVariable.Name.NameValue == "age")
-                //{
-                //    Log($"linguisticVariable (3) = {linguisticVariable}");
 
-                //    //throw new NotImplementedException();
-                //}
 #endif
 
                 var holder = linguisticVariable.Holder;
@@ -100,10 +81,6 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
 
         private void NAppendValue(FuzzyLogicNonNumericValue value, StrongIdentifierValue holder)
         {
-#if DEBUG
-            //Log($"value = {value}");
-#endif
-
             var name = value.Name;
 
             if (_valuesDict.ContainsKey(name))
@@ -113,11 +90,6 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
                 if (dict.ContainsKey(holder))
                 {
                     var targetList = dict[holder];
-
-#if DEBUG
-                    //Log($"dict[holder].Count = {dict[holder].Count}");
-                    //Log($"targetList = {targetList.WriteListToString()}");
-#endif
 
                     StorageHelper.RemoveSameItems(targetList, value);
 
@@ -143,10 +115,6 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"name = {name}");
-#endif
-
                 if (_realStorageContext.Disabled)
                 {
                     return _emptyNonNumericValuesList;

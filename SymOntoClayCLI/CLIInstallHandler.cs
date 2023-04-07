@@ -33,21 +33,9 @@ namespace SymOntoClay.CLI
 {
     public class CLIInstallHandler
     {
-#if DEBUG
-        //private readonly Logger _logger = LogManager.GetCurrentClassLogger();
-#endif
-
         public void Run(CLICommand command)
         {
-#if DEBUG
-            //_logger.Info($"command = {command}");
-#endif
-
             var libName = command.ProjectName;
-
-#if DEBUG
-            //_logger.Info($"libName = {libName}");
-#endif
 
             if (!command.NoLogo)
             {
@@ -62,33 +50,13 @@ namespace SymOntoClay.CLI
 
             var targetFiles = WorldSpaceFilesSearcher.Run(worldSpaceFilesSearcherOptions);
 
-#if DEBUG
-            //_logger.Info($"targetFiles = {targetFiles}");
-#endif
-
             var socAssembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(p => p.GetName().Name == "soc").Location;
-
-#if DEBUG
-            //_logger.Info($"socAssembly = {socAssembly}");
-#endif
 
             var assemblyPath = (new FileInfo(socAssembly)).DirectoryName;
 
-#if DEBUG
-            //_logger.Info($"assemblyPath = {assemblyPath}");
-#endif
-
             var libraryBaseSource = Path.Combine(assemblyPath, "LibsForInstall");
 
-#if DEBUG
-            //_logger.Info($"libraryBaseSource = {libraryBaseSource}");
-#endif
-
             var librarySource = Path.Combine(libraryBaseSource, libName);
-
-#if DEBUG
-            //_logger.Info($"librarySource = {librarySource}");
-#endif
 
             if(!Directory.Exists(librarySource))
             {
@@ -101,10 +69,6 @@ namespace SymOntoClay.CLI
             }
 
             var libraryDest = Path.Combine(targetFiles.SharedLibsDir, libName);
-
-#if DEBUG
-            //_logger.Info($"libraryDest = {libraryDest}");
-#endif
 
             if(Directory.Exists(libraryDest))
             {
@@ -128,23 +92,9 @@ namespace SymOntoClay.CLI
 
         private void CopyDirectory(string dir, string baseSourceDir, string baseDestDir)
         {
-#if DEBUG
-            //_logger.Info($"dir = '{dir}'");
-            //_logger.Info($"baseSourceDir = '{baseSourceDir}'");
-            //_logger.Info($"baseDestDir = '{baseDestDir}'");
-#endif
-
             var relativeDirName = dir.Replace(baseSourceDir, string.Empty);
 
-#if DEBUG
-            //_logger.Info($"relativeDirName = {relativeDirName}");
-#endif
-
             var destDirName = Path.Combine(baseDestDir, relativeDirName);
-
-#if DEBUG
-            //_logger.Info($"destDirName = {destDirName}");
-#endif
 
             if (!Directory.Exists(destDirName))
             {
@@ -162,21 +112,9 @@ namespace SymOntoClay.CLI
 
             foreach(var file in files)
             {
-#if DEBUG
-                //_logger.Info($"file = {file}");
-#endif
-
                 var relativeFileName = file.Replace(baseSourceDir, string.Empty).Substring(1);
 
-#if DEBUG
-                //_logger.Info($"relativeFileName = {relativeFileName}");
-#endif
-
                 var newFileName = Path.Combine(baseDestDir, relativeFileName);
-
-#if DEBUG
-                //_logger.Info($"newFileName = {newFileName}");
-#endif
 
                 File.Copy(file, newFileName, true);
             }

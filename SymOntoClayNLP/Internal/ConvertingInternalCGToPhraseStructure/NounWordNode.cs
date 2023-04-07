@@ -49,38 +49,21 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 
         public Word GetWord()
         {
-#if DEBUG
-            //_logger.Log($"_word = '{_word}'");
-            //_logger.Log($"_roleOfNoun = {_roleOfNoun}");
-#endif
-
             switch (_roleOfNoun)
             {
                 case RoleOfNoun.Subject:
                     {
                         var wordFramesList = _wordsDict.GetWordFramesByWord(_word);
 
-#if DEBUG
-                        //_logger.Log($"wordFramesList = {wordFramesList.WriteListToString()}");
-#endif
-
                         var pronounsList = wordFramesList.Where(p => p.IsPronoun).Select(p => p.AsPronoun).Where(p => p.Case == CaseOfPersonalPronoun.Subject).ToList();
 
                         if (pronounsList.Any())
                         {
-#if DEBUG
-                            //_logger.Log($"pronounsList = {pronounsList.WriteListToString()}");
-#endif
-
                             var result = new Word();
 
                             result.Content = _word;
 
                             result.WordFrame = pronounsList.Single();
-
-#if DEBUG
-                            //_logger.Log($"result = {result}");
-#endif
 
                             return result;
                         }
@@ -89,19 +72,11 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 
                         if (pronounsList.Any())
                         {
-#if DEBUG
-                            //_logger.Log($"pronounsList = {pronounsList.WriteListToString()}");
-#endif
-
                             var result = new Word();
 
                             result.Content = _word;
 
                             result.WordFrame = pronounsList.Single();
-
-#if DEBUG
-                            //_logger.Log($"result = {result}");
-#endif
 
                             return result;
                         }
@@ -110,19 +85,11 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 
                         if (nounsList.Any())
                         {
-#if DEBUG
-                            //_logger.Log($"nounsList = {nounsList.WriteListToString()}");
-#endif
-
                             var result = new Word();
 
                             result.Content = _word;
 
                             result.WordFrame = nounsList.Single();
-
-#if DEBUG
-                            //_logger.Log($"result = {result}");
-#endif
 
                             return result;
                         }
@@ -139,27 +106,15 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 
                         var wordFramesList = _wordsDict.GetWordFramesByWord(_word);
 
-#if DEBUG
-                        //_logger.Log($"wordFramesList = {wordFramesList.WriteListToString()}");
-#endif
-
                         var nounsList = wordFramesList.Where(p => p.IsNoun).Select(p => p.AsNoun).ToList();
 
                         if (nounsList.Any())
                         {
-#if DEBUG
-                            //_logger.Log($"nounsList = {nounsList.WriteListToString()}");
-#endif
-
                             var result = new Word();
 
                             result.Content = _word;
 
                             result.WordFrame = nounsList.Single();
-
-#if DEBUG
-                            //_logger.Log($"result = {result}");
-#endif
 
                             return result;
                         }
@@ -171,18 +126,10 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                     {
                         var wordFramesList = _wordsDict.GetWordFramesByRootWord(_word);
 
-#if DEBUG
-                        //_logger.Log($"wordFramesList = {wordFramesList.WriteListToString()}");
-#endif
-
                         var articlesList = wordFramesList.Where(p => p.IsArticle).Select(p => p.AsArticle).ToList();
 
                         if(articlesList.Any())
                         {
-#if DEBUG
-                            //_logger.Log($"articlesList = {articlesList.WriteListToString()}");
-#endif
-
                             var targetWordFrame = articlesList.Single();
 
                             var result = new Word();
@@ -190,10 +137,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                             result.Content = targetWordFrame.Word;
 
                             result.WordFrame = targetWordFrame;
-
-#if DEBUG
-                            //_logger.Log($"result = {result}");
-#endif
 
                             return result;
                         }
@@ -205,27 +148,15 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                     {
                         var wordFramesList = _wordsDict.GetWordFramesByWord(_word);
 
-#if DEBUG
-                        //_logger.Log($"wordFramesList = {wordFramesList.WriteListToString()}");
-#endif
-
                         var nounsList = wordFramesList.Where(p => p.IsNoun).Select(p => p.AsNoun).ToList();
 
                         if (nounsList.Any())
                         {
-#if DEBUG
-                            //_logger.Log($"nounsList = {nounsList.WriteListToString()}");
-#endif
-
                             var result = new Word();
 
                             result.Content = _word;
 
                             result.WordFrame = nounsList.Single();
-
-#if DEBUG
-                            //_logger.Log($"result = {result}");
-#endif
 
                             return result;
                         }
@@ -241,10 +172,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
         public NounPhrase GetNounPhrase()
         {
             var nounWord = GetWord();
-
-#if DEBUG
-            //_logger.Log($"nounWord = {nounWord}");
-#endif
 
             if(nounWord == null)
             {

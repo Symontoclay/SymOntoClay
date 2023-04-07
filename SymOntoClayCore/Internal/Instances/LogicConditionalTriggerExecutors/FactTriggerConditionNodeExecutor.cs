@@ -79,24 +79,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
                 targetLogicalSearchOptions.TargetStorage = processedRuleInstance;
             }
 
-#if DEBUG
-            //Log($"targetLogicalSearchOptions = {targetLogicalSearchOptions}");
-#endif
-
             var searchResult = _searcher.Run(targetLogicalSearchOptions);
-
-#if DEBUG
-            //Log($"searchResult = {searchResult}");
-            //Log($"searchResult = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
-            //foreach (var usedKey in searchResult.UsedKeysList)
-            //{
-            //    Log($"usedKey = {usedKey}");
-            //}
-#endif
-
-#if DEBUG
-            //Log($"searchResult.Items.Count = {searchResult.Items.Count}");
-#endif
 
             if (!searchResult.IsSuccess)
             {
@@ -120,15 +103,10 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
                         continue;
                     }
 
-                    //foundKeys.Add(keyForTrigger);
 
                     if (_bindingVariables.Any())
                     {
                         var resultVarsList = foundResultItem.ResultOfVarOfQueryToRelationList;
-
-#if DEBUG
-                        //Log($"resultVarsList.Count = {resultVarsList.Count}");
-#endif
 
                         var resultVarList = new List<Var>();
                         varList.Add(resultVarList);
@@ -136,10 +114,6 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
                         if (processedRuleInstance != null)
                         {
                             var destVar = _bindingVariables.GetDest(StrongIdentifierValue.LogicalVarBlankIdentifier);
-
-#if DEBUG
-                            //Log($"destVar = {destVar}");
-#endif
 
                             if(destVar != null)
                             {
@@ -156,21 +130,9 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 
                         foreach (var resultVar in resultVarsList)
                         {
-#if DEBUG
-                            //Log($"resultVar = {resultVar}");
-#endif
-
                             var value = LogicalQueryNodeHelper.ToValue(resultVar.FoundExpression);
 
-#if DEBUG
-                            //Log($"value = {value}");
-#endif
-
                             var destVar = _bindingVariables.GetDest(resultVar.NameOfVar);
-
-#if DEBUG
-                            //Log($"destVar = {destVar}");
-#endif
 
                             if(destVar == null)
                             {

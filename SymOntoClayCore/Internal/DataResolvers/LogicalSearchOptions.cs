@@ -53,7 +53,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.PrintObjProp(n, nameof(TargetStorage), TargetStorage);
             sb.PrintObjProp(n, nameof(LocalCodeExecutionContext), LocalCodeExecutionContext);
 
-            //sb.PrintObjProp(n, nameof(), );
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -73,7 +72,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.PrintShortObjProp(n, nameof(TargetStorage), TargetStorage);
             sb.PrintShortObjProp(n, nameof(LocalCodeExecutionContext), LocalCodeExecutionContext);
 
-            //sb.PrintShortObjProp(n, nameof(), );
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -93,7 +91,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.PrintBriefObjProp(n, nameof(TargetStorage), TargetStorage);
             sb.PrintBriefObjProp(n, nameof(LocalCodeExecutionContext), LocalCodeExecutionContext);
 
-            //sb.PrintBriefObjProp(n, nameof(), );
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

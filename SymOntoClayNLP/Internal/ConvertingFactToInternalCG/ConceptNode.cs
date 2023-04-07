@@ -42,10 +42,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 
         public ResultOfNode Run()
         {
-#if DEBUG
-            //_logger.Log($"_concept = {_concept.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
-#endif
-
             var result = new ResultOfNode();
             result.KindOfResult = KindOfResultOfNode.ProcessConcept;
             result.LogicalQueryNode = _concept;

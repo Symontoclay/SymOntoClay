@@ -54,21 +54,12 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             var factNode = new RuleInstanceNode(fact, context);
             var factNodeResult = factNode.Run();
 
-#if DEBUG
-            //_logger.Log($"factNodeResult = {factNodeResult}");
-#endif
-
             outerConceptualGraph.KindOfQuestion = KindOfQuestion.None;//tmp
             outerConceptualGraph.Tense = GrammaticalTenses.Present;//tmp
             outerConceptualGraph.Aspect = GrammaticalAspect.Simple;//tmp
             outerConceptualGraph.Voice = GrammaticalVoice.Active;//tmp
 
             outerConceptualGraph.Mood = GrammaticalMood.Imperative;//tmp
-
-#if DEBUG
-            //_logger.Log($"fact.ObligationModality = {fact.ObligationModality}");
-            //_logger.Log($"fact.SelfObligationModality = {fact.SelfObligationModality}");
-#endif
 
             var logicalValueModalityResolver = nlpContext.LogicalValueModalityResolver;
 
@@ -85,13 +76,8 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 
             outerConceptualGraph.AbilityModality = AbilityModality.None;//tmp
             outerConceptualGraph.PermissionModality = PermissionModality.None;//tmp
-            //tmp
             outerConceptualGraph.ProbabilityModality = ProbabilityModality.None;//tmp
             outerConceptualGraph.ConditionalModality = ConditionalModality.None;//tmp
-
-#if DEBUG
-            //_logger.Log($"outerConceptualGraph = {outerConceptualGraph}");
-#endif
 
             return outerConceptualGraph;
         }

@@ -81,11 +81,6 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public override void SetVarValue(StrongIdentifierValue varName, Value value)
         {
-#if DEBUG
-            //Log($"varName = {varName}");
-            //Log($"value = {value}");
-#endif
-
             _varsResolver.SetVarValue(varName, value, _localCodeExecutionContext);
         }
 
@@ -98,23 +93,17 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public override Value GetVarValue(StrongIdentifierValue varName)
         {
-#if DEBUG
-            //Log($"varName = {varName}");
-#endif
-
             return _varsResolver.GetVarValue(varName, _localCodeExecutionContext);
         }
 
         /// <inheritdoc/>
         protected override void RunPreConstructors()
         {
-            //Do nothing! Constructors will be called in general executor after instantiating.
         }
 
         /// <inheritdoc/>
         protected override void RunConstructors()
         {
-            //Do nothing! Constructors will be called in general executor after instantiating.
         }
     }
 }

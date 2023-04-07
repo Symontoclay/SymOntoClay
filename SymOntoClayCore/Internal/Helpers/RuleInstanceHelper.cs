@@ -33,10 +33,6 @@ namespace SymOntoClay.Core.Internal.Helpers
 {
     public static class RuleInstanceHelper
     {
-#if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         private static readonly string _logicalVarPattern = @"(\A|\b|\s|\W)(?<var>\$(\w|_|\d)+)(\b|\Z|\s)";
         private static readonly Regex _logicalVarRegex = new Regex(_logicalVarPattern);
 
@@ -152,10 +148,6 @@ namespace SymOntoClay.Core.Internal.Helpers
 
         private static void GetUniqueVarNames(RuleInstance source, List<string> result)
         {
-#if DEBUG
-            //_gbcLogger.Info($"source = {source.ToHumanizedString()}");
-#endif
-
             if(source.PrimaryPart != null)
             {
                 GetUniqueVarNames(source.PrimaryPart, result);
@@ -172,19 +164,11 @@ namespace SymOntoClay.Core.Internal.Helpers
 
         private static void GetUniqueVarNames(BaseRulePart source, List<string> result)
         {
-#if DEBUG
-            //_gbcLogger.Info($"source = {source.ToHumanizedString()}");
-#endif
-
             GetUniqueVarNames(source.Expression, result);
         }
 
         private static void GetUniqueVarNames(LogicalQueryNode source, List<string> result)
         {
-#if DEBUG
-            //_gbcLogger.Info($"source = {source.ToHumanizedString()}");
-#endif
-
             var linkedVars = source.LinkedVars;
 
             if(!linkedVars.IsNullOrEmpty())

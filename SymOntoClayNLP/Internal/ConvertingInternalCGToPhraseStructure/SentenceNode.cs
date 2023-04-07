@@ -51,16 +51,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 
         public ResultOfNode Run()
         {
-#if DEBUG
-            //var dotStr = DotConverter.ConvertToString(_source);
-            //_logger.Log($"dotStr = '{dotStr}'");
-#endif
-
             var mood = _context.Mood;
-
-#if DEBUG
-            //_logger.Log($"mood = {mood}");
-#endif
 
             switch (mood)
             {
@@ -88,10 +79,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 
                 var stateRelation = statesList.First();
 
-#if DEBUG
-                //_logger.Log($"stateRelation = {stateRelation}");
-#endif
-
                 _context.VisitedRelations.Add(stateRelation);
 
                 if (stateRelation.Inputs.Count != 1)
@@ -106,23 +93,11 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 
                 var subjectConcept = stateRelation.Inputs.First();
 
-#if DEBUG
-                //_logger.Log($"subjectConcept = {subjectConcept}");
-#endif
-
                 var experiencerRelation = subjectConcept.Inputs.Where(p => p.Name == SpecialNamesOfRelations.ExperiencerRelationName).Select(p => p.AsRelationNode).Single();
-
-#if DEBUG
-                //_logger.Log($"experiencerRelation = {experiencerRelation}");
-#endif
 
                 _context.VisitedRelations.Add(experiencerRelation);
 
                 var stateConcept = stateRelation.Outputs.First();
-
-#if DEBUG
-                //_logger.Log($"stateConcept = {stateConcept}");
-#endif
 
                 return new KeyConceptsOfSentenceNode()
                 { 
@@ -142,10 +117,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 
                 var actionRelation = actionsList.First();
 
-#if DEBUG
-                //_logger.Log($"actionRelation = {actionRelation}");
-#endif
-
                 _context.VisitedRelations.Add(actionRelation);
 
                 if (actionRelation.Inputs.Count != 1)
@@ -160,23 +131,11 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 
                 var subjectConcept = actionRelation.Inputs.First();
 
-#if DEBUG
-                //_logger.Log($"subjectConcept = {subjectConcept}");
-#endif
-
                 var agentRelation = subjectConcept.Inputs.Where(p => p.Name == SpecialNamesOfRelations.AgentRelationName).Select(p => p.AsRelationNode).Single();
-
-#if DEBUG
-                //_logger.Log($"agentRelation = {agentRelation}");
-#endif
 
                 _context.VisitedRelations.Add(agentRelation);
 
                 var actionConcept = actionRelation.Outputs.First();
-
-#if DEBUG
-                //_logger.Log($"actionConcept = {actionConcept}");
-#endif
 
                 return new KeyConceptsOfSentenceNode()
                 {
@@ -192,38 +151,16 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
         {
             var keyConcepts = GetKeyConcepts();
 
-#if DEBUG
-            //_logger.Log($"keyConcepts = {keyConcepts}");
-#endif
-
             var subjectNode = new NounNode(keyConcepts.SubjectConcept, RoleOfNoun.Subject, _context);
             var subjectResult = subjectNode.Run();
-
-#if DEBUG
-            //_logger.Log($"subjectResult = {subjectResult}");
-#endif
 
             var verbNode = new VerbNode(keyConcepts.VerbConcept, subjectResult.SentenceItem, _context);
 
             var verbResult = verbNode.Run();
 
-#if DEBUG
-            //_logger.Log($"verbResult = {verbResult}");
-#endif
-
-#if DEBUG
-            //_logger.Log($"subjectResult.SentenceItem = {subjectResult.SentenceItem.ToDbgString()}");
-            //_logger.Log($"verbResult.SentenceItem = {verbResult.SentenceItem.ToDbgString()}");
-#endif
-
             var sentence = new Sentence();
             sentence.Subject = subjectResult.SentenceItem;
             sentence.Predicate = verbResult.SentenceItem;
-
-#if DEBUG
-            //_logger.Log($"sentence = {sentence}");
-            //_logger.Log($"sentence = {sentence.ToDbgString()}");
-#endif
 
             return new ResultOfNode()
             {
@@ -235,25 +172,12 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
         {
             var keyConcepts = GetKeyConcepts();
 
-#if DEBUG
-            //_logger.Log($"keyConcepts = {keyConcepts}");
-#endif
-
             var verbNode = new VerbNode(keyConcepts.VerbConcept, null, _context);
 
             var verbResult = verbNode.Run();
 
-#if DEBUG
-            //_logger.Log($"verbResult = {verbResult}");
-#endif
-
             var sentence = new Sentence();
             sentence.Predicate = verbResult.SentenceItem;
-
-#if DEBUG
-            //_logger.Log($"sentence = {sentence}");
-            //_logger.Log($"sentence = {sentence.ToDbgString()}");
-#endif
 
             return new ResultOfNode()
             {

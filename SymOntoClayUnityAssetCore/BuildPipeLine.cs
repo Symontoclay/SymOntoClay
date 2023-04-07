@@ -31,33 +31,15 @@ namespace SymOntoClay.UnityAsset.Core
 {
     public static class BuildPipeLine
     {
-#if DEBUG
-        //private static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
-#endif
-
         public static void CopyFiles(string sourceDir, string outputExeFile)
         {
-#if DEBUG
-            //_logger.Info($"sourceDir = {sourceDir}");
-            //_logger.Info($"outputExeFile = {outputExeFile}");
-#endif
-
             var fileInfo = new FileInfo(outputExeFile);
 
             var baseDirectory = fileInfo.DirectoryName;
 
             var fileName = fileInfo.Name.Replace(fileInfo.Extension, string.Empty);
 
-#if DEBUG
-            //_logger.Info($"baseDirectory = {baseDirectory}");
-            //_logger.Info($"fileName = {fileName}");
-#endif
-
             var targetDir = Path.Combine(baseDirectory, $"{fileName}_Data");
-
-#if DEBUG
-            //_logger.Info($"targetDir = {targetDir}");
-#endif
 
             CopySymOntoClaySourceFiles(sourceDir, targetDir);
 
@@ -66,29 +48,14 @@ namespace SymOntoClay.UnityAsset.Core
 
         private static void CopyNLPDicts(string sourceDir, string targetDir)
         {
-#if DEBUG
-            //_logger.Info($"sourceDir = {sourceDir}");
-            //_logger.Info($"targetDir = {targetDir}");
-#endif
-
             var sourceDictsDir = Path.Combine(sourceDir, "SymOntoClay", "Dicts");
             var targetDictsDir = Path.Combine(targetDir, "SymOntoClay", "Dicts");
-
-#if DEBUG
-            //_logger.Info($"sourceDictsDir = {sourceDictsDir}");
-            //_logger.Info($"targetDictsDir = {targetDictsDir}");
-#endif
 
             CopyDirectory(sourceDictsDir, sourceDictsDir, targetDictsDir);
         }
 
         private static void CopySymOntoClaySourceFiles(string sourceDir, string targetDir)
         {
-#if DEBUG
-            //_logger.Info($"sourceDir = {sourceDir}");
-            //_logger.Info($"targetDir = {targetDir}");
-#endif
-
             var sourceDirectoriesList = DetectDirectoriesWithSymOntoClaySourceFiles(sourceDir);
 
             if(!sourceDirectoriesList.Any())
@@ -96,32 +63,15 @@ namespace SymOntoClay.UnityAsset.Core
                 return;
             }
 
-#if DEBUG
-            //_logger.Info($"sourceDirectoriesList.Count = {sourceDirectoriesList.Count}");
-#endif
             foreach (var dir in sourceDirectoriesList)
             {
-#if DEBUG
-                //_logger.Info($"dir = {dir}");
-#endif
-
                 CopyDirectory(dir, sourceDir, targetDir);
             }
         }
 
         private static void CopyDirectory(string sourceDir, string baseSourceDir, string baseTargetDir)
         {
-#if DEBUG
-            //_logger.Info($"sourceDir = {sourceDir}");
-            //_logger.Info($"baseSourceDir = {baseSourceDir}");
-            //_logger.Info($"baseTargetDir = {baseTargetDir}");
-#endif
-
             var newDir = sourceDir.Replace(baseSourceDir, baseTargetDir);
-
-#if DEBUG
-            //_logger.Info($"newDir = {newDir}");
-#endif
 
             if(Directory.Exists(newDir))
             {
@@ -139,15 +89,7 @@ namespace SymOntoClay.UnityAsset.Core
                     continue;
                 }
 
-#if DEBUG
-                //_logger.Info($"fileName = {fileName}");
-#endif
-
                 var newFileName = fileName.Replace(baseSourceDir, baseTargetDir);
-
-#if DEBUG
-                //_logger.Info($"newFileName = {newFileName}");
-#endif
 
                 File.Copy(fileName, newFileName);
             }

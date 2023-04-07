@@ -59,10 +59,6 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
         /// <inheritdoc/>
         public Value Write(Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"value = {value}");
-#endif
-
             LogChannel(value.ToHumanizedString());
 
             return value;

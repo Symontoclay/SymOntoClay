@@ -49,19 +49,8 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         /// <inheritdoc/>
         public Value Call(Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"leftOperand = {leftOperand}");
-            //Log($"rightOperand = {rightOperand}");
-            //Log($"annotation = {annotation}");
-#endif
-
             leftOperand = TryResolveFromVarOrExpr(leftOperand, localCodeExecutionContext);
             rightOperand = TryResolveFromVarOrExpr(rightOperand, localCodeExecutionContext);
-
-#if DEBUG
-            //Log($"leftOperand (after) = {leftOperand}");
-            //Log($"rightOperand (after) = {rightOperand}");
-#endif
 
             Value valueFromSource = null;
 
@@ -87,25 +76,13 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                 valueFromSource = leftOperand;
             }
 
-#if DEBUG
-            //Log($"valueFromSource = {valueFromSource}");
-#endif
-
             if(rightOperand.KindOfValue == KindOfValue.StrongIdentifierValue)
             {
                 var identifier = rightOperand.AsStrongIdentifierValue;
 
-#if DEBUG
-                //Log($"identifier = {identifier}");
-#endif
-
                 if(identifier.KindOfName == KindOfName.Channel)
                 {
                     var channel = _channelsResolver.GetChannel(identifier, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
-
-#if DEBUG
-                    //Log($"channel = {channel}");
-#endif
 
                     return channel.Handler.Write(valueFromSource, localCodeExecutionContext);
                 }

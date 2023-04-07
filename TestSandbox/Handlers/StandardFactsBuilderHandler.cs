@@ -61,30 +61,6 @@ namespace TestSandbox.Handlers
 
             Case26();
             Case25();
-            //Case24();
-            //Case23();
-            //Case22();
-            //Case21();
-            //Case20();
-            //Case19();
-            //Case18();
-            //Case17();
-            //Case16();
-            //Case15();
-            //Case14();
-            //Case13();
-            //Case12();
-            //Case11();
-            //Case10();
-            //Case9();
-            //Case8();
-            //Case7();
-            //Case6();
-            //Case5();
-            //Case4();
-            //Case3();
-            //Case2();
-            //Case1();
 
             _logger.Log("End");
         }
@@ -278,13 +254,11 @@ namespace TestSandbox.Handlers
             var initialFact = _engineContext.Parser.ParseRuleInstance(initialFactStr);
 
             _logger.Log($"initialFact = '{initialFact.ToHumanizedString()}'");
-            //_logger.Log($"initialFact = {initialFact}");
 
             var fact = _standardFactsBuilder.BuildSoundFactInstance(15.588457107543945, 12, initialFact);
 
             _logger.Log($"fact = '{fact.ToHumanizedString()}'");
             _logger.Log($"fact = '{fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}'");
-            //_logger.Log($"fact = {fact}");
         }
 
         private void Case3()
@@ -303,13 +277,11 @@ namespace TestSandbox.Handlers
             var initialFact = _engineContext.Parser.ParseRuleInstance(initialFactStr);
 
             _logger.Log($"initialFact = '{initialFact.ToHumanizedString()}'");
-            //_logger.Log($"initialFact = {initialFact}");
 
             var fact = _standardFactsBuilder.BuildSayFactInstance("#123", initialFact);
 
             _logger.Log($"fact = '{fact.ToHumanizedString()}'");
             _logger.Log($"fact = '{fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}'");
-            //_logger.Log($"fact = {fact}");
         }
 
         private void Case1()

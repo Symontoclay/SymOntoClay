@@ -37,10 +37,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(AstBreakStatement statement, LoopCompilingContext loopCompilingContext)
         {
-#if DEBUG
-            //Log($"statement = {statement}");
-#endif
-
             var kind = statement.KindOfBreak;
 
             switch(kind)

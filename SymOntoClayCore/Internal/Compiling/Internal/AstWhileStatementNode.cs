@@ -37,10 +37,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(AstWhileStatement statement)
         {
-#if DEBUG
-            //Log($"statement = {statement}");
-#endif
-
             var firstCommand = new IntermediateScriptCommand() { OperationCode = OperationCode.Nop };
 
             AddCommand(firstCommand);
@@ -68,11 +64,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
             AddCommand(afterCommand);
 
-#if DEBUG
-            //DbgPrintCommands();
-#endif
-
-            //throw new NotImplementedException();
         }
     }
 }

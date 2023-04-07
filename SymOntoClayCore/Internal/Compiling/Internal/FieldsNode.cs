@@ -40,16 +40,8 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(List<Field> fields)
         {
-#if DEBUG
-            //Log($"fields = {fields.WriteListToString()}");
-#endif
-
             foreach(var field in fields)
             {
-#if DEBUG
-                //Log($"field = {field}");
-#endif
-
                 CompileVarDecl(field);
 
                 if(field.Value == null)
@@ -72,9 +64,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
                 AddCommand(command);
 
-#if DEBUG
-                //DbgPrintCommands();
-#endif
             }
         }
     }

@@ -53,19 +53,13 @@ namespace TestSandbox.CoreHostListener
             var context = complexContext.EngineContext;
             var worldContext = complexContext.WorldContext;
 
-            //var dictionary = context.Dictionary;
 
             var platformTypesConvertorsRegistry = worldContext.PlatformTypesConvertorsRegistry;
 
-            //var platformTypesConvertorsRegistry = new PlatformTypesConvertorsRegistry(context.Logger);
 
-            //var convertor_1 = new Vector3AndWayPointValueConvertor();
 
-            //platformTypesConvertorsRegistry.AddConvertor(convertor_1);
 
-            //var convertor_2 = new FloatAndNumberValueConvertor();
 
-            //platformTypesConvertorsRegistry.AddConvertor(convertor_2);
 
             var endpointsRegistries = new List<IEndpointsRegistry>();
 
@@ -73,7 +67,6 @@ namespace TestSandbox.CoreHostListener
             endpointsRegistries.Add(endpointsRegistry);
 
             var endpointsRegistry_2 = new EndpointsRegistry(context.Logger);
-            //endpointsRegistries.Add(endpointsRegistry_2);
 
             var endpointsProxyRegistryForDevices = new EndpointsProxyRegistryForDevices(context.Logger, endpointsRegistry_2, new List<int>() { 1, 2, 3});
             endpointsRegistries.Add(endpointsProxyRegistryForDevices);
@@ -96,11 +89,9 @@ namespace TestSandbox.CoreHostListener
 
             endpointsRegistry_2.AddEndpointsRange(platformEndpointsList);
 
-            //----------------------------------
 
             var methodName = NameHelper.CreateName("go");
 
-            //var listener = new TstCoreHostListener();
 
             var command = new Command();
             command.Name = methodName;
@@ -111,14 +102,10 @@ namespace TestSandbox.CoreHostListener
 
             command.ParamsDict[param1Name] = param1Value;
 
-            //var param2Value = new NumberValue(12.4);
-            //var param2Name = NameHelper.CreateName("speed", dictionary);
 
-            //command.ParamsDict[param2Name] = param2Value;
 
             _logger.Log($"command = {command}");
 
-            //----------------------------------
 
             var endPointInfo = endPointsResolver.GetEndpointInfo(command, endpointsRegistries, null);
 
@@ -167,72 +154,29 @@ namespace TestSandbox.CoreHostListener
                 Thread.Sleep(10000);
             }
 
-            //----------------------------------
-            //var platformListener = new TstPlatformHostListener();
 
-            //var platformEndpointsList = EndpointDescriber.GetEndpointsInfoList(platformListener);
 
-            //_logger.Log($"platformEndpointsList = {platformEndpointsList.WriteListToString()}");
 
-            //var goEndpoint = platformEndpointsList.FirstOrDefault(p => p.Name == "go");
 
-            //_logger.Log($"goEndpoint = {goEndpoint}");
 
-            //var tokenSource = new CancellationTokenSource();
-            //var token = tokenSource.Token;
 
-            //var parameterList = new List<object>() { token, new Vector3(12, 15, 0), 25 }.ToArray();
 
-            //var task = new Task(() =>
-            //{
-            //    try
-            //    {
-            //        goEndpoint.MethodInfo.Invoke(platformListener, parameterList);
-            //    }
-            //    catch(TargetInvocationException)
-            //    {
-            //    }
-            //    catch(Exception e)
-            //    {
-            //        _logger.Log($"e = {e}");
-            //    }
 
-            //}, token);
 
-            //var processInfo = new PlatformProcessInfo(task, tokenSource, goEndpoint.Devices);
 
-            //_logger.Log($"processInfo = {processInfo}");
 
-            //processInfo.Start();
 
-            //Thread.Sleep(10000);
 
-            //_logger.Log("Cancel");
 
-            //processInfo.Cancel();
 
-            //Thread.Sleep(10000);
-            //-----------
-            //var tokenSource = new CancellationTokenSource();
-            //var token = tokenSource.Token;
 
-            //var task = new Task(() => {
-            //    platformListener.GoToImpl(token, new Vector3(12, 15, 0));
-            //}, token);
 
-            //task.Start();
 
-            //Thread.Sleep(10000);
 
-            //_logger.Log("Cancel");
 
-            //tokenSource.Cancel();
 
-            //Thread.Sleep(10000);
 
-            //var process = listener.CreateProcess(command);
 
-            //_logger.Log($"process = {process}");
 
             _logger.Log("End");
         }

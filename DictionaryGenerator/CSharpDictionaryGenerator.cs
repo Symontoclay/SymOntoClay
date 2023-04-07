@@ -114,11 +114,6 @@ namespace DictionaryGenerator
 
         private void GenerateSourceItem(string word, List<BaseGrammaticalWordFrame> grammaticalWordFrames)
         {
-#if DEBUG
-            //_logger.Info($"word = {word}");
-            //_logger.Info($"grammaticalWordFrames = {grammaticalWordFrames.WriteListToString()}");
-#endif
-
             var statementsList = _constructor.Statements;
 
             statementsList.Add(new CodeSnippetExpression("framesList = new List<BaseGrammaticalWordFrame>()"));
@@ -182,10 +177,6 @@ namespace DictionaryGenerator
 
         private void GenerateNoun(NounGrammaticalWordFrame frame)
         {
-#if DEBUG
-            //_logger.Info($"frame = {frame}");
-#endif
-
             var propertiesList = new List<string>();
 
             propertiesList.Add($"IsName = {frame.IsName.ToString().ToLower()}");
@@ -202,19 +193,11 @@ namespace DictionaryGenerator
             sb.AppendLine("framesList.Add(new NounGrammaticalWordFrame(){");
             sb.AppendLine(string.Join(",\n", propertiesList));
             sb.Append("})");
-#if DEBUG
-            //_logger.Info($"sb = {sb}");
-#endif
-
             _constructor.Statements.Add(new CodeSnippetExpression(sb.ToString()));
         }
 
         private void GeneratePronoun(PronounGrammaticalWordFrame frame)
         {
-#if DEBUG
-            //_logger.Info($"frame = {frame}");
-#endif
-
             var propertiesList = new List<string>();
 
             propertiesList.Add($"Gender = GrammaticalGender.{frame.Gender}");
@@ -231,19 +214,11 @@ namespace DictionaryGenerator
             sb.AppendLine("framesList.Add(new PronounGrammaticalWordFrame(){");
             sb.AppendLine(string.Join(",\n", propertiesList));
             sb.Append("})");
-#if DEBUG
-            //_logger.Info($"sb = {sb}");
-#endif
-
             _constructor.Statements.Add(new CodeSnippetExpression(sb.ToString()));
         }
 
         private void GenerateAdjective(AdjectiveGrammaticalWordFrame frame)
         {
-#if DEBUG
-            //_logger.Info($"frame = {frame}");
-#endif
-
             var propertiesList = new List<string>();
 
             propertiesList.Add($"Comparison = GrammaticalComparison.{frame.Comparison}");
@@ -255,19 +230,11 @@ namespace DictionaryGenerator
             sb.AppendLine("framesList.Add(new AdjectiveGrammaticalWordFrame(){");
             sb.AppendLine(string.Join(",\n", propertiesList));
             sb.Append("})");
-#if DEBUG
-            //_logger.Info($"sb = {sb}");
-#endif
-
             _constructor.Statements.Add(new CodeSnippetExpression(sb.ToString()));
         }
 
         private void GenerateVerb(VerbGrammaticalWordFrame frame)
         {
-#if DEBUG
-            //_logger.Info($"frame = {frame}");
-#endif
-
             var propertiesList = new List<string>();
 
             propertiesList.Add($"VerbType = VerbType.{frame.VerbType}");
@@ -286,19 +253,11 @@ namespace DictionaryGenerator
             sb.AppendLine("framesList.Add(new VerbGrammaticalWordFrame(){");
             sb.AppendLine(string.Join(",\n", propertiesList));
             sb.Append("})");
-#if DEBUG
-            //_logger.Info($"sb = {sb}");
-#endif
-
             _constructor.Statements.Add(new CodeSnippetExpression(sb.ToString()));
         }
 
         private void GenerateAdverb(AdverbGrammaticalWordFrame frame)
         {
-#if DEBUG
-            //_logger.Info($"frame = {frame}");
-#endif
-
             var propertiesList = new List<string>();
 
             propertiesList.Add($"Comparison = GrammaticalComparison.{frame.Comparison}");
@@ -312,19 +271,11 @@ namespace DictionaryGenerator
             sb.AppendLine("framesList.Add(new AdverbGrammaticalWordFrame(){");
             sb.AppendLine(string.Join(",\n", propertiesList));
             sb.Append("})");
-#if DEBUG
-            //_logger.Info($"sb = {sb}");
-#endif
-
             _constructor.Statements.Add(new CodeSnippetExpression(sb.ToString()));
         }
 
         private void GeneratePreposition(PrepositionGrammaticalWordFrame frame)
         {
-#if DEBUG
-            //_logger.Info($"frame = {frame}");
-#endif
-
             var propertiesList = new List<string>();
 
             propertiesList.Add($"Comparison = GrammaticalComparison.{frame.Comparison}");
@@ -335,19 +286,11 @@ namespace DictionaryGenerator
             sb.AppendLine("framesList.Add(new PrepositionGrammaticalWordFrame(){");
             sb.AppendLine(string.Join(",\n", propertiesList));
             sb.Append("})");
-#if DEBUG
-            //_logger.Info($"sb = {sb}");
-#endif
-
             _constructor.Statements.Add(new CodeSnippetExpression(sb.ToString()));
         }
 
         private void GeneratePostposition(PostpositionGrammaticalWordFrame frame)
         {
-#if DEBUG
-            //_logger.Info($"frame = {frame}");
-#endif
-
             var propertiesList = new List<string>();
 
             AddBaseGrammaticalWordFrameProps(frame, propertiesList);
@@ -356,19 +299,11 @@ namespace DictionaryGenerator
             sb.AppendLine("framesList.Add(new PostpositionGrammaticalWordFrame(){");
             sb.AppendLine(string.Join(",\n", propertiesList));
             sb.Append("})");
-#if DEBUG
-            //_logger.Info($"sb = {sb}");
-#endif
-
             _constructor.Statements.Add(new CodeSnippetExpression(sb.ToString()));
         }
 
         private void GenerateConjunction(ConjunctionGrammaticalWordFrame frame)
         {
-#if DEBUG
-            //_logger.Info($"frame = {frame}");
-#endif
-
             var propertiesList = new List<string>();
 
             propertiesList.Add($"Kind = KindOfConjunction.{frame.Kind}");
@@ -383,19 +318,11 @@ namespace DictionaryGenerator
             sb.AppendLine("framesList.Add(new ConjunctionGrammaticalWordFrame(){");
             sb.AppendLine(string.Join(",\n", propertiesList));
             sb.Append("})");
-#if DEBUG
-            //_logger.Info($"sb = {sb}");
-#endif
-
             _constructor.Statements.Add(new CodeSnippetExpression(sb.ToString()));
         }
 
         private void GenerateInterjection(InterjectionGrammaticalWordFrame frame)
         {
-#if DEBUG
-            //_logger.Info($"frame = {frame}");
-#endif
-
             var propertiesList = new List<string>();
 
             AddBaseGrammaticalWordFrameProps(frame, propertiesList);
@@ -404,19 +331,11 @@ namespace DictionaryGenerator
             sb.AppendLine("framesList.Add(new InterjectionGrammaticalWordFrame(){");
             sb.AppendLine(string.Join(",\n", propertiesList));
             sb.Append("})");
-#if DEBUG
-            //_logger.Info($"sb = {sb}");
-#endif
-
             _constructor.Statements.Add(new CodeSnippetExpression(sb.ToString()));
         }
 
         private void GenerateArticle(ArticleGrammaticalWordFrame frame)
         {
-#if DEBUG
-            //_logger.Info($"frame = {frame}");
-#endif
-
             var propertiesList = new List<string>();
 
             propertiesList.Add($"Number = GrammaticalNumberOfWord.{frame.Number}");
@@ -428,19 +347,11 @@ namespace DictionaryGenerator
             sb.AppendLine("framesList.Add(new ArticleGrammaticalWordFrame(){");
             sb.AppendLine(string.Join(",\n", propertiesList));
             sb.Append("})");
-#if DEBUG
-            //_logger.Info($"sb = {sb}");
-#endif
-
             _constructor.Statements.Add(new CodeSnippetExpression(sb.ToString()));
         }
 
         private void GenerateNumeral(NumeralGrammaticalWordFrame frame)
         {
-#if DEBUG
-            //_logger.Info($"frame = {frame}");
-#endif
-
             var propertiesList = new List<string>();
 
             propertiesList.Add($"NumeralType = NumeralType.{frame.NumeralType}");
@@ -456,10 +367,6 @@ namespace DictionaryGenerator
             sb.AppendLine("framesList.Add(new NumeralGrammaticalWordFrame(){");
             sb.AppendLine(string.Join(",\n", propertiesList));
             sb.Append("})");
-#if DEBUG
-            //_logger.Info($"sb = {sb}");
-#endif
-
             _constructor.Statements.Add(new CodeSnippetExpression(sb.ToString()));
         }
 
@@ -507,10 +414,6 @@ namespace DictionaryGenerator
             sb.Append("new Dictionary<string, IList<string>>() {");
             sb.Append(string.Join(',', itemsList));
             sb.Append("}");
-
-#if DEBUG
-            //_logger.Info($"sb = {sb}");
-#endif
 
             return sb.ToString();
         }

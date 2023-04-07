@@ -56,13 +56,11 @@ namespace TestSandbox.PlatformImplementations
         /// <inheritdoc/>
         public void WriteLnRawLog(string message)
         {
-            //_logger.Info(message);
         }
 
         /// <inheritdoc/>
         public void WriteLnRawWarning(string message)
         {
-            //_logger.Info(message);
         }
 
         /// <inheritdoc/>

@@ -45,27 +45,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             _context = context;            
             _localContext = localContext;
-            //_worldPublicFactsStorage = context.Storage.WorldPublicFactsStorage;
-
-#if DEBUG
-            //Log($"_worldPublicFactsStorage == null = {_worldPublicFactsStorage == null}");
-#endif
 
             Expression = entityConditionExpression;
             LogicalQuery = logicalQuery;
             Name = name;
 
-#if DEBUG
-            //Log($"entityConditionExpression = {entityConditionExpression.ToHumanizedString()}");
-            //Log($"logicalQuery = {logicalQuery.ToHumanizedString()}");
-            //Log($"logicalQuery.Normalized = {logicalQuery.Normalized.ToHumanizedString()}");
-#endif
-
             var entityConstraintsConcepts = logicalQuery.GetStandaloneConcepts();
-
-#if DEBUG
-            //Log($"entityConstraintsConcepts = {entityConstraintsConcepts.WriteListToString()}");
-#endif
 
             if(entityConstraintsConcepts.Any())
             {
@@ -75,15 +60,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 foreach (var entityConstraintConcept in entityConstraintsConcepts)
                 {
-#if DEBUG
-                    //Log($"entityConstraintConcept = {entityConstraintConcept}");
-#endif
-
                     var entityConstraint = entityConstraintsService.ConvertToEntityConstraint(entityConstraintConcept);
-
-#if DEBUG
-                    //Log($"entityConstraint = {entityConstraint}");
-#endif
 
                     constraintsList.Add(entityConstraint);
                 }
@@ -113,7 +90,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private IEngineContext _context;
         private ILocalCodeExecutionContext _localContext;
-        //private IStorage _worldPublicFactsStorage;
         private readonly LogicalSearchResolver _searcher;
         private readonly ILocalCodeExecutionContext _localCodeExecutionContext;
         private readonly IStorage _storage;
@@ -140,29 +116,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             try
             {
-#if DEBUG
-                //Log("Begin");
-#endif
-
                 _needUpdate = false;
-
-#if DEBUG
-                //Log($"constraints = {JsonConvert.SerializeObject(_constraints?.Select(p => p.ToString()))}");
-#endif
-
-#if DEBUG
-                //Log($"_searchOptions = {_searchOptions}");
-#endif
 
                 var searchOptions = _searchOptions;
 
                 if (_onceStorage != null)
                 {
-#if DEBUG
-                    //Log("_onceStorage != null");
-                    //_onceStorage.DbgPrintFactsAndRules();
-#endif
-
                     searchOptions = new LogicalSearchOptions();
                     searchOptions.QueryExpression = LogicalQuery;
                     searchOptions.TargetStorage = _onceStorage;
@@ -170,13 +129,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 }
                 
                 var searchResult = _searcher.Run(searchOptions);
-
-#if DEBUG
-                //Log($"searchResult = {searchResult}");
-                //Log($"_condition = {DebugHelperForRuleInstance.ToString(LogicalQuery)}");
-                //Log($"searchResult = {DebugHelperForLogicalSearchResult.ToString(searchResult)}");
-                //_worldPublicFactsStorage.DbgPrintFactsAndRules();
-#endif
 
                 if (searchResult.IsSuccess)
                 {
@@ -224,10 +176,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     }
                 }
             }
-
-#if DEBUG
-            //Log($"foundIdsList = {JsonConvert.SerializeObject(foundIdsList?.Select(p => p.NameValue))}");
-#endif
 
             ProcessIdsList(foundIdsList);
         }

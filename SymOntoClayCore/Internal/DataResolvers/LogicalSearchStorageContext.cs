@@ -119,21 +119,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private bool IsFit(ILogicalSearchItem item, Value modalityValue, Value queryModalityValue, ILocalCodeExecutionContext localCodeExecutionContext, KindOfCheckedModality kindOfCheckedModality, IDictionary<RuleInstance, IItemWithModalities> additionalModalities)
         {
-#if DEBUG
-            //Log($"item = {item}");
-            //Log($"queryModalityValue = {queryModalityValue}");
-            //Log($"additionalModalities.Count = {additionalModalities.Count}");
-#endif
-
             var originalRuleInstance = item.RuleInstance.Original;
 
             if (additionalModalities.ContainsKey(originalRuleInstance))
             {
                 var additionalPart = additionalModalities[originalRuleInstance];
-
-#if DEBUG
-                //Log($"additionalPart = {additionalPart}");
-#endif
 
                 Value additionalModalityValue = null;
 

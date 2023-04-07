@@ -68,7 +68,6 @@ namespace TestSandbox.Handlers
             settings.AllowPublicPosition = true;
             settings.UseStaticPosition = new Vector3(10, 10, 10);
 
-            //settings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Things\Barrel\Barrel.sobj");
             settings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Things\M4A1\M4A1.sobj");
             settings.HostListener = platformListener2;
             settings.PlatformSupport = new PlatformSupportCLIStub(new Vector3(100, 100, 100));
@@ -79,7 +78,6 @@ namespace TestSandbox.Handlers
 
             Thread.Sleep(5000);
 
-            //gameObject.PushSoundFact(60, "act(M16, shoot)");
 
             Thread.Sleep(5000);
 

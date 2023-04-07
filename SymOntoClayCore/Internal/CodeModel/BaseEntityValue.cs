@@ -198,10 +198,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         protected void ProcessIdsList(List<StrongIdentifierValue> idsList)
         {
-#if DEBUG
-            //Log($"idsList = {JsonConvert.SerializeObject(idsList?.Select(p => p.NameValue))}");
-#endif
-
             if (!idsList.Any())
             {
                 ResetCurrEntity();
@@ -220,15 +216,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             foreach (var foundId in idsList)
             {
-#if DEBUG
-                //Log($"foundId = {foundId}");
-#endif
-
                 var instanceId = _conditionalEntityHostSupport.GetInstanceId(foundId);
-
-#if DEBUG
-                //Log($"instanceId = {instanceId}");
-#endif
 
                 if (instanceId == 0)
                 {
@@ -247,10 +235,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     {
                         break;
                     }
-
-#if DEBUG
-                    //Log($"constraint = {constraint}");
-#endif
 
                     switch (constraint)
                     {
@@ -322,10 +306,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
                             throw new ArgumentOutOfRangeException(nameof(constraint), constraint, null);
                     }
                 }
-
-#if DEBUG
-                //Log($"isFit = {isFit}");
-#endif
 
                 if (!isFit)
                 {

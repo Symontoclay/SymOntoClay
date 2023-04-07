@@ -64,10 +64,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _codeItems.Push(codeEntity);
 
-#if DEBUG
-            //Logger.Log($"codeEntity.Name = {codeEntity.Name}");
-#endif
-
             if(_currCodeItem != null)
             {
                 _currCodeItem.OnNameChanged -= OnNameOfCurrentCodeItemChanged;
@@ -105,10 +101,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void OnNameOfCurrentCodeItemChanged(StrongIdentifierValue name)
         {
-#if DEBUG
-            //Logger.Log($"name = {name}");
-#endif
-
             if(CurrentDefaultSetings != null)
             {
                 CurrentDefaultSetings.Holder = name;
@@ -178,15 +170,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         public void Recovery(Token token)
         {
-#if DEBUG
-            //Logger.Log($"token = {token}");
-#endif
-
             _recoveriesTokens.Push(token);
 
-#if DEBUG
-            //Logger.Log($"_recoveriesTokens = {_recoveriesTokens.ToList().WriteListToString()}");
-#endif
         }
 
         public bool IsEmpty()

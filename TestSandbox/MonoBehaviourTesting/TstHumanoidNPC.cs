@@ -55,7 +55,6 @@ namespace TestSandbox.MonoBehaviourTesting
             var npcSettings = new HumanoidNPCSettings();
             npcSettings.Id = _id;
             npcSettings.InstanceId = 1;
-            //npcSettings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Hosts\PeaceKeeper\PeaceKeeper.host");
             npcSettings.LogicFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Npcs\PeaceKeeper\PeaceKeeper.sobj");
             npcSettings.HostListener = platformListener;
             npcSettings.VisionProvider = _tstRayScaner;
@@ -83,30 +82,17 @@ namespace TestSandbox.MonoBehaviourTesting
 
         public override void Update()
         {
-            //_logger.Log("Begin");
 
-            //if(!_isFactUpated)
-            //{
-            //    _isFactUpated = true;
 
-            //    var factStr = $"act({_id}, go)";
 
-            //    _logger.Log($"factStr = {factStr}");
 
-            //    var factId = _npc.InsertPublicFact(factStr);
 
-            //    _logger.Log($"factId = {factId}");
 
-            //    _npc.RemovePublicFact(factId);
-            //}
 
             _tstRayScaner.Scan();
 
-            //var tmpVisibleItems = _tstRayScaner.GetCurrentVisibleItems();
 
-            //_logger.Log($"tmpVisibleItems = {JsonConvert.SerializeObject(tmpVisibleItems, Formatting.Indented)}");
 
-            //_logger.Log("End");
         }
 
         public override void Stop()

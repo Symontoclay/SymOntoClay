@@ -46,18 +46,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_currToken = {_currToken}");
-#endif
             _context.Recovery(_currToken);
             var parser = new SetStatementParser(_context);
             parser.Run();
 
             var result = parser.Result;
-
-#if DEBUG
-            //Log($"result = {result}");
-#endif
 
             var kindOfStatement = result.Kind;
 

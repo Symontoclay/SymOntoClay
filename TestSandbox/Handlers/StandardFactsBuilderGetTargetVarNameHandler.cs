@@ -44,16 +44,6 @@ namespace TestSandbox.Handlers
             _logger.Log("Begin");
 
             Case11();
-            //Case10();
-            //Case9();
-            //Case8();
-            //Case7();
-            //Case6();
-            //Case5();
-            //Case4();
-            //Case3();
-            //Case2();
-            //Case1();
 
             _logger.Log("End");
         }
@@ -174,7 +164,6 @@ namespace TestSandbox.Handlers
 
         private void Case6()
         {
-            //var factStr = "{: >: { $x = {: #^`fdb93ce8-6392-4583-a400-565ade676acd` >: { act(m16,shoot) } :} & hear(i,$x1) & distance(i,$x2,15.588457107543945) & direction($x,12) & point($x,#@[15.588457107543945, 12]) & say(I, $y) } :}";
             var factStr = "{: >: { $y = {: #^`fdb93ce8-6392-4583-a400-565ade676acd` >: { act(m16,shoot) } :} & hear(i,$y) & distance(i,$y,15.588457107543945) & direction($y,12) & point($y,#@[15.588457107543945, 12]) & say(I, $y) } :}";
 
             _logger.Log($"factStr = '{factStr}'");
@@ -231,7 +220,6 @@ namespace TestSandbox.Handlers
 
         private void Case4()
         {
-            //var factStr = "{: >: { $x = {: #^`fdb93ce8-6392-4583-a400-565ade676acd` >: { act(m16,shoot) } :} & hear(i,$x) & distance(i,$x,15.588457107543945) & direction($x,12) & point($x,#@[15.588457107543945, 12]) & say(I, $y) } :}";
             var factStr = "{: >: { $y = {: #^`fdb93ce8-6392-4583-a400-565ade676acd` >: { act(m16,shoot) } :} & hear(i,$y) & distance(i,$y,15.588457107543945) & direction($y,12) & point($y,#@[15.588457107543945, 12]) & say(I, $y) } :}";
 
             _logger.Log($"factStr = '{factStr}'");

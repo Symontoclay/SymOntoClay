@@ -49,11 +49,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
-#endif
-
             switch (_state)
             {
                 case State.Init:
@@ -142,10 +137,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessAliasItem()
         {
-#if DEBUG
-            //Log($"_currToken = {_currToken}");
-#endif
-
             var item = ParseName(_currToken.Content);
 
             if(Result.Contains(item))

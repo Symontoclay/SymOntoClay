@@ -38,16 +38,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         /// <inheritdoc/>
         public Value Call(Value operand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"operand = {operand}");
-            //Log($"annotation = {annotation}");
-#endif
-
             operand = TryResolveFromVarOrExpr(operand, localCodeExecutionContext);
-
-#if DEBUG
-            //Log($"operand (after) = {operand}");
-#endif
 
             if (operand.IsSystemNull)
             {

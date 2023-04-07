@@ -36,10 +36,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class ConditionalEntitySourceValue : Value
     {
-#if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         public ConditionalEntitySourceValue(EntityConditionExpressionNode entityConditionExpression)
             : this(entityConditionExpression, null)
         {
@@ -134,11 +130,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             _builtInSuperTypes = new List<StrongIdentifierValue>() { NameHelper.CreateName(StandardNamesConstants.ConditionalEntityTypeName) };
 
-#if DEBUG
-            //_gbcLogger.Info($"options = {options}");
-            //_gbcLogger.Info($"_isLogicalQueryGenerated = {_isLogicalQueryGenerated}");
-#endif
-
             CheckDirtyOptions convertOptions = null;
             
             if(options == null)
@@ -156,16 +147,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             {
                 convertOptions.DontConvertConceptsToInhRelations = context.ServicesFactory.GetEntityConstraintsService().GetConstraintsList();
 
-#if DEBUG
-                //_gbcLogger.Info($"convertOptions.DontConvertConceptsToInhRelations = {convertOptions.DontConvertConceptsToInhRelations.WriteListToString()}");
-#endif
             }
 
             convertOptions.IgnoreStandaloneConceptsInNormalization= true;
-
-#if DEBUG
-            //_gbcLogger.Info($"convertOptions = {convertOptions}");
-#endif
 
             if (_isLogicalQueryGenerated)
             {

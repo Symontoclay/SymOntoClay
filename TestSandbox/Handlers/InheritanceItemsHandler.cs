@@ -41,7 +41,6 @@ namespace TestSandbox.Handlers
 
             var context = TstEngineContextHelper.CreateAndInitContext().EngineContext;
 
-            //var dictionary = context.Dictionary;
 
             var inheritanceStorage = context.Storage.GlobalStorage.InheritanceStorage;
 

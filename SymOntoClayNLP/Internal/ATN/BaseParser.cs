@@ -113,11 +113,6 @@ namespace SymOntoClay.NLP.Internal.ATN
 
         protected ConcreteATNToken ConvertToConcreteATNToken(ATNToken token, BaseGrammaticalWordFrame wordFrame)
         {
-#if DEBUG
-            //Log($"token = {token}");
-            //Log($"wordFrame = {wordFrame}");
-#endif
-
             return new ConcreteATNToken()
             {
                  Kind = token.Kind,
@@ -130,10 +125,6 @@ namespace SymOntoClay.NLP.Internal.ATN
 
         protected Word ConvertToWord(ConcreteATNToken token)
         {
-#if DEBUG
-            //Log($"token = {token}");
-#endif
-
             return new Word()
             {
                 IsNumber = token.Kind == KindOfATNToken.Number,

@@ -74,10 +74,6 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
-#if DEBUG
-            //Log($"Name = {Name}");
-#endif
-
             if (_executionCoordinator.ExecutionStatus == ActionExecutionStatus.Executing)
             {
                 _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Canceled;

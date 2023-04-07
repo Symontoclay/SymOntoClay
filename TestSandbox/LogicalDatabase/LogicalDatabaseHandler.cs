@@ -54,18 +54,10 @@ namespace TestSandbox.LogicalDatabase
             _logger.Log("Begin");
 
             RunCase5();
-            //RunCase4();
-            //RunCase3();
-            //RunGettingLongHashCode();
-            //RunGettingInheritanceInformation();
-            //RunCase2();
-            //RunCase1();
-            //ParseFacts();
 
             _logger.Log("End");
         }
 
-        //Binding
         private void RunCase5()
         {
             var queryStr = string.Empty;
@@ -80,7 +72,6 @@ namespace TestSandbox.LogicalDatabase
             Search(queryStr);
         }
 
-        //Named Groups
         private void RunCase4()
         {
             var queryStr = string.Empty;
@@ -89,13 +80,10 @@ namespace TestSandbox.LogicalDatabase
             ParseQueryString(queryStr);
         }
 
-        //Values
         private void RunCase3()
         {
             var queryStr = string.Empty;
 
-            //queryStr = "{: weight(#Tom, 70.2) :}";
-            //ParseQueryString(queryStr);
 
             queryStr = "{: weight(#Tom, NULL) :}";
             ParseQueryString(queryStr);
@@ -148,7 +136,6 @@ namespace TestSandbox.LogicalDatabase
             _logger.Log("End");
         }
 
-        //This inheritance
         private void RunCase2()
         {
             _logger.Log("Begin");
@@ -188,20 +175,12 @@ namespace TestSandbox.LogicalDatabase
             queryStr = "{: { son($x, $y) } -> { male($x) & parent($y, $x)} :}";
             ParseQueryString(queryStr);
 
-            //queryStr = "{: son(?x, ?y) :}";
-            //Search(queryStr);
 
-            //queryStr = "{: ?z(?x, ?y) :}";
-            //Search(queryStr);
 
             queryStr = "{: son(#Tom, #Piter) :}";
             Search(queryStr);
 
-            //queryStr = "{: male(#Tom) :}";
-            //Search(queryStr);
 
-            //queryStr = "{: male(#Mary) :}";
-            //Search(queryStr);
 
             _logger.Log("End");
         }
@@ -212,23 +191,13 @@ namespace TestSandbox.LogicalDatabase
 
             var queryStr = string.Empty;
 
-            //queryStr = "{: >:{ male(#124) } :}";
-            //ParseQueryString(queryStr);
 
             queryStr = "{: male(#124) :}";
             ParseQueryString(queryStr);
 
-            //queryStr = "{: >:{son($x, $y)} -> { male($x) & parent($y, $x)} :}";
-            //ParseQueryString(queryStr);
 
-            //queryStr = "{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}";
-            //ParseQueryString(queryStr);
 
-            //queryStr = "{: { love($x, $y) } -> { help($x, $y) } :}";
-            //ParseQueryString(queryStr);
 
-            //queryStr = "{: ?x(?y, ?z) :}";
-            //Search(queryStr);
 
             _logger.Log("End");
         }
@@ -255,7 +224,6 @@ namespace TestSandbox.LogicalDatabase
 
             _logger.Log($"DebugHelperForRuleInstance.ToString(parsedQuery) = {DebugHelperForRuleInstance.ToString(parsedQuery)}");
 
-            //var indexedQuery = parsedQuery.GetIndexed(_context);
 
             parsedQuery.CheckDirty();
 
@@ -292,7 +260,6 @@ namespace TestSandbox.LogicalDatabase
 
             var inheritanceRelationsList = parsedQuery.GetInheritanceRelations();
 
-            //_logger.Log($"inheritanceRelationsList = {inheritanceRelationsList.WriteListToString()}");
 
             var inheritanceItemsList = new List<InheritanceItem>();
 
@@ -334,19 +301,14 @@ namespace TestSandbox.LogicalDatabase
 
             var parsedQuery = parser.Result;
 
-            //_logger.Log($"parsedQuery = {parsedQuery}");
 
             _logger.Log($"DebugHelperForRuleInstance.ToString(parsedQuery) = {DebugHelperForRuleInstance.ToString(parsedQuery)}");
 
-            //var indexedQuery = parsedQuery.GetIndexed(_context);
 
-            //_logger.Log($"indexedQuery = {indexedQuery}");
 
-            //_logger.Log($"DebugHelperForIndexedRuleInstance.ToString(indexedQuery) = {DebugHelperForIndexedRuleInstance.ToString(indexedQuery, _context.Dictionary)}");
 
             _context.Storage.GlobalStorage.LogicalStorage.Append(parsedQuery);
 
-            //throw new NotImplementedException();
         }
 
         private void Search(string queryStr)
@@ -367,15 +329,11 @@ namespace TestSandbox.LogicalDatabase
 
             var parsedQuery = parser.Result;
 
-            //_logger.Log($"parsedQuery = {parsedQuery}");
 
             _logger.Log($"DebugHelperForRuleInstance.ToString(parsedQuery) = {DebugHelperForRuleInstance.ToString(parsedQuery)}");
 
-            //var indexedQuery = parsedQuery.GetIndexed(_context);
 
-            //_logger.Log($"indexedQuery = {indexedQuery}");
 
-            //_logger.Log($"DebugHelperForIndexedRuleInstance.ToString(indexedQuery) = {DebugHelperForIndexedRuleInstance.ToString(indexedQuery, dictionary)}");
 
             var searcher = _context.DataResolversFactory.GetLogicalSearchResolver();
 
@@ -387,11 +345,9 @@ namespace TestSandbox.LogicalDatabase
             localCodeExecutionContext.Storage = _context.Storage.GlobalStorage;
             localCodeExecutionContext.Holder = _context.CommonNamesStorage.DefaultHolder;
 
-            //_logger.Log($"searchOptions = {searchOptions}");
 
             var searchResult = searcher.Run(searchOptions);
 
-            //_logger.Log($"searchResult = {searchResult}");
 
             _logger.Log($"searchResult.IsSuccess = {searchResult.IsSuccess}");
             _logger.Log($"searchResult.Items.Count = {searchResult.Items.Count}");
@@ -413,7 +369,6 @@ namespace TestSandbox.LogicalDatabase
                     _logger.Log($"DebugHelperForRuleInstance.ToString(foundNode) = {DebugHelperForRuleInstance.ToString(foundNode)}");
                 }
 
-                //_logger.Log($" = {}");
             }
         }
     }

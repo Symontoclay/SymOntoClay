@@ -28,11 +28,6 @@ using System.Text;
 
 namespace SymOntoClay.NLP.Internal.PhraseStructure
 {
-    //https://www-users.york.ac.uk/~lang18/Documentation/syn-intro.htm
-    //https://www.researchgate.net/publication/221761397_A_Multi-Classifier_Based_Guideline_Sentence_Classification_System
-    //https://www.researchgate.net/figure/Parsed-sentence-from-which-to-extract-the-feature-vector-CC-coordinating-conjunction_fig3_221761397
-    //QP
-    //"at least one", "very many"
     public class QuantifierPhrase : BaseSentenceItem
     {
         /// <inheritdoc/>
@@ -113,7 +108,6 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
             sb.PrintObjProp(n, nameof(Q), Q);
             sb.PrintObjProp(n, nameof(Adv), Adv);
 
-            //sb.PrintObjProp(n, nameof(), );
 
             sb.Append(base.PropertiesToString(n));
 

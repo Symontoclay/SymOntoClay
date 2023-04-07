@@ -52,20 +52,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             Result.CheckDirty();
 
-#if DEBUG
-            //Log($"Result = {Result}");
-#endif
         }
 
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");
-#endif
-
             switch (_state)
             {
                 case State.Init:
@@ -109,10 +100,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         var value = ParseValue();
 
-#if DEBUG
-                        //Log($"value = {value}");
-#endif
-
                         Result.SettingsDict[_settingsKey] = value;
                         _settingsKey = null;
 
@@ -145,10 +132,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             var nextToken = _context.GetToken();
             _context.Recovery(nextToken);
-
-#if DEBUG
-            //Log($"nextToken = {nextToken}");
-#endif
 
             switch(nextToken.TokenKind)
             {

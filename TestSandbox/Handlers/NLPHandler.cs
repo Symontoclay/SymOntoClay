@@ -84,11 +84,6 @@ namespace TestSandbox.Handlers
             _logger.Log("Begin");
 
             Case5();
-            //Case4();
-            //Case3();
-            //Case2();
-            //Case1();
-            //Case0();
 
             _logger.Log("End");
         }
@@ -97,13 +92,10 @@ namespace TestSandbox.Handlers
         {
             var nlpContext = _engineContext.GetNLPConverterContext();
 
-            //var factStr = "{: >: { like(i,#@{: >: { possess(i,$_) & cat($_) } :}) } :}";
             var factStr = "{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 0 :}";
 
             var ruleInstance = Parse(factStr);
 
-            //ruleInstance.ObligationModality = LogicalValue.TrueValue;
-            //_logger.Log($"ruleInstance = {ruleInstance}");
 
             _logger.Log($"ruleInstance = {ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
 
@@ -153,7 +145,6 @@ namespace TestSandbox.Handlers
 
         private void Case3()
         {
-            //var text = "I like my cat.";
             var text = "Go to green place!";
 
 #if DEBUG
@@ -173,34 +164,20 @@ namespace TestSandbox.Handlers
 
         private void Case2()
         {
-            //var wordsDict = new TstSimpleWordsDict();
 
-            //var text = "I like my cat.";
             var text = "Go to green place!";
 
 #if DEBUG
             _logger.Log($"text = {text}");
 #endif
 
-            //var globalContext = new GlobalParserContext(_engineContext, wordsDict, text);
 
-            //globalContext.Run();
 
             var logSessionDir = Directory.GetCurrentDirectory();
 
-            //var logDir = Path.Combine(Directory.GetCurrentDirectory(), "ATNLogs");
 
-            //if (!Directory.Exists(logDir))
-            //{
-            //    Directory.CreateDirectory(logDir);
-            //}
 
-            //var logSessionDir = Path.Combine(logDir, $"ATN_{DateTime.Now:dd-MM-yyyy_HH-mm-ss}");
 
-            //if (!Directory.Exists(logSessionDir))
-            //{
-            //    Directory.CreateDirectory(logSessionDir);
-            //}
 
             var parser = new ATNParser(_engineContext.Logger, _wordsDict);
 
@@ -215,7 +192,6 @@ namespace TestSandbox.Handlers
             var converterInternalCGToFact = new ConverterInternalCGToFact(_engineContext.Logger);
 
             var result = parser.Run(text);
-            //var result = parser.Run(text, true, logSessionDir);
 
             _logger.Log($"result.Count = {result.Count}");
 
@@ -241,7 +217,6 @@ namespace TestSandbox.Handlers
 
                     _logger.Log($"conceptualGraphDbgStr = '{conceptualGraphDbgStr}'");
 
-                    //_logger.Log($"conceptualGraphDbgStr.DeepTrim() = '{conceptualGraphDbgStr.DeepTrim()}'");
 
                     var internalCG = convertorCGToInternal.Convert(conceptualGraph);
 

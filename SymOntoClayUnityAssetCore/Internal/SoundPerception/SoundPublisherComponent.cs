@@ -52,20 +52,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         /// <inheritdoc/>
         public void PushSoundFact(float power, string factStr)
         {
-#if DEBUG
-            //Log($"power = {power}");
-            //Log($"factStr = {factStr}");
-#endif
-
             if(_soundBus == null)
             {
                 return;
             }
-
-#if DEBUG
-            //Log("NEXT");
-            //Log($"_hostSupport.GetCurrentAbsolutePosition() = {_hostSupport.GetCurrentAbsolutePosition()}");
-#endif
 
             _soundBus.PushSound(_instanceId, power, _hostSupport.GetCurrentAbsolutePosition(), factStr);
         }
@@ -73,16 +63,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         /// <inheritdoc/>
         public void PushSoundFact(float power, RuleInstance fact)
         {
-#if DEBUG
-            //Log($"power = {power}");
-            //Log($"fact = {fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
-#endif
-
             var factStr = fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent);
-
-#if DEBUG
-            //Log($"factStr = '{factStr}'");
-#endif
 
             PushSoundFact(power, factStr);
         }
@@ -90,16 +71,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         /// <inheritdoc/>
         public void PushSpeechFact(float power, string factStr)
         {
-#if DEBUG
-            //Log($"power = {power}");
-            //Log($"factStr = {factStr}");
-#endif
-
             factStr = _standardFactsBuilder.BuildSayFactString(_idForFacts, factStr);
-
-#if DEBUG
-            //Log($"factStr (after) = '{factStr}'");
-#endif
 
             PushSoundFact(power, factStr);
         }
@@ -107,16 +79,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         /// <inheritdoc/>
         public void PushSpeechFact(float power, RuleInstance fact)
         {
-#if DEBUG
-            //Log($"power = {power}");
-            //Log($"fact = {fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
-#endif
-
             var factStr = fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent);
-
-#if DEBUG
-            //Log($"factStr = '{factStr}'");
-#endif
 
             PushSpeechFact(power, factStr);
         }

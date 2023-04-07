@@ -47,17 +47,9 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 
         public string Resolve()
         {
-#if DEBUG
-            //_logger.Log($"_name = {_name}");
-#endif
-
             var resolvingContext = new ContextOfConceptFromVarResolver();
 
             ProcessExpression(_context.CurrentRulePart.Expression, resolvingContext);
-
-#if DEBUG
-            //_logger.Log($"resolvingContext.FoundItems = {resolvingContext.FoundItems.WriteListToString()}");
-#endif
 
             if(resolvingContext.FoundItems.Count == 1)
             {
@@ -69,10 +61,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 
         private string ProcessTargetResultItem(ResultItemOfConceptFromVarResolver resultItem)
         {
-#if DEBUG
-            //_logger.Log($"resultItem = {resultItem}");
-#endif
-
             var relation = resultItem.Relation;
 
             var result = new ResultOfNode();
@@ -89,10 +77,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 
         private void ProcessExpression(LogicalQueryNode expr, ContextOfConceptFromVarResolver resolvingContext)
         {
-#if DEBUG
-            //_logger.Log($"expr = {expr.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
-#endif
-
             var kind = expr.Kind;
 
             switch (kind)
@@ -119,10 +103,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 
         private void ProcessRelation(LogicalQueryNode relation, ContextOfConceptFromVarResolver resolvingContext)
         {
-#if DEBUG
-            //_logger.Log($"relation = {relation.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
-#endif
-
             if (_visitedRelations.ContainsKey(relation))
             {
                 return;
@@ -132,10 +112,6 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             {
                 foreach(var linkedVar in relation.LinkedVars)
                 {
-#if DEBUG
-                    //_logger.Log($"linkedVar = {linkedVar}");
-#endif
-
                     if(linkedVar.Name == _name)
                     {
                         resolvingContext.FoundItems.Add(new ResultItemOfConceptFromVarResolver()
@@ -161,16 +137,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 
         private void ProcessInheritanceRelation(LogicalQueryNode relation, ContextOfConceptFromVarResolver resolvingContext)
         {
-#if DEBUG
-            //_logger.Log($"relation = {relation.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
-#endif
-
             var param = relation.ParamsList[0];
-
-#if DEBUG
-            //_logger.Log($"param = {param}");
-            //_logger.Log($"param = {param.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
-#endif
 
             if (param.Kind != KindOfLogicalQueryNode.LogicalVar)
             {

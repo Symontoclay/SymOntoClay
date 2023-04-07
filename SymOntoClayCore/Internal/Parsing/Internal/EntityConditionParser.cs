@@ -48,12 +48,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");
-            //Log($"_state = {_state}");
-#endif
-
             switch(_state)
             {
                 case State.Init:
@@ -79,11 +73,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                 var parser = new EntityConditionExpressionParser(entityConditionExpressionParserContext);
                                 parser.Run();
-
-#if DEBUG
-                                //Log($"parser.Result = {parser.Result}");
-                                //Log($"parser.Result.GetHumanizeDbgString() = {parser.Result.ToHumanizedString()}");
-#endif
 
                                 Result = parser.Result;
 

@@ -52,8 +52,6 @@ namespace TestSandbox.Handlers
         {
             _logger.Log("Begin");
 
-            //var platformListener = new TstPlatformHostListener();
-            //var platformListener = new HostMethods_Tests_HostListener();
             var platformListener = new FullGeneralized_Tests_HostListener();
 
             var factorySettings = new UnityTestEngineContextFactorySettings();
@@ -77,39 +75,22 @@ namespace TestSandbox.Handlers
             var factStr = "{: $x = {: act(M16, shoot) :} & hear(I, $x) & distance(I, $x, 15.588457107543945) & direction($x, 12) & point($x, #@[15.588457107543945, 12]) :}";
             _npc.EngineContext.Storage.InsertListenedFact(factStr);
 
-            //var factId = _npc.InsertFact("{: see(I, #a) :}");
 
-            //_npc.PushSoundFact(60, "act(M16, shoot)");
 
             var factId = _npc.InsertFact("{: see(I, #a) :}");
-            //_npc.InsertFact("{: see(I, #a) :}");
-            //_npc.InsertFact("{: barrel (#a) :}");
-            //_npc.InsertFact("distance(I, #a, 14.71526)");
-            //_npc.InsertFact("{: see(I, enemy) :}");
-            //_npc.InsertPublicFact("{: color(I, green) :}");
 
-            //Thread.Sleep(100);
 
             _npc.Logger.LogChannel("|-|-|-|-|-|-|-|-|-|-|-|-|");
             _logger.Log("|-|-|-|-|-|-|-|-|-|-|-|-|");
 
-            //_npc.InsertFact("{: see(I, barrel) :}");
 
-            //_npc.RemoveFact(factId);
 
-            //Thread.Sleep(100);
 
-            //_logger.Log("|=|=|=|=|=|=|");
 
-            //_npc.Logger.LogChannel("|=|=|=|=|=|=|");
 
-            //_npc.RemoveFact(factId);
-            //_npc.InsertFact("{: see(I, #a) :}");
 
-            //_npc.InsertFact("{: see(I, barrel) :}");
 
             Thread.Sleep(50000);
-            //Thread.Sleep(500000);
 
             _logger.Log("End");
         }

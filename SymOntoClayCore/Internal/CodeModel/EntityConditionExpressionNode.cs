@@ -37,10 +37,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class EntityConditionExpressionNode : AnnotatedItem, IAstNode
     {
-#if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         public KindOfLogicalQueryNode Kind { get; set; } = KindOfLogicalQueryNode.Unknown;
         public KindOfOperatorOfLogicalQueryNode KindOfOperator { get; set; } = KindOfOperatorOfLogicalQueryNode.Unknown;
         public StrongIdentifierValue Name { get; set; }
@@ -53,10 +49,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-#if DEBUG
-            //_gbcLogger.Info($"this = {DebugHelperForRuleInstance.ToString(this)}");
-#endif
-
             switch (Kind)
             {
                 case KindOfLogicalQueryNode.BinaryOperator:

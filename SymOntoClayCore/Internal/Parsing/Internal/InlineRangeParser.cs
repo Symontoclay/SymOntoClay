@@ -62,12 +62,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnFinish()
         {
-#if DEBUG
-            //Log($"_leftBoundary = {_leftBoundary}");
-            //Log($"_rightBoundary = {_rightBoundary}");
-            //Log($"Result = {Result}");
-#endif
-
             if(_leftBoundary.Value != null)
             {
                 Result.LeftBoundary = _leftBoundary;
@@ -78,19 +72,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 Result.RightBoundary = _rightBoundary;
             }
 
-#if DEBUG
-            //Log($"Result (after) = {Result}");
-#endif
         }
 
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");            
-#endif
-
             switch (_state)
             {
                 case State.Init:
@@ -132,10 +118,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var parser = new NumberParser(_context);
                                 parser.Run();
 
-#if DEBUG
-                                //Log($"parser.Result = {parser.Result}");
-#endif
-
                                 _leftBoundary.Value = parser.Result.AsNumberValue;
 
                                 _state = State.GotLeftValue;
@@ -172,10 +154,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 _context.Recovery(_currToken);
                                 var parser = new NumberParser(_context);
                                 parser.Run();
-
-#if DEBUG
-                                //Log($"parser.Result = {parser.Result}");
-#endif
 
                                 _rightBoundary.Value = parser.Result.AsNumberValue;
 

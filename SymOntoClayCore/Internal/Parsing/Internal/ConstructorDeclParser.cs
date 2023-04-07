@@ -66,12 +66,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");            
-#endif
-
             switch (_state)
             {
                 case State.Init:
@@ -136,10 +130,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var parser = new AstExpressionParser(_context, TokenKind.Comma, TokenKind.OpenFigureBracket);
                                 parser.Run();
 
-#if DEBUG
-                                //Log($"parser.Result = {parser.Result}");
-#endif
-
                                 Result.CallSuperClassContructorsExpressions.Add(parser.Result);
 
                                 _state = State.GotSuperClassContructorItem;
@@ -156,18 +146,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     Pos= _currToken.Pos
                                 };
 
-#if DEBUG
-                                //Log($"token = {token}");
-#endif
                                 _context.Recovery(_currToken);
                                 _context.Recovery(token);
 
                                 var parser = new AstExpressionParser(_context, TokenKind.Comma, TokenKind.OpenFigureBracket);
                                 parser.Run();
-
-#if DEBUG
-                                //Log($"parser.Result = {parser.Result}");
-#endif
 
                                 Result.CallSuperClassContructorsExpressions.Add(parser.Result);
 

@@ -33,10 +33,6 @@ namespace SymOntoClay.CLI
 {
     public class CLINewHandler
     {
-#if DEBUG
-        //private readonly Logger _logger = LogManager.GetCurrentClassLogger();
-#endif
-
         public void Run(CLICommand command)
         {
             var wSpaceFile = WFilesSearcher.FindWSpaceFile(Directory.GetCurrentDirectory());

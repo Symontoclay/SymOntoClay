@@ -67,11 +67,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
-#endif
-
             switch (_state)
             {
                 case State.Init:
@@ -103,10 +98,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                 var parser = new LogicalQueryParser(_context);
                                 parser.Run();
-
-#if DEBUG
-                                //Log($"parser.Result = {parser.Result}");
-#endif
 
                                 _rawStatement.RuleInstance = parser.Result;
 

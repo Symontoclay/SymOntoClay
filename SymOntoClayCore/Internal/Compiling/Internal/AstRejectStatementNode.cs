@@ -37,10 +37,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(AstRejectStatement statement)
         {
-#if DEBUG
-            //Log($"statement = {statement}");
-#endif
-
             AddCommand(new IntermediateScriptCommand()
             {
                 OperationCode = OperationCode.Reject

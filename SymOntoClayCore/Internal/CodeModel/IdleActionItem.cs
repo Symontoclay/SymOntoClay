@@ -75,10 +75,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var result = base.CalculateLongHashCode(options) /*^ SubName.GetLongHashCode(options) ^ SuperName.GetLongHashCode(options)*/;
 
-            //if (Rank != null)
-            //{
-            //    result ^= LongHashCodeWeights.BaseModalityWeight ^ Rank.GetLongHashCode(options);
-            //}
 
             return result;
         }

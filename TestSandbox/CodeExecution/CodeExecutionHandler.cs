@@ -107,7 +107,6 @@ namespace TestSandbox.CodeExecution
             var codeFrameLocalContext = new LocalCodeExecutionContext();
             codeFrameLocalContext.Storage = context.Storage.GlobalStorage;
             codeFrameLocalContext.Holder = NameHelper.CreateName("PixKeeper");
-            //codeFrameLocalContext.Holder = new Name();
 
             codeFrame.LocalContext = codeFrameLocalContext;
 

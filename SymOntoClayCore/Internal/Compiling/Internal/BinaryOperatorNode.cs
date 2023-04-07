@@ -40,11 +40,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         
         public void Run(BinaryOperatorAstExpression expression)
         {
-#if DEBUG
-            //Log($"expression = {expression.ToHumanizedString()}");
-            //Log($"expression = {expression}");
-#endif
-
             var kindOfOperator = expression.KindOfOperator;
 
             switch(kindOfOperator)
@@ -61,32 +56,16 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         private void RunAssignBinaryOperator(BinaryOperatorAstExpression expression)
         {
-#if DEBUG
-            //Log($"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            //Log($"expression = {expression.ToHumanizedString()}");
-            //Log($"expression = {expression}");
-#endif
-
             var rightNode = new ExpressionNode(_context);
             rightNode.Run(expression.Right);
             AddCommands(rightNode.Result);
 
             RunLeftAssingNode(expression.Left);
 
-#if DEBUG
-            //DbgPrintCommands();
-            //throw new NotImplementedException();
-#endif
         }
 
         private void RunLeftAssingNode(AstExpression expression)
         {
-#if DEBUG
-            //Log($"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            //Log($"expression = {expression.ToHumanizedString()}");
-            //Log($"expression = {expression}");
-#endif
-
             var kind = expression.Kind;
 
             switch (kind)
@@ -111,10 +90,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     {
                         var varDeclAstExpression = expression.AsVarDeclAstExpression;
 
-#if DEBUG
-                        //Log($"varDeclAstExpression = {varDeclAstExpression.ToHumanizedString()}");
-#endif
-
                         CompileVarDecl(varDeclAstExpression);
 
                         CompilePushAnnotation(expression);
@@ -125,9 +100,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
                         AddCommand(command);
 
-#if DEBUG
-                        //DbgPrintCommands();
-#endif
                     }
                     break;
 
@@ -152,10 +124,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                                     command.KindOfOperator = KindOfOperator.Assign;
 
                                     AddCommand(command);
-
-#if DEBUG
-                                    //DbgPrintCommands();
-#endif
 
                                     RunLeftAssingNode(binOpExpr.Left);
                                 }
@@ -182,10 +150,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }
 
-#if DEBUG
-            //DbgPrintCommands();
-            //throw new NotImplementedException();
-#endif
         }
 
         private void RunUsualBinaryOperator(BinaryOperatorAstExpression expression)

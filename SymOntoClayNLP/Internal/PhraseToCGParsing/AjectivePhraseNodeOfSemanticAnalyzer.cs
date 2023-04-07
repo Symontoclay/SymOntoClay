@@ -65,40 +65,14 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
                 throw new NotImplementedException();
             }
 
-            //            var ajective = _adjectivePhrase.Adjective;
 
-            //#if DEBUG
-            //            Context.Logger.Log($"ajective = {ajective}");
-            //#endif
 
-            //            _concept = new ConceptCGNode();
-            //            result.RootConcept = _concept;
-            //            _concept.Parent = conceptualGraph;
-            //            _concept.Name = GetName(ajective);
 
-            //            var ajectiveFullLogicalMeaning = ajective.FullLogicalMeaning;
 
-            //            if (ajectiveFullLogicalMeaning.IsEmpty())
-            //            {
-            //                return result;
-            //            }
 
-            //            foreach (var logicalMeaning in ajectiveFullLogicalMeaning)
-            //            {
-            //#if DEBUG
-            //                Context.Logger.Log($"logicalMeaning = {logicalMeaning}");
-            //#endif
 
-            //                PrimaryRolesDict.Add(logicalMeaning, _concept);
-            //                resultPrimaryRolesDict.Add(logicalMeaning, _concept);
-            //            }
 
-            //#if DEBUG
-            //            Context.Logger.Log($"PrimaryRolesDict = {PrimaryRolesDict}");
-            //            Context.Logger.Log("End");
-            //#endif
 
-            //            return result;
 
             throw new NotImplementedException();
         }

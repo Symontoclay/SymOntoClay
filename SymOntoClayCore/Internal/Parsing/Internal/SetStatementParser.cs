@@ -70,9 +70,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnFinish()
         {
-#if DEBUG
-            //Log($"_rawStatement = {_rawStatement}");
-#endif
             var kindOfUseRawStatement = _rawStatement.KindOfSetRawStatement;
 
             switch(kindOfUseRawStatement)
@@ -104,10 +101,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             result.StateName = _rawStatement.FirstName;
 
-#if DEBUG
-            //Log($"result = {result}");
-#endif
-
             Result = result;
         }
 
@@ -120,10 +113,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             result.AppendAnnotations(_rawStatement);
 
             result.StateName = _rawStatement.FirstName;
-
-#if DEBUG
-            //Log($"result = {result}");
-#endif
 
             Result = result;
         }        
@@ -156,13 +145,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
-            //Log($"_rawStatement = {_rawStatement}");
-            //Log($"Result = {Result}");            
-#endif
-
             switch (_state)
             {
                 case State.Init:
@@ -298,7 +280,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var nextToken = _context.GetToken();
 
 #if DEBUG
-                                //Log($"nextToken = {nextToken}");
 
 #endif
                                 switch (nextToken.TokenKind)
@@ -368,9 +349,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessGotUseInheritanceSecondName();
                             break;
 
-                        //case TokenKind.Semicolon:
-                        //    Exit();
-                        //    break;
 
                         default:
                             throw new UnexpectedTokenException(_currToken);

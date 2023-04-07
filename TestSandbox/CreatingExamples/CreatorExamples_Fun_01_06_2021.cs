@@ -321,7 +321,5 @@ app PeaceKeeper
             _logger.Log("End");
         }
 
-        //"FuncExample_"
-        //Example(, text);
     }
 }

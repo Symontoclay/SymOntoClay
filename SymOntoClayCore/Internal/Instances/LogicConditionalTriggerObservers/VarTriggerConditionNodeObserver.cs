@@ -36,10 +36,6 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
         {
             _varName = condition.Name;
             
-#if DEBUG
-            //Log($"_varName = {_varName}");
-#endif
-
             storage.VarStorage.OnChangedWithKeys += VarStorage_OnChangedWithKeys;
             _storage = storage;
         }
@@ -49,11 +45,6 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
         private void VarStorage_OnChangedWithKeys(StrongIdentifierValue varName)
         {
-#if DEBUG
-            //Log($"varName = {varName}");
-            //Log($"_varName = {_varName}");
-#endif
-
             if (_varName == varName)
             {
                 EmitOnChanged();

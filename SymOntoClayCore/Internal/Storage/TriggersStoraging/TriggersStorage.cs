@@ -65,19 +65,11 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
         /// <inheritdoc/>
         public void Append(InlineTrigger inlineTrigger)
         {
-#if DEBUG
-            //Log($"inlineTrigger = {inlineTrigger}");
-#endif
-
             AnnotatedItemHelper.CheckAndFillUpHolder(inlineTrigger, _realStorageContext.MainStorageContext.CommonNamesStorage);
 
             inlineTrigger.CheckDirty();
 
             var kind = inlineTrigger.KindOfInlineTrigger;
-
-#if DEBUG
-            //Log($"kind = {kind}");
-#endif
 
             switch (kind)
             {
@@ -118,21 +110,11 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
         {
             inlineTrigger.CheckDirty();
 
-#if DEBUG
-            //Log($"inlineTrigger.Holder = {inlineTrigger.Holder}");
-            //Log($"inlineTrigger.Condition = {DebugHelperForRuleInstance.ToString(inlineTrigger.Condition)}");
-#endif
-
             var holder = inlineTrigger.Holder;
 
             if (dictForStoraging.ContainsKey(holder))
             {
                 var targetList = dictForStoraging[holder];
-
-#if DEBUG
-                //Log($"dictForStoraging[inlineTrigger.Holder].Count = {dictForStoraging[holder].Count}");
-                //Log($"targetList = {targetList.WriteListToString()}");
-#endif
 
                 StorageHelper.RemoveSameItems(targetList, inlineTrigger);
 
@@ -160,11 +142,6 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
                     {
                         var targetList = dict[holder];
 
-#if DEBUG
-                        //Log($"dict[superName].Count = {dict[holder].Count}");
-                        //Log($"targetList = {targetList.WriteListToString()}");
-#endif
-
                         StorageHelper.RemoveSameItems(targetList, inlineTrigger);
 
                         targetList.Add(inlineTrigger);
@@ -186,10 +163,6 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
         /// <inheritdoc/>
         public IList<WeightedInheritanceResultItem<InlineTrigger>> GetSystemEventsTriggersDirectly(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
-#if DEBUG
-            //Log($"kindOfSystemEvent = {kindOfSystemEvent}");
-#endif
-
             lock (_lockObj)
             {
                 if (_realStorageContext.Disabled)
@@ -261,17 +234,9 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
             {
                 var targetHolder = weightedInheritanceItem.SuperName;
 
-#if DEBUG
-                //Log($"targetHolder = {targetHolder}");
-#endif
-
                 if (dictForStoraging.ContainsKey(targetHolder))
                 {
                     var targetList = dictForStoraging[targetHolder];
-
-#if DEBUG
-                    //Log($"targetList.Count = {targetList.Count}");
-#endif
 
                     foreach (var targetVal in targetList)
                     {
@@ -288,10 +253,6 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"namedTriggerInstance.NamesList = {namedTriggerInstance.NamesList.WriteListToString()}");
-#endif
-
                 var namesList = namedTriggerInstance.NamesList;
 
                 if (namesList.IsNullOrEmpty())
@@ -310,10 +271,6 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
                 foreach(var name in namesList)
                 {
-#if DEBUG
-                    //Log($"name = {name}");
-#endif
-
                     if(_namedTriggerInstancesDict.ContainsKey(name))
                     {
                         var targetList = _namedTriggerInstancesDict[name];
@@ -341,10 +298,6 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"namedTriggerInstance.NamesList = {namedTriggerInstance.NamesList.WriteListToString()}");
-#endif
-
                 var namesList = namedTriggerInstance.NamesList;
 
                 if (namesList.IsNullOrEmpty())
@@ -363,10 +316,6 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
                 foreach (var name in namesList)
                 {
-#if DEBUG
-                    //Log($"name = {name}");
-#endif
-
                     var targetList = _namedTriggerInstancesDict[name];
 
                     targetList.Remove(namedTriggerInstance);
@@ -386,10 +335,6 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"name = {name}");
-#endif
-
                 if (_realStorageContext.Disabled)
                 {
                     return _emptyNamedTriggerInstancesList;
@@ -412,18 +357,11 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
         private void NamedTriggerInstance_OnChanged(IList<StrongIdentifierValue> namesList)
         {
-#if DEBUG
-            //Log($"namesList = {namesList.WriteListToString()}");
-#endif
             EmitOnChanged(namesList);
         }
 
         protected void EmitOnChanged(IList<StrongIdentifierValue> namesList)
         {
-#if DEBUG
-            //Log($"namesList = {namesList.WriteListToString()}");
-#endif
-
             Task.Run(() => {
                 OnNamedTriggerInstanceChanged?.Invoke();
             });
@@ -435,10 +373,6 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
         private void TriggersStorage_OnNamedTriggerInstanceChangedWithKeys(IList<StrongIdentifierValue> namesList)
         {
-#if DEBUG
-            //Log($"varName = {varName}");
-#endif
-
             EmitOnChanged(namesList);
         }
 

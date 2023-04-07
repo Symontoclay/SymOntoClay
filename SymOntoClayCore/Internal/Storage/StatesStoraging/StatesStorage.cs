@@ -52,10 +52,6 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStoraging
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"state = {state}");
-#endif
-
                 if (_statesList.Contains(state))
                 {
                     return;
@@ -132,10 +128,6 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStoraging
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"name = {name}");
-#endif
-
                 if (_realStorageContext.Disabled)
                 {
                     return _emptyWeightedStatesList;
@@ -147,17 +139,9 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStoraging
                 {
                     var targetHolder = weightedInheritanceItem.SuperName;
 
-#if DEBUG
-                    //Log($"targetHolder = {targetHolder}");
-#endif
-
                     if (_statesDict.ContainsKey(targetHolder))
                     {
                         var targetDict = _statesDict[targetHolder];
-
-#if DEBUG
-                        //Log($"targetDict.Count = {targetDict.Count}");
-#endif
 
                         if (targetDict.ContainsKey(name))
                         {
@@ -212,10 +196,6 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStoraging
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"name = {name}");
-#endif
-
                 _defaultStateName = name;
             }
         }
@@ -255,9 +235,6 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStoraging
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"mutuallyExclusiveStatesSet = {mutuallyExclusiveStatesSet}");
-#endif
                 if(_mutuallyExclusiveStatesSetsList.Contains(mutuallyExclusiveStatesSet))
                 {
                     return;

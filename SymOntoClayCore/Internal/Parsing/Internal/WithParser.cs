@@ -52,12 +52,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
-            //Log($"_itemName = {_itemName}");
-#endif
-
             switch (_state)
             {
                 case State.Init:
@@ -135,15 +129,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             var value = ParseValue();
 
-#if DEBUG
-            //Log($"value = {value}");
-#endif
-
             var nameStr = _itemName?.NormalizedNameValue;
-
-#if DEBUG
-            //Log($"nameStr = {nameStr}");
-#endif
 
             if (string.IsNullOrWhiteSpace(nameStr))
             {

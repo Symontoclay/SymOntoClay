@@ -105,7 +105,6 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
 
             globalOperatorsStorage.Append(op);
 
-            //-----------
 
             op = new Operator
             {
@@ -167,7 +166,6 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
 
             globalOperatorsStorage.Append(op);
 
-            //---------------
 
             op = new Operator
             {

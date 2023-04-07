@@ -929,7 +929,6 @@ namespace DictionaryGenerator
             {
             });
 
-            //------
             word = "ago";
             AddGrammaticalWordFrame(word, new PostpositionGrammaticalWordFrame()
             {

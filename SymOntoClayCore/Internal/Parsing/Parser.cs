@@ -50,10 +50,6 @@ namespace SymOntoClay.Core.Internal.Parsing
         /// <inheritdoc/>
         public List<CodeItem> Parse(string text, bool needCheckDirty)
         {
-#if DEBUG
-            //Log($"text = {text}");
-#endif
-
             var codeFile = new CodeFile();
 
             var internalParserContext = new InternalParserContext(text, codeFile, _context);
@@ -68,15 +64,7 @@ namespace SymOntoClay.Core.Internal.Parsing
         /// <inheritdoc/>
         public CodeFile Parse(ParsedFileInfo parsedFileInfo, DefaultSettingsOfCodeEntity defaultSettings)
         {
-#if DEBUG
-            //Log($"parsedFileInfo = {parsedFileInfo}");
-#endif
-
             var text = File.ReadAllText(parsedFileInfo.FileName);
-
-#if DEBUG
-            //Log($"text = {text}");
-#endif
 
             var result = new CodeFile();
             result.IsLocator = parsedFileInfo.IsLocator;
@@ -91,10 +79,6 @@ namespace SymOntoClay.Core.Internal.Parsing
 
             var codeEntitiesList = parser.Result;
 
-#if DEBUG
-            //Log($"codeEntitiesList = {codeEntitiesList.WriteListToString()}");
-#endif
-
             result.CodeEntities = codeEntitiesList;
 
             return result;
@@ -103,10 +87,6 @@ namespace SymOntoClay.Core.Internal.Parsing
         /// <inheritdoc/>
         public List<CodeFile> Parse(List<ParsedFileInfo> parsedFileInfoList, DefaultSettingsOfCodeEntity defaultSettings)
         {
-#if DEBUG
-            //Log($"parsedFileInfoList = {parsedFileInfoList.WriteListToString()}");
-#endif
-
             var result = new List<CodeFile>();
 
             foreach(var parsedFileInfo in parsedFileInfoList.Where(p => !p.IsLocator))

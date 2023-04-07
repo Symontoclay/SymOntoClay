@@ -35,10 +35,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 {
     public static class AddingFactHelper
     {
-#if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         public static IAddFactOrRuleResult CallEvent(MulticastDelegate onAddingFactEvent, RuleInstance ruleInstance, FuzzyLogicResolver fuzzyLogicResolver, ILocalCodeExecutionContext localCodeExecutionContext, IEntityLogger logger)
         {
             var resultsOfCallList = new List<IAddFactOrRuleResult>();
@@ -51,10 +47,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 try
                 {
                     var rawResultOfCall = item.DynamicInvoke(ruleInstance);
-
-#if DEBUG
-                    //_gbcLogger.Info($"rawResultOfCall = {rawResultOfCall}");
-#endif
 
                     if (rawResultOfCall == null)
                     {

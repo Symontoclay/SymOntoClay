@@ -35,10 +35,6 @@ namespace SymOntoClay.Core.DebugHelpers
     {
         private static readonly CultureInfo _cultureInfo = new CultureInfo("en-GB");
 
-#if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         public static string ToString(LogicalModalityExpressionNode source, HumanizedOptions options = HumanizedOptions.ShowAll)
         {
             var opt = new DebugHelperOptions()

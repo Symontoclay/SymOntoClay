@@ -37,11 +37,6 @@ namespace SymOntoClay.NLP.Internal.ATN.GrammarHelpers
 
         public static bool SubjectAndVerb(BaseGrammaticalWordFrame subject, VerbGrammaticalWordFrame verb)
         {
-#if DEBUG
-            //_gbcLogger.Info($"subject = {subject}");
-            //_gbcLogger.Info($"verb = {verb}");
-#endif
-
             switch(subject.PartOfSpeech)
             {
                 case GrammaticalPartOfSpeech.Pronoun:
@@ -57,11 +52,6 @@ namespace SymOntoClay.NLP.Internal.ATN.GrammarHelpers
 
         private static bool PronounSubjectAndVerb(PronounGrammaticalWordFrame subject, VerbGrammaticalWordFrame verb)
         {
-#if DEBUG
-            //_gbcLogger.Info($"subject = {subject}");
-            //_gbcLogger.Info($"verb = {verb}");
-#endif
-
             if(subject.Person == GrammaticalPerson.First)
             {
                 if(subject.Number == GrammaticalNumberOfWord.Singular && verb.Person == GrammaticalPerson.Neuter && (verb.Number == GrammaticalNumberOfWord.Singular || verb.Number == GrammaticalNumberOfWord.Neuter))

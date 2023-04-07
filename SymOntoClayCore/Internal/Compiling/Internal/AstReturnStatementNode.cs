@@ -37,10 +37,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(AstReturnStatement statement)
         {
-#if DEBUG
-            //Log($"statement = {statement}");
-#endif
-
             if(statement.Expression == null)
             {
                 AddCommand(new IntermediateScriptCommand()

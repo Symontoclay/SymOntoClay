@@ -37,17 +37,12 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(AstErrorStatement statement)
         {
-#if DEBUG
-            //Log($"statement = {statement}");
-#endif
-
             CompileValue(statement.RuleInstance);
 
             var command = new IntermediateScriptCommand();
             command.OperationCode = OperationCode.Error;
             AddCommand(command);
 
-            //throw new NotImplementedException();
         }
     }
 }

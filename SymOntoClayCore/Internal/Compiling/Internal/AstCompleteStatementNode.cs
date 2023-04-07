@@ -37,10 +37,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(AstCompleteStatement statement)
         {
-#if DEBUG
-            //Log($"statement = {statement}");
-#endif
-
             var kind = statement.KindOfCompletion;
 
             switch (kind)

@@ -53,10 +53,6 @@ namespace SymOntoClay.Core.Internal.Converters
         {
             var normalizedNameValue = source.NormalizedNameValue;
 
-#if DEBUG
-            //mainStorageContext.Logger.Log($"normalizedNameValue = {normalizedNameValue}");
-#endif
-
             switch (normalizedNameValue)
             {
                 case "true":

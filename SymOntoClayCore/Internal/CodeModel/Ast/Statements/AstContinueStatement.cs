@@ -50,8 +50,6 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var result = new AstContinueStatement();
             context[this] = result;
 
-            //result.KindOfBreak = KindOfBreak;
-            //result.RuleInstanceValue = RuleInstanceValue?.Clone(context);
 
             result.AppendAnnotations(this, context);
 
@@ -61,7 +59,6 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         /// <inheritdoc/>
         public override void CalculateLongHashCodes(CheckDirtyOptions options)
         {
-            //RuleInstanceValue?.CheckDirty(options);
 
             base.CalculateLongHashCodes(options);
         }
@@ -72,8 +69,6 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.AppendLine($"{spaces}{nameof(KindOfBreak)} = {KindOfBreak}");
-            //sb.PrintObjProp(n, nameof(RuleInstanceValue), RuleInstanceValue);
 
             sb.Append(base.PropertiesToString(n));
 
@@ -86,8 +81,6 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.AppendLine($"{spaces}{nameof(KindOfBreak)} = {KindOfBreak}");
-            //sb.PrintShortObjProp(n, nameof(RuleInstanceValue), RuleInstanceValue);
 
             sb.Append(base.PropertiesToShortString(n));
 
@@ -100,8 +93,6 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.AppendLine($"{spaces}{nameof(KindOfBreak)} = {KindOfBreak}");
-            //sb.PrintBriefObjProp(n, nameof(RuleInstanceValue), RuleInstanceValue);
 
             sb.Append(base.PropertiesToBriefString(n));
 

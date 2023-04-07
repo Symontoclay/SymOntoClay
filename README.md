@@ -112,14 +112,14 @@ And I hope this project will become useful for many indie game developers in the
 ## Requirements
 <div><div><div><div><p>
 SymOntoClay CLI requires:
-    <ul><li>NET 6.0</li>
+    <ul><li>NET 7.0</li>
 </ul>
 </div></div>
 
 <div><div><p>
 SymOntoClay's components for Unity require:
-    <ul><li>Unity 2020.2.3f1</li>
-<li>NET 6.0</li>
+    <ul><li>Unity 2022.2.8f1</li>
+<li>NET 7.0</li>
 </ul>
 </div></div></div></div>
 

@@ -45,6 +45,9 @@
         <member name="M:SymOntoClay.Core.BaseProcessInfo.Cancel">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.WeakCancel">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.BaseProcessInfo.Priority">
             <inheritdoc/>
         </member>
@@ -6668,6 +6671,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.Cancel">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.WeakCancel">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.ProcessInfo.Friends">

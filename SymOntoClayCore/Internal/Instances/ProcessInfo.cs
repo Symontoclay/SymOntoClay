@@ -155,6 +155,14 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
+        public override void WeakCancel()
+        {
+            Status = ProcessStatus.WeakCanceled;
+
+            base.WeakCancel();
+        }
+
+        /// <inheritdoc/>
         public override IReadOnlyList<string> Friends => _friends;
 
         /// <inheritdoc/>

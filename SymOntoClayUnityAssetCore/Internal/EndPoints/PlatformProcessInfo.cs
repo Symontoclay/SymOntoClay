@@ -130,13 +130,27 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         {
             lock (_lockObj)
             {
-                _cancellationTokenSource.Cancel();
                 _status = ProcessStatus.Canceled;
-
+                _cancellationTokenSource.Cancel();
+                
                 EmitOnFinish();
 
                 base.Cancel();
             }
+        }
+
+        /// <inheritdoc/>
+        public override void WeakCancel()
+        {
+            lock (_lockObj)
+            {
+                _status = ProcessStatus.WeakCanceled;
+                _cancellationTokenSource.Cancel();
+
+                EmitOnFinish();
+
+                base.WeakCancel();
+            }                
         }
 
         /// <inheritdoc/>

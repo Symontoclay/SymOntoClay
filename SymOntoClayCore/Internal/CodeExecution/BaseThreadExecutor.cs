@@ -1662,6 +1662,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     var status = processInfo.Status;
 
+#if DEBUG
+                    Log($"status = {status}");
+#endif
+
                     switch (status)
                     {
                         case ProcessStatus.Completed:
@@ -1671,6 +1675,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             {
                                 ExecCallEvent(completeAnnotationSystemEvent);
                             }
+                            break;
+
+                        case ProcessStatus.WeakCanceled:
+                            _currentCodeFrame.ValuesStack.Push(NullValue.Instance);
                             break;
 
                         case ProcessStatus.Canceled:

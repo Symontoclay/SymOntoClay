@@ -91,14 +91,22 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 }
                 catch (TargetInvocationException e)
                 {
-#if DEBUG
-                    Log($"e = {e}");
-                    Log($"e.InnerException = {e.InnerException}");
-#endif
-
                     if (e.InnerException.GetType() == typeof(OperationCanceledException))
                     {
-                        processInfo.Status = ProcessStatus.Canceled;
+#if DEBUG
+                        Log($"processInfo.Status = {processInfo.Status}");
+#endif
+
+                        if(processInfo.Status != ProcessStatus.Canceled || processInfo.Status != ProcessStatus.WeakCanceled)
+                        {
+                            processInfo.Status = ProcessStatus.Canceled;
+                        }                        
+                    }
+                    else
+                    {
+#if DEBUG
+                        Log($"e = {e}");
+#endif
                     }
                 }
                 catch (Exception e)
@@ -129,14 +137,22 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 }
                 catch (TargetInvocationException e)
                 {
-#if DEBUG
-                    Log($"e = {e}");
-                    Log($"e.InnerException = {e.InnerException}");
-#endif
-
                     if(e.InnerException.GetType() == typeof(OperationCanceledException))
                     {
-                        processInfo.Status = ProcessStatus.Canceled;
+#if DEBUG
+                        Log($"processInfo.Status = {processInfo.Status}");
+#endif
+
+                        if (processInfo.Status != ProcessStatus.Canceled || processInfo.Status != ProcessStatus.WeakCanceled)
+                        {
+                            processInfo.Status = ProcessStatus.Canceled;
+                        }
+                    }
+                    else
+                    {
+#if DEBUG
+                        Log($"e = {e}");
+#endif
                     }
                 }
                 catch (Exception e)

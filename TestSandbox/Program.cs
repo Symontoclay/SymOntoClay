@@ -84,8 +84,80 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            //TstWaitAsync();
+            //TstWaitAsync_2();
+            //TstWaitAsync_1();
+            //TstWorldSpaceFilesSearcher();
+            //TstSynonymsHandler();
+            //TstGetFullBaseTypesListInCSharpReflection();
+            //TstConvertFactToImperativeCode();
+            //TstFactToHtml();
+            //TstStandardFactsBuilder();
+            //TstStandardFactsBuilderGetTargetVarNameHandler();
+            //TstShieldString();
+            //TstSampleSpeechSynthesis();
+            //TstOnAddingFactEventHanler();
+            //TstEventHanler();
+            //TstStrCollectionCombination();
+            //TstIntCollectionCombination();
+            //TstModalitiesHandler();
+            //TstRelationsStorageHandler();
+            //TstGenerateDllDict();
+            //TSTWordsFactory();
+            //TstNLPConverterProvider();
+            //TstNLPHandler();//<=NLP
+            //TstTriggerConditionNodeHandler();
+            //TstSoundBus();
+            //TstNavigationHandler();
+            //TstCreatorExamples();
+            //TstLinguisticVariable_Tests();
+            //TstManageTempProject();
+            //TstAdvancedTestRunnerForMultipleInstances();//<=~
+            //TstAdvancedTestRunner();//<=
+            //TstTestRunnerWithHostListener();//<=t
+            //TstTestRunner();//<=
+            //TstNameHelper();
+            //TstDeffuzzification();
+            //TstRangeValue();
+            //TstFuzzyLogicNonNumericSequenceValue();
+            //TstCalculateTargetAnglesForRayScanner();
+            //TstCopyFilesOnBuilding();
+            //TstGetRootWorldSpaceDir();
+            //TstEnvironmentVariables();
+            //TstCLINewHandler();
+            //TstCLIRunHandler();
+            //TstCLICommandParser();
+            //TstLogicalDatabase();//!
+            //TstProcessInfoChildren();
+            //TstWaitIProcessInfo();
+            //TstKindOfParametersSсaffolder();
+            //TstDateTimeHandler();
+            //TstBaseManualControllingGameComponent();
+            //TstLoadTypesPlatformTypesConvertors();
+            //TstGetTypes();
+            //TstMainThreadSyncThread();
+            //TstCoreHostListenerHandler();
+            //TstNullableArithmetic();
+            //TstInheritanceItemsHandler();
+            //TstDefaultSettingsOfCodeEntityHandler();
+            //TstActivateMainEntity();
+            //TstCompileInlineTrigger();
+            //TstRegOperatorsHandler();
+            //TstCreateEngineContext();
+            //TstAsyncActivePeriodicObjectHandler();
+            //TstSyncActivePeriodicObjectHandler();
+            //TstCodeExecution();
+            //TstCreateName();
+            //TstExprNodeHandler();
+            //TstParsing();
             TstPlacesHandler();
+            //TstMonoBehaviourTestingHandler();//VT<=
+            //TstSoundStartHandler();//<==
+            //TstAddingFactTriggerHandler();
+            //TstGeneralStartHandler();//<=
+            //TstGetParsedFilesInfo();
 
+            //Thread.Sleep(10000);
         }
 
         private static void TstWaitAsync()

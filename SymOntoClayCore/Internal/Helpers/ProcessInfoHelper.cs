@@ -74,7 +74,8 @@ namespace SymOntoClay.Core.Internal.Helpers
                     {
                         foreach (var proc in processes)
                         {
-                            proc.Cancel();
+                            //proc.Cancel();
+                            proc.WeakCancel();
                         }
 
                         return;

@@ -51,7 +51,7 @@ namespace SymOntoClay.Core
             get
             {
                 var status = Status;
-                return status == ProcessStatus.Completed || status == ProcessStatus.Canceled || status == ProcessStatus.Faulted;
+                return status == ProcessStatus.Completed || status == ProcessStatus.Canceled || status == ProcessStatus.WeakCanceled || status == ProcessStatus.Faulted;
             }
         }
 
@@ -70,6 +70,12 @@ namespace SymOntoClay.Core
 
         /// <inheritdoc/>
         public virtual void Cancel()
+        {
+            CancelChildren();
+        }
+
+        /// <inheritdoc/>
+        public virtual void WeakCancel()
         {
             CancelChildren();
         }

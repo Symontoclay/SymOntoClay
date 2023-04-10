@@ -36,6 +36,7 @@ namespace SymOntoClay.Core
         WaitingForChildrenToComplete,
         Completed,
         Canceled,
+        WeakCanceled,
         Faulted
     }
 }

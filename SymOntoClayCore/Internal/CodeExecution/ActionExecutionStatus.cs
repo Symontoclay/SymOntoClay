@@ -34,6 +34,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         Broken,
         Faulted,
         Canceled,
+        WeakCanceled,
         /// <summary>
         /// Special status for options of convertors.
         /// It is not used in real ExecutionCoordinator.

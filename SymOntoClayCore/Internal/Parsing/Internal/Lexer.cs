@@ -1156,6 +1156,24 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.New;
                             break;
                         }
+
+                        if (string.Compare(content, "weak", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Weak;
+                            break;
+                        }
+
+                        if (string.Compare(content, "cancel", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Cancel;
+                            break;
+                        }
+
+                        if (string.Compare(content, "canceled", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Canceled;
+                            break;
+                        }
                     }
                     break;
 

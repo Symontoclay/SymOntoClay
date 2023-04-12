@@ -29,6 +29,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public enum KindOfAnnotationSystemEvent
     {
         Unknown,
-        Complete
+        Complete,
+        Cancel,
+        WeakCancel,
+        Error
     }
 }

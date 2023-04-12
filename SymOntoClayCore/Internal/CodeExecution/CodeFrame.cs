@@ -53,6 +53,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public bool NeedsExecCallEvent { get; set; }
         public ProcessStatus? LastProcessStatus { get; set; }
         public AnnotationSystemEvent CompleteAnnotationSystemEvent { get; set; }
+        public AnnotationSystemEvent CancelAnnotationSystemEvent { get; set; }
+        public AnnotationSystemEvent WeakCancelAnnotationSystemEvent { get; set; }
+        public AnnotationSystemEvent ErrorAnnotationSystemEvent { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -99,6 +102,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.AppendLine($"{spaces}{nameof(NeedsExecCallEvent)} = {NeedsExecCallEvent}");
             sb.AppendLine($"{spaces}{nameof(LastProcessStatus)} = {LastProcessStatus}");
             sb.PrintObjProp(n, nameof(CompleteAnnotationSystemEvent), CompleteAnnotationSystemEvent);
+            sb.PrintObjProp(n, nameof(CancelAnnotationSystemEvent), CancelAnnotationSystemEvent);
+            sb.PrintObjProp(n, nameof(WeakCancelAnnotationSystemEvent), WeakCancelAnnotationSystemEvent);
+            sb.PrintObjProp(n, nameof(ErrorAnnotationSystemEvent), ErrorAnnotationSystemEvent);
 
             return sb.ToString();
         }
@@ -148,6 +154,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.AppendLine($"{spaces}{nameof(NeedsExecCallEvent)} = {NeedsExecCallEvent}");
             sb.AppendLine($"{spaces}{nameof(LastProcessStatus)} = {LastProcessStatus}");
             sb.PrintShortObjProp(n, nameof(CompleteAnnotationSystemEvent), CompleteAnnotationSystemEvent);
+            sb.PrintShortObjProp(n, nameof(CancelAnnotationSystemEvent), CancelAnnotationSystemEvent);
+            sb.PrintShortObjProp(n, nameof(WeakCancelAnnotationSystemEvent), WeakCancelAnnotationSystemEvent);
+            sb.PrintShortObjProp(n, nameof(ErrorAnnotationSystemEvent), ErrorAnnotationSystemEvent);
 
             return sb.ToString();
         }
@@ -197,6 +206,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.AppendLine($"{spaces}{nameof(NeedsExecCallEvent)} = {NeedsExecCallEvent}");
             sb.AppendLine($"{spaces}{nameof(LastProcessStatus)} = {LastProcessStatus}");
             sb.PrintExisting(n, nameof(CompleteAnnotationSystemEvent), CompleteAnnotationSystemEvent);
+            sb.PrintExisting(n, nameof(CancelAnnotationSystemEvent), CancelAnnotationSystemEvent);
+            sb.PrintExisting(n, nameof(WeakCancelAnnotationSystemEvent), WeakCancelAnnotationSystemEvent);
+            sb.PrintExisting(n, nameof(ErrorAnnotationSystemEvent), ErrorAnnotationSystemEvent);
 
             return sb.ToString();
         }

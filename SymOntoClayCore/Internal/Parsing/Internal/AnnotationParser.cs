@@ -163,6 +163,24 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             return;
 
+                        case KeyWordTokenKind.Weak:
+                            {
+                                if (Result.AnnotationSystemEventsDict.ContainsKey(KindOfAnnotationSystemEvent.WeakCancel))
+                                {
+                                    throw new UnexpectedTokenException(_currToken, "Event `Weak cancel` already exists.");
+                                }
+
+                                _context.Recovery(_currToken);
+
+                                var parser = new AnnotationSystemEventParser(_context);
+                                parser.Run();
+
+                                Result.AnnotationSystemEventsDict[KindOfAnnotationSystemEvent.WeakCancel] = parser.Result;
+
+                                _state = State.GotItem;
+                            }
+                            return;
+
                         default:
                             break;
                     }

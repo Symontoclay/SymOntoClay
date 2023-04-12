@@ -24,6 +24,7 @@ using SymOntoClay.BaseTestLib;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,6 +33,8 @@ namespace SymOntoClay.BaseTestLib.HostListeners
 {
     public abstract class BaseHostListener: ILoggedTestHostListener
     {
+        protected static ToHumanizedStringJsonConverter _customConverter = new ToHumanizedStringJsonConverter();
+
         public void SetLogger(IEntityLogger logger)
         {
             _logger = logger;
@@ -49,6 +52,26 @@ namespace SymOntoClay.BaseTestLib.HostListeners
             {
                 _methodId++;
                 return _methodId;
+            }
+        }
+
+        [DebuggerHidden]
+        protected static void Sleep(int millisecondsTimeout, CancellationToken cancellationToken)
+        {
+            var delta = 10;
+
+            while (true)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+
+                Thread.Sleep(delta);
+
+                millisecondsTimeout = millisecondsTimeout - delta;
+
+                if (millisecondsTimeout <= 0)
+                {
+                    return;
+                }
             }
         }
     }

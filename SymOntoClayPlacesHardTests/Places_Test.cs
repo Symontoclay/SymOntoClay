@@ -348,5 +348,385 @@ namespace SymOntoClayPlacesHardTests
                 Thread.Sleep(5000);
             }
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case4()
+        {
+            using (var instance = new AdvancedBehaviorTestEngineInstance())
+            {
+                instance.CreateWorld((n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("Begin go", message);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual("Begin move and check", message);
+                            break;
+
+                        case 4:
+                            Assert.AreEqual(message, "GoToImpl Begin");
+                            break;
+
+                        case 5:
+                            Assert.AreEqual(message, "ByEntity");
+                            break;
+
+                        case 6:
+                            Assert.AreEqual(message, "123");
+                            break;
+
+                        case 7:
+                            Assert.AreEqual(message, "#wp1");
+                            break;
+
+                        case 8:
+                            Assert.AreEqual(message, "<10, 10, 10>");
+                            break;
+
+                        case 9:
+                            Assert.AreEqual("Begin check", message);
+                            break;
+
+                        case 10:
+                            Assert.AreEqual("StopImpl Begin", message);
+                            break;
+
+                        case 11:
+                            Assert.AreEqual("RotateImpl Begin", message);
+                            break;
+
+                        case 12:
+                            Assert.AreEqual("30", message);
+                            break;
+
+                        case 13:
+                            Assert.AreEqual("RotateImpl Begin", message);
+                            break;
+
+                        case 14:
+                            Assert.AreEqual("-60", message);
+                            break;
+
+                        case 15:
+                            Assert.AreEqual("RotateImpl Begin", message);
+                            break;
+
+                        case 16:
+                            Assert.AreEqual("30", message);
+                            break;
+
+                        case 17:
+                            Assert.AreEqual("End check", message);
+                            break;
+
+                        case 18:
+                            Assert.AreEqual(message, "GoToImpl Begin");
+                            break;
+
+                        case 19:
+                            Assert.AreEqual(message, "ByEntity");
+                            break;
+
+                        case 20:
+                            Assert.AreEqual(message, "123");
+                            break;
+
+                        case 21:
+                            Assert.AreEqual(message, "#wp1");
+                            break;
+
+                        case 22:
+                            Assert.AreEqual(message, "<10, 10, 10>");
+                            break;
+
+                        case 23:
+                            Assert.AreEqual(message, "GoToImpl End");
+                            break;
+
+                        case 24:
+                            Assert.AreEqual("on complete move", message);
+                            break;
+
+                        case 25:
+                            Assert.AreEqual("End go", message);
+                            break;
+
+                        case 26:
+                            Assert.AreEqual("End", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }, true);
+
+                instance.WriteFile(@"app PeaceKeeper
+{	
+	on Enter =>
+    {
+        'Begin' >> @>log;
+
+        go();
+
+        'End' >> @>log;
+    }
+	
+	fun go()
+    {
+	    'Begin go' >> @>log;
+		`move and check`(#@(waypoint & random));
+		'End go' >> @>log;
+    }
+}
+
+action `move and check`
+{
+    op (@target)
+	{
+	    'Begin move and check' >> @>log;
+
+	    repeat
+		{
+		    @@host.go(to: @target)[: timeout = 1200, on complete {'on complete move' >> @>log; complete action;} :];
+			check();			
+		}
+
+		'End move and check' >> @>log;
+	}
+}
+
+action check
+{
+    op ()
+	{
+	    'Begin check' >> @>log;
+	    @@host.`stop`();
+	    @@host.`rotate`(30);
+		@@host.`rotate`(-60);
+		@@host.`rotate`(30);
+		'End check' >> @>log;
+	}
+}");
+
+                var hostListener = new BattleRoyaleHostListener();
+
+                instance.CreateNPC(hostListener);
+
+                var settings = new PlaceSettings();
+                settings.Id = "#WP1";
+                settings.InstanceId = 123;
+                settings.AllowPublicPosition = true;
+                settings.UseStaticPosition = new System.Numerics.Vector3(5, 5, 5);
+
+                settings.PlatformSupport = new PlatformSupportCLIStub();
+
+                settings.Categories = new List<string>() { "waypoint" };
+                settings.EnableCategories = true;
+
+                var place = instance.GetPlace(settings);
+
+                instance.StartWorld();
+
+                Thread.Sleep(5000);
+            }
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case4_a()
+        {
+            using (var instance = new AdvancedBehaviorTestEngineInstance())
+            {
+                instance.CreateWorld((n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("Begin go", message);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual("Begin move and check", message);
+                            break;
+
+                        case 4:
+                            Assert.AreEqual(message, "GoToImpl Begin");
+                            break;
+
+                        case 5:
+                            Assert.AreEqual(message, "ByEntity");
+                            break;
+
+                        case 6:
+                            Assert.AreEqual(message, "123");
+                            break;
+
+                        case 7:
+                            Assert.AreEqual(message, "#wp1");
+                            break;
+
+                        case 8:
+                            Assert.AreEqual(message, "<10, 10, 10>");
+                            break;
+
+                        case 9:
+                            Assert.AreEqual("Begin check", message);
+                            break;
+
+                        case 10:
+                            Assert.AreEqual("StopImpl Begin", message);
+                            break;
+
+                        case 11:
+                            Assert.AreEqual("RotateImpl Begin", message);
+                            break;
+
+                        case 12:
+                            Assert.AreEqual("30", message);
+                            break;
+
+                        case 13:
+                            Assert.AreEqual("RotateImpl Begin", message);
+                            break;
+
+                        case 14:
+                            Assert.AreEqual("-60", message);
+                            break;
+
+                        case 15:
+                            Assert.AreEqual("RotateImpl Begin", message);
+                            break;
+
+                        case 16:
+                            Assert.AreEqual("30", message);
+                            break;
+
+                        case 17:
+                            Assert.AreEqual("End check", message);
+                            break;
+
+                        case 18:
+                            Assert.AreEqual(message, "GoToImpl Begin");
+                            break;
+
+                        case 19:
+                            Assert.AreEqual(message, "ByEntity");
+                            break;
+
+                        case 20:
+                            Assert.AreEqual(message, "123");
+                            break;
+
+                        case 21:
+                            Assert.AreEqual(message, "#wp1");
+                            break;
+
+                        case 22:
+                            Assert.AreEqual(message, "<10, 10, 10>");
+                            break;
+
+                        case 23:
+                            Assert.AreEqual(message, "GoToImpl End");
+                            break;
+
+                        case 24:
+                            Assert.AreEqual("on completed move", message);
+                            break;
+
+                        case 25:
+                            Assert.AreEqual("End go", message);
+                            break;
+
+                        case 26:
+                            Assert.AreEqual("End", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }, true);
+
+                instance.WriteFile(@"app PeaceKeeper
+{	
+	on Enter =>
+    {
+        'Begin' >> @>log;
+
+        go();
+
+        'End' >> @>log;
+    }
+	
+	fun go()
+    {
+	    'Begin go' >> @>log;
+		`move and check`(#@(waypoint & random));
+		'End go' >> @>log;
+    }
+}
+
+action `move and check`
+{
+    op (@target)
+	{
+	    'Begin move and check' >> @>log;
+
+	    repeat
+		{
+		    @@host.go(to: @target)[: timeout = 1200, on completed {'on completed move' >> @>log; complete action;} :];
+			check();			
+		}
+
+		'End move and check' >> @>log;
+	}
+}
+
+action check
+{
+    op ()
+	{
+	    'Begin check' >> @>log;
+	    @@host.`stop`();
+	    @@host.`rotate`(30);
+		@@host.`rotate`(-60);
+		@@host.`rotate`(30);
+		'End check' >> @>log;
+	}
+}");
+
+                var hostListener = new BattleRoyaleHostListener();
+
+                instance.CreateNPC(hostListener);
+
+                var settings = new PlaceSettings();
+                settings.Id = "#WP1";
+                settings.InstanceId = 123;
+                settings.AllowPublicPosition = true;
+                settings.UseStaticPosition = new System.Numerics.Vector3(5, 5, 5);
+
+                settings.PlatformSupport = new PlatformSupportCLIStub();
+
+                settings.Categories = new List<string>() { "waypoint" };
+                settings.EnableCategories = true;
+
+                var place = instance.GetPlace(settings);
+
+                instance.StartWorld();
+
+                Thread.Sleep(5000);
+            }
+        }
     }
 }

@@ -1,26 +1,4 @@
-/*MIT License
-
-Copyright (c) 2020 - 2023 Sergiy Tolkachov
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.*/
-
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using SymOntoClay.BaseTestLib.HostListeners;
 using SymOntoClay.Core;
 using SymOntoClay.UnityAsset.Core;
@@ -34,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace TestSandbox.CoreHostListener
 {
-    public class TstBattleRoyaleHostListener : BaseHostListener
+    public class TstBattleRoyaleHostListener2 : BaseHostListener
     {
         [DebuggerHidden]
         [BipedEndpoint("*")]
@@ -47,9 +25,7 @@ namespace TestSandbox.CoreHostListener
             _logger.Log($"positionedParameters = {JsonConvert.SerializeObject(positionedParameters, Formatting.Indented, _customConverter)}");
         }
 
-        private int? _remainingDistance;
-        private int _wholeDistance = 1000;
-        private int _goDelta = 100;
+        private bool _isFirstCall;
 
         [DebuggerHidden]
         [BipedEndpoint("Go", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
@@ -63,29 +39,18 @@ namespace TestSandbox.CoreHostListener
             _logger.Log($"entity.InstanceId = {entity.InstanceId}");
             _logger.Log($"entity.Id = {entity.Id}");
             _logger.Log($"entity.Position = {entity.Position}");
-            _logger.Log($"_remainingDistance = {_remainingDistance}");
+            _logger.Log($"_isFirstCall = {_isFirstCall}");
 
-            if (!_remainingDistance.HasValue)
+            if (!_isFirstCall)
             {
-                _remainingDistance = _wholeDistance;
+                _isFirstCall = true;
                 Sleep(10000, cancellationToken);
             }
             else
             {
-                _remainingDistance = _remainingDistance - _goDelta;
+                _isFirstCall = false;
 
-                _logger.Log($"_remainingDistance (after) = {_remainingDistance}");
-
-                if (_remainingDistance > 0)
-                {
-                    Sleep(10000, cancellationToken);
-                }
-                else
-                {
-                    _logger.Log($"It completed!!!!!");
-
-                    _remainingDistance = null;
-                }
+                _logger.Log($"It completed!!!!!");
             }
 
             _logger.Log($"cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");

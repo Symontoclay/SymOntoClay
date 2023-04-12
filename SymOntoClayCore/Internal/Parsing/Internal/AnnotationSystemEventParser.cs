@@ -80,6 +80,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             switch(_currToken.KeyWordTokenKind)
                             {
                                 case KeyWordTokenKind.Complete:
+                                case KeyWordTokenKind.Completed:
                                     Result.Kind = KindOfAnnotationSystemEvent.Complete;
                                     _state = State.GotKindOfEvent;
                                     break;

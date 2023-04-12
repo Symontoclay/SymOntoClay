@@ -63,6 +63,7 @@ namespace SymOntoClay.Core.Internal.Instances
                             break;
 
                         case ProcessStatus.Canceled:
+                        case ProcessStatus.WeakCanceled:
                         case ProcessStatus.Faulted:
                             ProcessGeneralFinishStatuses();
                             break;

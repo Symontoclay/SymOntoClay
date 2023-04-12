@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using System;
@@ -33,6 +34,10 @@ namespace SymOntoClay.Core.Internal.Helpers
 {
     public static class ProcessInfoHelper
     {
+#if DEBUG
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
         public static void Wait(params IProcessInfo[] processes)
         {
             Wait(null, null, null, processes);
@@ -43,6 +48,14 @@ namespace SymOntoClay.Core.Internal.Helpers
             if(processes.IsNullOrEmpty())
             {
                 return;
+            }
+
+            var initialTicks = 0f;
+
+            if(cancelAfter.HasValue)
+            {
+                var currentTick = dateTimeProvider.CurrentTiks;
+                initialTicks = currentTick * dateTimeProvider.MillisecondsMultiplicator;
             }
 
             while(true)
@@ -70,8 +83,22 @@ namespace SymOntoClay.Core.Internal.Helpers
                     var currentTick = dateTimeProvider.CurrentTiks;
                     var currentMilisecond = currentTick * dateTimeProvider.MillisecondsMultiplicator;
 
-                    if (currentMilisecond >= cancelAfter.Value)
+                    var delta = currentMilisecond - initialTicks;
+
+#if DEBUG
+                    //_gbcLogger.Info($"cancelAfter.Value = {cancelAfter.Value}");
+                    //_gbcLogger.Info($"initialTicks = {initialTicks}");
+                    //_gbcLogger.Info($"currentTick = {currentTick}");
+                    //_gbcLogger.Info($"currentMilisecond = {currentMilisecond}");
+                    //_gbcLogger.Info($"delta = {delta}");
+#endif
+
+                    if (delta >= cancelAfter.Value)
                     {
+#if DEBUG
+                        //_gbcLogger.Info($"delta >= cancelAfter.Value !!!!!");
+#endif
+
                         foreach (var proc in processes)
                         {
                             //proc.Cancel();

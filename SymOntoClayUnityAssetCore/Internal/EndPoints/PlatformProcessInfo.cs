@@ -83,6 +83,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                             break;
 
                         case ProcessStatus.Canceled:
+                        case ProcessStatus.WeakCanceled:
                         case ProcessStatus.Faulted:
                             ProcessGeneralFinishStatuses();
                             break;

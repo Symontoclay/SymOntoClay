@@ -1663,7 +1663,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     var status = processInfo.Status;
 
 #if DEBUG
-                    Log($"status = {status}");
+                    //Log($"[{methodName.ToHumanizedString()}] status = {status}");
 #endif
 
                     switch (status)

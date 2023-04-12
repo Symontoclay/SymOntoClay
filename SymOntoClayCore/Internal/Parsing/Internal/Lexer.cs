@@ -983,6 +983,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
                         }
 
+                        if (string.Compare(content, "completed", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Completed;
+                            break;
+                        }
+
                         if (string.Compare(content, "break", true) == 0)
                         {
                             kindOfKeyWord = KeyWordTokenKind.Break;

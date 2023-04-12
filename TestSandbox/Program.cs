@@ -71,6 +71,7 @@ using System.Speech.Synthesis;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.BaseTestLib.HostListeners;
 using SymOntoClay.BaseTestLib;
+using NUnit.Framework;
 
 namespace TestSandbox
 {
@@ -84,6 +85,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            //TstSerializeValue();
             //TstWaitAsync();
             //TstWaitAsync_2();
             //TstWaitAsync_1();
@@ -150,7 +152,7 @@ namespace TestSandbox
             //TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();
-            TstPlacesHandler();
+            TstPlacesHandler();//<==
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
@@ -158,6 +160,19 @@ namespace TestSandbox
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstSerializeValue()
+        {
+            _logger.Log("Begin");
+
+            var list = new List<object>() { new NumberValue(16) };
+
+#if DEBUG
+            _logger.Log($"list = {JsonConvert.SerializeObject(list, Formatting.Indented, new ToHumanizedStringJsonConverter())}");
+#endif
+
+            _logger.Log("End");
         }
 
         private static void TstWaitAsync()

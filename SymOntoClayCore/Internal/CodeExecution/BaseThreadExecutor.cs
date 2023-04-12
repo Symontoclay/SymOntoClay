@@ -260,6 +260,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 var currentCommand = compiledFunctionBodyCommands[currentPosition];
 
+#if DEBUG
+                //Log($"_currentCodeFrame.LocalContext.Holder = {_currentCodeFrame.LocalContext.Holder}");
+                //Log($"currentCommand = {currentCommand}");
+                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+
                 switch (currentCommand.OperationCode)
                 {
                     case OperationCode.Nop:
@@ -1203,6 +1209,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void GoBackToPrevCodeFrame(ActionExecutionStatus targetActionExecutionStatus)
         {
+#if DEBUG
+            Log($"targetActionExecutionStatus = {targetActionExecutionStatus}");
+#endif
+
             if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus == ActionExecutionStatus.Executing)
             {
                 var specialMark = _currentCodeFrame.SpecialMark;
@@ -1264,6 +1274,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             else
             {
                 _currentCodeFrame = _codeFrames.Peek();
+
+#if DEBUG
+                Log($"_isCanceled = {_isCanceled}");
+#endif
 
                 if (_isCanceled)
                 {
@@ -1699,13 +1713,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             break;
 
                         case ProcessStatus.WeakCanceled:
-                            _currentCodeFrame.ValuesStack.Push(NullValue.Instance);
+                            _currentCodeFrame.ProcessInfo.Status = ProcessStatus.WeakCanceled;
 
                             if (weakCancelAnnotationSystemEvent != null)
                             {
                                 ExecCallEvent(weakCancelAnnotationSystemEvent);
                             }
-                            break;
+                            GoBackToPrevCodeFrame(ActionExecutionStatus.WeakCanceled);
+                            return;
 
                         case ProcessStatus.Canceled:
                             _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Canceled;
@@ -2077,15 +2092,17 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                         var task = threadExecutor.Start();
 
+                        var taskValue = task.AsTaskValue;
+
                         if (completeAnnotationSystemEvent != null)
                         {
-                            task.AsTaskValue.OnComplete += () =>
+                            taskValue.OnComplete += () =>
                             {
-                                var completeAnnotationSystemEventCoordinator = ((IExecutable)completeAnnotationSystemEvent).GetCoordinator(_context, targetCurrentCodeFrame.LocalContext);
+                                var annotationSystemEventCoordinator = ((IExecutable)completeAnnotationSystemEvent).GetCoordinator(_context, targetCurrentCodeFrame.LocalContext);
 
                                 var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(completeAnnotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, targetCurrentCodeFrame.LocalContext, null, true);
 
-                                ExecuteCodeFrame(newCodeFrame, completeAnnotationSystemEventCoordinator, SyncOption.ChildAsync);
+                                ExecuteCodeFrame(newCodeFrame, targetCurrentCodeFrame, annotationSystemEventCoordinator, SyncOption.ChildAsync);
                             };
                         }
 
@@ -2096,7 +2113,23 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                         if (weakCancelAnnotationSystemEvent != null)
                         {
-                            throw new NotImplementedException();
+                            taskValue.OnComplete += () =>
+                            {
+#if DEBUG
+                                Log($"codeFrame.ProcessInfo.Status = {codeFrame.ProcessInfo.Status}");
+#endif
+
+                                if(codeFrame.ProcessInfo.Status != ProcessStatus.WeakCanceled)
+                                {
+                                    return;
+                                }
+
+                                var annotationSystemEventCoordinator = ((IExecutable)weakCancelAnnotationSystemEvent).GetCoordinator(_context, targetCurrentCodeFrame.LocalContext);
+
+                                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(weakCancelAnnotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, targetCurrentCodeFrame.LocalContext, null, true);
+
+                                ExecuteCodeFrame(newCodeFrame, targetCurrentCodeFrame, annotationSystemEventCoordinator, SyncOption.ChildAsync);
+                            };
                         }
 
                         if (errorAnnotationSystemEvent != null)

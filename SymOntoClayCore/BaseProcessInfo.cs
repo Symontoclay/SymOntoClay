@@ -82,7 +82,7 @@ namespace SymOntoClay.Core
 
         protected void CancelChildren()
         {
-            foreach (var child in _childrenProcessInfoList)
+            foreach (var child in _childrenProcessInfoList.ToList())
             {
                 child.Cancel();
             }
@@ -254,7 +254,7 @@ namespace SymOntoClay.Core
 
         protected virtual void OnDisposed()
         {
-            foreach(var child in _childrenProcessInfoList)
+            foreach(var child in _childrenProcessInfoList.ToList())
             {
                 child.Dispose();
             }

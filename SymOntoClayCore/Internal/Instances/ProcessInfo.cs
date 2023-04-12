@@ -150,6 +150,11 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public override void Cancel()
         {
+            if (IsFinished)
+            {
+                return;
+            }
+
             Status = ProcessStatus.Canceled;
 
             base.Cancel();
@@ -158,6 +163,11 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public override void WeakCancel()
         {
+            if (IsFinished)
+            {
+                return;
+            }
+
             Status = ProcessStatus.WeakCanceled;
 
             base.WeakCancel();

@@ -131,6 +131,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         {
             lock (_lockObj)
             {
+                if(IsFinished)
+                {
+                    return;
+                }
+
                 _status = ProcessStatus.Canceled;
                 _cancellationTokenSource.Cancel();
                 
@@ -145,6 +150,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         {
             lock (_lockObj)
             {
+                if (IsFinished)
+                {
+                    return;
+                }
+
                 _status = ProcessStatus.WeakCanceled;
                 _cancellationTokenSource.Cancel();
 

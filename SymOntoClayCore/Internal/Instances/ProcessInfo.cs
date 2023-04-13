@@ -20,8 +20,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using Newtonsoft.Json.Linq;
 using NLog;
 using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -33,12 +35,16 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class ProcessInfo: BaseProcessInfo
     {
+#if DEBUG
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
         /// <inheritdoc/>
         public override ProcessStatus Status 
         { 
             get
             {
-                lock(_lockObj)
+                lock(_statusLockObj)
                 {
                     return _status;
                 }
@@ -46,29 +52,51 @@ namespace SymOntoClay.Core.Internal.Instances
 
             set
             {
-                lock (_lockObj)
+                lock (_statusLockObj)
                 {
-                    if(_status == value)
-                    {
-                        return;
-                    }
+#if DEBUG
+                    //_gbcLogger.Info($"value = {value}");
+#endif
 
-                    _status = value;
-
-                    switch(_status)
-                    {
-                        case ProcessStatus.Completed:
-                            EmitOnComplete();
-                            ProcessGeneralFinishStatuses();
-                            break;
-
-                        case ProcessStatus.Canceled:
-                        case ProcessStatus.WeakCanceled:
-                        case ProcessStatus.Faulted:
-                            ProcessGeneralFinishStatuses();
-                            break;
-                    }
+                    NSetStatus(value);
                 }
+            }
+        }
+
+        private void NSetStatus(ProcessStatus status)
+        {
+            if (_status == status)
+            {
+                return;
+            }
+
+            if (IsFinished && status != ProcessStatus.WeakCanceled)
+            {
+                return;
+            }
+
+            _status = status;
+
+#if DEBUG
+            //_gbcLogger.Info($"_status = {_status}");
+#endif
+
+            switch (_status)
+            {
+                case ProcessStatus.Completed:
+                    EmitOnComplete();
+                    ProcessGeneralFinishStatuses();
+                    break;
+
+                case ProcessStatus.WeakCanceled:
+                    EmitOnFinish();
+                    NWeakCancelChildren();
+                    break;
+
+                case ProcessStatus.Canceled:                
+                case ProcessStatus.Faulted:
+                    ProcessGeneralFinishStatuses();
+                    break;
             }
         }
 
@@ -89,7 +117,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private void ProcessGeneralFinishStatuses()
         {
             EmitOnFinish();
-            CancelChildren();
+            NCancelChildren();
         }
 
         /// <inheritdoc/>
@@ -105,17 +133,23 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             add
             {
-                InternalOnFinish += value;
-
-                if(_status == ProcessStatus.Completed || _status == ProcessStatus.Canceled || _status == ProcessStatus.Faulted)
+                lock(_statusLockObj)
                 {
-                    EmitOnFinish();
+                    InternalOnFinish += value;
+
+                    if (NIsFinished)
+                    {
+                        EmitOnFinish();
+                    }
                 }
             }
 
             remove
             {
-                InternalOnFinish -= value;
+                lock (_statusLockObj)
+                {
+                    InternalOnFinish -= value;
+                }                
             }
         }
 
@@ -126,17 +160,23 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             add
             {
-                InternalOnComplete += value;
-
-                if (_status == ProcessStatus.Completed)
+                lock (_statusLockObj)
                 {
-                    EmitOnComplete();
+                    InternalOnComplete += value;
+
+                    if (_status == ProcessStatus.Completed)
+                    {
+                        EmitOnComplete();
+                    }
                 }
             }
 
             remove
             {
-                InternalOnComplete -= value;
+                lock (_statusLockObj)
+                {
+                    InternalOnComplete -= value;
+                }                
             }
         }
 
@@ -150,27 +190,34 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public override void Cancel()
         {
-            if (IsFinished)
+            lock (_statusLockObj)
             {
-                return;
+                if (NIsFinished && _status != ProcessStatus.WeakCanceled)
+                {
+                    return;
+                }
+
+                _status = ProcessStatus.Canceled;
+
+                ProcessGeneralFinishStatuses();
             }
-
-            Status = ProcessStatus.Canceled;
-
-            base.Cancel();
         }
 
         /// <inheritdoc/>
         public override void WeakCancel()
         {
-            if (IsFinished)
+            lock (_statusLockObj)
             {
-                return;
+                if (NIsFinished)
+                {
+                    return;
+                }
+
+                _status = ProcessStatus.WeakCanceled;
+
+                EmitOnFinish();
+                NWeakCancelChildren();
             }
-
-            Status = ProcessStatus.WeakCanceled;
-
-            base.WeakCancel();
         }
 
         /// <inheritdoc/>
@@ -189,7 +236,6 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         #region private fields
-        private readonly object _lockObj = new object();
         private ProcessStatus _status = ProcessStatus.Created;
         private readonly List<int> _devices = new List<int>();
         private readonly List<string> _friends = new List<string>();

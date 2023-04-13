@@ -1239,6 +1239,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             ProcessStatus? lastProcessStatus = null;
 
+#if DEBUG
+            Log($"currentProcessInfo.Status = {currentProcessInfo.Status}");
+#endif
+
             if (currentProcessInfo.Status == ProcessStatus.Running)
             {
                 switch (targetActionExecutionStatus)
@@ -1698,7 +1702,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     var status = processInfo.Status;
 
 #if DEBUG
-                    //Log($"[{methodName.ToHumanizedString()}] status = {status}");
+                    Log($"[{methodName.ToHumanizedString()}] status = {status}");
 #endif
 
                     switch (status)
@@ -2113,13 +2117,24 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                         if (weakCancelAnnotationSystemEvent != null)
                         {
+
+
+                            codeFrame.ProcessInfo.OnFinish += (pi) =>
+                            {
+#if DEBUG
+                                Log($"pi.Status = {pi.Status}");
+                                Log($"pi.GetType().FullName = {pi.GetType().FullName}");
+#endif
+                            };
+
                             taskValue.OnComplete += () =>
                             {
 #if DEBUG
                                 Log($"codeFrame.ProcessInfo.Status = {codeFrame.ProcessInfo.Status}");
+                                Log($"codeFrame.ProcessInfo.GetType().FullName = {codeFrame.ProcessInfo.GetType().FullName}");
 #endif
 
-                                if(codeFrame.ProcessInfo.Status != ProcessStatus.WeakCanceled)
+                                if (codeFrame.ProcessInfo.Status != ProcessStatus.WeakCanceled)
                                 {
                                     return;
                                 }

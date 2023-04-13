@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -31,6 +32,10 @@ namespace SymOntoClay.Core
 {
     public abstract class BaseProcessInfo : IProcessInfo
     {
+#if DEBUG
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
         protected BaseProcessInfo()
         {
             Id = NameHelper.GetNewEntityNameString();
@@ -50,6 +55,17 @@ namespace SymOntoClay.Core
         {
             get
             {
+                lock(_statusLockObj)
+                {
+                    return NIsFinished;
+                }
+            }
+        }
+
+        protected bool NIsFinished
+        {
+            get
+            {
                 var status = Status;
                 return status == ProcessStatus.Completed || status == ProcessStatus.Canceled || status == ProcessStatus.WeakCanceled || status == ProcessStatus.Faulted;
             }
@@ -58,7 +74,6 @@ namespace SymOntoClay.Core
         /// <inheritdoc/>
         public abstract IReadOnlyList<int> Devices { get; }
 
-        
         /// <inheritdoc/>
         public abstract event ProcessInfoEvent OnFinish;
 
@@ -69,22 +84,40 @@ namespace SymOntoClay.Core
         public abstract void Start();
 
         /// <inheritdoc/>
-        public virtual void Cancel()
-        {
-            CancelChildren();
-        }
+        public abstract void Cancel();
 
         /// <inheritdoc/>
-        public virtual void WeakCancel()
-        {
-            CancelChildren();
-        }
+        public abstract void WeakCancel();
 
-        protected void CancelChildren()
+        protected void NCancelChildren()
         {
+#if DEBUG
+            //_gbcLogger.Info($"GetHashCode() = {GetHashCode()}");
+#endif
+
             foreach (var child in _childrenProcessInfoList.ToList())
             {
+#if DEBUG
+                //_gbcLogger.Info($"child.GetHashCode() = {child.GetHashCode()}");
+#endif
+
                 child.Cancel();
+            }
+        }
+
+        protected void NWeakCancelChildren()
+        {
+#if DEBUG
+            //_gbcLogger.Info($"GetHashCode() = {GetHashCode()}");
+#endif
+
+            foreach (var child in _childrenProcessInfoList.ToList())
+            {
+#if DEBUG
+                //_gbcLogger.Info($"child.GetHashCode() = {child.GetHashCode()}");
+#endif
+
+                child.WeakCancel();
             }
         }
 
@@ -116,7 +149,7 @@ namespace SymOntoClay.Core
         { 
             get
             {
-                lock (_lockObj)
+                lock (_parentAndChildrenLockObj)
                 {
                     return _parentProcessInfo;
                 }
@@ -124,7 +157,7 @@ namespace SymOntoClay.Core
 
             set
             {
-                lock (_lockObj)
+                lock (_parentAndChildrenLockObj)
                 {
                     if(_parentProcessInfo == value)
                     {
@@ -156,7 +189,7 @@ namespace SymOntoClay.Core
         { 
             get
             {
-                lock(_lockObj)
+                lock(_parentAndChildrenLockObj)
                 {
                     return _childrenProcessInfoList.ToList();
                 }
@@ -166,7 +199,7 @@ namespace SymOntoClay.Core
         /// <inheritdoc/>
         public void AddChild(IProcessInfo processInfo)
         {
-            lock (_lockObj)
+            lock (_parentAndChildrenLockObj)
             {
                 if(processInfo == this)
                 {
@@ -196,7 +229,7 @@ namespace SymOntoClay.Core
 
         private void ProcessInfo_OnFinish(IProcessInfo processInfo)
         {
-            lock (_lockObj)
+            lock (_parentAndChildrenLockObj)
             {
                 NRemoveChild(processInfo);
             }
@@ -205,7 +238,7 @@ namespace SymOntoClay.Core
         /// <inheritdoc/>
         public void RemoveChild(IProcessInfo processInfo)
         {
-            lock (_lockObj)
+            lock (_parentAndChildrenLockObj)
             {
                 NRemoveChild(processInfo);
             }
@@ -229,7 +262,8 @@ namespace SymOntoClay.Core
         }
 
         #region private fields
-        private readonly object _lockObj = new object();
+        protected readonly object _statusLockObj = new object();
+        protected readonly object _parentAndChildrenLockObj = new object();
         private IProcessInfo _parentProcessInfo;
         private readonly List<IProcessInfo> _childrenProcessInfoList = new List<IProcessInfo>();
         #endregion
@@ -239,7 +273,7 @@ namespace SymOntoClay.Core
         /// <inheritdoc/>
         public void Dispose()
         {
-            lock(_lockObj)
+            lock(_parentAndChildrenLockObj)
             {
                 if(_isDisposed)
                 {

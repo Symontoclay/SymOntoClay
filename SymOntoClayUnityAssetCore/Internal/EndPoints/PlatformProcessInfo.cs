@@ -23,6 +23,7 @@ SOFTWARE.*/
 using Newtonsoft.Json;
 using NLog;
 using SymOntoClay.Core;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -58,7 +59,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         {
             get
             {
-                lock (_lockObj)
+                lock (_statusLockObj)
                 {
                     return _status;
                 }
@@ -66,29 +67,34 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
             set
             {
-                lock (_lockObj)
+                lock (_statusLockObj)
                 {
-                    if (_status == value)
-                    {
-                        return;
-                    }
-
-                    _status = value;
-
-                    switch (_status)
-                    {
-                        case ProcessStatus.Completed:
-                            EmitOnComplete();
-                            ProcessGeneralFinishStatuses();
-                            break;
-
-                        case ProcessStatus.Canceled:
-                        case ProcessStatus.WeakCanceled:
-                        case ProcessStatus.Faulted:
-                            ProcessGeneralFinishStatuses();
-                            break;
-                    }
+                    NSetStatus(value);
                 }
+            }
+        }
+
+        private void NSetStatus(ProcessStatus status)
+        {
+            if (_status == status)
+            {
+                return;
+            }
+
+            _status = status;
+
+            switch (_status)
+            {
+                case ProcessStatus.Completed:
+                    EmitOnComplete();
+                    ProcessGeneralFinishStatuses();
+                    break;
+
+                case ProcessStatus.Canceled:
+                case ProcessStatus.WeakCanceled:
+                case ProcessStatus.Faulted:
+                    ProcessGeneralFinishStatuses();
+                    break;
             }
         }
 
@@ -109,7 +115,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         private void ProcessGeneralFinishStatuses()
         {
             EmitOnFinish();
-            CancelChildren();
+            NCancelChildren();
         }
 
         /// <inheritdoc/>
@@ -118,7 +124,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         /// <inheritdoc/>
         public override void Start()
         {
-            lock (_lockObj)
+            lock (_statusLockObj)
             {
                 _task.Start();
 
@@ -129,7 +135,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         /// <inheritdoc/>
         public override void Cancel()
         {
-            lock (_lockObj)
+            lock (_statusLockObj)
             {
                 if(IsFinished)
                 {
@@ -141,14 +147,14 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 
                 EmitOnFinish();
 
-                base.Cancel();
+                NCancelChildren();
             }
         }
 
         /// <inheritdoc/>
         public override void WeakCancel()
         {
-            lock (_lockObj)
+            lock (_statusLockObj)
             {
                 if (IsFinished)
                 {
@@ -160,8 +166,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
                 EmitOnFinish();
 
-                base.WeakCancel();
-            }                
+                NCancelChildren();
+            }
         }
 
         /// <inheritdoc/>
@@ -169,17 +175,23 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         {
             add
             {
-                InternalOnFinish += value;
-
-                if (_status == ProcessStatus.Completed || _status == ProcessStatus.Canceled || _status == ProcessStatus.Faulted)
+                lock (_statusLockObj)
                 {
-                    EmitOnFinish();
+                    InternalOnFinish += value;
+
+                    if (IsFinished)
+                    {
+                        EmitOnFinish();
+                    }
                 }
             }
 
             remove
             {
-                InternalOnFinish -= value;
+                lock (_statusLockObj)
+                {
+                    InternalOnFinish -= value;
+                }                
             }
         }
 
@@ -190,17 +202,23 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         {
             add
             {
-                InternalOnComplete += value;
-
-                if(_status == ProcessStatus.Completed)
+                lock(_statusLockObj)
                 {
-                    EmitOnComplete();
+                    InternalOnComplete += value;
+
+                    if (_status == ProcessStatus.Completed)
+                    {
+                        EmitOnComplete();
+                    }
                 }
             }
 
             remove
             {
-                InternalOnComplete -= value;
+                lock (_statusLockObj)
+                {
+                    InternalOnComplete -= value;
+                }                
             }
         }
 
@@ -223,7 +241,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
-            lock (_lockObj)
+            lock (_statusLockObj)
             {
                 _cancellationTokenSource.Cancel();
             }
@@ -232,7 +250,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         }
 
         #region private fields
-        private readonly object _lockObj = new object();
         private readonly string _endPointName;
         private ProcessStatus _status = ProcessStatus.Created;
         private readonly IReadOnlyList<int> _devices;

@@ -9,7 +9,7 @@
     on Enter =>
     {
         'Begin' >> @>log;
-        a~()[: timeout = 100, on weak canceled { 'on weak canceled' >> @>log; } :];
+        a~~()[: timeout = 100, on weak canceled { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }

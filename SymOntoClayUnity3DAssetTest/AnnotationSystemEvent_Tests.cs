@@ -1306,7 +1306,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        a~()[: timeout = 100, on weak cancel { 'on weak cancel' >> @>log; } :];
+        a~~()[: timeout = 100, on weak cancel { 'on weak cancel' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -1320,11 +1320,11 @@ action Go
                             break;
 
                         case 2:
-                            Assert.AreEqual("on weak cancel", message);
+                            Assert.AreEqual(true, (message == "on weak cancel" || message == "End"));
                             break;
 
                         case 3:
-                            Assert.AreEqual("End", message);
+                            Assert.AreEqual(true, (message == "on weak cancel" || message == "End"));
                             break;
 
                         default:
@@ -1348,7 +1348,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        a~()[: timeout = 100, on weak canceled { 'on weak canceled' >> @>log; } :];
+        a~~()[: timeout = 100, on weak canceled { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -1362,11 +1362,11 @@ action Go
                             break;
 
                         case 2:
-                            Assert.AreEqual("on weak canceled", message);
+                            Assert.AreEqual(true, (message == "on weak canceled" || message == "End"));
                             break;
 
                         case 3:
-                            Assert.AreEqual("End", message);
+                            Assert.AreEqual(true, (message == "on weak canceled" || message == "End"));
                             break;
 
                         default:
@@ -1390,7 +1390,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        a~()[: timeout = 100, on weak cancel => { 'on weak cancel' >> @>log; } :];
+        a~~()[: timeout = 100, on weak cancel => { 'on weak cancel' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -1404,11 +1404,11 @@ action Go
                             break;
 
                         case 2:
-                            Assert.AreEqual("on weak cancel", message);
+                            Assert.AreEqual(true, (message == "on weak cancel" || message == "End"));
                             break;
 
                         case 3:
-                            Assert.AreEqual("End", message);
+                            Assert.AreEqual(true, (message == "on weak cancel" || message == "End"));
                             break;
 
                         default:
@@ -1432,7 +1432,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        a~()[: timeout = 100, on weak canceled => { 'on weak canceled' >> @>log; } :];
+        a~~()[: timeout = 100, on weak canceled => { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -1446,11 +1446,11 @@ action Go
                             break;
 
                         case 2:
-                            Assert.AreEqual("on weak canceled", message);
+                            Assert.AreEqual(true, (message == "on weak canceled" || message == "End"));
                             break;
 
                         case 3:
-                            Assert.AreEqual("End", message);
+                            Assert.AreEqual(true, (message == "on weak canceled" || message == "End"));
                             break;
 
                         default:
@@ -1474,7 +1474,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        a~()[: timeout = 100, on weak cancel ~ { 'on weak cancel' >> @>log; } :];
+        a~~()[: timeout = 100, on weak cancel ~ { 'on weak cancel' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -1516,7 +1516,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        a~()[: timeout = 100, on weak canceled ~ { 'on weak canceled' >> @>log; } :];
+        a~~()[: timeout = 100, on weak canceled ~ { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -1558,7 +1558,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        a~()[: timeout = 100, on weak cancel ~ => { 'on weak cancel' >> @>log; } :];
+        a~~()[: timeout = 100, on weak cancel ~ => { 'on weak cancel' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -1600,7 +1600,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        a~()[: timeout = 100, on weak canceled ~ => { 'on weak canceled' >> @>log; } :];
+        a~~()[: timeout = 100, on weak canceled ~ => { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";

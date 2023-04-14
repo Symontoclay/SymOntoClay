@@ -88,12 +88,8 @@ namespace SymOntoClay.Core.Internal.Instances
                     ProcessGeneralFinishStatuses();
                     break;
 
+                case ProcessStatus.Canceled:
                 case ProcessStatus.WeakCanceled:
-                    EmitOnFinish();
-                    NWeakCancelChildren();
-                    break;
-
-                case ProcessStatus.Canceled:                
                 case ProcessStatus.Faulted:
                     ProcessGeneralFinishStatuses();
                     break;
@@ -215,8 +211,9 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 _status = ProcessStatus.WeakCanceled;
 
-                EmitOnFinish();
-                NWeakCancelChildren();
+                ProcessGeneralFinishStatuses();
+                //EmitOnFinish();
+                //NWeakCancelChildren();
             }
         }
 

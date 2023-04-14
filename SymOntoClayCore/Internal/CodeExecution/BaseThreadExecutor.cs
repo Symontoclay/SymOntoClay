@@ -1210,7 +1210,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void GoBackToPrevCodeFrame(ActionExecutionStatus targetActionExecutionStatus)
         {
 #if DEBUG
-            Log($"targetActionExecutionStatus = {targetActionExecutionStatus}");
+            //Log($"targetActionExecutionStatus = {targetActionExecutionStatus}");
 #endif
 
             if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus == ActionExecutionStatus.Executing)
@@ -1239,11 +1239,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             ProcessStatus? lastProcessStatus = null;
 
+            var currentProcessInfoStatus = currentProcessInfo.Status;
+
 #if DEBUG
-            Log($"currentProcessInfo.Status = {currentProcessInfo.Status}");
+            //Log($"currentProcessInfoStatus = {currentProcessInfoStatus}");
 #endif
 
-            if (currentProcessInfo.Status == ProcessStatus.Running)
+            if (currentProcessInfoStatus == ProcessStatus.Running)
             {
                 switch (targetActionExecutionStatus)
                 {
@@ -1261,13 +1263,26 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     case ActionExecutionStatus.Canceled:
-                    default:
                         currentProcessInfo.Status = ProcessStatus.Canceled;
                         break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(targetActionExecutionStatus), targetActionExecutionStatus, null);
                 }
 
                 lastProcessStatus = currentProcessInfo.Status;
             }
+            else
+            {
+                if(targetActionExecutionStatus == ActionExecutionStatus.WeakCanceled)
+                {
+                    currentProcessInfo.Status = ProcessStatus.WeakCanceled;
+                }
+            }
+
+#if DEBUG
+            //Log($"lastProcessStatus = {lastProcessStatus}");
+#endif
 
             _codeFrames.Pop();
 
@@ -1280,7 +1295,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 _currentCodeFrame = _codeFrames.Peek();
 
 #if DEBUG
-                Log($"_isCanceled = {_isCanceled}");
+                //Log($"_isCanceled = {_isCanceled}");
 #endif
 
                 if (_isCanceled)
@@ -2117,24 +2132,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                         if (weakCancelAnnotationSystemEvent != null)
                         {
-
-
-                            codeFrame.ProcessInfo.OnFinish += (pi) =>
-                            {
-#if DEBUG
-                                Log($"pi.Status = {pi.Status}");
-                                Log($"pi.GetType().FullName = {pi.GetType().FullName}");
-#endif
-                            };
-
                             taskValue.OnComplete += () =>
                             {
+                                var codeFrameProcessInfoStatus = codeFrame.ProcessInfo.Status;
+
 #if DEBUG
-                                Log($"codeFrame.ProcessInfo.Status = {codeFrame.ProcessInfo.Status}");
-                                Log($"codeFrame.ProcessInfo.GetType().FullName = {codeFrame.ProcessInfo.GetType().FullName}");
+                                //Log($"codeFrameProcessInfoStatus = {codeFrameProcessInfoStatus}");
+                                //Log($"codeFrame.ProcessInfo.GetType().FullName = {codeFrame.ProcessInfo.GetType().FullName}");
 #endif
 
-                                if (codeFrame.ProcessInfo.Status != ProcessStatus.WeakCanceled)
+                                if (codeFrameProcessInfoStatus != ProcessStatus.WeakCanceled)
                                 {
                                     return;
                                 }

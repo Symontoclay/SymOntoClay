@@ -148,10 +148,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
             var targetAddingFactTriggersList = _triggersResolver.ResolveAddFactTriggersList(Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
-#if DEBUG
-
-#endif
-
             if(targetAddingFactTriggersList.Any())
             {
                 foreach(var targetTrigger in targetAddingFactTriggersList)

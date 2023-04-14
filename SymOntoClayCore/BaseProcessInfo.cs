@@ -91,33 +91,9 @@ namespace SymOntoClay.Core
 
         protected void NCancelChildren()
         {
-#if DEBUG
-            //_gbcLogger.Info($"GetHashCode() = {GetHashCode()}");
-#endif
-
             foreach (var child in _childrenProcessInfoList.ToList())
             {
-#if DEBUG
-                //_gbcLogger.Info($"child.GetHashCode() = {child.GetHashCode()}");
-#endif
-
                 child.Cancel();
-            }
-        }
-
-        protected void NWeakCancelChildren()
-        {
-#if DEBUG
-            //_gbcLogger.Info($"GetHashCode() = {GetHashCode()}");
-#endif
-
-            foreach (var child in _childrenProcessInfoList.ToList())
-            {
-#if DEBUG
-                //_gbcLogger.Info($"child.GetHashCode() = {child.GetHashCode()}");
-#endif
-
-                child.WeakCancel();
             }
         }
 

@@ -56,17 +56,17 @@ namespace SymOntoClay.BaseTestLib.HostListeners
             _logger.Log(entity.Id);
             _logger.Log(entity.Position.ToString());
 
-            await SomeMethod();
+            await SomeMethod(cancellationToken);
 
             _logger.Log($"GoToImpl End");
         }
 
-        private Task SomeMethod()
+        private Task SomeMethod(CancellationToken cancellationToken)
         {
             return Task.Run(() => { 
                 if(_millisecondsTimeout.HasValue)
                 {
-                    Thread.Sleep(_millisecondsTimeout.Value);
+                    Sleep(_millisecondsTimeout.Value, cancellationToken);
                 }                
             });
         }

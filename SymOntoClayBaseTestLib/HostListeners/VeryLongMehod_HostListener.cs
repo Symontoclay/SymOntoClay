@@ -14,11 +14,11 @@ namespace SymOntoClay.BaseTestLib.HostListeners
         [BipedEndpoint("SomeVeryLongSilentFun", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
         public void SomeVeryLongSilentFunImpl(CancellationToken cancellationToken)
         {
-            _logger.Log("SomeVeryLongSilentFunImpl Begin");
+            //_logger.Log("SomeVeryLongSilentFunImpl Begin");
 
-            Sleep(10000, cancellationToken);
+            Sleep(1000, cancellationToken);
 
-            _logger.Log("SomeVeryLongSilentFunImpl End");
+            //_logger.Log("SomeVeryLongSilentFunImpl End");
         }
     }
 }

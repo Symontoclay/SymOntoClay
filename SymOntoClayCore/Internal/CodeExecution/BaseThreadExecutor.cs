@@ -263,7 +263,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #if DEBUG
                 //Log($"_currentCodeFrame.LocalContext.Holder = {_currentCodeFrame.LocalContext.Holder}");
                 //Log($"currentCommand = {currentCommand}");
-                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 switch (currentCommand.OperationCode)
@@ -1564,10 +1564,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void CallFunction(KindOfFunctionParameters kindOfParameters, int parametersCount, SyncOption syncOption)
         {
 #if DEBUG
-            Log($"kindOfParameters = {kindOfParameters}");
-            Log($"parametersCount = {parametersCount}");
-            Log($"syncOption = {syncOption}");
-            Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+            //Log($"kindOfParameters = {kindOfParameters}");
+            //Log($"parametersCount = {parametersCount}");
+            //Log($"syncOption = {syncOption}");
+            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
             var valueStack = _currentCodeFrame.ValuesStack;
@@ -1724,7 +1724,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     var status = processInfo.Status;
 
 #if DEBUG
-                    Log($"[{methodName.ToHumanizedString()}] status = {status}");
+                    //Log($"[{methodName.ToHumanizedString()}] status = {status}");
 #endif
 
                     switch (status)
@@ -1823,8 +1823,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                         processInfo.OnWeakCanceled += (procI) => {
 #if DEBUG
-                            Log($"procI.Status = {procI.Status}");
-                            Log($"processInfo.Status = {processInfo.Status}");
+                            //Log($"procI.Status = {procI.Status}");
+                            //Log($"processInfo.Status = {processInfo.Status}");
 #endif
 
                             var annotationSystemEventCoordinator = ((IExecutable)weakCancelAnnotationSystemEvent).GetCoordinator(_context, currCodeFrame.LocalContext);

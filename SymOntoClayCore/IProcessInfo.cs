@@ -42,6 +42,7 @@ namespace SymOntoClay.Core
         void WeakCancel();
         event ProcessInfoEvent OnFinish;
         event ProcessInfoEvent OnComplete;
+        event ProcessInfoEvent OnWeakCanceled;
         float Priority { get; }
         float GlobalPriority { get; }
         IReadOnlyList<string> Friends { get; }

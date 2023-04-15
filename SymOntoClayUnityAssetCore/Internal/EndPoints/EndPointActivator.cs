@@ -91,16 +91,21 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 }
                 catch (TargetInvocationException e)
                 {
+#if DEBUG
+                    //Log($"processInfo.Status = {processInfo.Status}");
+                    //Log($"e = {e}");
+#endif
+
                     if (e.InnerException.GetType() == typeof(OperationCanceledException))
                     {
 #if DEBUG
                         //Log($"processInfo.Status = {processInfo.Status}");
 #endif
 
-                        if(processInfo.Status != ProcessStatus.Canceled || processInfo.Status != ProcessStatus.WeakCanceled)
+                        if(processInfo.Status != ProcessStatus.Canceled && processInfo.Status != ProcessStatus.WeakCanceled)
                         {
                             processInfo.Status = ProcessStatus.Canceled;
-                        }                        
+                        }
                     }
                     else
                     {
@@ -137,13 +142,18 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 }
                 catch (TargetInvocationException e)
                 {
-                    if(e.InnerException.GetType() == typeof(OperationCanceledException))
+#if DEBUG
+                    //Log($"processInfo.Status = {processInfo.Status}");
+                    //Log($"e = {e}");
+#endif
+
+                    if (e.InnerException.GetType() == typeof(OperationCanceledException))
                     {
 #if DEBUG
                         //Log($"processInfo.Status = {processInfo.Status}");
 #endif
 
-                        if (processInfo.Status != ProcessStatus.Canceled || processInfo.Status != ProcessStatus.WeakCanceled)
+                        if (processInfo.Status != ProcessStatus.Canceled && processInfo.Status != ProcessStatus.WeakCanceled)
                         {
                             processInfo.Status = ProcessStatus.Canceled;
                         }

@@ -1025,6 +1025,9 @@
         <member name="E:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.OnComplete">
             <inheritdoc/>
         </member>
+        <member name="E:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.OnWeakCanceled">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.Friends">
             <inheritdoc/>
         </member>

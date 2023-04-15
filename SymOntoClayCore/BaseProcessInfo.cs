@@ -81,6 +81,9 @@ namespace SymOntoClay.Core
         public abstract event ProcessInfoEvent OnComplete;
 
         /// <inheritdoc/>
+        public abstract event ProcessInfoEvent OnWeakCanceled;
+
+        /// <inheritdoc/>
         public abstract void Start();
 
         /// <inheritdoc/>

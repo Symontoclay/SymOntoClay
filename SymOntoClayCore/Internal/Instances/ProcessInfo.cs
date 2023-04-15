@@ -88,8 +88,12 @@ namespace SymOntoClay.Core.Internal.Instances
                     ProcessGeneralFinishStatuses();
                     break;
 
-                case ProcessStatus.Canceled:
                 case ProcessStatus.WeakCanceled:
+                    EmitOnWeakCanceled();
+                    ProcessGeneralFinishStatuses();
+                    break;
+
+                case ProcessStatus.Canceled:                
                 case ProcessStatus.Faulted:
                     ProcessGeneralFinishStatuses();
                     break;
@@ -107,6 +111,13 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             Task.Run(() => {
                 InternalOnFinish?.Invoke(this);
+            });
+        }
+
+        private void EmitOnWeakCanceled()
+        {
+            Task.Run(() => {
+                InternalOnWeakCanceled?.Invoke(this);
             });
         }
 
@@ -179,6 +190,33 @@ namespace SymOntoClay.Core.Internal.Instances
         private event ProcessInfoEvent InternalOnComplete;
 
         /// <inheritdoc/>
+        public override event ProcessInfoEvent OnWeakCanceled
+        {
+            add
+            {
+                lock (_statusLockObj)
+                {
+                    InternalOnWeakCanceled += value;
+
+                    if (_status == ProcessStatus.Completed)
+                    {
+                        EmitOnWeakCanceled();
+                    }
+                }
+            }
+
+            remove
+            {
+                lock (_statusLockObj)
+                {
+                    InternalOnWeakCanceled -= value;
+                }
+            }
+        }
+
+        private event ProcessInfoEvent InternalOnWeakCanceled;
+
+        /// <inheritdoc/>
         public override void Start()
         {
         }
@@ -211,9 +249,8 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 _status = ProcessStatus.WeakCanceled;
 
+                EmitOnWeakCanceled();
                 ProcessGeneralFinishStatuses();
-                //EmitOnFinish();
-                //NWeakCancelChildren();
             }
         }
 

@@ -90,8 +90,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     ProcessGeneralFinishStatuses();
                     break;
 
-                case ProcessStatus.Canceled:
                 case ProcessStatus.WeakCanceled:
+                    EmitOnWeakCanceled();
+                    ProcessGeneralFinishStatuses();
+                    break;
+
+                case ProcessStatus.Canceled:
                 case ProcessStatus.Faulted:
                     ProcessGeneralFinishStatuses();
                     break;
@@ -109,6 +113,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         {
             Task.Run(() => {
                 InternalOnComplete?.Invoke(this);
+            });
+        }
+
+        private void EmitOnWeakCanceled()
+        {
+            Task.Run(() => {
+                InternalOnWeakCanceled?.Invoke(this);
             });
         }
 
@@ -144,10 +155,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
                 _status = ProcessStatus.Canceled;
                 _cancellationTokenSource.Cancel();
-                
-                EmitOnFinish();
 
-                NCancelChildren();
+                ProcessGeneralFinishStatuses();
             }
         }
 
@@ -164,9 +173,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 _status = ProcessStatus.WeakCanceled;
                 _cancellationTokenSource.Cancel();
 
-                EmitOnFinish();
-
-                NCancelChildren();
+                EmitOnWeakCanceled();
+                ProcessGeneralFinishStatuses();
             }
         }
 
@@ -223,6 +231,33 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         }
 
         private event ProcessInfoEvent InternalOnComplete;
+
+        /// <inheritdoc/>
+        public override event ProcessInfoEvent OnWeakCanceled
+        {
+            add
+            {
+                lock (_statusLockObj)
+                {
+                    InternalOnWeakCanceled += value;
+
+                    if (_status == ProcessStatus.Completed)
+                    {
+                        EmitOnWeakCanceled();
+                    }
+                }
+            }
+
+            remove
+            {
+                lock (_statusLockObj)
+                {
+                    InternalOnWeakCanceled -= value;
+                }
+            }
+        }
+
+        private event ProcessInfoEvent InternalOnWeakCanceled;
 
         /// <inheritdoc/>
         public override IReadOnlyList<string> Friends => _friends;

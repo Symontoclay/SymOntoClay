@@ -3,7 +3,7 @@
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun()[: timeout = 100, on weak canceled { 'on weak canceled' >> @>log; } :];
+        @@host.SomeVeryLongSilentFun~~()[: timeout = 100, on weak canceled { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }

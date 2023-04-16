@@ -110,6 +110,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsCodeItem => false;
         public virtual CodeItem AsCodeItem => null;
 
+        public virtual bool IsSequenceValue => false;
+        public virtual SequenceValue AsSequenceValue => null;
+
         public virtual bool IsSystemNull => false;
 
         public virtual IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => throw new NotImplementedException();

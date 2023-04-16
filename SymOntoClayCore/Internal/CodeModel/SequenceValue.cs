@@ -8,9 +8,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         public SequenceValue(Value initialValue)
         {
-            throw new NotImplementedException();
+            _values.Add(initialValue);
         }
 
+        /// <inheritdoc/>
+        public override KindOfValue KindOfValue => KindOfValue.SequenceValue;
 
+        /// <inheritdoc/>
+        public override bool IsSequenceValue => true;
+
+        /// <inheritdoc/>
+        public override SequenceValue AsSequenceValue => this;
+
+        private readonly List<Value> _values = new List<Value>();
     }
 }

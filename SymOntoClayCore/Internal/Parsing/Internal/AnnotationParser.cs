@@ -45,22 +45,28 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private State _state = State.Init;
         public Annotation Result { get; private set; } = new Annotation();
+        private Dictionary<StrongIdentifierValue, Value> _settingsDict;
         private StrongIdentifierValue _settingsKey;
+        private StrongIdentifierValue _lastSettingsKey;
+
+        protected override void OnEnter()
+        {
+            _settingsDict = Result.SettingsDict;
+        }
 
         /// <inheritdoc/>
         protected override void OnFinish()
         {
             Result.CheckDirty();
-
         }
 
         /// <inheritdoc/>
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
+            Log($"Result = {Result}");
 #endif
 
             switch (_state)
@@ -106,7 +112,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         var value = ParseValue();
 
-                        Result.SettingsDict[_settingsKey] = value;
+                        _settingsDict[_settingsKey] = value;
+                        _lastSettingsKey = _settingsKey;
                         _settingsKey = null;
 
                         _state = State.GotItem;
@@ -116,11 +123,46 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotItem:
                     switch (_currToken.TokenKind)
                     {
+                        case TokenKind.Word:
+                            {
+                                if(_lastSettingsKey == null)
+                                {
+                                    throw new UnexpectedTokenException(_currToken);
+                                }
+#if DEBUG
+                                Log($"_lastSettingsKey = {_lastSettingsKey}");
+#endif
+
+                                var lastValue = _settingsDict[_lastSettingsKey];
+
+#if DEBUG
+                                Log($"lastValue = {lastValue}");
+#endif
+
+                                var value = ParseValue();
+
+#if DEBUG
+                                Log($"value = {value}");
+#endif
+
+                                if(lastValue.IsSequenceValue)
+                                {
+                                    lastValue.AsSequenceValue.AddValue(value);
+                                }
+                                else
+                                {
+                                    lastValue = new SequenceValue(lastValue);
+                                    lastValue.AddValue(value);
+                                }
+                            }
+                            break;
+
                         case TokenKind.CloseAnnotationBracket:
                             Exit();
                             break;
 
                         case TokenKind.Comma:
+                            _lastSettingsKey = null;
                             _state = State.WaitForItem;
                             break;
 
@@ -138,6 +180,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             var nextToken = _context.GetToken();
             _context.Recovery(nextToken);
+
+#if DEBUG
+            Log($"nextToken = {nextToken}");
+#endif
 
             switch(nextToken.TokenKind)
             {

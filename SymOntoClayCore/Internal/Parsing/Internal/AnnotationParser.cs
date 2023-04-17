@@ -130,19 +130,19 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     throw new UnexpectedTokenException(_currToken);
                                 }
 #if DEBUG
-                                Log($"_lastSettingsKey = {_lastSettingsKey}");
+                                //Log($"_lastSettingsKey = {_lastSettingsKey}");
 #endif
 
                                 var lastValue = _settingsDict[_lastSettingsKey];
 
 #if DEBUG
-                                Log($"lastValue = {lastValue}");
+                                //Log($"lastValue = {lastValue}");
 #endif
 
                                 var value = ParseValue();
 
 #if DEBUG
-                                Log($"value = {value}");
+                                //Log($"value = {value}");
 #endif
 
                                 if(lastValue.IsSequenceValue)
@@ -151,8 +151,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 }
                                 else
                                 {
-                                    lastValue = new SequenceValue(lastValue);
-                                    lastValue.AddValue(value);
+                                    var sequenceValue = new SequenceValue(lastValue);
+                                    lastValue = sequenceValue;
+                                    sequenceValue.AddValue(value);
+                                    _settingsDict[_lastSettingsKey] = sequenceValue;
                                 }
                             }
                             break;

@@ -43,6 +43,7 @@ namespace SymOntoClay.Core.Internal
         public const string WaypointTypeName = "waypoint";
         public const string ConditionalEntityTypeName = "conditional entity";
         public const string EntityTypeName = "entity";
+        public const string SequenceTypeName = "sequence";
         public const string SelfSystemVarName = "@@self";
         public const string HostSystemVarName = "@@host";
         public const string RandomConstraintName = "random";

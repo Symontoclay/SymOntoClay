@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     {
         public StrongIdentifierValue Name { get; set; }
         public List<StrongIdentifierValue> TypesList { get; set; } = new List<StrongIdentifierValue>();
-        public List<StrongIdentifierValue> MeaningRolesList { get; set; } = new List<StrongIdentifierValue>();
+        public List<Value> MeaningRolesList { get; set; } = new List<Value>();
 
         /// <summary>
         /// Clones the instance and returns cloned instance.
@@ -63,7 +63,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             result.Name = Name.Clone(context);
             result.TypesList = TypesList?.Select(p => p.Clone(context)).ToList();
-            result.MeaningRolesList = MeaningRolesList?.Select(p => p.Clone(context)).ToList();
+            result.MeaningRolesList = MeaningRolesList?.Select(p => p.CloneValue(context)).ToList();
 
             return result;
         }
@@ -239,7 +239,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             if(!MeaningRolesList.IsNullOrEmpty())
             {
                 sb.Append("[:");
-                sb.Append(string.Join(",", MeaningRolesList.Select(p => p.NameValue)));
+                sb.Append(string.Join(",", MeaningRolesList.Select(p => p.ToHumanizedString(options))));
                 sb.Append(":]");
             }
 

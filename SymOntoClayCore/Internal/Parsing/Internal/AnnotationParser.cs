@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using Newtonsoft.Json.Linq;
 using SymOntoClay.Core.Internal.CodeModel;
 using System;
 using System.Collections.Generic;
@@ -46,11 +47,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private State _state = State.Init;
         public Annotation Result { get; private set; } = new Annotation();
         private Dictionary<StrongIdentifierValue, Value> _settingsDict;
+        private List<Value> _meaningRolesList;
         private StrongIdentifierValue _settingsKey;
         private StrongIdentifierValue _lastSettingsKey;
+        private StrongIdentifierValue _lastMeaningRole;
 
         protected override void OnEnter()
         {
+            _meaningRolesList = Result.MeaningRolesList;
             _settingsDict = Result.SettingsDict;
         }
 
@@ -64,9 +68,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"_currToken = {_currToken}");
-            Log($"Result = {Result}");
+            //Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
+            //Log($"Result = {Result}");
 #endif
 
             switch (_state)
@@ -115,6 +119,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         _settingsDict[_settingsKey] = value;
                         _lastSettingsKey = _settingsKey;
                         _settingsKey = null;
+                        _lastMeaningRole = null;
 
                         _state = State.GotItem;
                     }
@@ -125,18 +130,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         case TokenKind.Word:
                             {
-                                if(_lastSettingsKey == null)
-                                {
-                                    throw new UnexpectedTokenException(_currToken);
-                                }
 #if DEBUG
                                 //Log($"_lastSettingsKey = {_lastSettingsKey}");
-#endif
-
-                                var lastValue = _settingsDict[_lastSettingsKey];
-
-#if DEBUG
-                                //Log($"lastValue = {lastValue}");
 #endif
 
                                 var value = ParseValue();
@@ -145,16 +140,42 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 //Log($"value = {value}");
 #endif
 
-                                if(lastValue.IsSequenceValue)
+                                if (_lastSettingsKey == null)
                                 {
-                                    lastValue.AsSequenceValue.AddValue(value);
+#if DEBUG
+                                    //Log($"_lastMeaningRole = {_lastMeaningRole}");
+#endif
+
+                                    if (_lastMeaningRole.IsSequenceValue)
+                                    {
+                                        _lastMeaningRole.AsSequenceValue.AddValue(value);
+                                    }
+                                    else
+                                    {
+                                        var sequenceValue = new SequenceValue(_lastMeaningRole);
+                                        _meaningRolesList[_meaningRolesList.IndexOf(_lastMeaningRole)] = sequenceValue;
+                                        sequenceValue.AddValue(value);
+                                    }                                    
                                 }
                                 else
                                 {
-                                    var sequenceValue = new SequenceValue(lastValue);
-                                    lastValue = sequenceValue;
-                                    sequenceValue.AddValue(value);
-                                    _settingsDict[_lastSettingsKey] = sequenceValue;
+                                    var lastValue = _settingsDict[_lastSettingsKey];
+
+#if DEBUG
+                                    //Log($"lastValue = {lastValue}");
+#endif
+
+                                    if (lastValue.IsSequenceValue)
+                                    {
+                                        lastValue.AsSequenceValue.AddValue(value);
+                                    }
+                                    else
+                                    {
+                                        var sequenceValue = new SequenceValue(lastValue);
+                                        lastValue = sequenceValue;
+                                        sequenceValue.AddValue(value);
+                                        _settingsDict[_lastSettingsKey] = sequenceValue;
+                                    }
                                 }
                             }
                             break;
@@ -165,6 +186,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.Comma:
                             _lastSettingsKey = null;
+                            _lastMeaningRole = null;
                             _state = State.WaitForItem;
                             break;
 
@@ -184,7 +206,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             _context.Recovery(nextToken);
 
 #if DEBUG
-            Log($"nextToken = {nextToken}");
+            //Log($"nextToken = {nextToken}");
 #endif
 
             switch(nextToken.TokenKind)
@@ -243,7 +265,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
             }
 
-            Result.MeaningRolesList.Add(ParseName(_currToken.Content));
+            _lastMeaningRole = ParseName(_currToken.Content);
+            _meaningRolesList.Add(_lastMeaningRole);
             _state = State.GotItem;
         }
     }

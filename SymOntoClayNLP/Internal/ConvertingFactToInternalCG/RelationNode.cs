@@ -105,7 +105,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
                 var paramDescription = relationDescription.Arguments[n];
                 n++;
 
-                var meaningRolesList = paramDescription.MeaningRolesList.Select(p => p.NormalizedNameValue);
+                var meaningRolesList = paramDescription.MeaningRolesList.Select(p => ValueToNormalizedNameValue(p));
 
                 if (meaningRolesList.Contains("owner"))
                 {
@@ -171,7 +171,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
                 var paramDescription = relationDescription.Arguments[n];
                 n++;
 
-                var meaningRolesList = paramDescription.MeaningRolesList.Select(p => p.NormalizedNameValue);
+                var meaningRolesList = paramDescription.MeaningRolesList.Select(p => ValueToNormalizedNameValue(p));
 
                 if(meaningRolesList.Contains("owner"))
                 {
@@ -215,7 +215,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
                 var paramDescription = relationDescription.Arguments[n];
                 n++;
 
-                var meaningRolesList = paramDescription.MeaningRolesList.Select(p => p.NormalizedNameValue);
+                var meaningRolesList = paramDescription.MeaningRolesList.Select(p => ValueToNormalizedNameValue(p));
 
                 if (isState && meaningRolesList.Contains("experiencer"))
                 {
@@ -268,6 +268,20 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
         private ResultOfNode ProcessInheritanceRelation()
         {
             throw new NotImplementedException();
+        }
+
+        private string ValueToNormalizedNameValue(Value value)
+        {
+            var kindOfValue = value.KindOfValue;
+
+            switch(kindOfValue)
+            {
+                case KindOfValue.StrongIdentifierValue:
+                    return value.AsStrongIdentifierValue.NormalizedNameValue;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfValue), kindOfValue, null);
+            }
         }
     }
 }

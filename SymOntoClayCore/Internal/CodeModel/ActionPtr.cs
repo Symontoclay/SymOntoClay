@@ -140,7 +140,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override IList<RuleInstance> AnnotationFacts => _action.AnnotationFacts;
 
         /// <inheritdoc/>
-        public override IList<StrongIdentifierValue> MeaningRolesList => _action.MeaningRolesList;
+        public override IList<Value> MeaningRolesList => _action.MeaningRolesList;
 
         /// <inheritdoc/>
         public override Value GetSettings(StrongIdentifierValue key)

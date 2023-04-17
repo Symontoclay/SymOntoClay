@@ -32,7 +32,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public class Annotation: ItemWithLongHashCodes, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public List<RuleInstance> Facts { get; set; } = new List<RuleInstance>();
-        public List<StrongIdentifierValue> MeaningRolesList { get; set; } = new List<StrongIdentifierValue>();
+        public List<Value> MeaningRolesList { get; set; } = new List<Value>();
         public Dictionary<StrongIdentifierValue, Value> SettingsDict { get; set; } = new Dictionary<StrongIdentifierValue, Value>();
         public Dictionary<KindOfAnnotationSystemEvent, AnnotationSystemEvent> AnnotationSystemEventsDict { get; set; } = new Dictionary<KindOfAnnotationSystemEvent, AnnotationSystemEvent>();
 
@@ -95,7 +95,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             context[this] = result;
 
             result.Facts = Facts?.Select(p => p.Clone(context)).ToList();
-            result.MeaningRolesList = MeaningRolesList?.Select(p => p.Clone(context)).ToList();
+            result.MeaningRolesList = MeaningRolesList?.Select(p => p.CloneValue(context)).ToList();
             result.SettingsDict = SettingsDict?.ToDictionary(p => p.Key.Clone(context), p => p.Value.CloneValue(context));
             result.AnnotationSystemEventsDict?.ToDictionary(p => p.Key, p => p.Value.Clone(context));
 

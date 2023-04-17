@@ -110,7 +110,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public virtual IList<StrongIdentifierValue> MeaningRolesList
+        public virtual IList<Value> MeaningRolesList
         {
             get
             {
@@ -140,7 +140,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         private List<RuleInstance> _annotationFacts = new List<RuleInstance>();
-        private List<StrongIdentifierValue> _meaningRolesList = new List<StrongIdentifierValue>();
+        private List<Value> _meaningRolesList = new List<Value>();
         private Dictionary<StrongIdentifierValue, Value> _settingsDict = new Dictionary<StrongIdentifierValue, Value>();
 
         private void CheckAnnotationsPreparation()

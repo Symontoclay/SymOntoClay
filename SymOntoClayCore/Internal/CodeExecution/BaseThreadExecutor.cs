@@ -1700,6 +1700,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 _instancesStorage.AppendAndTryStartProcessInfo(processInfo);
 
                 var timeout = GetTimeoutFromAnnotation(annotation);
+                var timeoutCancelMode = GetTimeoutCancelModeFromAnnotation(annotation);
+
+#if DEBUG
+                Log($"[{methodName.ToHumanizedString()}] timeoutCancelMode = {timeoutCancelMode}");
+#endif
 
                 if (syncOption == SyncOption.Sync)
                 {
@@ -1906,6 +1911,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
             return Convert.ToInt64(numberValue.SystemValue.Value);
+        }
+
+        private TimeoutCancelMode _defaultTimeoutCancelMode = TimeoutCancelMode.WeakCancel;
+
+        private TimeoutCancelMode GetTimeoutCancelModeFromAnnotation(Value annotation)
+        {
+
         }
 
         private float? GetPriorityFromAnnotation(Value annotation)

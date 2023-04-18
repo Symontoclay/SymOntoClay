@@ -1700,10 +1700,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 _instancesStorage.AppendAndTryStartProcessInfo(processInfo);
 
                 var timeout = GetTimeoutFromAnnotation(annotation);
-                var timeoutCancelMode = GetTimeoutCancelModeFromAnnotation(annotation);
+                var timeoutCancellationMode = GetTimeoutCancellationModeFromAnnotation(annotation);
 
 #if DEBUG
-                Log($"[{methodName.ToHumanizedString()}] timeoutCancelMode = {timeoutCancelMode}");
+                Log($"[{methodName.ToHumanizedString()}] timeoutCancellationMode = {timeoutCancellationMode}");
 #endif
 
                 if (syncOption == SyncOption.Sync)
@@ -1717,7 +1717,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         executionCoordinators = new List<IExecutionCoordinator>() { _executionCoordinator };
                     }
 
-                    ProcessInfoHelper.Wait(executionCoordinators, timeout, _dateTimeProvider, processInfo);
+                    ProcessInfoHelper.Wait(executionCoordinators, timeout, timeoutCancellationMode, _dateTimeProvider, processInfo);
 
                     if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus == ActionExecutionStatus.Broken)
                     {
@@ -1794,7 +1794,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         }
 
                         Task.Run(() => {
-                            ProcessInfoHelper.Wait(executionCoordinators, timeout, _dateTimeProvider, processInfo);
+                            ProcessInfoHelper.Wait(executionCoordinators, timeout, timeoutCancellationMode, _dateTimeProvider, processInfo);
                         });
                     }
 
@@ -1913,11 +1913,42 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             return Convert.ToInt64(numberValue.SystemValue.Value);
         }
 
-        private TimeoutCancelMode _defaultTimeoutCancelMode = TimeoutCancelMode.WeakCancel;
+        private TimeoutCancellationMode _defaultTimeoutCancellationMode = TimeoutCancellationMode.WeakCancel;
 
-        private TimeoutCancelMode GetTimeoutCancelModeFromAnnotation(Value annotation)
+        private TimeoutCancellationMode GetTimeoutCancellationModeFromAnnotation(Value annotation)
         {
+#if DEBUG
+            Log($"annotation = {annotation}");
+#endif
 
+            var meaningRoles = annotation.MeaningRolesList;
+
+#if DEBUG
+            Log($"meaningRoles = {meaningRoles.WriteListToString()}");
+#endif
+
+            if(meaningRoles.IsNullOrEmpty())
+            {
+                return _defaultTimeoutCancellationMode;
+            }
+
+            var identifiersList = meaningRoles.Where(p => p.IsStrongIdentifierValue).Select(p => p.AsStrongIdentifierValue).ToList();
+
+#if DEBUG
+            Log($"identifiersList = {identifiersList.WriteListToString()}");
+#endif
+
+            if(identifiersList.Any())
+            {
+                throw new NotImplementedException();
+            }
+
+            if(meaningRoles.Where(p => p.IsSequenceValue).Select(p => p.AsSequenceValue).Where(p => p.Values.Count == 2 && p.Values[0].AsStrongIdentifierValue?.NormalizedNameValue == "weak" && p.Values[1].AsStrongIdentifierValue?.NormalizedNameValue == "cancel").Any())
+            {
+                return TimeoutCancellationMode.WeakCancel;
+            }
+
+            return _defaultTimeoutCancellationMode;
         }
 
         private float? GetPriorityFromAnnotation(Value annotation)

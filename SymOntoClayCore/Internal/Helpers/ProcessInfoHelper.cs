@@ -35,15 +35,15 @@ namespace SymOntoClay.Core.Internal.Helpers
     public static class ProcessInfoHelper
     {
 #if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static void Wait(params IProcessInfo[] processes)
         {
-            Wait(null, null, null, processes);
+            Wait(null, null, TimeoutCancellationMode.WeakCancel, null, processes);
         }
 
-        public static void Wait(List<IExecutionCoordinator> executionCoordinators, long? cancelAfter, IDateTimeProvider dateTimeProvider, params IProcessInfo[] processes)
+        public static void Wait(List<IExecutionCoordinator> executionCoordinators, long? cancelAfter, TimeoutCancellationMode timeoutCancellationMode, IDateTimeProvider dateTimeProvider, params IProcessInfo[] processes)
         {
             if(processes.IsNullOrEmpty())
             {
@@ -86,23 +86,35 @@ namespace SymOntoClay.Core.Internal.Helpers
                     var delta = currentMilisecond - initialTicks;
 
 #if DEBUG
-                    //_gbcLogger.Info($"cancelAfter.Value = {cancelAfter.Value}");
-                    //_gbcLogger.Info($"initialTicks = {initialTicks}");
-                    //_gbcLogger.Info($"currentTick = {currentTick}");
-                    //_gbcLogger.Info($"currentMilisecond = {currentMilisecond}");
-                    //_gbcLogger.Info($"delta = {delta}");
+                    _gbcLogger.Info($"cancelAfter.Value = {cancelAfter.Value}");
+                    _gbcLogger.Info($"initialTicks = {initialTicks}");
+                    _gbcLogger.Info($"currentTick = {currentTick}");
+                    _gbcLogger.Info($"currentMilisecond = {currentMilisecond}");
+                    _gbcLogger.Info($"delta = {delta}");
 #endif
 
                     if (delta >= cancelAfter.Value)
                     {
 #if DEBUG
-                        //_gbcLogger.Info($"delta >= cancelAfter.Value !!!!!");
+                        _gbcLogger.Info($"delta >= cancelAfter.Value !!!!!");
+                        _gbcLogger.Info($"timeoutCancellationMode = {timeoutCancellationMode}");
 #endif
 
                         foreach (var proc in processes)
                         {
-                            //proc.Cancel();
-                            proc.WeakCancel();
+                            switch(timeoutCancellationMode)
+                            {
+                                case TimeoutCancellationMode.WeakCancel:
+                                    proc.WeakCancel();
+                                    break;
+
+                                case TimeoutCancellationMode.Cancel:
+                                    proc.Cancel();
+                                    break;
+
+                                default:
+                                    throw new ArgumentOutOfRangeException(nameof(timeoutCancellationMode), timeoutCancellationMode, null);
+                            }                            
                         }
 
                         return;

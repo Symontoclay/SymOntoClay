@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
 {
-    public enum TimeoutCancelMode
+    public enum TimeoutCancellationMode
     {
         WeakCancel,
         Cancel

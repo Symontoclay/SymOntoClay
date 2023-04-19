@@ -48,6 +48,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
+#if DEBUG
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
+            //Log($"Result = {Result.WriteListToString()}");          
+#endif
+
             switch (_state)
             {
                 case State.Init:
@@ -143,6 +149,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                 case KeyWordTokenKind.Exec:
                                     ProcessExecStatement();
+                                    break;
+
+                                case KeyWordTokenKind.On:
+                                    ProcessEventDeclStatement();
                                     break;
 
                                 default:
@@ -286,6 +296,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var parser = new ExecStatementParser(_context);
             parser.Run();
             AddStatement(parser.Result);
+        }
+
+        private void ProcessEventDeclStatement()
+        {
+            _context.Recovery(_currToken);
+            var parser = new EventDeclStatementParser(_context);
+            parser.Run();
+
+            throw new NotImplementedException();
         }
 
         private void AddStatement(AstStatement statement)

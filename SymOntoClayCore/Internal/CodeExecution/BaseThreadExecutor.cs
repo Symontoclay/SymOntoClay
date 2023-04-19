@@ -238,7 +238,27 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     if (currentMilisecond >= endOfTargetDuration.Value)
                     {
-                        GoBackToPrevCodeFrame(ActionExecutionStatus.WeakCanceled);
+                        var timeoutCancellationMode = _currentCodeFrame.TimeoutCancellationMode;
+
+#if DEBUG
+                        //Log($"timeoutCancellationMode = {timeoutCancellationMode}");
+#endif
+
+                        switch(timeoutCancellationMode)
+                        {
+                            case TimeoutCancellationMode.WeakCancel:
+                                GoBackToPrevCodeFrame(ActionExecutionStatus.WeakCanceled);
+                                break;
+
+                            case TimeoutCancellationMode.Cancel:
+                                GoBackToPrevCodeFrame(ActionExecutionStatus.Canceled);
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(timeoutCancellationMode), timeoutCancellationMode, null);
+                        }
+
+                        
                         return true;
                     }
                 }
@@ -1264,6 +1284,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     case ActionExecutionStatus.Canceled:
                         currentProcessInfo.Status = ProcessStatus.Canceled;
+                        _isCanceled = true;
                         break;
 
                     default:
@@ -1274,9 +1295,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
             else
             {
-                if(targetActionExecutionStatus == ActionExecutionStatus.WeakCanceled)
+                switch (targetActionExecutionStatus)
                 {
-                    currentProcessInfo.Status = ProcessStatus.WeakCanceled;
+                    case ActionExecutionStatus.WeakCanceled:
+                        currentProcessInfo.Status = ProcessStatus.WeakCanceled;
+                        break;
+
+                    case ActionExecutionStatus.Canceled:
+                        currentProcessInfo.Status = ProcessStatus.Canceled;
+                        _isCanceled = true;
+                        break;
                 }
             }
 
@@ -1703,7 +1731,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var timeoutCancellationMode = GetTimeoutCancellationModeFromAnnotation(annotation);
 
 #if DEBUG
-                Log($"[{methodName.ToHumanizedString()}] timeoutCancellationMode = {timeoutCancellationMode}");
+                //Log($"[{methodName.ToHumanizedString()}] timeoutCancellationMode = {timeoutCancellationMode}");
 #endif
 
                 if (syncOption == SyncOption.Sync)
@@ -1918,13 +1946,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private TimeoutCancellationMode GetTimeoutCancellationModeFromAnnotation(Value annotation)
         {
 #if DEBUG
-            Log($"annotation = {annotation}");
+            //Log($"annotation = {annotation}");
 #endif
 
             var meaningRoles = annotation.MeaningRolesList;
 
 #if DEBUG
-            Log($"meaningRoles = {meaningRoles.WriteListToString()}");
+            //Log($"meaningRoles = {meaningRoles.WriteListToString()}");
 #endif
 
             if(meaningRoles.IsNullOrEmpty())
@@ -1932,15 +1960,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 return _defaultTimeoutCancellationMode;
             }
 
-            var identifiersList = meaningRoles.Where(p => p.IsStrongIdentifierValue).Select(p => p.AsStrongIdentifierValue).ToList();
-
-#if DEBUG
-            Log($"identifiersList = {identifiersList.WriteListToString()}");
-#endif
-
-            if(identifiersList.Any())
+            if(meaningRoles.Where(p => p.IsStrongIdentifierValue).Select(p => p.AsStrongIdentifierValue).Any(p => p.NormalizedNameValue == "cancel"))
             {
-                throw new NotImplementedException();
+                return TimeoutCancellationMode.Cancel;
             }
 
             if(meaningRoles.Where(p => p.IsSequenceValue).Select(p => p.AsSequenceValue).Where(p => p.Values.Count == 2 && p.Values[0].AsStrongIdentifierValue?.NormalizedNameValue == "weak" && p.Values[1].AsStrongIdentifierValue?.NormalizedNameValue == "cancel").Any())
@@ -2099,6 +2121,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private ConversionExecutableToCodeFrameAdditionalSettings GetAdditionalSettingsFromAnnotation(Value annotation, ILocalCodeExecutionContext ownLocalCodeExecutionContext)
         {
             var timeout = GetTimeoutFromAnnotation(annotation);
+            var timeoutCancellationMode = GetTimeoutCancellationModeFromAnnotation(annotation);
             var priority = GetPriorityFromAnnotation(annotation);
 
             ConversionExecutableToCodeFrameAdditionalSettings additionalSettings = null;
@@ -2108,6 +2131,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 additionalSettings = new ConversionExecutableToCodeFrameAdditionalSettings()
                 {
                     Timeout = timeout,
+                    TimeoutCancellationMode = timeoutCancellationMode,
                     Priority = priority,
                     AllowParentLocalStorages = ownLocalCodeExecutionContext == null ? false : true
                 };

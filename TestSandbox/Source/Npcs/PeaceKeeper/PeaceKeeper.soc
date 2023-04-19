@@ -1,9 +1,16 @@
 ﻿app PeaceKeeper
 {
+    fun a() => 
+    {       
+        wait 1000;
+        '`a` has been called!' >> @>log;
+    }
+
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun~~()[: timeout = 100, cancel, on weak canceled { 'on weak canceled' >> @>log; } :];
+        a~()[: timeout = 100, weak cancel, on weak canceled => { 'on weak canceled' >> @>log; } :];
+        wait 2000;
         'End' >> @>log;
     }
 }

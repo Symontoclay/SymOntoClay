@@ -145,6 +145,7 @@ namespace SymOntoClay.Core.Internal.Services
             if (timeout.HasValue)
             {
                 codeFrame.TargetDuration = timeout;
+                codeFrame.TimeoutCancellationMode = additionalSettings.TimeoutCancellationMode;
             }
 
             var priority = additionalSettings?.Priority;

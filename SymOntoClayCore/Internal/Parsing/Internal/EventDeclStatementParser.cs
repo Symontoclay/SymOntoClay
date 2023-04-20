@@ -181,7 +181,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             var statementsList = parser.Result;
 
-            var function = new NamedFunction() { TypeOfAccess = TypeOfAccess.Local };
+            var function = new NamedFunction() { TypeOfAccess = TypeOfAccess.Local, IsAnonymous = true };
             function.Statements = statementsList;
             function.CompiledFunctionBody = _context.Compiler.Compile(statementsList);
 

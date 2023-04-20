@@ -35,6 +35,8 @@ namespace SymOntoClay.Core.DebugHelpers
         public bool IsHtml { get; set; }
         public List<IObjectToString> ItemsForSelection { get; set; }
         public MutablePartOfRuleInstance MutablePartOfRuleInstance { get; set; }
+        public bool EnableMark { get; set; } = true;
+        public bool EnableParamsIfEmpty { get; set; } = true;
 
         /// <summary>
         /// Clones the instance and returns cloned instance.
@@ -48,6 +50,8 @@ namespace SymOntoClay.Core.DebugHelpers
             result.IsHtml = IsHtml;
             result.ItemsForSelection = ItemsForSelection?.ToList();
             result.MutablePartOfRuleInstance = MutablePartOfRuleInstance;
+            result.EnableMark = EnableMark;
+            result.EnableParamsIfEmpty = EnableParamsIfEmpty;
 
             return result;
         }
@@ -73,7 +77,9 @@ namespace SymOntoClay.Core.DebugHelpers
             sb.AppendLine($"{spaces}{nameof(HumanizedOptions)} = {HumanizedOptions}");
             sb.AppendLine($"{spaces}{nameof(IsHtml)} = {IsHtml}");
             sb.PrintObjListProp(n, nameof(ItemsForSelection), ItemsForSelection);
-            sb.PrintObjProp(n, nameof(MutablePartOfRuleInstance), MutablePartOfRuleInstance);            
+            sb.PrintObjProp(n, nameof(MutablePartOfRuleInstance), MutablePartOfRuleInstance);
+            sb.AppendLine($"{spaces}{nameof(EnableMark)} = {EnableMark}");
+            sb.AppendLine($"{spaces}{nameof(EnableParamsIfEmpty)} = {EnableParamsIfEmpty}");
 
             return sb.ToString();
         }

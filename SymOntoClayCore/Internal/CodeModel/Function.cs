@@ -228,28 +228,36 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            var sb = new StringBuilder("fun");
+            var sb = new StringBuilder();
+
+            if(options?.EnableMark ?? false)
+            {
+                sb.Append("fun");
+            }
 
             if(Name != null && !IsAnonymous)
             {
                 sb.Append($" {Name.NameValue}");
             }
 
-            sb.Append("(");
-
-            if(!Arguments.IsNullOrEmpty())
+            if(!Arguments.IsNullOrEmpty() || ((options?.EnableParamsIfEmpty ?? false) && Arguments.IsNullOrEmpty()))
             {
-                var argumentsList = new List<string>();
+                sb.Append("(");
 
-                foreach(var argument in Arguments)
+                if (!Arguments.IsNullOrEmpty())
                 {
-                    argumentsList.Add(argument.ToHumanizedString(options));
+                    var argumentsList = new List<string>();
+
+                    foreach (var argument in Arguments)
+                    {
+                        argumentsList.Add(argument.ToHumanizedString(options));
+                    }
+
+                    sb.Append(string.Join(", ", argumentsList));
                 }
 
-                sb.Append(string.Join(", ", argumentsList));
+                sb.Append(")");
             }
-
-            sb.Append(")");
 
             sb.AppendLine("{");
 

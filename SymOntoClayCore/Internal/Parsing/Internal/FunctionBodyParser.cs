@@ -304,7 +304,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var parser = new EventDeclStatementParser(_context);
             parser.Run();
 
-            throw new NotImplementedException();
+#if DEBUG
+            Log($"parser.Result = {parser.Result}");
+#endif
+
+            AddStatement(parser.Result);
         }
 
         private void AddStatement(AstStatement statement)

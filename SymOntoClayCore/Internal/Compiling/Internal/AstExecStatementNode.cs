@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             : base(context)
         {
         }
-
+        
         public void Run(AstExecStatement statement)
         {
             var node = new ExpressionNode(_context);

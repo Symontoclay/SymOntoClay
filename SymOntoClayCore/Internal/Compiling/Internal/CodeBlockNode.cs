@@ -88,6 +88,10 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             {
                 var kind = statement.Kind;
 
+#if DEBUG
+                Log($"kind = {kind}");
+#endif
+
                 switch(kind)
                 {
                     case KindOfAstStatement.Expression:
@@ -222,6 +226,14 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                         {
                             var node = new AstExecStatementNode(_context);
                             node.Run(statement as AstExecStatement);
+                            AddCommands(node.Result);
+                        }
+                        break;
+
+                    case KindOfAstStatement.EventDeclStatement:
+                        {
+                            var node = new AstEventDeclStatementNode(_context);
+                            node.Run(statement as AstEventDeclStatement);
                             AddCommands(node.Result);
                         }
                         break;

@@ -50,7 +50,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
                 return (AstStatement)context[this];
             }
 
-            var result = new AstReturnStatement();
+            var result = new AstExecStatement();
             context[this] = result;
 
             result.Expression = Expression.CloneAstExpression(context);
@@ -71,12 +71,12 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         /// <inheritdoc/>
         public override void CalculateLongHashCodes(CheckDirtyOptions options)
         {
+            base.CalculateLongHashCodes(options);
+
             if (Expression != null)
             {
                 Expression.CheckDirty(options);
-            }
-
-            base.CalculateLongHashCodes(options);
+            }            
         }
 
         /// <inheritdoc/>

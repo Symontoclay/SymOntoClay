@@ -102,6 +102,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         Reject,
         Instantiate,
         Instantiate_N,
-        Instantiate_P
+        Instantiate_P,
+        AddLifeCycleEvent
     }
 }

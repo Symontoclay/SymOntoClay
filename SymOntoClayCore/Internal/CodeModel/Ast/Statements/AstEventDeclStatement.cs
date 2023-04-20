@@ -20,12 +20,9 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
 
         public AstExpression Expression { get; set; }
 
-        public KindOfAnnotationSystemEvent KindOfAnnotationSystemEvent { get; set; }
+        public StrongIdentifierValue KindOfLifeCycleEvent { get; set; }
 
         public NamedFunction Handler { get; set; }
-
-        //public List<AstStatement> Statements { get; set; } = new List<AstStatement>();
-        //public CompiledFunctionBody CompiledFunctionBody { get; set; }
 
         /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
@@ -45,7 +42,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             context[this] = result;
 
             result.Expression = Expression?.CloneAstExpression(context);
-            result.KindOfAnnotationSystemEvent = KindOfAnnotationSystemEvent;
+            result.KindOfLifeCycleEvent = KindOfLifeCycleEvent;
             result.Handler = Handler.Clone(context);
 
             result.AppendAnnotations(this, context);
@@ -78,7 +75,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var sb = new StringBuilder();
 
             sb.PrintObjProp(n, nameof(Expression), Expression);
-            sb.AppendLine($"{spaces}{nameof(KindOfAnnotationSystemEvent)} = {KindOfAnnotationSystemEvent}");
+            sb.PrintObjProp(n, nameof(KindOfLifeCycleEvent), KindOfLifeCycleEvent);
 
             sb.PrintObjProp(n, nameof(Handler), Handler);
 
@@ -94,7 +91,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var sb = new StringBuilder();
 
             sb.PrintShortObjProp(n, nameof(Expression), Expression);
-            sb.AppendLine($"{spaces}{nameof(KindOfAnnotationSystemEvent)} = {KindOfAnnotationSystemEvent}");
+            sb.PrintShortObjProp(n, nameof(KindOfLifeCycleEvent), KindOfLifeCycleEvent);
 
             sb.PrintShortObjProp(n, nameof(Handler), Handler);
 
@@ -110,7 +107,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
             var sb = new StringBuilder();
 
             sb.PrintBriefObjProp(n, nameof(Expression), Expression);
-            sb.AppendLine($"{spaces}{nameof(KindOfAnnotationSystemEvent)} = {KindOfAnnotationSystemEvent}");
+            sb.PrintBriefObjProp(n, nameof(KindOfLifeCycleEvent), KindOfLifeCycleEvent);
 
             sb.PrintBriefObjProp(n, nameof(Handler), Handler);
 
@@ -129,32 +126,11 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
                 sb.Append($" {Expression.ToHumanizedString(options)}");
             }
 
-            switch(KindOfAnnotationSystemEvent)
+            if(KindOfLifeCycleEvent != null)
             {
-                case KindOfAnnotationSystemEvent.Unknown:
-                    sb.Append(" unknown");
-                    break;
-
-                case KindOfAnnotationSystemEvent.Complete:
-                    sb.Append(" complete");
-                    break;
-
-                case KindOfAnnotationSystemEvent.Cancel:
-                    sb.Append(" cancel");
-                    break;
-
-                case KindOfAnnotationSystemEvent.WeakCancel:
-                    sb.Append(" weak cancel");
-                    break;
-
-                case KindOfAnnotationSystemEvent.Error:
-                    sb.Append(" error");
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(KindOfAnnotationSystemEvent), KindOfAnnotationSystemEvent, null);
+                sb.Append($" {KindOfLifeCycleEvent.ToHumanizedString(options)}");
             }
-
+            
             if(Handler != null)
             {
                 var handlerHumanizedOptions = options.Clone();

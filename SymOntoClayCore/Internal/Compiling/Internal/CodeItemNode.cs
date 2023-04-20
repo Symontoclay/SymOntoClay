@@ -41,8 +41,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             CompilePushVal(expression.CodeItem);
 
             CompilePushAnnotation(expression);
-
-            
+           
             if(expression.CodeItem.IsAnonymous)
             {
                 var command = new IntermediateScriptCommand();

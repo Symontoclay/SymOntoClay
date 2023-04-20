@@ -189,6 +189,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 case OperationCode.CodeItemDecl:                
                 case OperationCode.CallDefaultCtors:
                 case OperationCode.ExecCallEvent:
+                case OperationCode.AddLifeCycleEvent:
                     return $"{operationCode}";
 
                 case OperationCode.PushVal:

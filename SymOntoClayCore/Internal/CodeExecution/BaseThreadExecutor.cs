@@ -283,7 +283,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #if DEBUG
                 //Log($"_currentCodeFrame.LocalContext.Holder = {_currentCodeFrame.LocalContext.Holder}");
                 //Log($"currentCommand = {currentCommand}");
-                //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 switch (currentCommand.OperationCode)
@@ -468,6 +468,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         ProcessInstantiate(KindOfFunctionParameters.PositionedParameters, currentCommand.CountParams);
                         break;
 
+                    case OperationCode.AddLifeCycleEvent:
+                        ProcessAddLifeCycleEvent();
+                        break;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(currentCommand.OperationCode), currentCommand.OperationCode, null);
                 }
@@ -482,6 +486,33 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 throw;
             }
+        }
+
+        private void ProcessAddLifeCycleEvent()
+        {
+            var valuesStack = _currentCodeFrame.ValuesStack;
+
+            var annotationValue = TryGetAnnotationValue();
+
+#if DEBUG
+            //Log($"annotationValue = {annotationValue}");
+#endif
+
+            var handlerValue = TryResolveFromVarOrExpr(valuesStack.Pop());
+
+            var kindOfLifeCycleEventValue = TryResolveFromVarOrExpr(valuesStack.Pop());
+
+            var targetObjectValue = TryResolveFromVarOrExpr(valuesStack.Pop());
+
+#if DEBUG
+            Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+
+#if DEBUG
+            Log($"targetObjectValue = {targetObjectValue}");
+#endif
+
+            throw new NotImplementedException();
         }
 
         private void ProcessInstantiate(KindOfFunctionParameters kindOfParameters, int parametersCount)
@@ -980,6 +1011,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void ProcessNop()
         {
             _currentCodeFrame.CurrentPosition++;
+        }
+
+        private AnnotationValue TryGetAnnotationValue()
+        {
+            var value = _currentCodeFrame.ValuesStack.Peek();
+
+            if(value.IsAnnotationValue)
+            {
+                _currentCodeFrame.ValuesStack.Pop();
+                return value.AsAnnotationValue;
+            }
+
+            return null;
         }
 
         private Value TryResolveFromVarOrExpr(Value operand)

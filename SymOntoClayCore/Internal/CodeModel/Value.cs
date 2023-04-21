@@ -53,6 +53,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsTaskValue => false;
         public virtual TaskValue AsTaskValue => null;
 
+        public virtual bool IsProcessInfoValue => false;
+        public virtual ProcessInfoValue AsProcessInfoValue => null;
+
         public virtual bool IsAnnotationValue => false;
         public virtual AnnotationValue AsAnnotationValue => null;
 

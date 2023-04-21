@@ -248,7 +248,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            return "Task!!!!";
+            return $"Task: {TaskId} ({SystemTask?.Status})";
         }
     }
 }

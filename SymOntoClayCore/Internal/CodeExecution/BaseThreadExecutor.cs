@@ -199,7 +199,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             try
             {
-                if (_currentCodeFrame == null)
+                var currentCodeFrame = _currentCodeFrame;
+
+                if (currentCodeFrame == null)
                 {
                     return false;
                 }
@@ -216,19 +218,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     return true;
                 }
 
-                if (_currentCodeFrame.ProcessInfo.Status == ProcessStatus.Canceled)
+                if (currentCodeFrame.ProcessInfo.Status == ProcessStatus.Canceled)
                 {
                     GoBackToPrevCodeFrame(ActionExecutionStatus.Canceled);
                     return true;
                 }
 
-                if (_currentCodeFrame.ProcessInfo.Status == ProcessStatus.WeakCanceled)
+                if (currentCodeFrame.ProcessInfo.Status == ProcessStatus.WeakCanceled)
                 {
                     GoBackToPrevCodeFrame(ActionExecutionStatus.WeakCanceled);
                     return true;
                 }
 
-                var endOfTargetDuration = _currentCodeFrame.EndOfTargetDuration;
+                var endOfTargetDuration = currentCodeFrame.EndOfTargetDuration;
 
                 if (endOfTargetDuration.HasValue)
                 {
@@ -238,7 +240,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     if (currentMilisecond >= endOfTargetDuration.Value)
                     {
-                        var timeoutCancellationMode = _currentCodeFrame.TimeoutCancellationMode;
+                        var timeoutCancellationMode = currentCodeFrame.TimeoutCancellationMode;
 
 #if DEBUG
                         //Log($"timeoutCancellationMode = {timeoutCancellationMode}");
@@ -263,9 +265,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     }
                 }
 
-                var currentPosition = _currentCodeFrame.CurrentPosition;
+                var currentPosition = currentCodeFrame.CurrentPosition;
 
-                var compiledFunctionBodyCommands = _currentCodeFrame.CompiledFunctionBody.Commands;
+                var compiledFunctionBodyCommands = currentCodeFrame.CompiledFunctionBody.Commands;
 
                 if (currentPosition >= compiledFunctionBodyCommands.Count)
                 {
@@ -281,9 +283,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var currentCommand = compiledFunctionBodyCommands[currentPosition];
 
 #if DEBUG
-                //Log($"_currentCodeFrame.LocalContext.Holder = {_currentCodeFrame.LocalContext.Holder}");
+                //Log($"currentCodeFrame.LocalContext.Holder = {currentCodeFrame.LocalContext.Holder}");
                 //Log($"currentCommand = {currentCommand}");
-                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                Log($"currentCodeFrame = {currentCodeFrame.ToDbgString()}");
 #endif
 
                 switch (currentCommand.OperationCode)
@@ -509,7 +511,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #endif
 
 #if DEBUG
-            Log($"targetObjectValue = {targetObjectValue}");
+            Log($"targetObjectValue = {targetObjectValue.ToHumanizedString()}");
+            Log($"kindOfLifeCycleEventValue = {kindOfLifeCycleEventValue}");
+#endif
+
+            var kindOfLifeCycleEventName = kindOfLifeCycleEventValue.AsStrongIdentifierValue.NormalizedNameValue;
+
+#if DEBUG
+            Log($"kindOfLifeCycleEventName = {kindOfLifeCycleEventName}");
 #endif
 
             throw new NotImplementedException();
@@ -2208,7 +2217,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 targetCurrentCodeFrame = currentCodeFrame;
             }
 
-            _context.InstancesStorage.AppendProcessInfo(codeFrame.ProcessInfo);
+            var currentProcessInfo = codeFrame.ProcessInfo;
+
+            _context.InstancesStorage.AppendProcessInfo(currentProcessInfo);
 
             switch (syncOption)
             {
@@ -2248,11 +2259,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 case SyncOption.IndependentAsync:
                 case SyncOption.ChildAsync:
                     {
+                        var processInfoValue = new ProcessInfoValue(currentProcessInfo);
+
                         targetCurrentCodeFrame.CurrentPosition++;
 
                         if (syncOption == SyncOption.ChildAsync)
                         {
-                            targetCurrentCodeFrame.ProcessInfo.AddChild(codeFrame.ProcessInfo);
+                            targetCurrentCodeFrame.ProcessInfo.AddChild(currentProcessInfo);
                         }
 
                         var threadExecutor = new AsyncThreadExecutor(_context);
@@ -2260,55 +2273,41 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                         var task = threadExecutor.Start();
 
-                        if(completeAnnotationSystemEvent != null || cancelAnnotationSystemEvent != null || weakCancelAnnotationSystemEvent != null || errorAnnotationSystemEvent != null)
+                        if (completeAnnotationSystemEvent != null)
                         {
-                            var taskValue = task.AsTaskValue;
-
-                            taskValue.OnComplete += () =>
+                            currentProcessInfo.OnComplete += (processInfo) =>
                             {
-                                var codeFrameProcessInfoStatus = codeFrame.ProcessInfo.Status;
+                                var annotationSystemEventCoordinator = ((IExecutable)completeAnnotationSystemEvent).GetCoordinator(_context, targetCurrentCodeFrame.LocalContext);
 
-                                switch (codeFrameProcessInfoStatus)
-                                {
-                                    case ProcessStatus.Completed:
-                                        if (completeAnnotationSystemEvent != null)
-                                        {
-                                            var annotationSystemEventCoordinator = ((IExecutable)completeAnnotationSystemEvent).GetCoordinator(_context, targetCurrentCodeFrame.LocalContext);
+                                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(completeAnnotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, targetCurrentCodeFrame.LocalContext, null, true);
 
-                                            var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(completeAnnotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, targetCurrentCodeFrame.LocalContext, null, true);
-
-                                            ExecuteCodeFrame(newCodeFrame, targetCurrentCodeFrame, annotationSystemEventCoordinator, SyncOption.ChildAsync);
-                                        }
-                                        break;
-
-                                    case ProcessStatus.WeakCanceled:
-                                        if (weakCancelAnnotationSystemEvent != null)
-                                        {
-                                            var annotationSystemEventCoordinator = ((IExecutable)weakCancelAnnotationSystemEvent).GetCoordinator(_context, targetCurrentCodeFrame.LocalContext);
-
-                                            var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(weakCancelAnnotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, targetCurrentCodeFrame.LocalContext, null, true);
-
-                                            ExecuteCodeFrame(newCodeFrame, targetCurrentCodeFrame, annotationSystemEventCoordinator, SyncOption.ChildAsync);
-                                        }
-                                        break;
-
-                                    default:
-                                        throw new ArgumentOutOfRangeException(nameof(codeFrameProcessInfoStatus), codeFrameProcessInfoStatus, null);
-                                }
+                                ExecuteCodeFrame(newCodeFrame, targetCurrentCodeFrame, annotationSystemEventCoordinator, SyncOption.ChildAsync);
                             };
-
-                            if (cancelAnnotationSystemEvent != null)
-                            {
-                                throw new NotImplementedException();
-                            }
-
-                            if (errorAnnotationSystemEvent != null)
-                            {
-                                throw new NotImplementedException();
-                            }
                         }
 
-                        targetCurrentCodeFrame.ValuesStack.Push(task);
+                        if (weakCancelAnnotationSystemEvent != null)
+                        {
+                            currentProcessInfo.OnWeakCanceled += (processInfo) =>
+                            {
+                                var annotationSystemEventCoordinator = ((IExecutable)weakCancelAnnotationSystemEvent).GetCoordinator(_context, targetCurrentCodeFrame.LocalContext);
+
+                                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(weakCancelAnnotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, targetCurrentCodeFrame.LocalContext, null, true);
+
+                                ExecuteCodeFrame(newCodeFrame, targetCurrentCodeFrame, annotationSystemEventCoordinator, SyncOption.ChildAsync);
+                            };
+                        }
+
+                        if (cancelAnnotationSystemEvent != null)
+                        {
+                            throw new NotImplementedException();
+                        }
+
+                        if (errorAnnotationSystemEvent != null)
+                        {
+                            throw new NotImplementedException();
+                        }
+
+                        targetCurrentCodeFrame.ValuesStack.Push(processInfoValue);
                     }
                     break;
 

@@ -9,7 +9,7 @@
     {
         'Begin' >> @>log;
         var @task = a~();
-        on @task complete { 'on complete' >> @>log; };
+        on @task completed { 'on completed' >> @>log; };
         wait 1000;
         'End' >> @>log;
     }

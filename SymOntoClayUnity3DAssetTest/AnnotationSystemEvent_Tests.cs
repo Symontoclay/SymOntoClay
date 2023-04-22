@@ -3305,5 +3305,119 @@ action Go
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case14()
+        {
+            var text = @"app PeaceKeeper
+{
+    fun a() => 
+    {
+        '`a` has been called!' >> @>log;
+    }
+
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        var @task = a~();
+        on @task complete { 'on complete' >> @>log; };
+        wait 1000;
+        'End' >> @>log;
+    }
+}";
+
+            var wasFunCalled = false;
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            if(message == "`a` has been called!")
+                            {
+                                wasFunCalled = true;
+                            }
+                            Assert.AreEqual(true, (message == "`a` has been called!" || message == "End"));
+                            break;
+
+                        case 3:
+                            if (message == "`a` has been called!")
+                            {
+                                wasFunCalled = true;
+                            }
+                            Assert.AreEqual(true, (message == (wasFunCalled ? "on complete" : "`a` has been called!") || message == "End"));
+                            break;
+
+                        case 4:
+                            Assert.AreEqual(true, (message == (wasFunCalled ? "on complete" : "`a` has been called!") || message == "End"));
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case14_1()
+        {
+            var text = @"app PeaceKeeper
+{
+    fun a() => 
+    {
+        '`a` has been called!' >> @>log;
+    }
+
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        var @task = a~();
+        on @task completed { 'on completed' >> @>log; };
+        wait 1000;
+        'End' >> @>log;
+    }
+}";
+
+            var wasFunCalled = false;
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            if (message == "`a` has been called!")
+                            {
+                                wasFunCalled = true;
+                            }
+                            Assert.AreEqual(true, (message == "`a` has been called!" || message == "End"));
+                            break;
+
+                        case 3:
+                            if (message == "`a` has been called!")
+                            {
+                                wasFunCalled = true;
+                            }
+                            Assert.AreEqual(true, (message == (wasFunCalled ? "on completed" : "`a` has been called!") || message == "End"));
+                            break;
+
+                        case 4:
+                            Assert.AreEqual(true, (message == (wasFunCalled ? "on completed" : "`a` has been called!") || message == "End"));
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
     }
 }

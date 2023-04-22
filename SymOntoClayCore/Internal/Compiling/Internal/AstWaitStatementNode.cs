@@ -55,6 +55,10 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
             AddCommand(command);
 
+            AddCommand(new IntermediateScriptCommand()
+            {
+                OperationCode = OperationCode.ClearStack
+            });
         }
     }
 }

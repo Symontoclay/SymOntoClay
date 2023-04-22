@@ -21,20 +21,23 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
+using NLog.Fluent;
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SymOntoClay.Core
 {
     public abstract class BaseProcessInfo : IProcessInfo
     {
-#if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
+        protected static ILogger _logger = LogManager.GetCurrentClassLogger();
 
         protected BaseProcessInfo()
         {
@@ -240,11 +243,206 @@ namespace SymOntoClay.Core
             }
         }
 
+        /// <inheritdoc/>
+        public void AddOnFinishHandler(IProcessInfoEventHandler handler)
+        {
+            lock (_parentAndChildrenLockObj)
+            {
+                if(handler == null)
+                {
+                    return;
+                }
+
+                if(_onFinishHandlersList.Contains(handler))
+                {
+                    return;
+                }
+
+                _onFinishHandlersList.Add(handler);
+
+                if(handler.ProcessInfo != this)
+                {
+                    handler.ProcessInfo = this;
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public void RemoveOnFinishHandler(IProcessInfoEventHandler handler)
+        {
+            lock (_parentAndChildrenLockObj)
+            {
+                if (!_onFinishHandlersList.Contains(handler))
+                {
+                    return;
+                }
+
+                _onFinishHandlersList.Remove(handler);
+
+                if (handler.ProcessInfo == this)
+                {
+                    handler.ProcessInfo = null;
+                }
+            }
+        }
+
+        protected void EmitOnFinishHandlers()
+        {
+            lock (_parentAndChildrenLockObj)
+            {
+                foreach (var item in _onFinishHandlersList)
+                {
+                    Task.Run(() =>
+                    {
+                        try
+                        {
+                            item.Run();
+                        }
+                        catch(Exception e)
+                        {
+                            _logger.Error(e);
+                        }                        
+                    });
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public void AddOnCompleteHandler(IProcessInfoEventHandler handler)
+        {
+            lock (_parentAndChildrenLockObj)
+            {
+                if (handler == null)
+                {
+                    return;
+                }
+
+                if (_onCompleteHandlersList.Contains(handler))
+                {
+                    return;
+                }
+
+                _onCompleteHandlersList.Add(handler);
+
+                if (handler.ProcessInfo != this)
+                {
+                    handler.ProcessInfo = this;
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public void RemoveOnCompleteHandler(IProcessInfoEventHandler handler)
+        {
+            lock (_parentAndChildrenLockObj)
+            {
+                if (!_onCompleteHandlersList.Contains(handler))
+                {
+                    return;
+                }
+
+                _onCompleteHandlersList.Remove(handler);
+
+                if (handler.ProcessInfo == this)
+                {
+                    handler.ProcessInfo = null;
+                }
+            }
+        }
+
+        protected void EmitOnCompleteHandlers()
+        {
+            lock (_parentAndChildrenLockObj)
+            {
+                foreach (var item in _onCompleteHandlersList)
+                {
+                    Task.Run(() =>
+                    {
+                        try
+                        {
+                            item.Run();
+                        }
+                        catch (Exception e)
+                        {
+                            _logger.Error(e);
+                        }                        
+                    });
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public void AddOnWeakCanceledHandler(IProcessInfoEventHandler handler)
+        {
+            lock (_parentAndChildrenLockObj)
+            {
+                if (handler == null)
+                {
+                    return;
+                }
+
+                if (_onWeakCanceledHandlersList.Contains(handler))
+                {
+                    return;
+                }
+
+                _onWeakCanceledHandlersList.Add(handler);
+
+                if (handler.ProcessInfo != this)
+                {
+                    handler.ProcessInfo = this;
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public void RemoveOnWeakCanceledHandler(IProcessInfoEventHandler handler)
+        {
+            lock (_parentAndChildrenLockObj)
+            {
+                if (!_onWeakCanceledHandlersList.Contains(handler))
+                {
+                    return;
+                }
+
+                _onWeakCanceledHandlersList.Remove(handler);
+
+                if (handler.ProcessInfo == this)
+                {
+                    handler.ProcessInfo = null;
+                }
+            }
+        }
+
+        protected void EmitOnWeakCanceledHandlers()
+        {
+            lock (_parentAndChildrenLockObj)
+            {
+                foreach (var item in _onWeakCanceledHandlersList)
+                {
+                    Task.Run(() =>
+                    {
+                        try
+                        {
+                            item.Run();
+                        }
+                        catch (Exception e)
+                        {
+                            _logger.Error(e);
+                        }                        
+                    });
+                }
+            }
+        }
+
         #region private fields
         protected readonly object _statusLockObj = new object();
         protected readonly object _parentAndChildrenLockObj = new object();
         private IProcessInfo _parentProcessInfo;
-        private readonly List<IProcessInfo> _childrenProcessInfoList = new List<IProcessInfo>();
+        private List<IProcessInfo> _childrenProcessInfoList = new List<IProcessInfo>();
+        private List<IProcessInfoEventHandler> _onFinishHandlersList = new List<IProcessInfoEventHandler>();
+        private List<IProcessInfoEventHandler> _onCompleteHandlersList = new List<IProcessInfoEventHandler>();
+        private List<IProcessInfoEventHandler> _onWeakCanceledHandlersList = new List<IProcessInfoEventHandler>();
         #endregion
 
         private bool _isDisposed;
@@ -273,6 +471,27 @@ namespace SymOntoClay.Core
             }
 
             _childrenProcessInfoList.Clear();
+
+            foreach(var item in _onFinishHandlersList)
+            {
+                item.Dispose();
+            }
+
+            _onFinishHandlersList.Clear();
+
+            foreach (var item in _onCompleteHandlersList)
+            {
+                item.Dispose();
+            }
+
+            _onCompleteHandlersList.Clear();
+
+            foreach (var item in _onWeakCanceledHandlersList)
+            {
+                item.Dispose();
+            }
+
+            _onWeakCanceledHandlersList.Clear();
         }
 
         /// <inheritdoc/>

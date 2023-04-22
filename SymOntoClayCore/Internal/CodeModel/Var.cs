@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -33,6 +34,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class Var: CodeItem
     {
+        private static ILogger _logger = LogManager.GetCurrentClassLogger();
+
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.Var;
 
@@ -58,7 +61,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     _value = value;
 
                     Task.Run(() => {
-                        OnChanged?.Invoke(Name);
+                        try
+                        {
+                            OnChanged?.Invoke(Name);
+                        }
+                        catch (Exception e)
+                        {
+                            _logger.Error(e);
+                        }                        
                     });
                 }
             }

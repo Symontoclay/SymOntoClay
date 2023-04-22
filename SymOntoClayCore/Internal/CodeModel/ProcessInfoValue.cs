@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -26,6 +27,36 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override ProcessInfoValue AsProcessInfoValue => this;
 
         public IProcessInfo ProcessInfo { get; private set; }
+
+        public void AddOnFinishHandler(IProcessInfoEventHandler handler)
+        {
+            ProcessInfo.AddOnFinishHandler(handler);
+        }
+
+        public void RemoveOnFinishHandler(IProcessInfoEventHandler handler)
+        {
+            ProcessInfo.RemoveOnFinishHandler(handler);
+        }
+
+        public void AddOnCompleteHandler(IProcessInfoEventHandler handler)
+        {
+            ProcessInfo.AddOnCompleteHandler(handler);
+        }
+
+        public void RemoveOnCompleteHandler(IProcessInfoEventHandler handler)
+        {
+            ProcessInfo.RemoveOnCompleteHandler(handler);
+        }
+
+        public void AddOnWeakCanceledHandler(IProcessInfoEventHandler handler)
+        {
+            ProcessInfo.AddOnWeakCanceledHandler(handler);
+        }
+
+        public void RemoveOnWeakCanceledHandler(IProcessInfoEventHandler handler)
+        {
+            ProcessInfo.RemoveOnWeakCanceledHandler(handler);
+        }
 
         /// <inheritdoc/>
         public override object GetSystemValue()

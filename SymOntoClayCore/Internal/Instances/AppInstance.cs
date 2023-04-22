@@ -174,49 +174,56 @@ namespace SymOntoClay.Core.Internal.Instances
         public void ActivateState(StateDef state, List<Var> varList)
         {
             Task.Run(() => {
-                StateInstance stateInstance = null;
-
-                var statesForDeactivating = new List<StateInstance>();
-
-                lock (_statesLockObj)
+                try
                 {
-                    var stateName = state.Name;
+                    StateInstance stateInstance = null;
 
-                    if (_activeStatesDict.ContainsKey(stateName))
+                    var statesForDeactivating = new List<StateInstance>();
+
+                    lock (_statesLockObj)
                     {
-                        return;
-                    }
+                        var stateName = state.Name;
 
-                    if(_mutuallyExclusiveStatesSet.ContainsKey(stateName))
-                    {
-                        var initialMutuallyExclusiveStatesSet = _mutuallyExclusiveStatesSet[stateName];
-
-                        foreach(var nameItem in initialMutuallyExclusiveStatesSet)
+                        if (_activeStatesDict.ContainsKey(stateName))
                         {
-                            if(_activeStatesDict.ContainsKey(nameItem))
+                            return;
+                        }
+
+                        if (_mutuallyExclusiveStatesSet.ContainsKey(stateName))
+                        {
+                            var initialMutuallyExclusiveStatesSet = _mutuallyExclusiveStatesSet[stateName];
+
+                            foreach (var nameItem in initialMutuallyExclusiveStatesSet)
                             {
-                                statesForDeactivating.Add(_activeStatesDict[nameItem]);
-                                _activeStatesDict.Remove(nameItem);
+                                if (_activeStatesDict.ContainsKey(nameItem))
+                                {
+                                    statesForDeactivating.Add(_activeStatesDict[nameItem]);
+                                    _activeStatesDict.Remove(nameItem);
+                                }
                             }
-                        }               
+                        }
+
+                        stateInstance = new StateInstance(state, _context, _storage, _localCodeExecutionContext, varList);
+
+                        _activeStatesDict[stateName] = stateInstance;
+
+                        stateInstance.OnStateInstanceFinished += ChildStateInstance_OnFinished;
                     }
 
-                    stateInstance = new StateInstance(state, _context, _storage, _localCodeExecutionContext, varList);
-
-                    _activeStatesDict[stateName] = stateInstance;
-
-                    stateInstance.OnStateInstanceFinished += ChildStateInstance_OnFinished;
-                }
-
-                if (statesForDeactivating.Any())
-                {
-                    foreach(var stateForDeactivating in statesForDeactivating)
+                    if (statesForDeactivating.Any())
                     {
-                        stateForDeactivating.Dispose();
+                        foreach (var stateForDeactivating in statesForDeactivating)
+                        {
+                            stateForDeactivating.Dispose();
+                        }
                     }
-                }
 
-                stateInstance.Init();
+                    stateInstance.Init();
+                }
+                catch(Exception e)
+                {
+                    Error(e);
+                }
             });
         }
 
@@ -263,9 +270,17 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 _stateActivators.Add(activatorInstance);
 
-                Task.Run(() => { activatorInstance.Init(); });
+                Task.Run(() => {
+                    try
+                    {
+                        activatorInstance.Init();
+                    }
+                    catch (Exception e)
+                    {
+                        Error(e);
+                    }                    
+                });
             }
-
         }
 
         /// <inheritdoc/>

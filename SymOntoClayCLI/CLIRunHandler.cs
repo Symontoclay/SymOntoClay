@@ -132,13 +132,20 @@ namespace SymOntoClay.CLI
             {
                 var timeoutValue = command.Timeout.Value;
 
-                Task.Run(() => { 
-                    if(timeoutValue > 0)
+                Task.Run(() => {
+                    try
                     {
-                        Thread.Sleep(timeoutValue);
-                    }
+                        if (timeoutValue > 0)
+                        {
+                            Thread.Sleep(timeoutValue);
+                        }
 
-                    Environment.Exit(0);
+                        Environment.Exit(0);
+                    }
+                    catch(Exception e)
+                    {
+                        _npcLogger.Error(e.ToString());
+                    }
                 });
             }
             else

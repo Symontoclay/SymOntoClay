@@ -458,29 +458,36 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = _cancellationTokenSource.Token;
 
-            Task.Run(() => { 
-                while(true)
+            Task.Run(() => {
+                try
                 {
-                    lock (_gameComponentsListLockObj)
+                    while (true)
                     {
-                        if(_gameComponentsForLateInitializingList.Any())
+                        lock (_gameComponentsListLockObj)
                         {
-                            foreach(var component in _gameComponentsForLateInitializingList)
+                            if (_gameComponentsForLateInitializingList.Any())
                             {
-                                component.LoadFromSourceCode();
-                                component.BeginStarting();
+                                foreach (var component in _gameComponentsForLateInitializingList)
+                                {
+                                    component.LoadFromSourceCode();
+                                    component.BeginStarting();
+                                }
+
+                                _gameComponentsForLateInitializingList.Clear();
                             }
-
-                            _gameComponentsForLateInitializingList.Clear();
                         }
-                    }
 
-                    if(_cancellationTokenSource.IsCancellationRequested)
-                    {
-                        break;
-                    }
+                        if (_cancellationTokenSource.IsCancellationRequested)
+                        {
+                            break;
+                        }
 
-                    Thread.Sleep(1000);
+                        Thread.Sleep(1000);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Error(e.ToString());
                 }
             }, cancellationToken);
         }

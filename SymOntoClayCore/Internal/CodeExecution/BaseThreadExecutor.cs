@@ -554,6 +554,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"newCodeFrame = {newCodeFrame.ToDbgString()}");
 #endif
 
+            targetObject.AddOnCompleteHandler(new ProcessInfoEventHandler(_context, newCodeFrame, currentCodeFrame, lifeCycleEventCoordinator));
+
             targetObject.ProcessInfo.OnComplete += (processInfo) =>
             {
                 ExecuteCodeFrame(newCodeFrame, currentCodeFrame, lifeCycleEventCoordinator, SyncOption.ChildAsync, false);
@@ -1681,7 +1683,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
             else
             {
-                ExecuteCodeFrame(newCodeFrame, coordinator, SyncOption.ChildAsync);
+                ExecuteCodeFrame(newCodeFrame, coordinator, SyncOption.ChildAsync, false);
             }
         }
 

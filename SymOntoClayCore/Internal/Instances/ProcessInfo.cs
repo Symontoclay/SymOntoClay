@@ -102,22 +102,49 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void EmitOnComplete()
         {
+            EmitOnCompleteHandlers();
+
             Task.Run(() => {
-                InternalOnComplete?.Invoke(this);
+                try
+                {
+                    InternalOnComplete?.Invoke(this);
+                }
+                catch (Exception e)
+                {
+                    _logger.Error(e);
+                }                
             });
         }
 
         private void EmitOnFinish()
         {
+            EmitOnFinishHandlers();
+
             Task.Run(() => {
-                InternalOnFinish?.Invoke(this);
+                try
+                {
+                    InternalOnFinish?.Invoke(this);
+                }
+                catch (Exception e)
+                {
+                    _logger.Error(e);
+                }                
             });
         }
 
         private void EmitOnWeakCanceled()
         {
+            EmitOnWeakCanceledHandlers();
+
             Task.Run(() => {
-                InternalOnWeakCanceled?.Invoke(this);
+                try
+                {
+                    InternalOnWeakCanceled?.Invoke(this);
+                }
+                catch (Exception e)
+                {
+                    _logger.Error(e);
+                }                
             });
         }
 

@@ -257,11 +257,25 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
         protected void EmitOnChanged(StrongIdentifierValue varName)
         {
             Task.Run(() => {
-                OnChanged?.Invoke();
+                try
+                {
+                    OnChanged?.Invoke();
+                }
+                catch (Exception e)
+                {
+                    Error(e);
+                }                
             });
 
             Task.Run(() => {
-                OnChangedWithKeys?.Invoke(varName);
+                try
+                {
+                    OnChangedWithKeys?.Invoke(varName);
+                }
+                catch (Exception e)
+                {
+                    Error(e);
+                }                
             });
         }
 

@@ -178,7 +178,16 @@ namespace SymOntoClay.Core.Internal.Instances
 
                     _globalTriggersStorage.Append(triggerInstance);
 
-                    Task.Run(() => { triggerInstance.Init(); });                    
+                    Task.Run(() => {
+                        try
+                        {
+                            triggerInstance.Init();
+                        }
+                        catch (Exception e)
+                        {
+                            Error(e);
+                        }                        
+                    });                    
                 }
             }
 

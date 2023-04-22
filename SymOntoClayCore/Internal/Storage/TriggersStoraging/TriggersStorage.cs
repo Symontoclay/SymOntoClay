@@ -363,11 +363,25 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
         protected void EmitOnChanged(IList<StrongIdentifierValue> namesList)
         {
             Task.Run(() => {
-                OnNamedTriggerInstanceChanged?.Invoke();
+                try
+                {
+                    OnNamedTriggerInstanceChanged?.Invoke();
+                }
+                catch (Exception e)
+                {
+                    Error(e);
+                }                
             });
 
             Task.Run(() => {
-                OnNamedTriggerInstanceChangedWithKeys?.Invoke(namesList);
+                try
+                {
+                    OnNamedTriggerInstanceChangedWithKeys?.Invoke(namesList);
+                }
+                catch (Exception e)
+                {
+                    Error(e);
+                }                
             });
         }
 

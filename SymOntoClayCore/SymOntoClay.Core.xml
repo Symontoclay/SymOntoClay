@@ -75,6 +75,24 @@
         <member name="M:SymOntoClay.Core.BaseProcessInfo.RemoveChild(SymOntoClay.Core.IProcessInfo)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.AddOnFinishHandler(SymOntoClay.Core.Internal.CodeExecution.IProcessInfoEventHandler)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.RemoveOnFinishHandler(SymOntoClay.Core.Internal.CodeExecution.IProcessInfoEventHandler)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.AddOnCompleteHandler(SymOntoClay.Core.Internal.CodeExecution.IProcessInfoEventHandler)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.RemoveOnCompleteHandler(SymOntoClay.Core.Internal.CodeExecution.IProcessInfoEventHandler)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.AddOnWeakCanceledHandler(SymOntoClay.Core.Internal.CodeExecution.IProcessInfoEventHandler)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.RemoveOnWeakCanceledHandler(SymOntoClay.Core.Internal.CodeExecution.IProcessInfoEventHandler)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.BaseProcessInfo.Dispose">
             <inheritdoc/>
         </member>
@@ -556,6 +574,12 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeExecution.ProcessInfoEventHandler.ProcessInfo">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ProcessInfoEventHandler.Run">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.ProcessInitialInfo.ToString">

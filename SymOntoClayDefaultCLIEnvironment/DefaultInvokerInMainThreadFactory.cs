@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using System;
 using System.Collections.Generic;
@@ -31,16 +32,25 @@ namespace SymOntoClay.DefaultCLIEnvironment
 {
     public static class DefaultInvokerInMainThreadFactory
     {
+        private static ILogger _logger = LogManager.GetCurrentClassLogger();
+
         public static InvokerInMainThread Create()
         {
             var invokingInMainThread = new InvokerInMainThread();
 
             Task.Run(() => {
-                while (true)
+                try
                 {
-                    invokingInMainThread.Update();
+                    while (true)
+                    {
+                        invokingInMainThread.Update();
 
-                    Thread.Sleep(1000);
+                        Thread.Sleep(1000);
+                    }
+                }
+                catch (Exception e)
+                {
+                    _logger.Error(e);
                 }
             });
 

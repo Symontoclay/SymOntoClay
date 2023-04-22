@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -51,5 +52,11 @@ namespace SymOntoClay.Core
         IReadOnlyList<IProcessInfo> GetChildrenProcessInfoList { get; }
         void AddChild(IProcessInfo processInfo);
         void RemoveChild(IProcessInfo processInfo);
+        void AddOnFinishHandler(IProcessInfoEventHandler handler);
+        void RemoveOnFinishHandler(IProcessInfoEventHandler handler);
+        void AddOnCompleteHandler(IProcessInfoEventHandler handler);
+        void RemoveOnCompleteHandler(IProcessInfoEventHandler handler);
+        void AddOnWeakCanceledHandler(IProcessInfoEventHandler handler);
+        void RemoveOnWeakCanceledHandler(IProcessInfoEventHandler handler);
     }
 }

@@ -63,7 +63,14 @@ namespace SymOntoClay.Core.Internal.Instances
         protected override void ExecutionCoordinator_OnFinished()
         {
             Task.Run(() => {
-                OnStateInstanceFinished?.Invoke(this);
+                try
+                {
+                    OnStateInstanceFinished?.Invoke(this);
+                }
+                catch (Exception e)
+                {
+                    Error(e);
+                }                
             });
 
             base.ExecutionCoordinator_OnFinished();

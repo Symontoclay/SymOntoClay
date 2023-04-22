@@ -478,11 +478,25 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         protected void EmitOnChanged(IList<StrongIdentifierValue> usedKeysList)
         {
             Task.Run(() => {
-                OnChanged?.Invoke();
+                try
+                {
+                    OnChanged?.Invoke();
+                }
+                catch(Exception e)
+                {
+                    Error(e);
+                }                
             });
 
             Task.Run(() => {
-                OnChangedWithKeys?.Invoke(usedKeysList);
+                try
+                {
+                    OnChangedWithKeys?.Invoke(usedKeysList);
+                }
+                catch (Exception e)
+                {
+                    Error(e);
+                }                
             });
         }
 

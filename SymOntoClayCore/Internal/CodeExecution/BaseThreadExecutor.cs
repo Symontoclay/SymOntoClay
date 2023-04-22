@@ -285,7 +285,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #if DEBUG
                 //Log($"currentCodeFrame.LocalContext.Holder = {currentCodeFrame.LocalContext.Holder}");
                 //Log($"currentCommand = {currentCommand}");
-                Log($"currentCodeFrame = {currentCodeFrame.ToDbgString()}");
+                //Log($"currentCodeFrame = {currentCodeFrame.ToDbgString()}");
 #endif
 
                 switch (currentCommand.OperationCode)
@@ -484,6 +484,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
 #if DEBUG
                 Error(e);
+                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 throw;
@@ -507,18 +508,18 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var targetObjectValue = TryResolveFromVarOrExpr(valuesStack.Pop());
 
 #if DEBUG
-            Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
 #if DEBUG
-            Log($"targetObjectValue = {targetObjectValue.ToHumanizedString()}");
-            Log($"kindOfLifeCycleEventValue = {kindOfLifeCycleEventValue}");
+            //Log($"targetObjectValue = {targetObjectValue.ToHumanizedString()}");
+            //Log($"kindOfLifeCycleEventValue = {kindOfLifeCycleEventValue}");
 #endif
 
             var kindOfLifeCycleEventName = kindOfLifeCycleEventValue.AsStrongIdentifierValue.NormalizedNameValue;
 
 #if DEBUG
-            Log($"kindOfLifeCycleEventName = {kindOfLifeCycleEventName}");
+            //Log($"kindOfLifeCycleEventName = {kindOfLifeCycleEventName}");
 #endif
 
             switch(kindOfLifeCycleEventName)
@@ -538,7 +539,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void AddCompleteLifeCycleEvent(ProcessInfoValue targetObject, Function handler, AnnotationValue annotation)
         {
 #if DEBUG
-            Log($"targetObjectValue = {targetObject.ToHumanizedString()}");
+            //Log($"targetObjectValue = {targetObject.ToHumanizedString()}");
 #endif
 
             var currentCodeFrame = _currentCodeFrame;
@@ -550,7 +551,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(handler, KindOfFunctionParameters.NoParameters, null, null, currentCodeFrame.LocalContext, additionalSettings);
 
 #if DEBUG
-            Log($"newCodeFrame = {newCodeFrame.ToDbgString()}");
+            //Log($"newCodeFrame = {newCodeFrame.ToDbgString()}");
 #endif
 
             targetObject.ProcessInfo.OnComplete += (processInfo) =>
@@ -1048,6 +1049,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessClearStack()
         {
+#if DEBUG
+            //Log("Begin");
+#endif
+
             _currentCodeFrame.ValuesStack.Clear();
             _currentCodeFrame.CurrentPosition++;
         }
@@ -1105,9 +1110,21 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 return;
             }
 
+#if DEBUG
+            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+
             var annotation = _currentCodeFrame.ValuesStack.Pop();
 
+#if DEBUG
+            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+
             var positionedParameters = TakePositionedParameters(currentCommand.CountParams, true);
+
+#if DEBUG
+            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
 
             if (positionedParameters.Count == 1)
             {
@@ -2343,7 +2360,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             throw new NotImplementedException();
                         }
 
-                        targetCurrentCodeFrame.ValuesStack.Push(processInfoValue);
+                        if (increaceCurrentFramePosition)
+                        {
+                            targetCurrentCodeFrame.ValuesStack.Push(processInfoValue);
+                        }                            
                     }
                     break;
 

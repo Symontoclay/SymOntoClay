@@ -546,20 +546,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var additionalSettings = GetAdditionalSettingsFromAnnotation(annotation, null);
 
-            var lifeCycleEventCoordinator = ((IExecutable)handler).GetCoordinator(_context, currentCodeFrame.LocalContext);
+            //var lifeCycleEventCoordinator = ((IExecutable)handler).GetCoordinator(_context, currentCodeFrame.LocalContext);
 
-            var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(handler, KindOfFunctionParameters.NoParameters, null, null, currentCodeFrame.LocalContext, additionalSettings);
+            //var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(handler, KindOfFunctionParameters.NoParameters, null, null, currentCodeFrame.LocalContext, additionalSettings);
 
 #if DEBUG
             //Log($"newCodeFrame = {newCodeFrame.ToDbgString()}");
 #endif
 
-            targetObject.AddOnCompleteHandler(new ProcessInfoEventHandler(_context, newCodeFrame, currentCodeFrame, lifeCycleEventCoordinator));
-
-            targetObject.ProcessInfo.OnComplete += (processInfo) =>
-            {
-                ExecuteCodeFrame(newCodeFrame, currentCodeFrame, lifeCycleEventCoordinator, SyncOption.ChildAsync, false);
-            };
+            targetObject.AddOnCompleteHandler(new ProcessInfoEventHandler(_context, handler, currentCodeFrame, additionalSettings, true));
         }
 
         private void ProcessInstantiate(KindOfFunctionParameters kindOfParameters, int parametersCount)
@@ -1687,15 +1682,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
         }
 
-        private enum SyncOption
-        {
-            Sync,
-            IndependentAsync,
-            ChildAsync,
-            Ctor,
-            PseudoSync
-        }
-
         private void CallFunction(KindOfFunctionParameters kindOfParameters, int parametersCount, SyncOption syncOption)
         {
 #if DEBUG
@@ -2310,6 +2296,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 case SyncOption.IndependentAsync:
                 case SyncOption.ChildAsync:
+                    g
+
                     {
                         var processInfoValue = new ProcessInfoValue(currentProcessInfo);
 
@@ -2365,7 +2353,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         if (increaceCurrentFramePosition)
                         {
                             targetCurrentCodeFrame.ValuesStack.Push(processInfoValue);
-                        }                            
+                        }
                     }
                     break;
 

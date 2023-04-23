@@ -198,10 +198,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 {
                     InternalOnComplete += value;
 
-                    if (_status == ProcessStatus.Completed)
-                    {
-                        EmitOnComplete();
-                    }
+                    CheckOnCompleteStatus();
                 }
             }
 
@@ -215,6 +212,15 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         private event ProcessInfoEvent InternalOnComplete;
+
+        /// <inheritdoc/>
+        protected override void CheckOnCompleteStatus()
+        {
+            if (_status == ProcessStatus.Completed)
+            {
+                EmitOnComplete();
+            }
+        }
 
         /// <inheritdoc/>
         public override event ProcessInfoEvent OnWeakCanceled

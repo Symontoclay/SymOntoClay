@@ -241,10 +241,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 {
                     InternalOnComplete += value;
 
-                    if (_status == ProcessStatus.Completed)
-                    {
-                        EmitOnComplete();
-                    }
+                    CheckOnCompleteStatus();
                 }
             }
 
@@ -258,6 +255,15 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         }
 
         private event ProcessInfoEvent InternalOnComplete;
+
+        /// <inheritdoc/>
+        protected override void CheckOnCompleteStatus()
+        {
+            if (_status == ProcessStatus.Completed)
+            {
+                EmitOnComplete();
+            }
+        }
 
         /// <inheritdoc/>
         public override event ProcessInfoEvent OnWeakCanceled

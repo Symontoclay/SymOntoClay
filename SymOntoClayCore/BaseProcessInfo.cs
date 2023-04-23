@@ -264,6 +264,8 @@ namespace SymOntoClay.Core
                 {
                     handler.ProcessInfo = this;
                 }
+
+                CheckOnFinishStatus();
             }
         }
 
@@ -285,6 +287,8 @@ namespace SymOntoClay.Core
                 }
             }
         }
+
+        protected abstract void CheckOnFinishStatus();
 
         protected void EmitOnFinishHandlers()
         {
@@ -328,6 +332,8 @@ namespace SymOntoClay.Core
                 {
                     handler.ProcessInfo = this;
                 }
+
+                CheckOnCompleteStatus();
             }
         }
 
@@ -349,6 +355,8 @@ namespace SymOntoClay.Core
                 }
             }
         }
+
+        protected abstract void CheckOnCompleteStatus();
 
         protected void EmitOnCompleteHandlers()
         {
@@ -392,6 +400,8 @@ namespace SymOntoClay.Core
                 {
                     handler.ProcessInfo = this;
                 }
+
+                CheckOnWeakCanceledStatus();
             }
         }
 
@@ -413,6 +423,8 @@ namespace SymOntoClay.Core
                 }
             }
         }
+
+        protected abstract void CheckOnWeakCanceledStatus();
 
         protected void EmitOnWeakCanceledHandlers()
         {

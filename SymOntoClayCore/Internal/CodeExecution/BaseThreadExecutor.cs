@@ -2299,64 +2299,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 case SyncOption.IndependentAsync:
                 case SyncOption.ChildAsync:
                     _codeFrameAsyncExecutor.AsyncExecuteCodeFrame(codeFrame, targetCurrentCodeFrame, coordinator, syncOption, increaceCurrentFramePosition, completeAnnotationSystemEvent, cancelAnnotationSystemEvent, weakCancelAnnotationSystemEvent, errorAnnotationSystemEvent);
-
-                    //{
-                    //    var processInfoValue = new ProcessInfoValue(currentProcessInfo);
-
-                    //    if (increaceCurrentFramePosition)
-                    //    {
-                    //        targetCurrentCodeFrame.CurrentPosition++;
-                    //    }
-
-                    //    if (syncOption == SyncOption.ChildAsync)
-                    //    {
-                    //        targetCurrentCodeFrame.ProcessInfo.AddChild(currentProcessInfo);
-                    //    }
-
-                    //    var threadExecutor = new AsyncThreadExecutor(_context);
-                    //    threadExecutor.SetCodeFrame(codeFrame);
-
-                    //    var task = threadExecutor.Start();
-
-                    //    if (completeAnnotationSystemEvent != null)
-                    //    {
-                    //        var annotationSystemEventCoordinator = ((IExecutable)completeAnnotationSystemEvent).GetCoordinator(_context, targetCurrentCodeFrame.LocalContext);
-
-                    //        var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(completeAnnotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, targetCurrentCodeFrame.LocalContext, null, true);
-
-                    //        currentProcessInfo.OnComplete += (processInfo) =>
-                    //        {
-                    //            ExecuteCodeFrame(newCodeFrame, targetCurrentCodeFrame, annotationSystemEventCoordinator, SyncOption.ChildAsync, false);
-                    //        };
-                    //    }
-
-                    //    if (weakCancelAnnotationSystemEvent != null)
-                    //    {
-                    //        var annotationSystemEventCoordinator = ((IExecutable)weakCancelAnnotationSystemEvent).GetCoordinator(_context, targetCurrentCodeFrame.LocalContext);
-
-                    //        var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(weakCancelAnnotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, targetCurrentCodeFrame.LocalContext, null, true);
-
-                    //        currentProcessInfo.OnWeakCanceled += (processInfo) =>
-                    //        {
-                    //            ExecuteCodeFrame(newCodeFrame, targetCurrentCodeFrame, annotationSystemEventCoordinator, SyncOption.ChildAsync, false);
-                    //        };
-                    //    }
-
-                    //    if (cancelAnnotationSystemEvent != null)
-                    //    {
-                    //        throw new NotImplementedException();
-                    //    }
-
-                    //    if (errorAnnotationSystemEvent != null)
-                    //    {
-                    //        throw new NotImplementedException();
-                    //    }
-
-                    //    if (increaceCurrentFramePosition)
-                    //    {
-                    //        targetCurrentCodeFrame.ValuesStack.Push(processInfoValue);
-                    //    }
-                    //}
                     break;
 
                 case SyncOption.PseudoSync:

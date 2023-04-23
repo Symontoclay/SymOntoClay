@@ -62,29 +62,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             if (completeAnnotationSystemEvent != null)
             {
                 currentProcessInfo.AddOnCompleteHandler(new ProcessInfoEventHandler(_context, completeAnnotationSystemEvent, currentCodeFrame, true));
-
-                //var annotationSystemEventCoordinator = ((IExecutable)completeAnnotationSystemEvent).GetCoordinator(_context, targetCurrentCodeFrame.LocalContext);
-
-                //var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(completeAnnotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, targetCurrentCodeFrame.LocalContext, null, true);
-
-                //currentProcessInfo.OnComplete += (processInfo) =>
-                //{
-                    //ExecuteCodeFrame(newCodeFrame, targetCurrentCodeFrame, annotationSystemEventCoordinator, SyncOption.ChildAsync, false);
-                //};
             }
 
             if (weakCancelAnnotationSystemEvent != null)
             {
                 currentProcessInfo.AddOnWeakCanceledHandler(new ProcessInfoEventHandler(_context, weakCancelAnnotationSystemEvent, currentCodeFrame, true));
-
-                //var annotationSystemEventCoordinator = ((IExecutable)weakCancelAnnotationSystemEvent).GetCoordinator(_context, targetCurrentCodeFrame.LocalContext);
-
-                //var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(weakCancelAnnotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, targetCurrentCodeFrame.LocalContext, null, true);
-
-                //currentProcessInfo.OnWeakCanceled += (processInfo) =>
-                //{
-                    //ExecuteCodeFrame(newCodeFrame, targetCurrentCodeFrame, annotationSystemEventCoordinator, SyncOption.ChildAsync, false);
-                //};
             }
 
             if (cancelAnnotationSystemEvent != null)

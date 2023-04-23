@@ -6805,6 +6805,9 @@
         <member name="E:SymOntoClay.Core.Internal.Instances.ProcessInfo.OnFinish">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.CheckOnFinishStatus">
+            <inheritdoc/>
+        </member>
         <member name="E:SymOntoClay.Core.Internal.Instances.ProcessInfo.OnComplete">
             <inheritdoc/>
         </member>
@@ -6812,6 +6815,9 @@
             <inheritdoc/>
         </member>
         <member name="E:SymOntoClay.Core.Internal.Instances.ProcessInfo.OnWeakCanceled">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.CheckOnWeakCanceledStatus">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.Start">

@@ -57,6 +57,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             _context = context;
             _codeFrameService = context.ServicesFactory.GetCodeFrameService();
+            _codeFrameAsyncExecutor = new CodeFrameAsyncExecutor(context);
 
             _projectLoader = new ProjectLoader(context);
 
@@ -97,6 +98,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private readonly IEngineContext _context;
         private readonly ICodeFrameService _codeFrameService;
+        private readonly CodeFrameAsyncExecutor _codeFrameAsyncExecutor;
 
         private readonly ProjectLoader _projectLoader;
 
@@ -544,7 +546,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var currentCodeFrame = _currentCodeFrame;
 
-            var additionalSettings = GetAdditionalSettingsFromAnnotation(annotation, null);
+            //var additionalSettings = GetAdditionalSettingsFromAnnotation(annotation, null);
 
             //var lifeCycleEventCoordinator = ((IExecutable)handler).GetCoordinator(_context, currentCodeFrame.LocalContext);
 
@@ -554,7 +556,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"newCodeFrame = {newCodeFrame.ToDbgString()}");
 #endif
 
-            targetObject.AddOnCompleteHandler(new ProcessInfoEventHandler(_context, handler, currentCodeFrame, additionalSettings, true));
+            targetObject.AddOnCompleteHandler(new ProcessInfoEventHandler(_context, handler, currentCodeFrame, true));
         }
 
         private void ProcessInstantiate(KindOfFunctionParameters kindOfParameters, int parametersCount)
@@ -2296,65 +2298,65 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 case SyncOption.IndependentAsync:
                 case SyncOption.ChildAsync:
-                    g
+                    _codeFrameAsyncExecutor.AsyncExecuteCodeFrame(codeFrame, targetCurrentCodeFrame, coordinator, syncOption, increaceCurrentFramePosition, completeAnnotationSystemEvent, cancelAnnotationSystemEvent, weakCancelAnnotationSystemEvent, errorAnnotationSystemEvent);
 
-                    {
-                        var processInfoValue = new ProcessInfoValue(currentProcessInfo);
+                    //{
+                    //    var processInfoValue = new ProcessInfoValue(currentProcessInfo);
 
-                        if (increaceCurrentFramePosition)
-                        {
-                            targetCurrentCodeFrame.CurrentPosition++;
-                        }
+                    //    if (increaceCurrentFramePosition)
+                    //    {
+                    //        targetCurrentCodeFrame.CurrentPosition++;
+                    //    }
 
-                        if (syncOption == SyncOption.ChildAsync)
-                        {
-                            targetCurrentCodeFrame.ProcessInfo.AddChild(currentProcessInfo);
-                        }
+                    //    if (syncOption == SyncOption.ChildAsync)
+                    //    {
+                    //        targetCurrentCodeFrame.ProcessInfo.AddChild(currentProcessInfo);
+                    //    }
 
-                        var threadExecutor = new AsyncThreadExecutor(_context);
-                        threadExecutor.SetCodeFrame(codeFrame);
+                    //    var threadExecutor = new AsyncThreadExecutor(_context);
+                    //    threadExecutor.SetCodeFrame(codeFrame);
 
-                        var task = threadExecutor.Start();
+                    //    var task = threadExecutor.Start();
 
-                        if (completeAnnotationSystemEvent != null)
-                        {
-                            var annotationSystemEventCoordinator = ((IExecutable)completeAnnotationSystemEvent).GetCoordinator(_context, targetCurrentCodeFrame.LocalContext);
+                    //    if (completeAnnotationSystemEvent != null)
+                    //    {
+                    //        var annotationSystemEventCoordinator = ((IExecutable)completeAnnotationSystemEvent).GetCoordinator(_context, targetCurrentCodeFrame.LocalContext);
 
-                            var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(completeAnnotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, targetCurrentCodeFrame.LocalContext, null, true);
+                    //        var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(completeAnnotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, targetCurrentCodeFrame.LocalContext, null, true);
 
-                            currentProcessInfo.OnComplete += (processInfo) =>
-                            {
-                                ExecuteCodeFrame(newCodeFrame, targetCurrentCodeFrame, annotationSystemEventCoordinator, SyncOption.ChildAsync, false);
-                            };
-                        }
+                    //        currentProcessInfo.OnComplete += (processInfo) =>
+                    //        {
+                    //            ExecuteCodeFrame(newCodeFrame, targetCurrentCodeFrame, annotationSystemEventCoordinator, SyncOption.ChildAsync, false);
+                    //        };
+                    //    }
 
-                        if (weakCancelAnnotationSystemEvent != null)
-                        {
-                            var annotationSystemEventCoordinator = ((IExecutable)weakCancelAnnotationSystemEvent).GetCoordinator(_context, targetCurrentCodeFrame.LocalContext);
+                    //    if (weakCancelAnnotationSystemEvent != null)
+                    //    {
+                    //        var annotationSystemEventCoordinator = ((IExecutable)weakCancelAnnotationSystemEvent).GetCoordinator(_context, targetCurrentCodeFrame.LocalContext);
 
-                            var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(weakCancelAnnotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, targetCurrentCodeFrame.LocalContext, null, true);
+                    //        var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(weakCancelAnnotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, targetCurrentCodeFrame.LocalContext, null, true);
 
-                            currentProcessInfo.OnWeakCanceled += (processInfo) =>
-                            {
-                                ExecuteCodeFrame(newCodeFrame, targetCurrentCodeFrame, annotationSystemEventCoordinator, SyncOption.ChildAsync, false);
-                            };
-                        }
+                    //        currentProcessInfo.OnWeakCanceled += (processInfo) =>
+                    //        {
+                    //            ExecuteCodeFrame(newCodeFrame, targetCurrentCodeFrame, annotationSystemEventCoordinator, SyncOption.ChildAsync, false);
+                    //        };
+                    //    }
 
-                        if (cancelAnnotationSystemEvent != null)
-                        {
-                            throw new NotImplementedException();
-                        }
+                    //    if (cancelAnnotationSystemEvent != null)
+                    //    {
+                    //        throw new NotImplementedException();
+                    //    }
 
-                        if (errorAnnotationSystemEvent != null)
-                        {
-                            throw new NotImplementedException();
-                        }
+                    //    if (errorAnnotationSystemEvent != null)
+                    //    {
+                    //        throw new NotImplementedException();
+                    //    }
 
-                        if (increaceCurrentFramePosition)
-                        {
-                            targetCurrentCodeFrame.ValuesStack.Push(processInfoValue);
-                        }
-                    }
+                    //    if (increaceCurrentFramePosition)
+                    //    {
+                    //        targetCurrentCodeFrame.ValuesStack.Push(processInfoValue);
+                    //    }
+                    //}
                     break;
 
                 case SyncOption.PseudoSync:

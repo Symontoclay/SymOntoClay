@@ -214,10 +214,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 {
                     InternalOnFinish += value;
 
-                    if (IsFinished)
-                    {
-                        EmitOnFinish();
-                    }
+                    CheckOnFinishStatus();
                 }
             }
 
@@ -231,6 +228,15 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         }
 
         private event ProcessInfoEvent InternalOnFinish;
+
+        /// <inheritdoc/>
+        protected override void CheckOnFinishStatus()
+        {
+            if (NIsFinished)
+            {
+                EmitOnFinish();
+            }
+        }
 
         /// <inheritdoc/>
         public override event ProcessInfoEvent OnComplete
@@ -274,10 +280,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 {
                     InternalOnWeakCanceled += value;
 
-                    if (_status == ProcessStatus.Completed)
-                    {
-                        EmitOnWeakCanceled();
-                    }
+                    CheckOnWeakCanceledStatus();
                 }
             }
 
@@ -291,6 +294,15 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         }
 
         private event ProcessInfoEvent InternalOnWeakCanceled;
+
+        /// <inheritdoc/>
+        protected override void CheckOnWeakCanceledStatus()
+        {
+            if (_status == ProcessStatus.WeakCanceled)
+            {
+                EmitOnWeakCanceled();
+            }
+        }
 
         /// <inheritdoc/>
         public override IReadOnlyList<string> Friends => _friends;

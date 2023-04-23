@@ -171,10 +171,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 {
                     InternalOnFinish += value;
 
-                    if (NIsFinished)
-                    {
-                        EmitOnFinish();
-                    }
+                    CheckOnFinishStatus();
                 }
             }
 
@@ -188,6 +185,15 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         private event ProcessInfoEvent InternalOnFinish;
+
+        /// <inheritdoc/>
+        protected override void CheckOnFinishStatus()
+        {
+            if (NIsFinished)
+            {
+                EmitOnFinish();
+            }
+        }
 
         /// <inheritdoc/>
         public override event ProcessInfoEvent OnComplete
@@ -231,10 +237,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 {
                     InternalOnWeakCanceled += value;
 
-                    if (_status == ProcessStatus.Completed)
-                    {
-                        EmitOnWeakCanceled();
-                    }
+                    CheckOnWeakCanceledStatus();
                 }
             }
 
@@ -248,6 +251,15 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         private event ProcessInfoEvent InternalOnWeakCanceled;
+
+        /// <inheritdoc/>
+        protected override void CheckOnWeakCanceledStatus()
+        {
+            if (_status == ProcessStatus.WeakCanceled)
+            {
+                EmitOnWeakCanceled();
+            }
+        }
 
         /// <inheritdoc/>
         public override void Start()

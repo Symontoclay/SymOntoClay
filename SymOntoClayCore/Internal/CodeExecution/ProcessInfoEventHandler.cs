@@ -9,7 +9,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public class ProcessInfoEventHandler: BaseComponent, IProcessInfoEventHandler
     {
-        public ProcessInfoEventHandler(IEngineContext context, IExecutable handler, CodeFrame currentCodeFrame, ConversionExecutableToCodeFrameAdditionalSettings additionalSettings, bool runOnce)
+        public ProcessInfoEventHandler(IEngineContext context, IExecutable handler, CodeFrame currentCodeFrame, bool runOnce)
             : base(context.Logger)
         {
             _context = context;
@@ -17,7 +17,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _codeFrameAsyncExecutor = new CodeFrameAsyncExecutor(context);
             _handler = handler;
             _currentCodeFrame = currentCodeFrame;
-            _additionalSettings = additionalSettings;
             _runOnce = runOnce;
         }
 
@@ -27,11 +26,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly IEngineContext _context;
         private readonly ICodeFrameService _codeFrameService;
 
-        private CodeFrameAsyncExecutor _codeFrameAsyncExecutor;
+        private readonly CodeFrameAsyncExecutor _codeFrameAsyncExecutor;
 
         private IExecutable _handler;
         private CodeFrame _currentCodeFrame;
-        private ConversionExecutableToCodeFrameAdditionalSettings _additionalSettings;
         private readonly bool _runOnce;
         private bool _isAlreadyRun;
 
@@ -41,7 +39,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public void Run()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
             lock(_lockObj)
@@ -58,7 +56,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
             var lifeCycleEventCoordinator = _handler.GetCoordinator(_context, _currentCodeFrame.LocalContext);
-            var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(_handler, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, _additionalSettings);
+            var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(_handler, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, null, true);
 
             _codeFrameAsyncExecutor.AsyncExecuteCodeFrame(newCodeFrame, _currentCodeFrame, lifeCycleEventCoordinator, SyncOption.ChildAsync, false);
         }

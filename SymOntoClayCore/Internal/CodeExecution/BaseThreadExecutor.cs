@@ -1923,16 +1923,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     if (completeAnnotationSystemEvent != null)
                     {
-                        var currCodeFrame = _currentCodeFrame;
-
-                        var annotationSystemEventCoordinator = ((IExecutable)completeAnnotationSystemEvent).GetCoordinator(_context, currCodeFrame.LocalContext);
-
-                        var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(completeAnnotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, currCodeFrame.LocalContext, null, true);
-
-                        processInfo.OnComplete += (procI) =>
-                        {
-                            ExecuteCodeFrame(newCodeFrame, currCodeFrame, annotationSystemEventCoordinator, SyncOption.ChildAsync, false);
-                        };
+                        processInfo.AddOnCompleteHandler(new ProcessInfoEventHandler(_context, completeAnnotationSystemEvent, _currentCodeFrame, true));
                     }
 
                     if (cancelAnnotationSystemEvent != null)
@@ -1942,20 +1933,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     if (weakCancelAnnotationSystemEvent != null)
                     {
-                        var currCodeFrame = _currentCodeFrame;
-
-                        var annotationSystemEventCoordinator = ((IExecutable)weakCancelAnnotationSystemEvent).GetCoordinator(_context, currCodeFrame.LocalContext);
-
-                        var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(weakCancelAnnotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, currCodeFrame.LocalContext, null, true);
-
-                        processInfo.OnWeakCanceled += (procI) => {
-#if DEBUG
-                            //Log($"procI.Status = {procI.Status}");
-                            //Log($"processInfo.Status = {processInfo.Status}");
-#endif
-
-                            ExecuteCodeFrame(newCodeFrame, currCodeFrame, annotationSystemEventCoordinator, SyncOption.ChildAsync, false);
-                        };
+                        processInfo.AddOnWeakCanceledHandler(new ProcessInfoEventHandler(_context, weakCancelAnnotationSystemEvent, _currentCodeFrame, true));
                     }
 
                     if (errorAnnotationSystemEvent != null)

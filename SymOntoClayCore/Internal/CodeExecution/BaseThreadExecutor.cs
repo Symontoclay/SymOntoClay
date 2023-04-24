@@ -1889,7 +1889,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 }
                 else
                 {
-                    if(syncOption == SyncOption.ChildAsync)
+                    var processInfoValue = new ProcessInfoValue(processInfo);
+
+                    if (syncOption == SyncOption.ChildAsync)
                     {
                         processInfo.ParentProcessInfo = _currentCodeFrame.ProcessInfo;
                     }
@@ -1927,6 +1929,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     {
                         throw new NotImplementedException();
                     }
+
+                    _currentCodeFrame.ValuesStack.Push(processInfoValue);
                 }
 
                 _currentCodeFrame.CurrentPosition++;

@@ -1,15 +1,11 @@
 ﻿app PeaceKeeper
 {
-    fun a() => 
-    {
-        '`a` has been called!' >> @>log;
-    }
-
     on Enter =>
     {
         'Begin' >> @>log;
-        var @task = a~~();
-        on @task complete { 'on complete' >> @>log; };
+        var @task = @@host.SomeVeryLongSilentFun~() [: timeout = 100 :];
+        on @task weak canceled { 'on weak canceled' >> @>log; };
+        wait 1000;
         'End' >> @>log;
     }
 }

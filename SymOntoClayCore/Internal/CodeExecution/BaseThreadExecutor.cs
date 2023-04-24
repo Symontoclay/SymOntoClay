@@ -524,11 +524,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Log($"kindOfLifeCycleEventName = {kindOfLifeCycleEventName}");
 #endif
 
-            switch(kindOfLifeCycleEventName)
+            var targetObject = targetObjectValue.AsProcessInfoValue;
+            var handler = handlerValue.AsCodeItem.AsFunction;
+
+            switch (kindOfLifeCycleEventName)
             {
                 case "complete":
                 case "completed":
-                    AddCompleteLifeCycleEvent(targetObjectValue.AsProcessInfoValue, handlerValue.AsCodeItem.AsFunction, annotationValue);
+                    targetObject.AddOnCompleteHandler(new ProcessInfoEventHandler(_context, handler, _currentCodeFrame, true));
                     break;
 
                 default:
@@ -536,27 +539,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
             _currentCodeFrame.CurrentPosition++;
-        }
-
-        private void AddCompleteLifeCycleEvent(ProcessInfoValue targetObject, Function handler, AnnotationValue annotation)
-        {
-#if DEBUG
-            //Log($"targetObjectValue = {targetObject.ToHumanizedString()}");
-#endif
-
-            var currentCodeFrame = _currentCodeFrame;
-
-            //var additionalSettings = GetAdditionalSettingsFromAnnotation(annotation, null);
-
-            //var lifeCycleEventCoordinator = ((IExecutable)handler).GetCoordinator(_context, currentCodeFrame.LocalContext);
-
-            //var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(handler, KindOfFunctionParameters.NoParameters, null, null, currentCodeFrame.LocalContext, additionalSettings);
-
-#if DEBUG
-            //Log($"newCodeFrame = {newCodeFrame.ToDbgString()}");
-#endif
-
-            targetObject.AddOnCompleteHandler(new ProcessInfoEventHandler(_context, handler, currentCodeFrame, true));
         }
 
         private void ProcessInstantiate(KindOfFunctionParameters kindOfParameters, int parametersCount)

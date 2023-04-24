@@ -534,6 +534,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     targetObject.AddOnCompleteHandler(new ProcessInfoEventHandler(_context, handler, _currentCodeFrame, true));
                     break;
 
+                case "weak cancel":
+                case "weak canceled":
+                    targetObject.AddOnWeakCanceledHandler(new ProcessInfoEventHandler(_context, handler, _currentCodeFrame, true));
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfLifeCycleEventName), kindOfLifeCycleEventName, null);
             }

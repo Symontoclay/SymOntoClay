@@ -1,16 +1,17 @@
 ﻿app PeaceKeeper
 {
     fun a() => 
-    {
+    {       
+        wait 1000;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        var @task = a~();
-        on @task completed { 'on completed' >> @>log; };
-        wait 1000;
+        var @task = a~() [: timeout = 100 :];
+        on @task weak cancel { 'on weak cancel' >> @>log; };
+        wait 2000;
         'End' >> @>log;
     }
 }

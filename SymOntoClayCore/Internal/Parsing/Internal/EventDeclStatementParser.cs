@@ -117,6 +117,41 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     _state = State.GotKindOfEvent;
                                     break;
 
+                                case KeyWordTokenKind.Weak:
+                                    {
+                                        var nextToken = _context.GetToken();
+
+#if DEBUG
+                                        //Log($"nextToken = {nextToken}");
+#endif
+
+                                        switch (nextToken.TokenKind)
+                                        {
+                                            case TokenKind.Word:
+                                                switch (nextToken.KeyWordTokenKind)
+                                                {
+                                                    case KeyWordTokenKind.Cancel:
+                                                    case KeyWordTokenKind.Canceled:
+                                                        Result.KindOfLifeCycleEvent = ParseName($"{_currToken.Content} {nextToken.Content}");
+
+#if DEBUG
+                                                        //Log($"Result.KindOfLifeCycleEvent = {Result.KindOfLifeCycleEvent}");
+#endif
+
+                                                        _state = State.GotKindOfEvent;
+                                                        break;
+
+                                                    default:
+                                                        throw new UnexpectedTokenException(_currToken);
+                                                }
+                                                break;
+
+                                            default:
+                                                throw new UnexpectedTokenException(nextToken);
+                                        }
+                                    }
+                                    break;
+
                                 default:
                                     throw new UnexpectedTokenException(_currToken);
                             }

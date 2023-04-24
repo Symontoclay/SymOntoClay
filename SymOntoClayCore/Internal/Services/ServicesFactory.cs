@@ -46,7 +46,7 @@ namespace SymOntoClay.Core.Internal.Services
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
-            _entityConstraintsService.Dispose();
+            _entityConstraintsService?.Dispose();
 
             base.OnDisposed();
         }

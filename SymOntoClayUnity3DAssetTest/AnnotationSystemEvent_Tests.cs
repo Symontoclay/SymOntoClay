@@ -3440,7 +3440,7 @@ action Go
         wait 2000;
         'End' >> @>log;
     }
-}}";
+}";
 
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) => {
@@ -3484,7 +3484,7 @@ action Go
         wait 2000;
         'End' >> @>log;
     }
-}}";
+}";
 
             Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
                 (n, message) => {
@@ -3507,5 +3507,205 @@ action Go
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case15()
+        {
+            var text = @"app PeaceKeeper
+{
+    fun a() => 
+    {
+        '`a` has been called!' >> @>log;
+    }
+
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        var @task = a~~();
+        on @task complete { 'on complete' >> @>log; };
+        'End' >> @>log;
+    }
+}";
+
+            var wasFunCalled = false;
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            if (message == "`a` has been called!")
+                            {
+                                wasFunCalled = true;
+                            }
+                            Assert.AreEqual(true, (message == "`a` has been called!" || message == "End"));
+                            break;
+
+                        case 3:
+                            if (message == "`a` has been called!")
+                            {
+                                wasFunCalled = true;
+                            }
+                            Assert.AreEqual(true, (message == (wasFunCalled ? "on complete" : "`a` has been called!") || message == "End"));
+                            break;
+
+                        case 4:
+                            Assert.AreEqual(true, (message == (wasFunCalled ? "on complete" : "`a` has been called!") || message == "End"));
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case15_1()
+        {
+            var text = @"app PeaceKeeper
+{
+    fun a() => 
+    {
+        '`a` has been called!' >> @>log;
+    }
+
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        var @task = a~~();
+        on @task completed { 'on completed' >> @>log; };
+        'End' >> @>log;
+    }
+}";
+
+            var wasFunCalled = false;
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            if (message == "`a` has been called!")
+                            {
+                                wasFunCalled = true;
+                            }
+                            Assert.AreEqual(true, (message == "`a` has been called!" || message == "End"));
+                            break;
+
+                        case 3:
+                            if (message == "`a` has been called!")
+                            {
+                                wasFunCalled = true;
+                            }
+                            Assert.AreEqual(true, (message == (wasFunCalled ? "on completed" : "`a` has been called!") || message == "End"));
+                            break;
+
+                        case 4:
+                            Assert.AreEqual(true, (message == (wasFunCalled ? "on completed" : "`a` has been called!") || message == "End"));
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case15_a()
+        {
+            var text = @"app PeaceKeeper
+{
+    fun a() => 
+    {       
+        wait 1000;
+        '`a` has been called!' >> @>log;
+    }
+
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        var @task = a~~() [: timeout = 100 :];
+        on @task weak cancel { 'on weak cancel' >> @>log; };
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(true, (message == "on weak cancel" || message == "End"));
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(true, (message == "on weak cancel" || message == "End"));
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case15_a_1()
+        {
+            var text = @"app PeaceKeeper
+{
+    fun a() => 
+    {       
+        wait 1000;
+        '`a` has been called!' >> @>log;
+    }
+
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        var @task = a~~() [: timeout = 100 :];
+        on @task weak canceled { 'on weak canceled' >> @>log; };
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(true, (message == "on weak canceled" || message == "End"));
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(true, (message == "on weak canceled" || message == "End"));
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+
     }
 }

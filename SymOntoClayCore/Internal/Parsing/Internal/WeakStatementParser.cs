@@ -107,6 +107,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotWeakCancelAction:
                     switch (_currToken.TokenKind)
                     {
+                        case TokenKind.Semicolon:
+                            Exit();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -115,10 +119,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
-
-            /*
-
-             */
         }
     }
 }

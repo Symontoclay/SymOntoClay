@@ -48,6 +48,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         RepeatStatement,
         RejectStatement,
         ExecStatement,
-        EventDeclStatement
+        EventDeclStatement,
+        WeakCancelAction
     }
 }

@@ -610,6 +610,61 @@ action Go
 
         [Test]
         [Parallelizable]
+        public void Case4_a()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter =>
+    {
+        'Begin' >> @>log;
+ 
+        Go()[:on complete { 'on complete' >> @>log; } :];
+
+        'End' >> @>log;
+    }
+}
+
+action Go 
+{
+    op () => 
+    {
+        'Begin Go' >> @>log;
+        'End Go' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("Begin", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("Begin Go", message);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual("End Go", message);
+                            break;
+
+                        case 4:
+                            Assert.AreEqual("on complete", message);
+                            break;
+
+                        case 5:
+                            Assert.AreEqual("End", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
         public void Case5()
         {
             var text = @"app PeaceKeeper

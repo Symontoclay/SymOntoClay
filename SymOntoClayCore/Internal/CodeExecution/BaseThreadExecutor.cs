@@ -287,7 +287,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #if DEBUG
                 //Log($"currentCodeFrame.LocalContext.Holder = {currentCodeFrame.LocalContext.Holder}");
                 //Log($"currentCommand = {currentCommand}");
-                //Log($"currentCodeFrame = {currentCodeFrame.ToDbgString()}");
+                Log($"currentCodeFrame = {currentCodeFrame.ToDbgString()}");
 #endif
 
                 switch (currentCommand.OperationCode)
@@ -1599,7 +1599,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var lastProcessStatus = currentCodeFrame.LastProcessStatus.Value;
 
 #if DEBUG
-                //Log($"lastProcessStatus = {lastProcessStatus}");
+                Log($"lastProcessStatus = {lastProcessStatus}");
 #endif
 
                 switch (lastProcessStatus)
@@ -1945,6 +1945,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             Value annotation, SyncOption syncOption, bool mayCallHost)
         {
+#if DEBUG
+            Log($"methodName = {methodName}");
+#endif
+
             IExecutable method = null;
 
             switch(kindOfParameters)
@@ -1965,7 +1969,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
             }
 
-            if(method == null)
+            if (method == null)
             {
                 if(mayCallHost)
                 {
@@ -2145,6 +2149,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 {
                     targetLocalContext = executable.OwnLocalCodeExecutionContext;
                 }
+
+#if DEBUG
+                Log($"completeAnnotationSystemEvent != null = {completeAnnotationSystemEvent != null}");
+#endif
 
                 var additionalSettings = GetAdditionalSettingsFromAnnotation(annotation, ownLocalCodeExecutionContext);
 

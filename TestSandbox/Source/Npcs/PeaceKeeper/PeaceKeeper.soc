@@ -3,9 +3,31 @@
     on Enter =>
     {
         'Begin' >> @>log;
-        var @task = @@host.SomeVeryLongSilentFun~() [: timeout = 100 :];
-        on @task weak canceled { 'on weak canceled' >> @>log; };
-        wait 1000;
+ 
+        Go()[:on complete { 'on complete' >> @>log; } :];
+
         'End' >> @>log;
     }
+}
+
+action Go 
+{
+    /*on Enter =>
+    {
+        'Enter Go' >> @>log;
+    }*/
+
+    op () => 
+    {
+        'Begin Go' >> @>log;
+        //await;
+        'End Go' >> @>log;
+    }
+
+    /*on {: see(I, $x) :} ($x >> @x) => 
+    {
+        'on Fired' >> @>log;
+        @x >> @>log;
+        complete action;
+    }*/
 }

@@ -152,11 +152,11 @@ namespace TestSandbox
             //TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();
-            TstPlacesHandler();//<==
+            //TstPlacesHandler();//<==
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            //TstGeneralStartHandler();//<=
+            TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);

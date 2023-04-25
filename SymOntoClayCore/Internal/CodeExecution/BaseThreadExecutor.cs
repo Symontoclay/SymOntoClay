@@ -216,7 +216,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing)
                 {
-                    GoBackToPrevCodeFrame(ActionExecutionStatus.Canceled);
+                    //var executionStatus = _executionCoordinator.ExecutionStatus;
+
+#if DEBUG
+                    //Log($"_executionCoordinator.ExecutionStatus = {_executionCoordinator.ExecutionStatus}");
+#endif
+
+                    GoBackToPrevCodeFrame(_executionCoordinator.ExecutionStatus);
                     return true;
                 }
 
@@ -287,7 +293,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #if DEBUG
                 //Log($"currentCodeFrame.LocalContext.Holder = {currentCodeFrame.LocalContext.Holder}");
                 //Log($"currentCommand = {currentCommand}");
-                Log($"currentCodeFrame = {currentCodeFrame.ToDbgString()}");
+                //Log($"currentCodeFrame = {currentCodeFrame.ToDbgString()}");
 #endif
 
                 switch (currentCommand.OperationCode)
@@ -1599,7 +1605,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var lastProcessStatus = currentCodeFrame.LastProcessStatus.Value;
 
 #if DEBUG
-                Log($"lastProcessStatus = {lastProcessStatus}");
+                //Log($"lastProcessStatus = {lastProcessStatus}");
 #endif
 
                 switch (lastProcessStatus)
@@ -1946,7 +1952,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             Value annotation, SyncOption syncOption, bool mayCallHost)
         {
 #if DEBUG
-            Log($"methodName = {methodName}");
+            //Log($"methodName = {methodName}");
 #endif
 
             IExecutable method = null;
@@ -2151,7 +2157,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 }
 
 #if DEBUG
-                Log($"completeAnnotationSystemEvent != null = {completeAnnotationSystemEvent != null}");
+                //Log($"completeAnnotationSystemEvent != null = {completeAnnotationSystemEvent != null}");
 #endif
 
                 var additionalSettings = GetAdditionalSettingsFromAnnotation(annotation, ownLocalCodeExecutionContext);

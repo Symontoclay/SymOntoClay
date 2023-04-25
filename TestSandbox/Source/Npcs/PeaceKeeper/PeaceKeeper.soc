@@ -12,22 +12,15 @@
 
 action Go 
 {
-    /*on Enter =>
-    {
-        'Enter Go' >> @>log;
-    }*/
-
     op () => 
     {
         'Begin Go' >> @>log;
-        //await;
+        await;
         'End Go' >> @>log;
     }
 
-    /*on {: see(I, $x) :} ($x >> @x) => 
+    on {: see(I, $x) :} ($x >> @x) => 
     {
-        'on Fired' >> @>log;
-        @x >> @>log;
         complete action;
-    }*/
+    }
 }

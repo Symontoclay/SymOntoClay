@@ -231,7 +231,10 @@ namespace SymOntoClay.BaseTestLib
             var n = 0;
 
             return CreateAndStartNPC(message => { n++; logChannel(n, message); },
-                error => { throw new Exception(error); }, platformListener);
+                error => 
+                { 
+                    throw new Exception(error); 
+                }, platformListener);
         }
 
         public IHumanoidNPC CreateAndStartNPC(Action<string> logChannel, Action<string> error)

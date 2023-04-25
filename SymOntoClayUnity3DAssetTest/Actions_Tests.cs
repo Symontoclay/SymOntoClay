@@ -51,11 +51,6 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
 action Go 
 {
-    on Enter =>
-    {
-        'Enter Go' >> @>log;
-    }
-
     op () => 
     {
         'Begin Go' >> @>log;
@@ -93,10 +88,6 @@ action Go
                         break;
 
                     case 5:
-                        Assert.AreEqual(message, "End Go");
-                        break;
-
-                    case 6:
                         Assert.AreEqual(message, "End");
                         break;
 
@@ -132,11 +123,6 @@ action Go
 
 action Go 
 {
-    on Enter =>
-    {
-        'Enter Go' >> @>log;
-    }
-
     op () => 
     {
         'Begin Go' >> @>log;
@@ -174,10 +160,6 @@ action Go
                         break;
 
                     case 5:
-                        Assert.AreEqual(message, "End Go");
-                        break;
-
-                    case 6:
                         Assert.AreEqual(message, "End");
                         break;
 
@@ -213,11 +195,6 @@ action Go
 
 action Go 
 {
-    on Enter =>
-    {
-        'Enter Go' >> @>log;
-    }
-
     op () => 
     {
         'Begin Go' >> @>log;
@@ -235,18 +212,14 @@ action Go
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "Enter Go");
-                        break;
-
-                    case 3:
                         Assert.AreEqual(message, "Begin Go");
                         break;
 
-                    case 4:
+                    case 3:
                         Assert.AreEqual(message, "End Go");
                         break;
 
-                    case 5:
+                    case 4:
                         Assert.AreEqual(message, "End");
                         break;
 
@@ -280,11 +253,6 @@ app PeaceKeeper
 
 action Go 
 {
-    on Enter =>
-    {
-        'Enter Go' >> @>log;
-    }
-
     op () => 
     {
         'Begin Go' >> @>log;
@@ -302,18 +270,14 @@ action Go
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "Enter Go");
-                        break;
-
-                    case 3:
                         Assert.AreEqual(message, "Begin Go");
                         break;
 
-                    case 4:
+                    case 3:
                         Assert.AreEqual(message, "End Go");
                         break;
 
-                    case 5:
+                    case 4:
                         Assert.AreEqual(message, "End");
                         break;
 
@@ -321,6 +285,72 @@ action Go
                         throw new ArgumentOutOfRangeException(nameof(n), n, null);
                 }
             });
+
+            Thread.Sleep(1000);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case1_d()
+        {
+            var instance = new AdvancedBehaviorTestEngineInstance();
+
+            var text = @"app PeaceKeeper
+{
+    on Enter =>
+    {
+        'Begin' >> @>log;
+ 
+        Go()[:on complete { 'on complete' >> @>log; } :];
+
+        'End' >> @>log;
+    }
+}
+
+action Go 
+{
+    op () => 
+    {
+        'Begin Go' >> @>log;
+        await;
+        'End Go' >> @>log;
+    }
+
+    on {: see(I, $x) :} ($x >> @x) => 
+    {
+        complete action;
+    }
+}";
+
+            instance.WriteFile(text);
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                switch (n)
+                {
+                    case 1:
+                        Assert.AreEqual(message, "Begin");
+                        break;
+
+                    case 2:
+                        Assert.AreEqual(message, "Begin Go");
+                        break;
+
+                    case 3:
+                        Assert.AreEqual(message, "on complete");
+                        break;
+
+                    case 4:
+                        Assert.AreEqual(message, "End");
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                }
+            });
+
+            Thread.Sleep(1000);
+
+            npc.InsertFact("{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -345,11 +375,6 @@ action Go
 
 action `my Go 1` alias `Go` 
 {
-    on Enter =>
-    {
-        'Enter Go' >> @>log;
-    }
-
     op () => 
     {
         'Begin Go' >> @>log;
@@ -387,10 +412,6 @@ action `my Go 1` alias `Go`
                         break;
 
                     case 5:
-                        Assert.AreEqual(message, "End Go");
-                        break;
-
-                    case 6:
                         Assert.AreEqual(message, "End");
                         break;
                     default:
@@ -425,11 +446,6 @@ action `my Go 1` alias `Go`
 
 action `my Go 1` alias `Go`, Run 
 {
-    on Enter =>
-    {
-        'Enter Go' >> @>log;
-    }
-
     op () => 
     {
         'Begin Go' >> @>log;
@@ -467,10 +483,6 @@ action `my Go 1` alias `Go`, Run
                         break;
 
                     case 5:
-                        Assert.AreEqual(message, "End Go");
-                        break;
-
-                    case 6:
                         Assert.AreEqual(message, "End");
                         break;
                     default:
@@ -505,11 +517,6 @@ action `my Go 1` alias `Go`, Run
 
 action `my Go 1` alias `Go`, `Run` 
 {
-    on Enter =>
-    {
-        'Enter Go' >> @>log;
-    }
-
     op () => 
     {
         'Begin Go' >> @>log;
@@ -547,10 +554,6 @@ action `my Go 1` alias `Go`, `Run`
                         break;
 
                     case 5:
-                        Assert.AreEqual(message, "End Go");
-                        break;
-
-                    case 6:
                         Assert.AreEqual(message, "End");
                         break;
                     default:
@@ -585,11 +588,6 @@ action `my Go 1` alias `Go`, `Run`
 
 action `my Go 1` alias `Go` is `base app` 
 {
-    on Enter =>
-    {
-        'Enter Go' >> @>log;
-    }
-
     op () => 
     {
         'Begin Go' >> @>log;
@@ -627,10 +625,6 @@ action `my Go 1` alias `Go` is `base app`
                         break;
 
                     case 5:
-                        Assert.AreEqual(message, "End Go");
-                        break;
-
-                    case 6:
                         Assert.AreEqual(message, "End");
                         break;
 
@@ -666,11 +660,6 @@ action `my Go 1` alias `Go` is `base app`
 
 action `my Go 1` alias `Go`, Run is `base app` 
 {
-    on Enter =>
-    {
-        'Enter Go' >> @>log;
-    }
-
     op () => 
     {
         'Begin Go' >> @>log;
@@ -708,10 +697,6 @@ action `my Go 1` alias `Go`, Run is `base app`
                         break;
 
                     case 5:
-                        Assert.AreEqual(message, "End Go");
-                        break;
-
-                    case 6:
                         Assert.AreEqual(message, "End");
                         break;
                     default:
@@ -746,11 +731,6 @@ action `my Go 1` alias `Go`, Run is `base app`
 
 action `my Go 1` alias `Go`, `Run` is `base app` 
 {
-    on Enter =>
-    {
-        'Enter Go' >> @>log;
-    }
-
     op () => 
     {
         'Begin Go' >> @>log;
@@ -788,10 +768,6 @@ action `my Go 1` alias `Go`, `Run` is `base app`
                         break;
 
                     case 5:
-                        Assert.AreEqual(message, "End Go");
-                        break;
-
-                    case 6:
                         Assert.AreEqual(message, "End");
                         break;
                     default:
@@ -826,11 +802,6 @@ action `my Go 1` alias `Go`, `Run` is `base app`
 
 action `Go` is `base app` 
 {
-    on Enter =>
-    {
-        'Enter Go' >> @>log;
-    }
-
     op () => 
     {
         'Begin Go' >> @>log;
@@ -868,10 +839,6 @@ action `Go` is `base app`
                         break;
 
                     case 5:
-                        Assert.AreEqual(message, "End Go");
-                        break;
-
-                    case 6:
                         Assert.AreEqual(message, "End");
                         break;
                     default:
@@ -906,11 +873,6 @@ action `Go` is `base app`
 
 action Go is `base app` 
 {
-    on Enter =>
-    {
-        'Enter Go' >> @>log;
-    }
-
     op () => 
     {
         'Begin Go' >> @>log;
@@ -948,10 +910,6 @@ action Go is `base app`
                         break;
 
                     case 5:
-                        Assert.AreEqual(message, "End Go");
-                        break;
-
-                    case 6:
                         Assert.AreEqual(message, "End");
                         break;
                     default:
@@ -986,11 +944,6 @@ action Go is `base app`
 
 action Go 
 {
-    on Enter =>
-    {
-        'Enter Go' >> @>log;
-    }
-
     op () => 
     {
         'Begin Go' >> @>log;
@@ -1067,11 +1020,6 @@ action Go
 
 action Go 
 {
-    on Enter =>
-    {
-        'Enter Go' >> @>log;
-    }
-
     op () => 
     {
         'Begin Go' >> @>log;

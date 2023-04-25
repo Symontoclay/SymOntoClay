@@ -41,7 +41,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             : base(context)
         {
         }
-
+        
         private State _state = State.Init;
 
         public AstStatement Result { get; private set; }

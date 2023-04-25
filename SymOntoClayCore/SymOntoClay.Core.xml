@@ -7610,6 +7610,12 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.WaitStatementParser.OnRun">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.WeakStatementParser.OnFinish">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.WeakStatementParser.OnRun">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.WhileStatementParser.OnEnter">
             <inheritdoc/>
         </member>

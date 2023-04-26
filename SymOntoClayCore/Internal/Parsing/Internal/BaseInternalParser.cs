@@ -706,3 +706,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         }
     }
 }
+
+/*
+                    switch (_currToken.TokenKind)
+            {
+                default:
+                    throw new UnexpectedTokenException(_currToken);
+            }
+
+                    switch (_currToken.KeyWordTokenKind)
+                    {
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }     
+ */

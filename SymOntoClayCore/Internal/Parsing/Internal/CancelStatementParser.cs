@@ -6,17 +6,16 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
-    public class WeakStatementParser : BaseInternalParser
+    public class CancelStatementParser : BaseInternalParser
     {
         private enum State
         {
             Init,
-            GotWeakMark,
-            GotWeakCancel,
-            GotWeakCancelAction
+            GotCancel,
+            GotCancelAction
         }
 
-        public WeakStatementParser(InternalParserContext context)
+        public CancelStatementParser(InternalParserContext context)
             : base(context)
         {
         }
@@ -46,10 +45,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Word:
-                            switch(_currToken.KeyWordTokenKind)
+                            switch (_currToken.KeyWordTokenKind)
                             {
-                                case KeyWordTokenKind.Weak:
-                                    _state = State.GotWeakMark;
+                                case KeyWordTokenKind.Cancel:
+                                    _state = State.GotCancel;
                                     break;
 
                                 default:
@@ -62,36 +61,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                case State.GotWeakMark:
-                    switch (_currToken.TokenKind)
-                    {
-                        case TokenKind.Word:
-                            switch(_currToken.KeyWordTokenKind)
-                            {
-                                case KeyWordTokenKind.Cancel: 
-                                    _state = State.GotWeakCancel;
-                                    break;
-
-                                default:
-                                    throw new UnexpectedTokenException(_currToken);
-                            }
-                            break;
-
-                        default:
-                            throw new UnexpectedTokenException(_currToken);
-                    }
-                    break;
-
-                case State.GotWeakCancel:
+                case State.GotCancel:
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Word:
                             switch (_currToken.KeyWordTokenKind)
                             {
                                 case KeyWordTokenKind.Action:
-                                    Result = new AstWeakCancelActionStatement();
+                                    Result = new AstCancelActionStatement();
                                     DefaultSettingsOfCodeEntityHelper.SetUpAnnotatedItem(Result, CurrentDefaultSetings);
-                                    _state = State.GotWeakCancelAction;
+                                    _state = State.GotCancelAction;
                                     break;
 
                                 default:
@@ -104,7 +83,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-                case State.GotWeakCancelAction:
+                case State.GotCancelAction:
                     switch (_currToken.TokenKind)
                     {
                         case TokenKind.Semicolon:

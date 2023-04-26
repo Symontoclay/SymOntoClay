@@ -89,7 +89,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 var kind = statement.Kind;
 
 #if DEBUG
-                //Log($"kind = {kind}");
+                Log($"kind = {kind}");
 #endif
 
                 switch(kind)
@@ -234,6 +234,22 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                         {
                             var node = new AstEventDeclStatementNode(_context);
                             node.Run(statement as AstEventDeclStatement);
+                            AddCommands(node.Result);
+                        }
+                        break;
+
+                    case KindOfAstStatement.WeakCancelActionStatement:
+                        {
+                            var node = new AstWeakCancelActionStatementNode(_context);
+                            node.Run(statement as AstWeakCancelActionStatement);
+                            AddCommands(node.Result);
+                        }
+                        break;
+
+                    case KindOfAstStatement.CancelActionStatement:
+                        {
+                            var node = new AstCancelActionStatementNode(_context);
+                            node.Run(statement as AstCancelActionStatement);
                             AddCommands(node.Result);
                         }
                         break;

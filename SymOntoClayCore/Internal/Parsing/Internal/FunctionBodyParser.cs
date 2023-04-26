@@ -49,8 +49,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"_currToken = {_currToken}");
+            //Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
             //Log($"Result = {Result.WriteListToString()}");          
 #endif
 
@@ -121,6 +121,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                 case KeyWordTokenKind.Weak:
                                     ProcessWeakStatement();
+                                    break;
+
+                                case KeyWordTokenKind.Cancel:
+                                    ProcessCancelStatement();
                                     break;
 
                                 case KeyWordTokenKind.Break:
@@ -242,6 +246,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _context.Recovery(_currToken);
             var parser = new WeakStatementParser(_context);
+            parser.Run();
+            AddStatement(parser.Result);
+        }
+
+        private void ProcessCancelStatement()
+        {
+            _context.Recovery(_currToken);
+            var parser = new CancelStatementParser(_context);
             parser.Run();
             AddStatement(parser.Result);
         }

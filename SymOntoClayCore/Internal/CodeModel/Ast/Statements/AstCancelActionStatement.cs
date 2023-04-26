@@ -5,10 +5,10 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
 {
-    public class AstWeakCancelActionStatement : AstStatement
+    public class AstCancelActionStatement : AstStatement
     {
         /// <inheritdoc/>
-        public override KindOfAstStatement Kind => KindOfAstStatement.WeakCancelActionStatement;
+        public override KindOfAstStatement Kind => KindOfAstStatement.CancelActionStatement;
 
         /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
@@ -24,7 +24,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
                 return (AstStatement)context[this];
             }
 
-            var result = new AstWeakCancelActionStatement();
+            var result = new AstCancelActionStatement();
             context[this] = result;
 
             result.AppendAnnotations(this, context);
@@ -35,7 +35,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            return "weak cancel action;";
+            return "cancel action;";
         }
     }
 }

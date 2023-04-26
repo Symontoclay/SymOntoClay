@@ -21,6 +21,7 @@ action Go
 
     on {: see(I, $x) :} ($x >> @x) => 
     {
-        weak cancel action;
+        cancel action;
+        //weak cancel action;
     }
 }

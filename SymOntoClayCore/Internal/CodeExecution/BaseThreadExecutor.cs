@@ -430,6 +430,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         ProcessBreakActionVal();
                         break;
 
+                    case OperationCode.CancelAction:
+                        ProcessCancelAction();
+                        break;
+
+                    case OperationCode.WeakCancelAction:
+                        ProcessWeakCancelAction();
+                        break;
+
                     case OperationCode.Error:
                         ProcessError();
                         break;
@@ -827,6 +835,20 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void ProcessCompleteAction()
         {
             _currentCodeFrame.ExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
+
+            _currentCodeFrame.CurrentPosition++;
+        }
+
+        private void ProcessCancelAction()
+        {
+            _currentCodeFrame.ExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Canceled;
+
+            _currentCodeFrame.CurrentPosition++;
+        }
+
+        private void ProcessWeakCancelAction()
+        {
+            _currentCodeFrame.ExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.WeakCanceled;
 
             _currentCodeFrame.CurrentPosition++;
         }

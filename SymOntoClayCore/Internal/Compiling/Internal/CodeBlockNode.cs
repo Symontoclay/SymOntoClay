@@ -89,7 +89,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 var kind = statement.Kind;
 
 #if DEBUG
-                Log($"kind = {kind}");
+                //Log($"kind = {kind}");
 #endif
 
                 switch(kind)

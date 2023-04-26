@@ -1226,5 +1226,129 @@ action Go
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case6()
+        {
+            var instance = new AdvancedBehaviorTestEngineInstance();
+
+            var text = @"app PeaceKeeper
+{
+    on Enter =>
+    {
+        'Begin' >> @>log;
+ 
+        Go()[: on weak cancel { 'on weak cancel' >> @>log; } :];
+
+        'End' >> @>log;
+    }
+}
+
+action Go 
+{
+    op () => 
+    {
+        'Begin Go' >> @>log;
+        await;
+        'End Go' >> @>log;
+    }
+
+    on {: see(I, $x) :} ($x >> @x) => 
+    {
+        weak cancel action;
+    }
+}";
+
+            instance.WriteFile(text);
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                switch (n)
+                {
+                    case 1:
+                        Assert.AreEqual(message, "Begin");
+                        break;
+
+                    case 2:
+                        Assert.AreEqual(message, "Begin Go");
+                        break;
+
+                    case 3:
+                        Assert.AreEqual(message, "on weak cancel");
+                        break;
+
+                    case 4:
+                        Assert.AreEqual(message, "End");
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                }
+            });
+
+            Thread.Sleep(1000);
+
+            npc.InsertFact("{: see(I, #a) :}");
+
+            Thread.Sleep(1000);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case7()
+        {
+            var instance = new AdvancedBehaviorTestEngineInstance();
+
+            var text = @"app PeaceKeeper
+{
+    on Enter =>
+    {
+        'Begin' >> @>log;
+ 
+        Go()[: on weak cancel { 'on weak cancel' >> @>log; } :];
+
+        'End' >> @>log;
+    }
+}
+
+action Go 
+{
+    op () => 
+    {
+        'Begin Go' >> @>log;
+        await;
+        'End Go' >> @>log;
+    }
+
+    on {: see(I, $x) :} ($x >> @x) => 
+    {
+        cancel action;
+    }
+}";
+
+            instance.WriteFile(text);
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                switch (n)
+                {
+                    case 1:
+                        Assert.AreEqual(message, "Begin");
+                        break;
+
+                    case 2:
+                        Assert.AreEqual(message, "Begin Go");
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                }
+            });
+
+            Thread.Sleep(1000);
+
+            npc.InsertFact("{: see(I, #a) :}");
+
+            Thread.Sleep(1000);
+        }
     }
 }

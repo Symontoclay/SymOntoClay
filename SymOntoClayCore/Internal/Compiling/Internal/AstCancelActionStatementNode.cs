@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
+using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,7 +15,10 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(AstCancelActionStatement statement)
         {
-            throw new NotImplementedException();
+            AddCommand(new IntermediateScriptCommand()
+            {
+                OperationCode = OperationCode.CancelAction
+            });
         }
     }
 }

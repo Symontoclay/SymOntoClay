@@ -200,6 +200,8 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                 case OperationCode.CompleteActionVal:
                 case OperationCode.BreakAction:
                 case OperationCode.BreakActionVal:
+                case OperationCode.CancelAction:
+                case OperationCode.WeakCancelAction:
                 case OperationCode.SetState:
                 case OperationCode.SetDefaultState:
                 case OperationCode.CompleteState:

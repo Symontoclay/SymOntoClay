@@ -4,7 +4,7 @@
     {
         'Begin' >> @>log;
  
-        Go()[: on weak cancel { 'on weak cancel' >> @>log; } :];
+        Go()[:on complete { 'on complete' >> @>log; } :];
 
         'End' >> @>log;
     }
@@ -15,13 +15,6 @@ action Go
     op () => 
     {
         'Begin Go' >> @>log;
-        await;
         'End Go' >> @>log;
-    }
-
-    on {: see(I, $x) :} ($x >> @x) => 
-    {
-        cancel action;
-        //weak cancel action;
     }
 }

@@ -67,12 +67,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");
-#endif
-
             switch (_state)
             {
                 case State.Init:
@@ -130,22 +124,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         case TokenKind.Word:
                             {
-#if DEBUG
-                                //Log($"_lastSettingsKey = {_lastSettingsKey}");
-#endif
-
                                 var value = ParseValue();
-
-#if DEBUG
-                                //Log($"value = {value}");
-#endif
 
                                 if (_lastSettingsKey == null)
                                 {
-#if DEBUG
-                                    //Log($"_lastMeaningRole = {_lastMeaningRole}");
-#endif
-
                                     if (_lastMeaningRole.IsSequenceValue)
                                     {
                                         _lastMeaningRole.AsSequenceValue.AddValue(value);
@@ -160,10 +142,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 else
                                 {
                                     var lastValue = _settingsDict[_lastSettingsKey];
-
-#if DEBUG
-                                    //Log($"lastValue = {lastValue}");
-#endif
 
                                     if (lastValue.IsSequenceValue)
                                     {
@@ -204,10 +182,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             var nextToken = _context.GetToken();
             _context.Recovery(nextToken);
-
-#if DEBUG
-            //Log($"nextToken = {nextToken}");
-#endif
 
             switch(nextToken.TokenKind)
             {

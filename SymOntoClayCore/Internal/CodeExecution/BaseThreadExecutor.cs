@@ -216,11 +216,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing)
                 {
-                    //var executionStatus = _executionCoordinator.ExecutionStatus;
-
-#if DEBUG
-                    //Log($"_executionCoordinator.ExecutionStatus = {_executionCoordinator.ExecutionStatus}");
-#endif
 
                     GoBackToPrevCodeFrame(_executionCoordinator.ExecutionStatus);
                     return true;
@@ -249,10 +244,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     if (currentMilisecond >= endOfTargetDuration.Value)
                     {
                         var timeoutCancellationMode = currentCodeFrame.TimeoutCancellationMode;
-
-#if DEBUG
-                        //Log($"timeoutCancellationMode = {timeoutCancellationMode}");
-#endif
 
                         switch(timeoutCancellationMode)
                         {
@@ -289,12 +280,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 }
 
                 var currentCommand = compiledFunctionBodyCommands[currentPosition];
-
-#if DEBUG
-                //Log($"currentCodeFrame.LocalContext.Holder = {currentCodeFrame.LocalContext.Holder}");
-                //Log($"currentCommand = {currentCommand}");
-                //Log($"currentCodeFrame = {currentCodeFrame.ToDbgString()}");
-#endif
 
                 switch (currentCommand.OperationCode)
                 {
@@ -513,30 +498,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var annotationValue = TryGetAnnotationValue();
 
-#if DEBUG
-            //Log($"annotationValue = {annotationValue}");
-#endif
-
             var handlerValue = TryResolveFromVarOrExpr(valuesStack.Pop());
 
             var kindOfLifeCycleEventValue = TryResolveFromVarOrExpr(valuesStack.Pop());
 
             var targetObjectValue = TryResolveFromVarOrExpr(valuesStack.Pop());
 
-#if DEBUG
-            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-#endif
-
-#if DEBUG
-            //Log($"targetObjectValue = {targetObjectValue.ToHumanizedString()}");
-            //Log($"kindOfLifeCycleEventValue = {kindOfLifeCycleEventValue}");
-#endif
-
             var kindOfLifeCycleEventName = kindOfLifeCycleEventValue.AsStrongIdentifierValue.NormalizedNameValue;
-
-#if DEBUG
-            //Log($"kindOfLifeCycleEventName = {kindOfLifeCycleEventName}");
-#endif
 
             var targetObject = targetObjectValue.AsProcessInfoValue;
             var handler = handlerValue.AsCodeItem.AsFunction;
@@ -1063,10 +1031,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessClearStack()
         {
-#if DEBUG
-            //Log("Begin");
-#endif
-
             _currentCodeFrame.ValuesStack.Clear();
             _currentCodeFrame.CurrentPosition++;
         }
@@ -1124,21 +1088,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 return;
             }
 
-#if DEBUG
-            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-#endif
-
             var annotation = _currentCodeFrame.ValuesStack.Pop();
 
-#if DEBUG
-            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-#endif
-
             var positionedParameters = TakePositionedParameters(currentCommand.CountParams, true);
-
-#if DEBUG
-            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-#endif
 
             if (positionedParameters.Count == 1)
             {
@@ -1348,10 +1300,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void GoBackToPrevCodeFrame(ActionExecutionStatus targetActionExecutionStatus)
         {
-#if DEBUG
-            //Log($"targetActionExecutionStatus = {targetActionExecutionStatus}");
-#endif
-
             if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus == ActionExecutionStatus.Executing)
             {
                 var specialMark = _currentCodeFrame.SpecialMark;
@@ -1379,10 +1327,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             ProcessStatus? lastProcessStatus = null;
 
             var currentProcessInfoStatus = currentProcessInfo.Status;
-
-#if DEBUG
-            //Log($"currentProcessInfoStatus = {currentProcessInfoStatus}");
-#endif
 
             if (currentProcessInfoStatus == ProcessStatus.Running)
             {
@@ -1427,10 +1371,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 }
             }
 
-#if DEBUG
-            //Log($"lastProcessStatus = {lastProcessStatus}");
-#endif
-
             _codeFrames.Pop();
 
             if (_codeFrames.Count == 0)
@@ -1440,10 +1380,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             else
             {
                 _currentCodeFrame = _codeFrames.Peek();
-
-#if DEBUG
-                //Log($"_isCanceled = {_isCanceled}");
-#endif
 
                 if (_isCanceled)
                 {
@@ -1626,10 +1562,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 var lastProcessStatus = currentCodeFrame.LastProcessStatus.Value;
 
-#if DEBUG
-                //Log($"lastProcessStatus = {lastProcessStatus}");
-#endif
-
                 switch (lastProcessStatus)
                 {
                     case ProcessStatus.Completed:
@@ -1701,13 +1633,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void CallFunction(KindOfFunctionParameters kindOfParameters, int parametersCount, SyncOption syncOption)
         {
-#if DEBUG
-            //Log($"kindOfParameters = {kindOfParameters}");
-            //Log($"parametersCount = {parametersCount}");
-            //Log($"syncOption = {syncOption}");
-            //Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-#endif
-
             var valueStack = _currentCodeFrame.ValuesStack;
 
             var annotation = valueStack.Pop();
@@ -1840,10 +1765,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var timeout = GetTimeoutFromAnnotation(annotation);
                 var timeoutCancellationMode = GetTimeoutCancellationModeFromAnnotation(annotation);
 
-#if DEBUG
-                //Log($"[{methodName.ToHumanizedString()}] timeoutCancellationMode = {timeoutCancellationMode}");
-#endif
-
                 if (syncOption == SyncOption.Sync)
                 {
                     processInfo.ParentProcessInfo = _currentCodeFrame.ProcessInfo;
@@ -1865,10 +1786,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     }
 
                     var status = processInfo.Status;
-
-#if DEBUG
-                    //Log($"[{methodName.ToHumanizedString()}] status = {status}");
-#endif
 
                     switch (status)
                     {
@@ -1973,10 +1890,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             Value annotation, SyncOption syncOption, bool mayCallHost)
         {
-#if DEBUG
-            //Log($"methodName = {methodName}");
-#endif
-
             IExecutable method = null;
 
             switch(kindOfParameters)
@@ -2036,15 +1949,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private TimeoutCancellationMode GetTimeoutCancellationModeFromAnnotation(Value annotation)
         {
-#if DEBUG
-            //Log($"annotation = {annotation}");
-#endif
-
             var meaningRoles = annotation.MeaningRolesList;
-
-#if DEBUG
-            //Log($"meaningRoles = {meaningRoles.WriteListToString()}");
-#endif
 
             if(meaningRoles.IsNullOrEmpty())
             {
@@ -2177,10 +2082,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 {
                     targetLocalContext = executable.OwnLocalCodeExecutionContext;
                 }
-
-#if DEBUG
-                //Log($"completeAnnotationSystemEvent != null = {completeAnnotationSystemEvent != null}");
-#endif
 
                 var additionalSettings = GetAdditionalSettingsFromAnnotation(annotation, ownLocalCodeExecutionContext);
 

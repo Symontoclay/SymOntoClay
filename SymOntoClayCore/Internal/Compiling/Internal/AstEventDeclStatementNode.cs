@@ -38,10 +38,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(AstEventDeclStatement statement)
         {
-#if DEBUG
-            //Log($"statement = {statement.ToHumanizedString()}");
-#endif
-
             var node = new ExpressionNode(_context);
             node.Run(statement.Expression);
             AddCommands(node.Result);
@@ -62,9 +58,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 OperationCode = OperationCode.ClearStack
             });
 
-#if DEBUG
-            //DbgPrintCommands();
-#endif
         }
     }
 }

@@ -88,10 +88,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             {
                 var kind = statement.Kind;
 
-#if DEBUG
-                //Log($"kind = {kind}");
-#endif
-
                 switch(kind)
                 {
                     case KindOfAstStatement.Expression:

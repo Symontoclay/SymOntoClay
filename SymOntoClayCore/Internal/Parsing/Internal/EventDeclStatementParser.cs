@@ -74,12 +74,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");          
-#endif
-
             switch (_state)
             {
                 case State.Init:
@@ -112,10 +106,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 var parser = new AstExpressionParser(_context, _exprTerminationTokensList);
                                 parser.Run();
 
-#if DEBUG
-                                //Log($"parser.Result = {parser.Result}");
-#endif
-
                                 Result.Expression = parser.Result;
 
                                 _state = State.GotExpression;
@@ -143,10 +133,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     {
                                         var nextToken = _context.GetToken();
 
-#if DEBUG
-                                        //Log($"nextToken = {nextToken}");
-#endif
-
                                         switch (nextToken.TokenKind)
                                         {
                                             case TokenKind.Word:
@@ -155,10 +141,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                                     case KeyWordTokenKind.Cancel:
                                                     case KeyWordTokenKind.Canceled:
                                                         Result.KindOfLifeCycleEvent = ParseName($"{_currToken.Content} {nextToken.Content}");
-
-#if DEBUG
-                                                        //Log($"Result.KindOfLifeCycleEvent = {Result.KindOfLifeCycleEvent}");
-#endif
 
                                                         _state = State.GotKindOfEvent;
                                                         break;

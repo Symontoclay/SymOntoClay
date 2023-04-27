@@ -60,10 +60,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         /// <inheritdoc/>
         public void Run()
         {
-#if DEBUG
-            //Log("Begin");
-#endif
-
             lock(_lockObj)
             {
                 if(_runOnce)

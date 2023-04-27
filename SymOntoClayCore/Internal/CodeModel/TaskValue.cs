@@ -37,10 +37,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class TaskValue : Value
     {
-#if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         public TaskValue(Task systemTask, CancellationTokenSource cancellationTokenSource)
         {
             SystemTask = systemTask;
@@ -98,10 +94,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 _checkTaskEventWatcher = Task.Run(() => {
                     SystemTask.Wait();
-
-#if DEBUG
-                    //_gbcLogger.Info($"SystemTask.Status = {SystemTask.Status}");
-#endif
 
                     switch (SystemTask.Status)
                     {

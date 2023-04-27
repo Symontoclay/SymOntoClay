@@ -34,10 +34,6 @@ namespace SymOntoClay.Core.Internal.Helpers
 {
     public static class ProcessInfoHelper
     {
-#if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         public static void Wait(params IProcessInfo[] processes)
         {
             Wait(null, null, TimeoutCancellationMode.WeakCancel, null, processes);
@@ -85,21 +81,8 @@ namespace SymOntoClay.Core.Internal.Helpers
 
                     var delta = currentMilisecond - initialTicks;
 
-#if DEBUG
-                    //_gbcLogger.Info($"cancelAfter.Value = {cancelAfter.Value}");
-                    //_gbcLogger.Info($"initialTicks = {initialTicks}");
-                    //_gbcLogger.Info($"currentTick = {currentTick}");
-                    //_gbcLogger.Info($"currentMilisecond = {currentMilisecond}");
-                    //_gbcLogger.Info($"delta = {delta}");
-#endif
-
                     if (delta >= cancelAfter.Value)
                     {
-#if DEBUG
-                        //_gbcLogger.Info($"delta >= cancelAfter.Value !!!!!");
-                        //_gbcLogger.Info($"timeoutCancellationMode = {timeoutCancellationMode}");
-#endif
-
                         foreach (var proc in processes)
                         {
                             switch(timeoutCancellationMode)

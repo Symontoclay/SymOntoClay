@@ -35,10 +35,6 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class ProcessInfo: BaseProcessInfo
     {
-#if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         /// <inheritdoc/>
         public override ProcessStatus Status 
         { 
@@ -54,10 +50,6 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 lock (_statusLockObj)
                 {
-#if DEBUG
-                    //_gbcLogger.Info($"value = {value}");
-#endif
-
                     NSetStatus(value);
                 }
             }
@@ -76,10 +68,6 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
             _status = status;
-
-#if DEBUG
-            //_gbcLogger.Info($"_status = {_status}");
-#endif
 
             switch (_status)
             {

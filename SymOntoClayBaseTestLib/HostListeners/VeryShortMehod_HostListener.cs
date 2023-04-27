@@ -36,11 +36,8 @@ namespace SymOntoClay.BaseTestLib.HostListeners
         [BipedEndpoint("SomeVeryShortSilentFun", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
         public void SomeVeryShortSilentFunImpl(CancellationToken cancellationToken)
         {
-            //_logger.Log("SomeVeryShortSilentFunImpl Begin");
 
-            //Sleep(1000, cancellationToken);
 
-            //_logger.Log("SomeVeryShortSilentFunImpl End");
         }
     }
 }

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<extradoc>
+	<method name="Clone">
+		<summary>
+			Clones the instance and returns cloned instance.
+		</summary>
+		<returns>Cloned instance.</returns>
+	</method>
+	<method name="CloneWithContext">
+		<summary>
+			Clones the instance using special context and returns cloned instance.
+		</summary>
+		<param name="context">Special context for providing references continuity.</param>
+		 <returns>Cloned instance.</returns>		
+	</method>	
+</extradoc>

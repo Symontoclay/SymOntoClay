@@ -32,6 +32,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{24C693C1-B50D-4CE1-8408-CAC6E496F2A4}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		CommonDoc.xml = CommonDoc.xml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SymOntoClayNLPBinaryDict", "SymOntoClayNLPBinaryDict\SymOntoClayNLPBinaryDict.csproj", "{AF825015-D064-405A-976C-B07D940039B6}"
@@ -44,7 +45,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SymOntoClayHardTests", "Sym
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SymOntoClayStandardFacts", "SymOntoClayStandardFacts\SymOntoClayStandardFacts.csproj", "{208D11A7-A169-4244-AD9F-80403431D4D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SymOntoClayPlacesHardTests", "SymOntoClayPlacesHardTests\SymOntoClayPlacesHardTests.csproj", "{CA07056A-CB97-4855-BEA3-B82D368A60FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SymOntoClayPlacesHardTests", "SymOntoClayPlacesHardTests\SymOntoClayPlacesHardTests.csproj", "{CA07056A-CB97-4855-BEA3-B82D368A60FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

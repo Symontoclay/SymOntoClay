@@ -154,9 +154,8 @@
         </member>
         <member name="M:SymOntoClay.Core.DebugHelpers.DebugHelperOptions.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.DebugHelpers.DebugHelperOptions.ToString">
             <inheritdoc/>
@@ -617,16 +616,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.SEHGroup.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.SEHGroup.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.SEHGroup.ToString">
             <inheritdoc/>

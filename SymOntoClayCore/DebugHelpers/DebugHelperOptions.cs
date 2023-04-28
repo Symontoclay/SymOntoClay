@@ -38,10 +38,7 @@ namespace SymOntoClay.Core.DebugHelpers
         public bool EnableMark { get; set; } = true;
         public bool EnableParamsIfEmpty { get; set; } = true;
 
-        /// <summary>
-        /// Clones the instance and returns cloned instance.
-        /// </summary>
-        /// <returns>Cloned instance.</returns>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
         public DebugHelperOptions Clone()
         {
             var result = new DebugHelperOptions();

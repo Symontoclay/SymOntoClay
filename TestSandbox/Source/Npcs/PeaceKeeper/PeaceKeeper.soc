@@ -34,7 +34,7 @@ action `move and check`
 	    repeat
 		{
 		    @@host.go(to: @target)[: timeout = 1200, on completed {'on completed move' >> @>log; complete action;} :];
-		    //move(@target)[: timeout = 10000, on complete { 'on complete move' >> @>log; complete action;} :];
+		    //move(@target)[: timeout = 1200, on complete { 'on complete move' >> @>log; complete action;} :];
 			check();			
 		}
 
@@ -59,6 +59,6 @@ action move
 {		
 	op (@target)
 	{
-		@@host.go(to: @target);
+		@@host.go(to: @target) [: on complete { 'on complete move (host)' >> @>log; complete action;} :];
 	}
 }

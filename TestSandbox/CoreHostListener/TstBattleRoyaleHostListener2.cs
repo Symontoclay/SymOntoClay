@@ -79,5 +79,18 @@ namespace TestSandbox.CoreHostListener
 
             _logger.Log($"GoToImpl End");
         }
+
+        [BipedEndpoint("Stop", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
+        public void StopImpl(CancellationToken cancellationToken)
+        {
+            _logger.Log("StopImpl Begin");
+        }
+
+        [BipedEndpoint("Rotate", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
+        public void RotateImpl(CancellationToken cancellationToken, float? direction)
+        {
+            _logger.Log("RotateImpl Begin");
+            _logger.Log(direction.ToString());
+        }
     }
 }

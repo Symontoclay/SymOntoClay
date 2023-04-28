@@ -1,20 +1,64 @@
 ﻿app PeaceKeeper
 {
-    on Enter =>
+    //idle actions
+    //{
+    //    go();
+    //}
+	
+	on Enter =>
     {
         'Begin' >> @>log;
- 
-        Go()[:on complete { 'on complete' >> @>log; } :];
+
+        go();
 
         'End' >> @>log;
     }
+	
+	fun go()
+    {
+	    'Begin go' >> @>log;
+		`move and check`(#@(waypoint & random));
+		//@@host.go(to: #@(waypoint));
+        //@@host.go(to: #@(waypoint & random));
+		//@@host.go(to: #WP_43);
+		'End go' >> @>log;
+    }
 }
 
-action Go 
+action `move and check`
 {
-    op () => 
-    {
-        'Begin Go' >> @>log;
-        'End Go' >> @>log;
-    }
+    op (@target)
+	{
+	    'Begin move and check' >> @>log;
+
+	    repeat
+		{
+		    @@host.go(to: @target)[: timeout = 1200, on completed {'on completed move' >> @>log; complete action;} :];
+		    //move(@target)[: timeout = 10000, on complete { 'on complete move' >> @>log; complete action;} :];
+			check();			
+		}
+
+		'End move and check' >> @>log;
+	}
+}
+
+action check
+{
+    op ()
+	{
+	    'Begin check' >> @>log;
+	    @@host.`stop`();
+	    @@host.`rotate`(30);
+		@@host.`rotate`(-60);
+		@@host.`rotate`(30);
+		'End check' >> @>log;
+	}
+}
+
+action move
+{		
+	op (@target)
+	{
+		@@host.go(to: @target);
+	}
 }

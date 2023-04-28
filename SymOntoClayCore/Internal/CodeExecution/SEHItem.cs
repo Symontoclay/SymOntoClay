@@ -34,21 +34,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public RuleInstance Condition { get; set; }
         public int TargetPosition { get; set; }
 
-        /// <summary>
-        /// Clones the instance and returns cloned instance.
-        /// </summary>
-        /// <returns>Cloned instance.</returns>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
         public SEHItem Clone()
         {
             var context = new Dictionary<object, object>();
             return Clone(context);
         }
 
-        /// <summary>
-        /// Clones the instance using special context and returns cloned instance.
-        /// </summary>
-        /// <param name="context">Special context for providing references continuity.</param>
-        /// <returns>Cloned instance.</returns>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="CloneWithContext"]/*' />
         public SEHItem Clone(Dictionary<object, object> context)
         {
             if (context.ContainsKey(this))

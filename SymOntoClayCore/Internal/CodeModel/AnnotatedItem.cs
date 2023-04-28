@@ -188,30 +188,23 @@ namespace SymOntoClay.Core.Internal.CodeModel
             Annotations.Add(annotation);
         }
 
-        /// <summary>
-        /// Clones the instance and returns cloned instance.
-        /// </summary>
-        /// <returns>Cloned instance.</returns>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
         public AnnotatedItem CloneAnnotatedItem()
         {
             var context = new Dictionary<object, object>();
             return CloneAnnotatedItem(context);
         }
 
-        /// <summary>
-        /// Clones the instance using special context and returns cloned instance.
-        /// </summary>
-        /// <param name="context">Special context for providing references continuity.</param>
-        /// <returns>Cloned instance.</returns>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="CloneWithContext"]/*' />
         public abstract AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context);
 
         public void AppendAnnotations(AnnotatedItem source)
         {
-            var cloneContext = new Dictionary<object, object>();
-            AppendAnnotations(source, cloneContext);
+            var context = new Dictionary<object, object>();
+            AppendAnnotations(source, context);
         }
 
-        public void AppendAnnotations(AnnotatedItem source, Dictionary<object, object> cloneContext)
+        public void AppendAnnotations(AnnotatedItem source, Dictionary<object, object> context)
         {
             if(source.WhereSection == null)
             {
@@ -226,7 +219,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 foreach (var item in source.WhereSection)
                 {
-                    WhereSection.Add(item.CloneValue(cloneContext));
+                    WhereSection.Add(item.CloneValue(context));
                 }
             }
 
@@ -243,7 +236,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 foreach(var annotation in source.Annotations)
                 {
-                    Annotations.Add(annotation.Clone(cloneContext));
+                    Annotations.Add(annotation.Clone(context));
                 }
             }
         }

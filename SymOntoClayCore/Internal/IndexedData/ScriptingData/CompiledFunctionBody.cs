@@ -35,21 +35,14 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         public Dictionary<int, ScriptCommand> Commands { get; set; } = new Dictionary<int, ScriptCommand>();
         public Dictionary<int, SEHGroup> SEH { get; set; } = new Dictionary<int, SEHGroup>();
 
-        /// <summary>
-        /// Clones the instance and returns cloned instance.
-        /// </summary>
-        /// <returns>Cloned instance.</returns>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
         public CompiledFunctionBody Clone()
         {
             var context = new Dictionary<object, object>();
             return Clone(context);
         }
 
-        /// <summary>
-        /// Clones the instance using special context and returns cloned instance.
-        /// </summary>
-        /// <param name="context">Special context for providing references continuity.</param>
-        /// <returns>Cloned instance.</returns>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="CloneWithContext"]/*' />
         public CompiledFunctionBody Clone(Dictionary<object, object> context)
         {
             if (context.ContainsKey(this))

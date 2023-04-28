@@ -168,21 +168,21 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override Value CloneValue(Dictionary<object, object> cloneContext)
+        public override Value CloneValue(Dictionary<object, object> context)
         {
-            if (cloneContext.ContainsKey(this))
+            if (context.ContainsKey(this))
             {
-                return (Value)cloneContext[this];
+                return (Value)context[this];
             }
 
             var result = new ConditionalEntitySourceValue();
-            cloneContext[this] = result;
+            context[this] = result;
 
-            result.Name = Name?.Clone(cloneContext);
-            result.Expression = Expression?.Clone(cloneContext);
-            result.LogicalQuery = LogicalQuery?.Clone(cloneContext);
+            result.Name = Name?.Clone(context);
+            result.Expression = Expression?.Clone(context);
+            result.LogicalQuery = LogicalQuery?.Clone(context);
 
-            result.AppendAnnotations(this, cloneContext);
+            result.AppendAnnotations(this, context);
 
             return result;
         }

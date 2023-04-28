@@ -196,22 +196,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Clones the instance and returns cloned instance.
-        /// </summary>
-        /// <returns>Cloned instance.</returns>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
         public Value CloneValue()
         {
-            var cloneContext = new Dictionary<object, object>();
-            return CloneValue(cloneContext);
+            var context = new Dictionary<object, object>();
+            return CloneValue(context);
         }
 
-        /// <summary>
-        /// Clones the instance using special context and returns cloned instance.
-        /// </summary>
-        /// <param name="cloneContext">Special context for providing references continuity.</param>
-        /// <returns>Cloned instance.</returns>
-        public abstract Value CloneValue(Dictionary<object, object> cloneContext);
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="CloneWithContext"]/*' />
+        public abstract Value CloneValue(Dictionary<object, object> context);
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

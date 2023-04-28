@@ -146,21 +146,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return Clone(context);
         }
 
-        /// <summary>
-        /// Clones the instance and returns cloned instance.
-        /// </summary>
-        /// <returns>Cloned instance.</returns>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
         public FuzzyLogicNonNumericSequenceValue Clone()
         {
             var context = new Dictionary<object, object>();
             return Clone(context);
         }
 
-        /// <summary>
-        /// Clones the instance using special context and returns cloned instance.
-        /// </summary>
-        /// <param name="context">Special context for providing references continuity.</param>
-        /// <returns>Cloned instance.</returns>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="CloneWithContext"]/*' />
         public FuzzyLogicNonNumericSequenceValue Clone(Dictionary<object, object> context)
         {
             if (context.ContainsKey(this))
@@ -180,9 +173,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override Value CloneValue(Dictionary<object, object> cloneContext)
+        public override Value CloneValue(Dictionary<object, object> context)
         {
-            return Clone(cloneContext);
+            return Clone(context);
         }
 
         /// <inheritdoc/>

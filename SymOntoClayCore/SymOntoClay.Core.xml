@@ -653,16 +653,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.SEHItem.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.SEHItem.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.SEHItem.ToString">
             <inheritdoc/>
@@ -711,16 +708,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionDef.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionDef.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionDef.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
@@ -892,16 +886,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
@@ -926,16 +917,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActivatingItem.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActivatingItem.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActivatingItem.PropertiesToString(System.UInt32)">
             <inheritdoc/>
@@ -1009,16 +997,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotatedItem.CloneAnnotatedItem">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotatedItem.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotatedItem.GetAnnotationValue">
             <inheritdoc/>
@@ -1076,16 +1061,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Annotation.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Annotation.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Annotation.ToString">
             <inheritdoc/>
@@ -1161,16 +1143,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent.ToString">
             <inheritdoc/>
@@ -1264,16 +1243,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnonymousObject.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnonymousObject.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnonymousObject.PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
@@ -1289,32 +1265,26 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.App.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.App.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.App.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.AstExpression.CloneAstExpression">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.AstExpression.CloneAstExpression(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.AstExpression.ToString">
             <inheritdoc/>
@@ -1390,16 +1360,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.CallingParameter.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.CallingParameter.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.CallingParameter.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
@@ -1673,16 +1640,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstCatchStatement.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstCatchStatement.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstCatchStatement.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
@@ -1761,16 +1725,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstElifStatement.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstElifStatement.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstElifStatement.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
@@ -1930,16 +1891,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstRejectStatement.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstRejectStatement.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstRejectStatement.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
@@ -1955,16 +1913,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstRepeatStatement.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstRepeatStatement.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstRepeatStatement.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
@@ -2085,16 +2040,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstStatement.CloneAstStatement">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstStatement.CloneAstStatement(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstStatement.PropertiesToString(System.UInt32)">
             <inheritdoc/>
@@ -2182,16 +2134,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstWhileStatement.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstWhileStatement.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstWhileStatement.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
@@ -2291,16 +2240,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.BindingVariableItem.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.BindingVariableItem.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.BindingVariableItem.ToString">
             <inheritdoc/>
@@ -2331,16 +2277,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.BindingVariables.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.BindingVariables.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.BindingVariables.ToString">
             <inheritdoc/>
@@ -2380,16 +2323,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Channel.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Channel.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Channel.PropertiesToString(System.UInt32)">
             <inheritdoc/>
@@ -2405,16 +2345,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions.ToString">
             <inheritdoc/>
@@ -2433,16 +2370,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Class.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Class.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Class.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
@@ -2503,16 +2437,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeItem.CloneCodeItem">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeItem.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="cloneContext">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeItem.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
@@ -2531,16 +2462,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeItemDirective.CloneCodeItemDirective">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeItemDirective.CloneCodeItemDirective(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeItemDirective.PropertiesToString(System.UInt32)">
             <inheritdoc/>
@@ -2660,16 +2588,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr.TriggerConditionNode.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr.TriggerConditionNode.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr.TriggerConditionNode.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
@@ -2700,16 +2625,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Constructor.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Constructor.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Constructor.CloneFunction(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
@@ -2731,16 +2653,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.EntityConditionExpressionNode.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.EntityConditionExpressionNode.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.EntityConditionExpressionNode.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
@@ -2834,16 +2753,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ErrorValue.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ErrorValue.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ErrorValue.PropertiesToString(System.UInt32)">
             <inheritdoc/>
@@ -2877,16 +2793,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Field.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Field.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Field.PropertiesToString(System.UInt32)">
             <inheritdoc/>
@@ -2977,16 +2890,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionArgumentInfo.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionArgumentInfo.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionArgumentInfo.ToString">
             <inheritdoc/>
@@ -3041,16 +2951,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FuzzyLogicNonNumericSequenceValue.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FuzzyLogicNonNumericSequenceValue.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FuzzyLogicNonNumericSequenceValue.CloneValue(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
@@ -3075,16 +2982,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FuzzyLogicNonNumericValue.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FuzzyLogicNonNumericValue.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FuzzyLogicNonNumericValue.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
@@ -3106,16 +3010,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FuzzyLogicOperator.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FuzzyLogicOperator.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FuzzyLogicOperator.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
@@ -3272,16 +3173,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.IdleActionItem.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.IdleActionItem.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.IdleActionItem.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
@@ -3317,16 +3215,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InheritanceItem.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InheritanceItem.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InheritanceItem.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
@@ -3360,16 +3255,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InlineTrigger.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InlineTrigger.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InlineTrigger.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
@@ -3394,16 +3286,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceCodeItem.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceCodeItem.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceCodeItem.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
@@ -3481,16 +3370,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Lib.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Lib.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Lib.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
@@ -3509,16 +3395,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariable.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariable.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariable.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
@@ -3540,16 +3423,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariableConstraint.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariableConstraint.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariableConstraint.ToString">
             <inheritdoc/>
@@ -3580,16 +3460,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariableConstraintItem.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariableConstraintItem.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariableConstraintItem.ToString">
             <inheritdoc/>
@@ -3653,16 +3530,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalModalityExpressionNode.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalModalityExpressionNode.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalModalityExpressionNode.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
             <inheritdoc/>
@@ -3744,16 +3618,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
@@ -3903,16 +3774,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.MutablePartOfRuleInstance.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.MutablePartOfRuleInstance.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.MutablePartOfRuleInstance.ToString">
             <inheritdoc/>
@@ -3973,16 +3841,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.MutablePartOfRuleInstanceValue.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.MutablePartOfRuleInstanceValue.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.MutablePartOfRuleInstanceValue.PropertiesToString(System.UInt32)">
             <inheritdoc/>
@@ -4013,16 +3878,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.MutuallyExclusiveStatesSet.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.MutuallyExclusiveStatesSet.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.MutuallyExclusiveStatesSet.PropertiesToString(System.UInt32)">
             <inheritdoc/>
@@ -4047,16 +3909,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NamedFunction.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NamedFunction.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NamedFunction.CloneFunction(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
@@ -4129,16 +3988,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.PropertiesToString(System.UInt32)">
             <inheritdoc/>
@@ -4214,16 +4070,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
@@ -4293,16 +4146,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart.PropertiesToString(System.UInt32)">
             <inheritdoc/>
@@ -4354,16 +4204,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RangeBoundary.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RangeBoundary.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RangeBoundary.ToString">
             <inheritdoc/>
@@ -4418,16 +4265,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RangeValue.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RangeValue.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RangeValue.PropertiesToString(System.UInt32)">
             <inheritdoc/>
@@ -4464,16 +4308,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationDescription.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationDescription.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationDescription.PropertiesToString(System.UInt32)">
             <inheritdoc/>
@@ -4489,16 +4330,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationParameterDescription.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationParameterDescription.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationParameterDescription.ToString">
             <inheritdoc/>
@@ -4556,16 +4394,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
@@ -4725,16 +4560,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.SecondaryRulePart.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.SecondaryRulePart.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.SecondaryRulePart.PropertiesToString(System.UInt32)">
             <inheritdoc/>
@@ -4849,16 +4681,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StateDef.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StateDef.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StateDef.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
@@ -4958,16 +4787,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.CloneValue(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
@@ -5001,16 +4827,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Synonym.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Synonym.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Synonym.PropertiesToString(System.UInt32)">
             <inheritdoc/>
@@ -5078,16 +4901,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Value.CloneValue">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Value.CloneValue(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="cloneContext">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Value.PropertiesToString(System.UInt32)">
             <inheritdoc/>
@@ -5106,16 +4926,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Var.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Var.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Var.PropertiesToString(System.UInt32)">
             <inheritdoc/>
@@ -5233,16 +5050,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.World.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.World.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.World.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
@@ -5843,16 +5657,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.DefaultSettingsOfCodeEntity.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DefaultSettingsOfCodeEntity.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DefaultSettingsOfCodeEntity.ToString">
             <inheritdoc/>
@@ -6149,16 +5960,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.CompiledFunctionBody.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.CompiledFunctionBody.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.CompiledFunctionBody.ToString">
             <inheritdoc/>
@@ -6238,16 +6046,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.ScriptCommand.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.ScriptCommand.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.ScriptCommand.ToString">
             <inheritdoc/>
@@ -7328,16 +7133,13 @@
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RawStatements.SetRawStatement.Clone">
             <summary>
-            Clones the instance and returns cloned instance.
-            </summary>
-            <returns>Cloned instance.</returns>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RawStatements.SetRawStatement.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <summary>
-            Clones the instance using special context and returns cloned instance.
-            </summary>
-            <param name="context">Special context for providing references continuity.</param>
-            <returns>Cloned instance.</returns>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RawStatements.SetRawStatement.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>

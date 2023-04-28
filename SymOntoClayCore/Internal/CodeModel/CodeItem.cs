@@ -216,36 +216,29 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override Value CloneValue(Dictionary<object, object> cloneContext)
+        public override Value CloneValue(Dictionary<object, object> context)
         {
-            return CloneCodeItem(cloneContext);
+            return CloneCodeItem(context);
         }
 
-        /// <summary>
-        /// Clones the instance and returns cloned instance.
-        /// </summary>
-        /// <returns>Cloned instance.</returns>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
         public CodeItem CloneCodeItem()
         {
             var context = new Dictionary<object, object>();
             return CloneCodeItem(context);
         }
 
-        /// <summary>
-        /// Clones the instance using special context and returns cloned instance.
-        /// </summary>
-        /// <param name="cloneContext">Special context for providing references continuity.</param>
-        /// <returns>Cloned instance.</returns>
-        public abstract CodeItem CloneCodeItem(Dictionary<object, object> cloneContext);
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="CloneWithContext"]/*' />
+        public abstract CodeItem CloneCodeItem(Dictionary<object, object> context);
 
-        protected void AppendCodeItem(CodeItem source, Dictionary<object, object> cloneContext)
+        protected void AppendCodeItem(CodeItem source, Dictionary<object, object> context)
         {
-            Name = source.Name?.Clone(cloneContext);
-            InheritanceItems = source.InheritanceItems?.Select(p => p.Clone(cloneContext)).ToList();
+            Name = source.Name?.Clone(context);
+            InheritanceItems = source.InheritanceItems?.Select(p => p.Clone(context)).ToList();
 
             CodeFile = source.CodeFile;
             ParentCodeEntity = source.ParentCodeEntity;
-            SubItems = source.SubItems?.Select(p => p.CloneCodeItem(cloneContext)).ToList();
+            SubItems = source.SubItems?.Select(p => p.CloneCodeItem(context)).ToList();
 
             TypeOfAccess = source.TypeOfAccess;
 
@@ -258,17 +251,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 Holder = source.Holder;
             }
 
-            Directives = source.Directives?.Select(p => p.CloneCodeItemDirective(cloneContext)).ToList();
+            Directives = source.Directives?.Select(p => p.CloneCodeItemDirective(context)).ToList();
 
-            ActivatingConditions = source.ActivatingConditions?.Select(p => p.Clone(cloneContext)).ToList();
-            DeactivatingConditions = source.DeactivatingConditions?.Select(p => p.Clone(cloneContext)).ToList();
-            IdleActionItems = source.IdleActionItems?.Select(p => p.Clone(cloneContext)).ToList();
+            ActivatingConditions = source.ActivatingConditions?.Select(p => p.Clone(context)).ToList();
+            DeactivatingConditions = source.DeactivatingConditions?.Select(p => p.Clone(context)).ToList();
+            IdleActionItems = source.IdleActionItems?.Select(p => p.Clone(context)).ToList();
 
-            Priority = source.Priority?.CloneValue(cloneContext);
+            Priority = source.Priority?.CloneValue(context);
 
-            ImportsList = source.ImportsList?.Select(p => p.Clone(cloneContext)).ToList();
+            ImportsList = source.ImportsList?.Select(p => p.Clone(context)).ToList();
 
-            AppendAnnotations(source, cloneContext);
+            AppendAnnotations(source, context);
         }
 
         /// <inheritdoc/>

@@ -121,17 +121,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override Value CloneValue(Dictionary<object, object> cloneContext)
+        public override Value CloneValue(Dictionary<object, object> context)
         {
-            if (cloneContext.ContainsKey(this))
+            if (context.ContainsKey(this))
             {
-                return (Value)cloneContext[this];
+                return (Value)context[this];
             }
 
-            var result = new WaypointSourceValue(Distance, HorizontalAngle, Name?.Clone(cloneContext));
-            cloneContext[this] = result;
+            var result = new WaypointSourceValue(Distance, HorizontalAngle, Name?.Clone(context));
+            context[this] = result;
 
-            result.AppendAnnotations(this, cloneContext);
+            result.AppendAnnotations(this, context);
 
             return result;
         }

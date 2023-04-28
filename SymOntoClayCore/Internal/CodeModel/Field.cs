@@ -54,26 +54,19 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public List<StrongIdentifierValue> TypesList { get; set; } = new List<StrongIdentifierValue>();
 
         /// <inheritdoc/>
-        public override CodeItem CloneCodeItem(Dictionary<object, object> cloneContext)
+        public override CodeItem CloneCodeItem(Dictionary<object, object> context)
         {
-            return Clone(cloneContext);
+            return Clone(context);
         }
 
-        /// <summary>
-        /// Clones the instance and returns cloned instance.
-        /// </summary>
-        /// <returns>Cloned instance.</returns>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
         public Field Clone()
         {
             var context = new Dictionary<object, object>();
             return Clone(context);
         }
 
-        /// <summary>
-        /// Clones the instance using special context and returns cloned instance.
-        /// </summary>
-        /// <param name="context">Special context for providing references continuity.</param>
-        /// <returns>Cloned instance.</returns>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="CloneWithContext"]/*' />
         public Field Clone(Dictionary<object, object> context)
         {
             if (context.ContainsKey(this))
@@ -89,12 +82,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return result;
         }
 
-        protected void AppendVar(Field source, Dictionary<object, object> cloneContext)
+        protected void AppendVar(Field source, Dictionary<object, object> context)
         {
-            Value = source.Value?.CloneAstExpression(cloneContext);
-            TypesList = source.TypesList?.Select(p => p.Clone(cloneContext)).ToList();
+            Value = source.Value?.CloneAstExpression(context);
+            TypesList = source.TypesList?.Select(p => p.Clone(context)).ToList();
 
-            AppendCodeItem(source, cloneContext);
+            AppendCodeItem(source, context);
         }
 
         /// <inheritdoc/>

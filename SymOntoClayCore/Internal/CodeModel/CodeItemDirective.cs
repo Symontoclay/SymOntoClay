@@ -43,21 +43,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return CloneCodeItemDirective(context);
         }
 
-        /// <summary>
-        /// Clones the instance and returns cloned instance.
-        /// </summary>
-        /// <returns>Cloned instance.</returns>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
         public CodeItemDirective CloneCodeItemDirective()
         {
             var context = new Dictionary<object, object>();
             return CloneCodeItemDirective(context);
         }
 
-        /// <summary>
-        /// Clones the instance using special context and returns cloned instance.
-        /// </summary>
-        /// <param name="context">Special context for providing references continuity.</param>
-        /// <returns>Cloned instance.</returns>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="CloneWithContext"]/*' />
         public abstract CodeItemDirective CloneCodeItemDirective(Dictionary<object, object> context);
 
         /// <inheritdoc/>

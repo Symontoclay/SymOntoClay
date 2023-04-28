@@ -69,16 +69,16 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
             return result;
         }
 
-        protected void FillUpCallingFunctionAstExpression(CallingFunctionAstExpression source, Dictionary<object, object> cloneContext)
+        protected void FillUpCallingFunctionAstExpression(CallingFunctionAstExpression source, Dictionary<object, object> context)
         {
-            Left = source.Left.CloneAstExpression(cloneContext);
+            Left = source.Left.CloneAstExpression(context);
             
-            Parameters = source.Parameters?.Select(p => p.Clone(cloneContext)).ToList();
+            Parameters = source.Parameters?.Select(p => p.Clone(context)).ToList();
 
             IsAsync = source.IsAsync;
             IsChild = source.IsChild;
 
-            AppendAnnotations(source, cloneContext);
+            AppendAnnotations(source, context);
         }
 
         /// <inheritdoc/>

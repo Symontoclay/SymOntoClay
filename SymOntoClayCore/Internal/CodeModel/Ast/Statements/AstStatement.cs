@@ -31,21 +31,14 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
     {
         public abstract KindOfAstStatement Kind { get; }
 
-        /// <summary>
-        /// Clones the instance and returns cloned instance.
-        /// </summary>
-        /// <returns>Cloned instance.</returns>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
         public AstStatement CloneAstStatement()
         {
             var context = new Dictionary<object, object>();
             return CloneAstStatement(context);
         }
 
-        /// <summary>
-        /// Clones the instance using special context and returns cloned instance.
-        /// </summary>
-        /// <param name="context">Special context for providing references continuity.</param>
-        /// <returns>Cloned instance.</returns>
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="CloneWithContext"]/*' />
         public abstract AstStatement CloneAstStatement(Dictionary<object, object> context);
 
         /// <inheritdoc/>

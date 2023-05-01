@@ -152,7 +152,8 @@ namespace TestSandbox
             //TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();
-            TstPlacesHandler();//<==
+            TstBattleRoyaleHandler();//<==
+            //TstPlacesHandler();//<==
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
@@ -1700,6 +1701,16 @@ action Go
             _logger.Log("Begin");
 
             var handler = new ParsingHandler();
+            handler.Run();
+
+            _logger.Log("End");
+        }
+
+        private static void TstBattleRoyaleHandler()
+        {
+            _logger.Log("Begin");
+
+            var handler = new BattleRoyaleHandler();
             handler.Run();
 
             _logger.Log("End");

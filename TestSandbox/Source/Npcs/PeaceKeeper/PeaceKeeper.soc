@@ -40,6 +40,12 @@ action `move and check`
 
 		'End move and check' >> @>log;
 	}
+
+	on {: see(I, $_) :} => 
+	{
+	    'see(I, $_)' >> @>log;
+		weak cancel action;
+	}
 }
 
 action check

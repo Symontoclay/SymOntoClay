@@ -264,6 +264,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     }
                 }
 
+#if DEBUG
+                Log($"currentCodeFrame.ToDbgString() = {currentCodeFrame.ToDbgString()}");
+#endif
+
                 var currentPosition = currentCodeFrame.CurrentPosition;
 
                 var compiledFunctionBodyCommands = currentCodeFrame.CompiledFunctionBody.Commands;
@@ -1300,6 +1304,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void GoBackToPrevCodeFrame(ActionExecutionStatus targetActionExecutionStatus)
         {
+#if DEBUG
+            Log($"targetActionExecutionStatus = {targetActionExecutionStatus}");
+#endif
+
             if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus == ActionExecutionStatus.Executing)
             {
                 var specialMark = _currentCodeFrame.SpecialMark;
@@ -1327,6 +1335,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             ProcessStatus? lastProcessStatus = null;
 
             var currentProcessInfoStatus = currentProcessInfo.Status;
+
+#if DEBUG
+            Log($"currentProcessInfoStatus = {currentProcessInfoStatus}");
+#endif
 
             if (currentProcessInfoStatus == ProcessStatus.Running)
             {

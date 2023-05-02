@@ -144,7 +144,7 @@ namespace SymOntoClay.Core
             ProcessSetStatus(ProcessStatus.WeakCanceled);
         }
 
-        private bool NIsFinished
+        protected bool NIsFinished
         {
             get
             {

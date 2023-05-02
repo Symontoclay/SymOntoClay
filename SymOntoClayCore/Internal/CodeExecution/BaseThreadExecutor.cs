@@ -1824,17 +1824,21 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             break;
 
                         case ProcessStatus.Canceled:
-                            _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Canceled;
-
-                            if (cancelAnnotationSystemEvent != null)
+                            if(_currentCodeFrame.ProcessInfo.Status != ProcessStatus.WeakCanceled)
                             {
-                                ExecCallEvent(cancelAnnotationSystemEvent);
+                                _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Canceled;
+
+                                if (cancelAnnotationSystemEvent != null)
+                                {
+                                    ExecCallEvent(cancelAnnotationSystemEvent);
+                                }
+
+                                _isCanceled = true;
+
+                                GoBackToPrevCodeFrame(ActionExecutionStatus.Canceled);
+                                return;
                             }
-
-                            _isCanceled = true;
-
-                            GoBackToPrevCodeFrame(ActionExecutionStatus.Canceled);
-                            return;
+                            break;
 
                         case ProcessStatus.Faulted:
                             _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Faulted;

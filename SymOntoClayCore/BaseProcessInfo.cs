@@ -95,12 +95,29 @@ namespace SymOntoClay.Core
         /// <inheritdoc/>
         public abstract void WeakCancel();
 
-        protected void NCancelChildren()
+        protected void NCancelChildren(ProcessStatus status)
         {
-            foreach (var child in _childrenProcessInfoList.ToList())
+            switch(status)
             {
-                child.Cancel();
+                case ProcessStatus.WeakCanceled:
+                    foreach (var child in _childrenProcessInfoList.ToList())
+                    {
+                        child.WeakCancel();
+                    }
+                    break;
+
+                case ProcessStatus.Canceled:
+                    foreach (var child in _childrenProcessInfoList.ToList())
+                    {
+                        child.Cancel();
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(status), status, null);
             }
+
+
         }
 
         /// <inheritdoc/>

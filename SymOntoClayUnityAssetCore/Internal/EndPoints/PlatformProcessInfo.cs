@@ -87,17 +87,17 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             {
                 case ProcessStatus.Completed:
                     EmitOnComplete();
-                    ProcessGeneralFinishStatuses();
+                    ProcessGeneralFinishStatuses(ProcessStatus.WeakCanceled);
                     break;
 
                 case ProcessStatus.WeakCanceled:
                     EmitOnWeakCanceled();
-                    ProcessGeneralFinishStatuses();
+                    ProcessGeneralFinishStatuses(ProcessStatus.WeakCanceled);
                     break;
 
                 case ProcessStatus.Canceled:
                 case ProcessStatus.Faulted:
-                    ProcessGeneralFinishStatuses();
+                    ProcessGeneralFinishStatuses(ProcessStatus.Canceled);
                     break;
             }
         }
@@ -150,10 +150,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             });
         }
 
-        private void ProcessGeneralFinishStatuses()
+        private void ProcessGeneralFinishStatuses(ProcessStatus status)
         {
             EmitOnFinish();
-            NCancelChildren();
+            NCancelChildren(status);
         }
 
         /// <inheritdoc/>
@@ -183,7 +183,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 _status = ProcessStatus.Canceled;
                 _cancellationTokenSource.Cancel();
 
-                ProcessGeneralFinishStatuses();
+                ProcessGeneralFinishStatuses(ProcessStatus.Canceled);
             }
         }
 
@@ -201,7 +201,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 _cancellationTokenSource.Cancel();
 
                 EmitOnWeakCanceled();
-                ProcessGeneralFinishStatuses();
+                ProcessGeneralFinishStatuses(ProcessStatus.WeakCanceled);
             }
         }
 

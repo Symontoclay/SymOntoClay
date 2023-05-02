@@ -73,17 +73,17 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 case ProcessStatus.Completed:
                     EmitOnComplete();
-                    ProcessGeneralFinishStatuses();
+                    ProcessGeneralFinishStatuses(ProcessStatus.WeakCanceled);
                     break;
 
                 case ProcessStatus.WeakCanceled:
                     EmitOnWeakCanceled();
-                    ProcessGeneralFinishStatuses();
+                    ProcessGeneralFinishStatuses(ProcessStatus.WeakCanceled);
                     break;
 
                 case ProcessStatus.Canceled:                
                 case ProcessStatus.Faulted:
-                    ProcessGeneralFinishStatuses();
+                    ProcessGeneralFinishStatuses(ProcessStatus.Canceled);
                     break;
             }
         }
@@ -136,10 +136,10 @@ namespace SymOntoClay.Core.Internal.Instances
             });
         }
 
-        private void ProcessGeneralFinishStatuses()
+        private void ProcessGeneralFinishStatuses(ProcessStatus status)
         {
             EmitOnFinish();
-            NCancelChildren();
+            NCancelChildren(status);
         }
 
         /// <inheritdoc/>

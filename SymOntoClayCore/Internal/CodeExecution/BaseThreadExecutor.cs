@@ -1383,6 +1383,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 }
             }
 
+#if DEBUG
+            Log($"_isCanceled = {_isCanceled}");
+#endif
+
             _codeFrames.Pop();
 
             if (_codeFrames.Count == 0)

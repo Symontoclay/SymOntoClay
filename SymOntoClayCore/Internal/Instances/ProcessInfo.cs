@@ -266,7 +266,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 _status = ProcessStatus.Canceled;
 
-                ProcessGeneralFinishStatuses();
+                ProcessGeneralFinishStatuses(ProcessStatus.Canceled);
             }
         }
 
@@ -283,7 +283,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 _status = ProcessStatus.WeakCanceled;
 
                 EmitOnWeakCanceled();
-                ProcessGeneralFinishStatuses();
+                ProcessGeneralFinishStatuses(ProcessStatus.WeakCanceled);
             }
         }
 

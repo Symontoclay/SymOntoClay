@@ -265,7 +265,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 }
 
 #if DEBUG
-                Log($"currentCodeFrame.ToDbgString() = {currentCodeFrame.ToDbgString()}");
+                //Log($"currentCodeFrame.ToDbgString() = {currentCodeFrame.ToDbgString()}");
 #endif
 
                 var currentPosition = currentCodeFrame.CurrentPosition;
@@ -1305,7 +1305,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void GoBackToPrevCodeFrame(ActionExecutionStatus targetActionExecutionStatus)
         {
 #if DEBUG
-            Log($"targetActionExecutionStatus = {targetActionExecutionStatus}");
+            //Log($"targetActionExecutionStatus = {targetActionExecutionStatus}");
 #endif
 
             if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus == ActionExecutionStatus.Executing)
@@ -1337,7 +1337,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var currentProcessInfoStatus = currentProcessInfo.Status;
 
 #if DEBUG
-            Log($"currentProcessInfoStatus = {currentProcessInfoStatus}");
+            //Log($"currentProcessInfoStatus = {currentProcessInfoStatus}");
 #endif
 
             if (currentProcessInfoStatus == ProcessStatus.Running)
@@ -1384,7 +1384,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            Log($"_isCanceled = {_isCanceled}");
+            //Log($"_isCanceled = {_isCanceled}");
 #endif
 
             _codeFrames.Pop();
@@ -1824,21 +1824,17 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             break;
 
                         case ProcessStatus.Canceled:
-                            if(_currentCodeFrame.ProcessInfo.Status != ProcessStatus.WeakCanceled)
+                            _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Canceled;
+
+                            if (cancelAnnotationSystemEvent != null)
                             {
-                                _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Canceled;
-
-                                if (cancelAnnotationSystemEvent != null)
-                                {
-                                    ExecCallEvent(cancelAnnotationSystemEvent);
-                                }
-
-                                _isCanceled = true;
-
-                                GoBackToPrevCodeFrame(ActionExecutionStatus.Canceled);
-                                return;
+                                ExecCallEvent(cancelAnnotationSystemEvent);
                             }
-                            break;
+
+                            _isCanceled = true;
+
+                            GoBackToPrevCodeFrame(ActionExecutionStatus.Canceled);
+                            return;
 
                         case ProcessStatus.Faulted:
                             _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Faulted;

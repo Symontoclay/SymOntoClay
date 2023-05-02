@@ -65,9 +65,19 @@ namespace SymOntoClay.Core.Internal.Helpers
                 {
                     if(executionCoordinators.Any(p => p.ExecutionStatus != ActionExecutionStatus.Executing))
                     {
-                        foreach(var proc in processes)
+                        if(executionCoordinators.Any(p => p.ExecutionStatus == ActionExecutionStatus.Canceled))
                         {
-                            proc.Cancel();
+                            foreach (var proc in processes)
+                            {
+                                proc.Cancel();
+                            }
+                        }
+                        else
+                        {
+                            foreach (var proc in processes)
+                            {
+                                proc.WeakCancel();
+                            }
                         }
 
                         return;

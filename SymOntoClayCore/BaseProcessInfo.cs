@@ -20,9 +20,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using Newtonsoft.Json.Linq;
 using NLog;
 using NLog.Fluent;
 using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -51,53 +53,167 @@ namespace SymOntoClay.Core
         public abstract string EndPointName { get; }
 
         /// <inheritdoc/>
-        public abstract ProcessStatus Status { get; set; }
+        public ProcessStatus Status 
+        {
+            get
+            {
+                lock (_statusLockObj)
+                {
+                    return _status;
+                }
+            }
+
+            set
+            {
+                lock (_statusLockObj)
+                {
+                    if (_status == value)
+                    {
+                        return;
+                    }
+
+                    if (NIsFinished && value != ProcessStatus.WeakCanceled)
+                    {
+                        return;
+                    }
+
+                    _status = value;
+                }
+
+                ProcessSetStatus(value);
+            }
+        }
 
         /// <inheritdoc/>
         public bool IsFinished
         {
             get
             {
-                lock(_statusLockObj)
+                lock (_statusLockObj)
                 {
                     return NIsFinished;
                 }
             }
         }
 
-        protected bool NIsFinished
+        /// <inheritdoc/>
+        public void Start()
+        {
+            lock (_statusLockObj)
+            {
+                if(_status != ProcessStatus.Created)
+                {
+                    return;
+                }
+
+                _status = ProcessStatus.Running;
+            }
+
+            ProcessPlatformStart();
+        }
+
+        /// <inheritdoc/>
+        public void Cancel()
+        {
+            lock (_statusLockObj)
+            {
+                if (NIsFinished)
+                {
+                    return;
+                }
+
+                _status = ProcessStatus.Canceled;
+            }
+
+            ProcessSetStatus(ProcessStatus.Canceled);
+        }
+
+        /// <inheritdoc/>
+        public void WeakCancel()
+        {
+            lock (_statusLockObj)
+            {
+                if (NIsFinished)
+                {
+                    return;
+                }
+
+                _status = ProcessStatus.WeakCanceled;
+            }
+
+            ProcessSetStatus(ProcessStatus.WeakCanceled);
+        }
+
+        private bool NIsFinished
         {
             get
             {
-                var status = Status;
+                var status = _status;
                 return status == ProcessStatus.Completed || status == ProcessStatus.Canceled || status == ProcessStatus.WeakCanceled || status == ProcessStatus.Faulted;
             }
         }
 
-        /// <inheritdoc/>
-        public abstract IReadOnlyList<int> Devices { get; }
-
-        /// <inheritdoc/>
-        public abstract event ProcessInfoEvent OnFinish;
-
-        /// <inheritdoc/>
-        public abstract event ProcessInfoEvent OnComplete;
-
-        /// <inheritdoc/>
-        public abstract event ProcessInfoEvent OnWeakCanceled;
-
-        /// <inheritdoc/>
-        public abstract void Start();
-
-        /// <inheritdoc/>
-        public abstract void Cancel();
-
-        /// <inheritdoc/>
-        public abstract void WeakCancel();
-
-        protected void NCancelChildren(ProcessStatus status)
+        private void ProcessSetStatus(ProcessStatus status)
         {
-            switch(status)
+            switch (status)
+            {
+                case ProcessStatus.Completed:
+                    EmitOnComplete();
+                    ProcessGeneralFinishStatuses(ProcessStatus.WeakCanceled);
+                    break;
+
+                case ProcessStatus.WeakCanceled:
+                    EmitOnWeakCanceled();
+                    ProcessGeneralFinishStatuses(ProcessStatus.WeakCanceled);
+                    ProcessPlatformCancelation();
+                    break;
+
+                case ProcessStatus.Canceled:
+                case ProcessStatus.Faulted:
+                    ProcessGeneralFinishStatuses(ProcessStatus.Canceled);
+                    ProcessPlatformCancelation();
+                    break;
+            }
+        }
+
+        protected virtual void ProcessPlatformStart()
+        {
+        }
+
+        protected virtual void ProcessPlatformCancelation()
+        {
+        }
+
+        private void EmitOnFinish()
+        {
+            EmitOnFinishHandlers();
+
+            InternalOnFinish?.Invoke(this);
+        }
+
+        private void EmitOnComplete()
+        {
+            EmitOnCompleteHandlers();
+
+            InternalOnComplete?.Invoke(this);
+        }
+
+        private void EmitOnWeakCanceled()
+        {
+            EmitOnWeakCanceledHandlers();
+
+            InternalOnWeakCanceled?.Invoke(this);
+        }
+
+        private void ProcessGeneralFinishStatuses(ProcessStatus status)
+        {
+            EmitOnFinish();
+            NCancelChildren(status);
+        }
+
+        private void NCancelChildren(ProcessStatus status)
+        {
+            switch (status)
             {
                 case ProcessStatus.WeakCanceled:
                     foreach (var child in _childrenProcessInfoList.ToList())
@@ -116,9 +232,106 @@ namespace SymOntoClay.Core
                 default:
                     throw new ArgumentOutOfRangeException(nameof(status), status, null);
             }
-
-
         }
+
+        /// <inheritdoc/>
+        public event ProcessInfoEvent OnFinish
+        {
+            add
+            {
+                lock (_statusLockObj)
+                {
+                    InternalOnFinish += value;
+
+                    CheckOnFinishStatus();
+                }
+            }
+
+            remove
+            {
+                lock (_statusLockObj)
+                {
+                    InternalOnFinish -= value;
+                }
+            }
+        }
+
+        private event ProcessInfoEvent InternalOnFinish;
+
+        /// <inheritdoc/>
+        public event ProcessInfoEvent OnComplete
+        {
+            add
+            {
+                lock (_statusLockObj)
+                {
+                    InternalOnComplete += value;
+
+                    CheckOnCompleteStatus();
+                }
+            }
+
+            remove
+            {
+                lock (_statusLockObj)
+                {
+                    InternalOnComplete -= value;
+                }
+            }
+        }
+
+        private event ProcessInfoEvent InternalOnComplete;
+
+        /// <inheritdoc/>
+        public event ProcessInfoEvent OnWeakCanceled
+        {
+            add
+            {
+                lock (_statusLockObj)
+                {
+                    InternalOnWeakCanceled += value;
+
+                    CheckOnWeakCanceledStatus();
+                }
+            }
+
+            remove
+            {
+                lock (_statusLockObj)
+                {
+                    InternalOnWeakCanceled -= value;
+                }
+            }
+        }
+
+        private event ProcessInfoEvent InternalOnWeakCanceled;
+
+        protected void CheckOnFinishStatus()
+        {
+            if (NIsFinished)
+            {
+                EmitOnFinish();
+            }
+        }
+
+        protected void CheckOnCompleteStatus()
+        {
+            if (_status == ProcessStatus.Completed)
+            {
+                EmitOnComplete();
+            }
+        }
+
+        protected void CheckOnWeakCanceledStatus()
+        {
+            if (_status == ProcessStatus.WeakCanceled)
+            {
+                EmitOnWeakCanceled();
+            }
+        }
+
+        /// <inheritdoc/>
+        public abstract IReadOnlyList<int> Devices { get; }
 
         /// <inheritdoc/>
         public float Priority { get; set; } = PrioritiesOfProcesses.Normal;
@@ -305,25 +518,13 @@ namespace SymOntoClay.Core
             }
         }
 
-        protected abstract void CheckOnFinishStatus();
-
         protected void EmitOnFinishHandlers()
         {
             lock (_parentAndChildrenLockObj)
             {
                 foreach (var item in _onFinishHandlersList)
                 {
-                    Task.Run(() =>
-                    {
-                        try
-                        {
-                            item.Run();
-                        }
-                        catch(Exception e)
-                        {
-                            _logger.Error(e);
-                        }                        
-                    });
+                    item.Run();
                 }
             }
         }
@@ -373,25 +574,13 @@ namespace SymOntoClay.Core
             }
         }
 
-        protected abstract void CheckOnCompleteStatus();
-
         protected void EmitOnCompleteHandlers()
         {
             lock (_parentAndChildrenLockObj)
             {
                 foreach (var item in _onCompleteHandlersList)
                 {
-                    Task.Run(() =>
-                    {
-                        try
-                        {
-                            item.Run();
-                        }
-                        catch (Exception e)
-                        {
-                            _logger.Error(e);
-                        }                        
-                    });
+                    item.Run();
                 }
             }
         }
@@ -441,32 +630,21 @@ namespace SymOntoClay.Core
             }
         }
 
-        protected abstract void CheckOnWeakCanceledStatus();
-
         protected void EmitOnWeakCanceledHandlers()
         {
             lock (_parentAndChildrenLockObj)
             {
                 foreach (var item in _onWeakCanceledHandlersList)
                 {
-                    Task.Run(() =>
-                    {
-                        try
-                        {
-                            item.Run();
-                        }
-                        catch (Exception e)
-                        {
-                            _logger.Error(e);
-                        }                        
-                    });
+                    item.Run();
                 }
             }
         }
 
         #region private fields
-        protected readonly object _statusLockObj = new object();
+        protected object _statusLockObj = new object();
         protected readonly object _parentAndChildrenLockObj = new object();
+        private ProcessStatus _status = ProcessStatus.Created;
         private IProcessInfo _parentProcessInfo;
         private List<IProcessInfo> _childrenProcessInfoList = new List<IProcessInfo>();
         private List<IProcessInfoEventHandler> _onFinishHandlersList = new List<IProcessInfoEventHandler>();

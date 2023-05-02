@@ -208,12 +208,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     return false;
                 }
 
-                if (cancellationToken.IsCancellationRequested)
-                {
-                    GoBackToPrevCodeFrame(ActionExecutionStatus.Canceled);
-                    return true;
-                }
-
                 if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing)
                 {
 
@@ -262,6 +256,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         
                         return true;
                     }
+                }
+
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    GoBackToPrevCodeFrame(ActionExecutionStatus.Canceled);
+                    return true;
                 }
 
 #if DEBUG

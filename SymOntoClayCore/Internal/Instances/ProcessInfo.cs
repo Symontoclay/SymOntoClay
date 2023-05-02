@@ -35,6 +35,7 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class ProcessInfo: BaseProcessInfo
     {
+        /*
         /// <inheritdoc/>
         public override ProcessStatus Status 
         { 
@@ -141,14 +142,6 @@ namespace SymOntoClay.Core.Internal.Instances
             EmitOnFinish();
             NCancelChildren(status);
         }
-
-        /// <inheritdoc/>
-        public override string EndPointName => string.Empty;
-
-        public CodeFrame CodeFrame { get; set; }
-
-        /// <inheritdoc/>
-        public override IReadOnlyList<int> Devices => _devices;
 
         /// <inheritdoc/>
         public override event ProcessInfoEvent OnFinish
@@ -285,7 +278,15 @@ namespace SymOntoClay.Core.Internal.Instances
                 EmitOnWeakCanceled();
                 ProcessGeneralFinishStatuses(ProcessStatus.WeakCanceled);
             }
-        }
+        }*/
+
+        /// <inheritdoc/>
+        public override string EndPointName => string.Empty;
+
+        public CodeFrame CodeFrame { get; set; }
+
+        /// <inheritdoc/>
+        public override IReadOnlyList<int> Devices => _devices;
 
         /// <inheritdoc/>
         public override IReadOnlyList<string> Friends => _friends;

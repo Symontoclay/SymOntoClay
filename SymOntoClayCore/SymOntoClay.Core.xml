@@ -30,7 +30,13 @@
         <member name="P:SymOntoClay.Core.BaseProcessInfo.IsFinished">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.BaseProcessInfo.Devices">
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.Start">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.Cancel">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.WeakCancel">
             <inheritdoc/>
         </member>
         <member name="E:SymOntoClay.Core.BaseProcessInfo.OnFinish">
@@ -42,13 +48,7 @@
         <member name="E:SymOntoClay.Core.BaseProcessInfo.OnWeakCanceled">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.BaseProcessInfo.Start">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.BaseProcessInfo.Cancel">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.BaseProcessInfo.WeakCancel">
+        <member name="P:SymOntoClay.Core.BaseProcessInfo.Devices">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.BaseProcessInfo.Priority">
@@ -6618,40 +6618,10 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.ObjectInstance.RunConstructors">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.Instances.ProcessInfo.Status">
-            <inheritdoc/>
-        </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.ProcessInfo.EndPointName">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.ProcessInfo.Devices">
-            <inheritdoc/>
-        </member>
-        <member name="E:SymOntoClay.Core.Internal.Instances.ProcessInfo.OnFinish">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.CheckOnFinishStatus">
-            <inheritdoc/>
-        </member>
-        <member name="E:SymOntoClay.Core.Internal.Instances.ProcessInfo.OnComplete">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.CheckOnCompleteStatus">
-            <inheritdoc/>
-        </member>
-        <member name="E:SymOntoClay.Core.Internal.Instances.ProcessInfo.OnWeakCanceled">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.CheckOnWeakCanceledStatus">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.Start">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.Cancel">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.WeakCancel">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.ProcessInfo.Friends">

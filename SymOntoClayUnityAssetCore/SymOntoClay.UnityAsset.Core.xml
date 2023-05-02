@@ -1004,37 +1004,13 @@
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.EndPointName">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.Status">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.ProcessPlatformStart">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.ProcessPlatformCancelation">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.Devices">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.Start">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.Cancel">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.WeakCancel">
-            <inheritdoc/>
-        </member>
-        <member name="E:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.OnFinish">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.CheckOnFinishStatus">
-            <inheritdoc/>
-        </member>
-        <member name="E:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.OnComplete">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.CheckOnCompleteStatus">
-            <inheritdoc/>
-        </member>
-        <member name="E:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.OnWeakCanceled">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.CheckOnWeakCanceledStatus">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.Friends">

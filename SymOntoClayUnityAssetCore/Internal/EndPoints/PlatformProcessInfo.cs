@@ -55,6 +55,19 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         public override string EndPointName => _endPointName;
 
         /// <inheritdoc/>
+        protected override void ProcessPlatformStart()
+        {
+            _task.Start();
+        }
+
+        /// <inheritdoc/>
+        protected override void ProcessPlatformCancelation()
+        {
+            _cancellationTokenSource.Cancel();
+        }
+
+        /*
+        /// <inheritdoc/>
         public override ProcessStatus Status
         {
             get
@@ -157,9 +170,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         }
 
         /// <inheritdoc/>
-        public override IReadOnlyList<int> Devices => _devices;
-
-        /// <inheritdoc/>
         public override void Start()
         {
             lock (_statusLockObj)
@@ -205,29 +215,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             }
         }
 
-        /// <inheritdoc/>
-        public override event ProcessInfoEvent OnFinish
-        {
-            add
-            {
-                lock (_statusLockObj)
-                {
-                    InternalOnFinish += value;
 
-                    CheckOnFinishStatus();
-                }
-            }
-
-            remove
-            {
-                lock (_statusLockObj)
-                {
-                    InternalOnFinish -= value;
-                }                
-            }
-        }
-
-        private event ProcessInfoEvent InternalOnFinish;
 
         /// <inheritdoc/>
         protected override void CheckOnFinishStatus()
@@ -238,29 +226,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             }
         }
 
-        /// <inheritdoc/>
-        public override event ProcessInfoEvent OnComplete
-        {
-            add
-            {
-                lock(_statusLockObj)
-                {
-                    InternalOnComplete += value;
 
-                    CheckOnCompleteStatus();
-                }
-            }
-
-            remove
-            {
-                lock (_statusLockObj)
-                {
-                    InternalOnComplete -= value;
-                }                
-            }
-        }
-
-        private event ProcessInfoEvent InternalOnComplete;
 
         /// <inheritdoc/>
         protected override void CheckOnCompleteStatus()
@@ -271,38 +237,16 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             }
         }
 
-        /// <inheritdoc/>
-        public override event ProcessInfoEvent OnWeakCanceled
-        {
-            add
-            {
-                lock (_statusLockObj)
-                {
-                    InternalOnWeakCanceled += value;
 
-                    CheckOnWeakCanceledStatus();
-                }
-            }
-
-            remove
-            {
-                lock (_statusLockObj)
-                {
-                    InternalOnWeakCanceled -= value;
-                }
-            }
-        }
-
-        private event ProcessInfoEvent InternalOnWeakCanceled;
 
         /// <inheritdoc/>
         protected override void CheckOnWeakCanceledStatus()
         {
-            if (_status == ProcessStatus.WeakCanceled)
-            {
-                EmitOnWeakCanceled();
-            }
-        }
+
+        }*/
+
+        /// <inheritdoc/>
+        public override IReadOnlyList<int> Devices => _devices;
 
         /// <inheritdoc/>
         public override IReadOnlyList<string> Friends => _friends;
@@ -331,7 +275,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
         #region private fields
         private readonly string _endPointName;
-        private ProcessStatus _status = ProcessStatus.Created;
         private readonly IReadOnlyList<int> _devices;
         private readonly IReadOnlyList<string> _friends;
         private Task _task;

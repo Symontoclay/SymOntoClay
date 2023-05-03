@@ -40,3 +40,5 @@ SymOntoClayCLI/obj/
 *.log
 /SymOntoClayPlacesHardTests/obj
 /SymOntoClayPlacesHardTests/bin
+/SymOntoClayActionsHardTests/obj
+/SymOntoClayActionsHardTests/bin

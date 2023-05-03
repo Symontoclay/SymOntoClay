@@ -35,7 +35,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case1()
         {
-            var instance = new AdvancedBehaviorTestEngineInstance();
+            using var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"app PeaceKeeper
 {
@@ -107,7 +107,7 @@ action Go
         [Parallelizable]
         public void Case1_a()
         {
-            var instance = new AdvancedBehaviorTestEngineInstance();
+            using var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"app PeaceKeeper
 {
@@ -179,7 +179,7 @@ action Go
         [Parallelizable]
         public void Case1_b()
         {
-            var instance = new AdvancedBehaviorTestEngineInstance();
+            using var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"app PeaceKeeper
 {
@@ -235,7 +235,7 @@ action Go
         [Parallelizable]
         public void Case1_c()
         {
-            var instance = new AdvancedBehaviorTestEngineInstance();
+            using var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"synonym go for walk;
 
@@ -293,7 +293,7 @@ action Go
         [Parallelizable]
         public void Case1_d()
         {
-            var instance = new AdvancedBehaviorTestEngineInstance();
+            using var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"app PeaceKeeper
 {
@@ -359,7 +359,7 @@ action Go
         [Parallelizable]
         public void Case2()
         {
-            var instance = new AdvancedBehaviorTestEngineInstance();
+            using var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"app PeaceKeeper
 {
@@ -430,7 +430,7 @@ action `my Go 1` alias `Go`
         [Parallelizable]
         public void Case2_a()
         {
-            var instance = new AdvancedBehaviorTestEngineInstance();
+            using var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"app PeaceKeeper
 {
@@ -501,7 +501,7 @@ action `my Go 1` alias `Go`, Run
         [Parallelizable]
         public void Case2_b()
         {
-            var instance = new AdvancedBehaviorTestEngineInstance();
+            using var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"app PeaceKeeper
 {
@@ -572,7 +572,7 @@ action `my Go 1` alias `Go`, `Run`
         [Parallelizable]
         public void Case2_c()
         {
-            var instance = new AdvancedBehaviorTestEngineInstance();
+            using var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"app PeaceKeeper
 {
@@ -644,7 +644,7 @@ action `my Go 1` alias `Go` is `base app`
         [Parallelizable]
         public void Case2_d()
         {
-            var instance = new AdvancedBehaviorTestEngineInstance();
+            using var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"app PeaceKeeper
 {
@@ -715,7 +715,7 @@ action `my Go 1` alias `Go`, Run is `base app`
         [Parallelizable]
         public void Case2_e()
         {
-            var instance = new AdvancedBehaviorTestEngineInstance();
+            using var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"app PeaceKeeper
 {
@@ -786,7 +786,7 @@ action `my Go 1` alias `Go`, `Run` is `base app`
         [Parallelizable]
         public void Case2_f()
         {
-            var instance = new AdvancedBehaviorTestEngineInstance();
+            using var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"app PeaceKeeper
 {
@@ -857,7 +857,7 @@ action `Go` is `base app`
         [Parallelizable]
         public void Case2_g()
         {
-            var instance = new AdvancedBehaviorTestEngineInstance();
+            using var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"app PeaceKeeper
 {
@@ -928,7 +928,7 @@ action Go is `base app`
         [Parallelizable]
         public void Case3()
         {
-            var instance = new AdvancedBehaviorTestEngineInstance();
+            using var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"app PeaceKeeper
 {
@@ -996,7 +996,7 @@ action Go
         [Parallelizable]
         public void Case3_a()
         {
-            var instance = new AdvancedBehaviorTestEngineInstance();
+            using var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"app PeaceKeeper
 {
@@ -1231,7 +1231,7 @@ action Go
         [Parallelizable]
         public void Case6()
         {
-            var instance = new AdvancedBehaviorTestEngineInstance();
+            using var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"app PeaceKeeper
 {
@@ -1297,7 +1297,7 @@ action Go
         [Parallelizable]
         public void Case7()
         {
-            var instance = new AdvancedBehaviorTestEngineInstance();
+            using var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"app PeaceKeeper
 {

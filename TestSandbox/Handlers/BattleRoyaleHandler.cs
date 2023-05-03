@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.BaseTestLib;
+using SymOntoClay.BaseTestLib.HostListeners;
 using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClay.StandardFacts;
 using SymOntoClay.UnityAsset.Core;
@@ -18,7 +19,8 @@ namespace TestSandbox.Handlers
         {
             _logger.Log("Begin");
 
-            var platformListener = new TstBattleRoyaleHostListener();
+            var platformListener = new BattleRoyaleSilentHostListener();
+            //var platformListener = new TstBattleRoyaleHostListener();
             //var platformListener = new TstBattleRoyaleHostListener2();
             //var platformListener = new BattleRoyaleHostListener();
             //var platformListener = new VeryLongMehod_HostListener();

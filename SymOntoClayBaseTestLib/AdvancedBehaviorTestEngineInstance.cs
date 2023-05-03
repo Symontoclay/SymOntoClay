@@ -260,6 +260,11 @@ namespace SymOntoClay.BaseTestLib
             return npc;
         }
 
+        public IHumanoidNPC GetHumanoidNPC(HumanoidNPCSettings settings)
+        {
+            return _world.GetHumanoidNPC(settings);
+        }
+
         public IGameObject CreateThing(string thingName)
         {
             return CreateThing(thingName, new object(), new Vector3(10, 10, 10));

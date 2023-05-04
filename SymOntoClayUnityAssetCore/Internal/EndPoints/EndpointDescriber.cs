@@ -75,6 +75,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
         private static bool FillUpBaseEndpointInfo(BaseEndpointInfo platformEndpointInfo, MethodBase method)
         {
+            platformEndpointInfo.OriginalName = method.Name;
+
             var customAttribute = GetEndpointCustomAttribute(method);
 
             if(customAttribute == null)

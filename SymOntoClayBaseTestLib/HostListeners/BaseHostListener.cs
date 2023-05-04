@@ -43,15 +43,24 @@ namespace SymOntoClay.BaseTestLib.HostListeners
         }
 
         [SupportHostListenerMethod]
-        protected void EmitOnMethodEnter(string methodName, string methodImplName)
+        protected void EmitOnMethodEnter()
         {
+            var methodNamesResult = GetMethodNames();
+
+            var endPointName = methodNamesResult.Item1;
+            var methodName = methodNamesResult.Item2;
+
 #if DEBUG
+            _logger.Log($"endPointName = {endPointName}");
             _logger.Log($"methodName = {methodName}");
-            _logger.Log($"methodImplName = {methodImplName}");
 #endif
 
-            var className = string.Empty;
-            var methodName_1 = string.Empty;
+            //throw new NotImplementedException();
+        }
+
+        [SupportHostListenerMethod]
+        private (string, string) GetMethodNames()
+        {
             var framesToSkip = 0;
 
             while (true)
@@ -60,7 +69,7 @@ namespace SymOntoClay.BaseTestLib.HostListeners
 
                 var method = frame.GetMethod();
 
-                if(method == null)
+                if (method == null)
                 {
                     break;
                 }
@@ -72,7 +81,7 @@ namespace SymOntoClay.BaseTestLib.HostListeners
 
                 var supportHostListenerMethodAttribute = method?.GetCustomAttribute<SupportHostListenerMethodAttribute>();
 
-                if( supportHostListenerMethodAttribute != null )
+                if (supportHostListenerMethodAttribute != null)
                 {
                     framesToSkip++;
                     continue;
@@ -84,24 +93,15 @@ namespace SymOntoClay.BaseTestLib.HostListeners
                 _logger.Log($"endPointInfo = {endPointInfo}");
 #endif
 
-                var declaringType = method.DeclaringType;
-
-                if (declaringType == null)
+                if (endPointInfo == null)
                 {
                     break;
                 }
 
-                if (declaringType.Module.Name.Equals("mscorlib.dll", StringComparison.OrdinalIgnoreCase))
-                {
-                    break;
-                }
-
-                framesToSkip++;
-                className = declaringType.FullName;
-                methodName_1 = method.Name;
+                return (endPointInfo.Name, endPointInfo.OriginalName);
             }
 
-            //throw new NotImplementedException();
+            return (string.Empty, string.Empty);
         }
 
         protected static ToHumanizedStringJsonConverter _customConverter = new ToHumanizedStringJsonConverter();

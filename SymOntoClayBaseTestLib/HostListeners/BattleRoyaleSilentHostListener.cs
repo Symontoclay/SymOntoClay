@@ -29,7 +29,7 @@ namespace SymOntoClay.BaseTestLib.HostListeners
             [EndpointParam("To", KindOfEndpointParam.Position)] INavTarget navTarget,
             float speed = 12)
         {
-            EmitOnMethodEnter("Go", nameof(GoToImpl));
+            EmitOnMethodEnter();
 
             var entity = navTarget.Entity;
 

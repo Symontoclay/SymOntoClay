@@ -878,6 +878,9 @@
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.BaseEndpointInfo.KindOfEndpoint">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.BaseEndpointInfo.OriginalName">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.BaseEndpointInfo.Name">
             <inheritdoc/>
         </member>

@@ -8,6 +8,7 @@ namespace SymOntoClay.UnityAsset.Core
     public interface IBaseEndpointInfo : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         KindOfEndpointInfo KindOfEndpoint { get; }
+        string OriginalName { get; }
         string Name { get; }
         bool NeedMainThread { get; }
         IReadOnlyList<int> Devices { get; }

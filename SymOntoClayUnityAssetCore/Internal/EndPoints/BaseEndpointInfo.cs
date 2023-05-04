@@ -15,6 +15,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
         public BaseEndpointInfo(IBaseEndpointInfo source)
         {
+            OriginalName = source.OriginalName;
             Name = source.Name;
             NeedMainThread = source.NeedMainThread;
             Devices = new List<int>(source.Devices);
@@ -40,6 +41,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 return KindOfEndpointInfo.Usual;
             }
         }
+
+        /// <inheritdoc/>
+        public string OriginalName { get; set; }
 
         /// <inheritdoc/>
         public string Name { get; set; }
@@ -81,7 +85,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(KindOfEndpoint)} = {KindOfEndpoint}");
+            sb.AppendLine($"{spaces}{nameof(KindOfEndpoint)} = {KindOfEndpoint}"); 
+            sb.AppendLine($"{spaces}{nameof(OriginalName)} = {OriginalName}");
             sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
             sb.AppendLine($"{spaces}{nameof(NeedMainThread)} = {NeedMainThread}");
             sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
@@ -110,6 +115,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(KindOfEndpoint)} = {KindOfEndpoint}");
+            sb.AppendLine($"{spaces}{nameof(OriginalName)} = {OriginalName}");
             sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
             sb.AppendLine($"{spaces}{nameof(NeedMainThread)} = {NeedMainThread}");
             sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
@@ -138,6 +144,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(KindOfEndpoint)} = {KindOfEndpoint}");
+            sb.AppendLine($"{spaces}{nameof(OriginalName)} = {OriginalName}");
             sb.AppendLine($"{spaces}{nameof(Name)} = {Name}");
             sb.AppendLine($"{spaces}{nameof(NeedMainThread)} = {NeedMainThread}");
             sb.PrintValueTypesListProp(n, nameof(Devices), Devices);

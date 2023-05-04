@@ -101,7 +101,7 @@ namespace SymOntoClay.Core
         {
             lock (_statusLockObj)
             {
-                if(_status != ProcessStatus.Created)
+                if (NIsFinished || _status == ProcessStatus.Running)
                 {
                     return;
                 }

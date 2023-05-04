@@ -28,14 +28,8 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core
 {
-    public interface IEndpointInfo: IObjectToString, IObjectToShortString, IObjectToBriefString
+    public interface IEndpointInfo: IBaseEndpointInfo
     {
-        KindOfEndpointInfo KindOfEndpoint { get; }
-        string Name { get; }
-        bool NeedMainThread { get; }
-        IReadOnlyList<int> Devices { get; }
-        IReadOnlyList<string> Friends { get; }
-        IReadOnlyList<IEndpointArgumentInfo> Arguments { get; }
         MethodInfo MethodInfo { get; }
         object Object { get; }
     }

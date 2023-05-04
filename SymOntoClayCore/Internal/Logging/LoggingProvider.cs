@@ -58,7 +58,6 @@ namespace SymOntoClay.Core.Internal.Logging
 
             var dotStr = DebugHelperForLogicalSearchExplainNode.ToDot(explainNode);
 
-
             File.WriteAllText(fileName, dotStr);
 
             return fileName;

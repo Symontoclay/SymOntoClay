@@ -57,6 +57,8 @@ namespace TestSandbox.CoreHostListener
             [EndpointParam("To", KindOfEndpointParam.Position)] INavTarget navTarget,
             float speed = 12)
         {
+            EmitOnMethodEnter("Go", nameof(GoToImpl));
+
             _logger.Log($"GoToImpl Begin");
             _logger.Log($"navTarget.Kind = {navTarget.Kind}");
             var entity = navTarget.Entity;

@@ -19,8 +19,8 @@ namespace TestSandbox.Handlers
         {
             _logger.Log("Begin");
 
-            var platformListener = new BattleRoyaleSilentHostListener();
-            //var platformListener = new TstBattleRoyaleHostListener();
+            //var platformListener = new BattleRoyaleSilentHostListener();
+            var platformListener = new TstBattleRoyaleHostListener();
             //var platformListener = new TstBattleRoyaleHostListener2();
             //var platformListener = new BattleRoyaleHostListener();
             //var platformListener = new VeryLongMehod_HostListener();
@@ -60,9 +60,15 @@ namespace TestSandbox.Handlers
 
             var standardFactsBuilder = new StandardFactsBuilder();
 
+            //platformListener.AddOnMethodEnterSyncHandler("Go", () => {
+            //    _logger.Log("Enter to Go");
+
+                //var factId = _npc.InsertFact("{: see(I, #enemy1) :}");
+            //});
+
             _world.Start();
 
-            Thread.Sleep(500);
+            Thread.Sleep(5000);
 
             var factId = _npc.InsertFact("{: see(I, #enemy1) :}");
 

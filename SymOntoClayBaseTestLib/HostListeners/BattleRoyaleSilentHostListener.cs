@@ -29,6 +29,8 @@ namespace SymOntoClay.BaseTestLib.HostListeners
             [EndpointParam("To", KindOfEndpointParam.Position)] INavTarget navTarget,
             float speed = 12)
         {
+            EmitOnMethodEnter("Go", nameof(GoToImpl));
+
             var entity = navTarget.Entity;
 
             if (!_remainingDistance.HasValue)

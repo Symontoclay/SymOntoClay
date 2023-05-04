@@ -22,10 +22,14 @@ SOFTWARE.*/
 
 using SymOntoClay.BaseTestLib;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.UnityAsset.Core;
+using SymOntoClay.UnityAsset.Core.Internal.EndPoints;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -33,6 +37,73 @@ namespace SymOntoClay.BaseTestLib.HostListeners
 {
     public abstract class BaseHostListener: ILoggedTestHostListener
     {
+        public void AddOnMethodEnterSyncHandler(string methodName, Action handler)
+        {
+            //throw new NotImplementedException();
+        }
+
+        [SupportHostListenerMethod]
+        protected void EmitOnMethodEnter(string methodName, string methodImplName)
+        {
+#if DEBUG
+            _logger.Log($"methodName = {methodName}");
+            _logger.Log($"methodImplName = {methodImplName}");
+#endif
+
+            var className = string.Empty;
+            var methodName_1 = string.Empty;
+            var framesToSkip = 0;
+
+            while (true)
+            {
+                var frame = new StackFrame(framesToSkip, false);
+
+                var method = frame.GetMethod();
+
+                if(method == null)
+                {
+                    break;
+                }
+
+#if DEBUG
+                _logger.Log($"method.Name = {method.Name}");
+                _logger.Log($"method.GetType().FullName = {method.GetType().FullName}");
+#endif
+
+                var supportHostListenerMethodAttribute = method?.GetCustomAttribute<SupportHostListenerMethodAttribute>();
+
+                if( supportHostListenerMethodAttribute != null )
+                {
+                    framesToSkip++;
+                    continue;
+                }
+
+                var endPointInfo = EndpointDescriber.GetBaseEndpointInfo(method);
+
+#if DEBUG
+                _logger.Log($"endPointInfo = {endPointInfo}");
+#endif
+
+                var declaringType = method.DeclaringType;
+
+                if (declaringType == null)
+                {
+                    break;
+                }
+
+                if (declaringType.Module.Name.Equals("mscorlib.dll", StringComparison.OrdinalIgnoreCase))
+                {
+                    break;
+                }
+
+                framesToSkip++;
+                className = declaringType.FullName;
+                methodName_1 = method.Name;
+            }
+
+            //throw new NotImplementedException();
+        }
+
         protected static ToHumanizedStringJsonConverter _customConverter = new ToHumanizedStringJsonConverter();
 
         public void SetLogger(IEntityLogger logger)

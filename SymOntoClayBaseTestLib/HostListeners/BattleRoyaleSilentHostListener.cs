@@ -17,6 +17,7 @@ namespace SymOntoClay.BaseTestLib.HostListeners
         public void GenericCall(CancellationToken cancellationToken, string methodName, bool isNamedParameters,
             Dictionary<string, object> namedParameters, List<object> positionedParameters)
         {
+            EmitOnEnter();
         }
 
         private int? _remainingDistance;
@@ -29,7 +30,7 @@ namespace SymOntoClay.BaseTestLib.HostListeners
             [EndpointParam("To", KindOfEndpointParam.Position)] INavTarget navTarget,
             float speed = 12)
         {
-            EmitOnMethodEnter();
+            EmitOnEnter();
 
             var entity = navTarget.Entity;
 
@@ -56,11 +57,13 @@ namespace SymOntoClay.BaseTestLib.HostListeners
         [BipedEndpoint("Stop", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
         public void StopImpl(CancellationToken cancellationToken)
         {
+            EmitOnEnter();
         }
 
         [BipedEndpoint("Rotate", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
         public void RotateImpl(CancellationToken cancellationToken, float? direction)
         {
+            EmitOnEnter();
         }
     }
 }

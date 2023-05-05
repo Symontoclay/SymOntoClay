@@ -41,6 +41,8 @@ namespace TestSandbox.CoreHostListener
         public void GenericCall(CancellationToken cancellationToken, string methodName, bool isNamedParameters,
             Dictionary<string, object> namedParameters, List<object> positionedParameters)
         {
+            EmitOnEnter();
+
             _logger.Log($"methodName = '{methodName}'");
             _logger.Log($"isNamedParameters = {isNamedParameters}");
             _logger.Log($"namedParameters = {JsonConvert.SerializeObject(namedParameters, Formatting.Indented, _customConverter)}");
@@ -57,7 +59,7 @@ namespace TestSandbox.CoreHostListener
             [EndpointParam("To", KindOfEndpointParam.Position)] INavTarget navTarget,
             float speed = 12)
         {
-            EmitOnMethodEnter();
+            EmitOnEnter();
 
             _logger.Log($"GoToImpl Begin");
             _logger.Log($"navTarget.Kind = {navTarget.Kind}");
@@ -98,12 +100,16 @@ namespace TestSandbox.CoreHostListener
         [BipedEndpoint("Stop", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
         public void StopImpl(CancellationToken cancellationToken)
         {
+            EmitOnEnter();
+
             _logger.Log("StopImpl Begin");
         }
 
         [BipedEndpoint("Rotate", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
         public void RotateImpl(CancellationToken cancellationToken, float? direction)
         {
+            EmitOnEnter();
+
             _logger.Log("RotateImpl Begin");
             _logger.Log(direction.ToString());
         }

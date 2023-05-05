@@ -60,17 +60,18 @@ namespace TestSandbox.Handlers
 
             var standardFactsBuilder = new StandardFactsBuilder();
 
-            //platformListener.AddOnMethodEnterSyncHandler("Go", () => {
-            //    _logger.Log("Enter to Go");
+            platformListener.AddOnEndPointEnterSyncHandler("Go", () =>
+            {
+                _logger.Log("Enter to Go");
 
-                //var factId = _npc.InsertFact("{: see(I, #enemy1) :}");
-            //});
+                var factId = _npc.InsertFact("{: see(I, #enemy1) :}");
+            });
 
             _world.Start();
 
-            Thread.Sleep(5000);
+            //Thread.Sleep(5000);
 
-            var factId = _npc.InsertFact("{: see(I, #enemy1) :}");
+            //var factId = _npc.InsertFact("{: see(I, #enemy1) :}");
 
             Thread.Sleep(100000);
 

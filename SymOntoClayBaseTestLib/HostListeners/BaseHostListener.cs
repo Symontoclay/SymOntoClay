@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.BaseTestLib;
+using SymOntoClay.BaseTestLib.HostListeners.Handlers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints;
@@ -37,13 +38,77 @@ namespace SymOntoClay.BaseTestLib.HostListeners
 {
     public abstract class BaseHostListener: ILoggedTestHostListener
     {
-        public void AddOnMethodEnterSyncHandler(string methodName, Action handler)
+        public void AddEnterSyncHandler(string methodName, Action handler)
         {
-            //throw new NotImplementedException();
+            _onEnterHandlersRegistry.AddSyncHandler(methodName, handler);
         }
 
+        public void AddOnEndPointEnterSyncHandler(string methodName, Action handler)
+        {
+            _onEnterHandlersRegistry.AddEndPointSyncHandler(methodName, handler);
+        }
+
+        public void AddMethodImplEnterSyncHandler(string methodName, Action handler)
+        {
+            _onEnterHandlersRegistry.AddMethodImplSyncHandler(methodName, handler);
+        }
+
+        public void AddEnterAsyncHandler(string methodName, Action handler)
+        {
+            _onEnterHandlersRegistry.AddAsyncHandler(methodName, handler);
+        }
+
+        public void AddEndPointEnterAsyncHandler(string methodName, Action handler)
+        {
+            _onEnterHandlersRegistry.AddEndPointAsyncHandler(methodName, handler);
+        }
+
+        public void AddMethodImplEnterAsyncHandler(string methodName, Action handler)
+        {
+            _onEnterHandlersRegistry.AddMethodImplAsyncHandler(methodName, handler);
+        }
+
+        public void AddLeaveSyncHandler(string methodName, Action handler)
+        {
+            _onLeaveHandlersRegistry.AddSyncHandler(methodName, handler);
+        }
+
+        public void AddOnEndPointLeaveSyncHandler(string methodName, Action handler)
+        {
+            _onLeaveHandlersRegistry.AddEndPointSyncHandler(methodName, handler);
+        }
+
+        public void AddMethodImplLeaveSyncHandler(string methodName, Action handler)
+        {
+            _onLeaveHandlersRegistry.AddMethodImplSyncHandler(methodName, handler);
+        }
+
+        public void AddLeaveAsyncHandler(string methodName, Action handler)
+        {
+            _onLeaveHandlersRegistry.AddAsyncHandler(methodName, handler);
+        }
+
+        public void AddEndPointLeaveAsyncHandler(string methodName, Action handler)
+        {
+            _onLeaveHandlersRegistry.AddEndPointAsyncHandler(methodName, handler);
+        }
+
+        public void AddMethodImplLeaveAsyncHandler(string methodName, Action handler)
+        {
+            _onLeaveHandlersRegistry.AddMethodImplAsyncHandler(methodName, handler);
+        }
+
+        public void RemoveHandler(string methodName, Action handler)
+        {
+            _onEnterHandlersRegistry.RemoveHandler(methodName, handler);
+            _onLeaveHandlersRegistry.RemoveHandler(methodName, handler);
+        }
+
+        private HostListenerHandlersRegistry _onEnterHandlersRegistry = new HostListenerHandlersRegistry();
+        private HostListenerHandlersRegistry _onLeaveHandlersRegistry = new HostListenerHandlersRegistry();
+
         [SupportHostListenerMethod]
-        protected void EmitOnMethodEnter()
+        protected void EmitOnEnter()
         {
             var methodNamesResult = GetMethodNames();
 
@@ -51,11 +116,11 @@ namespace SymOntoClay.BaseTestLib.HostListeners
             var methodName = methodNamesResult.Item2;
 
 #if DEBUG
-            _logger.Log($"endPointName = {endPointName}");
-            _logger.Log($"methodName = {methodName}");
+            //_logger.Log($"endPointName = {endPointName}");
+            //_logger.Log($"methodName = {methodName}");
 #endif
 
-            //throw new NotImplementedException();
+            _onEnterHandlersRegistry.Emit(endPointName, methodName);
         }
 
         [SupportHostListenerMethod]
@@ -75,8 +140,8 @@ namespace SymOntoClay.BaseTestLib.HostListeners
                 }
 
 #if DEBUG
-                _logger.Log($"method.Name = {method.Name}");
-                _logger.Log($"method.GetType().FullName = {method.GetType().FullName}");
+                //_logger.Log($"method.Name = {method.Name}");
+                //_logger.Log($"method.GetType().FullName = {method.GetType().FullName}");
 #endif
 
                 var supportHostListenerMethodAttribute = method?.GetCustomAttribute<SupportHostListenerMethodAttribute>();
@@ -90,7 +155,7 @@ namespace SymOntoClay.BaseTestLib.HostListeners
                 var endPointInfo = EndpointDescriber.GetBaseEndpointInfo(method);
 
 #if DEBUG
-                _logger.Log($"endPointInfo = {endPointInfo}");
+                //_logger.Log($"endPointInfo = {endPointInfo}");
 #endif
 
                 if (endPointInfo == null)
@@ -109,6 +174,7 @@ namespace SymOntoClay.BaseTestLib.HostListeners
         public void SetLogger(IEntityLogger logger)
         {
             _logger = logger;
+            _onEnterHandlersRegistry.SetLogger(logger);
         }
 
         protected IEntityLogger _logger;

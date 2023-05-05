@@ -18,6 +18,7 @@ namespace SymOntoClay.BaseTestLib.HostListeners
             Dictionary<string, object> namedParameters, List<object> positionedParameters)
         {
             EmitOnEnter();
+            EmitOnLeave();
         }
 
         private int? _remainingDistance;
@@ -52,18 +53,22 @@ namespace SymOntoClay.BaseTestLib.HostListeners
                     _remainingDistance = null;
                 }
             }
+
+            EmitOnLeave();
         }
 
         [BipedEndpoint("Stop", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
         public void StopImpl(CancellationToken cancellationToken)
         {
             EmitOnEnter();
+            EmitOnLeave();
         }
 
         [BipedEndpoint("Rotate", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
         public void RotateImpl(CancellationToken cancellationToken, float? direction)
         {
             EmitOnEnter();
+            EmitOnLeave();
         }
     }
 }

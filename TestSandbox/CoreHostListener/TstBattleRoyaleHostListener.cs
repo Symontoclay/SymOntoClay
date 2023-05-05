@@ -47,6 +47,8 @@ namespace TestSandbox.CoreHostListener
             _logger.Log($"isNamedParameters = {isNamedParameters}");
             _logger.Log($"namedParameters = {JsonConvert.SerializeObject(namedParameters, Formatting.Indented, _customConverter)}");
             _logger.Log($"positionedParameters = {JsonConvert.SerializeObject(positionedParameters, Formatting.Indented, _customConverter)}");
+
+            EmitOnLeave();
         }
 
         private int? _remainingDistance;
@@ -95,6 +97,8 @@ namespace TestSandbox.CoreHostListener
             _logger.Log($"cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");
 
             _logger.Log($"GoToImpl End");
+
+            EmitOnLeave();
         }
 
         [BipedEndpoint("Stop", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
@@ -103,6 +107,8 @@ namespace TestSandbox.CoreHostListener
             EmitOnEnter();
 
             _logger.Log("StopImpl Begin");
+
+            EmitOnLeave();
         }
 
         [BipedEndpoint("Rotate", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
@@ -112,6 +118,8 @@ namespace TestSandbox.CoreHostListener
 
             _logger.Log("RotateImpl Begin");
             _logger.Log(direction.ToString());
+
+            EmitOnLeave();
         }
     }
 }

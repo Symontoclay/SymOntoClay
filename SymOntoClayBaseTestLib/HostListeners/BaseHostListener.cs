@@ -124,6 +124,22 @@ namespace SymOntoClay.BaseTestLib.HostListeners
         }
 
         [SupportHostListenerMethod]
+        protected void EmitOnLeave()
+        {
+            var methodNamesResult = GetMethodNames();
+
+            var endPointName = methodNamesResult.Item1;
+            var methodName = methodNamesResult.Item2;
+
+#if DEBUG
+            //_logger.Log($"endPointName = {endPointName}");
+            //_logger.Log($"methodName = {methodName}");
+#endif
+
+            _onLeaveHandlersRegistry.Emit(endPointName, methodName);
+        }
+
+        [SupportHostListenerMethod]
         private (string, string) GetMethodNames()
         {
             var framesToSkip = 0;

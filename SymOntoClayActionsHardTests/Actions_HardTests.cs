@@ -137,11 +137,11 @@ action check
 
             var enemy = instance.GetHumanoidNPC(enemySettings);
 
+            hostListener.AddOnEndPointEnterSyncHandler("Go", () => {
+                npc.InsertFact("{: see(I, #enemy1) :}");
+            });
+
             instance.StartWorld();
-
-            Thread.Sleep(500);
-
-            npc.InsertFact("{: see(I, #enemy1) :}");
 
             Thread.Sleep(2000);
         }
@@ -270,11 +270,11 @@ action check
 
             var enemy = instance.GetHumanoidNPC(enemySettings);
 
+            hostListener.AddOnEndPointEnterSyncHandler("Go", () => {
+                npc.InsertFact("{: see(I, #enemy1) :}");
+            });
+
             instance.StartWorld();
-
-            Thread.Sleep(500);
-
-            npc.InsertFact("{: see(I, #enemy1) :}");
 
             Thread.Sleep(2000);
         }

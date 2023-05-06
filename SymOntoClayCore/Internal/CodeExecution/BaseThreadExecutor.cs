@@ -1305,7 +1305,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void GoBackToPrevCodeFrame(ActionExecutionStatus targetActionExecutionStatus)
         {
 #if DEBUG
-            //Log($"targetActionExecutionStatus = {targetActionExecutionStatus}");
+            Log($"targetActionExecutionStatus = {targetActionExecutionStatus}");
 #endif
 
             if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus == ActionExecutionStatus.Executing)
@@ -1337,7 +1337,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var currentProcessInfoStatus = currentProcessInfo.Status;
 
 #if DEBUG
-            //Log($"currentProcessInfoStatus = {currentProcessInfoStatus}");
+            Log($"currentProcessInfoStatus = {currentProcessInfoStatus}");
 #endif
 
             if (currentProcessInfoStatus == ProcessStatus.Running)
@@ -1770,6 +1770,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 annotationSystemEventsDict.TryGetValue(KindOfAnnotationSystemEvent.Error, out errorAnnotationSystemEvent);
             }
 
+#if DEBUG
+            Log($"_currentCodeFrame.ProcessInfo.Status = {_currentCodeFrame.ProcessInfo.Status}");
+#endif
+
             var processCreatingResult = _hostListener.CreateProcess(command, _context, _currentCodeFrame.LocalContext);
 
             if(processCreatingResult.IsSuccessful)
@@ -1783,6 +1787,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (syncOption == SyncOption.Sync)
                 {
+#if DEBUG
+                    Log($"_currentCodeFrame.ProcessInfo.Status (2) = {_currentCodeFrame.ProcessInfo.Status}");
+#endif
+
                     processInfo.ParentProcessInfo = _currentCodeFrame.ProcessInfo;
 
                     List<IExecutionCoordinator> executionCoordinators = null;
@@ -1793,6 +1801,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     }
 
                     ProcessInfoHelper.Wait(executionCoordinators, timeout, timeoutCancellationMode, _dateTimeProvider, processInfo);
+
+#if DEBUG
+                    Log($"_currentCodeFrame.ProcessInfo.Status (3) = {_currentCodeFrame.ProcessInfo.Status}");
+#endif
 
                     if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus == ActionExecutionStatus.Broken)
                     {

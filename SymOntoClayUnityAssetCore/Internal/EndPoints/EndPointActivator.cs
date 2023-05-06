@@ -93,7 +93,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 {
                     if (e.InnerException.GetType() == typeof(OperationCanceledException))
                     {
-                        if(processInfo.Status != ProcessStatus.Canceled && processInfo.Status != ProcessStatus.WeakCanceled)
+#if DEBUG
+                        Log($"e = {e}");
+#endif
+
+                        if (processInfo.Status != ProcessStatus.Canceled && processInfo.Status != ProcessStatus.WeakCanceled)
                         {
                             processInfo.Status = ProcessStatus.Canceled;
                         }
@@ -135,6 +139,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 {
                     if (e.InnerException.GetType() == typeof(OperationCanceledException))
                     {
+#if DEBUG
+                        Log($"e = {e}");
+#endif
+
                         if (processInfo.Status != ProcessStatus.Canceled && processInfo.Status != ProcessStatus.WeakCanceled)
                         {
                             processInfo.Status = ProcessStatus.Canceled;

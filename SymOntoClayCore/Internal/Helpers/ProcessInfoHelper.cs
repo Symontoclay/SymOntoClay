@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using Newtonsoft.Json;
 using NLog;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
@@ -71,7 +72,11 @@ namespace SymOntoClay.Core.Internal.Helpers
                 
                 if(executionCoordinators != null)
                 {
-                    if(executionCoordinators.Any(p => p.ExecutionStatus != ActionExecutionStatus.Executing))
+#if DEBUG
+                    //_logger.Info($"Wait {JsonConvert.SerializeObject(executionCoordinators.Select(p => (p.GetHashCode(), p.ExecutionStatus)), Formatting.Indented)}");
+#endif
+
+                    if (executionCoordinators.Any(p => p.ExecutionStatus != ActionExecutionStatus.Executing))
                     {
 #if DEBUG
                         _logger.Info($"Wait executionCoordinators.Any(p => p.ExecutionStatus != ActionExecutionStatus.Executing)");

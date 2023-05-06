@@ -210,6 +210,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing)
                 {
+#if DEBUG
+                    Log($"_executionCoordinator != null && _executionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing ({currentCodeFrame.ProcessInfo.GetHashCode()}); >>> {_executionCoordinator.GetHashCode()}");
+#endif
 
                     GoBackToPrevCodeFrame(_executionCoordinator.ExecutionStatus);
                     return true;
@@ -1934,6 +1937,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             Value annotation, SyncOption syncOption, bool mayCallHost)
         {
+#if DEBUG
+            Log($"methodName = {methodName}; ({_currentCodeFrame.ProcessInfo.GetHashCode()}) >>> {_executionCoordinator?.GetHashCode()}");
+#endif
+
             IExecutable method = null;
 
             switch(kindOfParameters)
@@ -2114,6 +2121,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     annotationSystemEventsDict.TryGetValue(KindOfAnnotationSystemEvent.WeakCancel, out weakCancelAnnotationSystemEvent);
                     annotationSystemEventsDict.TryGetValue(KindOfAnnotationSystemEvent.Error, out errorAnnotationSystemEvent);
                 }
+
+#if DEBUG
+                Log($"executable.NeedActivation = {executable.NeedActivation}; ({_currentCodeFrame.ProcessInfo.GetHashCode()}) >>> {_executionCoordinator?.GetHashCode()}");
+                Log($"executable.IsActivated = {executable.IsActivated}; ({_currentCodeFrame.ProcessInfo.GetHashCode()}) >>> {_executionCoordinator?.GetHashCode()}");
+#endif
 
                 if (executable.NeedActivation && !executable.IsActivated)
                 {

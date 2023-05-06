@@ -61,6 +61,12 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if (parentExecutionCoordinator != null)
             {
+                //TODO: make this more graceful.
+                //TODO: make that parentExecutionCoordinator.OnFinished += () fires if ExecutionStatus != Executing, like It is for BaseProcessInfo
+                parentExecutionCoordinator.OnFinished += () => {
+                    _executionCoordinator.ExecutionStatus = ActionExecutionStatus.WeakCanceled;
+                };
+
                 throw new NotImplementedException();
             }
 

@@ -1305,7 +1305,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void GoBackToPrevCodeFrame(ActionExecutionStatus targetActionExecutionStatus)
         {
 #if DEBUG
-            Log($"targetActionExecutionStatus = {targetActionExecutionStatus}");
+            Log($"targetActionExecutionStatus = {targetActionExecutionStatus} ({_currentCodeFrame.ProcessInfo.GetHashCode()})");
 #endif
 
             if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus == ActionExecutionStatus.Executing)
@@ -1337,7 +1337,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var currentProcessInfoStatus = currentProcessInfo.Status;
 
 #if DEBUG
-            Log($"currentProcessInfoStatus = {currentProcessInfoStatus}");
+            Log($"currentProcessInfoStatus = {currentProcessInfoStatus} ({currentProcessInfo.GetHashCode()})");
 #endif
 
             if (currentProcessInfoStatus == ProcessStatus.Running)
@@ -2201,6 +2201,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     if(increaceCurrentFramePosition)
                     {
                         targetCurrentCodeFrame.CurrentPosition++;
+                        targetCurrentCodeFrame.ProcessInfo.AddChild(currentProcessInfo);
                     }
 
                     if (completeAnnotationSystemEvent != null)

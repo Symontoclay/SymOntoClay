@@ -806,6 +806,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessCompleteAction()
         {
+#if DEBUG
+            Log($"({_currentCodeFrame.GetHashCode()}) _currentCodeFrame.ExecutionCoordinator = {_currentCodeFrame.ExecutionCoordinator.GetHashCode()}");
+#endif
+
             _currentCodeFrame.ExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
 
             _currentCodeFrame.CurrentPosition++;
@@ -813,6 +817,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessCancelAction()
         {
+#if DEBUG
+            Log($"({_currentCodeFrame.GetHashCode()}) _currentCodeFrame.ExecutionCoordinator = {_currentCodeFrame.ExecutionCoordinator.GetHashCode()}");
+#endif
+
             _currentCodeFrame.ExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Canceled;
 
             _currentCodeFrame.CurrentPosition++;
@@ -820,6 +828,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessWeakCancelAction()
         {
+#if DEBUG
+            Log($"({_currentCodeFrame.GetHashCode()}) _currentCodeFrame.ExecutionCoordinator = {_currentCodeFrame.ExecutionCoordinator.GetHashCode()}");
+#endif
+
             _currentCodeFrame.ExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.WeakCanceled;
 
             _currentCodeFrame.CurrentPosition++;
@@ -1305,7 +1317,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void GoBackToPrevCodeFrame(ActionExecutionStatus targetActionExecutionStatus)
         {
 #if DEBUG
-            Log($"targetActionExecutionStatus = {targetActionExecutionStatus} ({_currentCodeFrame.ProcessInfo.GetHashCode()})");
+            Log($"targetActionExecutionStatus = {targetActionExecutionStatus} ({_currentCodeFrame.ProcessInfo.GetHashCode()}); >>> {_executionCoordinator?.GetHashCode()}");
 #endif
 
             if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus == ActionExecutionStatus.Executing)
@@ -1771,7 +1783,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            Log($"_currentCodeFrame.ProcessInfo.Status = {_currentCodeFrame.ProcessInfo.Status}");
+            Log($"_currentCodeFrame.ProcessInfo.Status = {_currentCodeFrame.ProcessInfo.Status};>>> {_executionCoordinator?.GetHashCode()}");
 #endif
 
             var processCreatingResult = _hostListener.CreateProcess(command, _context, _currentCodeFrame.LocalContext);
@@ -1788,7 +1800,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 if (syncOption == SyncOption.Sync)
                 {
 #if DEBUG
-                    Log($"_currentCodeFrame.ProcessInfo.Status (2) = {_currentCodeFrame.ProcessInfo.Status}");
+                    Log($"_currentCodeFrame.ProcessInfo.Status (2) = {_currentCodeFrame.ProcessInfo.Status};>>> {_executionCoordinator?.GetHashCode()}");
 #endif
 
                     processInfo.ParentProcessInfo = _currentCodeFrame.ProcessInfo;
@@ -1797,6 +1809,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     if (_executionCoordinator != null)
                     {
+#if DEBUG
+                        Log($"_executionCoordinator != null;>>> {_executionCoordinator?.GetHashCode()}");
+#endif
+
                         executionCoordinators = new List<IExecutionCoordinator>() { _executionCoordinator };
                     }
 

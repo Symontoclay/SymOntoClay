@@ -34,6 +34,10 @@ namespace SymOntoClay.Core.Internal.Helpers
 {
     public static class ProcessInfoHelper
     {
+#if DEBUG
+        private static ILogger _logger = LogManager.GetCurrentClassLogger();
+#endif
+
         public static void Wait(params IProcessInfo[] processes)
         {
             Wait(null, null, TimeoutCancellationMode.WeakCancel, null, processes);
@@ -58,6 +62,10 @@ namespace SymOntoClay.Core.Internal.Helpers
             {
                 if(processes.All(p => p.IsFinished))
                 {
+#if DEBUG
+                    _logger.Info($"Wait processes.All(p => p.IsFinished)");
+#endif
+
                     return;
                 }
                 
@@ -65,8 +73,16 @@ namespace SymOntoClay.Core.Internal.Helpers
                 {
                     if(executionCoordinators.Any(p => p.ExecutionStatus != ActionExecutionStatus.Executing))
                     {
-                        if(executionCoordinators.Any(p => p.ExecutionStatus == ActionExecutionStatus.Canceled))
+#if DEBUG
+                        _logger.Info($"Wait executionCoordinators.Any(p => p.ExecutionStatus != ActionExecutionStatus.Executing)");
+#endif
+
+                        if (executionCoordinators.Any(p => p.ExecutionStatus == ActionExecutionStatus.Canceled))
                         {
+#if DEBUG
+                            _logger.Info($"Wait executionCoordinators.Any(p => p.ExecutionStatus == ActionExecutionStatus.Canceled)");
+#endif
+
                             foreach (var proc in processes)
                             {
                                 proc.Cancel();
@@ -93,6 +109,10 @@ namespace SymOntoClay.Core.Internal.Helpers
 
                     if (delta >= cancelAfter.Value)
                     {
+#if DEBUG
+                        _logger.Info($"Wait delta >= cancelAfter.Value");
+#endif
+
                         foreach (var proc in processes)
                         {
                             switch(timeoutCancellationMode)

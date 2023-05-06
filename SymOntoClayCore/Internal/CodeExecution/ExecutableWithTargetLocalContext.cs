@@ -67,9 +67,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         /// <inheritdoc/>
-        IExecutable IExecutable.Activate(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
+        IExecutable IExecutable.Activate(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext, IExecutionCoordinator executionCoordinator)
         {
-            return _executable.Activate(context, localCodeExecutionContext);
+            return _executable.Activate(context, localCodeExecutionContext, executionCoordinator);
         }
 
         /// <inheritdoc/>

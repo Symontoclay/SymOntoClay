@@ -417,13 +417,13 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        public override Value CreateInstance(ActionPtr actionPtr, ILocalCodeExecutionContext executionContext)
+        public override Value CreateInstance(ActionPtr actionPtr, ILocalCodeExecutionContext executionContext, IExecutionCoordinator executionCoordinator)
         {
             var action = actionPtr.Action;
 
             var targetCodeItem = CreateAndSaveInstanceCodeItem(action, NameHelper.CreateEntityName());
 
-            var actionInstance = new ActionInstance(targetCodeItem, actionPtr, _context, executionContext.Storage, executionContext);
+            var actionInstance = new ActionInstance(targetCodeItem, actionPtr, _context, executionContext.Storage, executionContext, executionCoordinator);
 
             actionInstance.Init();
 

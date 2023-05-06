@@ -165,13 +165,13 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        public virtual Value CreateInstance(CodeItem codeItem, ILocalCodeExecutionContext executionContext)
+        public virtual Value CreateInstance(CodeItem codeItem, ILocalCodeExecutionContext executionContextx)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public virtual Value CreateInstance(ActionPtr actionPtr, ILocalCodeExecutionContext executionContext)
+        public virtual Value CreateInstance(ActionPtr actionPtr, ILocalCodeExecutionContext executionContext, IExecutionCoordinator executionCoordinator)
         {
             throw new NotImplementedException();
         }

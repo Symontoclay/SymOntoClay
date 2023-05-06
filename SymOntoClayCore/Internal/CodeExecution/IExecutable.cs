@@ -43,7 +43,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         bool NeedActivation { get; }
         bool IsActivated { get; }
         UsingLocalCodeExecutionContextPreferences UsingLocalCodeExecutionContextPreferences { get; }
-        IExecutable Activate(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext);
+        IExecutable Activate(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext, IExecutionCoordinator executionCoordinator);
         bool IsInstance { get; }
         IInstance AsInstance { get; }
     }

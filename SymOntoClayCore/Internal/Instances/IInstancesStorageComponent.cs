@@ -45,7 +45,7 @@ namespace SymOntoClay.Core.Internal.Instances
         Value CreateInstance(StrongIdentifierValue prototypeName, ILocalCodeExecutionContext executionContext);
         Value CreateInstance(InstanceValue instanceValue, ILocalCodeExecutionContext executionContext);
         Value CreateInstance(CodeItem codeItem, ILocalCodeExecutionContext executionContext);
-        Value CreateInstance(ActionPtr actionPtr, ILocalCodeExecutionContext executionContext);
+        Value CreateInstance(ActionPtr actionPtr, ILocalCodeExecutionContext executionContext, IExecutionCoordinator executionCoordinator);
 
 #if DEBUG
         void PrintProcessesList();

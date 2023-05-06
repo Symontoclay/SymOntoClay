@@ -38,7 +38,8 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public abstract class BaseInstance : BaseComponent, IInstance, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        protected BaseInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext, IStorageFactory storageFactory, List<Var> varList)
+        protected BaseInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext, 
+            IExecutionCoordinator parentExecutionCoordinator, IStorageFactory storageFactory, List<Var> varList)
             : base(context.Logger)
         {
             _codeItem = codeItem;
@@ -57,6 +58,11 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _executionCoordinator = new ExecutionCoordinator(this);
             _executionCoordinator.OnFinished += ExecutionCoordinator_OnFinished;
+
+            if (parentExecutionCoordinator != null)
+            {
+                throw new NotImplementedException();
+            }
 
             var localCodeExecutionContext = new LocalCodeExecutionContext(parentCodeExecutionContext);
             var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);

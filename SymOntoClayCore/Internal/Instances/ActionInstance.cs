@@ -34,8 +34,8 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class ActionInstance : BaseInstance, IExecutable
     {
-        public ActionInstance(CodeItem codeItem, ActionPtr actionPtr, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext)
-            : base(codeItem, context, parentStorage, parentCodeExecutionContext, new ActionStorageFactory(), null)
+        public ActionInstance(CodeItem codeItem, ActionPtr actionPtr, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext, IExecutionCoordinator parentExecutionCoordinator)
+            : base(codeItem, context, parentStorage, parentCodeExecutionContext, parentExecutionCoordinator, new ActionStorageFactory(), null)
         {
             _action = actionPtr.Action;
             _operator = actionPtr.Operator;
@@ -57,7 +57,7 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        IExecutable IExecutable.Activate(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
+        IExecutable IExecutable.Activate(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext, IExecutionCoordinator executionCoordinator)
         {
             return this;
         }

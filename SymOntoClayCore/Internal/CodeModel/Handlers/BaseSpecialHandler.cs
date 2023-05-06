@@ -60,7 +60,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Handlers
         }
 
         /// <inheritdoc/>
-        public IExecutable Activate(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
+        public IExecutable Activate(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext, IExecutionCoordinator executionCoordinator)
         {
             return this;
         }

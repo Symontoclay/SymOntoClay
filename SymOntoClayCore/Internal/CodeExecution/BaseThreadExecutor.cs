@@ -2129,7 +2129,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (executable.NeedActivation && !executable.IsActivated)
                 {
-                    executable = executable.Activate(_context, _currentCodeFrame.LocalContext);
+                    executable = executable.Activate(_context, _currentCodeFrame.LocalContext, _executionCoordinator);
                 }
 
                 var coordinator = executable.GetCoordinator(_context, _currentCodeFrame.LocalContext);

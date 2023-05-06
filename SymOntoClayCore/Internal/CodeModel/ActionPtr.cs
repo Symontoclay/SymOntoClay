@@ -76,9 +76,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        IExecutable IExecutable.Activate(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
+        IExecutable IExecutable.Activate(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext, IExecutionCoordinator executionCoordinator)
         {
-            return context.InstancesStorage.CreateInstance(this, localCodeExecutionContext).AsActionInstanceValue.ActionInstance;
+            return context.InstancesStorage.CreateInstance(this, localCodeExecutionContext, executionCoordinator).AsActionInstanceValue.ActionInstance;
         }
 
         /// <inheritdoc/>

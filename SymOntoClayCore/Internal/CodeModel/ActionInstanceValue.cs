@@ -56,7 +56,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public IExecutable Activate(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
+        public IExecutable Activate(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext, IExecutionCoordinator executionCoordinator)
         {
             throw new NotImplementedException();
         }

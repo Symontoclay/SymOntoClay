@@ -470,7 +470,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.SymOntoClay#Core#Internal#CodeExecution#IExecutable#GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
@@ -746,7 +746,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.GetSystemValue">
@@ -839,7 +839,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.SymOntoClay#Core#Internal#CodeExecution#IExecutable#GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionPtr.OwnLocalCodeExecutionContext">
@@ -1114,7 +1114,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent.GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent.Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent.Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
@@ -2843,7 +2843,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Function.SymOntoClay#Core#Internal#CodeExecution#IExecutable#GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Function.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Function.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Function.OwnLocalCodeExecutionContext">
@@ -3057,7 +3057,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
@@ -4041,7 +4041,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.SymOntoClay#Core#Internal#CodeExecution#IExecutable#GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Operator.OwnLocalCodeExecutionContext">
@@ -6132,7 +6132,7 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.SymOntoClay#Core#Internal#CodeExecution#IExecutable#GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.ActionInstance.IsSystemDefined">
@@ -6354,7 +6354,7 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.CodeItem,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.ActionPtr,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.ActionPtr,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.PrintProcessesList">
@@ -6468,7 +6468,7 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.CodeItem,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.ActionPtr,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.ActionPtr,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.PrintProcessesList">

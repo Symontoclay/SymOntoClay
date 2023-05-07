@@ -34,6 +34,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         IInstance Instance { get; }
         KindOfInstance KindOfInstance { get; }
         ActionExecutionStatus ExecutionStatus { get; set; }
+        bool IsFinished { get; }
         RuleInstance RuleInstance { get; set; }
         event Action OnFinished;
     }

@@ -59,16 +59,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _executionCoordinator = new ExecutionCoordinator(this);
             _executionCoordinator.OnFinished += ExecutionCoordinator_OnFinished;
 
-            if (parentExecutionCoordinator != null)
-            {
-                //TODO: make this more graceful.
-                //TODO: make that parentExecutionCoordinator.OnFinished += () fires if ExecutionStatus != Executing, like It is for BaseProcessInfo
-                parentExecutionCoordinator.OnFinished += () => {
-                    _executionCoordinator.ExecutionStatus = ActionExecutionStatus.WeakCanceled;
-                };
-
-                throw new NotImplementedException();
-            }
+            _parentExecutionCoordinator = parentExecutionCoordinator;
 
             var localCodeExecutionContext = new LocalCodeExecutionContext(parentCodeExecutionContext);
             var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);
@@ -107,6 +98,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly IStorage _parentStorage;
         protected readonly IStorage _storage;
         protected readonly ILocalCodeExecutionContext _localCodeExecutionContext;
+        private readonly IExecutionCoordinator _parentExecutionCoordinator;
 
         private readonly TriggersResolver _triggersResolver;
         private readonly ConstructorsResolver _constructorsResolver;
@@ -140,6 +132,18 @@ namespace SymOntoClay.Core.Internal.Instances
 
         public virtual void Init()
         {
+            if (_parentExecutionCoordinator != null)
+            {
+                if(_parentExecutionCoordinator.IsFinished)
+                {
+                    _executionCoordinator.ExecutionStatus = ActionExecutionStatus.WeakCanceled;
+                    _instanceState = InstanceState.Initialized;
+                    return;
+                }
+
+                _parentExecutionCoordinator.OnFinished += ParentExecutionCoordinator_OnFinished;
+            }
+
             _instanceState = InstanceState.Initializing;
 
             _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
@@ -488,6 +492,11 @@ namespace SymOntoClay.Core.Internal.Instances
 
         }
 
+        private void ParentExecutionCoordinator_OnFinished()
+        {
+            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.WeakCanceled;
+        }
+
         protected virtual void ExecutionCoordinator_OnFinished()
         {
             if (_parentInstance != null)
@@ -543,6 +552,11 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
+            if(_parentExecutionCoordinator != null)
+            {
+                _parentExecutionCoordinator.OnFinished -= ParentExecutionCoordinator_OnFinished;
+            }
+
             foreach (var triggerInstance in _logicConditionalTriggersList)
             {
                 _globalTriggersStorage.Remove(triggerInstance);

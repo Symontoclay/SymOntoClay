@@ -6399,6 +6399,9 @@
         <member name="P:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator.ExecutionStatus">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator.IsFinished">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator.RuleInstance">
             <inheritdoc/>
         </member>

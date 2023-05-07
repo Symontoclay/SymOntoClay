@@ -77,7 +77,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
                         if (currIsFinished)
                         {
-                            OnFinished?.Invoke();
+                            InternalOnFinish?.Invoke();
                         }
                     }
                 }
@@ -85,6 +85,18 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         private ActionExecutionStatus _executionStatus;
+
+        /// <inheritdoc/>
+        public bool IsFinished 
+        { 
+            get
+            {
+                lock(_lockObj)
+                {
+                    return _isFinished;
+                }
+            }
+        }
 
         /// <inheritdoc/>
         public RuleInstance RuleInstance
@@ -109,7 +121,25 @@ namespace SymOntoClay.Core.Internal.Instances
         private RuleInstance _ruleInstance;
 
         /// <inheritdoc/>
-        public event Action OnFinished;
+        public event Action OnFinished
+        {
+            add
+            {
+                InternalOnFinish += value;
+
+                if (_isFinished)
+                {
+                    InternalOnFinish?.Invoke();
+                }
+            }
+
+            remove
+            {
+                InternalOnFinish -= value;
+            }
+        }
+
+        private event Action InternalOnFinish;
 
         /// <inheritdoc/>
         public override string ToString()

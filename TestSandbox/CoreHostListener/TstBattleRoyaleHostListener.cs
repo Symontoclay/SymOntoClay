@@ -84,7 +84,7 @@ namespace TestSandbox.CoreHostListener
 
                 if (_remainingDistance > 0)
                 {
-                    Sleep(20000, cancellationToken);
+                    Sleep(10000, cancellationToken);
                 }
                 else
                 {

@@ -211,7 +211,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing)
                 {
 #if DEBUG
-                    Log($"_executionCoordinator != null && _executionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing ({currentCodeFrame.ProcessInfo.GetHashCode()}); >>> {_executionCoordinator.GetHashCode()}");
+                    //Log($"_executionCoordinator != null && _executionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing ({currentCodeFrame.ProcessInfo.GetHashCode()}); >>> {_executionCoordinator.GetHashCode()}");
 #endif
 
                     GoBackToPrevCodeFrame(_executionCoordinator.ExecutionStatus);
@@ -809,10 +809,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessCompleteAction()
         {
-#if DEBUG
-            Log($"({_currentCodeFrame.GetHashCode()}) _currentCodeFrame.ExecutionCoordinator = {_currentCodeFrame.ExecutionCoordinator.GetHashCode()}");
-#endif
-
             _currentCodeFrame.ExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
 
             _currentCodeFrame.CurrentPosition++;
@@ -820,10 +816,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessCancelAction()
         {
-#if DEBUG
-            Log($"({_currentCodeFrame.GetHashCode()}) _currentCodeFrame.ExecutionCoordinator = {_currentCodeFrame.ExecutionCoordinator.GetHashCode()}");
-#endif
-
             _currentCodeFrame.ExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Canceled;
 
             _currentCodeFrame.CurrentPosition++;
@@ -831,10 +823,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessWeakCancelAction()
         {
-#if DEBUG
-            Log($"({_currentCodeFrame.GetHashCode()}) _currentCodeFrame.ExecutionCoordinator = {_currentCodeFrame.ExecutionCoordinator.GetHashCode()}");
-#endif
-
             _currentCodeFrame.ExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.WeakCanceled;
 
             _currentCodeFrame.CurrentPosition++;
@@ -1320,7 +1308,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void GoBackToPrevCodeFrame(ActionExecutionStatus targetActionExecutionStatus)
         {
 #if DEBUG
-            Log($"targetActionExecutionStatus = {targetActionExecutionStatus} ({_currentCodeFrame.ProcessInfo.GetHashCode()}); >>> {_executionCoordinator?.GetHashCode()}");
+            //Log($"targetActionExecutionStatus = {targetActionExecutionStatus} ({_currentCodeFrame.ProcessInfo.GetHashCode()}); >>> {_executionCoordinator?.GetHashCode()}");
 #endif
 
             if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus == ActionExecutionStatus.Executing)
@@ -1352,7 +1340,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var currentProcessInfoStatus = currentProcessInfo.Status;
 
 #if DEBUG
-            Log($"currentProcessInfoStatus = {currentProcessInfoStatus} ({currentProcessInfo.GetHashCode()})");
+            //Log($"currentProcessInfoStatus = {currentProcessInfoStatus} ({currentProcessInfo.GetHashCode()})");
 #endif
 
             if (currentProcessInfoStatus == ProcessStatus.Running)
@@ -1786,7 +1774,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            Log($"_currentCodeFrame.ProcessInfo.Status = {_currentCodeFrame.ProcessInfo.Status};>>> {_executionCoordinator?.GetHashCode()}");
+            //Log($"_currentCodeFrame.ProcessInfo.Status = {_currentCodeFrame.ProcessInfo.Status};>>> {_executionCoordinator?.GetHashCode()}");
 #endif
 
             var processCreatingResult = _hostListener.CreateProcess(command, _context, _currentCodeFrame.LocalContext);
@@ -1803,7 +1791,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 if (syncOption == SyncOption.Sync)
                 {
 #if DEBUG
-                    Log($"_currentCodeFrame.ProcessInfo.Status (2) = {_currentCodeFrame.ProcessInfo.Status};>>> {_executionCoordinator?.GetHashCode()}");
+                    //Log($"_currentCodeFrame.ProcessInfo.Status (2) = {_currentCodeFrame.ProcessInfo.Status};>>> {_executionCoordinator?.GetHashCode()}");
 #endif
 
                     processInfo.ParentProcessInfo = _currentCodeFrame.ProcessInfo;
@@ -1813,7 +1801,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     if (_executionCoordinator != null)
                     {
 #if DEBUG
-                        Log($"_executionCoordinator != null;>>> {_executionCoordinator?.GetHashCode()}");
+                        //Log($"_executionCoordinator != null;>>> {_executionCoordinator?.GetHashCode()}");
 #endif
 
                         executionCoordinators = new List<IExecutionCoordinator>() { _executionCoordinator };
@@ -1822,7 +1810,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     ProcessInfoHelper.Wait(executionCoordinators, timeout, timeoutCancellationMode, _dateTimeProvider, processInfo);
 
 #if DEBUG
-                    Log($"_currentCodeFrame.ProcessInfo.Status (3) = {_currentCodeFrame.ProcessInfo.Status}");
+                    //Log($"_currentCodeFrame.ProcessInfo.Status (3) = {_currentCodeFrame.ProcessInfo.Status}");
 #endif
 
                     if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus == ActionExecutionStatus.Broken)
@@ -1937,10 +1925,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             Value annotation, SyncOption syncOption, bool mayCallHost)
         {
-#if DEBUG
-            Log($"methodName = {methodName}; ({_currentCodeFrame.ProcessInfo.GetHashCode()}) >>> {_executionCoordinator?.GetHashCode()}");
-#endif
-
             IExecutable method = null;
 
             switch(kindOfParameters)
@@ -2121,11 +2105,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     annotationSystemEventsDict.TryGetValue(KindOfAnnotationSystemEvent.WeakCancel, out weakCancelAnnotationSystemEvent);
                     annotationSystemEventsDict.TryGetValue(KindOfAnnotationSystemEvent.Error, out errorAnnotationSystemEvent);
                 }
-
-#if DEBUG
-                Log($"executable.NeedActivation = {executable.NeedActivation}; ({_currentCodeFrame.ProcessInfo.GetHashCode()}) >>> {_executionCoordinator?.GetHashCode()}");
-                Log($"executable.IsActivated = {executable.IsActivated}; ({_currentCodeFrame.ProcessInfo.GetHashCode()}) >>> {_executionCoordinator?.GetHashCode()}");
-#endif
 
                 if (executable.NeedActivation && !executable.IsActivated)
                 {

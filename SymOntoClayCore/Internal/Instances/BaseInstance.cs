@@ -489,7 +489,6 @@ namespace SymOntoClay.Core.Internal.Instances
             finalizationExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
 
             RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger.Leave, finalizationExecutionCoordinator, false);
-
         }
 
         private void ParentExecutionCoordinator_OnFinished()

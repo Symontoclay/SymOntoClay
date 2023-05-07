@@ -133,18 +133,10 @@ namespace SymOntoClay.Core
         {
             lock (_statusLockObj)
             {
-#if DEBUG
-                _logger.Info($"WeakCancel GetType().FullName = {GetType().FullName} ({GetHashCode()})");
-#endif
-
                 if (NIsFinished)
                 {
                     return;
                 }
-
-#if DEBUG
-                _logger.Info($"WeakCancel NEXT GetType().FullName = {GetType().FullName} ({GetHashCode()})");
-#endif
 
                 _status = ProcessStatus.WeakCanceled;
             }
@@ -163,10 +155,6 @@ namespace SymOntoClay.Core
 
         private void ProcessSetStatus(ProcessStatus status)
         {
-#if DEBUG
-            _logger.Info($"ProcessSetStatus status = {status}; GetType().FullName = {GetType().FullName} ({GetHashCode()})");
-#endif
-
             switch (status)
             {
                 case ProcessStatus.Completed:
@@ -219,34 +207,18 @@ namespace SymOntoClay.Core
 
         private void ProcessGeneralFinishStatuses(ProcessStatus status)
         {
-#if DEBUG
-            _logger.Info($"ProcessGeneralFinishStatuses status = {status} GetType().FullName = {GetType().FullName} ({GetHashCode()})");
-#endif
-
             EmitOnFinish();
             NCancelChildren(status);
         }
 
         private void NCancelChildren(ProcessStatus status)
         {
-#if DEBUG
-            _logger.Info($"NCancelChildren status = {status} GetType().FullName = {GetType().FullName} ({GetHashCode()}); _childrenProcessInfoList.Count = {_childrenProcessInfoList.Count}");
-#endif
-
             switch (status)
             {
                 case ProcessStatus.WeakCanceled:
                     foreach (var child in _childrenProcessInfoList.ToList())
                     {
-#if DEBUG
-                        _logger.Info($"NCancelChildren child = {child.GetType().FullName}; GetType().FullName = {GetType().FullName} ({GetHashCode()})");
-#endif
-
                         child.WeakCancel();
-
-#if DEBUG
-                        _logger.Info($"NCancelChildren NEXT child = {child.GetType().FullName}; GetType().FullName = {GetType().FullName} ({GetHashCode()})");
-#endif
                     }
                     break;
 
@@ -441,10 +413,6 @@ namespace SymOntoClay.Core
         {
             lock (_parentAndChildrenLockObj)
             {
-#if DEBUG
-                _logger.Info($"AddChild processInfo = {processInfo.GetType().FullName} ({processInfo.GetHashCode()}); GetType().FullName = {GetType().FullName} ({GetHashCode()})");
-#endif
-
                 if (processInfo == this)
                 {
                     return;
@@ -459,10 +427,6 @@ namespace SymOntoClay.Core
                 {
                     return;
                 }
-
-#if DEBUG
-                _logger.Info($"AddChild NEXT processInfo = {processInfo.GetType().FullName} ({processInfo.GetHashCode()}); GetType().FullName = {GetType().FullName} ({GetHashCode()})");
-#endif
 
                 _childrenProcessInfoList.Add(processInfo);
 
@@ -494,10 +458,6 @@ namespace SymOntoClay.Core
 
         private void NRemoveChild(IProcessInfo processInfo)
         {
-#if DEBUG
-            _logger.Info($"NRemoveChild processInfo = {processInfo.GetType().FullName} ({processInfo.GetHashCode()}); GetType().FullName = {GetType().FullName} ({GetHashCode()})");
-#endif
-
             if (!_childrenProcessInfoList.Contains(processInfo))
             {
                 return;

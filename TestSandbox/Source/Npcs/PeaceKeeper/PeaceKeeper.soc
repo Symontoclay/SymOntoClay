@@ -1,4 +1,15 @@
-﻿{: {soldier($x)} -> { enemy($x) } :}
+﻿/*app PeaceKeeper
+{
+	{: male(#Tom) :}
+	{: parent(#Piter, #Tom) :}
+	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
+
+	on Enter => {
+	    select {: son($x, $y) :} >> @>log;
+	}
+}*/
+
+{: {soldier($x)} -> { enemy($x) } :}
 
 app PeaceKeeper
 {
@@ -22,11 +33,11 @@ app PeaceKeeper
 		//weak cancel action;
 	}
 
-	on {: see(I, $_) :} => 
-	{
-	    'see(I, $_)' >> @>log;
+	//on {: see(I, $_) :} => 
+	//{
+	//    'see(I, $_)' >> @>log;
 		//weak cancel action;
-	}
+	//}
 
 	fun go()
     {

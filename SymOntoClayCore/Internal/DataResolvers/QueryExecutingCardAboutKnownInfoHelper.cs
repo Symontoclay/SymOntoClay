@@ -20,8 +20,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,10 +33,22 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public static class QueryExecutingCardAboutKnownInfoHelper
     {
+#if DEBUG
+        private static ILogger _logger = LogManager.GetCurrentClassLogger();
+#endif
+
         public static MergingResultOfTwoQueryExecutingCardAboutKnownInfoLists Merge(IList<QueryExecutingCardAboutKnownInfo> internalKnownInfoList, IList<QueryExecutingCardAboutVar> internalVarsInfoList, IList<QueryExecutingCardAboutKnownInfo> externalKnownInfoList, bool inPartFromRelationForProduction)
         {
             var result = new MergingResultOfTwoQueryExecutingCardAboutKnownInfoLists();
             var targetKnownInfoList = new List<QueryExecutingCardAboutKnownInfo>();
+
+#if DEBUG
+            //if (inPartFromRelationForProduction)
+            //{
+                //_logger.Info($"Merge externalKnownInfoList  = {externalKnownInfoList.WriteListToString()}");
+                //_logger.Info($"Merge internalKnownInfoList  = {internalKnownInfoList.WriteListToString()}");
+            //}
+#endif
 
             if (externalKnownInfoList.IsNullOrEmpty())
             {
@@ -46,18 +60,41 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var targetRelationVarsInfoDictByPosition = internalVarsInfoList.ToDictionary(p => p.Position, p => p);
                 var targetRelationVarsInfoDictByKeyOfVar = internalVarsInfoList.ToDictionary(p => p.NameOfVar, p => p);
 
+#if DEBUG
+                //_logger.Info($"Merge targetRelationVarsInfoDictByPosition  = {targetRelationVarsInfoDictByPosition.WriteDict_2_ToString()}");
+#endif
+
+                var wasMatch = false;
+
                 foreach (var initialKnownInfo in externalKnownInfoList)
                 {
                     if (inPartFromRelationForProduction)
                     {
+#if DEBUG
+                        //_logger.Info($"Merge initialKnownInfo = {initialKnownInfo}");
+#endif
+
                         var position = initialKnownInfo.Position;
+
+#if DEBUG
+                        //_logger.Info($"Merge position = {position}");
+#endif
 
                         if (position.HasValue)
                         {
-                            var existingVar = targetRelationVarsInfoDictByPosition[position.Value];
-                            var resultKnownInfo = initialKnownInfo.Clone();
-                            resultKnownInfo.NameOfVar = existingVar.NameOfVar;
-                            targetKnownInfoList.Add(resultKnownInfo);
+                            if(targetRelationVarsInfoDictByPosition.ContainsKey(position.Value))
+                            {
+                                var existingVar = targetRelationVarsInfoDictByPosition[position.Value];
+                                var resultKnownInfo = initialKnownInfo.Clone();
+                                resultKnownInfo.NameOfVar = existingVar.NameOfVar;
+                                targetKnownInfoList.Add(resultKnownInfo);
+
+                                wasMatch = true;
+                            }
+                            //else
+                            //{
+                            //    targetKnownInfoList.Add(internalKnownInfoList[externalKnownInfoList.IndexOf(initialKnownInfo)]);
+                            //}
                         }
                         else
                         {
@@ -78,13 +115,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                 resultKnownInfo.NameOfVar = keyOfVar;
                                 resultKnownInfo.Position = existingVar.Position;
                                 targetKnownInfoList.Add(resultKnownInfo);
+
+                                wasMatch = true;
                             }
                         }
                         else
                         {
-                            throw new NotImplementedException();
+                            //throw new NotImplementedException();
                         }
                     }
+                }
+
+                if(!wasMatch)
+                {
+                    targetKnownInfoList = internalKnownInfoList.ToList();
                 }
             }
 

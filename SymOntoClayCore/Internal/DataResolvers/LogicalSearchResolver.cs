@@ -1187,6 +1187,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private void FillExecutingCard(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
+#if DEBUG
+            Log($"processedExpr = {processedExpr.ToHumanizedString()}");
+#endif
+
             var kind = processedExpr.Kind;
 
             switch(kind)
@@ -1274,6 +1278,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private void NFillExecutingCardForRelationLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
+#if DEBUG
+            Log($"processedExpr = {processedExpr.ToHumanizedString()}");
+#endif
+
             var relationName = processedExpr.Name;
 
             if (!queryExecutingCard.PostFiltersList.IsNullOrEmpty())
@@ -1293,6 +1301,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             queryExecutingCardForExpression.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
 
             NFillExecutingCardForConcreteRelationLogicalQueryNode(processedExpr, queryExecutingCardForExpression, dataSource, options);
+
+#if DEBUG
+            Log($"&&&&&&&& processedExpr = {processedExpr.ToHumanizedString()}");
+#endif
 
             if (!queryExecutingCardForExpression.PostFiltersList.IsNullOrEmpty())
             {
@@ -1366,7 +1378,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private void NFillExecutingCardForConcreteRelationLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-
+            Log($"processedExpr = {processedExpr.ToHumanizedString()}");
 #endif
 
             LogicalSearchExplainNode currentExplainNode = null;
@@ -1474,6 +1486,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 foreach (var rulePartsOfFacts in rulePartsOfFactsList)
                 {
+#if DEBUG
+                    Log($"rulePartsOfFacts = {rulePartsOfFacts.ToHumanizedString()}");
+#endif
+
                     LogicalSearchExplainNode localResultExplainNode = null;
 
                     if (directFactsResultsCollectorExplainNode != null)
@@ -1496,6 +1512,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     queryExecutingCardForTargetFact.ParentExplainNode = localResultExplainNode;
 
                     FillExecutingCardForCallingFromRelationForFact(rulePartsOfFacts, queryExecutingCardForTargetFact, dataSource, options);
+
+#if DEBUG
+                    Log($"******** rulePartsOfFacts = {rulePartsOfFacts.ToHumanizedString()}");
+#endif
 
                     if (queryExecutingCardForTargetFact.IsSuccess)
                     {
@@ -1530,6 +1550,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 foreach (var indexedRulePartsOfRule in rulePartWithOneRelationsList)
                 {
+#if DEBUG
+                    Log($"indexedRulePartsOfRule = {indexedRulePartsOfRule.ToHumanizedString()}");
+#endif
+
                     LogicalSearchExplainNode localResultExplainNode = null;
 
                     if(productionResultsCollectorExplainNode != null)
@@ -1553,6 +1577,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     queryExecutingCardForTargetRule.ParentExplainNode = localResultExplainNode;
 
                     FillExecutingCardForCallingFromRelationForProduction(indexedRulePartsOfRule, queryExecutingCardForTargetRule, dataSource, options);
+
+#if DEBUG
+                    Log($"################### indexedRulePartsOfRule = {indexedRulePartsOfRule.ToHumanizedString()}");
+#endif
 
                     if (queryExecutingCardForTargetRule.IsSuccess)
                     {
@@ -2644,6 +2672,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private void FillExecutingCardForCallingFromRelationForFact(BaseRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
+#if DEBUG
+            Log($"processedExpr = {processedExpr.ToHumanizedString()}");
+#endif
+
             LogicalSearchExplainNode currentExplainNode = null;
 
             var rootParentExplainNode = queryExecutingCard.RootParentExplainNode;
@@ -3107,6 +3139,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private void FillExecutingCardForCallingFromRelationForProduction(BaseRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
+#if DEBUG
+            Log($"processedExpr = {processedExpr.ToHumanizedString()}");
+#endif
+
             LogicalSearchExplainNode currentExplainNode = null;
 
             var rootParentExplainNode = queryExecutingCard.RootParentExplainNode;
@@ -3139,6 +3175,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var targetRelation = targetRelationsList.First();
 
+#if DEBUG
+            Log($"targetRelation = {targetRelation.ToHumanizedString()}");
+#endif
+
             if (targetRelation.ParamsList.Count != queryExecutingCard.CountParams)
             {
                 if (currentExplainNode != null)
@@ -3161,6 +3201,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var targetKnownInfoList = mergingResult.KnownInfoList;
 
+#if DEBUG
+            //Log($"targetKnownInfoList = {targetKnownInfoList.WriteListToString()}");
+#endif
+
             LogicalSearchExplainNode relationWithProductionNextPartsCollectorExplainNode = null;
 
             if (currentExplainNode != null)
@@ -3177,6 +3221,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var nextPart in nextPartsList)
             {
+#if DEBUG
+                Log($"nextPart = {nextPart.ToHumanizedString()}");
+#endif
+
                 LogicalSearchExplainNode nextPartLocalResultExplainNode = null;
 
                 if (relationWithProductionNextPartsCollectorExplainNode != null)
@@ -3198,17 +3246,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 FillExecutingCardForCallingFromOtherPart(nextPart, queryExecutingCardForNextPart, dataSource, options);
 
-                if(nextPartLocalResultExplainNode != null)
+#if DEBUG
+                Log($"^^^^^^^^^^^ nextPart = {nextPart.ToHumanizedString()}");
+#endif
+
+                if (nextPartLocalResultExplainNode != null)
                 {
                     FillUpResultToExplainNode(queryExecutingCardForNextPart, nextPartLocalResultExplainNode);
                 }
 
                 queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForNextPart.UsedKeysList);
-
-#if DEBUG
-
-
-#endif
 
                 if (queryExecutingCardForNextPart.IsPostFiltersListOnly)
                 {
@@ -3271,6 +3318,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private void FillExecutingCardForCallingFromOtherPart(BaseRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
+#if DEBUG
+            Log($"processedExpr = {processedExpr.ToHumanizedString()}");
+#endif
+
             LogicalSearchExplainNode currentExplainNode = null;
             LogicalSearchExplainNode resultExplainNode = null;
 
@@ -3304,6 +3355,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             queryExecutingCardForExpression.ParentExplainNode = resultExplainNode;
 
             FillExecutingCard(processedExpr.Expression, queryExecutingCardForExpression, dataSource, options);
+
+#if DEBUG
+            Log($"%%%%%%%%% processedExpr = {processedExpr.ToHumanizedString()}");
+#endif
 
             if (resultExplainNode != null)
             {

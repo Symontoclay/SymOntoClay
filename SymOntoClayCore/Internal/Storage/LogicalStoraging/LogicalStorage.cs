@@ -185,13 +185,23 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         private bool NAppend(RuleInstance ruleInstance, bool isPrimary)
         {
 #if DEBUG
+            //if(!DebugHelperForRuleInstance.ToString(ruleInstance).Contains("is"))
+            //{
+            //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
+            //Log($"ruleInstance = {ruleInstance}");
+            //Log($"isPrimary = {isPrimary}");
+            //}
 
+            Log($"({GetHashCode()}) ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
+            Log($"({GetHashCode()}) ruleInstance.Normalized = {DebugHelperForRuleInstance.ToString(ruleInstance.Normalized)}");
+            //Log($"ruleInstance = {ruleInstance}");
+            Log($"isPrimary = {isPrimary}");
 #endif
 
-            if(_enableAddingRemovingFactLoggingInStorages)
-            {
-                Log($"({GetHashCode()}) isPrimary = {isPrimary}; ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
-            }
+            //if (_enableAddingRemovingFactLoggingInStorages)
+            //{
+            //    Log($"({GetHashCode()}) isPrimary = {isPrimary}; ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
+            //}
 
             if (ruleInstance.TypeOfAccess != TypeOfAccess.Local)
             {
@@ -213,8 +223,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                 return true;
             }
-
-
 
             var ruleInstanceName = ruleInstance.Name;
 

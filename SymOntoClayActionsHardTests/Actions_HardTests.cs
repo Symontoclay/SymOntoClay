@@ -2,6 +2,7 @@
 using SymOntoClay.BaseTestLib;
 using SymOntoClay.BaseTestLib.HostListeners;
 using SymOntoClay.DefaultCLIEnvironment;
+using SymOntoClay.StandardFacts;
 using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
@@ -105,6 +106,7 @@ action check
         'End check' >> @>log;
     }
 }");
+            var standardFactsBuilder = new StandardFactsBuilder();
 
             var hostListener = new BattleRoyaleSilentHostListener();
 
@@ -123,8 +125,10 @@ action check
 
             var place = instance.GetPlace(settings);
 
+            var enemyId = "#enemy1";
+
             var enemySettings = new HumanoidNPCSettings();
-            enemySettings.Id = "#enemy1";
+            enemySettings.Id = enemyId;
             enemySettings.InstanceId = 567;
             enemySettings.AllowPublicPosition = true;
             enemySettings.UseStaticPosition = new System.Numerics.Vector3(15, 15, 15);
@@ -138,7 +142,7 @@ action check
             var enemy = instance.GetHumanoidNPC(enemySettings);
 
             hostListener.AddOnEndPointEnterSyncHandler("Go", () => {
-                npc.InsertFact("{: see(I, #enemy1) :}");
+                npc.InsertFact(standardFactsBuilder.BuildSeeFact(enemyId));
             });
 
             instance.StartWorld();
@@ -238,6 +242,7 @@ action check
         'End check' >> @>log;
     }
 }");
+            var standardFactsBuilder = new StandardFactsBuilder();
 
             var hostListener = new BattleRoyaleSilentHostListener();
 
@@ -256,8 +261,10 @@ action check
 
             var place = instance.GetPlace(settings);
 
+            var enemyId = "#enemy1";
+
             var enemySettings = new HumanoidNPCSettings();
-            enemySettings.Id = "#enemy1";
+            enemySettings.Id = enemyId;
             enemySettings.InstanceId = 567;
             enemySettings.AllowPublicPosition = true;
             enemySettings.UseStaticPosition = new System.Numerics.Vector3(15, 15, 15);
@@ -271,7 +278,7 @@ action check
             var enemy = instance.GetHumanoidNPC(enemySettings);
 
             hostListener.AddOnEndPointEnterSyncHandler("Go", () => {
-                npc.InsertFact("{: see(I, #enemy1) :}");
+                npc.InsertFact(standardFactsBuilder.BuildSeeFact(enemyId));
             });
 
             instance.StartWorld();
@@ -385,6 +392,7 @@ action move
 		'End move' >> @>log;
 	}
 }");
+            var standardFactsBuilder = new StandardFactsBuilder();
 
             var hostListener = new BattleRoyaleSilentHostListener();
 
@@ -403,8 +411,10 @@ action move
 
             var place = instance.GetPlace(settings);
 
+            var enemyId = "#enemy1";
+
             var enemySettings = new HumanoidNPCSettings();
-            enemySettings.Id = "#enemy1";
+            enemySettings.Id = enemyId;
             enemySettings.InstanceId = 567;
             enemySettings.AllowPublicPosition = true;
             enemySettings.UseStaticPosition = new System.Numerics.Vector3(15, 15, 15);
@@ -418,7 +428,7 @@ action move
             var enemy = instance.GetHumanoidNPC(enemySettings);
 
             hostListener.AddOnEndPointEnterSyncHandler("Go", () => {
-                npc.InsertFact("{: see(I, #enemy1) :}");
+                npc.InsertFact(standardFactsBuilder.BuildSeeFact(enemyId));
             });
 
             instance.StartWorld();
@@ -533,6 +543,8 @@ action move
 	}
 }");
 
+            var standardFactsBuilder = new StandardFactsBuilder();
+
             var hostListener = new BattleRoyaleSilentHostListener();
 
             var npc = instance.CreateNPC(hostListener);
@@ -550,8 +562,10 @@ action move
 
             var place = instance.GetPlace(settings);
 
+            var enemyId = "#enemy1";
+
             var enemySettings = new HumanoidNPCSettings();
-            enemySettings.Id = "#enemy1";
+            enemySettings.Id = enemyId;
             enemySettings.InstanceId = 567;
             enemySettings.AllowPublicPosition = true;
             enemySettings.UseStaticPosition = new System.Numerics.Vector3(15, 15, 15);
@@ -565,7 +579,7 @@ action move
             var enemy = instance.GetHumanoidNPC(enemySettings);
 
             hostListener.AddOnEndPointEnterSyncHandler("Go", () => {
-                npc.InsertFact("{: see(I, #enemy1) :}");
+                npc.InsertFact(standardFactsBuilder.BuildSeeFact(enemyId));
             });
 
             instance.StartWorld();

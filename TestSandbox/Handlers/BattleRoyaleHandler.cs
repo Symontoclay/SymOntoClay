@@ -31,6 +31,8 @@ namespace TestSandbox.Handlers
 
             CreateMainNPC(factorySettings);
 
+            var standardFactsBuilder = new StandardFactsBuilder();
+
             var placeSettings = new PlaceSettings();
             placeSettings.Id = "#WP1";
             placeSettings.InstanceId = 123;
@@ -60,20 +62,18 @@ namespace TestSandbox.Handlers
 
             var enemy = _world.GetHumanoidNPC(enemySettings);
 
-            var standardFactsBuilder = new StandardFactsBuilder();
-
             platformListener.AddOnEndPointEnterSyncHandler("Go", () =>
             {
-                _logger.Log("Enter to Go");
-
-                var factStr = standardFactsBuilder.BuildSeeFact(enemyId);
-
-                _logger.Log($"factStr = {factStr}");
-
-                var factId = _npc.InsertFact(factStr/*"{: see(I, #enemy1) :}"*/);
+                _npc.InsertFact(standardFactsBuilder.BuildSeeFact(enemyId));
             });
 
             _world.Start();
+
+            enemy.InsertFact(standardFactsBuilder.BuildAliveFactString(enemyId));
+
+            Thread.Sleep(1000);
+
+            _npc.InsertFact(standardFactsBuilder.BuildSeeFact(enemyId));
 
             //Thread.Sleep(5000);
 

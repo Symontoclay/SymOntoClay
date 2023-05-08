@@ -1,4 +1,6 @@
-﻿app PeaceKeeper
+﻿{: {soldier($x)} -> { enemy($x) } :}
+
+app PeaceKeeper
 {
     //idle actions
     //{
@@ -9,11 +11,23 @@
     {
         'Begin' >> @>log;
 
-        go();
+        //go();
 
         'End' >> @>log;
     }
 	
+    on {: see(I, $_) & enemy($_) & state($_, alive) :} => 
+	{
+	    'see(I, $_) & enemy($_) & state($_, alive)' >> @>log;
+		//weak cancel action;
+	}
+
+	on {: see(I, $_) :} => 
+	{
+	    'see(I, $_)' >> @>log;
+		//weak cancel action;
+	}
+
 	fun go()
     {
 	    'Begin go' >> @>log;
@@ -41,10 +55,16 @@ action `move and check`
 		'End move and check' >> @>log;
 	}
 
-	on {: see(I, $_) :} => 
+	on {: see(I, $_) & enemy($_) & state($_, alive) :} => 
+	{
+	    'see(I, $_) & enemy($_) & state($_, alive)' >> @>log;
+		weak cancel action;
+	}
+
+    on {: see(I, $_) :} => 
 	{
 	    'see(I, $_)' >> @>log;
-		weak cancel action;
+		//weak cancel action;
 	}
 }
 

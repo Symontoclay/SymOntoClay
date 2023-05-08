@@ -87,7 +87,6 @@ namespace SymOntoClay.Core.Internal.Storage
             _logicQueryParseAndCache = _context.LogicQueryParseAndCache;
             _parser = _context.Parser;
 
-
             var globalStorageSettings = new RealStorageSettings();
 
             var parentStoragesList = new List<IStorage>();
@@ -140,8 +139,6 @@ namespace SymOntoClay.Core.Internal.Storage
 
                         _visibleFactsStorage = new ConsolidatedPublicFactsStorage(_context.Logger, KindOfStorage.VisiblePublicFacts, visibleFactsStorageSettings);
                         parentStoragesList.Add(_visibleFactsStorage);
-
-
 
                         var categoriesStorageSettings = new CategoriesStorageSettings()
                         {

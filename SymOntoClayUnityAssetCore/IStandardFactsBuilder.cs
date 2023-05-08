@@ -212,5 +212,8 @@ namespace SymOntoClay.UnityAsset.Core
         /// <param name="selfId">Id of the NPC.</param>
         /// <returns>Instance of built fact.</returns>
         RuleInstance BuildReadyForShootFactInstance(string selfId);
+
+        string BuildSeeFact(string seenObjId);
+        string BuildFocusFact(string seenObjId);
     }
 }

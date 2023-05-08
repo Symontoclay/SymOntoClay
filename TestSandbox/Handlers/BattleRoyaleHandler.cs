@@ -19,8 +19,8 @@ namespace TestSandbox.Handlers
         {
             _logger.Log("Begin");
 
-            var platformListener = new BattleRoyaleSilentHostListener();
-            //var platformListener = new TstBattleRoyaleHostListener();
+            //var platformListener = new BattleRoyaleSilentHostListener();
+            var platformListener = new TstBattleRoyaleHostListener();
             //var platformListener = new TstBattleRoyaleHostListener2();
             //var platformListener = new BattleRoyaleHostListener();
             //var platformListener = new VeryLongMehod_HostListener();
@@ -44,8 +44,10 @@ namespace TestSandbox.Handlers
 
             var place = _world.GetPlace(placeSettings);
 
+            var enemyId = "#enemy1";
+
             var enemySettings = new HumanoidNPCSettings();
-            enemySettings.Id = "#enemy1";
+            enemySettings.Id = enemyId;
             enemySettings.InstanceId = 567;
             enemySettings.AllowPublicPosition = true;
             enemySettings.UseStaticPosition = new System.Numerics.Vector3(15, 15, 15);
@@ -64,7 +66,11 @@ namespace TestSandbox.Handlers
             {
                 _logger.Log("Enter to Go");
 
-                var factId = _npc.InsertFact("{: see(I, #enemy1) :}");
+                var factStr = standardFactsBuilder.BuildSeeFact(enemyId);
+
+                _logger.Log($"factStr = {factStr}");
+
+                var factId = _npc.InsertFact(factStr/*"{: see(I, #enemy1) :}"*/);
             });
 
             _world.Start();

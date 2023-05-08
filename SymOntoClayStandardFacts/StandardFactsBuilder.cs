@@ -34,7 +34,6 @@ namespace SymOntoClay.StandardFacts
 {
     public class StandardFactsBuilder : IStandardFactsBuilder
     {
-
         /// <inheritdoc/>
         public virtual string BuildSayFactString(string selfId, string factStr)
         {
@@ -724,6 +723,28 @@ namespace SymOntoClay.StandardFacts
             };
 
             return result;
+        }
+
+        /// <inheritdoc/>
+        public string BuildSeeFact(string seenObjId)
+        {
+            var sb = new StringBuilder();
+            sb.Append("{: see(I, ");
+            sb.Append(seenObjId);
+            sb.Append(") :}");
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string BuildFocusFact(string seenObjId)
+        {
+            var sb = new StringBuilder();
+            sb.Append("{: focus(I, ");
+            sb.Append(seenObjId);
+            sb.Append(") :}");
+
+            return sb.ToString();
         }
 
         protected virtual string GetTargetVarName(string factStr)

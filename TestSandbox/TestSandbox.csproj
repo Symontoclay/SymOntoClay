@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DictionaryGenerator\DictionaryGenerator.csproj" />
+    <ProjectReference Include="..\SymOntoClayActionsHardTests\SymOntoClayActionsHardTests.csproj" />
     <ProjectReference Include="..\SymOntoClayBaseTestLib\SymOntoClayBaseTestLib.csproj" />
     <ProjectReference Include="..\SymOntoClayCLI\SymOntoClayCLI.csproj" />
     <ProjectReference Include="..\SymOntoClayCoreHelper\SymOntoClayCoreHelper.csproj" />
@@ -29,10 +30,10 @@
     <ProjectReference Include="..\SymOntoClayUnityAssetCore\SymOntoClayUnityAssetCore.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="NLog" Version="4.7.9" />
-    <PackageReference Include="System.CodeDom" Version="6.0.0" />
-    <PackageReference Include="System.Speech" Version="6.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="NLog" Version="5.1.4" />
+    <PackageReference Include="System.CodeDom" Version="7.0.0" />
+    <PackageReference Include="System.Speech" Version="7.0.0" />
   </ItemGroup>
   <ItemGroup>
     <None Update="NLog.config">

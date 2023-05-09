@@ -33,7 +33,7 @@ using System.Xml.Linq;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public abstract class BaseRulePart: AnnotatedItem, IMemberAccess, IReadOnlyMemberAccess, ILogicalSearchItem, ILogicalQueryNodeParent
+    public abstract class BaseRulePart: AnnotatedItem, IMemberAccess, IReadOnlyMemberAccess, ILogicalSearchItem, ILogicalQueryNodeParent//, IEquatable<BaseRulePart>
     {
         public RuleInstance Parent { get; set; }
 
@@ -51,6 +51,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public StrongIdentifierValue Holder { get; set; }
 
         public IDictionary<StrongIdentifierValue, IList<LogicalQueryNode>> RelationsDict { get; set; }
+
+        // <inheritdoc/>
+        //public bool Equals(BaseRulePart other)
+        //{
+        //    if (other == null)
+        //    {
+        //        return false;
+        //    }
+
+        //    throw new NotImplementedException();
+        //}
 
         public void SetHolder(StrongIdentifierValue holder)
         {

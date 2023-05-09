@@ -3604,6 +3604,9 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode.SelfObligationModality">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode.Equals(SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
             <inheritdoc/>
         </member>

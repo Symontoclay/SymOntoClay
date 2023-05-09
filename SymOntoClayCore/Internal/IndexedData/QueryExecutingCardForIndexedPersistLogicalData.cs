@@ -44,6 +44,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public List<StrongIdentifierValue> UsedKeysList { get; set; } = new List<StrongIdentifierValue>();
         public LogicalSearchExplainNode ParentExplainNode { get; set; }
         public LogicalSearchExplainNode RootParentExplainNode { get; set; }
+        public List<LogicalQueryNode> UsedRelations { get; set; } = new List<LogicalQueryNode>();
 
         /// <inheritdoc/>
         public override string ToString()
@@ -76,6 +77,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.PrintObjListProp(n, nameof(UsedKeysList), UsedKeysList);
             sb.PrintExisting(n, nameof(ParentExplainNode), ParentExplainNode);
             sb.PrintExisting(n, nameof(RootParentExplainNode), RootParentExplainNode);
+            sb.PrintObjListProp(n, nameof(UsedRelations), UsedRelations);
 
             return sb.ToString();
         }
@@ -111,6 +113,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.PrintShortObjListProp(n, nameof(UsedKeysList), UsedKeysList);
             sb.PrintExisting(n, nameof(ParentExplainNode), ParentExplainNode);
             sb.PrintExisting(n, nameof(RootParentExplainNode), RootParentExplainNode);
+            sb.PrintShortObjListProp(n, nameof(UsedRelations), UsedRelations);
 
             return sb.ToString();
         }
@@ -145,7 +148,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.AppendLine($"{spaces}{nameof(IsPostFiltersListOnly)} = {IsPostFiltersListOnly}");
             sb.PrintBriefObjListProp(n, nameof(UsedKeysList), UsedKeysList);
             sb.PrintExisting(n, nameof(ParentExplainNode), ParentExplainNode);
-            sb.PrintExisting(n, nameof(RootParentExplainNode), RootParentExplainNode);
+            sb.PrintExisting(n, nameof(RootParentExplainNode), RootParentExplainNode);            
 
             return sb.ToString();
         }

@@ -1299,6 +1299,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             queryExecutingCardForExpression.VarsInfoList = queryExecutingCard.VarsInfoList;
             queryExecutingCardForExpression.KnownInfoList = queryExecutingCard.KnownInfoList;
             queryExecutingCardForExpression.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+            queryExecutingCardForExpression.UsedRelations.AddRange(queryExecutingCard.UsedRelations);
 
             NFillExecutingCardForConcreteRelationLogicalQueryNode(processedExpr, queryExecutingCardForExpression, dataSource, options);
 
@@ -1327,6 +1328,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 queryExecutingCardForExpression.VarsInfoList = queryExecutingCard.VarsInfoList;
                 queryExecutingCardForExpression.KnownInfoList = queryExecutingCard.KnownInfoList;
                 queryExecutingCardForExpression.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+                queryExecutingCardForExpression.UsedRelations.AddRange(queryExecutingCard.UsedRelations);
 
                 var newRelation = processedExpr.Clone();
                 newRelation.Name = synonym;
@@ -1355,6 +1357,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 queryExecutingCardForExpression.VarsInfoList = queryExecutingCard.VarsInfoList;
                 queryExecutingCardForExpression.KnownInfoList = queryExecutingCard.KnownInfoList;
                 queryExecutingCardForExpression.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+                queryExecutingCardForExpression.UsedRelations.AddRange(queryExecutingCard.UsedRelations);
 
                 var newRelation = processedExpr.Clone();
                 newRelation.Name = superClass;
@@ -1378,8 +1381,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private void NFillExecutingCardForConcreteRelationLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            Log($"processedExpr = {processedExpr.ToHumanizedString()}");
+            Log($"processedExpr = {processedExpr.ToHumanizedString()}; ({processedExpr.GetLongHashCode()})");
 #endif
+
+            if (queryExecutingCard.UsedRelations.Contains(processedExpr))
+            {
+                return;
+            }
+
+            queryExecutingCard.UsedRelations.Add(processedExpr);
 
             LogicalSearchExplainNode currentExplainNode = null;
 
@@ -1575,6 +1585,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     queryExecutingCardForTargetRule.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
                     queryExecutingCardForTargetRule.RootParentExplainNode = rootParentExplainNode;
                     queryExecutingCardForTargetRule.ParentExplainNode = localResultExplainNode;
+                    queryExecutingCardForTargetRule.UsedRelations.AddRange(queryExecutingCard.UsedRelations);
 
                     FillExecutingCardForCallingFromRelationForProduction(indexedRulePartsOfRule, queryExecutingCardForTargetRule, dataSource, options);
 
@@ -3243,6 +3254,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 queryExecutingCardForNextPart.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
                 queryExecutingCardForNextPart.RootParentExplainNode = rootParentExplainNode;
                 queryExecutingCardForNextPart.ParentExplainNode = nextPartLocalResultExplainNode;
+                queryExecutingCardForNextPart.UsedRelations.AddRange(queryExecutingCard.UsedRelations);
 
                 FillExecutingCardForCallingFromOtherPart(nextPart, queryExecutingCardForNextPart, dataSource, options);
 
@@ -3353,6 +3365,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             queryExecutingCardForExpression.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
             queryExecutingCardForExpression.RootParentExplainNode = rootParentExplainNode;
             queryExecutingCardForExpression.ParentExplainNode = resultExplainNode;
+            queryExecutingCardForExpression.UsedRelations.AddRange(queryExecutingCard.UsedRelations);
 
             FillExecutingCard(processedExpr.Expression, queryExecutingCardForExpression, dataSource, options);
 

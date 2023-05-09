@@ -38,8 +38,12 @@ using System.Xml.Linq;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class LogicalQueryNode: AnnotatedItem, IAstNode, IMemberAccess, IReadOnlyMemberAccess, ILogicalSearchItem, ILogicalQueryNodeParent
+    public class LogicalQueryNode: AnnotatedItem, IAstNode, IMemberAccess, IReadOnlyMemberAccess, ILogicalSearchItem, ILogicalQueryNodeParent, IEquatable<LogicalQueryNode>
     {
+#if DEBUG
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
         public KindOfLogicalQueryNode Kind { get; set; } = KindOfLogicalQueryNode.Unknown;
 
         public bool IsExpression => Kind == KindOfLogicalQueryNode.Relation || Kind == KindOfLogicalQueryNode.Group || Kind == KindOfLogicalQueryNode.BinaryOperator || Kind == KindOfLogicalQueryNode.UnaryOperator;
@@ -78,10 +82,73 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public Value SelfObligationModality => RuleInstance.SelfObligationModality;
 
+        /// <inheritdoc/>
+        public bool Equals(LogicalQueryNode other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
 
+            if(Kind != other.Kind)
+            {
+                return false;
+            }
 
+            switch (Kind)
+            {
+                case KindOfLogicalQueryNode.Relation:
+                    if(Name != other.Name)
+                    {
+                        return false;
+                    }
 
+                    if(ParamsList.Count != other.ParamsList.Count)
+                    {
+                        return false;
+                    }
 
+#if DEBUG
+                    _gbcLogger.Info($"LogicalQueryNode Equals this = {ToHumanizedString()}");
+                    _gbcLogger.Info($"LogicalQueryNode Equals other = {other?.ToHumanizedString()}");
+#endif
+
+                    var otherParamsEnumerator = other.ParamsList.GetEnumerator();
+
+                    foreach (var thisParam in ParamsList)
+                    {
+                        if(!otherParamsEnumerator.MoveNext())
+                        {
+                            return false;
+                        }
+
+                        if (!thisParam.Equals(otherParamsEnumerator.Current))
+                        {
+                            return false;
+                        }
+
+#if DEBUG
+                        _gbcLogger.Info($"LogicalQueryNode Equals thisParam = {thisParam.ToHumanizedString()}");
+                        _gbcLogger.Info($"LogicalQueryNode Equals otherParamsEnumerator.Current = {otherParamsEnumerator.Current?.ToHumanizedString()}");
+#endif
+                    }
+
+                    return true;
+
+                case KindOfLogicalQueryNode.Concept:
+                case KindOfLogicalQueryNode.Entity:
+                    return Name.Equals(other.Name);
+
+                case KindOfLogicalQueryNode.LogicalVar:
+                    return true;
+
+                case KindOfLogicalQueryNode.Value:
+                    return true;//tmp
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
+            }
+        }
 
         public void PrepareDirty(ContextOfConvertingExpressionNode contextOfConvertingExpressionNode, RuleInstance ruleInstance, BaseRulePart rulePart)
         {

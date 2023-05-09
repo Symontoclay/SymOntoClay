@@ -1,17 +1,18 @@
-﻿/*app PeaceKeeper
+﻿app PeaceKeeper
 {
-	{: male(#Tom) :}
-	{: parent(#Piter, #Tom) :}
-	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
+	{: soldier(#Tom) :}
+	{: state(#Tom, alive) :}
+	{: see(I, #Tom) :}
+	{: { enemy($x) } -> { soldier($x) } :}
 
 	on Enter => {
-	    select {: son($x, $y) :} >> @>log;
+	    select {: see(I, $x) & enemy($x) & state($x, alive) :} >> @>log;
 	}
-}*/
+}
 
-{: {soldier($x)} -> { enemy($x) } :}
 
-app PeaceKeeper
+
+/*app PeaceKeeper
 {
     //idle actions
     //{
@@ -32,6 +33,18 @@ app PeaceKeeper
 	    'see(I, $_) & enemy($_) & state($_, alive)' >> @>log;
 		//weak cancel action;
 	}
+
+	//on {: see(I, $_) & soldier($_):} => 
+	//{
+	//    'see(I, $_) & soldier($_)' >> @>log;
+		//weak cancel action;
+	//}
+
+    //on {: see(I, $_) & enemy($_):} => 
+	//{
+	//    'see(I, $_) & enemy($_)' >> @>log;
+		//weak cancel action;
+	//}
 
 	//on {: see(I, $_) :} => 
 	//{
@@ -100,4 +113,4 @@ action move
 		@@host.go(to: @target) [: on weak canceled { 'on weak canceled move (host)' >> @>log; complete action; }, on complete { 'on complete move (host)' >> @>log; complete action;} :];
 		'End move' >> @>log;
 	}
-}
+}*/

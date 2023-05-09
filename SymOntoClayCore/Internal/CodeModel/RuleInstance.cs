@@ -38,9 +38,8 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class RuleInstance: CodeItem, IStorage, ILogicalStorage
+    public class RuleInstance: CodeItem, IStorage, ILogicalStorage//, IEquatable<RuleInstance>
     {
-
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.RuleOrFact;
 
@@ -72,6 +71,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public RuleInstance Normalized { get; set; }
 
         private readonly CommonPersistIndexedLogicalData _commonPersistIndexedLogicalData = new CommonPersistIndexedLogicalData();
+
+        // <inheritdoc/>
+        //public bool Equals(RuleInstance other)
+        //{
+        //    if (other == null)
+        //    {
+        //        return false;
+        //    }
+
+        //    throw new NotImplementedException();
+        //}
 
         private void PrepareDirty(CheckDirtyOptions options)
         {

@@ -203,6 +203,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
                         }
                         break;
 
+                    case KindOfValue.CodeItem:
+                        {
+                            var codeItem = Target.AsCodeItem;
+
+                            switch (codeItem.Kind)
+                            {
+                                default:
+                                    throw new ArgumentOutOfRangeException(nameof(codeItem.Kind), codeItem.Kind, null);
+                            }
+                        }
+                        break;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(Target.KindOfValue), Target.KindOfValue, null);
                 }

@@ -31,7 +31,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public abstract class Value: AnnotatedItem
+    public abstract class Value: AnnotatedItem, IEquatable<Value>
     {
         public abstract KindOfValue KindOfValue { get; }
 
@@ -123,6 +123,27 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public abstract object GetSystemValue();
 
         public abstract string ToSystemString();
+
+        /// <inheritdoc/>
+        public bool Equals(Value other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            if(KindOfValue != other.KindOfValue)
+            {
+                return false;
+            }
+
+            return ConcreteValueEquals(other);
+        }
+
+        protected virtual bool ConcreteValueEquals(Value other)
+        {
+            throw new NotImplementedException();
+        }
 
         public void SetMemberValue(StrongIdentifierValue memberName, Value value)
         {

@@ -3974,6 +3974,9 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.NumberValue.IsSystemNull">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.ConcreteValueEquals(SymOntoClay.Core.Internal.CodeModel.Value)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.GetSystemValue">
             <inheritdoc/>
         </member>
@@ -4901,6 +4904,9 @@
             <summary>
             Reserved for CodeEntities which will be accessible in module.
             </summary>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Value.Equals(SymOntoClay.Core.Internal.CodeModel.Value)">
+            <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Value.CloneValue">
             <summary>

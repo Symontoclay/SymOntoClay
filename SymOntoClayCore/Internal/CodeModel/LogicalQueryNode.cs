@@ -122,15 +122,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
                             return false;
                         }
 
-                        if (!thisParam.Equals(otherParamsEnumerator.Current))
-                        {
-                            return false;
-                        }
-
 #if DEBUG
                         _gbcLogger.Info($"LogicalQueryNode Equals thisParam = {thisParam.ToHumanizedString()}");
                         _gbcLogger.Info($"LogicalQueryNode Equals otherParamsEnumerator.Current = {otherParamsEnumerator.Current?.ToHumanizedString()}");
 #endif
+
+                        if (!thisParam.Equals(otherParamsEnumerator.Current))
+                        {
+                            return false;
+                        }
                     }
 
                     return true;
@@ -143,7 +143,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     return true;
 
                 case KindOfLogicalQueryNode.Value:
-                    return true;//tmp
+                    return Value.Equals(other.Value);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);

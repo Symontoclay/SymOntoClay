@@ -726,7 +726,7 @@ namespace SymOntoClay.StandardFacts
         }
 
         /// <inheritdoc/>
-        public string BuildSeeFact(string seenObjId)
+        public string BuildSeeFactString(string seenObjId)
         {
             var sb = new StringBuilder();
             sb.Append("{: see(I, ");
@@ -737,12 +737,25 @@ namespace SymOntoClay.StandardFacts
         }
 
         /// <inheritdoc/>
-        public string BuildFocusFact(string seenObjId)
+        public string BuildFocusFactString(string seenObjId)
         {
             var sb = new StringBuilder();
             sb.Append("{: focus(I, ");
             sb.Append(seenObjId);
             sb.Append(") :}");
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string BuildDefaultInheritanceFactString(string obj, string superObj)
+        {
+            var sb = new StringBuilder();
+            sb.Append("{: is (");
+            sb.Append(obj);
+            sb.Append(",");
+            sb.Append(superObj);
+            sb.Append(", 1) :}");
 
             return sb.ToString();
         }

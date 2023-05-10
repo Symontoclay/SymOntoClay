@@ -1,18 +1,6 @@
-﻿app PeaceKeeper
-{
-	{: soldier(#Tom) :}
-	{: state(#Tom, alive) :}
-	{: see(I, #Tom) :}
-	{: { enemy($x) } -> { soldier($x) } :}
+﻿{: { enemy($x) } -> { soldier($x) } :}
 
-	on Enter => {
-	    select {: see(I, $x) & enemy($x) & state($x, alive) :} >> @>log;
-	}
-}
-
-
-
-/*app PeaceKeeper
+app PeaceKeeper
 {
     //idle actions
     //{
@@ -23,26 +11,20 @@
     {
         'Begin' >> @>log;
 
-        //go();
+        go();
 
         'End' >> @>log;
     }
 	
-    on {: see(I, $_) & enemy($_) & state($_, alive) :} => 
-	{
-	    'see(I, $_) & enemy($_) & state($_, alive)' >> @>log;
-		//weak cancel action;
-	}
-
-	//on {: see(I, $_) & soldier($_):} => 
+    //on {: see(I, $_) & enemy($_) & state($_, alive) :} => 
 	//{
-	//    'see(I, $_) & soldier($_)' >> @>log;
+	//    'see(I, $_) & enemy($_) & state($_, alive)' >> @>log;
 		//weak cancel action;
 	//}
 
-    //on {: see(I, $_) & enemy($_):} => 
+	//on {: see(I, $_) & state($_, alive) :} => 
 	//{
-	//    'see(I, $_) & enemy($_)' >> @>log;
+	//    'see(I, $_) & state($_, alive)' >> @>log;
 		//weak cancel action;
 	//}
 
@@ -85,11 +67,11 @@ action `move and check`
 		weak cancel action;
 	}
 
-    on {: see(I, $_) :} => 
-	{
-	    'see(I, $_)' >> @>log;
+    //on {: see(I, $_) :} => 
+	//{
+	//    'see(I, $_)' >> @>log;
 		//weak cancel action;
-	}
+	//}
 }
 
 action check
@@ -113,4 +95,32 @@ action move
 		@@host.go(to: @target) [: on weak canceled { 'on weak canceled move (host)' >> @>log; complete action; }, on complete { 'on complete move (host)' >> @>log; complete action;} :];
 		'End move' >> @>log;
 	}
-}*/
+}
+
+action kill
+{
+    op (@target)
+	{
+	    'Begin kill' >> @>log;
+	}
+
+	fun aim()
+	{
+	
+	}
+
+	fun shoot()
+	{
+	
+	}
+
+	fun `stop shoot`()
+	{
+	
+	}
+
+	fun `ready for shoot`()
+	{
+	    
+	}
+}

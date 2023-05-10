@@ -64,18 +64,23 @@ namespace TestSandbox.Handlers
 
             platformListener.AddOnEndPointEnterSyncHandler("Go", () =>
             {
-                _npc.InsertFact(standardFactsBuilder.BuildSeeFact(enemyId));
+                _logger.Log("OnEndPointEnterSyncHandler: On Enter Go");
+
+                _npc.InsertFact(standardFactsBuilder.BuildAliveFactString(enemyId));
+                //_npc.InsertFact("{: is(#enemy1,soldier,1) :}");
+                _npc.InsertFact(standardFactsBuilder.BuildDefaultInheritanceFactString(enemyId, "soldier"));
+                _npc.InsertFact(standardFactsBuilder.BuildSeeFactString(enemyId));
             });
 
             _world.Start();
 
-            enemy.InsertFact(standardFactsBuilder.BuildAliveFactString(enemyId));
+            //enemy.InsertFact(standardFactsBuilder.BuildAliveFactString(enemyId));
 
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
 
-            _npc.InsertFact(standardFactsBuilder.BuildAliveFactString(enemyId));
-            _npc.InsertFact("{: is(#enemy1,soldier,1) :}");
-            _npc.InsertFact(standardFactsBuilder.BuildSeeFact(enemyId));
+            //_npc.InsertFact(standardFactsBuilder.BuildAliveFactString(enemyId));
+            //_npc.InsertFact("{: is(#enemy1,soldier,1) :}");
+            //_npc.InsertFact(standardFactsBuilder.BuildSeeFact(enemyId));
 
             //Thread.Sleep(5000);
 

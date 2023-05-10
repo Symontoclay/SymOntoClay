@@ -121,5 +121,35 @@ namespace TestSandbox.CoreHostListener
 
             EmitOnLeave();
         }
+
+        [DebuggerHidden]
+        [BipedEndpoint("Aim to", DeviceOfBiped.RightHand, DeviceOfBiped.LeftHand)]
+        public void AimToImpl(CancellationToken cancellationToken, IEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        [DebuggerHidden]
+        [BipedEndpoint("Ready For Shoot", DeviceOfBiped.RightHand, DeviceOfBiped.LeftHand)]
+        public void ReadyForShootImpl(CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        [DebuggerHidden]
+        [FriendsEndpoints("Aim to")]
+        [BipedEndpoint("Start Shoot", DeviceOfBiped.RightHand, DeviceOfBiped.LeftHand)]
+        public void StartShootImpl(CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        [DebuggerHidden]
+        [FriendsEndpoints("Aim to")]
+        [BipedEndpoint("Stop Shoot", DeviceOfBiped.RightHand, DeviceOfBiped.LeftHand)]
+        public void StopShootImpl(CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

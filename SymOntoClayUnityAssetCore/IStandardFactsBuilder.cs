@@ -213,7 +213,8 @@ namespace SymOntoClay.UnityAsset.Core
         /// <returns>Instance of built fact.</returns>
         RuleInstance BuildReadyForShootFactInstance(string selfId);
 
-        string BuildSeeFact(string seenObjId);
-        string BuildFocusFact(string seenObjId);
+        string BuildSeeFactString(string seenObjId);
+        string BuildFocusFactString(string seenObjId);
+        string BuildDefaultInheritanceFactString(string obj, string superObj);
     }
 }

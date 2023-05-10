@@ -192,10 +192,10 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             //Log($"isPrimary = {isPrimary}");
             //}
 
-            Log($"({GetHashCode()}) ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
-            Log($"({GetHashCode()}) ruleInstance.Normalized = {DebugHelperForRuleInstance.ToString(ruleInstance.Normalized)}");
+            //Log($"({GetHashCode()}) ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
+            //Log($"({GetHashCode()}) ruleInstance.Normalized = {DebugHelperForRuleInstance.ToString(ruleInstance.Normalized)}");
             //Log($"ruleInstance = {ruleInstance}");
-            Log($"isPrimary = {isPrimary}");
+            //Log($"isPrimary = {isPrimary}");
 #endif
 
             //if (_enableAddingRemovingFactLoggingInStorages)

@@ -34,10 +34,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public abstract class Value: AnnotatedItem, IEquatable<Value>
     {
-#if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         public abstract KindOfValue KindOfValue { get; }
 
         public virtual bool IsNullValue => false;
@@ -137,11 +133,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 return false;
             }
 
-#if DEBUG
-            _gbcLogger.Info($"Value Equals ({KindOfValue}) this = {ToHumanizedString()}");
-            _gbcLogger.Info($"Value Equals ({KindOfValue}) other = {other.ToHumanizedString()}");
-#endif
-
             if(other.IsNullValue)
             {
                 return NullValueEquals();
@@ -149,6 +140,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             if(KindOfValue != other.KindOfValue)
             {
+                if((KindOfValue == KindOfValue.NumberValue && other.KindOfValue == KindOfValue.LogicalValue) ||
+                    (KindOfValue == KindOfValue.LogicalValue && other.KindOfValue == KindOfValue.NumberValue))
+                {
+                    throw new NotImplementedException();
+                }
+
                 return false;
             }
 

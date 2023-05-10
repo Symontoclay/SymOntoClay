@@ -3478,5 +3478,37 @@ app PeaceKeeper
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case35()
+        {
+            var text = @"app PeaceKeeper
+{
+	{: soldier(#Tom) :}
+	{: state(#Tom, alive) :}
+	{: see(I, #Tom) :}
+	{: { enemy($x) } -> { soldier($x) } :}
+
+	on Enter => {
+	    select {: see(I, $x) & enemy($x) & state($x, alive) :} >> @>log;
+	}
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$x = #tom"), true);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
     }
 }

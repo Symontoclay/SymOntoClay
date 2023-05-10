@@ -40,10 +40,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class LogicalQueryNode: AnnotatedItem, IAstNode, IMemberAccess, IReadOnlyMemberAccess, ILogicalSearchItem, ILogicalQueryNodeParent, IEquatable<LogicalQueryNode>
     {
-#if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         public KindOfLogicalQueryNode Kind { get; set; } = KindOfLogicalQueryNode.Unknown;
 
         public bool IsExpression => Kind == KindOfLogicalQueryNode.Relation || Kind == KindOfLogicalQueryNode.Group || Kind == KindOfLogicalQueryNode.BinaryOperator || Kind == KindOfLogicalQueryNode.UnaryOperator;
@@ -108,11 +104,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
                         return false;
                     }
 
-#if DEBUG
-                    _gbcLogger.Info($"LogicalQueryNode Equals this = {ToHumanizedString()}");
-                    _gbcLogger.Info($"LogicalQueryNode Equals other = {other?.ToHumanizedString()}");
-#endif
-
                     var otherParamsEnumerator = other.ParamsList.GetEnumerator();
 
                     foreach (var thisParam in ParamsList)
@@ -121,11 +112,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
                         {
                             return false;
                         }
-
-#if DEBUG
-                        _gbcLogger.Info($"LogicalQueryNode Equals thisParam = {thisParam.ToHumanizedString()}");
-                        _gbcLogger.Info($"LogicalQueryNode Equals otherParamsEnumerator.Current = {otherParamsEnumerator.Current?.ToHumanizedString()}");
-#endif
 
                         if (!thisParam.Equals(otherParamsEnumerator.Current))
                         {

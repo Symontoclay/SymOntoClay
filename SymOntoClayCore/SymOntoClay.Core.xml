@@ -3745,6 +3745,12 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalValue.IsSystemNull">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalValue.NullValueEquals">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalValue.ConcreteValueEquals(SymOntoClay.Core.Internal.CodeModel.Value)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalValue.GetSystemValue">
             <inheritdoc/>
         </member>
@@ -3935,6 +3941,9 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.NullValue.IsSystemNull">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.NullValue.NullValueEquals">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NullValue.GetSystemValue">
             <inheritdoc/>
         </member>
@@ -3972,6 +3981,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.NumberValue.IsSystemNull">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.NullValueEquals">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.ConcreteValueEquals(SymOntoClay.Core.Internal.CodeModel.Value)">

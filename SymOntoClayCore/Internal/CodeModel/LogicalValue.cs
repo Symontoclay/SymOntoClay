@@ -109,6 +109,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override bool IsSystemNull => !SystemValue.HasValue;
 
         /// <inheritdoc/>
+        protected override bool NullValueEquals()
+        {
+            return !SystemValue.HasValue;
+        }
+
+        /// <inheritdoc/>
+        protected override bool ConcreteValueEquals(Value other)
+        {
+            return SystemValue == other.AsLogicalValue.SystemValue;
+        }
+
+        /// <inheritdoc/>
         public override object GetSystemValue()
         {
             return SystemValue;

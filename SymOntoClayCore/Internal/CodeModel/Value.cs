@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using Newtonsoft.Json.Linq;
+using NLog;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.IndexedData;
@@ -33,6 +34,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public abstract class Value: AnnotatedItem, IEquatable<Value>
     {
+#if DEBUG
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
         public abstract KindOfValue KindOfValue { get; }
 
         public virtual bool IsNullValue => false;
@@ -132,12 +137,27 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 return false;
             }
 
+#if DEBUG
+            _gbcLogger.Info($"Value Equals ({KindOfValue}) this = {ToHumanizedString()}");
+            _gbcLogger.Info($"Value Equals ({KindOfValue}) other = {other.ToHumanizedString()}");
+#endif
+
+            if(other.IsNullValue)
+            {
+                return NullValueEquals();
+            }
+
             if(KindOfValue != other.KindOfValue)
             {
                 return false;
             }
 
             return ConcreteValueEquals(other);
+        }
+
+        protected virtual bool NullValueEquals()
+        {
+            throw new NotImplementedException();
         }
 
         protected virtual bool ConcreteValueEquals(Value other)

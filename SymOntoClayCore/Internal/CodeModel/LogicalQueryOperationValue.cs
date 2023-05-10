@@ -209,6 +209,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                             switch (codeItem.Kind)
                             {
+                                case KindOfCodeEntity.RuleOrFact:
+                                    sb.Append(codeItem.AsRuleInstance.ToHumanizedString(options));
+                                    break;
+
                                 default:
                                     throw new ArgumentOutOfRangeException(nameof(codeItem.Kind), codeItem.Kind, null);
                             }

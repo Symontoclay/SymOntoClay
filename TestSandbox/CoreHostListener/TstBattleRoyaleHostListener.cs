@@ -126,14 +126,19 @@ namespace TestSandbox.CoreHostListener
         [BipedEndpoint("Aim to", DeviceOfBiped.RightHand, DeviceOfBiped.LeftHand)]
         public void AimToImpl(CancellationToken cancellationToken, IEntity entity)
         {
-            throw new NotImplementedException();
+            _logger.Log("AimToImpl Begin");
+            _logger.Log($"entity.InstanceId = {entity.InstanceId}");
+            _logger.Log($"entity.Id = {entity.Id}");
+            _logger.Log($"entity.Position = {entity.Position}");
+            //throw new NotImplementedException();
         }
 
         [DebuggerHidden]
         [BipedEndpoint("Ready For Shoot", DeviceOfBiped.RightHand, DeviceOfBiped.LeftHand)]
         public void ReadyForShootImpl(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            _logger.Log("ReadyForShootImpl Begin");
+            //throw new NotImplementedException();
         }
 
         [DebuggerHidden]
@@ -141,7 +146,8 @@ namespace TestSandbox.CoreHostListener
         [BipedEndpoint("Start Shoot", DeviceOfBiped.RightHand, DeviceOfBiped.LeftHand)]
         public void StartShootImpl(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            _logger.Log("StartShootImpl Begin");
+            //throw new NotImplementedException();
         }
 
         [DebuggerHidden]
@@ -149,7 +155,8 @@ namespace TestSandbox.CoreHostListener
         [BipedEndpoint("Stop Shoot", DeviceOfBiped.RightHand, DeviceOfBiped.LeftHand)]
         public void StopShootImpl(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            _logger.Log("StopShootImpl Begin");
+            //throw new NotImplementedException();
         }
     }
 }

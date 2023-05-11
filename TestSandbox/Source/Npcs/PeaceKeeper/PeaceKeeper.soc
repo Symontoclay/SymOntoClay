@@ -16,11 +16,17 @@ app PeaceKeeper
         'End' >> @>log;
     }
 	
-    //on {: see(I, $_) & enemy($_) & state($_, alive) :} => 
-	//{
-	//    'see(I, $_) & enemy($_) & state($_, alive)' >> @>log;
+    on {: see(I, $_) & enemy($_) & state($_, alive) :} => 
+	{
+	    'see(I, $_) & enemy($_) & state($_, alive)' >> @>log;
+		//kill(#@{: see(I, $_) & enemy($_) & state($_, alive) :});
 		//weak cancel action;
-	//}
+	}
+
+	on duration 1000
+	{
+	    'duration 1000' >> @>log;
+	}
 
 	//on {: see(I, $_) & state($_, alive) :} => 
 	//{
@@ -37,10 +43,11 @@ app PeaceKeeper
 	fun go()
     {
 	    'Begin go' >> @>log;
-		`move and check`(#@(waypoint & random));
+		//`move and check`(#@(waypoint & random));
 		//@@host.go(to: #@(waypoint));
         //@@host.go(to: #@(waypoint & random));
 		//@@host.go(to: #WP_43);
+		kill(#@{: see(I, $_) & enemy($_) & state($_, alive) :});
 		'End go' >> @>log;
     }
 }
@@ -99,28 +106,65 @@ action move
 
 action kill
 {
+    on leave 
+	{
+	   `stop shoot`(); 
+	}
+
     op (@target)
 	{
 	    'Begin kill' >> @>log;
+		@_target = @target;
+		`ready for shoot`();
+		aim();
+		shoot();
+		await;
+		'End kill' >> @>log;
+	}
+
+	on {: state(@_target, dead) :}
+	{
+	    'state(@_target, dead)' >> @>log;
+
+	    complete action;
+	}
+
+	on {: !see(I, @_target) :}
+	{
+	    '!see(I, @_target)' >> @>log;
+
+	    weak cancel action;
 	}
 
 	fun aim()
 	{
-	
+	    'Begin aim' >> @>log;
+		@_target >> @>log;
+	    @@host.`aim to`(@_target);
+		'End aim' >> @>log;
 	}
 
 	fun shoot()
 	{
-	
+	    'Begin shoot' >> @>log;
+	    @@host.`start shoot`();
+		'End shoot' >> @>log;
 	}
 
 	fun `stop shoot`()
 	{
-	
+	    'Begin stop shoot' >> @>log;
+	    @@host.`stop shoot`();
+		'End stop shoot' >> @>log;
 	}
 
 	fun `ready for shoot`()
 	{
-	    
+	    'Begin ready for shoot' >> @>log;
+	    @@host.`ready for shoot`();
+		'End ready for shoot' >> @>log;
 	}
+
+	private:
+	    var @_target;
 }

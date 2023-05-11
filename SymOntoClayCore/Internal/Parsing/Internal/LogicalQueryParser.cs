@@ -133,6 +133,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.Word:
                         case TokenKind.LogicalVar:
+                        case TokenKind.Not:
                             ProcessPrimaryRulePart(TokenKind.CloseFactBracket);
                             break;
 

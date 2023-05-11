@@ -88,7 +88,9 @@ namespace TestSandbox.Handlers
             _npc.InsertFact(standardFactsBuilder.BuildDefaultInheritanceFactString(enemyId, "soldier"));
             _npc.InsertFact(standardFactsBuilder.BuildSeeFactString(enemyId));
 
-            //Thread.Sleep(5000);
+            Thread.Sleep(5000);
+
+            _npc.InsertFact(standardFactsBuilder.BuildDeadFactString(enemyId));
 
             //var factId = _npc.InsertFact("{: see(I, #enemy1) :}");
 

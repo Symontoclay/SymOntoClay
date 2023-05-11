@@ -23,11 +23,6 @@ app PeaceKeeper
 		//weak cancel action;
 	}
 
-	on duration 1000
-	{
-	    'duration 1000' >> @>log;
-	}
-
 	//on {: see(I, $_) & state($_, alive) :} => 
 	//{
 	//    'see(I, $_) & state($_, alive)' >> @>log;
@@ -129,12 +124,12 @@ action kill
 	    complete action;
 	}
 
-	on {: !see(I, @_target) :}
-	{
-	    '!see(I, @_target)' >> @>log;
+	//on {: !see(I, @_target) :}
+	//{
+	//    '!see(I, @_target)' >> @>log;
 
-	    weak cancel action;
-	}
+	//    weak cancel action;
+	//}
 
 	fun aim()
 	{

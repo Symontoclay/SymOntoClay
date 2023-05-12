@@ -19,7 +19,7 @@ app PeaceKeeper
     on {: see(I, $_) & enemy($_) & state($_, alive) :} => 
 	{
 	    'see(I, $_) & enemy($_) & state($_, alive)' >> @>log;
-		//kill(#@{: see(I, $_) & enemy($_) & state($_, alive) :});
+		kill(#@{: see(I, $_) & enemy($_) & state($_, alive) :});
 		//weak cancel action;
 	}
 
@@ -42,7 +42,7 @@ app PeaceKeeper
 		//@@host.go(to: #@(waypoint));
         //@@host.go(to: #@(waypoint & random));
 		//@@host.go(to: #WP_43);
-		kill(#@{: see(I, $_) & enemy($_) & state($_, alive) :});
+		//kill(#@{: see(I, $_) & enemy($_) & state($_, alive) :});
 		'End go' >> @>log;
     }
 }

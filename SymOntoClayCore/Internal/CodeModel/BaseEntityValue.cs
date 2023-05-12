@@ -169,6 +169,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         protected IStorage _onceStorage;
         protected int _instanceId;
         protected string _id;
+        protected StrongIdentifierValue _entityId;
         protected string _idForFacts;
         protected Vector3? _position;
         protected bool _isEmpty = true;
@@ -188,6 +189,22 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         /// <inheritdoc/>
         IEntity INavTarget.Entity => this;
+
+        public StrongIdentifierValue EntityId => _entityId;
+
+        public StrongIdentifierValue ResolveAndGetEntityId()
+        {
+            if(_entityId == null || _entityId.IsEmpty)
+            {
+                Resolve();
+            }
+            else
+            {
+                ResolveIfNeeds();
+            }
+            
+            return _entityId;
+        }
 
         private struct FilteredItem
         {
@@ -372,6 +389,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 position = _conditionalEntityHostSupport.GetPosition(instanceId);
             }
 
+            _entityId = id;
             _id = id.NameValue;
             _idForFacts = _id;
             _instanceId = instanceId;
@@ -382,6 +400,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         protected void ResetCurrEntity()
         {
             _id = string.Empty;
+            _entityId = StrongIdentifierValue.Empty;
             _idForFacts = string.Empty;
             _instanceId = 0;
             _position = null;

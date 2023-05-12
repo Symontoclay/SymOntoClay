@@ -1024,7 +1024,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     {
                         var conditionalEntitySourceValue = value.AsConditionalEntitySourceValue;
 
-                        value = conditionalEntitySourceValue.ConvertToConditionalEntityValue(_context, _currentCodeFrame.LocalContext);
+                        var conditionalEntityValue = conditionalEntitySourceValue.ConvertToConditionalEntityValue(_context, _currentCodeFrame.LocalContext);
+                        conditionalEntityValue.Resolve();
+                        value = conditionalEntityValue;
                     }
                     break;
 

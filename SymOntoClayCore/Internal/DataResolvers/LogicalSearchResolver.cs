@@ -3635,44 +3635,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 throw new NotImplementedException();
             }
 
-            /*if((expressionNode1.Kind == KindOfLogicalQueryNode.Entity && expressionNode2.Kind == KindOfLogicalQueryNode.Value && expressionNode2.Value.IsConditionalEntityValue) || 
-                (expressionNode2.Kind == KindOfLogicalQueryNode.Entity && expressionNode1.Kind == KindOfLogicalQueryNode.Value && expressionNode1.Value.IsConditionalEntityValue))
-            {
-#if DEBUG
-                //Log($"expressionNode1 = {expressionNode1}");
-                //Log($"expressionNode2 = {expressionNode2}");
-#endif
-
-                StrongIdentifierValue entityName = null;
-                ConditionalEntityValue conditionalEntityValue = null;
-
-                if (expressionNode1.Kind == KindOfLogicalQueryNode.Entity)
-                {
-                    entityName = expressionNode1.Name;
-                    conditionalEntityValue = expressionNode2.Value.AsConditionalEntityValue;
-                }
-                else
-                {
-                    entityName = expressionNode2.Name;
-                    conditionalEntityValue = expressionNode1.Value.AsConditionalEntityValue;
-                }
-
-#if DEBUG
-                //Log($"entityName = {entityName}");
-                //Log($"conditionalEntityValue = {conditionalEntityValue}");
-#endif
-
-                var conditionalEntityId = conditionalEntityValue.ResolveAndGetEntityId();
-
-#if DEBUG
-                //Log($"entityName = {entityName}");
-                //Log($"conditionalEntityId = {conditionalEntityId}");
-#endif
-
-
-                return entityName == conditionalEntityId;
-            }*/
-
 #if DEBUG
             Log($"expressionNode1 = {expressionNode1}");
             Log($"expressionNode2 = {expressionNode2}");

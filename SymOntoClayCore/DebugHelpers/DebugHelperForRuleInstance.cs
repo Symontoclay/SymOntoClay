@@ -685,6 +685,7 @@ namespace SymOntoClay.Core.DebugHelpers
                     return WaypointValueToString(value, options);
 
                 case KindOfValue.ConditionalEntitySourceValue:
+                case KindOfValue.ConditionalEntityValue:
                     return ConditionalEntitySourceValueToString(value, options);
 
                 default:

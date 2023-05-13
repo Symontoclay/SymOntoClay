@@ -123,6 +123,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             queryExpression = queryExpression.Normalized;
 
+#if DEBUG
+            Log($"queryExpression = {queryExpression.ToHumanizedString()}");
+#endif
+
             var loggingProvider = _context.LoggingProvider;
             var kindOfLogicalSearchExplain = loggingProvider.KindOfLogicalSearchExplain;
 
@@ -204,6 +208,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                     Log($"The explanation of query `{queryExpression.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}` has been dumped into file `{dumpFileName}`.");
                 }
+
+#if DEBUG
+                Log($"result.IsSuccess = {result.IsSuccess}");
+#endif
             }
             catch (Exception e)
             {
@@ -2407,6 +2415,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 return;
             }
+
+#if DEBUG
+            Log($"leftExpr.Kind = {leftExpr.Kind}");
+            Log($"rightExpr.Kind = {rightExpr.Kind}");
+            Log($"rightExpr = {rightExpr.ToHumanizedString()}");
+#endif
 
             throw new NotImplementedException();
         }

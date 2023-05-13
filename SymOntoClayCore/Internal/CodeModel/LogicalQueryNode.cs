@@ -40,6 +40,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class LogicalQueryNode: AnnotatedItem, IAstNode, IMemberAccess, IReadOnlyMemberAccess, ILogicalSearchItem, ILogicalQueryNodeParent, IEquatable<LogicalQueryNode>
     {
+#if DEBUG
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
         public KindOfLogicalQueryNode Kind { get; set; } = KindOfLogicalQueryNode.Unknown;
 
         public bool IsExpression => Kind == KindOfLogicalQueryNode.Relation || Kind == KindOfLogicalQueryNode.Group || Kind == KindOfLogicalQueryNode.BinaryOperator || Kind == KindOfLogicalQueryNode.UnaryOperator;
@@ -211,6 +215,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 case KindOfLogicalQueryNode.Group:
                     Left.PrepareDirty(contextOfConvertingExpressionNode, ruleInstance, rulePart);
+                    break;
+
+                case KindOfLogicalQueryNode.Var:
+                    contextOfConvertingExpressionNode.IsParameterized = true;
                     break;
 
                 default:
@@ -424,39 +432,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                                 break;
 
                             case KindOfLogicalQueryNode.Var:
-                                {
-                                    var value = varsResolver.GetVarValue(param.Name);
-
-                                    if(value.IsStrongIdentifierValue)
-                                    {
-                                        var strVal = value.AsStrongIdentifierValue;
-
-                                        var kindOfName = strVal.KindOfName;
-
-                                        switch (kindOfName)
-                                        {
-                                            case KindOfName.Concept:
-                                                param.Kind = KindOfLogicalQueryNode.Concept;
-                                                param.Name = strVal;
-                                                break;
-
-                                            case KindOfName.Entity:
-                                                param.Kind = KindOfLogicalQueryNode.Entity;
-                                                param.Name = strVal;
-                                                break;
-
-                                            default:
-                                                throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        param.Kind = KindOfLogicalQueryNode.Value;
-                                        param.Name = null;
-                                        param.Value = value;
-                                    }
-
-                                }
+                                ResolveVariable(param, varsResolver);
                                 break;
 
                             default:
@@ -469,8 +445,54 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     Left.ResolveVariables(varsResolver);
                     break;
 
+                case KindOfLogicalQueryNode.Var:
+                    ResolveVariable(this, varsResolver);
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
+            }
+        }
+
+        private static void ResolveVariable(LogicalQueryNode logicalQueryNode, IPackedVarsResolver varsResolver)
+        {
+#if DEBUG
+            _gbcLogger.Info($"logicalQueryNode.Name = {logicalQueryNode.Name}");
+#endif
+
+            var value = varsResolver.GetVarValue(logicalQueryNode.Name);
+
+#if DEBUG
+            _gbcLogger.Info($"value = {value.ToHumanizedString()}");
+#endif
+
+            if (value.IsStrongIdentifierValue)
+            {
+                var strVal = value.AsStrongIdentifierValue;
+
+                var kindOfName = strVal.KindOfName;
+
+                switch (kindOfName)
+                {
+                    case KindOfName.Concept:
+                        logicalQueryNode.Kind = KindOfLogicalQueryNode.Concept;
+                        logicalQueryNode.Name = strVal;
+                        break;
+
+                    case KindOfName.Entity:
+                        logicalQueryNode.Kind = KindOfLogicalQueryNode.Entity;
+                        logicalQueryNode.Name = strVal;
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
+                }
+            }
+            else
+            {
+                logicalQueryNode.Kind = KindOfLogicalQueryNode.Value;
+                logicalQueryNode.Name = null;
+                logicalQueryNode.Value = value;
             }
         }
 
@@ -574,6 +596,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 case KindOfLogicalQueryNode.Fact:
                     Fact.Holder = holder;
+                    break;
+
+                case KindOfLogicalQueryNode.Var:
                     break;
 
                 default:
@@ -681,6 +706,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 case KindOfLogicalQueryNode.Fact:
                     Fact.TypeOfAccess = typeOfAccess;
+                    break;
+
+                case KindOfLogicalQueryNode.Var:
                     break;
 
                 default:

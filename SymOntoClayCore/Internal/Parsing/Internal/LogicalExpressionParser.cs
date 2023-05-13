@@ -466,6 +466,34 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
+                        case TokenKind.Var:
+                            {
+                                var node = new LogicalQueryNode();
+                                node.Kind = KindOfLogicalQueryNode.Var;
+                                node.Name = NameHelper.CreateName(_currToken.Content);
+
+                                var intermediateNode = new IntermediateAstNode(node);
+
+                                AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+
+                                _state = State.GotConcept;
+                            }
+                            break;
+
+                        /*
+                                                 case TokenKind.Var:
+                        {
+                            var node = new LogicalQueryNode();
+                            node.Kind = KindOfLogicalQueryNode.Var;
+                            node.Name = NameHelper.CreateName(_currToken.Content);
+
+                            _lastLogicalQueryNode.ParamsList.Add(node);
+
+                            _state = State.GotPredicateParameter;
+                        }
+                        break;
+                         */
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

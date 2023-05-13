@@ -124,10 +124,10 @@ action kill
 	//    complete action;
 	//}
 
-	on {: !see(I, @_target) :}
+	on {: !see(I, @_target) &  @_target is not NULL :}
 	{
 	    '!see(I, @_target)' >> @>log;
-		select {: !see(I, $x) :} >> @>log;
+		select {: !see(I, @_target) :} >> @>log;
 	    weak cancel action;
 	}
 

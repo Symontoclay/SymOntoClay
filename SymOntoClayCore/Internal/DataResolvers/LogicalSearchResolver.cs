@@ -2615,6 +2615,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private void FillExecutingCardForNotOperatorLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
+#if DEBUG
+            Log($"processedExpr = {processedExpr.ToHumanizedString()}");
+#endif
+
             LogicalSearchExplainNode currentExplainNode = null;
             LogicalSearchExplainNode resultExplainNode = null;
 
@@ -2647,7 +2651,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             leftQueryExecutingCard.RootParentExplainNode = rootParentExplainNode;
             leftQueryExecutingCard.ParentExplainNode = resultExplainNode;
 
+#if DEBUG
+            Log($"processedExpr.Left = {processedExpr.Left.ToHumanizedString()}");
+#endif
+
             FillExecutingCard(processedExpr.Left, leftQueryExecutingCard, dataSource, options);
+
+#if DEBUG
+            Log($"^^^^^^^^^^^^^^^^^^^^^^^^^^processedExpr = {processedExpr.ToHumanizedString()}");
+#endif
 
             queryExecutingCard.UsedKeysList.AddRange(leftQueryExecutingCard.UsedKeysList);
 

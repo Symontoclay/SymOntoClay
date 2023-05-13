@@ -104,6 +104,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
+#if DEBUG
+            //Log($"_state = {_state}");
+            //Log($"_isGroup = {_isGroup}");
+            //Log($"_currToken = {_currToken}");
+            //Log($"Result = {Result}");
+            //Log($"_nodePoint = {_nodePoint}");
+            //Log($"_nodePoint = {_nodePoint?.BuildExpr<LogicalQueryNode>()?.ToHumanizedString()}");
+#endif
+
             if (_terminatingTokenKindList.Contains(_currToken.TokenKind))
             {
                 _context.Recovery(_currToken);
@@ -140,6 +149,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.OpenRoundBracket:
                             ProcessGroup();
+                            break;
+
+                        case TokenKind.Not:
+                            ProcessUnaryOperator(KindOfOperatorOfLogicalQueryNode.Not);
                             break;
 
                         default:

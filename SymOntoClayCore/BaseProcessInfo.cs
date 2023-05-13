@@ -371,7 +371,12 @@ namespace SymOntoClay.Core
             {
                 lock (_parentAndChildrenLockObj)
                 {
-                    if(_parentProcessInfo == value)
+#if DEBUG
+                    //_logger.Info($"ParentProcessInfo set {GetHashCode()}; {value?.GetHashCode()}");
+                    //_logger.Info($"ParentProcessInfo set {_parentProcessInfo?.GetHashCode()}; {value?.GetHashCode()}");
+#endif
+
+                    if (_parentProcessInfo == value)
                     {
                         return;
                     }
@@ -387,6 +392,11 @@ namespace SymOntoClay.Core
                     }
 
                     _parentProcessInfo = value;
+
+#if DEBUG
+                    //_logger.Info($"ParentProcessInfo set NEXT {GetHashCode()}; {value?.GetHashCode()}");
+                    //_logger.Info($"ParentProcessInfo set NEXT {_parentProcessInfo?.GetHashCode()}; {value?.GetHashCode()}");
+#endif
 
                     if (_parentProcessInfo != null)
                     {
@@ -413,12 +423,25 @@ namespace SymOntoClay.Core
         {
             lock (_parentAndChildrenLockObj)
             {
+#if DEBUG
+                //_logger.Info($"AddChild processInfo?.GetHashCode() = {processInfo?.GetHashCode()} ({GetHashCode()})");
+#endif
+
                 if (processInfo == this)
                 {
                     return;
                 }
 
                 if (processInfo == null)
+                {
+                    return;
+                }
+
+#if DEBUG
+                //_logger.Info($"AddChild _childrenProcessInfoList.Count = {_childrenProcessInfoList.Count} ({GetHashCode()})");
+#endif
+
+                if(_removedChildrenProcessInfoList.Contains(processInfo))
                 {
                     return;
                 }
@@ -430,9 +453,13 @@ namespace SymOntoClay.Core
 
                 _childrenProcessInfoList.Add(processInfo);
 
+#if DEBUG
+                //_logger.Info($"AddChild NEXT processInfo?.GetHashCode() = {processInfo?.GetHashCode()} ({GetHashCode()})");
+#endif
+
                 processInfo.OnFinish += ProcessInfo_OnFinish;
 
-                if(processInfo.ParentProcessInfo != this)
+                if (processInfo.ParentProcessInfo != this)
                 {
                     processInfo.ParentProcessInfo = this;
                 }
@@ -458,12 +485,17 @@ namespace SymOntoClay.Core
 
         private void NRemoveChild(IProcessInfo processInfo)
         {
+#if DEBUG
+            //_logger.Info($"NRemoveChild processInfo?.GetHashCode() = {processInfo?.GetHashCode()} ({GetHashCode()})");
+#endif
+
             if (!_childrenProcessInfoList.Contains(processInfo))
             {
                 return;
             }
 
             _childrenProcessInfoList.Remove(processInfo);
+            _removedChildrenProcessInfoList.Add(processInfo);
 
             processInfo.OnFinish -= ProcessInfo_OnFinish;
 
@@ -647,6 +679,7 @@ namespace SymOntoClay.Core
         private ProcessStatus _status = ProcessStatus.Created;
         private IProcessInfo _parentProcessInfo;
         private List<IProcessInfo> _childrenProcessInfoList = new List<IProcessInfo>();
+        private List<IProcessInfo> _removedChildrenProcessInfoList = new List<IProcessInfo>();
         private List<IProcessInfoEventHandler> _onFinishHandlersList = new List<IProcessInfoEventHandler>();
         private List<IProcessInfoEventHandler> _onCompleteHandlersList = new List<IProcessInfoEventHandler>();
         private List<IProcessInfoEventHandler> _onWeakCanceledHandlersList = new List<IProcessInfoEventHandler>();

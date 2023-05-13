@@ -117,19 +117,19 @@ action kill
 		'End kill' >> @>log;
 	}
 
-	on {: state(@_target, dead) :}
-	{
-	    'state(@_target, dead)' >> @>log;
-
-	    complete action;
-	}
-
-	//on {: !see(I, @_target) :}
+	//on {: state(@_target, dead) :}
 	//{
-	//    '!see(I, @_target)' >> @>log;
+	//    'state(@_target, dead)' >> @>log;
 
-	//    weak cancel action;
+	//    complete action;
 	//}
+
+	on {: !see(I, @_target) :}
+	{
+	    '!see(I, @_target)' >> @>log;
+		select {: !see(I, $x) :} >> @>log;
+	    weak cancel action;
+	}
 
 	fun aim()
 	{

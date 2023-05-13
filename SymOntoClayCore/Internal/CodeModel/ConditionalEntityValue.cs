@@ -115,7 +115,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         private void NResolve()
         {
 #if DEBUG
-            Log("Begin");
+            //Log("Begin");
 #endif
 
             try

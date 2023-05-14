@@ -72,6 +72,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private readonly CommonPersistIndexedLogicalData _commonPersistIndexedLogicalData = new CommonPersistIndexedLogicalData();
 
+        public void Accept(ILogicalVisitor logicalVisitor)
+        {
+            logicalVisitor.VisitRuleInstance(this);
+        }
+
         // <inheritdoc/>
         //public bool Equals(RuleInstance other)
         //{

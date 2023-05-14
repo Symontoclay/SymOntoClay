@@ -159,7 +159,6 @@ namespace SymOntoClay.Core.Internal.Instances
         public void Init()
         {
             Observer_OnChanged();
-
         }
 
         private void Observer_OnChanged()

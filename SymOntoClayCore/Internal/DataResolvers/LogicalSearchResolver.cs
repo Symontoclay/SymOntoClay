@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.Visitors;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -69,10 +70,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public LogicalSearchResult Run(LogicalSearchOptions options)
         {
             var result = new LogicalSearchResult();
-
-#if DEBUG
-
-#endif
 
             ConsolidatedDataSource dataSource = null;
 
@@ -119,6 +116,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 queryExpression.ResolveVariables(packedVarsResolver);
 
                 queryExpression.CheckDirty();
+
+                if(options.IgnoreIfNullValueInImperativeVariables)
+                {
+                    var containsNullValueLogicalVisitor = new ContainsNullValueLogicalVisitor(_context.Logger);
+
+#if DEBUG
+                    Log($"containsNullValueLogicalVisitor.Run(queryExpression) = {containsNullValueLogicalVisitor.Run(queryExpression)}");
+#endif
+
+                    result.IsSuccess = false;
+                    return result;
+                }
             }
 
             queryExpression = queryExpression.Normalized;

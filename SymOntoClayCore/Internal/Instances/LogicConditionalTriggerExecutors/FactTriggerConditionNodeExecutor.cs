@@ -51,6 +51,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
             _searchOptions = new LogicalSearchOptions();
             _searchOptions.QueryExpression = condition.RuleInstance;
             _searchOptions.LocalCodeExecutionContext = localCodeExecutionContext;
+            _searchOptions.IgnoreIfNullValueInImperativeVariables = true;
         }
 
         private readonly IEngineContext _engineContext;

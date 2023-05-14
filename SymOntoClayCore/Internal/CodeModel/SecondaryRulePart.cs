@@ -39,6 +39,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return new List<BaseRulePart>() { PrimaryPart };
         }
 
+        public void Accept(ILogicalVisitor logicalVisitor)
+        {
+            logicalVisitor.VisitSecondaryRulePart(this);
+        }
+
         /// <inheritdoc/>
         public override AnnotatedItem CloneAnnotatedItem(Dictionary<object, object> context)
         {

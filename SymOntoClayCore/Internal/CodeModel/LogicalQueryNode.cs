@@ -82,6 +82,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public Value SelfObligationModality => RuleInstance.SelfObligationModality;
 
+        public void Accept(ILogicalVisitor logicalVisitor)
+        {
+            logicalVisitor.VisitLogicalQueryNode(this);
+        }
+
         /// <inheritdoc/>
         public bool Equals(LogicalQueryNode other)
         {
@@ -408,36 +413,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 case KindOfLogicalQueryNode.Relation:
                     foreach (var param in ParamsList)
                     {
-                        var kindOfParam = param.Kind;
-
-                        switch (kindOfParam)
-                        {
-                            case KindOfLogicalQueryNode.Concept:
-                            case KindOfLogicalQueryNode.Entity:
-                            case KindOfLogicalQueryNode.Value:
-                            case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
-                                break;
-
-                            case KindOfLogicalQueryNode.Relation:
-                                foreach (var subParam in param.ParamsList)
-                                {
-                                    subParam.ResolveVariables(varsResolver);
-                                }
-                                break;
-
-                            case KindOfLogicalQueryNode.LogicalVar:
-                                break;
-
-                            case KindOfLogicalQueryNode.QuestionVar:
-                                break;
-
-                            case KindOfLogicalQueryNode.Var:
-                                ResolveVariable(param, varsResolver);
-                                break;
-
-                            default:
-                                throw new ArgumentOutOfRangeException(nameof(kindOfParam), kindOfParam, null);
-                        }
+                        ResolveVariable(param, varsResolver);
                     }
                     break;
 

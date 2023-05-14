@@ -86,11 +86,15 @@ namespace TestSandbox.Handlers
             _npc.InsertFact(standardFactsBuilder.BuildAliveFactString(enemyId));
             _npc.InsertFact("{: is(#enemy1,soldier,1) :}");
             _npc.InsertFact(standardFactsBuilder.BuildDefaultInheritanceFactString(enemyId, "soldier"));
-            _npc.InsertFact(standardFactsBuilder.BuildSeeFactString(enemyId));
+            var seeFactId = _npc.InsertFact(standardFactsBuilder.BuildSeeFactString(enemyId));
 
             Thread.Sleep(5000);
+            _logger.Log("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
 
-            _npc.InsertFact(standardFactsBuilder.BuildDeadFactString(enemyId));
+            //_npc.InsertFact(standardFactsBuilder.BuildDeadFactString(enemyId));
+            _npc.RemoveFact(seeFactId);
+
+            _logger.Log("__________________________________________________________");
 
             //var factId = _npc.InsertFact("{: see(I, #enemy1) :}");
 

@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
     public static class QueryExecutingCardAboutKnownInfoHelper
     {
 #if DEBUG
-        private static ILogger _logger = LogManager.GetCurrentClassLogger();
+        //private static ILogger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static MergingResultOfTwoQueryExecutingCardAboutKnownInfoLists Merge(IList<QueryExecutingCardAboutKnownInfo> internalKnownInfoList, IList<QueryExecutingCardAboutVar> internalVarsInfoList, IList<QueryExecutingCardAboutKnownInfo> externalKnownInfoList, bool inPartFromRelationForProduction)

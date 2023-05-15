@@ -59,6 +59,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             foreach (var parentStorage in _parentLogicalStoragesList)
             {
                 parentStorage.OnChangedWithKeys += LogicalStorage_OnChangedWithKeys;
+                parentStorage.OnChanged += LogicalStorage_OnChanged;
                 parentStorage.OnAddingFact += LogicalStorage_OnAddingFact;
             }
 
@@ -294,10 +295,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             _ruleInstancesDictById[ruleInstanceId] = ruleInstance;
             _lifeTimeCycleById[ruleInstanceId] = DEFAULT_INITIAL_TIME;
 
-#if DEBUG
-
-#endif            
-
             _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(ruleInstance.Normalized);
 
             if(isPrimary && _kind != KindOfStorage.PublicFacts && _kind != KindOfStorage.PerceptedFacts)
@@ -365,11 +362,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 }
             }
 
-#if IMAGINE_WORKING
-#else
-            throw new NotImplementedException();
-#endif
-
             return true;
         }
 
@@ -431,10 +423,18 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         {
             var usedKeysList = NRemoveAndReturnUsedKeysList(ruleInstance);
 
-            if(usedKeysList != null)
+#if DEBUG
+            Log($"usedKeysList?.Count = {usedKeysList?.Count}");
+#endif
+
+            if (usedKeysList.IsNullOrEmpty())
             {
+                EmitOnChanged();
+            }
+            else 
+            { 
                 EmitOnChanged(usedKeysList);
-            }            
+            }
         }
 
         private List<StrongIdentifierValue> NRemoveAndReturnUsedKeysList(RuleInstance ruleInstance)
@@ -485,16 +485,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         protected void EmitOnChanged(IList<StrongIdentifierValue> usedKeysList)
         {
-            Task.Run(() => {
-                try
-                {
-                    OnChanged?.Invoke();
-                }
-                catch(Exception e)
-                {
-                    Error(e);
-                }                
-            });
+            EmitOnChanged();
 
             Task.Run(() => {
                 try
@@ -508,9 +499,28 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             });
         }
 
+        protected void EmitOnChanged()
+        {
+            Task.Run(() => {
+                try
+                {
+                    OnChanged?.Invoke();
+                }
+                catch (Exception e)
+                {
+                    Error(e);
+                }
+            });
+        }
+
         private void LogicalStorage_OnChangedWithKeys(IList<StrongIdentifierValue> changedKeysList)
         {
             EmitOnChanged(changedKeysList);
+        }
+
+        private void LogicalStorage_OnChanged()
+        {
+            EmitOnChanged();
         }
 
         private IAddFactOrRuleResult LogicalStorage_OnAddingFact(RuleInstance ruleInstance)
@@ -527,6 +537,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         {
             var logicalStorage = storage.LogicalStorage;
             logicalStorage.OnChangedWithKeys += LogicalStorage_OnChangedWithKeys;
+            logicalStorage.OnChanged += LogicalStorage_OnChanged;
             logicalStorage.OnAddingFact += LogicalStorage_OnAddingFact;
 
             _parentLogicalStoragesList.Add(logicalStorage);
@@ -536,6 +547,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         {
             var logicalStorage = storage.LogicalStorage;
             logicalStorage.OnChangedWithKeys -= LogicalStorage_OnChangedWithKeys;
+            logicalStorage.OnChanged -= LogicalStorage_OnChanged;
             logicalStorage.OnAddingFact -= LogicalStorage_OnAddingFact;
 
             _parentLogicalStoragesList.Remove(logicalStorage);
@@ -843,6 +855,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             foreach (var parentStorage in _parentLogicalStoragesList)
             {
                 parentStorage.OnChangedWithKeys -= LogicalStorage_OnChangedWithKeys;
+                parentStorage.OnChanged -= LogicalStorage_OnChanged;
                 parentStorage.OnAddingFact -= LogicalStorage_OnAddingFact;
             }
 

@@ -107,33 +107,47 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             queryExpression.CheckDirty();
 
-            if(queryExpression.IsParameterized)
+#if DEBUG
+            Log($"queryExpression = {queryExpression.ToHumanizedString()}");
+#endif
+
+            if (queryExpression.IsParameterized)
             {
                 queryExpression = queryExpression.Clone();
 
                 var packedVarsResolver = new PackedVarsResolver(_varsResolver, options.LocalCodeExecutionContext);
 
-                queryExpression.ResolveVariables(packedVarsResolver);
+                var resolveVariablesLogicalVisitor = new ResolveVariablesLogicalVisitor(_context.Logger);
+                resolveVariablesLogicalVisitor.Run(queryExpression, packedVarsResolver);
+
+                //queryExpression.ResolveVariables(packedVarsResolver);
 
                 queryExpression.CheckDirty();
 
-                if(options.IgnoreIfNullValueInImperativeVariables)
+#if DEBUG
+                Log($"queryExpression (2) = {queryExpression.ToHumanizedString()}");
+#endif
+
+                if (options.IgnoreIfNullValueInImperativeVariables)
                 {
                     var containsNullValueLogicalVisitor = new ContainsNullValueLogicalVisitor(_context.Logger);
 
 #if DEBUG
-                    Log($"containsNullValueLogicalVisitor.Run(queryExpression) = {containsNullValueLogicalVisitor.Run(queryExpression)}");
+                    Log($"({queryExpression.ToHumanizedString()}) containsNullValueLogicalVisitor.Run(queryExpression) = {containsNullValueLogicalVisitor.Run(queryExpression)}");
 #endif
 
-                    result.IsSuccess = false;
-                    return result;
+                    if(containsNullValueLogicalVisitor.Run(queryExpression))
+                    {
+                        result.IsSuccess = false;
+                        return result;
+                    }
                 }
             }
 
             queryExpression = queryExpression.Normalized;
 
 #if DEBUG
-            Log($"queryExpression = {queryExpression.ToHumanizedString()}");
+            Log($"queryExpression (3) = {queryExpression.ToHumanizedString()}");
 #endif
 
             var loggingProvider = _context.LoggingProvider;
@@ -219,7 +233,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
 #if DEBUG
-                Log($"result.IsSuccess = {result.IsSuccess}");
+                Log($"({queryExpression.ToHumanizedString()}) result.IsSuccess = {result.IsSuccess}");
 #endif
             }
             catch (Exception e)

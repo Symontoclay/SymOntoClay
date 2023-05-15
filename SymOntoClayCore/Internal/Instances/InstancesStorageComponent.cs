@@ -76,11 +76,6 @@ namespace SymOntoClay.Core.Internal.Instances
             var globalStorage = _context.Storage.GlobalStorage;
 
             globalStorage.VarStorage.SetSystemValue(_context.CommonNamesStorage.HostSystemVarName, new HostValue());
-
-#if IMAGINE_WORKING
-#else
-            throw new NotImplementedException();
-#endif
         }
 
         /// <inheritdoc/>

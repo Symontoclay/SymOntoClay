@@ -110,6 +110,7 @@ action kill
 	{
 	    'Begin kill' >> @>log;
 		@_target = @target;
+		@_target >> @>log;
 		`ready for shoot`();
 		aim();
 		shoot();

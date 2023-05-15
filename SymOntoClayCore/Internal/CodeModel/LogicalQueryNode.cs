@@ -413,7 +413,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 case KindOfLogicalQueryNode.Relation:
                     foreach (var param in ParamsList)
                     {
-                        ResolveVariable(param, varsResolver);
+                        param.ResolveVariables(varsResolver);
                     }
                     break;
 
@@ -422,53 +422,50 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     break;
 
                 case KindOfLogicalQueryNode.Var:
-                    ResolveVariable(this, varsResolver);
+                    {
+#if DEBUG
+                        _gbcLogger.Info($"Name = {Name}");
+#endif
+
+                        var value = varsResolver.GetVarValue(Name);
+
+#if DEBUG
+                        _gbcLogger.Info($"value = {value.ToHumanizedString()}");
+#endif
+
+                        if (value.IsStrongIdentifierValue)
+                        {
+                            var strVal = value.AsStrongIdentifierValue;
+
+                            var kindOfName = strVal.KindOfName;
+
+                            switch (kindOfName)
+                            {
+                                case KindOfName.Concept:
+                                    Kind = KindOfLogicalQueryNode.Concept;
+                                    Name = strVal;
+                                    break;
+
+                                case KindOfName.Entity:
+                                    Kind = KindOfLogicalQueryNode.Entity;
+                                    Name = strVal;
+                                    break;
+
+                                default:
+                                    throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
+                            }
+                        }
+                        else
+                        {
+                            Kind = KindOfLogicalQueryNode.Value;
+                            Name = null;
+                            Value = value;
+                        }
+                    }
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
-            }
-        }
-
-        private static void ResolveVariable(LogicalQueryNode logicalQueryNode, IPackedVarsResolver varsResolver)
-        {
-#if DEBUG
-            _gbcLogger.Info($"logicalQueryNode.Name = {logicalQueryNode.Name}");
-#endif
-
-            var value = varsResolver.GetVarValue(logicalQueryNode.Name);
-
-#if DEBUG
-            _gbcLogger.Info($"value = {value.ToHumanizedString()}");
-#endif
-
-            if (value.IsStrongIdentifierValue)
-            {
-                var strVal = value.AsStrongIdentifierValue;
-
-                var kindOfName = strVal.KindOfName;
-
-                switch (kindOfName)
-                {
-                    case KindOfName.Concept:
-                        logicalQueryNode.Kind = KindOfLogicalQueryNode.Concept;
-                        logicalQueryNode.Name = strVal;
-                        break;
-
-                    case KindOfName.Entity:
-                        logicalQueryNode.Kind = KindOfLogicalQueryNode.Entity;
-                        logicalQueryNode.Name = strVal;
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
-                }
-            }
-            else
-            {
-                logicalQueryNode.Kind = KindOfLogicalQueryNode.Value;
-                logicalQueryNode.Name = null;
-                logicalQueryNode.Value = value;
             }
         }
 

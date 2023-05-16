@@ -178,30 +178,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             UsedKeysList = usedKeysList.Distinct().ToList();
         }
 
-        public void ResolveVariables(IPackedVarsResolver varsResolver)
-        {
-            if (PrimaryPart != null)
-            {
-                if (PrimaryPart.IsParameterized)
-                {
-                    PrimaryPart.ResolveVariables(varsResolver);
-                }
-            }
-
-            if (!SecondaryParts.IsNullOrEmpty())
-            {
-                foreach (var item in SecondaryParts)
-                {
-                    if (item.IsParameterized)
-                    {
-                        item.ResolveVariables(varsResolver);
-                    }
-                }
-            }
-
-            IsParameterized = false;
-        }
-
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {

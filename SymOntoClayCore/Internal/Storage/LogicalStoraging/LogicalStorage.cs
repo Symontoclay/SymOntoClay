@@ -424,7 +424,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             var usedKeysList = NRemoveAndReturnUsedKeysList(ruleInstance);
 
 #if DEBUG
-            Log($"usedKeysList?.Count = {usedKeysList?.Count}");
+            //Log($"usedKeysList?.Count = {usedKeysList?.Count}");
 #endif
 
             if (usedKeysList.IsNullOrEmpty())

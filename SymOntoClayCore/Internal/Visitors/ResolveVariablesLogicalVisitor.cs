@@ -144,13 +144,13 @@ namespace SymOntoClay.Core.Internal.Visitors
                 case KindOfLogicalQueryNode.Var:
                     {
 #if DEBUG
-                        Log($"Name = {logicalQueryNode.Name}");
+                        //Log($"Name = {logicalQueryNode.Name}");
 #endif
 
                         var value = _varsResolver.GetVarValue(logicalQueryNode.Name);
 
 #if DEBUG
-                        Log($"value = {value.ToHumanizedString()}");
+                        //Log($"value = {value.ToHumanizedString()}");
 #endif
 
                         if (value.IsStrongIdentifierValue)

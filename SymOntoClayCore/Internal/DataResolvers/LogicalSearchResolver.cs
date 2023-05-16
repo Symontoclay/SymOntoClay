@@ -108,7 +108,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             queryExpression.CheckDirty();
 
 #if DEBUG
-            Log($"queryExpression = {queryExpression.ToHumanizedString()}");
+            //Log($"queryExpression = {queryExpression.ToHumanizedString()}");
 #endif
 
             if (queryExpression.IsParameterized)
@@ -120,12 +120,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var resolveVariablesLogicalVisitor = new ResolveVariablesLogicalVisitor(_context.Logger);
                 resolveVariablesLogicalVisitor.Run(queryExpression, packedVarsResolver);
 
-                //queryExpression.ResolveVariables(packedVarsResolver);
-
                 queryExpression.CheckDirty();
 
 #if DEBUG
-                Log($"queryExpression (2) = {queryExpression.ToHumanizedString()}");
+                //Log($"queryExpression (2) = {queryExpression.ToHumanizedString()}");
 #endif
 
                 if (options.IgnoreIfNullValueInImperativeVariables)
@@ -133,7 +131,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     var containsNullValueLogicalVisitor = new ContainsNullValueLogicalVisitor(_context.Logger);
 
 #if DEBUG
-                    Log($"({queryExpression.ToHumanizedString()}) containsNullValueLogicalVisitor.Run(queryExpression) = {containsNullValueLogicalVisitor.Run(queryExpression)}");
+                    //Log($"({queryExpression.ToHumanizedString()}) containsNullValueLogicalVisitor.Run(queryExpression) = {containsNullValueLogicalVisitor.Run(queryExpression)}");
 #endif
 
                     if(containsNullValueLogicalVisitor.Run(queryExpression))
@@ -147,7 +145,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             queryExpression = queryExpression.Normalized;
 
 #if DEBUG
-            Log($"queryExpression (3) = {queryExpression.ToHumanizedString()}");
+            //Log($"queryExpression (3) = {queryExpression.ToHumanizedString()}");
 #endif
 
             var loggingProvider = _context.LoggingProvider;
@@ -233,7 +231,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
 #if DEBUG
-                Log($"({queryExpression.ToHumanizedString()}) result.IsSuccess = {result.IsSuccess}");
+                //Log($"({queryExpression.ToHumanizedString()}) result.IsSuccess = {result.IsSuccess}");
 #endif
             }
             catch (Exception e)
@@ -2653,7 +2651,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private void FillExecutingCardForNotOperatorLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
 #if DEBUG
-            Log($"processedExpr = {processedExpr.ToHumanizedString()}");
+            //Log($"processedExpr = {processedExpr.ToHumanizedString()}");
 #endif
 
             LogicalSearchExplainNode currentExplainNode = null;
@@ -2689,13 +2687,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             leftQueryExecutingCard.ParentExplainNode = resultExplainNode;
 
 #if DEBUG
-            Log($"processedExpr.Left = {processedExpr.Left.ToHumanizedString()}");
+            //Log($"processedExpr.Left = {processedExpr.Left.ToHumanizedString()}");
 #endif
 
             FillExecutingCard(processedExpr.Left, leftQueryExecutingCard, dataSource, options);
 
 #if DEBUG
-            Log($"^^^^^^^^^^^^^^^^^^^^^^^^^^processedExpr = {processedExpr.ToHumanizedString()}");
+            //Log($"^^^^^^^^^^^^^^^^^^^^^^^^^^processedExpr = {processedExpr.ToHumanizedString()}");
 #endif
 
             queryExecutingCard.UsedKeysList.AddRange(leftQueryExecutingCard.UsedKeysList);

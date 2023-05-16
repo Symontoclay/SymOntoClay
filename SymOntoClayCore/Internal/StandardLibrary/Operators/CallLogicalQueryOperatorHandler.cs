@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.Visitors;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -155,8 +156,8 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                 ruleInstance = ruleInstance.Clone();
 
                 var packedVarsResolver = new PackedVarsResolver(_varsResolver, localCodeExecutionContext);
-
-                ruleInstance.ResolveVariables(packedVarsResolver);
+                var resolveVariablesLogicalVisitor = new ResolveVariablesLogicalVisitor(_engineContext.Logger);
+                resolveVariablesLogicalVisitor.Run(ruleInstance, packedVarsResolver);
 
                 ruleInstance.CheckDirty();
             }            

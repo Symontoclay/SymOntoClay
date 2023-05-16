@@ -137,13 +137,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             RelationsDict = contextOfConvertingExpressionNode.RelationsList.GroupBy(p => p.Name).ToDictionary(p => p.Key, p => (IList<LogicalQueryNode>)p.ToList());
         }
 
-        public void ResolveVariables(IPackedVarsResolver varsResolver)
-        {
-            Expression.ResolveVariables(varsResolver);
-
-            IsParameterized = false;
-        }
-
         public void CalculateUsedKeys(List<StrongIdentifierValue> usedKeysList)
         {
             Expression.CalculateUsedKeys(usedKeysList);

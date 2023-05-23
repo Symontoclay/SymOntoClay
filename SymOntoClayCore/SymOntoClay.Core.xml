@@ -4794,6 +4794,12 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.Equals(System.Object)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.NullValueEquals">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.ConcreteValueEquals(SymOntoClay.Core.Internal.CodeModel.Value)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.GetHashCode">
             <inheritdoc/>
         </member>

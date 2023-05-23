@@ -60,8 +60,10 @@ namespace TestSandbox.Handlers
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.UseDefaultAppFiles = false;
             factorySettings.UseDefaultNLPSettings = false;
+            factorySettings.UseStandardLibrary = true;
 
-            _engineContext = TstEngineContextHelper.CreateAndInitContext(factorySettings).EngineContext;
+            _engineContext = UnityTestEngineContextFactory.CreateAndInitTestEngineContext(factorySettings).EngineContext;
+            //_engineContext = TstEngineContextHelper.CreateAndInitContext(factorySettings).EngineContext;
 
             var mainDictPath = Path.Combine(Directory.GetCurrentDirectory(), "Dicts", "BigMainDictionary.dict");
 
@@ -83,9 +85,23 @@ namespace TestSandbox.Handlers
         {
             _logger.Log("Begin");
 
-            Case5();
+            Case6();
+            //Case5();
 
             _logger.Log("End");
+        }
+
+        private void Case6()
+        {
+            var factStr = "{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 1 :}";
+
+            var nlpContext = _engineContext.GetNLPConverterContext();
+
+            var ruleInstance = Parse(factStr);
+
+            var converterFactToCG = new ConverterFactToInternalCG(_logger);
+
+            var internalCG = converterFactToCG.Convert(ruleInstance, nlpContext);
         }
 
         private void Case5()
@@ -109,18 +125,18 @@ namespace TestSandbox.Handlers
 
             _logger.Log($"dotStr = '{dotStr}'");
 
-            var converterInternalCGToPhraseStructure = new ConverterInternalCGToPhraseStructure(_logger, _wordsDict);
+            //var converterInternalCGToPhraseStructure = new ConverterInternalCGToPhraseStructure(_logger, _wordsDict);
 
-            var sentenceItem = converterInternalCGToPhraseStructure.Convert(internalCG, nlpContext);
+            //var sentenceItem = converterInternalCGToPhraseStructure.Convert(internalCG, nlpContext);
 
-            ////_logger.Log($"sentenceItem = {sentenceItem}");
-            _logger.Log($"sentenceItem = {sentenceItem.ToDbgString()}");
+            //////_logger.Log($"sentenceItem = {sentenceItem}");
+            //_logger.Log($"sentenceItem = {sentenceItem.ToDbgString()}");
 
-            var converterPhraseStructureToText = new ConverterPhraseStructureToText(_logger);
+            //var converterPhraseStructureToText = new ConverterPhraseStructureToText(_logger);
 
-            var text = converterPhraseStructureToText.Convert(sentenceItem);
+            //var text = converterPhraseStructureToText.Convert(sentenceItem);
 
-            _logger.Log($"text = '{text}'");
+            //_logger.Log($"text = '{text}'");
         }
 
         private void Case4()

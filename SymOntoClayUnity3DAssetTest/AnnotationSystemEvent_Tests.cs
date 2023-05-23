@@ -3271,7 +3271,11 @@ action Go
                             break;
 
                         case 2:
-                            Assert.AreEqual("End", message);
+                            Assert.AreEqual(true, message == "End" || message == "on weak canceled");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(true, message == "End" || message == "on weak canceled");
                             break;
 
                         default:

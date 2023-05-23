@@ -84,6 +84,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public bool Equals(StrongIdentifierValue other)
         {
+            return NEquals(other);
+        }
+
+        private bool NEquals(StrongIdentifierValue other)
+        {
             if (other == null)
             {
                 return false;
@@ -147,6 +152,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
 
             return a.NormalizedNameValue != b.NormalizedNameValue;
+        }
+
+        /// <inheritdoc/>
+        protected override bool NullValueEquals()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        protected override bool ConcreteValueEquals(Value other)
+        {
+            return NEquals(other.AsStrongIdentifierValue);
         }
 
         /// <inheritdoc/>

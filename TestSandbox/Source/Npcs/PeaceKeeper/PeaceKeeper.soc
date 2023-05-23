@@ -1,4 +1,20 @@
-﻿{: { enemy($x) } -> { soldier($x) } :}
+﻿app PeaceKeeper
+{
+    fun a() => 
+    {       
+        wait 1000;
+        '`a` has been called!' >> @>log;
+    }
+
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        a~()[: timeout = 100, weak cancel, on weak canceled => { 'on weak canceled' >> @>log; } :];
+        'End' >> @>log;
+    }
+}
+
+/*{: { enemy($x) } -> { soldier($x) } :}
 
 app PeaceKeeper
 {
@@ -163,4 +179,4 @@ action kill
 
 	private:
 	    var @_target;
-}
+}*/

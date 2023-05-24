@@ -205,6 +205,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 result.UsedKeysList = usedKeysList;
 
+                if(queryExecutingCard.IsNegative)
+                {
+                    throw new NotImplementedException();
+                }
+
                 result.IsSuccess = queryExecutingCard.IsSuccess;
 
                 var resultItemsList = new List<LogicalSearchResultItem>();
@@ -339,6 +344,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 throw new NotImplementedException();
             }
 
+            if (queryExecutingCardForPart_1.IsNegative)
+            {
+                throw new NotImplementedException();
+            }
+
             AppendResults(queryExecutingCardForPart_1, queryExecutingCard);
 
             if (resultExplainNode != null)
@@ -395,6 +405,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForExpression.UsedKeysList);
 
                 return;
+            }
+
+            if (queryExecutingCardForExpression.IsNegative)
+            {
+                throw new NotImplementedException();
             }
 
             if (queryExecutingCardForExpression.PostFiltersList.Any())
@@ -538,7 +553,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var resultsOfQueryToRelationList = new List<ResultOfQueryToRelation>();
             var usedKeysList = new List<StrongIdentifierValue>();
 
-            if(leftExpr.Kind == KindOfLogicalQueryNode.LogicalVar && rightExpr.Kind == KindOfLogicalQueryNode.LogicalVar)
+            if (sourceQueryExecutingCard.IsNegative)
+            {
+                throw new NotImplementedException();
+            }
+
+            if (leftExpr.Kind == KindOfLogicalQueryNode.LogicalVar && rightExpr.Kind == KindOfLogicalQueryNode.LogicalVar)
             {
                 var leftVariableName = leftExpr.Name;
                 var rightVariableName = rightExpr.Name;
@@ -1336,6 +1356,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"&&&&&&&& processedExpr = {processedExpr.ToHumanizedString()}");
 #endif
 
+            if (queryExecutingCardForExpression.IsNegative)
+            {
+                throw new NotImplementedException();
+            }
+
             if (!queryExecutingCardForExpression.PostFiltersList.IsNullOrEmpty())
             {
                 throw new NotImplementedException();
@@ -1363,6 +1388,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 newRelation.Name = synonym;
 
                 NFillExecutingCardForConcreteRelationLogicalQueryNode(newRelation, queryExecutingCardForExpression, dataSource, options);
+
+                if (queryExecutingCardForExpression.IsNegative)
+                {
+                    throw new NotImplementedException();
+                }
 
                 if (!queryExecutingCardForExpression.PostFiltersList.IsNullOrEmpty())
                 {
@@ -1393,10 +1423,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 NFillExecutingCardForConcreteRelationLogicalQueryNode(newRelation, queryExecutingCardForExpression, dataSource, options);
 
+                if (queryExecutingCardForExpression.IsNegative)
+                {
+                    throw new NotImplementedException();
+                }
+
                 if (!queryExecutingCardForExpression.PostFiltersList.IsNullOrEmpty())
                 {
                     throw new NotImplementedException();
                 }
+
                 if (queryExecutingCardForExpression.IsPostFiltersListOnly)
                 {
                     throw new NotImplementedException();
@@ -1558,6 +1594,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                     if (queryExecutingCardForTargetFact.IsSuccess)
                     {
+                        if (queryExecutingCardForTargetFact.IsNegative)
+                        {
+                            throw new NotImplementedException();
+                        }
+
                         if (queryExecutingCardForTargetFact.IsPostFiltersListOnly)
                         {
                             throw new NotImplementedException();
@@ -1624,6 +1665,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                     if (queryExecutingCardForTargetRule.IsSuccess)
                     {
+                        if (queryExecutingCardForTargetRule.IsNegative)
+                        {
+                            throw new NotImplementedException();
+                        }
+
                         if (queryExecutingCardForTargetRule.IsPostFiltersListOnly)
                         {
                             throw new NotImplementedException();
@@ -1897,6 +1943,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return;
             }
 
+            if (leftQueryExecutingCard.IsNegative)
+            {
+                throw new NotImplementedException();
+            }
+
+            if (rightQueryExecutingCard.IsNegative)
+            {
+                throw new NotImplementedException();
+            }
+
             queryExecutingCard.IsSuccess = true;
 
             queryExecutingCard.UsedKeysList.AddRange(leftQueryExecutingCard.UsedKeysList.Concat(rightQueryExecutingCard.UsedKeysList));
@@ -2138,6 +2194,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
                 return;
+            }
+
+            if (leftQueryExecutingCard.IsNegative)
+            {
+                throw new NotImplementedException();
+            }
+
+            if (rightQueryExecutingCard.IsNegative)
+            {
+                throw new NotImplementedException();
             }
 
             if (leftQueryExecutingCard.IsPostFiltersListOnly && rightQueryExecutingCard.IsPostFiltersListOnly)
@@ -2718,7 +2784,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 throw new NotImplementedException();
             }
 
-            queryExecutingCard.IsSuccess = !leftQueryExecutingCard.IsSuccess;
+            queryExecutingCard.IsNegative = !leftQueryExecutingCard.IsNegative;
+            queryExecutingCard.IsSuccess = leftQueryExecutingCard.IsSuccess;
             queryExecutingCard.UsedKeysList.AddRange(leftQueryExecutingCard.UsedKeysList);
 
             queryExecutingCard.UsedKeysList = queryExecutingCard.UsedKeysList.Distinct().ToList();
@@ -2919,6 +2986,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                             FillUpResultToExplainNode(queryExecutingCardForExprInParameter, fetchingAllValuesForResolvingExpressionParamResultExplainNode);
                                         }
 
+                                        if (queryExecutingCardForExprInParameter.IsNegative)
+                                        {
+                                            throw new NotImplementedException();
+                                        }
+
                                         queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForExprInParameter.UsedKeysList);
 
                                         if(queryExecutingCardForExprInParameter.IsSuccess && queryExecutingCardForExprInParameter.ResultsOfQueryToRelationList.Any())
@@ -3082,6 +3154,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return;
             }
 
+            if (leftQueryExecutingCard.IsNegative)
+            {
+                throw new NotImplementedException();
+            }
+
             if (leftQueryExecutingCard.PostFiltersList.Any())
             {
                 var queryExecutingCardForFillExecutingCardUsingPostFiltersList = new QueryExecutingCardForIndexedPersistLogicalData();
@@ -3106,11 +3183,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 AppendResults(leftQueryExecutingCard, queryExecutingCard);
             }
-
-#if DEBUG
-
-#endif
-
         }
 
         private bool CompareKnownInfoAndParamOfTargetRelation(QueryExecutingCardAboutKnownInfo knownInfo, LogicalQueryNode paramOfTargetRelation, ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource)
@@ -3316,6 +3388,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForNextPart.UsedKeysList);
 
+                if (queryExecutingCardForNextPart.IsNegative)
+                {
+                    throw new NotImplementedException();
+                }
+
                 if (queryExecutingCardForNextPart.IsPostFiltersListOnly)
                 {
                     throw new NotImplementedException();
@@ -3426,6 +3503,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForExpression.UsedKeysList);
+
+            if (queryExecutingCardForExpression.IsNegative)
+            {
+                throw new NotImplementedException();
+            }
 
             if (queryExecutingCardForExpression.IsPostFiltersListOnly)
             {

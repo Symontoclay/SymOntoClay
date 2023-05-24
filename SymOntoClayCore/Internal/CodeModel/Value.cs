@@ -147,18 +147,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 return NullValueEquals();
             }
 
-            if(KindOfValue != other.KindOfValue)
+            if (KindOfValue == other.KindOfValue)
             {
-                if((KindOfValue == KindOfValue.NumberValue && other.KindOfValue == KindOfValue.LogicalValue) ||
-                    (KindOfValue == KindOfValue.LogicalValue && other.KindOfValue == KindOfValue.NumberValue))
-                {
-                    throw new NotImplementedException();
-                }
-
-                return false;
+                return ConcreteValueEquals(other);
             }
 
-            return ConcreteValueEquals(other);
+            if ((KindOfValue == KindOfValue.NumberValue && other.KindOfValue == KindOfValue.LogicalValue) ||
+                (KindOfValue == KindOfValue.LogicalValue && other.KindOfValue == KindOfValue.NumberValue))
+            {
+                throw new NotImplementedException();
+            }
+
+            return false;
         }
 
         protected virtual bool NullValueEquals()

@@ -39,6 +39,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public IList<QueryExecutingCardAboutKnownInfo> KnownInfoList { get; set; }
         public List<ResultOfQueryToRelation> ResultsOfQueryToRelationList { get; set; } = new List<ResultOfQueryToRelation>();
         public List<PostFilterOfQueryExecutingCardForPersistLogicalData> PostFiltersList { get; set; } = new List<PostFilterOfQueryExecutingCardForPersistLogicalData>();
+        public bool IsNegative { get; set; }
         public bool IsSuccess { get; set; }
         public bool IsPostFiltersListOnly { get; set; }
         public List<StrongIdentifierValue> UsedKeysList { get; set; } = new List<StrongIdentifierValue>();
@@ -71,6 +72,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.PrintObjListProp(n, nameof(KnownInfoList), KnownInfoList);
             sb.PrintObjListProp(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
             sb.PrintObjListProp(n, nameof(PostFiltersList), PostFiltersList);
+            sb.AppendLine($"{spaces}{nameof(IsNegative)} = {IsNegative}");
 
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
             sb.AppendLine($"{spaces}{nameof(IsPostFiltersListOnly)} = {IsPostFiltersListOnly}");
@@ -107,6 +109,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.PrintShortObjListProp(n, nameof(KnownInfoList), KnownInfoList);
             sb.PrintShortObjListProp(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
             sb.PrintShortObjListProp(n, nameof(PostFiltersList), PostFiltersList);
+            sb.AppendLine($"{spaces}{nameof(IsNegative)} = {IsNegative}");
 
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
             sb.AppendLine($"{spaces}{nameof(IsPostFiltersListOnly)} = {IsPostFiltersListOnly}");
@@ -143,6 +146,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.PrintBriefObjListProp(n, nameof(KnownInfoList), KnownInfoList);
             sb.PrintBriefObjListProp(n, nameof(ResultsOfQueryToRelationList), ResultsOfQueryToRelationList);
             sb.PrintBriefObjListProp(n, nameof(PostFiltersList), PostFiltersList);
+            sb.AppendLine($"{spaces}{nameof(IsNegative)} = {IsNegative}");
 
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
             sb.AppendLine($"{spaces}{nameof(IsPostFiltersListOnly)} = {IsPostFiltersListOnly}");

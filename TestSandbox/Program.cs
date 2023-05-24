@@ -107,7 +107,7 @@ namespace TestSandbox
             //TstGenerateDllDict();
             //TSTWordsFactory();
             //TstNLPConverterProvider();
-            TstNLPHandler();//<=NLP
+            //TstNLPHandler();//<=NLP
             //TstTriggerConditionNodeHandler();
             //TstSoundBus();
             //TstNavigationHandler();
@@ -152,7 +152,7 @@ namespace TestSandbox
             //TstCreateName();
             //TstExprNodeHandler();
             //TstParsing();
-            //TstBattleRoyaleHandler();//<==
+            TstBattleRoyaleHandler();//<==
             //TstPlacesHandler();//<==
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==

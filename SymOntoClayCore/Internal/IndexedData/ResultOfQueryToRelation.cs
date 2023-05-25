@@ -30,7 +30,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
     public class ResultOfQueryToRelation : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public IList<ResultOfVarOfQueryToRelation> ResultOfVarOfQueryToRelationList { get; set; } = new List<ResultOfVarOfQueryToRelation>();
-
+        
         /// <inheritdoc/>
         public override string ToString()
         {

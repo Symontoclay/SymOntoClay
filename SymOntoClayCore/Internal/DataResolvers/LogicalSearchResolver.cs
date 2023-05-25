@@ -207,21 +207,75 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 if(queryExecutingCard.IsNegative)
                 {
-                    throw new NotImplementedException();
+                    var resolvingNotResultsStrategy = options.ResolvingNotResultsStrategy;
+
+#if DEBUG
+                    resolvingNotResultsStrategy = ResolvingNotResultsStrategy.InResolver;
+                    Log($"resolvingNotResultsStrategy = {resolvingNotResultsStrategy}");
+#endif
+
+                    switch(resolvingNotResultsStrategy)
+                    {
+                        case ResolvingNotResultsStrategy.NotSupport:
+                            if(queryExecutingCard.ResultsOfQueryToRelationList.Any())
+                            {
+                                throw new NotSupportedException();
+                            }
+
+                            result.IsSuccess = queryExecutingCard.IsSuccess;
+                            result.Items = new List<LogicalSearchResultItem>();
+                            break;
+
+                        case ResolvingNotResultsStrategy.Ignore:
+                            result.IsSuccess = queryExecutingCard.IsSuccess;
+                            result.Items = new List<LogicalSearchResultItem>();
+                            break;
+
+                        case ResolvingNotResultsStrategy.InResolver:
+                            {
+#if DEBUG
+                                foreach (var tmpItem in queryExecutingCard.ResultsOfQueryToRelationList)
+                                {
+                                    Log("+++++++++++++++++++++++++++++++++++++++");
+
+                                    foreach (var varInfo in tmpItem.ResultOfVarOfQueryToRelationList)
+                                    {
+                                        Log($"varInfo = {varInfo}");
+                                    }
+                                }
+#endif
+
+                                var initialResultVarsDict = queryExecutingCard.ResultsOfQueryToRelationList.SelectMany(p => p.ResultOfVarOfQueryToRelationList).GroupBy(p => p.NameOfVar).ToDictionary(p => p.Key, p => p.Select(x => x.FoundExpression).ToList());
+
+#if DEBUG
+                                var tmpVar = initialResultVarsDict.ToDictionary(p => p.Key.ToHumanizedString(), p => p.Value.Select(x => x.ToHumanizedString()));
+
+                                Log($"tmpVar = {JsonConvert.SerializeObject(tmpVar, Formatting.Indented)}");
+#endif
+
+                                throw new NotImplementedException();
+                            }
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(resolvingNotResultsStrategy), resolvingNotResultsStrategy, null);
+                    }
                 }
-
-                result.IsSuccess = queryExecutingCard.IsSuccess;
-
-                var resultItemsList = new List<LogicalSearchResultItem>();
-
-                foreach (var resultOfQueryToRelation in queryExecutingCard.ResultsOfQueryToRelationList)
+                else
                 {
-                    var resultItem = new LogicalSearchResultItem();
-                    resultItem.ResultOfVarOfQueryToRelationList = resultOfQueryToRelation.ResultOfVarOfQueryToRelationList;
-                    resultItemsList.Add(resultItem);
-                }
+                    result.IsSuccess = queryExecutingCard.IsSuccess;
 
-                result.Items = resultItemsList;
+                    var resultItemsList = new List<LogicalSearchResultItem>();
+
+                    foreach (var resultOfQueryToRelation in queryExecutingCard.ResultsOfQueryToRelationList)
+                    {
+                        var resultItem = new LogicalSearchResultItem();
+                        resultItem.ResultOfVarOfQueryToRelationList = resultOfQueryToRelation.ResultOfVarOfQueryToRelationList;
+                        resultItemsList.Add(resultItem);
+                    }
+
+                    result.Items = resultItemsList;
+                }
 
                 if (resultExplainNode != null)
                 {
@@ -344,12 +398,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 throw new NotImplementedException();
             }
 
-            if (queryExecutingCardForPart_1.IsNegative)
-            {
-                throw new NotImplementedException();
-            }
-
             AppendResults(queryExecutingCardForPart_1, queryExecutingCard);
+            queryExecutingCard.IsNegative = queryExecutingCardForPart_1.IsNegative;
 
             if (resultExplainNode != null)
             {
@@ -407,13 +457,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return;
             }
 
-            if (queryExecutingCardForExpression.IsNegative)
-            {
-                throw new NotImplementedException();
-            }
-
             if (queryExecutingCardForExpression.PostFiltersList.Any())
             {
+                if (queryExecutingCardForExpression.IsNegative)
+                {
+                    throw new NotImplementedException();
+                }
+
                 var queryExecutingCardForFillExecutingCardUsingPostFiltersList = new QueryExecutingCardForIndexedPersistLogicalData();
                 queryExecutingCardForFillExecutingCardUsingPostFiltersList.RootParentExplainNode = rootParentExplainNode;
                 queryExecutingCardForFillExecutingCardUsingPostFiltersList.ParentExplainNode = parentExplainNode;
@@ -432,9 +482,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 if(parentExplainNode != null)
                 {
                     LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
-                }                
+                }
 
                 AppendResults(queryExecutingCardForExpression, queryExecutingCard);
+                queryExecutingCard.IsNegative = queryExecutingCardForExpression.IsNegative;
             }
 
         }
@@ -2781,7 +2832,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (leftQueryExecutingCard.ResultsOfQueryToRelationList.Any())
             {
-                throw new NotImplementedException();
+#if DEBUG
+                foreach(var tmpItem in leftQueryExecutingCard.ResultsOfQueryToRelationList)
+                {
+                    Log("----------------");
+
+                    foreach(var varInfo in tmpItem.ResultOfVarOfQueryToRelationList)
+                    {
+                        Log($"varInfo = {varInfo}");
+                    }
+                }
+#endif
+
+                AppendResults(leftQueryExecutingCard, queryExecutingCard);
             }
 
             queryExecutingCard.IsNegative = !leftQueryExecutingCard.IsNegative;
@@ -2789,6 +2852,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             queryExecutingCard.UsedKeysList.AddRange(leftQueryExecutingCard.UsedKeysList);
 
             queryExecutingCard.UsedKeysList = queryExecutingCard.UsedKeysList.Distinct().ToList();
+
             if (parentExplainNode != null)
             {
                 LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);

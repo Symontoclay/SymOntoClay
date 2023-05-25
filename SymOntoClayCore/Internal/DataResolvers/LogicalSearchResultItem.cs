@@ -32,7 +32,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.DataResolvers
 {
-    public class LogicalSearchResultItem : IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class LogicalSearchResultItem : IResultOfQueryToRelation
     {
         public string KeyForTrigger
         {
@@ -68,7 +68,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             _keyForTrigger = string.Join(string.Empty, strList);
         }
 
-        public IList<ResultOfVarOfQueryToRelation> ResultOfVarOfQueryToRelationList { get; set; }
+        public IList<IResultOfVarOfQueryToRelation> ResultOfVarOfQueryToRelationList { get; set; }
 
         public ulong GetLongHashCode(CheckDirtyOptions options)
         {

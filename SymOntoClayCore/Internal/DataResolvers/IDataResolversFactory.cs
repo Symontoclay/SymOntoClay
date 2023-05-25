@@ -125,5 +125,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         ValueResolvingHelper GetValueResolvingHelper();
 
         MetadataResolver GetMetadataResolver();
+
+        LogicalSearchVarResultsItemInvertor GetLogicalSearchVarResultsItemInvertor();
     }
 }

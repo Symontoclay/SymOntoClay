@@ -105,6 +105,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private MetadataResolver _metadataResolver;
         private readonly object _metadataResolverLockObj = new object();
 
+        private LogicalSearchVarResultsItemInvertor _logicalSearchVarResultsItemInvertor;
+        private readonly object _logicalSearchVarResultsItemInvertorLockObj = new object();
+
         /// <inheritdoc/>
         public BaseResolver GetBaseResolver()
         {
@@ -424,6 +427,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
                 return _metadataResolver;
+            }
+        }
+
+        /// <inheritdoc/>
+        public LogicalSearchVarResultsItemInvertor GetLogicalSearchVarResultsItemInvertor()
+        {
+            lock(_logicalSearchVarResultsItemInvertorLockObj)
+            {
+                if(_logicalSearchVarResultsItemInvertor == null)
+                {
+                    _logicalSearchVarResultsItemInvertor = new LogicalSearchVarResultsItemInvertor(_context);
+                }
+
+                return _logicalSearchVarResultsItemInvertor;
             }
         }
     }

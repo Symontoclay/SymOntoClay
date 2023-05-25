@@ -50,6 +50,7 @@ namespace SymOntoClay.Core
         IList<RuleInstance> GetAllOriginFacts();
         IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode);
         IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode);
+        IList<LogicalQueryNode> GetLogicalQueryNodes(IList<LogicalQueryNode> exceptList);
 
 #if DEBUG
         void DbgPrintFactsAndRules();

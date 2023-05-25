@@ -47,6 +47,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly NumberValueLinearResolver _numberValueLinearResolver;
         private readonly VarsResolver _varsResolver;
         private readonly SynonymsResolver _synonymsResolver;
+        private readonly LogicalSearchVarResultsItemInvertor _logicalSearchVarResultsItemInvertor;
 
         public LogicalSearchResolver(IMainStorageContext context)
             : base(context)
@@ -58,6 +59,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             _numberValueLinearResolver = dataResolversFactory.GetNumberValueLinearResolver();
             _varsResolver = dataResolversFactory.GetVarsResolver();
             _synonymsResolver = dataResolversFactory.GetSynonymsResolver();
+            _logicalSearchVarResultsItemInvertor = dataResolversFactory.GetLogicalSearchVarResultsItemInvertor();
         }
 
         public bool IsTruth(LogicalSearchOptions options)
@@ -72,10 +74,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var result = new LogicalSearchResult();
 
             ConsolidatedDataSource dataSource = null;
+            List<StorageUsingOptions> storagesList = null;
 
-            if(options.TargetStorage == null)
+            if (options.TargetStorage == null)
             {
-                dataSource = new ConsolidatedDataSource(GetStoragesList(options.LocalCodeExecutionContext.Storage));
+                storagesList = GetStoragesList(options.LocalCodeExecutionContext.Storage);
+                dataSource = new ConsolidatedDataSource(storagesList);
             }
             else
             {
@@ -97,8 +101,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 targetStorageList.AddRange(additinalStoragesList);
 
-                dataSource = new ConsolidatedDataSource(targetStorageList);
+                storagesList = targetStorageList;
 
+                dataSource = new ConsolidatedDataSource(targetStorageList);
             }
 
             var queryExecutingCard = new QueryExecutingCardForIndexedPersistLogicalData();
@@ -233,8 +238,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                         case ResolvingNotResultsStrategy.InResolver:
                             {
+                                var newItems = _logicalSearchVarResultsItemInvertor.Invert<LogicalSearchResultItem>(queryExecutingCard.ResultsOfQueryToRelationList.Cast<IResultOfQueryToRelation>(), storagesList);
+
 #if DEBUG
-                                foreach (var tmpItem in queryExecutingCard.ResultsOfQueryToRelationList)
+                                foreach (var tmpItem in newItems)
                                 {
                                     Log("+++++++++++++++++++++++++++++++++++++++");
 
@@ -243,14 +250,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                         Log($"varInfo = {varInfo}");
                                     }
                                 }
-#endif
-
-                                var initialResultVarsDict = queryExecutingCard.ResultsOfQueryToRelationList.SelectMany(p => p.ResultOfVarOfQueryToRelationList).GroupBy(p => p.NameOfVar).ToDictionary(p => p.Key, p => p.Select(x => x.FoundExpression).ToList());
-
-#if DEBUG
-                                var tmpVar = initialResultVarsDict.ToDictionary(p => p.Key.ToHumanizedString(), p => p.Value.Select(x => x.ToHumanizedString()));
-
-                                Log($"tmpVar = {JsonConvert.SerializeObject(tmpVar, Formatting.Indented)}");
 #endif
 
                                 throw new NotImplementedException();
@@ -3001,11 +3000,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         {
                             if (DetectExpressionInParamOfRelation(queryExecutingCard.VarsInfoList, paramsListOfTargetRelation))
                             {
-                                var resultCache = new List<List<ResultOfVarOfQueryToRelation>>();
+                                var resultCache = new List<List<IResultOfVarOfQueryToRelation>>();
 
                                 foreach (var varItem in queryExecutingCard.VarsInfoList)
                                 {
-                                    var resultCacheItem = new List<ResultOfVarOfQueryToRelation>();
+                                    var resultCacheItem = new List<IResultOfVarOfQueryToRelation>();
                                     resultCache.Add(resultCacheItem);
 
                                     var paramOfTargetRelation = paramsListOfTargetRelation[varItem.Position];
@@ -3487,7 +3486,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     foreach (var resultOfQueryToRelation in resultsOfQueryToRelationList)
                     {
                         var newResultOfQueryToRelation = new ResultOfQueryToRelation();
-                        var newResultOfVarOfQueryToRelationList = new List<ResultOfVarOfQueryToRelation>();
+                        var newResultOfVarOfQueryToRelationList = new List<IResultOfVarOfQueryToRelation>();
 
                         foreach (var resultOfVarOfQueryToRelation in resultOfQueryToRelation.ResultOfVarOfQueryToRelationList)
                         {

@@ -27,9 +27,10 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData
 {
-    public class ResultOfQueryToRelation : IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class ResultOfQueryToRelation : IResultOfQueryToRelation
     {
-        public IList<ResultOfVarOfQueryToRelation> ResultOfVarOfQueryToRelationList { get; set; } = new List<ResultOfVarOfQueryToRelation>();
+        /// <inheritdoc/>
+        public IList<IResultOfVarOfQueryToRelation> ResultOfVarOfQueryToRelationList { get; set; } = new List<IResultOfVarOfQueryToRelation>();
         
         /// <inheritdoc/>
         public override string ToString()

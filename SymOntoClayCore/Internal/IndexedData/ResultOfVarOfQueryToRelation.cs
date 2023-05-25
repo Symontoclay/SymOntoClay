@@ -28,11 +28,15 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.IndexedData
 {
-    public class ResultOfVarOfQueryToRelation : IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class ResultOfVarOfQueryToRelation : IResultOfVarOfQueryToRelation
     {
+        /// <inheritdoc/>
         public StrongIdentifierValue NameOfVar { get; set; }
+
+        /// <inheritdoc/>
         public LogicalQueryNode FoundExpression { get; set; }
 
+        /// <inheritdoc/>
         public ulong GetLongHashCode(CheckDirtyOptions options)
         {
             return NameOfVar.GetLongHashCode(options) ^ FoundExpression.GetLongHashCode(options);

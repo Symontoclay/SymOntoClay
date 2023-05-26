@@ -38,7 +38,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             Log($"tmpVar = {JsonConvert.SerializeObject(tmpVar, Formatting.Indented)}");
 #endif
 
-            foreach(var initialResultVarsKvpItem in initialResultVarsDict)
+            var replacingNotResultsStrategy = ReplacingNotResultsStrategy.AllKindOfItems;
+
+            foreach (var initialResultVarsKvpItem in initialResultVarsDict)
             {
                 var varName = initialResultVarsKvpItem.Key;
                 var exceptList = initialResultVarsKvpItem.Value;
@@ -48,7 +50,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 Log($"exceptList = {exceptList.WriteListToString()}");
 #endif
 
-                var newLogicalQueryNodes = GetLogicalQueryNodes(exceptList, storagesList);
+                var calculateTargetKindsOfItemsResult = CalculateTargetKindsOfItems(exceptList, replacingNotResultsStrategy);
+
+                var newLogicalQueryNodes = GetLogicalQueryNodes(exceptList, calculateTargetKindsOfItemsResult.ReplacingNotResultsStrategy, calculateTargetKindsOfItemsResult.TargetKindsOfItems, storagesList);
 
 #if DEBUG
                 Log($"newLogicalQueryNodes = {newLogicalQueryNodes.WriteListToString()}");
@@ -60,20 +64,32 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             throw new NotImplementedException();
         }
 
-        private List<LogicalQueryNode> GetLogicalQueryNodes(List<LogicalQueryNode> exceptList, List<StorageUsingOptions> storagesList)
+        private (List<KindOfLogicalQueryNode> TargetKindsOfItems, ReplacingNotResultsStrategy ReplacingNotResultsStrategy) CalculateTargetKindsOfItems(IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy)
         {
 #if DEBUG
             Log($"exceptList = {exceptList.WriteListToString()}");
+            Log($"replacingNotResultsStrategy = {replacingNotResultsStrategy}");
+#endif
+
+            throw new NotImplementedException();
+        }
+
+        private List<LogicalQueryNode> GetLogicalQueryNodes(IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy, IList<KindOfLogicalQueryNode> targetKindsOfItems, List<StorageUsingOptions> storagesList)
+        {
+#if DEBUG
+            Log($"exceptList = {exceptList.WriteListToString()}");
+            Log($"replacingNotResultsStrategy = {replacingNotResultsStrategy}");
+            Log($"targetKindsOfItems = {targetKindsOfItems.WritePODListToString()}");
 #endif
 
             var result = new List<LogicalQueryNode>();
 
             foreach (var storageItem in storagesList)
             {
-                var itemsList = storageItem.Storage.LogicalStorage.GetLogicalQueryNodes(exceptList);
+                //var itemsList = storageItem.Storage.LogicalStorage.GetLogicalQueryNodes(exceptList);
 
 #if DEBUG
-                Log($"itemsList = {itemsList.WriteListToString()}");
+                //Log($"itemsList = {itemsList.WriteListToString()}");
 #endif
             }
 

@@ -5649,6 +5649,31 @@
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.ReasonOfFuzzyLogicResolving.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="F:SymOntoClay.Core.Internal.DataResolvers.ReplacingNotResultsStrategy.AllKindOfItems">
+            <summary>
+            Elements of the result will be replaced by other elements that do not belong to set of the replaced elements.
+            The replacing elements can be of all kinds.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.DataResolvers.ReplacingNotResultsStrategy.PresentKindOfItems">
+            <summary>
+            Elements of the result will be replaced by other elements that do not belong to set of the replaced elements.
+            The replacing elements can have only kinds of replaced elements.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.DataResolvers.ReplacingNotResultsStrategy.FirstPresentNextOtherKindOfItems">
+            <summary>
+            Elements of the result will be replaced by other elements that do not belong to set of the replaced elements.
+            Firstly replacing elements of kinds of replaced elements are placed.
+            Next replacing elements of other kinds  are placed.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.DataResolvers.ReplacingNotResultsStrategy.DominantKindOfItems">
+            <summary>
+            Elements of the result will be replaced by other elements that do not belong to set of the replaced elements.
+            The replacing elements can have only dominant kind of replaced elements.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.ResolverOptions.ToString">
             <inheritdoc/>
         </member>

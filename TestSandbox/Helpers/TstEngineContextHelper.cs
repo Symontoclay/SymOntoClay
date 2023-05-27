@@ -50,7 +50,7 @@ namespace TestSandbox.Helpers
 {
     public static class TstEngineContextHelper
     {
-        private static readonly IEntityLogger _logger = new LoggerImpementation();
+        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
 
         public static WorldSettings CreateWorldSettings(UnityTestEngineContextFactorySettings factorySettings)
         {

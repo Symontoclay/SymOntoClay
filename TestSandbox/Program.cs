@@ -77,7 +77,7 @@ namespace TestSandbox
 {
     class Program
     {
-        private static readonly IEntityLogger _logger = new LoggerImpementation();
+        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
 
         static void Main(string[] args)
         {
@@ -85,6 +85,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            //TstDetectDoninantItems();
             //TstSerializeValue();
             //TstWaitAsync();
             //TstWaitAsync_2();
@@ -163,15 +164,32 @@ namespace TestSandbox
             //Thread.Sleep(10000);
         }
 
+        private static void TstDetectDoninantItems()
+        {
+            _logger.Log("Begin");
+
+            var initialList = new List<KindOfLogicalQueryNode>() { KindOfLogicalQueryNode.Entity, KindOfLogicalQueryNode.Concept, KindOfLogicalQueryNode.Value, KindOfLogicalQueryNode.Entity };
+
+            _logger.Log($"initialList = {JsonConvert.SerializeObject(initialList, Formatting.Indented)}");
+
+            var orderedList = initialList.GroupBy(p => p).Select(p => new
+            {
+                Value = p.Key,
+                Count = p.Count()
+            }).OrderByDescending(p => p.Count).Take(1);
+
+            _logger.Log($"orderedList = {JsonConvert.SerializeObject(orderedList, Formatting.Indented)}");
+
+            _logger.Log("End");
+        }
+
         private static void TstSerializeValue()
         {
             _logger.Log("Begin");
 
             var list = new List<object>() { new NumberValue(16) };
 
-#if DEBUG
             _logger.Log($"list = {JsonConvert.SerializeObject(list, Formatting.Indented, new ToHumanizedStringJsonConverter())}");
-#endif
 
             _logger.Log("End");
         }

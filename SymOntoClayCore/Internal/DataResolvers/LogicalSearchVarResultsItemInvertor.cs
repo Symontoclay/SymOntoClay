@@ -38,7 +38,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             Log($"tmpVar = {JsonConvert.SerializeObject(tmpVar, Formatting.Indented)}");
 #endif
 
-            var replacingNotResultsStrategy = ReplacingNotResultsStrategy.AllKindOfItems;
+            var replacingNotResultsStrategy = ReplacingNotResultsStrategy.DominantKindOfItems;//tmp
 
             foreach (var initialResultVarsKvpItem in initialResultVarsDict)
             {
@@ -64,6 +64,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             throw new NotImplementedException();
         }
 
+        private static readonly List<KindOfLogicalQueryNode> EmptyTargetKindsOfItems = new List<KindOfLogicalQueryNode>();
+
         private (List<KindOfLogicalQueryNode> TargetKindsOfItems, ReplacingNotResultsStrategy ReplacingNotResultsStrategy) CalculateTargetKindsOfItems(IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy)
         {
 #if DEBUG
@@ -71,7 +73,43 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             Log($"replacingNotResultsStrategy = {replacingNotResultsStrategy}");
 #endif
 
-            throw new NotImplementedException();
+            switch(replacingNotResultsStrategy)
+            {
+                case ReplacingNotResultsStrategy.AllKindOfItems:
+                    return (EmptyTargetKindsOfItems, replacingNotResultsStrategy);
+
+                case ReplacingNotResultsStrategy.PresentKindOfItems:
+                case ReplacingNotResultsStrategy.FirstPresentNextOtherKindOfItems:
+                    {
+                        if(exceptList.Count == 1)
+                        {
+                            return (exceptList.Select(p => p.Kind).ToList(), replacingNotResultsStrategy);
+                        }
+
+                        return (exceptList.Select(p => p.Kind).GroupBy(p => p).Select(p => new
+                        {
+                            Value = p.Key,
+                            Count = p.Count()
+                        }).OrderByDescending(p => p.Count).Select(p => p.Value).ToList(), replacingNotResultsStrategy);
+                    }
+
+                case ReplacingNotResultsStrategy.DominantKindOfItems:
+                    {
+                        if (exceptList.Count == 1)
+                        {
+                            return (exceptList.Select(p => p.Kind).ToList(), ReplacingNotResultsStrategy.PresentKindOfItems);
+                        }
+
+                        return (exceptList.Select(p => p.Kind).GroupBy(p => p).Select(p => new
+                        {
+                            Value = p.Key,
+                            Count = p.Count()
+                        }).OrderByDescending(p => p.Count).Select(p => p.Value).Take(1).ToList(), ReplacingNotResultsStrategy.PresentKindOfItems);
+                    }
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(replacingNotResultsStrategy), replacingNotResultsStrategy, null);
+            }
         }
 
         private List<LogicalQueryNode> GetLogicalQueryNodes(IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy, IList<KindOfLogicalQueryNode> targetKindsOfItems, List<StorageUsingOptions> storagesList)
@@ -86,10 +124,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var storageItem in storagesList)
             {
-                //var itemsList = storageItem.Storage.LogicalStorage.GetLogicalQueryNodes(exceptList);
+                var itemsList = storageItem.Storage.LogicalStorage.GetLogicalQueryNodes(exceptList, replacingNotResultsStrategy, targetKindsOfItems);
 
 #if DEBUG
-                //Log($"itemsList = {itemsList.WriteListToString()}");
+                Log($"itemsList = {itemsList.WriteListToString()}");
 #endif
             }
 

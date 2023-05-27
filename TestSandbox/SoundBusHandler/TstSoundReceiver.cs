@@ -41,7 +41,7 @@ namespace TestSandbox.SoundBusHandler
     public class TstSoundReceiver: BaseSoundReceiverComponent
     {
         public TstSoundReceiver(int instanceId, Vector3 position)
-            : base(new LoggerImpementation(), instanceId, new StandardFactsBuilder())
+            : base(new LoggerNLogImpementation(), instanceId, new StandardFactsBuilder())
         {
             _position = position;
         }

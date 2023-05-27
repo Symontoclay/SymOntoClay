@@ -37,7 +37,7 @@ namespace TestSandbox.Parsing
 {
     public class CompileInlineTriggerHandler
     {
-        private static readonly IEntityLogger _logger = new LoggerImpementation();
+        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
 
         public void Run()
         {

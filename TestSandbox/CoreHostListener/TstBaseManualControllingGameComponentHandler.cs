@@ -41,7 +41,7 @@ namespace TestSandbox.CoreHostListener
 {
     public class TstBaseManualControllingGameComponentHandler
     {
-        private static readonly IEntityLogger _logger = new LoggerImpementation();
+        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
 
         public void Run()
         {

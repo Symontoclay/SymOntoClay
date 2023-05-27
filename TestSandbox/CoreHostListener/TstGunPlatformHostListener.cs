@@ -32,7 +32,7 @@ namespace TestSandbox.CoreHostListener
 {
     public class TstGunPlatformHostListener
     {
-        private static readonly IEntityLogger _logger = new LoggerImpementation();
+        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
 
         [BipedEndpoint]
         public void Shoot(CancellationToken cancellationToken)

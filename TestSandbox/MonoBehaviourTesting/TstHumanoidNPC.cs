@@ -36,7 +36,7 @@ namespace TestSandbox.MonoBehaviourTesting
 {
     public class TstHumanoidNPC: TstMonoBehaviour
     {
-        private readonly IEntityLogger _logger = new LoggerImpementation();
+        private readonly IEntityLogger _logger = new LoggerNLogImpementation();
 
         private IHumanoidNPC _npc;
         private string _id;

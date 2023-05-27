@@ -24,6 +24,7 @@ using NLog;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Converters;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -35,6 +36,10 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 {
     public class CommonPersistIndexedLogicalData: BaseLoggedComponent
     {
+#if DEBUG
+        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
         public CommonPersistIndexedLogicalData()
             : this(null)
         {
@@ -241,6 +246,17 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             }
 
             return null;
+        }
+
+        public IList<LogicalQueryNode> GetLogicalQueryNodes(IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy, IList<KindOfLogicalQueryNode> targetKindsOfItems)
+        {
+#if DEBUG
+            Log($"exceptList = {exceptList.WriteListToString()}");
+            Log($"replacingNotResultsStrategy = {replacingNotResultsStrategy}");
+            Log($"targetKindsOfItems = {targetKindsOfItems.WritePODListToString()}");
+#endif
+
+            throw new NotImplementedException();
         }
     }
 }

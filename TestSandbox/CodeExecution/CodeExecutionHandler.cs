@@ -38,7 +38,7 @@ namespace TestSandbox.CodeExecution
 {
     public class CodeExecutionHandler
     {
-        private static readonly IEntityLogger _logger = new LoggerImpementation();
+        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
 
         public void Run()
         {

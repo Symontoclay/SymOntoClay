@@ -34,7 +34,7 @@ namespace TestSandbox.Handlers
 {
     public class TriggerConditionNodeHandler
     {
-        private static readonly IEntityLogger _logger = new LoggerImpementation();
+        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
 
         public void Run()
         {

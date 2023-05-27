@@ -49,7 +49,7 @@ namespace TestSandbox.Handlers
             _world = TstEngineContextHelper.CreateWorld(factorySettings);
         }
 
-        protected static readonly IEntityLogger _logger = new LoggerImpementation();
+        protected static readonly IEntityLogger _logger = new LoggerNLogImpementation();
 
         protected IWorld _world;
         protected IHumanoidNPC _npc;

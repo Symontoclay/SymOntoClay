@@ -33,7 +33,7 @@ namespace TestSandbox.DateTimes
 {
     public class DateTimeHandler
     {
-        private static readonly IEntityLogger _logger = new LoggerImpementation();
+        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
 
         public void Run()
         {

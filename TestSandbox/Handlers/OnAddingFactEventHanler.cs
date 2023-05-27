@@ -49,7 +49,7 @@ namespace TestSandbox.Handlers
             _engineContext = TstEngineContextHelper.CreateAndInitContext(factorySettings).EngineContext;
         }
 
-        private static readonly IEntityLogger _logger = new LoggerImpementation();
+        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
         private readonly IEngineContext _engineContext;
 
         event Func<RuleInstance, IAddFactOrRuleResult> OnAddingFact;

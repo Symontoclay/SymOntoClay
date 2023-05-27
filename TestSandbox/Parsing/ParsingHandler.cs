@@ -79,7 +79,7 @@ namespace TestSandbox.Parsing
         {
             _logger.Info("Begin");
 
-            var logger = new LoggerImpementation();
+            var logger = new LoggerNLogImpementation();
 
             var text = @"app Enemy
 {
@@ -131,7 +131,7 @@ namespace TestSandbox.Parsing
         {
             _logger.Info("Begin");
 
-            var logger = new LoggerImpementation();
+            var logger = new LoggerNLogImpementation();
 
             var text = @"app Enemy
 {

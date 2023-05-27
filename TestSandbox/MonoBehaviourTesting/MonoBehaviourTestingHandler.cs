@@ -31,7 +31,7 @@ namespace TestSandbox.MonoBehaviourTesting
 {
     public class MonoBehaviourTestingHandler
     {
-        private readonly IEntityLogger _logger = new LoggerImpementation();
+        private readonly IEntityLogger _logger = new LoggerNLogImpementation();
 
         public void Run()
         {

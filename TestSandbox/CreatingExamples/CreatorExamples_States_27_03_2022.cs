@@ -32,7 +32,7 @@ namespace TestSandbox.CreatingExamples
 {
     public class CreatorExamples_States_27_03_2022 : BaseCreatorExamples
     {
-        private static readonly IEntityLogger _logger = new LoggerImpementation();
+        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
 
         public void Run()
         {

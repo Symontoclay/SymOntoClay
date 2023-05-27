@@ -32,7 +32,7 @@ namespace TestSandbox.Handlers
 {
     public class EventHanler
     {
-        private static readonly IEntityLogger _logger = new LoggerImpementation();
+        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
         
         event Func<int, int> OnEv;
 

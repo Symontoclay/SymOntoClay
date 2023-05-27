@@ -38,7 +38,7 @@ namespace TestSandbox.CoreHostListener
 {
     public class TstPlatformHostListener
     {
-        private static readonly IEntityLogger _logger = new LoggerImpementation();
+        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
 
         private static object _lockObj = new object();
 

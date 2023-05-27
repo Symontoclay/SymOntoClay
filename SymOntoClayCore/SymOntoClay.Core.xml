@@ -4567,6 +4567,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.ILogicalSearchStorageContext,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.GetLogicalQueryNodes(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode},SymOntoClay.Core.Internal.DataResolvers.ReplacingNotResultsStrategy,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.KindOfLogicalQueryNode})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#DbgPrintFactsAndRules">
             <inheritdoc/>
         </member>
@@ -8143,6 +8146,9 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.ILogicalSearchStorageContext,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.GetLogicalQueryNodes(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode},SymOntoClay.Core.Internal.DataResolvers.ReplacingNotResultsStrategy,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.KindOfLogicalQueryNode})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.Remove(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
@@ -8192,6 +8198,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.ILogicalSearchStorageContext,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.GetLogicalQueryNodes(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode},SymOntoClay.Core.Internal.DataResolvers.ReplacingNotResultsStrategy,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.KindOfLogicalQueryNode})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.DbgPrintFactsAndRules">

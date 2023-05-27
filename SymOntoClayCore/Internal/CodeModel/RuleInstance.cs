@@ -40,6 +40,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class RuleInstance: CodeItem, IStorage, ILogicalStorage//, IEquatable<RuleInstance>
     {
+#if DEBUG
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+#endif
+
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.RuleOrFact;
 
@@ -639,6 +643,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
 
             return _commonPersistIndexedLogicalData.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name);
+        }
+
+        /// <inheritdoc/>
+        public IList<LogicalQueryNode> GetLogicalQueryNodes(IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy, IList<KindOfLogicalQueryNode> targetKindsOfItems)
+        {
+            return _commonPersistIndexedLogicalData.GetLogicalQueryNodes(exceptList, replacingNotResultsStrategy, targetKindsOfItems);
         }
 
         /// <inheritdoc/>

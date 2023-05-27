@@ -52,7 +52,7 @@ namespace TestSandbox.Handlers
         }
 
         private readonly IEngineContext _engineContext;
-        private static readonly IEntityLogger _logger = new LoggerImpementation();
+        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
         private readonly IStandardFactsBuilder _standardFactsBuilder;
 
         public void Run()

@@ -35,7 +35,7 @@ namespace TestSandbox.MonoBehaviourTesting
 {
     public class TstWord: TstMonoBehaviour
     {
-        private readonly IEntityLogger _logger = new LoggerImpementation();
+        private readonly IEntityLogger _logger = new LoggerNLogImpementation();
 
         private IWorld _world;
 

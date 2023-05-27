@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -762,6 +763,35 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 }
 
                 return logicalSearchStorageContext.Filter(source, false);
+            }
+        }
+
+        /// <inheritdoc/>
+        public IList<LogicalQueryNode> GetLogicalQueryNodes(IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy, IList<KindOfLogicalQueryNode> targetKindsOfItems)
+        {
+            lock (_lockObj)
+            {
+#if DEBUG
+                Log($"exceptList = {exceptList.WriteListToString()}");
+                Log($"replacingNotResultsStrategy = {replacingNotResultsStrategy}");
+                Log($"targetKindsOfItems = {targetKindsOfItems.WritePODListToString()}");
+#endif
+
+                var result = new List<LogicalQueryNode>();
+
+                foreach (var ruleInstance in _ruleInstancesList)
+                {
+                    var targetItemsList = ruleInstance.GetLogicalQueryNodes(exceptList, replacingNotResultsStrategy, targetKindsOfItems);
+
+                    if (targetItemsList.IsNullOrEmpty())
+                    {
+                        continue;
+                    }
+
+                    result.AddRange(targetItemsList);
+                }
+
+                return result;
             }
         }
 

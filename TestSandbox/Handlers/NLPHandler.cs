@@ -79,7 +79,7 @@ namespace TestSandbox.Handlers
         private readonly IEngineContext _engineContext;
         private readonly INLPConverter _converter;
         private readonly IWordsDict _wordsDict;
-        private static readonly IEntityLogger _logger = new LoggerImpementation();
+        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
 
         public void Run()
         {

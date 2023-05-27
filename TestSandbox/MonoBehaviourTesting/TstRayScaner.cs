@@ -34,7 +34,7 @@ namespace TestSandbox.MonoBehaviourTesting
 {
     public class TstRayScaner : IVisionProvider
     {
-        private readonly IEntityLogger _logger = new LoggerImpementation();
+        private readonly IEntityLogger _logger = new LoggerNLogImpementation();
 
         public TstRayScaner()
         {

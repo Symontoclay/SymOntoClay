@@ -720,6 +720,29 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         }
 
         /// <inheritdoc/>
+        public IList<LogicalQueryNode> GetLogicalQueryNodes(IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy, IList<KindOfLogicalQueryNode> targetKindsOfItems)
+        {
+            lock (_lockObj)
+            {
+                var result = new List<LogicalQueryNode>();
+
+                foreach (var storage in _logicalStorages)
+                {
+                    var targetItemsList = storage.GetLogicalQueryNodes(exceptList, replacingNotResultsStrategy, targetKindsOfItems);
+
+                    if (targetItemsList.IsNullOrEmpty())
+                    {
+                        continue;
+                    }
+
+                    result.AddRange(targetItemsList);
+                }
+
+                return result;
+            }
+        }
+
+        /// <inheritdoc/>
         public void Remove(RuleInstance ruleInstance)
         {
             throw new NotImplementedException();

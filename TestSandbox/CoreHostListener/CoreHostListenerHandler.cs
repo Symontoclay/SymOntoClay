@@ -42,7 +42,7 @@ namespace TestSandbox.CoreHostListener
 {
     public class CoreHostListenerHandler
     {
-        private static readonly IEntityLogger _logger = new LoggerImpementation();
+        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
 
         public void Run()
         {

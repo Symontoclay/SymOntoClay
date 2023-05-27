@@ -33,7 +33,7 @@ namespace TestSandbox.MonoBehaviourTesting
 {
     public class TstGameObject : TstMonoBehaviour
     {
-        private readonly IEntityLogger _logger = new LoggerImpementation();
+        private readonly IEntityLogger _logger = new LoggerNLogImpementation();
 
         private IGameObject _gameObject;
         private string _id;

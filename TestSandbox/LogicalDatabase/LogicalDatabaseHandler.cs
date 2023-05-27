@@ -39,7 +39,7 @@ namespace TestSandbox.LogicalDatabase
 {
     public class LogicalDatabaseHandler
     {
-        private static readonly IEntityLogger _logger = new LoggerImpementation();
+        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
         private readonly ComplexTestEngineContext _genericContext;
         private readonly IEngineContext _context;
 

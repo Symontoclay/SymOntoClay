@@ -27,7 +27,7 @@ using System.Text;
 
 namespace TestSandbox.PlatformImplementations
 {
-    public class LoggerImpementation: IEntityLogger
+    public class LoggerNLogImpementation: IEntityLogger
     {
         private readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 

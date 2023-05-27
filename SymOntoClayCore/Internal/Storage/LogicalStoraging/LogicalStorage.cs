@@ -296,7 +296,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             _ruleInstancesDictById[ruleInstanceId] = ruleInstance;
             _lifeTimeCycleById[ruleInstanceId] = DEFAULT_INITIAL_TIME;
 
-            _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(ruleInstance.Normalized);
+            _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(ruleInstance.Normalized, false);
 
             if(isPrimary && _kind != KindOfStorage.PublicFacts && _kind != KindOfStorage.PerceptedFacts)
             {

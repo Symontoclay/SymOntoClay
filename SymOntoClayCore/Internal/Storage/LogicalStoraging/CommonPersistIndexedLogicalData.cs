@@ -59,7 +59,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         public IList<LogicalQueryNode> RelationsList { get; set; }
         private IDictionary<KindOfLogicalQueryNode, IList<LogicalQueryNode>> _leafs = new Dictionary<KindOfLogicalQueryNode, IList<LogicalQueryNode>>();
 
-        public void NSetIndexedRuleInstanceToIndexData(RuleInstance indexedRuleInstance)
+        public void NSetIndexedRuleInstanceToIndexData(RuleInstance indexedRuleInstance, bool registerLeafs)
         {
             IndexedRuleInstancesDict[indexedRuleInstance.Name] = indexedRuleInstance;
 
@@ -104,10 +104,15 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 case KindOfRuleInstance.Question:
                     break;
 
-
                 default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }
 
+            if(registerLeafs)
+            {
+                //_leafs
+
+                throw new NotImplementedException();
+            }
         }
 
         private void NAddIndexedRulePartToKeysOfRelationsIndex(IDictionary<StrongIdentifierValue, IList<BaseRulePart>> indexData, BaseRulePart indexedRulePart)

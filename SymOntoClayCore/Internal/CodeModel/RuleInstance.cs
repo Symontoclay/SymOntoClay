@@ -146,7 +146,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 }
             }
 
-            _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(Normalized);
+            _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(Normalized, true);
         }
 
         private void NPrepareDirty()

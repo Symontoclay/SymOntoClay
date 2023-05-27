@@ -102,6 +102,11 @@
             <param name="n">Count of spaces in the string for more comfortable representation.</param>
             <returns>A string that represents the current instance without additional information, only pair name of property - value.</returns>
         </member>
+        <member name="F:SymOntoClay.CoreHelper.DebugHelpers.LoggerNLogImpementation.Instance">
+            <summary>
+            Gets default instance of the class.
+            </summary>
+        </member>
         <member name="T:SymOntoClay.CoreHelper.ISymOntoClayDisposable">
             <summary>
             Provides small improving of mechanism for releasing unmanaged resources by adding additional members.

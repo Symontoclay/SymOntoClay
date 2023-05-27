@@ -1,4 +1,4 @@
-/*MIT License
+﻿/*MIT License
 
 Copyright (c) 2020 - 2023 Sergiy Tolkachov
 
@@ -25,10 +25,15 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TestSandbox.PlatformImplementations
+namespace SymOntoClay.CoreHelper.DebugHelpers
 {
-    public class LoggerNLogImpementation: IEntityLogger
+    public class LoggerNLogImpementation : IEntityLogger
     {
+        /// <summary>
+        /// Gets default instance of the class.
+        /// </summary>
+        public static LoggerNLogImpementation Instance = new LoggerNLogImpementation();
+
         private readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 
         [MethodForLoggingSupport]

@@ -36,12 +36,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 {
     public class CommonPersistIndexedLogicalData: BaseLoggedComponent
     {
-#if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         public CommonPersistIndexedLogicalData()
-            : this(null)
+            : this(LoggerNLogImpementation.Instance)
         {
         }
 
@@ -61,6 +57,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         public IDictionary<StrongIdentifierValue, IList<BaseRulePart>> IndexedRulePartsOfFactsDict { get; set; }
         public IDictionary<StrongIdentifierValue, IList<BaseRulePart>> IndexedRulePartsWithOneRelationWithVarsDict { get; set; }
         public IList<LogicalQueryNode> RelationsList { get; set; }
+        private IDictionary<KindOfLogicalQueryNode, IList<LogicalQueryNode>> _leafs = new Dictionary<KindOfLogicalQueryNode, IList<LogicalQueryNode>>();
 
         public void NSetIndexedRuleInstanceToIndexData(RuleInstance indexedRuleInstance)
         {
@@ -248,13 +245,15 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             return null;
         }
 
-        public IList<LogicalQueryNode> GetLogicalQueryNodes(IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy, IList<KindOfLogicalQueryNode> targetKindsOfItems)
+        public IReadOnlyList<LogicalQueryNode> GetLogicalQueryNodes(IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy, IList<KindOfLogicalQueryNode> targetKindsOfItems)
         {
 #if DEBUG
             Log($"exceptList = {exceptList.WriteListToString()}");
             Log($"replacingNotResultsStrategy = {replacingNotResultsStrategy}");
             Log($"targetKindsOfItems = {targetKindsOfItems.WritePODListToString()}");
 #endif
+
+            //_leafs
 
             throw new NotImplementedException();
         }

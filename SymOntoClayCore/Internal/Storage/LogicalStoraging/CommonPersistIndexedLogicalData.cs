@@ -109,10 +109,15 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             if(registerLeafs)
             {
-                //_leafs
-
-                throw new NotImplementedException();
+                NRegisterLogicalQueryNodeLeafs(indexedRuleInstance);
             }
+        }
+
+        private void NRegisterLogicalQueryNodeLeafs(RuleInstance indexedRuleInstance)
+        {
+            //_leafs
+
+            throw new NotImplementedException();
         }
 
         private void NAddIndexedRulePartToKeysOfRelationsIndex(IDictionary<StrongIdentifierValue, IList<BaseRulePart>> indexData, BaseRulePart indexedRulePart)

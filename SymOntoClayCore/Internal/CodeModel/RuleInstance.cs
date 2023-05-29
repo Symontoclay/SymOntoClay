@@ -29,6 +29,7 @@ using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Storage.LogicalStoraging;
 using SymOntoClay.Core.Internal.Storage.SynonymsStoraging;
+using SymOntoClay.Core.Internal.Visitors;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -70,6 +71,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public Value SelfObligationModality { get; set; }
 
         public List<StrongIdentifierValue> UsedKeysList { get; set; }
+
+        public List<LogicalQueryNode> LeafsList { get; set; }
         
         public RuleInstance Original { get; set; }
         public RuleInstance Normalized { get; set; }
@@ -163,6 +166,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             ObligationModality?.CheckDirty();
             SelfObligationModality?.CheckDirty();
+
+            var logicalQueryNodeLeafsVisitor = new LogicalQueryNodeLeafsVisitor();
+            LeafsList = logicalQueryNodeLeafsVisitor.Run(this);
+
+#if DEBUG
+            LoggerNLogImpementation.Instance.Log($"LeafsList = {LeafsList.WriteListToString()}");
+#endif
         }
 
         public void CalculateUsedKeys()
@@ -280,6 +290,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.ObligationModality = ObligationModality;
             result.SelfObligationModality = SelfObligationModality;
             result.UsedKeysList = UsedKeysList?.ToList();
+            result.LeafsList = LeafsList?.ToList();
 
             result.AppendCodeItem(this, context);
 
@@ -340,6 +351,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjProp(n, nameof(SelfObligationModality), SelfObligationModality);
 
             sb.PrintObjListProp(n, nameof(UsedKeysList), UsedKeysList);
+            sb.PrintObjListProp(n, nameof(LeafsList), LeafsList);
 
             sb.PrintExisting(n, nameof(Original), Original);
             sb.PrintExisting(n, nameof(Normalized), Normalized);
@@ -366,6 +378,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjProp(n, nameof(SelfObligationModality), SelfObligationModality);
 
             sb.PrintShortObjListProp(n, nameof(UsedKeysList), UsedKeysList);
+            sb.PrintShortObjListProp(n, nameof(LeafsList), LeafsList);
 
             sb.PrintExisting(n, nameof(Original), Original);
             sb.PrintExisting(n, nameof(Normalized), Normalized);
@@ -392,6 +405,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintExisting(n, nameof(SelfObligationModality), SelfObligationModality);
 
             sb.PrintBriefObjListProp(n, nameof(UsedKeysList), UsedKeysList);
+            sb.PrintBriefObjListProp(n, nameof(LeafsList), LeafsList);
 
             sb.PrintExisting(n, nameof(Original), Original);
             sb.PrintExisting(n, nameof(Normalized), Normalized);

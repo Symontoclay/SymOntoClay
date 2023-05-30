@@ -43,7 +43,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 #if DEBUG
         private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
-
+        
         public KindOfLogicalQueryNode Kind { get; set; } = KindOfLogicalQueryNode.Unknown;
 
         public bool IsExpression => Kind == KindOfLogicalQueryNode.Relation || Kind == KindOfLogicalQueryNode.Group || Kind == KindOfLogicalQueryNode.BinaryOperator || Kind == KindOfLogicalQueryNode.UnaryOperator;

@@ -2724,6 +2724,12 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.EntityValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.EqualityComparers.LogicalQueryNodeEqualityComparer.Equals(SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode,SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.EqualityComparers.LogicalQueryNodeEqualityComparer.GetHashCode(SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ErrorValue.KindOfValue">
             <inheritdoc/>
         </member>

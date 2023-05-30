@@ -23,6 +23,7 @@ SOFTWARE.*/
 using NLog;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.EqualityComparers;
 using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
@@ -57,7 +58,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         public IDictionary<StrongIdentifierValue, IList<BaseRulePart>> IndexedRulePartsOfFactsDict { get; set; }
         public IDictionary<StrongIdentifierValue, IList<BaseRulePart>> IndexedRulePartsWithOneRelationWithVarsDict { get; set; }
         public IList<LogicalQueryNode> RelationsList { get; set; }
-        private IDictionary<KindOfLogicalQueryNode, IList<LogicalQueryNode>> _leafs = new Dictionary<KindOfLogicalQueryNode, IList<LogicalQueryNode>>();
+        private IDictionary<KindOfLogicalQueryNode, IList<LogicalQueryNode>> _leafsDict = new Dictionary<KindOfLogicalQueryNode, IList<LogicalQueryNode>>();
+
+        private static LogicalQueryNodeEqualityComparer _logicalQueryNodeEqualityComparer = new LogicalQueryNodeEqualityComparer();
 
         public void NSetIndexedRuleInstanceToIndexData(RuleInstance indexedRuleInstance, bool registerLeafs)
         {
@@ -115,9 +118,46 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private void NRegisterLogicalQueryNodeLeafs(RuleInstance indexedRuleInstance)
         {
-            //_leafs
+#if DEBUG
+            //Log($"indexedRuleInstance.LeafsList = {indexedRuleInstance.LeafsList.WriteListToString()}");
+#endif
 
-            throw new NotImplementedException();
+            var leafsDict = indexedRuleInstance.LeafsList.GroupBy(p => p.Kind).ToDictionary(p => p.Key, p => p.ToList());
+
+            foreach(var leafsDictKVPItem in leafsDict)
+            {
+#if DEBUG
+                //Log($"leafsDictKVPItem.Key = {leafsDictKVPItem.Key}");
+                //Log($"leafsDictKVPItem.Value = {leafsDictKVPItem.Value.WriteListToString()}");
+#endif
+
+                NRegisterLogicalQueryNodeLeafs(leafsDictKVPItem.Key, leafsDictKVPItem.Value);
+            }
+        }
+
+        private void NRegisterLogicalQueryNodeLeafs(KindOfLogicalQueryNode kind, List<LogicalQueryNode> leafs)
+        {
+#if DEBUG
+            //Log($"kind = {kind}");
+            //Log($"leafs = {leafs.WriteListToString()}");
+#endif
+
+            if(_leafsDict.ContainsKey(kind))
+            {
+                var list = _leafsDict[kind];
+
+                foreach(var leaf in leafs)
+                {
+                    if(!list.Contains(leaf))
+                    {
+                        list.Add(leaf);
+                    }
+                }
+            }
+            else
+            {
+                _leafsDict[kind] = leafs.Distinct(_logicalQueryNodeEqualityComparer).ToList();
+            }
         }
 
         private void NAddIndexedRulePartToKeysOfRelationsIndex(IDictionary<StrongIdentifierValue, IList<BaseRulePart>> indexData, BaseRulePart indexedRulePart)
@@ -263,9 +303,16 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             Log($"targetKindsOfItems = {targetKindsOfItems.WritePODListToString()}");
 #endif
 
-            //_leafs
+            switch(replacingNotResultsStrategy)
+            {
+                case ReplacingNotResultsStrategy.AllKindOfItems:
+                    return _leafsDict.Values.SelectMany(p => p).Where(p => !exceptList.Contains(p)).Distinct(_logicalQueryNodeEqualityComparer).ToList();
 
-            throw new NotImplementedException();
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(replacingNotResultsStrategy), replacingNotResultsStrategy, null);
+            }
+
+            //_leafsDict
         }
     }
 }

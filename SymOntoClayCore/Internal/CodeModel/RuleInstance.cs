@@ -171,7 +171,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             LeafsList = logicalQueryNodeLeafsVisitor.Run(this);
 
 #if DEBUG
-            LoggerNLogImpementation.Instance.Log($"LeafsList = {LeafsList.WriteListToString()}");
+            //LoggerNLogImpementation.Instance.Log($"LeafsList = {LeafsList.WriteListToString()}");
 #endif
         }
 

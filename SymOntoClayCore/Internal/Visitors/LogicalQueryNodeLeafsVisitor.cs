@@ -64,7 +64,7 @@ namespace SymOntoClay.Core.Internal.Visitors
         public void VisitLogicalQueryNode(LogicalQueryNode logicalQueryNode)
         {
 #if DEBUG
-            Log($"logicalQueryNode.Kind = {logicalQueryNode.Kind}");
+            //Log($"logicalQueryNode.Kind = {logicalQueryNode.Kind}");
 #endif
 
             var kind = logicalQueryNode.Kind;

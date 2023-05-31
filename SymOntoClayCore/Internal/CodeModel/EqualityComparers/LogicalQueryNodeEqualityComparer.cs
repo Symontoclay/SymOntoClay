@@ -37,6 +37,10 @@ namespace SymOntoClay.Core.Internal.CodeModel.EqualityComparers
                 case KindOfLogicalQueryNode.Value:
                     return x.Value.Equals(y.Value);
 
+                case KindOfLogicalQueryNode.Concept:
+                case KindOfLogicalQueryNode.Entity:
+                    return x.Name == y.Name;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }

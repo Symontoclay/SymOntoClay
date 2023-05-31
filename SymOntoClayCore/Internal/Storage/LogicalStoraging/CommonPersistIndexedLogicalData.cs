@@ -306,7 +306,26 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             switch(replacingNotResultsStrategy)
             {
                 case ReplacingNotResultsStrategy.AllKindOfItems:
-                    return _leafsDict.Values.SelectMany(p => p).Where(p => !exceptList.Contains(p)).Distinct(_logicalQueryNodeEqualityComparer).ToList();
+                    return _leafsDict.Values.SelectMany(p => p).Where(p => !exceptList.Contains(p))/*.Distinct(_logicalQueryNodeEqualityComparer)*/.ToList();
+
+                case ReplacingNotResultsStrategy.PresentKindOfItems:
+                    {
+                        var result = new List<LogicalQueryNode>();
+
+                        foreach(var targetKind in targetKindsOfItems)
+                        {
+#if DEBUG
+                            Log($"targetKind = {targetKind}");
+#endif
+
+                            if(_leafsDict.ContainsKey(targetKind))
+                            {
+                                result.AddRange(_leafsDict[targetKind].Where(p => !exceptList.Contains(p)));
+                            }
+                        }
+
+                        return result;
+                    }
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(replacingNotResultsStrategy), replacingNotResultsStrategy, null);

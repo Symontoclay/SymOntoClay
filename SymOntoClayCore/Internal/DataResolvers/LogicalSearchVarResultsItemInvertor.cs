@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             Log($"tmpVar = {JsonConvert.SerializeObject(tmpVar, Formatting.Indented)}");
 #endif
 
-            var replacingNotResultsStrategy = ReplacingNotResultsStrategy.AllKindOfItems;//ReplacingNotResultsStrategy.PresentKindOfItems;//tmp
+            var replacingNotResultsStrategy = ReplacingNotResultsStrategy.DominantKindOfItems;//tmp
 
             foreach (var initialResultVarsKvpItem in initialResultVarsDict)
             {
@@ -52,9 +52,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 Log($"exceptList = {exceptList.WriteListToString()}");
 #endif
 
-                var calculateTargetKindsOfItemsResult = CalculateTargetKindsOfItems(exceptList, replacingNotResultsStrategy);
-
-                var newLogicalQueryNodes = GetLogicalQueryNodes(exceptList, calculateTargetKindsOfItemsResult.ReplacingNotResultsStrategy, calculateTargetKindsOfItemsResult.TargetKindsOfItems, storagesList);
+                var newLogicalQueryNodes = GetLogicalQueryNodes(exceptList, replacingNotResultsStrategy, storagesList);
 
 #if DEBUG
                 Log($"newLogicalQueryNodes = {newLogicalQueryNodes.WriteListToString()}");
@@ -88,11 +86,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             return (exceptList.Select(p => p.Kind).ToList(), replacingNotResultsStrategy);
                         }
 
-                        return (exceptList.Select(p => p.Kind).GroupBy(p => p).Select(p => new
-                        {
-                            Value = p.Key,
-                            Count = p.Count()
-                        }).OrderByDescending(p => p.Count).Select(p => p.Value).ToList(), replacingNotResultsStrategy);
+                        return (GetOrderedKindOfLogicalQueryNodes(exceptList).ToList(), replacingNotResultsStrategy);
                     }
 
                 case ReplacingNotResultsStrategy.FirstPresentNextOtherKindOfItems:
@@ -102,11 +96,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             return (exceptList.Select(p => p.Kind).ToList(), ReplacingNotResultsStrategy.AllKindOfItems);
                         }
 
-                        return (exceptList.Select(p => p.Kind).GroupBy(p => p).Select(p => new
-                        {
-                            Value = p.Key,
-                            Count = p.Count()
-                        }).OrderByDescending(p => p.Count).Select(p => p.Value).ToList(), ReplacingNotResultsStrategy.AllKindOfItems);
+                        return (GetOrderedKindOfLogicalQueryNodes(exceptList).ToList(), ReplacingNotResultsStrategy.AllKindOfItems);
                     }
 
                 case ReplacingNotResultsStrategy.DominantKindOfItems:
@@ -116,11 +106,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             return (exceptList.Select(p => p.Kind).ToList(), ReplacingNotResultsStrategy.PresentKindOfItems);
                         }
 
-                        return (exceptList.Select(p => p.Kind).GroupBy(p => p).Select(p => new
-                        {
-                            Value = p.Key,
-                            Count = p.Count()
-                        }).OrderByDescending(p => p.Count).Select(p => p.Value).Take(1).ToList(), ReplacingNotResultsStrategy.PresentKindOfItems);
+                        return (GetOrderedKindOfLogicalQueryNodes(exceptList).Take(1).ToList(), ReplacingNotResultsStrategy.PresentKindOfItems);
                     }
 
                 default:
@@ -128,15 +114,31 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private List<LogicalQueryNode> GetLogicalQueryNodes(IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy, IList<KindOfLogicalQueryNode> targetKindsOfItems, List<StorageUsingOptions> storagesList)
+        private IEnumerable<KindOfLogicalQueryNode> GetOrderedKindOfLogicalQueryNodes(IEnumerable<LogicalQueryNode> exceptList)
+        {
+            return exceptList.Select(p => p.Kind).GroupBy(p => p).Select(p => new
+            {
+                Value = p.Key,
+                Count = p.Count()
+            }).OrderByDescending(p => p.Count).Select(p => p.Value);
+        }
+
+        private List<LogicalQueryNode> GetLogicalQueryNodes(IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy, List<StorageUsingOptions> storagesList)
         {
 #if DEBUG
             Log($"exceptList = {exceptList.WriteListToString()}");
             Log($"replacingNotResultsStrategy = {replacingNotResultsStrategy}");
+#endif
+
+            var calculateTargetKindsOfItemsResult = CalculateTargetKindsOfItems(exceptList, replacingNotResultsStrategy);
+
+            var targetKindsOfItems = calculateTargetKindsOfItemsResult.TargetKindsOfItems;
+
+#if DEBUG
             Log($"targetKindsOfItems = {targetKindsOfItems.WritePODListToString()}");
 #endif
 
-            return SortLogicalQueryNodes(GetRawLogicalQueryNodes(exceptList, replacingNotResultsStrategy, targetKindsOfItems, storagesList), replacingNotResultsStrategy, targetKindsOfItems);
+            return SortLogicalQueryNodes(GetRawLogicalQueryNodes(exceptList, calculateTargetKindsOfItemsResult.ReplacingNotResultsStrategy, targetKindsOfItems, storagesList), replacingNotResultsStrategy, targetKindsOfItems);
         }
 
         private List<LogicalQueryNode> GetRawLogicalQueryNodes(IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy, IList<KindOfLogicalQueryNode> targetKindsOfItems, List<StorageUsingOptions> storagesList)
@@ -187,6 +189,85 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             switch(replacingNotResultsStrategy)
             {
+                case ReplacingNotResultsStrategy.AllKindOfItems:
+                case ReplacingNotResultsStrategy.DominantKindOfItems:
+                    return source;
+
+                case ReplacingNotResultsStrategy.PresentKindOfItems:
+                    {
+                        if(targetKindsOfItems.Count == 1)
+                        {
+                            return source;
+                        }
+
+                        if(source.Count == 1)
+                        {
+                            return source;
+                        }
+
+                        var result = new List<LogicalQueryNode>();
+
+                        var sourceDict = source.GroupBy(p => p.Kind).ToDictionary(p => p.Key, p => p.ToList());
+
+                        List<LogicalQueryNode> nodesList = null;
+
+                        foreach (var targetKind in targetKindsOfItems)
+                        {
+#if DEBUG
+                            //Log($"targetKind = {targetKind}");
+#endif
+
+                            if (sourceDict.TryGetValue(targetKind, out nodesList))
+                            {
+                                result.AddRange(nodesList);
+                            }
+                        }
+
+                        return result;
+                    }
+
+                case ReplacingNotResultsStrategy.FirstPresentNextOtherKindOfItems:
+                    {
+                        if (source.Count == 1)
+                        {
+                            return source;
+                        }
+
+                        var result = new List<LogicalQueryNode>();
+
+                        var sourceDict = source.GroupBy(p => p.Kind).ToDictionary(p => p.Key, p => p.ToList());
+
+                        List<LogicalQueryNode> nodesList = null;
+
+                        foreach (var targetKind in targetKindsOfItems)
+                        {
+#if DEBUG
+                            Log($"targetKind = {targetKind}");
+#endif
+
+                            if(sourceDict.TryGetValue(targetKind, out nodesList))
+                            {
+                                result.AddRange(nodesList);
+                            }
+                        }
+
+                        var otherKindOfItems = Enum.GetValues(typeof(KindOfLogicalQueryNode)).Cast<KindOfLogicalQueryNode>().Where(p => !targetKindsOfItems.Contains(p));
+
+                        foreach(var otherKind in otherKindOfItems)
+                        {
+#if DEBUG
+                            Log($"otherKind = {otherKind}");
+#endif
+
+                            if (sourceDict.TryGetValue(otherKind, out nodesList))
+                            {
+                                result.AddRange(nodesList);
+                            }
+                        }
+
+                        return result;
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(replacingNotResultsStrategy), replacingNotResultsStrategy, null);
             }

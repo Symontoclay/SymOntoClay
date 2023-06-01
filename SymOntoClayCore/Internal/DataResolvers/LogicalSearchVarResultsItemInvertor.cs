@@ -18,7 +18,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
         }
 
-        public IList<T> Invert<T>(IEnumerable<IResultOfQueryToRelation> source, List<StorageUsingOptions> storagesList) where T : IResultOfQueryToRelation
+        public IList<T> Invert<T>(IEnumerable<IResultOfQueryToRelation> source, List<StorageUsingOptions> storagesList) 
+            where T : IResultOfQueryToRelation
         {
 #if DEBUG
             foreach (var tmpItem in source)
@@ -42,6 +43,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var replacingNotResultsStrategy = ReplacingNotResultsStrategy.DominantKindOfItems;//tmp
 
+            var newResultVarsDict = new Dictionary<StrongIdentifierValue, List<LogicalQueryNode>>();
+
             foreach (var initialResultVarsKvpItem in initialResultVarsDict)
             {
                 var varName = initialResultVarsKvpItem.Key;
@@ -58,14 +61,66 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 Log($"newLogicalQueryNodes = {newLogicalQueryNodes.WriteListToString()}");
 #endif
 
-                throw new NotImplementedException();
+                newResultVarsDict[varName] = newLogicalQueryNodes;
             }
 
-            throw new NotImplementedException();
+            return ConvertToResult<T>(newResultVarsDict);
         }
 
         private static readonly List<KindOfLogicalQueryNode> EmptyTargetKindsOfItems = new List<KindOfLogicalQueryNode>();
         private static LogicalQueryNodeEqualityComparer _logicalQueryNodeEqualityComparer = new LogicalQueryNodeEqualityComparer();
+
+        private IList<T> ConvertToResult<T>(Dictionary<StrongIdentifierValue, List<LogicalQueryNode>> source)
+            where T : IResultOfQueryToRelation
+        {
+            var keysList = source.Keys.ToList();
+
+            var result = new List<T>();
+
+            ProcessConvertToResult(source, 0, keysList, new List<(StrongIdentifierValue, LogicalQueryNode)>(), ref result);
+
+            return result;
+        }
+
+        private static void ProcessConvertToResult<T>(Dictionary<StrongIdentifierValue, List<LogicalQueryNode>> source, int n, List<StrongIdentifierValue> keysList, 
+            List<(StrongIdentifierValue, LogicalQueryNode)> currentValues, ref List<T> result)
+            where T : IResultOfQueryToRelation
+        {
+            if (n == keysList.Count - 1)
+            {
+                ProcessConvertToResultFinalNode(source, n, keysList, currentValues, ref result);
+            }
+            else
+            {
+                ProcessConvertToResultIntermediateNode(source, n, keysList, currentValues, ref result);
+            }
+        }
+
+        private static void ProcessConvertToResultIntermediateNode<T>(Dictionary<StrongIdentifierValue, List<LogicalQueryNode>> source, int n, List<StrongIdentifierValue> keysList,
+            List<(StrongIdentifierValue, LogicalQueryNode)> currentValues, ref List<T> result)
+            where T : IResultOfQueryToRelation
+        {
+            var key = keysList[n];
+
+            var list = source[key];
+
+            var nextN = n + 1;
+
+            foreach (var item in list)
+            {
+                var newCurrentValues = currentValues.ToList();
+                newCurrentValues.Add((key, item));
+
+                ProcessConvertToResult(source, nextN, keysList, newCurrentValues, ref result);
+            }
+        }
+
+        private static void ProcessConvertToResultFinalNode<T>(Dictionary<StrongIdentifierValue, List<LogicalQueryNode>> source, int n, List<StrongIdentifierValue> keysList,
+            List<(StrongIdentifierValue, LogicalQueryNode)> currentValues, ref List<T> result)
+            where T : IResultOfQueryToRelation
+        {
+            throw new NotImplementedException();
+        }
 
         private (List<KindOfLogicalQueryNode> TargetKindsOfItems, ReplacingNotResultsStrategy ReplacingNotResultsStrategy) CalculateTargetKindsOfItems(IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy)
         {

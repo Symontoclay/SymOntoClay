@@ -85,6 +85,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            //TstCreateListByVarsDict();
             //TstDetectDoninantItems();
             //TstSerializeValue();
             //TstWaitAsync();
@@ -162,6 +163,100 @@ namespace TestSandbox
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstCreateListByVarsDict()
+        {
+            _logger.Log("Begin");
+
+            var source = new Dictionary<string, List<string>>();
+
+            source["$x"] = new List<string>() { "#1", "#2", "#3" };
+            source["$y"] = new List<string>() { "cat", "dog", "tree" };
+            source["$z"] = new List<string>() { "town", "city", "village" };
+
+            _logger.Log($"source = {JsonConvert.SerializeObject(source, Formatting.Indented)}");
+
+            var keysList = source.Keys.ToList();
+
+            _logger.Log($"keysList = {JsonConvert.SerializeObject(keysList, Formatting.Indented)}");
+
+            var result = new List<List<(string, string)>>();
+
+            TstProcessCreateListByVarsDict(0, keysList, source, new List<(string, string)>(), ref result);
+
+            _logger.Log($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
+
+            _logger.Log("End");
+        }
+
+        private static void TstProcessCreateListByVarsDict(int n, List<string> keysList, Dictionary<string, List<string>> source, List<(string, string)> currentValues, ref List<List<(string, string)>> result)
+        {
+            _logger.Log($"n = {n}");
+            _logger.Log($"keysList.Count = {keysList.Count}");
+            _logger.Log($"currentValues = {JsonConvert.SerializeObject(currentValues, Formatting.Indented)}");
+
+            if (n == keysList.Count - 1)
+            {
+                TstProcessCreateListByVarsDictFinalNode(n, keysList, source, currentValues, ref result);
+            }
+            else
+            {
+                TstProcessCreateListByVarsDictIntermediateNode(n, keysList, source, currentValues, ref result);
+            }
+        }
+
+        private static void TstProcessCreateListByVarsDictIntermediateNode(int n, List<string> keysList, Dictionary<string, List<string>> source, List<(string, string)> currentValues, ref List<List<(string, string)>> result)
+        {
+            _logger.Log($"n = {n}");
+            _logger.Log($"keysList.Count = {keysList.Count}");
+            _logger.Log($"currentValues = {JsonConvert.SerializeObject(currentValues, Formatting.Indented)}");
+
+            var key = keysList[n];
+
+            _logger.Log($"key = {key}");
+
+            var list = source[key];
+
+            var nextN = n + 1;
+
+            foreach (var item in list)
+            {
+                _logger.Log($"item = {item}");
+
+                var newCurrentValues = currentValues.ToList();
+                newCurrentValues.Add((key, item));
+
+                TstProcessCreateListByVarsDict(nextN, keysList, source, newCurrentValues, ref result);
+            }
+        }
+
+        private static void TstProcessCreateListByVarsDictFinalNode(int n, List<string> keysList, Dictionary<string, List<string>> source, List<(string, string)> currentValues, ref List<List<(string, string)>> result)
+        {
+            _logger.Log($"n = {n}");
+            _logger.Log($"keysList.Count = {keysList.Count}");
+            _logger.Log($"currentValues = {JsonConvert.SerializeObject(currentValues, Formatting.Indented)}");
+
+            var key = keysList[n];
+
+            _logger.Log($"key = {key}");
+
+            var list = source[key];
+
+            foreach (var item in list)
+            {
+                _logger.Log($"item = {item}");
+
+                var resultItem = new List<(string, string)>();
+                result.Add(resultItem);
+
+                foreach(var currentValue in currentValues)
+                {
+                    resultItem.Add(currentValue);
+                }
+
+                resultItem.Add((key, item));
+            }
         }
 
         private static void TstDetectDoninantItems()

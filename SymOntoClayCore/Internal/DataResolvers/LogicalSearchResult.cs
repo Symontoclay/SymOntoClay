@@ -32,6 +32,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
     public class LogicalSearchResult : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public bool IsSuccess { get; set; }
+        public bool IsNegative { get; set; }
         public IList<LogicalSearchResultItem> Items { get; set; }
         public List<StrongIdentifierValue> UsedKeysList { get; set; } = new List<StrongIdentifierValue>();
 
@@ -69,6 +70,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
+            sb.AppendLine($"{spaces}{nameof(IsNegative)} = {IsNegative}");
             sb.PrintObjListProp(n, nameof(Items), Items);
             sb.PrintObjListProp(n, nameof(UsedKeysList), UsedKeysList);
 
@@ -94,6 +96,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
+            sb.AppendLine($"{spaces}{nameof(IsNegative)} = {IsNegative}");
             sb.PrintShortObjListProp(n, nameof(Items), Items);
             sb.PrintShortObjListProp(n, nameof(UsedKeysList), UsedKeysList);
 
@@ -119,6 +122,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(IsSuccess)} = {IsSuccess}");
+            sb.AppendLine($"{spaces}{nameof(IsNegative)} = {IsNegative}");
             sb.PrintBriefObjListProp(n, nameof(Items), Items);
             sb.PrintBriefObjListProp(n, nameof(UsedKeysList), UsedKeysList);
 

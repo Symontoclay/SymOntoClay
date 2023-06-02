@@ -215,8 +215,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     var resolvingNotResultsStrategy = options.ResolvingNotResultsStrategy;
 
 #if DEBUG
-                    resolvingNotResultsStrategy = ResolvingNotResultsStrategy.InResolver;
-                    Log($"resolvingNotResultsStrategy = {resolvingNotResultsStrategy}");
+                    //resolvingNotResultsStrategy = ResolvingNotResultsStrategy.InConsumer;//tmp
+                    //Log($"resolvingNotResultsStrategy = {resolvingNotResultsStrategy}");
 #endif
 
                     switch(resolvingNotResultsStrategy)
@@ -238,22 +238,42 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                         case ResolvingNotResultsStrategy.InResolver:
                             {
-                                var newItems = _logicalSearchVarResultsItemInvertor.Invert<LogicalSearchResultItem>(queryExecutingCard.ResultsOfQueryToRelationList.Cast<IResultOfQueryToRelation>(), storagesList);
+#if DEBUG
+                                //Log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+#endif
+                                var newItems = _logicalSearchVarResultsItemInvertor.Invert<LogicalSearchResultItem>(queryExecutingCard.ResultsOfQueryToRelationList.Cast<IResultOfQueryToRelation>(), storagesList, options.ReplacingNotResultsStrategy);
 
 #if DEBUG
-                                foreach (var tmpItem in newItems)
-                                {
-                                    Log("+++++++++++++++++++++++++++++++++++++++");
+                                //foreach (var tmpItem in newItems)
+                                //{
+                                //    Log("+++++++++++++++++++++++++++++++++++++++");
 
-                                    foreach (var varInfo in tmpItem.ResultOfVarOfQueryToRelationList)
-                                    {
-                                        Log($"varInfo = {varInfo}");
-                                    }
-                                }
+                                //    foreach (var varInfo in tmpItem.ResultOfVarOfQueryToRelationList)
+                                //    {
+                                //        Log($"varInfo = {varInfo.ToHumanizedString()}");
+                                //        //Log($"varInfo = {varInfo}");
+                                //    }
+                                //}
 #endif
 
-                                throw new NotImplementedException();
+                                result.IsSuccess = queryExecutingCard.IsSuccess;
+                                result.Items = newItems;
                             }
+                            break;
+
+                        case ResolvingNotResultsStrategy.InConsumer:
+                            result.IsSuccess = queryExecutingCard.IsSuccess;
+                            result.IsNegative = true;
+                            var resultItemsList = new List<LogicalSearchResultItem>();
+
+                            foreach (var resultOfQueryToRelation in queryExecutingCard.ResultsOfQueryToRelationList)
+                            {
+                                var resultItem = new LogicalSearchResultItem();
+                                resultItem.ResultOfVarOfQueryToRelationList = resultOfQueryToRelation.ResultOfVarOfQueryToRelationList;
+                                resultItemsList.Add(resultItem);
+                            }
+
+                            result.Items = resultItemsList;
                             break;
 
                         default:
@@ -2832,15 +2852,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             if (leftQueryExecutingCard.ResultsOfQueryToRelationList.Any())
             {
 #if DEBUG
-                foreach(var tmpItem in leftQueryExecutingCard.ResultsOfQueryToRelationList)
-                {
-                    Log("----------------");
+                //foreach (var tmpItem in leftQueryExecutingCard.ResultsOfQueryToRelationList)
+                //{
+                //    Log("----------------");
 
-                    foreach(var varInfo in tmpItem.ResultOfVarOfQueryToRelationList)
-                    {
-                        Log($"varInfo = {varInfo}");
-                    }
-                }
+                //    foreach (var varInfo in tmpItem.ResultOfVarOfQueryToRelationList)
+                //    {
+                //        Log($"varInfo = {varInfo.ToHumanizedString()}");
+                //        //Log($"varInfo = {varInfo}");
+                //    }
+                //}
 #endif
 
                 AppendResults(leftQueryExecutingCard, queryExecutingCard);

@@ -772,9 +772,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             lock (_lockObj)
             {
 #if DEBUG
-                Log($"exceptList = {exceptList.WriteListToString()}");
-                Log($"replacingNotResultsStrategy = {replacingNotResultsStrategy}");
-                Log($"targetKindsOfItems = {targetKindsOfItems.WritePODListToString()}");
+                //Log($"exceptList = {exceptList.WriteListToString()}");
+                //Log($"replacingNotResultsStrategy = {replacingNotResultsStrategy}");
+                //Log($"targetKindsOfItems = {targetKindsOfItems.WritePODListToString()}");
 #endif
 
                 var result = new List<LogicalQueryNode>();

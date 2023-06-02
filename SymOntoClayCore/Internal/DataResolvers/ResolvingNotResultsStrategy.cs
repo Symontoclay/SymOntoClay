@@ -9,6 +9,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         NotSupport,
         Ignore,
         InResolver,
-        InConsumer        
+        InConsumer
     }
 }

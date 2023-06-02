@@ -107,6 +107,8 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             var query = target.AsRuleInstance;
 
             var searchOptions = new LogicalSearchOptions();
+            searchOptions.ResolvingNotResultsStrategy = ResolvingNotResultsStrategy.InResolver;
+            searchOptions.ReplacingNotResultsStrategy = ReplacingNotResultsStrategy.AllKindOfItems;
             searchOptions.QueryExpression = query;
             searchOptions.LocalCodeExecutionContext = localCodeExecutionContext;
 

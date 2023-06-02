@@ -37,6 +37,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public bool UseInheritance { get; set; } = true;
         public bool IgnoreIfNullValueInImperativeVariables { get; set; }
         public ResolvingNotResultsStrategy ResolvingNotResultsStrategy { get; set; } = ResolvingNotResultsStrategy.NotSupport;
+        public ReplacingNotResultsStrategy ReplacingNotResultsStrategy { get; set; } = ReplacingNotResultsStrategy.AllKindOfItems;
         public RuleInstance QueryExpression { get; set; }
         public IStorage TargetStorage { get; set; }
         public ILocalCodeExecutionContext LocalCodeExecutionContext { get; set; }
@@ -52,6 +53,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.AppendLine($"{spaces}{nameof(UseInheritance)} = {UseInheritance}");
             sb.AppendLine($"{spaces}{nameof(IgnoreIfNullValueInImperativeVariables)} = {IgnoreIfNullValueInImperativeVariables}");
             sb.AppendLine($"{spaces}{nameof(ResolvingNotResultsStrategy)} = {ResolvingNotResultsStrategy}");
+            sb.AppendLine($"{spaces}{nameof(ReplacingNotResultsStrategy)} = {ReplacingNotResultsStrategy}");
 
             sb.PrintObjProp(n, nameof(QueryExpression), QueryExpression);
             sb.PrintObjProp(n, nameof(TargetStorage), TargetStorage);
@@ -72,6 +74,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.AppendLine($"{spaces}{nameof(UseInheritance)} = {UseInheritance}");
             sb.AppendLine($"{spaces}{nameof(IgnoreIfNullValueInImperativeVariables)} = {IgnoreIfNullValueInImperativeVariables}");
             sb.AppendLine($"{spaces}{nameof(ResolvingNotResultsStrategy)} = {ResolvingNotResultsStrategy}");
+            sb.AppendLine($"{spaces}{nameof(ReplacingNotResultsStrategy)} = {ReplacingNotResultsStrategy}");
 
             sb.PrintShortObjProp(n, nameof(QueryExpression), QueryExpression);
             sb.PrintShortObjProp(n, nameof(TargetStorage), TargetStorage);
@@ -92,6 +95,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.AppendLine($"{spaces}{nameof(UseInheritance)} = {UseInheritance}");
             sb.AppendLine($"{spaces}{nameof(IgnoreIfNullValueInImperativeVariables)} = {IgnoreIfNullValueInImperativeVariables}");
             sb.AppendLine($"{spaces}{nameof(ResolvingNotResultsStrategy)} = {ResolvingNotResultsStrategy}");
+            sb.AppendLine($"{spaces}{nameof(ReplacingNotResultsStrategy)} = {ReplacingNotResultsStrategy}");
 
             sb.PrintBriefObjProp(n, nameof(QueryExpression), QueryExpression);
             sb.PrintBriefObjProp(n, nameof(TargetStorage), TargetStorage);

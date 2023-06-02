@@ -298,9 +298,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         public IReadOnlyList<LogicalQueryNode> GetLogicalQueryNodes(IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy, IList<KindOfLogicalQueryNode> targetKindsOfItems)
         {
 #if DEBUG
-            Log($"exceptList = {exceptList.WriteListToString()}");
-            Log($"replacingNotResultsStrategy = {replacingNotResultsStrategy}");
-            Log($"targetKindsOfItems = {targetKindsOfItems.WritePODListToString()}");
+            //Log($"exceptList = {exceptList.WriteListToString()}");
+            //Log($"replacingNotResultsStrategy = {replacingNotResultsStrategy}");
+            //Log($"targetKindsOfItems = {targetKindsOfItems.WritePODListToString()}");
 #endif
 
             switch(replacingNotResultsStrategy)
@@ -315,7 +315,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                         foreach(var targetKind in targetKindsOfItems)
                         {
 #if DEBUG
-                            Log($"targetKind = {targetKind}");
+                            //Log($"targetKind = {targetKind}");
 #endif
 
                             if(_leafsDict.ContainsKey(targetKind))

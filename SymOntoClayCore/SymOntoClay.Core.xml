@@ -6034,6 +6034,12 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ResultOfVarOfQueryToRelation.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ResultOfVarOfQueryToRelation.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ResultOfVarOfQueryToRelation.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.CompiledFunctionBody.Clone">
             <summary>
 			Clones the instance and returns cloned instance.

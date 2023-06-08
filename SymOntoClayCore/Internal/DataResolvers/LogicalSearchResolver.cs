@@ -2013,15 +2013,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return;
             }
 
-            if (leftQueryExecutingCard.IsNegative)
+            var leftQueryExecutingCardIsNegative = leftQueryExecutingCard.IsNegative;
+            var rightQueryExecutingCardIsNegative = rightQueryExecutingCard.IsNegative;
+
+            if(leftQueryExecutingCardIsNegative && rightQueryExecutingCardIsNegative)
             {
                 throw new NotImplementedException();
             }
 
-            if (rightQueryExecutingCard.IsNegative)
-            {
-                throw new NotImplementedException();
-            }
+            //if (leftQueryExecutingCardIsNegative)
+            //{
+            //    throw new NotImplementedException();
+            //}
+
+            //if (rightQueryExecutingCardIsNegative)
+            //{
+            //    throw new NotImplementedException();
+            //}
 
             queryExecutingCard.IsSuccess = true;
 
@@ -2126,18 +2134,74 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             var leftVal = leftVarsDict[varName];
                             var rightVal = rightVarsDict[varName];
 
+#if DEBUG
+                            //leftQueryExecutingCardIsNegative && rightQueryExecutingCardIsNegative
+                            //Log($"leftQueryExecutingCard.IsNegative = {leftQueryExecutingCard.IsNegative}");
+                            //Log($"leftVal = {leftVal.ToHumanizedString()}");
+                            //Log($"rightQueryExecutingCard.IsNegative = {rightQueryExecutingCard.IsNegative}");
+                            //Log($"rightVal = {rightVal.ToHumanizedString()}");
+#endif
+
                             var resultOfComparison = EqualityCompare(leftVal, rightVal, null, null, null, options, null, dataSource);
+
+#if DEBUG
+                            //Log($"resultOfComparison = {resultOfComparison}");
+#endif
+
+#if DEBUG
+                            if (leftQueryExecutingCardIsNegative || rightQueryExecutingCardIsNegative)
+                            {
+                                resultOfComparison = !resultOfComparison;
+                            }
+#endif
+
+#if DEBUG
+                            //Log($"resultOfComparison (after) = {resultOfComparison}");
+#endif
+
+#if DEBUG
+                            //if (leftQueryExecutingCard.IsNegative)
+                            //{
+                            //    throw new NotImplementedException();
+                            //}
+
+                            //if (rightQueryExecutingCard.IsNegative)
+                            //{
+                            //    throw new NotImplementedException();
+                            //}
+#endif
 
                             if (resultOfComparison)
                             {
                                 if(leftVal.Kind == KindOfLogicalQueryNode.Relation && rightVal.Kind != KindOfLogicalQueryNode.Relation)
                                 {
-                                    varValuesList.Add((varName, rightVal));
+                                    if(leftQueryExecutingCardIsNegative || rightQueryExecutingCardIsNegative)
+                                    {
+                                        throw new NotImplementedException();
+                                    }
+                                    else
+                                    {
+                                        varValuesList.Add((varName, rightVal));
+                                    }
                                 }
                                 else
                                 {
-                                    varValuesList.Add((varName, leftVal));
-                                }                                
+                                    if(leftQueryExecutingCardIsNegative || rightQueryExecutingCardIsNegative)
+                                    {
+                                        if(leftQueryExecutingCardIsNegative)
+                                        {
+                                            varValuesList.Add((varName, rightVal));
+                                        }
+                                        else
+                                        {
+                                            varValuesList.Add((varName, leftVal));
+                                        }
+                                    }
+                                    else
+                                    {
+                                        varValuesList.Add((varName, leftVal));
+                                    }
+                                }
                             }
                             else
                             {

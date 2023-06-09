@@ -2018,7 +2018,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if(leftQueryExecutingCardIsNegative && rightQueryExecutingCardIsNegative)
             {
-                throw new NotImplementedException();
+                MergeExecutingCardForOrOperatorLogicalQueryNode(leftQueryExecutingCard, rightQueryExecutingCard, queryExecutingCard, currentExplainNode, dataSource, options);
+                return;
             }
 
             //if (leftQueryExecutingCardIsNegative)
@@ -2320,6 +2321,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 FillUpResultToExplainNode(rightQueryExecutingCard, rightResultExplainNode);
             }
 
+            MergeExecutingCardForOrOperatorLogicalQueryNode(leftQueryExecutingCard, rightQueryExecutingCard, queryExecutingCard, currentExplainNode, dataSource, options);
+        }
+
+        private void MergeExecutingCardForOrOperatorLogicalQueryNode(QueryExecutingCardForIndexedPersistLogicalData leftQueryExecutingCard, QueryExecutingCardForIndexedPersistLogicalData rightQueryExecutingCard, 
+            QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, LogicalSearchExplainNode currentExplainNode, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        {
             if (!leftQueryExecutingCard.IsSuccess && !rightQueryExecutingCard.IsSuccess)
             {
                 if (currentExplainNode != null)
@@ -2330,12 +2337,35 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return;
             }
 
-            if (leftQueryExecutingCard.IsNegative)
+            var leftQueryExecutingCardIsNegative = leftQueryExecutingCard.IsNegative;
+            var rightQueryExecutingCardIsNegative = rightQueryExecutingCard.IsNegative;
+
+#if DEBUG
+            Log($"leftQueryExecutingCardIsNegative = {leftQueryExecutingCardIsNegative}");
+            Log($"rightQueryExecutingCardIsNegative = {rightQueryExecutingCardIsNegative}");
+#endif
+
+            var setIsNegativeToResult = false;
+
+            if(leftQueryExecutingCardIsNegative && leftQueryExecutingCardIsNegative)
+            {
+                leftQueryExecutingCardIsNegative = false;
+                rightQueryExecutingCardIsNegative = false;
+                setIsNegativeToResult = true;
+            }
+
+#if DEBUG
+            Log($"setIsNegativeToResult = {setIsNegativeToResult}");
+            Log($"leftQueryExecutingCardIsNegative (after) = {leftQueryExecutingCardIsNegative}");
+            Log($"rightQueryExecutingCardIsNegative (after) = {rightQueryExecutingCardIsNegative}");
+#endif
+
+            if (leftQueryExecutingCardIsNegative)
             {
                 throw new NotImplementedException();
             }
 
-            if (rightQueryExecutingCard.IsNegative)
+            if (rightQueryExecutingCardIsNegative)
             {
                 throw new NotImplementedException();
             }
@@ -2386,10 +2416,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     resultsOfQueryToRelationList.Add(resultOfQueryToRelation);
                 }
 
+                if(setIsNegativeToResult)
+                {
+                    queryExecutingCard.IsNegative = true;
+                }
+
                 return;
             }
 
-            if(!leftQueryExecutingCard.IsSuccess && rightQueryExecutingCard.IsSuccess)
+            if (!leftQueryExecutingCard.IsSuccess && rightQueryExecutingCard.IsSuccess)
             {
                 if (currentExplainNode != null)
                 {
@@ -2405,6 +2440,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     resultsOfQueryToRelationList.Add(resultOfQueryToRelation);
                 }
 
+                if (setIsNegativeToResult)
+                {
+                    queryExecutingCard.IsNegative = true;
+                }
+
                 return;
             }
 
@@ -2414,7 +2454,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             queryExecutingCard.UsedKeysList = queryExecutingCard.UsedKeysList.Distinct().ToList();
 
-            if(leftQueryExecutingCardResultsOfQueryToRelationList.Any() && !rightQueryExecutingCardResultsOfQueryToRelationList.Any())
+            if (leftQueryExecutingCardResultsOfQueryToRelationList.Any() && !rightQueryExecutingCardResultsOfQueryToRelationList.Any())
             {
                 if (currentExplainNode != null)
                 {
@@ -2426,10 +2466,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     resultsOfQueryToRelationList.Add(resultOfQueryToRelation);
                 }
 
+                if (setIsNegativeToResult)
+                {
+                    queryExecutingCard.IsNegative = true;
+                }
+
                 return;
             }
 
-            if(!leftQueryExecutingCardResultsOfQueryToRelationList.Any() && rightQueryExecutingCardResultsOfQueryToRelationList.Any())
+            if (!leftQueryExecutingCardResultsOfQueryToRelationList.Any() && rightQueryExecutingCardResultsOfQueryToRelationList.Any())
             {
                 if (currentExplainNode != null)
                 {
@@ -2439,6 +2484,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 foreach (var resultOfQueryToRelation in rightQueryExecutingCardResultsOfQueryToRelationList)
                 {
                     resultsOfQueryToRelationList.Add(resultOfQueryToRelation);
+                }
+
+                if (setIsNegativeToResult)
+                {
+                    queryExecutingCard.IsNegative = true;
                 }
 
                 return;
@@ -2474,7 +2524,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                             var resultOfComparison = EqualityCompare(leftVal, rightVal, null, null, null, options, null, dataSource);
 
-                            if(resultOfComparison)
+                            if (resultOfComparison)
                             {
                                 varValuesList.Add((varName, leftVal));
                             }
@@ -2486,7 +2536,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         }
                         else
                         {
-                            if(leftVarsDictContainsKey)
+                            if (leftVarsDictContainsKey)
                             {
                                 varValuesList.Add((varName, leftVarsDict[varName]));
                             }
@@ -2501,7 +2551,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                     var varNamesListEnumerator = varNamesList.GetEnumerator();
 
-                    if(varNamesListEnumerator.MoveNext())
+                    if (varNamesListEnumerator.MoveNext())
                     {
                         var resultVarValuesList = new List<(StrongIdentifierValue, LogicalQueryNode)>();
 
@@ -2514,6 +2564,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
             }
 
+            if (setIsNegativeToResult)
+            {
+                queryExecutingCard.IsNegative = true;
+            }
         }
 
         private void FillExecutingCardForIsOperatorLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)

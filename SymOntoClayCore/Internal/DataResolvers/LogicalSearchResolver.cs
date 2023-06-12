@@ -2341,8 +2341,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var rightQueryExecutingCardIsNegative = rightQueryExecutingCard.IsNegative;
 
 #if DEBUG
-            Log($"leftQueryExecutingCardIsNegative = {leftQueryExecutingCardIsNegative}");
-            Log($"rightQueryExecutingCardIsNegative = {rightQueryExecutingCardIsNegative}");
+            //Log($"leftQueryExecutingCardIsNegative = {leftQueryExecutingCardIsNegative}");
+            //Log($"rightQueryExecutingCardIsNegative = {rightQueryExecutingCardIsNegative}");
 #endif
 
             var setIsNegativeToResult = false;
@@ -2355,9 +2355,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            Log($"setIsNegativeToResult = {setIsNegativeToResult}");
-            Log($"leftQueryExecutingCardIsNegative (after) = {leftQueryExecutingCardIsNegative}");
-            Log($"rightQueryExecutingCardIsNegative (after) = {rightQueryExecutingCardIsNegative}");
+            //Log($"setIsNegativeToResult = {setIsNegativeToResult}");
+            //Log($"leftQueryExecutingCardIsNegative (after) = {leftQueryExecutingCardIsNegative}");
+            //Log($"rightQueryExecutingCardIsNegative (after) = {rightQueryExecutingCardIsNegative}");
 #endif
 
             if (leftQueryExecutingCardIsNegative)

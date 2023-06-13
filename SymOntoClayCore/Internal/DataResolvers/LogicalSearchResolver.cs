@@ -169,6 +169,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 optionsOfFillExecutingCard.LocalCodeExecutionContext = options.LocalCodeExecutionContext;
                 optionsOfFillExecutingCard.MainStorageContext = _context;
                 optionsOfFillExecutingCard.LogicalSearchStorageContext = logicalSearchStorageContext;
+                optionsOfFillExecutingCard.ReplacingNotResultsStrategy = options.ReplacingNotResultsStrategy;
 
                 LogicalSearchExplainNode resultExplainNode = null;
 
@@ -2360,16 +2361,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"rightQueryExecutingCardIsNegative (after) = {rightQueryExecutingCardIsNegative}");
 #endif
 
-            if (leftQueryExecutingCardIsNegative)
-            {
-                throw new NotImplementedException();
-            }
-
-            if (rightQueryExecutingCardIsNegative)
-            {
-                throw new NotImplementedException();
-            }
-
             if (leftQueryExecutingCard.IsPostFiltersListOnly && rightQueryExecutingCard.IsPostFiltersListOnly)
             {
                 throw new NotImplementedException();
@@ -2402,6 +2393,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (leftQueryExecutingCard.IsSuccess && !rightQueryExecutingCard.IsSuccess)
             {
+                if (leftQueryExecutingCardIsNegative)
+                {
+                    leftQueryExecutingCardIsNegative = false;
+                    leftQueryExecutingCardResultsOfQueryToRelationList = _logicalSearchVarResultsItemInvertor.Invert<ResultOfQueryToRelation>(leftQueryExecutingCardResultsOfQueryToRelationList.Cast<IResultOfQueryToRelation>(), dataSource.StoragesList, options.ReplacingNotResultsStrategy).ToList();
+                }
+
                 if (currentExplainNode != null)
                 {
                     currentExplainNode.AdditionalInformation.Add("leftQueryExecutingCard.IsSuccess && !rightQueryExecutingCard.IsSuccess");
@@ -2426,6 +2423,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (!leftQueryExecutingCard.IsSuccess && rightQueryExecutingCard.IsSuccess)
             {
+                if (rightQueryExecutingCardIsNegative)
+                {
+                    rightQueryExecutingCardIsNegative = false;
+                    rightQueryExecutingCardResultsOfQueryToRelationList = _logicalSearchVarResultsItemInvertor.Invert<ResultOfQueryToRelation>(rightQueryExecutingCardResultsOfQueryToRelationList.Cast<IResultOfQueryToRelation>(), dataSource.StoragesList, options.ReplacingNotResultsStrategy).ToList();
+                }
+
                 if (currentExplainNode != null)
                 {
                     currentExplainNode.AdditionalInformation.Add("!leftQueryExecutingCard.IsSuccess && rightQueryExecutingCard.IsSuccess");
@@ -2456,6 +2459,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (leftQueryExecutingCardResultsOfQueryToRelationList.Any() && !rightQueryExecutingCardResultsOfQueryToRelationList.Any())
             {
+                if (leftQueryExecutingCardIsNegative)
+                {
+                    leftQueryExecutingCardIsNegative = false;
+                    leftQueryExecutingCardResultsOfQueryToRelationList = _logicalSearchVarResultsItemInvertor.Invert<ResultOfQueryToRelation>(leftQueryExecutingCardResultsOfQueryToRelationList.Cast<IResultOfQueryToRelation>(), dataSource.StoragesList, options.ReplacingNotResultsStrategy).ToList();
+                }
+
                 if (currentExplainNode != null)
                 {
                     currentExplainNode.AdditionalInformation.Add("leftQueryExecutingCardResultsOfQueryToRelationList.Any() && !rightQueryExecutingCardResultsOfQueryToRelationList.Any()");
@@ -2476,6 +2485,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (!leftQueryExecutingCardResultsOfQueryToRelationList.Any() && rightQueryExecutingCardResultsOfQueryToRelationList.Any())
             {
+                if (rightQueryExecutingCardIsNegative)
+                {
+                    rightQueryExecutingCardIsNegative = false;
+                    rightQueryExecutingCardResultsOfQueryToRelationList = _logicalSearchVarResultsItemInvertor.Invert<ResultOfQueryToRelation>(rightQueryExecutingCardResultsOfQueryToRelationList.Cast<IResultOfQueryToRelation>(), dataSource.StoragesList, options.ReplacingNotResultsStrategy).ToList();
+                }
+
                 if (currentExplainNode != null)
                 {
                     currentExplainNode.AdditionalInformation.Add("!leftQueryExecutingCardResultsOfQueryToRelationList.Any() && rightQueryExecutingCardResultsOfQueryToRelationList.Any()");
@@ -2492,6 +2507,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
                 return;
+            }
+
+            if (leftQueryExecutingCardIsNegative)
+            {
+                leftQueryExecutingCardIsNegative = false;
+                leftQueryExecutingCardResultsOfQueryToRelationList = _logicalSearchVarResultsItemInvertor.Invert<ResultOfQueryToRelation>(leftQueryExecutingCardResultsOfQueryToRelationList.Cast<IResultOfQueryToRelation>(), dataSource.StoragesList, options.ReplacingNotResultsStrategy).ToList();
+            }
+
+            if (rightQueryExecutingCardIsNegative)
+            {
+                rightQueryExecutingCardIsNegative = false;
+                rightQueryExecutingCardResultsOfQueryToRelationList = _logicalSearchVarResultsItemInvertor.Invert<ResultOfQueryToRelation>(rightQueryExecutingCardResultsOfQueryToRelationList.Cast<IResultOfQueryToRelation>(), dataSource.StoragesList, options.ReplacingNotResultsStrategy).ToList();
             }
 
             foreach (var leftResultOfQueryToRelation in leftQueryExecutingCardResultsOfQueryToRelationList)

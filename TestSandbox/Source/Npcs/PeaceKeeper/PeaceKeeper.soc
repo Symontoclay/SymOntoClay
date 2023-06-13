@@ -7,6 +7,6 @@
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
-	    select {: !male($x) & !son($x, $y) :} >> @>log;
+	    select {: male($x) | !son($x, $y) :} >> @>log;
 	}
 }

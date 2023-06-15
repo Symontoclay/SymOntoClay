@@ -3578,5 +3578,41 @@ app PeaceKeeper
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case37()
+        {
+            var text = @"app PeaceKeeper
+{
+	{: female(#Mary) :}
+	{: male(#Tom) :}
+	{: male(#Mark) :}
+	{: male(null) :}
+	{: parent(#Piter, #Tom) :}
+	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
+
+	on Enter => {
+	    select {: male($x) :} >> @>log;
+	}
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(message.Contains("$x = #mark"), true);
+                            Assert.AreEqual(message.Contains("$x = NULL"), true);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
     }
 }

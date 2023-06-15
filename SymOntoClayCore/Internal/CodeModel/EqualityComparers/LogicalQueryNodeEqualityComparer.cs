@@ -58,7 +58,16 @@ namespace SymOntoClay.Core.Internal.CodeModel.EqualityComparers
                     return kind.GetHashCode() ^ obj.Name.GetHashCode();
 
                 case KindOfLogicalQueryNode.Value:
-                    return kind.GetHashCode() ^ obj.Value.GetSystemValue().GetHashCode();
+                    {
+                        var systemValue = obj.Value.GetSystemValue();
+
+                        if (systemValue == null)
+                        {
+                            return kind.GetHashCode();
+                        }
+
+                        return kind.GetHashCode() ^ systemValue.GetHashCode();
+                    }
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);

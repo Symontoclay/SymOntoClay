@@ -63,7 +63,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override bool IsSystemNull => !SystemValue.HasValue;
 
         /// <inheritdoc/>
-        protected override bool NullValueEquals()
+        public override bool NullValueEquals()
         {
             return !SystemValue.HasValue;
         }

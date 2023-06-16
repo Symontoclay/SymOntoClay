@@ -53,7 +53,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override bool IsSystemNull => true;
 
         /// <inheritdoc/>
-        protected override bool NullValueEquals()
+        public override bool NullValueEquals()
         {
             return true;
         }

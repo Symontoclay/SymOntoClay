@@ -161,7 +161,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return false;
         }
 
-        protected virtual bool NullValueEquals()
+        public virtual bool NullValueEquals()
         {
 #if DEBUG
             //_gbcLogger.Info($"this = {ToString()}");

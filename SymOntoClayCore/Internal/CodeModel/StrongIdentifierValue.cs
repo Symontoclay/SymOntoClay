@@ -47,6 +47,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public string NormalizedNameValue { get; set; } = string.Empty;
 
+        private bool _isNull;
+
         /// <inheritdoc/>
         public override bool IsStrongIdentifierValue => true;
 
@@ -155,9 +157,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        protected override bool NullValueEquals()
+        public override bool NullValueEquals()
         {
-            throw new NotImplementedException();
+            return _isNull;
         }
 
         /// <inheritdoc/>
@@ -175,6 +177,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
+            if(NormalizedNameValue == "null")
+            {
+                _isNull = true;
+                return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.NullWeight;
+            }
+
             return base.CalculateLongHashCode(options) ^ (ulong)NormalizedNameValue.GetHashCode();
         }
 
@@ -280,7 +288,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return NameValue;
         }
 
-        private static bool IsNullOrEmpty(StrongIdentifierValue value)
+        private static bool IsSystemNullOrEmpty(StrongIdentifierValue value)
         {
             if(value == null)
             {

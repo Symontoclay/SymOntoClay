@@ -3755,6 +3755,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private bool EqualityCompare(LogicalQueryNode expressionNode1, LogicalQueryNode expressionNode2, List<StrongIdentifierValue> additionalKeys_1, List<StrongIdentifierValue> additionalKeys_2, ReasonOfFuzzyLogicResolving reason, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource)
         {
+            if(expressionNode1.IsNull && expressionNode2.IsNull)
+            {
+                return true;
+            }
+
             if (expressionNode1.Kind == KindOfLogicalQueryNode.LogicalVar && (expressionNode2.Kind == KindOfLogicalQueryNode.Concept || expressionNode2.Kind == KindOfLogicalQueryNode.Entity))
             {
                 var resultOfQueryToRelation = new ResultOfQueryToRelation();

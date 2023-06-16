@@ -39,11 +39,7 @@ using System.Xml.Linq;
 namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class LogicalQueryNode: AnnotatedItem, IAstNode, IMemberAccess, IReadOnlyMemberAccess, ILogicalSearchItem, ILogicalQueryNodeParent, IEquatable<LogicalQueryNode>
-    {
-#if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-        
+    {        
         public KindOfLogicalQueryNode Kind { get; set; } = KindOfLogicalQueryNode.Unknown;
 
         public bool IsExpression => Kind == KindOfLogicalQueryNode.Relation || Kind == KindOfLogicalQueryNode.Group || Kind == KindOfLogicalQueryNode.BinaryOperator || Kind == KindOfLogicalQueryNode.UnaryOperator;
@@ -59,6 +55,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public RuleInstance Fact { get; set; }
 
         public bool IsQuestion { get; set; }
+
+        public bool IsNull { get; set; }
 
         public int CountParams { get; set; }
         public IList<QueryExecutingCardAboutVar> VarsInfoList { get; set; }
@@ -147,6 +145,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public void PrepareDirty(ContextOfConvertingExpressionNode contextOfConvertingExpressionNode, RuleInstance ruleInstance, BaseRulePart rulePart)
         {
+            this.CheckDirty();
+
             RuleInstance = ruleInstance;
             RulePart = rulePart;
 
@@ -185,6 +185,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     break;
 
                 case KindOfLogicalQueryNode.Concept:
+                    Name.CheckDirty();
+                    break;
+
                 case KindOfLogicalQueryNode.Entity:
                 case KindOfLogicalQueryNode.QuestionVar:
                     Name.CheckDirty();
@@ -258,6 +261,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                             knownInfo.Position = i;
                             knownInfoList.Add(knownInfo);
 
+                            param.CheckDirty();
                         }
                         break;
 
@@ -681,13 +685,34 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     }
 
                 case KindOfLogicalQueryNode.Concept:
+                    {
+                        var nameLongHashCode = Name.GetLongHashCode(options);
+                        IsNull = Name.NullValueEquals();
+
+                        if (IsNull)
+                        {
+                            return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.NullWeight;
+                        }
+                        return base.CalculateLongHashCode(options) ^ nameLongHashCode;
+                    }
+
                 case KindOfLogicalQueryNode.Entity:
                 case KindOfLogicalQueryNode.QuestionVar:
                 case KindOfLogicalQueryNode.LogicalVar:
                     return base.CalculateLongHashCode(options) ^ Name.GetLongHashCode(options);
 
                 case KindOfLogicalQueryNode.Value:
-                    return base.CalculateLongHashCode(options) ^ Value.GetLongHashCode(options);
+                    {
+                        var valueLongHashCode = Value.GetLongHashCode(options);
+
+                        IsNull = Value.NullValueEquals();
+
+                        if (IsNull)
+                        {
+                            return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.NullWeight;
+                        }
+                        return base.CalculateLongHashCode(options) ^ valueLongHashCode;
+                    }
 
                 case KindOfLogicalQueryNode.FuzzyLogicNonNumericSequence:
                     return base.CalculateLongHashCode(options) ^ FuzzyLogicNonNumericSequenceValue.GetLongHashCode(options);
@@ -768,6 +793,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.FuzzyLogicNonNumericSequenceValue = FuzzyLogicNonNumericSequenceValue?.Clone(context);
             result.Fact = Fact?.Clone(context);
             result.IsQuestion = IsQuestion;
+            result.IsNull = IsNull;
             result.TypeOfAccess = TypeOfAccess;
             result.Holder = Holder;
 
@@ -1008,7 +1034,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjProp(n, nameof(Fact), Fact);
 
             sb.AppendLine($"{spaces}{nameof(IsQuestion)} = {IsQuestion}");
-            sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
+            sb.AppendLine($"{spaces}{nameof(IsNull)} = {IsNull}");
+            sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");            
 
             sb.PrintObjListProp(n, nameof(VarsInfoList), VarsInfoList);
             sb.PrintObjListProp(n, nameof(KnownInfoList), KnownInfoList);
@@ -1043,6 +1070,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjProp(n, nameof(Fact), Fact);
 
             sb.AppendLine($"{spaces}{nameof(IsQuestion)} = {IsQuestion}");
+            sb.AppendLine($"{spaces}{nameof(IsNull)} = {IsNull}");
             sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
 
             sb.PrintShortObjListProp(n, nameof(VarsInfoList), VarsInfoList);
@@ -1078,6 +1106,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintBriefObjProp(n, nameof(Fact), Fact);
 
             sb.AppendLine($"{spaces}{nameof(IsQuestion)} = {IsQuestion}");
+            sb.AppendLine($"{spaces}{nameof(IsNull)} = {IsNull}");
             sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
 
             sb.PrintBriefObjListProp(n, nameof(VarsInfoList), VarsInfoList);

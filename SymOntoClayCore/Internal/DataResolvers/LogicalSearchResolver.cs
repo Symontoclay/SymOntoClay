@@ -2619,6 +2619,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var leftExpr = processedExpr.Left;
             var rightExpr = processedExpr.Right;
 
+            if(leftExpr.IsNull & rightExpr.IsNull)
+            {
+                queryExecutingCard.IsSuccess = true;
+                queryExecutingCard.UsedKeysList.Add(leftExpr.Name);
+                queryExecutingCard.UsedKeysList.Add(rightExpr.Name);
+                return;
+            }
+
+            if((leftExpr.IsNull & !rightExpr.IsNull) || (!leftExpr.IsNull & rightExpr.IsNull))
+            {
+                return;
+            }
+
             if ((leftExpr.Kind == KindOfLogicalQueryNode.Concept || leftExpr.Kind == KindOfLogicalQueryNode.Entity) && (rightExpr.Kind == KindOfLogicalQueryNode.Concept || rightExpr.Kind == KindOfLogicalQueryNode.Entity))
             {
                 var additionalKeys_1 = _inheritanceResolver.GetSuperClassesKeysList(leftExpr.Name, options.LocalCodeExecutionContext);
@@ -2680,6 +2693,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var leftExpr = processedExpr.Left;
             var rightExpr = processedExpr.Right;
+
+            if(leftExpr.IsNull && rightExpr.IsNull)
+            {
+                return;
+            }
+
+            if((leftExpr.IsNull && !rightExpr.IsNull) || (!leftExpr.IsNull && rightExpr.IsNull))
+            {
+                queryExecutingCard.IsSuccess = true;
+                queryExecutingCard.UsedKeysList.Add(leftExpr.Name);
+                queryExecutingCard.UsedKeysList.Add(rightExpr.Name);
+                return;
+            }
 
             if ((leftExpr.Kind == KindOfLogicalQueryNode.Concept || leftExpr.Kind == KindOfLogicalQueryNode.Entity) && (rightExpr.Kind == KindOfLogicalQueryNode.Concept || rightExpr.Kind == KindOfLogicalQueryNode.Entity))
             {

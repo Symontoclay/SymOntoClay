@@ -129,6 +129,7 @@ namespace SymOntoClay.Core.Internal.Visitors
 
                 case KindOfLogicalQueryNode.QuestionVar:
                 case KindOfLogicalQueryNode.LogicalVar:
+                case KindOfLogicalQueryNode.Var:
                 case KindOfLogicalQueryNode.StubParam:
                 case KindOfLogicalQueryNode.EntityCondition:
                 case KindOfLogicalQueryNode.EntityRef:

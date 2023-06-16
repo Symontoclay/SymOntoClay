@@ -8,6 +8,8 @@
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
-	    select {: male($x) & $x is not null :} >> @>log;
+	    @_target = 1;
+
+	    select {: male($x) & @_target is not NULL :} >> @>log;
 	}
 }

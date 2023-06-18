@@ -114,9 +114,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => _builtInSuperTypes;
 
         /// <inheritdoc/>
+        public override bool NullValueEquals()
+        {
+            return false;
+        }
+
+        /// <inheritdoc/>
         public override object GetSystemValue()
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         /// <inheritdoc/>

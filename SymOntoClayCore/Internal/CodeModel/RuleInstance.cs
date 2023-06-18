@@ -41,10 +41,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class RuleInstance: CodeItem, IStorage, ILogicalStorage//, IEquatable<RuleInstance>
     {
-#if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.RuleOrFact;
 
@@ -82,6 +78,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public void Accept(ILogicalVisitor logicalVisitor)
         {
             logicalVisitor.VisitRuleInstance(this);
+        }
+
+        /// <inheritdoc/>
+        public override bool NullValueEquals()
+        {
+            return false;
         }
 
         // <inheritdoc/>

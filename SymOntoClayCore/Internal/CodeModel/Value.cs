@@ -164,10 +164,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool NullValueEquals()
         {
 #if DEBUG
-            //_gbcLogger.Info($"this = {ToString()}");
+            //LoggerNLogImpementation.Instance.Log($"this = {ToString()}");
 #endif
 
-            throw new NotImplementedException();
+            return false;
         }
 
         protected virtual bool ConcreteValueEquals(Value other)

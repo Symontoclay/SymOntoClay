@@ -308,6 +308,11 @@ namespace SymOntoClay.Core.Internal.Converters
             {
                 var relationInfo = _relationsResolver.GetRelation(relation.Name, relation.ParamsList.Count, localCodeExecutionContext);
 
+                if(relationInfo == null)
+                {
+                    continue;
+                }
+
                 var isAct = relationInfo.InheritanceItems.Any(p => p.SuperName == _actName);
 
                 if(isAct)

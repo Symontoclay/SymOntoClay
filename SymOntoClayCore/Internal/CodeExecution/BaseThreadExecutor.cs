@@ -889,8 +889,29 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var kindOfCurrentValue = currentValue.KindOfValue;
 
+#if DEBUG
+            //Log($"kindOfCurrentValue = {kindOfCurrentValue}");
+#endif
+
             switch (kindOfCurrentValue)
             {
+                case KindOfValue.CodeItem:
+                    var codeItem = currentValue.AsCodeItem;
+                    var codeItemKind = codeItem.Kind;
+#if DEBUG
+                    //Log($"codeItemKind = {codeItemKind}");
+#endif
+                    switch (codeItemKind)
+                    {
+                        case KindOfCodeEntity.RuleOrFact:
+                            ExecRuleInstanceValue(currentValue.AsRuleInstance);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(codeItemKind), codeItemKind, null);
+                    }
+                    break;
+
                 case KindOfValue.RuleInstance:
                     ExecRuleInstanceValue(currentValue.AsRuleInstance);
                     break;

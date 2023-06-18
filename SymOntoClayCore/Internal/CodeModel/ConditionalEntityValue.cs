@@ -96,6 +96,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         private LogicalSearchOptions _searchOptions;
 
         /// <inheritdoc/>
+        public override bool NullValueEquals()
+        {
+            return false;
+        }
+
+        /// <inheritdoc/>
         public override void Resolve()
         {
             NResolve();

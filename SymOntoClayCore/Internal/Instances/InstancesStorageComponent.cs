@@ -459,7 +459,7 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
-            foreach (var processInfo in _processesInfoList)
+            foreach (var processInfo in _processesInfoList.ToList())
             {
                 processInfo.Dispose();
             }

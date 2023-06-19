@@ -1189,6 +1189,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         var searchOptions = new LogicalSearchOptions();
                         searchOptions.QueryExpression = ruleInstance;
                         searchOptions.LocalCodeExecutionContext = _currentCodeFrame.LocalContext;
+                        searchOptions.ResolvingNotResultsStrategy = ResolvingNotResultsStrategy.Ignore;
 
                         var searchResult = _logicalSearchResolver.Run(searchOptions);
 

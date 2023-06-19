@@ -120,12 +120,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         {
             var text = @"app PeaceKeeper
 {
-    on Enter =>
-    {
-        insert {: see(I, #`gun 1`) :};
-    }
-
-	on {: see(I, #`gun 1`) :} => 
+	on {: !see(I, #`gun 1`) :} => 
     {
 	    'D' >> @>log;
 	}

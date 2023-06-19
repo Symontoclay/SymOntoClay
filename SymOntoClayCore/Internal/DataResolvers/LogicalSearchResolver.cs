@@ -150,7 +150,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             queryExpression = queryExpression.Normalized;
 
 #if DEBUG
-            //Log($"queryExpression (3) = {queryExpression.ToHumanizedString()}");
+            Log($"queryExpression (3) = {queryExpression.ToHumanizedString()}");
 #endif
 
             var loggingProvider = _context.LoggingProvider;
@@ -211,13 +211,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 result.UsedKeysList = usedKeysList;
 
-                if(queryExecutingCard.IsNegative)
+#if DEBUG
+                Log($"queryExecutingCard.IsSuccess = {queryExecutingCard.IsSuccess}");
+                Log($"queryExecutingCard.IsNegative = {queryExecutingCard.IsNegative}");
+#endif
+
+                if (queryExecutingCard.IsNegative)
                 {
                     var resolvingNotResultsStrategy = options.ResolvingNotResultsStrategy;
 
 #if DEBUG
                     //resolvingNotResultsStrategy = ResolvingNotResultsStrategy.InConsumer;//tmp
-                    //Log($"resolvingNotResultsStrategy = {resolvingNotResultsStrategy}");
+                    Log($"resolvingNotResultsStrategy = {resolvingNotResultsStrategy}");
 #endif
 
                     switch(resolvingNotResultsStrategy)
@@ -3003,6 +3008,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"^^^^^^^^^^^^^^^^^^^^^^^^^^processedExpr = {processedExpr.ToHumanizedString()}");
 #endif
 
+#if DEBUG
+            //Log($"leftQueryExecutingCard.IsSuccess = {leftQueryExecutingCard.IsSuccess}");
+            //Log($"leftQueryExecutingCard.ResultsOfQueryToRelationList.Any() = {leftQueryExecutingCard.ResultsOfQueryToRelationList.Any()}");
+#endif
+
             queryExecutingCard.UsedKeysList.AddRange(leftQueryExecutingCard.UsedKeysList);
 
             if (resultExplainNode != null)
@@ -3036,10 +3046,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
 
                 AppendResults(leftQueryExecutingCard, queryExecutingCard);
+
+                queryExecutingCard.IsSuccess = true;
+            }
+            else
+            {
+                queryExecutingCard.IsSuccess = !leftQueryExecutingCard.IsSuccess;
             }
 
             queryExecutingCard.IsNegative = !leftQueryExecutingCard.IsNegative;
-            queryExecutingCard.IsSuccess = leftQueryExecutingCard.IsSuccess;
             queryExecutingCard.UsedKeysList.AddRange(leftQueryExecutingCard.UsedKeysList);
 
             queryExecutingCard.UsedKeysList = queryExecutingCard.UsedKeysList.Distinct().ToList();

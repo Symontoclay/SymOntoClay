@@ -150,7 +150,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             queryExpression = queryExpression.Normalized;
 
 #if DEBUG
-            Log($"queryExpression (3) = {queryExpression.ToHumanizedString()}");
+            //Log($"queryExpression (3) = {queryExpression.ToHumanizedString()}");
 #endif
 
             var loggingProvider = _context.LoggingProvider;
@@ -212,8 +212,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 result.UsedKeysList = usedKeysList;
 
 #if DEBUG
-                Log($"queryExecutingCard.IsSuccess = {queryExecutingCard.IsSuccess}");
-                Log($"queryExecutingCard.IsNegative = {queryExecutingCard.IsNegative}");
+                //Log($"queryExecutingCard.IsSuccess = {queryExecutingCard.IsSuccess}");
+                //Log($"queryExecutingCard.IsNegative = {queryExecutingCard.IsNegative}");
 #endif
 
                 if (queryExecutingCard.IsNegative)
@@ -222,7 +222,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
 #if DEBUG
                     //resolvingNotResultsStrategy = ResolvingNotResultsStrategy.InConsumer;//tmp
-                    Log($"resolvingNotResultsStrategy = {resolvingNotResultsStrategy}");
+                    //Log($"resolvingNotResultsStrategy = {resolvingNotResultsStrategy}");
 #endif
 
                     switch(resolvingNotResultsStrategy)

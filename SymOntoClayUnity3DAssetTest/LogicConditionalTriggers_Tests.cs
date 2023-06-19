@@ -116,6 +116,38 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
         [Test]
         [Parallelizable]
+        public void Case1_c()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter =>
+    {
+        insert {: see(I, #`gun 1`) :};
+    }
+
+	on {: see(I, #`gun 1`) :} => 
+    {
+	    'D' >> @>log;
+	}
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message.Contains("D"), true);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
         public void Case2()
         {
             var text = @"app PeaceKeeper

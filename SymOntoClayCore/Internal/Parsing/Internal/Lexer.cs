@@ -1174,6 +1174,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.Canceled;
                             break;
                         }
+
+                        if (string.Compare(content, "each", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Each;
+                            break;
+                        }
                     }
                     break;
 

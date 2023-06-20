@@ -104,6 +104,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Weak,
         Cancel,
         Canceled,
+        Each,
 
         /// <summary>
         /// Special value for prediction.

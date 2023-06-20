@@ -88,6 +88,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
+#if DEBUG
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
+            //Log($"Result = {Result}");            
+#endif
+
             switch (_state)
             {
                 case State.Init:
@@ -130,6 +136,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                 case KeyWordTokenKind.Add:
                                     _state = State.GotAdd;
+                                    break;
+
+                                case KeyWordTokenKind.Each:
+                                    {
+                                        _inlineTrigger.KindOfInlineTrigger = KindOfInlineTrigger.LogicConditional;
+
+                                        _context.Recovery(_currToken);
+
+                                        var parser = new TriggerConditionParser(_context, new TerminationToken(TokenKind.Word, KeyWordTokenKind.Down));
+                                        parser.Run();
+
+                                        _inlineTrigger.SetCondition = parser.Result;
+
+                                        _state = State.GotSetCondition;
+                                    }
                                     break;
 
                                 default:

@@ -57,6 +57,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
+#if DEBUG
+            Log($"_currToken = {_currToken}");
+            //Log($"Result = {Result}");            
+#endif
+
             switch (_currToken.TokenKind)
             {
                 case TokenKind.OpenFactBracket:
@@ -127,6 +132,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case KeyWordTokenKind.With:
                             _context.Recovery(_currToken);
                             Exit();
+                            break;
+
+                        case KeyWordTokenKind.Each: 
+                            ProcessEach();
                             break;
 
                         default:
@@ -249,6 +258,28 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             {
                 _hasSingleFactOrDuration = true;
             }
+        }
+
+        private void ProcessEach()
+        {
+            _lastBinaryOperator = null;
+            _lastIsOperator = null;
+            _hasSomething = true;
+
+            _context.Recovery(_currToken);
+
+            var parser = new TriggerConditionEachParser(_context);
+            parser.Run();
+
+#if DEBUG
+            Log($"parser.Result = {parser.Result}");
+#endif
+
+            var intermediateNode = new IntermediateAstNode(parser.Result);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+
+            throw new NotImplementedException();
         }
 
         private void ProcessDuration()

@@ -1,6 +1,6 @@
 ﻿app PeaceKeeper
 {
-	on {: !see(I, #`gun 1`) :} => 
+	on each 1000 
     {
 	    'D' >> @>log;
 	}

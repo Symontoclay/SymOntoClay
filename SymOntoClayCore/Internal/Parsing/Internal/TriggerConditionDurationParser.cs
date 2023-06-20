@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Init,
             GotDurationMark
         }
-
+        
         public TriggerConditionDurationParser(InternalParserContext context)
             : base(context)
         {

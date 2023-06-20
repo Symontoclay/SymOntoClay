@@ -9,7 +9,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
     {
         private enum State
         {
-            Init
+            Init,
+            GotEachMark
         }
 
         public TriggerConditionEachParser(InternalParserContext context)
@@ -25,8 +26,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_state = {_state}");
-            Log($"_currToken = {_currToken}");
+            //Log($"_state = {_state}");
+            //Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");            
 #endif
 
@@ -35,6 +36,42 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.Init:
                     switch (_currToken.TokenKind)
                     {
+                        case TokenKind.Word:
+                            switch(_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Each:
+                                    _state = State.GotEachMark;
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotEachMark:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Number:
+                            {
+                                _context.Recovery(_currToken);
+
+                                var parser = new NumberParser(_context);
+                                parser.Run();
+
+                                var conditionNode = new TriggerConditionNode() { Kind = KindOfTriggerConditionNode.Each };
+                                conditionNode.Value = parser.Result;
+
+                                Result = conditionNode;
+
+                                Exit();
+                            }
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

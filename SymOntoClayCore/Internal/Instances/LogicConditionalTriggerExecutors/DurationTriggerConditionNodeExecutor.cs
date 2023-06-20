@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers;
 using System;
@@ -36,15 +37,14 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
             : base(context.EngineContext.Logger)
         {
             _context = context;
-            _dateTimeProvider = context.EngineContext.DateTimeProvider;
+            _dateTimeResolver = context.EngineContext.DataResolversFactory.GetDateTimeResolver();
 
             _targetDuration = TriggerConditionNodeHelper.GetInt32Duration(condition);
-
         }
 
         private readonly TriggerConditionNodeObserverContext _context;
 
-        private readonly IDateTimeProvider _dateTimeProvider;
+        private readonly DateTimeResolver _dateTimeResolver;
 
         private readonly int _targetDuration;
 
@@ -56,7 +56,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
                 return LogicalValue.FalseValue;
             }
 
-            var secondsNow = _dateTimeProvider.CurrentTiks * _dateTimeProvider.SecondsMultiplicator;
+            var secondsNow = _dateTimeResolver.GetCurrentSeconds();
 
             if (secondsNow > _context.SetSeconds + _targetDuration)
             {

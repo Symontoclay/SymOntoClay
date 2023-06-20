@@ -108,6 +108,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private LogicalSearchVarResultsItemInvertor _logicalSearchVarResultsItemInvertor;
         private readonly object _logicalSearchVarResultsItemInvertorLockObj = new object();
 
+        private DateTimeResolver _dateTimeResolver;
+        private readonly object _dateTimeResolverLockObj = new object();
+
         /// <inheritdoc/>
         public BaseResolver GetBaseResolver()
         {
@@ -441,6 +444,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
                 return _logicalSearchVarResultsItemInvertor;
+            }
+        }
+
+        /// <inheritdoc/>
+        public DateTimeResolver GetDateTimeResolver()
+        {
+            lock(_dateTimeResolverLockObj)
+            {
+                if(_dateTimeResolver == null)
+                {
+                    _dateTimeResolver = new DateTimeResolver(_context);
+                }
+
+                return _dateTimeResolver;
             }
         }
     }

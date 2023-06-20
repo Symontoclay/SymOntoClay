@@ -78,11 +78,12 @@ namespace SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr
                     return base.CalculateLongHashCode(options) ^ RuleInstance.GetLongHashCode(options);
 
                 case KindOfTriggerConditionNode.Duration:
+                case KindOfTriggerConditionNode.Each:
                     return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.StubWeight ^ Value.GetLongHashCode(options);
 
                 case KindOfTriggerConditionNode.Group:
                     return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.GroupWeight ^ Left.GetLongHashCode(options);
-
+                    
                 default:
                     throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
             }

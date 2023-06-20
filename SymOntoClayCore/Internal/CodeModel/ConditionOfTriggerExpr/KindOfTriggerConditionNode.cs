@@ -43,6 +43,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr
         FuzzyLogicNonNumericSequence,
         Var,
         Fact,
-        Duration
+        Duration,
+        Each
     }
 }

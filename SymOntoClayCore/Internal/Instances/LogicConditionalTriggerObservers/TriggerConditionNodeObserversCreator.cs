@@ -51,6 +51,10 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
                     result.Add(new DurationTriggerConditionNodeObserver(context, condition));
                     break;
 
+                case KindOfTriggerConditionNode.Each:
+                    result.Add(new EachTriggerConditionNodeObserver(context, condition));
+                    break;
+
                 case KindOfTriggerConditionNode.Var:
                     result.Add(new VarTriggerConditionNodeObserver(context.EngineContext.Logger, context.Storage, condition));
                     break;

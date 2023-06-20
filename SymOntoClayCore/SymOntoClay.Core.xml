@@ -5394,6 +5394,15 @@
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.DataResolversFactory.GetLogicalSearchVarResultsItemInvertor">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.DataResolversFactory.GetDateTimeResolver">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.DateTimeResolver.GetCurrentSeconds">
+            <summary>
+            Gets the current quasi time in quasi seconds.
+            </summary>
+            <returns>Quasi seconds elapsed since the engine was launched.</returns>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.IDataResolversFactory.GetChannelsResolver">
             <summary>
             Gets instance of Channels resolver.

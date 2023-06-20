@@ -47,6 +47,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private TriggerConditionNode _lastIsOperator;
         private TriggerConditionNode _lastBinaryOperator;
         private bool _hasSingleFactOrDuration;
+        private bool _hasSingleEach;
 
         /// <inheritdoc/>
         protected override void OnFinish()
@@ -58,7 +59,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_currToken = {_currToken}");
+            //Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");            
 #endif
 
@@ -161,7 +162,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case TokenKind.OpenRoundBracket:
-                    if (_hasSingleFactOrDuration)
+                    if (_hasSingleFactOrDuration || _hasSingleEach)
                     {
                         _context.Recovery(_currToken);
                         Exit();
@@ -262,6 +263,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private void ProcessEach()
         {
+            var oldHasSomething = _hasSomething;
+
             _lastBinaryOperator = null;
             _lastIsOperator = null;
             _hasSomething = true;
@@ -272,14 +275,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             parser.Run();
 
 #if DEBUG
-            Log($"parser.Result = {parser.Result}");
+            //Log($"parser.Result = {parser.Result}");
 #endif
 
             var intermediateNode = new IntermediateAstNode(parser.Result);
 
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
 
-            throw new NotImplementedException();
+            if (!oldHasSomething)
+            {
+                _hasSingleEach = true;
+            }
         }
 
         private void ProcessDuration()

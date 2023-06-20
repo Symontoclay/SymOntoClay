@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.Threads;
 using System;
@@ -42,7 +43,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
             var engineContext = context.EngineContext;
 
-            _dateTimeProvider = engineContext.DateTimeProvider;
+            _dateTimeResolver = engineContext.DataResolversFactory.GetDateTimeResolver();
 
             _activeObject = new AsyncActivePeriodicObject(engineContext.ActivePeriodicObjectContext);
             _activeObject.PeriodicMethod = NRun;
@@ -50,7 +51,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
         }
 
         private readonly IActivePeriodicObject _activeObject;
-        private readonly IDateTimeProvider _dateTimeProvider;
+        private readonly DateTimeResolver _dateTimeResolver;
         private readonly TriggerConditionNodeObserverContext _context;
 
         private readonly int _targetDuration;
@@ -64,9 +65,9 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
                 return true;
             }
 
-            var secondsNow = _dateTimeProvider.CurrentTiks * _dateTimeProvider.SecondsMultiplicator;
+            var secondsNow = _dateTimeResolver.GetCurrentSeconds();
 
-            if(secondsNow > _context.SetSeconds + _targetDuration)
+            if (secondsNow > _context.SetSeconds + _targetDuration)
             {
                 EmitOnChanged();
             }

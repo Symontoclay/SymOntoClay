@@ -51,14 +51,14 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         /// <inheritdoc/>
         public override Value Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
         {
-            if (!_context.SetSeconds.HasValue)
+            if (!_context.SetDurationSeconds.HasValue)
             {
                 return LogicalValue.FalseValue;
             }
 
             var secondsNow = _dateTimeResolver.GetCurrentSeconds();
 
-            if (secondsNow > _context.SetSeconds + _targetDuration)
+            if (secondsNow > _context.SetDurationSeconds + _targetDuration)
             {
                 return LogicalValue.TrueValue;
             }

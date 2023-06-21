@@ -60,14 +60,14 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
         {
             Thread.Sleep(100);
 
-            if (!_context.SetSeconds.HasValue)
+            if (!_context.SetDurationSeconds.HasValue)
             {
                 return true;
             }
 
             var secondsNow = _dateTimeResolver.GetCurrentSeconds();
 
-            if (secondsNow > _context.SetSeconds + _targetDuration)
+            if (secondsNow > _context.SetDurationSeconds + _targetDuration)
             {
                 EmitOnChanged();
             }

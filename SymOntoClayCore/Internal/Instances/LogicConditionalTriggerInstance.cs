@@ -236,16 +236,16 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if(_isOn)
             {
-                if(!_triggerConditionNodeObserverContext.SetSeconds.HasValue)
+                if(!_triggerConditionNodeObserverContext.SetDurationSeconds.HasValue)
                 {
-                    _triggerConditionNodeObserverContext.SetSeconds = Convert.ToInt64(_dateTimeProvider.CurrentTiks * _dateTimeProvider.SecondsMultiplicator);
+                    _triggerConditionNodeObserverContext.SetDurationSeconds = Convert.ToInt64(_dateTimeProvider.CurrentTiks * _dateTimeProvider.SecondsMultiplicator);
                 }
             }
             else
             {
-                if(_triggerConditionNodeObserverContext.SetSeconds.HasValue)
+                if(_triggerConditionNodeObserverContext.SetDurationSeconds.HasValue)
                 {
-                    _triggerConditionNodeObserverContext.SetSeconds = null;
+                    _triggerConditionNodeObserverContext.SetDurationSeconds = null;
                 }
             }
 

@@ -41,7 +41,8 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
         public IStorage Storage { get; private set; }
         public StrongIdentifierValue Holder { get; private set; }
 
-        public long? SetSeconds { get; set; }
+        public long? SetDurationSeconds { get; set; }
+        public long? SetEachSeconds { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -62,7 +63,8 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
             var sb = new StringBuilder();
 
             sb.PrintObjProp(n, nameof(Holder), Holder);
-            sb.AppendLine($"{spaces}{nameof(SetSeconds)} = {SetSeconds}");
+            sb.AppendLine($"{spaces}{nameof(SetDurationSeconds)} = {SetDurationSeconds}");
+            sb.AppendLine($"{spaces}{nameof(SetEachSeconds)} = {SetEachSeconds}");
 
             return sb.ToString();
         }
@@ -86,7 +88,8 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
             var sb = new StringBuilder();
 
             sb.PrintShortObjProp(n, nameof(Holder), Holder);
-            sb.AppendLine($"{spaces}{nameof(SetSeconds)} = {SetSeconds}");
+            sb.AppendLine($"{spaces}{nameof(SetDurationSeconds)} = {SetDurationSeconds}");
+            sb.AppendLine($"{spaces}{nameof(SetEachSeconds)} = {SetEachSeconds}");
 
             return sb.ToString();
         }
@@ -110,7 +113,8 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
             var sb = new StringBuilder();
 
             sb.PrintBriefObjProp(n, nameof(Holder), Holder);
-            sb.AppendLine($"{spaces}{nameof(SetSeconds)} = {SetSeconds}");
+            sb.AppendLine($"{spaces}{nameof(SetDurationSeconds)} = {SetDurationSeconds}");
+            sb.AppendLine($"{spaces}{nameof(SetEachSeconds)} = {SetEachSeconds}");
 
             return sb.ToString();
         }

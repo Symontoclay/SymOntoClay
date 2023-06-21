@@ -6589,6 +6589,9 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.DurationTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Var}},SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.EachTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Var}},SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.FactTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Var}},SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>

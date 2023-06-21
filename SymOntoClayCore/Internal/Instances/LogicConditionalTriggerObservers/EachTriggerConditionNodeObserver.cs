@@ -41,6 +41,8 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
             Log($"_targetDuration = {_targetDuration}");
 #endif
 
+            //throw new NotImplementedException();
+
             return true;
         }
     }

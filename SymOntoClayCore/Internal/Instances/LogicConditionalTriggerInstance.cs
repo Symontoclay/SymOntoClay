@@ -234,18 +234,29 @@ namespace SymOntoClay.Core.Internal.Instances
                 DoSearchWithNoResetCondition();
             }
 
+#if DEBUG
+            Log($"_isOn = {_isOn}");
+#endif
+
             if(_isOn)
             {
                 if(!_triggerConditionNodeObserverContext.SetDurationSeconds.HasValue)
                 {
                     _triggerConditionNodeObserverContext.SetDurationSeconds = Convert.ToInt64(_dateTimeProvider.CurrentTiks * _dateTimeProvider.SecondsMultiplicator);
                 }
+
+                _triggerConditionNodeObserverContext.SetEachSeconds = Convert.ToInt64(_dateTimeProvider.CurrentTiks * _dateTimeProvider.SecondsMultiplicator);
             }
             else
             {
                 if(_triggerConditionNodeObserverContext.SetDurationSeconds.HasValue)
                 {
                     _triggerConditionNodeObserverContext.SetDurationSeconds = null;
+                }
+
+                if(!_triggerConditionNodeObserverContext.SetEachSeconds.HasValue)
+                {
+                    _triggerConditionNodeObserverContext.SetEachSeconds = Convert.ToInt64(_dateTimeProvider.CurrentTiks * _dateTimeProvider.SecondsMultiplicator);
                 }
             }
 
@@ -373,7 +384,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void RunResetCondition()
         {
-
             var isResetSuccsess = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList);
 
             if (isResetSuccsess)
@@ -396,6 +406,10 @@ namespace SymOntoClay.Core.Internal.Instances
         private void DoSearchWithNoResetCondition()
         {
             var isSetSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
+
+#if DEBUG
+            Log($"isSetSuccsess = {isSetSuccsess}");
+#endif
 
             if (isSetSuccsess)
             {
@@ -424,6 +438,9 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             if (_isOn)
             {
+#if DEBUG
+                Log("_isOn return;");
+#endif
                 return;
             }
 
@@ -431,6 +448,10 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if(_hasRuleInstancesList)
             {
+#if DEBUG
+                Log("_hasRuleInstancesList return;");
+#endif
+
                 return;
             }
 

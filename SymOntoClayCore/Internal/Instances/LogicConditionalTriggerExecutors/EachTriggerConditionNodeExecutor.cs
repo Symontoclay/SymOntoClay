@@ -31,9 +31,29 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         {
 #if DEBUG
             Log($"_targetDuration = {_targetDuration}");
+            Log($"_context.SetEachSeconds = {_context.SetEachSeconds}");
 #endif
 
-            //throw new NotImplementedException();
+            if (!_context.SetEachSeconds.HasValue)
+            {
+                return LogicalValue.FalseValue;
+            }
+
+            var secondsNow = _dateTimeResolver.GetCurrentSeconds();
+
+#if DEBUG
+            Log($"secondsNow = {secondsNow}");
+            Log($"_context.SetEachSeconds + _targetDuration = {_context.SetEachSeconds + _targetDuration}");
+#endif
+
+            if (secondsNow > _context.SetEachSeconds + _targetDuration)
+            {
+#if DEBUG
+                Log($"Yess !!!!!!!!");
+#endif
+
+                return LogicalValue.TrueValue;
+            }
 
             return LogicalValue.FalseValue;
         }

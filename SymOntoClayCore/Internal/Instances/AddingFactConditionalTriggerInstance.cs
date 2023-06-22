@@ -63,9 +63,9 @@ namespace SymOntoClay.Core.Internal.Instances
                 _processedItems.Add(ruleInstance);
             }
 
-            var isSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> varsList, ruleInstance);
+            var setResult = _setConditionalTriggerExecutor.Run(out List<List<Var>> varsList, ruleInstance);
 
-            if(!isSuccsess)
+            if(!setResult.IsSuccess)
             {
                 return null;
             }

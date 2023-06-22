@@ -283,9 +283,9 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void DoSearchWithEqualConditions()
         {
-            var isSetSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
+            var setResult = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
 
-            if (isSetSuccsess)
+            if (setResult.IsSuccess)
             {
                 if (setVarList.Any())
                 {
@@ -297,9 +297,9 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
             }
 
-            var isResetSuccsess = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList);
+            var resetResult = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList);
 
-            if (isResetSuccsess)
+            if (resetResult.IsSuccess)
             {
                 if (_hasResetHandler)
                 {
@@ -322,9 +322,9 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void DoSearchWithPriorSetCondition()
         {
-            var isSetSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
+            var setResult = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
 
-            if (isSetSuccsess)
+            if (setResult.IsSuccess)
             {
                 if (setVarList.Any())
                 {
@@ -344,9 +344,9 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void DoSearchWithPriorResetCondition()
         {
-            var isResetSuccsess = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList);
+            var resetResult = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList);
 
-            if(isResetSuccsess)
+            if(resetResult.IsSuccess)
             {
                 if (_hasResetHandler)
                 {
@@ -364,9 +364,9 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 if(!_isOn)
                 {
-                    var isSetSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
+                    var setResult = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
 
-                    if(isSetSuccsess)
+                    if(setResult.IsSuccess)
                     {
                         if (setVarList.Any())
                         {
@@ -384,9 +384,9 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void RunResetCondition()
         {
-            var isResetSuccsess = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList);
+            var resetResult = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList);
 
-            if (isResetSuccsess)
+            if (resetResult.IsSuccess)
             {
                 if (_hasResetHandler)
                 {
@@ -405,13 +405,13 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void DoSearchWithNoResetCondition()
         {
-            var isSetSuccsess = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
+            var setResult = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
 
 #if DEBUG
-            Log($"isSetSuccsess = {isSetSuccsess}");
+            Log($"setResult = {setResult}");
 #endif
 
-            if (isSetSuccsess)
+            if (setResult.IsSuccess)
             {
                 if (setVarList.Any())
                 {

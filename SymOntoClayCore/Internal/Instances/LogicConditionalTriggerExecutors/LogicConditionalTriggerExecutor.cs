@@ -51,16 +51,18 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         private ToSystemBoolResolver _toSystemBoolResolver;
         private readonly BaseTriggerConditionNodeExecutor _node;
 
-        public bool Run(out List<List<Var>> varList)
+        public (bool IsSuccess, bool IsPeriodic) Run(out List<List<Var>> varList)
         {
             return Run(out varList, null);
         }
 
-        public bool Run(out List<List<Var>> varList, RuleInstance processedRuleInstance)
+        public (bool IsSuccess, bool IsPeriodic) Run(out List<List<Var>> varList, RuleInstance processedRuleInstance)
         {
             varList = new List<List<Var>>();
 
-            return _toSystemBoolResolver.Resolve(_node.Run(varList, processedRuleInstance));
+            var initialResult = _node.Run(varList, processedRuleInstance);
+
+            return (_toSystemBoolResolver.Resolve(initialResult), false);
         }
     }
 }

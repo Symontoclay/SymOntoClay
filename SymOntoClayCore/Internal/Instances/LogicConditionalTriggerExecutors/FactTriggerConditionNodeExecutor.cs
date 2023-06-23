@@ -64,7 +64,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         private List<string> _foundKeys = new List<string>();
 
         /// <inheritdoc/>
-        public override Value Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
+        public override (Value Value, bool IsPeriodic) Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
         {
             LogicalSearchOptions targetLogicalSearchOptions = null;
 
@@ -86,7 +86,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
             {
                 _foundKeys.Clear();
 
-                return LogicalValue.FalseValue;
+                return (LogicalValue.FalseValue, false);
             }
 
             if (searchResult.Items.Any())
@@ -153,7 +153,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
                 _foundKeys = usedKeys;
             }
 
-            return LogicalValue.TrueValue;
+            return (LogicalValue.TrueValue, false);
         }
     }
 }

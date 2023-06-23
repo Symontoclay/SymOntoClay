@@ -38,7 +38,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         public BaseTriggerConditionNodeExecutor Left { get; set; }
 
         /// <inheritdoc/>
-        public override Value Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
+        public override (Value Value, bool IsPeriodic) Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
         {
             return Left.Run(varList, processedRuleInstance);
         }

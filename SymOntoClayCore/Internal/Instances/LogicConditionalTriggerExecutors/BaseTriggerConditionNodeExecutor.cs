@@ -35,6 +35,6 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         {
         }
 
-        public abstract Value Run(List<List<Var>> varList, RuleInstance processedRuleInstance);
+        public abstract (Value Value, bool IsPeriodic) Run(List<List<Var>> varList, RuleInstance processedRuleInstance);
     }
 }

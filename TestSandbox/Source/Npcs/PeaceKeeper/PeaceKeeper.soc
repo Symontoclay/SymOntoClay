@@ -1,6 +1,6 @@
 ﻿app PeaceKeeper
 {
-	on each 10 
+	on each 1
     {
 	    'D' >> @>log;
 	}

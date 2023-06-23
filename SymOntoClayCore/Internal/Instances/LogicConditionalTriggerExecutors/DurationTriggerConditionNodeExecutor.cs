@@ -49,21 +49,21 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         private readonly int _targetDuration;
 
         /// <inheritdoc/>
-        public override Value Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
+        public override (Value Value, bool IsPeriodic) Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
         {
             if (!_context.SetDurationSeconds.HasValue)
             {
-                return LogicalValue.FalseValue;
+                return (LogicalValue.FalseValue, false);
             }
 
             var secondsNow = _dateTimeResolver.GetCurrentSeconds();
 
             if (secondsNow > _context.SetDurationSeconds + _targetDuration)
             {
-                return LogicalValue.TrueValue;
+                return (LogicalValue.TrueValue, false);
             }
 
-            return LogicalValue.FalseValue;
+            return (LogicalValue.FalseValue, false);
         }
     }
 }

@@ -235,7 +235,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Log($"_isOn = {_isOn}");
+            //Log($"_isOn = {_isOn}");
 #endif
 
             if(_isOn)
@@ -293,7 +293,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
                 else
                 {
-                    ProcessSetResultWithNoItems();
+                    ProcessSetResultWithNoItems(setResult.IsPeriodic);
                 }
             }
 
@@ -332,7 +332,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
                 else
                 {
-                    ProcessSetResultWithNoItems();
+                    ProcessSetResultWithNoItems(setResult.IsPeriodic);
                 }
             }
             else
@@ -374,7 +374,7 @@ namespace SymOntoClay.Core.Internal.Instances
                         }
                         else
                         {
-                            ProcessSetResultWithNoItems();
+                            ProcessSetResultWithNoItems(setResult.IsPeriodic);
                         }
                     }
                 }
@@ -408,7 +408,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var setResult = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
 
 #if DEBUG
-            Log($"setResult = {setResult}");
+            //Log($"setResult = {setResult}");
 #endif
 
             if (setResult.IsSuccess)
@@ -419,7 +419,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
                 else
                 {
-                    ProcessSetResultWithNoItems();
+                    ProcessSetResultWithNoItems(setResult.IsPeriodic);
                 }
             }
             else
@@ -434,22 +434,34 @@ namespace SymOntoClay.Core.Internal.Instances
 
         }
 
-        private void ProcessSetResultWithNoItems()
+        private void ProcessSetResultWithNoItems(bool isPeriodic)
         {
+#if DEBUG
+            //Log($"isPeriodic = {isPeriodic}");
+            //Log($"_hasResetHandler = {_hasResetHandler}");
+#endif
+
             if (_isOn)
             {
 #if DEBUG
-                Log("_isOn return;");
+                //Log("_isOn return;");
 #endif
                 return;
             }
 
-            _isOn = true;
+            if(!isPeriodic || _hasResetHandler)
+            {
+                _isOn = true;
+            }
+            else
+            {
+                _triggerConditionNodeObserverContext.SetEachSeconds = Convert.ToInt64(_dateTimeProvider.CurrentTiks * _dateTimeProvider.SecondsMultiplicator);
+            }         
 
             if(_hasRuleInstancesList)
             {
 #if DEBUG
-                Log("_hasRuleInstancesList return;");
+                //Log("_hasRuleInstancesList return;");
 #endif
 
                 return;

@@ -40,9 +40,9 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         private readonly StrongIdentifierValue _name;
 
         /// <inheritdoc/>
-        public override Value Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
+        public override (Value Value, bool IsPeriodic) Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
         {
-            return _name;
+            return (_name, false);
         }
     }
 }

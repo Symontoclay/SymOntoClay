@@ -48,22 +48,22 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         private readonly TriggersResolver _triggersResolver;
 
         /// <inheritdoc/>
-        public override Value Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
+        public override (Value Value, bool IsPeriodic) Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
         {
             var namedTriggerInstance = _triggersResolver.ResolveNamedTriggerInstance(_triggerName, _localCodeExecutionContext);
 
             if(namedTriggerInstance == null)
             {
-                return NullValue.Instance;
+                return (NullValue.Instance, false);
             }
 
             if(namedTriggerInstance.IsOn)
             {
-                return LogicalValue.TrueValue;
+                return (LogicalValue.TrueValue, false);
             }
             else
             {
-                return LogicalValue.FalseValue;
+                return (LogicalValue.FalseValue, false);
             }
         }
     }

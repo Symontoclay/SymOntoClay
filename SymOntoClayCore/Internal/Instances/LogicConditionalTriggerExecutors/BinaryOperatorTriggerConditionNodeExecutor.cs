@@ -56,7 +56,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         public BaseTriggerConditionNodeExecutor Right { get; set; }
 
         /// <inheritdoc/>
-        public override Value Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
+        public override (Value Value, bool IsPeriodic) Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
         {
             var kindOfOperator = _kindOfOperator;
 
@@ -65,12 +65,15 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
                 kindOfOperator = KindOfOperator.Is;
             }
 
+            var leftResult = Left.Run(varList, processedRuleInstance);
+            var rightResult = Right.Run(varList, processedRuleInstance);
+
             var paramsList = new List<Value>();
-            paramsList.Add(Left.Run(varList, processedRuleInstance));
-            paramsList.Add(Right.Run(varList, processedRuleInstance));
+            paramsList.Add(leftResult.Value);
+            paramsList.Add(rightResult.Value);
             paramsList.Add(NullValue.Instance);
 
-            return _codeExecutor.CallOperator(kindOfOperator, paramsList, _localCodeExecutionContext);
+            return (_codeExecutor.CallOperator(kindOfOperator, paramsList, _localCodeExecutionContext), leftResult.IsPeriodic || rightResult.IsPeriodic);
         }
     }
 }

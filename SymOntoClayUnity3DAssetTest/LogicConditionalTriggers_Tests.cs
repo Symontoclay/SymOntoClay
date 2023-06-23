@@ -1833,5 +1833,41 @@ app PeaceKeeper
 
             Thread.Sleep(1000);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case17()
+        {
+            var text = @"app PeaceKeeper
+{
+	on each 1
+    {
+	    'D' >> @>log;
+	}
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("D", message);
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("D", message);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual("D", message);
+                            break;
+
+                        default:
+                            Assert.AreEqual("D", message);
+                            break;
+                    }
+                }), true);
+        }
     }
 }

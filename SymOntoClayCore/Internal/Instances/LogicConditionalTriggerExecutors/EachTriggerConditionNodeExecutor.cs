@@ -27,35 +27,35 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         private readonly int _targetDuration;
 
         /// <inheritdoc/>
-        public override Value Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
+        public override (Value Value, bool IsPeriodic) Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
         {
 #if DEBUG
-            Log($"_targetDuration = {_targetDuration}");
-            Log($"_context.SetEachSeconds = {_context.SetEachSeconds}");
+            //Log($"_targetDuration = {_targetDuration}");
+            //Log($"_context.SetEachSeconds = {_context.SetEachSeconds}");
 #endif
 
             if (!_context.SetEachSeconds.HasValue)
             {
-                return LogicalValue.FalseValue;
+                return (LogicalValue.FalseValue, true);
             }
 
             var secondsNow = _dateTimeResolver.GetCurrentSeconds();
 
 #if DEBUG
-            Log($"secondsNow = {secondsNow}");
-            Log($"_context.SetEachSeconds + _targetDuration = {_context.SetEachSeconds + _targetDuration}");
+            //Log($"secondsNow = {secondsNow}");
+            //Log($"_context.SetEachSeconds + _targetDuration = {_context.SetEachSeconds + _targetDuration}");
 #endif
 
             if (secondsNow > _context.SetEachSeconds + _targetDuration)
             {
 #if DEBUG
-                Log($"Yess !!!!!!!!");
+                //Log($"Yess !!!!!!!!");
 #endif
 
-                return LogicalValue.TrueValue;
+                return (LogicalValue.TrueValue, true);
             }
 
-            return LogicalValue.FalseValue;
+            return (LogicalValue.FalseValue, true);
         }
     }
 }

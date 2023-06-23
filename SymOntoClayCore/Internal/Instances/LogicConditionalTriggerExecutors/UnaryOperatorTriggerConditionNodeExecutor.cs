@@ -71,7 +71,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         public List<BaseTriggerConditionNodeExecutor> ParamsList { get; set; }
 
         /// <inheritdoc/>
-        public override Value Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
+        public override (Value Value, bool IsPeriodic) Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
         {
             if(_kindOfOperator == KindOfOperator.CallFunction)
             {
@@ -81,9 +81,9 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
             return RunUnaryOperator(varList, processedRuleInstance);
         }
 
-        private Value RunCallFunction(List<List<Var>> varList, RuleInstance processedRuleInstance)
+        private (Value Value, bool IsPeriodic) RunCallFunction(List<List<Var>> varList, RuleInstance processedRuleInstance)
         {
-            var caller = Left.Run(varList, processedRuleInstance);
+            var caller = Left.Run(varList, processedRuleInstance).Value;
 
             var paramsList = new List<Value>();
 
@@ -91,20 +91,23 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
             {
                 foreach (var paramExecutor in ParamsList)
                 {
-                    paramsList.Add(paramExecutor.Run(varList, processedRuleInstance));
+                    paramsList.Add(paramExecutor.Run(varList, processedRuleInstance).Value);
                 }
             }
 
-            return _codeExecutor.CallFunctionSync(caller, _kindOfparameters, paramsList, _localCodeExecutionContext);
+            return (_codeExecutor.CallFunctionSync(caller, _kindOfparameters, paramsList, _localCodeExecutionContext), false);
         }
 
-        private Value RunUnaryOperator(List<List<Var>> varList, RuleInstance processedRuleInstance)
+        private (Value Value, bool IsPeriodic) RunUnaryOperator(List<List<Var>> varList, RuleInstance processedRuleInstance)
         {
             var paramsList = new List<Value>();
-            paramsList.Add(Left.Run(varList, processedRuleInstance));
+
+            var leftResult = Left.Run(varList, processedRuleInstance);
+
+            paramsList.Add(leftResult.Value);
             paramsList.Add(NullValue.Instance);
 
-            return _codeExecutor.CallOperator(_kindOfOperator, paramsList, _localCodeExecutionContext);
+            return (_codeExecutor.CallOperator(_kindOfOperator, paramsList, _localCodeExecutionContext), leftResult.IsPeriodic);
         }
     }
 }

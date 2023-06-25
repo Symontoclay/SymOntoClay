@@ -30,6 +30,7 @@ namespace SymOntoClay.Core.Internal.Helpers
 {
     public static class TriggerConditionNodeHelper
     {
+        [Obsolete("Use DateTimeResolver.ConvertTimeValueToTicks instead of the method.")]
         public static int GetInt32Duration(TriggerConditionNode node)
         {
             var value = node.Value;

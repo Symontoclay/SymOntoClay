@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SymOntoClay.Core.Internal.CodeModel;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -14,10 +15,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private readonly IDateTimeProvider _dateTimeProvider;
 
-        /// <summary>
-        /// Gets the current quasi time in quasi seconds.
-        /// </summary>
-        /// <returns>Quasi seconds elapsed since the engine was launched.</returns>
+
+        public long? ConvertTimeValueToTicks(Value duration)
+        {
+
+        }
+
         public float GetCurrentSeconds()
         {
             return _dateTimeProvider.CurrentTiks * _dateTimeProvider.SecondsMultiplicator;

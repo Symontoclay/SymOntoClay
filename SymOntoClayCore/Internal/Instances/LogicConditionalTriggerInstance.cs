@@ -235,7 +235,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Log($"_triggerConditionNodeObserverContext.IsOn = {_triggerConditionNodeObserverContext.IsOn}");
+            //Log($"_triggerConditionNodeObserverContext.IsOn = {_triggerConditionNodeObserverContext.IsOn}");
 #endif
 
             if(_triggerConditionNodeObserverContext.IsOn)

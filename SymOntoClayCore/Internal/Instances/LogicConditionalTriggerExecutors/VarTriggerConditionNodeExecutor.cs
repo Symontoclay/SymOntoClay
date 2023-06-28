@@ -33,7 +33,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 {
     public class VarTriggerConditionNodeExecutor : BaseTriggerConditionNodeExecutor
     {
-        public VarTriggerConditionNodeExecutor(IEngineContext engineContext, ILocalCodeExecutionContext localCodeExecutionContext, TriggerConditionNode condition)
+        public VarTriggerConditionNodeExecutor(IEngineContext engineContext, ILocalCodeExecutionContext localCodeExecutionContext, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition)
             : base(engineContext.Logger)
         {
             _varName = condition.Name;

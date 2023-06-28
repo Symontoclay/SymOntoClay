@@ -31,7 +31,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 {
     public class VarTriggerConditionNodeObserver : BaseTriggerConditionNodeObserver
     {
-        public VarTriggerConditionNodeObserver(IEntityLogger logger, IStorage storage, TriggerConditionNode condition)
+        public VarTriggerConditionNodeObserver(IEntityLogger logger, IStorage storage, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition)
             : base(logger)
         {
             _varName = condition.Name;

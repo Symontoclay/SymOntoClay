@@ -31,7 +31,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 {
     public class ValueTriggerConditionNodeExecutor : BaseTriggerConditionNodeExecutor
     {
-        public ValueTriggerConditionNodeExecutor(IEntityLogger logger, TriggerConditionNode condition)
+        public ValueTriggerConditionNodeExecutor(IEntityLogger logger, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition)
             : base(logger)
         {
             _value = condition.Value;

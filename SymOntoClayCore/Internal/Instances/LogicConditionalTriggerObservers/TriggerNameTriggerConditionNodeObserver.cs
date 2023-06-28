@@ -36,7 +36,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 {
     public class TriggerNameTriggerConditionNodeObserver : BaseTriggerConditionNodeObserver
     {
-        public TriggerNameTriggerConditionNodeObserver(IEngineContext engineContext, IStorage storage, TriggerConditionNode condition)
+        public TriggerNameTriggerConditionNodeObserver(IEngineContext engineContext, IStorage storage, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition)
             : base(engineContext.Logger)
         {
             _triggerName = condition.Name;

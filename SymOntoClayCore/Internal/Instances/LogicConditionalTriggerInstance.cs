@@ -66,7 +66,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _triggerConditionNodeObserverContext = new TriggerConditionNodeObserverContext(context, _storage, parent.Name);
 
-            _setConditionalTriggerObserver = new LogicConditionalTriggerObserver(_triggerConditionNodeObserverContext, trigger.SetCondition);
+            _setConditionalTriggerObserver = new LogicConditionalTriggerObserver(_triggerConditionNodeObserverContext, trigger.SetCondition, KindOfTriggerCondition.SetCondition);
             _setConditionalTriggerObserver.OnChanged += Observer_OnChanged;
 
             _ruleInstancesList = _trigger.RuleInstancesList;
@@ -80,7 +80,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 setBindingVariables = new BindingVariables();
             }
 
-            _setConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext,  trigger.SetCondition, trigger.SetBindingVariables, _localCodeExecutionContext);
+            _setConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext,  trigger.SetCondition, KindOfTriggerCondition.SetCondition, trigger.SetBindingVariables, _localCodeExecutionContext);
 
             _hasResetHandler = trigger.ResetCompiledFunctionBody != null;
 
@@ -88,7 +88,7 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 _hasResetConditions = true;
 
-                _resetConditionalTriggerObserver = new LogicConditionalTriggerObserver(_triggerConditionNodeObserverContext, trigger.ResetCondition);
+                _resetConditionalTriggerObserver = new LogicConditionalTriggerObserver(_triggerConditionNodeObserverContext, trigger.ResetCondition, KindOfTriggerCondition.ResetCondition);
                 _resetConditionalTriggerObserver.OnChanged += Observer_OnChanged;
 
                 var resetBindingVariables = _trigger.ResetBindingVariables;
@@ -103,7 +103,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     resetBindingVariables = new BindingVariables();
                 }
 
-                _resetConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext, trigger.ResetCondition, resetBindingVariables, _localCodeExecutionContext);
+                _resetConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext, trigger.ResetCondition, KindOfTriggerCondition.ResetCondition, resetBindingVariables, _localCodeExecutionContext);
             }
         }
 
@@ -130,7 +130,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private bool _isBusy;
         private bool _needRepeat;
 
-        private bool _isOn;
+        //private bool _isOn;
 
         private readonly bool _hasResetConditions;
         private readonly bool _hasResetHandler;
@@ -139,7 +139,7 @@ namespace SymOntoClay.Core.Internal.Instances
         public IList<StrongIdentifierValue> NamesList => _namesList;
 
         /// <inheritdoc/>
-        public bool IsOn => _isOn;
+        public bool IsOn => _triggerConditionNodeObserverContext.IsOn;
 
         /// <inheritdoc/>
         public ulong GetLongHashCode()
@@ -207,7 +207,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void DoSearch()
         {
-            var oldIsOn = _isOn;
+            var oldIsOn = _triggerConditionNodeObserverContext.IsOn;
 
             if (_hasResetConditions)
             {
@@ -235,34 +235,34 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            //Log($"_isOn = {_isOn}");
+            Log($"_triggerConditionNodeObserverContext.IsOn = {_triggerConditionNodeObserverContext.IsOn}");
 #endif
 
-            if(_isOn)
+            if(_triggerConditionNodeObserverContext.IsOn)
             {
-                if(!_triggerConditionNodeObserverContext.SetDurationSeconds.HasValue)
+                if(!_triggerConditionNodeObserverContext.InitialDurationTime.HasValue)
                 {
-                    _triggerConditionNodeObserverContext.SetDurationSeconds = Convert.ToInt64(_dateTimeProvider.CurrentTiks * _dateTimeProvider.SecondsMultiplicator);
+                    _triggerConditionNodeObserverContext.InitialDurationTime = _dateTimeProvider.CurrentTiks;
                 }
 
-                _triggerConditionNodeObserverContext.SetEachSeconds = Convert.ToInt64(_dateTimeProvider.CurrentTiks * _dateTimeProvider.SecondsMultiplicator);
+                _triggerConditionNodeObserverContext.InitialEachTime = _dateTimeProvider.CurrentTiks;
             }
             else
             {
-                if(_triggerConditionNodeObserverContext.SetDurationSeconds.HasValue)
+                if(_triggerConditionNodeObserverContext.InitialDurationTime.HasValue)
                 {
-                    _triggerConditionNodeObserverContext.SetDurationSeconds = null;
+                    _triggerConditionNodeObserverContext.InitialDurationTime = null;
                 }
 
-                if(!_triggerConditionNodeObserverContext.SetEachSeconds.HasValue)
+                if(!_triggerConditionNodeObserverContext.InitialEachTime.HasValue)
                 {
-                    _triggerConditionNodeObserverContext.SetEachSeconds = Convert.ToInt64(_dateTimeProvider.CurrentTiks * _dateTimeProvider.SecondsMultiplicator);
+                    _triggerConditionNodeObserverContext.InitialEachTime = _dateTimeProvider.CurrentTiks;
                 }
             }
 
-            if(_hasRuleInstancesList && oldIsOn != _isOn)
+            if(_hasRuleInstancesList && oldIsOn != _triggerConditionNodeObserverContext.IsOn)
             {
-                if(_isOn)
+                if(_triggerConditionNodeObserverContext.IsOn)
                 {
                     _globalLogicalStorage.Append(_ruleInstancesList);
                 }
@@ -272,7 +272,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
             }
 
-            if(_hasNames && oldIsOn != _isOn)
+            if(_hasNames && oldIsOn != _triggerConditionNodeObserverContext.IsOn)
             {
                 Task.Run(() => {
                     OnChanged?.Invoke(_namesList);
@@ -314,7 +314,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
                 else
                 {
-                    _isOn = false;
+                    _triggerConditionNodeObserverContext.IsOn = false;
                 }
             }
 
@@ -362,7 +362,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
             else
             {
-                if(!_isOn)
+                if(!_triggerConditionNodeObserverContext.IsOn)
                 {
                     var setResult = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
 
@@ -429,7 +429,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     ProcessResetResultWithNoItems();
                 }
 
-                _isOn = false;
+                _triggerConditionNodeObserverContext.IsOn = false;
             }
 
         }
@@ -441,7 +441,7 @@ namespace SymOntoClay.Core.Internal.Instances
             //Log($"_hasResetHandler = {_hasResetHandler}");
 #endif
 
-            if (_isOn)
+            if (_triggerConditionNodeObserverContext.IsOn)
             {
 #if DEBUG
                 //Log("_isOn return;");
@@ -451,12 +451,12 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if(!isPeriodic || _hasResetHandler)
             {
-                _isOn = true;
+                _triggerConditionNodeObserverContext.IsOn = true;
             }
             else
             {
-                _triggerConditionNodeObserverContext.SetEachSeconds = Convert.ToInt64(_dateTimeProvider.CurrentTiks * _dateTimeProvider.SecondsMultiplicator);
-            }         
+                _triggerConditionNodeObserverContext.InitialEachTime = _dateTimeProvider.CurrentTiks;
+            }
 
             if(_hasRuleInstancesList)
             {
@@ -479,7 +479,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void ProcessSetResultWithItems(List<List<Var>> varList)
         {
-            _isOn = true;
+            _triggerConditionNodeObserverContext.IsOn = true;
 
             if (_hasRuleInstancesList)
             {
@@ -508,12 +508,12 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void ProcessResetResultWithNoItems()
         {
-            if(!_isOn)
+            if(!_triggerConditionNodeObserverContext.IsOn)
             {
                 return;
             }
 
-            _isOn = false;
+            _triggerConditionNodeObserverContext.IsOn = false;
 
             if (_hasRuleInstancesList)
             {
@@ -532,7 +532,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void ProcessResetResultWithItems(List<List<Var>> varList)
         {
-            _isOn = false;
+            _triggerConditionNodeObserverContext.IsOn = false;
 
             if (_hasRuleInstancesList)
             {

@@ -50,10 +50,18 @@ namespace SymOntoClay.UnityAsset.Core.Internal.DateAndTime
         private long _ticks = 0;
 
         /// <inheritdoc/>
-        public float SecondsMultiplicator => 0.1F;
+        public float TicksToSecondsMultiplicator => 0.001F;
 
         /// <inheritdoc/>
-        public float MillisecondsMultiplicator => 100;
+        public float SecondsToTicksMultiplicator => 1000F;
+
+        /// <inheritdoc/>
+        public float TicksToMillisecondsMultiplicator => 1F;
+
+        /// <inheritdoc/>
+        public float MillisecondsToTicksMultiplicator => 1F;
+
+        private int _millisecondsTimeout = 100;
 
         public void LoadFromSourceCode()
         {
@@ -75,14 +83,16 @@ namespace SymOntoClay.UnityAsset.Core.Internal.DateAndTime
             }
         }
 
+        
+
         private bool NRun(CancellationToken cancellationToken)
         {
             lock (_lockObj)
             {
-                _ticks++;
+                _ticks += _millisecondsTimeout;
             }
 
-            Thread.Sleep(100);
+            Thread.Sleep(_millisecondsTimeout);
 
             return true;
         }

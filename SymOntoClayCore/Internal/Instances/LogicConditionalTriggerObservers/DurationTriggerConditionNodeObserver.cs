@@ -34,15 +34,20 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 {
     public class DurationTriggerConditionNodeObserver : BaseTriggerConditionNodeObserver
     {
-        public DurationTriggerConditionNodeObserver(TriggerConditionNodeObserverContext context, TriggerConditionNode condition)
+        public DurationTriggerConditionNodeObserver(TriggerConditionNodeObserverContext context, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition)
             : base(context.EngineContext.Logger)
         {
+            if (kindOfTriggerCondition == KindOfTriggerCondition.SetCondition)
+            {
+                throw new Exception($"Duration can not be used in {kindOfTriggerCondition}");
+            }
+
             _context = context;
 
-            _targetDuration = TriggerConditionNodeHelper.GetInt32Duration(condition);
+            _targetDuration = _dateTimeResolver.ConvertTimeValueToTicks(condition.Value, DefaultTimeValues.DurationDefaultTimeValue);
 
             var engineContext = context.EngineContext;
-
+            _dateTimeProvider = engineContext.DateTimeProvider;
             _dateTimeResolver = engineContext.DataResolversFactory.GetDateTimeResolver();
 
             _activeObject = new AsyncActivePeriodicObject(engineContext.ActivePeriodicObjectContext);
@@ -52,22 +57,23 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
         private readonly IActivePeriodicObject _activeObject;
         private readonly DateTimeResolver _dateTimeResolver;
+        private readonly IDateTimeProvider _dateTimeProvider;
         private readonly TriggerConditionNodeObserverContext _context;
 
-        private readonly int _targetDuration;
+        private readonly long _targetDuration;
 
         private bool NRun(CancellationToken cancellationToken)
         {
             Thread.Sleep(100);
 
-            if (!_context.SetDurationSeconds.HasValue)
+            if (!_context.InitialDurationTime.HasValue)
             {
                 return true;
             }
 
-            var secondsNow = _dateTimeResolver.GetCurrentSeconds();
+            var ticksNow = _dateTimeProvider.CurrentTiks;
 
-            if (secondsNow > _context.SetDurationSeconds + _targetDuration)
+            if (ticksNow > _context.InitialDurationTime + _targetDuration)
             {
                 EmitOnChanged();
             }

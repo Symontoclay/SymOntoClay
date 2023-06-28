@@ -35,7 +35,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 {
     public class FactTriggerConditionNodeExecutor: BaseTriggerConditionNodeExecutor
     {
-        public FactTriggerConditionNodeExecutor(IEngineContext engineContext, ILocalCodeExecutionContext localCodeExecutionContext, TriggerConditionNode condition, BindingVariables bindingVariables)
+        public FactTriggerConditionNodeExecutor(IEngineContext engineContext, ILocalCodeExecutionContext localCodeExecutionContext, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition, BindingVariables bindingVariables)
             : base(engineContext.Logger)
         {
             _engineContext = engineContext;

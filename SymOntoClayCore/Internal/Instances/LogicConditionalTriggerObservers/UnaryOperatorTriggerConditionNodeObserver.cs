@@ -32,7 +32,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 {
     public class UnaryOperatorTriggerConditionNodeObserver : BaseTriggerConditionNodeObserver
     {
-        public UnaryOperatorTriggerConditionNodeObserver(IEntityLogger logger, IStorage storage, TriggerConditionNode condition)
+        public UnaryOperatorTriggerConditionNodeObserver(IEntityLogger logger, IStorage storage, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition)
             : base(logger)
         {
             _kindOfOperator = condition.KindOfOperator;

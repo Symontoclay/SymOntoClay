@@ -34,29 +34,29 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 {
     public static class TriggerConditionNodeExecutorsCreator
     {
-        public static BaseTriggerConditionNodeExecutor CreateExecutors(TriggerConditionNodeObserverContext context, ILocalCodeExecutionContext localCodeExecutionContext, BindingVariables bindingVariables, TriggerConditionNode condition)
+        public static BaseTriggerConditionNodeExecutor CreateExecutors(TriggerConditionNodeObserverContext context, ILocalCodeExecutionContext localCodeExecutionContext, BindingVariables bindingVariables, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition)
         {
-            return CreateExecutors(context, localCodeExecutionContext, bindingVariables, condition, true);
+            return CreateExecutors(context, localCodeExecutionContext, bindingVariables, condition, kindOfTriggerCondition, true);
         }
 
-        public static BaseTriggerConditionNodeExecutor CreateExecutors(TriggerConditionNodeObserverContext context, ILocalCodeExecutionContext localCodeExecutionContext, BindingVariables bindingVariables, TriggerConditionNode condition, bool conceptAsTriggerName)
+        public static BaseTriggerConditionNodeExecutor CreateExecutors(TriggerConditionNodeObserverContext context, ILocalCodeExecutionContext localCodeExecutionContext, BindingVariables bindingVariables, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition, bool conceptAsTriggerName)
         {
             switch(condition.Kind)
             {
                 case KindOfTriggerConditionNode.Fact:
-                    return new FactTriggerConditionNodeExecutor(context.EngineContext, localCodeExecutionContext, condition, bindingVariables);
+                    return new FactTriggerConditionNodeExecutor(context.EngineContext, localCodeExecutionContext, condition, kindOfTriggerCondition, bindingVariables);
 
                 case KindOfTriggerConditionNode.Duration:
-                    return new DurationTriggerConditionNodeExecutor(context, condition);
+                    return new DurationTriggerConditionNodeExecutor(context, condition, kindOfTriggerCondition);
 
                 case KindOfTriggerConditionNode.Each:
-                    return new EachTriggerConditionNodeExecutor(context, condition);
+                    return new EachTriggerConditionNodeExecutor(context, condition, kindOfTriggerCondition);
 
                 case KindOfTriggerConditionNode.BinaryOperator:
                     {
-                        var result = new BinaryOperatorTriggerConditionNodeExecutor(context.EngineContext, localCodeExecutionContext, condition);
-                        result.Left = CreateExecutors(context, localCodeExecutionContext, bindingVariables, condition.Left, conceptAsTriggerName);
-                        result.Right = CreateExecutors(context, localCodeExecutionContext, bindingVariables, condition.Right, conceptAsTriggerName);
+                        var result = new BinaryOperatorTriggerConditionNodeExecutor(context.EngineContext, localCodeExecutionContext, condition, kindOfTriggerCondition);
+                        result.Left = CreateExecutors(context, localCodeExecutionContext, bindingVariables, condition.Left, kindOfTriggerCondition, conceptAsTriggerName);
+                        result.Right = CreateExecutors(context, localCodeExecutionContext, bindingVariables, condition.Right, kindOfTriggerCondition, conceptAsTriggerName);
                         return result;
                     }
 
@@ -74,37 +74,37 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 
                                 foreach (var param in condition.ParamsList)
                                 {
-                                    paramsList.Add(CreateExecutors(context, localCodeExecutionContext, bindingVariables, param, false));
+                                    paramsList.Add(CreateExecutors(context, localCodeExecutionContext, bindingVariables, param, kindOfTriggerCondition, false));
                                 }
                             }
 
-                            result.Left = CreateExecutors(context, localCodeExecutionContext, bindingVariables, condition.Left, false);
+                            result.Left = CreateExecutors(context, localCodeExecutionContext, bindingVariables, condition.Left, kindOfTriggerCondition, false);
                         }
                         else
                         {
-                            result.Left = CreateExecutors(context, localCodeExecutionContext, bindingVariables, condition.Left, conceptAsTriggerName);
+                            result.Left = CreateExecutors(context, localCodeExecutionContext, bindingVariables, condition.Left, kindOfTriggerCondition, conceptAsTriggerName);
                         }
                         
                         return result;
                     }
 
                 case KindOfTriggerConditionNode.Var:
-                    return new VarTriggerConditionNodeExecutor(context.EngineContext, localCodeExecutionContext, condition);
+                    return new VarTriggerConditionNodeExecutor(context.EngineContext, localCodeExecutionContext, condition, kindOfTriggerCondition);
 
                 case KindOfTriggerConditionNode.Value:
-                    return new ValueTriggerConditionNodeExecutor(context.EngineContext.Logger, condition);
+                    return new ValueTriggerConditionNodeExecutor(context.EngineContext.Logger, condition, kindOfTriggerCondition);
 
                 case KindOfTriggerConditionNode.Concept:
                     if(conceptAsTriggerName)
                     {
-                        return new TriggerNameTriggerConditionNodeExecutor(context.EngineContext, localCodeExecutionContext, condition);
+                        return new TriggerNameTriggerConditionNodeExecutor(context.EngineContext, localCodeExecutionContext, condition, kindOfTriggerCondition);
                     }
                     return new ConceptTriggerConditionNodeExecutor(context.EngineContext.Logger, condition);
 
                 case KindOfTriggerConditionNode.Group:
                     {
                         var result = new GroupTriggerConditionNodeExecutor(context.EngineContext.Logger);
-                        result.Left = CreateExecutors(context, localCodeExecutionContext, bindingVariables, condition.Left, conceptAsTriggerName);
+                        result.Left = CreateExecutors(context, localCodeExecutionContext, bindingVariables, condition.Left, kindOfTriggerCondition, conceptAsTriggerName);
                         return result;
                     }
 

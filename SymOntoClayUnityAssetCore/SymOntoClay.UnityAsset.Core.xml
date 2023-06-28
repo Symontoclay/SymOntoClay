@@ -857,10 +857,16 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.GetNewEntity(System.String)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider.SecondsMultiplicator">
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider.TicksToSecondsMultiplicator">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider.MillisecondsMultiplicator">
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider.SecondsToTicksMultiplicator">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider.TicksToMillisecondsMultiplicator">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider.MillisecondsToTicksMultiplicator">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider.CurrentTiks">

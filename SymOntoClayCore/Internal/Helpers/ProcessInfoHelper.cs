@@ -52,7 +52,7 @@ namespace SymOntoClay.Core.Internal.Helpers
             if(cancelAfter.HasValue)
             {
                 var currentTick = dateTimeProvider.CurrentTiks;
-                initialTicks = currentTick * dateTimeProvider.MillisecondsMultiplicator;
+                initialTicks = currentTick * dateTimeProvider.TicksToMillisecondsMultiplicator;
             }
 
             while(true)
@@ -88,7 +88,7 @@ namespace SymOntoClay.Core.Internal.Helpers
                 if(cancelAfter.HasValue)
                 {
                     var currentTick = dateTimeProvider.CurrentTiks;
-                    var currentMilisecond = currentTick * dateTimeProvider.MillisecondsMultiplicator;
+                    var currentMilisecond = currentTick * dateTimeProvider.TicksToMillisecondsMultiplicator;
 
                     var delta = currentMilisecond - initialTicks;
 

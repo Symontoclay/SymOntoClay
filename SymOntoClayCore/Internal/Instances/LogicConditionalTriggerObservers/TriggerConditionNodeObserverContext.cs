@@ -41,8 +41,11 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
         public IStorage Storage { get; private set; }
         public StrongIdentifierValue Holder { get; private set; }
 
-        public long? SetDurationSeconds { get; set; }
-        public long? SetEachSeconds { get; set; }
+        public bool IsOn { get; set; }
+
+        public long? InitialDurationTime { get; set; }
+
+        public long? InitialEachTime { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -63,8 +66,9 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
             var sb = new StringBuilder();
 
             sb.PrintObjProp(n, nameof(Holder), Holder);
-            sb.AppendLine($"{spaces}{nameof(SetDurationSeconds)} = {SetDurationSeconds}");
-            sb.AppendLine($"{spaces}{nameof(SetEachSeconds)} = {SetEachSeconds}");
+            sb.AppendLine($"{spaces}{nameof(IsOn)} = {IsOn}");
+            sb.AppendLine($"{spaces}{nameof(InitialDurationTime)} = {InitialDurationTime}");
+            sb.AppendLine($"{spaces}{nameof(InitialEachTime)} = {InitialEachTime}");
 
             return sb.ToString();
         }
@@ -88,8 +92,9 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
             var sb = new StringBuilder();
 
             sb.PrintShortObjProp(n, nameof(Holder), Holder);
-            sb.AppendLine($"{spaces}{nameof(SetDurationSeconds)} = {SetDurationSeconds}");
-            sb.AppendLine($"{spaces}{nameof(SetEachSeconds)} = {SetEachSeconds}");
+            sb.AppendLine($"{spaces}{nameof(IsOn)} = {IsOn}");
+            sb.AppendLine($"{spaces}{nameof(InitialDurationTime)} = {InitialDurationTime}");
+            sb.AppendLine($"{spaces}{nameof(InitialEachTime)} = {InitialEachTime}");
 
             return sb.ToString();
         }
@@ -113,8 +118,9 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
             var sb = new StringBuilder();
 
             sb.PrintBriefObjProp(n, nameof(Holder), Holder);
-            sb.AppendLine($"{spaces}{nameof(SetDurationSeconds)} = {SetDurationSeconds}");
-            sb.AppendLine($"{spaces}{nameof(SetEachSeconds)} = {SetEachSeconds}");
+            sb.AppendLine($"{spaces}{nameof(IsOn)} = {IsOn}");
+            sb.AppendLine($"{spaces}{nameof(InitialDurationTime)} = {InitialDurationTime}");
+            sb.AppendLine($"{spaces}{nameof(InitialEachTime)} = {InitialEachTime}");
 
             return sb.ToString();
         }

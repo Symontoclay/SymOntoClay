@@ -42,7 +42,7 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             _triggerConditionNodeObserverContext = new TriggerConditionNodeObserverContext(context, _storage, parent.Name);
 
-            _setConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext, trigger.SetCondition, trigger.SetBindingVariables, parentCodeExecutionContext);
+            _setConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext, trigger.SetCondition, KindOfTriggerCondition.SetCondition, trigger.SetBindingVariables, parentCodeExecutionContext);
         }
 
         private readonly TriggerConditionNodeObserverContext _triggerConditionNodeObserverContext;

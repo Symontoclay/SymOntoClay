@@ -154,7 +154,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 var currentTick = _dateTimeProvider.CurrentTiks;
 
-                var currentMilisecond = currentTick * _dateTimeProvider.MillisecondsMultiplicator;
+                var currentMilisecond = currentTick * _dateTimeProvider.TicksToMillisecondsMultiplicator;
 
                 codeFrame.EndOfTargetDuration = Convert.ToInt64(currentMilisecond + timeout.Value);
             }
@@ -236,7 +236,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 {
                     var currentTick = _dateTimeProvider.CurrentTiks;
 
-                    var currentMilisecond = currentTick * _dateTimeProvider.MillisecondsMultiplicator;
+                    var currentMilisecond = currentTick * _dateTimeProvider.TicksToMillisecondsMultiplicator;
 
                     if (currentMilisecond >= endOfTargetDuration.Value)
                     {
@@ -1094,7 +1094,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 var currentTick = _dateTimeProvider.CurrentTiks;
 
-                var currentMilisecond = currentTick * _dateTimeProvider.MillisecondsMultiplicator;
+                var currentMilisecond = currentTick * _dateTimeProvider.TicksToMillisecondsMultiplicator;
 
                 if (currentMilisecond >= _endOfTargetDuration.Value)
                 {
@@ -1134,7 +1134,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     var currentTick = _dateTimeProvider.CurrentTiks;
 
-                    var currentMilisecond = currentTick * _dateTimeProvider.MillisecondsMultiplicator;
+                    var currentMilisecond = currentTick * _dateTimeProvider.TicksToMillisecondsMultiplicator;
 
                     _endOfTargetDuration = Convert.ToInt64(currentMilisecond + timeoutSystemVal);
 

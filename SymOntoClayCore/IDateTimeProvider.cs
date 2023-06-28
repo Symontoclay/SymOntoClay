@@ -28,8 +28,10 @@ namespace SymOntoClay.Core
 {
     public interface IDateTimeProvider
     {
-        float SecondsMultiplicator { get; }
-        float MillisecondsMultiplicator { get; }
+        float TicksToSecondsMultiplicator { get; }
+        float SecondsToTicksMultiplicator { get; }
+        float TicksToMillisecondsMultiplicator { get; }
+        float MillisecondsToTicksMultiplicator { get; }
         long CurrentTiks { get; }
     }
 }

@@ -36,7 +36,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 {
     public class LogicConditionalTriggerExecutor : BaseComponent
     {        
-        public LogicConditionalTriggerExecutor(TriggerConditionNodeObserverContext context, TriggerConditionNode condition, BindingVariables bindingVariables, ILocalCodeExecutionContext parentCodeExecutionContext)
+        public LogicConditionalTriggerExecutor(TriggerConditionNodeObserverContext context, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition, BindingVariables bindingVariables, ILocalCodeExecutionContext parentCodeExecutionContext)
             : base(context.EngineContext.Logger)
         {
             _toSystemBoolResolver = context.EngineContext.DataResolversFactory.GetToSystemBoolResolver();
@@ -45,7 +45,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
             localCodeExecutionContext.Storage = context.Storage;
             localCodeExecutionContext.Holder = context.Holder;
 
-            _node = TriggerConditionNodeExecutorsCreator.CreateExecutors(context, localCodeExecutionContext, bindingVariables, condition);
+            _node = TriggerConditionNodeExecutorsCreator.CreateExecutors(context, localCodeExecutionContext, bindingVariables, condition, kindOfTriggerCondition);
         }
 
         private ToSystemBoolResolver _toSystemBoolResolver;

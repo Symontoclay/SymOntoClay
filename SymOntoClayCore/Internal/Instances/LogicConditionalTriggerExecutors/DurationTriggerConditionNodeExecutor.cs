@@ -33,32 +33,39 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 {
     public class DurationTriggerConditionNodeExecutor : BaseTriggerConditionNodeExecutor
     {
-        public DurationTriggerConditionNodeExecutor(TriggerConditionNodeObserverContext context, TriggerConditionNode condition)
+        public DurationTriggerConditionNodeExecutor(TriggerConditionNodeObserverContext context, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition)
             : base(context.EngineContext.Logger)
         {
+            if (kindOfTriggerCondition == KindOfTriggerCondition.SetCondition)
+            {
+                throw new Exception($"Duration can not be used in {kindOfTriggerCondition}");
+            }
+
             _context = context;
+            var engineContext = context.EngineContext;
+            _dateTimeProvider = engineContext.DateTimeProvider;
             _dateTimeResolver = context.EngineContext.DataResolversFactory.GetDateTimeResolver();
 
-            _targetDuration = TriggerConditionNodeHelper.GetInt32Duration(condition);
+            _targetDuration = _dateTimeResolver.ConvertTimeValueToTicks(condition.Value, DefaultTimeValues.DurationDefaultTimeValue);
         }
 
         private readonly TriggerConditionNodeObserverContext _context;
 
         private readonly DateTimeResolver _dateTimeResolver;
-
-        private readonly int _targetDuration;
+        private readonly IDateTimeProvider _dateTimeProvider;
+        private readonly long _targetDuration;
 
         /// <inheritdoc/>
         public override (Value Value, bool IsPeriodic) Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
         {
-            if (!_context.SetDurationSeconds.HasValue)
+            if (!_context.InitialDurationTime.HasValue)
             {
                 return (LogicalValue.FalseValue, false);
             }
 
-            var secondsNow = _dateTimeResolver.GetCurrentSeconds();
+            var ticksNow = _dateTimeProvider.CurrentTiks;
 
-            if (secondsNow > _context.SetDurationSeconds + _targetDuration)
+            if (ticksNow > _context.InitialDurationTime + _targetDuration)
             {
                 return (LogicalValue.TrueValue, false);
             }

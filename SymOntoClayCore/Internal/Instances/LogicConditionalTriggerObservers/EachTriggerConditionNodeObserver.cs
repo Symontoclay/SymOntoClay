@@ -11,7 +11,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 {
     public class EachTriggerConditionNodeObserver : BaseTriggerConditionNodeObserver
     {
-        public EachTriggerConditionNodeObserver(TriggerConditionNodeObserverContext context, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition)
+        public EachTriggerConditionNodeObserver(TriggerConditionNodeObserverContext context, ILocalCodeExecutionContext localCodeExecutionContext, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition)
             : base(context.EngineContext.Logger)
         {
             if(kindOfTriggerCondition == KindOfTriggerCondition.ResetCondition)
@@ -27,7 +27,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
             _dateTimeResolver = engineContext.DataResolversFactory.GetDateTimeResolver();
 
-            _targetDuration = _dateTimeResolver.ConvertTimeValueToTicks(condition.Value, DefaultTimeValues.EachTimerDefaultTimeValue);
+            _targetDuration = _dateTimeResolver.ConvertTimeValueToTicks(condition.Value, DefaultTimeValues.EachTimerDefaultTimeValue, localCodeExecutionContext);
 
 #if DEBUG
             //Log($"_targetDuration = {_targetDuration}");

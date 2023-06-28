@@ -45,11 +45,16 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
             localCodeExecutionContext.Storage = context.Storage;
             localCodeExecutionContext.Holder = context.Holder;
 
+            _localCodeExecutionContext = localCodeExecutionContext;
+
             _node = TriggerConditionNodeExecutorsCreator.CreateExecutors(context, localCodeExecutionContext, bindingVariables, condition, kindOfTriggerCondition);
         }
 
         private ToSystemBoolResolver _toSystemBoolResolver;
         private readonly BaseTriggerConditionNodeExecutor _node;
+        private readonly ILocalCodeExecutionContext _localCodeExecutionContext;
+
+        public ILocalCodeExecutionContext LocalCodeExecutionContext => _localCodeExecutionContext;
 
         public (bool IsSuccess, bool IsPeriodic) Run(out List<List<Var>> varList)
         {

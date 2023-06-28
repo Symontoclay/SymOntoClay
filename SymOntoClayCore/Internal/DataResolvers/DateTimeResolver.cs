@@ -16,7 +16,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private readonly IDateTimeProvider _dateTimeProvider;
 
-        public long ConvertTimeValueToTicks(Value value, KindOfDefaultTimeValue kindOfDefaultTimeValue)
+        public long ConvertTimeValueToTicks(Value value, KindOfDefaultTimeValue kindOfDefaultTimeValue, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
             Log($"value = {value}");

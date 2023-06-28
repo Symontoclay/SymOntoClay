@@ -30,7 +30,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 {
     public static class TriggerConditionNodeObserversCreator
     {
-        public static List<BaseTriggerConditionNodeObserver> CreateObservers(TriggerConditionNodeObserverContext context, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition)
+        public static List<BaseTriggerConditionNodeObserver> CreateObservers(TriggerConditionNodeObserverContext context, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var result = new List<BaseTriggerConditionNodeObserver>();
 
@@ -39,7 +39,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
             return result;
         }
 
-        private static void CreateObservers(List<BaseTriggerConditionNodeObserver> result, TriggerConditionNodeObserverContext context, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition)
+        private static void CreateObservers(List<BaseTriggerConditionNodeObserver> result, TriggerConditionNodeObserverContext context, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             switch (condition.Kind)
             {

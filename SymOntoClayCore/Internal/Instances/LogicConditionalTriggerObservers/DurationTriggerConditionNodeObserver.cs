@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 {
     public class DurationTriggerConditionNodeObserver : BaseTriggerConditionNodeObserver
     {
-        public DurationTriggerConditionNodeObserver(TriggerConditionNodeObserverContext context, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition)
+        public DurationTriggerConditionNodeObserver(TriggerConditionNodeObserverContext context, ILocalCodeExecutionContext localCodeExecutionContext, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition)
             : base(context.EngineContext.Logger)
         {
             if (kindOfTriggerCondition == KindOfTriggerCondition.SetCondition)
@@ -44,7 +44,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
             _context = context;
 
-            _targetDuration = _dateTimeResolver.ConvertTimeValueToTicks(condition.Value, DefaultTimeValues.DurationDefaultTimeValue);
+            _targetDuration = _dateTimeResolver.ConvertTimeValueToTicks(condition.Value, DefaultTimeValues.DurationDefaultTimeValue, localCodeExecutionContext);
 
             var engineContext = context.EngineContext;
             _dateTimeProvider = engineContext.DateTimeProvider;

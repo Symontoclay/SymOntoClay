@@ -8,5 +8,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
     {
         public const KindOfDefaultTimeValue EachTimerDefaultTimeValue = KindOfDefaultTimeValue.Seconds;
         public const KindOfDefaultTimeValue DurationDefaultTimeValue = KindOfDefaultTimeValue.Seconds;
+        public const KindOfDefaultTimeValue TimeoutDefaultTimeValue = KindOfDefaultTimeValue.Milliseconds;
     }
 }

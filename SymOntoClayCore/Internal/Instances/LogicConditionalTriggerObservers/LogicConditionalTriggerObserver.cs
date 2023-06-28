@@ -31,10 +31,10 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 {
     public class LogicConditionalTriggerObserver : BaseComponent
     {
-        public LogicConditionalTriggerObserver(TriggerConditionNodeObserverContext context, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition)
+        public LogicConditionalTriggerObserver(TriggerConditionNodeObserverContext context, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition, ILocalCodeExecutionContext localCodeExecutionContext)
             : base(context.EngineContext.Logger)
         {
-            _observersList = TriggerConditionNodeObserversCreator.CreateObservers(context, condition, kindOfTriggerCondition);
+            _observersList = TriggerConditionNodeObserversCreator.CreateObservers(context, condition, kindOfTriggerCondition, localCodeExecutionContext);
 
             foreach (var observer in _observersList)
             {

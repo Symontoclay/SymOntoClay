@@ -11,7 +11,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 {
     public class EachTriggerConditionNodeExecutor : BaseTriggerConditionNodeExecutor
     {
-        public EachTriggerConditionNodeExecutor(TriggerConditionNodeObserverContext context, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition)
+        public EachTriggerConditionNodeExecutor(TriggerConditionNodeObserverContext context, ILocalCodeExecutionContext localCodeExecutionContext, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition)
             : base(context.EngineContext.Logger)
         {
             if (kindOfTriggerCondition == KindOfTriggerCondition.ResetCondition)
@@ -26,7 +26,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
             _dateTimeProvider = engineContext.DateTimeProvider;
             _dateTimeResolver = engineContext.DataResolversFactory.GetDateTimeResolver();
 
-            _targetDuration = _dateTimeResolver.ConvertTimeValueToTicks(condition.Value, DefaultTimeValues.EachTimerDefaultTimeValue);
+            _targetDuration = _dateTimeResolver.ConvertTimeValueToTicks(condition.Value, DefaultTimeValues.EachTimerDefaultTimeValue, localCodeExecutionContext);
         }
 
         private readonly TriggerConditionNodeObserverContext _context;

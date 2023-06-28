@@ -1,7 +1,13 @@
 ﻿app PeaceKeeper
 {
-	on each 1
+    fun a() => 
     {
-	    'D' >> @>log;
-	}
+        '`a` has been called!' >> @>log;
+    }
+
+    on Enter =>
+    {
+        a~();
+        wait 1000;
+    }
 }

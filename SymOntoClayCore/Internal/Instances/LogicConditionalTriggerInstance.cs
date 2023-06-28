@@ -66,8 +66,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _triggerConditionNodeObserverContext = new TriggerConditionNodeObserverContext(context, _storage, parent.Name);
 
-            _setConditionalTriggerObserver = new LogicConditionalTriggerObserver(_triggerConditionNodeObserverContext, trigger.SetCondition, KindOfTriggerCondition.SetCondition);
-            _setConditionalTriggerObserver.OnChanged += Observer_OnChanged;
+
 
             _ruleInstancesList = _trigger.RuleInstancesList;
 
@@ -82,14 +81,14 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _setConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext,  trigger.SetCondition, KindOfTriggerCondition.SetCondition, trigger.SetBindingVariables, _localCodeExecutionContext);
 
+            _setConditionalTriggerObserver = new LogicConditionalTriggerObserver(_triggerConditionNodeObserverContext, trigger.SetCondition, KindOfTriggerCondition.SetCondition, _setConditionalTriggerExecutor.LocalCodeExecutionContext);
+            _setConditionalTriggerObserver.OnChanged += Observer_OnChanged;
+
             _hasResetHandler = trigger.ResetCompiledFunctionBody != null;
 
             if (_trigger.ResetCondition != null)
             {
                 _hasResetConditions = true;
-
-                _resetConditionalTriggerObserver = new LogicConditionalTriggerObserver(_triggerConditionNodeObserverContext, trigger.ResetCondition, KindOfTriggerCondition.ResetCondition);
-                _resetConditionalTriggerObserver.OnChanged += Observer_OnChanged;
 
                 var resetBindingVariables = _trigger.ResetBindingVariables;
 
@@ -104,6 +103,9 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
 
                 _resetConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext, trigger.ResetCondition, KindOfTriggerCondition.ResetCondition, resetBindingVariables, _localCodeExecutionContext);
+
+                _resetConditionalTriggerObserver = new LogicConditionalTriggerObserver(_triggerConditionNodeObserverContext, trigger.ResetCondition, KindOfTriggerCondition.ResetCondition, _setConditionalTriggerExecutor.LocalCodeExecutionContext);
+                _resetConditionalTriggerObserver.OnChanged += Observer_OnChanged;
             }
         }
 

@@ -83,6 +83,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _statesResolver = dataResolversFactory.GetStatesResolver();
             _annotationsResolver = dataResolversFactory.GetAnnotationsResolver();
             _inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
+            _dateTimeResolver = dataResolversFactory.GetDateTimeResolver();
 
             _valueResolvingHelper = dataResolversFactory.GetValueResolvingHelper();
 
@@ -118,6 +119,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly StatesResolver _statesResolver;
         private readonly AnnotationsResolver _annotationsResolver;
         private readonly InheritanceResolver _inheritanceResolver;
+        private readonly DateTimeResolver _dateTimeResolver;
 
         private readonly ValueResolvingHelper _valueResolvingHelper;
         
@@ -1126,17 +1128,35 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 var firstParameter = positionedParameters[0];
 
+#if DEBUG
+                Log($"firstParameter = {firstParameter}");
+#endif
+
                 if (firstParameter.KindOfValue != KindOfValue.TaskValue)
                 {
+                    var timeoutSystemVal = _dateTimeResolver.ConvertTimeValueToTicks(firstParameter, DefaultTimeValues.TimeoutDefaultTimeValue, _currentCodeFrame.LocalContext);
+
+#if DEBUG
+                    Log($"timeoutSystemVal = {timeoutSystemVal}");
+#endif
+
+                    throw new NotImplementedException();
+
                     var timeoutNumVal = _numberValueLinearResolver.Resolve(firstParameter, _currentCodeFrame.LocalContext);
 
-                    var timeoutSystemVal = timeoutNumVal.SystemValue.Value;
+#if DEBUG
+                    Log($"timeoutNumVal = {timeoutNumVal}");
+#endif
 
                     var currentTick = _dateTimeProvider.CurrentTiks;
 
                     var currentMilisecond = currentTick * _dateTimeProvider.TicksToMillisecondsMultiplicator;
 
                     _endOfTargetDuration = Convert.ToInt64(currentMilisecond + timeoutSystemVal);
+
+#if DEBUG
+                    Log($"_endOfTargetDuration = {_endOfTargetDuration}");
+#endif
 
                     return;
                 }

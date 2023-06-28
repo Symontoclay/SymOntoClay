@@ -1096,9 +1096,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 var currentTick = _dateTimeProvider.CurrentTiks;
 
-                var currentMilisecond = currentTick * _dateTimeProvider.TicksToMillisecondsMultiplicator;
-
-                if (currentMilisecond >= _endOfTargetDuration.Value)
+                if (currentTick >= _endOfTargetDuration.Value)
                 {
                     _endOfTargetDuration = null;
                     _currentCodeFrame.CurrentPosition++;

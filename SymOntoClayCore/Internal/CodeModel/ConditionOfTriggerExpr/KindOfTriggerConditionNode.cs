@@ -44,6 +44,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr
         Var,
         Fact,
         Duration,
-        Each
+        Each,
+        Once
     }
 }

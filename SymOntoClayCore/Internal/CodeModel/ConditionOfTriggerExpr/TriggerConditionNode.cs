@@ -79,6 +79,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr
 
                 case KindOfTriggerConditionNode.Duration:
                 case KindOfTriggerConditionNode.Each:
+                case KindOfTriggerConditionNode.Once:
                     return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.StubWeight ^ Value.GetLongHashCode(options);
 
                 case KindOfTriggerConditionNode.Group:

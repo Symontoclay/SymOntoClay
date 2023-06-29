@@ -48,6 +48,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private TriggerConditionNode _lastBinaryOperator;
         private bool _hasSingleFactOrDuration;
         private bool _hasSingleEach;
+        private bool _hasSingleOnce;
 
         /// <inheritdoc/>
         protected override void OnFinish()
@@ -59,8 +60,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");            
+            Log($"_currToken = {_currToken}");
+            Log($"Result = {Result}");            
 #endif
 
             switch (_currToken.TokenKind)
@@ -139,6 +140,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             ProcessEach();
                             break;
 
+                        case KeyWordTokenKind.Once:
+                            ProcessOnce();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -162,7 +167,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case TokenKind.OpenRoundBracket:
-                    if (_hasSingleFactOrDuration || _hasSingleEach)
+                    if (_hasSingleFactOrDuration || _hasSingleEach || _hasSingleOnce)
                     {
                         _context.Recovery(_currToken);
                         Exit();
@@ -285,6 +290,33 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             if (!oldHasSomething)
             {
                 _hasSingleEach = true;
+            }
+        }
+
+        private void ProcessOnce()
+        {
+            var oldHasSomething = _hasSomething;
+
+            _lastBinaryOperator = null;
+            _lastIsOperator = null;
+            _hasSomething = true;
+
+            _context.Recovery(_currToken);
+
+            var parser = new TriggerConditionOnceParser(_context);
+            parser.Run();
+
+#if DEBUG
+            //Log($"parser.Result = {parser.Result}");
+#endif
+
+            var intermediateNode = new IntermediateAstNode(parser.Result);
+
+            AstNodesLinker.SetNode(intermediateNode, _nodePoint);
+
+            if (!oldHasSomething)
+            {
+                _hasSingleOnce = true;
             }
         }
 

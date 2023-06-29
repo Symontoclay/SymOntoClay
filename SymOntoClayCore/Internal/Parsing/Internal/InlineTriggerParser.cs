@@ -89,8 +89,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            //Log($"_state = {_state}");
-            //Log($"_currToken = {_currToken}");
+            Log($"_state = {_state}");
+            Log($"_currToken = {_currToken}");
             //Log($"Result = {Result}");            
 #endif
 
@@ -139,6 +139,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     break;
 
                                 case KeyWordTokenKind.Each:
+                                case KeyWordTokenKind.Once:
                                     {
                                         _inlineTrigger.KindOfInlineTrigger = KindOfInlineTrigger.LogicConditional;
 

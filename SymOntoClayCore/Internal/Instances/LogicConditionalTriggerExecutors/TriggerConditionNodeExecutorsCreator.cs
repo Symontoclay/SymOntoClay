@@ -52,6 +52,9 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
                 case KindOfTriggerConditionNode.Each:
                     return new EachTriggerConditionNodeExecutor(context, localCodeExecutionContext, condition, kindOfTriggerCondition);
 
+                case KindOfTriggerConditionNode.Once:
+                    return new OnceTriggerConditionNodeExecutor(context, localCodeExecutionContext, condition, kindOfTriggerCondition);
+
                 case KindOfTriggerConditionNode.BinaryOperator:
                     {
                         var result = new BinaryOperatorTriggerConditionNodeExecutor(context.EngineContext, localCodeExecutionContext, condition, kindOfTriggerCondition);

@@ -6592,6 +6592,9 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.GroupTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Var}},SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.OnceTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Var}},SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.TriggerNameTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Var}},SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
@@ -7476,6 +7479,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.TriggerConditionEachParser.OnRun">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.TriggerConditionOnceParser.OnRun">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.TriggerConditionParser.OnFinish">

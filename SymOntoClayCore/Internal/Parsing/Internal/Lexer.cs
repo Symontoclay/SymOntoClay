@@ -1180,6 +1180,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.Each;
                             break;
                         }
+
+                        if (string.Compare(content, "once", true) == 0)
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Once;
+                            break;
+                        }
                     }
                     break;
 

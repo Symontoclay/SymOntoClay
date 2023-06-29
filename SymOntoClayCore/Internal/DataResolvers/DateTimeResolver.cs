@@ -19,11 +19,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public long ConvertTimeValueToTicks(Value value, KindOfDefaultTimeValue kindOfDefaultTimeValue, ILocalCodeExecutionContext localCodeExecutionContext)
         {
 #if DEBUG
-            Log($"value = {value}");
-            Log($"kindOfDefaultTimeValue = {kindOfDefaultTimeValue}");
+            //Log($"value = {value}");
+            //Log($"kindOfDefaultTimeValue = {kindOfDefaultTimeValue}");
 #endif
-
-            //var timeoutNumVal = _numberValueLinearResolver.Resolve(firstParameter, _currentCodeFrame.LocalContext);
 
             var kindOfValue = value.KindOfValue;
 
@@ -31,6 +29,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 case KindOfValue.NumberValue:
                     return ConvertNumberValueToTicks(value.AsNumberValue, kindOfDefaultTimeValue);
+
+                case KindOfValue.StrongIdentifierValue:
+                    {
+                        ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving = null;
+
+                        return ConvertNumberValueToTicks(_context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(value.AsStrongIdentifierValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext), kindOfDefaultTimeValue);
+                    }
+
+                case KindOfValue.FuzzyLogicNonNumericSequenceValue:
+                    {
+                        ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving = null;
+
+                        return ConvertNumberValueToTicks(_context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(value.AsFuzzyLogicNonNumericSequenceValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext), kindOfDefaultTimeValue);
+                    }
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfValue), kindOfValue, null);
@@ -40,14 +52,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private long ConvertNumberValueToTicks(NumberValue value, KindOfDefaultTimeValue kindOfDefaultTimeValue)
         {
 #if DEBUG
-            Log($"value = {value}");
-            Log($"kindOfDefaultTimeValue = {kindOfDefaultTimeValue}");
+            //Log($"value = {value}");
+            //Log($"kindOfDefaultTimeValue = {kindOfDefaultTimeValue}");
 #endif
 
             var sysValue = Convert.ToInt64(value.SystemValue);
 
 #if DEBUG
-            Log($"sysValue = {sysValue}");
+            //Log($"sysValue = {sysValue}");
 #endif
 
             switch(kindOfDefaultTimeValue)
@@ -66,9 +78,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        public float GetCurrentSeconds()
-        {
-            return _dateTimeProvider.CurrentTiks * _dateTimeProvider.TicksToSecondsMultiplicator;
-        }
+        //public float GetCurrentSeconds()
+        //{
+        //    return _dateTimeProvider.CurrentTiks * _dateTimeProvider.TicksToSecondsMultiplicator;
+        //}
     }
 }

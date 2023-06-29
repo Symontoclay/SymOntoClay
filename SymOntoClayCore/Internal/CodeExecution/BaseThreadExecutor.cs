@@ -156,9 +156,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 var currentTick = _dateTimeProvider.CurrentTiks;
 
-                var currentMilisecond = currentTick * _dateTimeProvider.TicksToMillisecondsMultiplicator;
-
-                codeFrame.EndOfTargetDuration = Convert.ToInt64(currentMilisecond + timeout.Value);
+                codeFrame.EndOfTargetDuration = currentTick + timeout.Value;
             }
 
             _codeFrames.Push(codeFrame);
@@ -238,9 +236,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 {
                     var currentTick = _dateTimeProvider.CurrentTiks;
 
-                    var currentMilisecond = currentTick * _dateTimeProvider.TicksToMillisecondsMultiplicator;
-
-                    if (currentMilisecond >= endOfTargetDuration.Value)
+                    if (currentTick >= endOfTargetDuration.Value)
                     {
                         var timeoutCancellationMode = currentCodeFrame.TimeoutCancellationMode;
 
@@ -2002,14 +1998,22 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private long? GetTimeoutFromAnnotation(Value annotation)
         {
-            var numberValue = GetSettingsFromAnnotation(annotation, _timeoutName);
+#if DEBUG
+            //Log($"annotation = {annotation}");
+#endif
 
-            if(numberValue == null)
+            var initialValue = GetInitialSettingsValueFromAnnotation(annotation, _timeoutName);
+
+#if DEBUG
+            //Log($"initialValue = {initialValue}");
+#endif
+
+            if(initialValue == null)
             {
                 return null;
             }
 
-            return Convert.ToInt64(numberValue.SystemValue.Value);
+            return _dateTimeResolver.ConvertTimeValueToTicks(initialValue, DefaultTimeValues.TimeoutDefaultTimeValue, _currentCodeFrame.LocalContext);
         }
 
         private TimeoutCancellationMode _defaultTimeoutCancellationMode = TimeoutCancellationMode.WeakCancel;
@@ -2050,21 +2054,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private NumberValue GetSettingsFromAnnotation(Value annotation, StrongIdentifierValue settingName)
         {
-            if (annotation == null)
+            var initialValue = GetInitialSettingsValueFromAnnotation(annotation, settingName);
+
+            if (initialValue == null)
             {
                 return null;
             }
 
-            var localContext = _currentCodeFrame.LocalContext;
-
-            var initialValue = _annotationsResolver.GetSettings(annotation, settingName, localContext);
-
-            if (initialValue == null || initialValue.KindOfValue == KindOfValue.NullValue)
-            {
-                return null;
-            }
-
-            var numberValue = _numberValueLinearResolver.Resolve(initialValue, localContext);
+            var numberValue = _numberValueLinearResolver.Resolve(initialValue, _currentCodeFrame.LocalContext);
 
             if (numberValue == null || numberValue.KindOfValue == KindOfValue.NullValue)
             {
@@ -2072,6 +2069,23 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
             return numberValue;
+        }
+
+        private Value GetInitialSettingsValueFromAnnotation(Value annotation, StrongIdentifierValue settingName)
+        {
+            if (annotation == null)
+            {
+                return null;
+            }
+
+            var initialValue = _annotationsResolver.GetSettings(annotation, settingName, _currentCodeFrame.LocalContext);
+
+            if (initialValue == null || initialValue.KindOfValue == KindOfValue.NullValue)
+            {
+                return null;
+            }
+
+            return initialValue;
         }
 
         private void CallOperator(Operator op, List<Value> positionedParameters)

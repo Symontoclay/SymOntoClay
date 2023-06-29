@@ -87,19 +87,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     {
                         ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving = null;
 
-                        return _context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(source.AsStrongIdentifierValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext, options);
+                        return _context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(source.AsStrongIdentifierValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext);
                     }
 
                 case KindOfValue.FuzzyLogicNonNumericSequenceValue:
                     {
                         ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving = null;
 
-                        return _context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(source.AsFuzzyLogicNonNumericSequenceValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext, options);
+                        return _context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(source.AsFuzzyLogicNonNumericSequenceValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext);
                     }
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(sourceKind), sourceKind, null);
             }
         }
+
     }
 }

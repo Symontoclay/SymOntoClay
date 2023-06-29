@@ -49,7 +49,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 #if DEBUG
             Log($"_targetDuration = {_targetDuration}");
             //Log($"_context.IsOn = {_context.IsOn}");
-            Log($"_context.InitialEachTime = {_context.InitialEachTime}");
+            Log($"_context.InitialOnceTime = {_context.InitialOnceTime}");
 #endif
 
             throw new NotImplementedException();

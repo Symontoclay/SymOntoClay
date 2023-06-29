@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
         {
             var result = new List<BaseTriggerConditionNodeObserver>();
 
-            CreateObservers(result, context, condition, kindOfTriggerCondition);
+            CreateObservers(result, context, condition, kindOfTriggerCondition, localCodeExecutionContext);
 
             return result;
         }
@@ -48,11 +48,11 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
                     break;
 
                 case KindOfTriggerConditionNode.Duration:
-                    result.Add(new DurationTriggerConditionNodeObserver(context, condition, kindOfTriggerCondition));
+                    result.Add(new DurationTriggerConditionNodeObserver(context, localCodeExecutionContext, condition, kindOfTriggerCondition));
                     break;
 
                 case KindOfTriggerConditionNode.Each:
-                    result.Add(new EachTriggerConditionNodeObserver(context, condition, kindOfTriggerCondition));
+                    result.Add(new EachTriggerConditionNodeObserver(context, localCodeExecutionContext, condition, kindOfTriggerCondition));
                     break;
 
                 case KindOfTriggerConditionNode.Var:
@@ -63,8 +63,8 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
                     break;
 
                 case KindOfTriggerConditionNode.BinaryOperator:
-                    CreateObservers(result, context, condition.Left, kindOfTriggerCondition);
-                    CreateObservers(result, context, condition.Right, kindOfTriggerCondition);
+                    CreateObservers(result, context, condition.Left, kindOfTriggerCondition, localCodeExecutionContext);
+                    CreateObservers(result, context, condition.Right, kindOfTriggerCondition, localCodeExecutionContext);
                     break;
 
                 case KindOfTriggerConditionNode.UnaryOperator:
@@ -72,12 +72,12 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
                     if(condition.KindOfOperator != KindOfOperator.CallFunction)
                     {
-                        CreateObservers(result, context, condition.Left, kindOfTriggerCondition);
+                        CreateObservers(result, context, condition.Left, kindOfTriggerCondition, localCodeExecutionContext);
                     }
                     break;
 
                 case KindOfTriggerConditionNode.Group:
-                    CreateObservers(result, context, condition.Left, kindOfTriggerCondition);
+                    CreateObservers(result, context, condition.Left, kindOfTriggerCondition, localCodeExecutionContext);
                     break;
 
                 case KindOfTriggerConditionNode.Concept:

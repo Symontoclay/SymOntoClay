@@ -23,6 +23,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             Log($"kindOfDefaultTimeValue = {kindOfDefaultTimeValue}");
 #endif
 
+            //var timeoutNumVal = _numberValueLinearResolver.Resolve(firstParameter, _currentCodeFrame.LocalContext);
+
             var kindOfValue = value.KindOfValue;
 
             switch (kindOfValue)

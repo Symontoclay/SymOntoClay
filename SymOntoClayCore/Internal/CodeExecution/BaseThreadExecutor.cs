@@ -1127,7 +1127,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var firstParameter = positionedParameters[0];
 
 #if DEBUG
-                Log($"firstParameter = {firstParameter}");
+                //Log($"firstParameter = {firstParameter}");
 #endif
 
                 if (firstParameter.KindOfValue != KindOfValue.TaskValue)
@@ -1135,25 +1135,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     var timeoutSystemVal = _dateTimeResolver.ConvertTimeValueToTicks(firstParameter, DefaultTimeValues.TimeoutDefaultTimeValue, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-                    Log($"timeoutSystemVal = {timeoutSystemVal}");
-#endif
-
-                    throw new NotImplementedException();
-
-                    var timeoutNumVal = _numberValueLinearResolver.Resolve(firstParameter, _currentCodeFrame.LocalContext);
-
-#if DEBUG
-                    Log($"timeoutNumVal = {timeoutNumVal}");
+                    //Log($"timeoutSystemVal = {timeoutSystemVal}");
 #endif
 
                     var currentTick = _dateTimeProvider.CurrentTiks;
 
-                    var currentMilisecond = currentTick * _dateTimeProvider.TicksToMillisecondsMultiplicator;
-
-                    _endOfTargetDuration = Convert.ToInt64(currentMilisecond + timeoutSystemVal);
+                    _endOfTargetDuration = currentTick + timeoutSystemVal;
 
 #if DEBUG
-                    Log($"_endOfTargetDuration = {_endOfTargetDuration}");
+                    //Log($"_endOfTargetDuration = {_endOfTargetDuration}");
 #endif
 
                     return;

@@ -7,7 +7,9 @@
 
     on Enter =>
     {
+        'Begin' >> @>log;
         a~();
-        wait 1000;
+        wait 10000;
+        'End' >> @>log;
     }
 }

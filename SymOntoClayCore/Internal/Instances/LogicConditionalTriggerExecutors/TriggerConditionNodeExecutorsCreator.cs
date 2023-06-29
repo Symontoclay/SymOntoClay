@@ -47,10 +47,10 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
                     return new FactTriggerConditionNodeExecutor(context.EngineContext, localCodeExecutionContext, condition, kindOfTriggerCondition, bindingVariables);
 
                 case KindOfTriggerConditionNode.Duration:
-                    return new DurationTriggerConditionNodeExecutor(context, condition, kindOfTriggerCondition);
+                    return new DurationTriggerConditionNodeExecutor(context, localCodeExecutionContext, condition, kindOfTriggerCondition);
 
                 case KindOfTriggerConditionNode.Each:
-                    return new EachTriggerConditionNodeExecutor(context, condition, kindOfTriggerCondition);
+                    return new EachTriggerConditionNodeExecutor(context, localCodeExecutionContext, condition, kindOfTriggerCondition);
 
                 case KindOfTriggerConditionNode.BinaryOperator:
                     {

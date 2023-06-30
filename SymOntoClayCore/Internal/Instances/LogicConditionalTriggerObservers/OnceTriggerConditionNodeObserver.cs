@@ -42,17 +42,48 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
         private readonly long _targetDuration;
 
+        private bool _wasRun;
+
         private bool NRun(CancellationToken cancellationToken)
         {
             Thread.Sleep(100);
 
 #if DEBUG
-            Log($"_targetDuration = {_targetDuration}");
+            //Log($"_targetDuration = {_targetDuration}");
             //Log($"_context.IsOn = {_context.IsOn}");
-            Log($"_context.InitialOnceTime = {_context.InitialOnceTime}");
+            //Log($"_context.InitialSetTime = {_context.InitialSetTime}");
+            //Log($"_wasRun = {_wasRun}");
 #endif
 
-            throw new NotImplementedException();
+            if(_wasRun)
+            {
+                return false;
+            }
+
+            if (!_context.InitialSetTime.HasValue)
+            {
+                return true;
+            }
+
+            var ticksNow = _dateTimeProvider.CurrentTiks;
+
+#if DEBUG
+            //Log($"ticksNow = {ticksNow}");
+            //Log($"_context.InitialSetTime + _targetDuration = {_context.InitialSetTime + _targetDuration}");
+#endif
+
+            if (ticksNow > _context.InitialSetTime + _targetDuration)
+            {
+#if DEBUG
+                //Log($"EmitOnChanged() !!!!!!!!");
+#endif
+
+                _wasRun = true;
+
+                EmitOnChanged();
+            }
+
+            return true;
         }
     }
 }

@@ -43,9 +43,9 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
         public bool IsOn { get; set; }
 
-        public long? InitialDurationTime { get; set; }
+        public long? InitialResetTime { get; set; }
 
-        public long? InitialEachTime { get; set; }
+        public long? InitialSetTime { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -67,8 +67,8 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
             sb.PrintObjProp(n, nameof(Holder), Holder);
             sb.AppendLine($"{spaces}{nameof(IsOn)} = {IsOn}");
-            sb.AppendLine($"{spaces}{nameof(InitialDurationTime)} = {InitialDurationTime}");
-            sb.AppendLine($"{spaces}{nameof(InitialEachTime)} = {InitialEachTime}");
+            sb.AppendLine($"{spaces}{nameof(InitialResetTime)} = {InitialResetTime}");
+            sb.AppendLine($"{spaces}{nameof(InitialSetTime)} = {InitialSetTime}");
 
             return sb.ToString();
         }
@@ -93,8 +93,8 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
             sb.PrintShortObjProp(n, nameof(Holder), Holder);
             sb.AppendLine($"{spaces}{nameof(IsOn)} = {IsOn}");
-            sb.AppendLine($"{spaces}{nameof(InitialDurationTime)} = {InitialDurationTime}");
-            sb.AppendLine($"{spaces}{nameof(InitialEachTime)} = {InitialEachTime}");
+            sb.AppendLine($"{spaces}{nameof(InitialResetTime)} = {InitialResetTime}");
+            sb.AppendLine($"{spaces}{nameof(InitialSetTime)} = {InitialSetTime}");
 
             return sb.ToString();
         }
@@ -119,8 +119,8 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
             sb.PrintBriefObjProp(n, nameof(Holder), Holder);
             sb.AppendLine($"{spaces}{nameof(IsOn)} = {IsOn}");
-            sb.AppendLine($"{spaces}{nameof(InitialDurationTime)} = {InitialDurationTime}");
-            sb.AppendLine($"{spaces}{nameof(InitialEachTime)} = {InitialEachTime}");
+            sb.AppendLine($"{spaces}{nameof(InitialResetTime)} = {InitialResetTime}");
+            sb.AppendLine($"{spaces}{nameof(InitialSetTime)} = {InitialSetTime}");
 
             return sb.ToString();
         }

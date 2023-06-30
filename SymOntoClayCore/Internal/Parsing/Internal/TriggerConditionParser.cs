@@ -60,8 +60,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Log($"_currToken = {_currToken}");
-            Log($"Result = {Result}");            
+            //Log($"_currToken = {_currToken}");
+            //Log($"Result = {Result}");            
 #endif
 
             switch (_currToken.TokenKind)

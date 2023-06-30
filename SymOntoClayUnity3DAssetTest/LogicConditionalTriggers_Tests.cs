@@ -1869,5 +1869,32 @@ app PeaceKeeper
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case18()
+        {
+            var text = @"app PeaceKeeper
+{
+	on once 1
+    {
+	    'D' >> @>log;
+	}
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual("D", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
     }
 }

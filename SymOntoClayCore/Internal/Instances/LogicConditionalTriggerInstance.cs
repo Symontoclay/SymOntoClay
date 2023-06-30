@@ -242,23 +242,23 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if(_triggerConditionNodeObserverContext.IsOn)
             {
-                if(!_triggerConditionNodeObserverContext.InitialDurationTime.HasValue)
+                if(!_triggerConditionNodeObserverContext.InitialResetTime.HasValue)
                 {
-                    _triggerConditionNodeObserverContext.InitialDurationTime = _dateTimeProvider.CurrentTiks;
+                    _triggerConditionNodeObserverContext.InitialResetTime = _dateTimeProvider.CurrentTiks;
                 }
 
-                _triggerConditionNodeObserverContext.InitialEachTime = _dateTimeProvider.CurrentTiks;
+                _triggerConditionNodeObserverContext.InitialSetTime = _dateTimeProvider.CurrentTiks;
             }
             else
             {
-                if(_triggerConditionNodeObserverContext.InitialDurationTime.HasValue)
+                if(_triggerConditionNodeObserverContext.InitialResetTime.HasValue)
                 {
-                    _triggerConditionNodeObserverContext.InitialDurationTime = null;
+                    _triggerConditionNodeObserverContext.InitialResetTime = null;
                 }
 
-                if(!_triggerConditionNodeObserverContext.InitialEachTime.HasValue)
+                if(!_triggerConditionNodeObserverContext.InitialSetTime.HasValue)
                 {
-                    _triggerConditionNodeObserverContext.InitialEachTime = _dateTimeProvider.CurrentTiks;
+                    _triggerConditionNodeObserverContext.InitialSetTime = _dateTimeProvider.CurrentTiks;
                 }
             }
 
@@ -457,7 +457,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
             else
             {
-                _triggerConditionNodeObserverContext.InitialEachTime = _dateTimeProvider.CurrentTiks;
+                _triggerConditionNodeObserverContext.InitialSetTime = _dateTimeProvider.CurrentTiks;
             }
 
             if(_hasRuleInstancesList)

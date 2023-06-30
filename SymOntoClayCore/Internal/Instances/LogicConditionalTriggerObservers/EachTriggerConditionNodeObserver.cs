@@ -52,10 +52,10 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 #if DEBUG
             //Log($"_targetDuration = {_targetDuration}");
             //Log($"_context.IsOn = {_context.IsOn}");
-            //Log($"_context.InitialEachTime = {_context.InitialEachTime}");
+            //Log($"_context.InitialSetTime = {_context.InitialSetTime}");
 #endif
 
-            if (!_context.InitialEachTime.HasValue)
+            if (!_context.InitialSetTime.HasValue)
             {
                 return true;
             }
@@ -64,10 +64,10 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
 #if DEBUG
             //Log($"ticksNow = {ticksNow}");
-            //Log($"_context.InitialEachTime + _targetDuration = {_context.InitialEachTime + _targetDuration}");
+            //Log($"_context.InitialSetTime + _targetDuration = {_context.InitialSetTime + _targetDuration}");
 #endif
 
-            if (ticksNow > _context.InitialEachTime + _targetDuration)
+            if (ticksNow > _context.InitialSetTime + _targetDuration)
             {
 #if DEBUG
                 //Log($"EmitOnChanged() !!!!!!!!");

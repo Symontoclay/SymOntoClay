@@ -1,7 +1,15 @@
 ﻿app PeaceKeeper
 {
-	on once 1
+    fun a() => 
+    {       
+        wait 1;
+        '`a` has been called!' >> @>log;
+    }
+
+    on Enter =>
     {
-	    'D' >> @>log;
-	}
+        'Begin' >> @>log;
+        a()[: timeout = 0.1, on weak cancel { 'on weak cancel' >> @>log; } :];
+        'End' >> @>log;
+    }
 }

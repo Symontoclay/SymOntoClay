@@ -49,7 +49,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'Begin' >> @>log;
         var @task = a~();
         on @task complete { 'on complete' >> @>log; };
-        wait 1000;
+        wait 1;
         'End' >> @>log;
     }
 }";
@@ -106,7 +106,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'Begin' >> @>log;
         var @task = a~();
         on @task completed { 'on completed' >> @>log; };
-        wait 1000;
+        wait 1;
         'End' >> @>log;
     }
 }";
@@ -155,16 +155,16 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        var @task = a~() [: timeout = 100 :];
+        var @task = a~() [: timeout = 0.1 :];
         on @task weak cancel { 'on weak cancel' >> @>log; };
-        wait 2000;
+        wait 2;
         'End' >> @>log;
     }
 }";
@@ -199,16 +199,16 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        var @task = a~() [: timeout = 100 :];
+        var @task = a~() [: timeout = 0.1 :];
         on @task weak canceled { 'on weak canceled' >> @>log; };
-        wait 2000;
+        wait 2;
         'End' >> @>log;
     }
 }";
@@ -355,14 +355,14 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        var @task = a~~() [: timeout = 100 :];
+        var @task = a~~() [: timeout = 0.1 :];
         on @task weak cancel { 'on weak cancel' >> @>log; };
         'End' >> @>log;
     }
@@ -398,14 +398,14 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        var @task = a~~() [: timeout = 100 :];
+        var @task = a~~() [: timeout = 0.1 :];
         on @task weak canceled { 'on weak canceled' >> @>log; };
         'End' >> @>log;
     }
@@ -444,7 +444,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'Begin' >> @>log;
         var @task = @@host.SomeVeryShortSilentFun~();
         on @task complete { 'on complete' >> @>log; };
-        wait 1000;
+        wait 1;
         'End' >> @>log;
     }
 }";
@@ -484,7 +484,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         'Begin' >> @>log;
         var @task = @@host.SomeVeryShortSilentFun~();
         on @task completed { 'on completed' >> @>log; };
-        wait 1000;
+        wait 1;
         'End' >> @>log;
     }
 }";
@@ -522,9 +522,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     on Enter =>
     {
         'Begin' >> @>log;
-        var @task = @@host.SomeVeryLongSilentFun~() [: timeout = 100 :];
+        var @task = @@host.SomeVeryLongSilentFun~() [: timeout = 0.1 :];
         on @task weak cancel { 'on weak cancel' >> @>log; };
-        wait 2000;
+        wait 2;
         'End' >> @>log;
     }
 }";
@@ -562,9 +562,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     on Enter =>
     {
         'Begin' >> @>log;
-        var @task = @@host.SomeVeryLongSilentFun~() [: timeout = 100 :];
+        var @task = @@host.SomeVeryLongSilentFun~() [: timeout = 0.1 :];
         on @task weak canceled { 'on weak canceled' >> @>log; };
-        wait 2000;
+        wait 2;
         'End' >> @>log;
     }
 }";
@@ -680,7 +680,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     on Enter =>
     {
         'Begin' >> @>log;
-        var @task = @@host.SomeVeryLongSilentFun~~() [: timeout = 100 :];
+        var @task = @@host.SomeVeryLongSilentFun~~() [: timeout = 0.1 :];
         on @task weak cancel { 'on weak cancel' >> @>log; };
         'End' >> @>log;
     }
@@ -719,7 +719,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     on Enter =>
     {
         'Begin' >> @>log;
-        var @task = @@host.SomeVeryLongSilentFun~~() [: timeout = 100 :];
+        var @task = @@host.SomeVeryLongSilentFun~~() [: timeout = 0.1 :];
         on @task weak canceled { 'on weak canceled' >> @>log; };
         'End' >> @>log;
     }

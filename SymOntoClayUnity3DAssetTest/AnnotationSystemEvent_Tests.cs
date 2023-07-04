@@ -958,7 +958,7 @@ action Go
             @a >> @>log;
             @a = @a - 1;
 
-            @@host.`rotate`(30)[: timeout=1000, on complete { complete action; } :];
+            @@host.`rotate`(30)[: timeout=1, on complete { complete action; } :];
 
             if(@a > 5)
             {
@@ -1018,14 +1018,14 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a()[: timeout = 100, on weak cancel { 'on weak cancel' >> @>log; } :];
+        a()[: timeout = 0.1, on weak cancel { 'on weak cancel' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -1060,14 +1060,14 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a()[: timeout = 100, on weak canceled { 'on weak canceled' >> @>log; } :];
+        a()[: timeout = 0.1, on weak canceled { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -1102,14 +1102,14 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a()[: timeout = 100, on weak cancel => { 'on weak cancel' >> @>log; } :];
+        a()[: timeout = 0.1, on weak cancel => { 'on weak cancel' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -1144,14 +1144,14 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a()[: timeout = 100, on weak canceled => { 'on weak canceled' >> @>log; } :];
+        a()[: timeout = 0.1, on weak canceled => { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -1186,14 +1186,14 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a()[: timeout = 100, on weak cancel ~ { 'on weak cancel' >> @>log; } :];
+        a()[: timeout = 0.1, on weak cancel ~ { 'on weak cancel' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -1228,14 +1228,14 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a()[: timeout = 100, on weak canceled ~ { 'on weak canceled' >> @>log; } :];
+        a()[: timeout = 0.1, on weak canceled ~ { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -1270,14 +1270,14 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a()[: timeout = 100, on weak cancel ~ => { 'on weak cancel' >> @>log; } :];
+        a()[: timeout = 0.1, on weak cancel ~ => { 'on weak cancel' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -1312,14 +1312,14 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a()[: timeout = 100, on weak canceled ~ => { 'on weak canceled' >> @>log; } :];
+        a()[: timeout = 0.1, on weak canceled ~ => { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -1354,14 +1354,14 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a~~()[: timeout = 100, on weak cancel { 'on weak cancel' >> @>log; } :];
+        a~~()[: timeout = 0.1, on weak cancel { 'on weak cancel' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -1396,14 +1396,14 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a~~()[: timeout = 100, on weak canceled { 'on weak canceled' >> @>log; } :];
+        a~~()[: timeout = 0.1, on weak canceled { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -1438,14 +1438,14 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a~~()[: timeout = 100, on weak cancel => { 'on weak cancel' >> @>log; } :];
+        a~~()[: timeout = 0.1, on weak cancel => { 'on weak cancel' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -1480,14 +1480,14 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a~~()[: timeout = 100, on weak canceled => { 'on weak canceled' >> @>log; } :];
+        a~~()[: timeout = 0.1, on weak canceled => { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -1522,14 +1522,14 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a~~()[: timeout = 100, on weak cancel ~ { 'on weak cancel' >> @>log; } :];
+        a~~()[: timeout = 0.1, on weak cancel ~ { 'on weak cancel' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -1564,14 +1564,14 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a~~()[: timeout = 100, on weak canceled ~ { 'on weak canceled' >> @>log; } :];
+        a~~()[: timeout = 0.1, on weak canceled ~ { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -1606,14 +1606,14 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a~~()[: timeout = 100, on weak cancel ~ => { 'on weak cancel' >> @>log; } :];
+        a~~()[: timeout = 0.1, on weak cancel ~ => { 'on weak cancel' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -1648,14 +1648,14 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a~~()[: timeout = 100, on weak canceled ~ => { 'on weak canceled' >> @>log; } :];
+        a~~()[: timeout = 0.1, on weak canceled ~ => { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -1690,15 +1690,15 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a~()[: timeout = 100, on weak cancel { 'on weak cancel' >> @>log; } :];
-        wait 2000;
+        a~()[: timeout = 0.1, on weak cancel { 'on weak cancel' >> @>log; } :];
+        wait 2;
         'End' >> @>log;
     }
 }";
@@ -1733,15 +1733,15 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a~()[: timeout = 100, on weak canceled { 'on weak canceled' >> @>log; } :];
-        wait 2000;
+        a~()[: timeout = 0.1, on weak canceled { 'on weak canceled' >> @>log; } :];
+        wait 2;
         'End' >> @>log;
     }
 }";
@@ -1776,15 +1776,15 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a~()[: timeout = 100, on weak cancel => { 'on weak cancel' >> @>log; } :];
-        wait 2000;
+        a~()[: timeout = 0.1, on weak cancel => { 'on weak cancel' >> @>log; } :];
+        wait 2;
         'End' >> @>log;
     }
 }";
@@ -1819,15 +1819,15 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a~()[: timeout = 100, on weak canceled => { 'on weak canceled' >> @>log; } :];
-        wait 2000;
+        a~()[: timeout = 0.1, on weak canceled => { 'on weak canceled' >> @>log; } :];
+        wait 2;
         'End' >> @>log;
     }
 }";
@@ -1862,15 +1862,15 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a~()[: timeout = 100, on weak cancel ~ { 'on weak cancel' >> @>log; } :];
-        wait 2000;
+        a~()[: timeout = 0.1, on weak cancel ~ { 'on weak cancel' >> @>log; } :];
+        wait 2;
         'End' >> @>log;
     }
 }";
@@ -1905,15 +1905,15 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a~()[: timeout = 100, on weak canceled ~ { 'on weak canceled' >> @>log; } :];
-        wait 2000;
+        a~()[: timeout = 0.1, on weak canceled ~ { 'on weak canceled' >> @>log; } :];
+        wait 2;
         'End' >> @>log;
     }
 }";
@@ -1948,15 +1948,15 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a~()[: timeout = 100, on weak cancel ~ => { 'on weak cancel' >> @>log; } :];
-        wait 2000;
+        a~()[: timeout = 0.1, on weak cancel ~ => { 'on weak cancel' >> @>log; } :];
+        wait 2;
         'End' >> @>log;
     }
 }";
@@ -1991,15 +1991,15 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a~()[: timeout = 100, on weak canceled ~ => { 'on weak canceled' >> @>log; } :];
-        wait 2000;
+        a~()[: timeout = 0.1, on weak canceled ~ => { 'on weak canceled' >> @>log; } :];
+        wait 2;
         'End' >> @>log;
     }
 }";
@@ -2035,7 +2035,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun()[: timeout = 100, on weak cancel { 'on weak cancel' >> @>log; } :];
+        @@host.SomeVeryLongSilentFun()[: timeout = 0.1, on weak cancel { 'on weak cancel' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -2073,7 +2073,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun()[: timeout = 100, on weak canceled { 'on weak canceled' >> @>log; } :];
+        @@host.SomeVeryLongSilentFun()[: timeout = 0.1, on weak canceled { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -2111,7 +2111,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun()[: timeout = 100, on weak cancel => { 'on weak cancel' >> @>log; } :];
+        @@host.SomeVeryLongSilentFun()[: timeout = 0.1, on weak cancel => { 'on weak cancel' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -2149,7 +2149,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun()[: timeout = 100, on weak canceled => { 'on weak canceled' >> @>log; } :];
+        @@host.SomeVeryLongSilentFun()[: timeout = 0.1, on weak canceled => { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -2187,7 +2187,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun()[: timeout = 100, on weak cancel ~ { 'on weak cancel' >> @>log; } :];
+        @@host.SomeVeryLongSilentFun()[: timeout = 0.1, on weak cancel ~ { 'on weak cancel' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -2225,7 +2225,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun()[: timeout = 100, on weak canceled ~ { 'on weak canceled' >> @>log; } :];
+        @@host.SomeVeryLongSilentFun()[: timeout = 0.1, on weak canceled ~ { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -2263,7 +2263,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun()[: timeout = 100, on weak cancel ~ => { 'on weak cancel' >> @>log; } :];
+        @@host.SomeVeryLongSilentFun()[: timeout = 0.1, on weak cancel ~ => { 'on weak cancel' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -2301,7 +2301,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun()[: timeout = 100, on weak canceled ~ => { 'on weak canceled' >> @>log; } :];
+        @@host.SomeVeryLongSilentFun()[: timeout = 0.1, on weak canceled ~ => { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -2339,7 +2339,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun~~()[: timeout = 100, on weak cancel { 'on weak cancel' >> @>log; } :];
+        @@host.SomeVeryLongSilentFun~~()[: timeout = 0.1, on weak cancel { 'on weak cancel' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -2377,7 +2377,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun~~()[: timeout = 100, on weak canceled { 'on weak canceled' >> @>log; } :];
+        @@host.SomeVeryLongSilentFun~~()[: timeout = 0.1, on weak canceled { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -2415,7 +2415,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun~~()[: timeout = 100, on weak cancel => { 'on weak cancel' >> @>log; } :];
+        @@host.SomeVeryLongSilentFun~~()[: timeout = 0.1, on weak cancel => { 'on weak cancel' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -2453,7 +2453,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun~~()[: timeout = 100, on weak canceled => { 'on weak canceled' >> @>log; } :];
+        @@host.SomeVeryLongSilentFun~~()[: timeout = 0.1, on weak canceled => { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -2491,7 +2491,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun~~()[: timeout = 100, on weak cancel ~ { 'on weak cancel' >> @>log; } :];
+        @@host.SomeVeryLongSilentFun~~()[: timeout = 0.1, on weak cancel ~ { 'on weak cancel' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -2529,7 +2529,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun~~()[: timeout = 100, on weak canceled ~ { 'on weak canceled' >> @>log; } :];
+        @@host.SomeVeryLongSilentFun~~()[: timeout = 0.1, on weak canceled ~ { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -2567,7 +2567,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun~~()[: timeout = 100, on weak cancel ~ => { 'on weak cancel' >> @>log; } :];
+        @@host.SomeVeryLongSilentFun~~()[: timeout = 0.1, on weak cancel ~ => { 'on weak cancel' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -2605,7 +2605,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun~~()[: timeout = 100, on weak canceled ~ => { 'on weak canceled' >> @>log; } :];
+        @@host.SomeVeryLongSilentFun~~()[: timeout = 0.1, on weak canceled ~ => { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -2643,8 +2643,8 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun~()[: timeout = 100, on weak cancel { 'on weak cancel' >> @>log; } :];
-        wait 2000;
+        @@host.SomeVeryLongSilentFun~()[: timeout = 0.1, on weak cancel { 'on weak cancel' >> @>log; } :];
+        wait 2;
         'End' >> @>log;
     }
 }";
@@ -2682,8 +2682,8 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun~()[: timeout = 100, on weak canceled { 'on weak canceled' >> @>log; } :];
-        wait 2000;
+        @@host.SomeVeryLongSilentFun~()[: timeout = 0.1, on weak canceled { 'on weak canceled' >> @>log; } :];
+        wait 2;
         'End' >> @>log;
     }
 }";
@@ -2721,8 +2721,8 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun~()[: timeout = 100, on weak cancel => { 'on weak cancel' >> @>log; } :];
-        wait 2000;
+        @@host.SomeVeryLongSilentFun~()[: timeout = 0.1, on weak cancel => { 'on weak cancel' >> @>log; } :];
+        wait 2;
         'End' >> @>log;
     }
 }";
@@ -2760,8 +2760,8 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun~()[: timeout = 100, on weak canceled => { 'on weak canceled' >> @>log; } :];
-        wait 2000;
+        @@host.SomeVeryLongSilentFun~()[: timeout = 0.1, on weak canceled => { 'on weak canceled' >> @>log; } :];
+        wait 2;
         'End' >> @>log;
     }
 }";
@@ -2799,8 +2799,8 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun~()[: timeout = 100, on weak cancel ~ { 'on weak cancel' >> @>log; } :];
-        wait 2000;
+        @@host.SomeVeryLongSilentFun~()[: timeout = 0.1, on weak cancel ~ { 'on weak cancel' >> @>log; } :];
+        wait 2;
         'End' >> @>log;
     }
 }";
@@ -2838,8 +2838,8 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun~()[: timeout = 100, on weak canceled ~ { 'on weak canceled' >> @>log; } :];
-        wait 2000;
+        @@host.SomeVeryLongSilentFun~()[: timeout = 0.1, on weak canceled ~ { 'on weak canceled' >> @>log; } :];
+        wait 2;
         'End' >> @>log;
     }
 }";
@@ -2877,8 +2877,8 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun~()[: timeout = 100, on weak cancel ~ => { 'on weak cancel' >> @>log; } :];
-        wait 2000;
+        @@host.SomeVeryLongSilentFun~()[: timeout = 0.1, on weak cancel ~ => { 'on weak cancel' >> @>log; } :];
+        wait 2;
         'End' >> @>log;
     }
 }";
@@ -2916,8 +2916,8 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun~()[: timeout = 100, on weak canceled ~ => { 'on weak canceled' >> @>log; } :];
-        wait 2000;
+        @@host.SomeVeryLongSilentFun~()[: timeout = 0.1, on weak canceled ~ => { 'on weak canceled' >> @>log; } :];
+        wait 2;
         'End' >> @>log;
     }
 }";
@@ -2955,7 +2955,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun~~()[: timeout = 100, weak cancel, on weak canceled { 'on weak canceled' >> @>log; } :];
+        @@host.SomeVeryLongSilentFun~~()[: timeout = 0.1, weak cancel, on weak canceled { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -2993,7 +2993,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun~~()[: timeout = 100, cancel, on weak canceled { 'on weak canceled' >> @>log; } :];
+        @@host.SomeVeryLongSilentFun~~()[: timeout = 0.1, cancel, on weak canceled { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -3027,7 +3027,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun()[: timeout = 100, weak cancel, on weak canceled { 'on weak canceled' >> @>log; } :];
+        @@host.SomeVeryLongSilentFun()[: timeout = 0.1, weak cancel, on weak canceled { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -3065,7 +3065,7 @@ action Go
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.SomeVeryLongSilentFun()[: timeout = 100, cancel, on weak canceled { 'on weak canceled' >> @>log; } :];
+        @@host.SomeVeryLongSilentFun()[: timeout = 0.1, cancel, on weak canceled { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -3094,14 +3094,14 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a()[: timeout = 100, weak cancel, on weak canceled => { 'on weak canceled' >> @>log; } :];
+        a()[: timeout = 0.1, weak cancel, on weak canceled => { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -3136,14 +3136,14 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a()[: timeout = 100, cancel, on weak canceled => { 'on weak canceled' >> @>log; } :];
+        a()[: timeout = 0.1, cancel, on weak canceled => { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -3170,14 +3170,14 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a~~()[: timeout = 100, weak cancel, on weak canceled => { 'on weak canceled' >> @>log; } :];
+        a~~()[: timeout = 0.1, weak cancel, on weak canceled => { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -3212,14 +3212,14 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a~~()[: timeout = 100, cancel, on weak canceled => { 'on weak canceled' >> @>log; } :];
+        a~~()[: timeout = 0.1, cancel, on weak canceled => { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -3250,14 +3250,14 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a~()[: timeout = 100, weak cancel, on weak canceled => { 'on weak canceled' >> @>log; } :];
+        a~()[: timeout = 0.1, weak cancel, on weak canceled => { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -3292,14 +3292,14 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a~~()[: timeout = 100, cancel, on weak canceled => { 'on weak canceled' >> @>log; } :];
+        a~~()[: timeout = 0.1, cancel, on weak canceled => { 'on weak canceled' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -3330,15 +3330,15 @@ action Go
 {
     fun a() => 
     {       
-        wait 1000;
+        wait 1;
         '`a` has been called!' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a~()[: timeout = 100, weak cancel, on weak canceled => { 'on weak canceled' >> @>log; } :];
-        wait 2000;
+        a~()[: timeout = 0.1, weak cancel, on weak canceled => { 'on weak canceled' >> @>log; } :];
+        wait 2;
         'End' >> @>log;
     }
 }";

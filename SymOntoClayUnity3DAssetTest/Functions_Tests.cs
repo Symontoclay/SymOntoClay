@@ -1965,7 +1965,7 @@ app PeaceKeeper
     on Enter =>
     {
         a~();
-        wait 1000;
+        wait 1;
     }
 }";
 

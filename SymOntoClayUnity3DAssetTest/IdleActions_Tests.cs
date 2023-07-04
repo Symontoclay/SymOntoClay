@@ -46,7 +46,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     fun go()
     {
         'GO()' >> @>log;
-        wait 10000;
+        wait 10;
     }
 }";
 
@@ -73,13 +73,13 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     idle actions
     {
-        go()[: timeout=1000 :];
+        go()[: timeout=1 :];
     }
 
     fun go()
     {
         'GO()' >> @>log;
-        wait 10000;
+        wait 10;
     }
 }";
 
@@ -105,7 +105,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     {
         'GO()' >> @>log;
         @direction >> @>log;
-        wait 10000;
+        wait 10;
     }
 }";
 
@@ -136,13 +136,13 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
     idle actions
     {
-        {: >: { direction($x1,#@(place & color = green)) & $x1 = go(someone,self) } o: 1 :}[: timeout=1000 :];
+        {: >: { direction($x1,#@(place & color = green)) & $x1 = go(someone,self) } o: 1 :}[: timeout=1 :];
     }
 
     fun go(@direction)
     {
         'GO()' >> @>log;
-        wait 10000;
+        wait 10;
     }
 }";
 

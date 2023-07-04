@@ -495,7 +495,7 @@ action `move and check`
 
 	    repeat
 		{
-		    @@host.go(to: @target)[: timeout = 1200, on complete {'on complete move' >> @>log; complete action;} :];
+		    @@host.go(to: @target)[: timeout = 1.2, on complete {'on complete move' >> @>log; complete action;} :];
 			check();			
 		}
 
@@ -685,7 +685,7 @@ action `move and check`
 
 	    repeat
 		{
-		    @@host.go(to: @target)[: timeout = 1200, on completed {'on completed move' >> @>log; complete action;} :];
+		    @@host.go(to: @target)[: timeout = 1.2, on completed {'on completed move' >> @>log; complete action;} :];
 			check();			
 		}
 

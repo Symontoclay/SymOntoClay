@@ -749,439 +749,439 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
                         }
 
-                        if (string.Compare(content, "world", true) == 0)
+                        if (string.Equals(content, "world", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.World;
                             break;
                         }
 
-                        if (string.Compare(content, "app", true) == 0)
+                        if (string.Equals(content, "app", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.App;
                             break;
                         }
 
-                        if (string.Compare(content, "lib", true) == 0)
+                        if (string.Equals(content, "lib", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Lib;
                             break;
                         }
 
-                        if (string.Compare(content, "class", true) == 0)
+                        if (string.Equals(content, "class", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Class;
                             break;
                         }
 
-                        if (string.Compare(content, "action", true) == 0)
+                        if (string.Equals(content, "action", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Action;
                             break;
                         }
 
-                        if (string.Compare(content, "actions", true) == 0)
+                        if (string.Equals(content, "actions", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Actions;
                             break;
                         }
 
-                        if (string.Compare(content, "fun", true) == 0)
+                        if (string.Equals(content, "fun", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Fun;
                             break;
                         }
 
-                        if (string.Compare(content, "ctor", true) == 0)
+                        if (string.Equals(content, "ctor", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Constructor;
                             break;
                         }
 
-                        if (string.Compare(content, "op", true) == 0)
+                        if (string.Equals(content, "op", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Operator;
                             break;
                         }
 
-                        if (string.Compare(content, "is", true) == 0)
+                        if (string.Equals(content, "is", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Is;
                             break;
                         }
 
-                        if (string.Compare(content, "on", true) == 0)
+                        if (string.Equals(content, "on", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.On;
                             break;
                         }
 
-                        if (string.Compare(content, "init", true) == 0)
+                        if (string.Equals(content, "init", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Init;
                             break;
                         }
 
-                        if (string.Compare(content, "enter", true) == 0)
+                        if (string.Equals(content, "enter", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Enter;
                             break;
                         }
 
-                        if (string.Compare(content, "leave", true) == 0)
+                        if (string.Equals(content, "leave", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Leave;
                             break;
                         }
 
-                        if (string.Compare(content, "set", true) == 0)
+                        if (string.Equals(content, "set", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Set;
                             break;
                         }                        
 
-                        if (string.Compare(content, "not", true) == 0)
+                        if (string.Equals(content, "not", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Not;
                             break;
                         }
 
-                        if (string.Compare(content, "and", true) == 0)
+                        if (string.Equals(content, "and", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.And;
                             break;
                         }
 
-                        if (string.Compare(content, "or", true) == 0)
+                        if (string.Equals(content, "or", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Or;
                             break;
                         }
 
-                        if (string.Compare(content, "select", true) == 0)
+                        if (string.Equals(content, "select", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Select;
                             break;
                         }
 
-                        if (string.Compare(content, "insert", true) == 0)
+                        if (string.Equals(content, "insert", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Insert;
                             break;
                         }
 
-                        if (string.Compare(content, "null", true) == 0)
+                        if (string.Equals(content, "null", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Null;
                             break;
                         }
 
-                        if (string.Compare(content, "linvar", true) == 0)
+                        if (string.Equals(content, "linvar", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.LinguisticVariable;
                             break;
                         }
 
-                        if (string.Compare(content, "for", true) == 0)
+                        if (string.Equals(content, "for", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.For;
                             break;
                         }
 
-                        if (string.Compare(content, "range", true) == 0)
+                        if (string.Equals(content, "range", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Range;
                             break;
                         }
 
-                        if (string.Compare(content, "terms", true) == 0)
+                        if (string.Equals(content, "terms", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Terms;
                             break;
                         }
 
-                        if (string.Compare(content, "constraints", true) == 0)
+                        if (string.Equals(content, "constraints", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Constraints;
                             break;
                         }
 
-                        if (string.Compare(content, "relation", true) == 0)
+                        if (string.Equals(content, "relation", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Relation;
                             break;
                         }
 
-                        if (string.Compare(content, "rel", true) == 0)
+                        if (string.Equals(content, "rel", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Relation;
                             break;
                         }
 
-                        if (string.Compare(content, "inheritance", true) == 0)
+                        if (string.Equals(content, "inheritance", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Inheritance;
                             break;
                         }
 
-                        if (string.Compare(content, "inh", true) == 0)
+                        if (string.Equals(content, "inh", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Inheritance;
                             break;
                         }
 
-                        if (string.Compare(content, "error", true) == 0)
+                        if (string.Equals(content, "error", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Error;
                             break;
                         }
 
-                        if (string.Compare(content, "try", true) == 0)
+                        if (string.Equals(content, "try", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Try;
                             break;
                         }
 
-                        if (string.Compare(content, "catch", true) == 0)
+                        if (string.Equals(content, "catch", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Catch;
                             break;
                         }
 
-                        if (string.Compare(content, "else", true) == 0)
+                        if (string.Equals(content, "else", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Else;
                             break;
                         }
 
-                        if (string.Compare(content, "ensure", true) == 0)
+                        if (string.Equals(content, "ensure", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Ensure;
                             break;
                         }
 
-                        if (string.Compare(content, "where", true) == 0)
+                        if (string.Equals(content, "where", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Where;
                             break;
                         }
 
-                        if (string.Compare(content, "await", true) == 0)
+                        if (string.Equals(content, "await", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Await;
                             break;
                         }
 
-                        if (string.Compare(content, "wait", true) == 0)
+                        if (string.Equals(content, "wait", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Wait;
                             break;
                         }
 
-                        if (string.Compare(content, "complete", true) == 0)
+                        if (string.Equals(content, "complete", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Complete;
                             break;
                         }
 
-                        if (string.Compare(content, "completed", true) == 0)
+                        if (string.Equals(content, "completed", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Completed;
                             break;
                         }
 
-                        if (string.Compare(content, "break", true) == 0)
+                        if (string.Equals(content, "break", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Break;
                             break;
                         }
 
-                        if (string.Compare(content, "alias", true) == 0)
+                        if (string.Equals(content, "alias", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Alias;
                             break;
                         }
 
-                        if (string.Compare(content, "var", true) == 0)
+                        if (string.Equals(content, "var", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Var;
                             break;
                         }
 
-                        if (string.Compare(content, "public", true) == 0)
+                        if (string.Equals(content, "public", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Public;
                             break;
                         }
 
-                        if (string.Compare(content, "protected", true) == 0)
+                        if (string.Equals(content, "protected", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Protected;
                             break;
                         }
 
-                        if (string.Compare(content, "private", true) == 0)
+                        if (string.Equals(content, "private", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Private;
                             break;
                         }
 
-                        if (string.Compare(content, "return", true) == 0)
+                        if (string.Equals(content, "return", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Return;
                             break;
                         }
 
-                        if (string.Compare(content, "if", true) == 0)
+                        if (string.Equals(content, "if", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.If;
                             break;
                         }
 
-                        if (string.Compare(content, "elif", true) == 0)
+                        if (string.Equals(content, "elif", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Elif;
                             break;
                         }
 
-                        if (string.Compare(content, "while", true) == 0)
+                        if (string.Equals(content, "while", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.While;
                             break;
                         }
 
-                        if (string.Compare(content, "continue", true) == 0)
+                        if (string.Equals(content, "continue", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Continue;
                             break;
                         }
 
-                        if (string.Compare(content, "repeat", true) == 0)
+                        if (string.Equals(content, "repeat", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Repeat;
                             break;
                         }
 
-                        if (string.Compare(content, "state", true) == 0)
+                        if (string.Equals(content, "state", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.State;
                             break;
                         }
 
-                        if (string.Compare(content, "states", true) == 0)
+                        if (string.Equals(content, "states", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.States;
                             break;
                         }
 
-                        if (string.Compare(content, "as", true) == 0)
+                        if (string.Equals(content, "as", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.As;
                             break;
                         }
 
-                        if (string.Compare(content, "default", true) == 0)
+                        if (string.Equals(content, "default", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Default;
                             break;
                         }
 
-                        if (string.Compare(content, "down", true) == 0)
+                        if (string.Equals(content, "down", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Down;
                             break;
                         }
 
-                        if (string.Compare(content, "duration", true) == 0)
+                        if (string.Equals(content, "duration", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Duration;
                             break;
                         }
 
-                        if (string.Compare(content, "_", true) == 0)
+                        if (string.Equals(content, "_", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.BlankIdentifier;
                             break;
                         }
 
-                        if (string.Compare(content, "add", true) == 0)
+                        if (string.Equals(content, "add", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Add;
                             break;
                         }
 
-                        if (string.Compare(content, "fact", true) == 0)
+                        if (string.Equals(content, "fact", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Fact;
                             break;
                         }
 
-                        if (string.Compare(content, "reject", true) == 0)
+                        if (string.Equals(content, "reject", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Reject;
                             break;
                         }
 
-                        if (string.Compare(content, "exec", true) == 0)
+                        if (string.Equals(content, "exec", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Exec;
                             break;
                         }
 
-                        if (string.Compare(content, "synonym", true) == 0)
+                        if (string.Equals(content, "synonym", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Synonym;
                             break;
                         }
 
-                        if (string.Compare(content, "idle", true) == 0)
+                        if (string.Equals(content, "idle", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Idle;
                             break;
                         }
 
-                        if (string.Compare(content, "with", true) == 0)
+                        if (string.Equals(content, "with", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.With;
                             break;
                         }
 
-                        if (string.Compare(content, "import", true) == 0)
+                        if (string.Equals(content, "import", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Import;
                             break;
                         }
 
-                        if (string.Compare(content, "new", true) == 0)
+                        if (string.Equals(content, "new", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.New;
                             break;
                         }
 
-                        if (string.Compare(content, "weak", true) == 0)
+                        if (string.Equals(content, "weak", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Weak;
                             break;
                         }
 
-                        if (string.Compare(content, "cancel", true) == 0)
+                        if (string.Equals(content, "cancel", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Cancel;
                             break;
                         }
 
-                        if (string.Compare(content, "canceled", true) == 0)
+                        if (string.Equals(content, "canceled", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Canceled;
                             break;
                         }
 
-                        if (string.Compare(content, "each", true) == 0)
+                        if (string.Equals(content, "each", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Each;
                             break;
                         }
 
-                        if (string.Compare(content, "once", true) == 0)
+                        if (string.Equals(content, "once", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Once;
                             break;

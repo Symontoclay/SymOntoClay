@@ -138,6 +138,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 case KindOfLogicalQueryNode.Value:
                     return Value.Equals(other.Value);
 
+                case KindOfLogicalQueryNode.Group:
+                    return Left.Equals(other.Left);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
             }

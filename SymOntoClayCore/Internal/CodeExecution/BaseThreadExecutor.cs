@@ -1119,7 +1119,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var positionedParameters = TakePositionedParameters(currentCommand.CountParams, true);
 
 #if DEBUG
-            Log($"positionedParameters = {positionedParameters.WriteListToString()}");
+            //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
 #endif
 
             if (positionedParameters.Count == 1)
@@ -1127,7 +1127,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var firstParameter = positionedParameters[0];
 
 #if DEBUG
-                Log($"firstParameter = {firstParameter}");
+                //Log($"firstParameter = {firstParameter}");
 #endif
 
                 if (firstParameter.KindOfValue != KindOfValue.TaskValue)
@@ -1135,7 +1135,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     var timeoutSystemVal = _dateTimeResolver.ConvertTimeValueToTicks(firstParameter, DefaultTimeValues.TimeoutDefaultTimeValue, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-                    Log($"timeoutSystemVal = {timeoutSystemVal}");
+                    //Log($"timeoutSystemVal = {timeoutSystemVal}");
 #endif
 
                     var currentTick = _dateTimeProvider.CurrentTiks;
@@ -1143,7 +1143,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     _endOfTargetDuration = currentTick + timeoutSystemVal;
 
 #if DEBUG
-                    Log($"_endOfTargetDuration = {_endOfTargetDuration}");
+                    //Log($"_endOfTargetDuration = {_endOfTargetDuration}");
 #endif
 
                     return;
@@ -1160,6 +1160,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if(positionedParameters.Any(p => p.KindOfValue == KindOfValue.ProcessInfoValue))
                 {
+#if DEBUG
+                    Log($"positionedParameters = {positionedParameters.WriteListToString()}");
+#endif
+
                     throw new NotImplementedException();
                 }
 

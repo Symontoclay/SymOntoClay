@@ -1118,12 +1118,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var positionedParameters = TakePositionedParameters(currentCommand.CountParams, true);
 
+#if DEBUG
+            Log($"positionedParameters = {positionedParameters.WriteListToString()}");
+#endif
+
             if (positionedParameters.Count == 1)
             {
                 var firstParameter = positionedParameters[0];
 
 #if DEBUG
-                //Log($"firstParameter = {firstParameter}");
+                Log($"firstParameter = {firstParameter}");
 #endif
 
                 if (firstParameter.KindOfValue != KindOfValue.TaskValue)
@@ -1131,7 +1135,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     var timeoutSystemVal = _dateTimeResolver.ConvertTimeValueToTicks(firstParameter, DefaultTimeValues.TimeoutDefaultTimeValue, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-                    //Log($"timeoutSystemVal = {timeoutSystemVal}");
+                    Log($"timeoutSystemVal = {timeoutSystemVal}");
 #endif
 
                     var currentTick = _dateTimeProvider.CurrentTiks;
@@ -1139,16 +1143,26 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     _endOfTargetDuration = currentTick + timeoutSystemVal;
 
 #if DEBUG
-                    //Log($"_endOfTargetDuration = {_endOfTargetDuration}");
+                    Log($"_endOfTargetDuration = {_endOfTargetDuration}");
 #endif
 
                     return;
                 }
             }
 
-            if (positionedParameters.Any(p => p.KindOfValue == KindOfValue.TaskValue))
+            if(positionedParameters.Any(p => p.KindOfValue == KindOfValue.TaskValue) ||
+                positionedParameters.Any(p => p.KindOfValue == KindOfValue.ProcessInfoValue))
             {
-                _waitedTasksList = positionedParameters.Where(p => p.IsTaskValue).Select(p => p.AsTaskValue.SystemTask).ToList();
+                if (positionedParameters.Any(p => p.KindOfValue == KindOfValue.TaskValue))
+                {
+                    _waitedTasksList = positionedParameters.Where(p => p.IsTaskValue).Select(p => p.AsTaskValue.SystemTask).ToList();
+                }
+
+                if(positionedParameters.Any(p => p.KindOfValue == KindOfValue.ProcessInfoValue))
+                {
+                    throw new NotImplementedException();
+                }
+
                 return;
             }
 

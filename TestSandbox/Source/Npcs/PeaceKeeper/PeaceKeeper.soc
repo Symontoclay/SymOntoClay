@@ -1,15 +1,32 @@
 ﻿app PeaceKeeper
 {
     fun a() => 
-    {       
-        wait 1;
+    {
         '`a` has been called!' >> @>log;
+
+        wait 10;
+
+        'End `a`' >> @>log;
+    }
+
+    fun b() => 
+    {
+        '`b` has been called!' >> @>log;
+
+        wait 10;
+
+        'End `b`' >> @>log;
     }
 
     on Enter =>
     {
         'Begin' >> @>log;
-        a()[: timeout = 0.1, on weak cancel { 'on weak cancel' >> @>log; } :];
+
+        @a = a~~()[: timeout = 1 :];
+        @b = b~~()[: timeout = 1 :];
+
+        wait @a, @b;
+
         'End' >> @>log;
     }
 }

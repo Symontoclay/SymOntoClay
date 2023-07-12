@@ -138,6 +138,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private long? _endOfTargetDuration;
         private List<Task> _waitedTasksList;
+        private List<IProcessInfo> _waitedProcessInfoList;
         private Task _pseudoSyncTask;
 
         private readonly StrongIdentifierValue _defaultCtorName;
@@ -1102,9 +1103,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 return;
             }
 
-            if (!_waitedTasksList.IsNullOrEmpty())
+            if (!_waitedTasksList.IsNullOrEmpty() || !_waitedProcessInfoList.IsNullOrEmpty())
             {
-                if (_waitedTasksList.Any(p => p.Status == TaskStatus.Running))
+                if ((_waitedTasksList != null && _waitedTasksList.Any(p => p.Status == TaskStatus.Running)) || 
+                    (_waitedProcessInfoList != null && _waitedProcessInfoList.Any(p => p.Status == ProcessStatus.Running)))
                 {
                     return;
                 }
@@ -1161,10 +1163,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 if(positionedParameters.Any(p => p.KindOfValue == KindOfValue.ProcessInfoValue))
                 {
 #if DEBUG
-                    Log($"positionedParameters = {positionedParameters.WriteListToString()}");
+                    //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
 #endif
-
-                    throw new NotImplementedException();
+                    _waitedProcessInfoList = positionedParameters.Where(p => p.IsProcessInfoValue).Select(p => p.AsProcessInfoValue.ProcessInfo).ToList();
                 }
 
                 return;

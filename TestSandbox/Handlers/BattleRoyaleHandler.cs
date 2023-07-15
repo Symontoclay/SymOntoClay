@@ -42,11 +42,6 @@ namespace TestSandbox.Handlers
             _logger.Log("Begin");
 
             var platformListener = new BattleRoyaleSilentHostListener();
-            //var platformListener = new TstBattleRoyaleHostListener();
-            //var platformListener = new TstBattleRoyaleHostListener2();
-            //var platformListener = new BattleRoyaleHostListener();
-            //var platformListener = new VeryLongMehod_HostListener();
-            //var platformListener = new VeryShortMehod_HostListener();
 
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.HostListener = platformListener;
@@ -89,19 +84,13 @@ namespace TestSandbox.Handlers
                 _logger.Log("OnEndPointEnterSyncHandler: On Enter Go");
 
                 _npc.InsertFact(standardFactsBuilder.BuildAliveFactString(enemyId));
-                //_npc.InsertFact("{: is(#enemy1,soldier,1) :}");
                 _npc.InsertFact(standardFactsBuilder.BuildDefaultInheritanceFactString(enemyId, "soldier"));
                 _npc.InsertFact(standardFactsBuilder.BuildSeeFactString(enemyId));
             });
 
-            //_npc.InsertFact(standardFactsBuilder.BuildAliveFactString(enemyId));
-            //_npc.InsertFact("{: is(#enemy1,soldier,1) :}");
-            //_npc.InsertFact(standardFactsBuilder.BuildDefaultInheritanceFactString(enemyId, "soldier"));
-            //_npc.InsertFact(standardFactsBuilder.BuildSeeFactString(enemyId));
 
             _world.Start();
 
-            //enemy.InsertFact(standardFactsBuilder.BuildAliveFactString(enemyId));
 
             Thread.Sleep(1000);
 
@@ -113,12 +102,10 @@ namespace TestSandbox.Handlers
             Thread.Sleep(5000);
             _logger.Log("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
 
-            //_npc.InsertFact(standardFactsBuilder.BuildDeadFactString(enemyId));
             _npc.RemoveFact(seeFactId);
 
             _logger.Log("__________________________________________________________");
 
-            //var factId = _npc.InsertFact("{: see(I, #enemy1) :}");
 
             Thread.Sleep(100000);
 

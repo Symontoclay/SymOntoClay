@@ -130,7 +130,6 @@ namespace TestSandbox.CoreHostListener
             _logger.Log($"entity.InstanceId = {entity.InstanceId}");
             _logger.Log($"entity.Id = {entity.Id}");
             _logger.Log($"entity.Position = {entity.Position}");
-            //throw new NotImplementedException();
         }
 
         [DebuggerHidden]
@@ -138,7 +137,6 @@ namespace TestSandbox.CoreHostListener
         public void ReadyForShootImpl(CancellationToken cancellationToken)
         {
             _logger.Log("ReadyForShootImpl Begin");
-            //throw new NotImplementedException();
         }
 
         [DebuggerHidden]
@@ -147,7 +145,6 @@ namespace TestSandbox.CoreHostListener
         public void StartShootImpl(CancellationToken cancellationToken)
         {
             _logger.Log("StartShootImpl Begin");
-            //throw new NotImplementedException();
         }
 
         [DebuggerHidden]
@@ -156,7 +153,6 @@ namespace TestSandbox.CoreHostListener
         public void StopShootImpl(CancellationToken cancellationToken)
         {
             _logger.Log("StopShootImpl Begin");
-            //throw new NotImplementedException();
         }
     }
 }

@@ -85,10 +85,6 @@ namespace SymOntoClay.Core.Internal.Visitors
         /// <inheritdoc/>
         public void VisitLogicalQueryNode(LogicalQueryNode logicalQueryNode)
         {
-#if DEBUG
-            //Log($"logicalQueryNode.Kind = {logicalQueryNode.Kind}");
-#endif
-
             var kind = logicalQueryNode.Kind;
             var kindOfOperator = logicalQueryNode.KindOfOperator;
             var left = logicalQueryNode.Left;

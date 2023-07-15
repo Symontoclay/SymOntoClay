@@ -52,16 +52,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public IDictionary<StrongIdentifierValue, IList<LogicalQueryNode>> RelationsDict { get; set; }
 
-        // <inheritdoc/>
-        //public bool Equals(BaseRulePart other)
-        //{
-        //    if (other == null)
-        //    {
-        //        return false;
-        //    }
 
-        //    throw new NotImplementedException();
-        //}
 
         public void SetHolder(StrongIdentifierValue holder)
         {

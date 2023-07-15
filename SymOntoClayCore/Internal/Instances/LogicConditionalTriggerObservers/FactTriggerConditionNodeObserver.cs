@@ -41,10 +41,6 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
         private void LogicalStorage_OnChanged()
         {
-#if DEBUG
-            //Log("Begin");
-#endif
-
             EmitOnChanged();
         }
 

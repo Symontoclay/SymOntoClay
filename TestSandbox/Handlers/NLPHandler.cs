@@ -63,7 +63,6 @@ namespace TestSandbox.Handlers
             factorySettings.UseStandardLibrary = true;
 
             _engineContext = UnityTestEngineContextFactory.CreateAndInitTestEngineContext(factorySettings).EngineContext;
-            //_engineContext = TstEngineContextHelper.CreateAndInitContext(factorySettings).EngineContext;
 
             var mainDictPath = Path.Combine(Directory.GetCurrentDirectory(), "Dicts", "BigMainDictionary.dict");
 
@@ -86,7 +85,6 @@ namespace TestSandbox.Handlers
             _logger.Log("Begin");
 
             Case6();
-            //Case5();
 
             _logger.Log("End");
         }
@@ -125,18 +123,12 @@ namespace TestSandbox.Handlers
 
             _logger.Log($"dotStr = '{dotStr}'");
 
-            //var converterInternalCGToPhraseStructure = new ConverterInternalCGToPhraseStructure(_logger, _wordsDict);
 
-            //var sentenceItem = converterInternalCGToPhraseStructure.Convert(internalCG, nlpContext);
 
             //////_logger.Log($"sentenceItem = {sentenceItem}");
-            //_logger.Log($"sentenceItem = {sentenceItem.ToDbgString()}");
 
-            //var converterPhraseStructureToText = new ConverterPhraseStructureToText(_logger);
 
-            //var text = converterPhraseStructureToText.Convert(sentenceItem);
 
-            //_logger.Log($"text = '{text}'");
         }
 
         private void Case4()

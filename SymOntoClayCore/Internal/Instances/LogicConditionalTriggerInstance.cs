@@ -132,7 +132,6 @@ namespace SymOntoClay.Core.Internal.Instances
         private bool _isBusy;
         private bool _needRepeat;
 
-        //private bool _isOn;
 
         private readonly bool _hasResetConditions;
         private readonly bool _hasResetHandler;
@@ -235,10 +234,6 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 DoSearchWithNoResetCondition();
             }
-
-#if DEBUG
-            //Log($"_triggerConditionNodeObserverContext.IsOn = {_triggerConditionNodeObserverContext.IsOn}");
-#endif
 
             if(_triggerConditionNodeObserverContext.IsOn)
             {
@@ -409,10 +404,6 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             var setResult = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
 
-#if DEBUG
-            //Log($"setResult = {setResult}");
-#endif
-
             if (setResult.IsSuccess)
             {
                 if (setVarList.Any())
@@ -438,16 +429,8 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void ProcessSetResultWithNoItems(bool isPeriodic)
         {
-#if DEBUG
-            //Log($"isPeriodic = {isPeriodic}");
-            //Log($"_hasResetHandler = {_hasResetHandler}");
-#endif
-
             if (_triggerConditionNodeObserverContext.IsOn)
             {
-#if DEBUG
-                //Log("_isOn return;");
-#endif
                 return;
             }
 
@@ -462,10 +445,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if(_hasRuleInstancesList)
             {
-#if DEBUG
-                //Log("_hasRuleInstancesList return;");
-#endif
-
                 return;
             }
 

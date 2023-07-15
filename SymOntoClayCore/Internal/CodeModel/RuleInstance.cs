@@ -86,16 +86,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return false;
         }
 
-        // <inheritdoc/>
-        //public bool Equals(RuleInstance other)
-        //{
-        //    if (other == null)
-        //    {
-        //        return false;
-        //    }
 
-        //    throw new NotImplementedException();
-        //}
 
         private void PrepareDirty(CheckDirtyOptions options)
         {
@@ -172,9 +163,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var logicalQueryNodeLeafsVisitor = new LogicalQueryNodeLeafsVisitor();
             LeafsList = logicalQueryNodeLeafsVisitor.Run(this);
 
-#if DEBUG
-            //LoggerNLogImpementation.Instance.Log($"LeafsList = {LeafsList.WriteListToString()}");
-#endif
         }
 
         public void CalculateUsedKeys()

@@ -45,31 +45,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             where T : IResultOfQueryToRelation, new()
         {
 #if DEBUG
-            //foreach (var tmpItem in source)
-            //{
-            //    Log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
 
-            //    foreach (var varInfo in tmpItem.ResultOfVarOfQueryToRelationList)
-            //    {
-            //        Log($"varInfo = {varInfo.ToHumanizedString()}");
-            //        //Log($"varInfo = {varInfo}");
-            //    }
-            //}
 #endif
 
             var initialResultVarsDict = source.SelectMany(p => p.ResultOfVarOfQueryToRelationList).GroupBy(p => p.NameOfVar).ToDictionary(p => p.Key, p => p.Select(x => x.FoundExpression).ToList());
 
 #if DEBUG
-            //var tmpVar = initialResultVarsDict.ToDictionary(p => p.Key.ToHumanizedString(), p => p.Value.Select(x => x.ToHumanizedString()));
 
-            //Log($"tmpVar = {JsonConvert.SerializeObject(tmpVar, Formatting.Indented)}");
 #endif
 
-            //var replacingNotResultsStrategy = ReplacingNotResultsStrategy.DominantKindOfItems;//tmp
-
-#if DEBUG
-            //Log($"replacingNotResultsStrategy = {replacingNotResultsStrategy}");
-#endif
 
             var newResultVarsDict = new Dictionary<StrongIdentifierValue, List<LogicalQueryNode>>();
 
@@ -78,16 +62,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var varName = initialResultVarsKvpItem.Key;
                 var exceptList = initialResultVarsKvpItem.Value;
 
-#if DEBUG
-                //Log($"varName = {varName}");
-                //Log($"exceptList = {exceptList.WriteListToString()}");
-#endif
-
                 var newLogicalQueryNodes = GetLogicalQueryNodes(exceptList, replacingNotResultsStrategy, storagesList);
-
-#if DEBUG
-                //Log($"newLogicalQueryNodes = {newLogicalQueryNodes.WriteListToString()}");
-#endif
 
                 newResultVarsDict[varName] = newLogicalQueryNodes;
             }
@@ -175,11 +150,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private (List<KindOfLogicalQueryNode> TargetKindsOfItems, ReplacingNotResultsStrategy ReplacingNotResultsStrategy) CalculateTargetKindsOfItems(IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy)
         {
-#if DEBUG
-            //Log($"exceptList = {exceptList.WriteListToString()}");
-            //Log($"replacingNotResultsStrategy = {replacingNotResultsStrategy}");
-#endif
-
             switch(replacingNotResultsStrategy)
             {
                 case ReplacingNotResultsStrategy.AllKindOfItems:
@@ -231,18 +201,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private List<LogicalQueryNode> GetLogicalQueryNodes(IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy, List<StorageUsingOptions> storagesList)
         {
-#if DEBUG
-            //Log($"exceptList = {exceptList.WriteListToString()}");
-            //Log($"replacingNotResultsStrategy = {replacingNotResultsStrategy}");
-#endif
-
             var calculateTargetKindsOfItemsResult = CalculateTargetKindsOfItems(exceptList, replacingNotResultsStrategy);
 
             var targetKindsOfItems = calculateTargetKindsOfItemsResult.TargetKindsOfItems;
-
-#if DEBUG
-            //Log($"targetKindsOfItems = {targetKindsOfItems.WritePODListToString()}");
-#endif
 
             return SortLogicalQueryNodes(GetRawLogicalQueryNodes(exceptList, calculateTargetKindsOfItemsResult.ReplacingNotResultsStrategy, targetKindsOfItems, storagesList), replacingNotResultsStrategy, targetKindsOfItems);
         }
@@ -255,10 +216,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 var itemsList = storageItem.Storage.LogicalStorage.GetLogicalQueryNodes(exceptList, replacingNotResultsStrategy, targetKindsOfItems);
 
-#if DEBUG
-                //Log($"itemsList = {itemsList.WriteListToString()}");
-#endif
-
                 if (itemsList.IsNullOrEmpty())
                 {
                     continue;
@@ -267,27 +224,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 result.AddRange(itemsList);
             }
 
-#if DEBUG
-            //Log($"result = {result.WriteListToString()}");
-#endif
-
             result = result.Distinct(_logicalQueryNodeEqualityComparer).ToList();
-
-#if DEBUG
-            //Log($"result (after) = {result.WriteListToString()}");
-#endif
 
             return result;
         }
 
         private List<LogicalQueryNode> SortLogicalQueryNodes(List<LogicalQueryNode> source, ReplacingNotResultsStrategy replacingNotResultsStrategy, IList<KindOfLogicalQueryNode> targetKindsOfItems)
         {
-#if DEBUG
-            //Log($"source = {source.WriteListToString()}");
-            //Log($"replacingNotResultsStrategy = {replacingNotResultsStrategy}");
-            //Log($"targetKindsOfItems = {targetKindsOfItems.WritePODListToString()}");
-#endif
-
             if(source.IsNullOrEmpty())
             {
                 return new List<LogicalQueryNode>();
@@ -319,10 +262,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                         foreach (var targetKind in targetKindsOfItems)
                         {
-#if DEBUG
-                            //Log($"targetKind = {targetKind}");
-#endif
-
                             if (sourceDict.TryGetValue(targetKind, out nodesList))
                             {
                                 result.AddRange(nodesList);
@@ -347,10 +286,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                         foreach (var targetKind in targetKindsOfItems)
                         {
-#if DEBUG
-                            //Log($"targetKind = {targetKind}");
-#endif
-
                             if(sourceDict.TryGetValue(targetKind, out nodesList))
                             {
                                 result.AddRange(nodesList);
@@ -361,10 +296,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                         foreach(var otherKind in otherKindOfItems)
                         {
-#if DEBUG
-                            //Log($"otherKind = {otherKind}");
-#endif
-
                             if (sourceDict.TryGetValue(otherKind, out nodesList))
                             {
                                 result.AddRange(nodesList);

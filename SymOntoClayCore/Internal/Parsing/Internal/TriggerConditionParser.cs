@@ -59,11 +59,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnRun()
         {
-#if DEBUG
-            //Log($"_currToken = {_currToken}");
-            //Log($"Result = {Result}");            
-#endif
-
             switch (_currToken.TokenKind)
             {
                 case TokenKind.OpenFactBracket:
@@ -279,10 +274,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             var parser = new TriggerConditionEachParser(_context);
             parser.Run();
 
-#if DEBUG
-            //Log($"parser.Result = {parser.Result}");
-#endif
-
             var intermediateNode = new IntermediateAstNode(parser.Result);
 
             AstNodesLinker.SetNode(intermediateNode, _nodePoint);
@@ -305,10 +296,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             var parser = new TriggerConditionOnceParser(_context);
             parser.Run();
-
-#if DEBUG
-            //Log($"parser.Result = {parser.Result}");
-#endif
 
             var intermediateNode = new IntermediateAstNode(parser.Result);
 

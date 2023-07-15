@@ -35,10 +35,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public abstract class AnnotatedItem : ItemWithLongHashCodes, IAnnotatedItem, IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString, IObjectToHumanizedString, ISymOntoClayDisposable
     {
-#if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         /// <summary>
         /// It is 'Clauses section' in the documentation.
         /// </summary>

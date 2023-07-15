@@ -62,13 +62,6 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         /// <inheritdoc/>
         public override (Value Value, bool IsPeriodic) Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
         {
-#if DEBUG
-            //Log($"_targetDuration = {_targetDuration}");
-            //Log($"_context.IsOn = {_context.IsOn}");
-            //Log($"_context.InitialSetTime = {_context.InitialSetTime}");
-            //Log($"_wasRun = {_wasRun}");
-#endif
-
             if (_wasRun)
             {
                 return (LogicalValue.FalseValue, false);
@@ -81,17 +74,8 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 
             var ticksNow = _dateTimeProvider.CurrentTiks;
 
-#if DEBUG
-            //Log($"ticksNow = {ticksNow}");
-            //Log($"_context.InitialSetTime + _targetDuration = {_context.InitialSetTime + _targetDuration}");
-#endif
-
             if (ticksNow > _context.InitialSetTime + _targetDuration)
             {
-#if DEBUG
-                //Log($"Yess !!!!!!!!");
-#endif
-
                 _wasRun = true;
 
                 return (LogicalValue.TrueValue, false);

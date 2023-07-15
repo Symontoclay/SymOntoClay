@@ -187,23 +187,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         private bool NAppend(RuleInstance ruleInstance, bool isPrimary)
         {
 #if DEBUG
-            //if(!DebugHelperForRuleInstance.ToString(ruleInstance).Contains("is"))
-            //{
-            //Log($"ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
-            //Log($"ruleInstance = {ruleInstance}");
-            //Log($"isPrimary = {isPrimary}");
-            //}
 
-            //Log($"({GetHashCode()}) ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
-            //Log($"({GetHashCode()}) ruleInstance.Normalized = {DebugHelperForRuleInstance.ToString(ruleInstance.Normalized)}");
-            //Log($"ruleInstance = {ruleInstance}");
-            //Log($"isPrimary = {isPrimary}");
 #endif
 
-            //if (_enableAddingRemovingFactLoggingInStorages)
-            //{
-            //    Log($"({GetHashCode()}) isPrimary = {isPrimary}; ruleInstance = {DebugHelperForRuleInstance.ToString(ruleInstance)}");
-            //}
 
             if (ruleInstance.TypeOfAccess != TypeOfAccess.Local)
             {
@@ -423,10 +409,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         private void NRemove(RuleInstance ruleInstance)
         {
             var usedKeysList = NRemoveAndReturnUsedKeysList(ruleInstance);
-
-#if DEBUG
-            //Log($"usedKeysList?.Count = {usedKeysList?.Count}");
-#endif
 
             if (usedKeysList.IsNullOrEmpty())
             {
@@ -771,12 +753,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         {
             lock (_lockObj)
             {
-#if DEBUG
-                //Log($"exceptList = {exceptList.WriteListToString()}");
-                //Log($"replacingNotResultsStrategy = {replacingNotResultsStrategy}");
-                //Log($"targetKindsOfItems = {targetKindsOfItems.WritePODListToString()}");
-#endif
-
                 var result = new List<LogicalQueryNode>();
 
                 foreach (var ruleInstance in _ruleInstancesList)

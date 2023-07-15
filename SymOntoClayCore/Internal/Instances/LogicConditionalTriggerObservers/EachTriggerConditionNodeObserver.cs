@@ -51,10 +51,6 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
             _targetDuration = _dateTimeResolver.ConvertTimeValueToTicks(condition.Value, DefaultTimeValues.EachTimerDefaultTimeValue, localCodeExecutionContext);
 
-#if DEBUG
-            //Log($"_targetDuration = {_targetDuration}");
-#endif
-
             _activeObject = new AsyncActivePeriodicObject(engineContext.ActivePeriodicObjectContext);
             _activeObject.PeriodicMethod = NRun;
             _activeObject.Start();
@@ -71,12 +67,6 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
         {
             Thread.Sleep(100);
 
-#if DEBUG
-            //Log($"_targetDuration = {_targetDuration}");
-            //Log($"_context.IsOn = {_context.IsOn}");
-            //Log($"_context.InitialSetTime = {_context.InitialSetTime}");
-#endif
-
             if (!_context.InitialSetTime.HasValue)
             {
                 return true;
@@ -84,17 +74,8 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
             var ticksNow = _dateTimeProvider.CurrentTiks;
 
-#if DEBUG
-            //Log($"ticksNow = {ticksNow}");
-            //Log($"_context.InitialSetTime + _targetDuration = {_context.InitialSetTime + _targetDuration}");
-#endif
-
             if (ticksNow > _context.InitialSetTime + _targetDuration)
             {
-#if DEBUG
-                //Log($"EmitOnChanged() !!!!!!!!");
-#endif
-
                 EmitOnChanged();
             }
 

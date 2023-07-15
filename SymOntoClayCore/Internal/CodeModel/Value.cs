@@ -34,10 +34,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public abstract class Value: AnnotatedItem, IEquatable<Value>
     {
-#if DEBUG
-        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
-#endif
-
         public abstract KindOfValue KindOfValue { get; }
 
         public virtual bool IsNullValue => false;
@@ -163,22 +159,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public virtual bool NullValueEquals()
         {
-#if DEBUG
-            //LoggerNLogImpementation.Instance.Log($"this = {ToString()}");
-#endif
-
             return false;
         }
 
         protected virtual bool ConcreteValueEquals(Value other)
         {
-#if DEBUG
-            //_gbcLogger.Info($"this = {ToString()}");
-            //_gbcLogger.Info($"other = {other.ToString()}");
-            //_gbcLogger.Info($"this = {ToHumanizedString()}");
-            //_gbcLogger.Info($"other = {other.ToHumanizedString()}");
-#endif
-
             throw new NotImplementedException();
         }
 

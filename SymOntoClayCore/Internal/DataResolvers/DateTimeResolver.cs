@@ -40,11 +40,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public long ConvertTimeValueToTicks(Value value, KindOfDefaultTimeValue kindOfDefaultTimeValue, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-#if DEBUG
-            //Log($"value = {value}");
-            //Log($"kindOfDefaultTimeValue = {kindOfDefaultTimeValue}");
-#endif
-
             var kindOfValue = value.KindOfValue;
 
             switch (kindOfValue)
@@ -73,16 +68,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private long ConvertNumberValueToTicks(NumberValue value, KindOfDefaultTimeValue kindOfDefaultTimeValue)
         {
-#if DEBUG
-            //Log($"value = {value}");
-            //Log($"kindOfDefaultTimeValue = {kindOfDefaultTimeValue}");
-#endif
-
             var sysValue = Convert.ToInt64(value.SystemValue);
-
-#if DEBUG
-            //Log($"sysValue = {sysValue}");
-#endif
 
             switch(kindOfDefaultTimeValue)
             {
@@ -100,9 +86,5 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        //public float GetCurrentSeconds()
-        //{
-        //    return _dateTimeProvider.CurrentTiks * _dateTimeProvider.TicksToSecondsMultiplicator;
-        //}
     }
 }

@@ -211,10 +211,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing)
                 {
-#if DEBUG
-                    //Log($"_executionCoordinator != null && _executionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing ({currentCodeFrame.ProcessInfo.GetHashCode()}); >>> {_executionCoordinator.GetHashCode()}");
-#endif
-
                     GoBackToPrevCodeFrame(_executionCoordinator.ExecutionStatus);
                     return true;
                 }
@@ -265,10 +261,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     GoBackToPrevCodeFrame(ActionExecutionStatus.Canceled);
                     return true;
                 }
-
-#if DEBUG
-                //Log($"currentCodeFrame.ToDbgString() = {currentCodeFrame.ToDbgString()}");
-#endif
 
                 var currentPosition = currentCodeFrame.CurrentPosition;
 
@@ -888,18 +880,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var kindOfCurrentValue = currentValue.KindOfValue;
 
-#if DEBUG
-            //Log($"kindOfCurrentValue = {kindOfCurrentValue}");
-#endif
-
             switch (kindOfCurrentValue)
             {
                 case KindOfValue.CodeItem:
                     var codeItem = currentValue.AsCodeItem;
                     var codeItemKind = codeItem.Kind;
-#if DEBUG
-                    //Log($"codeItemKind = {codeItemKind}");
-#endif
                     switch (codeItemKind)
                     {
                         case KindOfCodeEntity.RuleOrFact:
@@ -1120,33 +1105,17 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var positionedParameters = TakePositionedParameters(currentCommand.CountParams, true);
 
-#if DEBUG
-            //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
-#endif
-
             if (positionedParameters.Count == 1)
             {
                 var firstParameter = positionedParameters[0];
-
-#if DEBUG
-                //Log($"firstParameter = {firstParameter}");
-#endif
 
                 if (firstParameter.KindOfValue != KindOfValue.TaskValue)
                 {
                     var timeoutSystemVal = _dateTimeResolver.ConvertTimeValueToTicks(firstParameter, DefaultTimeValues.TimeoutDefaultTimeValue, _currentCodeFrame.LocalContext);
 
-#if DEBUG
-                    //Log($"timeoutSystemVal = {timeoutSystemVal}");
-#endif
-
                     var currentTick = _dateTimeProvider.CurrentTiks;
 
                     _endOfTargetDuration = currentTick + timeoutSystemVal;
-
-#if DEBUG
-                    //Log($"_endOfTargetDuration = {_endOfTargetDuration}");
-#endif
 
                     return;
                 }
@@ -1162,9 +1131,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if(positionedParameters.Any(p => p.KindOfValue == KindOfValue.ProcessInfoValue))
                 {
-#if DEBUG
-                    //Log($"positionedParameters = {positionedParameters.WriteListToString()}");
-#endif
                     _waitedProcessInfoList = positionedParameters.Where(p => p.IsProcessInfoValue).Select(p => p.AsProcessInfoValue.ProcessInfo).ToList();
                 }
 
@@ -1354,10 +1320,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void GoBackToPrevCodeFrame(ActionExecutionStatus targetActionExecutionStatus)
         {
-#if DEBUG
-            //Log($"targetActionExecutionStatus = {targetActionExecutionStatus} ({_currentCodeFrame.ProcessInfo.GetHashCode()}); >>> {_executionCoordinator?.GetHashCode()}");
-#endif
-
             if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus == ActionExecutionStatus.Executing)
             {
                 var specialMark = _currentCodeFrame.SpecialMark;
@@ -1385,10 +1347,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             ProcessStatus? lastProcessStatus = null;
 
             var currentProcessInfoStatus = currentProcessInfo.Status;
-
-#if DEBUG
-            //Log($"currentProcessInfoStatus = {currentProcessInfoStatus} ({currentProcessInfo.GetHashCode()})");
-#endif
 
             if (currentProcessInfoStatus == ProcessStatus.Running)
             {
@@ -1432,10 +1390,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
                 }
             }
-
-#if DEBUG
-            //Log($"_isCanceled = {_isCanceled}");
-#endif
 
             _codeFrames.Pop();
 
@@ -1820,10 +1774,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 annotationSystemEventsDict.TryGetValue(KindOfAnnotationSystemEvent.Error, out errorAnnotationSystemEvent);
             }
 
-#if DEBUG
-            //Log($"_currentCodeFrame.ProcessInfo.Status = {_currentCodeFrame.ProcessInfo.Status};>>> {_executionCoordinator?.GetHashCode()}");
-#endif
-
             var processCreatingResult = _hostListener.CreateProcess(command, _context, _currentCodeFrame.LocalContext);
 
             if(processCreatingResult.IsSuccessful)
@@ -1837,28 +1787,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (syncOption == SyncOption.Sync)
                 {
-#if DEBUG
-                    //Log($"_currentCodeFrame.ProcessInfo.Status (2) = {_currentCodeFrame.ProcessInfo.Status};>>> {_executionCoordinator?.GetHashCode()}");
-#endif
-
                     processInfo.ParentProcessInfo = _currentCodeFrame.ProcessInfo;
 
                     List<IExecutionCoordinator> executionCoordinators = null;
 
                     if (_executionCoordinator != null)
                     {
-#if DEBUG
-                        //Log($"_executionCoordinator != null;>>> {_executionCoordinator?.GetHashCode()}");
-#endif
-
                         executionCoordinators = new List<IExecutionCoordinator>() { _executionCoordinator };
                     }
 
                     ProcessInfoHelper.Wait(executionCoordinators, timeout, timeoutCancellationMode, _dateTimeProvider, processInfo);
-
-#if DEBUG
-                    //Log($"_currentCodeFrame.ProcessInfo.Status (3) = {_currentCodeFrame.ProcessInfo.Status}");
-#endif
 
                     if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus == ActionExecutionStatus.Broken)
                     {
@@ -2017,15 +1955,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private long? GetTimeoutFromAnnotation(Value annotation)
         {
-#if DEBUG
-            //Log($"annotation = {annotation}");
-#endif
-
             var initialValue = GetInitialSettingsValueFromAnnotation(annotation, _timeoutName);
-
-#if DEBUG
-            //Log($"initialValue = {initialValue}");
-#endif
 
             if(initialValue == null)
             {

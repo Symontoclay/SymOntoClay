@@ -120,10 +120,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private void NResolve()
         {
-#if DEBUG
-            //Log("Begin");
-#endif
-
             try
             {
                 _needUpdate = false;

@@ -118,30 +118,16 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private void NRegisterLogicalQueryNodeLeafs(RuleInstance indexedRuleInstance)
         {
-#if DEBUG
-            //Log($"indexedRuleInstance.LeafsList = {indexedRuleInstance.LeafsList.WriteListToString()}");
-#endif
-
             var leafsDict = indexedRuleInstance.LeafsList.GroupBy(p => p.Kind).ToDictionary(p => p.Key, p => p.ToList());
 
             foreach(var leafsDictKVPItem in leafsDict)
             {
-#if DEBUG
-                //Log($"leafsDictKVPItem.Key = {leafsDictKVPItem.Key}");
-                //Log($"leafsDictKVPItem.Value = {leafsDictKVPItem.Value.WriteListToString()}");
-#endif
-
                 NRegisterLogicalQueryNodeLeafs(leafsDictKVPItem.Key, leafsDictKVPItem.Value);
             }
         }
 
         private void NRegisterLogicalQueryNodeLeafs(KindOfLogicalQueryNode kind, List<LogicalQueryNode> leafs)
         {
-#if DEBUG
-            //Log($"kind = {kind}");
-            //Log($"leafs = {leafs.WriteListToString()}");
-#endif
-
             if(_leafsDict.ContainsKey(kind))
             {
                 var list = _leafsDict[kind];
@@ -297,12 +283,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         public IReadOnlyList<LogicalQueryNode> GetLogicalQueryNodes(IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy, IList<KindOfLogicalQueryNode> targetKindsOfItems)
         {
-#if DEBUG
-            //Log($"exceptList = {exceptList.WriteListToString()}");
-            //Log($"replacingNotResultsStrategy = {replacingNotResultsStrategy}");
-            //Log($"targetKindsOfItems = {targetKindsOfItems.WritePODListToString()}");
-#endif
-
             switch(replacingNotResultsStrategy)
             {
                 case ReplacingNotResultsStrategy.AllKindOfItems:
@@ -314,10 +294,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                         foreach(var targetKind in targetKindsOfItems)
                         {
-#if DEBUG
-                            //Log($"targetKind = {targetKind}");
-#endif
-
                             if(_leafsDict.ContainsKey(targetKind))
                             {
                                 result.AddRange(_leafsDict[targetKind].Where(p => !exceptList.Contains(p)));
@@ -331,7 +307,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     throw new ArgumentOutOfRangeException(nameof(replacingNotResultsStrategy), replacingNotResultsStrategy, null);
             }
 
-            //_leafsDict
         }
     }
 }

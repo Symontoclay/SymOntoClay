@@ -115,11 +115,6 @@ namespace SymOntoClay.BaseTestLib.HostListeners
             var endPointName = methodNamesResult.Item1;
             var methodName = methodNamesResult.Item2;
 
-#if DEBUG
-            //_logger.Log($"endPointName = {endPointName}");
-            //_logger.Log($"methodName = {methodName}");
-#endif
-
             _onEnterHandlersRegistry.Emit(endPointName, methodName);
         }
 
@@ -130,11 +125,6 @@ namespace SymOntoClay.BaseTestLib.HostListeners
 
             var endPointName = methodNamesResult.Item1;
             var methodName = methodNamesResult.Item2;
-
-#if DEBUG
-            //_logger.Log($"endPointName = {endPointName}");
-            //_logger.Log($"methodName = {methodName}");
-#endif
 
             _onLeaveHandlersRegistry.Emit(endPointName, methodName);
         }
@@ -155,11 +145,6 @@ namespace SymOntoClay.BaseTestLib.HostListeners
                     break;
                 }
 
-#if DEBUG
-                //_logger.Log($"method.Name = {method.Name}");
-                //_logger.Log($"method.GetType().FullName = {method.GetType().FullName}");
-#endif
-
                 var supportHostListenerMethodAttribute = method?.GetCustomAttribute<SupportHostListenerMethodAttribute>();
 
                 if (supportHostListenerMethodAttribute != null)
@@ -169,10 +154,6 @@ namespace SymOntoClay.BaseTestLib.HostListeners
                 }
 
                 var endPointInfo = EndpointDescriber.GetBaseEndpointInfo(method);
-
-#if DEBUG
-                //_logger.Log($"endPointInfo = {endPointInfo}");
-#endif
 
                 if (endPointInfo == null)
                 {

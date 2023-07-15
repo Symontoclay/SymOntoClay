@@ -371,11 +371,6 @@ namespace SymOntoClay.Core
             {
                 lock (_parentAndChildrenLockObj)
                 {
-#if DEBUG
-                    //_logger.Info($"ParentProcessInfo set {GetHashCode()}; {value?.GetHashCode()}");
-                    //_logger.Info($"ParentProcessInfo set {_parentProcessInfo?.GetHashCode()}; {value?.GetHashCode()}");
-#endif
-
                     if (_parentProcessInfo == value)
                     {
                         return;
@@ -392,11 +387,6 @@ namespace SymOntoClay.Core
                     }
 
                     _parentProcessInfo = value;
-
-#if DEBUG
-                    //_logger.Info($"ParentProcessInfo set NEXT {GetHashCode()}; {value?.GetHashCode()}");
-                    //_logger.Info($"ParentProcessInfo set NEXT {_parentProcessInfo?.GetHashCode()}; {value?.GetHashCode()}");
-#endif
 
                     if (_parentProcessInfo != null)
                     {
@@ -423,10 +413,6 @@ namespace SymOntoClay.Core
         {
             lock (_parentAndChildrenLockObj)
             {
-#if DEBUG
-                //_logger.Info($"AddChild processInfo?.GetHashCode() = {processInfo?.GetHashCode()} ({GetHashCode()})");
-#endif
-
                 if (processInfo == this)
                 {
                     return;
@@ -436,10 +422,6 @@ namespace SymOntoClay.Core
                 {
                     return;
                 }
-
-#if DEBUG
-                //_logger.Info($"AddChild _childrenProcessInfoList.Count = {_childrenProcessInfoList.Count} ({GetHashCode()})");
-#endif
 
                 if(_removedChildrenProcessInfoList.Contains(processInfo))
                 {
@@ -452,10 +434,6 @@ namespace SymOntoClay.Core
                 }
 
                 _childrenProcessInfoList.Add(processInfo);
-
-#if DEBUG
-                //_logger.Info($"AddChild NEXT processInfo?.GetHashCode() = {processInfo?.GetHashCode()} ({GetHashCode()})");
-#endif
 
                 processInfo.OnFinish += ProcessInfo_OnFinish;
 
@@ -485,10 +463,6 @@ namespace SymOntoClay.Core
 
         private void NRemoveChild(IProcessInfo processInfo)
         {
-#if DEBUG
-            //_logger.Info($"NRemoveChild processInfo?.GetHashCode() = {processInfo?.GetHashCode()} ({GetHashCode()})");
-#endif
-
             if (!_childrenProcessInfoList.Contains(processInfo))
             {
                 return;

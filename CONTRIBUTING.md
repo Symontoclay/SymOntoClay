@@ -1,6 +1,7 @@
 # Contributing
 <div><div><p>
 SymOntoClay is still under development. 
+I will be glad if someone else is interested in it.
 Contributions are always welcome!
 </p>
 

@@ -16,33 +16,11 @@ app PeaceKeeper
         'End' >> @>log;
     }
 	
-    on {: see(I, $_) & enemy($_) & state($_, alive) :} => 
-	{
-	    'see(I, $_) & enemy($_) & state($_, alive)' >> @>log;
-		kill(#@{: see(I, $_) & enemy($_) & state($_, alive) :});
-		//weak cancel action;
-	}
-
-	//on {: see(I, $_) & state($_, alive) :} => 
-	//{
-	//    'see(I, $_) & state($_, alive)' >> @>log;
-		//weak cancel action;
-	//}
-
-	//on {: see(I, $_) :} => 
-	//{
-	//    'see(I, $_)' >> @>log;
-		//weak cancel action;
-	//}
-
 	fun go()
     {
 	    'Begin go' >> @>log;
-		//`move and check`(#@(waypoint & random));
-		//@@host.go(to: #@(waypoint));
-        //@@host.go(to: #@(waypoint & random));
-		//@@host.go(to: #WP_43);
-		//kill(#@{: see(I, $_) & enemy($_) & state($_, alive) :});
+		`move and check`(#@(waypoint & random));
+		kill(#@{: see(I, $_) & enemy($_) & state($_, alive) :});
 		'End go' >> @>log;
     }
 }
@@ -68,12 +46,6 @@ action `move and check`
 	    'see(I, $_) & enemy($_) & state($_, alive)' >> @>log;
 		weak cancel action;
 	}
-
-    //on {: see(I, $_) :} => 
-	//{
-	//    'see(I, $_)' >> @>log;
-		//weak cancel action;
-	//}
 }
 
 action check
@@ -118,12 +90,12 @@ action kill
 		'End kill' >> @>log;
 	}
 
-	//on {: state(@_target, dead) :}
-	//{
-	//    'state(@_target, dead)' >> @>log;
+	on {: state(@_target, dead) :}
+	{
+	    'state(@_target, dead)' >> @>log;
 
-	//    complete action;
-	//}
+	    complete action;
+	}
 
 	on {: !see(I, @_target) :}
 	{

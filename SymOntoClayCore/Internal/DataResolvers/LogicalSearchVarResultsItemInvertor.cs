@@ -130,8 +130,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             where T : IResultOfQueryToRelation, new()
         {
 #if DEBUG
-            Log($"n = {n}");
-            Log($"keysList = {keysList.WriteListToString()}");
+            //Log($"n = {n}");
+            //Log($"keysList = {keysList.WriteListToString()}");
 #endif
 
             if(!keysList.Any())

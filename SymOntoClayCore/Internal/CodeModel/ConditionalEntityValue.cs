@@ -203,7 +203,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override object GetSystemValue()
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         /// <inheritdoc/>

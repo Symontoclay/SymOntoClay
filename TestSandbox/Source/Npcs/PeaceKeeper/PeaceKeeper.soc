@@ -1,32 +1,173 @@
-﻿app PeaceKeeper
+﻿{: { enemy($x) } -> { soldier($x) } :}
+
+app PeaceKeeper
 {
-    fun a() => 
-    {
-        '`a` has been called!' >> @>log;
-
-        wait 10;
-
-        'End `a`' >> @>log;
-    }
-
-    fun b() => 
-    {
-        '`b` has been called!' >> @>log;
-
-        wait 10;
-
-        'End `b`' >> @>log;
-    }
-
-    on Enter =>
+    //idle actions
+    //{
+    //    go();
+    //}
+	
+	on Enter =>
     {
         'Begin' >> @>log;
 
-        @a = a~~()[: timeout = 1 :];
-        @b = b~~()[: timeout = 1 :];
-
-        wait @a, @b;
+        go();
 
         'End' >> @>log;
     }
+	
+    on {: see(I, $_) & enemy($_) & state($_, alive) :} => 
+	{
+	    'see(I, $_) & enemy($_) & state($_, alive)' >> @>log;
+		kill(#@{: see(I, $_) & enemy($_) & state($_, alive) :});
+		//weak cancel action;
+	}
+
+	//on {: see(I, $_) & state($_, alive) :} => 
+	//{
+	//    'see(I, $_) & state($_, alive)' >> @>log;
+		//weak cancel action;
+	//}
+
+	//on {: see(I, $_) :} => 
+	//{
+	//    'see(I, $_)' >> @>log;
+		//weak cancel action;
+	//}
+
+	fun go()
+    {
+	    'Begin go' >> @>log;
+		//`move and check`(#@(waypoint & random));
+		//@@host.go(to: #@(waypoint));
+        //@@host.go(to: #@(waypoint & random));
+		//@@host.go(to: #WP_43);
+		//kill(#@{: see(I, $_) & enemy($_) & state($_, alive) :});
+		'End go' >> @>log;
+    }
+}
+
+action `move and check`
+{
+    op (@target)
+	{
+	    'Begin move and check' >> @>log;
+
+	    repeat
+		{
+		    //@@host.go(to: @target)[: timeout = 1200, on completed {'on completed move' >> @>log; complete action;} :];
+		    move(@target)[: timeout = 1200, on complete { 'on complete move' >> @>log; complete action;}, on weak canceled { 'on weak canceled move and check (move)' >> @>log; } :];
+			check();
+		}
+
+		'End move and check' >> @>log;
+	}
+
+	on {: see(I, $_) & enemy($_) & state($_, alive) :} => 
+	{
+	    'see(I, $_) & enemy($_) & state($_, alive)' >> @>log;
+		weak cancel action;
+	}
+
+    //on {: see(I, $_) :} => 
+	//{
+	//    'see(I, $_)' >> @>log;
+		//weak cancel action;
+	//}
+}
+
+action check
+{
+    op ()
+	{
+	    'Begin check' >> @>log;
+	    @@host.`stop`();
+	    @@host.`rotate`(30);
+		@@host.`rotate`(-60);
+		@@host.`rotate`(30);
+		'End check' >> @>log;
+	}
+}
+
+action move
+{		
+	op (@target)
+	{
+	    'Begin move' >> @>log;
+		@@host.go(to: @target) [: on weak canceled { 'on weak canceled move (host)' >> @>log; complete action; }, on complete { 'on complete move (host)' >> @>log; complete action;} :];
+		'End move' >> @>log;
+	}
+}
+
+action kill
+{
+    on leave 
+	{
+	   `stop shoot`(); 
+	}
+
+    op (@target)
+	{
+	    'Begin kill' >> @>log;
+		@_target = @target;
+		@_target >> @>log;
+		`ready for shoot`();
+		aim();
+		shoot();
+		await;
+		'End kill' >> @>log;
+	}
+
+	//on {: state(@_target, dead) :}
+	//{
+	//    'state(@_target, dead)' >> @>log;
+
+	//    complete action;
+	//}
+
+	on {: !see(I, @_target) :}
+	{
+	    '!see(I, @_target)' >> @>log;
+		select {: !see(I, @_target) :} >> @>log;
+	    weak cancel action;
+	}
+
+	on each 5
+	{
+	    'Begin on each 5' >> @>log;
+	    aim();
+		'End on each 5' >> @>log;
+	}
+
+	fun aim()
+	{
+	    'Begin aim' >> @>log;
+		@_target >> @>log;
+	    @@host.`aim to`(@_target);
+		'End aim' >> @>log;
+	}
+
+	fun shoot()
+	{
+	    'Begin shoot' >> @>log;
+	    @@host.`start shoot`();
+		'End shoot' >> @>log;
+	}
+
+	fun `stop shoot`()
+	{
+	    'Begin stop shoot' >> @>log;
+	    @@host.`stop shoot`();
+		'End stop shoot' >> @>log;
+	}
+
+	fun `ready for shoot`()
+	{
+	    'Begin ready for shoot' >> @>log;
+	    @@host.`ready for shoot`();
+		'End ready for shoot' >> @>log;
+	}
+
+	private:
+	    var @_target;
 }

@@ -45,13 +45,30 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             where T : IResultOfQueryToRelation, new()
         {
 #if DEBUG
+            //foreach (var tmpItem in source)
+            //{
+            //    Log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
 
+            //    foreach (var varInfo in tmpItem.ResultOfVarOfQueryToRelationList)
+            //    {
+            //        Log($"varInfo = {varInfo.ToHumanizedString()}");
+            //        //Log($"varInfo = {varInfo}");
+            //    }
+            //}
 #endif
 
             var initialResultVarsDict = source.SelectMany(p => p.ResultOfVarOfQueryToRelationList).GroupBy(p => p.NameOfVar).ToDictionary(p => p.Key, p => p.Select(x => x.FoundExpression).ToList());
 
 #if DEBUG
+            //var tmpVar = initialResultVarsDict.ToDictionary(p => p.Key.ToHumanizedString(), p => p.Value.Select(x => x.ToHumanizedString()));
 
+            //Log($"tmpVar = {JsonConvert.SerializeObject(tmpVar, Formatting.Indented)}");
+#endif
+
+            //var replacingNotResultsStrategy = ReplacingNotResultsStrategy.DominantKindOfItems;//tmp
+
+#if DEBUG
+            //Log($"replacingNotResultsStrategy = {replacingNotResultsStrategy}");
 #endif
 
 
@@ -62,7 +79,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var varName = initialResultVarsKvpItem.Key;
                 var exceptList = initialResultVarsKvpItem.Value;
 
+#if DEBUG
+                //Log($"varName = {varName}");
+                //Log($"exceptList = {exceptList.WriteListToString()}");
+#endif
+
                 var newLogicalQueryNodes = GetLogicalQueryNodes(exceptList, replacingNotResultsStrategy, storagesList);
+
+#if DEBUG
+                //Log($"newLogicalQueryNodes = {newLogicalQueryNodes.WriteListToString()}");
+#endif
 
                 newResultVarsDict[varName] = newLogicalQueryNodes;
             }
@@ -85,7 +111,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private static void ProcessConvertToResult<T>(Dictionary<StrongIdentifierValue, List<LogicalQueryNode>> source, int n, List<StrongIdentifierValue> keysList, 
+        private void ProcessConvertToResult<T>(Dictionary<StrongIdentifierValue, List<LogicalQueryNode>> source, int n, List<StrongIdentifierValue> keysList, 
             List<(StrongIdentifierValue, LogicalQueryNode)> currentValues, ref List<T> result)
             where T : IResultOfQueryToRelation, new()
         {
@@ -99,10 +125,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private static void ProcessConvertToResultIntermediateNode<T>(Dictionary<StrongIdentifierValue, List<LogicalQueryNode>> source, int n, List<StrongIdentifierValue> keysList,
+        private void ProcessConvertToResultIntermediateNode<T>(Dictionary<StrongIdentifierValue, List<LogicalQueryNode>> source, int n, List<StrongIdentifierValue> keysList,
             List<(StrongIdentifierValue, LogicalQueryNode)> currentValues, ref List<T> result)
             where T : IResultOfQueryToRelation, new()
         {
+#if DEBUG
+            Log($"n = {n}");
+            Log($"keysList = {keysList.WriteListToString()}");
+#endif
+
+            if(!keysList.Any())
+            {
+                return;
+            }
+
             var key = keysList[n];
             var list = source[key];
             var nextN = n + 1;
@@ -116,7 +152,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private static void ProcessConvertToResultFinalNode<T>(Dictionary<StrongIdentifierValue, List<LogicalQueryNode>> source, int n, List<StrongIdentifierValue> keysList,
+        private void ProcessConvertToResultFinalNode<T>(Dictionary<StrongIdentifierValue, List<LogicalQueryNode>> source, int n, List<StrongIdentifierValue> keysList,
             List<(StrongIdentifierValue, LogicalQueryNode)> currentValues, ref List<T> result)
             where T : IResultOfQueryToRelation, new()
         {

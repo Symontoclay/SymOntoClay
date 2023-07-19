@@ -42,6 +42,11 @@ namespace TestSandbox.Handlers
             _logger.Log("Begin");
 
             var platformListener = new BattleRoyaleSilentHostListener();
+            //var platformListener = new TstBattleRoyaleHostListener();
+            //var platformListener = new TstBattleRoyaleHostListener2();
+            //var platformListener = new BattleRoyaleHostListener();
+            //var platformListener = new VeryLongMehod_HostListener();
+            //var platformListener = new VeryShortMehod_HostListener();
 
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.HostListener = platformListener;

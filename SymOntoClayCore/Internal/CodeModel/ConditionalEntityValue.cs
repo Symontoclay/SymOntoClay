@@ -136,6 +136,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 
                 var searchResult = _searcher.Run(searchOptions);
 
+#if DEBUG
+                Log($"searchResult.IsSuccess = {searchResult.IsSuccess}");
+#endif
+
                 if (searchResult.IsSuccess)
                 {
                     if (searchResult.Items.Count == 0)

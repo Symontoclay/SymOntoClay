@@ -1,6 +1,6 @@
 ﻿{: { enemy($x) } -> { soldier($x) } :}
 
-app PeaceKeeper
+app NPC_BattleRoyale_AS_1 is soldier
 {
     //idle actions
     //{
@@ -19,28 +19,40 @@ app PeaceKeeper
 	fun go()
     {
 	    'Begin go' >> @>log;
-		`move and check`(#@(waypoint & random));
-		kill(#@{: see(I, $_) & enemy($_) & state($_, alive) :});
+		`go and kill`(#@(waypoint & random));
 		'End go' >> @>log;
     }
+}
+
+action `go and kill`
+{
+    op(@target)
+	{
+	    repeat
+		{
+		    'Begin go and kill' >> @>log;
+		    `move and check`(@target)[: on complete { 'on complete go and kill (move and check)' >> @>log; complete action;} :];//, on weak canceled { 'on weak canceled go and kill (move and check)' >> @>log; weak cancel action; }
+			kill(#@{: see(I, $_) & enemy($_) & state($_, alive) :});
+			'End go and kill' >> @>log;
+		}
+	}
 }
 
 action `move and check`
 {
     op (@target)
 	{
-	    'Begin move and check' >> @>log;
-
 	    repeat
 		{
-		    move(@target)[: timeout = 1.2, on complete { 'on complete move' >> @>log; complete action;}, on weak canceled { 'on weak canceled move and check (move)' >> @>log; weak cancel action; } :];
+		    'Begin move and check' >> @>log;
+		    @@host.go(to: @target)[: timeout = 5, on complete { 'on complete move and check (move)' >> @>log; complete action;} :];//Don't make cascade "on weak canceled"!
+		    //move(@target)[: timeout = 5, on complete { 'on complete move and check (move)' >> @>log; complete action;} :];//Don't make cascade "on weak canceled"!
 			check();
+			'End move and check' >> @>log;
 		}
-
-		'End move and check' >> @>log;
 	}
-
-	on {: see(I, $_) & enemy($_) & state($_, alive) :} => 
+	
+    on {: see(I, $_) & enemy($_) & state($_, alive) :} => 
 	{
 	    'see(I, $_) & enemy($_) & state($_, alive)' >> @>log;
 		weak cancel action;
@@ -52,10 +64,12 @@ action check
     op ()
 	{
 	    'Begin check' >> @>log;
+	
 	    @@host.`stop`();
 	    @@host.`rotate`(30);
 		@@host.`rotate`(-60);
 		@@host.`rotate`(30);
+		
 		'End check' >> @>log;
 	}
 }
@@ -64,9 +78,7 @@ action move
 {		
 	op (@target)
 	{
-	    'Begin move' >> @>log;
-		@@host.go(to: @target) [: on weak canceled { 'on weak canceled move (host)' >> @>log; complete action; }, on complete { 'on complete move (host)' >> @>log; complete action;} :];
-		'End move' >> @>log;
+		@@host.go(to: @target);
 	}
 }
 

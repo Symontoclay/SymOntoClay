@@ -1,4 +1,47 @@
-﻿{: { enemy($x) } -> { soldier($x) } :}
+﻿app PeaceKeeper
+{
+    on Enter
+	{
+	    'Begin' >> @>log;
+
+	    move(1);
+		kill(2);
+
+		'End' >> @>log;
+	}
+}
+
+action move
+{
+    op(@target)
+	{
+	    'Begin move' >> @>log;
+		@target >> @>log;
+		@_target = @target;
+		@_target >> @>log;
+		'End move' >> @>log;
+	}
+
+	private:
+	    var @_target;
+}
+
+action kill
+{
+    op(@target)
+	{
+	    'Begin kill' >> @>log;
+		@target >> @>log;
+		@_target = @target;
+		@_target >> @>log;
+		'End kill' >> @>log;
+	}
+
+	private:
+	    var @_target;
+}
+
+/*{: { enemy($x) } -> { soldier($x) } :}
 
 app NPC_BattleRoyale_AS_1 is soldier
 {
@@ -153,4 +196,4 @@ action kill
 
 	private:
 	    var @_target;
-}
+}*/

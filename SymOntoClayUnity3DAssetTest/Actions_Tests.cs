@@ -1350,5 +1350,103 @@ action Go
 
             Thread.Sleep(1000);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case8()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter
+	{
+	    'Begin' >> @>log;
+
+	    move(1);
+		kill(2);
+
+		'End' >> @>log;
+	}
+}
+
+action move
+{
+    op(@target)
+	{
+	    'Begin move' >> @>log;
+		@target >> @>log;
+		@_target = @target;
+		@_target >> @>log;
+		'End move' >> @>log;
+	}
+
+	private:
+	    var @_target;
+}
+
+action kill
+{
+    op(@target)
+	{
+	    'Begin kill' >> @>log;
+		@target >> @>log;
+		@_target = @target;
+		@_target >> @>log;
+		'End kill' >> @>log;
+	}
+
+	private:
+	    var @_target;
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual("Begin move", message);
+                            break;
+
+                        case 3:
+                            Assert.AreEqual("1", message);
+                            break;
+
+                        case 4:
+                            Assert.AreEqual("1", message);
+                            break;
+
+                        case 5:
+                            Assert.AreEqual("End move", message);
+                            break;
+
+                        case 6:
+                            Assert.AreEqual("Begin kill", message);
+                            break;
+
+                        case 7:
+                            Assert.AreEqual("2", message);
+                            break;
+
+                        case 8:
+                            Assert.AreEqual("2", message);
+                            break;
+
+                        case 9:
+                            Assert.AreEqual("End kill", message);
+                            break;
+
+                        case 10:
+                            Assert.AreEqual("End", message);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
     }
 }

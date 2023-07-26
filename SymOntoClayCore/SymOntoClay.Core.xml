@@ -530,6 +530,9 @@
         <member name="P:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.UseParentInResolving">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.IsIsolated">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.Holder">
             <inheritdoc/>
         </member>
@@ -4465,6 +4468,9 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#Instance">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#IsIsolated">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#LogicalStorage">
             <inheritdoc/>
         </member>
@@ -7891,6 +7897,9 @@
         <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.Instance">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.IsIsolated">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.LogicalStorage">
             <inheritdoc/>
         </member>
@@ -8311,6 +8320,9 @@
         <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.Instance">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.IsIsolated">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.LogicalStorage">
             <inheritdoc/>
         </member>
@@ -8668,6 +8680,9 @@
         <member name="E:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.OnChangedWithKeys">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.DbgPrintVariables">
+            <inheritdoc/>
+        </member>
         <member name="E:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.OnChanged">
             <inheritdoc/>
         </member>
@@ -8693,6 +8708,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.OnDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.DbgPrintVariables">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Threads.ActivePeriodicObjectCommonContext.IsNeedWating">

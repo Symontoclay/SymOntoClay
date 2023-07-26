@@ -44,7 +44,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public ILocalCodeExecutionContext Parent { get;private set; }
 
         /// <inheritdoc/>
-        public bool UseParentInResolving { get;set; } = true;
+        public bool UseParentInResolving { get; set; } = true;
+
+        /// <inheritdoc/>
+        public bool IsIsolated { get; set; }
 
         /// <inheritdoc/>
         public StrongIdentifierValue Holder { get; set; }
@@ -89,7 +92,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var sb = new StringBuilder();
 
             sb.PrintBriefObjProp(n, nameof(Parent), Parent);
-            sb.AppendLine($"{spaces}{nameof(UseParentInResolving)} = {UseParentInResolving}");
+            sb.AppendLine($"{spaces}{nameof(UseParentInResolving)} = {UseParentInResolving}"); 
+            sb.AppendLine($"{spaces}{nameof(IsIsolated)} = {IsIsolated}");
             sb.PrintObjProp(n, nameof(Holder), Holder);            
             sb.AppendLine($"{spaces}{nameof(Storage)}.Kind = {Storage?.Kind}");
             sb.PrintObjProp(n, nameof(Owner), Owner);

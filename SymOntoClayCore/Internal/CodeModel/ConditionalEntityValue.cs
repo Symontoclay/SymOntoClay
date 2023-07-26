@@ -213,7 +213,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override string ToSystemString()
         {
-            throw new NotImplementedException();
+            return ToHumanizedString();
         }
 
         /// <inheritdoc/>

@@ -320,5 +320,26 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
             base.OnDisposed();
         }
+
+#if DEBUG
+        /// <inheritdoc/>
+        public void DbgPrintVariables()
+        {
+            lock (_lockObj)
+            {
+                var sb = new StringBuilder();
+                sb.AppendLine($"({GetHashCode()}) Begin {_kind} of {_mainStorageContext.Id}");
+
+                foreach(var varItem in _allVariablesList)
+                {
+                    sb.AppendLine($"({varItem.GetHashCode()}){varItem.ToHumanizedString()}");
+                }
+
+                sb.AppendLine($"({GetHashCode()}) End {_kind} of {_mainStorageContext.Id}");
+
+                Log(sb.ToString());
+            }                
+        }
+#endif
     }
 }

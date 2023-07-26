@@ -41,5 +41,9 @@ namespace SymOntoClay.Core
 
         event Action OnChanged;
         event Action<StrongIdentifierValue> OnChangedWithKeys;
+
+#if DEBUG
+        void DbgPrintVariables();
+#endif
     }
 }

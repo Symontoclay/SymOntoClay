@@ -39,6 +39,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public KindOfGC KindOfGC { get; set; } = KindOfGC.None;
         public bool EnableOnAddingFactEvent { get; set; }
         public bool Enabled { get; set; } = true;
+        public bool IsIsolated { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -66,6 +67,7 @@ namespace SymOntoClay.Core.Internal.Storage
             sb.AppendLine($"{spaces}{nameof(KindOfGC)} = {KindOfGC}");
             sb.AppendLine($"{spaces}{nameof(EnableOnAddingFactEvent)} = {EnableOnAddingFactEvent}");
             sb.AppendLine($"{spaces}{nameof(Enabled)} = {Enabled}");
+            sb.AppendLine($"{spaces}{nameof(IsIsolated)} = {IsIsolated}");
             return sb.ToString();
         }
     }

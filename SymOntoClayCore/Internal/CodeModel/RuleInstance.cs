@@ -86,8 +86,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return false;
         }
 
-
-
         private void PrepareDirty(CheckDirtyOptions options)
         {
             if(Name == null || Name.IsEmpty)
@@ -430,6 +428,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         /// <inheritdoc/>
         IInstance IStorage.Instance => null;
+
+        /// <inheritdoc/>
+        bool IStorage.IsIsolated => false;
 
         /// <inheritdoc/>
         ILogicalStorage IStorage.LogicalStorage => this;

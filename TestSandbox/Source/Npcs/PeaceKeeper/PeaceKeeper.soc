@@ -4,10 +4,22 @@
 	{
 	    'Begin' >> @>log;
 
-	    move(1);
-		kill(2);
+		`go and kill`(1);
 
 		'End' >> @>log;
+	}
+}
+
+action `go and kill`
+{
+    op(@target)
+	{
+	    'Begin go and kill' >> @>log;
+
+		move(@target);
+		kill(2);
+
+		'End go and kill' >> @>log;
 	}
 }
 
@@ -16,9 +28,9 @@ action move
     op(@target)
 	{
 	    'Begin move' >> @>log;
-		@target >> @>log;
-		@_target = @target;
-		@_target >> @>log;
+		'move: ' + @target >> @>log;
+		//@_target = @target;
+		//'move: ' + @_target >> @>log;
 		'End move' >> @>log;
 	}
 
@@ -31,9 +43,9 @@ action kill
     op(@target)
 	{
 	    'Begin kill' >> @>log;
-		@target >> @>log;
-		@_target = @target;
-		@_target >> @>log;
+		'kill: ' + @target >> @>log;
+		//@_target = @target;
+		//'kill: ' + @_target >> @>log;
 		'End kill' >> @>log;
 	}
 
@@ -43,7 +55,7 @@ action kill
 
 /*{: { enemy($x) } -> { soldier($x) } :}
 
-app NPC_BattleRoyale_AS_1 is soldier
+app PeaceKeeper is soldier
 {
     //idle actions
     //{
@@ -135,8 +147,9 @@ action kill
     op (@target)
 	{
 	    'Begin kill' >> @>log;
+		'kill: ' + @target >> @>log;
 		@_target = @target;
-		@_target >> @>log;
+		'kill: ' + @_target >> @>log;
 		`ready for shoot`();
 		aim();
 		shoot();

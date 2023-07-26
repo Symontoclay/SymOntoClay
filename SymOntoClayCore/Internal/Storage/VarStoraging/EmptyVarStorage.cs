@@ -74,5 +74,12 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
         /// <inheritdoc/>
         public event Action<StrongIdentifierValue> OnChangedWithKeys;
+
+#if DEBUG
+        /// <inheritdoc/>
+        public void DbgPrintVariables()
+        {
+        }
+#endif
     }
 }

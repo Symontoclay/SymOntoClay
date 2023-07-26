@@ -262,6 +262,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     return true;
                 }
 
+#if DEBUG
+                //Log($"currentCodeFrame.ToDbgString() = {currentCodeFrame.ToDbgString()}");
+#endif
+
                 var currentPosition = currentCodeFrame.CurrentPosition;
 
                 var compiledFunctionBodyCommands = currentCodeFrame.CompiledFunctionBody.Commands;
@@ -1679,6 +1683,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
             }
 
+#if DEBUG
+            Log($"caller.IsPointRefValue = {caller.IsPointRefValue}");
+            Log($"caller.IsStrongIdentifierValue = {caller.IsStrongIdentifierValue}");
+            Log($"caller.IsInstanceValue = {caller.IsInstanceValue}");
+#endif
+
             if (caller.IsPointRefValue)
             {
                 CallPointRefValue(caller.AsPointRefValue, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
@@ -2115,7 +2125,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 var additionalSettings = GetAdditionalSettingsFromAnnotation(annotation, ownLocalCodeExecutionContext);
 
-                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(executable, kindOfParameters, namedParameters, positionedParameters, targetLocalContext, additionalSettings);
+                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(executable, kindOfParameters, namedParameters, positionedParameters, targetLocalContext, 
+                    additionalSettings);
 
                 ExecuteCodeFrame(newCodeFrame, coordinator, syncOption, true, completeAnnotationSystemEvent, cancelAnnotationSystemEvent, weakCancelAnnotationSystemEvent, errorAnnotationSystemEvent);
             }

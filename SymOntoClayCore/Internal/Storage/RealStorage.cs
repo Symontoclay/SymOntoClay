@@ -60,6 +60,8 @@ namespace SymOntoClay.Core.Internal.Storage
             _realStorageContext.InheritancePublicFactsReplicator = settings.InheritancePublicFactsReplicator;
             _realStorageContext.Disabled = !settings.Enabled;
 
+            IsIsolated = settings.IsIsolated;
+
             DefaultSettingsOfCodeEntity = settings.DefaultSettingsOfCodeEntity;
 
             var parents = settings.ParentsStorages;
@@ -132,6 +134,9 @@ namespace SymOntoClay.Core.Internal.Storage
 
         /// <inheritdoc/>
         public virtual IInstance Instance => null;
+
+        /// <inheritdoc/>
+        public bool IsIsolated { get; private set; }
 
         private readonly RealStorageContext _realStorageContext;
         private readonly object _lockObj = new object();
@@ -409,6 +414,7 @@ namespace SymOntoClay.Core.Internal.Storage
             sb.AppendLine($"{spaces}HashCode = {GetHashCode()}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {_kind}");
             sb.AppendLine($"{spaces}Owner = {_realStorageContext.MainStorageContext.Id}");
+            sb.AppendLine($"{spaces}{nameof(IsIsolated)} = {IsIsolated}");
             return sb.ToString();
         }
 
@@ -433,6 +439,7 @@ namespace SymOntoClay.Core.Internal.Storage
             sb.AppendLine($"{spaces}HashCode = {GetHashCode()}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {_kind}");
             sb.AppendLine($"{spaces}Owner = {_realStorageContext.MainStorageContext.Id}");
+            sb.AppendLine($"{spaces}{nameof(IsIsolated)} = {IsIsolated}");
             return sb.ToString();
         }
 
@@ -457,6 +464,7 @@ namespace SymOntoClay.Core.Internal.Storage
             sb.AppendLine($"{spaces}HashCode = {GetHashCode()}");
             sb.AppendLine($"{spaces}{nameof(Kind)} = {_kind}");
             sb.AppendLine($"{spaces}Owner = {_realStorageContext.MainStorageContext.Id}");
+            sb.AppendLine($"{spaces}{nameof(IsIsolated)} = {IsIsolated}");
             return sb.ToString();
         }
     }

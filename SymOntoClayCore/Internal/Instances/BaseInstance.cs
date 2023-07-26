@@ -61,8 +61,17 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _parentExecutionCoordinator = parentExecutionCoordinator;
 
-            var localCodeExecutionContext = new LocalCodeExecutionContext(parentCodeExecutionContext);
+            var isIsolated = codeItem.ParentCodeEntity == null;
+
+            var localCodeExecutionContext = new LocalCodeExecutionContext(parentCodeExecutionContext)
+            {
+                IsIsolated = isIsolated
+            };
+
             var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);
+
+            localStorageSettings.IsIsolated = isIsolated;
+
             _storage = storageFactory.CreateStorage(localStorageSettings);
 
             localCodeExecutionContext.Storage = _storage;

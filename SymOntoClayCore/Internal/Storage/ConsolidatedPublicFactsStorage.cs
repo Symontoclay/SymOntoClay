@@ -106,6 +106,9 @@ namespace SymOntoClay.Core.Internal.Storage
         public IInstance Instance => null;
 
         /// <inheritdoc/>
+        public bool IsIsolated => false;
+
+        /// <inheritdoc/>
         public ILogicalStorage LogicalStorage => _logicalStorage;
 
         /// <inheritdoc/>

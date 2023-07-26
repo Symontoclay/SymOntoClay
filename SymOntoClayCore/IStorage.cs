@@ -38,6 +38,8 @@ namespace SymOntoClay.Core
         StrongIdentifierValue InstanceName { get; }
         IInstance Instance { get; }
 
+        bool IsIsolated { get; }
+
         ILogicalStorage LogicalStorage { get; }
         IRelationsStorage RelationsStorage { get; }
         IMethodsStorage MethodsStorage { get; }

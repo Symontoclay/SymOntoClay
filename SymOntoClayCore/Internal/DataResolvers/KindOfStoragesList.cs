@@ -29,6 +29,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
     public enum KindOfStoragesList
     {
         Full,
-        CodeItems
+        CodeItems,
+        Var
     }
 }

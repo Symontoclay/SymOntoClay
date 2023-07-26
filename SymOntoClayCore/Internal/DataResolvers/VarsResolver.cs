@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog.Fluent;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
@@ -155,6 +156,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             Var varPtr = null;
 
+#if DEBUG
+            Log($"varName = {varName}");
+            Log($"localCodeExecutionContext.OwnerStorage != null = {localCodeExecutionContext.OwnerStorage != null}");
+#endif
+
             if (localCodeExecutionContext.OwnerStorage != null)
             {
                 varPtr = NResolve(varName, localCodeExecutionContext.Owner, localCodeExecutionContext.OwnerStorage, true, localCodeExecutionContext, options);
@@ -165,13 +171,47 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return varPtr;
             }
 
-            return NResolve(varName, localCodeExecutionContext.Holder, localCodeExecutionContext.Storage, false, localCodeExecutionContext, options);
+            var result = NResolve(varName, localCodeExecutionContext.Holder, localCodeExecutionContext.Storage, false, localCodeExecutionContext, options);
+
+#if DEBUG
+            Log($"result?.GetHashCode() = {result?.GetHashCode()}");
+#endif
+
+            return result;
         }
 
         private Var NResolve(StrongIdentifierValue varName, StrongIdentifierValue holder, IStorage storage, bool privateOnly, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
+#if DEBUG
+            Log($"varName = {varName}");
+#endif
 
-            var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
+#if DEBUG
+            //var oldStoragesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
+            //foreach (var tmpItem in oldStoragesList)
+            //{
+            //    Log("############################################################");
+            //    Log($"tmpItem.Storage.Kind = {tmpItem.Storage.Kind}");
+            //    Log($"tmpItem.Storage.GetHashCode() = {tmpItem.Storage.GetHashCode()}");
+            //    Log($"tmpItem.Storage.TargetClassName = {tmpItem.Storage.TargetClassName?.ToHumanizedString()}");
+            //    Log($"tmpItem.Storage.IsIsolated = {tmpItem.Storage.IsIsolated}");
+            //    tmpItem.Storage.VarStorage.DbgPrintVariables();
+            //}
+#endif
+
+            var storagesList = GetStoragesList(storage, KindOfStoragesList.Var);
+
+#if DEBUG
+            foreach(var tmpItem in storagesList)
+            {
+                Log("-------------------------------------");
+                Log($"tmpItem.Storage.Kind = {tmpItem.Storage.Kind}");
+                Log($"tmpItem.Storage.GetHashCode() = {tmpItem.Storage.GetHashCode()}");
+                Log($"tmpItem.Storage.TargetClassName = {tmpItem.Storage.TargetClassName?.ToHumanizedString()}");
+                Log($"tmpItem.Storage.IsIsolated = {tmpItem.Storage.IsIsolated}");
+                tmpItem.Storage.VarStorage.DbgPrintVariables();
+            }
+#endif
 
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
@@ -179,6 +219,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
 
             var rawList = GetRawVarsList(varName, storagesList, weightedInheritanceItems);
+
+#if DEBUG
+            foreach (var tmpItem in rawList)
+            {
+                Log("==========================================");
+                Log($"tmpItem.ResultItem.GetHashCode() = {tmpItem.ResultItem.GetHashCode()}");
+            }
+#endif
 
             if (!rawList.Any())
             {
@@ -203,9 +251,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return filteredList.Single().ResultItem;
             }
 
-            var maxStogageDistance = filteredList.Max(p => p.StorageDistance);
+            var minStogageDistance = filteredList.Min(p => p.StorageDistance);
 
-            filteredList = filteredList.Where(p => p.StorageDistance == maxStogageDistance).ToList();
+            filteredList = filteredList.Where(p => p.StorageDistance == minStogageDistance).ToList();
 
             if (filteredList.Count == 1)
             {

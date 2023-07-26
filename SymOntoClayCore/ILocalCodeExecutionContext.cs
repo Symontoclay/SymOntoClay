@@ -32,8 +32,9 @@ namespace SymOntoClay.Core
     public interface ILocalCodeExecutionContext : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         ILocalCodeExecutionContext Parent { get; }
-
         bool UseParentInResolving { get; }
+
+        bool IsIsolated { get; }
 
         StrongIdentifierValue Holder { get;}
         IStorage Storage { get;}

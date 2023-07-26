@@ -54,13 +54,91 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         
         public List<StorageUsingOptions> GetStoragesList(IStorage storage, CollectChainOfStoragesOptions options, KindOfStoragesList kindOfStoragesList = KindOfStoragesList.Full)
         {
-            switch(kindOfStoragesList)
+            switch (kindOfStoragesList)
+            {
+                case KindOfStoragesList.Full:
+                case KindOfStoragesList.CodeItems:
+                    return NGetStoragesList(storage, options, kindOfStoragesList);
+
+                case KindOfStoragesList.Var:
+                    return FilterStoragesForVarResolving(NGetStoragesList(storage, options, KindOfStoragesList.CodeItems));
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfStoragesList), kindOfStoragesList, null);
+            }
+        }
+
+        private List<StorageUsingOptions> FilterStoragesForVarResolving(List<StorageUsingOptions> storagesList)
+        {
+            var result = new List<StorageUsingOptions>();
+
+            var wasIsolatedStorage = false;
+
+            foreach(var item in storagesList)
+            {
+                var storage = item.Storage;
+
+#if DEBUG
+                //Log("**************************************************");
+                //Log($"wasIsolatedStorage = {wasIsolatedStorage}");
+                //Log($"storage.Kind = {storage.Kind}");
+                //Log($"storage.GetHashCode() = {storage.GetHashCode()}");
+                //Log($"storage.TargetClassName = {storage.TargetClassName?.ToHumanizedString()}");
+                //Log($"storage.IsIsolated = {storage.IsIsolated}");
+                //storage.VarStorage.DbgPrintVariables();
+#endif
+
+                var kind = storage.Kind;
+
+                switch (kind)
+                {
+                    case KindOfStorage.Local:
+                        if(wasIsolatedStorage)
+                        {
+                            continue;
+                        }
+                        result.Add(item);
+                        break;
+
+                    case KindOfStorage.Action:
+                    case KindOfStorage.State:
+                    case KindOfStorage.Object:
+                        if (wasIsolatedStorage)
+                        {
+                            continue;
+                        }
+
+                        if(storage.IsIsolated)
+                        {
+                            wasIsolatedStorage = true;
+                        }
+                        result.Add(item);
+                        break;
+
+                    case KindOfStorage.Global:
+                    case KindOfStorage.Categories:
+                    case KindOfStorage.World:
+                    case KindOfStorage.SuperClass:
+                        result.Add(item);
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+                }
+            }
+
+            return result;
+        }
+
+        private List<StorageUsingOptions> NGetStoragesList(IStorage storage, CollectChainOfStoragesOptions options, KindOfStoragesList kindOfStoragesList)
+        {
+            switch (kindOfStoragesList)
             {
                 case KindOfStoragesList.Full:
                     break;
 
                 case KindOfStoragesList.CodeItems:
-                    if(storage.CodeItemsStoragesList != null)
+                    if (storage.CodeItemsStoragesList != null)
                     {
                         return storage.CodeItemsStoragesList;
                     }
@@ -74,7 +152,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var n = 0;
 
-            if(options != null && options.InitialPriority.HasValue)
+            if (options != null && options.InitialPriority.HasValue)
             {
                 n = options.InitialPriority.Value;
             }

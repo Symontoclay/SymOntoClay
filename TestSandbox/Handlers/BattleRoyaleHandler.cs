@@ -84,18 +84,21 @@ namespace TestSandbox.Handlers
 
             var enemy = _world.GetHumanoidNPC(enemySettings);
 
+            var wasHide = false;
+
             platformListener.AddOnEndPointEnterSyncHandler("Go", () =>
             {
-                _logger.Log("OnEndPointEnterSyncHandler: On Enter Go");
+                _logger.Log($"OnEndPointEnterSyncHandler: On Enter Go wasHide = {wasHide}");
 
-                _npc.InsertFact(standardFactsBuilder.BuildAliveFactString(enemyId));
-                _npc.InsertFact(standardFactsBuilder.BuildDefaultInheritanceFactString(enemyId, "soldier"));
-                _npc.InsertFact(standardFactsBuilder.BuildSeeFactString(enemyId));
+                if(!wasHide)
+                {
+                    //_npc.InsertFact(standardFactsBuilder.BuildAliveFactString(enemyId));
+                    //_npc.InsertFact(standardFactsBuilder.BuildDefaultInheritanceFactString(enemyId, "soldier"));
+                    //_npc.InsertFact(standardFactsBuilder.BuildSeeFactString(enemyId));
+                }
             });
 
-
             _world.Start();
-
 
             Thread.Sleep(1000);
 
@@ -108,6 +111,8 @@ namespace TestSandbox.Handlers
             _logger.Log("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
 
             _npc.RemoveFact(seeFactId);
+
+            wasHide = true;
 
             _logger.Log("__________________________________________________________");
 

@@ -1683,12 +1683,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
             }
 
-#if DEBUG
-            Log($"caller.IsPointRefValue = {caller.IsPointRefValue}");
-            Log($"caller.IsStrongIdentifierValue = {caller.IsStrongIdentifierValue}");
-            Log($"caller.IsInstanceValue = {caller.IsInstanceValue}");
-#endif
-
             if (caller.IsPointRefValue)
             {
                 CallPointRefValue(caller.AsPointRefValue, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);

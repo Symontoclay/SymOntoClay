@@ -1,59 +1,4 @@
-﻿app PeaceKeeper
-{
-    on Enter
-	{
-	    'Begin' >> @>log;
-
-		`go and kill`(1);
-
-		'End' >> @>log;
-	}
-}
-
-action `go and kill`
-{
-    op(@target)
-	{
-	    'Begin go and kill' >> @>log;
-
-		move(@target);
-		kill(2);
-
-		'End go and kill' >> @>log;
-	}
-}
-
-action move
-{
-    op(@target)
-	{
-	    'Begin move' >> @>log;
-		'move: ' + @target >> @>log;
-		//@_target = @target;
-		//'move: ' + @_target >> @>log;
-		'End move' >> @>log;
-	}
-
-	private:
-	    var @_target;
-}
-
-action kill
-{
-    op(@target)
-	{
-	    'Begin kill' >> @>log;
-		'kill: ' + @target >> @>log;
-		//@_target = @target;
-		//'kill: ' + @_target >> @>log;
-		'End kill' >> @>log;
-	}
-
-	private:
-	    var @_target;
-}
-
-/*{: { enemy($x) } -> { soldier($x) } :}
+﻿{: { enemy($x) } -> { soldier($x) } :}
 
 app PeaceKeeper is soldier
 {
@@ -209,4 +154,4 @@ action kill
 
 	private:
 	    var @_target;
-}*/
+}

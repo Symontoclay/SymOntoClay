@@ -1448,5 +1448,229 @@ action kill
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case8_a()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter
+	{
+	    'Begin' >> @>log;
+
+		`go and kill`(1);
+
+		'End' >> @>log;
+	}
+}
+
+action `go and kill`
+{
+    op(@target)
+	{
+	    'Begin go and kill' >> @>log;
+
+		move(@target);
+		kill(2);
+
+		'End go and kill' >> @>log;
+	}
+}
+
+action move
+{
+    op(@target)
+	{
+	    'Begin move' >> @>log;
+		'move: ' + @target >> @>log;
+		'End move' >> @>log;
+	}
+
+	private:
+	    var @_target;
+}
+
+action kill
+{
+    op(@target)
+	{
+	    'Begin kill' >> @>log;
+		'kill: ' + @target >> @>log;
+		'End kill' >> @>log;
+	}
+
+	private:
+	    var @_target;
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "Begin go and kill");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "Begin move");
+                            break;
+
+                        case 4:
+                            Assert.AreEqual(message, "move: 1");
+                            break;
+
+                        case 5:
+                            Assert.AreEqual(message, "End move");
+                            break;
+
+                        case 6:
+                            Assert.AreEqual(message, "Begin kill");
+                            break;
+
+                        case 7:
+                            Assert.AreEqual(message, "kill: 2");
+                            break;
+
+                        case 8:
+                            Assert.AreEqual(message, "End kill");
+                            break;
+
+                        case 9:
+                            Assert.AreEqual(message, "End go and kill");
+                            break;
+
+                        case 10:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case8_a_1()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter
+	{
+	    'Begin' >> @>log;
+
+		`go and kill`(1);
+
+		'End' >> @>log;
+	}
+}
+
+action `go and kill`
+{
+    op(@target)
+	{
+	    'Begin go and kill' >> @>log;
+
+		move(@target);
+		kill(2);
+
+		'End go and kill' >> @>log;
+	}
+}
+
+action move
+{
+    op(@target)
+	{
+	    'Begin move' >> @>log;
+		'move: ' + @target >> @>log;
+		@_target = @target;
+		'move (1): ' + @_target >> @>log;
+		'End move' >> @>log;
+	}
+
+	private:
+	    var @_target;
+}
+
+action kill
+{
+    op(@target)
+	{
+	    'Begin kill' >> @>log;
+		'kill: ' + @target >> @>log;
+		@_target = @target;
+		'kill (1): ' + @_target >> @>log;
+		'End kill' >> @>log;
+	}
+
+	private:
+	    var @_target;
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "Begin go and kill");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message, "Begin move");
+                            break;
+
+                        case 4:
+                            Assert.AreEqual(message, "move: 1");
+                            break;
+
+                        case 5:
+                            Assert.AreEqual(message, "move (1): 1");
+                            break;
+
+                        case 6:
+                            Assert.AreEqual(message, "End move");
+                            break;
+
+                        case 7:
+                            Assert.AreEqual(message, "Begin kill");
+                            break;
+
+                        case 8:
+                            Assert.AreEqual(message, "kill: 2");
+                            break;
+
+                        case 9:
+                            Assert.AreEqual(message, "kill (1): 2");
+                            break;
+
+                        case 10:
+                            Assert.AreEqual(message, "End kill");
+                            break;
+
+                        case 11:
+                            Assert.AreEqual(message, "End go and kill");
+                            break;
+
+                        case 12:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
     }
 }

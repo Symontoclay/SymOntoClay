@@ -53,13 +53,27 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
         public IProcessInfo Activate(IEndpointInfo endpointInfo, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
+#if DEBUG
+            Log($"endpointInfo = {endpointInfo}");
+            Log($"command = {command}");
+#endif
+
             var cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
 
             var paramsList = MapParams(cancellationToken, endpointInfo, command, context, localContext);
 
+#if DEBUG
+            Log($"paramsList?.Length = {paramsList?.Length}");
+#endif
+
             Task task = null;
             var processInfo = new PlatformProcessInfo(cancellationTokenSource, endpointInfo.Name, endpointInfo.Devices, endpointInfo.Friends);
+
+#if DEBUG
+            Log($"processInfo != null = {processInfo != null}");
+            Log($"endpointInfo.NeedMainThread = {endpointInfo.NeedMainThread}");
+#endif
 
             if (endpointInfo.NeedMainThread)
             {
@@ -71,6 +85,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             }
             
             processInfo.SetTask(task);
+
+#if DEBUG
+            Log($"NEXT");
+#endif
 
             return processInfo;
         }
@@ -163,7 +181,16 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
         private void Invoke(MethodInfo methodInfo, object platformListener, object[] paramsList)
         {
+#if DEBUG
+            Log($"methodInfo.Name = {methodInfo.Name}");
+            Log($"methodInfo.ReturnType?.FullName = {methodInfo.ReturnType?.FullName}");
+#endif
+
             var result = methodInfo.Invoke(platformListener, paramsList);
+
+#if DEBUG
+            Log($"result = {result}");
+#endif
 
             if (result != null)
             {

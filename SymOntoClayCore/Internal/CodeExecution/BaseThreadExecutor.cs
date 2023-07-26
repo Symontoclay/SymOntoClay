@@ -1742,6 +1742,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             Value annotation, SyncOption syncOption)
         {
+#if DEBUG
+            Log($"methodName = {methodName.ToHumanizedString()}");
+#endif
+
             var command = new Command();
             command.Name = methodName;
 
@@ -1780,7 +1784,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var processCreatingResult = _hostListener.CreateProcess(command, _context, _currentCodeFrame.LocalContext);
 
-            if(processCreatingResult.IsSuccessful)
+#if DEBUG
+            Log($"processCreatingResult.IsSuccessful = {processCreatingResult.IsSuccessful}");
+#endif
+
+            if (processCreatingResult.IsSuccessful)
             {
                 var processInfo = processCreatingResult.Process;
 

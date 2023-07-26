@@ -133,7 +133,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     searchOptions.TargetStorage = _onceStorage;
                     searchOptions.LocalCodeExecutionContext = _localCodeExecutionContext;  
                 }
-                
+
+#if DEBUG
+                Log($"searchOptions.QueryExpression = {searchOptions.QueryExpression.ToHumanizedString()}");
+#endif
+
                 var searchResult = _searcher.Run(searchOptions);
 
 #if DEBUG

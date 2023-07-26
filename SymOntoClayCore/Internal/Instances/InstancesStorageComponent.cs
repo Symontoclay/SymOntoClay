@@ -207,6 +207,10 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 var concurentProcessesInfoList = NGetConcurrentProcessesInfo(processInfo);
 
+#if DEBUG
+                Log($"concurentProcessesInfoList?.Count = {concurentProcessesInfoList?.Count}");
+#endif
+
                 if(concurentProcessesInfoList.IsNullOrEmpty())
                 {
                     NAppendAndTryStartProcessInfoWithDevices(processInfo);
@@ -228,6 +232,10 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
 
                 var globalPriority = processInfo.GlobalPriority;
+
+#if DEBUG
+                Log($"globalPriority = {globalPriority}");
+#endif
 
                 if (concurentProcessesInfoList.All(p => p.GlobalPriority >= globalPriority))
                 {

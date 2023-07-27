@@ -137,6 +137,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             queryExpression = queryExpression.Normalized;
 
+#if DEBUG
+            Log($"queryExpression = {queryExpression.ToHumanizedString()}");
+#endif
+
             var loggingProvider = _context.LoggingProvider;
             var kindOfLogicalSearchExplain = loggingProvider.KindOfLogicalSearchExplain;
 
@@ -219,10 +223,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         case ResolvingNotResultsStrategy.InResolver:
                             {
                                 var newItems = _logicalSearchVarResultsItemInvertor.Invert<LogicalSearchResultItem>(queryExecutingCard.ResultsOfQueryToRelationList.Cast<IResultOfQueryToRelation>(), storagesList, options.ReplacingNotResultsStrategy);
-
-#if DEBUG
-
-#endif
 
                                 result.IsSuccess = queryExecutingCard.IsSuccess;
                                 result.Items = newItems;
@@ -1473,6 +1473,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return;
             }
 
+#if DEBUG
+            Log($"processedExpr.Name = {processedExpr.Name}");
+#endif
+
             queryExecutingCard.UsedRelations.Add(processedExpr);
 
             LogicalSearchExplainNode currentExplainNode = null;
@@ -2508,7 +2512,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var leftExpr = processedExpr.Left;
             var rightExpr = processedExpr.Right;
 
-            if(leftExpr.IsNull & rightExpr.IsNull)
+            if (leftExpr.IsNull & rightExpr.IsNull)
             {
                 queryExecutingCard.IsSuccess = true;
                 queryExecutingCard.UsedKeysList.Add(leftExpr.Name);
@@ -2530,8 +2534,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 reasonOfFuzzyLogicResolving.Kind = KindOfReasonOfFuzzyLogicResolving.Inheritance;
 
                 var resultOfComparison = EqualityCompare(leftExpr, rightExpr, additionalKeys_1, additionalKeys_2, reasonOfFuzzyLogicResolving, options, null, dataSource);
-
-                if(resultOfComparison == true)
+                
+                if (resultOfComparison == true)
                 {
                     queryExecutingCard.IsSuccess = true;
                     queryExecutingCard.UsedKeysList.Add(leftExpr.Name);

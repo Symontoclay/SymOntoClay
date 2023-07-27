@@ -146,6 +146,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 if (searchResult.IsSuccess)
                 {
+#if DEBUG
+                    Log($"searchResult.Items.Count = {searchResult.Items.Count}");
+#endif
+
                     if (searchResult.Items.Count == 0)
                     {
                         ResetCurrEntity();
@@ -190,6 +194,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     }
                 }
             }
+
+#if DEBUG
+            Log($"foundIdsList = {foundIdsList.WriteListToString()}");
+#endif
 
             ProcessIdsList(foundIdsList);
         }

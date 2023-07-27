@@ -233,7 +233,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             foreach (var foundId in idsList)
             {
+#if DEBUG
+                Log($"foundId = {foundId}");
+#endif
+
                 var instanceId = _conditionalEntityHostSupport.GetInstanceId(foundId);
+
+#if DEBUG
+                Log($"instanceId = {instanceId}");
+#endif
 
                 if (instanceId == 0)
                 {
@@ -252,6 +260,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     {
                         break;
                     }
+
+#if DEBUG
+                    Log($"constraint = {constraint}");
+#endif
 
                     switch (constraint)
                     {
@@ -277,43 +289,45 @@ namespace SymOntoClay.Core.Internal.CodeModel
                             break;
 
                         case EntityConstraints.Nearest:
-                            var distanceToAndPosition = _conditionalEntityHostSupport.DistanceToAndPosition(instanceId);
-
-                            var distance = distanceToAndPosition.Item1;
-
-                            if (distance.HasValue)
                             {
-                                currentPosition = distanceToAndPosition.Item2;
+                                var distanceToAndPosition = _conditionalEntityHostSupport.DistanceToAndPosition(instanceId);
 
-                                if (minDistance.HasValue)
+                                var distance = distanceToAndPosition.Item1;
+
+                                if (distance.HasValue)
                                 {
-                                    if (minDistance == distance)
+                                    currentPosition = distanceToAndPosition.Item2;
+
+                                    if (minDistance.HasValue)
                                     {
-                                        currentMinDistance = distance;
-                                    }
-                                    else
-                                    {
-                                        if (minDistance < distance)
+                                        if (minDistance == distance)
                                         {
                                             currentMinDistance = distance;
-
-                                            clearFilteredItemsList = true;
                                         }
                                         else
                                         {
-                                            isFit = false;
+                                            if (minDistance < distance)
+                                            {
+                                                currentMinDistance = distance;
+
+                                                clearFilteredItemsList = true;
+                                            }
+                                            else
+                                            {
+                                                isFit = false;
+                                            }
                                         }
                                     }
-                                }
-                                else
-                                {
-                                    currentMinDistance = distance;
+                                    else
+                                    {
+                                        currentMinDistance = distance;
+                                    }
+
+                                    break;
                                 }
 
-                                break;
+                                isFit = false;
                             }
-
-                            isFit = false;
                             break;
 
                         case EntityConstraints.Random:
@@ -339,6 +353,20 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     minDistance = currentMinDistance;
                 }
 
+#if DEBUG
+                Log($"currentPosition = {currentPosition}");
+#endif
+
+                if(!currentPosition.HasValue)
+                {
+                    var distanceToAndPosition = _conditionalEntityHostSupport.DistanceToAndPosition(instanceId);
+                    currentPosition = distanceToAndPosition.Item2;
+                }
+
+#if DEBUG
+                Log($"currentPosition (after) = {currentPosition}");
+#endif
+
                 filteredItemsList.Add(new FilteredItem()
                 {
                     Id = foundId,
@@ -360,6 +388,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 var index = _random.Next(filteredItemsList.Count);
 
                 targetFilteredItem = filteredItemsList[index];
+
+#if DEBUG
+                Log($"targetFilteredItem.Id = {targetFilteredItem.Id}");
+#endif
             }
             else
             {

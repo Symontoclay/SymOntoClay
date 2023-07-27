@@ -217,7 +217,14 @@ namespace SymOntoClay.Core.Internal.Instances
                     return;
                 }
 
-                if(concurentProcessesInfoList.All(p => p.ParentProcessInfo == processInfo.ParentProcessInfo))
+#if DEBUG
+                foreach(var tmpProcessInfo in concurentProcessesInfoList)
+                {
+                    Log($"tmpProcessInfo.EndPointName = {tmpProcessInfo.EndPointName}");
+                }
+#endif
+
+                if (concurentProcessesInfoList.All(p => p.ParentProcessInfo == processInfo.ParentProcessInfo))
                 {
                     NAppendAndTryStartProcessInfoWithDevices(processInfo);
 

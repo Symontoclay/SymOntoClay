@@ -220,7 +220,7 @@ namespace SymOntoClay.Core.Internal.Instances
 #if DEBUG
                 foreach(var tmpProcessInfo in concurentProcessesInfoList)
                 {
-                    Log($"tmpProcessInfo.EndPointName = {tmpProcessInfo.EndPointName}");
+                    Log($"tmpProcessInfo.EndPointName = {tmpProcessInfo.EndPointName};tmpProcessInfo.GlobalPriority = {tmpProcessInfo.GlobalPriority}");
                 }
 #endif
 

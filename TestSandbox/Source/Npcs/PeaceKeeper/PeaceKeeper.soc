@@ -1,4 +1,33 @@
-﻿{: { enemy($x) } -> { soldier($x) } :}
+﻿/*app PeaceKeeper
+{
+	{: male(#Tom) :}
+	{: parent(#Piter, #Tom) :}
+	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
+
+	on Enter => {
+	    select {: son($x, $y) :} >> @>log;
+	}
+}*/
+
+{: { enemy($x) } -> { soldier($x) } :}
+
+{: waypoint(#wp1) :}
+{: soldier(#enemy1) :}
+{: soldier(#enemy2) :}
+
+app PeaceKeeper
+{
+    on Enter =>
+	{
+	    'Begin' >> @>log;
+
+		select {: waypoint($x) :} >> @>log;
+
+		'End' >> @>log;
+	}
+}
+
+/*{: { enemy($x) } -> { soldier($x) } :}
 
 app PeaceKeeper is soldier
 {
@@ -32,7 +61,7 @@ action `go and kill`
 		{
 		    'Begin go and kill' >> @>log;
 		    `move and check`(@target)[: on complete { 'on complete go and kill (move and check)' >> @>log; complete action;} :];//, on weak canceled { 'on weak canceled go and kill (move and check)' >> @>log; weak cancel action; }
-			kill(#@{: see(I, $_) & enemy($_) & state($_, alive) :});
+			//kill(#@{: see(I, $_) & enemy($_) & state($_, alive) :});
 			'End go and kill' >> @>log;
 		}
 	}
@@ -52,11 +81,11 @@ action `move and check`
 		}
 	}
 	
-    on {: see(I, $_) & enemy($_) & state($_, alive) :} => 
-	{
-	    'see(I, $_) & enemy($_) & state($_, alive)' >> @>log;
-		weak cancel action;
-	}
+    //on {: see(I, $_) & enemy($_) & state($_, alive) :} => 
+	//{
+	//    'see(I, $_) & enemy($_) & state($_, alive)' >> @>log;
+	//	weak cancel action;
+	//}
 }
 
 action check
@@ -154,4 +183,4 @@ action kill
 
 	private:
 	    var @_target;
-}
+}*/

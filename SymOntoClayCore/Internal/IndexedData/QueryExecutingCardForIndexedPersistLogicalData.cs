@@ -33,7 +33,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
     public class QueryExecutingCardForIndexedPersistLogicalData : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public bool IsFetchingAllValuesForResolvingExpressionParam { get; set; }
-        public StrongIdentifierValue TargetRelation { get; set; }
+        public StrongIdentifierValue TargetRelationName { get; set; }
         public int CountParams { get; set; }
         public IList<QueryExecutingCardAboutVar> VarsInfoList { get; set; }
         public IList<QueryExecutingCardAboutKnownInfo> KnownInfoList { get; set; }
@@ -66,7 +66,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(IsFetchingAllValuesForResolvingExpressionParam)} = {IsFetchingAllValuesForResolvingExpressionParam}");
-            sb.PrintObjProp(n, nameof(TargetRelation), TargetRelation);
+            sb.PrintObjProp(n, nameof(TargetRelationName), TargetRelationName);
             sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
             sb.PrintObjListProp(n, nameof(VarsInfoList), VarsInfoList);
             sb.PrintObjListProp(n, nameof(KnownInfoList), KnownInfoList);
@@ -103,7 +103,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(IsFetchingAllValuesForResolvingExpressionParam)} = {IsFetchingAllValuesForResolvingExpressionParam}");
-            sb.PrintShortObjProp(n, nameof(TargetRelation), TargetRelation);
+            sb.PrintShortObjProp(n, nameof(TargetRelationName), TargetRelationName);
             sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
             sb.PrintShortObjListProp(n, nameof(VarsInfoList), VarsInfoList);
             sb.PrintShortObjListProp(n, nameof(KnownInfoList), KnownInfoList);
@@ -140,7 +140,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(IsFetchingAllValuesForResolvingExpressionParam)} = {IsFetchingAllValuesForResolvingExpressionParam}");
-            sb.PrintBriefObjProp(n, nameof(TargetRelation), TargetRelation);
+            sb.PrintBriefObjProp(n, nameof(TargetRelationName), TargetRelationName);
             sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
             sb.PrintBriefObjListProp(n, nameof(VarsInfoList), VarsInfoList);
             sb.PrintBriefObjListProp(n, nameof(KnownInfoList), KnownInfoList);

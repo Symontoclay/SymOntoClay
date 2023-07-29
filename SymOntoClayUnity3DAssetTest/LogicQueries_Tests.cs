@@ -3811,7 +3811,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(true, BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3826,7 +3826,41 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }));
+        }
+
+        [Test]
+        [Parallelizable]
+        public void Case38()
+        {
+            var text = @"{: { enemy($x) } -> { soldier($x) } :}
+
+{: waypoint(#wp1) :}
+{: soldier(#enemy1) :}
+{: soldier(#enemy2) :}
+
+app PeaceKeeper
+{
+    on Enter =>
+	{
+		select {: waypoint($x) :} >> @>log;
+	}
+}";
+
+            Assert.AreEqual(true, BehaviorTestEngineInstance.Run(text,
+                (n, message) =>
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$x = #wp1"), true);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }));
         }
     }
 }

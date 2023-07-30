@@ -1743,7 +1743,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             Value annotation, SyncOption syncOption)
         {
 #if DEBUG
-            Log($"methodName = {methodName.ToHumanizedString()}");
+            //Log($"methodName = {methodName.ToHumanizedString()}");
 #endif
 
             var command = new Command();
@@ -1785,7 +1785,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var processCreatingResult = _hostListener.CreateProcess(command, _context, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-            Log($"processCreatingResult.IsSuccessful = {processCreatingResult.IsSuccessful}");
+            //Log($"processCreatingResult.IsSuccessful = {processCreatingResult.IsSuccessful}");
 #endif
 
             if (processCreatingResult.IsSuccessful)

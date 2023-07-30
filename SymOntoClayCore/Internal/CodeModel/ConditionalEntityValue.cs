@@ -135,19 +135,19 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 }
 
 #if DEBUG
-                Log($"searchOptions.QueryExpression = {searchOptions.QueryExpression.ToHumanizedString()}");
+                //Log($"searchOptions.QueryExpression = {searchOptions.QueryExpression.ToHumanizedString()}");
 #endif
 
                 var searchResult = _searcher.Run(searchOptions);
 
 #if DEBUG
-                Log($"searchResult.IsSuccess = {searchResult.IsSuccess}");
+                //Log($"searchResult.IsSuccess = {searchResult.IsSuccess}");
 #endif
 
                 if (searchResult.IsSuccess)
                 {
 #if DEBUG
-                    Log($"searchResult.Items.Count = {searchResult.Items.Count}");
+                    //Log($"searchResult.Items.Count = {searchResult.Items.Count}");
 #endif
 
                     if (searchResult.Items.Count == 0)
@@ -196,7 +196,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
 
 #if DEBUG
-            Log($"foundIdsList = {foundIdsList.WriteListToString()}");
+            //Log($"foundIdsList = {foundIdsList.WriteListToString()}");
 #endif
 
             ProcessIdsList(foundIdsList);

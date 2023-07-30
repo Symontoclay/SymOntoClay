@@ -234,13 +234,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
             foreach (var foundId in idsList)
             {
 #if DEBUG
-                Log($"foundId = {foundId}");
+                //Log($"foundId = {foundId}");
 #endif
 
                 var instanceId = _conditionalEntityHostSupport.GetInstanceId(foundId);
 
 #if DEBUG
-                Log($"instanceId = {instanceId}");
+                //Log($"instanceId = {instanceId}");
 #endif
 
                 if (instanceId == 0)
@@ -262,7 +262,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     }
 
 #if DEBUG
-                    Log($"constraint = {constraint}");
+                    //Log($"constraint = {constraint}");
 #endif
 
                     switch (constraint)
@@ -354,7 +354,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 }
 
 #if DEBUG
-                Log($"currentPosition = {currentPosition}");
+                //Log($"currentPosition = {currentPosition}");
 #endif
 
                 if(!currentPosition.HasValue)
@@ -364,7 +364,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 }
 
 #if DEBUG
-                Log($"currentPosition (after) = {currentPosition}");
+                //Log($"currentPosition (after) = {currentPosition}");
 #endif
 
                 filteredItemsList.Add(new FilteredItem()
@@ -390,7 +390,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 targetFilteredItem = filteredItemsList[index];
 
 #if DEBUG
-                Log($"targetFilteredItem.Id = {targetFilteredItem.Id}");
+                //Log($"targetFilteredItem.Id = {targetFilteredItem.Id}");
 #endif
             }
             else

@@ -208,7 +208,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 var concurentProcessesInfoList = NGetConcurrentProcessesInfo(processInfo);
 
 #if DEBUG
-                Log($"concurentProcessesInfoList?.Count = {concurentProcessesInfoList?.Count}");
+                //Log($"concurentProcessesInfoList?.Count = {concurentProcessesInfoList?.Count}");
 #endif
 
                 if(concurentProcessesInfoList.IsNullOrEmpty())
@@ -218,10 +218,10 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
 
 #if DEBUG
-                foreach(var tmpProcessInfo in concurentProcessesInfoList)
-                {
-                    Log($"tmpProcessInfo.EndPointName = {tmpProcessInfo.EndPointName};tmpProcessInfo.GlobalPriority = {tmpProcessInfo.GlobalPriority}");
-                }
+                //foreach(var tmpProcessInfo in concurentProcessesInfoList)
+                //{
+                //    Log($"tmpProcessInfo.EndPointName = {tmpProcessInfo.EndPointName};tmpProcessInfo.GlobalPriority = {tmpProcessInfo.GlobalPriority}");
+                //}
 #endif
 
                 if (concurentProcessesInfoList.All(p => p.ParentProcessInfo == processInfo.ParentProcessInfo))
@@ -241,7 +241,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 var globalPriority = processInfo.GlobalPriority;
 
 #if DEBUG
-                Log($"globalPriority = {globalPriority}");
+                //Log($"globalPriority = {globalPriority}");
 #endif
 
                 if (concurentProcessesInfoList.All(p => p.GlobalPriority >= globalPriority))

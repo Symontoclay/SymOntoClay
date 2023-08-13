@@ -200,7 +200,6 @@ namespace TestSandbox.CreatingExamples
             settings.Logging = new LoggingSettings()
             {
                 LogDir = logDir,
-                RootContractName = "Hi1",
                 PlatformLoggers = new List<IPlatformLogger>() { callBackLogger },
                 Enable = true,
                 EnableRemoteConnection = true

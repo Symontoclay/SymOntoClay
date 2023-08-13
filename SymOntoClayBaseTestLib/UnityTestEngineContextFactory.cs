@@ -192,7 +192,6 @@ namespace SymOntoClay.BaseTestLib
             var loggingSettings = new LoggingSettings()
             {
                 LogDir = logDir,
-                RootContractName = "Hi1",
                 Enable = true,
                 EnableRemoteConnection = true
             };

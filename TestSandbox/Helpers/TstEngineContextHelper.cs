@@ -143,7 +143,6 @@ namespace TestSandbox.Helpers
             var loggingSettings = new LoggingSettings()
             {
                 LogDir = logDir,
-                RootContractName = "Hi1",
                 Enable = true,
                 EnableRemoteConnection = true,
                 KindOfLogicalSearchExplain = KindOfLogicalSearchExplain.None,

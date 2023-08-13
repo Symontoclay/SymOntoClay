@@ -907,7 +907,6 @@ app PeaceKeeper is [very middle] exampleClass
             settings.Logging = new LoggingSettings()
             {
                 LogDir = logDir,
-                RootContractName = "Hi1",
                 PlatformLoggers = new List<IPlatformLogger>() { callBackLogger },
                 Enable = true,
                 EnableRemoteConnection = true
@@ -1383,7 +1382,6 @@ action Go
 
             settings.Logging = new LoggingSettings()
             {
-                RootContractName = "Hi1",
                 PlatformLoggers = new List<IPlatformLogger>() { new CLIPlatformLogger() },
                 Enable = true,
                 EnableRemoteConnection = true

@@ -40,11 +40,6 @@ namespace SymOntoClay.UnityAsset.Core
         public string LogDir { get; set; }
 
         /// <summary>
-        /// Gets or sets root contract name for remote logging or debugging game logic.
-        /// </summary>
-        public string RootContractName { get; set; }
-
-        /// <summary>
         /// Gets or sets value of enable logging.
         /// It alows enable or disable logging or remote connection for whole components synchronously.
         /// </summary>
@@ -86,7 +81,6 @@ namespace SymOntoClay.UnityAsset.Core
             var nextN = n + DisplayHelper.IndentationStep;
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(LogDir)} = {LogDir}");
-            sb.AppendLine($"{spaces}{nameof(RootContractName)} = {RootContractName}");
             sb.AppendLine($"{spaces}{nameof(Enable)} = {Enable}");
             sb.AppendLine($"{spaces}{nameof(EnableRemoteConnection)} = {EnableRemoteConnection}");
             sb.PrintExistingList(n, nameof(PlatformLoggers), PlatformLoggers);

@@ -74,7 +74,6 @@ namespace TestSandbox.MonoBehaviourTesting
             settings.Logging = new LoggingSettings()
             {
                 LogDir = logDir,
-                RootContractName = "Hi1",
                 PlatformLoggers = new List<IPlatformLogger>() { ConsoleLogger.Instance, CommonNLogLogger.Instance },
                 Enable = true,
                 EnableRemoteConnection = true

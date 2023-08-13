@@ -106,7 +106,6 @@ namespace SymOntoClay.CLI
             settings.Logging = new LoggingSettings()
             {
                 LogDir = logDir,
-                RootContractName = "Hi1",
                 PlatformLoggers = new List<IPlatformLogger>() { new CLIPlatformLogger() },
                 Enable = true,
                 EnableRemoteConnection = true

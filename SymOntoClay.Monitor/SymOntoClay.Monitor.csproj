@@ -12,4 +12,8 @@
     <ProjectReference Include="..\SymOntoClayCoreHelper\SymOntoClayCoreHelper.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Internal\" />
+  </ItemGroup>
+
 </Project>

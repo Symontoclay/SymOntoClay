@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using System;
+using SymOntoClay.Monitor.Common;
 using System.Collections.Generic;
 using System.Text;
 
@@ -51,6 +52,8 @@ namespace SymOntoClay.UnityAsset.Core
         public string BuiltInStandardLibraryDir { get; set; }
 
         public string TmpDir { get; set; }
+
+        public IMonitor Monitor { get; set; }
 
         /// <summary>
         /// Gets or sets logging settings.
@@ -93,6 +96,7 @@ namespace SymOntoClay.UnityAsset.Core
             sb.AppendLine($"{spaces}{nameof(BuiltInStandardLibraryDir)} = {BuiltInStandardLibraryDir}");
             sb.PrintPODList(n, nameof(DictionariesDirs), DictionariesDirs);
             sb.AppendLine($"{spaces}{nameof(TmpDir)} = {TmpDir}");
+            sb.PrintExisting(n, nameof(Monitor), Monitor);
             sb.AppendLine($"{spaces}{nameof(HostFile)} = {HostFile}");
             sb.PrintExisting(n, nameof(InvokerInMainThread), InvokerInMainThread);
             sb.PrintExisting(n, nameof(SoundBus), SoundBus);

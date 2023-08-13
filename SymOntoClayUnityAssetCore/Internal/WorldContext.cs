@@ -26,6 +26,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal.DateAndTime;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using SymOntoClay.UnityAsset.Core.Internal.Images;
@@ -54,6 +55,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             WorldSettingsValidator.Validate(settings);
 
             ImplementGeneralSettings(settings);
+            CreateMonitoring(settings);
             CreateLogging(settings);
             CreateComponents(settings);
 
@@ -75,6 +77,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             InvokerInMainThread = settings.InvokerInMainThread;
             SoundBus = settings.SoundBus;
             StandardFactsBuilder = settings.StandardFactsBuilder;
+        }
+
+        private void CreateMonitoring(WorldSettings settings)
+        {
+            Monitor = settings.Monitor;
+            MonitorLogger = Monitor;
         }
 
         private void CreateLogging(WorldSettings settings)
@@ -142,6 +150,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         public CoreLogger CoreLogger { get; private set; }
         public IEntityLogger Logger { get; private set; }
+
+        public IMonitor Monitor { get; private set; }
+        public IMonitorLogger MonitorLogger { get; private set; }
 
         IEntityLogger IWorldCoreGameComponentContext.CreateLogger(string name)
         {

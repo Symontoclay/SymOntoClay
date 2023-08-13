@@ -83,8 +83,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.DateAndTime
             }
         }
 
-        
-
         private bool NRun(CancellationToken cancellationToken)
         {
             lock (_lockObj)

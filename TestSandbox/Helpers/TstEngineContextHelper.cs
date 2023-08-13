@@ -164,6 +164,11 @@ namespace TestSandbox.Helpers
 
             settings.Logging = loggingSettings;
 
+            settings.Monitor = new SymOntoClay.Monitor.Monitor(new SymOntoClay.Monitor.MonitorSettings 
+            {
+                MessagesDir = Path.Combine(Directory.GetCurrentDirectory(), "MessagesDir")
+            });
+
             return settings;
         }
 

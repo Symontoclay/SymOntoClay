@@ -154,10 +154,14 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         public IMonitor Monitor { get; private set; }
         public IMonitorLogger MonitorLogger { get; private set; }
 
+        /// <inheritdoc/>
         IEntityLogger IWorldCoreGameComponentContext.CreateLogger(string name)
         {
             return CoreLogger.CreateLogger(name);
         }
+
+        /// <inheritdoc/>
+        IMonitor IWorldCoreGameComponentContext.Motitor => Monitor;
 
         public ImagesRegistry ImagesRegistry { get; private set; }
         public ThreadsCoreComponent ThreadsComponent { get; private set; }

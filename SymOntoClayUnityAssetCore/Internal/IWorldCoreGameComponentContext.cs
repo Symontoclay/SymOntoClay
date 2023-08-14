@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConverters;
 using System.Collections.Generic;
@@ -44,6 +45,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         string GetIdForFactsByInstanceId(int instanceId);
         int GetInstanceIdByIdForFacts(string id);
         IEntityLogger CreateLogger(string name);
+        IMonitor Motitor { get; }
         IActivePeriodicObjectCommonContext SyncContext { get; }
         
         IModulesStorage ModulesStorage { get; }

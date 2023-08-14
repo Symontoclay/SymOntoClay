@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
     {
         protected readonly IWorldCoreGameComponentContext _worldContext;
         private readonly IEntityLogger _logger;
+        private readonly IMonitorNode _monitorNode;
         private readonly IInvokerInMainThread _invokerInMainThread;
         private readonly int _instanceId;
         
@@ -48,6 +50,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _worldContext = worldContext;
             _invokerInMainThread = worldContext.InvokerInMainThread;
             _logger = _worldContext.CreateLogger(settings.Id);
+            _monitorNode = _worldContext.Motitor.CreateMotitorNode("852f0d28-15ca-4671-8779-66e00d23a386", settings.Id);
 
             _standardFactsBuilder = worldContext.StandardFactsBuilder;
         }
@@ -63,6 +66,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         public string Id => _id;
 
         public IEntityLogger Logger => _logger;
+        public IMonitorLogger MonitorLogger => _monitorNode;
 
         /// <inheritdoc/>
         public bool EnableLogging { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

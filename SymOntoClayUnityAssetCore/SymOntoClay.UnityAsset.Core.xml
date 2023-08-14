@@ -1348,6 +1348,12 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.Vision.VisionComponent.OnDisposed">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.SymOntoClay#UnityAsset#Core#Internal#IWorldCoreGameComponentContext#CreateLogger(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.WorldContext.SymOntoClay#UnityAsset#Core#Internal#IWorldCoreGameComponentContext#Motitor">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.WorldContext.InvokerInMainThread">
             <inheritdoc/>
         </member>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.Common
 {
-    public interface IMonitorNode
+    public interface IMonitorNode : IMonitorLogger
     {
         IThreadLogger CreateThreadLogger(string messagePointId, string threadId,
             [CallerMemberName] string memberName = "",

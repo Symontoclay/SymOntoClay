@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.Common
 {
-    public interface IMonitor : IDisposable
+    public interface IMonitor : IMonitorLogger, IDisposable
     {
         IMonitorNode CreateMotitorNode(string messagePointId, string nodeId,
             [CallerMemberName] string memberName = "",

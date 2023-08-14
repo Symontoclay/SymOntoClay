@@ -1,0 +1,42 @@
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SymOntoClay.Monitor.Common.Data
+{
+    public static class MessagesFactory
+    {
+#if DEBUG
+        //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+#endif
+
+        public static BaseMessage? ReadMessage(string content, KindOfMessage kindOfMessage)
+        {
+#if DEBUG
+            //_globalLogger.Info($"content = {content}");
+            //_globalLogger.Info($"kindOfMessage = {kindOfMessage}");
+#endif
+
+            switch (kindOfMessage)
+            {
+                case KindOfMessage.CreateMotitorNode:
+                    return JsonConvert.DeserializeObject<CreateMotitorNodeMessage>(content);
+
+                case KindOfMessage.CreateThreadLogger:
+                    return JsonConvert.DeserializeObject<CreateThreadLoggerMessage>(content);
+
+                case KindOfMessage.Info:
+                    return JsonConvert.DeserializeObject<InfoMessage>(content);
+
+                case KindOfMessage.Parameter:
+                    return JsonConvert.DeserializeObject<ParameterMessage>(content);
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfMessage), kindOfMessage, null);
+            }
+        }
+    }
+}

@@ -7,14 +7,12 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.Common.Data
 {
-    public class ParameterMessage : BaseValueMessage
+    public class OutputMessage : BaseMessage
     {
         /// <inheritdoc/>
-        public override KindOfMessage KindOfMessage => KindOfMessage.Parameter;
+        public override KindOfMessage KindOfMessage => KindOfMessage.Output;
 
-        public string CallMethodId { get; set; }
-
-        public string ParameterName { get; set; }
+        public string Message { get; set; }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
@@ -22,8 +20,7 @@ namespace SymOntoClay.Monitor.Common.Data
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(CallMethodId)} = {CallMethodId}");
-            sb.AppendLine($"{spaces}{nameof(ParameterName)} = {ParameterName}");
+            sb.AppendLine($"{spaces}{nameof(Message)} = {Message}");
 
             sb.Append(base.PropertiesToString(n));
 

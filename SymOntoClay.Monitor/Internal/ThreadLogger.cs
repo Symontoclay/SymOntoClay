@@ -26,6 +26,7 @@ namespace SymOntoClay.Monitor.Internal
         private readonly MessageNumberGenerator _messageNumberGenerator = new();
 
         public ThreadLogger(string threadId, MonitorNodeContext monitorNodeContext)
+            : base(monitorNodeContext.OutputHandler, monitorNodeContext.ErrorHandler)
         {
 #if DEBUG
             _globalLogger.Info($"threadId = {threadId}");

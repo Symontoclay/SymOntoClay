@@ -27,12 +27,18 @@ namespace SymOntoClay.Monitor
         private readonly MessageNumberGenerator _messageNumberGenerator = new();
 
         public Monitor(MonitorSettings monitorSettings)
+            : base(monitorSettings.OutputHandler, monitorSettings.ErrorHandler)
         {
 #if DEBUG
             _globalLogger.Info($"monitorSettings = {monitorSettings}");
 #endif
 
-            _monitorContext = new MonitorContext();
+            _monitorContext = new MonitorContext()
+            {
+                OutputHandler = monitorSettings.OutputHandler,
+                ErrorHandler = monitorSettings.ErrorHandler
+            };
+
             _remoteMonitor = monitorSettings.RemoteMonitor;
 
             var now = DateTime.Now;
@@ -49,8 +55,10 @@ namespace SymOntoClay.Monitor
 
             _features = new MonitorFeatures
             {
-                EnableInfo = true,
-                EnableParameter = true
+                EnableCallMethod = true,
+                EnableParameter = true,
+                EnableOutput = true,
+                EnableInfo = true
             };
 
             _monitorContext.Features = _features;

@@ -11,6 +11,8 @@ namespace SymOntoClay.Monitor
     {
         public string MessagesDir { get; set; }
         public IRemoteMonitor RemoteMonitor { get; set; }
+        public Action<string> OutputHandler { get; set; }
+        public Action<string> ErrorHandler { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -31,6 +33,8 @@ namespace SymOntoClay.Monitor
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(MessagesDir)} = {MessagesDir}");
             sb.PrintExisting(n, nameof(RemoteMonitor), RemoteMonitor);
+            sb.PrintExisting(n, nameof(OutputHandler), OutputHandler);
+            sb.PrintExisting(n, nameof(ErrorHandler), ErrorHandler);
             return sb.ToString();
         }
     }

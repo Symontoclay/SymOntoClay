@@ -15,5 +15,8 @@ namespace SymOntoClay.Monitor.Internal
         public MonitorFeatures Features { get; set; }
 
         public string NodeId { get; set; }
+
+        public Action<string> OutputHandler { get; set; }
+        public Action<string> ErrorHandler { get; set; }
     }
 }

@@ -85,6 +85,7 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            TstMonitor();
             //TstCreateListByVarsDict();
             //TstDetectDoninantItems();
             //TstSerializeValue();
@@ -159,10 +160,20 @@ namespace TestSandbox
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstMonitor()
+        {
+            _logger.Log("Begin");
+
+            var handler = new MonitorHandler();
+            handler.Run();
+
+            _logger.Log("End");
         }
 
         private static void TstCreateListByVarsDict()

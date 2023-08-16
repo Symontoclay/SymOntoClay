@@ -11,7 +11,9 @@ namespace SymOntoClay.Monitor.Common.Data
         Unknown,
         CreateMotitorNode,
         CreateThreadLogger,
-        Info,
-        Parameter
+        CallMethod,
+        Parameter,
+        Output,
+        Info
     }
 }

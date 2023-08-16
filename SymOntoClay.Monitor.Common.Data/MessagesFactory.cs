@@ -28,11 +28,17 @@ namespace SymOntoClay.Monitor.Common.Data
                 case KindOfMessage.CreateThreadLogger:
                     return JsonConvert.DeserializeObject<CreateThreadLoggerMessage>(content);
 
-                case KindOfMessage.Info:
-                    return JsonConvert.DeserializeObject<InfoMessage>(content);
+                case KindOfMessage.CallMethod:
+                    return JsonConvert.DeserializeObject<CallMethodMessage>(content);
 
                 case KindOfMessage.Parameter:
                     return JsonConvert.DeserializeObject<ParameterMessage>(content);
+
+                case KindOfMessage.Output:
+                    return JsonConvert.DeserializeObject<OutputMessage>(content);
+
+                case KindOfMessage.Info:
+                    return JsonConvert.DeserializeObject<InfoMessage>(content);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfMessage), kindOfMessage, null);

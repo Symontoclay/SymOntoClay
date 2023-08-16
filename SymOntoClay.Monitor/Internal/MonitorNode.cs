@@ -28,6 +28,7 @@ namespace SymOntoClay.Monitor.Internal
         private readonly string _nodeId;
 
         public MonitorNode(string nodeId, MonitorContext monitorContext)
+            : base(monitorContext.OutputHandler, monitorContext.ErrorHandler)
         {
 #if DEBUG
             _globalLogger.Info($"nodeId = {nodeId}");
@@ -44,6 +45,9 @@ namespace SymOntoClay.Monitor.Internal
             _fileCache = monitorContext.FileCache.CreateMonitorNodeFileCache(nodeId);
             _monitorNodeContext.FileCache = _fileCache;
             _monitorNodeContext.NodeId = nodeId;
+
+            _monitorNodeContext.OutputHandler = monitorContext.OutputHandler;
+            _monitorNodeContext.ErrorHandler = monitorContext.ErrorHandler;
 
             _monitorContext = monitorContext;
             _globalMessageNumberGenerator = monitorContext.GlobalMessageNumberGenerator;

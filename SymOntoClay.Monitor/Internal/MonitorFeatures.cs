@@ -12,7 +12,12 @@ namespace SymOntoClay.Monitor.Internal
         public bool EnableCallMethod { get; set; }
         public bool EnableParameter { get; set; }
         public bool EnableOutput { get; set; }
+        public bool EnableTrace { get; set; }
+        public bool EnableDebug { get; set; }
         public bool EnableInfo { get; set; }
+        public bool EnableWarn { get; set; }
+        public bool EnableError { get; set; }
+        public bool EnableFatal { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -34,7 +39,12 @@ namespace SymOntoClay.Monitor.Internal
             sb.AppendLine($"{spaces}{EnableCallMethod} = {EnableCallMethod}");
             sb.AppendLine($"{spaces}{EnableParameter} = {EnableParameter}");
             sb.AppendLine($"{spaces}{EnableOutput} = {EnableOutput}");
+            sb.AppendLine($"{spaces}{EnableTrace} = {EnableTrace}");
+            sb.AppendLine($"{spaces}{EnableDebug} = {EnableDebug}");
             sb.AppendLine($"{spaces}{EnableInfo} = {EnableInfo}");
+            sb.AppendLine($"{spaces}{EnableWarn} = {EnableWarn}");
+            sb.AppendLine($"{spaces}{EnableError} = {EnableError}");
+            sb.AppendLine($"{spaces}{EnableFatal} = {EnableFatal}");
             return sb.ToString();
         }
     }

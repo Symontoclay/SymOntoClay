@@ -40,7 +40,8 @@ namespace TestSandbox.Handlers
         {
             var monitor = new SymOntoClay.Monitor.Monitor(new MonitorSettings
             {
-                MessagesDir = Path.Combine(Directory.GetCurrentDirectory(), "MessagesDir")//,
+                MessagesDir = Path.Combine(Directory.GetCurrentDirectory(), "MessagesDir"),
+                OutputHandler = message => { _globalLogger.Info($"message = {message}"); }
                 //RemoteMonitor = new RemoteWCFMonitor(new RemoteWCFMonitorSettings
                 //{
                 //    Address = "net.pipe://localhost/MyService.svc"

@@ -58,7 +58,12 @@ namespace SymOntoClay.Monitor
                 EnableCallMethod = true,
                 EnableParameter = true,
                 EnableOutput = true,
-                EnableInfo = true
+                EnableTrace = true,
+                EnableDebug = true,
+                EnableInfo = true,
+                EnableWarn = true,
+                EnableError = true,
+                EnableFatal = true
             };
 
             _monitorContext.Features = _features;

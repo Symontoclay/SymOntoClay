@@ -229,12 +229,134 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
+            _outputHandler?.Invoke(message);
+
             Task.Run(() => {
 #if DEBUG
                 _globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new OutputMessage
+                {
+                    Message = message,
+                    DateTimeStamp = now,
+                    NodeId = _nodeId,
+                    ThreadId = _threadId,
+                    GlobalMessageNumber = globalMessageNumber,
+                    MessageNumber = messageNumber,
+                    MessagePointId = messagePointId,
+                    MemberName = memberName,
+                    SourceFilePath = sourceFilePath,
+                    SourceLineNumber = sourceLineNumber
+                };
+
+#if DEBUG
+                _globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache);
+            });
+        }
+
+        /// <inheritdoc/>
+        public void Trace(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"message = {message}");
+            _globalLogger.Info($"memberName = {memberName}");
+            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+            if (!_features.EnableTrace)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var now = DateTime.Now;
+
+            Task.Run(() => {
+#if DEBUG
+                _globalLogger.Info($"NEXT");
+#endif
+
+                var messageInfo = new TraceMessage
+                {
+                    Message = message,
+                    DateTimeStamp = now,
+                    NodeId = _nodeId,
+                    ThreadId = _threadId,
+                    GlobalMessageNumber = globalMessageNumber,
+                    MessageNumber = messageNumber,
+                    MessagePointId = messagePointId,
+                    MemberName = memberName,
+                    SourceFilePath = sourceFilePath,
+                    SourceLineNumber = sourceLineNumber
+                };
+
+#if DEBUG
+                _globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache);
+            });
+        }
+
+        /// <inheritdoc/>
+        public void Debug(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"message = {message}");
+            _globalLogger.Info($"memberName = {memberName}");
+            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+            if (!_features.EnableDebug)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var now = DateTime.Now;
+
+            Task.Run(() => {
+#if DEBUG
+                _globalLogger.Info($"NEXT");
+#endif
+
+                var messageInfo = new DebugMessage
                 {
                     Message = message,
                     DateTimeStamp = now,
@@ -314,6 +436,208 @@ namespace SymOntoClay.Monitor.Internal
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache);
             });
+        }
+
+        /// <inheritdoc/>
+        public void Warn(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"message = {message}");
+            _globalLogger.Info($"memberName = {memberName}");
+            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+            if (!_features.EnableWarn)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var now = DateTime.Now;
+
+            Task.Run(() => {
+#if DEBUG
+                _globalLogger.Info($"NEXT");
+#endif
+
+                var messageInfo = new WarnMessage
+                {
+                    Message = message,
+                    DateTimeStamp = now,
+                    NodeId = _nodeId,
+                    ThreadId = _threadId,
+                    GlobalMessageNumber = globalMessageNumber,
+                    MessageNumber = messageNumber,
+                    MessagePointId = messagePointId,
+                    MemberName = memberName,
+                    SourceFilePath = sourceFilePath,
+                    SourceLineNumber = sourceLineNumber
+                };
+
+#if DEBUG
+                _globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache);
+            });
+        }
+
+        /// <inheritdoc/>
+        public void Error(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"message = {message}");
+            _globalLogger.Info($"memberName = {memberName}");
+            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+            if (!_features.EnableError)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var now = DateTime.Now;
+
+            _errorHandler?.Invoke(message);
+
+            Task.Run(() => {
+#if DEBUG
+                _globalLogger.Info($"NEXT");
+#endif
+
+                var messageInfo = new ErrorMessage
+                {
+                    Message = message,
+                    DateTimeStamp = now,
+                    NodeId = _nodeId,
+                    ThreadId = _threadId,
+                    GlobalMessageNumber = globalMessageNumber,
+                    MessageNumber = messageNumber,
+                    MessagePointId = messagePointId,
+                    MemberName = memberName,
+                    SourceFilePath = sourceFilePath,
+                    SourceLineNumber = sourceLineNumber
+                };
+
+#if DEBUG
+                _globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache);
+            });
+        }
+
+        /// <inheritdoc/>
+        public void Error(string messagePointId, Exception exception,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            Error(messagePointId, exception?.ToString(), memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        public void Fatal(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"message = {message}");
+            _globalLogger.Info($"memberName = {memberName}");
+            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+            if (!_features.EnableFatal)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var now = DateTime.Now;
+
+            _errorHandler?.Invoke(message);
+
+            Task.Run(() => {
+#if DEBUG
+                _globalLogger.Info($"NEXT");
+#endif
+
+                var messageInfo = new FatalMessage
+                {
+                    Message = message,
+                    DateTimeStamp = now,
+                    NodeId = _nodeId,
+                    ThreadId = _threadId,
+                    GlobalMessageNumber = globalMessageNumber,
+                    MessageNumber = messageNumber,
+                    MessagePointId = messagePointId,
+                    MemberName = memberName,
+                    SourceFilePath = sourceFilePath,
+                    SourceLineNumber = sourceLineNumber
+                };
+
+#if DEBUG
+                _globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache);
+            });
+        }
+
+        /// <inheritdoc/>
+        public void Fatal(string messagePointId, Exception exception,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            Fatal(messagePointId, exception?.ToString(), memberName, sourceFilePath, sourceLineNumber);
         }
     }
 }

@@ -14,6 +14,11 @@ namespace SymOntoClay.Monitor.Common.Data
         CallMethod,
         Parameter,
         Output,
-        Info
+        Trace,
+        Debug,
+        Info,
+        Warn,
+        Error,
+        Fatal
     }
 }

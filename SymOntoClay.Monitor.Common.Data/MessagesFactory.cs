@@ -37,8 +37,23 @@ namespace SymOntoClay.Monitor.Common.Data
                 case KindOfMessage.Output:
                     return JsonConvert.DeserializeObject<OutputMessage>(content);
 
+                case KindOfMessage.Trace:
+                    return JsonConvert.DeserializeObject<TraceMessage>(content);
+
+                case KindOfMessage.Debug:
+                    return JsonConvert.DeserializeObject<DebugMessage>(content);
+
                 case KindOfMessage.Info:
                     return JsonConvert.DeserializeObject<InfoMessage>(content);
+
+                case KindOfMessage.Warn:
+                    return JsonConvert.DeserializeObject<WarnMessage>(content);
+
+                case KindOfMessage.Error:
+                    return JsonConvert.DeserializeObject<ErrorMessage>(content);
+
+                case KindOfMessage.Fatal:
+                    return JsonConvert.DeserializeObject<FatalMessage>(content);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfMessage), kindOfMessage, null);

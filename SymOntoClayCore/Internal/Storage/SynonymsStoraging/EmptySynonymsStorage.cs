@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -35,7 +36,7 @@ namespace SymOntoClay.Core.Internal.Storage.SynonymsStoraging
         {
         }
 
-        public EmptySynonymsStorage(IStorage storage, IEntityLogger logger)
+        public EmptySynonymsStorage(IStorage storage, IMonitorLogger logger)
             : base(storage, logger)
         {
         }

@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -31,7 +32,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
 {
     public class ConsolidatedPublicFactsInheritanceStorage : BaseComponent, IInheritanceStorage
     {
-        public ConsolidatedPublicFactsInheritanceStorage(ConsolidatedPublicFactsStorage parent, IEntityLogger logger, KindOfStorage kind)
+        public ConsolidatedPublicFactsInheritanceStorage(ConsolidatedPublicFactsStorage parent, IMonitorLogger logger, KindOfStorage kind)
             : base(logger)
         {
             _kind = kind;

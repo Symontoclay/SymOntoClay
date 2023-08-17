@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -32,7 +33,7 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStoraging
 {
     public class EmptyOperatorsStorage : BaseEmptySpecificStorage, IOperatorsStorage
     {
-        public EmptyOperatorsStorage(IStorage storage, IEntityLogger logger)
+        public EmptyOperatorsStorage(IStorage storage, IMonitorLogger logger)
             : base(storage, logger)
         {
         }

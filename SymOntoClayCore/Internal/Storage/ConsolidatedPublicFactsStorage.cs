@@ -38,6 +38,7 @@ using SymOntoClay.Core.Internal.Storage.SynonymsStoraging;
 using SymOntoClay.Core.Internal.Storage.TriggersStoraging;
 using SymOntoClay.Core.Internal.Storage.VarStoraging;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -46,12 +47,12 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public class ConsolidatedPublicFactsStorage: BaseComponent, IStorage
     {
-        public ConsolidatedPublicFactsStorage(IEntityLogger logger, KindOfStorage kind)
+        public ConsolidatedPublicFactsStorage(IMonitorLogger logger, KindOfStorage kind)
             : this(logger, kind, new ConsolidatedPublicFactsStorageSettings())
         {
         }
 
-        public ConsolidatedPublicFactsStorage(IEntityLogger logger, KindOfStorage kind, ConsolidatedPublicFactsStorageSettings settings)
+        public ConsolidatedPublicFactsStorage(IMonitorLogger logger, KindOfStorage kind, ConsolidatedPublicFactsStorageSettings settings)
             : base(logger)
         {
             _kind = kind;

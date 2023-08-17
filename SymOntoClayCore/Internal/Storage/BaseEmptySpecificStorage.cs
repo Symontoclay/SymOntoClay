@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -29,7 +30,7 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public abstract class BaseEmptySpecificStorage: BaseComponent, ISpecificStorage
     {
-        protected BaseEmptySpecificStorage(IStorage storage, IEntityLogger logger)
+        protected BaseEmptySpecificStorage(IStorage storage, IMonitorLogger logger)
             : base(logger)
         {
             _storage = storage;

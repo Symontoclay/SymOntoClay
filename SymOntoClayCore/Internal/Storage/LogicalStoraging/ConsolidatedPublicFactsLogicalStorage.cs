@@ -26,6 +26,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 {
     public class ConsolidatedPublicFactsLogicalStorage : BaseComponent, ILogicalStorage
     {
-        public ConsolidatedPublicFactsLogicalStorage(ConsolidatedPublicFactsStorage parent, IEntityLogger logger, KindOfStorage kind, ConsolidatedPublicFactsStorageSettings settings)
+        public ConsolidatedPublicFactsLogicalStorage(ConsolidatedPublicFactsStorage parent, IMonitorLogger logger, KindOfStorage kind, ConsolidatedPublicFactsStorageSettings settings)
             : base(logger)
         {
             _kind = kind;

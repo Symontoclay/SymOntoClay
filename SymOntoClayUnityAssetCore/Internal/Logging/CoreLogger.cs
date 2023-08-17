@@ -30,6 +30,7 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.Logging
 {
+    [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
     public class CoreLogger: IWorldCoreComponent
     {
         private readonly object _lockObj = new object();

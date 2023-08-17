@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -29,7 +30,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 {
     public abstract class BaseTriggerConditionNodeObserver : BaseComponent
     {
-        protected BaseTriggerConditionNodeObserver(IEntityLogger logger)
+        protected BaseTriggerConditionNodeObserver(IMonitorLogger logger)
             : base(logger)
         {
         }

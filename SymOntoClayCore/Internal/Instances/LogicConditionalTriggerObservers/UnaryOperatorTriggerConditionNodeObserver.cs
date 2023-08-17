@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -32,7 +33,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 {
     public class UnaryOperatorTriggerConditionNodeObserver : BaseTriggerConditionNodeObserver
     {
-        public UnaryOperatorTriggerConditionNodeObserver(IEntityLogger logger, IStorage storage, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition)
+        public UnaryOperatorTriggerConditionNodeObserver(IMonitorLogger logger, IStorage storage, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition)
             : base(logger)
         {
             _kindOfOperator = condition.KindOfOperator;

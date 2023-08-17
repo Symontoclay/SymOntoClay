@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -34,7 +35,7 @@ namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
     {
         private static readonly List<WeightedInheritanceResultItem<Constructor>> EmptyConstructorsList = new List<WeightedInheritanceResultItem<Constructor>>();
 
-        public EmptyConstructorsStorage(IStorage storage, IEntityLogger logger)
+        public EmptyConstructorsStorage(IStorage storage, IMonitorLogger logger)
             : base(storage, logger)
         {
         }

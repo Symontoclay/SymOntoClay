@@ -28,6 +28,7 @@ using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +43,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         {
         }
 
-        public CommonPersistIndexedLogicalData(IEntityLogger logger)
+        public CommonPersistIndexedLogicalData(IMonitorLogger logger)
             : base(logger)
         {
             IndexedRuleInstancesDict = new Dictionary<StrongIdentifierValue, RuleInstance>();

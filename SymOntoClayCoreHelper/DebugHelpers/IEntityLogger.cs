@@ -26,6 +26,7 @@ using System.Text;
 
 namespace SymOntoClay.CoreHelper.DebugHelpers
 {
+    [Obsolete("It should be replaced to IMonitorLogger", true)]
     public interface IEntityLogger
     {
         void Log(string message);

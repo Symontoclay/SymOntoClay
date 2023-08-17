@@ -32,6 +32,7 @@ namespace SymOntoClay.UnityAsset.Core
     /// <summary>
     /// Logging settings.
     /// </summary>
+    [Obsolete("It should be replaced to MonitorSettings", true)]
     public class LoggingSettings: IObjectToString
     {
         /// <summary>

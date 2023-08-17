@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -31,7 +32,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 {
     public class EmptyVarStorage : BaseEmptySpecificStorage, IVarStorage
     {
-        public EmptyVarStorage(IStorage storage, IEntityLogger logger)
+        public EmptyVarStorage(IStorage storage, IMonitorLogger logger)
             : base(storage, logger)
         {
         }

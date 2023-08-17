@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -31,7 +32,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 {
     public class EmptyTriggersStorage: BaseEmptySpecificStorage, ITriggersStorage
     {
-        public EmptyTriggersStorage(IStorage storage, IEntityLogger logger)
+        public EmptyTriggersStorage(IStorage storage, IMonitorLogger logger)
             : base(storage, logger)
         {
         }

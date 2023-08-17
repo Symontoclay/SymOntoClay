@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -31,7 +32,7 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
 {
     public class EmptyFuzzyLogicStorage : BaseEmptySpecificStorage, IFuzzyLogicStorage
     {
-        public EmptyFuzzyLogicStorage(IStorage storage, IEntityLogger logger)
+        public EmptyFuzzyLogicStorage(IStorage storage, IMonitorLogger logger)
             : base(storage, logger)
         {
         }

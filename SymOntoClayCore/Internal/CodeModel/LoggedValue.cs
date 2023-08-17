@@ -21,56 +21,113 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
     public abstract class LoggedValue : Value
     {
-        protected LoggedValue(IEntityLogger logger)
+        protected LoggedValue(IMonitorLogger logger)
         {
             _logger = logger;
         }
 
-        private readonly IEntityLogger _logger;
+        private readonly IMonitorLogger _logger;
 
-        public IEntityLogger Logger => _logger;
+        public IMonitorLogger Logger => _logger;
 
-        /// <inheritdoc/>
-        [MethodForLoggingSupport]
+        protected void Output(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _logger.Output(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        protected void Trace(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _logger.Trace(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        protected void Debug(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _logger.Debug(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        protected void Info(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _logger.Info(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        protected void Warn(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _logger.Warn(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        protected void Error(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _logger.Error(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        protected void Error(string messagePointId, Exception exception,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _logger.Error(messagePointId, exception, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        protected void Fatal(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _logger.Fatal(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        protected void Fatal(string messagePointId, Exception exception,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _logger.Fatal(messagePointId, exception, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        [Obsolete("Use Info", true)]
         protected void Log(string message)
         {
-            _logger.Log(message);
+            //_logger.Log(message);
         }
 
-        /// <inheritdoc/>
-        [MethodForLoggingSupport]
+        [Obsolete("Use Output", true)]
         protected void LogChannel(string message)
         {
-            _logger.LogChannel(message);
+            //_logger.LogChannel(message);
         }
 
-        /// <inheritdoc/>
-        [MethodForLoggingSupport]
+        [Obsolete("Use Warn", true)]
         protected void Warning(string message)
         {
-            _logger.Warning(message);
-        }
-
-        /// <inheritdoc/>
-        [MethodForLoggingSupport]
-        protected void Error(string message)
-        {
-            _logger.Error(message);
-        }
-
-        /// <inheritdoc/>
-        [MethodForLoggingSupport]
-        protected void Error(Exception e)
-        {
-            _logger.Error(e.ToString());
+            //_logger.Warning(message);
         }
     }
 }

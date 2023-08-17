@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using NLog.LayoutRenderers.Wrappers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,13 +62,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
         }
 
-        public Lexer(string text, IEntityLogger logger)
+        public Lexer(string text, IMonitorLogger logger)
         {
             _logger = logger;
             _items = new Queue<char>(text.ToList());
         }
 
-        private IEntityLogger _logger;
+        private IMonitorLogger _logger;
         private Queue<char> _items;
         private State _state = State.Init;
         private State _stateBeforeComment = State.Init;

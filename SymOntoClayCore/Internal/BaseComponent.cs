@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,7 +31,7 @@ namespace SymOntoClay.Core.Internal
 {
     public abstract class BaseComponent: BaseLoggedComponent, ISymOntoClayDisposable
     {
-        protected BaseComponent(IEntityLogger logger)
+        protected BaseComponent(IMonitorLogger logger)
             : base(logger)
         {
         }

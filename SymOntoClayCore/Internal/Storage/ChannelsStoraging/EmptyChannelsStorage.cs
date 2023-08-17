@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -31,7 +32,7 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStoraging
 {
     public class EmptyChannelsStorage : BaseEmptySpecificStorage, IChannelsStorage
     {
-        public EmptyChannelsStorage(IStorage storage, IEntityLogger logger)
+        public EmptyChannelsStorage(IStorage storage, IMonitorLogger logger)
             : base(storage, logger)
         {
         }

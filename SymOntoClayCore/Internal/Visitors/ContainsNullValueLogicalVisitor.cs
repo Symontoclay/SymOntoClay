@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -33,7 +34,7 @@ namespace SymOntoClay.Core.Internal.Visitors
 {
     public class ContainsNullValueLogicalVisitor: BaseLoggedComponent, ILogicalVisitor
     {
-        public ContainsNullValueLogicalVisitor(IEntityLogger logger)
+        public ContainsNullValueLogicalVisitor(IMonitorLogger logger)
             : base(logger)
         {
         }

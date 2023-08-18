@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -36,7 +37,7 @@ namespace SymOntoClay.Core.Internal.Visitors
         {
         }
 
-        public LogicalQueryNodeLeafsVisitor(IEntityLogger logger)
+        public LogicalQueryNodeLeafsVisitor(IMonitorLogger logger)
             : base(logger)
         {
         }

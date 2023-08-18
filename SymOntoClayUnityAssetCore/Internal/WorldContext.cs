@@ -42,6 +42,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -81,8 +82,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         private void CreateMonitoring(WorldSettings settings)
         {
-            Monitor = settings.Monitor;
-            MonitorLogger = Monitor;
+            Monitor = settings.Monitor;            
+            MonitorNode = Monitor.CreateMotitorNode("6B299F25-9FD9-46BE-A833-9C52B279444F", "world");
+            Logger = MonitorNode;
         }
 
         private void CreateLogging(WorldSettings settings)
@@ -90,7 +92,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             var loggingSettings = settings.Logging;
 
             CoreLogger = new CoreLogger(loggingSettings, this);
-            Logger = CoreLogger.WordCoreLogger;
 
             KindOfLogicalSearchExplain = loggingSettings.KindOfLogicalSearchExplain;
             LogicalSearchExplainDumpDir = CoreLogger.LogicalSearchExplainDumpDir;
@@ -149,16 +150,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         public string TmpDir => _tmpDir;
 
         public CoreLogger CoreLogger { get; private set; }
-        public IEntityLogger Logger { get; private set; }
 
         public IMonitor Monitor { get; private set; }
-        public IMonitorLogger MonitorLogger { get; private set; }
-
-        /// <inheritdoc/>
-        IEntityLogger IWorldCoreGameComponentContext.CreateLogger(string name)
-        {
-            return CoreLogger.CreateLogger(name);
-        }
+        public IMonitorNode MonitorNode { get; private set; }
+        public IMonitorLogger Logger { get; private set; }
 
         /// <inheritdoc/>
         IMonitor IWorldCoreGameComponentContext.Motitor => Monitor;
@@ -502,7 +497,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                 }
                 catch (Exception e)
                 {
-                    Error(e.ToString());
+                    Error("CDF6BAD4-76E3-4B1F-9379-C64BF752F9AE", e);
                 }
             }, cancellationToken);
         }
@@ -674,25 +669,68 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             CoreLogger.Dispose();
         }
 
-        /// <inheritdoc/>
-        [MethodForLoggingSupport]
-        private void Log(string message)
+        protected void Trace(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
         {
-            Logger.Log(message);
+            Logger.Trace(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
         }
 
-        /// <inheritdoc/>
-        [MethodForLoggingSupport]
-        private void Warning(string message)
+        protected void Debug(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
         {
-            Logger.Warning(message);
+            Logger.Debug(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
         }
 
-        /// <inheritdoc/>
-        [MethodForLoggingSupport]
-        private void Error(string message)
+        protected void Info(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
         {
-            Logger.Error(message);
+            Logger.Info(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        protected void Warn(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            Logger.Warn(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        protected void Error(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            Logger.Error(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        protected void Error(string messagePointId, Exception exception,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            Logger.Error(messagePointId, exception, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        protected void Fatal(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            Logger.Fatal(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        protected void Fatal(string messagePointId, Exception exception,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            Logger.Fatal(messagePointId, exception, memberName, sourceFilePath, sourceLineNumber);
         }
     }
 }

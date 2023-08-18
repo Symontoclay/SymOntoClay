@@ -34,7 +34,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.ModulesStorage
             : base(coreContext)
         {
             var modulesStorageSettings = new ModulesStorageSettings();
-            modulesStorageSettings.Logger = Logger;
+            modulesStorageSettings.MonitorNode = Logger;
             modulesStorageSettings.LibsDirs = settings.LibsDirs;
             
 

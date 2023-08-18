@@ -31,7 +31,7 @@ namespace SymOntoClay.Core
     public class Engine : BaseComponent, ISerializableEngine
     {
         public Engine(EngineSettings settings)
-            : base(settings.Logger)
+            : base(settings.MonitorNode)
         {
             _context = EngineContextHelper.CreateAndInitContext(settings);
         }

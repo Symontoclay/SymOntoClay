@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.Compiling;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,7 +31,8 @@ namespace SymOntoClay.Core.Internal
 {
     public interface IBaseCoreContext
     {
-        IEntityLogger Logger { get; }
+        IMonitorLogger Logger { get; }
+        IMonitorNode MonitorNode { get; }
         ICompiler Compiler { get; }
         IDateTimeProvider DateTimeProvider { get; }
     }

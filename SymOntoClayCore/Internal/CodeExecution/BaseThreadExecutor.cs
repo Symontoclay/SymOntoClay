@@ -486,6 +486,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             catch (Exception e)
             {
 #if DEBUG
+                //It should be used by the Thread executor's ThreadLogger
                 Error(e);
                 Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif

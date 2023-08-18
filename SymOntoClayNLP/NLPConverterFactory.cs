@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Dicts;
 using System;
@@ -34,7 +35,7 @@ namespace SymOntoClay.NLP
 {
     public class NLPConverterFactory: INLPConverterFactory
     {
-        public NLPConverterFactory(NLPConverterProviderSettings settings, IEntityLogger logger)
+        public NLPConverterFactory(NLPConverterProviderSettings settings, IMonitorLogger logger)
         {
             _logger = logger;
             _creationStrategy = settings.CreationStrategy;
@@ -78,7 +79,7 @@ namespace SymOntoClay.NLP
         }
 
         private readonly CreationStrategy _creationStrategy;
-        private readonly IEntityLogger _logger;
+        private readonly IMonitorLogger _logger;
         private readonly object _lockObj = new object();
         private readonly IWordsDict _wordsDict;
         private INLPConverter _converter;

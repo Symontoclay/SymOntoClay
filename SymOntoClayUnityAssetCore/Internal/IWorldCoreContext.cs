@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConverters;
 using System;
 using System.Collections.Generic;
@@ -32,8 +33,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
     public interface IWorldCoreContext
     {
         void AddWorldComponent(IWorldCoreComponent component);
-        IEntityLogger Logger { get; }
-        
+        IMonitorLogger Logger { get; }
+        IMonitorNode MonitorNode { get; }
+
         IModulesStorage ModulesStorage { get; }
         IPlatformTypesConvertersRegistry PlatformTypesConvertors { get; }
         IDateTimeProvider DateTimeProvider { get; }

@@ -26,6 +26,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +36,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 {
     public static class AddingFactHelper
     {
-        public static IAddFactOrRuleResult CallEvent(MulticastDelegate onAddingFactEvent, RuleInstance ruleInstance, FuzzyLogicResolver fuzzyLogicResolver, ILocalCodeExecutionContext localCodeExecutionContext, IEntityLogger logger)
+        public static IAddFactOrRuleResult CallEvent(MulticastDelegate onAddingFactEvent, RuleInstance ruleInstance, FuzzyLogicResolver fuzzyLogicResolver, ILocalCodeExecutionContext localCodeExecutionContext, IMonitorLogger logger)
         {
             var resultsOfCallList = new List<IAddFactOrRuleResult>();
 

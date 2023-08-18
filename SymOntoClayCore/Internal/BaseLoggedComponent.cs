@@ -117,17 +117,5 @@ namespace SymOntoClay.Core.Internal
         {
             //_logger.Log(message);
         }
-
-        [Obsolete("Use Output", true)]
-        protected void LogChannel(string message)
-        {
-            //_logger.LogChannel(message);
-        }
-
-        [Obsolete("Use Warn", true)]
-        protected void Warning(string message)
-        {
-            //_logger.Warning(message);
-        }
     }
 }

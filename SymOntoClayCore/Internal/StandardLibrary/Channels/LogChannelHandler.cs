@@ -59,7 +59,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
         /// <inheritdoc/>
         public Value Write(Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            LogChannel(value.ToHumanizedString());
+            Output("90A48AF8-3AF3-4D2B-B3FD-EB80ED2E25E0", value.ToHumanizedString());
 
             return value;
         }

@@ -26,14 +26,15 @@ using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.StandardLibrary;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 
 namespace SymOntoClay.Core.Internal
 {
     public class EngineContext : MainStorageContext, IEngineContext
     {
-        public EngineContext(IEntityLogger logger)
-            : base(logger)
+        public EngineContext(IMonitorNode monitorNode)
+            : base(monitorNode)
         {
         }
 

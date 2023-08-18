@@ -45,7 +45,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
                 standaloneStorageSettings.Id = settings.Id;
                 standaloneStorageSettings.IsWorld = false;
                 standaloneStorageSettings.AppFile = settings.HostFile;
-                standaloneStorageSettings.Logger = Logger;
+                standaloneStorageSettings.MonitorNode = Logger;
                 
                 standaloneStorageSettings.ModulesStorage = worldContext.ModulesStorage;
                 standaloneStorageSettings.ParentStorage = worldContext.StandaloneStorage;

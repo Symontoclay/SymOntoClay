@@ -42,7 +42,7 @@ namespace SymOntoClay.Core.Internal.Helpers
     {
         public static EngineContext CreateAndInitContext(EngineSettings settings)
         {
-            var context = new EngineContext(settings.Logger);
+            var context = new EngineContext(settings.MonitorNode);
 
             BaseInitMainStorageContext(context, settings, KindOfStorage.Global);
 
@@ -85,7 +85,7 @@ namespace SymOntoClay.Core.Internal.Helpers
 
         public static MainStorageContext CreateAndInitMainStorageContext(StandaloneStorageSettings settings)
         {
-            var context = new MainStorageContext(settings.Logger);
+            var context = new MainStorageContext(settings.MonitorNode);
 
             BaseInitMainStorageContext(context, settings, settings.IsWorld ? KindOfStorage.World : KindOfStorage.Host );
 
@@ -97,7 +97,7 @@ namespace SymOntoClay.Core.Internal.Helpers
 
         public static BaseCoreContext CreateAndInitBaseCoreContext(BaseCoreSettings settings)
         {
-            var context = new BaseCoreContext(settings.Logger);
+            var context = new BaseCoreContext(settings.MonitorNode);
 
             BaseInitBaseCoreContext(context, settings);
 

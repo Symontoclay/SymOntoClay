@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Compiling;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,7 +48,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         public bool NeedCheckDirty { get; set; } = true;
 
-        public IEntityLogger Logger => _context.Logger;
+        public IMonitorLogger Logger => _context.Logger;
         public ICompiler Compiler => _context.Compiler;
 
         public CodeFile CodeFile { get; private set; }

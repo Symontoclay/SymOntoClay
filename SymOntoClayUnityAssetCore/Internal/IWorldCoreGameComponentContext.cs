@@ -44,7 +44,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         IStorage GetPublicFactsStorageByInstanceId(int instanceId);
         string GetIdForFactsByInstanceId(int instanceId);
         int GetInstanceIdByIdForFacts(string id);
-        IEntityLogger CreateLogger(string name);
         IMonitor Motitor { get; }
         IActivePeriodicObjectCommonContext SyncContext { get; }
         

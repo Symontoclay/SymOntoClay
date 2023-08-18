@@ -42,7 +42,7 @@ namespace SymOntoClay.Core
     public class ModulesStorage : BaseComponent, IModulesStorage, ISerializableEngine
     {
         public ModulesStorage(ModulesStorageSettings settings)
-            : base(settings.Logger)
+            : base(settings.MonitorNode)
         {
 
             _libDirs = settings.LibsDirs;

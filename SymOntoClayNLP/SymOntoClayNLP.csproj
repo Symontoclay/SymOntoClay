@@ -9,6 +9,7 @@
     <Copyright>Copyright (c) 2020 - 2023 Sergiy Tolkachov aka metatypeman</Copyright>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SymOntoClay.Monitor.Common\SymOntoClay.Monitor.Common.csproj" />
     <ProjectReference Include="..\SymOntoClayCoreHelper\SymOntoClayCoreHelper.csproj" />
     <ProjectReference Include="..\SymOntoClayCore\SymOntoClayCore.csproj" />
     <ProjectReference Include="..\SymOntoClayNLPCommonDict\SymOntoClayNLPCommonDict.csproj" />

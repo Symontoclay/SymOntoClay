@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,7 +31,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 {
     public abstract class BaseTriggerConditionNodeExecutor : BaseComponent
     {
-        protected BaseTriggerConditionNodeExecutor(IEntityLogger logger)
+        protected BaseTriggerConditionNodeExecutor(IMonitorLogger logger)
             : base(logger)
         {
         }

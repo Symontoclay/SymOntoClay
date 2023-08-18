@@ -36,7 +36,7 @@ namespace SymOntoClay.Core
     public class StandaloneStorage: BaseComponent, IStandaloneStorage, ISerializableEngine
     {
         public StandaloneStorage(StandaloneStorageSettings settings)
-            : base(settings.Logger)
+            : base(settings.MonitorNode)
         {
 
             _additionalSourceCodePaths = settings.AdditionalSourceCodePaths;

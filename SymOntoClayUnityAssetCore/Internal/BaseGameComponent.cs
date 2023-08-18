@@ -27,6 +27,7 @@ using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,7 +36,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
     public abstract class BaseGameComponent : IGameComponent
     {
         protected readonly IWorldCoreGameComponentContext _worldContext;
-        private readonly IEntityLogger _logger;
+        private readonly IMonitorLogger _logger;
         private readonly IMonitorNode _monitorNode;
         private readonly IInvokerInMainThread _invokerInMainThread;
         private readonly int _instanceId;
@@ -49,8 +50,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             worldContext.AddGameComponent(this);
             _worldContext = worldContext;
             _invokerInMainThread = worldContext.InvokerInMainThread;
-            _logger = _worldContext.CreateLogger(settings.Id);
+            
             _monitorNode = _worldContext.Motitor.CreateMotitorNode("852f0d28-15ca-4671-8779-66e00d23a386", settings.Id);
+            _logger = _monitorNode;
 
             _standardFactsBuilder = worldContext.StandardFactsBuilder;
         }
@@ -65,7 +67,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         /// <inheritdoc/>
         public string Id => _id;
 
-        public IEntityLogger Logger => _logger;
+        public IMonitorLogger Logger => _logger;
         public IMonitorLogger MonitorLogger => _monitorNode;
 
         /// <inheritdoc/>
@@ -110,25 +112,74 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         /// <inheritdoc/>
         public virtual bool IsWaited { get; }
 
-        /// <inheritdoc/>
-        [MethodForLoggingSupport]
+        protected void Trace(string messagePointId, string message,
+    [CallerMemberName] string memberName = "",
+    [CallerFilePath] string sourceFilePath = "",
+    [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _logger.Trace(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        protected void Debug(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _logger.Debug(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        protected void Info(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _logger.Info(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        protected void Warn(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _logger.Warn(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        protected void Error(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _logger.Error(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        protected void Error(string messagePointId, Exception exception,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _logger.Error(messagePointId, exception, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        protected void Fatal(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _logger.Fatal(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        protected void Fatal(string messagePointId, Exception exception,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _logger.Fatal(messagePointId, exception, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        [Obsolete("Use Info", true)]
         protected void Log(string message)
         {
-            _logger.Log(message);
-        }
-
-        /// <inheritdoc/>
-        [MethodForLoggingSupport]
-        protected void Warning(string message)
-        {
-            _logger.Warning(message);
-        }
-
-        /// <inheritdoc/>
-        [MethodForLoggingSupport]
-        protected void Error(string message)
-        {
-            _logger.Error(message);
+            //_logger.Log(message);
         }
 
         protected ComponentState _componentState = ComponentState.Created;

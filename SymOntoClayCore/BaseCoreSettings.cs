@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,9 +31,9 @@ namespace SymOntoClay.Core
     public class BaseCoreSettings: IObjectToString
     {
         /// <summary>
-        /// Gets or sets reference to logger.
+        /// Gets or sets reference to MonitorNode.
         /// </summary>
-        public IEntityLogger Logger { get; set; }
+        public IMonitorNode MonitorNode { get; set; }
 
         public IDateTimeProvider DateTimeProvider { get; set; }
 
@@ -60,7 +61,7 @@ namespace SymOntoClay.Core
             var nextN = n + DisplayHelper.IndentationStep;
             var sb = new StringBuilder();
 
-            sb.PrintExisting(n, nameof(Logger), Logger);
+            sb.PrintExisting(n, nameof(MonitorNode), MonitorNode);
             sb.PrintExisting(n, nameof(DateTimeProvider), DateTimeProvider);
 
             return sb.ToString();

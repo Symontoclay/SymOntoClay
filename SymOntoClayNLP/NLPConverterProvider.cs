@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,7 @@ namespace SymOntoClay.NLP
         private INLPConverterFactory _factory;
 
         /// <inheritdoc/>
-        public INLPConverterFactory GetFactory(IEntityLogger logger)
+        public INLPConverterFactory GetFactory(IMonitorLogger logger)
         {
             lock(_lockObj)
             {

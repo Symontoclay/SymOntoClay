@@ -38,7 +38,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache
             : base(coreContext)
         {
             var settingsOfContext = new BaseCoreSettings();
-            settingsOfContext.Logger = coreContext.Logger;
+            settingsOfContext.MonitorNode = coreContext.MonitorNode;
             
             settingsOfContext.DateTimeProvider = coreContext.DateTimeProvider;
 

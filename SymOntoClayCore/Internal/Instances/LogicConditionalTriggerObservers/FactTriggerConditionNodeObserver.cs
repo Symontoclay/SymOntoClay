@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,7 +31,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 {
     public class FactTriggerConditionNodeObserver: BaseTriggerConditionNodeObserver
     {
-        public FactTriggerConditionNodeObserver(IEntityLogger logger, IStorage storage, KindOfTriggerCondition kindOfTriggerCondition)
+        public FactTriggerConditionNodeObserver(IMonitorLogger logger, IStorage storage, KindOfTriggerCondition kindOfTriggerCondition)
             : base(logger)
         {
             storage.LogicalStorage.OnChanged += LogicalStorage_OnChanged;

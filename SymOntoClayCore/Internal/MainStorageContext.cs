@@ -33,6 +33,7 @@ using SymOntoClay.Core.Internal.Services;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -41,8 +42,8 @@ namespace SymOntoClay.Core.Internal
 {
     public class MainStorageContext: BaseCoreContext, IMainStorageContext
     {
-        public MainStorageContext(IEntityLogger logger)
-            : base(logger)
+        public MainStorageContext(IMonitorNode monitorNode)
+            : base(monitorNode)
         {
         }
 

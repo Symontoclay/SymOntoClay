@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -31,7 +32,7 @@ namespace SymOntoClay.UnityAsset.Core
 {
     public interface IWorldComponent : ISymOntoClayDisposable, IExecutorInMainThread
     {
-        IEntityLogger Logger { get; }
+        IMonitorLogger Logger { get; }
         string InsertPublicFact(string text);
         string InsertPublicFact(RuleInstance fact);
         void RemovePublicFact(string id);

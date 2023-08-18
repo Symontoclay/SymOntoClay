@@ -75,7 +75,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 var coreEngineSettings = new EngineSettings();
                 coreEngineSettings.Id = settings.Id;
                 coreEngineSettings.AppFile = settings.LogicFile;
-                coreEngineSettings.Logger = Logger;
+                coreEngineSettings.MonitorNode = Logger;
                 coreEngineSettings.SyncContext = worldContext.SyncContext;
                 
                 coreEngineSettings.ModulesStorage = worldContext.ModulesStorage;

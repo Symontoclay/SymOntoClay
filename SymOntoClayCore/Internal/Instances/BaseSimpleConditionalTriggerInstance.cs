@@ -143,7 +143,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
                 catch (Exception e)
                 {
-                    Error(e);
+                    Error("9A9F4635-7A86-4074-9FD1-44E20C6D37FC", e);
                 }
             });
         }

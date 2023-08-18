@@ -468,7 +468,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             sb.AppendLine("End ProcessesList");
 
-            Log(sb.ToString());
+            Info("64404666-03BB-4163-996C-7813E654FD6F", sb.ToString());
         }
 #endif
         /// <inheritdoc/>

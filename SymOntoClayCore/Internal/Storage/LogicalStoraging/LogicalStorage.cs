@@ -238,7 +238,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                     if(_enableAddingRemovingFactLoggingInStorages)
                     {
-                        Log($"({GetHashCode()}) approvingRez = {approvingRez}");
+                        Info($"({GetHashCode()}) approvingRez = {approvingRez}");
                     }
 
                     if (approvingRez != null)
@@ -267,7 +267,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             if(_enableAddingRemovingFactLoggingInStorages)
             {
-                Log($"({GetHashCode()}) NEXT ruleInstance = {ruleInstance.ToHumanizedString()}");
+                Info($"({GetHashCode()}) NEXT ruleInstance = {ruleInstance.ToHumanizedString()}");
             }
 
             _ruleInstancesList.Add(ruleInstance);
@@ -451,7 +451,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             if(_enableAddingRemovingFactLoggingInStorages)
             {
-                Log($"({GetHashCode()}) `{ruleInstanceId}` has been removed.");
+                Info($"({GetHashCode()}) `{ruleInstanceId}` has been removed.");
             }
 
             return ruleInstance.UsedKeysList;
@@ -787,7 +787,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                 sb.AppendLine($"({GetHashCode()}) End {_kind} of {_mainStorageContext.Id}");
 
-                Log(sb.ToString());
+                Info("5E9B4D48-9A71-4DC5-873E-19C0B90633A4", sb.ToString());
             }
         }
 #endif
@@ -818,7 +818,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             if (_enableAddingRemovingFactLoggingInStorages)
             {
-                Log($"({GetHashCode()}) Lifetime of `{ruleInstanceId}` has been refreshed to {DEFAULT_INITIAL_TIME}.");
+                Info($"({GetHashCode()}) Lifetime of `{ruleInstanceId}` has been refreshed to {DEFAULT_INITIAL_TIME}.");
             }
         }
 
@@ -838,7 +838,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     {
                         if(_enableAddingRemovingFactLoggingInStorages)
                         {
-                            Log($"({GetHashCode()}) Put for deleting by end of life cycle: `{item}`");
+                            Info($"({GetHashCode()}) Put for deleting by end of life cycle: `{item}`");
                         }
 
                         NRemoveById(item.Key);

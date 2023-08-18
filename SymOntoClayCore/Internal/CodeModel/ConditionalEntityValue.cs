@@ -174,7 +174,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
             catch (Exception e)
             {
-                Error(e);
+                Error("90A3EEC7-6EAB-4318-82B1-3B285A55BE04", e);
             }
         }
 

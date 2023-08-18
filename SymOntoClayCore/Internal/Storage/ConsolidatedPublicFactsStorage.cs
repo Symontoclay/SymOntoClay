@@ -270,11 +270,11 @@ namespace SymOntoClay.Core.Internal.Storage
         /// <inheritdoc/>
         public void DbgPrintFactsAndRules()
         {
-            Log("Begin");
+            Info("82B887B0-0CBB-43C7-94FC-A993862D5FE1", "Begin");
 
             _logicalStorage.DbgPrintFactsAndRules();
 
-            Log("End");
+            Info("452B0BC5-2F78-469C-9A6B-12C89F770A7E", "End");
         }
 #endif
 

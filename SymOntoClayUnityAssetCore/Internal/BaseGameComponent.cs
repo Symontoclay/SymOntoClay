@@ -113,9 +113,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         public virtual bool IsWaited { get; }
 
         protected void Trace(string messagePointId, string message,
-    [CallerMemberName] string memberName = "",
-    [CallerFilePath] string sourceFilePath = "",
-    [CallerLineNumber] int sourceLineNumber = 0)
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
         {
             _logger.Trace(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
         }

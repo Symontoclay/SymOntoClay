@@ -273,14 +273,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 {
                     var dumpFileName = loggingProvider.DumpToFile(rootExplainNode);
 
-                    Log($"The explanation of query `{queryExpression.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}` has been dumped into file `{dumpFileName}`.");
+                    Info("F90D67DA-ED62-4AFC-B84D-BA658F77D689", $"The explanation of query `{queryExpression.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}` has been dumped into file `{dumpFileName}`.");
                 }
 
             }
             catch (Exception e)
             {
 #if DEBUG
-                Log($"e = {e}");
+                Info("8E45F313-D548-4D34-BC1F-249525BC1D26", $"e = {e}");
 #endif
 
                 var sb = new StringBuilder();
@@ -293,9 +293,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     sb.AppendLine($"The explanation has been dumped into file `{dumpFileName}`.");
                 }
 
-                Error(sb.ToString());
+                Error("01C3750D-32DB-4563-840D-3A865B22304D", sb.ToString());
 
-                Error(e);
+                Error("F5F36104-7980-4589-9BEF-3C4D93433BCA", e);
 
                 throw;
             }
@@ -2653,9 +2653,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            Log($"leftExpr.Kind = {leftExpr.Kind}");
-            Log($"rightExpr.Kind = {rightExpr.Kind}");
-            Log($"rightExpr = {rightExpr.ToHumanizedString()}");
+            Info("3179F4D5-CABA-4844-A563-0978A77C9AC3", $"leftExpr.Kind = {leftExpr.Kind}");
+            Info("65432D55-C080-4DAC-A78F-BE1FA4289D3F", $"rightExpr.Kind = {rightExpr.Kind}");
+            Info("B2036CA7-931B-4985-8CB8-06C90B645723", $"rightExpr = {rightExpr.ToHumanizedString()}");
 #endif
 
             throw new NotImplementedException();
@@ -3930,16 +3930,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
 
 #if DEBUG
-                Log($"expressionNode1 = {expressionNode1}");
-                Log($"expressionNode2 = {expressionNode2}");
+                Info($"expressionNode1 = {expressionNode1}");
+                Info($"expressionNode2 = {expressionNode2}");
 #endif
 
                 throw new NotImplementedException();
             }
 
 #if DEBUG
-            Log($"expressionNode1 = {expressionNode1}");
-            Log($"expressionNode2 = {expressionNode2}");
+            Info($"expressionNode1 = {expressionNode1}");
+            Info($"expressionNode2 = {expressionNode2}");
 #endif
 
             throw new NotImplementedException();

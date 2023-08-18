@@ -24,6 +24,7 @@ using Newtonsoft.Json;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConverters;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 {
     public class EndpointsRegistry : BaseLoggedComponent, IEndpointsRegistry
     {
-        public EndpointsRegistry(IEntityLogger logger)
+        public EndpointsRegistry(IMonitorLogger logger)
             : base(logger)
         {
         }

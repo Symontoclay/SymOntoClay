@@ -337,7 +337,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 break;
                             }
 #if DEBUG
-                            Log($"_nodePoint = {_nodePoint?.BuildExpr<LogicalQueryNode>()?.ToHumanizedString()}");
+                            Info("A0A13551-0B0E-47E3-B63A-F8948D3AE36F", $"_nodePoint = {_nodePoint?.BuildExpr<LogicalQueryNode>()?.ToHumanizedString()}");
 #endif
                             throw new UnexpectedTokenException(_currToken);
 

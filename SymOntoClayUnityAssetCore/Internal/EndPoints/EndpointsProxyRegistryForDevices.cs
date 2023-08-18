@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 {
     public class EndpointsProxyRegistryForDevices : BaseLoggedComponent, IEndpointsRegistry
     {
-        public EndpointsProxyRegistryForDevices(IEntityLogger logger, IEndpointsRegistry sourceEndpointsRegistry, IList<int> devices)
+        public EndpointsProxyRegistryForDevices(IMonitorLogger logger, IEndpointsRegistry sourceEndpointsRegistry, IList<int> devices)
             : base(logger)
         {
             _sourceEndpointsRegistry = sourceEndpointsRegistry;

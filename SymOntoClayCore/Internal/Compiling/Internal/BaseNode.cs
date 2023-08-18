@@ -156,7 +156,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
             sb.AppendLine("End Code");
 
-            Log($"sb = {sb}");
+            Info("5F925DB0-28D5-4B20-8C56-C79625D56D4C", $"sb = {sb}");
         }
 
         private string IntermediateScriptCommandToRawDbgString(IntermediateScriptCommand commandItem, Dictionary<IntermediateScriptCommand, int> cmdDict)

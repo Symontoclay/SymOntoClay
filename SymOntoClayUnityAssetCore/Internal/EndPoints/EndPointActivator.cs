@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConverters;
 using System;
@@ -41,7 +42,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 {
     public class EndPointActivator : BaseLoggedComponent
     {
-        public EndPointActivator(IEntityLogger logger, IPlatformTypesConvertersRegistry platformTypesConvertorsRegistry, IInvokerInMainThread invokingInMainThread)
+        public EndPointActivator(IMonitorLogger logger, IPlatformTypesConvertersRegistry platformTypesConvertorsRegistry, IInvokerInMainThread invokingInMainThread)
             : base(logger)
         {
             _platformTypesConvertorsRegistry = platformTypesConvertorsRegistry;
@@ -119,15 +120,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     else
                     {
 #if DEBUG
-                        Log($"e = {e}");
+                        Info("CC60ADBD-F203-491C-8187-BD302E2B0E08", $"e = {e}");
 #endif
                     }
                 }
                 catch (Exception e)
                 {
-#if DEBUG
-                    Log($"e = {e}");
-#endif
+                    Error("B713C1AF-C89B-4430-9AA3-1751BF5D4C51", e);
 
                     processInfo.Status = ProcessStatus.Faulted;
                 }
@@ -161,15 +160,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     else
                     {
 #if DEBUG
-                        Log($"e = {e}");
+                        Info("BC5E40E6-9992-437B-AA1F-D3E0FB13B323", $"e = {e}");
 #endif
                     }
                 }
                 catch (Exception e)
                 {
-#if DEBUG
-                    Log($"e = {e}");
-#endif
+                    Error("B459B0E1-D3D8-441A-B13C-3D1145FE09C0", e);
 
                     processInfo.Status = ProcessStatus.Faulted;
                 }

@@ -222,7 +222,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
                 catch(Exception e)
                 {
-                    Error(e);
+                    Error("847C55BE-261F-401D-A398-B6C81C1E0143", e);
                 }
             });
         }

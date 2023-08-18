@@ -157,7 +157,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 }
                 catch (Exception e)
                 {
-                    Error(e);
+                    Error("EAEB1532-7C12-459C-85F6-F488CCC6F90C", e);
                 }                
             });
         }
@@ -181,7 +181,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 }
                 catch (Exception e)
                 {
-                    Log(e.ToString());
+                    Error("5505F9AC-F874-4843-91D6-9CF97045326D", e);
                 }
             });
         }
@@ -197,7 +197,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     }
                     catch (Exception e)
                     {
-                        Log(e.ToString());
+                        Error("932FA4A1-3216-4B1F-8B5E-DB7EB08A42D4", e);
                     }
                 });
             }

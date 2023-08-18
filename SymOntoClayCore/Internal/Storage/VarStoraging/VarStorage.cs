@@ -337,7 +337,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
                 sb.AppendLine($"({GetHashCode()}) End {_kind} of {_mainStorageContext.Id}");
 
-                Log(sb.ToString());
+                Info("FE4DBAF2-5939-4194-8EA9-1D52F60D8F1A", sb.ToString());
             }                
         }
 #endif

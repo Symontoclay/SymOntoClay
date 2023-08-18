@@ -38,6 +38,7 @@ using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -52,8 +53,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public abstract class BaseThreadExecutor : BaseLoggedComponent
     {
-        protected BaseThreadExecutor(IEngineContext context, IActivePeriodicObject activeObject)
-            : base(context.Logger)
+        protected BaseThreadExecutor(IEngineContext context, IActivePeriodicObject activeObject, IMonitorLogger logger)
+            : base(logger)
         {
             _context = context;
             _codeFrameService = context.ServicesFactory.GetCodeFrameService();
@@ -487,8 +488,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
 #if DEBUG
                 //It should be used by the Thread executor's ThreadLogger
-                Error(e);
-                Log($"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+                Error("55249ED6-2612-4CAE-8073-0164016F1C03", e);
+                Info("AAAF2B02-51E1-469D-89DB-F9DA59C98984", $"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
                 throw;

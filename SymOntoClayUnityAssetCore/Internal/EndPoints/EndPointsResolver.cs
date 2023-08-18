@@ -26,6 +26,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConverters;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 {
     public class EndPointsResolver : BaseLoggedComponent
     {
-        public EndPointsResolver(IEntityLogger logger, IPlatformTypesConvertersRegistry platformTypesConvertorsRegistry)
+        public EndPointsResolver(IMonitorLogger logger, IPlatformTypesConvertersRegistry platformTypesConvertorsRegistry)
             : base(logger)
         {
             _platformTypesConvertorsRegistry = platformTypesConvertorsRegistry;

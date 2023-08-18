@@ -151,9 +151,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             }
             catch (Exception e)
             {
-#if DEBUG
-                Log($"e = {e}");
-#endif
+                Error("D61FB02A-C84A-4959-9F72-67F9479600CB", e);
 
                 return new ProcessCreatingResult(e);
             }

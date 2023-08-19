@@ -30,7 +30,6 @@ using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal.DateAndTime;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using SymOntoClay.UnityAsset.Core.Internal.Images;
-using SymOntoClay.UnityAsset.Core.Internal.Logging;
 using SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache;
 using SymOntoClay.UnityAsset.Core.Internal.ModulesStorage;
 using SymOntoClay.UnityAsset.Core.Internal.Storage;
@@ -57,7 +56,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
             ImplementGeneralSettings(settings);
             CreateMonitoring(settings);
-            CreateLogging(settings);
             CreateComponents(settings);
 
             if (settings.EnableAutoloadingConvertors)
@@ -89,13 +87,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             KindOfLogicalSearchExplain = Monitor.KindOfLogicalSearchExplain;
             LogicalSearchExplainDumpDir = Monitor.LogicalSearchExplainDumpDir;
             EnableAddingRemovingFactLoggingInStorages = Monitor.EnableAddingRemovingFactLoggingInStorages;
-        }
-
-        private void CreateLogging(WorldSettings settings)
-        {
-            var loggingSettings = settings.Logging;
-
-            CoreLogger = new CoreLogger(loggingSettings, this);
         }
 
         private void CreateComponents(WorldSettings settings)
@@ -148,8 +139,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         private string _tmpDir;
         public string TmpDir => _tmpDir;
-
-        public CoreLogger CoreLogger { get; private set; }
 
         public IMonitor Monitor { get; private set; }
         public IMonitorNode MonitorNode { get; private set; }

@@ -68,7 +68,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         public string Id => _id;
 
         public IMonitorLogger Logger => _logger;
-        public IMonitorLogger MonitorLogger => _monitorNode;
+        public IMonitorNode MonitorNode => _monitorNode;
 
         /// <inheritdoc/>
         public bool EnableLogging { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

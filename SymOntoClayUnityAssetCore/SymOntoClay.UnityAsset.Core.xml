@@ -776,28 +776,10 @@
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.IsWaited">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.Log(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.Warning(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.Error(System.String)">
-            <inheritdoc/>
-        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.IsDisposed">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.Dispose">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseWorldCoreComponent.Log(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseWorldCoreComponent.Warning(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseWorldCoreComponent.Error(System.String)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.BaseWorldCoreComponent.IsDisposed">
@@ -1076,62 +1058,6 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.HostSupport.HostSupportComponent.GetDirectionToPosition(System.Numerics.Vector3)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.Internal.ILoggerContext.Enable">
-            <summary>
-            Gets value of enable logging.
-            It alows enable or disable logging or remote connection for whole components synchronously.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.Internal.Logging.CoreLogger.EnableLogging">
-            <summary>
-            Gets or sets value of enable logging.
-            It alows enable or disable logging or remote connection for whole components synchronously.
-            </summary>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.Logging.CoreLogger.Dispose">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.Internal.Logging.CoreLogger.IsDisposed">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.Internal.Logging.CoreLoggerSettings.LogDir">
-            <summary>
-            Gets or sets root dir for file logging.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.Internal.Logging.CoreLoggerSettings.PlatformLoggers">
-            <summary>
-            Gets or sets list of platform specific loggers.
-            It alows us to add, for example, console logger for Unity3D.
-            </summary>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.Logging.CoreLoggerSettings.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.Logging.CoreLoggerSettings.ToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.Logging.CoreLoggerSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.Logging.InternalLogger.Log(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.Logging.InternalLogger.LogChannel(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.Logging.InternalLogger.Warning(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.Logging.InternalLogger.Error(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="T:SymOntoClay.UnityAsset.Core.Internal.Logging.LoggerContext">
-            <inheritdoc cref='T:SymOntoClay.UnityAsset.Core.Internal.ILoggerContext'/>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.Internal.Logging.LoggerContext.Enable">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache.GetLogicRuleOrFact(System.String)">
             <inheritdoc/>
         </member>
@@ -1348,9 +1274,6 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.Vision.VisionComponent.OnDisposed">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.SymOntoClay#UnityAsset#Core#Internal#IWorldCoreGameComponentContext#CreateLogger(System.String)">
-            <inheritdoc/>
-        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.WorldContext.SymOntoClay#UnityAsset#Core#Internal#IWorldCoreGameComponentContext#Motitor">
             <inheritdoc/>
         </member>
@@ -1394,15 +1317,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.Dispose">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.Log(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.Warning(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.Error(System.String)">
             <inheritdoc/>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.IPlace">

@@ -45,7 +45,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
                 standaloneStorageSettings.Id = settings.Id;
                 standaloneStorageSettings.IsWorld = false;
                 standaloneStorageSettings.AppFile = settings.HostFile;
-                standaloneStorageSettings.MonitorNode = Logger;
+                standaloneStorageSettings.MonitorNode = MonitorNode;
                 
                 standaloneStorageSettings.ModulesStorage = worldContext.ModulesStorage;
                 standaloneStorageSettings.ParentStorage = worldContext.StandaloneStorage;
@@ -61,7 +61,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             }
             catch (Exception e)
             {
-                Log(e.ToString());
+                Error("FF3FAC3F-DEDE-4556-A475-CE7EEF5E9902", e);
 
                 throw e;
             }

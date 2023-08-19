@@ -75,7 +75,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 var coreEngineSettings = new EngineSettings();
                 coreEngineSettings.Id = settings.Id;
                 coreEngineSettings.AppFile = settings.LogicFile;
-                coreEngineSettings.MonitorNode = Logger;
+                coreEngineSettings.MonitorNode = MonitorNode;
                 coreEngineSettings.SyncContext = worldContext.SyncContext;
                 
                 coreEngineSettings.ModulesStorage = worldContext.ModulesStorage;
@@ -100,7 +100,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             }
             catch (Exception e)
             {
-                Log(e.ToString());
+                Error("9A9C31DD-54C7-4E82-A6D3-6A84C2ABE746", e);
 
                 throw e;
             }   
@@ -141,7 +141,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             }
             catch (Exception e)
             {
-                Log(e.ToString());
+                Error("20DAE31E-C61E-4121-9735-FCCEAF367ABD", e);
 
                 throw e;
             }           

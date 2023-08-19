@@ -46,6 +46,11 @@ namespace SymOntoClay.Monitor
                 throw new NotImplementedException();
             }
 
+            if(!monitorSettings.Enable)
+            {
+                throw new NotImplementedException();
+            }
+
             _kindOfLogicalSearchExplain = monitorSettings.KindOfLogicalSearchExplain;
             _enableAddingRemovingFactLoggingInStorages = monitorSettings.EnableAddingRemovingFactLoggingInStorages;
 
@@ -98,10 +103,10 @@ namespace SymOntoClay.Monitor
         public bool EnableAddingRemovingFactLoggingInStorages => _enableAddingRemovingFactLoggingInStorages;
 
         /// <inheritdoc/>
-        public bool Enable { get => _monitorContext.Enable; set => _monitorContext.Enable = value; }
+        public bool Enable { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }//{ get => _monitorContext.Enable; set => _monitorContext.Enable = value; }
 
         /// <inheritdoc/>
-        public bool EnableRemoteConnection { get => _monitorContext.EnableRemoteConnection; set => _monitorContext.EnableRemoteConnection = value; }
+        public bool EnableRemoteConnection { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }//{ get => _monitorContext.EnableRemoteConnection; set => _monitorContext.EnableRemoteConnection = value; }
 
         /// <inheritdoc/>
         public IMonitorNode CreateMotitorNode(string messagePointId, string nodeId,

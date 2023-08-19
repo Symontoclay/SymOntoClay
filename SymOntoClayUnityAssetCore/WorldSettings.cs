@@ -91,7 +91,6 @@ namespace SymOntoClay.UnityAsset.Core
             var nextNSpaces = DisplayHelper.Spaces(nextN);
             var sb = new StringBuilder();
 
-            sb.PrintObjProp(n, nameof(Logging), Logging);
             sb.PrintPODList(n, nameof(LibsDirs), LibsDirs);
             sb.AppendLine($"{spaces}{nameof(ImagesRootDir)} = {ImagesRootDir}");
             sb.AppendLine($"{spaces}{nameof(BuiltInStandardLibraryDir)} = {BuiltInStandardLibraryDir}");

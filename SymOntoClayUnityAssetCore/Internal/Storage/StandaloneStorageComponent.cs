@@ -35,7 +35,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Storage
             var standaloneStorageSettings = new StandaloneStorageSettings();
             standaloneStorageSettings.Id = "world";
             standaloneStorageSettings.IsWorld = true;
-            standaloneStorageSettings.MonitorNode = coreContext.Logger;
+            standaloneStorageSettings.MonitorNode = coreContext.MonitorNode;
             standaloneStorageSettings.ModulesStorage = coreContext.ModulesStorage;
 
             if (!string.IsNullOrWhiteSpace(settings.BuiltInStandardLibraryDir))

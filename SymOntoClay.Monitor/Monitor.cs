@@ -27,6 +27,11 @@ namespace SymOntoClay.Monitor
         private readonly MessageNumberGenerator _messageNumberGenerator = new MessageNumberGenerator();
 
         /// <inheritdoc/>
+        private readonly KindOfLogicalSearchExplain _kindOfLogicalSearchExplain;
+
+        private readonly bool _enableAddingRemovingFactLoggingInStorages;
+
+        /// <inheritdoc/>
         public override string Id => "monitor_core";
 
         public Monitor(MonitorSettings monitorSettings)
@@ -35,6 +40,14 @@ namespace SymOntoClay.Monitor
 #if DEBUG
             _globalLogger.Info($"monitorSettings = {monitorSettings}");
 #endif
+            
+            if(monitorSettings.PlatformLoggers != null)
+            {
+                throw new NotImplementedException();
+            }
+
+            _kindOfLogicalSearchExplain = monitorSettings.KindOfLogicalSearchExplain;
+            _enableAddingRemovingFactLoggingInStorages = monitorSettings.EnableAddingRemovingFactLoggingInStorages;
 
             _monitorContext = new MonitorContext()
             {
@@ -56,23 +69,35 @@ namespace SymOntoClay.Monitor
 
             _globalMessageNumberGenerator = _monitorContext.GlobalMessageNumberGenerator;
 
+            //replace to more customizable.
+            var tmpEnable = monitorSettings.Enable;
+
             _features = new MonitorFeatures
             {
-                EnableCallMethod = true,
-                EnableParameter = true,
-                EnableOutput = true,
-                EnableTrace = true,
-                EnableDebug = true,
-                EnableInfo = true,
-                EnableWarn = true,
-                EnableError = true,
-                EnableFatal = true
+                EnableCallMethod = tmpEnable,
+                EnableParameter = tmpEnable,
+                EnableOutput = tmpEnable,
+                EnableTrace = tmpEnable,
+                EnableDebug = tmpEnable,
+                EnableInfo = tmpEnable,
+                EnableWarn = tmpEnable,
+                EnableError = tmpEnable,
+                EnableFatal = tmpEnable
             };
 
             _monitorContext.Features = _features;
 
             Init(_messageProcessor, _features, _fileCache, _globalMessageNumberGenerator, _messageNumberGenerator, string.Empty, string.Empty);
         }
+
+        /// <inheritdoc/>
+        public KindOfLogicalSearchExplain KindOfLogicalSearchExplain => _kindOfLogicalSearchExplain;
+
+        /// <inheritdoc/>
+        public string LogicalSearchExplainDumpDir => _fileCache.DirectoryName;
+
+        /// <inheritdoc/>
+        public bool EnableAddingRemovingFactLoggingInStorages => _enableAddingRemovingFactLoggingInStorages;
 
         /// <inheritdoc/>
         public IMonitorNode CreateMotitorNode(string messagePointId, string nodeId,

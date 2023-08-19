@@ -85,6 +85,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             Monitor = settings.Monitor;            
             MonitorNode = Monitor.CreateMotitorNode("6B299F25-9FD9-46BE-A833-9C52B279444F", "world");
             Logger = MonitorNode;
+
+            KindOfLogicalSearchExplain = Monitor.KindOfLogicalSearchExplain;
+            LogicalSearchExplainDumpDir = Monitor.LogicalSearchExplainDumpDir;
+            EnableAddingRemovingFactLoggingInStorages = Monitor.EnableAddingRemovingFactLoggingInStorages;
         }
 
         private void CreateLogging(WorldSettings settings)
@@ -92,10 +96,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             var loggingSettings = settings.Logging;
 
             CoreLogger = new CoreLogger(loggingSettings, this);
-
-            KindOfLogicalSearchExplain = loggingSettings.KindOfLogicalSearchExplain;
-            LogicalSearchExplainDumpDir = CoreLogger.LogicalSearchExplainDumpDir;
-            EnableAddingRemovingFactLoggingInStorages = loggingSettings.EnableAddingRemovingFactLoggingInStorages;
         }
 
         private void CreateComponents(WorldSettings settings)

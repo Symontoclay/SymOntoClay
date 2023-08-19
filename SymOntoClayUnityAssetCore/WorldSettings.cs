@@ -58,6 +58,7 @@ namespace SymOntoClay.UnityAsset.Core
         /// <summary>
         /// Gets or sets logging settings.
         /// </summary>
+        [Obsolete("It should be replaced to MonitorSettings", true)]
         public LoggingSettings Logging { get; set; }
 
         /// <summary>

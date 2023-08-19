@@ -9,5 +9,6 @@ namespace SymOntoClay.Monitor.Internal.FileCache
     public interface IFileCache
     {
         void WriteFile(string fileName, string messageText);
+        string DirectoryName { get; }
     }
 }

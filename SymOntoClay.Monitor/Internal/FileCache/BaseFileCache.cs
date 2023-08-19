@@ -23,6 +23,9 @@ namespace SymOntoClay.Monitor.Internal.FileCache
         protected readonly string _directory;
 
         /// <inheritdoc/>
+        public string DirectoryName => _directory;
+
+        /// <inheritdoc/>
         public void WriteFile(string fileName, string messageText)
         {
 #if DEBUG

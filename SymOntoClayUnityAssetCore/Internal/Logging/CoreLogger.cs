@@ -41,6 +41,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Logging
         private readonly IEntityLogger _coreLogger;
         private readonly string _todaysDir;
 
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public CoreLogger(LoggingSettings settings, IWorldCoreContext coreContext)
         {
             _coreContext = coreContext;
@@ -81,12 +82,14 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Logging
             _coreLogger = new InternalLogger(_loggerContext, "Core", _settings);
         }
 
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public string LogicalSearchExplainDumpDir { get; private set; }
 
         /// <summary>
         /// Gets or sets value of enable logging.
         /// It alows enable or disable logging or remote connection for whole components synchronously.
         /// </summary>
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public bool EnableLogging
         {
             get
@@ -106,19 +109,23 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Logging
             }
         }
 
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public IEntityLogger WordCoreLogger => _coreLogger;
 
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public IEntityLogger CreateLogger(string name)
         {
             return new InternalLogger(_loggerContext, name, _settings);
         }
 
         /// <inheritdoc/>
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void Dispose()
         {
         }
 
         /// <inheritdoc/>
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public bool IsDisposed { get => false; }
     }
 }

@@ -51,6 +51,7 @@ namespace SymOntoClay.Monitor
 
             _monitorContext = new MonitorContext()
             {
+                Enable = monitorSettings.Enable,
                 OutputHandler = monitorSettings.OutputHandler,
                 ErrorHandler = monitorSettings.ErrorHandler
             };
@@ -69,20 +70,17 @@ namespace SymOntoClay.Monitor
 
             _globalMessageNumberGenerator = _monitorContext.GlobalMessageNumberGenerator;
 
-            //replace to more customizable.
-            var tmpEnable = monitorSettings.Enable;
-
             _features = new MonitorFeatures
             {
-                EnableCallMethod = tmpEnable,
-                EnableParameter = tmpEnable,
-                EnableOutput = tmpEnable,
-                EnableTrace = tmpEnable,
-                EnableDebug = tmpEnable,
-                EnableInfo = tmpEnable,
-                EnableWarn = tmpEnable,
-                EnableError = tmpEnable,
-                EnableFatal = tmpEnable
+                EnableCallMethod = true,
+                EnableParameter = true,
+                EnableOutput = true,
+                EnableTrace = true,
+                EnableDebug = true,
+                EnableInfo = true,
+                EnableWarn = true,
+                EnableError = true,
+                EnableFatal = true
             };
 
             _monitorContext.Features = _features;
@@ -98,6 +96,12 @@ namespace SymOntoClay.Monitor
 
         /// <inheritdoc/>
         public bool EnableAddingRemovingFactLoggingInStorages => _enableAddingRemovingFactLoggingInStorages;
+
+        /// <inheritdoc/>
+        public bool Enable { get => _monitorContext.Enable; set => _monitorContext.Enable = value; }
+
+        /// <inheritdoc/>
+        public bool EnableRemoteConnection { get => _monitorContext.EnableRemoteConnection; set => _monitorContext.EnableRemoteConnection = value; }
 
         /// <inheritdoc/>
         public IMonitorNode CreateMotitorNode(string messagePointId, string nodeId,

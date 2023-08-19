@@ -10,6 +10,8 @@ namespace SymOntoClay.Monitor.Internal
 {
     public class MonitorContext : IObjectToString
     {
+        public bool Enable { get; set; }
+        public bool EnableRemoteConnection { get; set; }
         public MonitorFeatures Features { get; set; }
         public MonitorFileCache FileCache { get; set; }
         public MessageProcessor MessageProcessor { get; set; }
@@ -34,6 +36,8 @@ namespace SymOntoClay.Monitor.Internal
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}{nameof(Enable)} = {Enable}");
+            sb.AppendLine($"{spaces}{nameof(EnableRemoteConnection)} = {EnableRemoteConnection}");
             sb.PrintObjProp(n, nameof(Features), Features);
             sb.PrintExisting(n, nameof(FileCache), FileCache);
             sb.PrintExisting(n, nameof(MessageProcessor), MessageProcessor);

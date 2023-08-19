@@ -26,8 +26,8 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.Logging
 {
-    /// <inheritdoc cref='ILoggerContext'/>
-    public class LoggerContext : ILoggerContext
+    [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
+    public class LoggerContext
     {
         private readonly object _lockObj = new object();
         private bool _enable;

@@ -364,9 +364,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             }
         }
 
-        public bool EnableLogging { get => CoreLogger.EnableLogging; set => CoreLogger.EnableLogging = value; }
+        public bool EnableLogging { get => Monitor.Enable; set => Monitor.Enable = value; }
 
-        public bool EnableRemoteConnection { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool EnableRemoteConnection { get => Monitor.EnableRemoteConnection; set => Monitor.EnableRemoteConnection = value; }
 
         public void Load(IRunTimeImageInfo imageInfo)
         {
@@ -666,7 +666,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                 }
             }
 
-            CoreLogger.Dispose();
+            Monitor.Dispose();
         }
 
         protected void Trace(string messagePointId, string message,

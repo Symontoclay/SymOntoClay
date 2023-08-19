@@ -35,51 +35,15 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Logging
     public class CoreLogger: IWorldCoreComponent
     {
         private readonly object _lockObj = new object();
-        private readonly IWorldCoreContext _coreContext;
-        private readonly CoreLoggerSettings _settings;
+        //private readonly IWorldCoreContext _coreContext;
+        //private readonly CoreLoggerSettings _settings;
         private readonly LoggerContext _loggerContext = new LoggerContext();
-        private readonly IEntityLogger _coreLogger;
-        private readonly string _todaysDir;
+        //private readonly IEntityLogger _coreLogger;
+        //private readonly string _todaysDir;
 
         [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public CoreLogger(LoggingSettings settings, IWorldCoreContext coreContext)
         {
-            _coreContext = coreContext;
-            _settings = new CoreLoggerSettings();
-            _settings.LogDir = settings.LogDir;
-            _settings.PlatformLoggers = settings.PlatformLoggers?.ToList();
-
-            _loggerContext.Enable = settings.Enable;
-
-            if(!string.IsNullOrWhiteSpace(_settings.LogDir))
-            {
-                Directory.CreateDirectory(_settings.LogDir);
-
-                var now = DateTime.Now;
-                _todaysDir = $"{now.Year}_{now.Month:00}_{now.Day:00}_{now.Hour:00}_{now.Minute:00}_{now.Second:00}";
-
-                _settings.LogDir = Path.Combine(_settings.LogDir, _todaysDir);
-
-                Directory.CreateDirectory(_settings.LogDir);
-            }
-
-            if(settings.KindOfLogicalSearchExplain != KindOfLogicalSearchExplain.None)
-            {
-                if (string.IsNullOrWhiteSpace(settings.LogicalSearchExplainDumpDir))
-                {
-                    LogicalSearchExplainDumpDir = _settings.LogDir;
-                }
-                else
-                {
-                    Directory.CreateDirectory(settings.LogicalSearchExplainDumpDir);
-
-                    LogicalSearchExplainDumpDir = Path.Combine(settings.LogicalSearchExplainDumpDir, _todaysDir);
-
-                    Directory.CreateDirectory(LogicalSearchExplainDumpDir);
-                }
-            }
-
-            _coreLogger = new InternalLogger(_loggerContext, "Core", _settings);
         }
 
         [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
@@ -107,21 +71,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Logging
                     _loggerContext.Enable = value;
                 }
             }
-        }
-
-        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
-        public IEntityLogger WordCoreLogger => _coreLogger;
-
-        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
-        public IEntityLogger CreateLogger(string name)
-        {
-            return new InternalLogger(_loggerContext, name, _settings);
-        }
-
-        /// <inheritdoc/>
-        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
-        public void Dispose()
-        {
         }
 
         /// <inheritdoc/>

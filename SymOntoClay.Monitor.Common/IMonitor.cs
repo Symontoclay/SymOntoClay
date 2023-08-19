@@ -9,6 +9,9 @@ namespace SymOntoClay.Monitor.Common
 {
     public interface IMonitor : IMonitorLogger, IDisposable
     {
+        bool Enable { get; set; }
+        bool EnableRemoteConnection { get; set; }
+
         IMonitorNode CreateMotitorNode(string messagePointId, string nodeId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

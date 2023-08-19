@@ -90,7 +90,7 @@ namespace SymOntoClay.SoundBuses
                     }
                     catch (Exception e)
                     {
-                        receiver.Logger.Error(e.ToString());
+                        receiver.Logger.Error("A05B5697-3825-42D3-9CAD-3C07A8AE4BC0", e);
                     }
                 });
             }
@@ -121,7 +121,7 @@ namespace SymOntoClay.SoundBuses
                     }
                     catch (Exception e)
                     {
-                        receiver.Logger.Error(e.ToString());
+                        receiver.Logger.Error("40199609-AAAF-4DFB-A694-14295A8B6EC0", e);
                     }
                 });
             }

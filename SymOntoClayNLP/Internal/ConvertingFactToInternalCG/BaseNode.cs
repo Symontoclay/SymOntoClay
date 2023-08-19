@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.NLP.Internal.CG;
 using SymOntoClay.NLP.Internal.InternalCG;
 using System;
@@ -39,7 +40,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
         }
 
         protected readonly ContextOfConverterFactToInternalCG _context;
-        protected readonly IEntityLogger _logger;
+        protected readonly IMonitorLogger _logger;
 
         protected InternalConceptCGNode CreateOrGetExistingInternalConceptCGNode(string name)
         {

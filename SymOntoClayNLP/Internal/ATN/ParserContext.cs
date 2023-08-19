@@ -23,19 +23,21 @@ SOFTWARE.*/
 using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.ATN.ParsingDirectives;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace SymOntoClay.NLP.Internal.ATN
 {
     public class ParserContext : IObjectToString
     {
-        public ParserContext(GlobalParserContext globalContext, IEntityLogger logger, IWordsDict wordsDict, string text)
+        public ParserContext(GlobalParserContext globalContext, IMonitorLogger logger, IWordsDict wordsDict, string text)
         {
             _logger = logger;
             _globalContext = globalContext;
@@ -55,7 +57,7 @@ namespace SymOntoClay.NLP.Internal.ATN
             }
         }
 
-        private ParserContext(GlobalParserContext globalContext, IEntityLogger logger, int parentNum)
+        private ParserContext(GlobalParserContext globalContext, IMonitorLogger logger, int parentNum)
         {
             _globalContext = globalContext;
             _logger = logger;
@@ -71,7 +73,7 @@ namespace SymOntoClay.NLP.Internal.ATN
         private ATNLexer _lexer;
         private Stack<BaseParser> _parsers;
         private BaseParser _currentParser;
-        private readonly IEntityLogger _logger;
+        private readonly IMonitorLogger _logger;
         private readonly bool _dumpToLogDirOnExit;
         private readonly int _contextNum;
         private readonly int _parentNum;
@@ -110,11 +112,97 @@ namespace SymOntoClay.NLP.Internal.ATN
         }
 
         [MethodForLoggingSupport]
-        public void Log(string message)
+        public void Trace(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
         {
             LogToInternal(message);
 
-            _logger.Log(message);
+            _logger.Trace(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        [MethodForLoggingSupport]
+        public void Debug(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            LogToInternal(message);
+
+            _logger.Debug(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        [MethodForLoggingSupport]
+        public void Info(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            LogToInternal(message);
+
+            _logger.Info(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        [MethodForLoggingSupport]
+        public void Warn(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            LogToInternal(message);
+
+            _logger.Warn(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        [MethodForLoggingSupport]
+        public void Error(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            LogToInternal(message);
+
+            _logger.Error(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        [MethodForLoggingSupport]
+        public void Error(string messagePointId, Exception exception,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            LogToInternal(exception.ToString());
+
+            _logger.Error(messagePointId, exception, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        [MethodForLoggingSupport]
+        public void Fatal(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            LogToInternal(message);
+
+            _logger.Fatal(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        [MethodForLoggingSupport]
+        public void Fatal(string messagePointId, Exception exception,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            LogToInternal(exception.ToString());
+
+            _logger.Fatal(messagePointId, exception, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        [MethodForLoggingSupport]
+        [Obsolete("", true)]
+        public void Log(string message)
+        {
         }
 
         [MethodForLoggingSupport]
@@ -335,7 +423,7 @@ namespace SymOntoClay.NLP.Internal.ATN
             }
             catch (Exception ex)
             {
-                Log(ex.ToString());
+                Error("94075437-62F1-46BA-B1AA-E8BFB0BB7961", ex);
 
                 _result.IsSuccess = false;
                 _result.Error = ex;

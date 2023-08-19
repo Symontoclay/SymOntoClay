@@ -28,7 +28,6 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
-using SymOntoClay.UnityAsset.Core.Internal.Logging;
 using SymOntoClay.DefaultCLIEnvironment;
 using System;
 using System.Collections.Generic;

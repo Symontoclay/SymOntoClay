@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.CG;
 using System;
@@ -34,7 +35,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
         public ConceptualGraph OuterConceptualGraph { get; set; }
         public ConceptualGraph ConceptualGraph { get; set; }
         public IWordsDict WordsDict { get; set; }
-        public IEntityLogger Logger { get; set; }
+        public IMonitorLogger Logger { get; set; }
         public RelationStorageOfSemanticAnalyzer RelationStorage { get; private set; } = new RelationStorageOfSemanticAnalyzer();
     }
 }

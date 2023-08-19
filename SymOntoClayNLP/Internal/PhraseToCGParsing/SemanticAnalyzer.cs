@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.CG;
 using SymOntoClay.NLP.Internal.PhraseStructure;
@@ -32,14 +33,14 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 {
     public class SemanticAnalyzer
     {
-        public SemanticAnalyzer(IEntityLogger logger, IWordsDict wordsDict)
+        public SemanticAnalyzer(IMonitorLogger logger, IWordsDict wordsDict)
         {
             _wordsDict = wordsDict;
             _logger = logger;
         }
 
         private readonly IWordsDict _wordsDict;
-        private readonly IEntityLogger _logger;
+        private readonly IMonitorLogger _logger;
 
         public ConceptualGraph Run(BaseSentenceItem sentenceItem)
         {

@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.NLP.Internal.InternalCG;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
     public class ContextOfConverterFactToInternalCG
     {
         public InternalConceptualGraph ConceptualGraph { get; set; }
-        public IEntityLogger Logger { get; set; }
+        public IMonitorLogger Logger { get; set; }
         public INLPConverterContext NLPContext { get; set; }
         public BaseRulePart CurrentRulePart { get; set; }
         public Dictionary<string, string> VarConceptDict { get; set; } = new Dictionary<string, string>();

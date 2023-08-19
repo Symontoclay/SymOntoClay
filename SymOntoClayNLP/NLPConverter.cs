@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.ATN;
 using SymOntoClay.NLP.Internal.ConvertingCGToInternal;
@@ -39,14 +40,14 @@ namespace SymOntoClay.NLP
 {
     public class NLPConverter: INLPConverter
     {
-        public NLPConverter(IEntityLogger logger, IWordsDict wordsDict)
+        public NLPConverter(IMonitorLogger logger, IWordsDict wordsDict)
         {
             _wordsDict = wordsDict;
             _logger = logger;
         }
 
         private readonly IWordsDict _wordsDict;
-        private readonly IEntityLogger _logger;
+        private readonly IMonitorLogger _logger;
 
         /// <inheritdoc/>
         public IList<RuleInstance> Convert(string text)

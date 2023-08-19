@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.PhraseStructure;
 using System;
@@ -31,14 +32,14 @@ namespace SymOntoClay.NLP.Internal.ATN
 {
     public class PhraseCompactizer
     {
-        public PhraseCompactizer(IEntityLogger logger, IWordsDict wordsDict)
+        public PhraseCompactizer(IMonitorLogger logger, IWordsDict wordsDict)
         {
             _wordsDict = wordsDict;
             _logger = logger;
         }
 
         private readonly IWordsDict _wordsDict;
-        private readonly IEntityLogger _logger;
+        private readonly IMonitorLogger _logger;
 
         public void Run(BaseSentenceItem sentenceItem)
         {

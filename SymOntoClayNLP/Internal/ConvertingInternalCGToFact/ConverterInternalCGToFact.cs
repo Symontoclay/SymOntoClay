@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.NLP.Internal.Dot;
 using SymOntoClay.NLP.Internal.InternalCG;
 using SymOntoClay.NLP.Internal.PhraseStructure;
@@ -37,12 +38,12 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
 {
     public class ConverterInternalCGToFact
     {
-        public ConverterInternalCGToFact(IEntityLogger logger)
+        public ConverterInternalCGToFact(IMonitorLogger logger)
         {
             _logger = logger;
         }
 
-        private readonly IEntityLogger _logger;
+        private readonly IMonitorLogger _logger;
 
         public IList<RuleInstance> ConvertConceptualGraph(InternalConceptualGraph source)
         {

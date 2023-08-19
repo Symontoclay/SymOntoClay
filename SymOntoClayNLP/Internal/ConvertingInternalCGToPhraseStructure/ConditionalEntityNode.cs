@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.InternalCG;
 using SymOntoClay.NLP.Internal.PhraseStructure;
@@ -47,7 +48,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 
         private readonly BaseContextOfConvertingInternalCGToPhraseStructure _baseContext;
         private readonly InternalConceptualGraph _source;
-        private readonly IEntityLogger _logger;
+        private readonly IMonitorLogger _logger;
         private readonly IWordsDict _wordsDict;
         private readonly INLPConverterContext _nlpContext;
         private readonly List<InternalRelationCGNode> _visitedRelations;

@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.PhraseStructure;
 using System;
@@ -32,14 +33,14 @@ namespace SymOntoClay.NLP.Internal.ATN
 {
     public class ATNParser
     {
-        public ATNParser(IEntityLogger logger, IWordsDict wordsDict)
+        public ATNParser(IMonitorLogger logger, IWordsDict wordsDict)
         {
             _wordsDict = wordsDict;
             _logger = logger;
         }
 
         private readonly IWordsDict _wordsDict;
-        private readonly IEntityLogger _logger;
+        private readonly IMonitorLogger _logger;
 
         public List<BaseSentenceItem> Run(string text)
         {

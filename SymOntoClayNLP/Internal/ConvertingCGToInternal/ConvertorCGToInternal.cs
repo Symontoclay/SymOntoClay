@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.CG;
 using SymOntoClay.NLP.Internal.InternalCG;
@@ -37,12 +38,12 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
 {
     public class ConvertorCGToInternal
     {
-        public ConvertorCGToInternal(IEntityLogger logger)
+        public ConvertorCGToInternal(IMonitorLogger logger)
         {
             _logger = logger;
         }
 
-        private readonly IEntityLogger _logger;
+        private readonly IMonitorLogger _logger;
 
         public InternalConceptualGraph Convert(ConceptualGraph source)
         {
@@ -739,7 +740,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingCGToInternal
                             var modal = GrammaticalElementsHelper.GetAbilityModalityFromName(outputNodeOfTheRelation.Name);
 
 #if DEBUG
-                            _logger.Log($"modal = {modal}");
+                            _logger.Info("782BDC0B-F8EC-4A84-B00E-6CD8C20D3F4E", $"modal = {modal}");
 #endif
 
                             if (modal == AbilityModality.Undefined)

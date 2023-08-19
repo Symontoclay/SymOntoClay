@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.NLP.Internal.PhraseStructure;
 using System;
 using System.Collections.Generic;
@@ -30,12 +31,12 @@ namespace SymOntoClay.NLP.Internal.ConvertingPhraseStructureToText
 {
     public class ConverterPhraseStructureToText
     {
-        public ConverterPhraseStructureToText(IEntityLogger logger)
+        public ConverterPhraseStructureToText(IMonitorLogger logger)
         {
             _logger = logger;
         }
 
-        private readonly IEntityLogger _logger;
+        private readonly IMonitorLogger _logger;
 
         public string Convert(BaseSentenceItem sentenceItem)
         {

@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.NLP.Internal.CG;
 using SymOntoClay.NLP.Internal.Dot;
 using SymOntoClay.NLP.Internal.InternalCG;
@@ -46,7 +47,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
         }
 
         private readonly ContextOfConvertingInternalCGToPhraseStructure _context;
-        private readonly IEntityLogger _logger;
+        private readonly IMonitorLogger _logger;
         private readonly InternalConceptualGraph _source;
 
         public ResultOfNode Run()

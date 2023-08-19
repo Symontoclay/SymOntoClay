@@ -24,6 +24,7 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -43,7 +44,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
         private readonly StrongIdentifierValue _name;
         private readonly ContextOfConverterFactToInternalCG _context;
         private readonly Dictionary<LogicalQueryNode, ResultOfNode> _visitedRelations;
-        private readonly IEntityLogger _logger;
+        private readonly IMonitorLogger _logger;
 
         public string Resolve()
         {

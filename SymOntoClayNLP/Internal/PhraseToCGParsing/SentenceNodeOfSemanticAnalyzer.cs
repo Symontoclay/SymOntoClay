@@ -60,7 +60,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
                 var vocativeResult = vocativeNode.Run();
 
 #if DEBUG
-                Context.Logger.Log($"vocativeResult = {vocativeResult}");
+                Context.Logger.Info("AFD4E961-7430-4EE0-B418-22A1B48C5F4F", $"vocativeResult = {vocativeResult}");
 #endif
 
                 var entitiesList = vocativeResult.PrimaryRolesDict.GetByRole("entity");

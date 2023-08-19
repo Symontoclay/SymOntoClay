@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -40,7 +41,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 
         private readonly RuleInstance _fact;
         private readonly ContextOfConverterFactToInternalCG _context;
-        private readonly IEntityLogger _logger;
+        private readonly IMonitorLogger _logger;
 
         public ResultOfNode Run()
         {

@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.PhraseStructure;
 using System;
@@ -34,12 +35,12 @@ namespace SymOntoClay.NLP.Internal.ATN
 {
     public class GlobalParserContext : IObjectToString
     {
-        public GlobalParserContext(IEntityLogger logger, IWordsDict wordsDict, string text)
+        public GlobalParserContext(IMonitorLogger logger, IWordsDict wordsDict, string text)
             : this(logger, wordsDict, text, false, string.Empty)
         {
         }
 
-        public GlobalParserContext(IEntityLogger logger, IWordsDict wordsDict, string text, bool dumpToLogDirOnExit, string logDir)
+        public GlobalParserContext(IMonitorLogger logger, IWordsDict wordsDict, string text, bool dumpToLogDirOnExit, string logDir)
         {
             _logger = logger;
 
@@ -49,7 +50,7 @@ namespace SymOntoClay.NLP.Internal.ATN
             AddContext(new ParserContext(this, logger, wordsDict, text));
         }
 
-        private readonly IEntityLogger _logger;
+        private readonly IMonitorLogger _logger;
         public readonly bool DumpToLogDirOnExit;
         public readonly string LogDir;
         private readonly List<ParserContext> parserContexts = new List<ParserContext>();

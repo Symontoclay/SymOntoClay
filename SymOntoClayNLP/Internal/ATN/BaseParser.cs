@@ -26,6 +26,7 @@ using SymOntoClay.NLP.Internal.ATN.ParsingDirectives;
 using SymOntoClay.NLP.Internal.PhraseStructure;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace SymOntoClay.NLP.Internal.ATN
@@ -70,9 +71,75 @@ namespace SymOntoClay.NLP.Internal.ATN
         public int? StateAfterRunChild { get; set; }
 
         [MethodForLoggingSupport]
-        protected void Log(string message)
+        protected void Trace(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
         {
-            _context.Log(message);
+            _context.Trace(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        [MethodForLoggingSupport]
+        protected void Debug(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _context.Debug(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        [MethodForLoggingSupport]
+        protected void Info(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _context.Info(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        [MethodForLoggingSupport]
+        protected void Warn(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _context.Warn(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        [MethodForLoggingSupport]
+        protected void Error(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _context.Error(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        [MethodForLoggingSupport]
+        protected void Error(string messagePointId, Exception exception,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _context.Error(messagePointId, exception, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        [MethodForLoggingSupport]
+        protected void Fatal(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _context.Fatal(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        [MethodForLoggingSupport]
+        protected void Fatal(string messagePointId, Exception exception,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _context.Fatal(messagePointId, exception, memberName, sourceFilePath, sourceLineNumber);
         }
 
         protected void SetParser(params IParsingDirective[] directives)

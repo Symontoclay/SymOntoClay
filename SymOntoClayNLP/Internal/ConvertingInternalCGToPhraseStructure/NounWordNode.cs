@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.PhraseStructure;
 using System;
@@ -32,7 +33,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 {
     public class NounWordNode
     {
-        public NounWordNode(string word, RoleOfNoun roleOfNoun, IEntityLogger logger, IWordsDict wordsDict, GrammaticalMood mood)
+        public NounWordNode(string word, RoleOfNoun roleOfNoun, IMonitorLogger logger, IWordsDict wordsDict, GrammaticalMood mood)
         {
             _logger = logger;
             _wordsDict = wordsDict;
@@ -41,7 +42,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             _mood = mood;
         }
 
-        private readonly IEntityLogger _logger;
+        private readonly IMonitorLogger _logger;
         private readonly IWordsDict _wordsDict;
         private readonly string _word;
         private readonly RoleOfNoun _roleOfNoun;

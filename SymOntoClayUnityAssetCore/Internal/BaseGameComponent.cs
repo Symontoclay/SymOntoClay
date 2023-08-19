@@ -112,6 +112,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         /// <inheritdoc/>
         public virtual bool IsWaited { get; }
 
+        [MethodForLoggingSupport]
         protected void Trace(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -120,6 +121,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _logger.Trace(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
         }
 
+        [MethodForLoggingSupport]
         protected void Debug(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -128,6 +130,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _logger.Debug(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
         }
 
+        [MethodForLoggingSupport]
         protected void Info(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -136,6 +139,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _logger.Info(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
         }
 
+        [MethodForLoggingSupport]
         protected void Warn(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -144,6 +148,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _logger.Warn(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
         }
 
+        [MethodForLoggingSupport]
         protected void Error(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -152,6 +157,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _logger.Error(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
         }
 
+        [MethodForLoggingSupport]
         protected void Error(string messagePointId, Exception exception,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -160,6 +166,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _logger.Error(messagePointId, exception, memberName, sourceFilePath, sourceLineNumber);
         }
 
+        [MethodForLoggingSupport]
         protected void Fatal(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -168,18 +175,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _logger.Fatal(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
         }
 
+        [MethodForLoggingSupport]
         protected void Fatal(string messagePointId, Exception exception,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
             _logger.Fatal(messagePointId, exception, memberName, sourceFilePath, sourceLineNumber);
-        }
-
-        [Obsolete("Use Info", true)]
-        protected void Log(string message)
-        {
-            //_logger.Log(message);
         }
 
         protected ComponentState _componentState = ComponentState.Created;

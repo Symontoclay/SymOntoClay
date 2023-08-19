@@ -42,7 +42,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
         public ResultOfNodeOfSemanticAnalyzer Run()
         {
 #if DEBUG
-            Context.Logger.Log($"_adjectivePhrase = {_adjectivePhrase}");
+            Context.Logger.Info("F7CB6D71-3AE3-4B7D-B37B-EB15A2F95667", $"_adjectivePhrase = {_adjectivePhrase}");
 #endif
 
             var result = new ResultOfNodeOfSemanticAnalyzer();

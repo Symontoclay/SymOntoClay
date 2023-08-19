@@ -45,6 +45,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using System.Reflection;
+using System.Runtime;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -53,9 +54,22 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public abstract class BaseThreadExecutor : BaseLoggedComponent
     {
-        protected BaseThreadExecutor(IEngineContext context, IActivePeriodicObject activeObject, IMonitorLogger logger)
+        protected static (IMonitorLogger Logger, string ThreadId) CreateInitParams(IEngineContext context)
+        {
+            var threadId = Guid.NewGuid().ToString("D");
+            return (context.MonitorNode.CreateThreadLogger("71899838-D655-4B97-890D-0017F326F002", threadId), threadId);
+        }
+
+        protected BaseThreadExecutor(IEngineContext context, IActivePeriodicObject activeObject, (IMonitorLogger Logger, string ThreadId) initData)
+            : this(context, activeObject, initData.Logger, initData.ThreadId)
+        {
+        }
+
+        protected BaseThreadExecutor(IEngineContext context, IActivePeriodicObject activeObject, IMonitorLogger logger, string threadId)
             : base(logger)
         {
+            _threadId = threadId;
+
             _context = context;
             _codeFrameService = context.ServicesFactory.GetCodeFrameService();
             _codeFrameAsyncExecutor = new CodeFrameAsyncExecutor(context);
@@ -101,6 +115,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly IEngineContext _context;
         private readonly ICodeFrameService _codeFrameService;
         private readonly CodeFrameAsyncExecutor _codeFrameAsyncExecutor;
+
+        private readonly string _threadId;
+
+        public string ThreadId => _threadId;
 
         private readonly ProjectLoader _projectLoader;
 

@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -31,7 +32,22 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     public class SyncThreadExecutor: BaseThreadExecutor
     {
         public SyncThreadExecutor(IEngineContext context)
-            : base(context, new SyncActivePeriodicObject())
+            : base(context, new SyncActivePeriodicObject(), BaseThreadExecutor.CreateInitParams(context))
+        {
+        }
+
+        public SyncThreadExecutor(IEngineContext context, string threadId)
+            : this(context, context.MonitorNode.CreateThreadLogger("92CB0C9C-C836-4A71-9D76-FE7FB33CEA6D", threadId), threadId)
+        {
+        }
+
+        public SyncThreadExecutor(IEngineContext context, IMonitorLogger logger)
+            : this(context, logger, logger.Id)
+        {
+        }
+
+        public SyncThreadExecutor(IEngineContext context, IMonitorLogger logger, string threadId)
+            : base(context, new SyncActivePeriodicObject(), logger, threadId)
         {
         }
     }

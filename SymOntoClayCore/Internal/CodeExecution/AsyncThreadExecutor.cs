@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.Threads;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,7 +31,22 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     public class AsyncThreadExecutor: BaseThreadExecutor
     {
         public AsyncThreadExecutor(IEngineContext context)
-            : base(context, new AsyncActivePeriodicObject(context.ActivePeriodicObjectContext))
+            : base(context, new AsyncActivePeriodicObject(context.ActivePeriodicObjectContext), BaseThreadExecutor.CreateInitParams(context))
+        {
+        }
+
+        public AsyncThreadExecutor(IEngineContext context, string threadId)
+            : this(context, context.MonitorNode.CreateThreadLogger("8D41CD9A-26BA-405F-8AC2-A3468DCD2CA4", threadId), threadId)
+        {
+        }
+
+        public AsyncThreadExecutor(IEngineContext context, IMonitorLogger logger)
+            : this(context, logger, logger.Id)
+        {
+        }
+
+        public AsyncThreadExecutor(IEngineContext context, IMonitorLogger logger, string threadId)
+            : base(context, new AsyncActivePeriodicObject(context.ActivePeriodicObjectContext), logger, threadId)
         {
         }
     }

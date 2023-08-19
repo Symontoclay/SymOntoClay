@@ -9,6 +9,8 @@ namespace SymOntoClay.Monitor.Common
 {
     public interface IMonitorLogger
     {
+        string Id { get; }
+
         string CallMethod(string messagePointId, string methodName,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

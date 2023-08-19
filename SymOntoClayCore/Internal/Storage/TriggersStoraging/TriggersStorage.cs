@@ -369,7 +369,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
                 }
                 catch (Exception e)
                 {
-                    Error(e);
+                    Error("E2154301-E9FC-4720-B6D9-DC6B1ACF6FFA", e);
                 }                
             });
 
@@ -380,7 +380,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
                 }
                 catch (Exception e)
                 {
-                    Error(e);
+                    Error("5F87DF78-676E-4725-A534-A38299DCF1A5", e);
                 }                
             });
         }

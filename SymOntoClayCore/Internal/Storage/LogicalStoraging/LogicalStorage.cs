@@ -238,7 +238,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                     if(_enableAddingRemovingFactLoggingInStorages)
                     {
-                        Info($"({GetHashCode()}) approvingRez = {approvingRez}");
+                        Info("E7837A32-70CC-4F89-9206-1DC386542546", $"({GetHashCode()}) approvingRez = {approvingRez}");
                     }
 
                     if (approvingRez != null)
@@ -267,7 +267,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             if(_enableAddingRemovingFactLoggingInStorages)
             {
-                Info($"({GetHashCode()}) NEXT ruleInstance = {ruleInstance.ToHumanizedString()}");
+                Info("6D10091F-6FD6-4150-88DB-854F7CE890C8", $"({GetHashCode()}) NEXT ruleInstance = {ruleInstance.ToHumanizedString()}");
             }
 
             _ruleInstancesList.Add(ruleInstance);
@@ -451,7 +451,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             if(_enableAddingRemovingFactLoggingInStorages)
             {
-                Info($"({GetHashCode()}) `{ruleInstanceId}` has been removed.");
+                Info("62B03746-90F3-4BE7-9E69-71BBC71583E8", $"({GetHashCode()}) `{ruleInstanceId}` has been removed.");
             }
 
             return ruleInstance.UsedKeysList;
@@ -477,7 +477,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 }
                 catch (Exception e)
                 {
-                    Error(e);
+                    Error("B845E1E0-802D-4F3C-A5E6-1140F1CF7D3B", e);
                 }                
             });
         }
@@ -491,7 +491,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 }
                 catch (Exception e)
                 {
-                    Error(e);
+                    Error("DDC9388D-6FD6-44E6-8E24-CC13249A0914", e);
                 }
             });
         }
@@ -818,7 +818,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             if (_enableAddingRemovingFactLoggingInStorages)
             {
-                Info($"({GetHashCode()}) Lifetime of `{ruleInstanceId}` has been refreshed to {DEFAULT_INITIAL_TIME}.");
+                Info("5CCBE7D4-4436-4F63-9AF0-0DC060ED3468", $"({GetHashCode()}) Lifetime of `{ruleInstanceId}` has been refreshed to {DEFAULT_INITIAL_TIME}.");
             }
         }
 
@@ -838,7 +838,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     {
                         if(_enableAddingRemovingFactLoggingInStorages)
                         {
-                            Info($"({GetHashCode()}) Put for deleting by end of life cycle: `{item}`");
+                            Info("B824F12A-AD19-4F62-9849-1E1D85870B5B", $"({GetHashCode()}) Put for deleting by end of life cycle: `{item}`");
                         }
 
                         NRemoveById(item.Key);

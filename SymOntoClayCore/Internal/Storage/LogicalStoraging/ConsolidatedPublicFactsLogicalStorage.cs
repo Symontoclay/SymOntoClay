@@ -146,7 +146,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 }
                 catch (Exception e)
                 {
-                    Error(e);
+                    Error("6489EB1E-8E8B-4354-BC14-EA439E053431", e);
                 }                
             });
 

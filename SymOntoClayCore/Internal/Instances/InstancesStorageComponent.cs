@@ -124,7 +124,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
                 catch (Exception e)
                 {
-                    Error(e);
+                    Error("0E28EFF2-FA4B-46F2-A1B5-7CDF5C9B4862", e);
                 }
             });
         }
@@ -138,7 +138,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
                 catch (Exception e)
                 {
-                    Error(e);
+                    Error("1617E55E-58BC-4B63-9418-D5967AD99678", e);
                 }
             });
         }

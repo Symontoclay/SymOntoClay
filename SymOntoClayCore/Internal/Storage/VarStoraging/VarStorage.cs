@@ -263,7 +263,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
                 }
                 catch (Exception e)
                 {
-                    Error(e);
+                    Error("7DF94442-83B7-401F-93B7-CFA75C98E6E6", e);
                 }                
             });
 
@@ -274,7 +274,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
                 }
                 catch (Exception e)
                 {
-                    Error(e);
+                    Error("898152C4-535A-4BF1-8013-E6FDEF652622", e);
                 }                
             });
         }

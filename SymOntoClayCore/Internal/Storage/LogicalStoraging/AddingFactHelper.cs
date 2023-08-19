@@ -73,7 +73,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 }
                 catch(Exception e)
                 {
-                    logger.Error(e.ToString());
+                    logger.Error("57CBAC4F-F210-40B2-AD69-090EDE744E29", e);
                 }
             }
 

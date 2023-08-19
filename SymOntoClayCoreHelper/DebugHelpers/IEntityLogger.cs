@@ -29,9 +29,16 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
     [Obsolete("It should be replaced to IMonitorLogger", true)]
     public interface IEntityLogger
     {
+        [Obsolete("", true)]
         void Log(string message);
+
+        [Obsolete("", true)]
         void LogChannel(string message);
+
+        [Obsolete("", true)]
         void Error(string message);
+
+        [Obsolete("", true)]
         void Warning(string message);
     }
 }

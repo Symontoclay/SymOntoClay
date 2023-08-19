@@ -39,10 +39,5 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Validators
 
 
         }
-
-        public static void Validate(LoggingSettings settings)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

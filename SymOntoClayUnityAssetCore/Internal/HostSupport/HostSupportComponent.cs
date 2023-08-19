@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC;
 using System;
@@ -34,7 +35,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.HostSupport
 {
     public class HostSupportComponent : BaseComponent, IHostSupport
     {
-        public HostSupportComponent(IEntityLogger logger, IPlatformSupport platformSupport, IWorldCoreGameComponentContext worldContext)
+        public HostSupportComponent(IMonitorLogger logger, IPlatformSupport platformSupport, IWorldCoreGameComponentContext worldContext)
             : base(logger)
         {
             _invokerInMainThread = worldContext.InvokerInMainThread;

@@ -26,6 +26,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
 {
     public class PlatformTypesConvertersRegistry : BaseLoggedComponent, IPlatformTypesConvertersRegistry
     {
-        public PlatformTypesConvertersRegistry(IEntityLogger logger)
+        public PlatformTypesConvertersRegistry(IMonitorLogger logger)
             : base(logger)
         {
         }

@@ -27,6 +27,7 @@ using System.Text;
 
 namespace SymOntoClay.CLI
 {
+    [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
     public class CLIPlatformLogger: IPlatformLogger
     {
         /// <inheritdoc/>

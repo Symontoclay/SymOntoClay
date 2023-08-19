@@ -40,6 +40,7 @@ namespace SymOntoClay.Core.Internal
 
         public IMonitorLogger Logger => _logger;
 
+        [MethodForLoggingSupport]
         protected void Output(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -48,6 +49,7 @@ namespace SymOntoClay.Core.Internal
             _logger.Output(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
         }
 
+        [MethodForLoggingSupport]
         protected void Trace(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -56,6 +58,7 @@ namespace SymOntoClay.Core.Internal
             _logger.Trace(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
         }
 
+        [MethodForLoggingSupport]
         protected void Debug(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -64,6 +67,7 @@ namespace SymOntoClay.Core.Internal
             _logger.Debug(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
         }
 
+        [MethodForLoggingSupport]
         protected void Info(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -72,6 +76,7 @@ namespace SymOntoClay.Core.Internal
             _logger.Info(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
         }
 
+        [MethodForLoggingSupport]
         protected void Warn(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -80,6 +85,7 @@ namespace SymOntoClay.Core.Internal
             _logger.Warn(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
         }
 
+        [MethodForLoggingSupport]
         protected void Error(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -88,6 +94,7 @@ namespace SymOntoClay.Core.Internal
             _logger.Error(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
         }
 
+        [MethodForLoggingSupport]
         protected void Error(string messagePointId, Exception exception,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -96,6 +103,7 @@ namespace SymOntoClay.Core.Internal
             _logger.Error(messagePointId, exception, memberName, sourceFilePath, sourceLineNumber);
         }
 
+        [MethodForLoggingSupport]
         protected void Fatal(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -104,6 +112,7 @@ namespace SymOntoClay.Core.Internal
             _logger.Fatal(messagePointId, message, memberName, sourceFilePath, sourceLineNumber);
         }
 
+        [MethodForLoggingSupport]
         protected void Fatal(string messagePointId, Exception exception,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

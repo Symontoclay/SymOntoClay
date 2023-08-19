@@ -24,6 +24,7 @@ using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal.Vision;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport
 {
     public class ConditionalEntityHostSupportComponent : BaseComponent, IConditionalEntityHostSupport, IEntity
     {
-        public ConditionalEntityHostSupportComponent(IEntityLogger logger, HumanoidNPCSettings settings, VisionComponent visionComponent, IHostSupport hostSupport, IWorldCoreGameComponentContext worldContext)
+        public ConditionalEntityHostSupportComponent(IMonitorLogger logger, HumanoidNPCSettings settings, VisionComponent visionComponent, IHostSupport hostSupport, IWorldCoreGameComponentContext worldContext)
             : base(logger)
         {
             _worldContext = worldContext;

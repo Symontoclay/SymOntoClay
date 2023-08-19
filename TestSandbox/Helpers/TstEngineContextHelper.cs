@@ -166,7 +166,11 @@ namespace TestSandbox.Helpers
 
             settings.Monitor = new SymOntoClay.Monitor.Monitor(new SymOntoClay.Monitor.MonitorSettings 
             {
-                MessagesDir = Path.Combine(Directory.GetCurrentDirectory(), "MessagesDir")
+                Enable = true,
+                MessagesDir = Path.Combine(Directory.GetCurrentDirectory(), "MessagesDir"),
+                KindOfLogicalSearchExplain = KindOfLogicalSearchExplain.None,
+                LogicalSearchExplainDumpDir = Directory.GetCurrentDirectory(),
+                EnableAddingRemovingFactLoggingInStorages = false
             });
 
             return settings;

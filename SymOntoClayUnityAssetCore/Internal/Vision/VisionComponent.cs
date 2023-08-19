@@ -25,6 +25,7 @@ using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC;
 using System;
 using System.Collections.Generic;
@@ -38,7 +39,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
 {
     public class VisionComponent : BaseComponent
     {
-        public VisionComponent(IEntityLogger logger, IVisionProvider visionProvider, HumanoidNPCGameComponentContext internalContext, IWorldCoreGameComponentContext worldContext)
+        public VisionComponent(IMonitorLogger logger, IVisionProvider visionProvider, HumanoidNPCGameComponentContext internalContext, IWorldCoreGameComponentContext worldContext)
             : base(logger)
         {
             _internalContext = internalContext;

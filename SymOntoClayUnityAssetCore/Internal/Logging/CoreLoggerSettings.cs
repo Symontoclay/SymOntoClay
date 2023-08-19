@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,7 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.Logging
 {
+    [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
     public class CoreLoggerSettings : IObjectToString
     {
         /// <summary>

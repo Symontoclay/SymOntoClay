@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -71,6 +72,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Logging
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("", true)]
         public void Log(string message)
         {
             lock (_lockObj)
@@ -84,7 +86,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Logging
 
                 var now = DateTime.Now;
                 var tmpCallInfo = DiagnosticsHelper.GetNotLoggingSupportCallInfo();
-                var result = LogHelper.BuildLogString(now, KindOfLogLevel.LOG.ToString(), tmpCallInfo.FullClassName, tmpCallInfo.MethodName, message);
+                var result = LogHelper.BuildLogString(now, "LOG", tmpCallInfo.FullClassName, tmpCallInfo.MethodName, message);
 
                 WriteRaw(result);
             }
@@ -92,6 +94,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Logging
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("", true)]
         public void LogChannel(string message)
         {
             lock (_lockObj)
@@ -107,6 +110,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Logging
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("", true)]
         public void Warning(string message)
         {
             lock (_lockObj)
@@ -120,7 +124,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Logging
 
                 var now = DateTime.Now;
                 var tmpCallInfo = DiagnosticsHelper.GetNotLoggingSupportCallInfo();
-                var result = LogHelper.BuildLogString(now, KindOfLogLevel.WARNING.ToString(), tmpCallInfo.FullClassName, tmpCallInfo.MethodName, message);
+                var result = LogHelper.BuildLogString(now, "WARNING", tmpCallInfo.FullClassName, tmpCallInfo.MethodName, message);
 
                 WriteRaw(result);
             }
@@ -128,6 +132,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Logging
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("", true)]
         public void Error(string message)
         {
             lock (_lockObj)
@@ -141,7 +146,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Logging
 
                 var now = DateTime.Now;
                 var tmpCallInfo = DiagnosticsHelper.GetNotLoggingSupportCallInfo();
-                var result = LogHelper.BuildLogString(now, KindOfLogLevel.ERROR.ToString(), tmpCallInfo.FullClassName, tmpCallInfo.MethodName, message);
+                var result = LogHelper.BuildLogString(now, "ERROR", tmpCallInfo.FullClassName, tmpCallInfo.MethodName, message);
 
                 WriteRaw(result);
             }

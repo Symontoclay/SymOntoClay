@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -33,7 +34,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
 {
     public abstract class BaseSoundReceiverComponent : BaseComponent, ISoundReceiver
     {
-        protected BaseSoundReceiverComponent(IEntityLogger logger, int instanceId, IStandardFactsBuilder standardFactsBuilder)
+        protected BaseSoundReceiverComponent(IMonitorLogger logger, int instanceId, IStandardFactsBuilder standardFactsBuilder)
             : base(logger)
         {
             _instanceId = instanceId;

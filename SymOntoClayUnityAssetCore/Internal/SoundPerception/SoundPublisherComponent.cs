@@ -25,6 +25,7 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -33,7 +34,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
 {
     public class SoundPublisherComponent : BaseComponent, ISoundPublisherProvider
     {
-        public SoundPublisherComponent(IEntityLogger logger, int instanceId, string idForFacts, IHostSupport hostSupport, IWorldCoreGameComponentContext worldContext)
+        public SoundPublisherComponent(IMonitorLogger logger, int instanceId, string idForFacts, IHostSupport hostSupport, IWorldCoreGameComponentContext worldContext)
             : base(logger)
         {
             _instanceId = instanceId;

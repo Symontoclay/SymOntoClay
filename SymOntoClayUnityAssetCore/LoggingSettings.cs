@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -81,13 +82,6 @@ namespace SymOntoClay.UnityAsset.Core
             var spaces = DisplayHelper.Spaces(n);
             var nextN = n + DisplayHelper.IndentationStep;
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{nameof(LogDir)} = {LogDir}");
-            sb.AppendLine($"{spaces}{nameof(Enable)} = {Enable}");
-            sb.AppendLine($"{spaces}{nameof(EnableRemoteConnection)} = {EnableRemoteConnection}");
-            sb.PrintExistingList(n, nameof(PlatformLoggers), PlatformLoggers);
-            sb.AppendLine($"{spaces}{nameof(KindOfLogicalSearchExplain)} = {KindOfLogicalSearchExplain}");
-            sb.AppendLine($"{spaces}{nameof(LogicalSearchExplainDumpDir)} = {LogicalSearchExplainDumpDir}");
-            sb.AppendLine($"{spaces}{nameof(EnableAddingRemovingFactLoggingInStorages)} = {EnableAddingRemovingFactLoggingInStorages}");
             return sb.ToString();
         }
     }

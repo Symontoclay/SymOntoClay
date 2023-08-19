@@ -24,6 +24,7 @@ using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
 {
     public class SoundReceiverComponent : BaseSoundReceiverComponent
     {
-        public SoundReceiverComponent(IEntityLogger logger, int instanceId, HumanoidNPCGameComponentContext internalContext, IWorldCoreGameComponentContext worldContext)
+        public SoundReceiverComponent(IMonitorLogger logger, int instanceId, HumanoidNPCGameComponentContext internalContext, IWorldCoreGameComponentContext worldContext)
             : base(logger, instanceId, worldContext.StandardFactsBuilder)
         {
             _internalContext = internalContext;

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using SymOntoClay.Core;
 
 namespace TestSandbox.Handlers
 {
@@ -40,8 +41,12 @@ namespace TestSandbox.Handlers
         {
             var monitor = new SymOntoClay.Monitor.Monitor(new MonitorSettings
             {
+                Enable = true,
                 MessagesDir = Path.Combine(Directory.GetCurrentDirectory(), "MessagesDir"),
-                OutputHandler = message => { _globalLogger.Info($"message = {message}"); }
+                OutputHandler = message => { _globalLogger.Info($"message = {message}"); },
+                KindOfLogicalSearchExplain = KindOfLogicalSearchExplain.None,
+                LogicalSearchExplainDumpDir = Directory.GetCurrentDirectory(),
+                EnableAddingRemovingFactLoggingInStorages = false
                 //RemoteMonitor = new RemoteWCFMonitor(new RemoteWCFMonitorSettings
                 //{
                 //    Address = "net.pipe://localhost/MyService.svc"

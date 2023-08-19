@@ -39,6 +39,7 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using System.Linq;
 using SymOntoClay.ProjectFiles;
 using SymOntoClay.NLP;
+using SymOntoClay.Monitor.Common;
 
 namespace SymOntoClay.CLI
 {
@@ -176,7 +177,7 @@ namespace SymOntoClay.CLI
             }
         }
 
-        private IEntityLogger _npcLogger;
+        private IMonitorLogger _npcLogger;
 
         public void Dispose()
         {
@@ -188,10 +189,10 @@ namespace SymOntoClay.CLI
         public void GenericCall(CancellationToken cancellationToken, string methodName, bool isNamedParameters,
             Dictionary<string, object> namedParameters, List<object> positionedParameters)
         {
-            _npcLogger.Log($"methodName = '{methodName}'");
-            _npcLogger.Log($"isNamedParameters = {isNamedParameters}");
-            _npcLogger.Log($"namedParameters = {JsonConvert.SerializeObject(namedParameters, Formatting.Indented)}");
-            _npcLogger.Log($"positionedParameters = {JsonConvert.SerializeObject(positionedParameters, Formatting.Indented)}");
+            _npcLogger.Info("3478400A-0265-48B9-BF32-7B1604251CB3", $"methodName = '{methodName}'");
+            _npcLogger.Info("5FAD50B6-A6A7-49F1-856F-0F088CF017EE", $"isNamedParameters = {isNamedParameters}");
+            _npcLogger.Info("91117387-A87E-4392-82FB-BC2AB8343DFA", $"namedParameters = {JsonConvert.SerializeObject(namedParameters, Formatting.Indented)}");
+            _npcLogger.Info("422B550B-195E-4F52-9C89-9BCE68FA10AF", $"positionedParameters = {JsonConvert.SerializeObject(positionedParameters, Formatting.Indented)}");
         }
     }
 }

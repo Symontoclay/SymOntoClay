@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
@@ -28,49 +29,58 @@ using System.Text;
 
 namespace SymOntoClay.BaseTestLib
 {
-    public class EmptyLogger : IEntityLogger, IPlatformLogger
+    public class EmptyLogger : IMonitorLogger, IPlatformLogger
     {
         /// <inheritdoc/>
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void Error(string message)
         {
         }
 
         /// <inheritdoc/>
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void LogChannel(string message)
         {
         }
 
         /// <inheritdoc/>
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void Log(string message)
         {
         }
 
         /// <inheritdoc/>
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void Warning(string message)
         {
         }
 
         /// <inheritdoc/>
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void WriteLn(string message)
         {
         }
 
         /// <inheritdoc/>
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void WriteLnRawLogChannel(string message)
         {
         }
 
         /// <inheritdoc/>
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void WriteLnRawLog(string message)
         {
         }
 
         /// <inheritdoc/>
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void WriteLnRawWarning(string message)
         {
         }
 
         /// <inheritdoc/>
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void WriteLnRawError(string message)
         {
         }

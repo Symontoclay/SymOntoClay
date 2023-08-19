@@ -39,12 +39,14 @@ namespace SymOntoClay.UnityAsset.Core
         /// <summary>
         /// Gets or sets root dir for file logging.
         /// </summary>
+        [Obsolete("It should be replaced to MonitorSettings", true)]
         public string LogDir { get; set; }
 
         /// <summary>
         /// Gets or sets value of enable logging.
         /// It alows enable or disable logging or remote connection for whole components synchronously.
         /// </summary>
+        [Obsolete("It should be replaced to MonitorSettings", true)]
         public bool Enable { get; set; }
 
         /// <summary>
@@ -52,16 +54,20 @@ namespace SymOntoClay.UnityAsset.Core
         /// It alows enable or disable remote connection for whole components synchronously.
         /// It doesn't touch local logging.
         /// </summary>
+        [Obsolete("It should be replaced to MonitorSettings", true)]
         public bool EnableRemoteConnection { get; set; }
 
         /// <summary>
         /// Gets or sets list of platform specific loggers.
         /// It alows us to add, for example, console logger for Unity3D.
         /// </summary>
+        [Obsolete("It should be replaced to MonitorSettings", true)]
         public IList<IPlatformLogger> PlatformLoggers { get; set; }
-
+        [Obsolete("It should be replaced to MonitorSettings", true)]
         public KindOfLogicalSearchExplain KindOfLogicalSearchExplain { get; set; } = KindOfLogicalSearchExplain.None;
+        [Obsolete("It should be replaced to MonitorSettings", true)]
         public string LogicalSearchExplainDumpDir { get; set; }
+        [Obsolete("It should be replaced to MonitorSettings", true)]
         public bool EnableAddingRemovingFactLoggingInStorages { get; set; }
 
         /// <inheritdoc/>

@@ -44,12 +44,14 @@ using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.ProjectFiles;
 using SymOntoClay.BaseTestLib;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 
 namespace TestSandbox.Helpers
 {
     public static class TstEngineContextHelper
     {
-        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
 
         public static WorldSettings CreateWorldSettings(UnityTestEngineContextFactorySettings factorySettings)
         {
@@ -59,7 +61,7 @@ namespace TestSandbox.Helpers
             var supportBasePath = Path.Combine(Environment.GetEnvironmentVariable("APPDATA"), "SymOntoClay", appName);
 
 
-            var logDir = Path.Combine(supportBasePath, "NpcLogs");
+            var monitorMessagesDir = Path.Combine(supportBasePath, "NpcMonitorMessages");
 
             var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
 
@@ -139,11 +141,10 @@ namespace TestSandbox.Helpers
 
             settings.StandardFactsBuilder = new StandardFactsBuilder();
 
-            var loggingSettings = new LoggingSettings()
+            var monitorSettings = new SymOntoClay.Monitor.MonitorSettings
             {
-                LogDir = logDir,
                 Enable = true,
-                EnableRemoteConnection = true,
+                MessagesDir = monitorMessagesDir,
                 KindOfLogicalSearchExplain = KindOfLogicalSearchExplain.None,
                 LogicalSearchExplainDumpDir = Directory.GetCurrentDirectory(),
                 EnableAddingRemovingFactLoggingInStorages = false
@@ -151,26 +152,17 @@ namespace TestSandbox.Helpers
 
             if(factorySettings.PlatformLogger != null)
             {
-                loggingSettings.PlatformLoggers = new List<IPlatformLogger>() { factorySettings.PlatformLogger };
+                monitorSettings.PlatformLoggers = new List<IPlatformLogger>() { factorySettings.PlatformLogger };
             }
             else
             {
                 if(factorySettings.UseDefaultPlatformLogger)
                 {
-                    loggingSettings.PlatformLoggers = new List<IPlatformLogger>() { /*ConsoleLogger.Instance,*/ CommonNLogLogger.Instance };
+                    monitorSettings.PlatformLoggers = new List<IPlatformLogger>() { /*ConsoleLogger.Instance,*/ CommonNLogLogger.Instance };
                 }
             }
 
-            settings.Logging = loggingSettings;
-
-            settings.Monitor = new SymOntoClay.Monitor.Monitor(new SymOntoClay.Monitor.MonitorSettings 
-            {
-                Enable = true,
-                MessagesDir = Path.Combine(Directory.GetCurrentDirectory(), "MessagesDir"),
-                KindOfLogicalSearchExplain = KindOfLogicalSearchExplain.None,
-                LogicalSearchExplainDumpDir = Directory.GetCurrentDirectory(),
-                EnableAddingRemovingFactLoggingInStorages = false
-            });
+            settings.Monitor = new SymOntoClay.Monitor.Monitor(monitorSettings);
 
             return settings;
         }

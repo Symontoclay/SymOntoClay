@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -29,6 +30,6 @@ namespace SymOntoClay.BaseTestLib
 {
     public interface ILoggedTestHostListener
     {
-        void SetLogger(IEntityLogger logger);
+        void SetLogger(IMonitorLogger logger);
     }
 }

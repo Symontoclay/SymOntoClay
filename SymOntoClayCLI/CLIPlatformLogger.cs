@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
@@ -27,34 +28,38 @@ using System.Text;
 
 namespace SymOntoClay.CLI
 {
-    [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
     public class CLIPlatformLogger: IPlatformLogger
     {
         /// <inheritdoc/>
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void WriteLn(string message)
         {
             ConsoleWrapper.WriteText(message);
         }
 
         /// <inheritdoc/>
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void WriteLnRawLogChannel(string message)
         {
             ConsoleWrapper.WriteLogChannel(message);
         }
 
         /// <inheritdoc/>
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void WriteLnRawLog(string message)
         {
             ConsoleWrapper.WriteText(message);
         }
 
         /// <inheritdoc/>
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void WriteLnRawWarning(string message)
         {
             ConsoleWrapper.WriteText(message);
         }
 
         /// <inheritdoc/>
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void WriteLnRawError(string message)
         {
             ConsoleWrapper.WriteError(message);

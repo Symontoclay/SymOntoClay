@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.BaseTestLib;
 using SymOntoClay.BaseTestLib.HostListeners.Handlers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints;
 using System;
@@ -168,13 +169,13 @@ namespace SymOntoClay.BaseTestLib.HostListeners
 
         protected static ToHumanizedStringJsonConverter _customConverter = new ToHumanizedStringJsonConverter();
 
-        public void SetLogger(IEntityLogger logger)
+        public void SetLogger(IMonitorLogger logger)
         {
             _logger = logger;
             _onEnterHandlersRegistry.SetLogger(logger);
         }
 
-        protected IEntityLogger _logger;
+        protected IMonitorLogger _logger;
 
         private static object _lockObj = new object();
 

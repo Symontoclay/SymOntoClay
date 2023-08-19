@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
@@ -42,28 +43,33 @@ namespace TestSandbox.PlatformImplementations
         }
 
         /// <inheritdoc/>
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void WriteLn(string message)
         {
             _logger.Info(message);
         }
 
         /// <inheritdoc/>
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void WriteLnRawLogChannel(string message)
         {
             _logger.Info(message);
         }
 
         /// <inheritdoc/>
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void WriteLnRawLog(string message)
         {
         }
 
         /// <inheritdoc/>
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void WriteLnRawWarning(string message)
         {
         }
 
         /// <inheritdoc/>
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void WriteLnRawError(string message)
         {
             _logger.Info(message);

@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
@@ -41,17 +42,20 @@ namespace SymOntoClay.BaseTestLib
         private readonly Action<string> _error;
 
         /// <inheritdoc/>
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void WriteLn(string message)
         {
         }
 
         /// <inheritdoc/>
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void WriteLnRawLogChannel(string message)
         {
             _logChannel?.Invoke(message);
         }
 
         /// <inheritdoc/>
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void WriteLnRawLog(string message)
         {
             if (_enableWriteLnRawLog)
@@ -61,12 +65,14 @@ namespace SymOntoClay.BaseTestLib
         }
 
         /// <inheritdoc/>
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void WriteLnRawWarning(string message)
         {
             _logChannel?.Invoke(message);
         }
 
         /// <inheritdoc/>
+        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void WriteLnRawError(string message)
         {
             _error?.Invoke(message);

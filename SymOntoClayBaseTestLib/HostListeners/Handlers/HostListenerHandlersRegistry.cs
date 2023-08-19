@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,14 +32,14 @@ namespace SymOntoClay.BaseTestLib.HostListeners.Handlers
 {
     public class HostListenerHandlersRegistry : IDisposable
     {
-        public void SetLogger(IEntityLogger logger)
+        public void SetLogger(IMonitorLogger logger)
         {
             _logger = logger;
             _endPointHandlersRegistry.SetLogger(logger);
             _methodImplHandlersRegistry.SetLogger(logger);
         }
 
-        protected IEntityLogger _logger;
+        protected IMonitorLogger _logger;
 
         public void AddSyncHandler(string methodName, Action handler)
         {

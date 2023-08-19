@@ -26,7 +26,6 @@ using System.Text;
 
 namespace SymOntoClay.CoreHelper.DebugHelpers
 {
-    [Obsolete("", true)]
     public class MethodForLoggingSupportAttribute: Attribute
     {
     }

@@ -29,6 +29,7 @@ using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +40,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
     public class CommonPersistIndexedLogicalData: BaseLoggedComponent
     {
         public CommonPersistIndexedLogicalData()
-            : this(LoggerNLogImpementation.Instance)
+            : this(MonitorLoggerNLogImpementation.Instance)
         {
         }
 

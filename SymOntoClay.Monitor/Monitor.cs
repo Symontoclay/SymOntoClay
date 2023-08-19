@@ -27,7 +27,7 @@ namespace SymOntoClay.Monitor
         private readonly MessageNumberGenerator _messageNumberGenerator = new();
 
         public Monitor(MonitorSettings monitorSettings)
-            : base(monitorSettings.OutputHandler, monitorSettings.ErrorHandler)
+            : base(monitorSettings.OutputHandler, monitorSettings.ErrorHandler, "monitor_core")
         {
 #if DEBUG
             _globalLogger.Info($"monitorSettings = {monitorSettings}");

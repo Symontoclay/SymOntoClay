@@ -4,9 +4,9 @@
         <name>SymOntoClay.Core</name>
     </assembly>
     <members>
-        <member name="P:SymOntoClay.Core.BaseCoreSettings.Logger">
+        <member name="P:SymOntoClay.Core.BaseCoreSettings.MonitorNode">
             <summary>
-            Gets or sets reference to logger.
+            Gets or sets reference to MonitorNode.
             </summary>
         </member>
         <member name="M:SymOntoClay.Core.BaseCoreSettings.ToString">
@@ -308,25 +308,13 @@
         <member name="M:SymOntoClay.Core.Internal.BaseComponent.Dispose">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.BaseCoreContext.MonitorNode">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.BaseCoreContext.SymOntoClay#Core#Internal#IBaseCoreContext#Compiler">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.BaseCoreContext.DateTimeProvider">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.BaseLoggedComponent.Log(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.BaseLoggedComponent.LogChannel(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.BaseLoggedComponent.Warning(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.BaseLoggedComponent.Error(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.BaseLoggedComponent.Error(System.Exception)">
             <inheritdoc/>
         </member>
         <member name="F:SymOntoClay.Core.Internal.CodeExecution.ActionExecutionStatus.None">
@@ -3517,21 +3505,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariableConstraintItem.SymOntoClay#CoreHelper#DebugHelpers#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.LoggedValue.Log(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.LoggedValue.LogChannel(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.LoggedValue.Warning(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.LoggedValue.Error(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.LoggedValue.Error(System.Exception)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalModalityExpressionNode.SymOntoClay#Core#Internal#Parsing#Internal#ExprLinking#IAstNode#Left">

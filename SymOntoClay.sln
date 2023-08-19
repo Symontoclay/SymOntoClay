@@ -51,11 +51,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SymOntoClayActionsHardTests
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Monitoring", "Monitoring", "{6A6AC5F7-4125-4EE3-B213-F296886A4600}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SymOntoClay.Monitor.Common", "SymOntoClay.Monitor.Common\SymOntoClay.Monitor.Common.csproj", "{162E739B-6348-4B5D-BA83-D5FD70AEDAB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SymOntoClay.Monitor.Common", "SymOntoClay.Monitor.Common\SymOntoClay.Monitor.Common.csproj", "{162E739B-6348-4B5D-BA83-D5FD70AEDAB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SymOntoClay.Monitor.Common.Data", "SymOntoClay.Monitor.Common.Data\SymOntoClay.Monitor.Common.Data.csproj", "{B459566C-B538-4C41-890D-59ADE96455C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SymOntoClay.Monitor.Common.Data", "SymOntoClay.Monitor.Common.Data\SymOntoClay.Monitor.Common.Data.csproj", "{B459566C-B538-4C41-890D-59ADE96455C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SymOntoClay.Monitor", "SymOntoClay.Monitor\SymOntoClay.Monitor.csproj", "{D554553B-91C7-4EE4-943C-A3D935840544}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SymOntoClay.Monitor", "SymOntoClay.Monitor\SymOntoClay.Monitor.csproj", "{D554553B-91C7-4EE4-943C-A3D935840544}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SymOntoClay.Monitor.NLog", "SymOntoClay.Monitor.NLog\SymOntoClay.Monitor.NLog.csproj", "{A1AE6F36-702F-4015-A0E6-3E21C96F8054}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -151,6 +153,10 @@ Global
 		{D554553B-91C7-4EE4-943C-A3D935840544}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D554553B-91C7-4EE4-943C-A3D935840544}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D554553B-91C7-4EE4-943C-A3D935840544}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1AE6F36-702F-4015-A0E6-3E21C96F8054}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1AE6F36-702F-4015-A0E6-3E21C96F8054}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1AE6F36-702F-4015-A0E6-3E21C96F8054}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1AE6F36-702F-4015-A0E6-3E21C96F8054}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -164,6 +170,7 @@ Global
 		{162E739B-6348-4B5D-BA83-D5FD70AEDAB1} = {6A6AC5F7-4125-4EE3-B213-F296886A4600}
 		{B459566C-B538-4C41-890D-59ADE96455C4} = {6A6AC5F7-4125-4EE3-B213-F296886A4600}
 		{D554553B-91C7-4EE4-943C-A3D935840544} = {6A6AC5F7-4125-4EE3-B213-F296886A4600}
+		{A1AE6F36-702F-4015-A0E6-3E21C96F8054} = {6A6AC5F7-4125-4EE3-B213-F296886A4600}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A877AB4D-380D-4ADE-BBD2-F1DD29DADB05}

@@ -28,7 +28,7 @@ namespace SymOntoClay.Monitor.Internal
         private readonly string _nodeId;
 
         public MonitorNode(string nodeId, MonitorContext monitorContext)
-            : base(monitorContext.OutputHandler, monitorContext.ErrorHandler)
+            : base(monitorContext.OutputHandler, monitorContext.ErrorHandler, nodeId)
         {
 #if DEBUG
             _globalLogger.Info($"nodeId = {nodeId}");

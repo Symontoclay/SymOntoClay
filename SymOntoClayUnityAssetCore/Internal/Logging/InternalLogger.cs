@@ -29,6 +29,7 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.Logging
 {
+    [Obsolete("", true)]
     public class InternalLogger : IEntityLogger
     {
         private readonly object _lockObj = new object();

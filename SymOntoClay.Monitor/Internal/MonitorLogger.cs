@@ -17,7 +17,7 @@ namespace SymOntoClay.Monitor.Internal
         private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        protected MonitorLogger(Action<string> outputHandler, Action<string> errorHandler)
+        protected MonitorLogger(Action<string> outputHandler, Action<string> errorHandler, string id)
         {
             _outputHandler = outputHandler;
             _errorHandler = errorHandler;
@@ -35,6 +35,9 @@ namespace SymOntoClay.Monitor.Internal
 
         private readonly Action<string> _outputHandler;
         private readonly Action<string> _errorHandler;
+
+        /// <inheritdoc/>
+        public string Id => id;
 
         protected void Init(MessageProcessor messageProcessor, MonitorFeatures features, IFileCache fileCache, MessageNumberGenerator globalMessageNumberGenerator, MessageNumberGenerator messageNumberGenerator, string nodeId, string threadId)
         {

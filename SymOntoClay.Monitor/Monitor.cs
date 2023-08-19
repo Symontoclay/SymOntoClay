@@ -24,10 +24,13 @@ namespace SymOntoClay.Monitor
         private readonly MonitorFileCache _fileCache;
 
         private readonly MessageNumberGenerator _globalMessageNumberGenerator;
-        private readonly MessageNumberGenerator _messageNumberGenerator = new();
+        private readonly MessageNumberGenerator _messageNumberGenerator = new MessageNumberGenerator();
+
+        /// <inheritdoc/>
+        public override string Id => "monitor_core";
 
         public Monitor(MonitorSettings monitorSettings)
-            : base(monitorSettings.OutputHandler, monitorSettings.ErrorHandler, "monitor_core")
+            : base(monitorSettings.OutputHandler, monitorSettings.ErrorHandler)
         {
 #if DEBUG
             _globalLogger.Info($"monitorSettings = {monitorSettings}");

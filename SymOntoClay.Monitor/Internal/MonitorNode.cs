@@ -23,12 +23,15 @@ namespace SymOntoClay.Monitor.Internal
         private readonly MonitorNodeFileCache _fileCache;
 
         private readonly MessageNumberGenerator _globalMessageNumberGenerator;
-        private readonly MessageNumberGenerator _messageNumberGenerator = new();
+        private readonly MessageNumberGenerator _messageNumberGenerator = new MessageNumberGenerator();
 
         private readonly string _nodeId;
 
+        /// <inheritdoc/>
+        public override string Id => _nodeId;
+
         public MonitorNode(string nodeId, MonitorContext monitorContext)
-            : base(monitorContext.OutputHandler, monitorContext.ErrorHandler, nodeId)
+            : base(monitorContext.OutputHandler, monitorContext.ErrorHandler)
         {
 #if DEBUG
             _globalLogger.Info($"nodeId = {nodeId}");

@@ -33,6 +33,7 @@ using System.Text;
 using SymOntoClay.UnityAsset.Core.InternalImplementations;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
+using SymOntoClay.Monitor.Common;
 
 namespace SymOntoClay.UnityAsset.Core.World
 {
@@ -83,7 +84,7 @@ namespace SymOntoClay.UnityAsset.Core.World
         public bool EnableRemoteConnection { get => _context.EnableRemoteConnection; set => _context.EnableRemoteConnection = value; }
 
         /// <inheritdoc/>
-        public IEntityLogger Logger => _context.Logger;
+        public IMonitorLogger Logger => _context.Logger;
 
         /// <inheritdoc/>
         public void RunInMainThread(Action function)

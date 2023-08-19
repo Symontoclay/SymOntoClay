@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.Internal
@@ -23,10 +24,13 @@ namespace SymOntoClay.Monitor.Internal
         private readonly string _nodeId;
         private readonly string _threadId;
 
-        private readonly MessageNumberGenerator _messageNumberGenerator = new();
+        private readonly MessageNumberGenerator _messageNumberGenerator = new MessageNumberGenerator();
+
+        /// <inheritdoc/>
+        public override string Id => _threadId;
 
         public ThreadLogger(string threadId, MonitorNodeContext monitorNodeContext)
-            : base(monitorNodeContext.OutputHandler, monitorNodeContext.ErrorHandler, threadId)
+            : base(monitorNodeContext.OutputHandler, monitorNodeContext.ErrorHandler)
         {
 #if DEBUG
             _globalLogger.Info($"threadId = {threadId}");

@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal;
 using System;
 using System.Collections.Generic;
@@ -221,7 +222,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
         public IEndpointsRegistry EndpointsRegistry => _gameComponent.EndpointsRegistry;
 
         /// <inheritdoc/>
-        public IEntityLogger Logger => _gameComponent.Logger;
+        public IMonitorLogger Logger => _gameComponent.Logger;
 
         /// <inheritdoc/>
         public IStandardFactsBuilder StandardFactsBuilder => _gameComponent.StandardFactsBuilder;

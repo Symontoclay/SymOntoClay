@@ -13,7 +13,7 @@ namespace SymOntoClay.Monitor.Common.Data
         //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        public static BaseMessage? ReadMessage(string content, KindOfMessage kindOfMessage)
+        public static BaseMessage ReadMessage(string content, KindOfMessage kindOfMessage)
         {
 #if DEBUG
             //_globalLogger.Info($"content = {content}");

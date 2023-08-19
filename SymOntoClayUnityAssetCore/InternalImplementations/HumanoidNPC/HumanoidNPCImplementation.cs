@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal;
 using System;
 using System.Collections.Generic;
@@ -88,7 +89,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         public bool EnableLogging { get => _gameComponent.EnableLogging; set => _gameComponent.EnableLogging = value; }
 
         /// <inheritdoc/>
-        public IEntityLogger Logger => _gameComponent.Logger;
+        public IMonitorLogger Logger => _gameComponent.Logger;
 
         /// <inheritdoc/>
         public void RunInMainThread(Action function)

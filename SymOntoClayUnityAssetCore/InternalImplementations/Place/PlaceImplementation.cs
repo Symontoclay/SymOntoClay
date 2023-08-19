@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.Player;
 using System;
@@ -84,7 +85,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Place
         private bool? _enableCategories;
 
         /// <inheritdoc/>
-        public IEntityLogger Logger => _gameComponent.Logger;
+        public IMonitorLogger Logger => _gameComponent.Logger;
 
         /// <inheritdoc/>
         public void RunInMainThread(Action function)

@@ -80,7 +80,7 @@ namespace TestSandbox.CoreHostListener
             {
                 _remainingDistance = _remainingDistance - _goDelta;
 
-                _logger.Info($"_remainingDistance (after) = {_remainingDistance}");
+                _logger.Info("0C8929D6-FC00-48DA-81F7-19C40FF700EC", $"_remainingDistance (after) = {_remainingDistance}");
 
                 if (_remainingDistance > 0)
                 {
@@ -88,15 +88,15 @@ namespace TestSandbox.CoreHostListener
                 }
                 else
                 {
-                    _logger.Info($"It completed!!!!!");
+                    _logger.Info("D9CD494C-EC04-47CF-87DC-ED3C96FFE619", $"It completed!!!!!");
 
                     _remainingDistance = null;
                 }
             }
 
-            _logger.Info($"cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");
+            _logger.Info("F5536E3C-B7EF-4AE1-91CD-94C5B81F29A1", $"cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");
 
-            _logger.Info($"GoToImpl End");
+            _logger.Info("C91D8079-7CFB-4D82-AF55-39F2892B1FB8", $"GoToImpl End");
 
             EmitOnLeave();
         }
@@ -106,7 +106,7 @@ namespace TestSandbox.CoreHostListener
         {
             EmitOnEnter();
 
-            _logger.Info("StopImpl Begin");
+            _logger.Info("B14713CD-C569-4EED-8A0A-826F00692F03", "StopImpl Begin");
 
             EmitOnLeave();
         }
@@ -116,8 +116,8 @@ namespace TestSandbox.CoreHostListener
         {
             EmitOnEnter();
 
-            _logger.Info("RotateImpl Begin");
-            _logger.Info(direction.ToString());
+            _logger.Info("26ABD22B-A834-4D2E-A019-F21DDDA45079", "RotateImpl Begin");
+            _logger.Info("BA0E1FA1-E73A-4C30-8B31-B784DD319636", direction.ToString());
 
             EmitOnLeave();
         }
@@ -126,10 +126,10 @@ namespace TestSandbox.CoreHostListener
         [BipedEndpoint("Aim to", DeviceOfBiped.RightHand, DeviceOfBiped.LeftHand)]
         public void AimToImpl(CancellationToken cancellationToken, IEntity entity)
         {
-            _logger.Info("AimToImpl Begin");
-            _logger.Info($"entity.InstanceId = {entity.InstanceId}");
-            _logger.Info($"entity.Id = {entity.Id}");
-            _logger.Info($"entity.Position = {entity.Position}");
+            _logger.Info("127DD07F-83BA-4BCA-B4C3-ABEDACB76265", "AimToImpl Begin");
+            _logger.Info("60FC1D44-87D4-4E17-A6DD-1294844F8015", $"entity.InstanceId = {entity.InstanceId}");
+            _logger.Info("A583D18F-CDF9-420E-8EF6-26B84DC12BE1", $"entity.Id = {entity.Id}");
+            _logger.Info("5588E9C5-F08C-47BD-BCD9-9330DA17137A", $"entity.Position = {entity.Position}");
         }
 
         [DebuggerHidden]

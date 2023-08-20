@@ -22,7 +22,9 @@ SOFTWARE.*/
 
 using NUnit.Framework;
 using SymOntoClay.BaseTestLib;
+using SymOntoClay.BaseTestLib.Monitoring;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Internal.ATN;
 using SymOntoClay.NLP.Internal.Dot;
@@ -45,7 +47,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP
             _wordsDict = DictionaryInstance.Instance;
         }
 
-        private IEntityLogger _logger;
+        private IMonitorLogger _logger;
         private IWordsDict _wordsDict;
 
         [Test]

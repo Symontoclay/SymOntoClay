@@ -22,8 +22,10 @@ SOFTWARE.*/
 
 using NUnit.Framework;
 using SymOntoClay.BaseTestLib;
+using SymOntoClay.BaseTestLib.Monitoring;
 using SymOntoClay.Core.Internal.Parsing.Internal;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -38,7 +40,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
             _logger = new EmptyLogger();
         }
 
-        private IEntityLogger _logger;
+        private IMonitorLogger _logger;
 
         [Test]
         [Parallelizable]

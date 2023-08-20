@@ -30,6 +30,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.BaseTestLib.Monitoring;
 
 namespace SymOntoClay.UnityAsset.Core.Tests.NLP.ATN
 {
@@ -42,7 +44,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP.ATN
             _wordsDict = DictionaryInstance.Instance;
         }
 
-        private IEntityLogger _logger;
+        private IMonitorLogger _logger;
         private IWordsDict _wordsDict;
 
         [Test]

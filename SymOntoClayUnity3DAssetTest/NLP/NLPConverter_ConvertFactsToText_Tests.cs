@@ -22,9 +22,11 @@ SOFTWARE.*/
 
 using NUnit.Framework;
 using SymOntoClay.BaseTestLib;
+using SymOntoClay.BaseTestLib.Monitoring;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.NLP;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.UnityAsset.Core.Tests.NLP.ATN;
@@ -56,7 +58,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP
             _testEngineContext.Dispose();
         }
 
-        private IEntityLogger _logger;
+        private IMonitorLogger _logger;
         private ComplexTestEngineContext _testEngineContext;
         private IEngineContext _engineContext;
         private IWordsDict _wordsDict;

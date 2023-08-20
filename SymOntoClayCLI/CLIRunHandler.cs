@@ -102,15 +102,14 @@ namespace SymOntoClay.CLI
                 settings.NLPConverterProvider = nlpConverterProvider;
             }
 
-            var logDir = Path.Combine(Environment.GetEnvironmentVariable("APPDATA"), "SymOntoClay", "CLI", "NpcLogs");
+            var monitorMessagesDir = Path.Combine(Environment.GetEnvironmentVariable("APPDATA"), "SymOntoClay", "CLI", "NpcMonitorMessages");
 
-            settings.Logging = new LoggingSettings()
+            settings.Monitor = new SymOntoClay.Monitor.Monitor(new Monitor.MonitorSettings()
             {
-                LogDir = logDir,
+                MessagesDir = monitorMessagesDir,
                 PlatformLoggers = new List<IPlatformLogger>() { new CLIPlatformLogger() },
-                Enable = true,
-                EnableRemoteConnection = true
-            };
+                Enable = true
+            });
 
             instance.SetSettings(settings);
 

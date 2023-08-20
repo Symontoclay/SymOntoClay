@@ -25,6 +25,7 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,15 +47,15 @@ namespace TestSandbox.Handlers
         }
 
         private readonly IEngineContext _engineContext;
-        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
 
         public void Run()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             Case2();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private void Case2()
@@ -63,7 +64,7 @@ namespace TestSandbox.Handlers
 
             var fact = _engineContext.Parser.ParseRuleInstance(factStr);
 
-            _logger.Log($"fact = '{fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}'");
+            _logger.Info($"fact = '{fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}'");
         }
 
         private void Case1()
@@ -72,13 +73,13 @@ namespace TestSandbox.Handlers
 
             var fact = _engineContext.Parser.ParseRuleInstance(factStr);
 
-            _logger.Log($"fact (before) = {DebugHelperForRuleInstance.ToString(fact)}");
+            _logger.Info($"fact (before) = {DebugHelperForRuleInstance.ToString(fact)}");
 
             fact.ObligationModality = LogicalValue.TrueValue;
             fact.SelfObligationModality = LogicalValue.FalseValue;
 
 
-            _logger.Log($"fact (after) = {DebugHelperForRuleInstance.ToString(fact)}");
+            _logger.Info($"fact (after) = {DebugHelperForRuleInstance.ToString(fact)}");
         }
     }
 }

@@ -39,16 +39,16 @@ namespace TestSandbox.CoreHostListener
             [EndpointParam("To", KindOfEndpointParam.Position)] INavTarget navTarget,
             float speed = 12)
         {
-            _logger.Log($"GoToImpl Begin");
-            _logger.Log($"navTarget.Kind = {navTarget.Kind}");
+            _logger.Info($"GoToImpl Begin");
+            _logger.Info($"navTarget.Kind = {navTarget.Kind}");
             var entity = navTarget.Entity;
-            _logger.Log($"entity.InstanceId = {entity.InstanceId}");
-            _logger.Log($"entity.Id = {entity.Id}");
-            _logger.Log($"entity.Position = {entity.Position}");
+            _logger.Info($"entity.InstanceId = {entity.InstanceId}");
+            _logger.Info($"entity.Id = {entity.Id}");
+            _logger.Info($"entity.Position = {entity.Position}");
 
             Thread.Sleep(10000);
 
-            _logger.Log($"GoToImpl End");
+            _logger.Info($"GoToImpl End");
         }
     }
 }

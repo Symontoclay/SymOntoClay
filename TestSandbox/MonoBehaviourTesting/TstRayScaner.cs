@@ -22,6 +22,8 @@ SOFTWARE.*/
 
 using Newtonsoft.Json;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
@@ -34,7 +36,7 @@ namespace TestSandbox.MonoBehaviourTesting
 {
     public class TstRayScaner : IVisionProvider
     {
-        private readonly IEntityLogger _logger = new LoggerNLogImpementation();
+        private readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
 
         public TstRayScaner()
         {

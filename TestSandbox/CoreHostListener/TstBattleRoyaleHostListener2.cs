@@ -41,10 +41,10 @@ namespace TestSandbox.CoreHostListener
         public void GenericCall(CancellationToken cancellationToken, string methodName, bool isNamedParameters,
             Dictionary<string, object> namedParameters, List<object> positionedParameters)
         {
-            _logger.Log($"methodName = '{methodName}'");
-            _logger.Log($"isNamedParameters = {isNamedParameters}");
-            _logger.Log($"namedParameters = {JsonConvert.SerializeObject(namedParameters, Formatting.Indented, _customConverter)}");
-            _logger.Log($"positionedParameters = {JsonConvert.SerializeObject(positionedParameters, Formatting.Indented, _customConverter)}");
+            _logger.Info($"methodName = '{methodName}'");
+            _logger.Info($"isNamedParameters = {isNamedParameters}");
+            _logger.Info($"namedParameters = {JsonConvert.SerializeObject(namedParameters, Formatting.Indented, _customConverter)}");
+            _logger.Info($"positionedParameters = {JsonConvert.SerializeObject(positionedParameters, Formatting.Indented, _customConverter)}");
         }
 
         private bool _isFirstCall;
@@ -55,13 +55,13 @@ namespace TestSandbox.CoreHostListener
             [EndpointParam("To", KindOfEndpointParam.Position)] INavTarget navTarget,
             float speed = 12)
         {
-            _logger.Log($"GoToImpl Begin");
-            _logger.Log($"navTarget.Kind = {navTarget.Kind}");
+            _logger.Info($"GoToImpl Begin");
+            _logger.Info($"navTarget.Kind = {navTarget.Kind}");
             var entity = navTarget.Entity;
-            _logger.Log($"entity.InstanceId = {entity.InstanceId}");
-            _logger.Log($"entity.Id = {entity.Id}");
-            _logger.Log($"entity.Position = {entity.Position}");
-            _logger.Log($"_isFirstCall = {_isFirstCall}");
+            _logger.Info($"entity.InstanceId = {entity.InstanceId}");
+            _logger.Info($"entity.Id = {entity.Id}");
+            _logger.Info($"entity.Position = {entity.Position}");
+            _logger.Info($"_isFirstCall = {_isFirstCall}");
 
             if (!_isFirstCall)
             {
@@ -72,25 +72,25 @@ namespace TestSandbox.CoreHostListener
             {
                 _isFirstCall = false;
 
-                _logger.Log($"It completed!!!!!");
+                _logger.Info($"It completed!!!!!");
             }
 
-            _logger.Log($"cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");
+            _logger.Info($"cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");
 
-            _logger.Log($"GoToImpl End");
+            _logger.Info($"GoToImpl End");
         }
 
         [BipedEndpoint("Stop", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
         public void StopImpl(CancellationToken cancellationToken)
         {
-            _logger.Log("StopImpl Begin");
+            _logger.Info("StopImpl Begin");
         }
 
         [BipedEndpoint("Rotate", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
         public void RotateImpl(CancellationToken cancellationToken, float? direction)
         {
-            _logger.Log("RotateImpl Begin");
-            _logger.Log(direction.ToString());
+            _logger.Info("RotateImpl Begin");
+            _logger.Info(direction.ToString());
         }
     }
 }

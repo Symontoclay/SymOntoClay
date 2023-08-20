@@ -39,7 +39,7 @@ namespace TestSandbox.Handlers
     {
         public void Run()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var platformListener = new BattleRoyaleSilentHostListener();
             //var platformListener = new TstBattleRoyaleHostListener();
@@ -88,7 +88,7 @@ namespace TestSandbox.Handlers
 
             platformListener.AddOnEndPointEnterSyncHandler("Go", () =>
             {
-                _logger.Log($"OnEndPointEnterSyncHandler: On Enter Go wasHide = {wasHide}");
+                _logger.Info($"OnEndPointEnterSyncHandler: On Enter Go wasHide = {wasHide}");
 
                 if(!wasHide)
                 {
@@ -108,18 +108,18 @@ namespace TestSandbox.Handlers
             var seeFactId = _npc.InsertFact(standardFactsBuilder.BuildSeeFactString(enemyId));
 
             Thread.Sleep(5000);
-            _logger.Log("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+            _logger.Info("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
 
             _npc.RemoveFact(seeFactId);
 
             wasHide = true;
 
-            _logger.Log("__________________________________________________________");
+            _logger.Info("__________________________________________________________");
 
 
             Thread.Sleep(100000);
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
     }
 }

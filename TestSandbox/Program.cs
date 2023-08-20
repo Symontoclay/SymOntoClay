@@ -72,12 +72,14 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.BaseTestLib.HostListeners;
 using SymOntoClay.BaseTestLib;
 using NUnit.Framework;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 
 namespace TestSandbox
 {
     class Program
     {
-        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
 
         static void Main(string[] args)
         {
@@ -168,17 +170,17 @@ namespace TestSandbox
 
         private static void TstMonitor()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new MonitorHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstCreateListByVarsDict()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var source = new Dictionary<string, List<string>>();
 
@@ -186,26 +188,26 @@ namespace TestSandbox
             source["$y"] = new List<string>() { "cat", "dog", "tree" };
             source["$z"] = new List<string>() { "town", "city", "village" };
 
-            _logger.Log($"source = {JsonConvert.SerializeObject(source, Formatting.Indented)}");
+            _logger.Info($"source = {JsonConvert.SerializeObject(source, Formatting.Indented)}");
 
             var keysList = source.Keys.ToList();
 
-            _logger.Log($"keysList = {JsonConvert.SerializeObject(keysList, Formatting.Indented)}");
+            _logger.Info($"keysList = {JsonConvert.SerializeObject(keysList, Formatting.Indented)}");
 
             var result = new List<List<(string, string)>>();
 
             TstProcessCreateListByVarsDict(0, keysList, source, new List<(string, string)>(), ref result);
 
-            _logger.Log($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
+            _logger.Info($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstProcessCreateListByVarsDict(int n, List<string> keysList, Dictionary<string, List<string>> source, List<(string, string)> currentValues, ref List<List<(string, string)>> result)
         {
-            _logger.Log($"n = {n}");
-            _logger.Log($"keysList.Count = {keysList.Count}");
-            _logger.Log($"currentValues = {JsonConvert.SerializeObject(currentValues, Formatting.Indented)}");
+            _logger.Info($"n = {n}");
+            _logger.Info($"keysList.Count = {keysList.Count}");
+            _logger.Info($"currentValues = {JsonConvert.SerializeObject(currentValues, Formatting.Indented)}");
 
             if (n == keysList.Count - 1)
             {
@@ -219,13 +221,13 @@ namespace TestSandbox
 
         private static void TstProcessCreateListByVarsDictIntermediateNode(int n, List<string> keysList, Dictionary<string, List<string>> source, List<(string, string)> currentValues, ref List<List<(string, string)>> result)
         {
-            _logger.Log($"n = {n}");
-            _logger.Log($"keysList.Count = {keysList.Count}");
-            _logger.Log($"currentValues = {JsonConvert.SerializeObject(currentValues, Formatting.Indented)}");
+            _logger.Info($"n = {n}");
+            _logger.Info($"keysList.Count = {keysList.Count}");
+            _logger.Info($"currentValues = {JsonConvert.SerializeObject(currentValues, Formatting.Indented)}");
 
             var key = keysList[n];
 
-            _logger.Log($"key = {key}");
+            _logger.Info($"key = {key}");
 
             var list = source[key];
 
@@ -233,7 +235,7 @@ namespace TestSandbox
 
             foreach (var item in list)
             {
-                _logger.Log($"item = {item}");
+                _logger.Info($"item = {item}");
 
                 var newCurrentValues = currentValues.ToList();
                 newCurrentValues.Add((key, item));
@@ -244,19 +246,19 @@ namespace TestSandbox
 
         private static void TstProcessCreateListByVarsDictFinalNode(int n, List<string> keysList, Dictionary<string, List<string>> source, List<(string, string)> currentValues, ref List<List<(string, string)>> result)
         {
-            _logger.Log($"n = {n}");
-            _logger.Log($"keysList.Count = {keysList.Count}");
-            _logger.Log($"currentValues = {JsonConvert.SerializeObject(currentValues, Formatting.Indented)}");
+            _logger.Info($"n = {n}");
+            _logger.Info($"keysList.Count = {keysList.Count}");
+            _logger.Info($"currentValues = {JsonConvert.SerializeObject(currentValues, Formatting.Indented)}");
 
             var key = keysList[n];
 
-            _logger.Log($"key = {key}");
+            _logger.Info($"key = {key}");
 
             var list = source[key];
 
             foreach (var item in list)
             {
-                _logger.Log($"item = {item}");
+                _logger.Info($"item = {item}");
 
                 var resultItem = new List<(string, string)>();
                 result.Add(resultItem);
@@ -272,11 +274,11 @@ namespace TestSandbox
 
         private static void TstDetectDoninantItems()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var initialList = new List<KindOfLogicalQueryNode>() { KindOfLogicalQueryNode.Entity, KindOfLogicalQueryNode.Concept, KindOfLogicalQueryNode.Value, KindOfLogicalQueryNode.Entity };
 
-            _logger.Log($"initialList = {JsonConvert.SerializeObject(initialList, Formatting.Indented)}");
+            _logger.Info($"initialList = {JsonConvert.SerializeObject(initialList, Formatting.Indented)}");
 
             var orderedList = initialList.GroupBy(p => p).Select(p => new
             {
@@ -284,67 +286,67 @@ namespace TestSandbox
                 Count = p.Count()
             }).OrderByDescending(p => p.Count).Take(1);
 
-            _logger.Log($"orderedList = {JsonConvert.SerializeObject(orderedList, Formatting.Indented)}");
+            _logger.Info($"orderedList = {JsonConvert.SerializeObject(orderedList, Formatting.Indented)}");
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstSerializeValue()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var list = new List<object>() { new NumberValue(16) };
 
-            _logger.Log($"list = {JsonConvert.SerializeObject(list, Formatting.Indented, new ToHumanizedStringJsonConverter())}");
+            _logger.Info($"list = {JsonConvert.SerializeObject(list, Formatting.Indented, new ToHumanizedStringJsonConverter())}");
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstWaitAsync()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var source1 = new CancellationTokenSource();
             var token1 = source1.Token;
 
             var task = Task.Run(() => {
-                _logger.Log("Hi!");
+                _logger.Info("Hi!");
 
                 Thread.Sleep(10000);
 
-                _logger.Log("End Hi!");
+                _logger.Info("End Hi!");
             }, token1);
 
             var taskValue = new TaskValue(task, source1);
 
             taskValue.OnComplete += () => 
             {
-                _logger.Log("taskValue.OnComplete!!!!!");
+                _logger.Info("taskValue.OnComplete!!!!!");
             };
 
             taskValue.OnComplete += () =>
             {
-                _logger.Log("(2) taskValue.OnComplete!!!!!");
+                _logger.Info("(2) taskValue.OnComplete!!!!!");
             };
 
             Thread.Sleep(20000);
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstWaitAsync_2()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var source1 = new CancellationTokenSource();
             var token1 = source1.Token;
 
             var task = Task.Run(() => {
-                _logger.Log("Hi!");
+                _logger.Info("Hi!");
 
                 Thread.Sleep(10000);
 
-                _logger.Log("End Hi!");
+                _logger.Info("End Hi!");
             }, token1);
 
             Task.Run(() => {
@@ -352,39 +354,39 @@ namespace TestSandbox
 
                 waitingTask.Wait();
 
-                _logger.Log($"Finished!!!! task.Status = {task.Status}");
+                _logger.Info($"Finished!!!! task.Status = {task.Status}");
             });
 
             Thread.Sleep(20000);
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstWaitAsync_1()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var source1 = new CancellationTokenSource();
             var token1 = source1.Token;
 
             var task = Task.Run(() => {
-                _logger.Log("Hi!");
+                _logger.Info("Hi!");
 
                 Thread.Sleep(10000);
 
-                _logger.Log("End Hi!");
+                _logger.Info("End Hi!");
             }, token1);
 
             var waitingTask = task.WaitAsync(token1);
 
             waitingTask.Wait();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstWorldSpaceFilesSearcher()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var worldSpaceFilesSearcherOptions = new WorldSpaceFilesSearcherOptions()
             {
@@ -396,42 +398,42 @@ namespace TestSandbox
             var targetFiles = WorldSpaceFilesSearcher.Run(worldSpaceFilesSearcherOptions);
 
 #if DEBUG
-            _logger.Log($"targetFiles = {targetFiles}");
+            _logger.Info($"targetFiles = {targetFiles}");
 #endif 
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstSynonymsHandler()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new SynonymsHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstGetFullBaseTypesListInCSharpReflection()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var source = typeof(ConditionalEntityValue);
 
-            _logger.Log($"source.FullName = {source.FullName}");
+            _logger.Info($"source.FullName = {source.FullName}");
 
             var interfacesList = source.GetInterfaces();
 
-            _logger.Log($"interfacesList.Length = {interfacesList.Length}");
+            _logger.Info($"interfacesList.Length = {interfacesList.Length}");
 
             foreach(var item in interfacesList)
             {
-                _logger.Log($"item.FullName = {item.FullName}");
+                _logger.Info($"item.FullName = {item.FullName}");
             }
 
             PrintBaseType(source.BaseType);
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void PrintBaseType(Type type)
@@ -441,14 +443,14 @@ namespace TestSandbox
                 return;
             }
 
-            _logger.Log($"type.FullName = {type.FullName}");
+            _logger.Info($"type.FullName = {type.FullName}");
 
             PrintBaseType(type.BaseType);
         }
 
         private static void TstConvertFactToImperativeCode()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.UseDefaultNLPSettings = false;
@@ -457,7 +459,7 @@ namespace TestSandbox
 
             var factStr = "{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 1 :}";
 
-            _logger.Log($"factStr = '{factStr}'");
+            _logger.Info($"factStr = '{factStr}'");
 
             var fact = engineContext.Parser.ParseRuleInstance(factStr);
 
@@ -467,14 +469,14 @@ namespace TestSandbox
 
             var compiledCode = engineContext.ConvertersFactory.GetConverterFactToImperativeCode().Convert(fact, localCodeExecutionContext);
 
-            _logger.Log($"compiledCode = {compiledCode.ToDbgString()}");
+            _logger.Info($"compiledCode = {compiledCode.ToDbgString()}");
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstFactToHtml()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.UseDefaultNLPSettings = false;
@@ -483,13 +485,13 @@ namespace TestSandbox
 
             var factStr = "{: $x = {: act(M16, shoot) :} & hear(I, $x) & distance(I, $x, 15.588457107543945) & direction($x, 12) & point($x, #@[15.588457107543945, 12]) :}";
 
-            _logger.Log($"factStr = '{factStr}'");
+            _logger.Info($"factStr = '{factStr}'");
 
             var fact = engineContext.Parser.ParseRuleInstance(factStr);
 
             var targetItemForSelection = fact.PrimaryPart.Expression.Left.Left.Left.Left;
 
-            _logger.Log($"targetItemForSelection = {targetItemForSelection.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
+            _logger.Info($"targetItemForSelection = {targetItemForSelection.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
 
 
             var options = new DebugHelperOptions();
@@ -497,53 +499,53 @@ namespace TestSandbox
             options.IsHtml = true;
             options.ItemsForSelection = new List<IObjectToString>() { targetItemForSelection };
 
-            _logger.Log($"fact = {DebugHelperForRuleInstance.ToString(fact, options)}");
+            _logger.Info($"fact = {DebugHelperForRuleInstance.ToString(fact, options)}");
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstStandardFactsBuilder()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new StandardFactsBuilderHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstStandardFactsBuilderGetTargetVarNameHandler()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new StandardFactsBuilderGetTargetVarNameHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }            
 
         private static void TstShieldString()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var str = "@@self";
 
-            _logger.Log($"str = '{str}'");
+            _logger.Info($"str = '{str}'");
 
             var nameSubStr = str.Substring(2);
 
-            _logger.Log($"nameSubStr = '{nameSubStr}'");
+            _logger.Info($"nameSubStr = '{nameSubStr}'");
 
             var name = NameHelper.ShieldString(str);
 
-            _logger.Log($"name = '{name}'");
+            _logger.Info($"name = '{name}'");
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstSampleSpeechSynthesis()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var synth = new SpeechSynthesizer();
 
@@ -552,32 +554,32 @@ namespace TestSandbox
             synth.Speak("This example demonstrates a basic use of Speech Synthesizer");
             synth.Speak("Go to green place!");
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstOnAddingFactEventHanler()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new OnAddingFactEventHanler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstEventHanler()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new EventHanler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstStrCollectionCombination()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var source = new List<List<string>>();
 
@@ -585,18 +587,18 @@ namespace TestSandbox
             source.Add(new List<string>() { "h", "j", "L" });
             source.Add(new List<string>() { "b", "c", "f" });
 
-            _logger.Log($"source = {JsonConvert.SerializeObject(source, Formatting.Indented)}");
+            _logger.Info($"source = {JsonConvert.SerializeObject(source, Formatting.Indented)}");
 
             var result = CollectionCombinationHelper.Combine(source);
 
-            _logger.Log($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
+            _logger.Info($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstIntCollectionCombination()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var source = new List<List<int>>();
 
@@ -604,63 +606,63 @@ namespace TestSandbox
             source.Add(new List<int>() { 7, 9, 11 });
             source.Add(new List<int>() { 2, 3, 6 });
 
-            _logger.Log($"source = {JsonConvert.SerializeObject(source, Formatting.Indented)}");
+            _logger.Info($"source = {JsonConvert.SerializeObject(source, Formatting.Indented)}");
 
             var result = CollectionCombinationHelper.Combine(source);
 
-            _logger.Log($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
+            _logger.Info($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstModalitiesHandler()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new ModalitiesHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstRelationsStorageHandler()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new RelationsStorageHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstGenerateDllDict()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new GenerateDllDictHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TSTWordsFactory()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var wordsFactory = new WordsFactory();
             wordsFactory.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstNLPConverterProvider()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var mainDictPath = Path.Combine(Directory.GetCurrentDirectory(), "Dicts", "BigMainDictionary.dict");
 
 #if DEBUG
-            _logger.Log($"mainDictPath = {mainDictPath}");
+            _logger.Info($"mainDictPath = {mainDictPath}");
 #endif
 
             var settings = new NLPConverterProviderSettings();
@@ -668,7 +670,7 @@ namespace TestSandbox
             settings.CreationStrategy = CreationStrategy.Singleton;
 
 #if DEBUG
-            _logger.Log($"settings = {settings}");
+            _logger.Info($"settings = {settings}");
 #endif
 
             var nlpConverterProvider = new NLPConverterProvider(settings);
@@ -677,62 +679,62 @@ namespace TestSandbox
 
             var converter = factory.GetConverter();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstNLPHandler()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new NLPHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstTriggerConditionNodeHandler()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new TriggerConditionNodeHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstSoundBus()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new TstSoundBusHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstNavigationHandler()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new NavigationHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstCreatorExamples()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             using var handler = new CreatorExamples_States_27_03_2022();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstLinguisticVariable_Tests()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var text = @"linvar logic for range [0, 1]
 {
@@ -762,30 +764,30 @@ namespace TestSandbox
 
             firstItem.AsLinguisticVariable.CheckDirty();
 
-            _logger.Log($"firstItem = {firstItem}");
+            _logger.Info($"firstItem = {firstItem}");
 
             var term = firstItem.AsLinguisticVariable.Values[4];
 
-            _logger.Log($"term = {term}");
+            _logger.Info($"term = {term}");
 
             var handler = term.Handler;
 
-            _logger.Log($"handler = {handler}");
+            _logger.Info($"handler = {handler}");
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstManageTempProject()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var initialDir = Directory.GetCurrentDirectory();
 
-            _logger.Log($"initialDir = {initialDir}");
+            _logger.Info($"initialDir = {initialDir}");
 
             initialDir = Path.Combine(initialDir, "TempProjects");
 
-            _logger.Log($"initialDir (2) = {initialDir}");
+            _logger.Info($"initialDir (2) = {initialDir}");
 
             if(!Directory.Exists(initialDir))
             {
@@ -794,7 +796,7 @@ namespace TestSandbox
 
             var testDir = Path.Combine(initialDir, $"TstDir{Guid.NewGuid().ToString("D").Replace("-", string.Empty)}");
 
-            _logger.Log($"testDir = {testDir}");
+            _logger.Info($"testDir = {testDir}");
 
             if (!Directory.Exists(testDir))
             {
@@ -805,32 +807,32 @@ namespace TestSandbox
 
             var worldSpaceCreationSettings = new WorldSpaceCreationSettings() { ProjectName = projectName };
 
-            _logger.Log($"worldSpaceCreationSettings = {worldSpaceCreationSettings}");
+            _logger.Info($"worldSpaceCreationSettings = {worldSpaceCreationSettings}");
 
             var wSpaceFile = WorldSpaceCreator.CreateWithOutWSpaceFile(worldSpaceCreationSettings, testDir
                     , errorMsg => _logger.Error(errorMsg)
                     );
 
-            _logger.Log($"wSpaceFile = {wSpaceFile}");
+            _logger.Info($"wSpaceFile = {wSpaceFile}");
 
             var wSpaceDir = wSpaceFile.DirectoryName;
 
-            _logger.Log($"wSpaceDir = {wSpaceDir}");
+            _logger.Info($"wSpaceDir = {wSpaceDir}");
 
             var targetRelativeFileName = @"/Npcs/Example/Example.soc";
 
-            _logger.Log($"targetRelativeFileName = {targetRelativeFileName}");
+            _logger.Info($"targetRelativeFileName = {targetRelativeFileName}");
 
             if(targetRelativeFileName.StartsWith("/") || targetRelativeFileName.StartsWith("\\"))
             {
                 targetRelativeFileName = targetRelativeFileName.Substring(1);
             }
 
-            _logger.Log($"targetRelativeFileName (after) = {targetRelativeFileName}");
+            _logger.Info($"targetRelativeFileName (after) = {targetRelativeFileName}");
 
             var targetFileName = Path.Combine(wSpaceDir, targetRelativeFileName);
 
-            _logger.Log($"targetFileName = {targetFileName}");
+            _logger.Info($"targetFileName = {targetFileName}");
 
             var text = @"linvar logic for range [0, 1]
 {
@@ -887,11 +889,11 @@ app PeaceKeeper is [very middle] exampleClass
 
             var supportBasePath = Path.Combine(testDir, "SysDirs");
 
-            _logger.Log($"supportBasePath = {supportBasePath}");
+            _logger.Info($"supportBasePath = {supportBasePath}");
 
             var logDir = Path.Combine(supportBasePath, "NpcLogs");
 
-            _logger.Log($"logDir = {logDir}");
+            _logger.Info($"logDir = {logDir}");
 
             var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
 
@@ -911,8 +913,8 @@ app PeaceKeeper is [very middle] exampleClass
             settings.InvokerInMainThread = invokingInMainThread;
 
             var callBackLogger = new CallBackLogger(
-                message => { _logger.Log($"message = {message}"); },
-                error => { _logger.Log($"error = {error}"); }
+                message => { _logger.Info($"message = {message}"); },
+                error => { _logger.Info($"error = {error}"); }
                 );
 
             settings.Logging = new LoggingSettings()
@@ -923,7 +925,7 @@ app PeaceKeeper is [very middle] exampleClass
                 EnableRemoteConnection = true
             };
 
-            _logger.Log($"settings = {settings}");
+            _logger.Info($"settings = {settings}");
 
             instance.SetSettings(settings);
 
@@ -935,7 +937,7 @@ app PeaceKeeper is [very middle] exampleClass
             npcSettings.HostListener = platformListener;
             npcSettings.PlatformSupport = new PlatformSupportCLIStub();
 
-            _logger.Log($"npcSettings = {npcSettings}");
+            _logger.Info($"npcSettings = {npcSettings}");
 
             var npc = instance.GetHumanoidNPC(npcSettings);
 
@@ -945,18 +947,18 @@ app PeaceKeeper is [very middle] exampleClass
 
             Directory.Delete(testDir, true);
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstAdvancedTestRunnerForMultipleInstances()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             using (var instance = new AdvancedBehaviorTestEngineInstance())
             {
                 instance.CreateWorld((n, message) =>
                 {
-                    _logger.Log($"n = {n}; message = {message}");
+                    _logger.Info($"n = {n}; message = {message}");
                 }, true);
 
                 instance.WriteFile(@"app PeaceKeeper
@@ -988,12 +990,12 @@ app PeaceKeeper is [very middle] exampleClass
                 Thread.Sleep(5000);
             }
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstAdvancedTestRunner()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var instance = new AdvancedBehaviorTestEngineInstance();
 
@@ -1026,7 +1028,7 @@ action Go
             instance.WriteFile(text);
 
             var npc = instance.CreateAndStartNPC((n, message) => {
-                _logger.Log($"n = {n}; message = {message}");
+                _logger.Info($"n = {n}; message = {message}");
             });
 
             Thread.Sleep(1000);
@@ -1035,12 +1037,12 @@ action Go
 
             Thread.Sleep(1000);
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstTestRunnerWithHostListener()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var text = @"app PeaceKeeper
 {
@@ -1056,15 +1058,15 @@ action Go
 
             BehaviorTestEngineInstance.Run(text,
                 (n, message) => {
-                    _logger.Log($"n = {n}; message = {message}");
+                    _logger.Info($"n = {n}; message = {message}");
                 }, hostListener);
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstTestRunner()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var text = @"app PeaceKeeper
 {
@@ -1095,28 +1097,28 @@ action Go
 
             BehaviorTestEngineInstance.Run(text,
                 (n, message) => {
-                    _logger.Log($"n = {n}; message = {message}");
+                    _logger.Info($"n = {n}; message = {message}");
                 });
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstNameHelper()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var text = "$x";
 
             var name = NameHelper.CreateName(text);
 
-            _logger.Log($"name = {name}");
+            _logger.Info($"name = {name}");
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstDeffuzzification()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var veryHandler = new VeryFuzzyLogicOperatorHandler();
 
@@ -1128,22 +1130,22 @@ action Go
 
             var defuzzificatedValue = trapezoid.Defuzzificate();
 
-            _logger.Log($"defuzzificatedValue = {defuzzificatedValue}");
+            _logger.Info($"defuzzificatedValue = {defuzzificatedValue}");
 
             var naiveVeryDefuzzificatedValue = veryHandler.SystemCall(defuzzificatedValue);
 
-            _logger.Log($"naiveVeryDefuzzificatedValue = {naiveVeryDefuzzificatedValue}");
+            _logger.Info($"naiveVeryDefuzzificatedValue = {naiveVeryDefuzzificatedValue}");
 
             defuzzificatedValue = trapezoid.Defuzzificate(new List<IFuzzyLogicOperatorHandler>() { veryHandler });
 
-            _logger.Log($"defuzzificatedValue = {defuzzificatedValue}");
+            _logger.Info($"defuzzificatedValue = {defuzzificatedValue}");
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstRangeValue()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var leftValue = new NumberValue(0);
 
@@ -1163,36 +1165,36 @@ action Go
 
             range.CheckDirty();
 
-            _logger.Log($"range = {range}");
+            _logger.Info($"range = {range}");
 
-            _logger.Log($"range.ToDbgString() = {range.ToDbgString()}");
+            _logger.Info($"range.ToDbgString() = {range.ToDbgString()}");
 
-            _logger.Log($"range.Length = {range.Length}");
+            _logger.Info($"range.Length = {range.Length}");
 
-            _logger.Log($"range.IsFit(-1) = {range.IsFit(-1)}");
-            _logger.Log($"range.IsFit(0) = {range.IsFit(0)}");
-            _logger.Log($"range.IsFit(1) = {range.IsFit(1)}");
-            _logger.Log($"range.IsFit(12) = {range.IsFit(12)}");
-            _logger.Log($"range.IsFit(14) = {range.IsFit(14)}");
+            _logger.Info($"range.IsFit(-1) = {range.IsFit(-1)}");
+            _logger.Info($"range.IsFit(0) = {range.IsFit(0)}");
+            _logger.Info($"range.IsFit(1) = {range.IsFit(1)}");
+            _logger.Info($"range.IsFit(12) = {range.IsFit(12)}");
+            _logger.Info($"range.IsFit(14) = {range.IsFit(14)}");
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstFuzzyLogicNonNumericSequenceValue()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var sequence = new FuzzyLogicNonNumericSequenceValue();
 
-            _logger.Log($"sequence = {sequence}");
-            _logger.Log($"sequence = {sequence.ToDbgString()}");
+            _logger.Info($"sequence = {sequence}");
+            _logger.Info($"sequence = {sequence.ToDbgString()}");
 
             var very = NameHelper.CreateName("very");
 
             sequence.AddIdentifier(very);
 
-            _logger.Log($"sequence = {sequence}");
-            _logger.Log($"sequence = {sequence.ToDbgString()}");
+            _logger.Info($"sequence = {sequence}");
+            _logger.Info($"sequence = {sequence.ToDbgString()}");
 
             var teenager = NameHelper.CreateName("teenager");
 
@@ -1200,17 +1202,17 @@ action Go
 
             sequence.CheckDirty();
 
-            _logger.Log($"sequence = {sequence}");
-            _logger.Log($"sequence = {sequence.ToDbgString()}");
+            _logger.Info($"sequence = {sequence}");
+            _logger.Info($"sequence = {sequence.ToDbgString()}");
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static float Deg2Rad = 0.0174532924F;
 
         private static void TstCalculateTargetAnglesForRayScanner()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var TotalRaysAngle = 125;
             var TotalRaysInterval = 10;
@@ -1222,19 +1224,19 @@ action Go
             var halfOfTotalRaysAngle = TotalRaysAngle / 2;
             var halfOfFocusRaysAngle = FocusRaysAngle / 2;
 
-            _logger.Log($"halfOfTotalRaysAngle = {halfOfTotalRaysAngle}");
-            _logger.Log($"halfOfFocusRaysAngle = {halfOfFocusRaysAngle}");
+            _logger.Info($"halfOfTotalRaysAngle = {halfOfTotalRaysAngle}");
+            _logger.Info($"halfOfFocusRaysAngle = {halfOfFocusRaysAngle}");
 
             var currAngle = 0f;
             var inFocus = true;
 
             do
             {
-                _logger.Log($"currAngle = {currAngle}; inFocus = {inFocus}");
+                _logger.Info($"currAngle = {currAngle}; inFocus = {inFocus}");
 
                 var radAngle = currAngle * Deg2Rad;
 
-                _logger.Log($"radAngle = {radAngle}");
+                _logger.Info($"radAngle = {radAngle}");
 
                 anglesList.Add((radAngle, inFocus));
 
@@ -1269,70 +1271,70 @@ action Go
                 }
             } while (true);
 
-            _logger.Log($"anglesList = {JsonConvert.SerializeObject(anglesList, Formatting.Indented)}");
+            _logger.Info($"anglesList = {JsonConvert.SerializeObject(anglesList, Formatting.Indented)}");
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstCopyFilesOnBuilding()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var sourceDir = @"C:/Users/Sergey/Documents/GitHub/Game1/Assets";
             var outputPath = @"C:/Users/Sergey/Documents/ExampleBuild/CustomAssetExample.exe";
 
             BuildPipeLine.CopyFiles(sourceDir, outputPath);
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstGetRootWorldSpaceDir()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var inputFile = @"C:/Users/Sergey/Documents/GitHub/Game1/Assets\HelloWorld_Example1/World/PeaceKeeper.world";
 
-            _logger.Log($"inputFile = '{inputFile}'");
+            _logger.Info($"inputFile = '{inputFile}'");
 
             var wspaceDir = WorldSpaceHelper.GetRootWorldSpaceDir(inputFile);
 
-            _logger.Log($"wspaceDir = '{wspaceDir}'");
+            _logger.Info($"wspaceDir = '{wspaceDir}'");
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstEnvironmentVariables()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
 
             var path = Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.User);
 
-            _logger.Log($"path = '{path}'");
+            _logger.Info($"path = '{path}'");
 
             var pathsList = path.Split(';').Select(p => p.Trim()).Where(p => !string.IsNullOrWhiteSpace(p));
 
-            _logger.Log($"pathsList = {JsonConvert.SerializeObject(pathsList, Formatting.Indented)}");
+            _logger.Info($"pathsList = {JsonConvert.SerializeObject(pathsList, Formatting.Indented)}");
 
             var currDir = Directory.GetCurrentDirectory();
 
-            _logger.Log($"currDir = {currDir}");
+            _logger.Info($"currDir = {currDir}");
 
             if(!pathsList.Contains(currDir))
             {
                 path = $"{path};{currDir}";
 
-                _logger.Log($"path (after) = '{path}'");
+                _logger.Info($"path (after) = '{path}'");
 
                 Environment.SetEnvironmentVariable("Path", path, EnvironmentVariableTarget.User);
             }
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstCLINewHandler()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var args = new List<string>() {
                  "new",
@@ -1341,14 +1343,14 @@ action Go
 
             var command = CLICommandParser.Parse(args);
 
-            _logger.Log($"command = {command}");
+            _logger.Info($"command = {command}");
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstCLIRunHandler()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var args = new List<string>() {
                  "run"//,
@@ -1356,13 +1358,13 @@ action Go
 
             var targetDirectory = EVPath.Normalize("%USERPROFILE%/source/repos/SymOntoClay/TestSandbox/Source");
 
-            _logger.Log($"targetDirectory = {targetDirectory}");
+            _logger.Info($"targetDirectory = {targetDirectory}");
 
             Directory.SetCurrentDirectory(targetDirectory);
 
             var command = CLICommandParser.Parse(args);
 
-            _logger.Log($"command = {command}");
+            _logger.Info($"command = {command}");
 
             var worldSpaceFilesSearcherOptions = new WorldSpaceFilesSearcherOptions()
             {
@@ -1372,7 +1374,7 @@ action Go
 
             var targetFiles = WorldSpaceFilesSearcher.Run(worldSpaceFilesSearcherOptions);
 
-            _logger.Log($"targetFiles = {targetFiles}");
+            _logger.Info($"targetFiles = {targetFiles}");
 
 
             var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
@@ -1398,7 +1400,7 @@ action Go
                 EnableRemoteConnection = true
             };
 
-            _logger.Log($"settings = {settings}");
+            _logger.Info($"settings = {settings}");
 
             instance.SetSettings(settings);
 
@@ -1410,7 +1412,7 @@ action Go
             npcSettings.HostListener = platformListener;
             npcSettings.PlatformSupport = new PlatformSupportCLIStub();
 
-            _logger.Log($"npcSettings = {npcSettings}");
+            _logger.Info($"npcSettings = {npcSettings}");
 
             var npc = instance.GetHumanoidNPC(npcSettings);
 
@@ -1418,17 +1420,17 @@ action Go
 
             Thread.Sleep(50000);
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstCLICommandParser()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new CLICommandParserHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstLogicalDatabase()
@@ -1439,7 +1441,7 @@ action Go
 
         private static void TstProcessInfoChildren()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var parentProcessInfo = new ProcessInfo();
 
@@ -1449,14 +1451,14 @@ action Go
             var child_2 = new ProcessInfo();
             parentProcessInfo.AddChild(child_2);
 
-            _logger.Log($"parentProcessInfo = {parentProcessInfo}");
+            _logger.Info($"parentProcessInfo = {parentProcessInfo}");
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstWaitIProcessInfo()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var processInfo = new ProcessInfo();
 
@@ -1470,11 +1472,11 @@ action Go
 
             task.Start();
 
-            _logger.Log("task.Start()");
+            _logger.Info("task.Start()");
 
             ProcessInfoHelper.Wait(processInfo);
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private enum KindOfParameters
@@ -1486,7 +1488,7 @@ action Go
 
         private static void TstKindOfParametersSсaffolder()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var mainParametersList = new List<KindOfParameters>() { KindOfParameters.NoParameters, KindOfParameters.NamedParameters, KindOfParameters.PositionedParameters};
             var additionalParametersList = new List<KindOfParameters>() { KindOfParameters.NoParameters, KindOfParameters.NamedParameters, KindOfParameters.PositionedParameters };
@@ -1495,7 +1497,7 @@ action Go
 
             foreach(var mainParameter in mainParametersList)
             {
-                _logger.Log($"mainParameter = {mainParameter}");
+                _logger.Info($"mainParameter = {mainParameter}");
 
                 var mainParameterStr = string.Empty;
 
@@ -1510,11 +1512,11 @@ action Go
                         break;
                 }
 
-                _logger.Log($"mainParameterStr = {mainParameterStr}");
+                _logger.Info($"mainParameterStr = {mainParameterStr}");
 
                 foreach (var additionalParameter in additionalParametersList)
                 {
-                    _logger.Log($"additionalParameter = {additionalParameter}");
+                    _logger.Info($"additionalParameter = {additionalParameter}");
 
                     var additionalParameterStr = string.Empty;
 
@@ -1529,82 +1531,82 @@ action Go
                             break;
                     }
 
-                    _logger.Log($"additionalParameterStr = {additionalParameterStr}");
+                    _logger.Info($"additionalParameterStr = {additionalParameterStr}");
 
                     var str = $"Call{mainParameterStr}{additionalParameterStr}";
 
-                    _logger.Log($"str = {str}");
+                    _logger.Info($"str = {str}");
 
                     strList.AppendLine(str);
                 }             
             }
 
-            _logger.Log($"strList = {strList}");
+            _logger.Info($"strList = {strList}");
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstDateTimeHandler()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new DateTimeHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstBaseManualControllingGameComponent()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new TstBaseManualControllingGameComponentHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstLoadTypesPlatformTypesConvertors()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var targetAttributeType = typeof(PlatformTypesConverterAttribute);
 
             var typesList = AppDomainTypesEnumerator.GetTypes().Where(p => p.GetCustomAttributesData().Any(x => x.AttributeType == targetAttributeType));
 
-            _logger.Log($"typesList.Length = {typesList.Count()}");
+            _logger.Info($"typesList.Length = {typesList.Count()}");
 
             foreach (var type in typesList)
             {
-                _logger.Log($"type.FullName = {type.FullName}");
+                _logger.Info($"type.FullName = {type.FullName}");
 
                 var convertor = (IPlatformTypesConverter)Activator.CreateInstance(type);
 
-                _logger.Log($"convertor = {convertor}");
+                _logger.Info($"convertor = {convertor}");
             }
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstGetTypes()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var typesList = AppDomainTypesEnumerator.GetTypes();
 
-            _logger.Log($"typesList.Length = {typesList.Count}");
+            _logger.Info($"typesList.Length = {typesList.Count}");
 
             foreach (var type in typesList)
             {
-                _logger.Log($"type.FullName = {type.FullName}");
+                _logger.Info($"type.FullName = {type.FullName}");
             }
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstMainThreadSyncThread()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var invokingInMainThread = new InvokerInMainThread();
 
@@ -1619,136 +1621,136 @@ action Go
 
             Thread.Sleep(5000);
 
-            var invocableInMainThreadObj = new InvocableInMainThread(() => { _logger.Log("^)"); }, invokingInMainThread);
+            var invocableInMainThreadObj = new InvocableInMainThread(() => { _logger.Info("^)"); }, invokingInMainThread);
             invocableInMainThreadObj.Run();
 
             Thread.Sleep(5000);
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstCoreHostListenerHandler()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new CoreHostListenerHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstNullableArithmetic()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             float? a = null;
 
             var b = 1 - a;
 
-            _logger.Log($"b = {b}");
-            _logger.Log($"b == null = {b == null}");
+            _logger.Info($"b = {b}");
+            _logger.Info($"b == null = {b == null}");
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstInheritanceItemsHandler()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new InheritanceItemsHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
             
         private static void TstDefaultSettingsOfCodeEntityHandler()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new DefaultSettingsOfCodeEntityHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstActivateMainEntity()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new ActivateMainEntityHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstCompileInlineTrigger()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new CompileInlineTriggerHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstRegOperatorsHandler()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new RegOperatorsHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstCreateEngineContext()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var context = TstEngineContextHelper.CreateAndInitContext();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstAsyncActivePeriodicObjectHandler()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new AsyncActivePeriodicObjectHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstSyncActivePeriodicObjectHandler()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new SyncActivePeriodicObjectHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstCodeExecution()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new CodeExecutionHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstCreateName()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var parserContext = new TstMainStorageContext();
 
             var nameVal1 = "dog";
 
-            _logger.Log($"{nameof(nameVal1)} = {nameVal1}");
+            _logger.Info($"{nameof(nameVal1)} = {nameVal1}");
 
 
 
@@ -1780,9 +1782,9 @@ action Go
 
             var name = NameHelper.CreateName(nameVal1);
 
-            _logger.Log($"name = {name}");
+            _logger.Info($"name = {name}");
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private class NormalizedNameValues
@@ -1794,7 +1796,7 @@ action Go
         private static NormalizedNameValues ParseName(string text)
         {
 #if DEBUG
-            _logger.Log($"test = {text}");
+            _logger.Info($"test = {text}");
 #endif
 
             var result = new NormalizedNameValues();
@@ -1810,105 +1812,105 @@ action Go
 
         private static void TstExprNodeHandler()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new ExprNodeHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstParsing()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new ParsingHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstBattleRoyaleHandler()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new BattleRoyaleHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstPlacesHandler()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             using var handler = new PlacesHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstMonoBehaviourTestingHandler()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var handler = new MonoBehaviourTestingHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstSoundStartHandler()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             using var handler = new SoundStartHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstAddingFactTriggerHandler()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             using var handler = new AddingFactTriggerHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstGeneralStartHandler()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
 
             using var handler = new GeneralStartHandler();
             handler.Run();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void TstGetParsedFilesInfo()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var fileName = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Npcs\PixKeeper\PixKeeper.txt");
 
-            _logger.Log($"fileName = {fileName}");
+            _logger.Info($"fileName = {fileName}");
 
             var id = "#020ED339-6313-459A-900D-92F809CEBDC5";
 
             var resultList = FileHelper.GetParsedFilesInfo(fileName, id);
 
-            _logger.Log($"resultList = {JsonConvert.SerializeObject(resultList, Formatting.Indented)}");
+            _logger.Info($"resultList = {JsonConvert.SerializeObject(resultList, Formatting.Indented)}");
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            _logger.Log($"e.ExceptionObject = {e.ExceptionObject}");
+            _logger.Info($"e.ExceptionObject = {e.ExceptionObject}");
         }
     }
 }

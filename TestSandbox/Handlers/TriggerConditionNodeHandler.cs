@@ -23,6 +23,8 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,15 +36,15 @@ namespace TestSandbox.Handlers
 {
     public class TriggerConditionNodeHandler
     {
-        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
 
         public void Run()
         {
-            _logger.Log("Begin");
+            _logger.Info("85EFDF30-3226-48D5-8337-56A4E5341F26", "Begin");
 
             Case1();
 
-            _logger.Log("End");
+            _logger.Info("FB58A603-B2EC-4402-ADD2-C30627D0E610", "End");
         }
 
         private void Case1()
@@ -51,8 +53,8 @@ namespace TestSandbox.Handlers
             node.Kind = KindOfTriggerConditionNode.Concept;
             node.Name = NameHelper.CreateName("trigger 1");
 
-            _logger.Log($"node = {node}");
-            _logger.Log($"node = {node.ToHumanizedString()}");
+            _logger.Info("9E32B97A-4AF9-4464-97E9-A26BA1829680", $"node = {node}");
+            _logger.Info("266680BE-C7B5-4033-BC8B-595E83DC9BD0", $"node = {node.ToHumanizedString()}");
         }
     }
 }

@@ -31,12 +31,14 @@ using System.Text;
 using TestSandbox.CoreHostListener;
 using TestSandbox.Helpers;
 using TestSandbox.PlatformImplementations;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 
 namespace TestSandbox.MonoBehaviourTesting
 {
     public class TstHumanoidNPC: TstMonoBehaviour
     {
-        private readonly IEntityLogger _logger = new LoggerNLogImpementation();
+        private readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
 
         private IHumanoidNPC _npc;
         private string _id;
@@ -44,7 +46,7 @@ namespace TestSandbox.MonoBehaviourTesting
 
         public override void Awake()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             _tstRayScaner = new TstRayScaner();
 
@@ -60,22 +62,22 @@ namespace TestSandbox.MonoBehaviourTesting
             npcSettings.VisionProvider = _tstRayScaner;
             npcSettings.PlatformSupport = new PlatformSupportCLIStub();
 
-            _logger.Log($"npcSettings = {npcSettings}");
+            _logger.Info($"npcSettings = {npcSettings}");
 
             _npc = WorldFactory.WorldInstance.GetHumanoidNPC(npcSettings);
 
-            _logger.Log($"_npc == null = {_npc == null}");
+            _logger.Info($"_npc == null = {_npc == null}");
 
             _tstRayScaner.SetNPC(_npc);
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         public override void Start()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private bool _isFactUpated;
@@ -97,11 +99,11 @@ namespace TestSandbox.MonoBehaviourTesting
 
         public override void Stop()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             _npc.Dispose();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
     }
 }

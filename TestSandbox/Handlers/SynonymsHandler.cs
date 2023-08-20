@@ -22,6 +22,8 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 using SymOntoClay.NLP.Internal.PhraseStructure;
 using System;
 using System.Collections.Generic;
@@ -34,15 +36,15 @@ namespace TestSandbox.Handlers
 {
     public class SynonymsHandler
     {
-        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
 
         public void Run()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             Case1();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private void Case1()
@@ -53,12 +55,12 @@ namespace TestSandbox.Handlers
 
             var synonymsList = GetSynonyms("to");
 
-            _logger.Log($"synonymsList = {synonymsList.WritePODListToString()}");
+            _logger.Info($"synonymsList = {synonymsList.WritePODListToString()}");
         }
 
         private List<string> GetSynonyms(string name)
         {
-            _logger.Log($"name = {name}");
+            _logger.Info($"name = {name}");
 
             var result = new List<string>();
 
@@ -68,15 +70,15 @@ namespace TestSandbox.Handlers
             {
                 var futureProcessedList = new List<string>();
 
-                _logger.Log($"currentProcessedList = {currentProcessedList.WritePODListToString()}");
+                _logger.Info($"currentProcessedList = {currentProcessedList.WritePODListToString()}");
 
                 foreach (var processedItem in currentProcessedList)
                 {
-                    _logger.Log($"processedItem = {processedItem}");
+                    _logger.Info($"processedItem = {processedItem}");
 
                     var synonymsList = GetSynonymsDirectly(processedItem);
 
-                    _logger.Log($"synonymsList = {synonymsList.WritePODListToString()}");
+                    _logger.Info($"synonymsList = {synonymsList.WritePODListToString()}");
 
                     if(synonymsList == null)
                     {
@@ -85,7 +87,7 @@ namespace TestSandbox.Handlers
 
                     foreach(var item in synonymsList)
                     {
-                        _logger.Log($"item = {item}");
+                        _logger.Info($"item = {item}");
 
                         if (item == name || result.Contains(item))
                         {
@@ -97,7 +99,7 @@ namespace TestSandbox.Handlers
                     }
                 }
 
-                _logger.Log($"futureProcessedList = {futureProcessedList.WritePODListToString()}");
+                _logger.Info($"futureProcessedList = {futureProcessedList.WritePODListToString()}");
 
                 currentProcessedList = futureProcessedList;
             }
@@ -107,7 +109,7 @@ namespace TestSandbox.Handlers
 
         private List<string> GetSynonymsDirectly(string name)
         {
-            _logger.Log($"name = {name}");
+            _logger.Info($"name = {name}");
 
             if(_synonymsDict.ContainsKey(name))
             {

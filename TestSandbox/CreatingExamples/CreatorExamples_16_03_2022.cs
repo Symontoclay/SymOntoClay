@@ -21,6 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,11 +34,11 @@ namespace TestSandbox.CreatingExamples
 {
     public class CreatorExamples_16_03_2022 : BaseCreatorExamples
     {
-        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
 
         public void Run()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             Variables();
             MemberAccessModifiers();
@@ -51,7 +53,7 @@ namespace TestSandbox.CreatingExamples
             ContinueLoopStatement();//in process
             BreakLoopStatement();//in process
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private void Variables()

@@ -26,6 +26,8 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,15 +46,15 @@ namespace TestSandbox.Handlers
         }
 
         private readonly IEngineContext _engineContext;
-        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
 
         public void Run()
         {
-            _logger.Log("Begin");
+            _logger.Info("9706D239-E6B0-423F-A485-29199FB3AEEF", "Begin");
 
             CreateCommonRelations();
 
-            _logger.Log("End");
+            _logger.Info("36972AEF-3BF9-4238-B41F-AA3F1047E0A5", "End");
         }
         
         private void CreateCommonRelations()
@@ -86,7 +88,7 @@ namespace TestSandbox.Handlers
             inheritanceItem.SuperName = NameHelper.CreateName("state");
             inheritanceItem.Rank = LogicalValue.TrueValue;
 
-            _logger.Log($"relation = {relation.ToHumanizedString()}");
+            _logger.Info("15521A77-F18C-463D-B109-D5739BC6B8F8", $"relation = {relation.ToHumanizedString()}");
 
             AppendRelationToStorage(relation);
         }
@@ -116,7 +118,7 @@ namespace TestSandbox.Handlers
             inheritanceItem.SuperName = NameHelper.CreateName("state");
             inheritanceItem.Rank = LogicalValue.TrueValue;
 
-            _logger.Log($"relation = {relation.ToHumanizedString()}");
+            _logger.Info("93FBC5A3-E139-4A18-9F56-1916556ECDCC", $"relation = {relation.ToHumanizedString()}");
 
             AppendRelationToStorage(relation);
         }

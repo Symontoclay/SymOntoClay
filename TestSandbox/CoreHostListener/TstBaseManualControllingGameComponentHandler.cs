@@ -36,16 +36,18 @@ using System.Text;
 using System.Threading;
 using TestSandbox.Helpers;
 using TestSandbox.PlatformImplementations;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 
 namespace TestSandbox.CoreHostListener
 {
     public class TstBaseManualControllingGameComponentHandler
     {
-        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
 
         public void Run()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var complexContext = TstEngineContextHelper.CreateAndInitContext();
 
@@ -61,7 +63,7 @@ namespace TestSandbox.CoreHostListener
             npcSettings.HostListener = platformListener;
             npcSettings.PlatformSupport = new PlatformSupportCLIStub();
 
-            _logger.Log($"npcSettings = {npcSettings}");
+            _logger.Info($"npcSettings = {npcSettings}");
 
             var tstBaseManualControllingGameComponent = new TstBaseManualControllingGameComponent(npcSettings, worldContext);
 
@@ -81,7 +83,7 @@ namespace TestSandbox.CoreHostListener
 
             command.ParamsDict[param2Name] = param2Value;
 
-            _logger.Log($"command = {command}");
+            _logger.Info($"command = {command}");
 
 
             methodName = NameHelper.CreateName("shoot");
@@ -98,7 +100,7 @@ namespace TestSandbox.CoreHostListener
 
             gameObjectSettings.HostListener = gunPlatformHostListener;
 
-            _logger.Log($"gameObjectSettings = {gameObjectSettings}");
+            _logger.Info($"gameObjectSettings = {gameObjectSettings}");
 
             var gameObject = new GameObjectImplementation(gameObjectSettings, worldContext);
 
@@ -113,34 +115,34 @@ namespace TestSandbox.CoreHostListener
 
             var manualControlledObjectsList = tstBaseManualControllingGameComponent.GetManualControlledObjects();
 
-            _logger.Log($"manualControlledObjectsList.Count = {manualControlledObjectsList.Count}");
+            _logger.Info($"manualControlledObjectsList.Count = {manualControlledObjectsList.Count}");
 
             tstBaseManualControllingGameComponent.RemoveFromManualControl(gameObject);
 
             manualControlledObjectsList = tstBaseManualControllingGameComponent.GetManualControlledObjects();
 
-            _logger.Log($"manualControlledObjectsList.Count = {manualControlledObjectsList.Count}");
+            _logger.Info($"manualControlledObjectsList.Count = {manualControlledObjectsList.Count}");
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private void ExecuteCommand(TstBaseManualControllingGameComponent tstBaseManualControllingGameComponent, ICommand command)
         {
             var result = tstBaseManualControllingGameComponent.CreateProcess(command, null, null);
 
-            _logger.Log($"result = {result}");
+            _logger.Info($"result = {result}");
 
             if (result.IsSuccessful)
             {
                 var processInfo = result.Process;
 
-                _logger.Log($"processInfo = {processInfo}");
+                _logger.Info($"processInfo = {processInfo}");
 
                 processInfo.Start();
 
                 Thread.Sleep(5000);
 
-                _logger.Log("Cancel");
+                _logger.Info("Cancel");
 
                 processInfo.Cancel();
 

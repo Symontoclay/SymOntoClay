@@ -30,26 +30,28 @@ using System.Text;
 using TestSandbox.CoreHostListener;
 using TestSandbox.PlatformImplementations;
 using SymOntoClay.SoundBuses;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 
 namespace TestSandbox.MonoBehaviourTesting
 {
     public class TstWord: TstMonoBehaviour
     {
-        private readonly IEntityLogger _logger = new LoggerNLogImpementation();
+        private readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
 
         private IWorld _world;
 
         public override void Awake()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var appName = AppDomain.CurrentDomain.FriendlyName;
 
-            _logger.Log($"appName = {appName}");
+            _logger.Info($"appName = {appName}");
 
             var supportBasePath = Path.Combine(Environment.GetEnvironmentVariable("APPDATA"), "SymOntoClay", appName);
 
-            _logger.Log($"supportBasePath = {supportBasePath}");
+            _logger.Info($"supportBasePath = {supportBasePath}");
 
             var logDir = Path.Combine(supportBasePath, "NpcLogs");
 
@@ -79,29 +81,29 @@ namespace TestSandbox.MonoBehaviourTesting
                 EnableRemoteConnection = true
             };
 
-            _logger.Log($"settings = {settings}");
+            _logger.Info($"settings = {settings}");
 
             _world.SetSettings(settings);
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         public override void Start()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             _world.Start();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         public override void Stop()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             _world.Dispose();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
     }
 }

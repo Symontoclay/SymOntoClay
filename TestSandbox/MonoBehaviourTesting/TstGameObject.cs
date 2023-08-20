@@ -21,6 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
@@ -33,14 +35,14 @@ namespace TestSandbox.MonoBehaviourTesting
 {
     public class TstGameObject : TstMonoBehaviour
     {
-        private readonly IEntityLogger _logger = new LoggerNLogImpementation();
+        private readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
 
         private IGameObject _gameObject;
         private string _id;
 
         public override void Awake()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var platformListener = new TstPlatformHostListener();
 
@@ -54,16 +56,16 @@ namespace TestSandbox.MonoBehaviourTesting
 
             _gameObject = WorldFactory.WorldInstance.GetGameObject(settings);
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         public override void Stop()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             _gameObject.Dispose();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
     }
 }

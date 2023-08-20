@@ -28,16 +28,18 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using TestSandbox.PlatformImplementations;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 
 namespace TestSandbox.CoreHostListener
 {
     public class TstCoreHostListener: IHostListener
     {
-        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
 
         public IProcessCreatingResult CreateProcess(ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
-            _logger.Log($"command = {command}");
+            _logger.Info("49EE31D9-812D-4B9E-A81F-CF8185C1ECB0", $"command = {command}");
 
             throw new NotImplementedException();
         }

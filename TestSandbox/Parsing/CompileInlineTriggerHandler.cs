@@ -32,16 +32,18 @@ using TestSandbox.PlatformImplementations;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 
 namespace TestSandbox.Parsing
 {
     public class CompileInlineTriggerHandler
     {
-        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
 
         public void Run()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var context = TstEngineContextHelper.CreateAndInitContext().EngineContext;
 
@@ -50,25 +52,25 @@ namespace TestSandbox.Parsing
             var filesList = FileHelper.GetParsedFilesInfo(context.AppFile, context.Id);
 
 #if DEBUG
-            _logger.Log($"filesList.Count = {filesList.Count}");
+            _logger.Info($"filesList.Count = {filesList.Count}");
 
-            _logger.Log($"filesList = {filesList.WriteListToString()}");
+            _logger.Info($"filesList = {filesList.WriteListToString()}");
 #endif
 
             var parsedFilesList = context.Parser.Parse(filesList, globalStorage.DefaultSettingsOfCodeEntity);
 
 #if DEBUG
-            _logger.Log($"parsedFilesList.Count = {parsedFilesList.Count}");
+            _logger.Info($"parsedFilesList.Count = {parsedFilesList.Count}");
 
-            _logger.Log($"parsedFilesList = {parsedFilesList.WriteListToString()}");
+            _logger.Info($"parsedFilesList = {parsedFilesList.WriteListToString()}");
 #endif
 
             var parsedCodeEntitiesList = LinearizeSubItems(parsedFilesList);
 
 #if DEBUG
-            _logger.Log($"parsedCodeEntitiesList.Count = {parsedCodeEntitiesList.Count}");
+            _logger.Info($"parsedCodeEntitiesList.Count = {parsedCodeEntitiesList.Count}");
 
-            _logger.Log($"parsedCodeEntitiesList = {parsedCodeEntitiesList.WriteListToString()}");
+            _logger.Info($"parsedCodeEntitiesList = {parsedCodeEntitiesList.WriteListToString()}");
 #endif
 
             var metadataStorage = globalStorage.MetadataStorage;
@@ -80,7 +82,7 @@ namespace TestSandbox.Parsing
 
             var inlineTrigger = parsedCodeEntitiesList.FirstOrDefault(p => p.Kind == KindOfCodeEntity.InlineTrigger);
 
-            _logger.Log($"inlineTrigger = {inlineTrigger}");
+            _logger.Info($"inlineTrigger = {inlineTrigger}");
 
             var triggersStorage = globalStorage.TriggersStorage;
 
@@ -89,7 +91,7 @@ namespace TestSandbox.Parsing
             var mainEntity = metadataStorage.MainCodeEntity;
 
 #if DEBUG
-            _logger.Log($"mainEntity = {mainEntity}");
+            _logger.Info($"mainEntity = {mainEntity}");
 #endif
 
             var triggersResolver = context.DataResolversFactory.GetTriggersResolver();
@@ -100,10 +102,10 @@ namespace TestSandbox.Parsing
             var targetTriggersList = triggersResolver.ResolveSystemEventsTriggersList(KindOfSystemEventOfInlineTrigger.Enter, mainEntity.Name, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
 #if DEBUG
-            _logger.Log($"targetTriggersList = {targetTriggersList.WriteListToString()}");
+            _logger.Info($"targetTriggersList = {targetTriggersList.WriteListToString()}");
 #endif
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private List<CodeItem> LinearizeSubItems(List<CodeFile> source)

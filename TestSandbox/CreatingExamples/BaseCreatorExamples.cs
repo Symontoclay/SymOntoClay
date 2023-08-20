@@ -35,12 +35,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using TestSandbox.PlatformImplementations;
 using SymOntoClay.BaseTestLib;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 
 namespace TestSandbox.CreatingExamples
 {
     public abstract class BaseCreatorExamples: IDisposable
     {
-        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
 
         protected BaseCreatorExamples()
             : this(new BaseCreatorExamplesOptions())
@@ -49,14 +51,14 @@ namespace TestSandbox.CreatingExamples
 
         protected BaseCreatorExamples(BaseCreatorExamplesOptions options)
         {
-            _logger.Log($"options = {options}");
+            _logger.Info("66E944F6-3C0A-43C1-A70F-B5B9F238E045", $"options = {options}");
 
             if(string.IsNullOrWhiteSpace(options?.DestDir))
             {
                 _destDir = Path.Combine(Directory.GetCurrentDirectory(), "DestDirOfCreatorExamples");
             }
 
-            _logger.Log($"_destDir = {_destDir}");
+            _logger.Info("C08919DC-2DDB-457B-81DA-2BBA0D6DB617", $"_destDir = {_destDir}");
 
             if (Directory.Exists(_destDir))
             {
@@ -74,7 +76,7 @@ namespace TestSandbox.CreatingExamples
 
             _reportFileName = Path.Combine(_destDir, "report.txt");
 
-            _logger.Log($"_reportFileName = {_reportFileName}");
+            _logger.Info("06B092E7-822C-4032-8F73-FF0C5DA26707", $"_reportFileName = {_reportFileName}");
 
             if (File.Exists(_reportFileName))
             {
@@ -99,8 +101,8 @@ namespace TestSandbox.CreatingExamples
                 throw new ArgumentNullException(nameof(fileContent));
             }
 
-            _logger.Log($"fileContent = {fileContent}");
-            _logger.Log($"fileName = {fileName}");
+            _logger.Info("4D406E02-4CAD-48FB-823F-9A8EB99A6693", $"fileContent = {fileContent}");
+            _logger.Info("47AFB0CF-AC13-4863-BFD0-1249DAE87B5D", $"fileName = {fileName}");
 
             var targetDirectoryName = string.Empty;
 
@@ -118,18 +120,18 @@ namespace TestSandbox.CreatingExamples
             WriteLineToReport(targetDirectoryName);
             WriteLineToReport(" ");
 
-            _logger.Log($"fileName (after) = {fileName}");
-            _logger.Log($"targetDirectoryName = {targetDirectoryName}");
+            _logger.Info("5712120A-42AF-4EBA-A555-7559411D42FD", $"fileName (after) = {fileName}");
+            _logger.Info("A2CF00FC-05C4-4C6F-83C3-14097A57C609", $"targetDirectoryName = {targetDirectoryName}");
 
             var fullDestDirName = Path.Combine(_destDir, targetDirectoryName);
             var fullFileName = Path.Combine(_destDir, fileName); 
 
-            _logger.Log($"fullDestDirName = {fullDestDirName}");
-            _logger.Log($"fullFileName = {fullFileName}");
+            _logger.Info("A8707CC1-5A37-46E8-8E50-9C8F8A915494", $"fullDestDirName = {fullDestDirName}");
+            _logger.Info("08A54688-AA19-4FB5-841B-932596B2752B", $"fullFileName = {fullFileName}");
 
             var relativeExampleHref = $"{_baseRelativeExampleHref}{fileName}";
 
-            _logger.Log($"relativeExampleHref = {relativeExampleHref}");
+            _logger.Info("CC8BCD94-F831-4B81-A535-7962CE94BCBB", $"relativeExampleHref = {relativeExampleHref}");
 
             WriteLineToReport($"<code data-lng='soc' example-href='{relativeExampleHref}'>");
             WriteLineToReport(fileContent);
@@ -151,8 +153,8 @@ namespace TestSandbox.CreatingExamples
 
             var wSpaceDir = wSpaceFile.DirectoryName;
 
-            _logger.Log($"testDir = {testDir}");
-            _logger.Log($"wSpaceDir = {wSpaceDir}");
+            _logger.Info("CC12B555-6871-4743-9E20-26602F7B695A", $"testDir = {testDir}");
+            _logger.Info("1F06C648-9F72-4662-9397-803FCB8E2E4B", $"wSpaceDir = {wSpaceDir}");
 
             var relativeFileName = _defaultRelativeFileName;
 
@@ -167,7 +169,7 @@ namespace TestSandbox.CreatingExamples
 
             var supportBasePath = Path.Combine(testDir, "SysDirs");
 
-            var logDir = Path.Combine(supportBasePath, "NpcLogs");
+            var monitorMessagesDir = Path.Combine(supportBasePath, "NpcMonitorMessages");
 
             var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
 
@@ -190,20 +192,19 @@ namespace TestSandbox.CreatingExamples
                 message => 
                 {
                     WriteLineToReport(NormalizeTextForConsole(message));
-                    _logger.Log(message);
+                    _logger.Info("9049A34F-61F8-4A35-A591-AC24397CEBFA", message);
                 },
                 errorMsg => {
-                    _logger.Error(errorMsg);
+                    _logger.Error("0925690E-24A6-4D53-92BE-1387DF43D65A", errorMsg);
                 }
                 );
 
-            settings.Logging = new LoggingSettings()
+            settings.Monitor = new SymOntoClay.Monitor.Monitor(new SymOntoClay.Monitor.MonitorSettings
             {
-                LogDir = logDir,
+                MessagesDir = monitorMessagesDir,
                 PlatformLoggers = new List<IPlatformLogger>() { callBackLogger },
-                Enable = true,
-                EnableRemoteConnection = true
-            };
+                Enable = true
+            });
 
             instance.SetSettings(settings);
 

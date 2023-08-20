@@ -49,7 +49,7 @@ namespace TestSandbox.Handlers
 
         public void Run()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var platformListener = new TstPlatformHostListener();
 
@@ -81,7 +81,7 @@ namespace TestSandbox.Handlers
 
             Thread.Sleep(5000);
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
     }
 }

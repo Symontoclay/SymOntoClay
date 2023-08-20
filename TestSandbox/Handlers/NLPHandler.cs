@@ -29,6 +29,8 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 using SymOntoClay.NLP;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.NLP.Dicts;
@@ -67,7 +69,7 @@ namespace TestSandbox.Handlers
             var mainDictPath = Path.Combine(Directory.GetCurrentDirectory(), "Dicts", "BigMainDictionary.dict");
 
 #if DEBUG
-            _logger.Log($"mainDictPath = {mainDictPath}");
+            _logger.Info($"mainDictPath = {mainDictPath}");
 #endif
 
             _wordsDict = new JsonDictionary(mainDictPath);
@@ -78,15 +80,15 @@ namespace TestSandbox.Handlers
         private readonly IEngineContext _engineContext;
         private readonly INLPConverter _converter;
         private readonly IWordsDict _wordsDict;
-        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
 
         public void Run()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             Case6();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private void Case6()
@@ -111,21 +113,21 @@ namespace TestSandbox.Handlers
             var ruleInstance = Parse(factStr);
 
 
-            _logger.Log($"ruleInstance = {ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
+            _logger.Info($"ruleInstance = {ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
 
             var converterFactToCG = new ConverterFactToInternalCG(_logger);
 
             var internalCG = converterFactToCG.Convert(ruleInstance, nlpContext);
 
-            _logger.Log($"internalCG = {internalCG}");
+            _logger.Info($"internalCG = {internalCG}");
 
             var dotStr = DotConverter.ConvertToString(internalCG);
 
-            _logger.Log($"dotStr = '{dotStr}'");
+            _logger.Info($"dotStr = '{dotStr}'");
 
 
 
-            //////_logger.Log($"sentenceItem = {sentenceItem}");
+            //////_logger.Info($"sentenceItem = {sentenceItem}");
 
 
 
@@ -139,11 +141,11 @@ namespace TestSandbox.Handlers
 
             var ruleInstance = Parse(factStr);
 
-            _logger.Log($"ruleInstance = {ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
+            _logger.Info($"ruleInstance = {ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
 
             var text = _converter.Convert(ruleInstance, nlpContext);
 
-            _logger.Log($"text = '{text}'");
+            _logger.Info($"text = '{text}'");
         }
 
         private RuleInstance Parse(string text)
@@ -156,17 +158,17 @@ namespace TestSandbox.Handlers
             var text = "Go to green place!";
 
 #if DEBUG
-            _logger.Log($"text = {text}");
+            _logger.Info($"text = {text}");
 #endif
 
             var ruleInstancesList = _converter.Convert(text);
 
-            _logger.Log($"ruleInstancesList.Count = {ruleInstancesList.Count}");
+            _logger.Info($"ruleInstancesList.Count = {ruleInstancesList.Count}");
 
             foreach (var ruleInstance in ruleInstancesList)
             {
-                _logger.Log($"ruleInstance.KindOfRuleInstance = {ruleInstance.KindOfRuleInstance}");
-                _logger.Log($"ruleInstance = {ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
+                _logger.Info($"ruleInstance.KindOfRuleInstance = {ruleInstance.KindOfRuleInstance}");
+                _logger.Info($"ruleInstance = {ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
             }
         }
 
@@ -176,7 +178,7 @@ namespace TestSandbox.Handlers
             var text = "Go to green place!";
 
 #if DEBUG
-            _logger.Log($"text = {text}");
+            _logger.Info($"text = {text}");
 #endif
 
 
@@ -201,47 +203,47 @@ namespace TestSandbox.Handlers
 
             var result = parser.Run(text);
 
-            _logger.Log($"result.Count = {result.Count}");
+            _logger.Info($"result.Count = {result.Count}");
 
             foreach (var item in result)
             {
-                _logger.Log($"item = '{item.ToDbgString()}'");
+                _logger.Info($"item = '{item.ToDbgString()}'");
 
                 compactizer.Run(item);
 
-                _logger.Log($"item (after) = '{item.ToDbgString()}'");
+                _logger.Info($"item (after) = '{item.ToDbgString()}'");
 
                 var plainSentencesList = converterToPlainSentences.Run(item);
 
-                _logger.Log($"plainSentencesList.Count = {plainSentencesList.Count}");
+                _logger.Info($"plainSentencesList.Count = {plainSentencesList.Count}");
 
                 foreach(var plainSentence in plainSentencesList)
                 {
-                    _logger.Log($"plainSentence = '{plainSentence.ToDbgString()}'");
+                    _logger.Info($"plainSentence = '{plainSentence.ToDbgString()}'");
 
                     var conceptualGraph = semanticAnalyzer.Run(plainSentence);
 
                     var conceptualGraphDbgStr = DotConverter.ConvertToString(conceptualGraph);
 
-                    _logger.Log($"conceptualGraphDbgStr = '{conceptualGraphDbgStr}'");
+                    _logger.Info($"conceptualGraphDbgStr = '{conceptualGraphDbgStr}'");
 
 
                     var internalCG = convertorCGToInternal.Convert(conceptualGraph);
 
-                    _logger.Log($"internalCG = {internalCG}");
+                    _logger.Info($"internalCG = {internalCG}");
 
                     var dotStr = DotConverter.ConvertToString(internalCG);
 
-                    _logger.Log($"dotStr = '{dotStr}'");
+                    _logger.Info($"dotStr = '{dotStr}'");
 
                     var ruleInstancesList = converterInternalCGToFact.ConvertConceptualGraph(internalCG);
 
-                    _logger.Log($"ruleInstancesList.Count = {ruleInstancesList.Count}");
+                    _logger.Info($"ruleInstancesList.Count = {ruleInstancesList.Count}");
 
                     foreach (var ruleInstance in ruleInstancesList)
                     {
-                        _logger.Log($"ruleInstance.KindOfRuleInstance = {ruleInstance.KindOfRuleInstance}");
-                        _logger.Log($"ruleInstance = {ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
+                        _logger.Info($"ruleInstance.KindOfRuleInstance = {ruleInstance.KindOfRuleInstance}");
+                        _logger.Info($"ruleInstance = {ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
                     }
                 }
             }
@@ -251,11 +253,11 @@ namespace TestSandbox.Handlers
         {
             var result = _converter.Convert("I like my cat.()!.?,...:;-1234567890 M1$nrg, #erty3, @maror, 3% can't");
 
-            _logger.Log($"result.Count = {result.Count}");
+            _logger.Info($"result.Count = {result.Count}");
 
             foreach(var item in result)
             {
-                _logger.Log($"item = {item.ToHumanizedString()}");
+                _logger.Info($"item = {item.ToHumanizedString()}");
             }
         }
 
@@ -272,8 +274,8 @@ namespace TestSandbox.Handlers
             {
                 n++;
 
-                _logger.Log($"n = {n}");
-                _logger.Log($"item = {item}");
+                _logger.Info($"n = {n}");
+                _logger.Info($"item = {item}");
             }
         }
     }

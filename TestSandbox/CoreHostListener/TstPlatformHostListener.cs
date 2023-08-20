@@ -24,6 +24,7 @@ using Newtonsoft.Json;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
@@ -38,7 +39,7 @@ namespace TestSandbox.CoreHostListener
 {
     public class TstPlatformHostListener
     {
-        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
 
         private static object _lockObj = new object();
 
@@ -58,10 +59,10 @@ namespace TestSandbox.CoreHostListener
         public void GenericCall(CancellationToken cancellationToken, string methodName, bool isNamedParameters,
             Dictionary<string, object> namedParameters, List<object> positionedParameters)
         {
-            _logger.Log($"methodName = '{methodName}'");
-            _logger.Log($"isNamedParameters = {isNamedParameters}");
-            _logger.Log($"namedParameters = {JsonConvert.SerializeObject(namedParameters, Formatting.Indented)}");
-            _logger.Log($"positionedParameters = {JsonConvert.SerializeObject(positionedParameters, Formatting.Indented)}");
+            _logger.Info($"methodName = '{methodName}'");
+            _logger.Info($"isNamedParameters = {isNamedParameters}");
+            _logger.Info($"namedParameters = {JsonConvert.SerializeObject(namedParameters, Formatting.Indented)}");
+            _logger.Info($"positionedParameters = {JsonConvert.SerializeObject(positionedParameters, Formatting.Indented)}");
         }
 
 
@@ -84,12 +85,12 @@ namespace TestSandbox.CoreHostListener
         {
             var name = GetMethodId();
 
-            _logger.Log($"Begin {name}");
+            _logger.Info($"Begin {name}");
 
-            _logger.Log($"{name} entity.InstanceId = {entity.InstanceId}");
-            _logger.Log($"{name} entity.Id = {entity.Id}");
-            _logger.Log($"{name} entity.Position = {entity.Position}");
-            _logger.Log($"{name} speed = {speed}");
+            _logger.Info($"{name} entity.InstanceId = {entity.InstanceId}");
+            _logger.Info($"{name} entity.Id = {entity.Id}");
+            _logger.Info($"{name} entity.Position = {entity.Position}");
+            _logger.Info($"{name} speed = {speed}");
 
             var n = 0;
 
@@ -104,15 +105,15 @@ namespace TestSandbox.CoreHostListener
 
                 Thread.Sleep(1000);
 
-                _logger.Log($"{name} Hi! n = {n}");
+                _logger.Info($"{name} Hi! n = {n}");
 
-                _logger.Log($"{name} Hi! cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");
+                _logger.Info($"{name} Hi! cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");
 
                 cancellationToken.ThrowIfCancellationRequested();
             }
 
 
-            _logger.Log($"End {name}");
+            _logger.Info($"End {name}");
         }
 
         [DebuggerHidden]
@@ -123,16 +124,16 @@ namespace TestSandbox.CoreHostListener
         {
             var name = GetMethodId();
 
-            _logger.Log($"Begin {name}");
+            _logger.Info($"Begin {name}");
 
-            _logger.Log($"{name} navTarget.Kind = {navTarget.Kind}");
+            _logger.Info($"{name} navTarget.Kind = {navTarget.Kind}");
 
             var entity = navTarget.Entity;
 
-            _logger.Log($"{name} entity.InstanceId = {entity.InstanceId}");
-            _logger.Log($"{name} entity.Id = {entity.Id}");
-            _logger.Log($"{name} entity.Position = {entity.Position}");
-            _logger.Log($"{name} speed = {speed}");
+            _logger.Info($"{name} entity.InstanceId = {entity.InstanceId}");
+            _logger.Info($"{name} entity.Id = {entity.Id}");
+            _logger.Info($"{name} entity.Position = {entity.Position}");
+            _logger.Info($"{name} speed = {speed}");
 
             var n = 0;
 
@@ -147,15 +148,15 @@ namespace TestSandbox.CoreHostListener
 
                 Thread.Sleep(1000);
 
-                _logger.Log($"{name} Hi! n = {n}");
+                _logger.Info($"{name} Hi! n = {n}");
 
-                _logger.Log($"{name} Hi! cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");
+                _logger.Info($"{name} Hi! cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");
 
                 cancellationToken.ThrowIfCancellationRequested();
             }
 
 
-            _logger.Log($"End {name}");
+            _logger.Info($"End {name}");
         }
 
 
@@ -176,9 +177,9 @@ namespace TestSandbox.CoreHostListener
         {
             var name = GetMethodId();
 
-            _logger.Log($"Begin {name}");
+            _logger.Info($"Begin {name}");
 
-            _logger.Log($"(entity == null) = {entity == null}");
+            _logger.Info($"(entity == null) = {entity == null}");
 
             if(entity == null)
             {
@@ -189,49 +190,49 @@ namespace TestSandbox.CoreHostListener
 
             entity.Resolve();
 
-            _logger.Log($"{name} entity.InstanceId = {entity.InstanceId}");
-            _logger.Log($"{name} entity.Id = {entity.Id}");
-            _logger.Log($"{name} entity.Position = {entity.Position}");
+            _logger.Info($"{name} entity.InstanceId = {entity.InstanceId}");
+            _logger.Info($"{name} entity.Id = {entity.Id}");
+            _logger.Info($"{name} entity.Position = {entity.Position}");
 
-            _logger.Log($"End {name}");
+            _logger.Info($"End {name}");
         }
 
         [BipedEndpoint]
         private void JumpImpl(CancellationToken cancellationToken)
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         [BipedEndpoint("Aim", DeviceOfBiped.LeftHand, DeviceOfBiped.RightHand)]
         private void AimToImpl(CancellationToken cancellationToken)
         {
-            _logger.Log("AimToImpl Begin");
+            _logger.Info("AimToImpl Begin");
 
-            _logger.Log("AimToImpl End");
+            _logger.Info("AimToImpl End");
         }
 
         [FriendsEndpoints("Aim")]
         [BipedEndpoint("Fire", DeviceOfBiped.LeftHand, DeviceOfBiped.RightHand)]
         private void FireImpl(CancellationToken cancellationToken)
         {
-            _logger.Log("FireImpl Begin");
+            _logger.Info("FireImpl Begin");
 
             for(var i = 0; i < 100; i++)
             {
-                _logger.Log($"FireImpl {i}");
+                _logger.Info($"FireImpl {i}");
 
                 if (cancellationToken.IsCancellationRequested)
                 {
-                    _logger.Log("FireImpl Cancel");
+                    _logger.Info("FireImpl Cancel");
                     return;
                 }
 
                 Thread.Sleep(100);
             }
 
-            _logger.Log("FireImpl End");
+            _logger.Info("FireImpl End");
         }
 
         [DebuggerHidden]
@@ -241,13 +242,13 @@ namespace TestSandbox.CoreHostListener
 #if DEBUG
             var methodId = GetMethodId();
 
-            _logger.Log($"RotateImpl Begin {methodId}; direction = {direction}");
+            _logger.Info($"RotateImpl Begin {methodId}; direction = {direction}");
 #endif
 
 
 
 #if DEBUG
-            _logger.Log($"RotateImpl End {methodId}");
+            _logger.Info($"RotateImpl End {methodId}");
 #endif
         }
 
@@ -256,7 +257,7 @@ namespace TestSandbox.CoreHostListener
         public void RotateToEntityImpl(CancellationToken cancellationToken, IEntity entity,
             float speed = 2)
         {
-            _logger.Log("RotateToEntityImpl Begin");
+            _logger.Info("RotateToEntityImpl Begin");
         }
     }
 }

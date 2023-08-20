@@ -43,10 +43,10 @@ namespace TestSandbox.CoreHostListener
         {
             EmitOnEnter();
 
-            _logger.Log($"methodName = '{methodName}'");
-            _logger.Log($"isNamedParameters = {isNamedParameters}");
-            _logger.Log($"namedParameters = {JsonConvert.SerializeObject(namedParameters, Formatting.Indented, _customConverter)}");
-            _logger.Log($"positionedParameters = {JsonConvert.SerializeObject(positionedParameters, Formatting.Indented, _customConverter)}");
+            _logger.Info($"methodName = '{methodName}'");
+            _logger.Info($"isNamedParameters = {isNamedParameters}");
+            _logger.Info($"namedParameters = {JsonConvert.SerializeObject(namedParameters, Formatting.Indented, _customConverter)}");
+            _logger.Info($"positionedParameters = {JsonConvert.SerializeObject(positionedParameters, Formatting.Indented, _customConverter)}");
 
             EmitOnLeave();
         }
@@ -63,13 +63,13 @@ namespace TestSandbox.CoreHostListener
         {
             EmitOnEnter();
 
-            _logger.Log($"GoToImpl Begin");
-            _logger.Log($"navTarget.Kind = {navTarget.Kind}");
+            _logger.Info($"GoToImpl Begin");
+            _logger.Info($"navTarget.Kind = {navTarget.Kind}");
             var entity = navTarget.Entity;
-            _logger.Log($"entity.InstanceId = {entity.InstanceId}");
-            _logger.Log($"entity.Id = {entity.Id}");
-            _logger.Log($"entity.Position = {entity.Position}");
-            _logger.Log($"_remainingDistance = {_remainingDistance}");
+            _logger.Info($"entity.InstanceId = {entity.InstanceId}");
+            _logger.Info($"entity.Id = {entity.Id}");
+            _logger.Info($"entity.Position = {entity.Position}");
+            _logger.Info($"_remainingDistance = {_remainingDistance}");
 
             if (!_remainingDistance.HasValue)
             {
@@ -80,7 +80,7 @@ namespace TestSandbox.CoreHostListener
             {
                 _remainingDistance = _remainingDistance - _goDelta;
 
-                _logger.Log($"_remainingDistance (after) = {_remainingDistance}");
+                _logger.Info($"_remainingDistance (after) = {_remainingDistance}");
 
                 if (_remainingDistance > 0)
                 {
@@ -88,15 +88,15 @@ namespace TestSandbox.CoreHostListener
                 }
                 else
                 {
-                    _logger.Log($"It completed!!!!!");
+                    _logger.Info($"It completed!!!!!");
 
                     _remainingDistance = null;
                 }
             }
 
-            _logger.Log($"cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");
+            _logger.Info($"cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");
 
-            _logger.Log($"GoToImpl End");
+            _logger.Info($"GoToImpl End");
 
             EmitOnLeave();
         }
@@ -106,7 +106,7 @@ namespace TestSandbox.CoreHostListener
         {
             EmitOnEnter();
 
-            _logger.Log("StopImpl Begin");
+            _logger.Info("StopImpl Begin");
 
             EmitOnLeave();
         }
@@ -116,8 +116,8 @@ namespace TestSandbox.CoreHostListener
         {
             EmitOnEnter();
 
-            _logger.Log("RotateImpl Begin");
-            _logger.Log(direction.ToString());
+            _logger.Info("RotateImpl Begin");
+            _logger.Info(direction.ToString());
 
             EmitOnLeave();
         }
@@ -126,17 +126,17 @@ namespace TestSandbox.CoreHostListener
         [BipedEndpoint("Aim to", DeviceOfBiped.RightHand, DeviceOfBiped.LeftHand)]
         public void AimToImpl(CancellationToken cancellationToken, IEntity entity)
         {
-            _logger.Log("AimToImpl Begin");
-            _logger.Log($"entity.InstanceId = {entity.InstanceId}");
-            _logger.Log($"entity.Id = {entity.Id}");
-            _logger.Log($"entity.Position = {entity.Position}");
+            _logger.Info("AimToImpl Begin");
+            _logger.Info($"entity.InstanceId = {entity.InstanceId}");
+            _logger.Info($"entity.Id = {entity.Id}");
+            _logger.Info($"entity.Position = {entity.Position}");
         }
 
         [DebuggerHidden]
         [BipedEndpoint("Ready For Shoot", DeviceOfBiped.RightHand, DeviceOfBiped.LeftHand)]
         public void ReadyForShootImpl(CancellationToken cancellationToken)
         {
-            _logger.Log("ReadyForShootImpl Begin");
+            _logger.Info("ReadyForShootImpl Begin");
         }
 
         [DebuggerHidden]
@@ -144,7 +144,7 @@ namespace TestSandbox.CoreHostListener
         [BipedEndpoint("Start Shoot", DeviceOfBiped.RightHand, DeviceOfBiped.LeftHand)]
         public void StartShootImpl(CancellationToken cancellationToken)
         {
-            _logger.Log("StartShootImpl Begin");
+            _logger.Info("StartShootImpl Begin");
         }
 
         [DebuggerHidden]
@@ -152,7 +152,7 @@ namespace TestSandbox.CoreHostListener
         [BipedEndpoint("Stop Shoot", DeviceOfBiped.RightHand, DeviceOfBiped.LeftHand)]
         public void StopShootImpl(CancellationToken cancellationToken)
         {
-            _logger.Log("StopShootImpl Begin");
+            _logger.Info("StopShootImpl Begin");
         }
     }
 }

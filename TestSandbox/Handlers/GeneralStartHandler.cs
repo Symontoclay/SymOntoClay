@@ -50,7 +50,7 @@ namespace TestSandbox.Handlers
 
         public void Run()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var platformListener = new FullGeneralized_Tests_HostListener();
 
@@ -66,7 +66,7 @@ namespace TestSandbox.Handlers
 
             Thread.Sleep(100);
 
-            _logger.Log("|||||||||||||");
+            _logger.Info("|||||||||||||");
 
             _npc.Logger.LogChannel("|||||||||||||");
 
@@ -78,11 +78,11 @@ namespace TestSandbox.Handlers
             var factId = _npc.InsertFact("{: see(I, #a) :}");
 
             _npc.Logger.LogChannel("|-|-|-|-|-|-|-|-|-|-|-|-|");
-            _logger.Log("|-|-|-|-|-|-|-|-|-|-|-|-|");
+            _logger.Info("|-|-|-|-|-|-|-|-|-|-|-|-|");
 
             Thread.Sleep(50000);
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
     }
 }

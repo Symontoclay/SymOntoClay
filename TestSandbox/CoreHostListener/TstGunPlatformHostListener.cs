@@ -21,6 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
@@ -32,14 +34,14 @@ namespace TestSandbox.CoreHostListener
 {
     public class TstGunPlatformHostListener
     {
-        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
 
         [BipedEndpoint]
         public void Shoot(CancellationToken cancellationToken)
         {
-            _logger.Log("Begin");
+            _logger.Info("1CD1CC43-BB28-4F09-A45B-374AF9E37B6C", "Begin");
 
-            _logger.Log("End");
+            _logger.Info("A5289F2B-EEF7-456F-975C-C05D830D1F05", "End");
         }
     }
 }

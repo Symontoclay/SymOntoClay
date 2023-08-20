@@ -27,6 +27,8 @@ using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -38,11 +40,11 @@ namespace TestSandbox.CodeExecution
 {
     public class CodeExecutionHandler
     {
-        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
 
         public void Run()
         {
-            _logger.Log("Begin");
+            _logger.Info("0B8F0BCD-44D2-4000-9790-F782E90975EC", "Begin");
 
             var context = TstEngineContextHelper.CreateAndInitContext().EngineContext;
 
@@ -65,7 +67,7 @@ namespace TestSandbox.CodeExecution
             command.OperationCode = OperationCode.PushVal;
             command.Value = strVal;
 
-            _logger.Log($"command = {command}");
+            _logger.Info("3DAB2E7B-0380-431F-924A-33BEE41E3F35", $"command = {command}");
 
             compiledFunctionBody.Commands[0] = command;
 
@@ -76,7 +78,7 @@ namespace TestSandbox.CodeExecution
             command.Value = identifier;
             command.Position = 1;
 
-            _logger.Log($"command = {command}");
+            _logger.Info("972642DC-1B73-4713-A30A-02C030936DE9", $"command = {command}");
 
             compiledFunctionBody.Commands[1] = command;
 
@@ -86,7 +88,7 @@ namespace TestSandbox.CodeExecution
             command.KindOfOperator = KindOfOperator.LeftRightStream;
             command.Position = 2;
 
-            _logger.Log($"command = {command}");
+            _logger.Info("96A522D7-2A66-4838-BC2F-B429391E0AEC", $"command = {command}");
 
             compiledFunctionBody.Commands[2] = command;
 
@@ -94,12 +96,12 @@ namespace TestSandbox.CodeExecution
             command.OperationCode = OperationCode.Return;
             command.Position = 3;
 
-            _logger.Log($"command = {command}");
+            _logger.Info("24199F57-28C9-4A08-A8F5-09ACBA24BBEC", $"command = {command}");
 
             compiledFunctionBody.Commands[3] = command;
 
-            _logger.Log($"compiledFunctionBody = {compiledFunctionBody}");
-            _logger.Log($"compiledFunctionBody = {compiledFunctionBody.ToDbgString()}");
+            _logger.Info("8FCCA2FF-90E3-426D-879B-46F0FBBCD316", $"compiledFunctionBody = {compiledFunctionBody}");
+            _logger.Info("550A8C8E-1F86-4444-B577-856BE9BF7057", $"compiledFunctionBody = {compiledFunctionBody.ToDbgString()}");
 
             var codeFrame = new CodeFrame();
             codeFrame.CompiledFunctionBody = compiledFunctionBody;
@@ -110,8 +112,8 @@ namespace TestSandbox.CodeExecution
 
             codeFrame.LocalContext = codeFrameLocalContext;
 
-            _logger.Log($"codeFrame = {codeFrame}");
-            _logger.Log($"codeFrame = {codeFrame.ToDbgString()}");
+            _logger.Info("8DCC3C1B-B548-4FBB-B6EB-A0086AF10601", $"codeFrame = {codeFrame}");
+            _logger.Info("621EE055-AFB2-4B1E-BDC7-17D999C62329", $"codeFrame = {codeFrame.ToDbgString()}");
 
             var threadExecutor = new SyncThreadExecutor(context);
 
@@ -119,7 +121,7 @@ namespace TestSandbox.CodeExecution
 
             threadExecutor.Start();
 
-            _logger.Log("End");
+            _logger.Info("078C6419-54F8-46FE-A11B-DD50DE4FE201", "End");
         }
     }
 }

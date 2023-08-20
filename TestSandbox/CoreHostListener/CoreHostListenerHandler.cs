@@ -37,16 +37,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using TestSandbox.Helpers;
 using TestSandbox.PlatformImplementations;
+using SymOntoClay.Monitor.Common;
 
 namespace TestSandbox.CoreHostListener
 {
     public class CoreHostListenerHandler
     {
-        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
 
         public void Run()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var complexContext = TstEngineContextHelper.CreateAndInitContext();
 
@@ -104,24 +105,24 @@ namespace TestSandbox.CoreHostListener
 
 
 
-            _logger.Log($"command = {command}");
+            _logger.Info($"command = {command}");
 
 
             var endPointInfo = endPointsResolver.GetEndpointInfo(command, endpointsRegistries, null);
 
-            _logger.Log($"endPointInfo = {endPointInfo}");
+            _logger.Info($"endPointInfo = {endPointInfo}");
 
             if(endPointInfo != null)
             {
                 var processInfo = endPointActivator.Activate(endPointInfo, command, null, null);
 
-                _logger.Log($"processInfo = {processInfo}");
+                _logger.Info($"processInfo = {processInfo}");
 
                 processInfo.Start();
 
                 Thread.Sleep(10000);
 
-                _logger.Log("Cancel");
+                _logger.Info("Cancel");
 
                 processInfo.Cancel();
 
@@ -135,19 +136,19 @@ namespace TestSandbox.CoreHostListener
 
             endPointInfo = endPointsResolver.GetEndpointInfo(command, endpointsRegistries, null);
 
-            _logger.Log($"endPointInfo = {endPointInfo}");
+            _logger.Info($"endPointInfo = {endPointInfo}");
 
             if (endPointInfo != null)
             {
                 var processInfo = endPointActivator.Activate(endPointInfo, command, null, null);
 
-                _logger.Log($"processInfo = {processInfo}");
+                _logger.Info($"processInfo = {processInfo}");
 
                 processInfo.Start();
 
                 Thread.Sleep(10000);
 
-                _logger.Log("Cancel");
+                _logger.Info("Cancel");
 
                 processInfo.Cancel();
 
@@ -178,7 +179,7 @@ namespace TestSandbox.CoreHostListener
 
 
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
     }
 }

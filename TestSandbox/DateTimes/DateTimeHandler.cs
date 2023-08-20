@@ -22,6 +22,8 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 using SymOntoClay.UnityAsset.Core.Internal.DateAndTime;
 using System;
 using System.Collections.Generic;
@@ -33,11 +35,11 @@ namespace TestSandbox.DateTimes
 {
     public class DateTimeHandler
     {
-        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
 
         public void Run()
         {
-            _logger.Log("Begin");
+            _logger.Info("318FB3BC-0385-4398-B412-9F7912CD4FAA", "Begin");
 
             var commonActiveContext = new ActivePeriodicObjectCommonContext();
 
@@ -48,9 +50,9 @@ namespace TestSandbox.DateTimes
 
             Thread.Sleep(10000);
 
-            _logger.Log($"dateTimeProvider.CurrentTiks = {dateTimeProvider.CurrentTiks}");
+            _logger.Info("CA8ABEE8-6991-49CA-B002-DAAC33B90B1A", $"dateTimeProvider.CurrentTiks = {dateTimeProvider.CurrentTiks}");
 
-            _logger.Log("End");
+            _logger.Info("7250B82C-E27B-4139-BD88-EF70629095D4", "End");
         }
     }
 }

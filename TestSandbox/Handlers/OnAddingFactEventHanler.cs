@@ -29,6 +29,8 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Storage.LogicalStoraging;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,18 +51,18 @@ namespace TestSandbox.Handlers
             _engineContext = TstEngineContextHelper.CreateAndInitContext(factorySettings).EngineContext;
         }
 
-        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
         private readonly IEngineContext _engineContext;
 
         event Func<RuleInstance, IAddFactOrRuleResult> OnAddingFact;
 
         public void Run()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             Case1();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private void Case1()
@@ -80,12 +82,12 @@ namespace TestSandbox.Handlers
 
             var result = AddingFactHelper.CallEvent(OnAddingFact, ruleInstance, fuzzyLogicResolver, localCodeExecutionContext, _logger);
 
-            _logger.Log($"result = {result}");
+            _logger.Info($"result = {result}");
         }
 
         private IAddFactOrRuleResult Handler1(RuleInstance ruleInstance)
         {
-            _logger.Log($"ruleInstance = {ruleInstance.ToHumanizedString()}");
+            _logger.Info($"ruleInstance = {ruleInstance.ToHumanizedString()}");
 
             return new AddFactOrRuleResult()
             {
@@ -96,7 +98,7 @@ namespace TestSandbox.Handlers
 
         private IAddFactOrRuleResult Handler2(RuleInstance ruleInstance)
         {
-            _logger.Log($"ruleInstance = {ruleInstance.ToHumanizedString()}");
+            _logger.Info($"ruleInstance = {ruleInstance.ToHumanizedString()}");
 
             return new AddFactOrRuleResult()
             {
@@ -107,7 +109,7 @@ namespace TestSandbox.Handlers
 
         private IAddFactOrRuleResult Handler3(RuleInstance ruleInstance)
         {
-            _logger.Log($"ruleInstance = {ruleInstance.ToHumanizedString()}");
+            _logger.Info($"ruleInstance = {ruleInstance.ToHumanizedString()}");
 
             return new AddFactOrRuleResult()
             {

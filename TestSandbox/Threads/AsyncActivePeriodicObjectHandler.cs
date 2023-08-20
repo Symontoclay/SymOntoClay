@@ -23,6 +23,8 @@ SOFTWARE.*/
 using NLog;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -33,11 +35,11 @@ namespace TestSandbox.Threads
 {
     public class AsyncActivePeriodicObjectHandler
     {
-        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
 
         public void Run()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var commonActiveContext = new ActivePeriodicObjectCommonContext();
 
@@ -53,19 +55,19 @@ namespace TestSandbox.Threads
                 PeriodicMethod = NRun_2
             };
 
-            _logger.Log($"activeObject.IsWaited (0) = {activeObject.IsWaited}");
-            _logger.Log($"activeObject.IsActive (0) = {activeObject.IsActive}");
+            _logger.Info($"activeObject.IsWaited (0) = {activeObject.IsWaited}");
+            _logger.Info($"activeObject.IsActive (0) = {activeObject.IsActive}");
 
             var taskValue = activeObject.Start();
 
-            _logger.Log($"taskValue = {taskValue}");
+            _logger.Info($"taskValue = {taskValue}");
 
             activeObject2.Start();
 
             Thread.Sleep(10000);
 
-            _logger.Log($"activeObject.IsWaited = {activeObject.IsWaited}");
-            _logger.Log($"activeObject.IsActive = {activeObject.IsActive}");
+            _logger.Info($"activeObject.IsWaited = {activeObject.IsWaited}");
+            _logger.Info($"activeObject.IsActive = {activeObject.IsActive}");
 
             commonActiveContext.Lock();
 
@@ -73,8 +75,8 @@ namespace TestSandbox.Threads
 
             Thread.Sleep(1000);
 
-            _logger.Log($"activeObject.IsWaited (2) = {activeObject.IsWaited}");
-            _logger.Log($"activeObject.IsActive (2) = {activeObject.IsActive}");
+            _logger.Info($"activeObject.IsWaited (2) = {activeObject.IsWaited}");
+            _logger.Info($"activeObject.IsActive (2) = {activeObject.IsActive}");
 
             Thread.Sleep(1000);
 
@@ -82,8 +84,8 @@ namespace TestSandbox.Threads
 
             Thread.Sleep(1000);
 
-            _logger.Log($"activeObject.IsWaited (3) = {activeObject.IsWaited}");
-            _logger.Log($"activeObject.IsActive (3) = {activeObject.IsActive}");
+            _logger.Info($"activeObject.IsWaited (3) = {activeObject.IsWaited}");
+            _logger.Info($"activeObject.IsActive (3) = {activeObject.IsActive}");
 
 
 
@@ -101,7 +103,7 @@ namespace TestSandbox.Threads
 
             Thread.Sleep(1000);
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private int _n = 0;
@@ -111,7 +113,7 @@ namespace TestSandbox.Threads
         {
             _n++;
 
-            _logger.Log($"_n = {_n}");
+            _logger.Info($"_n = {_n}");
 
 
             return true;
@@ -121,7 +123,7 @@ namespace TestSandbox.Threads
         {
             _m++;
 
-            _logger.Log($"_m = {_m}");
+            _logger.Info($"_m = {_m}");
 
 
             return true;

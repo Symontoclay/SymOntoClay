@@ -34,6 +34,8 @@ using TestSandbox.PlatformImplementations;
 using TestSandbox.SoundBusHandler;
 using TestSandbox.Helpers;
 using SymOntoClay.BaseTestLib;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 
 namespace TestSandbox.Handlers
 {
@@ -49,7 +51,7 @@ namespace TestSandbox.Handlers
             _world = TstEngineContextHelper.CreateWorld(factorySettings);
         }
 
-        protected static readonly IEntityLogger _logger = new LoggerNLogImpementation();
+        protected static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
 
         protected IWorld _world;
         protected IHumanoidNPC _npc;

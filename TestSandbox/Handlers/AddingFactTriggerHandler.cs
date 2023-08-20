@@ -48,7 +48,7 @@ namespace TestSandbox.Handlers
 
         public void Run()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var platformListener = new TstPlatformHostListener();
 
@@ -61,7 +61,7 @@ namespace TestSandbox.Handlers
 
             Thread.Sleep(100);
 
-            _logger.Log("|||||||||||||");
+            _logger.Info("|||||||||||||");
 
             _npc.Logger.LogChannel("|||||||||||||");
 
@@ -85,12 +85,12 @@ namespace TestSandbox.Handlers
 
             Thread.Sleep(50000);
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private IAddFactOrRuleResult LogicalStorage_OnAddingFact(RuleInstance ruleInstance)
         {
-            _logger.Log($"ruleInstance = {ruleInstance.ToHumanizedString()}");
+            _logger.Info($"ruleInstance = {ruleInstance.ToHumanizedString()}");
 
             return new AddFactOrRuleResult() { 
                 KindOfResult = KindOfAddFactOrRuleResult.Accept,

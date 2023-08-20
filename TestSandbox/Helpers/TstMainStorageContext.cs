@@ -34,7 +34,7 @@ namespace TestSandbox.Helpers
     public class TstMainStorageContext : MainStorageContext
     {
         public TstMainStorageContext()
-            : base(new LoggerNLogImpementation())
+            : base(new MonitorLoggerNLogImpementation())
         {
             EngineContextHelper.BaseInitMainStorageContext(this, new StandaloneStorageSettings(), KindOfStorage.Host);
         }

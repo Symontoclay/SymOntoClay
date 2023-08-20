@@ -41,7 +41,7 @@ namespace TestSandbox.Handlers
     {
         public void Run()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var platformListener = new TstBattleRoyaleHostListener();
 
@@ -69,7 +69,7 @@ namespace TestSandbox.Handlers
 
             ////settings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Navs\waypoint\waypoint.sobj");
 
-            ////_logger.Log($"settings.HostFile = {settings.HostFile}");
+            ////_logger.Info($"settings.HostFile = {settings.HostFile}");
 
 
 
@@ -77,7 +77,7 @@ namespace TestSandbox.Handlers
 
             Thread.Sleep(100000);
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
     }
 }
@@ -99,8 +99,8 @@ namespace TestSandbox.Handlers
             settings.PlatformSupport = this;
 
 #if DEBUG
-            Debug.Log($"BaseElementaryArea Awake ('{name}') gameObject.GetInstanceID() = {gameObject.GetInstanceID()}");
-            Debug.Log($"BaseElementaryArea Awake ('{name}') Id = {Id}");
+            Debug.Info($"BaseElementaryArea Awake ('{name}') gameObject.GetInstanceID() = {gameObject.GetInstanceID()}");
+            Debug.Info($"BaseElementaryArea Awake ('{name}') Id = {Id}");
             if (GetType() == typeof(Waypoint))
             {
                 settings.Categories = new List<string>() { "waypoint" };

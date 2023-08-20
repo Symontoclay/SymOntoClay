@@ -28,6 +28,8 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Parsing.Internal;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +41,7 @@ namespace TestSandbox.LogicalDatabase
 {
     public class LogicalDatabaseHandler
     {
-        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
         private readonly ComplexTestEngineContext _genericContext;
         private readonly IEngineContext _context;
 
@@ -51,11 +53,11 @@ namespace TestSandbox.LogicalDatabase
 
         public void Run()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             RunCase5();
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private void RunCase5()
@@ -94,7 +96,7 @@ namespace TestSandbox.LogicalDatabase
 
         private void RunGettingLongHashCode()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var queryStr = string.Empty;
 
@@ -107,8 +109,8 @@ namespace TestSandbox.LogicalDatabase
             queryStr = "{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}";
             var b = ParseQueryStringAndGetLongHashCode(queryStr);
 
-            _logger.Log($"a = {a}");
-            _logger.Log($"b = {b}");
+            _logger.Info($"a = {a}");
+            _logger.Info($"b = {b}");
 
             if (a != b)
             {
@@ -121,24 +123,24 @@ namespace TestSandbox.LogicalDatabase
             queryStr = "{: ?x(?y, ?z) :}";
             ParseQueryStringAndGetLongHashCode(queryStr);
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private void RunGettingInheritanceInformation()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var queryStr = string.Empty;
 
             queryStr = "{: male(#Tom) :}";
             ParseQueryStringAndGetInheritanceInformation(queryStr);
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private void RunCase2()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var queryStr = string.Empty;
 
@@ -157,12 +159,12 @@ namespace TestSandbox.LogicalDatabase
             queryStr = "{: ?z(#Alisa_12, ?x) :}";
             Search(queryStr);
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private void RunCase1()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var queryStr = string.Empty;
 
@@ -182,12 +184,12 @@ namespace TestSandbox.LogicalDatabase
 
 
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private void ParseFacts()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             var queryStr = string.Empty;
 
@@ -199,12 +201,12 @@ namespace TestSandbox.LogicalDatabase
 
 
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private ulong ParseQueryStringAndGetLongHashCode(string queryStr)
         {
-            _logger.Log($"queryStr = {queryStr}");
+            _logger.Info($"queryStr = {queryStr}");
 
             var result = new CodeFile();
             result.IsMain = false;
@@ -220,27 +222,27 @@ namespace TestSandbox.LogicalDatabase
 
             var parsedQuery = parser.Result;
 
-            _logger.Log($"parsedQuery = {parsedQuery}");
+            _logger.Info($"parsedQuery = {parsedQuery}");
 
-            _logger.Log($"DebugHelperForRuleInstance.ToString(parsedQuery) = {DebugHelperForRuleInstance.ToString(parsedQuery)}");
+            _logger.Info($"DebugHelperForRuleInstance.ToString(parsedQuery) = {DebugHelperForRuleInstance.ToString(parsedQuery)}");
 
 
             parsedQuery.CheckDirty();
 
             var longConditionalHashCode = parsedQuery.GetLongConditionalHashCode();
 
-            _logger.Log($"longConditionalHashCode = {longConditionalHashCode}");
+            _logger.Info($"longConditionalHashCode = {longConditionalHashCode}");
 
             var longHashCode = parsedQuery.GetLongHashCode();
 
-            _logger.Log($"longHashCode = {longHashCode}");
+            _logger.Info($"longHashCode = {longHashCode}");
 
             return longHashCode;
         }
 
         private void ParseQueryStringAndGetInheritanceInformation(string queryStr)
         {
-            _logger.Log($"queryStr = {queryStr}");
+            _logger.Info($"queryStr = {queryStr}");
 
             var result = new CodeFile();
             result.IsMain = false;
@@ -256,7 +258,7 @@ namespace TestSandbox.LogicalDatabase
 
             var parsedQuery = parser.Result;
 
-            _logger.Log($"parsedQuery = {parsedQuery}");
+            _logger.Info($"parsedQuery = {parsedQuery}");
 
             var inheritanceRelationsList = parsedQuery.GetInheritanceRelations();
 
@@ -267,7 +269,7 @@ namespace TestSandbox.LogicalDatabase
 
             foreach (var inheritanceRelation in inheritanceRelationsList)
             {
-                _logger.Log($"inheritanceRelation = {inheritanceRelation}");
+                _logger.Info($"inheritanceRelation = {inheritanceRelation}");
 
                 var inheritanceItem = new InheritanceItem();
 
@@ -280,12 +282,12 @@ namespace TestSandbox.LogicalDatabase
                 inheritanceItemsList.Add(inheritanceItem);
             }
 
-            _logger.Log($"inheritanceItemsList = {inheritanceItemsList.WriteListToString()}");
+            _logger.Info($"inheritanceItemsList = {inheritanceItemsList.WriteListToString()}");
         }
 
         private void ParseQueryString(string queryStr)
         {
-            _logger.Log($"queryStr = {queryStr}");
+            _logger.Info($"queryStr = {queryStr}");
 
             var result = new CodeFile();
             result.IsMain = false;
@@ -302,7 +304,7 @@ namespace TestSandbox.LogicalDatabase
             var parsedQuery = parser.Result;
 
 
-            _logger.Log($"DebugHelperForRuleInstance.ToString(parsedQuery) = {DebugHelperForRuleInstance.ToString(parsedQuery)}");
+            _logger.Info($"DebugHelperForRuleInstance.ToString(parsedQuery) = {DebugHelperForRuleInstance.ToString(parsedQuery)}");
 
 
 
@@ -313,7 +315,7 @@ namespace TestSandbox.LogicalDatabase
 
         private void Search(string queryStr)
         {
-            _logger.Log($"queryStr = {queryStr}");
+            _logger.Info($"queryStr = {queryStr}");
 
             var result = new CodeFile();
             result.IsMain = false;
@@ -330,7 +332,7 @@ namespace TestSandbox.LogicalDatabase
             var parsedQuery = parser.Result;
 
 
-            _logger.Log($"DebugHelperForRuleInstance.ToString(parsedQuery) = {DebugHelperForRuleInstance.ToString(parsedQuery)}");
+            _logger.Info($"DebugHelperForRuleInstance.ToString(parsedQuery) = {DebugHelperForRuleInstance.ToString(parsedQuery)}");
 
 
 
@@ -349,24 +351,24 @@ namespace TestSandbox.LogicalDatabase
             var searchResult = searcher.Run(searchOptions);
 
 
-            _logger.Log($"searchResult.IsSuccess = {searchResult.IsSuccess}");
-            _logger.Log($"searchResult.Items.Count = {searchResult.Items.Count}");
+            _logger.Info($"searchResult.IsSuccess = {searchResult.IsSuccess}");
+            _logger.Info($"searchResult.Items.Count = {searchResult.Items.Count}");
 
-            _logger.Log(DebugHelperForLogicalSearchResult.ToString(searchResult));
+            _logger.Info(DebugHelperForLogicalSearchResult.ToString(searchResult));
 
             foreach (var item in searchResult.Items)
             {
-                _logger.Log($"item.ResultOfVarOfQueryToRelationList.Count = {item.ResultOfVarOfQueryToRelationList.Count}");
+                _logger.Info($"item.ResultOfVarOfQueryToRelationList.Count = {item.ResultOfVarOfQueryToRelationList.Count}");
 
                 foreach (var resultOfVarOfQueryToRelation in item.ResultOfVarOfQueryToRelationList)
                 {
                     var varName = resultOfVarOfQueryToRelation.NameOfVar;
 
-                    _logger.Log($"varName = {varName}");
+                    _logger.Info($"varName = {varName}");
 
                     var foundNode = resultOfVarOfQueryToRelation.FoundExpression;
 
-                    _logger.Log($"DebugHelperForRuleInstance.ToString(foundNode) = {DebugHelperForRuleInstance.ToString(foundNode)}");
+                    _logger.Info($"DebugHelperForRuleInstance.ToString(foundNode) = {DebugHelperForRuleInstance.ToString(foundNode)}");
                 }
 
             }

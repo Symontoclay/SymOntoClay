@@ -41,27 +41,50 @@ namespace TestSandbox.PlatformImplementations
         {
         }
 
+        /// <inheritdoc/>
         public void WriteLn(string message)
         {
             Console.WriteLine(message);
         }
 
-        public void WriteLnRawLogChannel(string message)
+        /// <inheritdoc/>
+        public void WriteLnRawOutput(string message)
         {
             Console.WriteLine(message);
         }
 
-        public void WriteLnRawLog(string message)
+        /// <inheritdoc/>
+        public void WriteLnRawTrace(string message)
         {
             Console.WriteLine(message);
         }
 
-        public void WriteLnRawWarning(string message)
+        /// <inheritdoc/>
+        public void WriteLnRawDebug(string message)
         {
             Console.WriteLine(message);
         }
 
+        /// <inheritdoc/>
+        public void WriteLnRawInfo(string message)
+        {
+            Console.WriteLine(message);
+        }
+
+        /// <inheritdoc/>
+        public void WriteLnRawWarn(string message)
+        {
+            Console.WriteLine(message);
+        }
+
+        /// <inheritdoc/>
         public void WriteLnRawError(string message)
+        {
+            Console.WriteLine(message);
+        }
+
+        /// <inheritdoc/>
+        public void WriteLnRawFatal(string message)
         {
             Console.WriteLine(message);
         }

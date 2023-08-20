@@ -33,16 +33,18 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Helpers;
 using System.Threading;
+using SymOntoClay.Monitor.NLog;
+using SymOntoClay.Monitor.Common;
 
 namespace TestSandbox.CodeExecution
 {
     public class ActivateMainEntityHandler
     {
-        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
 
         public void Run()
         {
-            _logger.Log("Begin");
+            _logger.Info("063417C9-B09E-414A-B62A-A06E5A8DAC4E", "Begin");
 
             var context = TstEngineContextHelper.CreateAndInitContext().EngineContext;
 
@@ -51,25 +53,25 @@ namespace TestSandbox.CodeExecution
             var filesList = FileHelper.GetParsedFilesInfo(context.AppFile, context.Id);
 
 #if DEBUG
-            _logger.Log($"filesList.Count = {filesList.Count}");
+            _logger.Info("54D2CA26-DF1B-457E-92DE-521225BC9DF4", $"filesList.Count = {filesList.Count}");
 
-            _logger.Log($"filesList = {filesList.WriteListToString()}");
+            _logger.Info("E32EDBFA-7ACF-4380-BCA6-26129BFE6C54", $"filesList = {filesList.WriteListToString()}");
 #endif
 
             var parsedFilesList = context.Parser.Parse(filesList, globalStorage.DefaultSettingsOfCodeEntity);
 
 #if DEBUG
-            _logger.Log($"parsedFilesList.Count = {parsedFilesList.Count}");
+            _logger.Info("5C47577F-86E5-49DB-BA60-C71C060E6DE6", $"parsedFilesList.Count = {parsedFilesList.Count}");
 
-            _logger.Log($"parsedFilesList = {parsedFilesList.WriteListToString()}");
+            _logger.Info("E8F6F152-E5FA-4AD3-9685-591D37D00FBA", $"parsedFilesList = {parsedFilesList.WriteListToString()}");
 #endif
 
             var parsedCodeEntitiesList = LinearizeSubItems(parsedFilesList);
 
 #if DEBUG
-            _logger.Log($"parsedCodeEntitiesList.Count = {parsedCodeEntitiesList.Count}");
+            _logger.Info("3AA315F2-F51B-44C9-A306-1CF0D67598E4", $"parsedCodeEntitiesList.Count = {parsedCodeEntitiesList.Count}");
 
-            _logger.Log($"parsedCodeEntitiesList = {parsedCodeEntitiesList.WriteListToString()}");
+            _logger.Info("F7C9516D-845A-4DEC-8D23-2B53870B773F", $"parsedCodeEntitiesList = {parsedCodeEntitiesList.WriteListToString()}");
 #endif
 
             var metadataStorage = globalStorage.MetadataStorage;
@@ -81,7 +83,7 @@ namespace TestSandbox.CodeExecution
 
             var inlineTrigger = parsedCodeEntitiesList.FirstOrDefault(p => p.Kind == KindOfCodeEntity.InlineTrigger);
 
-            _logger.Log($"inlineTrigger = {inlineTrigger}");
+            _logger.Info("551208E0-3E80-4059-8C76-8B331DC5E036", $"inlineTrigger = {inlineTrigger}");
 
             var triggersStorage = globalStorage.TriggersStorage;
 
@@ -90,7 +92,7 @@ namespace TestSandbox.CodeExecution
             var mainEntity = metadataStorage.MainCodeEntity;
 
 #if DEBUG
-            _logger.Log($"mainEntity = {mainEntity}");
+            _logger.Info("8400A737-96A9-40AF-987D-329A723827AB", $"mainEntity = {mainEntity}");
 #endif
 
             var triggersResolver = context.DataResolversFactory.GetTriggersResolver();
@@ -101,7 +103,7 @@ namespace TestSandbox.CodeExecution
             var targetTriggersList = triggersResolver.ResolveSystemEventsTriggersList(KindOfSystemEventOfInlineTrigger.Enter, mainEntity.Name, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
 #if DEBUG
-            _logger.Log($"targetTriggersList = {targetTriggersList.WriteListToString()}");
+            _logger.Info("19A255FA-44E8-4B4C-995B-7A5D946E69C2", $"targetTriggersList = {targetTriggersList.WriteListToString()}");
 #endif
 
             var instancesStorage = context.InstancesStorage;
@@ -110,7 +112,7 @@ namespace TestSandbox.CodeExecution
 
             Thread.Sleep(10000);
 
-            _logger.Log("End");
+            _logger.Info("6C2F10BC-3376-462E-AA32-E75422AF78D2", "End");
         }
 
         private List<CodeItem> LinearizeSubItems(List<CodeFile> source)

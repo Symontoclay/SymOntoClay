@@ -22,6 +22,8 @@ SOFTWARE.*/
 
 using SymOntoClay.CLI;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,23 +35,23 @@ namespace TestSandbox.Handlers
 {
     public class CLICommandParserHandler
     {
-        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
 
         public void Run()
         {
-            _logger.Log("Begin");
+            _logger.Info("2B26F375-9896-447B-8D4F-1596EE15FB1A", "Begin");
 
             var commandLine = "";
 
-            _logger.Log($"commandLine = '{commandLine}'");
+            _logger.Info("D3BD027C-DC4D-40CB-A0A8-C3F7D117B2D5", $"commandLine = '{commandLine}'");
 
             var args = ParseCommandLine(commandLine);
 
             var command = CLICommandParser.Parse(args);
 
-            _logger.Log($"command = {command}");
+            _logger.Info("10AFCA78-28A0-4278-91ED-284BE22B800D", $"command = {command}");
 
-            _logger.Log("End");
+            _logger.Info("2C97FCD9-83E7-438D-B5F6-C4D91B5AB170", "End");
         }
 
         private string[] ParseCommandLine(string value)

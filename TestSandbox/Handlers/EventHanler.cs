@@ -21,6 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,13 +34,13 @@ namespace TestSandbox.Handlers
 {
     public class EventHanler
     {
-        private static readonly IEntityLogger _logger = new LoggerNLogImpementation();
+        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
         
         event Func<int, int> OnEv;
 
         public void Run()
         {
-            _logger.Log("Begin");
+            _logger.Info("Begin");
 
             OnEv += Handler1;
             OnEv += Handler2;
@@ -46,35 +48,35 @@ namespace TestSandbox.Handlers
 
             var rez = OnEv(12);
 
-            _logger.Log($"rez = {rez}");
+            _logger.Info($"rez = {rez}");
 
             foreach(var item in OnEv.GetInvocationList())
             {
                 var r = item.DynamicInvoke(16);
 
-                _logger.Log($"r = {r}");
+                _logger.Info($"r = {r}");
             }
 
-            _logger.Log("End");
+            _logger.Info("End");
         }
 
         private int Handler1(int value)
         {
-            _logger.Log($"value = {value}");
+            _logger.Info($"value = {value}");
 
             return 1;
         }
 
         private int Handler2(int value)
         {
-            _logger.Log($"value = {value}");
+            _logger.Info($"value = {value}");
 
             return 2;
         }
 
         private int Handler3(int value)
         {
-            _logger.Log($"value = {value}");
+            _logger.Info($"value = {value}");
 
             return 3;
         }

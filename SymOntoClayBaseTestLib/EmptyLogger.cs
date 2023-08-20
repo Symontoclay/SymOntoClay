@@ -25,6 +25,7 @@ using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace SymOntoClay.BaseTestLib
@@ -32,56 +33,134 @@ namespace SymOntoClay.BaseTestLib
     public class EmptyLogger : IMonitorLogger, IPlatformLogger
     {
         /// <inheritdoc/>
-        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
-        public void Error(string message)
+        public string Id => nameof(EmptyLogger);
+
+        /// <inheritdoc/>
+        public string CallMethod(string messagePointId, string methodName,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            return messagePointId;
+        }
+
+        /// <inheritdoc/>
+        public void Parameter(string messagePointId, string callMethodId, string parameterName, object parameterValue,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
         {
         }
 
         /// <inheritdoc/>
-        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
-        public void LogChannel(string message)
+        public void Output(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
         {
         }
 
         /// <inheritdoc/>
-        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
-        public void Log(string message)
+        public void Trace(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
         {
         }
 
         /// <inheritdoc/>
-        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
-        public void Warning(string message)
+        public void Debug(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
         {
         }
 
         /// <inheritdoc/>
-        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
+        public void Info(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void Warn(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void Error(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void Error(string messagePointId, Exception exception,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void Fatal(string messagePointId, string message,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void Fatal(string messagePointId, Exception exception,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+        }
+
+        /// <inheritdoc/>
         public void WriteLn(string message)
         {
         }
 
         /// <inheritdoc/>
-        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
-        public void WriteLnRawLogChannel(string message)
+        public void WriteLnRawOutput(string message)
         {
         }
 
         /// <inheritdoc/>
-        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
-        public void WriteLnRawLog(string message)
+        public void WriteLnRawTrace(string message)
         {
         }
 
         /// <inheritdoc/>
-        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
-        public void WriteLnRawWarning(string message)
+        public void WriteLnRawDebug(string message)
         {
         }
 
         /// <inheritdoc/>
-        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
+        public void WriteLnRawInfo(string message)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void WriteLnRawWarn(string message)
+        {
+        }
+
+        /// <inheritdoc/>
         public void WriteLnRawError(string message)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void WriteLnRawFatal(string message)
         {
         }
     }

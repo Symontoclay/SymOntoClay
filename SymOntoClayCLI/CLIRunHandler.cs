@@ -144,7 +144,7 @@ namespace SymOntoClay.CLI
                     }
                     catch(Exception e)
                     {
-                        _npcLogger.Error(e.ToString());
+                        _npcLogger.Error("36F19773-BB0C-4216-A713-31CD3502BED9", e);
                     }
                 });
             }

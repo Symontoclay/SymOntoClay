@@ -31,36 +31,49 @@ namespace SymOntoClay.CLI
     public class CLIPlatformLogger: IPlatformLogger
     {
         /// <inheritdoc/>
-        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void WriteLn(string message)
         {
             ConsoleWrapper.WriteText(message);
         }
 
         /// <inheritdoc/>
-        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
-        public void WriteLnRawLogChannel(string message)
+        public void WriteLnRawOutput(string message)
         {
-            ConsoleWrapper.WriteLogChannel(message);
+            ConsoleWrapper.WriteOutput(message);
         }
 
         /// <inheritdoc/>
-        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
-        public void WriteLnRawLog(string message)
+        public void WriteLnRawTrace(string message)
         {
             ConsoleWrapper.WriteText(message);
         }
 
         /// <inheritdoc/>
-        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
-        public void WriteLnRawWarning(string message)
+        public void WriteLnRawDebug(string message)
         {
             ConsoleWrapper.WriteText(message);
         }
 
         /// <inheritdoc/>
-        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
+        public void WriteLnRawInfo(string message)
+        {
+            ConsoleWrapper.WriteText(message);
+        }
+
+        /// <inheritdoc/>
+        public void WriteLnRawWarn(string message)
+        {
+            ConsoleWrapper.WriteText(message);
+        }
+
+        /// <inheritdoc/>
         public void WriteLnRawError(string message)
+        {
+            ConsoleWrapper.WriteError(message);
+        }
+
+        /// <inheritdoc/>
+        public void WriteLnRawFatal(string message)
         {
             ConsoleWrapper.WriteError(message);
         }

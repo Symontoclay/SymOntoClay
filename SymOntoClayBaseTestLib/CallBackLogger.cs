@@ -42,21 +42,30 @@ namespace SymOntoClay.BaseTestLib
         private readonly Action<string> _error;
 
         /// <inheritdoc/>
-        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void WriteLn(string message)
         {
         }
 
         /// <inheritdoc/>
-        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
-        public void WriteLnRawLogChannel(string message)
+        public void WriteLnRawOutput(string message)
         {
             _logChannel?.Invoke(message);
         }
 
         /// <inheritdoc/>
-        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
-        public void WriteLnRawLog(string message)
+        public void WriteLnRawTrace(string message)
+        {
+            _logChannel?.Invoke(message);
+        }
+
+        /// <inheritdoc/>
+        public void WriteLnRawDebug(string message)
+        {
+            _logChannel?.Invoke(message);
+        }
+
+        /// <inheritdoc/>
+        public void WriteLnRawInfo(string message)
         {
             if (_enableWriteLnRawLog)
             {
@@ -65,15 +74,19 @@ namespace SymOntoClay.BaseTestLib
         }
 
         /// <inheritdoc/>
-        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
-        public void WriteLnRawWarning(string message)
+        public void WriteLnRawWarn(string message)
         {
             _logChannel?.Invoke(message);
         }
 
         /// <inheritdoc/>
-        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void WriteLnRawError(string message)
+        {
+            _error?.Invoke(message);
+        }
+
+        /// <inheritdoc/>
+        public void WriteLnRawFatal(string message)
         {
             _error?.Invoke(message);
         }

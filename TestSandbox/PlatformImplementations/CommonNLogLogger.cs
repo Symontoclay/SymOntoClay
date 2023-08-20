@@ -43,36 +43,51 @@ namespace TestSandbox.PlatformImplementations
         }
 
         /// <inheritdoc/>
-        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
         public void WriteLn(string message)
         {
             _logger.Info(message);
         }
 
         /// <inheritdoc/>
-        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
-        public void WriteLnRawLogChannel(string message)
+        public void WriteLnRawOutput(string message)
         {
             _logger.Info(message);
         }
 
         /// <inheritdoc/>
-        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
-        public void WriteLnRawLog(string message)
+        public void WriteLnRawTrace(string message)
         {
+            _logger.Trace(message);
         }
 
         /// <inheritdoc/>
-        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
-        public void WriteLnRawWarning(string message)
+        public void WriteLnRawDebug(string message)
         {
+            _logger.Debug(message);
         }
 
         /// <inheritdoc/>
-        [Obsolete("It should be replaced to Monitor or MonitorNode", true)]
+        public void WriteLnRawInfo(string message)
+        {
+            _logger.Info(message);
+        }
+
+        /// <inheritdoc/>
+        public void WriteLnRawWarn(string message)
+        {
+            _logger.Warn(message);
+        }
+
+        /// <inheritdoc/>
         public void WriteLnRawError(string message)
         {
-            _logger.Info(message);
+            _logger.Error(message);
+        }
+
+        /// <inheritdoc/>
+        public void WriteLnRawFatal(string message)
+        {
+            _logger.Fatal(message);
         }
     }
 }

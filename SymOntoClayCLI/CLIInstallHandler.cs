@@ -39,7 +39,7 @@ namespace SymOntoClay.CLI
 
             if (!command.NoLogo)
             {
-                ConsoleWrapper.WriteLogChannel("Only installation from a local source is supported!");
+                ConsoleWrapper.WriteOutput("Only installation from a local source is supported!");
                 ConsoleWrapper.WriteText($"Installing `{libName}`...");
             }
 
@@ -74,7 +74,7 @@ namespace SymOntoClay.CLI
             {
                 if (!command.NoLogo)
                 {
-                    ConsoleWrapper.WriteLogChannel($"Library `{libName}` already exists. It will be updated.");
+                    ConsoleWrapper.WriteOutput($"Library `{libName}` already exists. It will be updated.");
                 }
 
                 Directory.Delete(libraryDest, true);

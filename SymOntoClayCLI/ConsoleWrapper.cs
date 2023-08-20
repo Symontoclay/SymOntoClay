@@ -38,13 +38,13 @@ namespace SymOntoClay.CLI
         private readonly static object _lockObj = new object();
 
 #if DEBUG
-        public static bool WriteLogChannelToTextFileAsParallel 
+        public static bool WriteOutputToTextFileAsParallel
         { 
             get
             {
                 lock (_lockObj)
                 {
-                    return _writeLogChannelToTextFileAsParallel;
+                    return _writeOutputToTextFileAsParallel;
                 }
             }
 
@@ -52,24 +52,24 @@ namespace SymOntoClay.CLI
             {
                 lock (_lockObj)
                 {
-                    if(_writeLogChannelToTextFileAsParallel == value)
+                    if(_writeOutputToTextFileAsParallel == value)
                     {
                         return;
                     }
 
-                    _writeLogChannelToTextFileAsParallel = value;
+                    _writeOutputToTextFileAsParallel = value;
 
-                    if(_writeLogChannelToTextFileAsParallel)
+                    if(_writeOutputToTextFileAsParallel)
                     {
                         var now = DateTime.Now;
-                        _parallelLogChannelTextFileName = Path.Combine(Directory.GetCurrentDirectory(), $"parallelLogChannelTextFile_{now:ddMMyyyy-HHmmss}.log");
+                        _parallelOutputTextFileName = Path.Combine(Directory.GetCurrentDirectory(), $"parallelOutputTextFile_{now:ddMMyyyy-HHmmss}.log");
                     }
                 }
             }
         }
 
-        private static bool _writeLogChannelToTextFileAsParallel;
-        private static string _parallelLogChannelTextFileName;
+        private static bool _writeOutputToTextFileAsParallel;
+        private static string _parallelOutputTextFileName;
 #endif
         public static void WriteText(string text)
         {
@@ -80,16 +80,16 @@ namespace SymOntoClay.CLI
             }
         }
 
-        public static void WriteLogChannel(string text)
+        public static void WriteOutput(string text)
         {
             lock (_lockObj)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine(text);
 #if DEBUG
-                if(_writeLogChannelToTextFileAsParallel)
+                if(_writeOutputToTextFileAsParallel)
                 {
-                    File.AppendAllLines(_parallelLogChannelTextFileName, new List<string>() { text });
+                    File.AppendAllLines(_parallelOutputTextFileName, new List<string>() { text });
                 }
 #endif
                 Console.ForegroundColor = _defaultForegroundColor;

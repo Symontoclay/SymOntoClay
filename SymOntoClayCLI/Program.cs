@@ -38,7 +38,7 @@ namespace SymOntoClay.CLI
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
 #if DEBUG
-            ConsoleWrapper.WriteLogChannelToTextFileAsParallel = true;
+            ConsoleWrapper.WriteOutputToTextFileAsParallel = true;
 #endif
 
             using var app = new CLIApp();

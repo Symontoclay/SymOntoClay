@@ -39,8 +39,8 @@ namespace SymOntoClay.BaseTestLib.HostListeners
         public void GenericCall(CancellationToken cancellationToken, string methodName, bool isNamedParameters,
             Dictionary<string, object> namedParameters, List<object> positionedParameters)
         {
-            _logger.Log($"methodName = '{methodName}'");
-            _logger.Log($"isNamedParameters = {isNamedParameters}");
+            _logger.Info("DC880C87-A0C2-49A7-B630-B0143F1D6083", $"methodName = '{methodName}'");
+            _logger.Info("B9CB2582-5C1E-4A99-9DCC-37A507EA25CB", $"isNamedParameters = {isNamedParameters}");
         }
     }
 }

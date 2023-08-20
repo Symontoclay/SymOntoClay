@@ -43,6 +43,7 @@ using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.NLP;
 using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.ProjectFiles;
+using SymOntoClay.Monitor.Common;
 
 namespace SymOntoClay.BaseTestLib
 {
@@ -83,7 +84,7 @@ namespace SymOntoClay.BaseTestLib
 
             var supportBasePath = Path.Combine(baseDir, "SysDirs");
 
-            var logDir = Path.Combine(supportBasePath, "NpcLogs");
+            var monitorMessagesDir = Path.Combine(supportBasePath, "NpcMonitorMessages");
 
             var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
 
@@ -189,26 +190,23 @@ namespace SymOntoClay.BaseTestLib
 
             settings.StandardFactsBuilder = new StandardFactsBuilder();
 
-            var loggingSettings = new LoggingSettings()
+            var monitorSettings = new SymOntoClay.Monitor.MonitorSettings
             {
-                LogDir = logDir,
-                Enable = true,
-                EnableRemoteConnection = true
+                MessagesDir = monitorMessagesDir,
+                Enable = true
             };
 
             if (factorySettings.PlatformLogger == null)
             {
                 if (factorySettings.UseDefaultPlatformLogger)
                 {
-                    loggingSettings.PlatformLoggers = new List<IPlatformLogger>() { new EmptyLogger() };
+                    monitorSettings.PlatformLoggers = new List<IPlatformLogger>() { new EmptyLogger() };
                 }
             }
             else
             {
-                loggingSettings.PlatformLoggers = new List<IPlatformLogger>() { factorySettings.PlatformLogger };
+                monitorSettings.PlatformLoggers = new List<IPlatformLogger>() { factorySettings.PlatformLogger };
             }
-
-            settings.Logging = loggingSettings;
 
             return settings;
         }

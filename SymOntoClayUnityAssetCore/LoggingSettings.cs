@@ -63,12 +63,6 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         [Obsolete("It should be replaced to MonitorSettings", true)]
         public IList<IPlatformLogger> PlatformLoggers { get; set; }
-        [Obsolete("It should be replaced to MonitorSettings", true)]
-        public KindOfLogicalSearchExplain KindOfLogicalSearchExplain { get; set; } = KindOfLogicalSearchExplain.None;
-        [Obsolete("It should be replaced to MonitorSettings", true)]
-        public string LogicalSearchExplainDumpDir { get; set; }
-        [Obsolete("It should be replaced to MonitorSettings", true)]
-        public bool EnableAddingRemovingFactLoggingInStorages { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

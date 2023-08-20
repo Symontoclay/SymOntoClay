@@ -38,28 +38,28 @@ namespace SymOntoClay.BaseTestLib.HostListeners
         [BipedEndpoint("Boo", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
         public void BooImpl(CancellationToken cancellationToken)
         {
-            _logger.Log("BooImpl Begin");
+            _logger.Info("92F545C4-2D3A-42BF-84FC-B7F9F51A830A", "BooImpl Begin");
         }
 
         [BipedEndpoint("Rotate", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
         public void RotateImpl(CancellationToken cancellationToken, float? direction)
         {
-            _logger.Log("RotateImpl Begin");
-            _logger.Log(direction.ToString());
+            _logger.Info("369BBB1E-9DA6-480C-8BA2-A941382481B2", "RotateImpl Begin");
+            _logger.Info("6048DAC0-371D-4859-B83D-AF8645D3C1C5", direction.ToString());
         }
 
         [BipedEndpoint("Rotate", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
         public void RotateToEntityImpl(CancellationToken cancellationToken, IEntity entity,
             float speed = 2)
         {
-            _logger.Log("RotateToEntityImpl Begin");
+            _logger.Info("453A45AD-5878-4F88-BD91-BA5643831B48", "RotateToEntityImpl Begin");
         }
 
         [BipedEndpoint("Take", DeviceOfBiped.RightHand, DeviceOfBiped.LeftHand)]
         public void TakeImpl(CancellationToken cancellationToken, IEntity entity)
         {
-            _logger.Log("TakeImpl Begin");
-            _logger.Log($"(entity == null) = {entity == null}");
+            _logger.Info("D87D0436-F1B1-4D81-9D0E-8A45ECFE5C14", "TakeImpl Begin");
+            _logger.Info("075D7DF5-0EAC-4C0A-AB07-EDB9B897EF52", $"(entity == null) = {entity == null}");
 
             if (entity == null)
             {
@@ -70,11 +70,11 @@ namespace SymOntoClay.BaseTestLib.HostListeners
 
             entity.Resolve();
 
-            _logger.Log(entity.InstanceId.ToString());
-            _logger.Log(entity.Id);
-            _logger.Log(entity.Position.ToString());
+            _logger.Info("A77DC48E-F86E-4CF6-9341-3B62A18EFC4C", entity.InstanceId.ToString());
+            _logger.Info("C56BCDE0-9BB8-455C-8434-E2F881E13248", entity.Id);
+            _logger.Info("4161FB63-DAC2-4821-BF40-D99F6115FC3C", entity.Position.ToString());
 
-            _logger.Log($"TakeImpl End");
+            _logger.Info("E596E7CE-E5F4-40DC-B54E-24819A36424E", $"TakeImpl End");
         }
     }
 }

@@ -11,7 +11,9 @@
     <RootNamespace>SymOntoClay.BaseTestLib</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SymOntoClay.Monitor.Common.Data\SymOntoClay.Monitor.Common.Data.csproj" />
     <ProjectReference Include="..\SymOntoClay.Monitor.Common\SymOntoClay.Monitor.Common.csproj" />
+    <ProjectReference Include="..\SymOntoClay.Monitor\SymOntoClay.Monitor.csproj" />
     <ProjectReference Include="..\SymOntoClayCoreHelper\SymOntoClayCoreHelper.csproj" />
     <ProjectReference Include="..\SymOntoClayCore\SymOntoClayCore.csproj" />
     <ProjectReference Include="..\SymOntoClayDefaultCLIEnvironment\SymOntoClayDefaultCLIEnvironment.csproj" />

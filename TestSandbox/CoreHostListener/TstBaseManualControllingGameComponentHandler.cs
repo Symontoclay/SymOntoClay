@@ -47,7 +47,7 @@ namespace TestSandbox.CoreHostListener
 
         public void Run()
         {
-            _logger.Info("Begin");
+            _logger.Info("E999ED21-C52E-4177-844D-1D68533EC648", "Begin");
 
             var complexContext = TstEngineContextHelper.CreateAndInitContext();
 
@@ -63,7 +63,7 @@ namespace TestSandbox.CoreHostListener
             npcSettings.HostListener = platformListener;
             npcSettings.PlatformSupport = new PlatformSupportCLIStub();
 
-            _logger.Info($"npcSettings = {npcSettings}");
+            _logger.Info("052D2883-886A-4C97-93A7-5EAB717F7871", $"npcSettings = {npcSettings}");
 
             var tstBaseManualControllingGameComponent = new TstBaseManualControllingGameComponent(npcSettings, worldContext);
 
@@ -83,7 +83,7 @@ namespace TestSandbox.CoreHostListener
 
             command.ParamsDict[param2Name] = param2Value;
 
-            _logger.Info($"command = {command}");
+            _logger.Info("E211BABC-4838-41D7-A23F-51C6BEBDD451", $"command = {command}");
 
 
             methodName = NameHelper.CreateName("shoot");
@@ -100,7 +100,7 @@ namespace TestSandbox.CoreHostListener
 
             gameObjectSettings.HostListener = gunPlatformHostListener;
 
-            _logger.Info($"gameObjectSettings = {gameObjectSettings}");
+            _logger.Info("B7D3223B-B02D-451E-AA93-C2971308297C", $"gameObjectSettings = {gameObjectSettings}");
 
             var gameObject = new GameObjectImplementation(gameObjectSettings, worldContext);
 
@@ -115,34 +115,34 @@ namespace TestSandbox.CoreHostListener
 
             var manualControlledObjectsList = tstBaseManualControllingGameComponent.GetManualControlledObjects();
 
-            _logger.Info($"manualControlledObjectsList.Count = {manualControlledObjectsList.Count}");
+            _logger.Info("4C649695-DFA2-4D1C-9419-9FE5A9B7A9E0", $"manualControlledObjectsList.Count = {manualControlledObjectsList.Count}");
 
             tstBaseManualControllingGameComponent.RemoveFromManualControl(gameObject);
 
             manualControlledObjectsList = tstBaseManualControllingGameComponent.GetManualControlledObjects();
 
-            _logger.Info($"manualControlledObjectsList.Count = {manualControlledObjectsList.Count}");
+            _logger.Info("007DA309-84AB-4578-B2E1-59C7BC790337", $"manualControlledObjectsList.Count = {manualControlledObjectsList.Count}");
 
-            _logger.Info("End");
+            _logger.Info("741D700F-3C2D-4E6B-B0AF-D0C70BA51F62", "End");
         }
 
         private void ExecuteCommand(TstBaseManualControllingGameComponent tstBaseManualControllingGameComponent, ICommand command)
         {
             var result = tstBaseManualControllingGameComponent.CreateProcess(command, null, null);
 
-            _logger.Info($"result = {result}");
+            _logger.Info("42C7917C-89F0-487E-A7E4-32A994FB98B8", $"result = {result}");
 
             if (result.IsSuccessful)
             {
                 var processInfo = result.Process;
 
-                _logger.Info($"processInfo = {processInfo}");
+                _logger.Info("3C3BAA91-5333-44C4-955C-AE8EEAD4B83A", $"processInfo = {processInfo}");
 
                 processInfo.Start();
 
                 Thread.Sleep(5000);
 
-                _logger.Info("Cancel");
+                _logger.Info("70D31FCD-3A07-4CE7-AA79-1CEF5CFACD2A", "Cancel");
 
                 processInfo.Cancel();
 

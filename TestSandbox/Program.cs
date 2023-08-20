@@ -891,9 +891,9 @@ app PeaceKeeper is [very middle] exampleClass
 
             _logger.Info($"supportBasePath = {supportBasePath}");
 
-            var logDir = Path.Combine(supportBasePath, "NpcLogs");
+            var monitorMessagesDir = Path.Combine(supportBasePath, "NpcMonitorMessages");
 
-            _logger.Info($"logDir = {logDir}");
+            _logger.Info($"monitorMessagesDir = {monitorMessagesDir}");
 
             var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
 
@@ -917,13 +917,12 @@ app PeaceKeeper is [very middle] exampleClass
                 error => { _logger.Info($"error = {error}"); }
                 );
 
-            settings.Logging = new LoggingSettings()
+            settings.Monitor = new SymOntoClay.Monitor.Monitor(new SymOntoClay.Monitor.MonitorSettings
             {
-                LogDir = logDir,
+                MessagesDir = monitorMessagesDir,
                 PlatformLoggers = new List<IPlatformLogger>() { callBackLogger },
-                Enable = true,
-                EnableRemoteConnection = true
-            };
+                Enable = true
+            });
 
             _logger.Info($"settings = {settings}");
 
@@ -1393,12 +1392,11 @@ action Go
 
             settings.InvokerInMainThread = invokingInMainThread;
 
-            settings.Logging = new LoggingSettings()
+            settings.Monitor = new SymOntoClay.Monitor.Monitor(new SymOntoClay.Monitor.MonitorSettings
             {
                 PlatformLoggers = new List<IPlatformLogger>() { new CLIPlatformLogger() },
-                Enable = true,
-                EnableRemoteConnection = true
-            };
+                Enable = true
+            });
 
             _logger.Info($"settings = {settings}");
 

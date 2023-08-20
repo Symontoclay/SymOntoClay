@@ -43,10 +43,10 @@ namespace TestSandbox.CoreHostListener
         {
             EmitOnEnter();
 
-            _logger.Info($"methodName = '{methodName}'");
-            _logger.Info($"isNamedParameters = {isNamedParameters}");
-            _logger.Info($"namedParameters = {JsonConvert.SerializeObject(namedParameters, Formatting.Indented, _customConverter)}");
-            _logger.Info($"positionedParameters = {JsonConvert.SerializeObject(positionedParameters, Formatting.Indented, _customConverter)}");
+            _logger.Info("6D53EA4E-73A7-48D3-AD9F-5F3C6C6831BD", $"methodName = '{methodName}'");
+            _logger.Info("1715AE7E-31BD-4FE3-BD1D-BCABDFA80F79", $"isNamedParameters = {isNamedParameters}");
+            _logger.Info("14431596-FE75-4B14-A891-4C954C52D50E", $"namedParameters = {JsonConvert.SerializeObject(namedParameters, Formatting.Indented, _customConverter)}");
+            _logger.Info("581668DB-8C93-4531-A87A-E02FFA5FFA17", $"positionedParameters = {JsonConvert.SerializeObject(positionedParameters, Formatting.Indented, _customConverter)}");
 
             EmitOnLeave();
         }
@@ -63,13 +63,13 @@ namespace TestSandbox.CoreHostListener
         {
             EmitOnEnter();
 
-            _logger.Info($"GoToImpl Begin");
-            _logger.Info($"navTarget.Kind = {navTarget.Kind}");
+            _logger.Info("C4E768E8-D74D-4DC0-A3D4-F66C3FE40D56", $"GoToImpl Begin");
+            _logger.Info("164A6E53-4663-4B62-B20A-7CF5F433E81D", $"navTarget.Kind = {navTarget.Kind}");
             var entity = navTarget.Entity;
-            _logger.Info($"entity.InstanceId = {entity.InstanceId}");
-            _logger.Info($"entity.Id = {entity.Id}");
-            _logger.Info($"entity.Position = {entity.Position}");
-            _logger.Info($"_remainingDistance = {_remainingDistance}");
+            _logger.Info("1327F5B6-7A7F-4F0C-AE4B-F943667C7E1A", $"entity.InstanceId = {entity.InstanceId}");
+            _logger.Info("EB150AE3-C540-4EF5-94D9-4BD54F06B155", $"entity.Id = {entity.Id}");
+            _logger.Info("25EFB07E-9668-472F-9E74-D39BB8CD15EC", $"entity.Position = {entity.Position}");
+            _logger.Info("505688E5-8375-41E6-A8DB-02026E4E1FB2", $"_remainingDistance = {_remainingDistance}");
 
             if (!_remainingDistance.HasValue)
             {

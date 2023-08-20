@@ -268,7 +268,7 @@ namespace TestSandbox.Handlers
         {
             var factStr = "{: >: { $x = {: #^`fdb93ce8-6392-4583-a400-565ade676acd` >: { act(m16,shoot) } :} & hear(i,$x) & distance(i,$x,15.588457107543945) & direction($x,12) & point($x,#@[15.588457107543945, 12]) & say(I, $y) } :}";
 
-            _logger.Info($"factStr = '{factStr}'");
+            _logger.Info("4A56ED1A-AD19-419A-908E-D18C1FBCE763", $"factStr = '{factStr}'");
 
             var regex = new Regex(_logicalVarPattern);
 
@@ -276,10 +276,10 @@ namespace TestSandbox.Handlers
 
             while (true)
             {
-                _logger.Info($"pos = {pos}");
+                _logger.Info("E155C929-FF80-48B7-B1D9-22F16BFADBB3", $"pos = {pos}");
 
                 var match = regex.Match(factStr, pos);
-                _logger.Info($"match = {match}");
+                _logger.Info("9FA465FF-66D4-4B63-BB0B-179AEADCA744", $"match = {match}");
 
                 if (!match.Success)
                 {
@@ -290,13 +290,13 @@ namespace TestSandbox.Handlers
 
                 foreach (var group in groups)
                 {
-                    _logger.Info($"group = {group}");
+                    _logger.Info("CE02D640-4A1B-4F82-880F-B80C7FA7B81B", $"group = {group}");
                 }
 
                 var gItem = groups["var"];
 
-                _logger.Info($"gItem.Value = {gItem.Value}");
-                _logger.Info($"gItem.Index = {gItem.Index}");
+                _logger.Info("BC2A5AA5-7E51-4A43-9D2B-5F35F9200F51", $"gItem.Value = {gItem.Value}");
+                _logger.Info("F245B1DF-5E17-4718-BF43-082A4AD4532F", $"gItem.Index = {gItem.Index}");
 
                 pos = gItem.Index + 1;
             }
@@ -321,24 +321,24 @@ namespace TestSandbox.Handlers
 
             foreach (var item in itemsList)
             {
-                _logger.Info($"item = '{item}'");
+                _logger.Info("CB26FF56-D654-4DCE-B71C-4E662CCC8617", $"item = '{item}'");
 
-                _logger.Info($"isVar = {regex.IsMatch(item)}");
+                _logger.Info("74192E7E-FE0F-4748-9D85-ABA3028044DC", $"isVar = {regex.IsMatch(item)}");
 
                 var match = regex.Match(item);
-                _logger.Info($"match = {match}");
+                _logger.Info("E0BC12E0-B157-4928-A93B-594D318F22B4", $"match = {match}");
 
                 GroupCollection groups = match.Groups;
 
                 foreach (var group in groups)
                 {
-                    _logger.Info($"group = {group}");
+                    _logger.Info("80716A44-FAFA-42BD-94F0-090E4E6E0F89", $"group = {group}");
                 }
 
                 var gItem = groups["var"];
 
-                _logger.Info($"gItem.Value = {gItem.Value}");
-                _logger.Info($"gItem.Index = {gItem.Index}");
+                _logger.Info("CDADA05F-018D-44A7-9DBD-1B64E59140F3", $"gItem.Value = {gItem.Value}");
+                _logger.Info("86BD2C11-0D27-4A6E-A269-CB7B08F928C8", $"gItem.Index = {gItem.Index}");
             }
         }
     }

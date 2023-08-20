@@ -53,7 +53,7 @@ namespace TestSandbox.MonoBehaviourTesting
 
             _logger.Info($"supportBasePath = {supportBasePath}");
 
-            var logDir = Path.Combine(supportBasePath, "NpcLogs");
+            var monitorMessagesDir = Path.Combine(supportBasePath, "NpcMonitorMessages");
 
             var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
 
@@ -73,13 +73,12 @@ namespace TestSandbox.MonoBehaviourTesting
 
             settings.SoundBus = new SimpleSoundBus();
 
-            settings.Logging = new LoggingSettings()
+            settings.Monitor = new SymOntoClay.Monitor.Monitor(new SymOntoClay.Monitor.MonitorSettings
             {
-                LogDir = logDir,
+                MessagesDir = monitorMessagesDir,
                 PlatformLoggers = new List<IPlatformLogger>() { ConsoleLogger.Instance, CommonNLogLogger.Instance },
-                Enable = true,
-                EnableRemoteConnection = true
-            };
+                Enable = true
+            });
 
             _logger.Info($"settings = {settings}");
 

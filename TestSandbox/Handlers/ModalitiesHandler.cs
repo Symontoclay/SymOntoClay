@@ -26,6 +26,7 @@ using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;

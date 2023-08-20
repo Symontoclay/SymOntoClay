@@ -38,6 +38,7 @@ using System.Threading.Tasks;
 using TestSandbox.Helpers;
 using TestSandbox.PlatformImplementations;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 
 namespace TestSandbox.CoreHostListener
 {
@@ -47,7 +48,7 @@ namespace TestSandbox.CoreHostListener
 
         public void Run()
         {
-            _logger.Info("Begin");
+            _logger.Info("F0E5E372-95DC-4A4D-9A69-E7F5BFEA98A5", "Begin");
 
             var complexContext = TstEngineContextHelper.CreateAndInitContext();
 
@@ -105,24 +106,24 @@ namespace TestSandbox.CoreHostListener
 
 
 
-            _logger.Info($"command = {command}");
+            _logger.Info("B1C4B68E-9161-443E-8B95-F5E31AD8E7D6", $"command = {command}");
 
 
             var endPointInfo = endPointsResolver.GetEndpointInfo(command, endpointsRegistries, null);
 
-            _logger.Info($"endPointInfo = {endPointInfo}");
+            _logger.Info("AADBA393-119B-4566-A1CA-67BA8B3613B1", $"endPointInfo = {endPointInfo}");
 
             if(endPointInfo != null)
             {
                 var processInfo = endPointActivator.Activate(endPointInfo, command, null, null);
 
-                _logger.Info($"processInfo = {processInfo}");
+                _logger.Info("6A777CA4-CCF2-4E73-BD0C-9158EDD5163A", $"processInfo = {processInfo}");
 
                 processInfo.Start();
 
                 Thread.Sleep(10000);
 
-                _logger.Info("Cancel");
+                _logger.Info("96C7DAF4-E42C-450F-BF02-425223E4250B", "Cancel");
 
                 processInfo.Cancel();
 
@@ -136,19 +137,19 @@ namespace TestSandbox.CoreHostListener
 
             endPointInfo = endPointsResolver.GetEndpointInfo(command, endpointsRegistries, null);
 
-            _logger.Info($"endPointInfo = {endPointInfo}");
+            _logger.Info("0385006F-F10B-4FD6-AE62-906552DCCD6A", $"endPointInfo = {endPointInfo}");
 
             if (endPointInfo != null)
             {
                 var processInfo = endPointActivator.Activate(endPointInfo, command, null, null);
 
-                _logger.Info($"processInfo = {processInfo}");
+                _logger.Info("70799BDA-A7AD-406A-BEAD-9E3363CDBE83", $"processInfo = {processInfo}");
 
                 processInfo.Start();
 
                 Thread.Sleep(10000);
 
-                _logger.Info("Cancel");
+                _logger.Info("1D370D08-B6B1-40FF-A491-6074A19F778C", "Cancel");
 
                 processInfo.Cancel();
 
@@ -179,7 +180,7 @@ namespace TestSandbox.CoreHostListener
 
 
 
-            _logger.Info("End");
+            _logger.Info("C07950F1-5895-446D-8122-BA75BA272468", "End");
         }
     }
 }

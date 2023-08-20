@@ -1700,44 +1700,6 @@
             The type is absolute position.
             </summary>
         </member>
-        <member name="T:SymOntoClay.UnityAsset.Core.LoggingSettings">
-            <summary>
-            Logging settings.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.LoggingSettings.LogDir">
-            <summary>
-            Gets or sets root dir for file logging.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.LoggingSettings.Enable">
-            <summary>
-            Gets or sets value of enable logging.
-            It alows enable or disable logging or remote connection for whole components synchronously.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.LoggingSettings.EnableRemoteConnection">
-            <summary>
-            Gets or sets value of enable remote connection.
-            It alows enable or disable remote connection for whole components synchronously.
-            It doesn't touch local logging.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.LoggingSettings.PlatformLoggers">
-            <summary>
-            Gets or sets list of platform specific loggers.
-            It alows us to add, for example, console logger for Unity3D.
-            </summary>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.LoggingSettings.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.LoggingSettings.ToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.LoggingSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
         <member name="T:SymOntoClay.UnityAsset.Core.PlaceSettings">
             <summary>
             Place settings.
@@ -1810,11 +1772,6 @@
         <member name="P:SymOntoClay.UnityAsset.Core.WorldSettings.DictionariesDirs">
             <summary>
             Gets or sets list of file paths for describing places searching dictionaries of translation text to facts.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.WorldSettings.Logging">
-            <summary>
-            Gets or sets logging settings.
             </summary>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.WorldSettings.HostFile">

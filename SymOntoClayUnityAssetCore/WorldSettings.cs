@@ -56,12 +56,6 @@ namespace SymOntoClay.UnityAsset.Core
         public IMonitor Monitor { get; set; }
 
         /// <summary>
-        /// Gets or sets logging settings.
-        /// </summary>
-        [Obsolete("It should be replaced to MonitorSettings", true)]
-        public LoggingSettings Logging { get; set; }
-
-        /// <summary>
         /// Gets or sets file name of SymOntoClay host file.
         /// The file describes facts which are visible for other NPCs or can be recognized in some way by player.
         /// </summary>

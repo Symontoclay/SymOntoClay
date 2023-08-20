@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.BaseTestLib.Monitoring;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.Helpers;
@@ -32,7 +33,7 @@ namespace SymOntoClay.BaseTestLib
     public class UnityTestMainStorageContext : MainStorageContext
     {
         public UnityTestMainStorageContext()
-            : base(new EmptyLogger())
+            : base(new EmptyMonitorNode())
         {
             EngineContextHelper.BaseInitMainStorageContext(this, new StandaloneStorageSettings(), KindOfStorage.Host);
         }

@@ -48,7 +48,7 @@ namespace TestSandbox.Handlers
 
         public void Run()
         {
-            _logger.Info("Begin");
+            _logger.Info("9FEC1CBD-A953-4BB6-B23B-F0DF41B1962E", "Begin");
 
             var platformListener = new TstPlatformHostListener();
 
@@ -61,9 +61,9 @@ namespace TestSandbox.Handlers
 
             Thread.Sleep(100);
 
-            _logger.Info("|||||||||||||");
+            _logger.Info("4192C7E4-CD73-4005-814C-2DA5AB6A3A7B", "|||||||||||||");
 
-            _npc.Logger.LogChannel("|||||||||||||");
+            _npc.Logger.Output("FDC9FAC4-4442-453F-ADF9-0DD7558339F3", "|||||||||||||");
 
 
             Thread.Sleep(100);

@@ -170,17 +170,17 @@ namespace TestSandbox
 
         private static void TstMonitor()
         {
-            _logger.Info("Begin");
+            _logger.Info("62684563-F740-4A47-B812-50CBA43FF2BF", "Begin");
 
             var handler = new MonitorHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("EDA7FA8A-840B-4E39-8CBF-92A617BDBEE0", "End");
         }
 
         private static void TstCreateListByVarsDict()
         {
-            _logger.Info("Begin");
+            _logger.Info("DBD25DC2-47A1-40E2-AA21-CD3A5A2DC2E1", "Begin");
 
             var source = new Dictionary<string, List<string>>();
 
@@ -188,26 +188,26 @@ namespace TestSandbox
             source["$y"] = new List<string>() { "cat", "dog", "tree" };
             source["$z"] = new List<string>() { "town", "city", "village" };
 
-            _logger.Info($"source = {JsonConvert.SerializeObject(source, Formatting.Indented)}");
+            _logger.Info("3E2E0C8D-5D61-4691-A486-6C82590293BB", $"source = {JsonConvert.SerializeObject(source, Formatting.Indented)}");
 
             var keysList = source.Keys.ToList();
 
-            _logger.Info($"keysList = {JsonConvert.SerializeObject(keysList, Formatting.Indented)}");
+            _logger.Info("FB5FB564-1135-47D1-8001-D66ABB67D154", $"keysList = {JsonConvert.SerializeObject(keysList, Formatting.Indented)}");
 
             var result = new List<List<(string, string)>>();
 
             TstProcessCreateListByVarsDict(0, keysList, source, new List<(string, string)>(), ref result);
 
-            _logger.Info($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
+            _logger.Info("808200DC-90FE-40E3-AA1E-C0F1C0BAF3BA", $"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
 
-            _logger.Info("End");
+            _logger.Info("DE146257-00B1-4B93-B6B9-DD6B883481F7", "End");
         }
 
         private static void TstProcessCreateListByVarsDict(int n, List<string> keysList, Dictionary<string, List<string>> source, List<(string, string)> currentValues, ref List<List<(string, string)>> result)
         {
-            _logger.Info($"n = {n}");
-            _logger.Info($"keysList.Count = {keysList.Count}");
-            _logger.Info($"currentValues = {JsonConvert.SerializeObject(currentValues, Formatting.Indented)}");
+            _logger.Info("3B552CC3-57F5-4A8A-8B76-B5A321009277", $"n = {n}");
+            _logger.Info("8A703D2E-D713-4E4B-9E99-3DCC633A3070", $"keysList.Count = {keysList.Count}");
+            _logger.Info("512616F8-3B37-4B23-9551-D8D55E7375FA", $"currentValues = {JsonConvert.SerializeObject(currentValues, Formatting.Indented)}");
 
             if (n == keysList.Count - 1)
             {
@@ -221,13 +221,13 @@ namespace TestSandbox
 
         private static void TstProcessCreateListByVarsDictIntermediateNode(int n, List<string> keysList, Dictionary<string, List<string>> source, List<(string, string)> currentValues, ref List<List<(string, string)>> result)
         {
-            _logger.Info($"n = {n}");
-            _logger.Info($"keysList.Count = {keysList.Count}");
-            _logger.Info($"currentValues = {JsonConvert.SerializeObject(currentValues, Formatting.Indented)}");
+            _logger.Info("3A520F78-D5B9-4A75-B3FB-FA80A689B7AE", $"n = {n}");
+            _logger.Info("6B149AD3-C1C3-4BCD-9FC2-E9F68C622241", $"keysList.Count = {keysList.Count}");
+            _logger.Info("13EC9048-45AE-4C85-8804-934DDBDBEEC2", $"currentValues = {JsonConvert.SerializeObject(currentValues, Formatting.Indented)}");
 
             var key = keysList[n];
 
-            _logger.Info($"key = {key}");
+            _logger.Info("49E908B4-251B-47A3-9BC7-6E26D22425D1", $"key = {key}");
 
             var list = source[key];
 
@@ -235,7 +235,7 @@ namespace TestSandbox
 
             foreach (var item in list)
             {
-                _logger.Info($"item = {item}");
+                _logger.Info("802E4E3F-F1CD-4796-9288-BF3F344E53A9", $"item = {item}");
 
                 var newCurrentValues = currentValues.ToList();
                 newCurrentValues.Add((key, item));
@@ -246,19 +246,19 @@ namespace TestSandbox
 
         private static void TstProcessCreateListByVarsDictFinalNode(int n, List<string> keysList, Dictionary<string, List<string>> source, List<(string, string)> currentValues, ref List<List<(string, string)>> result)
         {
-            _logger.Info($"n = {n}");
-            _logger.Info($"keysList.Count = {keysList.Count}");
-            _logger.Info($"currentValues = {JsonConvert.SerializeObject(currentValues, Formatting.Indented)}");
+            _logger.Info("BCEE3A75-2913-4C06-B09A-F0F38E802213", $"n = {n}");
+            _logger.Info("523CCF9A-8D42-4738-9A77-3B5221C07883", $"keysList.Count = {keysList.Count}");
+            _logger.Info("2D3D6791-C8A9-4823-A73F-B0F1243CBBFE", $"currentValues = {JsonConvert.SerializeObject(currentValues, Formatting.Indented)}");
 
             var key = keysList[n];
 
-            _logger.Info($"key = {key}");
+            _logger.Info("88D2E766-5F6F-4C68-9171-DB899283B0CA", $"key = {key}");
 
             var list = source[key];
 
             foreach (var item in list)
             {
-                _logger.Info($"item = {item}");
+                _logger.Info("6F6FAD7B-543D-4021-9E55-B74BAF6E2497", $"item = {item}");
 
                 var resultItem = new List<(string, string)>();
                 result.Add(resultItem);
@@ -274,11 +274,11 @@ namespace TestSandbox
 
         private static void TstDetectDoninantItems()
         {
-            _logger.Info("Begin");
+            _logger.Info("51C3F12C-FE0A-4252-8CC1-704C0303292B", "Begin");
 
             var initialList = new List<KindOfLogicalQueryNode>() { KindOfLogicalQueryNode.Entity, KindOfLogicalQueryNode.Concept, KindOfLogicalQueryNode.Value, KindOfLogicalQueryNode.Entity };
 
-            _logger.Info($"initialList = {JsonConvert.SerializeObject(initialList, Formatting.Indented)}");
+            _logger.Info("871009ED-8BBF-4847-A740-1FADB4E745DF", $"initialList = {JsonConvert.SerializeObject(initialList, Formatting.Indented)}");
 
             var orderedList = initialList.GroupBy(p => p).Select(p => new
             {
@@ -286,67 +286,67 @@ namespace TestSandbox
                 Count = p.Count()
             }).OrderByDescending(p => p.Count).Take(1);
 
-            _logger.Info($"orderedList = {JsonConvert.SerializeObject(orderedList, Formatting.Indented)}");
+            _logger.Info("E59492F2-F862-49B9-B604-5DFF10C0DCFE", $"orderedList = {JsonConvert.SerializeObject(orderedList, Formatting.Indented)}");
 
-            _logger.Info("End");
+            _logger.Info("FBC541AB-A68A-4854-B5B9-88BC0DD9BF3B", "End");
         }
 
         private static void TstSerializeValue()
         {
-            _logger.Info("Begin");
+            _logger.Info("B32E1C96-D43F-440E-A8E8-3F5285BF611F", "Begin");
 
             var list = new List<object>() { new NumberValue(16) };
 
-            _logger.Info($"list = {JsonConvert.SerializeObject(list, Formatting.Indented, new ToHumanizedStringJsonConverter())}");
+            _logger.Info("414395AA-7875-47E2-B70C-C93BADF1EF7D", $"list = {JsonConvert.SerializeObject(list, Formatting.Indented, new ToHumanizedStringJsonConverter())}");
 
-            _logger.Info("End");
+            _logger.Info("8F8AB60B-F23B-469A-8DD6-29D4CBDAB78E", "End");
         }
 
         private static void TstWaitAsync()
         {
-            _logger.Info("Begin");
+            _logger.Info("D0577E69-6698-493D-B025-4AB190ABB503", "Begin");
 
             var source1 = new CancellationTokenSource();
             var token1 = source1.Token;
 
             var task = Task.Run(() => {
-                _logger.Info("Hi!");
+                _logger.Info("EB024ABD-0889-4DEF-A6E9-1D36CA08F839", "Hi!");
 
                 Thread.Sleep(10000);
 
-                _logger.Info("End Hi!");
+                _logger.Info("F812B258-8F6B-4066-8698-55DA609BD01D", "End Hi!");
             }, token1);
 
             var taskValue = new TaskValue(task, source1);
 
             taskValue.OnComplete += () => 
             {
-                _logger.Info("taskValue.OnComplete!!!!!");
+                _logger.Info("2CD55AB4-7F0D-49BE-B17F-455D69263E48", "taskValue.OnComplete!!!!!");
             };
 
             taskValue.OnComplete += () =>
             {
-                _logger.Info("(2) taskValue.OnComplete!!!!!");
+                _logger.Info("674D6CA3-085C-4174-9B21-6AA992F99157", "(2) taskValue.OnComplete!!!!!");
             };
 
             Thread.Sleep(20000);
 
-            _logger.Info("End");
+            _logger.Info("00DA50E0-1BCF-43C6-B37C-09F133FFFA9C", "End");
         }
 
         private static void TstWaitAsync_2()
         {
-            _logger.Info("Begin");
+            _logger.Info("2532A04C-BCEC-490C-88F7-B3CD786815A3", "Begin");
 
             var source1 = new CancellationTokenSource();
             var token1 = source1.Token;
 
             var task = Task.Run(() => {
-                _logger.Info("Hi!");
+                _logger.Info("A8DE6271-F6E5-46C4-904D-A155F4565C35", "Hi!");
 
                 Thread.Sleep(10000);
 
-                _logger.Info("End Hi!");
+                _logger.Info("8F32F920-C5F9-471D-8128-36959249E753", "End Hi!");
             }, token1);
 
             Task.Run(() => {
@@ -354,39 +354,39 @@ namespace TestSandbox
 
                 waitingTask.Wait();
 
-                _logger.Info($"Finished!!!! task.Status = {task.Status}");
+                _logger.Info("B38F5136-B803-452E-AFDF-2D429BA8D7A4", $"Finished!!!! task.Status = {task.Status}");
             });
 
             Thread.Sleep(20000);
 
-            _logger.Info("End");
+            _logger.Info("CF3E7AE0-132B-40E7-8B39-C7887BF4EC3B", "End");
         }
 
         private static void TstWaitAsync_1()
         {
-            _logger.Info("Begin");
+            _logger.Info("DB61B7C2-9E4A-420B-B58E-69346B983A85", "Begin");
 
             var source1 = new CancellationTokenSource();
             var token1 = source1.Token;
 
             var task = Task.Run(() => {
-                _logger.Info("Hi!");
+                _logger.Info("69910F34-E5D9-4C14-9B19-2A6F23E8C0DE", "Hi!");
 
                 Thread.Sleep(10000);
 
-                _logger.Info("End Hi!");
+                _logger.Info("FEAC882C-8F5C-475D-BBBE-801EC9C176A3", "End Hi!");
             }, token1);
 
             var waitingTask = task.WaitAsync(token1);
 
             waitingTask.Wait();
 
-            _logger.Info("End");
+            _logger.Info("9E45461D-12C0-4F44-AF7F-0DEBB2FFA132", "End");
         }
 
         private static void TstWorldSpaceFilesSearcher()
         {
-            _logger.Info("Begin");
+            _logger.Info("01DED674-A50F-4511-ADC9-EBE519F3B165", "Begin");
 
             var worldSpaceFilesSearcherOptions = new WorldSpaceFilesSearcherOptions()
             {
@@ -398,42 +398,42 @@ namespace TestSandbox
             var targetFiles = WorldSpaceFilesSearcher.Run(worldSpaceFilesSearcherOptions);
 
 #if DEBUG
-            _logger.Info($"targetFiles = {targetFiles}");
+            _logger.Info("ACB0323E-C2EA-488E-AC70-8FBE031549C8", $"targetFiles = {targetFiles}");
 #endif 
 
-            _logger.Info("End");
+            _logger.Info("C76B8D27-C94A-4241-B08C-3318B37EE2AC", "End");
         }
 
         private static void TstSynonymsHandler()
         {
-            _logger.Info("Begin");
+            _logger.Info("ED22070B-EDBE-4559-A4C7-E5856348A332", "Begin");
 
             var handler = new SynonymsHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("3400CEE0-AAD1-4056-ACE3-9FB1AA8CA32F", "End");
         }
 
         private static void TstGetFullBaseTypesListInCSharpReflection()
         {
-            _logger.Info("Begin");
+            _logger.Info("533CA9AC-7003-400F-AB4F-06EBF740BBC0", "Begin");
 
             var source = typeof(ConditionalEntityValue);
 
-            _logger.Info($"source.FullName = {source.FullName}");
+            _logger.Info("4024F159-B9E8-4C1B-9F34-494542F32C1C", $"source.FullName = {source.FullName}");
 
             var interfacesList = source.GetInterfaces();
 
-            _logger.Info($"interfacesList.Length = {interfacesList.Length}");
+            _logger.Info("E785E6ED-5462-4730-B204-C6E9F7AAD935", $"interfacesList.Length = {interfacesList.Length}");
 
             foreach(var item in interfacesList)
             {
-                _logger.Info($"item.FullName = {item.FullName}");
+                _logger.Info("E6F6AE7A-60C1-44C5-A61E-6E739CED8793", $"item.FullName = {item.FullName}");
             }
 
             PrintBaseType(source.BaseType);
 
-            _logger.Info("End");
+            _logger.Info("6AA062AB-BADA-4431-AA32-32F544FF7238", "End");
         }
 
         private static void PrintBaseType(Type type)
@@ -443,14 +443,14 @@ namespace TestSandbox
                 return;
             }
 
-            _logger.Info($"type.FullName = {type.FullName}");
+            _logger.Info("B90F8481-008E-426E-96CF-787586A984AD", $"type.FullName = {type.FullName}");
 
             PrintBaseType(type.BaseType);
         }
 
         private static void TstConvertFactToImperativeCode()
         {
-            _logger.Info("Begin");
+            _logger.Info("01A26185-263A-4BDC-8531-F6E569EFF4D0", "Begin");
 
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.UseDefaultNLPSettings = false;
@@ -459,7 +459,7 @@ namespace TestSandbox
 
             var factStr = "{: >: { direction($x1,#@{: >: { color($_,$x1) & place($_) & green($x1) } :}) & $x1 = go(someone,self) } o: 1 :}";
 
-            _logger.Info($"factStr = '{factStr}'");
+            _logger.Info("2AA3C13A-5F7B-4BFF-8CBE-DE9ABFC320E9", $"factStr = '{factStr}'");
 
             var fact = engineContext.Parser.ParseRuleInstance(factStr);
 
@@ -469,14 +469,14 @@ namespace TestSandbox
 
             var compiledCode = engineContext.ConvertersFactory.GetConverterFactToImperativeCode().Convert(fact, localCodeExecutionContext);
 
-            _logger.Info($"compiledCode = {compiledCode.ToDbgString()}");
+            _logger.Info("C815E21A-3AEF-4647-83E5-70C42708C2FB", $"compiledCode = {compiledCode.ToDbgString()}");
 
-            _logger.Info("End");
+            _logger.Info("1019AE4E-43EF-430D-B1D9-B068E525A18E", "End");
         }
 
         private static void TstFactToHtml()
         {
-            _logger.Info("Begin");
+            _logger.Info("A9743633-88AD-4C93-9B47-E684D52E95AD", "Begin");
 
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.UseDefaultNLPSettings = false;
@@ -485,13 +485,13 @@ namespace TestSandbox
 
             var factStr = "{: $x = {: act(M16, shoot) :} & hear(I, $x) & distance(I, $x, 15.588457107543945) & direction($x, 12) & point($x, #@[15.588457107543945, 12]) :}";
 
-            _logger.Info($"factStr = '{factStr}'");
+            _logger.Info("9F220482-88E1-4002-9810-38B5058D9388", $"factStr = '{factStr}'");
 
             var fact = engineContext.Parser.ParseRuleInstance(factStr);
 
             var targetItemForSelection = fact.PrimaryPart.Expression.Left.Left.Left.Left;
 
-            _logger.Info($"targetItemForSelection = {targetItemForSelection.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
+            _logger.Info("8CBF8F4B-80A4-4691-BEA3-C14CF5A0C748", $"targetItemForSelection = {targetItemForSelection.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
 
 
             var options = new DebugHelperOptions();
@@ -499,48 +499,48 @@ namespace TestSandbox
             options.IsHtml = true;
             options.ItemsForSelection = new List<IObjectToString>() { targetItemForSelection };
 
-            _logger.Info($"fact = {DebugHelperForRuleInstance.ToString(fact, options)}");
+            _logger.Info("16AE26A1-F184-4673-B479-477BF8659EA0", $"fact = {DebugHelperForRuleInstance.ToString(fact, options)}");
 
-            _logger.Info("End");
+            _logger.Info("A7FF14E8-6952-4F56-8A85-783EBBB60162", "End");
         }
 
         private static void TstStandardFactsBuilder()
         {
-            _logger.Info("Begin");
+            _logger.Info("99CE32B2-8653-4FEA-98E7-C98FBBEDD1F8", "Begin");
 
             var handler = new StandardFactsBuilderHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("52811802-DE88-4B02-BFAD-D7691D06608D", "End");
         }
 
         private static void TstStandardFactsBuilderGetTargetVarNameHandler()
         {
-            _logger.Info("Begin");
+            _logger.Info("686B9BD2-C1EA-423B-AE69-8862FE232B93", "Begin");
 
             var handler = new StandardFactsBuilderGetTargetVarNameHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("52A89F42-0117-4FC7-BD0C-ABC5EA23DC6B", "End");
         }            
 
         private static void TstShieldString()
         {
-            _logger.Info("Begin");
+            _logger.Info("AF228818-2973-4859-9F2A-573557010C19", "Begin");
 
             var str = "@@self";
 
-            _logger.Info($"str = '{str}'");
+            _logger.Info("19482D8F-CCE1-47B2-B69D-E3DE5D6DDFBB", $"str = '{str}'");
 
             var nameSubStr = str.Substring(2);
 
-            _logger.Info($"nameSubStr = '{nameSubStr}'");
+            _logger.Info("02CBA414-2257-4965-8DFC-569DCEF7AB07", $"nameSubStr = '{nameSubStr}'");
 
             var name = NameHelper.ShieldString(str);
 
-            _logger.Info($"name = '{name}'");
+            _logger.Info("E19DA3AB-AE64-4649-9F98-EF04C04AFB3E", $"name = '{name}'");
 
-            _logger.Info("End");
+            _logger.Info("8382B2E2-8262-4844-BE1F-891C2D3A7B06", "End");
         }
 
         private static void TstSampleSpeechSynthesis()

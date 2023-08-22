@@ -42,7 +42,7 @@ namespace TestSandbox.MonoBehaviourTesting
 
         public override void Awake()
         {
-            _logger.Info("Begin");
+            _logger.Info("3D5AF0B4-068B-468D-86BD-B091862A9B0A", "Begin");
 
             var platformListener = new TstPlatformHostListener();
 
@@ -56,16 +56,16 @@ namespace TestSandbox.MonoBehaviourTesting
 
             _gameObject = WorldFactory.WorldInstance.GetGameObject(settings);
 
-            _logger.Info("End");
+            _logger.Info("930C4944-BC9E-4F83-8258-04F3983BB94F", "End");
         }
 
         public override void Stop()
         {
-            _logger.Info("Begin");
+            _logger.Info("EC1CDFDD-C28B-44A7-9EC9-CDF80092C928", "Begin");
 
             _gameObject.Dispose();
 
-            _logger.Info("End");
+            _logger.Info("2845399D-87AB-4471-804F-A6DBED9435CC", "End");
         }
     }
 }

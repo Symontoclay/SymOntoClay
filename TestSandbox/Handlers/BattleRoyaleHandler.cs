@@ -39,7 +39,7 @@ namespace TestSandbox.Handlers
     {
         public void Run()
         {
-            _logger.Info("Begin");
+            _logger.Info("5DC0D3C2-03A4-4052-BB63-0844611322E5", "Begin");
 
             var platformListener = new BattleRoyaleSilentHostListener();
             //var platformListener = new TstBattleRoyaleHostListener();
@@ -88,7 +88,7 @@ namespace TestSandbox.Handlers
 
             platformListener.AddOnEndPointEnterSyncHandler("Go", () =>
             {
-                _logger.Info($"OnEndPointEnterSyncHandler: On Enter Go wasHide = {wasHide}");
+                _logger.Info("B60AE940-E30B-4DB3-BF85-553EAF1DC09A", $"OnEndPointEnterSyncHandler: On Enter Go wasHide = {wasHide}");
 
                 if(!wasHide)
                 {
@@ -108,18 +108,18 @@ namespace TestSandbox.Handlers
             var seeFactId = _npc.InsertFact(standardFactsBuilder.BuildSeeFactString(enemyId));
 
             Thread.Sleep(5000);
-            _logger.Info("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+            _logger.Info("5DA98BC3-9C27-4089-8360-D012E851B1E3", "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
 
             _npc.RemoveFact(seeFactId);
 
             wasHide = true;
 
-            _logger.Info("__________________________________________________________");
+            _logger.Info("A5EA37B2-4325-4DC0-8981-ECA7CF600E05", "__________________________________________________________");
 
 
             Thread.Sleep(100000);
 
-            _logger.Info("End");
+            _logger.Info("3E2444B7-6B09-4A60-ADE1-887A5F4B20F0", "End");
         }
     }
 }

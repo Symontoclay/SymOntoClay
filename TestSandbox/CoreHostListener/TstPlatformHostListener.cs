@@ -60,10 +60,10 @@ namespace TestSandbox.CoreHostListener
         public void GenericCall(CancellationToken cancellationToken, string methodName, bool isNamedParameters,
             Dictionary<string, object> namedParameters, List<object> positionedParameters)
         {
-            _logger.Info($"methodName = '{methodName}'");
-            _logger.Info($"isNamedParameters = {isNamedParameters}");
-            _logger.Info($"namedParameters = {JsonConvert.SerializeObject(namedParameters, Formatting.Indented)}");
-            _logger.Info($"positionedParameters = {JsonConvert.SerializeObject(positionedParameters, Formatting.Indented)}");
+            _logger.Info("F4F160FE-82E3-4A6F-A2D4-BDC3A980668E", $"methodName = '{methodName}'");
+            _logger.Info("C01856F4-0812-4FF0-8BC8-BFE7424AE637", $"isNamedParameters = {isNamedParameters}");
+            _logger.Info("88931B1B-1797-4A14-97C4-7BF190EE5270", $"namedParameters = {JsonConvert.SerializeObject(namedParameters, Formatting.Indented)}");
+            _logger.Info("20B22369-AC91-4A0D-AB1A-C9627DF4A267", $"positionedParameters = {JsonConvert.SerializeObject(positionedParameters, Formatting.Indented)}");
         }
 
 

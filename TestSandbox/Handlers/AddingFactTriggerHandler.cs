@@ -85,12 +85,12 @@ namespace TestSandbox.Handlers
 
             Thread.Sleep(50000);
 
-            _logger.Info("End");
+            _logger.Info("0FEF686A-A891-4BE5-93BF-59F00BFE8E0E", "End");
         }
 
         private IAddFactOrRuleResult LogicalStorage_OnAddingFact(RuleInstance ruleInstance)
         {
-            _logger.Info($"ruleInstance = {ruleInstance.ToHumanizedString()}");
+            _logger.Info("F13D2C8D-DF73-42B2-8A88-1CA39E33CEAE", $"ruleInstance = {ruleInstance.ToHumanizedString()}");
 
             return new AddFactOrRuleResult() { 
                 KindOfResult = KindOfAddFactOrRuleResult.Accept,

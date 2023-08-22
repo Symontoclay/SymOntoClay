@@ -41,10 +41,10 @@ namespace TestSandbox.CoreHostListener
         public void GenericCall(CancellationToken cancellationToken, string methodName, bool isNamedParameters,
             Dictionary<string, object> namedParameters, List<object> positionedParameters)
         {
-            _logger.Info($"methodName = '{methodName}'");
-            _logger.Info($"isNamedParameters = {isNamedParameters}");
-            _logger.Info($"namedParameters = {JsonConvert.SerializeObject(namedParameters, Formatting.Indented, _customConverter)}");
-            _logger.Info($"positionedParameters = {JsonConvert.SerializeObject(positionedParameters, Formatting.Indented, _customConverter)}");
+            _logger.Info("08901E08-2681-413A-A285-705442594E9B", $"methodName = '{methodName}'");
+            _logger.Info("3F7293DE-85B2-4BC7-B763-94318811E5AC", $"isNamedParameters = {isNamedParameters}");
+            _logger.Info("33910F7F-F62A-4EF9-B987-1BA6E44BA4A7", $"namedParameters = {JsonConvert.SerializeObject(namedParameters, Formatting.Indented, _customConverter)}");
+            _logger.Info("A2378CCB-C12F-4737-8872-840B9F59A4E6", $"positionedParameters = {JsonConvert.SerializeObject(positionedParameters, Formatting.Indented, _customConverter)}");
         }
 
         private bool _isFirstCall;
@@ -55,13 +55,13 @@ namespace TestSandbox.CoreHostListener
             [EndpointParam("To", KindOfEndpointParam.Position)] INavTarget navTarget,
             float speed = 12)
         {
-            _logger.Info($"GoToImpl Begin");
-            _logger.Info($"navTarget.Kind = {navTarget.Kind}");
+            _logger.Info("C404C995-403F-4DC4-A68F-3678FDBB66B5", $"GoToImpl Begin");
+            _logger.Info("BEA559BF-A353-42CF-9617-794E74D8644C", $"navTarget.Kind = {navTarget.Kind}");
             var entity = navTarget.Entity;
-            _logger.Info($"entity.InstanceId = {entity.InstanceId}");
-            _logger.Info($"entity.Id = {entity.Id}");
-            _logger.Info($"entity.Position = {entity.Position}");
-            _logger.Info($"_isFirstCall = {_isFirstCall}");
+            _logger.Info("51B66F4B-E01F-4464-8502-196439A6465D", $"entity.InstanceId = {entity.InstanceId}");
+            _logger.Info("E2218C0D-A645-4DFA-9772-E90ACC853D1A", $"entity.Id = {entity.Id}");
+            _logger.Info("41265F04-C163-4E84-8404-84B397CAD84A", $"entity.Position = {entity.Position}");
+            _logger.Info("27EB941F-A0DA-44A2-9470-A69C22FD2036", $"_isFirstCall = {_isFirstCall}");
 
             if (!_isFirstCall)
             {
@@ -72,25 +72,25 @@ namespace TestSandbox.CoreHostListener
             {
                 _isFirstCall = false;
 
-                _logger.Info($"It completed!!!!!");
+                _logger.Info("8C6E35EB-5395-4663-BAB7-3BF1A1D8196A", $"It completed!!!!!");
             }
 
-            _logger.Info($"cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");
+            _logger.Info("DABDF048-6461-48A6-849D-5DC16F938722", $"cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");
 
-            _logger.Info($"GoToImpl End");
+            _logger.Info("B7EB7277-57A9-44B2-A8F3-84E0431F18BA", $"GoToImpl End");
         }
 
         [BipedEndpoint("Stop", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
         public void StopImpl(CancellationToken cancellationToken)
         {
-            _logger.Info("StopImpl Begin");
+            _logger.Info("04F887D9-BC4B-40FD-9C19-76258EC8E887", "StopImpl Begin");
         }
 
         [BipedEndpoint("Rotate", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
         public void RotateImpl(CancellationToken cancellationToken, float? direction)
         {
-            _logger.Info("RotateImpl Begin");
-            _logger.Info(direction.ToString());
+            _logger.Info("FA60A1F5-2317-4F1C-8CD1-2ADE43B94CC5", "RotateImpl Begin");
+            _logger.Info("4E9418F4-D9C1-4674-87F7-C5235F345C9E", direction.ToString());
         }
     }
 }

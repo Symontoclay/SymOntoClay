@@ -58,11 +58,11 @@ namespace TestSandbox.Handlers
 
         public void Run()
         {
-            _logger.Info("Begin");
+            _logger.Info("77931337-9D84-4E40-83C7-6C3D2164EB2F", "Begin");
 
             Case1();
 
-            _logger.Info("End");
+            _logger.Info("3FBA1ACC-7A21-4A8D-B914-BD4813E35057", "End");
         }
 
         private void Case1()
@@ -82,12 +82,12 @@ namespace TestSandbox.Handlers
 
             var result = AddingFactHelper.CallEvent(OnAddingFact, ruleInstance, fuzzyLogicResolver, localCodeExecutionContext, _logger);
 
-            _logger.Info($"result = {result}");
+            _logger.Info("2DA20890-14D0-4755-BB63-C23648366632", $"result = {result}");
         }
 
         private IAddFactOrRuleResult Handler1(RuleInstance ruleInstance)
         {
-            _logger.Info($"ruleInstance = {ruleInstance.ToHumanizedString()}");
+            _logger.Info("8B8A3C16-7587-4530-862C-A8A8C50F5017", $"ruleInstance = {ruleInstance.ToHumanizedString()}");
 
             return new AddFactOrRuleResult()
             {
@@ -98,7 +98,7 @@ namespace TestSandbox.Handlers
 
         private IAddFactOrRuleResult Handler2(RuleInstance ruleInstance)
         {
-            _logger.Info($"ruleInstance = {ruleInstance.ToHumanizedString()}");
+            _logger.Info("FCA5D675-84B4-44D3-82F7-C0DE50E373E5", $"ruleInstance = {ruleInstance.ToHumanizedString()}");
 
             return new AddFactOrRuleResult()
             {
@@ -109,7 +109,7 @@ namespace TestSandbox.Handlers
 
         private IAddFactOrRuleResult Handler3(RuleInstance ruleInstance)
         {
-            _logger.Info($"ruleInstance = {ruleInstance.ToHumanizedString()}");
+            _logger.Info("E475C481-E0D5-4862-B0A7-49F93DE8D58E", $"ruleInstance = {ruleInstance.ToHumanizedString()}");
 
             return new AddFactOrRuleResult()
             {

@@ -38,7 +38,7 @@ namespace TestSandbox.CreatingExamples
 
         public void Run()
         {
-            _logger.Info("Begin");
+            _logger.Info("D88573AD-4B66-40B6-B0FA-C405CD2F3C95", "Begin");
 
             Variables();
             MemberAccessModifiers();
@@ -53,7 +53,7 @@ namespace TestSandbox.CreatingExamples
             ContinueLoopStatement();//in process
             BreakLoopStatement();//in process
 
-            _logger.Info("End");
+            _logger.Info("995F344C-14E9-48F9-8EA6-A3EBC4AE7F8C", "End");
         }
 
         private void Variables()

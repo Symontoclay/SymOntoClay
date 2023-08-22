@@ -545,7 +545,7 @@ namespace TestSandbox
 
         private static void TstSampleSpeechSynthesis()
         {
-            _logger.Info("Begin");
+            _logger.Info("8DE15CDF-8306-497C-8564-21A074DBF119", "Begin");
 
             var synth = new SpeechSynthesizer();
 
@@ -554,32 +554,32 @@ namespace TestSandbox
             synth.Speak("This example demonstrates a basic use of Speech Synthesizer");
             synth.Speak("Go to green place!");
 
-            _logger.Info("End");
+            _logger.Info("E1B00B6D-5432-420D-BFAF-B679A9E6CAD3", "End");
         }
 
         private static void TstOnAddingFactEventHanler()
         {
-            _logger.Info("Begin");
+            _logger.Info("A42581B7-AF6A-404D-A955-FF1D7BE94579", "Begin");
 
             var handler = new OnAddingFactEventHanler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("3F8D1A27-A27D-4D2A-9EBD-A2470BC923DF", "End");
         }
 
         private static void TstEventHanler()
         {
-            _logger.Info("Begin");
+            _logger.Info("802C193A-95BE-40B1-BB18-421668003039", "Begin");
 
             var handler = new EventHanler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("0918FFF7-E3F7-467B-A52C-C1D6F9AD3C6F", "End");
         }
 
         private static void TstStrCollectionCombination()
         {
-            _logger.Info("Begin");
+            _logger.Info("0E8C7739-639B-45B5-A685-20DCA62B8268", "Begin");
 
             var source = new List<List<string>>();
 
@@ -587,18 +587,18 @@ namespace TestSandbox
             source.Add(new List<string>() { "h", "j", "L" });
             source.Add(new List<string>() { "b", "c", "f" });
 
-            _logger.Info($"source = {JsonConvert.SerializeObject(source, Formatting.Indented)}");
+            _logger.Info("F5CD028E-7750-4E19-B4A7-5AADE6BF8EB9", $"source = {JsonConvert.SerializeObject(source, Formatting.Indented)}");
 
             var result = CollectionCombinationHelper.Combine(source);
 
-            _logger.Info($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
+            _logger.Info("A3189D70-D4D1-45FF-8764-15EC7FB0C7C9", $"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
 
-            _logger.Info("End");
+            _logger.Info("9BF05596-9FA1-4653-8DF6-4EA4EB5CBBA8", "End");
         }
 
         private static void TstIntCollectionCombination()
         {
-            _logger.Info("Begin");
+            _logger.Info("A312B861-C4F1-4FBC-90E6-2DD42EB416C0", "Begin");
 
             var source = new List<List<int>>();
 
@@ -606,63 +606,63 @@ namespace TestSandbox
             source.Add(new List<int>() { 7, 9, 11 });
             source.Add(new List<int>() { 2, 3, 6 });
 
-            _logger.Info($"source = {JsonConvert.SerializeObject(source, Formatting.Indented)}");
+            _logger.Info("F3F0C842-98B8-4A11-9066-5B7E7C2FCEFD", $"source = {JsonConvert.SerializeObject(source, Formatting.Indented)}");
 
             var result = CollectionCombinationHelper.Combine(source);
 
-            _logger.Info($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
+            _logger.Info("8282395B-5136-4827-9514-A1A8C4A1D604", $"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
 
-            _logger.Info("End");
+            _logger.Info("BC71A88F-7E01-42A3-96CA-E774A33AC271", "End");
         }
 
         private static void TstModalitiesHandler()
         {
-            _logger.Info("Begin");
+            _logger.Info("A354A53B-2F99-4CB9-9FA4-E65ECE61CB4C", "Begin");
 
             var handler = new ModalitiesHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("80905D58-0907-4B45-B446-4D5DD8A0F896", "End");
         }
 
         private static void TstRelationsStorageHandler()
         {
-            _logger.Info("Begin");
+            _logger.Info("9491BA22-5021-4180-BACC-ACC213630CC1", "Begin");
 
             var handler = new RelationsStorageHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("AECA21EC-D4A4-400F-8C1F-AAA809AF95ED", "End");
         }
 
         private static void TstGenerateDllDict()
         {
-            _logger.Info("Begin");
+            _logger.Info("36A7E4CB-918F-47C0-828B-29999B7772ED", "Begin");
 
             var handler = new GenerateDllDictHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("F3623C7E-4AC5-44AE-A455-EEA041C74367", "End");
         }
 
         private static void TSTWordsFactory()
         {
-            _logger.Info("Begin");
+            _logger.Info("E5E9649D-480C-4B18-8E39-2AB5B03278DE", "Begin");
 
             var wordsFactory = new WordsFactory();
             wordsFactory.Run();
 
-            _logger.Info("End");
+            _logger.Info("43313870-E3A7-4854-B0C1-62E7659DF7BF", "End");
         }
 
         private static void TstNLPConverterProvider()
         {
-            _logger.Info("Begin");
+            _logger.Info("67B93130-EFEE-4076-AA45-A3E06476CA58", "Begin");
 
             var mainDictPath = Path.Combine(Directory.GetCurrentDirectory(), "Dicts", "BigMainDictionary.dict");
 
 #if DEBUG
-            _logger.Info($"mainDictPath = {mainDictPath}");
+            _logger.Info("5A8EE3B2-4D86-47E6-B9A1-389230C11227", $"mainDictPath = {mainDictPath}");
 #endif
 
             var settings = new NLPConverterProviderSettings();
@@ -670,7 +670,7 @@ namespace TestSandbox
             settings.CreationStrategy = CreationStrategy.Singleton;
 
 #if DEBUG
-            _logger.Info($"settings = {settings}");
+            _logger.Info("30456AC0-AF91-4B0D-83EF-88F301022713", $"settings = {settings}");
 #endif
 
             var nlpConverterProvider = new NLPConverterProvider(settings);
@@ -679,62 +679,62 @@ namespace TestSandbox
 
             var converter = factory.GetConverter();
 
-            _logger.Info("End");
+            _logger.Info("EB98D2D8-19C5-481F-9867-2BC0DAF9A0F2", "End");
         }
 
         private static void TstNLPHandler()
         {
-            _logger.Info("Begin");
+            _logger.Info("A27B6690-4B39-491E-83AA-332424991282", "Begin");
 
             var handler = new NLPHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("B02392AD-7091-4FB2-93D8-51EA737DD550", "End");
         }
 
         private static void TstTriggerConditionNodeHandler()
         {
-            _logger.Info("Begin");
+            _logger.Info("934C5700-D080-4BF8-8F39-87C63A126D81", "Begin");
 
             var handler = new TriggerConditionNodeHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("B527FC41-1A8B-45A9-9450-ECB9E7A2D897", "End");
         }
 
         private static void TstSoundBus()
         {
-            _logger.Info("Begin");
+            _logger.Info("F0914D51-3508-41F4-8185-431B857A73FC", "Begin");
 
             var handler = new TstSoundBusHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("BA631638-8254-4678-AAEC-E6CB1B3D8311", "End");
         }
 
         private static void TstNavigationHandler()
         {
-            _logger.Info("Begin");
+            _logger.Info("3E8DD248-66F6-4C2C-A0C2-EC74B19DBED3", "Begin");
 
             var handler = new NavigationHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("0759EE0B-20A3-4CD4-AE10-E50228584A05", "End");
         }
 
         private static void TstCreatorExamples()
         {
-            _logger.Info("Begin");
+            _logger.Info("35B0586E-17AA-4B9B-9868-172A242A22DB", "Begin");
 
             using var handler = new CreatorExamples_States_27_03_2022();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("BBC9DC55-88A4-4787-A4ED-0F4D54875D0D", "End");
         }
 
         private static void TstLinguisticVariable_Tests()
         {
-            _logger.Info("Begin");
+            _logger.Info("E0960944-B88C-4A1E-B4D8-415F307968B1", "Begin");
 
             var text = @"linvar logic for range [0, 1]
 {
@@ -764,30 +764,30 @@ namespace TestSandbox
 
             firstItem.AsLinguisticVariable.CheckDirty();
 
-            _logger.Info($"firstItem = {firstItem}");
+            _logger.Info("6A0E9F63-280F-4EE4-B0EF-C9507214CCA9", $"firstItem = {firstItem}");
 
             var term = firstItem.AsLinguisticVariable.Values[4];
 
-            _logger.Info($"term = {term}");
+            _logger.Info("4696A996-DCB7-48FF-83AC-C5D0E1B5E7AD", $"term = {term}");
 
             var handler = term.Handler;
 
-            _logger.Info($"handler = {handler}");
+            _logger.Info("9771A1B2-51CE-493B-B944-8784446682F0", $"handler = {handler}");
 
-            _logger.Info("End");
+            _logger.Info("E765CFD3-12D6-4000-8663-A14FA68510F1", "End");
         }
 
         private static void TstManageTempProject()
         {
-            _logger.Info("Begin");
+            _logger.Info("7CD26702-DE44-4FEF-AE4E-F133FAB3811F", "Begin");
 
             var initialDir = Directory.GetCurrentDirectory();
 
-            _logger.Info($"initialDir = {initialDir}");
+            _logger.Info("66BEB294-CD1F-43C5-BDF6-711CA699E669", $"initialDir = {initialDir}");
 
             initialDir = Path.Combine(initialDir, "TempProjects");
 
-            _logger.Info($"initialDir (2) = {initialDir}");
+            _logger.Info("E70C56C9-A719-45D0-97FB-737DC6B92DEC", $"initialDir (2) = {initialDir}");
 
             if(!Directory.Exists(initialDir))
             {
@@ -796,7 +796,7 @@ namespace TestSandbox
 
             var testDir = Path.Combine(initialDir, $"TstDir{Guid.NewGuid().ToString("D").Replace("-", string.Empty)}");
 
-            _logger.Info($"testDir = {testDir}");
+            _logger.Info("FA8C941F-8D9D-4B54-B045-05A103E24A2E", $"testDir = {testDir}");
 
             if (!Directory.Exists(testDir))
             {
@@ -807,32 +807,32 @@ namespace TestSandbox
 
             var worldSpaceCreationSettings = new WorldSpaceCreationSettings() { ProjectName = projectName };
 
-            _logger.Info($"worldSpaceCreationSettings = {worldSpaceCreationSettings}");
+            _logger.Info("06965C85-B17F-4360-800B-B94BBDD614F9", $"worldSpaceCreationSettings = {worldSpaceCreationSettings}");
 
             var wSpaceFile = WorldSpaceCreator.CreateWithOutWSpaceFile(worldSpaceCreationSettings, testDir
-                    , errorMsg => _logger.Error(errorMsg)
+                    , errorMsg => _logger.Error("8726C7D4-DC3B-4484-BBD1-5C1F74675D79", errorMsg)
                     );
 
-            _logger.Info($"wSpaceFile = {wSpaceFile}");
+            _logger.Info("2EC1687B-02D6-4045-BAB4-CCDBA6FF50E8", $"wSpaceFile = {wSpaceFile}");
 
             var wSpaceDir = wSpaceFile.DirectoryName;
 
-            _logger.Info($"wSpaceDir = {wSpaceDir}");
+            _logger.Info("0896F326-B847-4BA2-A0BE-9B75F88C9BE6", $"wSpaceDir = {wSpaceDir}");
 
             var targetRelativeFileName = @"/Npcs/Example/Example.soc";
 
-            _logger.Info($"targetRelativeFileName = {targetRelativeFileName}");
+            _logger.Info("35F40A69-BEAB-4A13-B684-F76F3BBE53CD", $"targetRelativeFileName = {targetRelativeFileName}");
 
             if(targetRelativeFileName.StartsWith("/") || targetRelativeFileName.StartsWith("\\"))
             {
                 targetRelativeFileName = targetRelativeFileName.Substring(1);
             }
 
-            _logger.Info($"targetRelativeFileName (after) = {targetRelativeFileName}");
+            _logger.Info("F72FFE4B-F305-49BD-B977-93F6B99AC1D3", $"targetRelativeFileName (after) = {targetRelativeFileName}");
 
             var targetFileName = Path.Combine(wSpaceDir, targetRelativeFileName);
 
-            _logger.Info($"targetFileName = {targetFileName}");
+            _logger.Info("380D2E36-7F8E-4949-96FD-EE4E96A353BA", $"targetFileName = {targetFileName}");
 
             var text = @"linvar logic for range [0, 1]
 {
@@ -889,11 +889,11 @@ app PeaceKeeper is [very middle] exampleClass
 
             var supportBasePath = Path.Combine(testDir, "SysDirs");
 
-            _logger.Info($"supportBasePath = {supportBasePath}");
+            _logger.Info("3EF60072-1246-49F5-A4C6-9F30F2C81428", $"supportBasePath = {supportBasePath}");
 
             var monitorMessagesDir = Path.Combine(supportBasePath, "NpcMonitorMessages");
 
-            _logger.Info($"monitorMessagesDir = {monitorMessagesDir}");
+            _logger.Info("33072297-0819-4B8F-8551-B655F4FA22B0", $"monitorMessagesDir = {monitorMessagesDir}");
 
             var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
 
@@ -913,8 +913,8 @@ app PeaceKeeper is [very middle] exampleClass
             settings.InvokerInMainThread = invokingInMainThread;
 
             var callBackLogger = new CallBackLogger(
-                message => { _logger.Info($"message = {message}"); },
-                error => { _logger.Info($"error = {error}"); }
+                message => { _logger.Info("29A5ECF5-4369-4759-AE03-76EF742813F5", $"message = {message}"); },
+                error => { _logger.Info("68480D4E-B029-45A7-892C-D16D06CA9E79", $"error = {error}"); }
                 );
 
             settings.Monitor = new SymOntoClay.Monitor.Monitor(new SymOntoClay.Monitor.MonitorSettings
@@ -924,7 +924,7 @@ app PeaceKeeper is [very middle] exampleClass
                 Enable = true
             });
 
-            _logger.Info($"settings = {settings}");
+            _logger.Info("E17F812C-9900-4B6B-9210-A5CE8742C9DA", $"settings = {settings}");
 
             instance.SetSettings(settings);
 
@@ -936,7 +936,7 @@ app PeaceKeeper is [very middle] exampleClass
             npcSettings.HostListener = platformListener;
             npcSettings.PlatformSupport = new PlatformSupportCLIStub();
 
-            _logger.Info($"npcSettings = {npcSettings}");
+            _logger.Info("A471A33B-0564-49CC-AD27-2BADFB527C09", $"npcSettings = {npcSettings}");
 
             var npc = instance.GetHumanoidNPC(npcSettings);
 
@@ -946,18 +946,18 @@ app PeaceKeeper is [very middle] exampleClass
 
             Directory.Delete(testDir, true);
 
-            _logger.Info("End");
+            _logger.Info("47C7E720-4227-4738-8D52-E3270106EF66", "End");
         }
 
         private static void TstAdvancedTestRunnerForMultipleInstances()
         {
-            _logger.Info("Begin");
+            _logger.Info("4F0F2163-386D-4981-BC87-4900E243CB69", "Begin");
 
             using (var instance = new AdvancedBehaviorTestEngineInstance())
             {
                 instance.CreateWorld((n, message) =>
                 {
-                    _logger.Info($"n = {n}; message = {message}");
+                    _logger.Info("A0C91537-5AC2-4DCD-8199-C1479A99F083", $"n = {n}; message = {message}");
                 }, true);
 
                 instance.WriteFile(@"app PeaceKeeper
@@ -989,12 +989,12 @@ app PeaceKeeper is [very middle] exampleClass
                 Thread.Sleep(5000);
             }
 
-            _logger.Info("End");
+            _logger.Info("8B52CEC1-4F4A-4639-ABD9-4D6F6FD50129", "End");
         }
 
         private static void TstAdvancedTestRunner()
         {
-            _logger.Info("Begin");
+            _logger.Info("D7DC462F-D14E-42DF-828D-7CB3CE33D8B6", "Begin");
 
             var instance = new AdvancedBehaviorTestEngineInstance();
 
@@ -1027,7 +1027,7 @@ action Go
             instance.WriteFile(text);
 
             var npc = instance.CreateAndStartNPC((n, message) => {
-                _logger.Info($"n = {n}; message = {message}");
+                _logger.Info("2D23322D-000C-4FFA-89B1-B43A33383A20", $"n = {n}; message = {message}");
             });
 
             Thread.Sleep(1000);
@@ -1036,12 +1036,12 @@ action Go
 
             Thread.Sleep(1000);
 
-            _logger.Info("End");
+            _logger.Info("4715C87B-8AC4-4C59-AF96-37705E93BE41", "End");
         }
 
         private static void TstTestRunnerWithHostListener()
         {
-            _logger.Info("Begin");
+            _logger.Info("BEF83438-5B1E-4A1A-A729-8C5703D7D25C", "Begin");
 
             var text = @"app PeaceKeeper
 {
@@ -1057,15 +1057,15 @@ action Go
 
             BehaviorTestEngineInstance.Run(text,
                 (n, message) => {
-                    _logger.Info($"n = {n}; message = {message}");
+                    _logger.Info("2012B98A-BB15-41A1-A267-95D3719CF28E", $"n = {n}; message = {message}");
                 }, hostListener);
 
-            _logger.Info("End");
+            _logger.Info("8E6AB0DB-9DAD-47AE-83BB-89421B778775", "End");
         }
 
         private static void TstTestRunner()
         {
-            _logger.Info("Begin");
+            _logger.Info("02451C3B-2280-4CB7-8D31-6BF42E1176F9", "Begin");
 
             var text = @"app PeaceKeeper
 {
@@ -1096,28 +1096,28 @@ action Go
 
             BehaviorTestEngineInstance.Run(text,
                 (n, message) => {
-                    _logger.Info($"n = {n}; message = {message}");
+                    _logger.Info("BEF7431B-B672-473E-9ABB-76D9A2D708A1", $"n = {n}; message = {message}");
                 });
 
-            _logger.Info("End");
+            _logger.Info("E18A11E9-F938-49F4-8C02-A124EA88D690", "End");
         }
 
         private static void TstNameHelper()
         {
-            _logger.Info("Begin");
+            _logger.Info("BAB73BFD-AD12-44A2-80FA-7523A6A1A11A", "Begin");
 
             var text = "$x";
 
             var name = NameHelper.CreateName(text);
 
-            _logger.Info($"name = {name}");
+            _logger.Info("0A3F463E-7F2E-4EFF-93C7-6C066404C9BE", $"name = {name}");
 
-            _logger.Info("End");
+            _logger.Info("ADED3A3E-7627-42BE-92BF-912B8F2E8FC0", "End");
         }
 
         private static void TstDeffuzzification()
         {
-            _logger.Info("Begin");
+            _logger.Info("F88C9B47-6BF7-497D-8E1B-ED5821A0EA74", "Begin");
 
             var veryHandler = new VeryFuzzyLogicOperatorHandler();
 
@@ -1129,22 +1129,22 @@ action Go
 
             var defuzzificatedValue = trapezoid.Defuzzificate();
 
-            _logger.Info($"defuzzificatedValue = {defuzzificatedValue}");
+            _logger.Info("7DC833D8-2E97-488E-8BE7-D6659810BC35", $"defuzzificatedValue = {defuzzificatedValue}");
 
             var naiveVeryDefuzzificatedValue = veryHandler.SystemCall(defuzzificatedValue);
 
-            _logger.Info($"naiveVeryDefuzzificatedValue = {naiveVeryDefuzzificatedValue}");
+            _logger.Info("E2598E54-7922-4975-A847-76D36B317CFD", $"naiveVeryDefuzzificatedValue = {naiveVeryDefuzzificatedValue}");
 
             defuzzificatedValue = trapezoid.Defuzzificate(new List<IFuzzyLogicOperatorHandler>() { veryHandler });
 
-            _logger.Info($"defuzzificatedValue = {defuzzificatedValue}");
+            _logger.Info("1B0BD8F5-A296-43BD-B79B-16779B4977C3", $"defuzzificatedValue = {defuzzificatedValue}");
 
-            _logger.Info("End");
+            _logger.Info("1F0679D3-6F2C-4483-A0F5-E716E1B4B4AE", "End");
         }
 
         private static void TstRangeValue()
         {
-            _logger.Info("Begin");
+            _logger.Info("77695CB9-25A6-4FCA-B2D7-CE66EC71DBA6", "Begin");
 
             var leftValue = new NumberValue(0);
 
@@ -1164,36 +1164,36 @@ action Go
 
             range.CheckDirty();
 
-            _logger.Info($"range = {range}");
+            _logger.Info("AF4B7B77-7930-49F8-A27B-4E226A3404B9", $"range = {range}");
 
-            _logger.Info($"range.ToDbgString() = {range.ToDbgString()}");
+            _logger.Info("B6C432AD-C307-4DDB-BC79-376C6680BB8D", $"range.ToDbgString() = {range.ToDbgString()}");
 
-            _logger.Info($"range.Length = {range.Length}");
+            _logger.Info("3CC27F28-59D3-47D6-8447-F97B6DE190C7", $"range.Length = {range.Length}");
 
-            _logger.Info($"range.IsFit(-1) = {range.IsFit(-1)}");
-            _logger.Info($"range.IsFit(0) = {range.IsFit(0)}");
-            _logger.Info($"range.IsFit(1) = {range.IsFit(1)}");
-            _logger.Info($"range.IsFit(12) = {range.IsFit(12)}");
-            _logger.Info($"range.IsFit(14) = {range.IsFit(14)}");
+            _logger.Info("980553A3-CC98-4D1C-9232-C88FE37768C2", $"range.IsFit(-1) = {range.IsFit(-1)}");
+            _logger.Info("4C12AEA1-B05B-4367-8CA1-1FF77DA6F332", $"range.IsFit(0) = {range.IsFit(0)}");
+            _logger.Info("F90D93CB-28B8-4BE8-AA05-92C8AED286DA", $"range.IsFit(1) = {range.IsFit(1)}");
+            _logger.Info("FD5A31EE-DB2F-47E1-A751-9B59F858D34D", $"range.IsFit(12) = {range.IsFit(12)}");
+            _logger.Info("0843F1C0-297D-49E3-93C9-6185B465CC77", $"range.IsFit(14) = {range.IsFit(14)}");
 
-            _logger.Info("End");
+            _logger.Info("0D4FE745-F35B-4E9A-955C-C804092346FC", "End");
         }
 
         private static void TstFuzzyLogicNonNumericSequenceValue()
         {
-            _logger.Info("Begin");
+            _logger.Info("38899FB2-ED95-4C0E-97F2-3E977454DDB0", "Begin");
 
             var sequence = new FuzzyLogicNonNumericSequenceValue();
 
-            _logger.Info($"sequence = {sequence}");
-            _logger.Info($"sequence = {sequence.ToDbgString()}");
+            _logger.Info("3E05BE20-F906-4051-A83B-9E6BDE933AC2", $"sequence = {sequence}");
+            _logger.Info("5BBE5FEA-3931-415E-92CF-8AC902EDCCA7", $"sequence = {sequence.ToDbgString()}");
 
             var very = NameHelper.CreateName("very");
 
             sequence.AddIdentifier(very);
 
-            _logger.Info($"sequence = {sequence}");
-            _logger.Info($"sequence = {sequence.ToDbgString()}");
+            _logger.Info("3A683FB9-F354-4D97-BF92-67B47FC3628D", $"sequence = {sequence}");
+            _logger.Info("271A93F1-8546-42F3-A301-A17A53AB674B", $"sequence = {sequence.ToDbgString()}");
 
             var teenager = NameHelper.CreateName("teenager");
 
@@ -1201,17 +1201,17 @@ action Go
 
             sequence.CheckDirty();
 
-            _logger.Info($"sequence = {sequence}");
-            _logger.Info($"sequence = {sequence.ToDbgString()}");
+            _logger.Info("0DBDF7F3-3C5A-4C84-AB05-159F2226459D", $"sequence = {sequence}");
+            _logger.Info("E44DAC6F-A6D4-44D6-8C47-465B15EC8202", $"sequence = {sequence.ToDbgString()}");
 
-            _logger.Info("End");
+            _logger.Info("D6727E0C-F46F-4F0C-8190-4077F5E05560", "End");
         }
 
         private static float Deg2Rad = 0.0174532924F;
 
         private static void TstCalculateTargetAnglesForRayScanner()
         {
-            _logger.Info("Begin");
+            _logger.Info("DF0E9C07-194B-4430-B26F-0939274A8609", "Begin");
 
             var TotalRaysAngle = 125;
             var TotalRaysInterval = 10;
@@ -1223,19 +1223,19 @@ action Go
             var halfOfTotalRaysAngle = TotalRaysAngle / 2;
             var halfOfFocusRaysAngle = FocusRaysAngle / 2;
 
-            _logger.Info($"halfOfTotalRaysAngle = {halfOfTotalRaysAngle}");
-            _logger.Info($"halfOfFocusRaysAngle = {halfOfFocusRaysAngle}");
+            _logger.Info("14D27C16-C3AA-4CC2-8B8A-42EA275FF9BD", $"halfOfTotalRaysAngle = {halfOfTotalRaysAngle}");
+            _logger.Info("F803650D-035B-4940-84A8-2207EC235E46", $"halfOfFocusRaysAngle = {halfOfFocusRaysAngle}");
 
             var currAngle = 0f;
             var inFocus = true;
 
             do
             {
-                _logger.Info($"currAngle = {currAngle}; inFocus = {inFocus}");
+                _logger.Info("CF29BBFB-7098-407A-881F-7D2DCA9EA046", $"currAngle = {currAngle}; inFocus = {inFocus}");
 
                 var radAngle = currAngle * Deg2Rad;
 
-                _logger.Info($"radAngle = {radAngle}");
+                _logger.Info("B003358D-BECA-4AE8-AD42-7B297300B739", $"radAngle = {radAngle}");
 
                 anglesList.Add((radAngle, inFocus));
 
@@ -1270,70 +1270,70 @@ action Go
                 }
             } while (true);
 
-            _logger.Info($"anglesList = {JsonConvert.SerializeObject(anglesList, Formatting.Indented)}");
+            _logger.Info("DBD2620A-F43E-4732-A0A9-D317769B1EFB", $"anglesList = {JsonConvert.SerializeObject(anglesList, Formatting.Indented)}");
 
-            _logger.Info("End");
+            _logger.Info("0AB0763E-0FBE-488B-8F3E-A6D3892E9952", "End");
         }
 
         private static void TstCopyFilesOnBuilding()
         {
-            _logger.Info("Begin");
+            _logger.Info("24655813-6DE5-4560-84BE-FE0F6DC12A39", "Begin");
 
             var sourceDir = @"C:/Users/Sergey/Documents/GitHub/Game1/Assets";
             var outputPath = @"C:/Users/Sergey/Documents/ExampleBuild/CustomAssetExample.exe";
 
             BuildPipeLine.CopyFiles(sourceDir, outputPath);
 
-            _logger.Info("End");
+            _logger.Info("62C48237-5EA9-4A57-9300-F84F59D1F6C3", "End");
         }
 
         private static void TstGetRootWorldSpaceDir()
         {
-            _logger.Info("Begin");
+            _logger.Info("3E701AB8-E272-4B4F-8FD4-F88DD13FBAB0", "Begin");
 
             var inputFile = @"C:/Users/Sergey/Documents/GitHub/Game1/Assets\HelloWorld_Example1/World/PeaceKeeper.world";
 
-            _logger.Info($"inputFile = '{inputFile}'");
+            _logger.Info("FE12AD59-BDC3-422A-AB57-B71D0862633F", $"inputFile = '{inputFile}'");
 
             var wspaceDir = WorldSpaceHelper.GetRootWorldSpaceDir(inputFile);
 
-            _logger.Info($"wspaceDir = '{wspaceDir}'");
+            _logger.Info("AD8E2FD7-406D-42B1-AD58-3A486438CA34", $"wspaceDir = '{wspaceDir}'");
 
-            _logger.Info("End");
+            _logger.Info("26EBCD77-698B-470E-AFDF-C9EDF78D8524", "End");
         }
 
         private static void TstEnvironmentVariables()
         {
-            _logger.Info("Begin");
+            _logger.Info("B8EF5349-D77B-499C-8BBD-B3F50C0689DE", "Begin");
 
 
             var path = Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.User);
 
-            _logger.Info($"path = '{path}'");
+            _logger.Info("338359A1-B814-45FE-8CB1-CE2AC0812BAB", $"path = '{path}'");
 
             var pathsList = path.Split(';').Select(p => p.Trim()).Where(p => !string.IsNullOrWhiteSpace(p));
 
-            _logger.Info($"pathsList = {JsonConvert.SerializeObject(pathsList, Formatting.Indented)}");
+            _logger.Info("69D761ED-2382-42B8-ADDB-6CA3720AA37B", $"pathsList = {JsonConvert.SerializeObject(pathsList, Formatting.Indented)}");
 
             var currDir = Directory.GetCurrentDirectory();
 
-            _logger.Info($"currDir = {currDir}");
+            _logger.Info("D2F33841-465F-4C2D-BFA1-9E52B3E0C03F", $"currDir = {currDir}");
 
             if(!pathsList.Contains(currDir))
             {
                 path = $"{path};{currDir}";
 
-                _logger.Info($"path (after) = '{path}'");
+                _logger.Info("710E33F3-F748-44F5-B6E4-ADEB6450E5AF", $"path (after) = '{path}'");
 
                 Environment.SetEnvironmentVariable("Path", path, EnvironmentVariableTarget.User);
             }
 
-            _logger.Info("End");
+            _logger.Info("0B669B64-4190-4380-A01E-46AC843E1432", "End");
         }
 
         private static void TstCLINewHandler()
         {
-            _logger.Info("Begin");
+            _logger.Info("0D38F763-C02E-4DB5-855E-90029878AB58", "Begin");
 
             var args = new List<string>() {
                  "new",
@@ -1342,14 +1342,14 @@ action Go
 
             var command = CLICommandParser.Parse(args);
 
-            _logger.Info($"command = {command}");
+            _logger.Info("E9616FE0-2F8A-4124-9138-F8BFB4BDDE54", $"command = {command}");
 
-            _logger.Info("End");
+            _logger.Info("4972171D-AD36-4BBF-89FF-87B331FF076F", "End");
         }
 
         private static void TstCLIRunHandler()
         {
-            _logger.Info("Begin");
+            _logger.Info("5F7CF8CA-6353-47AF-847C-80CCEF9C3790", "Begin");
 
             var args = new List<string>() {
                  "run"//,
@@ -1357,13 +1357,13 @@ action Go
 
             var targetDirectory = EVPath.Normalize("%USERPROFILE%/source/repos/SymOntoClay/TestSandbox/Source");
 
-            _logger.Info($"targetDirectory = {targetDirectory}");
+            _logger.Info("F35FAE48-F180-464A-9A6C-BDF52D270408", $"targetDirectory = {targetDirectory}");
 
             Directory.SetCurrentDirectory(targetDirectory);
 
             var command = CLICommandParser.Parse(args);
 
-            _logger.Info($"command = {command}");
+            _logger.Info("5827F255-E21E-42AF-A6EF-8DD36C93364C", $"command = {command}");
 
             var worldSpaceFilesSearcherOptions = new WorldSpaceFilesSearcherOptions()
             {
@@ -1373,7 +1373,7 @@ action Go
 
             var targetFiles = WorldSpaceFilesSearcher.Run(worldSpaceFilesSearcherOptions);
 
-            _logger.Info($"targetFiles = {targetFiles}");
+            _logger.Info("BEDEEFAF-3DFE-4982-8441-206E5F863DA3", $"targetFiles = {targetFiles}");
 
 
             var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
@@ -1398,7 +1398,7 @@ action Go
                 Enable = true
             });
 
-            _logger.Info($"settings = {settings}");
+            _logger.Info("ECB2A35D-05A6-48C4-9C9E-27D54D70C501", $"settings = {settings}");
 
             instance.SetSettings(settings);
 
@@ -1410,7 +1410,7 @@ action Go
             npcSettings.HostListener = platformListener;
             npcSettings.PlatformSupport = new PlatformSupportCLIStub();
 
-            _logger.Info($"npcSettings = {npcSettings}");
+            _logger.Info("7B5072FD-FC34-4F73-98CD-08D9E8815AF0", $"npcSettings = {npcSettings}");
 
             var npc = instance.GetHumanoidNPC(npcSettings);
 
@@ -1418,17 +1418,17 @@ action Go
 
             Thread.Sleep(50000);
 
-            _logger.Info("End");
+            _logger.Info("D1D4E5FE-B5AC-41E4-AA19-A1E8A6F989BF", "End");
         }
 
         private static void TstCLICommandParser()
         {
-            _logger.Info("Begin");
+            _logger.Info("2F72C161-FA6B-4166-A55F-57292C5F31FA", "Begin");
 
             var handler = new CLICommandParserHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("E3D004B7-FAE2-47C5-BDF8-9F1A8A96EACF", "End");
         }
 
         private static void TstLogicalDatabase()
@@ -1439,7 +1439,7 @@ action Go
 
         private static void TstProcessInfoChildren()
         {
-            _logger.Info("Begin");
+            _logger.Info("290EA263-EB27-4AE1-B8C1-6AB49B2A3153", "Begin");
 
             var parentProcessInfo = new ProcessInfo();
 
@@ -1449,14 +1449,14 @@ action Go
             var child_2 = new ProcessInfo();
             parentProcessInfo.AddChild(child_2);
 
-            _logger.Info($"parentProcessInfo = {parentProcessInfo}");
+            _logger.Info("789033F5-F42A-46E0-9E02-26E9AFBECE22", $"parentProcessInfo = {parentProcessInfo}");
 
-            _logger.Info("End");
+            _logger.Info("E5482802-2CC1-48C8-B569-51D22A034199", "End");
         }
 
         private static void TstWaitIProcessInfo()
         {
-            _logger.Info("Begin");
+            _logger.Info("F3B2D5BF-65E8-4B27-A445-805093C376A0", "Begin");
 
             var processInfo = new ProcessInfo();
 
@@ -1470,11 +1470,11 @@ action Go
 
             task.Start();
 
-            _logger.Info("task.Start()");
+            _logger.Info("CF7047B1-3563-4026-ABB0-539205FD069B", "task.Start()");
 
             ProcessInfoHelper.Wait(processInfo);
 
-            _logger.Info("End");
+            _logger.Info("FF2656B1-8AA9-4CF6-B0E5-8877FC49EAE6", "End");
         }
 
         private enum KindOfParameters
@@ -1486,7 +1486,7 @@ action Go
 
         private static void TstKindOfParametersSсaffolder()
         {
-            _logger.Info("Begin");
+            _logger.Info("5A037CCC-0FD3-49E8-B274-6AB36FA47AAC", "Begin");
 
             var mainParametersList = new List<KindOfParameters>() { KindOfParameters.NoParameters, KindOfParameters.NamedParameters, KindOfParameters.PositionedParameters};
             var additionalParametersList = new List<KindOfParameters>() { KindOfParameters.NoParameters, KindOfParameters.NamedParameters, KindOfParameters.PositionedParameters };
@@ -1495,7 +1495,7 @@ action Go
 
             foreach(var mainParameter in mainParametersList)
             {
-                _logger.Info($"mainParameter = {mainParameter}");
+                _logger.Info("E6CBC8CD-B5D6-4746-958A-ABF1A54E4316", $"mainParameter = {mainParameter}");
 
                 var mainParameterStr = string.Empty;
 
@@ -1510,11 +1510,11 @@ action Go
                         break;
                 }
 
-                _logger.Info($"mainParameterStr = {mainParameterStr}");
+                _logger.Info("EA0521AB-6F7E-41CB-BC17-AF7189C7A64B", $"mainParameterStr = {mainParameterStr}");
 
                 foreach (var additionalParameter in additionalParametersList)
                 {
-                    _logger.Info($"additionalParameter = {additionalParameter}");
+                    _logger.Info("C2583936-C361-487F-A980-24FD57844241", $"additionalParameter = {additionalParameter}");
 
                     var additionalParameterStr = string.Empty;
 
@@ -1529,82 +1529,82 @@ action Go
                             break;
                     }
 
-                    _logger.Info($"additionalParameterStr = {additionalParameterStr}");
+                    _logger.Info("AA07C73A-ED5D-4545-A356-674F2E0A4E80", $"additionalParameterStr = {additionalParameterStr}");
 
                     var str = $"Call{mainParameterStr}{additionalParameterStr}";
 
-                    _logger.Info($"str = {str}");
+                    _logger.Info("576E1C66-2563-4F67-8A0C-647CEA727BD6", $"str = {str}");
 
                     strList.AppendLine(str);
                 }             
             }
 
-            _logger.Info($"strList = {strList}");
+            _logger.Info("517C404D-6E26-4465-BDDF-68AB61B91601", $"strList = {strList}");
 
-            _logger.Info("End");
+            _logger.Info("F9594D8E-D54A-4512-8C18-B3C581276E7A", "End");
         }
 
         private static void TstDateTimeHandler()
         {
-            _logger.Info("Begin");
+            _logger.Info("67B1E495-122E-4FED-A552-BFECDCE13FC8", "Begin");
 
             var handler = new DateTimeHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("E87D8845-B77F-4DFB-81C4-827CBC9C5138", "End");
         }
 
         private static void TstBaseManualControllingGameComponent()
         {
-            _logger.Info("Begin");
+            _logger.Info("B44EF86A-E413-442A-A60D-E8CFE5A48807", "Begin");
 
             var handler = new TstBaseManualControllingGameComponentHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("67F323C7-2C19-43F4-AE92-268099B28F70", "End");
         }
 
         private static void TstLoadTypesPlatformTypesConvertors()
         {
-            _logger.Info("Begin");
+            _logger.Info("19C092FE-75AD-4FB6-8399-91DF05BDB321", "Begin");
 
             var targetAttributeType = typeof(PlatformTypesConverterAttribute);
 
             var typesList = AppDomainTypesEnumerator.GetTypes().Where(p => p.GetCustomAttributesData().Any(x => x.AttributeType == targetAttributeType));
 
-            _logger.Info($"typesList.Length = {typesList.Count()}");
+            _logger.Info("26DD17FF-54E5-4F42-94A3-5D084D270752", $"typesList.Length = {typesList.Count()}");
 
             foreach (var type in typesList)
             {
-                _logger.Info($"type.FullName = {type.FullName}");
+                _logger.Info("461FCB43-A9F7-495A-999F-03EBBDE6D2B6", $"type.FullName = {type.FullName}");
 
                 var convertor = (IPlatformTypesConverter)Activator.CreateInstance(type);
 
-                _logger.Info($"convertor = {convertor}");
+                _logger.Info("59C95140-1BD1-4077-B3FB-ECB94C1ABD36", $"convertor = {convertor}");
             }
 
-            _logger.Info("End");
+            _logger.Info("DD103299-F1EA-4A2E-AC57-D0483BEA6282", "End");
         }
 
         private static void TstGetTypes()
         {
-            _logger.Info("Begin");
+            _logger.Info("DD64DB85-ACBB-4418-9E27-C7C238E7CD9E", "Begin");
 
             var typesList = AppDomainTypesEnumerator.GetTypes();
 
-            _logger.Info($"typesList.Length = {typesList.Count}");
+            _logger.Info("7C9EFB77-E8E0-4D13-99A0-6EC0DA326BD3", $"typesList.Length = {typesList.Count}");
 
             foreach (var type in typesList)
             {
-                _logger.Info($"type.FullName = {type.FullName}");
+                _logger.Info("769AB2F5-0DCE-4533-BDDE-EE931CDCD880", $"type.FullName = {type.FullName}");
             }
 
-            _logger.Info("End");
+            _logger.Info("1927808F-717F-4163-9AE1-761122324735", "End");
         }
 
         private static void TstMainThreadSyncThread()
         {
-            _logger.Info("Begin");
+            _logger.Info("23BE49E1-B545-4746-8FF1-854D6D7F3E11", "Begin");
 
             var invokingInMainThread = new InvokerInMainThread();
 
@@ -1619,136 +1619,136 @@ action Go
 
             Thread.Sleep(5000);
 
-            var invocableInMainThreadObj = new InvocableInMainThread(() => { _logger.Info("^)"); }, invokingInMainThread);
+            var invocableInMainThreadObj = new InvocableInMainThread(() => { _logger.Info("4A81F94C-2890-40C5-887D-D86C5BFB8C4E", "^)"); }, invokingInMainThread);
             invocableInMainThreadObj.Run();
 
             Thread.Sleep(5000);
 
-            _logger.Info("End");
+            _logger.Info("5903CF66-17A5-4A10-8C59-DB424E73D724", "End");
         }
 
         private static void TstCoreHostListenerHandler()
         {
-            _logger.Info("Begin");
+            _logger.Info("5FE225F3-8F89-4AD5-A1C8-15E89404F484", "Begin");
 
             var handler = new CoreHostListenerHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("106115D2-C4FD-424D-982F-C859FF88DF9F", "End");
         }
 
         private static void TstNullableArithmetic()
         {
-            _logger.Info("Begin");
+            _logger.Info("73A8482C-BC10-4E66-8B21-2F2789C01BED", "Begin");
 
             float? a = null;
 
             var b = 1 - a;
 
-            _logger.Info($"b = {b}");
-            _logger.Info($"b == null = {b == null}");
+            _logger.Info("5259BAA8-4E89-4527-9E50-008BE5B3DA46", $"b = {b}");
+            _logger.Info("1D0A41B5-258B-4F3D-8C0E-F14135B1E606", $"b == null = {b == null}");
 
-            _logger.Info("End");
+            _logger.Info("489DC67D-FBFD-4E5D-9980-453453C458C5", "End");
         }
 
         private static void TstInheritanceItemsHandler()
         {
-            _logger.Info("Begin");
+            _logger.Info("CCC34EFC-1D81-4B34-81AB-BA2C1CF87FE6", "Begin");
 
             var handler = new InheritanceItemsHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("1386C056-2C25-4D68-8C52-654254D81435", "End");
         }
             
         private static void TstDefaultSettingsOfCodeEntityHandler()
         {
-            _logger.Info("Begin");
+            _logger.Info("D1F85C75-6980-4A1E-8D6F-6B1138434279", "Begin");
 
             var handler = new DefaultSettingsOfCodeEntityHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("DFF3BDC9-0E12-4325-AA3F-98D82833DB4B", "End");
         }
 
         private static void TstActivateMainEntity()
         {
-            _logger.Info("Begin");
+            _logger.Info("DF20DB1C-9849-4808-AB10-B822A3B4B451", "Begin");
 
             var handler = new ActivateMainEntityHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("4A90A98E-6B97-4EBE-B1DB-DA88FD6C3C90", "End");
         }
 
         private static void TstCompileInlineTrigger()
         {
-            _logger.Info("Begin");
+            _logger.Info("8253CD94-4983-4E53-A4A8-EB9F0F8A4926", "Begin");
 
             var handler = new CompileInlineTriggerHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("8E232D5D-F8DD-435F-A374-3B68BD9AD59A", "End");
         }
 
         private static void TstRegOperatorsHandler()
         {
-            _logger.Info("Begin");
+            _logger.Info("4E96B7DC-E494-42F5-9DC0-67243292392A", "Begin");
 
             var handler = new RegOperatorsHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("54CDB7B3-C96A-42C6-836B-1ACA1B2CF8FB", "End");
         }
 
         private static void TstCreateEngineContext()
         {
-            _logger.Info("Begin");
+            _logger.Info("6767B4BA-B1C3-4C47-8831-997E0465D26C", "Begin");
 
             var context = TstEngineContextHelper.CreateAndInitContext();
 
-            _logger.Info("End");
+            _logger.Info("446B3B68-75E1-4DDD-84EF-B51ABFEFBAAC", "End");
         }
 
         private static void TstAsyncActivePeriodicObjectHandler()
         {
-            _logger.Info("Begin");
+            _logger.Info("61BF59CB-D8C5-432E-8343-DD8A07B24BE6", "Begin");
 
             var handler = new AsyncActivePeriodicObjectHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("E96DEF49-0830-4E78-835F-3E2EBE98FDA5", "End");
         }
 
         private static void TstSyncActivePeriodicObjectHandler()
         {
-            _logger.Info("Begin");
+            _logger.Info("5AFA77C9-837A-406C-896C-AB60F46E0A5D", "Begin");
 
             var handler = new SyncActivePeriodicObjectHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("A3701051-7969-4E1E-AB50-AC8770A980D7", "End");
         }
 
         private static void TstCodeExecution()
         {
-            _logger.Info("Begin");
+            _logger.Info("4FB6D8B8-F157-4FC1-8926-3ACA8F6DC949", "Begin");
 
             var handler = new CodeExecutionHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("BDD0D69E-5805-4E2F-89DA-7B85012D8F1C", "End");
         }
 
         private static void TstCreateName()
         {
-            _logger.Info("Begin");
+            _logger.Info("FC76D93C-5314-4852-BFAD-58ACE5999231", "Begin");
 
             var parserContext = new TstMainStorageContext();
 
             var nameVal1 = "dog";
 
-            _logger.Info($"{nameof(nameVal1)} = {nameVal1}");
+            _logger.Info("3E73FFE5-96A2-4288-B965-D265FC6623F1", $"{nameof(nameVal1)} = {nameVal1}");
 
 
 
@@ -1780,9 +1780,9 @@ action Go
 
             var name = NameHelper.CreateName(nameVal1);
 
-            _logger.Info($"name = {name}");
+            _logger.Info("2C88170A-6C28-48F1-98A1-980A34D8FCFC", $"name = {name}");
 
-            _logger.Info("End");
+            _logger.Info("8B5DDBE3-EB99-4DAA-BEA0-09745DC23DD7", "End");
         }
 
         private class NormalizedNameValues
@@ -1794,7 +1794,7 @@ action Go
         private static NormalizedNameValues ParseName(string text)
         {
 #if DEBUG
-            _logger.Info($"test = {text}");
+            _logger.Info("D0B9DF0B-16FE-4898-8EAD-94E5B519380E", $"test = {text}");
 #endif
 
             var result = new NormalizedNameValues();
@@ -1810,105 +1810,105 @@ action Go
 
         private static void TstExprNodeHandler()
         {
-            _logger.Info("Begin");
+            _logger.Info("9909DAAE-C58F-456E-9E04-A9CB6A3D198F", "Begin");
 
             var handler = new ExprNodeHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("D37A788F-086F-41DE-83BB-B3DB690D1CFA", "End");
         }
 
         private static void TstParsing()
         {
-            _logger.Info("Begin");
+            _logger.Info("FEE748E2-9BA0-4561-ACA9-54A05686FA3C", "Begin");
 
             var handler = new ParsingHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("03913BD8-9341-4F74-85B0-9FD85DC1C153", "End");
         }
 
         private static void TstBattleRoyaleHandler()
         {
-            _logger.Info("Begin");
+            _logger.Info("4CE05F07-108C-4535-B892-94C20E5E6E4B", "Begin");
 
             var handler = new BattleRoyaleHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("99429CC7-5AFD-42F4-97D1-830039DF67DF", "End");
         }
 
         private static void TstPlacesHandler()
         {
-            _logger.Info("Begin");
+            _logger.Info("73D89609-7D39-4E57-8A92-F9E194D85945", "Begin");
 
             using var handler = new PlacesHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("2BD6E59D-1CD6-432F-9427-CDB04F69190A", "End");
         }
 
         private static void TstMonoBehaviourTestingHandler()
         {
-            _logger.Info("Begin");
+            _logger.Info("E3BE2386-3885-4B2C-8A0F-A6E71AE3B7A6", "Begin");
 
             var handler = new MonoBehaviourTestingHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("5229A73C-405A-413D-AB44-DDDEBE840D31", "End");
         }
 
         private static void TstSoundStartHandler()
         {
-            _logger.Info("Begin");
+            _logger.Info("CE282423-8258-4B09-8783-FF7BEFCB35F2", "Begin");
 
             using var handler = new SoundStartHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("FED25492-F87F-41A9-AA76-89EDE680CCCA", "End");
         }
 
         private static void TstAddingFactTriggerHandler()
         {
-            _logger.Info("Begin");
+            _logger.Info("7B75EA54-EDEB-4761-9092-1C9D58FB6E55", "Begin");
 
             using var handler = new AddingFactTriggerHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("EABCDF37-04C2-467E-9865-0527479C5CCB", "End");
         }
 
         private static void TstGeneralStartHandler()
         {
-            _logger.Info("Begin");
+            _logger.Info("BABAC27C-220E-4152-B16F-4D93C62631C3", "Begin");
 
 
             using var handler = new GeneralStartHandler();
             handler.Run();
 
-            _logger.Info("End");
+            _logger.Info("82BF5322-13F3-4EB8-ABF7-6A152052EF41", "End");
         }
 
         private static void TstGetParsedFilesInfo()
         {
-            _logger.Info("Begin");
+            _logger.Info("BD8086E6-A01F-4D41-88F0-749C93F88D34", "Begin");
 
             var fileName = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Npcs\PixKeeper\PixKeeper.txt");
 
-            _logger.Info($"fileName = {fileName}");
+            _logger.Info("B905A4EE-1B85-4967-9425-0976A8494256", $"fileName = {fileName}");
 
             var id = "#020ED339-6313-459A-900D-92F809CEBDC5";
 
             var resultList = FileHelper.GetParsedFilesInfo(fileName, id);
 
-            _logger.Info($"resultList = {JsonConvert.SerializeObject(resultList, Formatting.Indented)}");
+            _logger.Info("F5A00933-4051-4D62-89EF-9C8A63E49072", $"resultList = {JsonConvert.SerializeObject(resultList, Formatting.Indented)}");
 
-            _logger.Info("End");
+            _logger.Info("18724EB5-FD43-4DC6-8D94-9B8516749CAB", "End");
         }
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            _logger.Info($"e.ExceptionObject = {e.ExceptionObject}");
+            _logger.Info("D90EB257-F5E2-4D7C-96AC-3D3476070498", $"e.ExceptionObject = {e.ExceptionObject}");
         }
     }
 }

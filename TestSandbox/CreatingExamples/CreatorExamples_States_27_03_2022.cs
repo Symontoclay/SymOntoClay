@@ -38,7 +38,7 @@ namespace TestSandbox.CreatingExamples
 
         public void Run()
         {
-            _logger.Info("Begin");
+            _logger.Info("BE5C3F2F-4D07-42D9-8E2F-FCB7623A0548", "Begin");
 
             var prefix = "States";
 
@@ -338,7 +338,7 @@ state Idling
 
             Example(CreateName(prefix, n), text);
 
-            _logger.Info("End");
+            _logger.Info("8828AA38-3BE4-49B2-B543-8C9AFBE397AB", "End");
         }
 
         /*

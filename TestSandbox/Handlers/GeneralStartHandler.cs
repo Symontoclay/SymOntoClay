@@ -50,7 +50,7 @@ namespace TestSandbox.Handlers
 
         public void Run()
         {
-            _logger.Info("Begin");
+            _logger.Info("FF819764-4617-46ED-9326-EADFE6B1A62D", "Begin");
 
             var platformListener = new FullGeneralized_Tests_HostListener();
 
@@ -66,9 +66,9 @@ namespace TestSandbox.Handlers
 
             Thread.Sleep(100);
 
-            _logger.Info("|||||||||||||");
+            _logger.Info("E90B79FF-F642-4FC1-94A6-EE3F9BBD6DD0", "|||||||||||||");
 
-            _npc.Logger.LogChannel("|||||||||||||");
+            _npc.Logger.Output("264C27BF-FC6F-4002-A957-6B59C2B41EE7", "|||||||||||||");
 
             Thread.Sleep(500);
 
@@ -77,12 +77,12 @@ namespace TestSandbox.Handlers
 
             var factId = _npc.InsertFact("{: see(I, #a) :}");
 
-            _npc.Logger.LogChannel("|-|-|-|-|-|-|-|-|-|-|-|-|");
-            _logger.Info("|-|-|-|-|-|-|-|-|-|-|-|-|");
+            _npc.Logger.Output("DEEBC565-B66B-48F5-9DF6-4716C2E1623E", "|-|-|-|-|-|-|-|-|-|-|-|-|");
+            _logger.Info("ED0C4551-A685-4CC0-ADB8-ACAA419FA244", "|-|-|-|-|-|-|-|-|-|-|-|-|");
 
             Thread.Sleep(50000);
 
-            _logger.Info("End");
+            _logger.Info("40669EA9-0F77-4447-B128-5E940A3DCE2D", "End");
         }
     }
 }

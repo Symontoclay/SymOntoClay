@@ -39,16 +39,16 @@ namespace TestSandbox.CoreHostListener
             [EndpointParam("To", KindOfEndpointParam.Position)] INavTarget navTarget,
             float speed = 12)
         {
-            _logger.Info($"GoToImpl Begin");
-            _logger.Info($"navTarget.Kind = {navTarget.Kind}");
+            _logger.Info("FDAF0616-4EEB-4FF6-A30D-789B10DE2472", $"GoToImpl Begin");
+            _logger.Info("35A18046-C1D0-49BB-817A-4EEA05007A30", $"navTarget.Kind = {navTarget.Kind}");
             var entity = navTarget.Entity;
-            _logger.Info($"entity.InstanceId = {entity.InstanceId}");
-            _logger.Info($"entity.Id = {entity.Id}");
-            _logger.Info($"entity.Position = {entity.Position}");
+            _logger.Info("B2201525-B34E-4E68-9F64-7B33525B08C6", $"entity.InstanceId = {entity.InstanceId}");
+            _logger.Info("03B35534-77FF-45E0-B362-3F5216521200", $"entity.Id = {entity.Id}");
+            _logger.Info("54C307CD-DA2A-48E4-B420-F438A0C6D61B", $"entity.Position = {entity.Position}");
 
             Thread.Sleep(10000);
 
-            _logger.Info($"GoToImpl End");
+            _logger.Info("AAFCC9C1-A54B-4C0D-A698-7938FA8F1133", $"GoToImpl End");
         }
     }
 }

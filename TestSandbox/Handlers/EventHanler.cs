@@ -40,7 +40,7 @@ namespace TestSandbox.Handlers
 
         public void Run()
         {
-            _logger.Info("Begin");
+            _logger.Info("2DB9BB89-78E8-418C-8C6C-709687A9E410", "Begin");
 
             OnEv += Handler1;
             OnEv += Handler2;
@@ -48,35 +48,35 @@ namespace TestSandbox.Handlers
 
             var rez = OnEv(12);
 
-            _logger.Info($"rez = {rez}");
+            _logger.Info("E4F886BF-4F22-4DC5-98B6-4A1E2A5BBC35", $"rez = {rez}");
 
             foreach(var item in OnEv.GetInvocationList())
             {
                 var r = item.DynamicInvoke(16);
 
-                _logger.Info($"r = {r}");
+                _logger.Info("13594AB6-B098-4CB7-A324-41BC9E3206D7", $"r = {r}");
             }
 
-            _logger.Info("End");
+            _logger.Info("54AF39EC-8861-4DC7-B2A6-35C31C5C5123", "End");
         }
 
         private int Handler1(int value)
         {
-            _logger.Info($"value = {value}");
+            _logger.Info("A160679D-1FE1-45D3-B367-ADBBDC9C3ED0", $"value = {value}");
 
             return 1;
         }
 
         private int Handler2(int value)
         {
-            _logger.Info($"value = {value}");
+            _logger.Info("A1EB0163-C9A0-4DFF-AC64-8878C4181D4D", $"value = {value}");
 
             return 2;
         }
 
         private int Handler3(int value)
         {
-            _logger.Info($"value = {value}");
+            _logger.Info("4775F876-EB82-4153-8936-8A331BE61901", $"value = {value}");
 
             return 3;
         }

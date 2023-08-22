@@ -136,7 +136,7 @@ namespace TestSandbox.CoreHostListener
         [BipedEndpoint("Ready For Shoot", DeviceOfBiped.RightHand, DeviceOfBiped.LeftHand)]
         public void ReadyForShootImpl(CancellationToken cancellationToken)
         {
-            _logger.Info("ReadyForShootImpl Begin");
+            _logger.Info("50886639-E150-4C06-9ACA-B78D5815BCFA", "ReadyForShootImpl Begin");
         }
 
         [DebuggerHidden]
@@ -144,7 +144,7 @@ namespace TestSandbox.CoreHostListener
         [BipedEndpoint("Start Shoot", DeviceOfBiped.RightHand, DeviceOfBiped.LeftHand)]
         public void StartShootImpl(CancellationToken cancellationToken)
         {
-            _logger.Info("StartShootImpl Begin");
+            _logger.Info("7AFDDD2F-1830-4791-93FC-EC2AA4B59129", "StartShootImpl Begin");
         }
 
         [DebuggerHidden]
@@ -152,7 +152,7 @@ namespace TestSandbox.CoreHostListener
         [BipedEndpoint("Stop Shoot", DeviceOfBiped.RightHand, DeviceOfBiped.LeftHand)]
         public void StopShootImpl(CancellationToken cancellationToken)
         {
-            _logger.Info("StopShootImpl Begin");
+            _logger.Info("7523B37F-5F8F-424F-87A3-8CB4FC2AF94A", "StopShootImpl Begin");
         }
     }
 }

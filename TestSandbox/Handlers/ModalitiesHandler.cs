@@ -52,11 +52,11 @@ namespace TestSandbox.Handlers
 
         public void Run()
         {
-            _logger.Info("Begin");
+            _logger.Info("DD43DA27-6B8E-4E29-94BC-B8BACE5DFB8E", "Begin");
 
             Case2();
 
-            _logger.Info("End");
+            _logger.Info("59622775-A4B6-4568-93DC-592C7D3FCF96", "End");
         }
 
         private void Case2()
@@ -65,7 +65,7 @@ namespace TestSandbox.Handlers
 
             var fact = _engineContext.Parser.ParseRuleInstance(factStr);
 
-            _logger.Info($"fact = '{fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}'");
+            _logger.Info("A0C7F1DC-341B-4560-87EF-C8A4A869AAD2", $"fact = '{fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}'");
         }
 
         private void Case1()
@@ -74,13 +74,13 @@ namespace TestSandbox.Handlers
 
             var fact = _engineContext.Parser.ParseRuleInstance(factStr);
 
-            _logger.Info($"fact (before) = {DebugHelperForRuleInstance.ToString(fact)}");
+            _logger.Info("A9D29B32-DEBF-40C8-BD79-74CD20ADCD1C", $"fact (before) = {DebugHelperForRuleInstance.ToString(fact)}");
 
             fact.ObligationModality = LogicalValue.TrueValue;
             fact.SelfObligationModality = LogicalValue.FalseValue;
 
 
-            _logger.Info($"fact (after) = {DebugHelperForRuleInstance.ToString(fact)}");
+            _logger.Info("E48442B1-F36F-4EB3-8B79-1D1C65398ED3", $"fact (after) = {DebugHelperForRuleInstance.ToString(fact)}");
         }
     }
 }

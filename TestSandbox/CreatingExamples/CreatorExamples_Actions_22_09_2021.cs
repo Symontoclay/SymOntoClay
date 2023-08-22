@@ -38,7 +38,7 @@ namespace TestSandbox.CreatingExamples
 
         public void Run()
         {
-            _logger.Info("Begin");
+            _logger.Info("FDFFF99D-361C-4E15-8DC5-8EF378722D21", "Begin");
 
             var text = @"app PeaceKeeper
 {
@@ -75,7 +75,7 @@ action Go
 
             Example("ActionExample_1", text);
 
-            _logger.Info("End");
+            _logger.Info("B82E982D-6A55-4680-AFF3-BB95125510F3", "End");
         }
     }
 }

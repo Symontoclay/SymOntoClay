@@ -43,15 +43,15 @@ namespace TestSandbox.MonoBehaviourTesting
 
         public override void Awake()
         {
-            _logger.Info("Begin");
+            _logger.Info("A5E4C33A-962D-4EE5-92C4-A6D2D1BCA31B", "Begin");
 
             var appName = AppDomain.CurrentDomain.FriendlyName;
 
-            _logger.Info($"appName = {appName}");
+            _logger.Info("C5000A3A-FC77-4395-A6BB-21E1582AC6FD", $"appName = {appName}");
 
             var supportBasePath = Path.Combine(Environment.GetEnvironmentVariable("APPDATA"), "SymOntoClay", appName);
 
-            _logger.Info($"supportBasePath = {supportBasePath}");
+            _logger.Info("235B068B-F202-403D-9D0A-A9A564AB5F8A", $"supportBasePath = {supportBasePath}");
 
             var monitorMessagesDir = Path.Combine(supportBasePath, "NpcMonitorMessages");
 
@@ -80,29 +80,29 @@ namespace TestSandbox.MonoBehaviourTesting
                 Enable = true
             });
 
-            _logger.Info($"settings = {settings}");
+            _logger.Info("B41FD963-D229-4BDF-A3A9-CBF339B120A5", $"settings = {settings}");
 
             _world.SetSettings(settings);
 
-            _logger.Info("End");
+            _logger.Info("175D394F-43AD-4B26-BCED-E97F79D3D846", "End");
         }
 
         public override void Start()
         {
-            _logger.Info("Begin");
+            _logger.Info("D582B7B0-A82D-46E2-819C-1655D3873982", "Begin");
 
             _world.Start();
 
-            _logger.Info("End");
+            _logger.Info("D020A229-22F9-4E6A-92F9-2CC4A985CE65", "End");
         }
 
         public override void Stop()
         {
-            _logger.Info("Begin");
+            _logger.Info("89DF1C65-5299-4FB4-9AD6-3D323C456C7A", "Begin");
 
             _world.Dispose();
 
-            _logger.Info("End");
+            _logger.Info("10DCCCD6-E965-4D20-93A8-F168F29AE5DB", "End");
         }
     }
 }

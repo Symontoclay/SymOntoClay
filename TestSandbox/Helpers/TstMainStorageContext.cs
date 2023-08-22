@@ -24,6 +24,7 @@ using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.NLog;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -34,7 +35,7 @@ namespace TestSandbox.Helpers
     public class TstMainStorageContext : MainStorageContext
     {
         public TstMainStorageContext()
-            : base(new MonitorLoggerNLogImpementation())
+            : base(new MonitorNodeNLogImpementation())
         {
             EngineContextHelper.BaseInitMainStorageContext(this, new StandaloneStorageSettings(), KindOfStorage.Host);
         }

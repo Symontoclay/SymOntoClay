@@ -46,7 +46,7 @@ namespace TestSandbox.MonoBehaviourTesting
 
         public override void Awake()
         {
-            _logger.Info("Begin");
+            _logger.Info("40CE89C8-E4E3-4FA1-BA28-D64D6B416C46", "Begin");
 
             _tstRayScaner = new TstRayScaner();
 
@@ -62,22 +62,22 @@ namespace TestSandbox.MonoBehaviourTesting
             npcSettings.VisionProvider = _tstRayScaner;
             npcSettings.PlatformSupport = new PlatformSupportCLIStub();
 
-            _logger.Info($"npcSettings = {npcSettings}");
+            _logger.Info("468926C0-E364-4D57-9BE0-FA2BBA7386D3", $"npcSettings = {npcSettings}");
 
             _npc = WorldFactory.WorldInstance.GetHumanoidNPC(npcSettings);
 
-            _logger.Info($"_npc == null = {_npc == null}");
+            _logger.Info("816078D8-87DA-4215-AC74-30D83391651E", $"_npc == null = {_npc == null}");
 
             _tstRayScaner.SetNPC(_npc);
 
-            _logger.Info("End");
+            _logger.Info("0BF6B946-3309-489B-A903-063F474C4442", "End");
         }
 
         public override void Start()
         {
-            _logger.Info("Begin");
+            _logger.Info("98F76603-5F34-4F5C-801F-94E79E1DDE10", "Begin");
 
-            _logger.Info("End");
+            _logger.Info("28EE84EC-9F1B-42F7-9C23-694261067170", "End");
         }
 
         private bool _isFactUpated;
@@ -99,11 +99,11 @@ namespace TestSandbox.MonoBehaviourTesting
 
         public override void Stop()
         {
-            _logger.Info("Begin");
+            _logger.Info("17A2B831-C23F-481D-A226-4CB3858308B3", "Begin");
 
             _npc.Dispose();
 
-            _logger.Info("End");
+            _logger.Info("F3062F4C-22A5-4228-AA0B-0652E1FC4EAF", "End");
         }
     }
 }

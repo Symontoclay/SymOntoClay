@@ -43,7 +43,7 @@ namespace TestSandbox.Parsing
 
         public void Run()
         {
-            _logger.Info("Begin");
+            _logger.Info("054AA112-A5AB-4271-8656-68F8A83AAD41", "Begin");
 
             var context = TstEngineContextHelper.CreateAndInitContext().EngineContext;
 
@@ -52,25 +52,25 @@ namespace TestSandbox.Parsing
             var filesList = FileHelper.GetParsedFilesInfo(context.AppFile, context.Id);
 
 #if DEBUG
-            _logger.Info($"filesList.Count = {filesList.Count}");
+            _logger.Info("B3C4FE99-B0FA-426F-87CB-86963A26AE5F", $"filesList.Count = {filesList.Count}");
 
-            _logger.Info($"filesList = {filesList.WriteListToString()}");
+            _logger.Info("EB878C4E-1B31-4E29-ADAC-B1E7E80813DD", $"filesList = {filesList.WriteListToString()}");
 #endif
 
             var parsedFilesList = context.Parser.Parse(filesList, globalStorage.DefaultSettingsOfCodeEntity);
 
 #if DEBUG
-            _logger.Info($"parsedFilesList.Count = {parsedFilesList.Count}");
+            _logger.Info("684C171C-BE80-4481-A984-5DFC0073998D", $"parsedFilesList.Count = {parsedFilesList.Count}");
 
-            _logger.Info($"parsedFilesList = {parsedFilesList.WriteListToString()}");
+            _logger.Info("2A0D7352-4EBC-4A83-BE4C-A39BC1AF965B", $"parsedFilesList = {parsedFilesList.WriteListToString()}");
 #endif
 
             var parsedCodeEntitiesList = LinearizeSubItems(parsedFilesList);
 
 #if DEBUG
-            _logger.Info($"parsedCodeEntitiesList.Count = {parsedCodeEntitiesList.Count}");
+            _logger.Info("3CEDBEDA-6DF1-4535-8EF6-A96BA68E6E54", $"parsedCodeEntitiesList.Count = {parsedCodeEntitiesList.Count}");
 
-            _logger.Info($"parsedCodeEntitiesList = {parsedCodeEntitiesList.WriteListToString()}");
+            _logger.Info("F06A2EBE-10AE-41A0-9C9D-19C3DD8D19D0", $"parsedCodeEntitiesList = {parsedCodeEntitiesList.WriteListToString()}");
 #endif
 
             var metadataStorage = globalStorage.MetadataStorage;
@@ -82,7 +82,7 @@ namespace TestSandbox.Parsing
 
             var inlineTrigger = parsedCodeEntitiesList.FirstOrDefault(p => p.Kind == KindOfCodeEntity.InlineTrigger);
 
-            _logger.Info($"inlineTrigger = {inlineTrigger}");
+            _logger.Info("8A38B320-8367-4BCB-9F1F-9D3D4DA1D2D4", $"inlineTrigger = {inlineTrigger}");
 
             var triggersStorage = globalStorage.TriggersStorage;
 
@@ -91,7 +91,7 @@ namespace TestSandbox.Parsing
             var mainEntity = metadataStorage.MainCodeEntity;
 
 #if DEBUG
-            _logger.Info($"mainEntity = {mainEntity}");
+            _logger.Info("D9807FBA-704B-414F-A025-5CE1A32DE5C4", $"mainEntity = {mainEntity}");
 #endif
 
             var triggersResolver = context.DataResolversFactory.GetTriggersResolver();
@@ -102,10 +102,10 @@ namespace TestSandbox.Parsing
             var targetTriggersList = triggersResolver.ResolveSystemEventsTriggersList(KindOfSystemEventOfInlineTrigger.Enter, mainEntity.Name, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
 #if DEBUG
-            _logger.Info($"targetTriggersList = {targetTriggersList.WriteListToString()}");
+            _logger.Info("D30E0ACA-3D8B-4352-B278-A5443311D169", $"targetTriggersList = {targetTriggersList.WriteListToString()}");
 #endif
 
-            _logger.Info("End");
+            _logger.Info("D7B22065-75FF-48B4-97B1-6CAE41BA68D2", "End");
         }
 
         private List<CodeItem> LinearizeSubItems(List<CodeFile> source)

@@ -53,11 +53,11 @@ namespace TestSandbox.LogicalDatabase
 
         public void Run()
         {
-            _logger.Info("Begin");
+            _logger.Info("2079F60A-077A-4ED0-B2B1-A24896B220C4", "Begin");
 
             RunCase5();
 
-            _logger.Info("End");
+            _logger.Info("2D704A7C-B3C2-4B96-87ED-1D79340F954C", "End");
         }
 
         private void RunCase5()
@@ -96,7 +96,7 @@ namespace TestSandbox.LogicalDatabase
 
         private void RunGettingLongHashCode()
         {
-            _logger.Info("Begin");
+            _logger.Info("0BF2668E-EFCC-450F-AEFF-C8E6FCEAFFEA", "Begin");
 
             var queryStr = string.Empty;
 
@@ -109,8 +109,8 @@ namespace TestSandbox.LogicalDatabase
             queryStr = "{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}";
             var b = ParseQueryStringAndGetLongHashCode(queryStr);
 
-            _logger.Info($"a = {a}");
-            _logger.Info($"b = {b}");
+            _logger.Info("026EA3EE-089E-47A9-B319-6036A7A5B7EA", $"a = {a}");
+            _logger.Info("9CD7643A-1CCE-4013-A7CB-E268599920D5", $"b = {b}");
 
             if (a != b)
             {
@@ -123,24 +123,24 @@ namespace TestSandbox.LogicalDatabase
             queryStr = "{: ?x(?y, ?z) :}";
             ParseQueryStringAndGetLongHashCode(queryStr);
 
-            _logger.Info("End");
+            _logger.Info("3161FF2D-2215-426E-B51A-DE07707D4222", "End");
         }
 
         private void RunGettingInheritanceInformation()
         {
-            _logger.Info("Begin");
+            _logger.Info("80693A80-1BBD-4487-BE6B-DCEB44089305", "Begin");
 
             var queryStr = string.Empty;
 
             queryStr = "{: male(#Tom) :}";
             ParseQueryStringAndGetInheritanceInformation(queryStr);
 
-            _logger.Info("End");
+            _logger.Info("A887DA09-6BF8-4E39-848A-CB6338B6882F", "End");
         }
 
         private void RunCase2()
         {
-            _logger.Info("Begin");
+            _logger.Info("CC894FFB-2CE6-4811-9F90-9958152770A0", "Begin");
 
             var queryStr = string.Empty;
 
@@ -159,12 +159,12 @@ namespace TestSandbox.LogicalDatabase
             queryStr = "{: ?z(#Alisa_12, ?x) :}";
             Search(queryStr);
 
-            _logger.Info("End");
+            _logger.Info("C474D1D5-EEC6-4931-80FF-615793F70256", "End");
         }
 
         private void RunCase1()
         {
-            _logger.Info("Begin");
+            _logger.Info("87492D1F-7FED-4A19-90BC-6DA023321B37", "Begin");
 
             var queryStr = string.Empty;
 
@@ -184,12 +184,12 @@ namespace TestSandbox.LogicalDatabase
 
 
 
-            _logger.Info("End");
+            _logger.Info("E321D751-A987-4CFB-95D7-D4CD5764E0E2", "End");
         }
 
         private void ParseFacts()
         {
-            _logger.Info("Begin");
+            _logger.Info("C256D297-17FD-4133-A8CD-33293FF971C8", "Begin");
 
             var queryStr = string.Empty;
 
@@ -201,12 +201,12 @@ namespace TestSandbox.LogicalDatabase
 
 
 
-            _logger.Info("End");
+            _logger.Info("E8889FC0-0D6C-44CD-B3DB-D31265ADBA44", "End");
         }
 
         private ulong ParseQueryStringAndGetLongHashCode(string queryStr)
         {
-            _logger.Info($"queryStr = {queryStr}");
+            _logger.Info("55112DDC-30F9-4AA2-BBF8-F10C191B3163", $"queryStr = {queryStr}");
 
             var result = new CodeFile();
             result.IsMain = false;
@@ -222,27 +222,27 @@ namespace TestSandbox.LogicalDatabase
 
             var parsedQuery = parser.Result;
 
-            _logger.Info($"parsedQuery = {parsedQuery}");
+            _logger.Info("B460E306-84B6-4E6A-89AC-B5835057A529", $"parsedQuery = {parsedQuery}");
 
-            _logger.Info($"DebugHelperForRuleInstance.ToString(parsedQuery) = {DebugHelperForRuleInstance.ToString(parsedQuery)}");
+            _logger.Info("4CA71172-B9E7-46D5-A13E-996A03C107ED", $"DebugHelperForRuleInstance.ToString(parsedQuery) = {DebugHelperForRuleInstance.ToString(parsedQuery)}");
 
 
             parsedQuery.CheckDirty();
 
             var longConditionalHashCode = parsedQuery.GetLongConditionalHashCode();
 
-            _logger.Info($"longConditionalHashCode = {longConditionalHashCode}");
+            _logger.Info("3BF42181-EA52-4E2D-9750-48BFDF617276", $"longConditionalHashCode = {longConditionalHashCode}");
 
             var longHashCode = parsedQuery.GetLongHashCode();
 
-            _logger.Info($"longHashCode = {longHashCode}");
+            _logger.Info("090D14E5-63E7-4EA3-B7BD-880285C6417B", $"longHashCode = {longHashCode}");
 
             return longHashCode;
         }
 
         private void ParseQueryStringAndGetInheritanceInformation(string queryStr)
         {
-            _logger.Info($"queryStr = {queryStr}");
+            _logger.Info("DF353C44-C299-40D1-A68B-85F5A0422661", $"queryStr = {queryStr}");
 
             var result = new CodeFile();
             result.IsMain = false;
@@ -258,7 +258,7 @@ namespace TestSandbox.LogicalDatabase
 
             var parsedQuery = parser.Result;
 
-            _logger.Info($"parsedQuery = {parsedQuery}");
+            _logger.Info("90B7C219-2209-458E-84EE-C3475864AB54", $"parsedQuery = {parsedQuery}");
 
             var inheritanceRelationsList = parsedQuery.GetInheritanceRelations();
 
@@ -269,7 +269,7 @@ namespace TestSandbox.LogicalDatabase
 
             foreach (var inheritanceRelation in inheritanceRelationsList)
             {
-                _logger.Info($"inheritanceRelation = {inheritanceRelation}");
+                _logger.Info("8A1B667D-D8B3-48EF-BB7D-C662AF2D1D96", $"inheritanceRelation = {inheritanceRelation}");
 
                 var inheritanceItem = new InheritanceItem();
 
@@ -282,12 +282,12 @@ namespace TestSandbox.LogicalDatabase
                 inheritanceItemsList.Add(inheritanceItem);
             }
 
-            _logger.Info($"inheritanceItemsList = {inheritanceItemsList.WriteListToString()}");
+            _logger.Info("08F618A1-A6A9-4E7F-97DE-EC4639627534", $"inheritanceItemsList = {inheritanceItemsList.WriteListToString()}");
         }
 
         private void ParseQueryString(string queryStr)
         {
-            _logger.Info($"queryStr = {queryStr}");
+            _logger.Info("978095AB-306F-4D5E-8821-BBE3CA4E9EAD", $"queryStr = {queryStr}");
 
             var result = new CodeFile();
             result.IsMain = false;
@@ -304,7 +304,7 @@ namespace TestSandbox.LogicalDatabase
             var parsedQuery = parser.Result;
 
 
-            _logger.Info($"DebugHelperForRuleInstance.ToString(parsedQuery) = {DebugHelperForRuleInstance.ToString(parsedQuery)}");
+            _logger.Info("B1C83582-4CB8-467E-AAFE-D9D1BC0BCF3C", $"DebugHelperForRuleInstance.ToString(parsedQuery) = {DebugHelperForRuleInstance.ToString(parsedQuery)}");
 
 
 
@@ -315,7 +315,7 @@ namespace TestSandbox.LogicalDatabase
 
         private void Search(string queryStr)
         {
-            _logger.Info($"queryStr = {queryStr}");
+            _logger.Info("24CD3A09-50A1-4EC2-A4F9-0CEB438AFF9D", $"queryStr = {queryStr}");
 
             var result = new CodeFile();
             result.IsMain = false;
@@ -332,7 +332,7 @@ namespace TestSandbox.LogicalDatabase
             var parsedQuery = parser.Result;
 
 
-            _logger.Info($"DebugHelperForRuleInstance.ToString(parsedQuery) = {DebugHelperForRuleInstance.ToString(parsedQuery)}");
+            _logger.Info("B07A0AE1-F9E2-4691-B7FD-251B62E98913", $"DebugHelperForRuleInstance.ToString(parsedQuery) = {DebugHelperForRuleInstance.ToString(parsedQuery)}");
 
 
 
@@ -351,24 +351,24 @@ namespace TestSandbox.LogicalDatabase
             var searchResult = searcher.Run(searchOptions);
 
 
-            _logger.Info($"searchResult.IsSuccess = {searchResult.IsSuccess}");
-            _logger.Info($"searchResult.Items.Count = {searchResult.Items.Count}");
+            _logger.Info("BF5C1994-CE03-49B0-9D2F-B0F83E6D7AFF", $"searchResult.IsSuccess = {searchResult.IsSuccess}");
+            _logger.Info("647788EC-5163-4777-BFBF-82154C2A6F09", $"searchResult.Items.Count = {searchResult.Items.Count}");
 
-            _logger.Info(DebugHelperForLogicalSearchResult.ToString(searchResult));
+            _logger.Info("61E1D35E-F669-4CD0-AB22-724BAD33A20D", DebugHelperForLogicalSearchResult.ToString(searchResult));
 
             foreach (var item in searchResult.Items)
             {
-                _logger.Info($"item.ResultOfVarOfQueryToRelationList.Count = {item.ResultOfVarOfQueryToRelationList.Count}");
+                _logger.Info("9B0640EC-A3B1-4ED3-B0BF-4B42A74185F8", $"item.ResultOfVarOfQueryToRelationList.Count = {item.ResultOfVarOfQueryToRelationList.Count}");
 
                 foreach (var resultOfVarOfQueryToRelation in item.ResultOfVarOfQueryToRelationList)
                 {
                     var varName = resultOfVarOfQueryToRelation.NameOfVar;
 
-                    _logger.Info($"varName = {varName}");
+                    _logger.Info("CC02C7DE-6066-4369-A113-21B5E21C7ABD", $"varName = {varName}");
 
                     var foundNode = resultOfVarOfQueryToRelation.FoundExpression;
 
-                    _logger.Info($"DebugHelperForRuleInstance.ToString(foundNode) = {DebugHelperForRuleInstance.ToString(foundNode)}");
+                    _logger.Info("6A34DDC5-2078-46DA-AE73-7EFAD2BEAD93", $"DebugHelperForRuleInstance.ToString(foundNode) = {DebugHelperForRuleInstance.ToString(foundNode)}");
                 }
 
             }

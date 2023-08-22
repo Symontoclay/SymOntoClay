@@ -40,11 +40,11 @@ namespace TestSandbox.Handlers
 
         public void Run()
         {
-            _logger.Info("Begin");
+            _logger.Info("A49F397C-8760-4F11-A909-2F9EC9F9B922", "Begin");
 
             Case1();
 
-            _logger.Info("End");
+            _logger.Info("CC99B88C-E5C1-4FE9-95D2-46CBB1008979", "End");
         }
 
         private void Case1()
@@ -55,12 +55,12 @@ namespace TestSandbox.Handlers
 
             var synonymsList = GetSynonyms("to");
 
-            _logger.Info($"synonymsList = {synonymsList.WritePODListToString()}");
+            _logger.Info("E97CB54E-95CA-491A-BF86-DB16302AFFD7", $"synonymsList = {synonymsList.WritePODListToString()}");
         }
 
         private List<string> GetSynonyms(string name)
         {
-            _logger.Info($"name = {name}");
+            _logger.Info("73697413-FFBB-4DBD-BB6D-50EA8C551FF2", $"name = {name}");
 
             var result = new List<string>();
 
@@ -70,15 +70,15 @@ namespace TestSandbox.Handlers
             {
                 var futureProcessedList = new List<string>();
 
-                _logger.Info($"currentProcessedList = {currentProcessedList.WritePODListToString()}");
+                _logger.Info("FFED62D7-BC9B-42E7-A272-17B3F1E17052", $"currentProcessedList = {currentProcessedList.WritePODListToString()}");
 
                 foreach (var processedItem in currentProcessedList)
                 {
-                    _logger.Info($"processedItem = {processedItem}");
+                    _logger.Info("ACDE8739-08A4-4CA2-A1B1-CBDE5430844B", $"processedItem = {processedItem}");
 
                     var synonymsList = GetSynonymsDirectly(processedItem);
 
-                    _logger.Info($"synonymsList = {synonymsList.WritePODListToString()}");
+                    _logger.Info("332EC78A-162A-4B42-A360-D458DD296655", $"synonymsList = {synonymsList.WritePODListToString()}");
 
                     if(synonymsList == null)
                     {
@@ -87,7 +87,7 @@ namespace TestSandbox.Handlers
 
                     foreach(var item in synonymsList)
                     {
-                        _logger.Info($"item = {item}");
+                        _logger.Info("89CDC0B0-DD40-43E3-A49D-BEB483DA7932", $"item = {item}");
 
                         if (item == name || result.Contains(item))
                         {
@@ -99,7 +99,7 @@ namespace TestSandbox.Handlers
                     }
                 }
 
-                _logger.Info($"futureProcessedList = {futureProcessedList.WritePODListToString()}");
+                _logger.Info("FCD1EB06-A13C-490E-AF68-7ADEE2818F2A", $"futureProcessedList = {futureProcessedList.WritePODListToString()}");
 
                 currentProcessedList = futureProcessedList;
             }
@@ -109,7 +109,7 @@ namespace TestSandbox.Handlers
 
         private List<string> GetSynonymsDirectly(string name)
         {
-            _logger.Info($"name = {name}");
+            _logger.Info("41D2EBE7-751A-4F60-B6C4-A653124CC648", $"name = {name}");
 
             if(_synonymsDict.ContainsKey(name))
             {

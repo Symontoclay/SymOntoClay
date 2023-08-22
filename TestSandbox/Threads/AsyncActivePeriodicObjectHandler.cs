@@ -39,7 +39,7 @@ namespace TestSandbox.Threads
 
         public void Run()
         {
-            _logger.Info("Begin");
+            _logger.Info("9E0B3523-0D26-4864-A12B-D953C36A6BA2", "Begin");
 
             var commonActiveContext = new ActivePeriodicObjectCommonContext();
 
@@ -55,19 +55,19 @@ namespace TestSandbox.Threads
                 PeriodicMethod = NRun_2
             };
 
-            _logger.Info($"activeObject.IsWaited (0) = {activeObject.IsWaited}");
-            _logger.Info($"activeObject.IsActive (0) = {activeObject.IsActive}");
+            _logger.Info("5442E7B9-A695-40B2-BC02-4CD3F5333FB1", $"activeObject.IsWaited (0) = {activeObject.IsWaited}");
+            _logger.Info("8B9469EE-FFA5-4E99-898E-D73766BE7360", $"activeObject.IsActive (0) = {activeObject.IsActive}");
 
             var taskValue = activeObject.Start();
 
-            _logger.Info($"taskValue = {taskValue}");
+            _logger.Info("4D80C65C-3477-4AA9-B710-2D3991CFD649", $"taskValue = {taskValue}");
 
             activeObject2.Start();
 
             Thread.Sleep(10000);
 
-            _logger.Info($"activeObject.IsWaited = {activeObject.IsWaited}");
-            _logger.Info($"activeObject.IsActive = {activeObject.IsActive}");
+            _logger.Info("EE8ABBDD-6A49-4BD8-8922-FD52CD97F164", $"activeObject.IsWaited = {activeObject.IsWaited}");
+            _logger.Info("6C97EA93-73D3-4B67-B6D2-3BB7CBC5353C", $"activeObject.IsActive = {activeObject.IsActive}");
 
             commonActiveContext.Lock();
 
@@ -75,8 +75,8 @@ namespace TestSandbox.Threads
 
             Thread.Sleep(1000);
 
-            _logger.Info($"activeObject.IsWaited (2) = {activeObject.IsWaited}");
-            _logger.Info($"activeObject.IsActive (2) = {activeObject.IsActive}");
+            _logger.Info("ADCF53E3-CB13-4B07-9983-D5DE522C511D", $"activeObject.IsWaited (2) = {activeObject.IsWaited}");
+            _logger.Info("8E94A7E7-BF8B-42E9-BFA7-366AFB95C372", $"activeObject.IsActive (2) = {activeObject.IsActive}");
 
             Thread.Sleep(1000);
 
@@ -84,8 +84,8 @@ namespace TestSandbox.Threads
 
             Thread.Sleep(1000);
 
-            _logger.Info($"activeObject.IsWaited (3) = {activeObject.IsWaited}");
-            _logger.Info($"activeObject.IsActive (3) = {activeObject.IsActive}");
+            _logger.Info("CDAB2113-F5A2-4CD7-8321-579EAA6C57FC", $"activeObject.IsWaited (3) = {activeObject.IsWaited}");
+            _logger.Info("9E05155F-3AC4-48A2-9C40-A4842C34A415", $"activeObject.IsActive (3) = {activeObject.IsActive}");
 
 
 
@@ -103,7 +103,7 @@ namespace TestSandbox.Threads
 
             Thread.Sleep(1000);
 
-            _logger.Info("End");
+            _logger.Info("EA561877-4C5A-43A0-84DE-5E7AE2353275", "End");
         }
 
         private int _n = 0;
@@ -113,7 +113,7 @@ namespace TestSandbox.Threads
         {
             _n++;
 
-            _logger.Info($"_n = {_n}");
+            _logger.Info("B32B701D-6F24-43FA-872B-D45F07DE5EC8", $"_n = {_n}");
 
 
             return true;
@@ -123,7 +123,7 @@ namespace TestSandbox.Threads
         {
             _m++;
 
-            _logger.Info($"_m = {_m}");
+            _logger.Info("4D1A0A5A-3ADA-4001-96C2-472CF4ECE6C1", $"_m = {_m}");
 
 
             return true;

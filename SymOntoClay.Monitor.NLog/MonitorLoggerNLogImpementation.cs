@@ -17,7 +17,17 @@ namespace SymOntoClay.Monitor.NLog
         /// </summary>
         public static MonitorLoggerNLogImpementation Instance = new MonitorLoggerNLogImpementation();
 
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        public MonitorLoggerNLogImpementation()
+            : this(LogManager.GetCurrentClassLogger())
+        {
+        }
+
+        public MonitorLoggerNLogImpementation(Logger logger)
+        {
+            _logger = logger;
+        }
+
+        private readonly Logger _logger;
 
         /// <inheritdoc/>
         public string Id => "MonitorLoggerNLogImpementation";

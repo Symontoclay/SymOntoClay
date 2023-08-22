@@ -37,17 +37,17 @@ namespace TestSandbox.MonoBehaviourTesting
 
         public void Run()
         {
-            _logger.Info("Begin");
+            _logger.Info("38BEAB64-097F-4511-82B5-37FF1530CB1C", "Begin");
 
             var componentsList = new List<TstMonoBehaviour>() { new TstHumanoidNPC(), new TstWord(), new TstGameObject() };
             ExecuteList(componentsList);
 
-            _logger.Info("End");
+            _logger.Info("B0A32DCB-7F52-44BC-AA3C-B58819DAAF96", "End");
         }
 
         private void ExecuteList(List<TstMonoBehaviour> componentsList)
         {
-            _logger.Info("Begin");
+            _logger.Info("70700B3E-F972-4C7E-AADA-A3576AB56749", "Begin");
 
             foreach(var component in componentsList)
             {
@@ -78,7 +78,7 @@ namespace TestSandbox.MonoBehaviourTesting
                 component.Stop();
             }
 
-            _logger.Info("End");
+            _logger.Info("03A0E19B-4578-4E81-B4C8-31D15D81CAD4", "End");
         }
     }
 }

@@ -86,12 +86,12 @@ namespace TestSandbox.CoreHostListener
         {
             var name = GetMethodId();
 
-            _logger.Info($"Begin {name}");
+            _logger.Info("480DD174-5637-41D3-9CA1-975DB652FAF2", $"Begin {name}");
 
-            _logger.Info($"{name} entity.InstanceId = {entity.InstanceId}");
-            _logger.Info($"{name} entity.Id = {entity.Id}");
-            _logger.Info($"{name} entity.Position = {entity.Position}");
-            _logger.Info($"{name} speed = {speed}");
+            _logger.Info("1220943D-E3C3-4836-B863-F46D5AD5F92C", $"{name} entity.InstanceId = {entity.InstanceId}");
+            _logger.Info("8B2B7978-91AF-40D6-AD13-8C2383D9B4AD", $"{name} entity.Id = {entity.Id}");
+            _logger.Info("B6A0C4E2-3AEE-4505-917C-4B779400AF1F", $"{name} entity.Position = {entity.Position}");
+            _logger.Info("CCA0DBB4-C37A-4404-B3E0-0C8FB3C0FD28", $"{name} speed = {speed}");
 
             var n = 0;
 
@@ -106,15 +106,15 @@ namespace TestSandbox.CoreHostListener
 
                 Thread.Sleep(1000);
 
-                _logger.Info($"{name} Hi! n = {n}");
+                _logger.Info("9167BFF3-6AAD-4168-8A30-1FD88D0ECB7D", $"{name} Hi! n = {n}");
 
-                _logger.Info($"{name} Hi! cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");
+                _logger.Info("B4493AEC-5DC1-4784-9B3C-663F40D44D83", $"{name} Hi! cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");
 
                 cancellationToken.ThrowIfCancellationRequested();
             }
 
 
-            _logger.Info($"End {name}");
+            _logger.Info("08B06A4E-D1F6-46E9-816C-4586EB2C9814", $"End {name}");
         }
 
         [DebuggerHidden]
@@ -125,16 +125,16 @@ namespace TestSandbox.CoreHostListener
         {
             var name = GetMethodId();
 
-            _logger.Info($"Begin {name}");
+            _logger.Info("07519B1E-8030-474B-856F-1896B0843897", $"Begin {name}");
 
-            _logger.Info($"{name} navTarget.Kind = {navTarget.Kind}");
+            _logger.Info("80830510-ECEC-45FB-A0CE-6E6AD9799571", $"{name} navTarget.Kind = {navTarget.Kind}");
 
             var entity = navTarget.Entity;
 
-            _logger.Info($"{name} entity.InstanceId = {entity.InstanceId}");
-            _logger.Info($"{name} entity.Id = {entity.Id}");
-            _logger.Info($"{name} entity.Position = {entity.Position}");
-            _logger.Info($"{name} speed = {speed}");
+            _logger.Info("C75C4FAC-9AA1-48C7-919C-2AAB7350DFF1", $"{name} entity.InstanceId = {entity.InstanceId}");
+            _logger.Info("76146FD5-34DB-4B93-8787-1D8D00C338B8", $"{name} entity.Id = {entity.Id}");
+            _logger.Info("23F0E6BF-9BBD-4E38-8D00-B7262C3C3822", $"{name} entity.Position = {entity.Position}");
+            _logger.Info("5B0742F0-A362-473B-B8E8-16D68F27D015", $"{name} speed = {speed}");
 
             var n = 0;
 
@@ -149,15 +149,15 @@ namespace TestSandbox.CoreHostListener
 
                 Thread.Sleep(1000);
 
-                _logger.Info($"{name} Hi! n = {n}");
+                _logger.Info("D3A91577-8AAD-48BF-BCE5-335EAC537CCE", $"{name} Hi! n = {n}");
 
-                _logger.Info($"{name} Hi! cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");
+                _logger.Info("49621894-127B-4232-A80F-D350DFF82DC7", $"{name} Hi! cancellationToken.IsCancellationRequested = {cancellationToken.IsCancellationRequested}");
 
                 cancellationToken.ThrowIfCancellationRequested();
             }
 
 
-            _logger.Info($"End {name}");
+            _logger.Info("3C79F6E8-2E06-4F56-B76A-CB27B66A4AC9", $"End {name}");
         }
 
 
@@ -178,9 +178,9 @@ namespace TestSandbox.CoreHostListener
         {
             var name = GetMethodId();
 
-            _logger.Info($"Begin {name}");
+            _logger.Info("B17B110A-0E73-4EA4-AE67-B3715B79ED2F", $"Begin {name}");
 
-            _logger.Info($"(entity == null) = {entity == null}");
+            _logger.Info("246F9A99-8A1C-4D71-BDB5-0366B97F9058", $"(entity == null) = {entity == null}");
 
             if(entity == null)
             {
@@ -191,49 +191,49 @@ namespace TestSandbox.CoreHostListener
 
             entity.Resolve();
 
-            _logger.Info($"{name} entity.InstanceId = {entity.InstanceId}");
-            _logger.Info($"{name} entity.Id = {entity.Id}");
-            _logger.Info($"{name} entity.Position = {entity.Position}");
+            _logger.Info("E1EC0AAE-3AF0-42C0-A0C2-D18CD5E8229C", $"{name} entity.InstanceId = {entity.InstanceId}");
+            _logger.Info("6B1CB60C-57D4-4C09-9CCA-CD2215B1A9A2", $"{name} entity.Id = {entity.Id}");
+            _logger.Info("B2537EE6-BCCA-445C-A890-CA5FE82D67AC", $"{name} entity.Position = {entity.Position}");
 
-            _logger.Info($"End {name}");
+            _logger.Info("C4C1779D-0714-498D-9D6C-242BB06821B8", $"End {name}");
         }
 
         [BipedEndpoint]
         private void JumpImpl(CancellationToken cancellationToken)
         {
-            _logger.Info("Begin");
+            _logger.Info("EC5A9B0B-3627-4141-8F65-8E6163313A3A", "Begin");
 
-            _logger.Info("End");
+            _logger.Info("65CB2066-6C91-45B2-A790-DFDB5B116440", "End");
         }
 
         [BipedEndpoint("Aim", DeviceOfBiped.LeftHand, DeviceOfBiped.RightHand)]
         private void AimToImpl(CancellationToken cancellationToken)
         {
-            _logger.Info("AimToImpl Begin");
+            _logger.Info("C383ABA2-1138-4A5D-9CF9-D3876897DA0E", "AimToImpl Begin");
 
-            _logger.Info("AimToImpl End");
+            _logger.Info("127E488D-EEB1-46BC-A9C7-1D62EC03D2FC", "AimToImpl End");
         }
 
         [FriendsEndpoints("Aim")]
         [BipedEndpoint("Fire", DeviceOfBiped.LeftHand, DeviceOfBiped.RightHand)]
         private void FireImpl(CancellationToken cancellationToken)
         {
-            _logger.Info("FireImpl Begin");
+            _logger.Info("476E9B3A-FF4E-42CD-BBDB-F5266D66B43B", "FireImpl Begin");
 
             for(var i = 0; i < 100; i++)
             {
-                _logger.Info($"FireImpl {i}");
+                _logger.Info("80973732-B1EF-471F-A3F4-DDA7260CD07D", $"FireImpl {i}");
 
                 if (cancellationToken.IsCancellationRequested)
                 {
-                    _logger.Info("FireImpl Cancel");
+                    _logger.Info("C732A698-909A-42D0-9797-C228B6BF87B6", "FireImpl Cancel");
                     return;
                 }
 
                 Thread.Sleep(100);
             }
 
-            _logger.Info("FireImpl End");
+            _logger.Info("298CD9B0-20F2-4EA8-9699-9D5A3A7C37B1", "FireImpl End");
         }
 
         [DebuggerHidden]
@@ -243,13 +243,13 @@ namespace TestSandbox.CoreHostListener
 #if DEBUG
             var methodId = GetMethodId();
 
-            _logger.Info($"RotateImpl Begin {methodId}; direction = {direction}");
+            _logger.Info("BBF926CA-710E-4937-B113-4001DE08DCF0", $"RotateImpl Begin {methodId}; direction = {direction}");
 #endif
 
 
 
 #if DEBUG
-            _logger.Info($"RotateImpl End {methodId}");
+            _logger.Info("AA97362C-1452-4D45-9894-E1F3E86736B4", $"RotateImpl End {methodId}");
 #endif
         }
 
@@ -258,7 +258,7 @@ namespace TestSandbox.CoreHostListener
         public void RotateToEntityImpl(CancellationToken cancellationToken, IEntity entity,
             float speed = 2)
         {
-            _logger.Info("RotateToEntityImpl Begin");
+            _logger.Info("57114BFE-8ADB-4518-A48D-C21BD7C4BDFC", "RotateToEntityImpl Begin");
         }
     }
 }

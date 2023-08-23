@@ -48,8 +48,8 @@ namespace TestSandbox.Handlers
                 OutputHandler = message => { _globalLogger.Info($"message = {message}"); },
                 KindOfLogicalSearchExplain = KindOfLogicalSearchExplain.None,
                 LogicalSearchExplainDumpDir = Directory.GetCurrentDirectory(),
-                EnableAddingRemovingFactLoggingInStorages = false//,
-                //PlatformLoggers = new List<IPlatformLogger>() { /*ConsoleLogger.Instance,*/ CommonNLogLogger.Instance }
+                EnableAddingRemovingFactLoggingInStorages = false,
+                PlatformLoggers = new List<IPlatformLogger>() { /*ConsoleLogger.Instance,*/ CommonNLogLogger.Instance }
                 //RemoteMonitor = new RemoteWCFMonitor(new RemoteWCFMonitorSettings
                 //{
                 //    Address = "net.pipe://localhost/MyService.svc"

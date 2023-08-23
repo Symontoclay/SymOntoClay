@@ -56,6 +56,16 @@ namespace SymOntoClay.Monitor
                 throw new NotImplementedException();
             }
 
+            if(monitorSettings.NodesSettings != null)
+            {
+                throw new NotImplementedException();
+            }
+
+            if(monitorSettings.EnableOnlyDirectlySetUpNodes)
+            {
+                throw new NotImplementedException();
+            }
+
             _kindOfLogicalSearchExplain = monitorSettings.KindOfLogicalSearchExplain;
             _enableAddingRemovingFactLoggingInStorages = monitorSettings.EnableAddingRemovingFactLoggingInStorages;
 

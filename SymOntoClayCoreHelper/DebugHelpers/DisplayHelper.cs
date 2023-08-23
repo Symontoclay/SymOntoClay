@@ -552,6 +552,36 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
             }
         }
 
+        public static void PrintObjDict_3_Prop<V>(this StringBuilder sb, uint n, string propName, IDictionary<string, V> items)
+            where V : IObjectToString
+        {
+            var spaces = Spaces(n);
+            var nextN = n + IndentationStep;
+            var nextNSpaces = Spaces(nextN);
+            var nextNextN = nextN + IndentationStep;
+            var nextNextNSpaces = Spaces(nextNextN);
+            var nextNextNextN = nextNextN + IndentationStep;
+
+            if (items == null)
+            {
+                sb.AppendLine($"{spaces}{propName} = NULL");
+            }
+            else
+            {
+                sb.AppendLine($"{spaces}Begin {propName}");
+                foreach (var item in items)
+                {
+                    sb.AppendLine($"{nextNSpaces}Begin Item");
+                    sb.AppendLine($"{nextNextNSpaces}Key = {item.Key}");
+                    sb.AppendLine($"{nextNextNSpaces}Begin Value");
+                    sb.Append(item.Value.ToString(nextNextNextN));
+                    sb.AppendLine($"{nextNextNSpaces}End Value");
+                    sb.AppendLine($"{nextNSpaces}End Item");
+                }
+                sb.AppendLine($"{spaces}End {propName}");
+            }
+        }
+
         public static void PrintPODDictProp<K, V>(this StringBuilder sb, uint n, string propName, IDictionary<K, V> items)
         {
             var spaces = Spaces(n);

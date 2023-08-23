@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using SymOntoClay.Core;
 using SymOntoClay.Monitor.Common;
+using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.Handlers
 {
@@ -47,7 +48,8 @@ namespace TestSandbox.Handlers
                 OutputHandler = message => { _globalLogger.Info($"message = {message}"); },
                 KindOfLogicalSearchExplain = KindOfLogicalSearchExplain.None,
                 LogicalSearchExplainDumpDir = Directory.GetCurrentDirectory(),
-                EnableAddingRemovingFactLoggingInStorages = false
+                EnableAddingRemovingFactLoggingInStorages = false//,
+                //PlatformLoggers = new List<IPlatformLogger>() { /*ConsoleLogger.Instance,*/ CommonNLogLogger.Instance }
                 //RemoteMonitor = new RemoteWCFMonitor(new RemoteWCFMonitorSettings
                 //{
                 //    Address = "net.pipe://localhost/MyService.svc"

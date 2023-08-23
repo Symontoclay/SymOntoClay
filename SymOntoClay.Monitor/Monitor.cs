@@ -51,6 +51,11 @@ namespace SymOntoClay.Monitor
                 throw new NotImplementedException();
             }
 
+            if(monitorSettings.Features != null)
+            {
+                throw new NotImplementedException();
+            }
+
             _kindOfLogicalSearchExplain = monitorSettings.KindOfLogicalSearchExplain;
             _enableAddingRemovingFactLoggingInStorages = monitorSettings.EnableAddingRemovingFactLoggingInStorages;
 

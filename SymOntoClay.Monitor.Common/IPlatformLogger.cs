@@ -6,7 +6,6 @@ namespace SymOntoClay.Monitor.Common
 {
     public interface IPlatformLogger
     {
-        void WriteLn(string message);
         void WriteLnRawOutput(string message);
         void WriteLnRawTrace(string message);
         void WriteLnRawDebug(string message);

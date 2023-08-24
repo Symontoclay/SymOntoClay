@@ -42,11 +42,6 @@ namespace SymOntoClay.BaseTestLib
         private readonly Action<string> _error;
 
         /// <inheritdoc/>
-        public void WriteLn(string message)
-        {
-        }
-
-        /// <inheritdoc/>
         public void WriteLnRawOutput(string message)
         {
             _logChannel?.Invoke(message);

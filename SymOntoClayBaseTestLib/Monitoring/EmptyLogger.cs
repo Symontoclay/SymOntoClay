@@ -103,11 +103,6 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         }
 
         /// <inheritdoc/>
-        public void WriteLn(string message)
-        {
-        }
-
-        /// <inheritdoc/>
         public void WriteLnRawOutput(string message)
         {
         }

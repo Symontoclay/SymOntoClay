@@ -43,12 +43,6 @@ namespace TestSandbox.PlatformImplementations
         }
 
         /// <inheritdoc/>
-        public void WriteLn(string message)
-        {
-            _logger.Info(message);
-        }
-
-        /// <inheritdoc/>
         public void WriteLnRawOutput(string message)
         {
             _logger.Info(message);

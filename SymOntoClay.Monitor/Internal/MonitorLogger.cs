@@ -240,7 +240,7 @@ namespace SymOntoClay.Monitor.Internal
             {
                 foreach (var platformLogger in _platformLoggers)
                 {
-                    platformLogger
+                    platformLogger.WriteLnRawOutput(message);
                 }
             }
 
@@ -308,7 +308,7 @@ namespace SymOntoClay.Monitor.Internal
             {
                 foreach (var platformLogger in _platformLoggers)
                 {
-                    platformLogger
+                    platformLogger.WriteLnRawTrace(message);
                 }
             }
 
@@ -376,7 +376,7 @@ namespace SymOntoClay.Monitor.Internal
             {
                 foreach (var platformLogger in _platformLoggers)
                 {
-                    platformLogger
+                    platformLogger.WriteLnRawDebug(message);
                 }
             }
 
@@ -444,7 +444,7 @@ namespace SymOntoClay.Monitor.Internal
             {
                 foreach (var platformLogger in _platformLoggers)
                 {
-                    platformLogger
+                    platformLogger.WriteLnRawInfo(message);
                 }
             }
 
@@ -512,7 +512,7 @@ namespace SymOntoClay.Monitor.Internal
             {
                 foreach (var platformLogger in _platformLoggers)
                 {
-                    platformLogger
+                    platformLogger.WriteLnRawWarn(message);
                 }
             }
 
@@ -582,7 +582,7 @@ namespace SymOntoClay.Monitor.Internal
             {
                 foreach (var platformLogger in _platformLoggers)
                 {
-                    platformLogger
+                    platformLogger.WriteLnRawError(message);
                 }
             }
 
@@ -661,7 +661,7 @@ namespace SymOntoClay.Monitor.Internal
             {
                 foreach (var platformLogger in _platformLoggers)
                 {
-                    platformLogger
+                    platformLogger.WriteLnRawFatal(message);
                 }
             }
 

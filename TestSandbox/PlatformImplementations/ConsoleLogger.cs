@@ -42,12 +42,6 @@ namespace TestSandbox.PlatformImplementations
         }
 
         /// <inheritdoc/>
-        public void WriteLn(string message)
-        {
-            Console.WriteLine(message);
-        }
-
-        /// <inheritdoc/>
         public void WriteLnRawOutput(string message)
         {
             Console.WriteLine(message);

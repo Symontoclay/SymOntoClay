@@ -31,12 +31,6 @@ namespace SymOntoClay.CLI
     public class CLIPlatformLogger: IPlatformLogger
     {
         /// <inheritdoc/>
-        public void WriteLn(string message)
-        {
-            ConsoleWrapper.WriteText(message);
-        }
-
-        /// <inheritdoc/>
         public void WriteLnRawOutput(string message)
         {
             ConsoleWrapper.WriteOutput(message);

@@ -27,6 +27,7 @@ namespace SymOntoClay.Monitor.Internal
         private MonitorFeatures _features;
         private IFileCache _fileCache;
         private MessageNumberGenerator _globalMessageNumberGenerator;
+        private IList<IPlatformLogger> _platformLoggers;
 
         private string _nodeId;
         private string _threadId;
@@ -39,7 +40,7 @@ namespace SymOntoClay.Monitor.Internal
         /// <inheritdoc/>
         public abstract string Id { get; }
 
-        protected void Init(MessageProcessor messageProcessor, MonitorFeatures features, IFileCache fileCache, MessageNumberGenerator globalMessageNumberGenerator, MessageNumberGenerator messageNumberGenerator, string nodeId, string threadId)
+        protected void Init(MessageProcessor messageProcessor, MonitorFeatures features, IList<IPlatformLogger> platformLoggers, IFileCache fileCache, MessageNumberGenerator globalMessageNumberGenerator, MessageNumberGenerator messageNumberGenerator, string nodeId, string threadId)
         {
             _messageProcessor = messageProcessor;
             _features = features;
@@ -48,6 +49,7 @@ namespace SymOntoClay.Monitor.Internal
             _messageNumberGenerator = messageNumberGenerator;
             _nodeId = nodeId;
             _threadId = threadId;
+            _platformLoggers = platformLoggers;
         }
 
         private readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings()
@@ -234,6 +236,14 @@ namespace SymOntoClay.Monitor.Internal
 
             _outputHandler?.Invoke(message);
 
+            if(_platformLoggers.Any())
+            {
+                foreach (var platformLogger in _platformLoggers)
+                {
+                    platformLogger
+                }
+            }
+
             Task.Run(() => {
 #if DEBUG
                 _globalLogger.Info($"NEXT");
@@ -293,6 +303,14 @@ namespace SymOntoClay.Monitor.Internal
 #endif
 
             var now = DateTime.Now;
+
+            if (_platformLoggers.Any())
+            {
+                foreach (var platformLogger in _platformLoggers)
+                {
+                    platformLogger
+                }
+            }
 
             Task.Run(() => {
 #if DEBUG
@@ -354,6 +372,14 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
+            if (_platformLoggers.Any())
+            {
+                foreach (var platformLogger in _platformLoggers)
+                {
+                    platformLogger
+                }
+            }
+
             Task.Run(() => {
 #if DEBUG
                 _globalLogger.Info($"NEXT");
@@ -414,6 +440,14 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
+            if (_platformLoggers.Any())
+            {
+                foreach (var platformLogger in _platformLoggers)
+                {
+                    platformLogger
+                }
+            }
+
             Task.Run(() => {
 #if DEBUG
                 _globalLogger.Info($"NEXT");
@@ -473,6 +507,14 @@ namespace SymOntoClay.Monitor.Internal
 #endif
 
             var now = DateTime.Now;
+
+            if (_platformLoggers.Any())
+            {
+                foreach (var platformLogger in _platformLoggers)
+                {
+                    platformLogger
+                }
+            }
 
             Task.Run(() => {
 #if DEBUG
@@ -535,6 +577,14 @@ namespace SymOntoClay.Monitor.Internal
             var now = DateTime.Now;
 
             _errorHandler?.Invoke(message);
+
+            if (_platformLoggers.Any())
+            {
+                foreach (var platformLogger in _platformLoggers)
+                {
+                    platformLogger
+                }
+            }
 
             Task.Run(() => {
 #if DEBUG
@@ -606,6 +656,14 @@ namespace SymOntoClay.Monitor.Internal
             var now = DateTime.Now;
 
             _errorHandler?.Invoke(message);
+
+            if (_platformLoggers.Any())
+            {
+                foreach (var platformLogger in _platformLoggers)
+                {
+                    platformLogger
+                }
+            }
 
             Task.Run(() => {
 #if DEBUG

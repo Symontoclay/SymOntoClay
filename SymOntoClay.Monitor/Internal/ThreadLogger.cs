@@ -48,7 +48,7 @@ namespace SymOntoClay.Monitor.Internal
             _nodeId = _monitorNodeContext.NodeId;
             _threadId = threadId;
 
-            Init(_messageProcessor, _features, _fileCache, _globalMessageNumberGenerator, _messageNumberGenerator, _nodeId, _threadId);
+            Init(_messageProcessor, _features, monitorContext.PlatformLoggers, _fileCache, _globalMessageNumberGenerator, _messageNumberGenerator, _nodeId, _threadId);
         }
     }
 }

@@ -41,11 +41,6 @@ namespace SymOntoClay.Monitor
             _globalLogger.Info($"monitorSettings = {monitorSettings}");
 #endif
             
-            if(monitorSettings.PlatformLoggers != null)
-            {
-                throw new NotImplementedException();
-            }
-
             if(!monitorSettings.Enable)
             {
                 throw new NotImplementedException();
@@ -66,6 +61,11 @@ namespace SymOntoClay.Monitor
                 throw new NotImplementedException();
             }
 
+            if(monitorSettings.PlatformLoggers == null)
+            {
+                monitorSettings.PlatformLoggers = new List<IPlatformLogger>();
+            }
+
             _kindOfLogicalSearchExplain = monitorSettings.KindOfLogicalSearchExplain;
             _enableAddingRemovingFactLoggingInStorages = monitorSettings.EnableAddingRemovingFactLoggingInStorages;
 
@@ -73,7 +73,8 @@ namespace SymOntoClay.Monitor
             {
                 Enable = monitorSettings.Enable,
                 OutputHandler = monitorSettings.OutputHandler,
-                ErrorHandler = monitorSettings.ErrorHandler
+                ErrorHandler = monitorSettings.ErrorHandler,
+                PlatformLoggers = monitorSettings.PlatformLoggers
             };
 
             _remoteMonitor = monitorSettings.RemoteMonitor;
@@ -105,7 +106,7 @@ namespace SymOntoClay.Monitor
 
             _monitorContext.Features = _features;
 
-            Init(_messageProcessor, _features, _fileCache, _globalMessageNumberGenerator, _messageNumberGenerator, string.Empty, string.Empty);
+            Init(_messageProcessor, _features, _monitorContext.PlatformLoggers, _fileCache, _globalMessageNumberGenerator, _messageNumberGenerator, string.Empty, string.Empty);
         }
 
         /// <inheritdoc/>

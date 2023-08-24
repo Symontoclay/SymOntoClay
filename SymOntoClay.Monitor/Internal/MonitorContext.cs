@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Internal.FileCache;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,12 @@ namespace SymOntoClay.Monitor.Internal
         public MessageNumberGenerator GlobalMessageNumberGenerator { get; set; } = new MessageNumberGenerator();
         public Action<string> OutputHandler { get; set; }
         public Action<string> ErrorHandler { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of platform specific loggers.
+        /// It alows us to add, for example, console logger for Unity3D.
+        /// </summary>
+        public IList<IPlatformLogger> PlatformLoggers { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -43,6 +50,8 @@ namespace SymOntoClay.Monitor.Internal
             sb.PrintExisting(n, nameof(MessageProcessor), MessageProcessor);
             sb.PrintExisting(n, nameof(OutputHandler), OutputHandler);
             sb.PrintExisting(n, nameof(ErrorHandler), ErrorHandler);
+            var platformLoggersMark = PlatformLoggers == null ? "No" : PlatformLoggers.Any() ? "Yes" : "No";
+            sb.AppendLine($"{spaces}{nameof(PlatformLoggers)} = {platformLoggersMark}");
             return sb.ToString();
         }
     }

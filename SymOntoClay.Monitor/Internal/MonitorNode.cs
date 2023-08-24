@@ -56,7 +56,7 @@ namespace SymOntoClay.Monitor.Internal
             _globalMessageNumberGenerator = monitorContext.GlobalMessageNumberGenerator;
             _messageProcessor = monitorContext.MessageProcessor;
 
-            Init(_messageProcessor, _features, _fileCache, _globalMessageNumberGenerator, _messageNumberGenerator, _nodeId, string.Empty);
+            Init(_messageProcessor, _features, monitorContext.PlatformLoggers, _fileCache, _globalMessageNumberGenerator, _messageNumberGenerator, _nodeId, string.Empty);
         }
 
         /// <inheritdoc/>

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.Monitor.Internal.FileCache;
@@ -11,20 +12,25 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.Internal
 {
-    public abstract class MonitorLogger : IMonitorLogger
+    public class MonitorLogger : IMonitorLogger
     {
 #if DEBUG
         private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        protected MonitorLogger(Action<string> outputHandler, Action<string> errorHandler)
+        public MonitorLogger(IMonitorLoggerContext context)
         {
-            _outputHandler = outputHandler;
-            _errorHandler = errorHandler;
+            _context = context;
+
+            _outputHandler = context.OutputHandler;
+            _errorHandler = context.ErrorHandler;
+            _messageProcessor = context.MessageProcessor;
         }
 
+        private readonly IMonitorLoggerContext _context;
+
         private MessageProcessor _messageProcessor;
-        private MonitorFeatures _features;
+        private IMonitorFeatures _features;
         private IFileCache _fileCache;
         private MessageNumberGenerator _globalMessageNumberGenerator;
         private IList<IPlatformLogger> _platformLoggers;
@@ -38,11 +44,10 @@ namespace SymOntoClay.Monitor.Internal
         private readonly Action<string> _errorHandler;
 
         /// <inheritdoc/>
-        public abstract string Id { get; }
+        public string Id => throw new NotImplementedException();
 
-        protected void Init(MessageProcessor messageProcessor, MonitorFeatures features, IList<IPlatformLogger> platformLoggers, IFileCache fileCache, MessageNumberGenerator globalMessageNumberGenerator, MessageNumberGenerator messageNumberGenerator, string nodeId, string threadId)
+        public void Init(IMonitorFeatures features, IList<IPlatformLogger> platformLoggers, IFileCache fileCache, MessageNumberGenerator globalMessageNumberGenerator, MessageNumberGenerator messageNumberGenerator, string nodeId, string threadId)
         {
-            _messageProcessor = messageProcessor;
             _features = features;
             _fileCache = fileCache;
             _globalMessageNumberGenerator = globalMessageNumberGenerator;
@@ -58,6 +63,7 @@ namespace SymOntoClay.Monitor.Internal
         };
 
         /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public string CallMethod(string messagePointId, string methodName,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -120,6 +126,7 @@ namespace SymOntoClay.Monitor.Internal
         }
 
         /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public void Parameter(string messagePointId, string callMethodId, string parameterName, object parameterValue,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -202,6 +209,7 @@ namespace SymOntoClay.Monitor.Internal
         }
 
         /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public void Output(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -236,7 +244,7 @@ namespace SymOntoClay.Monitor.Internal
 
             _outputHandler?.Invoke(message);
 
-            if(_platformLoggers.Any())
+            if (_platformLoggers.Any())
             {
                 foreach (var platformLogger in _platformLoggers)
                 {
@@ -272,6 +280,7 @@ namespace SymOntoClay.Monitor.Internal
         }
 
         /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public void Trace(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -340,6 +349,7 @@ namespace SymOntoClay.Monitor.Internal
         }
 
         /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public void Debug(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -408,6 +418,7 @@ namespace SymOntoClay.Monitor.Internal
         }
 
         /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public void Info(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -476,6 +487,7 @@ namespace SymOntoClay.Monitor.Internal
         }
 
         /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public void Warn(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -544,6 +556,7 @@ namespace SymOntoClay.Monitor.Internal
         }
 
         /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public void Error(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -614,6 +627,7 @@ namespace SymOntoClay.Monitor.Internal
         }
 
         /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public void Error(string messagePointId, Exception exception,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -623,6 +637,7 @@ namespace SymOntoClay.Monitor.Internal
         }
 
         /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public void Fatal(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -693,6 +708,7 @@ namespace SymOntoClay.Monitor.Internal
         }
 
         /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public void Fatal(string messagePointId, Exception exception,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

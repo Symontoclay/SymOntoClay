@@ -7,16 +7,33 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.Internal
 {
-    public class MonitorFeatures : IObjectToString
+    public class MonitorFeatures : IMonitorFeatures, IObjectToString
     {
+        /// <inheritdoc/>
         public bool EnableCallMethod { get; set; }
+
+        /// <inheritdoc/>
         public bool EnableParameter { get; set; }
+
+        /// <inheritdoc/>
         public bool EnableOutput { get; set; }
+
+        /// <inheritdoc/>
         public bool EnableTrace { get; set; }
+
+        /// <inheritdoc/>
         public bool EnableDebug { get; set; }
+
+        /// <inheritdoc/>
         public bool EnableInfo { get; set; }
+
+        /// <inheritdoc/>
         public bool EnableWarn { get; set; }
+
+        /// <inheritdoc/>
         public bool EnableError { get; set; }
+
+        /// <inheritdoc/>
         public bool EnableFatal { get; set; }
 
         /// <inheritdoc/>

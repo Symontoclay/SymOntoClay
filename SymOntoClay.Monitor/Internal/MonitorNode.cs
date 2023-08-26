@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.Internal
 {
-    public class MonitorNode : IMonitorLoggerContext, IMonitorNode
+    public class MonitorNode : IMonitorLoggerContext, IMonitorFeatures, IMonitorNode
     {
 #if DEBUG
         private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
@@ -60,13 +60,123 @@ namespace SymOntoClay.Monitor.Internal
             _messageProcessor = monitorContext.MessageProcessor;
 
             _monitorLoggerImpl = new MonitorLogger(this);
-
-            _monitorLoggerImpl.Init(_features, monitorContext.PlatformLoggers, _fileCache, _globalMessageNumberGenerator, _messageNumberGenerator, _nodeId, string.Empty);
         }
 
         Action<string> IMonitorLoggerContext.OutputHandler => _monitorContext.OutputHandler;
         Action<string> IMonitorLoggerContext.ErrorHandler => _monitorContext.ErrorHandler;
         MessageProcessor IMonitorLoggerContext.MessageProcessor => _messageProcessor;
+        IMonitorFeatures IMonitorLoggerContext.Features => this;
+        IList<IPlatformLogger> IMonitorLoggerContext.PlatformLoggers => _monitorContext.PlatformLoggers;
+        IFileCache IMonitorLoggerContext.FileCache => _fileCache;
+        MessageNumberGenerator IMonitorLoggerContext.GlobalMessageNumberGenerator => _globalMessageNumberGenerator;
+        MessageNumberGenerator IMonitorLoggerContext.MessageNumberGenerator => _messageNumberGenerator;
+        string IMonitorLoggerContext.NodeId => _nodeId;
+        string IMonitorLoggerContext.ThreadId => string.Empty;
+
+        bool IMonitorFeatures.EnableCallMethod
+        {
+            get
+            {
+                return _features.EnableCallMethod;
+            }
+        }
+
+        bool IMonitorFeatures.EnableParameter
+        {
+            get
+            {
+                return _features.EnableParameter;
+            }
+        }
+
+        bool IMonitorFeatures.EnableOutput
+        {
+            get
+            {
+                return _features.EnableOutput;
+            }
+        }
+
+        bool IMonitorFeatures.EnableTrace
+        {
+            get
+            {
+                return _features.EnableTrace;
+            }
+        }
+
+        bool IMonitorFeatures.EnableDebug
+        {
+            get
+            {
+                return _features.EnableDebug;
+            }
+        }
+
+        bool IMonitorFeatures.EnableInfo
+        {
+            get
+            {
+                return _features.EnableInfo;
+            }
+        }
+
+        bool IMonitorFeatures.EnableWarn
+        {
+            get
+            {
+                return _features.EnableWarn;
+            }
+        }
+
+        bool IMonitorFeatures.EnableError
+        {
+            get
+            {
+                return _features.EnableError;
+            }
+        }
+
+        bool IMonitorFeatures.EnableFatal
+        {
+            get
+            {
+                return _features.EnableFatal;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return ToString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToString(uint n)
+        {
+            return this.GetDefaultToStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToString.PropertiesToString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            var monitorFeatures = (IMonitorFeatures)this;
+
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableCallMethod)} = {monitorFeatures.EnableCallMethod}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableParameter)} = {monitorFeatures.EnableParameter}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableOutput)} = {monitorFeatures.EnableOutput}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableTrace)} = {monitorFeatures.EnableTrace}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableDebug)} = {monitorFeatures.EnableDebug}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableInfo)} = {monitorFeatures.EnableInfo}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableWarn)} = {monitorFeatures.EnableWarn}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableError)} = {monitorFeatures.EnableError}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableFatal)} = {monitorFeatures.EnableFatal}");
+
+            return sb.ToString();
+        }
 
         /// <inheritdoc/>
         public IThreadLogger CreateThreadLogger(string messagePointId, string threadId,

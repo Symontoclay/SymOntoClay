@@ -53,15 +53,15 @@ namespace SymOntoClay.Monitor.Internal
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{EnableCallMethod} = {EnableCallMethod}");
-            sb.AppendLine($"{spaces}{EnableParameter} = {EnableParameter}");
-            sb.AppendLine($"{spaces}{EnableOutput} = {EnableOutput}");
-            sb.AppendLine($"{spaces}{EnableTrace} = {EnableTrace}");
-            sb.AppendLine($"{spaces}{EnableDebug} = {EnableDebug}");
-            sb.AppendLine($"{spaces}{EnableInfo} = {EnableInfo}");
-            sb.AppendLine($"{spaces}{EnableWarn} = {EnableWarn}");
-            sb.AppendLine($"{spaces}{EnableError} = {EnableError}");
-            sb.AppendLine($"{spaces}{EnableFatal} = {EnableFatal}");
+            sb.AppendLine($"{spaces}{nameof(EnableCallMethod)} = {EnableCallMethod}");
+            sb.AppendLine($"{spaces}{nameof(EnableParameter)} = {EnableParameter}");
+            sb.AppendLine($"{spaces}{nameof(EnableOutput)} = {EnableOutput}");
+            sb.AppendLine($"{spaces}{nameof(EnableTrace)} = {EnableTrace}");
+            sb.AppendLine($"{spaces}{nameof(EnableDebug)} = {EnableDebug}");
+            sb.AppendLine($"{spaces}{nameof(EnableInfo)} = {EnableInfo}");
+            sb.AppendLine($"{spaces}{nameof(EnableWarn)} = {EnableWarn}");
+            sb.AppendLine($"{spaces}{nameof(EnableError)} = {EnableError}");
+            sb.AppendLine($"{spaces}{nameof(EnableFatal)} = {EnableFatal}");
             return sb.ToString();
         }
     }

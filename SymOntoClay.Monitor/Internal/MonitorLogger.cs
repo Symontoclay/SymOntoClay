@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.Internal
@@ -25,6 +26,13 @@ namespace SymOntoClay.Monitor.Internal
             _outputHandler = context.OutputHandler;
             _errorHandler = context.ErrorHandler;
             _messageProcessor = context.MessageProcessor;
+            _features = context.Features;
+            _platformLoggers = context.PlatformLoggers;
+            _fileCache = context.FileCache;
+            _globalMessageNumberGenerator = context.GlobalMessageNumberGenerator;
+            _messageNumberGenerator = context.MessageNumberGenerator;
+            _nodeId = context.NodeId;
+            _threadId = context.ThreadId;
         }
 
         private readonly IMonitorLoggerContext _context;
@@ -45,17 +53,6 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         public string Id => throw new NotImplementedException();
-
-        public void Init(IMonitorFeatures features, IList<IPlatformLogger> platformLoggers, IFileCache fileCache, MessageNumberGenerator globalMessageNumberGenerator, MessageNumberGenerator messageNumberGenerator, string nodeId, string threadId)
-        {
-            _features = features;
-            _fileCache = fileCache;
-            _globalMessageNumberGenerator = globalMessageNumberGenerator;
-            _messageNumberGenerator = messageNumberGenerator;
-            _nodeId = nodeId;
-            _threadId = threadId;
-            _platformLoggers = platformLoggers;
-        }
 
         private readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings()
         {

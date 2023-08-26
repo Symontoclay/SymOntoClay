@@ -29,7 +29,7 @@ namespace SymOntoClay.Monitor
 
         private readonly MonitorLogger _monitorLoggerImpl;
 
-        private readonly BaseMonitorSettings _baseMonitorSettings; 
+        private readonly BaseMonitorSettings _baseMonitorSettings;
 
         /// <inheritdoc/>
         public string Id => "monitor_core";

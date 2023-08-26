@@ -18,5 +18,7 @@ namespace SymOntoClay.Monitor.Internal
 
         public Action<string> OutputHandler { get; set; }
         public Action<string> ErrorHandler { get; set; }
+
+        public BaseMonitorSettings Settings { get; set; }
     }
 }

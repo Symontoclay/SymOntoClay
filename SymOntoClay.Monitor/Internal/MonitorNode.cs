@@ -30,11 +30,12 @@ namespace SymOntoClay.Monitor.Internal
 
         private readonly MonitorLogger _monitorLoggerImpl;
 
+        private readonly BaseMonitorSettings _baseMonitorSettings;
+
         /// <inheritdoc/>
         public string Id => _nodeId;
 
         public MonitorNode(string nodeId, MonitorContext monitorContext)
-            : base()
         {
 #if DEBUG
             _globalLogger.Info($"nodeId = {nodeId}");
@@ -44,7 +45,12 @@ namespace SymOntoClay.Monitor.Internal
 
             _monitorNodeContext = new MonitorNodeContext();
             _monitorNodeContext.MonitorContext = monitorContext;
-            _features = monitorContext.Features;
+
+            _baseMonitorSettings = monitorContext.Settings;
+
+            _monitorNodeContext.Settings = _baseMonitorSettings;
+
+            _features = _baseMonitorSettings.Features;
 
             _monitorNodeContext.Features = _features;
 

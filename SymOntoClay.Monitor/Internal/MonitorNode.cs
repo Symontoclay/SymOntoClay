@@ -35,7 +35,7 @@ namespace SymOntoClay.Monitor.Internal
         /// <inheritdoc/>
         public string Id => _nodeId;
 
-        public MonitorNode(string nodeId, MonitorContext monitorContext)
+        public MonitorNode(string nodeId, BaseMonitorSettings nodeSettings, MonitorContext monitorContext)
         {
 #if DEBUG
             _globalLogger.Info($"nodeId = {nodeId}");
@@ -46,7 +46,7 @@ namespace SymOntoClay.Monitor.Internal
             _monitorNodeContext = new MonitorNodeContext();
             _monitorNodeContext.MonitorContext = monitorContext;
 
-            _baseMonitorSettings = monitorContext.Settings;
+            _baseMonitorSettings = nodeSettings;
 
             _monitorNodeContext.Settings = _baseMonitorSettings;
 
@@ -83,7 +83,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _features.EnableCallMethod;
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableCallMethod;
             }
         }
 

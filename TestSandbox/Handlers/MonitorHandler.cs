@@ -63,12 +63,33 @@ namespace TestSandbox.Handlers
                     EnableWarn = true,
                     EnableError = true,
                     EnableFatal = true
-                }
+                },
+                NodesSettings = new Dictionary<string, BaseMonitorSettings>()
+                {
+                    {"soldier 1", new BaseMonitorSettings
+                        {
+                            Enable = true,
+                            Features = new MonitorFeatures
+                            {
+                                EnableCallMethod = false,
+                                EnableParameter = false,
+                                EnableOutput = false,
+                                EnableTrace = false,
+                                EnableDebug = false,
+                                EnableInfo = true,
+                                EnableWarn = false,
+                                EnableError = false,
+                                EnableFatal = false
+                            }
+                        } 
+                    }
+                },
+                EnableOnlyDirectlySetUpNodes = true
                 //RemoteMonitor = new RemoteWCFMonitor(new RemoteWCFMonitorSettings
                 //{
                 //    Address = "net.pipe://localhost/MyService.svc"
                 //})
-        });
+            });
 
             _globalLogger.Info($"monitor.SessionDirectoryName = {monitor.SessionDirectoryName}");
             _globalLogger.Info($"monitor.SessionDirectoryFullName = {monitor.SessionDirectoryFullName}");

@@ -27,9 +27,14 @@ namespace SymOntoClay.Monitor
         private readonly MessageNumberGenerator _globalMessageNumberGenerator;
         private readonly MessageNumberGenerator _messageNumberGenerator = new MessageNumberGenerator();
 
+        private readonly IDictionary<string, BaseMonitorSettings> _nodesSettings;
+        private readonly bool _enableOnlyDirectlySetUpNodes;
+
         private readonly MonitorLogger _monitorLoggerImpl;
 
         private readonly BaseMonitorSettings _baseMonitorSettings;
+
+        private readonly bool _TopSysEnable = true;
 
         /// <inheritdoc/>
         public string Id => "monitor_core";
@@ -42,19 +47,24 @@ namespace SymOntoClay.Monitor
             _globalLogger.Info($"monitorSettings = {monitorSettings}");
 #endif
             
-            if(!monitorSettings.Enable)
-            {
-                throw new NotImplementedException();
-            }
+            _nodesSettings = monitorSettings.NodesSettings;
+            _enableOnlyDirectlySetUpNodes = monitorSettings.EnableOnlyDirectlySetUpNodes;
 
-            if(monitorSettings.NodesSettings != null)
+            if(_nodesSettings == null)
             {
-                throw new NotImplementedException();
-            }
+                _nodesSettings = new Dictionary<string, BaseMonitorSettings>();
 
-            if(monitorSettings.EnableOnlyDirectlySetUpNodes)
+                if(_enableOnlyDirectlySetUpNodes)
+                {
+                    _TopSysEnable = false;
+                }
+            }
+            else
             {
-                throw new NotImplementedException();
+                if(!_nodesSettings.ContainsKey(Id) && _enableOnlyDirectlySetUpNodes)
+                {
+                    _TopSysEnable = false;
+                }
             }
 
             _baseMonitorSettings = monitorSettings.Clone();
@@ -81,7 +91,6 @@ namespace SymOntoClay.Monitor
 
             _monitorContext = new MonitorContext()
             {
-                Enable = monitorSettings.Enable,
                 OutputHandler = monitorSettings.OutputHandler,
                 ErrorHandler = monitorSettings.ErrorHandler,
                 PlatformLoggers = monitorSettings.PlatformLoggers ?? new List<IPlatformLogger>(),
@@ -127,7 +136,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _features.EnableCallMethod;
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableCallMethod;
             }
         }
 
@@ -135,7 +144,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _features.EnableParameter;
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableParameter;
             }
         }
 
@@ -143,7 +152,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _features.EnableOutput;
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableOutput;
             }
         }
 
@@ -151,7 +160,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _features.EnableTrace;
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableTrace;
             }
         }
 
@@ -159,7 +168,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _features.EnableDebug;
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableDebug;
             }
         }
 
@@ -167,7 +176,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _features.EnableInfo;
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableInfo;
             }
         }
 
@@ -175,7 +184,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _features.EnableWarn;
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableWarn;
             }
         }
 
@@ -183,7 +192,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _features.EnableError;
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableError;
             }
         }
 
@@ -191,7 +200,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _features.EnableFatal;
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableFatal;
             }
         }
 
@@ -238,10 +247,10 @@ namespace SymOntoClay.Monitor
         public bool EnableAddingRemovingFactLoggingInStorages => _baseMonitorSettings.EnableAddingRemovingFactLoggingInStorages;
 
         /// <inheritdoc/>
-        public bool Enable { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }//{ get => _monitorContext.Enable; set => _monitorContext.Enable = value; }
+        public bool Enable { get => _monitorContext.Enable; set => _monitorContext.Enable = value; }
 
         /// <inheritdoc/>
-        public bool EnableRemoteConnection { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }//{ get => _monitorContext.EnableRemoteConnection; set => _monitorContext.EnableRemoteConnection = value; }
+        public bool EnableRemoteConnection { get => _monitorContext.EnableRemoteConnection; set => _monitorContext.EnableRemoteConnection = value; }
 
         /// <inheritdoc/>
         public IMonitorNode CreateMotitorNode(string messagePointId, string nodeId,
@@ -295,7 +304,26 @@ namespace SymOntoClay.Monitor
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache);
             });
 
-            return new MonitorNode(nodeId, _monitorContext);
+            var nodeSettings = GetMotitorNodeSettings(nodeId);
+
+            return new MonitorNode(nodeId, nodeSettings, _monitorContext);
+        }
+
+        private BaseMonitorSettings GetMotitorNodeSettings(string nodeId)
+        {
+            if (_nodesSettings.ContainsKey(nodeId))
+            {
+                return _nodesSettings[nodeId];
+            }
+
+            var nodeSettings = _baseMonitorSettings.Clone();
+
+            if (_enableOnlyDirectlySetUpNodes)
+            {
+                nodeSettings.Enable = false;
+            }
+
+            return nodeSettings;
         }
 
         /// <inheritdoc/>

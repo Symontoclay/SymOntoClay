@@ -21,6 +21,21 @@ namespace SymOntoClay.Monitor
         public bool EnableAddingRemovingFactLoggingInStorages { get; set; }
         public MonitorFeatures Features { get; set; }
 
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
+        public BaseMonitorSettings Clone()
+        {
+            var result = new BaseMonitorSettings();
+
+            result.Enable = Enable;
+            result.EnableRemoteConnection = EnableRemoteConnection;
+            result.KindOfLogicalSearchExplain = KindOfLogicalSearchExplain;
+            result.LogicalSearchExplainDumpDir = LogicalSearchExplainDumpDir;
+            result.EnableAddingRemovingFactLoggingInStorages = EnableAddingRemovingFactLoggingInStorages;
+            result.Features = Features?.Clone();
+
+            return result;
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {

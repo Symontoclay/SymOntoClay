@@ -27,12 +27,9 @@ namespace SymOntoClay.Monitor
         private readonly MessageNumberGenerator _globalMessageNumberGenerator;
         private readonly MessageNumberGenerator _messageNumberGenerator = new MessageNumberGenerator();
 
-        /// <inheritdoc/>
-        private readonly KindOfLogicalSearchExplain _kindOfLogicalSearchExplain;
-
-        private readonly bool _enableAddingRemovingFactLoggingInStorages;
-
         private readonly MonitorLogger _monitorLoggerImpl;
+
+        private readonly BaseMonitorSettings _baseMonitorSettings; 
 
         /// <inheritdoc/>
         public string Id => "monitor_core";
@@ -50,11 +47,6 @@ namespace SymOntoClay.Monitor
                 throw new NotImplementedException();
             }
 
-            if(monitorSettings.Features != null)
-            {
-                throw new NotImplementedException();
-            }
-
             if(monitorSettings.NodesSettings != null)
             {
                 throw new NotImplementedException();
@@ -65,20 +57,36 @@ namespace SymOntoClay.Monitor
                 throw new NotImplementedException();
             }
 
-            if(monitorSettings.PlatformLoggers == null)
-            {
-                monitorSettings.PlatformLoggers = new List<IPlatformLogger>();
-            }
+            _baseMonitorSettings = monitorSettings.Clone();
 
-            _kindOfLogicalSearchExplain = monitorSettings.KindOfLogicalSearchExplain;
-            _enableAddingRemovingFactLoggingInStorages = monitorSettings.EnableAddingRemovingFactLoggingInStorages;
+            _features = _baseMonitorSettings.Features;
+
+            if (_features == null)
+            {
+                _features = new MonitorFeatures
+                {
+                    EnableCallMethod = true,
+                    EnableParameter = true,
+                    EnableOutput = true,
+                    EnableTrace = true,
+                    EnableDebug = true,
+                    EnableInfo = true,
+                    EnableWarn = true,
+                    EnableError = true,
+                    EnableFatal = true
+                };
+
+                _baseMonitorSettings.Features = _features;
+            }
 
             _monitorContext = new MonitorContext()
             {
                 Enable = monitorSettings.Enable,
                 OutputHandler = monitorSettings.OutputHandler,
                 ErrorHandler = monitorSettings.ErrorHandler,
-                PlatformLoggers = monitorSettings.PlatformLoggers
+                PlatformLoggers = monitorSettings.PlatformLoggers ?? new List<IPlatformLogger>(),
+                Features = _features,
+                Settings = _baseMonitorSettings
             };
 
             _remoteMonitor = monitorSettings.RemoteMonitor;
@@ -94,21 +102,6 @@ namespace SymOntoClay.Monitor
             _monitorContext.MessageProcessor = _messageProcessor;
 
             _globalMessageNumberGenerator = _monitorContext.GlobalMessageNumberGenerator;
-
-            _features = new MonitorFeatures
-            {
-                EnableCallMethod = true,
-                EnableParameter = true,
-                EnableOutput = true,
-                EnableTrace = true,
-                EnableDebug = true,
-                EnableInfo = true,
-                EnableWarn = true,
-                EnableError = true,
-                EnableFatal = true
-            };
-
-            _monitorContext.Features = _features;
 
             _monitorLoggerImpl = new MonitorLogger(this);
         }
@@ -236,13 +229,13 @@ namespace SymOntoClay.Monitor
         }
 
         /// <inheritdoc/>
-        public KindOfLogicalSearchExplain KindOfLogicalSearchExplain => _kindOfLogicalSearchExplain;
+        public KindOfLogicalSearchExplain KindOfLogicalSearchExplain => _baseMonitorSettings.KindOfLogicalSearchExplain;
 
         /// <inheritdoc/>
         public string LogicalSearchExplainDumpDir => _fileCache.DirectoryName;
 
         /// <inheritdoc/>
-        public bool EnableAddingRemovingFactLoggingInStorages => _enableAddingRemovingFactLoggingInStorages;
+        public bool EnableAddingRemovingFactLoggingInStorages => _baseMonitorSettings.EnableAddingRemovingFactLoggingInStorages;
 
         /// <inheritdoc/>
         public bool Enable { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }//{ get => _monitorContext.Enable; set => _monitorContext.Enable = value; }

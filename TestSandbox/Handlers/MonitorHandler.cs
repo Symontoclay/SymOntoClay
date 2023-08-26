@@ -12,6 +12,7 @@ using SymOntoClay.Core;
 using SymOntoClay.Monitor.Common;
 using TestSandbox.PlatformImplementations;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
+using SymOntoClay.Monitor.Internal;
 
 namespace TestSandbox.Handlers
 {
@@ -50,12 +51,24 @@ namespace TestSandbox.Handlers
                 KindOfLogicalSearchExplain = KindOfLogicalSearchExplain.None,
                 LogicalSearchExplainDumpDir = Directory.GetCurrentDirectory(),
                 EnableAddingRemovingFactLoggingInStorages = false,
-                PlatformLoggers = new List<IPlatformLogger>() { /*ConsoleLogger.Instance,*/ CommonNLogLogger.Instance }
+                PlatformLoggers = new List<IPlatformLogger>() { /*ConsoleLogger.Instance,*/ CommonNLogLogger.Instance },
+                Features = new MonitorFeatures
+                {
+                    EnableCallMethod = true,
+                    EnableParameter = true,
+                    EnableOutput = true,
+                    EnableTrace = true,
+                    EnableDebug = true,
+                    EnableInfo = true,
+                    EnableWarn = true,
+                    EnableError = true,
+                    EnableFatal = true
+                }
                 //RemoteMonitor = new RemoteWCFMonitor(new RemoteWCFMonitorSettings
                 //{
                 //    Address = "net.pipe://localhost/MyService.svc"
                 //})
-            });
+        });
 
             _globalLogger.Info($"monitor.SessionDirectoryName = {monitor.SessionDirectoryName}");
             _globalLogger.Info($"monitor.SessionDirectoryFullName = {monitor.SessionDirectoryFullName}");

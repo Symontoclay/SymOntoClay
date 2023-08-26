@@ -36,6 +36,23 @@ namespace SymOntoClay.Monitor.Internal
         /// <inheritdoc/>
         public bool EnableFatal { get; set; }
 
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
+        public MonitorFeatures Clone()
+        {
+            var result = new MonitorFeatures();
+            result.EnableCallMethod = EnableCallMethod;
+            result.EnableParameter = EnableParameter;
+            result.EnableOutput = EnableOutput;
+            result.EnableTrace = EnableTrace;
+            result.EnableDebug = EnableDebug;
+            result.EnableInfo = EnableInfo;
+            result.EnableWarn = EnableWarn;
+            result.EnableError = EnableError;
+            result.EnableFatal = EnableFatal;
+
+            return result ;
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {

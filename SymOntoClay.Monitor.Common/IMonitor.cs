@@ -12,6 +12,9 @@ namespace SymOntoClay.Monitor.Common
         bool Enable { get; set; }
         bool EnableRemoteConnection { get; set; }
 
+        string SessionDirectoryName { get; }
+        string SessionDirectoryFullName { get; }
+
         IMonitorNode CreateMotitorNode(string messagePointId, string nodeId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

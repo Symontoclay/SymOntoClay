@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using SymOntoClay.Core;
 using SymOntoClay.Monitor.Common;
 using TestSandbox.PlatformImplementations;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 
 namespace TestSandbox.Handlers
 {
@@ -55,6 +56,9 @@ namespace TestSandbox.Handlers
                 //    Address = "net.pipe://localhost/MyService.svc"
                 //})
             });
+
+            _globalLogger.Info($"monitor.SessionDirectoryName = {monitor.SessionDirectoryName}");
+            _globalLogger.Info($"monitor.SessionDirectoryFullName = {monitor.SessionDirectoryFullName}");
 
             var nonitorNode = monitor.CreateMotitorNode("9FF4FC16-06AF-4121-BD2F-F333F1BCCE95", "soldier 1");
 

@@ -37,6 +37,8 @@ namespace SymOntoClay.Monitor
         /// <inheritdoc/>
         public string Id => "monitor_core";
 
+        private readonly string _sessionName;
+
         public Monitor(MonitorSettings monitorSettings)
         {
 #if DEBUG
@@ -82,9 +84,9 @@ namespace SymOntoClay.Monitor
             _remoteMonitor = monitorSettings.RemoteMonitor;
 
             var now = DateTime.Now;
-            var sessionName = $"{now.Year}_{now.Month:00}_{now.Day:00}_{now.Hour:00}_{now.Minute:00}_{now.Second:00}";
+            _sessionName = $"{now.Year}_{now.Month:00}_{now.Day:00}_{now.Hour:00}_{now.Minute:00}_{now.Second:00}";
 
-            _fileCache = new MonitorFileCache(monitorSettings.MessagesDir, sessionName);
+            _fileCache = new MonitorFileCache(monitorSettings.MessagesDir, _sessionName);
             _monitorContext.FileCache = _fileCache;
 
             _messageProcessor = new MessageProcessor(_remoteMonitor);
@@ -110,6 +112,12 @@ namespace SymOntoClay.Monitor
 
             _monitorLoggerImpl = new MonitorLogger(this);
         }
+
+        /// <inheritdoc/>
+        public string SessionDirectoryName => _sessionName;
+
+        /// <inheritdoc/>
+        public string SessionDirectoryFullName => _fileCache.DirectoryName;
 
         Action<string> IMonitorLoggerContext.OutputHandler => _monitorContext.OutputHandler;
         Action<string> IMonitorLoggerContext.ErrorHandler => _monitorContext.ErrorHandler;

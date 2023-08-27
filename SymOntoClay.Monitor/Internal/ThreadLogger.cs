@@ -70,6 +70,8 @@ namespace SymOntoClay.Monitor.Internal
         string IMonitorLoggerContext.NodeId => _nodeId;
         string IMonitorLoggerContext.ThreadId => _threadId;
 
+        bool IMonitorLoggerContext.EnableRemoteConnection => _baseMonitorSettings.EnableRemoteConnection && _monitorContext.Settings.EnableRemoteConnection;
+
         bool IMonitorFeatures.EnableCallMethod
         {   
             get

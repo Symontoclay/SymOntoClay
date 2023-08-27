@@ -116,7 +116,7 @@ namespace SymOntoClay.Monitor.Internal
                 _globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache);
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
             });
 
             return messagePointId;
@@ -201,7 +201,7 @@ namespace SymOntoClay.Monitor.Internal
                 _globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache);
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
             });
         }
 
@@ -272,7 +272,7 @@ namespace SymOntoClay.Monitor.Internal
                 _globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache);
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
             });
         }
 
@@ -341,7 +341,7 @@ namespace SymOntoClay.Monitor.Internal
                 _globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache);
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
             });
         }
 
@@ -410,7 +410,7 @@ namespace SymOntoClay.Monitor.Internal
                 _globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache);
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
             });
         }
 
@@ -479,7 +479,7 @@ namespace SymOntoClay.Monitor.Internal
                 _globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache);
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
             });
         }
 
@@ -548,7 +548,7 @@ namespace SymOntoClay.Monitor.Internal
                 _globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache);
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
             });
         }
 
@@ -619,7 +619,7 @@ namespace SymOntoClay.Monitor.Internal
                 _globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache);
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
             });
         }
 
@@ -700,7 +700,7 @@ namespace SymOntoClay.Monitor.Internal
                 _globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache);
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
             });
         }
 

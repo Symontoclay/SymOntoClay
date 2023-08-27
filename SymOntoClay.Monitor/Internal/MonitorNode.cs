@@ -79,6 +79,8 @@ namespace SymOntoClay.Monitor.Internal
         string IMonitorLoggerContext.NodeId => _nodeId;
         string IMonitorLoggerContext.ThreadId => string.Empty;
 
+        bool IMonitorLoggerContext.EnableRemoteConnection => _baseMonitorSettings.EnableRemoteConnection && _monitorContext.Settings.EnableRemoteConnection;
+
         bool IMonitorFeatures.EnableCallMethod
         {
             get
@@ -263,7 +265,7 @@ namespace SymOntoClay.Monitor.Internal
                 _globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache);
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _baseMonitorSettings.EnableRemoteConnection && _monitorContext.Settings.EnableRemoteConnection);
             });
 
             return new ThreadLogger(threadId, _monitorNodeContext);

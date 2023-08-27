@@ -18,5 +18,6 @@ namespace SymOntoClay.Monitor.Internal
         MessageNumberGenerator MessageNumberGenerator { get; }
         string NodeId { get; }
         string ThreadId { get; }
+        bool EnableRemoteConnection { get; }
     }
 }

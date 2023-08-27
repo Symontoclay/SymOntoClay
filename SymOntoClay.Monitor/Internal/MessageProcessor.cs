@@ -24,10 +24,11 @@ namespace SymOntoClay.Monitor.Internal
             _hasRemoteMonitor = remoteMonitor != null;
         }
 
-        public void ProcessMessage(BaseMessage message, IFileCache fileCache)
+        public void ProcessMessage(BaseMessage message, IFileCache fileCache, bool enableRemoteConnection)
         {
 #if DEBUG
             _globalLogger.Info($"message = {message}");
+            _globalLogger.Info($"enableRemoteConnection = {enableRemoteConnection}");
 #endif
 
             var text = JsonConvert.SerializeObject(message);
@@ -44,7 +45,7 @@ namespace SymOntoClay.Monitor.Internal
 
             fileCache.WriteFile(fileName, text);
 
-            if (_hasRemoteMonitor)
+            if (_hasRemoteMonitor && enableRemoteConnection)
             {
                 var envelope = new Envelope()
                 {

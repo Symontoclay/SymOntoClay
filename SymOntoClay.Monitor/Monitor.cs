@@ -301,7 +301,7 @@ namespace SymOntoClay.Monitor
                 _globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache);
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _baseMonitorSettings.EnableRemoteConnection);
             });
 
             var nodeSettings = GetMotitorNodeSettings(nodeId);

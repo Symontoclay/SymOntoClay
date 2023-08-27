@@ -247,10 +247,10 @@ namespace SymOntoClay.Monitor
         public bool EnableAddingRemovingFactLoggingInStorages => _baseMonitorSettings.EnableAddingRemovingFactLoggingInStorages;
 
         /// <inheritdoc/>
-        public bool Enable { get => _monitorContext.Enable; set => _monitorContext.Enable = value; }
+        public bool Enable { get => _baseMonitorSettings.Enable; set => _baseMonitorSettings.Enable = value; }
 
         /// <inheritdoc/>
-        public bool EnableRemoteConnection { get => _monitorContext.EnableRemoteConnection; set => _monitorContext.EnableRemoteConnection = value; }
+        public bool EnableRemoteConnection { get => _baseMonitorSettings.EnableRemoteConnection; set => _baseMonitorSettings.EnableRemoteConnection = value; }
 
         /// <inheritdoc/>
         public IMonitorNode CreateMotitorNode(string messagePointId, string nodeId,

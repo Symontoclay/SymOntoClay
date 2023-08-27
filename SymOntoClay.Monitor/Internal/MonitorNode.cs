@@ -91,7 +91,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _features.EnableParameter;
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableParameter;
             }
         }
 
@@ -99,7 +99,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _features.EnableOutput;
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableOutput;
             }
         }
 
@@ -107,7 +107,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _features.EnableTrace;
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableTrace;
             }
         }
 
@@ -115,7 +115,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _features.EnableDebug;
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableDebug;
             }
         }
 
@@ -123,7 +123,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _features.EnableInfo;
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableInfo;
             }
         }
 
@@ -131,7 +131,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _features.EnableWarn;
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableWarn;
             }
         }
 
@@ -139,7 +139,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _features.EnableError;
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableError;
             }
         }
 
@@ -147,7 +147,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _features.EnableFatal;
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableFatal;
             }
         }
 

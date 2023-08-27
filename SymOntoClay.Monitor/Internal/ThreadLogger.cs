@@ -18,6 +18,7 @@ namespace SymOntoClay.Monitor.Internal
 #endif
 
         private readonly MonitorNodeContext _monitorNodeContext;
+        private readonly MonitorContext _monitorContext;
         private readonly MessageProcessor _messageProcessor;
         private readonly MonitorFeatures _features;
         private readonly ThreadLoggerFileCache _fileCache;
@@ -27,6 +28,8 @@ namespace SymOntoClay.Monitor.Internal
         private readonly string _threadId;
 
         private readonly MessageNumberGenerator _messageNumberGenerator = new MessageNumberGenerator();
+
+        private readonly BaseMonitorSettings _baseMonitorSettings;
 
         private readonly MonitorLogger _monitorLoggerImpl;
 
@@ -40,11 +43,13 @@ namespace SymOntoClay.Monitor.Internal
 #endif
 
             _monitorNodeContext = monitorNodeContext;
+            _baseMonitorSettings = monitorNodeContext.Settings;
             _features = monitorNodeContext.Features;
             _fileCache = monitorNodeContext.FileCache.CreateThreadLoggerFileCache(threadId);
 
             var monitorContext = monitorNodeContext.MonitorContext;
 
+            _monitorContext = monitorContext;
             _messageProcessor = monitorContext.MessageProcessor;
             _globalMessageNumberGenerator = monitorContext.GlobalMessageNumberGenerator;
 
@@ -69,7 +74,7 @@ namespace SymOntoClay.Monitor.Internal
         {   
             get
             {
-                return _features.EnableCallMethod;
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableCallMethod;
             }
         }
 
@@ -77,7 +82,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _features.EnableParameter;
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableParameter;
             }
         }
 
@@ -85,7 +90,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _features.EnableOutput;
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableOutput;
             }
         }
 
@@ -93,7 +98,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _features.EnableTrace;
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableTrace;
             }
         }
 
@@ -101,7 +106,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _features.EnableDebug;
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableDebug;
             }
         }
 
@@ -109,7 +114,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _features.EnableInfo;
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableInfo;
             }
         }
 
@@ -117,7 +122,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _features.EnableWarn;
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableWarn;
             }
         }
 
@@ -125,7 +130,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _features.EnableError;
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableError;
             }
         }
 
@@ -133,7 +138,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _features.EnableFatal;
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableFatal;
             }
         }
 

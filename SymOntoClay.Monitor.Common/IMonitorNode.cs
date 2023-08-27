@@ -9,6 +9,9 @@ namespace SymOntoClay.Monitor.Common
 {
     public interface IMonitorNode : IMonitorLogger
     {
+        bool Enable { get; set; }
+        bool EnableRemoteConnection { get; set; }
+
         IThreadLogger CreateThreadLogger(string messagePointId, string threadId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

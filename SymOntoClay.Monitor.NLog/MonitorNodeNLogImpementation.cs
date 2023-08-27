@@ -25,6 +25,12 @@ namespace SymOntoClay.Monitor.NLog
         private readonly ThreadLoggerNLogImpementation _threadLogger;
 
         /// <inheritdoc/>
+        public bool Enable { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableRemoteConnection { get; set; }
+
+        /// <inheritdoc/>
         public IThreadLogger CreateThreadLogger(string messagePointId, string threadId, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
         {
             return _threadLogger;

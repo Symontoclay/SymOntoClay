@@ -14,6 +14,12 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         public override string Id => Guid.NewGuid().ToString("D");
 
         /// <inheritdoc/>
+        public bool Enable { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableRemoteConnection { get; set; }
+
+        /// <inheritdoc/>
         public IThreadLogger CreateThreadLogger(string messagePointId, string threadId, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
         {
             return new EmptyThreadLogger(threadId);

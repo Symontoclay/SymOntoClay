@@ -152,6 +152,12 @@ namespace SymOntoClay.Monitor.Internal
         }
 
         /// <inheritdoc/>
+        public bool Enable { get => _baseMonitorSettings.Enable; set => _baseMonitorSettings.Enable = value; }
+
+        /// <inheritdoc/>
+        public bool EnableRemoteConnection { get => _baseMonitorSettings.EnableRemoteConnection; set => _baseMonitorSettings.EnableRemoteConnection = value; }
+
+        /// <inheritdoc/>
         public override string ToString()
         {
             return ToString(0u);

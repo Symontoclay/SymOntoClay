@@ -34,6 +34,7 @@ namespace SymOntoClay.Core.Internal
         public BaseCoreContext(IMonitorNode monitorNode)
             : base(monitorNode)
         {
+            MonitorNode = monitorNode;
         }
 
         /// <inheritdoc/>

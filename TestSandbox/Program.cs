@@ -74,6 +74,9 @@ using SymOntoClay.BaseTestLib;
 using NUnit.Framework;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
+using SymOntoClay.Monitor.Common.Data;
+using SymOntoClay.Monitor.LogFileBuilder.TextRowOptionItems;
+using SymOntoClay.Monitor.LogFileBuilder;
 
 namespace TestSandbox
 {
@@ -81,12 +84,17 @@ namespace TestSandbox
     {
         private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
 
+#if DEBUG
+        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+#endif
+
         static void Main(string[] args)
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            //TstLogFileBuilder();
             //TstMonitor();
             //TstCreateListByVarsDict();
             //TstDetectDoninantItems();
@@ -166,6 +174,50 @@ namespace TestSandbox
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstLogFileBuilder()
+        {
+            _globalLogger.Info("Begin");
+
+            var sourceDirectoryName = @"c:\Users\sergiy.tolkachov\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesDir\2023_08_25_12_46_59\soldier 1\";
+
+            _globalLogger.Info($"sourceDirectoryName = {sourceDirectoryName}");
+
+            var logFileName = Path.Combine(Directory.GetCurrentDirectory(), "mylog.txt");
+
+            _globalLogger.Info($"logFileName = {logFileName}");
+
+            var options = new LogFileCreatorOptions()
+            {
+                SourceDirectoryName = sourceDirectoryName,
+                OutputFileName = logFileName,
+                KindOfMessages = new List<KindOfMessage>()
+                {
+                    KindOfMessage.Info
+                },
+                Layout = new List<BaseMessageTextRowOptionItem>
+                {
+                    new LongDateTimeStampTextRowOptionItem(),
+                    new SpaceTextRowOptionItem(),
+                    new MessagePointIdTextRowOptionItem(),
+                    new SpaceTextRowOptionItem(),
+                    new MemberNameTextRowOptionItem(),
+                    new SpaceTextRowOptionItem(),
+                    new KindOfMessageTextRowOptionItem
+                    {
+                        TextTransformation = TextTransformations.UpperCase
+                    },
+                    new SpaceTextRowOptionItem(),
+                    new MessageContentTextRowOptionItem()
+                }
+            };
+
+            _globalLogger.Info($"options = {options}");
+
+            LogFileCreator.Run(options);
+
+            _globalLogger.Info("End");
         }
 
         private static void TstMonitor()

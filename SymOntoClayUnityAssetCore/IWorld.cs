@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.CoreHelper;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal;
 using System;
 using System.Collections.Generic;
@@ -168,5 +169,7 @@ namespace SymOntoClay.UnityAsset.Core
         /// Gets world context. Onkly for debugging and testing!
         /// </summary>
         WorldContext WorldContext { get; }
+
+        IMonitor Monitor { get; }
     }
 }

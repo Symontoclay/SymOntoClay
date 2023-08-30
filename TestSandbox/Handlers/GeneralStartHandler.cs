@@ -40,6 +40,10 @@ namespace TestSandbox.Handlers
 {
     public class GeneralStartHandler: BaseGeneralStartHandler
     {
+#if DEBUG
+        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+#endif
+
         public GeneralStartHandler()
             : base(new UnityTestEngineContextFactorySettings()
             {
@@ -62,7 +66,15 @@ namespace TestSandbox.Handlers
 
             CreateMainNPC(factorySettings);
 
+            var monitor = _world.Monitor;
+
             _world.Start();
+
+            var sessionDirectoryFullName = monitor.SessionDirectoryFullName;
+
+            _globalLogger.Info($"sessionDirectoryFullName = {sessionDirectoryFullName}");
+
+            //_globalLogger.Info($" = {_npc.I}");
 
             Thread.Sleep(100);
 

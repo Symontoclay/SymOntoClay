@@ -52,6 +52,9 @@ namespace SymOntoClay.UnityAsset.Core.World
         public WorldContext WorldContext => _context;
 
         /// <inheritdoc/>
+        public IMonitor Monitor => _context.Monitor;
+
+        /// <inheritdoc/>
         public void SetSettings(WorldSettings settings)
         {
             lock(_lockObj)

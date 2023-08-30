@@ -635,6 +635,9 @@
         <member name="P:SymOntoClay.UnityAsset.Core.World.WorldCore.WorldContext">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.World.WorldCore.Monitor">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.SetSettings(SymOntoClay.UnityAsset.Core.WorldSettings)">
             <inheritdoc/>
         </member>

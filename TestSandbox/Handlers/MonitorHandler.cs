@@ -117,6 +117,7 @@ namespace TestSandbox.Handlers
             threadLogger.Parameter("1F7666DD-E7F8-5AD5-885D-B04257AD4041", callMethodId, "param6", DateTime.Now);
             threadLogger.Parameter("1F7666DD-E7F8-4BD5-885D-B04257AD4041", callMethodId, "param7", new TstClass { SomeValue = "Bazz" });
             threadLogger.Parameter("1F7666DD-E7F9-4BD5-885D-B04257AD4041", callMethodId, "param8", KindOfMessage.Info);
+            threadLogger.Parameter("1F7666DD-E7F9-4BD5-885D-B04257AD4041", callMethodId, "param9", 1.6);
 
             threadLogger.Output("9053861C-4AD1-4C2D-ABAB-FC1CC5DB4834", "<Yes>");
 

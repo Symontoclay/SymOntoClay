@@ -94,9 +94,9 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
-            //TstLogFileBuilderParameterValueConverterToString();
+            TstLogFileBuilderParameterValueConverterToString();
             //TstLogFileBuilder();
-            TstMonitor();
+            //TstMonitor();
             //TstCreateListByVarsDict();
             //TstDetectDoninantItems();
             //TstSerializeValue();
@@ -181,8 +181,8 @@ namespace TestSandbox
         {
             _globalLogger.Info("Begin");
 
-            var typeName = "System.Int32";
-            var base64Content = "MQ==";
+            var typeName = "System.Collections.Generic.List`1[[System.Int32, System.Private.CoreLib, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]";
+            var base64Content = "eyIkaWQiOiIxIiwiJHZhbHVlcyI6WzEsMiwzLDQsNV19";
 
             _globalLogger.Info($"typeName = {typeName}");
             _globalLogger.Info($"base64Content = '{base64Content}'");
@@ -208,7 +208,7 @@ namespace TestSandbox
         {
             _globalLogger.Info("Begin");
 
-            var sourceDirectoryName = @"c:\Users\sergiy.tolkachov\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesDir\2023_08_30_16_27_49\soldier 1\";
+            var sourceDirectoryName = @"c:\Users\Acer\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesDir\2023_09_01_21_10_58\soldier 1\";
 
             _globalLogger.Info($"sourceDirectoryName = {sourceDirectoryName}");
 

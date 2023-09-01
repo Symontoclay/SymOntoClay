@@ -183,7 +183,7 @@ namespace SymOntoClay.Monitor.Internal
                 var messageInfo = new ParameterMessage
                 {
                     ParameterName = parameterName,
-                    TypeName = parameterValue?.GetType().FullName,
+                    TypeName = parameterValue?.GetType().FullName ?? "null",
                     Base64Content = base64Str,
                     CallMethodId = callMethodId,
                     DateTimeStamp = now,

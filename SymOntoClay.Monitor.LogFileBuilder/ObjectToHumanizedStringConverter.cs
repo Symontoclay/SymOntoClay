@@ -15,6 +15,11 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private static readonly global::NLog.ILogger _globalLogger = global::NLog.LogManager.GetCurrentClassLogger();
 #endif
 
+        private static readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings()
+        {
+            PreserveReferencesHandling = PreserveReferencesHandling.All
+        };
+
         public static string FromBase64StringToHumanizedString(string base64Content, string typeName, HumanizedOptions options = HumanizedOptions.ShowAll)
         {
 #if DEBUG
@@ -46,13 +51,18 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             _globalLogger.Info($"jsonStr = {jsonStr}");
 #endif
 
+            if(typeName.Equals("null", StringComparison.OrdinalIgnoreCase))
+            {
+                return "NULL";
+            }
+
             var type = Type.GetType(typeName);
 
 #if DEBUG
             _globalLogger.Info($"type.FullName = {type.FullName}");
 #endif
 
-            var obj = JsonConvert.DeserializeObject(jsonStr, type);
+            var obj = JsonConvert.DeserializeObject(jsonStr, type, _jsonSerializerSettings);
 
 #if DEBUG
             _globalLogger.Info($"obj?.GetType().FullName = {obj?.GetType().FullName}");
@@ -73,7 +83,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
         public static string ToHumanizedString(object obj, DebugHelperOptions options)
         {
-             throw new NotImplementedException();
+            return ToHumanizedString(obj, obj?.GetType(), options);
         }
 
         public static string ToHumanizedString(object obj, Type type, DebugHelperOptions options)

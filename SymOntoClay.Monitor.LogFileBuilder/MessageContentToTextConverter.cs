@@ -72,8 +72,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
         private static string GetParameter(ParameterMessage message)
         {
-            //return $"Parameter of {message.CallMethodId}: '{message.ParameterName}' = ";
-            throw new NotImplementedException();
+            return $"Parameter of {message.CallMethodId}: '{message.ParameterName}' = {ObjectToHumanizedStringConverter.FromBase64StringToHumanizedString(message.Base64Content, message.TypeName)}";
         }
 
         private static string GetInfoMessageText(InfoMessage message)

@@ -74,6 +74,15 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
             }
         }
 
+        /// <inheritdoc/>
+        public string Id => _gameComponent.Id;
+
+        /// <inheritdoc/>
+        public string IdForFacts => _gameComponent.IdForFacts;
+
+        /// <inheritdoc/>
+        public int InstanceId => _gameComponent.InstanceId;
+
         private readonly PlayerSettings _settings;
         private readonly object _initializeLockObj = new object();
 

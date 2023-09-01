@@ -75,6 +75,15 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Place
             }
         }
 
+        /// <inheritdoc/>
+        public string Id => _gameComponent.Id;
+
+        /// <inheritdoc/>
+        public string IdForFacts => _gameComponent.IdForFacts;
+
+        /// <inheritdoc/>
+        public int InstanceId => _gameComponent.InstanceId;
+
         private readonly object _initializeLockObj = new object();
 
         private PlaceGameComponent _gameComponent;

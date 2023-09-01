@@ -94,8 +94,9 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            //TstLogFileBuilderParameterValueConverterToString();
             //TstLogFileBuilder();
-            //TstMonitor();
+            TstMonitor();
             //TstCreateListByVarsDict();
             //TstDetectDoninantItems();
             //TstSerializeValue();
@@ -170,17 +171,44 @@ namespace TestSandbox
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstLogFileBuilderParameterValueConverterToString()
+        {
+            _globalLogger.Info("Begin");
+
+            var typeName = "System.Int32";
+            var base64Content = "MQ==";
+
+            _globalLogger.Info($"typeName = {typeName}");
+            _globalLogger.Info($"base64Content = '{base64Content}'");
+
+            //var base64bytes = Convert.FromBase64String(base64Content);
+
+            //var jsonStr = Encoding.UTF8.GetString(base64bytes);
+
+            //_globalLogger.Info($"jsonStr = {jsonStr}");
+
+            //var type = Type.GetType(typeName);
+
+            //_globalLogger.Info($"type.FullName = {type.FullName}");
+
+            var result = ObjectToHumanizedStringConverter.FromBase64StringToHumanizedString(base64Content, typeName);
+
+            _globalLogger.Info($"result = {result}");
+
+            _globalLogger.Info("End");
         }
 
         private static void TstLogFileBuilder()
         {
             _globalLogger.Info("Begin");
 
-            var sourceDirectoryName = @"c:\Users\sergiy.tolkachov\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesDir\2023_08_25_12_46_59\soldier 1\";
+            var sourceDirectoryName = @"c:\Users\sergiy.tolkachov\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesDir\2023_08_30_16_27_49\soldier 1\";
 
             _globalLogger.Info($"sourceDirectoryName = {sourceDirectoryName}");
 
@@ -194,7 +222,7 @@ namespace TestSandbox
                 OutputFileName = logFileName,
                 KindOfMessages = new List<KindOfMessage>()
                 {
-                    KindOfMessage.Info
+                    //KindOfMessage.Info
                 },
                 Layout = new List<BaseMessageTextRowOptionItem>
                 {

@@ -318,6 +318,15 @@
         <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.Id">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.IdForFacts">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.InstanceId">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.RunInMainThread(System.Action)">
             <inheritdoc/>
         </member>
@@ -405,6 +414,15 @@
             <inheritdoc/>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.Id">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.IdForFacts">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.InstanceId">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.EnableLogging">
@@ -524,6 +542,15 @@
         <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.Id">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.IdForFacts">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.InstanceId">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.Logger">
             <inheritdoc/>
         </member>
@@ -584,6 +611,15 @@
         <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.Id">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.IdForFacts">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.InstanceId">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.Logger">
             <inheritdoc/>
         </member>
@@ -630,6 +666,15 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.World.WorldCore.Id">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.World.WorldCore.IdForFacts">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.World.WorldCore.InstanceId">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.World.WorldCore.WorldContext">

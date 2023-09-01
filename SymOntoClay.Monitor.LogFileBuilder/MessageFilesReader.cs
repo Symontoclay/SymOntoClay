@@ -12,7 +12,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
     public static class MessageFilesReader
     {
 #if DEBUG
-        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly global::NLog.ILogger _globalLogger = global::NLog.LogManager.GetCurrentClassLogger();
 #endif
 
         public static List<((string NodeId, string ThreadId, ulong MessageNumber, ulong GlobalMessageNumber, KindOfMessage KindOfMessage), string)> GetFileNames(string targetDirectoryName, IEnumerable<KindOfMessage> targetKindOfMessages)

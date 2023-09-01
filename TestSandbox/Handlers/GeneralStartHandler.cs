@@ -35,6 +35,9 @@ using TestSandbox.PlatformImplementations;
 using SymOntoClay.BaseTestLib.HostListeners;
 using System.Runtime;
 using SymOntoClay.BaseTestLib;
+using SymOntoClay.Monitor.Common.Data;
+using SymOntoClay.Monitor.LogFileBuilder.TextRowOptionItems;
+using SymOntoClay.Monitor.LogFileBuilder;
 
 namespace TestSandbox.Handlers
 {
@@ -74,7 +77,11 @@ namespace TestSandbox.Handlers
 
             _globalLogger.Info($"sessionDirectoryFullName = {sessionDirectoryFullName}");
 
-            //_globalLogger.Info($" = {_npc.I}");
+            _globalLogger.Info($"_npc.Id = {_npc.Id}");
+
+            var sourceDirectoryName = Path.Combine(sessionDirectoryFullName, _npc.Id);
+
+            _globalLogger.Info($"sourceDirectoryName = {sourceDirectoryName}");
 
             Thread.Sleep(100);
 
@@ -92,9 +99,47 @@ namespace TestSandbox.Handlers
             _npc.Logger.Output("DEEBC565-B66B-48F5-9DF6-4716C2E1623E", "|-|-|-|-|-|-|-|-|-|-|-|-|");
             _logger.Info("ED0C4551-A685-4CC0-ADB8-ACAA419FA244", "|-|-|-|-|-|-|-|-|-|-|-|-|");
 
-            Thread.Sleep(50000);
+            Thread.Sleep(5000);
 
             _logger.Info("40669EA9-0F77-4447-B128-5E940A3DCE2D", "End");
+
+            Thread.Sleep(500);
+
+            var logFileName = Path.Combine(Directory.GetCurrentDirectory(), "mylog.txt");
+
+            _globalLogger.Info($"logFileName = {logFileName}");
+
+            var options = new LogFileCreatorOptions()
+            {
+                SourceDirectoryName = sourceDirectoryName,
+                OutputFileName = logFileName,
+                KindOfMessages = new List<KindOfMessage>()
+                {
+                    KindOfMessage.Info,
+                    KindOfMessage.Output
+                },
+                Layout = new List<BaseMessageTextRowOptionItem>
+                {
+                    new LongDateTimeStampTextRowOptionItem(),
+                    new SpaceTextRowOptionItem(),
+                    new MessagePointIdTextRowOptionItem(),
+                    new SpaceTextRowOptionItem(),
+                    new MemberNameTextRowOptionItem(),
+                    new SpaceTextRowOptionItem(),
+                    new KindOfMessageTextRowOptionItem
+                    {
+                        TextTransformation = TextTransformations.UpperCase
+                    },
+                    new SpaceTextRowOptionItem(),
+                    new MessageContentTextRowOptionItem()
+                }
+            };
+
+            _globalLogger.Info($"options = {options}");
+
+            LogFileCreator.Run(options);
+
+            _globalLogger.Info("End");
         }
     }
 }

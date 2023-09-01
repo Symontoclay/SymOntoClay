@@ -32,6 +32,9 @@ namespace SymOntoClay.UnityAsset.Core
 {
     public interface IWorldComponent : ISymOntoClayDisposable, IExecutorInMainThread
     {
+        string Id { get; }
+        string IdForFacts { get; }
+        int InstanceId { get; }
         IMonitorLogger Logger { get; }
         string InsertPublicFact(string text);
         string InsertPublicFact(RuleInstance fact);

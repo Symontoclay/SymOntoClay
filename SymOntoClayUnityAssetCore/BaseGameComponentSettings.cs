@@ -35,8 +35,8 @@ namespace SymOntoClay.UnityAsset.Core
         /// Gets or sets unique Id.
         /// It allows us to identify each item of the game.
         /// </summary>
-        public string Id 
-        { 
+        public string Id
+        {
             get
             {
                 return _id;

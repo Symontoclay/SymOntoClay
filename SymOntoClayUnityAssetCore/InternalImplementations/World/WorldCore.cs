@@ -47,7 +47,16 @@ namespace SymOntoClay.UnityAsset.Core.World
         #endregion
 
         #region public members
-        
+
+        /// <inheritdoc/>
+        public string Id => string.Empty;
+
+        /// <inheritdoc/>
+        public string IdForFacts => string.Empty;
+
+        /// <inheritdoc/>
+        public int InstanceId => 0;
+
         /// <inheritdoc/>
         public WorldContext WorldContext => _context;
 

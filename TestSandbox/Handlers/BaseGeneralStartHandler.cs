@@ -60,7 +60,7 @@ namespace TestSandbox.Handlers
         {
             _npc = CreateNPC(factorySettings);       
         }
-
+        
         protected IHumanoidNPC CreateNPC(UnityTestEngineContextFactorySettings factorySettings)
         {
             return TstEngineContextHelper.CreateNPC(_world, factorySettings);

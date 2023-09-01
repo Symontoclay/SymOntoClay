@@ -77,6 +77,15 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             }
         }
 
+        /// <inheritdoc/>
+        public string Id => _gameComponent.Id;
+
+        /// <inheritdoc/>
+        public string IdForFacts => _gameComponent.IdForFacts;
+
+        /// <inheritdoc/>
+        public int InstanceId => _gameComponent.InstanceId;
+
         private readonly object _initializeLockObj = new object();
 
         private readonly HumanoidNPCSettings _settings;

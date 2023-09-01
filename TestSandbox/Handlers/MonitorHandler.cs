@@ -63,28 +63,28 @@ namespace TestSandbox.Handlers
                     EnableWarn = true,
                     EnableError = true,
                     EnableFatal = true
-                },
-                NodesSettings = new Dictionary<string, BaseMonitorSettings>()
-                {
-                    {"soldier 1", new BaseMonitorSettings
-                        {
-                            Enable = true,
-                            Features = new MonitorFeatures
-                            {
-                                EnableCallMethod = false,
-                                EnableParameter = false,
-                                EnableOutput = false,
-                                EnableTrace = false,
-                                EnableDebug = false,
-                                EnableInfo = true,
-                                EnableWarn = false,
-                                EnableError = false,
-                                EnableFatal = false
-                            }
-                        } 
-                    }
-                },
-                EnableOnlyDirectlySetUpNodes = true
+                }//,
+                //NodesSettings = new Dictionary<string, BaseMonitorSettings>()
+                //{
+                //    {"soldier 1", new BaseMonitorSettings
+                //        {
+                //            Enable = true,
+                //            Features = new MonitorFeatures
+                //            {
+                //                EnableCallMethod = false,
+                //                EnableParameter = false,
+                //                EnableOutput = false,
+                //                EnableTrace = false,
+                //                EnableDebug = false,
+                //                EnableInfo = true,
+                //                EnableWarn = false,
+                //                EnableError = false,
+                //                EnableFatal = false
+                //            }
+                //        } 
+                //    }
+                //},
+                //EnableOnlyDirectlySetUpNodes = true
                 //RemoteMonitor = new RemoteWCFMonitor(new RemoteWCFMonitorSettings
                 //{
                 //    Address = "net.pipe://localhost/MyService.svc"
@@ -109,6 +109,7 @@ namespace TestSandbox.Handlers
             _globalLogger.Info($"callMethodId = {callMethodId}");
 
             threadLogger.Parameter("1F7327DD-E8F8-4AD5-885D-B04257AD4041", callMethodId, "param1", 1);
+            threadLogger.Parameter("1F7327DD-E8F8-4AD5-885D-B04257AD4041", callMethodId, "param1", null);
             threadLogger.Parameter("1F7777DD-E8F8-4AD5-885D-B04257AD4041", callMethodId, "param2", new List<int> { 1, 2, 3, 4, 5 });
             threadLogger.Parameter("1F7666DD-E8F8-4AD5-885D-B04257AD4041", callMethodId, "param3", new List<int> { 1, 2, 3, 4, 5 }.ToArray());
             threadLogger.Parameter("1F7666DD-E7F8-4AD5-885D-B04257AD4041", callMethodId, "param4", new TstStruct { SomeValue = "Hi!" });

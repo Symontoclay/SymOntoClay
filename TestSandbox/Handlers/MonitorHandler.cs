@@ -110,6 +110,7 @@ namespace TestSandbox.Handlers
 
             threadLogger.Parameter("1F7327DD-E8F8-4AD5-885D-B04257AD4041", callMethodId, "param1", 1);
             threadLogger.Parameter("1F7327DD-E8F8-4AD5-885D-B04257AD4041", callMethodId, "param1", null);
+            threadLogger.Parameter("1F7327DD-E8F8-4AD5-885D-B04257AD4041", callMethodId, "param1", new Dictionary<int, int> { { 1, 2 } });
             threadLogger.Parameter("1F7777DD-E8F8-4AD5-885D-B04257AD4041", callMethodId, "param2", new List<int> { 1, 2, 3, 4, 5 });
             threadLogger.Parameter("1F7666DD-E8F8-4AD5-885D-B04257AD4041", callMethodId, "param3", new List<int> { 1, 2, 3, 4, 5 }.ToArray());
             threadLogger.Parameter("1F7666DD-E7F8-4AD5-885D-B04257AD4041", callMethodId, "param4", new TstStruct { SomeValue = "Hi!" });

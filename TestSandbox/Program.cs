@@ -94,8 +94,8 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
-            TstLogFileBuilderParameterValueConverterToString();
-            //TstLogFileBuilder();
+            //TstLogFileBuilderParameterValueConverterToString();
+            TstLogFileBuilder();
             //TstMonitor();
             //TstCreateListByVarsDict();
             //TstDetectDoninantItems();
@@ -208,7 +208,7 @@ namespace TestSandbox
         {
             _globalLogger.Info("Begin");
 
-            var sourceDirectoryName = @"c:\Users\Acer\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesDir\2023_09_01_21_10_58\soldier 1\";
+            var sourceDirectoryName = @"c:\Users\Acer\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesDir\2023_09_02_19_58_24\soldier 1\";
 
             _globalLogger.Info($"sourceDirectoryName = {sourceDirectoryName}");
 

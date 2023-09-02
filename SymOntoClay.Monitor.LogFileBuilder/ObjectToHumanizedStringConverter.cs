@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
 using SymOntoClay.Core.DebugHelpers;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
@@ -90,6 +92,11 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         {
 #if DEBUG
             _globalLogger.Info($"type?.FullName = {type?.FullName}");
+            _globalLogger.Info($"type?.IsClass = {type?.IsClass}");
+            _globalLogger.Info($"type?.IsPrimitive = {type?.IsPrimitive}");
+            _globalLogger.Info($"type?.IsEnum = {type?.IsEnum}");
+            _globalLogger.Info($"type?.IsGenericType = {type?.IsGenericType}");
+
             _globalLogger.Info($"options = {options}");
 #endif
 
@@ -103,6 +110,25 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 return obj.ToString();
             }
 
+            if(type.GetInterfaces().Contains(typeof(IDictionary)))
+            {
+#if DEBUG
+                _globalLogger.Info($"Dictionary!!!!");
+#endif
+
+                var dict = (IDictionary)obj;
+
+                var dict_2 = new Dictionary<object, object>();
+
+                foreach(DictionaryEntry de in dict)
+                {
+                    dict_2.Add(de.Key, de.Value);
+                }
+
+                return JsonConvert.SerializeObject(dict_2.ToDictionary(p => ToHumanizedString(p.Key, p.Key?.GetType(), options), p => ToHumanizedString(p.Value, p.Value?.GetType(), options)));
+            }
+
+            //return string.Empty;
             throw new NotImplementedException();
         }
     }

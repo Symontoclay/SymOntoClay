@@ -1,10 +1,12 @@
 ﻿using SymOntoClay.Monitor.Common.Data;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SymOntoClay.Monitor.LogFileBuilder
 {
@@ -36,23 +38,30 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 case KindOfMessage.Parameter:
                     return GetParameter(message as ParameterMessage);
 
+                case KindOfMessage.Output:
+                    return GetOutput(message as OutputMessage);
+
+                case KindOfMessage.Trace:
+                    return GetTrace(message as TraceMessage);
+
+                case KindOfMessage.Debug:
+                    return GetDebug(message as DebugMessage);
+
                 case KindOfMessage.Info:
-                    return GetInfoMessageText(message as InfoMessage);
+                    return GetInfoMessage(message as InfoMessage);
+
+                case KindOfMessage.Warn:
+                    return GetWarn(message as WarnMessage);
+
+                case KindOfMessage.Error:
+                    return GetError(message as ErrorMessage);
+
+                case KindOfMessage.Fatal:
+                    return GetFatal(message as FatalMessage);
 
                 default:
-                    //throw new ArgumentOutOfRangeException(nameof(kindOfMessage), kindOfMessage, null);
-                    return string.Empty;
+                    throw new ArgumentOutOfRangeException(nameof(kindOfMessage), kindOfMessage, null);
             }
-
-            /*
-        Output,
-        Trace,
-        Debug,
-        Info,
-        Warn,
-        Error,
-        Fatal
-             */
         }
 
         private static string GetCreateMotitorNode(CreateMotitorNodeMessage message)
@@ -81,7 +90,61 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return tmpResult;
         }
 
-        private static string GetInfoMessageText(InfoMessage message)
+        private static string GetOutput(OutputMessage message)
+        {
+#if DEBUG
+            //_globalLogger.Info($"message = {message}");
+#endif
+
+            return message.Message;
+        }
+
+        private static string GetTrace(TraceMessage message)
+        {
+#if DEBUG
+            //_globalLogger.Info($"message = {message}");
+#endif
+
+            return message.Message;
+        }
+
+        private static string GetDebug(DebugMessage message)
+        {
+#if DEBUG
+            //_globalLogger.Info($"message = {message}");
+#endif
+
+            return message.Message;
+        }
+
+        private static string GetInfoMessage(InfoMessage message)
+        {
+#if DEBUG
+            //_globalLogger.Info($"message = {message}");
+#endif
+
+            return message.Message;
+        }
+
+        private static string GetWarn(WarnMessage message)
+        {
+#if DEBUG
+            //_globalLogger.Info($"message = {message}");
+#endif
+
+            return message.Message;
+        }
+
+        private static string GetError(ErrorMessage message)
+        {
+#if DEBUG
+            //_globalLogger.Info($"message = {message}");
+#endif
+
+            return message.Message;
+        }
+
+        private static string GetFatal(FatalMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");

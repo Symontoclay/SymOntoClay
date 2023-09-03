@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SymOntoClay.Core.DebugHelpers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -19,6 +21,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
         private static readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings()
         {
+            Converters = { new ArrayReferencePreservngConverter() },
             PreserveReferencesHandling = PreserveReferencesHandling.All
         };
 
@@ -61,8 +64,13 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             var type = Type.GetType(typeName);
 
 #if DEBUG
-            _globalLogger.Info($"type.FullName = {type.FullName}");
+            _globalLogger.Info($"type.FullName = {type?.FullName}");
 #endif
+
+            if (type == null)
+            {
+                return jsonStr;
+            }
 
             var obj = JsonConvert.DeserializeObject(jsonStr, type, _jsonSerializerSettings);
 
@@ -105,12 +113,39 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 return "NULL";
             }
 
-            if(type == typeof(int))
+            if(type.IsEnum)
             {
                 return obj.ToString();
             }
 
-            if(type.GetInterfaces().Contains(typeof(IDictionary)))
+            if(type == typeof(sbyte) ||
+                type == typeof(byte) ||
+                type == typeof(short) ||
+                type == typeof(ushort) ||
+                type == typeof(int) || 
+                type == typeof(uint) ||
+                type == typeof(long) ||
+                type == typeof(ulong) ||
+                type == typeof(nint) ||
+                type == typeof(nuint) ||
+                type == typeof(string))
+            {
+                return obj.ToString();
+            }
+
+            if(type == typeof(DateTime))
+            {
+                return ((DateTime)obj).ToString("dd.MM.yyyy HH:mm:ss.fffff");
+            }
+
+            var interfaces = type.GetInterfaces();
+
+            if(interfaces.Contains(typeof(IObjectToHumanizedString)))
+            {
+                return ((IObjectToHumanizedString)obj).ToHumanizedString(options);
+            }
+
+            if(interfaces.Contains(typeof(IDictionary)))
             {
 #if DEBUG
                 _globalLogger.Info($"Dictionary!!!!");
@@ -128,8 +163,25 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 return JsonConvert.SerializeObject(dict_2.ToDictionary(p => ToHumanizedString(p.Key, p.Key?.GetType(), options), p => ToHumanizedString(p.Value, p.Value?.GetType(), options)));
             }
 
-            //return string.Empty;
-            throw new NotImplementedException();
+            if(interfaces.Contains(typeof(IList)))
+            {
+#if DEBUG
+                _globalLogger.Info($"List!!!!");
+#endif
+
+                var list = (IList)obj;
+
+                var list_2 = new List<object>();
+
+                foreach(var item in list)
+                {
+                    list_2.Add(item);
+                }
+
+                return JsonConvert.SerializeObject(list_2.Select(p => ToHumanizedString(p, p?.GetType(), options)));
+            }
+
+            return obj.ToString();
         }
     }
 }

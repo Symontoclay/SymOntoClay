@@ -16,7 +16,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
     public static class ObjectToHumanizedStringConverter
     {
 #if DEBUG
-        private static readonly global::NLog.ILogger _globalLogger = global::NLog.LogManager.GetCurrentClassLogger();
+        //private static readonly global::NLog.ILogger _globalLogger = global::NLog.LogManager.GetCurrentClassLogger();
 #endif
 
         private static readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings()
@@ -28,9 +28,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public static string FromBase64StringToHumanizedString(string base64Content, string typeName, HumanizedOptions options = HumanizedOptions.ShowAll)
         {
 #if DEBUG
-            _globalLogger.Info($"base64Content = '{base64Content}'");
-            _globalLogger.Info($"typeName = {typeName}");
-            _globalLogger.Info($"options = {options}");
+            //_globalLogger.Info($"base64Content = '{base64Content}'");
+            //_globalLogger.Info($"typeName = {typeName}");
+            //_globalLogger.Info($"options = {options}");
 #endif
 
             var opt = new DebugHelperOptions()
@@ -44,16 +44,16 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public static string FromBase64StringToHumanizedString(string base64Content, string typeName, DebugHelperOptions options)
         {
 #if DEBUG
-            _globalLogger.Info($"base64Content = '{base64Content}'");
-            _globalLogger.Info($"typeName = {typeName}");
-            _globalLogger.Info($"options = {options}");
+            //_globalLogger.Info($"base64Content = '{base64Content}'");
+            //_globalLogger.Info($"typeName = {typeName}");
+            //_globalLogger.Info($"options = {options}");
 #endif
 
             var base64bytes = Convert.FromBase64String(base64Content);
             var jsonStr = Encoding.UTF8.GetString(base64bytes);
 
 #if DEBUG
-            _globalLogger.Info($"jsonStr = {jsonStr}");
+            //_globalLogger.Info($"jsonStr = {jsonStr}");
 #endif
 
             if(typeName.Equals("null", StringComparison.OrdinalIgnoreCase))
@@ -64,7 +64,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             var type = Type.GetType(typeName);
 
 #if DEBUG
-            _globalLogger.Info($"type.FullName = {type?.FullName}");
+            //_globalLogger.Info($"type.FullName = {type?.FullName}");
 #endif
 
             if (type == null)
@@ -75,7 +75,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             var obj = JsonConvert.DeserializeObject(jsonStr, type, _jsonSerializerSettings);
 
 #if DEBUG
-            _globalLogger.Info($"obj?.GetType().FullName = {obj?.GetType().FullName}");
+            //_globalLogger.Info($"obj?.GetType().FullName = {obj?.GetType().FullName}");
 #endif
 
             return ToHumanizedString(obj, type, options);
@@ -99,13 +99,13 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public static string ToHumanizedString(object obj, Type type, DebugHelperOptions options)
         {
 #if DEBUG
-            _globalLogger.Info($"type?.FullName = {type?.FullName}");
-            _globalLogger.Info($"type?.IsClass = {type?.IsClass}");
-            _globalLogger.Info($"type?.IsPrimitive = {type?.IsPrimitive}");
-            _globalLogger.Info($"type?.IsEnum = {type?.IsEnum}");
-            _globalLogger.Info($"type?.IsGenericType = {type?.IsGenericType}");
+            //_globalLogger.Info($"type?.FullName = {type?.FullName}");
+            //_globalLogger.Info($"type?.IsClass = {type?.IsClass}");
+            //_globalLogger.Info($"type?.IsPrimitive = {type?.IsPrimitive}");
+            //_globalLogger.Info($"type?.IsEnum = {type?.IsEnum}");
+            //_globalLogger.Info($"type?.IsGenericType = {type?.IsGenericType}");
 
-            _globalLogger.Info($"options = {options}");
+            //_globalLogger.Info($"options = {options}");
 #endif
 
             if(obj == null)
@@ -148,7 +148,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             if(interfaces.Contains(typeof(IDictionary)))
             {
 #if DEBUG
-                _globalLogger.Info($"Dictionary!!!!");
+                //_globalLogger.Info($"Dictionary!!!!");
 #endif
 
                 var dict = (IDictionary)obj;
@@ -166,7 +166,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             if(interfaces.Contains(typeof(IList)))
             {
 #if DEBUG
-                _globalLogger.Info($"List!!!!");
+                //_globalLogger.Info($"List!!!!");
 #endif
 
                 var list = (IList)obj;

@@ -13,13 +13,13 @@ namespace SymOntoClay.Monitor.LogFileBuilder
     public static class MessageContentToTextConverter
     {
 #if DEBUG
-        private static readonly global::NLog.ILogger _globalLogger = global::NLog.LogManager.GetCurrentClassLogger();
+        //private static readonly global::NLog.ILogger _globalLogger = global::NLog.LogManager.GetCurrentClassLogger();
 #endif
 
         public static string GetText(BaseMessage message)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
             var kindOfMessage = message.KindOfMessage;
@@ -84,7 +84,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             var tmpResult = $"Parameter of {message.CallMethodId}: '{message.ParameterName}' = {ObjectToHumanizedStringConverter.FromBase64StringToHumanizedString(message.Base64Content, message.TypeName)}";
 
 #if DEBUG
-            _globalLogger.Info($"tmpResult = {tmpResult}");
+            //_globalLogger.Info($"tmpResult = {tmpResult}");
 #endif
 
             return tmpResult;

@@ -115,8 +115,8 @@ namespace TestSandbox.Handlers
                 OutputFileName = logFileName,
                 KindOfMessages = new List<KindOfMessage>()
                 {
-                    KindOfMessage.Info,
-                    KindOfMessage.Output
+                    //KindOfMessage.Info,
+                    //KindOfMessage.Output
                 },
                 Layout = new List<BaseMessageTextRowOptionItem>
                 {

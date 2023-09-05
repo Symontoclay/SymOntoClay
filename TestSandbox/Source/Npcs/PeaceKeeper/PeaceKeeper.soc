@@ -1,4 +1,12 @@
-﻿/*app PeaceKeeper
+﻿app PeaceKeeper
+{
+    on Enter =>
+	{
+	    @@host.`stop`();
+	}
+}
+
+/*app PeaceKeeper
 {
 	{: male(#Tom) :}
 	{: parent(#Piter, #Tom) :}
@@ -9,7 +17,7 @@
 	}
 }*/
 
-{: { enemy($x) } -> { soldier($x) } :}
+/*{: { enemy($x) } -> { soldier($x) } :}
 
 {: waypoint(#wp1) :}
 {: soldier(#enemy1) :}
@@ -25,7 +33,7 @@ app PeaceKeeper
 
 		'End' >> @>log;
 	}
-}
+}*/
 
 /*{: { enemy($x) } -> { soldier($x) } :}
 

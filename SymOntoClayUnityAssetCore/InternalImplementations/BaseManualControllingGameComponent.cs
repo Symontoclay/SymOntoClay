@@ -32,6 +32,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SymOntoClay.Monitor.Common;
 
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 {
@@ -132,20 +133,20 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         }
 
         /// <inheritdoc/>
-        public IProcessCreatingResult CreateProcess(ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext)
+        public IProcessCreatingResult CreateProcess(IMonitorLogger logger, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
             try
             {
                 var packedSynonymsResolver = new PackedSynonymsResolver(context.DataResolversFactory.GetSynonymsResolver(), localContext);
 
-                var endPointInfo = _endPointsResolver.GetEndpointInfo(command, _endpointsRegistries, packedSynonymsResolver);
+                var endPointInfo = _endPointsResolver.GetEndpointInfo(logger, command, _endpointsRegistries, packedSynonymsResolver);
 
                 if (endPointInfo == null)
                 {
                     return new ProcessCreatingResult();
                 }
 
-                var processInfo = _endPointActivator.Activate(endPointInfo, command, context, localContext);
+                var processInfo = _endPointActivator.Activate(logger, endPointInfo, command, context, localContext);
 
                 return new ProcessCreatingResult(processInfo);
             }

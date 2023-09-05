@@ -35,11 +35,9 @@ namespace TestSandbox.CoreHostListener
 {
     public class TstCoreHostListener: IHostListener
     {
-        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
-
-        public IProcessCreatingResult CreateProcess(ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext)
+        public IProcessCreatingResult CreateProcess(IMonitorLogger logger, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
-            _logger.Info("49EE31D9-812D-4B9E-A81F-CF8185C1ECB0", $"command = {command}");
+            logger.Info("49EE31D9-812D-4B9E-A81F-CF8185C1ECB0", $"command = {command}");
 
             throw new NotImplementedException();
         }

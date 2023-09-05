@@ -1802,7 +1802,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 annotationSystemEventsDict.TryGetValue(KindOfAnnotationSystemEvent.Error, out errorAnnotationSystemEvent);
             }
 
-            var processCreatingResult = _hostListener.CreateProcess(command, _context, _currentCodeFrame.LocalContext);
+            var processCreatingResult = _hostListener.CreateProcess(Logger, command, _context, _currentCodeFrame.LocalContext);
 
 #if DEBUG
             //Log($"processCreatingResult.IsSuccessful = {processCreatingResult.IsSuccessful}");

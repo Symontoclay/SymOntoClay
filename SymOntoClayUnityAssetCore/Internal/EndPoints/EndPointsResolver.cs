@@ -45,7 +45,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
         private readonly IPlatformTypesConvertersRegistry _platformTypesConvertorsRegistry;
 
-        public IEndpointInfo GetEndpointInfo(ICommand command, IList<IEndpointsRegistry> endpointsRegistries, IPackedSynonymsResolver synonymsResolver)
+        public IEndpointInfo GetEndpointInfo(IMonitorLogger logger, ICommand command, IList<IEndpointsRegistry> endpointsRegistries, IPackedSynonymsResolver synonymsResolver)
         {
             var endPointsList = new List<IEndpointInfo>();
 

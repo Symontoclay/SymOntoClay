@@ -25,11 +25,12 @@ using SymOntoClay.Core.Internal;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using SymOntoClay.Monitor.Common;
 
 namespace SymOntoClay.Core
 {
     public interface IHostListener
     {
-        IProcessCreatingResult CreateProcess(ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext);
+        IProcessCreatingResult CreateProcess(IMonitorLogger logger, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext);
     }
 }

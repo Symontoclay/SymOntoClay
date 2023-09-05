@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using Newtonsoft.Json;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
@@ -36,11 +37,11 @@ namespace SymOntoClay.BaseTestLib.HostListeners
     {
         [DebuggerHidden]
         [BipedEndpoint("*")]
-        public void GenericCall(CancellationToken cancellationToken, string methodName, bool isNamedParameters,
+        public void GenericCall(CancellationToken cancellationToken, IMonitorLogger logger, string methodName, bool isNamedParameters,
             Dictionary<string, object> namedParameters, List<object> positionedParameters)
         {
-            _logger.Info("DC880C87-A0C2-49A7-B630-B0143F1D6083", $"methodName = '{methodName}'");
-            _logger.Info("B9CB2582-5C1E-4A99-9DCC-37A507EA25CB", $"isNamedParameters = {isNamedParameters}");
+            logger.Info("DC880C87-A0C2-49A7-B630-B0143F1D6083", $"methodName = '{methodName}'");
+            logger.Info("B9CB2582-5C1E-4A99-9DCC-37A507EA25CB", $"isNamedParameters = {isNamedParameters}");
         }
     }
 }

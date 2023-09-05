@@ -207,41 +207,70 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
         private object[] MapParams(CancellationToken cancellationToken, IMonitorLogger logger, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
+            var methodInfo = endpointInfo.MethodInfo;
+
+            var methodInfoParamsList = methodInfo.GetParameters();
+
+            var containsLogger = false;
+
+            if(methodInfoParamsList.Any(p => p.ParameterType == typeof(IMonitorLogger)))
+            {
+                containsLogger = true;
+            }
+
             var kindOfCommandParameters = command.KindOfCommandParameters;
 
             switch (kindOfCommandParameters)
             {
                 case KindOfCommandParameters.NoParameters:
-                    if(endpointInfo.KindOfEndpoint == KindOfEndpointInfo.GenericCall)
                     {
-                        return new List<object>() { cancellationToken, logger, command.Name.NameValue, false, null, null }.ToArray();
+                        var resultList = new List<object>();
+                        resultList.Add(cancellationToken);
+
+                        if(containsLogger)
+                        {
+                            resultList.Add(logger);
+                        }
+
+
+                        if (endpointInfo.KindOfEndpoint == KindOfEndpointInfo.GenericCall)
+                        {
+                            resultList.Add(command.Name.NameValue);
+                            resultList.Add(false);
+                            resultList.Add(null);
+                            resultList.Add(null);
+                        }
+
+                        return resultList.ToArray();
                     }
 
-                    return new List<object>() { cancellationToken, logger }.ToArray();
-
                 case KindOfCommandParameters.ParametersByDict:
-                    return MapParamsByParametersByDict(cancellationToken, logger, endpointInfo, command, context, localContext);
+                    return MapParamsByParametersByDict(cancellationToken, logger, endpointInfo, command, context, localContext, containsLogger);
 
                 case KindOfCommandParameters.ParametersByList:
-                    return MapParamsByParametersByList(cancellationToken, logger, endpointInfo, command, context, localContext);
+                    return MapParamsByParametersByList(cancellationToken, logger, endpointInfo, command, context, localContext, containsLogger);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfCommandParameters), kindOfCommandParameters, null);
             }
         }
 
-        private object[] MapParamsByParametersByList(CancellationToken cancellationToken, IMonitorLogger logger, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext)
+        private object[] MapParamsByParametersByList(CancellationToken cancellationToken, IMonitorLogger logger, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext, bool containsLogger)
         {
             if(endpointInfo.KindOfEndpoint == KindOfEndpointInfo.GenericCall)
             {
-                return MapGenericCallParamsByParametersByList(cancellationToken, logger, endpointInfo, command, context, localContext);
+                return MapGenericCallParamsByParametersByList(cancellationToken, logger, endpointInfo, command, context, localContext, containsLogger);
             }
 
             var argumentsList = endpointInfo.Arguments.Where(p => !p.IsSystemDefiend);
 
             var resultList = new List<object>();
             resultList.Add(cancellationToken);
-            resultList.Add(logger);
+
+            if(containsLogger)
+            {
+                resultList.Add(logger);
+            }            
 
             var commandParamsEnumerator = command.ParamsList.GetEnumerator();
 
@@ -267,11 +296,16 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             return resultList.ToArray();
         }
 
-        private object[] MapGenericCallParamsByParametersByList(CancellationToken cancellationToken, IMonitorLogger logger, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext)
+        private object[] MapGenericCallParamsByParametersByList(CancellationToken cancellationToken, IMonitorLogger logger, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext, bool containsLogger)
         {
             var resultList = new List<object>();
             resultList.Add(cancellationToken);
-            resultList.Add(logger);
+
+            if(containsLogger)
+            {
+                resultList.Add(logger);
+            }
+            
             resultList.Add(command.Name.NameValue);
             resultList.Add(false);
             resultList.Add(null);
@@ -280,11 +314,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             return resultList.ToArray();
         }
 
-        private object[] MapParamsByParametersByDict(CancellationToken cancellationToken, IMonitorLogger logger, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext)
+        private object[] MapParamsByParametersByDict(CancellationToken cancellationToken, IMonitorLogger logger, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext, bool containsLogger)
         {
             if(endpointInfo.KindOfEndpoint == KindOfEndpointInfo.GenericCall)
             {
-                return MapGenericCallParamsByParametersByDict(cancellationToken, logger, endpointInfo, command, context, localContext);
+                return MapGenericCallParamsByParametersByDict(cancellationToken, logger, endpointInfo, command, context, localContext, containsLogger);
             }
 
             var commandParamsDict = command.ParamsDict.ToDictionary(p => p.Key.NameValue.ToLower(), p => p.Value);
@@ -294,8 +328,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
             var resultList = new List<object>();
             resultList.Add(cancellationToken);
-            resultList.Add(logger);
 
+            if(containsLogger)
+            {
+                resultList.Add(logger);
+            }
+           
             foreach (var argumentItem in argumentsDict)
             {
                 var argumentName = argumentItem.Key;
@@ -350,11 +388,16 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             return resultList.ToArray();
         }
 
-        private object[] MapGenericCallParamsByParametersByDict(CancellationToken cancellationToken, IMonitorLogger logger, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext)
+        private object[] MapGenericCallParamsByParametersByDict(CancellationToken cancellationToken, IMonitorLogger logger, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext, bool containsLogger)
         {
             var resultList = new List<object>();
             resultList.Add(cancellationToken);
-            resultList.Add(logger);
+
+            if(containsLogger)
+            {
+                resultList.Add(logger);
+            }
+            
             resultList.Add(command.Name.NameValue);
             resultList.Add(true);
             resultList.Add(command.ParamsDict.ToDictionary(p => p.Key.NameValue, p => (object)(p.Value.ToHumanizedString())));

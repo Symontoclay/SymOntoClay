@@ -232,7 +232,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                             resultList.Add(logger);
                         }
 
-
                         if (endpointInfo.KindOfEndpoint == KindOfEndpointInfo.GenericCall)
                         {
                             resultList.Add(command.Name.NameValue);

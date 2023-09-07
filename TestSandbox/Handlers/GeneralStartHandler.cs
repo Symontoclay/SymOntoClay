@@ -105,7 +105,7 @@ namespace TestSandbox.Handlers
 
             Thread.Sleep(500);
 
-            var logFileName = Path.Combine(Directory.GetCurrentDirectory(), "mylog.txt");
+            var logFileName = Path.Combine(Directory.GetCurrentDirectory(), "logs", $"mylog_{monitor.SessionDirectoryName}.txt");
 
             _globalLogger.Info($"logFileName = {logFileName}");
 

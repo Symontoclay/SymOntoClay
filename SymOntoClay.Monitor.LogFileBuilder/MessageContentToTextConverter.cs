@@ -13,7 +13,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
     public static class MessageContentToTextConverter
     {
 #if DEBUG
-        //private static readonly global::NLog.ILogger _globalLogger = global::NLog.LogManager.GetCurrentClassLogger();
+        private static readonly global::NLog.ILogger _globalLogger = global::NLog.LogManager.GetCurrentClassLogger();
 #endif
 
         public static string GetText(BaseMessage message)
@@ -66,12 +66,23 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
         private static string GetCreateMotitorNode(CreateMotitorNodeMessage message)
         {
-            throw new NotImplementedException();
+            return $"MotitorNode '{message.NodeId}' has been created";
         }
 
         private static string GetCreateThreadLogger(CreateThreadLoggerMessage message)
         {
-            return $"MotitorNode '{message.NodeId}' has created ThreadLogger '{message.ThreadId}'";
+#if DEBUG
+            _globalLogger.Info($"message = {message}");
+#endif
+
+            var sb = new StringBuilder($"MotitorNode '{message.NodeId}' has created ThreadLogger '{message.ThreadId}'");
+
+            if(!string.IsNullOrWhiteSpace(message.ParentThreadId))
+            {
+                sb.Append($" with ParentThreadId '{message.ParentThreadId}'");
+            }
+
+            return sb.ToString();
         }
 
         private static string GetCallMethod(CallMethodMessage message)

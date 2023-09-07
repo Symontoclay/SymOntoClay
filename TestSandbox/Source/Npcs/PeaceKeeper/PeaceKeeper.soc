@@ -2,7 +2,11 @@
 {
     on Enter =>
 	{
-	    @@host.`stop`();
+	    'Begin' >> @>log;
+
+	    @@host.`stop`~~();
+
+		'End' >> @>log;
 	}
 }
 

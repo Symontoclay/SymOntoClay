@@ -2295,7 +2295,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 case SyncOption.IndependentAsync:
                 case SyncOption.ChildAsync:
-                    _codeFrameAsyncExecutor.AsyncExecuteCodeFrame(codeFrame, targetCurrentCodeFrame, coordinator, syncOption, increaceCurrentFramePosition, completeAnnotationSystemEvent, cancelAnnotationSystemEvent, weakCancelAnnotationSystemEvent, errorAnnotationSystemEvent);
+                    _codeFrameAsyncExecutor.AsyncExecuteCodeFrame(Logger.Id, codeFrame, targetCurrentCodeFrame, coordinator, syncOption, increaceCurrentFramePosition, completeAnnotationSystemEvent, cancelAnnotationSystemEvent, weakCancelAnnotationSystemEvent, errorAnnotationSystemEvent);
                     break;
 
                 case SyncOption.PseudoSync:

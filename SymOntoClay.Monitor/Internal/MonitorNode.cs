@@ -160,6 +160,9 @@ namespace SymOntoClay.Monitor.Internal
         public bool EnableRemoteConnection { get => _baseMonitorSettings.EnableRemoteConnection; set => _baseMonitorSettings.EnableRemoteConnection = value; }
 
         /// <inheritdoc/>
+        public bool EnableFullCallInfo => _baseMonitorSettings.EnableFullCallInfo && _monitorContext.Settings.EnableFullCallInfo;
+
+        /// <inheritdoc/>
         public override string ToString()
         {
             return ToString(0u);
@@ -240,6 +243,16 @@ namespace SymOntoClay.Monitor.Internal
             _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
+            var classFullName = string.Empty;
+
+            if (EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
             var now = DateTime.Now;
 
             Task.Run(() => {
@@ -256,6 +269,7 @@ namespace SymOntoClay.Monitor.Internal
                     GlobalMessageNumber = globalMessageNumber,
                     MessageNumber = messageNumber,
                     MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
                     MemberName = memberName,
                     SourceFilePath = sourceFilePath,
                     SourceLineNumber = sourceLineNumber

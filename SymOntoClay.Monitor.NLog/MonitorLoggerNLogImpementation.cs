@@ -69,8 +69,8 @@ namespace SymOntoClay.Monitor.NLog
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            var callInfo = DiagnosticsHelper.GetNotLoggingSupportCallInfo();
-            var result = LogHelper.BuildLogString(DateTime.Now, "Trace", callInfo.FullClassName, callInfo.MethodName, message);
+            var callInfo = DiagnosticsHelper.GetCallInfo();
+            var result = LogHelper.BuildLogString(DateTime.Now, "Trace", callInfo.ClassFullName, callInfo.MethodName, message);
 
             _logger.Info(result);
         }
@@ -82,8 +82,8 @@ namespace SymOntoClay.Monitor.NLog
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            var callInfo = DiagnosticsHelper.GetNotLoggingSupportCallInfo();
-            var result = LogHelper.BuildLogString(DateTime.Now, "Debug", callInfo.FullClassName, callInfo.MethodName, message);
+            var callInfo = DiagnosticsHelper.GetCallInfo();
+            var result = LogHelper.BuildLogString(DateTime.Now, "Debug", callInfo.ClassFullName, callInfo.MethodName, message);
 
             _logger.Info(result);
         }
@@ -95,8 +95,8 @@ namespace SymOntoClay.Monitor.NLog
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            var callInfo = DiagnosticsHelper.GetNotLoggingSupportCallInfo();
-            var result = LogHelper.BuildLogString(DateTime.Now, "Info", callInfo.FullClassName, callInfo.MethodName, message);
+            var callInfo = DiagnosticsHelper.GetCallInfo();
+            var result = LogHelper.BuildLogString(DateTime.Now, "Info", callInfo.ClassFullName, callInfo.MethodName, message);
 
             _logger.Info(result);
         }
@@ -108,8 +108,8 @@ namespace SymOntoClay.Monitor.NLog
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            var callInfo = DiagnosticsHelper.GetNotLoggingSupportCallInfo();
-            var result = LogHelper.BuildLogString(DateTime.Now, "Warn", callInfo.FullClassName, callInfo.MethodName, message);
+            var callInfo = DiagnosticsHelper.GetCallInfo();
+            var result = LogHelper.BuildLogString(DateTime.Now, "Warn", callInfo.ClassFullName, callInfo.MethodName, message);
 
             _logger.Info(result);
         }
@@ -121,8 +121,8 @@ namespace SymOntoClay.Monitor.NLog
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            var callInfo = DiagnosticsHelper.GetNotLoggingSupportCallInfo();
-            var result = LogHelper.BuildLogString(DateTime.Now, "Error", callInfo.FullClassName, callInfo.MethodName, message);
+            var callInfo = DiagnosticsHelper.GetCallInfo();
+            var result = LogHelper.BuildLogString(DateTime.Now, "Error", callInfo.ClassFullName, callInfo.MethodName, message);
 
             _logger.Info(result);
         }
@@ -144,8 +144,8 @@ namespace SymOntoClay.Monitor.NLog
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            var callInfo = DiagnosticsHelper.GetNotLoggingSupportCallInfo();
-            var result = LogHelper.BuildLogString(DateTime.Now, "Fatal", callInfo.FullClassName, callInfo.MethodName, message);
+            var callInfo = DiagnosticsHelper.GetCallInfo();
+            var result = LogHelper.BuildLogString(DateTime.Now, "Fatal", callInfo.ClassFullName, callInfo.MethodName, message);
 
             _logger.Info(result);
         }

@@ -9,7 +9,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
     public static class DiagnosticsHelper
     {
         [MethodForLoggingSupport]
-        public static DiagnosticsCallInfo GetNotLoggingSupportCallInfo()
+        public static DiagnosticsCallInfo GetCallInfo()
         {
             var className = string.Empty;
             var methodName = string.Empty;
@@ -46,7 +46,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
             }
 
             var result = new DiagnosticsCallInfo();
-            result.FullClassName = className;
+            result.ClassFullName = className;
             result.MethodName = methodName;
             return result;
         }

@@ -91,6 +91,16 @@ namespace SymOntoClay.Monitor.Internal
             _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
             var now = DateTime.Now;
 
             Task.Run(() => {
@@ -107,6 +117,7 @@ namespace SymOntoClay.Monitor.Internal
                     GlobalMessageNumber = globalMessageNumber,
                     MessageNumber = messageNumber,
                     MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
                     MemberName = memberName,
                     SourceFilePath = sourceFilePath,
                     SourceLineNumber = sourceLineNumber
@@ -160,6 +171,16 @@ namespace SymOntoClay.Monitor.Internal
             _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
             var jsonStr = JsonConvert.SerializeObject(parameterValue, _jsonSerializerSettings);
 
 #if DEBUG
@@ -192,6 +213,7 @@ namespace SymOntoClay.Monitor.Internal
                     GlobalMessageNumber = globalMessageNumber,
                     MessageNumber = messageNumber,
                     MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
                     MemberName = memberName,
                     SourceFilePath = sourceFilePath,
                     SourceLineNumber = sourceLineNumber
@@ -237,6 +259,16 @@ namespace SymOntoClay.Monitor.Internal
             _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
             var now = DateTime.Now;
 
             _outputHandler?.Invoke(message);
@@ -263,6 +295,7 @@ namespace SymOntoClay.Monitor.Internal
                     GlobalMessageNumber = globalMessageNumber,
                     MessageNumber = messageNumber,
                     MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
                     MemberName = memberName,
                     SourceFilePath = sourceFilePath,
                     SourceLineNumber = sourceLineNumber
@@ -308,6 +341,16 @@ namespace SymOntoClay.Monitor.Internal
             _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
             var now = DateTime.Now;
 
             if (_platformLoggers.Any())
@@ -332,6 +375,7 @@ namespace SymOntoClay.Monitor.Internal
                     GlobalMessageNumber = globalMessageNumber,
                     MessageNumber = messageNumber,
                     MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
                     MemberName = memberName,
                     SourceFilePath = sourceFilePath,
                     SourceLineNumber = sourceLineNumber
@@ -377,6 +421,16 @@ namespace SymOntoClay.Monitor.Internal
             _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
             var now = DateTime.Now;
 
             if (_platformLoggers.Any())
@@ -401,6 +455,7 @@ namespace SymOntoClay.Monitor.Internal
                     GlobalMessageNumber = globalMessageNumber,
                     MessageNumber = messageNumber,
                     MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
                     MemberName = memberName,
                     SourceFilePath = sourceFilePath,
                     SourceLineNumber = sourceLineNumber
@@ -446,6 +501,16 @@ namespace SymOntoClay.Monitor.Internal
             _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
             var now = DateTime.Now;
 
             if (_platformLoggers.Any())
@@ -470,6 +535,7 @@ namespace SymOntoClay.Monitor.Internal
                     GlobalMessageNumber = globalMessageNumber,
                     MessageNumber = messageNumber,
                     MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
                     MemberName = memberName,
                     SourceFilePath = sourceFilePath,
                     SourceLineNumber = sourceLineNumber
@@ -515,6 +581,16 @@ namespace SymOntoClay.Monitor.Internal
             _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
             var now = DateTime.Now;
 
             if (_platformLoggers.Any())
@@ -539,6 +615,7 @@ namespace SymOntoClay.Monitor.Internal
                     GlobalMessageNumber = globalMessageNumber,
                     MessageNumber = messageNumber,
                     MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
                     MemberName = memberName,
                     SourceFilePath = sourceFilePath,
                     SourceLineNumber = sourceLineNumber
@@ -584,6 +661,16 @@ namespace SymOntoClay.Monitor.Internal
             _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
             var now = DateTime.Now;
 
             _errorHandler?.Invoke(message);
@@ -610,6 +697,7 @@ namespace SymOntoClay.Monitor.Internal
                     GlobalMessageNumber = globalMessageNumber,
                     MessageNumber = messageNumber,
                     MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
                     MemberName = memberName,
                     SourceFilePath = sourceFilePath,
                     SourceLineNumber = sourceLineNumber
@@ -665,6 +753,16 @@ namespace SymOntoClay.Monitor.Internal
             _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
             var now = DateTime.Now;
 
             _errorHandler?.Invoke(message);
@@ -691,6 +789,7 @@ namespace SymOntoClay.Monitor.Internal
                     GlobalMessageNumber = globalMessageNumber,
                     MessageNumber = messageNumber,
                     MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
                     MemberName = memberName,
                     SourceFilePath = sourceFilePath,
                     SourceLineNumber = sourceLineNumber

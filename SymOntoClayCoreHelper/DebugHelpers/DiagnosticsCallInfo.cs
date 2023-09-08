@@ -6,7 +6,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
 {
     public class DiagnosticsCallInfo : IObjectToString
     {
-        public string FullClassName { get; set; }
+        public string ClassFullName { get; set; }
         public string MethodName { get; set; }
 
         /// <inheritdoc/>
@@ -26,7 +26,7 @@ namespace SymOntoClay.CoreHelper.DebugHelpers
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{nameof(FullClassName)} = {FullClassName}");
+            sb.AppendLine($"{spaces}{nameof(ClassFullName)} = {ClassFullName}");
             sb.AppendLine($"{spaces}{nameof(MethodName)} = {MethodName}");
             return sb.ToString();
         }

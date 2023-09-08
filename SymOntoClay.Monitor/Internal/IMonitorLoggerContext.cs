@@ -19,5 +19,6 @@ namespace SymOntoClay.Monitor.Internal
         string NodeId { get; }
         string ThreadId { get; }
         bool EnableRemoteConnection { get; }
+        bool EnableFullCallInfo { get; }
     }
 }

@@ -205,6 +205,9 @@ namespace SymOntoClay.Monitor
         }
 
         /// <inheritdoc/>
+        public bool EnableFullCallInfo => _baseMonitorSettings.EnableFullCallInfo;
+
+        /// <inheritdoc/>
         public override string ToString()
         {
             return ToString(0u);
@@ -278,6 +281,16 @@ namespace SymOntoClay.Monitor
             _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
+            var classFullName = string.Empty;
+
+            if(EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
             var now = DateTime.Now;
 
             Task.Run(() => {
@@ -292,6 +305,7 @@ namespace SymOntoClay.Monitor
                     GlobalMessageNumber = globalMessageNumber,
                     MessageNumber = messageNumber,
                     MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
                     MemberName = memberName,
                     SourceFilePath = sourceFilePath,
                     SourceLineNumber = sourceLineNumber

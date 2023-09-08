@@ -145,6 +145,9 @@ namespace SymOntoClay.Monitor.Internal
         }
 
         /// <inheritdoc/>
+        public bool EnableFullCallInfo => _baseMonitorSettings.EnableFullCallInfo && _monitorContext.Settings.EnableFullCallInfo;
+
+        /// <inheritdoc/>
         public override string ToString()
         {
             return ToString(0u);

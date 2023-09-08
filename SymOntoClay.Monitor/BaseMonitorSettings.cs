@@ -19,6 +19,9 @@ namespace SymOntoClay.Monitor
         public KindOfLogicalSearchExplain KindOfLogicalSearchExplain { get; set; } = KindOfLogicalSearchExplain.None;
         public string LogicalSearchExplainDumpDir { get; set; }
         public bool EnableAddingRemovingFactLoggingInStorages { get; set; }
+
+        public bool EnableFullCallInfo { get; set; }
+
         public MonitorFeatures Features { get; set; }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
@@ -31,6 +34,7 @@ namespace SymOntoClay.Monitor
             result.KindOfLogicalSearchExplain = KindOfLogicalSearchExplain;
             result.LogicalSearchExplainDumpDir = LogicalSearchExplainDumpDir;
             result.EnableAddingRemovingFactLoggingInStorages = EnableAddingRemovingFactLoggingInStorages;
+            result.EnableFullCallInfo = EnableFullCallInfo;
             result.Features = Features?.Clone();
 
             return result;
@@ -63,6 +67,7 @@ namespace SymOntoClay.Monitor
             sb.AppendLine($"{spaces}{nameof(KindOfLogicalSearchExplain)} = {KindOfLogicalSearchExplain}");
             sb.AppendLine($"{spaces}{nameof(LogicalSearchExplainDumpDir)} = {LogicalSearchExplainDumpDir}");
             sb.AppendLine($"{spaces}{nameof(EnableAddingRemovingFactLoggingInStorages)} = {EnableAddingRemovingFactLoggingInStorages}");
+            sb.AppendLine($"{spaces}{nameof(EnableFullCallInfo)} = {EnableFullCallInfo}");
             sb.PrintObjProp(n, nameof(Features), Features);
             return sb.ToString();
         }

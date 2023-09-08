@@ -16,6 +16,7 @@ namespace SymOntoClay.Monitor.Common.Data
         public ulong GlobalMessageNumber { get; set; }
         public ulong MessageNumber { get; set; }
         public string MessagePointId { get; set; }
+        public string ClassFullName { get; set; }
         public string MemberName { get; set; }
         public string SourceFilePath { get; set; }
         public int SourceLineNumber { get; set; }
@@ -48,6 +49,7 @@ namespace SymOntoClay.Monitor.Common.Data
             sb.AppendLine($"{spaces}{nameof(NodeId)} = {NodeId}");
             sb.AppendLine($"{spaces}{nameof(ThreadId)} = {ThreadId}");
             sb.AppendLine($"{spaces}{nameof(GlobalMessageNumber)} = {GlobalMessageNumber}");
+            sb.AppendLine($"{spaces}{nameof(ClassFullName)} = {ClassFullName}");
             sb.AppendLine($"{spaces}{nameof(MessageNumber)} = {MessageNumber}");
             sb.AppendLine($"{spaces}{nameof(MessagePointId)} = {MessagePointId}");
             sb.AppendLine($"{spaces}{nameof(MemberName)} = {MemberName}");

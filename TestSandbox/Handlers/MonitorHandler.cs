@@ -52,6 +52,7 @@ namespace TestSandbox.Handlers
                 LogicalSearchExplainDumpDir = Directory.GetCurrentDirectory(),
                 EnableAddingRemovingFactLoggingInStorages = false,
                 PlatformLoggers = new List<IPlatformLogger>() { /*ConsoleLogger.Instance,*/ CommonNLogLogger.Instance },
+                EnableFullCallInfo = true,
                 Features = new MonitorFeatures
                 {
                     EnableCallMethod = true,

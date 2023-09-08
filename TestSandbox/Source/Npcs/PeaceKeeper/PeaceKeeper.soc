@@ -11,7 +11,12 @@
 
 	fun go()
 	{
-	    @@host.`stop`();
+	    somefun2~~();
+	}
+
+	fun somefun2()
+	{
+	    @@host.`stop`~~();
 	}
 }
 

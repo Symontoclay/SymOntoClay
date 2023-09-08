@@ -95,8 +95,8 @@ namespace TestSandbox
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
             //TstLogFileBuilderParameterValueConverterToString();
-            //TstLogFileBuilder();
-            TstMonitor();
+            TstLogFileBuilder();
+            //TstMonitor();
             //TstCreateListByVarsDict();
             //TstDetectDoninantItems();
             //TstSerializeValue();
@@ -208,7 +208,8 @@ namespace TestSandbox
         {
             _globalLogger.Info("Begin");
 
-            var sourceDirectoryName = @"c:\Users\Acer\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesDir\2023_09_02_19_58_24\soldier 1\";
+            //var sourceDirectoryName = @"c:\Users\Acer\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesDir\2023_09_02_19_58_24\soldier 1\";
+            var sourceDirectoryName = @"c:\Users\Acer\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesDir\2023_09_08_16_34_10\soldier 1\";
 
             _globalLogger.Info($"sourceDirectoryName = {sourceDirectoryName}");
 
@@ -229,6 +230,8 @@ namespace TestSandbox
                     new LongDateTimeStampTextRowOptionItem(),
                     new SpaceTextRowOptionItem(),
                     new MessagePointIdTextRowOptionItem(),
+                    new SpaceTextRowOptionItem(),
+                    new ClassFullNameTextRowOptionItem(),
                     new SpaceTextRowOptionItem(),
                     new MemberNameTextRowOptionItem(),
                     new SpaceTextRowOptionItem(),

@@ -386,12 +386,6 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrame.SymOntoClay#CoreHelper#DebugHelpers#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrameAsyncExecutor.AsyncExecuteCodeFrame(SymOntoClay.Core.Internal.CodeExecution.CodeFrame,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator,SymOntoClay.Core.Internal.CodeExecution.SyncOption,System.Boolean,SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent,SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent,SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent,SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrameAsyncExecutor.AsyncExecuteCodeFrame(SymOntoClay.Core.Internal.CodeExecution.CodeFrame,SymOntoClay.Core.Internal.CodeExecution.CodeFrame,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator,SymOntoClay.Core.Internal.CodeExecution.SyncOption,System.Boolean,SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent,SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent,SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent,SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent)">
-            <inheritdoc/>
-        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeExecution.Command.Name">
             <inheritdoc/>
         </member>

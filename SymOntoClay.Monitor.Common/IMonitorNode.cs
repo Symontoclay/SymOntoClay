@@ -17,7 +17,7 @@ namespace SymOntoClay.Monitor.Common
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);
 
-        IThreadLogger CreateThreadLogger(string messagePointId, string threadId, string parentTheadId,
+        IThreadLogger CreateThreadLogger(string messagePointId, string threadId, string parentThreadId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);

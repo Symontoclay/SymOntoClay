@@ -31,9 +31,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public class ProcessInfoEventHandler: BaseComponent, IProcessInfoEventHandler
     {
-        public ProcessInfoEventHandler(IEngineContext context, IExecutable handler, CodeFrame currentCodeFrame, bool runOnce)
+        public ProcessInfoEventHandler(IEngineContext context, string parentThreadId, IExecutable handler, CodeFrame currentCodeFrame, bool runOnce)
             : base(context.Logger)
         {
+            _parentThreadId = parentThreadId;
             _context = context;
             _codeFrameService = context.ServicesFactory.GetCodeFrameService();
             _codeFrameAsyncExecutor = new CodeFrameAsyncExecutor(context);
@@ -49,6 +50,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly ICodeFrameService _codeFrameService;
 
         private readonly CodeFrameAsyncExecutor _codeFrameAsyncExecutor;
+
+        private readonly string _parentThreadId;
 
         private IExecutable _handler;
         private CodeFrame _currentCodeFrame;
@@ -76,7 +79,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var lifeCycleEventCoordinator = _handler.GetCoordinator(_context, _currentCodeFrame.LocalContext);
             var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(_handler, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, null, true);
 
-            _codeFrameAsyncExecutor.AsyncExecuteCodeFrame(newCodeFrame, _currentCodeFrame, lifeCycleEventCoordinator, SyncOption.ChildAsync, false);
+            _codeFrameAsyncExecutor.AsyncExecuteCodeFrame(_parentThreadId, newCodeFrame, _currentCodeFrame, lifeCycleEventCoordinator, SyncOption.ChildAsync, false);
         }
     }
 }

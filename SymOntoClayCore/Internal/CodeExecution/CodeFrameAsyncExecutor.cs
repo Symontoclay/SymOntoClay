@@ -41,17 +41,17 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly IEngineContext _context;
         private readonly ICodeFrameService _codeFrameService;
 
-        /// <inheritdoc/>
-        public void AsyncExecuteCodeFrame(CodeFrame codeFrame, IExecutionCoordinator coordinator, SyncOption syncOption, bool increaceCurrentFramePosition = true, AnnotationSystemEvent completeAnnotationSystemEvent = null, AnnotationSystemEvent cancelAnnotationSystemEvent = null, AnnotationSystemEvent weakCancelAnnotationSystemEvent = null, AnnotationSystemEvent errorAnnotationSystemEvent = null)
-        {
-            AsyncExecuteCodeFrame(codeFrame, null, coordinator, syncOption, increaceCurrentFramePosition, completeAnnotationSystemEvent, cancelAnnotationSystemEvent, weakCancelAnnotationSystemEvent, errorAnnotationSystemEvent);
-        }
+        // <inheritdoc/>
+        //public void AsyncExecuteCodeFrame(CodeFrame codeFrame, IExecutionCoordinator coordinator, SyncOption syncOption, bool increaceCurrentFramePosition = true, AnnotationSystemEvent completeAnnotationSystemEvent = null, AnnotationSystemEvent cancelAnnotationSystemEvent = null, AnnotationSystemEvent weakCancelAnnotationSystemEvent = null, AnnotationSystemEvent errorAnnotationSystemEvent = null)
+        //{
+        //    AsyncExecuteCodeFrame(codeFrame, null, coordinator, syncOption, increaceCurrentFramePosition, completeAnnotationSystemEvent, cancelAnnotationSystemEvent, weakCancelAnnotationSystemEvent, errorAnnotationSystemEvent);
+        //}
 
-        /// <inheritdoc/>
-        public void AsyncExecuteCodeFrame(CodeFrame codeFrame, CodeFrame currentCodeFrame, IExecutionCoordinator coordinator, SyncOption syncOption, bool increaceCurrentFramePosition = true, AnnotationSystemEvent completeAnnotationSystemEvent = null, AnnotationSystemEvent cancelAnnotationSystemEvent = null, AnnotationSystemEvent weakCancelAnnotationSystemEvent = null, AnnotationSystemEvent errorAnnotationSystemEvent = null)
-        {
-            AsyncExecuteCodeFrame(string.Empty, codeFrame, currentCodeFrame, coordinator, syncOption, increaceCurrentFramePosition, completeAnnotationSystemEvent, AnnotationSystemEvent cancelAnnotationSystemEvent = null, AnnotationSystemEvent weakCancelAnnotationSystemEvent = null, AnnotationSystemEvent errorAnnotationSystemEvent = null);
-        }
+        // <inheritdoc/>
+        //public void AsyncExecuteCodeFrame(CodeFrame codeFrame, CodeFrame currentCodeFrame, IExecutionCoordinator coordinator, SyncOption syncOption, bool increaceCurrentFramePosition = true, AnnotationSystemEvent completeAnnotationSystemEvent = null, AnnotationSystemEvent cancelAnnotationSystemEvent = null, AnnotationSystemEvent weakCancelAnnotationSystemEvent = null, AnnotationSystemEvent errorAnnotationSystemEvent = null)
+        //{
+        //    AsyncExecuteCodeFrame(string.Empty, codeFrame, currentCodeFrame, coordinator, syncOption, increaceCurrentFramePosition, completeAnnotationSystemEvent, cancelAnnotationSystemEvent, weakCancelAnnotationSystemEvent, errorAnnotationSystemEvent);
+        //}
 
         public void AsyncExecuteCodeFrame(string parentThreadId, CodeFrame codeFrame, CodeFrame currentCodeFrame, IExecutionCoordinator coordinator, SyncOption syncOption, bool increaceCurrentFramePosition = true, AnnotationSystemEvent completeAnnotationSystemEvent = null, AnnotationSystemEvent cancelAnnotationSystemEvent = null, AnnotationSystemEvent weakCancelAnnotationSystemEvent = null, AnnotationSystemEvent errorAnnotationSystemEvent = null)
         {
@@ -81,19 +81,23 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 targetCurrentCodeFrame.ProcessInfo.AddChild(currentProcessInfo);
             }
 
-            var threadExecutor = new AsyncThreadExecutor(_context);
+            var threadId = Guid.NewGuid().ToString("D");
+
+            var logger = _context.MonitorNode.CreateThreadLogger("0FBA9877-ACBB-48F1-8CAF-B73CAF435653", threadId, parentThreadId: parentThreadId);
+
+            var threadExecutor = new AsyncThreadExecutor(_context, logger);
             threadExecutor.SetCodeFrame(codeFrame);
 
             var task = threadExecutor.Start();
 
             if (completeAnnotationSystemEvent != null)
             {
-                currentProcessInfo.AddOnCompleteHandler(new ProcessInfoEventHandler(_context, completeAnnotationSystemEvent, currentCodeFrame, true));
+                currentProcessInfo.AddOnCompleteHandler(new ProcessInfoEventHandler(_context, threadId, completeAnnotationSystemEvent, currentCodeFrame, true));
             }
 
             if (weakCancelAnnotationSystemEvent != null)
             {
-                currentProcessInfo.AddOnWeakCanceledHandler(new ProcessInfoEventHandler(_context, weakCancelAnnotationSystemEvent, currentCodeFrame, true));
+                currentProcessInfo.AddOnWeakCanceledHandler(new ProcessInfoEventHandler(_context, threadId, weakCancelAnnotationSystemEvent, currentCodeFrame, true));
             }
 
             if (cancelAnnotationSystemEvent != null)

@@ -534,7 +534,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         Info("2F56F914-3967-4260-86A3-083281AD50AA", $"Logger.Id = {Logger.Id}");
 #endif
 
-                        return _context.MonitorNode.CreateThreadLogger("D855D49C-25C6-4A2B-8951-DEB4A2139E74", Guid.NewGuid().ToString("D"), parentTheadId: Logger.Id);
+                        return _context.MonitorNode.CreateThreadLogger("D855D49C-25C6-4A2B-8951-DEB4A2139E74", Guid.NewGuid().ToString("D"), parentThreadId: Logger.Id);
                     }
 
                 default:
@@ -563,12 +563,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 case "complete":
                 case "completed":
-                    targetObject.AddOnCompleteHandler(new ProcessInfoEventHandler(_context, handler, _currentCodeFrame, true));
+                    targetObject.AddOnCompleteHandler(new ProcessInfoEventHandler(_context, Logger.Id, handler, _currentCodeFrame, true));
                     break;
 
                 case "weak cancel":
                 case "weak canceled":
-                    targetObject.AddOnWeakCanceledHandler(new ProcessInfoEventHandler(_context, handler, _currentCodeFrame, true));
+                    targetObject.AddOnWeakCanceledHandler(new ProcessInfoEventHandler(_context, Logger.Id, handler, _currentCodeFrame, true));
                     break;
 
                 default:
@@ -1936,7 +1936,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     if (completeAnnotationSystemEvent != null)
                     {
-                        processInfo.AddOnCompleteHandler(new ProcessInfoEventHandler(_context, completeAnnotationSystemEvent, _currentCodeFrame, true));
+                        processInfo.AddOnCompleteHandler(new ProcessInfoEventHandler(_context, Logger.Id, completeAnnotationSystemEvent, _currentCodeFrame, true));
                     }
 
                     if (cancelAnnotationSystemEvent != null)
@@ -1946,7 +1946,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     if (weakCancelAnnotationSystemEvent != null)
                     {
-                        processInfo.AddOnWeakCanceledHandler(new ProcessInfoEventHandler(_context, weakCancelAnnotationSystemEvent, _currentCodeFrame, true));
+                        processInfo.AddOnWeakCanceledHandler(new ProcessInfoEventHandler(_context, Logger.Id, weakCancelAnnotationSystemEvent, _currentCodeFrame, true));
                     }
 
                     if (errorAnnotationSystemEvent != null)

@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.CoreHelper;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -44,7 +45,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly FuzzyLogicResolver _fuzzyLogicResolver;
         private readonly ToSystemBoolResolver _toSystemBoolResolver;
 
-        public bool IsHigh(Value modalityValue, ILocalCodeExecutionContext localCodeExecutionContext)
+        public bool IsHigh(IMonitorLogger logger, Value modalityValue, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             if(modalityValue == null)
             {
@@ -61,7 +62,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return _toSystemBoolResolver.Resolve(numberValue);
         }
 
-        public bool IsFit(Value modalityValue, Value queryModalityValue, ILocalCodeExecutionContext localCodeExecutionContext)
+        public bool IsFit(IMonitorLogger logger, Value modalityValue, Value queryModalityValue, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             if(modalityValue == null)
             {
@@ -83,7 +84,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return _fuzzyLogicResolver.Equals(modalityValue, queryModalityValue, localCodeExecutionContext);
         }
 
-        private bool ProcessBoolExpression(Value modalityValue, LogicalModalityExpressionNode expressionNode, ILocalCodeExecutionContext localCodeExecutionContext)
+        private bool ProcessBoolExpression(IMonitorLogger logger, Value modalityValue, LogicalModalityExpressionNode expressionNode, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             switch (expressionNode.Kind)
             {
@@ -101,7 +102,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private Value ProcessValueExpression(Value modalityValue, LogicalModalityExpressionNode expressionNode, ILocalCodeExecutionContext localCodeExecutionContext)
+        private Value ProcessValueExpression(IMonitorLogger logger, Value modalityValue, LogicalModalityExpressionNode expressionNode, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             switch (expressionNode.Kind)
             {
@@ -116,12 +117,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private Value ProcessBlankIdentifier(Value modalityValue, LogicalModalityExpressionNode expressionNode, ILocalCodeExecutionContext localCodeExecutionContext)
+        private Value ProcessBlankIdentifier(IMonitorLogger logger, Value modalityValue, LogicalModalityExpressionNode expressionNode, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return modalityValue;
         }
 
-        private bool ProcessBinaryOperator(Value modalityValue, LogicalModalityExpressionNode expressionNode, ILocalCodeExecutionContext localCodeExecutionContext)
+        private bool ProcessBinaryOperator(IMonitorLogger logger, Value modalityValue, LogicalModalityExpressionNode expressionNode, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             switch (expressionNode.KindOfOperator)
             {
@@ -202,7 +203,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private bool ProcessUnaryOperator(Value modalityValue, LogicalModalityExpressionNode expressionNode, ILocalCodeExecutionContext localCodeExecutionContext)
+        private bool ProcessUnaryOperator(IMonitorLogger logger, Value modalityValue, LogicalModalityExpressionNode expressionNode, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             switch (expressionNode.KindOfOperator)
             {
@@ -214,12 +215,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private Value ProcessValue(Value modalityValue, LogicalModalityExpressionNode expressionNode, ILocalCodeExecutionContext localCodeExecutionContext)
+        private Value ProcessValue(IMonitorLogger logger, Value modalityValue, LogicalModalityExpressionNode expressionNode, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return expressionNode.Value;
         }
 
-        private bool ProcessGroup(Value modalityValue, LogicalModalityExpressionNode expressionNode, ILocalCodeExecutionContext localCodeExecutionContext)
+        private bool ProcessGroup(IMonitorLogger logger, Value modalityValue, LogicalModalityExpressionNode expressionNode, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return ProcessBoolExpression(modalityValue, expressionNode.Left, localCodeExecutionContext);
         }

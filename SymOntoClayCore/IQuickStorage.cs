@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -29,7 +30,7 @@ namespace SymOntoClay.Core
     public interface IQuickStorage
     {
         IStorage Storage { get; }
-        string InsertFact(string text);
-        void RemoveFact(string id);
+        string InsertFact(IMonitorLogger logger, string text);
+        void RemoveFact(IMonitorLogger logger, string id);
     }
 }

@@ -26,6 +26,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,12 +45,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private readonly InheritanceResolver _inheritanceResolver;
 
-        public void SetVarValue(StrongIdentifierValue varName, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
+        public void SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             SetVarValue(varName, value, localCodeExecutionContext, _defaultOptions);
         }
 
-        public void SetVarValue(StrongIdentifierValue varName, Value value, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public void SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             if (varName.KindOfName != KindOfName.Var)
             {
@@ -68,12 +69,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             varPtr.Value = value;
         }
 
-        public void CheckFitVariableAndValue(Var varItem, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
+        public void CheckFitVariableAndValue(IMonitorLogger logger, Var varItem, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             CheckFitVariableAndValue(varItem, value, localCodeExecutionContext, _defaultOptions);
         }
 
-        public void CheckFitVariableAndValue(Var varItem, Value value, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public void CheckFitVariableAndValue(IMonitorLogger logger, Var varItem, Value value, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             if(varItem.TypesList.IsNullOrEmpty())
             {
@@ -95,7 +96,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             throw new Exception($"The value '{value.ToHumanizedString()}' does not fit to variable {varItem.ToHumanizedString()}");
         }
 
-        private Var CreateAndSaveLocalVariable(StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext)
+        private Var CreateAndSaveLocalVariable(IMonitorLogger logger, StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var result = new Var();
             result.Name = varName;
@@ -106,12 +107,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        public Value GetVarValue(StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext)
+        public Value GetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return GetVarValue(varName, localCodeExecutionContext, _defaultOptions);
         }
 
-        public Value GetVarValue(StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public Value GetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             if(varName.KindOfName == KindOfName.SystemVar)
             {
@@ -121,7 +122,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return GetUsualVarValue(varName, localCodeExecutionContext, options);
         }
 
-        private Value GetSystemVarValue(StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private Value GetSystemVarValue(IMonitorLogger logger, StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
@@ -140,7 +141,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             throw new NotImplementedException();
         }
 
-        private Value GetUsualVarValue(StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private Value GetUsualVarValue(IMonitorLogger logger, StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var varPtr = Resolve(varName, localCodeExecutionContext, _defaultOptions);
 
@@ -152,7 +153,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return varPtr.Value;
         }
 
-        public Var Resolve(StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public Var Resolve(IMonitorLogger logger, StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             Var varPtr = null;
 
@@ -169,7 +170,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return NResolve(varName, localCodeExecutionContext.Holder, localCodeExecutionContext.Storage, false, localCodeExecutionContext, options);
         }
 
-        private Var NResolve(StrongIdentifierValue varName, StrongIdentifierValue holder, IStorage storage, bool privateOnly, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private Var NResolve(IMonitorLogger logger, StrongIdentifierValue varName, StrongIdentifierValue holder, IStorage storage, bool privateOnly, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storagesList = GetStoragesList(storage, KindOfStoragesList.Var);
 
@@ -215,7 +216,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return OrderAndDistinctByInheritance(filteredList, options).FirstOrDefault()?.ResultItem;
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<Var>> GetRawVarsList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        private List<WeightedInheritanceResultItemWithStorageInfo<Var>> GetRawVarsList(IMonitorLogger logger, StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             if (!storagesList.Any())
             {

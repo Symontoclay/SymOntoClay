@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,9 +31,9 @@ namespace SymOntoClay.Core
 {
     public interface IInheritanceStorage : ISpecificStorage
     {
-        void SetInheritance(InheritanceItem inheritanceItem);
-        void SetInheritance(InheritanceItem inheritanceItem, bool isPrimary);
-        void RemoveInheritance(InheritanceItem inheritanceItem);
-        IList<WeightedInheritanceResultItem<InheritanceItem>> GetItemsDirectly(StrongIdentifierValue subName);
+        void SetInheritance(IMonitorLogger logger, InheritanceItem inheritanceItem);
+        void SetInheritance(IMonitorLogger logger, InheritanceItem inheritanceItem, bool isPrimary);
+        void RemoveInheritance(IMonitorLogger logger, InheritanceItem inheritanceItem);
+        IList<WeightedInheritanceResultItem<InheritanceItem>> GetItemsDirectly(IMonitorLogger logger, StrongIdentifierValue subName);
     }
 }

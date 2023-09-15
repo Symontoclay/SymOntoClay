@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,21 +58,21 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly LogicalValueModalityResolver _logicalValueModalityResolver;
 
         /// <inheritdoc/>
-        public IList<T> Filter<T>(IList<T> source, bool enableModalitiesControll) 
+        public IList<T> Filter<T>(IMonitorLogger logger, IList<T> source, bool enableModalitiesControll) 
             where T : ILogicalSearchItem
         {
             return Filter(source, enableModalitiesControll, null);
         }
 
         /// <inheritdoc/>
-        public IList<T> Filter<T>(IList<T> source, IDictionary<RuleInstance, IItemWithModalities> additionalModalities) 
+        public IList<T> Filter<T>(IMonitorLogger logger, IList<T> source, IDictionary<RuleInstance, IItemWithModalities> additionalModalities) 
             where T : ILogicalSearchItem
         {
             return Filter(source, true, additionalModalities);
         }
 
         /// <inheritdoc/>
-        public IList<T> Filter<T>(IList<T> source, bool enableModalitiesControll, IDictionary<RuleInstance, IItemWithModalities> additionalModalities)
+        public IList<T> Filter<T>(IMonitorLogger logger, IList<T> source, bool enableModalitiesControll, IDictionary<RuleInstance, IItemWithModalities> additionalModalities)
             where T : ILogicalSearchItem
         {
             if (source.IsNullOrEmpty())
@@ -117,7 +118,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             SelfObligationModality
         }
 
-        private bool IsFit(ILogicalSearchItem item, Value modalityValue, Value queryModalityValue, ILocalCodeExecutionContext localCodeExecutionContext, KindOfCheckedModality kindOfCheckedModality, IDictionary<RuleInstance, IItemWithModalities> additionalModalities)
+        private bool IsFit(IMonitorLogger logger, ILogicalSearchItem item, Value modalityValue, Value queryModalityValue, ILocalCodeExecutionContext localCodeExecutionContext, KindOfCheckedModality kindOfCheckedModality, IDictionary<RuleInstance, IItemWithModalities> additionalModalities)
         {
             var originalRuleInstance = item.RuleInstance.Original;
 

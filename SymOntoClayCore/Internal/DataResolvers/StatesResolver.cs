@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,12 +47,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly InheritanceResolver _inheritanceResolver;
         private readonly SynonymsResolver _synonymsResolver;
 
-        public StrongIdentifierValue ResolveDefaultStateName(ILocalCodeExecutionContext localCodeExecutionContext)
+        public StrongIdentifierValue ResolveDefaultStateName(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return ResolveDefaultStateName(localCodeExecutionContext, _defaultOptions);
         }
 
-        public StrongIdentifierValue ResolveDefaultStateName(ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public StrongIdentifierValue ResolveDefaultStateName(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
@@ -75,12 +76,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return null;
         }
 
-        public StateDef Resolve(StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext)
+        public StateDef Resolve(IMonitorLogger logger, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Resolve(name, localCodeExecutionContext, _defaultOptions);
         }
 
-        public StateDef Resolve(StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public StateDef Resolve(IMonitorLogger logger, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
@@ -113,12 +114,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return OrderAndDistinctByInheritance(filteredList, options).FirstOrDefault()?.ResultItem;
         }
 
-        public List<StateDef> ResolveAllStatesList(ILocalCodeExecutionContext localCodeExecutionContext)
+        public List<StateDef> ResolveAllStatesList(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return ResolveAllStatesList(localCodeExecutionContext, _defaultOptions);
         }
 
-        public List<StateDef> ResolveAllStatesList(ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<StateDef> ResolveAllStatesList(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
@@ -141,12 +142,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        public List<ActivationInfoOfStateDef> ResolveActivationInfoOfStateList(ILocalCodeExecutionContext localCodeExecutionContext)
+        public List<ActivationInfoOfStateDef> ResolveActivationInfoOfStateList(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return ResolveActivationInfoOfStateList(localCodeExecutionContext, _defaultOptions);
         }
         
-        public List<ActivationInfoOfStateDef> ResolveActivationInfoOfStateList(ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<ActivationInfoOfStateDef> ResolveActivationInfoOfStateList(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
@@ -169,12 +170,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        public List<MutuallyExclusiveStatesSet> ResolveMutuallyExclusiveStatesSetsList(ILocalCodeExecutionContext localCodeExecutionContext)
+        public List<MutuallyExclusiveStatesSet> ResolveMutuallyExclusiveStatesSetsList(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return ResolveMutuallyExclusiveStatesSetsList(localCodeExecutionContext, _defaultOptions);
         }
 
-        public List<MutuallyExclusiveStatesSet> ResolveMutuallyExclusiveStatesSetsList(ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<MutuallyExclusiveStatesSet> ResolveMutuallyExclusiveStatesSetsList(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
@@ -197,7 +198,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<StateDef>> GetRawStatesList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        private List<WeightedInheritanceResultItemWithStorageInfo<StateDef>> GetRawStatesList(IMonitorLogger logger, StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             var result = NGetRawStatesList(name, storagesList, weightedInheritanceItems);
 
@@ -209,7 +210,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<StateDef>> GetRawStatesListFromSynonyms(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        private List<WeightedInheritanceResultItemWithStorageInfo<StateDef>> GetRawStatesListFromSynonyms(IMonitorLogger logger, StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             var synonymsList = _synonymsResolver.GetSynonyms(name, storagesList);
 
@@ -228,7 +229,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return new List<WeightedInheritanceResultItemWithStorageInfo<StateDef>>();
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<StateDef>> NGetRawStatesList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        private List<WeightedInheritanceResultItemWithStorageInfo<StateDef>> NGetRawStatesList(IMonitorLogger logger, StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             if (!storagesList.Any())
             {

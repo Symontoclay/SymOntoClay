@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,17 +43,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         protected readonly IMainStorageContext _context;
 
-        public Dictionary<StrongIdentifierValue, IStorage> GetSuperClassStoragesDict(IStorage storage, IInstance instance)
+        public Dictionary<StrongIdentifierValue, IStorage> GetSuperClassStoragesDict(IMonitorLogger logger, IStorage storage, IInstance instance)
         {
             return GetStoragesList(storage, KindOfStoragesList.CodeItems).Select(p => p.Storage).Where(p => p.Kind == KindOfStorage.SuperClass && p.Instance == instance).ToDictionary(p => p.TargetClassName, p => p);
         }
 
-        public List<StorageUsingOptions> GetStoragesList(IStorage storage, KindOfStoragesList kindOfStoragesList = KindOfStoragesList.Full)
+        public List<StorageUsingOptions> GetStoragesList(IMonitorLogger logger, IStorage storage, KindOfStoragesList kindOfStoragesList = KindOfStoragesList.Full)
         {
             return GetStoragesList(storage, null, kindOfStoragesList);
         }
         
-        public List<StorageUsingOptions> GetStoragesList(IStorage storage, CollectChainOfStoragesOptions options, KindOfStoragesList kindOfStoragesList = KindOfStoragesList.Full)
+        public List<StorageUsingOptions> GetStoragesList(IMonitorLogger logger, IStorage storage, CollectChainOfStoragesOptions options, KindOfStoragesList kindOfStoragesList = KindOfStoragesList.Full)
         {
             switch (kindOfStoragesList)
             {
@@ -68,7 +69,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private List<StorageUsingOptions> FilterStoragesForVarResolving(List<StorageUsingOptions> storagesList)
+        private List<StorageUsingOptions> FilterStoragesForVarResolving(IMonitorLogger logger, List<StorageUsingOptions> storagesList)
         {
             var result = new List<StorageUsingOptions>();
 
@@ -130,7 +131,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private List<StorageUsingOptions> NGetStoragesList(IStorage storage, CollectChainOfStoragesOptions options, KindOfStoragesList kindOfStoragesList)
+        private List<StorageUsingOptions> NGetStoragesList(IMonitorLogger logger, IStorage storage, CollectChainOfStoragesOptions options, KindOfStoragesList kindOfStoragesList)
         {
             switch (kindOfStoragesList)
             {
@@ -178,13 +179,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterCodeItems<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, ILocalCodeExecutionContext localCodeExecutionContext)
+        protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterCodeItems<T>(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<T>> source, ILocalCodeExecutionContext localCodeExecutionContext)
             where T : CodeItem
         {
             return FilterCodeItems<T>(source, localCodeExecutionContext.Holder, localCodeExecutionContext);
         }
 
-        protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterCodeItems<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext)
+        protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterCodeItems<T>(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<T>> source, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext)
             where T : CodeItem
         {
             if (!source.Any())
@@ -221,7 +222,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        public List<T> FilterByTypeOfAccess<T>(IList<T> source, ILocalCodeExecutionContext localCodeExecutionContext, bool allowUnknown)
+        public List<T> FilterByTypeOfAccess<T>(IMonitorLogger logger, IList<T> source, ILocalCodeExecutionContext localCodeExecutionContext, bool allowUnknown)
             where T : IReadOnlyMemberAccess
         {
             var holder = localCodeExecutionContext.Holder;
@@ -281,7 +282,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private bool IsFitByTypeOfAccess(IReadOnlyMemberAccess item, StrongIdentifierValue holder, InheritanceResolver inheritanceResolver, ILocalCodeExecutionContext localCodeExecutionContext, bool holderIsEntity, bool hasHolderInItems, bool allowUnknown)
+        private bool IsFitByTypeOfAccess(IMonitorLogger logger, IReadOnlyMemberAccess item, StrongIdentifierValue holder, InheritanceResolver inheritanceResolver, ILocalCodeExecutionContext localCodeExecutionContext, bool holderIsEntity, bool hasHolderInItems, bool allowUnknown)
         {
             var typeOfAccess = item.TypeOfAccess;
 
@@ -349,7 +350,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return false;
         }
 
-        protected List<WeightedInheritanceResultItemWithStorageInfo<T>> Filter<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source)
+        protected List<WeightedInheritanceResultItemWithStorageInfo<T>> Filter<T>(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<T>> source)
             where T: AnnotatedItem
         {
             if(!source.Any())
@@ -373,7 +374,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        protected List<T> Filter<T>(List<T> source)
+        protected List<T> Filter<T>(IMonitorLogger logger, List<T> source)
             where T : AnnotatedItem
         {
             if (!source.Any())
@@ -397,7 +398,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        protected List<WeightedInheritanceResultItemWithStorageInfo<T>> OrderAndDistinctByInheritance<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, ResolverOptions options)
+        protected List<WeightedInheritanceResultItemWithStorageInfo<T>> OrderAndDistinctByInheritance<T>(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<T>> source, ResolverOptions options)
             where T : AnnotatedItem
         {
             if(options.JustDistinct)
@@ -408,7 +409,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return source.OrderByDescending(p => p.IsSelf).ThenByDescending(p => p.Rank).ThenBy(p => p.Distance).ToList();
         }
 
-        protected virtual T ChooseTargetItem<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source) 
+        protected virtual T ChooseTargetItem<T>(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<T>> source) 
             where T : AnnotatedItem
         {
             if(!source.Any())

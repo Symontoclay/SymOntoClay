@@ -24,6 +24,7 @@ using NLog;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public static class QueryExecutingCardAboutKnownInfoHelper
     {
-        public static MergingResultOfTwoQueryExecutingCardAboutKnownInfoLists Merge(IList<QueryExecutingCardAboutKnownInfo> internalKnownInfoList, IList<QueryExecutingCardAboutVar> internalVarsInfoList, IList<QueryExecutingCardAboutKnownInfo> externalKnownInfoList, bool inPartFromRelationForProduction)
+        public static MergingResultOfTwoQueryExecutingCardAboutKnownInfoLists Merge(IMonitorLogger logger, IList<QueryExecutingCardAboutKnownInfo> internalKnownInfoList, IList<QueryExecutingCardAboutVar> internalVarsInfoList, IList<QueryExecutingCardAboutKnownInfo> externalKnownInfoList, bool inPartFromRelationForProduction)
         {
             var result = new MergingResultOfTwoQueryExecutingCardAboutKnownInfoLists();
             var targetKnownInfoList = new List<QueryExecutingCardAboutKnownInfo>();

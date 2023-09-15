@@ -64,7 +64,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private static LogicalQueryNodeEqualityComparer _logicalQueryNodeEqualityComparer = new LogicalQueryNodeEqualityComparer();
 
-        public void NSetIndexedRuleInstanceToIndexData(RuleInstance indexedRuleInstance, bool registerLeafs)
+        public void NSetIndexedRuleInstanceToIndexData(IMonitorLogger logger, RuleInstance indexedRuleInstance, bool registerLeafs)
         {
             IndexedRuleInstancesDict[indexedRuleInstance.Name] = indexedRuleInstance;
 
@@ -118,7 +118,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             }
         }
 
-        private void NRegisterLogicalQueryNodeLeafs(RuleInstance indexedRuleInstance)
+        private void NRegisterLogicalQueryNodeLeafs(IMonitorLogger logger, RuleInstance indexedRuleInstance)
         {
             var leafsDict = indexedRuleInstance.LeafsList.GroupBy(p => p.Kind).ToDictionary(p => p.Key, p => p.ToList());
 
@@ -128,7 +128,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             }
         }
 
-        private void NRegisterLogicalQueryNodeLeafs(KindOfLogicalQueryNode kind, List<LogicalQueryNode> leafs)
+        private void NRegisterLogicalQueryNodeLeafs(IMonitorLogger logger, KindOfLogicalQueryNode kind, List<LogicalQueryNode> leafs)
         {
             if(_leafsDict.ContainsKey(kind))
             {
@@ -148,7 +148,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             }
         }
 
-        private void NAddIndexedRulePartToKeysOfRelationsIndex(IDictionary<StrongIdentifierValue, IList<BaseRulePart>> indexData, BaseRulePart indexedRulePart)
+        private void NAddIndexedRulePartToKeysOfRelationsIndex(IMonitorLogger logger, IDictionary<StrongIdentifierValue, IList<BaseRulePart>> indexData, BaseRulePart indexedRulePart)
         {
             var relationsList = indexedRulePart.RelationsDict.SelectMany(p => p.Value).Distinct().ToList();
 
@@ -180,7 +180,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             }
         }
 
-        public void NRemoveIndexedRuleInstanceFromIndexData(RuleInstance indexedRuleInstance)
+        public void NRemoveIndexedRuleInstanceFromIndexData(IMonitorLogger logger, RuleInstance indexedRuleInstance)
         {
             IndexedRuleInstancesDict.Remove(indexedRuleInstance.Name);
 
@@ -231,7 +231,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         }
 
-        private void NRemoveIndexedRulePartFromKeysOfRelationsIndex(IDictionary<StrongIdentifierValue, IList<BaseRulePart>> indexData, BaseRulePart indexedRulePart)
+        private void NRemoveIndexedRulePartFromKeysOfRelationsIndex(IMonitorLogger logger, IDictionary<StrongIdentifierValue, IList<BaseRulePart>> indexData, BaseRulePart indexedRulePart)
         {
             var relationsList = indexedRulePart.RelationsDict.SelectMany(p => p.Value).Distinct().ToList();
 
@@ -258,12 +258,12 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             }
         }
 
-        public IList<LogicalQueryNode> GetAllRelations()
+        public IList<LogicalQueryNode> GetAllRelations(IMonitorLogger logger)
         {
             return RelationsList.ToList();
         }
 
-        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name)
+        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(IMonitorLogger logger, StrongIdentifierValue name)
         {
             if (IndexedRulePartsOfFactsDict.ContainsKey(name))
             {
@@ -273,7 +273,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             return null;
         }
 
-        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name)
+        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(IMonitorLogger logger, StrongIdentifierValue name)
         {
             if (IndexedRulePartsWithOneRelationWithVarsDict.ContainsKey(name))
             {
@@ -283,7 +283,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             return null;
         }
 
-        public IReadOnlyList<LogicalQueryNode> GetLogicalQueryNodes(IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy, IList<KindOfLogicalQueryNode> targetKindsOfItems)
+        public IReadOnlyList<LogicalQueryNode> GetLogicalQueryNodes(IMonitorLogger logger, IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy, IList<KindOfLogicalQueryNode> targetKindsOfItems)
         {
             switch(replacingNotResultsStrategy)
             {

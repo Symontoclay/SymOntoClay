@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -39,12 +40,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
         }
 
-        public LogicalValue Resolve(Value source, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public LogicalValue Resolve(IMonitorLogger logger, Value source, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             return Resolve(source, localCodeExecutionContext, options, false);
         }
 
-        public LogicalValue Resolve(Value source, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options, bool forInheritance)
+        public LogicalValue Resolve(IMonitorLogger logger, Value source, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options, bool forInheritance)
         {
             var sourceKind = source.KindOfValue;
 

@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,21 +40,21 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public readonly ResolverOptions DefaultOptions = ResolverOptions.GetDefaultOptions();
 
-        public List<StrongIdentifierValue> GetSynonyms(StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext)
+        public List<StrongIdentifierValue> GetSynonyms(IMonitorLogger logger, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var storage = localCodeExecutionContext.Storage;
 
             return GetSynonyms(name, storage);
         }
 
-        public List<StrongIdentifierValue> GetSynonyms(StrongIdentifierValue name, IStorage storage)
+        public List<StrongIdentifierValue> GetSynonyms(IMonitorLogger logger, StrongIdentifierValue name, IStorage storage)
         {
             var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
 
             return GetSynonyms(name, storagesList);
         }
 
-        public List<StrongIdentifierValue> GetSynonyms(StrongIdentifierValue name, List<StorageUsingOptions> storagesList)
+        public List<StrongIdentifierValue> GetSynonyms(IMonitorLogger logger, StrongIdentifierValue name, List<StorageUsingOptions> storagesList)
         {
             var result = new List<StrongIdentifierValue>();
 
@@ -90,7 +91,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private List<StrongIdentifierValue> GetSynonymsDirectly(StrongIdentifierValue name, List<StorageUsingOptions> storagesList)
+        private List<StrongIdentifierValue> GetSynonymsDirectly(IMonitorLogger logger, StrongIdentifierValue name, List<StorageUsingOptions> storagesList)
         {
             if (!storagesList.Any())
             {

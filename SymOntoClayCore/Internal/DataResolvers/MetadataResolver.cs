@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -44,12 +45,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private readonly SynonymsResolver _synonymsResolver;
 
-        public CodeItem Resolve(StrongIdentifierValue prototypeName, ILocalCodeExecutionContext localCodeExecutionContext)
+        public CodeItem Resolve(IMonitorLogger logger, StrongIdentifierValue prototypeName, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Resolve(prototypeName, localCodeExecutionContext, _defaultOptions);
         }
 
-        public CodeItem Resolve(StrongIdentifierValue prototypeName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public CodeItem Resolve(IMonitorLogger logger, StrongIdentifierValue prototypeName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
@@ -77,7 +78,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             throw new NotImplementedException();
         }
 
-        private List<CodeItem> GetRawMetadataList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList)
+        private List<CodeItem> GetRawMetadataList(IMonitorLogger logger, StrongIdentifierValue name, List<StorageUsingOptions> storagesList)
         {
             if (!storagesList.Any())
             {
@@ -108,7 +109,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private List<CodeItem> NGetRawMetadataList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList)
+        private List<CodeItem> NGetRawMetadataList(IMonitorLogger logger, StrongIdentifierValue name, List<StorageUsingOptions> storagesList)
         {
             var result = new List<CodeItem>();
 

@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,20 +31,20 @@ namespace SymOntoClay.Core
 {
     public interface IVarStorage: ISpecificStorage
     {
-        void SetSystemValue(StrongIdentifierValue varName, Value value);
-        Value GetSystemValueDirectly(StrongIdentifierValue varName);
+        void SetSystemValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value);
+        Value GetSystemValueDirectly(IMonitorLogger logger, StrongIdentifierValue varName);
         
-        void Append(Var varItem);
-        IList<WeightedInheritanceResultItem<Var>> GetVarDirectly(StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems);
-        Var GetLocalVarDirectly(StrongIdentifierValue name);
+        void Append(IMonitorLogger logger, Var varItem);
+        IList<WeightedInheritanceResultItem<Var>> GetVarDirectly(IMonitorLogger logger, StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems);
+        Var GetLocalVarDirectly(IMonitorLogger logger, StrongIdentifierValue name);
 
-        void SetValue(StrongIdentifierValue varName, Value value);
+        void SetValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value);
 
         event Action OnChanged;
         event Action<StrongIdentifierValue> OnChangedWithKeys;
 
 #if DEBUG
-        void DbgPrintVariables();
+        void DbgPrintVariables(IMonitorLogger logger);
 #endif
     }
 }

@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,12 +49,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly InheritanceResolver _inheritanceResolver;
         private readonly SynonymsResolver _synonymsResolver;
 
-        public RelationDescription GetRelation(StrongIdentifierValue name, int paramsCount, ILocalCodeExecutionContext localCodeExecutionContext)
+        public RelationDescription GetRelation(IMonitorLogger logger, StrongIdentifierValue name, int paramsCount, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return GetRelation(name, paramsCount, localCodeExecutionContext, DefaultOptions);
         }
 
-        public RelationDescription GetRelation(StrongIdentifierValue name, int paramsCount, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public RelationDescription GetRelation(IMonitorLogger logger, StrongIdentifierValue name, int paramsCount, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
@@ -78,7 +79,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return targetItem;
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<RelationDescription>> GetRawList(StrongIdentifierValue name, int paramsCount, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        private List<WeightedInheritanceResultItemWithStorageInfo<RelationDescription>> GetRawList(IMonitorLogger logger, StrongIdentifierValue name, int paramsCount, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             var result = NGetRawList(name, paramsCount, storagesList, weightedInheritanceItems);
 
@@ -90,7 +91,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<RelationDescription>> GetRawListFromSynonyms(StrongIdentifierValue name, int paramsCount, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        private List<WeightedInheritanceResultItemWithStorageInfo<RelationDescription>> GetRawListFromSynonyms(IMonitorLogger logger, StrongIdentifierValue name, int paramsCount, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             var synonymsList = _synonymsResolver.GetSynonyms(name, storagesList);
 
@@ -109,7 +110,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return new List<WeightedInheritanceResultItemWithStorageInfo<RelationDescription>>();
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<RelationDescription>> NGetRawList(StrongIdentifierValue name, int paramsCount, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        private List<WeightedInheritanceResultItemWithStorageInfo<RelationDescription>> NGetRawList(IMonitorLogger logger, StrongIdentifierValue name, int paramsCount, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             if (!storagesList.Any())
             {

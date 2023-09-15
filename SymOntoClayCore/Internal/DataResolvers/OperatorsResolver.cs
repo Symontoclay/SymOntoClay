@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,12 +43,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private readonly InheritanceResolver _inheritanceResolver;
 
-        public Operator GetOperator(KindOfOperator kindOfOperator, ILocalCodeExecutionContext localCodeExecutionContext)
+        public Operator GetOperator(IMonitorLogger logger, KindOfOperator kindOfOperator, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return GetOperator(kindOfOperator, localCodeExecutionContext, _defaultOptions);
         }
 
-        public Operator GetOperator(KindOfOperator kindOfOperator, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public Operator GetOperator(IMonitorLogger logger, KindOfOperator kindOfOperator, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
@@ -67,7 +68,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return targetOp;
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<Operator>> GetRawList(KindOfOperator kindOfOperator, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        private List<WeightedInheritanceResultItemWithStorageInfo<Operator>> GetRawList(IMonitorLogger logger, KindOfOperator kindOfOperator, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             if(!storagesList.Any())
             {

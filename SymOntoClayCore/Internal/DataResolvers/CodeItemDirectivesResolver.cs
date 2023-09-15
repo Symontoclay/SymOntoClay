@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,12 +45,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly InheritanceResolver _inheritanceResolver;
         private readonly MetadataResolver _metadataResolver;
 
-        public List<CodeItemDirective> Resolve(ILocalCodeExecutionContext localCodeExecutionContext)
+        public List<CodeItemDirective> Resolve(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Resolve(localCodeExecutionContext, _defaultOptions);
         }
 
-        public List<CodeItemDirective> Resolve(ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<CodeItemDirective> Resolve(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;

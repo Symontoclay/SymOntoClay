@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -40,7 +41,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly ILocalCodeExecutionContext _localCodeExecutionContext;
 
         /// <inheritdoc/>
-        public bool IsHigh(Value modalityValue)
+        public bool IsHigh(IMonitorLogger logger, Value modalityValue)
         {
             return _logicalValueModalityResolver.IsHigh(modalityValue, _localCodeExecutionContext);
         }

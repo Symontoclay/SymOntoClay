@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,17 +31,17 @@ namespace SymOntoClay.Core
 {
     public interface ITriggersStorage : ISpecificStorage
     {
-        void Append(InlineTrigger inlineTrigger);
-        IList<WeightedInheritanceResultItem<InlineTrigger>> GetSystemEventsTriggersDirectly(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IList<WeightedInheritanceItem> weightedInheritanceItems);
-        IList<WeightedInheritanceResultItem<InlineTrigger>> GetLogicConditionalTriggersDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems);
-        IList<WeightedInheritanceResultItem<InlineTrigger>> GetAddFactTriggersDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems);
+        void Append(IMonitorLogger logger, InlineTrigger inlineTrigger);
+        IList<WeightedInheritanceResultItem<InlineTrigger>> GetSystemEventsTriggersDirectly(IMonitorLogger logger, KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IList<WeightedInheritanceItem> weightedInheritanceItems);
+        IList<WeightedInheritanceResultItem<InlineTrigger>> GetLogicConditionalTriggersDirectly(IMonitorLogger logger, IList<WeightedInheritanceItem> weightedInheritanceItems);
+        IList<WeightedInheritanceResultItem<InlineTrigger>> GetAddFactTriggersDirectly(IMonitorLogger logger, IList<WeightedInheritanceItem> weightedInheritanceItems);
 
-        void Append(INamedTriggerInstance namedTriggerInstance);
-        void Remove(INamedTriggerInstance namedTriggerInstance);
+        void Append(IMonitorLogger logger, INamedTriggerInstance namedTriggerInstance);
+        void Remove(IMonitorLogger logger, INamedTriggerInstance namedTriggerInstance);
 
         event Action OnNamedTriggerInstanceChanged;
         event Action<IList<StrongIdentifierValue>> OnNamedTriggerInstanceChangedWithKeys;
 
-        IList<INamedTriggerInstance> GetNamedTriggerInstancesDirectly(StrongIdentifierValue name);
+        IList<INamedTriggerInstance> GetNamedTriggerInstancesDirectly(IMonitorLogger logger, StrongIdentifierValue name);
     }
 }

@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -29,7 +30,7 @@ namespace SymOntoClay.Core
 {
     public interface INLPConverter
     {
-        IList<RuleInstance> Convert(string text);
-        string Convert(RuleInstance fact, INLPConverterContext nlpContext);
+        IList<RuleInstance> Convert(IMonitorLogger logger, string text);
+        string Convert(IMonitorLogger logger, RuleInstance fact, INLPConverterContext nlpContext);
     }
 }

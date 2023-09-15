@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,7 +47,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly InheritanceResolver _inheritanceResolver;
         private readonly SynonymsResolver _synonymsResolver;
 
-        public List<InlineTrigger> ResolveLogicConditionalTriggersList(StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<InlineTrigger> ResolveLogicConditionalTriggersList(IMonitorLogger logger, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storagesList = GetStoragesList(localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
@@ -60,7 +61,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return OrderAndDistinct(rawList, localCodeExecutionContext, options).Select(p => p.ResultItem).ToList();
         }
 
-        public List<InlineTrigger> ResolveAddFactTriggersList(StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<InlineTrigger> ResolveAddFactTriggersList(IMonitorLogger logger, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storagesList = GetStoragesList(localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
@@ -74,7 +75,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return OrderAndDistinct(rawList, localCodeExecutionContext, options).Select(p => p.ResultItem).ToList();
         }
 
-        public List<InlineTrigger> ResolveSystemEventsTriggersList(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<InlineTrigger> ResolveSystemEventsTriggersList(IMonitorLogger logger, KindOfSystemEventOfInlineTrigger kindOfSystemEvent, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storagesList = GetStoragesList(localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
@@ -88,14 +89,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return OrderAndDistinct(rawList, localCodeExecutionContext, options).Select(p => p.ResultItem).ToList();
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>> OrderAndDistinct(List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>> source, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>> OrderAndDistinct(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>> source, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var inheritanceOrderOptions = options.Clone();
 
             return OrderAndDistinctByInheritance(source, inheritanceOrderOptions);
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>> GetLogicConditionalRawList(List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        private List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>> GetLogicConditionalRawList(IMonitorLogger logger, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             var result = new List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>>();
 
@@ -120,7 +121,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>> GetAddFactTriggersRawList(List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        private List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>> GetAddFactTriggersRawList(IMonitorLogger logger, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             var result = new List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>>();
 
@@ -145,7 +146,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>> GetSystemEventsRawList(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        private List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>> GetSystemEventsRawList(IMonitorLogger logger, KindOfSystemEventOfInlineTrigger kindOfSystemEvent, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             var result = new List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>>();
 
@@ -170,12 +171,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        public INamedTriggerInstance ResolveNamedTriggerInstance(StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext)
+        public INamedTriggerInstance ResolveNamedTriggerInstance(IMonitorLogger logger, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return ResolveNamedTriggerInstance(name, localCodeExecutionContext, _defaultOptions);
         }
 
-        public INamedTriggerInstance ResolveNamedTriggerInstance(StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public INamedTriggerInstance ResolveNamedTriggerInstance(IMonitorLogger logger, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
@@ -196,7 +197,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             throw new NotImplementedException();
         }
 
-        private List<INamedTriggerInstance> GetNamedTriggerInstanceRawList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, ILocalCodeExecutionContext localCodeExecutionContext)
+        private List<INamedTriggerInstance> GetNamedTriggerInstanceRawList(IMonitorLogger logger, StrongIdentifierValue name, List<StorageUsingOptions> storagesList, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var result = NGetNamedTriggerInstanceRawList(name, storagesList);
 
@@ -208,7 +209,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private List<INamedTriggerInstance> GetNamedTriggerInstanceRawListFromSynonyms(StrongIdentifierValue name, List<StorageUsingOptions> storagesList, ILocalCodeExecutionContext localCodeExecutionContext)
+        private List<INamedTriggerInstance> GetNamedTriggerInstanceRawListFromSynonyms(IMonitorLogger logger, StrongIdentifierValue name, List<StorageUsingOptions> storagesList, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var synonymsList = _synonymsResolver.GetSynonyms(name, localCodeExecutionContext);
 
@@ -227,7 +228,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return new List<INamedTriggerInstance>();
         }
 
-        private List<INamedTriggerInstance> NGetNamedTriggerInstanceRawList(StrongIdentifierValue name, List<StorageUsingOptions> storagesList)
+        private List<INamedTriggerInstance> NGetNamedTriggerInstanceRawList(IMonitorLogger logger, StrongIdentifierValue name, List<StorageUsingOptions> storagesList)
         {
             if (!storagesList.Any())
             {

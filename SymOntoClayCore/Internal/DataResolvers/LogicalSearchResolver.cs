@@ -63,14 +63,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             _logicalSearchVarResultsItemInvertor = dataResolversFactory.GetLogicalSearchVarResultsItemInvertor();
         }
 
-        public bool IsTruth(LogicalSearchOptions options)
+        public bool IsTruth(IMonitorLogger logger, LogicalSearchOptions options)
         {
             var result = Run(options);
 
             return result.IsSuccess;
         }
 
-        public LogicalSearchResult Run(LogicalSearchOptions options)
+        public LogicalSearchResult Run(IMonitorLogger logger, LogicalSearchOptions options)
         {
             var result = new LogicalSearchResult();
 
@@ -304,7 +304,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private void AppendResults(QueryExecutingCardForIndexedPersistLogicalData sourceQueryExecutingCard, QueryExecutingCardForIndexedPersistLogicalData destQueryExecutingCard, bool setIsSuccessIfTrue = false)
+        private void AppendResults(IMonitorLogger logger, QueryExecutingCardForIndexedPersistLogicalData sourceQueryExecutingCard, QueryExecutingCardForIndexedPersistLogicalData destQueryExecutingCard, bool setIsSuccessIfTrue = false)
         {
             if(setIsSuccessIfTrue)
             {
@@ -323,7 +323,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             destQueryExecutingCard.UsedKeysList.AddRange(sourceQueryExecutingCard.UsedKeysList);
         }
 
-        private void CopyResultsOfQueryToRelationList(QueryExecutingCardForIndexedPersistLogicalData sourceQueryExecutingCard, QueryExecutingCardForIndexedPersistLogicalData destQueryExecutingCard)
+        private void CopyResultsOfQueryToRelationList(IMonitorLogger logger, QueryExecutingCardForIndexedPersistLogicalData sourceQueryExecutingCard, QueryExecutingCardForIndexedPersistLogicalData destQueryExecutingCard)
         {
             var destList = destQueryExecutingCard.ResultsOfQueryToRelationList;
 
@@ -333,13 +333,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private void FillUpResultToExplainNode(QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, LogicalSearchExplainNode resultExplainNode)
+        private void FillUpResultToExplainNode(IMonitorLogger logger, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, LogicalSearchExplainNode resultExplainNode)
         {
             resultExplainNode.IsSuccess = queryExecutingCard.IsSuccess;
             resultExplainNode.ResultsOfQueryToRelationList = queryExecutingCard.ResultsOfQueryToRelationList;
         }
 
-        private void FillExecutingCard(RuleInstance processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void FillExecutingCard(IMonitorLogger logger, RuleInstance processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
             LogicalSearchExplainNode currentExplainNode = null;
             LogicalSearchExplainNode resultExplainNode = null;
@@ -393,7 +393,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         }
 
-        private void FillExecutingCard(PrimaryRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void FillExecutingCard(IMonitorLogger logger, PrimaryRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
             LogicalSearchExplainNode currentExplainNode = null;
             LogicalSearchExplainNode resultExplainNode = null;
@@ -475,7 +475,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         }
 
-        private LogicalSearchExplainNode FillExecutingCardUsingPostFiltersList(QueryExecutingCardForIndexedPersistLogicalData sourceQueryExecutingCard, QueryExecutingCardForIndexedPersistLogicalData destQueryExecutingCard, OptionsOfFillExecutingCard options, ConsolidatedDataSource dataSource)
+        private LogicalSearchExplainNode FillExecutingCardUsingPostFiltersList(IMonitorLogger logger, QueryExecutingCardForIndexedPersistLogicalData sourceQueryExecutingCard, QueryExecutingCardForIndexedPersistLogicalData destQueryExecutingCard, OptionsOfFillExecutingCard options, ConsolidatedDataSource dataSource)
         {
             var postFiltersList = sourceQueryExecutingCard.PostFiltersList;
 
@@ -565,7 +565,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private LogicalSearchExplainNode FillExecutingCardUsingPostFilterListWithAndStrategy(QueryExecutingCardForIndexedPersistLogicalData sourceQueryExecutingCard, QueryExecutingCardForIndexedPersistLogicalData destQueryExecutingCard, PostFilterOfQueryExecutingCardForPersistLogicalData postFilter, OptionsOfFillExecutingCard options, ConsolidatedDataSource dataSource)
+        private LogicalSearchExplainNode FillExecutingCardUsingPostFilterListWithAndStrategy(IMonitorLogger logger, QueryExecutingCardForIndexedPersistLogicalData sourceQueryExecutingCard, QueryExecutingCardForIndexedPersistLogicalData destQueryExecutingCard, PostFilterOfQueryExecutingCardForPersistLogicalData postFilter, OptionsOfFillExecutingCard options, ConsolidatedDataSource dataSource)
         {
             var processedExpr = postFilter.ProcessedExpr;
 
@@ -694,7 +694,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return currentExplainNode;
         }
 
-        private bool CompareForPostFilter(KindOfOperatorOfLogicalQueryNode kindOfOperator, LogicalQueryNode leftNode, LogicalQueryNode rightNode, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource)
+        private bool CompareForPostFilter(IMonitorLogger logger, KindOfOperatorOfLogicalQueryNode kindOfOperator, LogicalQueryNode leftNode, LogicalQueryNode rightNode, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource)
         {
             switch (kindOfOperator)
             {
@@ -715,7 +715,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private bool CompareForPostFilterByOperatorIs(LogicalQueryNode leftNode, LogicalQueryNode rightNode, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource)
+        private bool CompareForPostFilterByOperatorIs(IMonitorLogger logger, LogicalQueryNode leftNode, LogicalQueryNode rightNode, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource)
         {
             List<StrongIdentifierValue> additionalKeys_1 = null;
             List<StrongIdentifierValue> additionalKeys_2 = null;
@@ -763,7 +763,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return EqualityCompare(leftNode, rightNode, additionalKeys_1, additionalKeys_2, reasonOfFuzzyLogicResolving, options, queryExecutingCard, dataSource);
         }
 
-        private bool CompareForPostFilterByOperatorsMoreOrLess(KindOfOperatorOfLogicalQueryNode kindOfOperator, LogicalQueryNode leftNode, LogicalQueryNode rightNode, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard)
+        private bool CompareForPostFilterByOperatorsMoreOrLess(IMonitorLogger logger, KindOfOperatorOfLogicalQueryNode kindOfOperator, LogicalQueryNode leftNode, LogicalQueryNode rightNode, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard)
         {
             var localCodeExecutionContext = options.LocalCodeExecutionContext;
             var numberValueLinearResolver = _numberValueLinearResolver;
@@ -1246,7 +1246,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             throw new NotImplementedException();
         }
 
-        private bool CompareSystemValues(KindOfOperatorOfLogicalQueryNode kindOfOperator, double left, double right, OptionsOfFillExecutingCard options)
+        private bool CompareSystemValues(IMonitorLogger logger, KindOfOperatorOfLogicalQueryNode kindOfOperator, double left, double right, OptionsOfFillExecutingCard options)
         {
             switch (kindOfOperator)
             {
@@ -1270,7 +1270,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private void FillExecutingCard(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void FillExecutingCard(IMonitorLogger logger, LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
             var kind = processedExpr.Kind;
 
@@ -1342,7 +1342,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         }
 
-        private void FillExecutingCardForRelationLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void FillExecutingCardForRelationLogicalQueryNode(IMonitorLogger logger, LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
             if (processedExpr.IsQuestion)
             {
@@ -1357,7 +1357,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
         }
 
-        private void NFillExecutingCardForRelationLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void NFillExecutingCardForRelationLogicalQueryNode(IMonitorLogger logger, LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
             var relationName = processedExpr.Name;
 
@@ -1467,7 +1467,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         }
 
-        private void NFillExecutingCardForConcreteRelationLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void NFillExecutingCardForConcreteRelationLogicalQueryNode(IMonitorLogger logger, LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
             if (queryExecutingCard.UsedRelations.Contains(processedExpr))
             {
@@ -1716,7 +1716,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         }
 
-        private void FillExecutingCardForQuestion(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void FillExecutingCardForQuestion(IMonitorLogger logger, LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
             LogicalSearchExplainNode currentExplainNode = null;
             LogicalSearchExplainNode dataSourceResultExplainNode = null;
@@ -1865,7 +1865,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         }
 
-        private void CopyPostFilters(QueryExecutingCardForIndexedPersistLogicalData sourceQueryExecutingCard, QueryExecutingCardForIndexedPersistLogicalData destQueryExecutingCard, KindOfOperatorOfLogicalQueryNode kindOfBinaryOperator)
+        private void CopyPostFilters(IMonitorLogger logger, QueryExecutingCardForIndexedPersistLogicalData sourceQueryExecutingCard, QueryExecutingCardForIndexedPersistLogicalData destQueryExecutingCard, KindOfOperatorOfLogicalQueryNode kindOfBinaryOperator)
         {
             var destList = destQueryExecutingCard.PostFiltersList;
 
@@ -1883,7 +1883,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private void FillExecutingCardForAndOperatorLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void FillExecutingCardForAndOperatorLogicalQueryNode(IMonitorLogger logger, LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
             LogicalSearchExplainNode currentExplainNode = null;
             LogicalSearchExplainNode leftResultExplainNode = null;
@@ -2177,7 +2177,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         }
 
-        private void FillExecutingCardForOrOperatorLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void FillExecutingCardForOrOperatorLogicalQueryNode(IMonitorLogger logger, LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
             LogicalSearchExplainNode currentExplainNode = null;
             LogicalSearchExplainNode leftResultExplainNode = null;
@@ -2245,7 +2245,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             MergeExecutingCardForOrOperatorLogicalQueryNode(leftQueryExecutingCard, rightQueryExecutingCard, queryExecutingCard, currentExplainNode, dataSource, options);
         }
 
-        private void MergeExecutingCardForOrOperatorLogicalQueryNode(QueryExecutingCardForIndexedPersistLogicalData leftQueryExecutingCard, QueryExecutingCardForIndexedPersistLogicalData rightQueryExecutingCard, 
+        private void MergeExecutingCardForOrOperatorLogicalQueryNode(IMonitorLogger logger, QueryExecutingCardForIndexedPersistLogicalData leftQueryExecutingCard, QueryExecutingCardForIndexedPersistLogicalData rightQueryExecutingCard, 
             QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, LogicalSearchExplainNode currentExplainNode, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
             if (!leftQueryExecutingCard.IsSuccess && !rightQueryExecutingCard.IsSuccess)
@@ -2506,7 +2506,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private void FillExecutingCardForIsOperatorLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void FillExecutingCardForIsOperatorLogicalQueryNode(IMonitorLogger logger, LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
             LogicalSearchExplainNode currentExplainNode = null;
 
@@ -2581,7 +2581,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             throw new NotImplementedException();
         }
 
-        private void FillExecutingCardForIsNotOperatorLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void FillExecutingCardForIsNotOperatorLogicalQueryNode(IMonitorLogger logger, LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
             LogicalSearchExplainNode currentExplainNode = null;
 
@@ -2662,7 +2662,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             throw new NotImplementedException();
         }
 
-        private void FillExecutingCardForMoreOperatorLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void FillExecutingCardForMoreOperatorLogicalQueryNode(IMonitorLogger logger, LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
             LogicalSearchExplainNode currentExplainNode = null;
 
@@ -2704,7 +2704,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             throw new NotImplementedException();
         }
 
-        private void FillExecutingCardForMoreOrEqualOperatorLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void FillExecutingCardForMoreOrEqualOperatorLogicalQueryNode(IMonitorLogger logger, LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
             LogicalSearchExplainNode currentExplainNode = null;
 
@@ -2746,7 +2746,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             throw new NotImplementedException();
         }
 
-        private void FillExecutingCardForLessOperatorLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void FillExecutingCardForLessOperatorLogicalQueryNode(IMonitorLogger logger, LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
             LogicalSearchExplainNode currentExplainNode = null;
 
@@ -2788,7 +2788,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             throw new NotImplementedException();
         }
 
-        private void FillExecutingCardForLessOrEqualOperatorLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void FillExecutingCardForLessOrEqualOperatorLogicalQueryNode(IMonitorLogger logger, LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
             LogicalSearchExplainNode currentExplainNode = null;
 
@@ -2830,7 +2830,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             throw new NotImplementedException();
         }
 
-        private void BuildResultsOfQueryToRelationListForBinaryOperatorLogicalQueryNode(IEnumerator<StrongIdentifierValue> varNamesListEnumerator, Dictionary<StrongIdentifierValue, List<(StrongIdentifierValue, LogicalQueryNode)>> varValuesDict, List<(StrongIdentifierValue, LogicalQueryNode)> resultVarValuesList, IList<ResultOfQueryToRelation> resultsOfQueryToRelationList, OptionsOfFillExecutingCard options)
+        private void BuildResultsOfQueryToRelationListForBinaryOperatorLogicalQueryNode(IMonitorLogger logger, IEnumerator<StrongIdentifierValue> varNamesListEnumerator, Dictionary<StrongIdentifierValue, List<(StrongIdentifierValue, LogicalQueryNode)>> varValuesDict, List<(StrongIdentifierValue, LogicalQueryNode)> resultVarValuesList, IList<ResultOfQueryToRelation> resultsOfQueryToRelationList, OptionsOfFillExecutingCard options)
         {
             var varName = varNamesListEnumerator.Current;
 
@@ -2864,7 +2864,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private void FillExecutingCardForNotOperatorLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void FillExecutingCardForNotOperatorLogicalQueryNode(IMonitorLogger logger, LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
             LogicalSearchExplainNode currentExplainNode = null;
             LogicalSearchExplainNode resultExplainNode = null;
@@ -2943,7 +2943,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private void FillExecutingCardForCallingFromRelationForFact(BaseRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void FillExecutingCardForCallingFromRelationForFact(IMonitorLogger logger, BaseRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
             LogicalSearchExplainNode currentExplainNode = null;
 
@@ -3217,7 +3217,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private (bool IsFit, QueryExecutingCardForIndexedPersistLogicalData ComparisonQueryExecutingCard) IsFitByKnownInfo(LogicalQueryNode targetRelation, 
+        private (bool IsFit, QueryExecutingCardForIndexedPersistLogicalData ComparisonQueryExecutingCard) IsFitByKnownInfo(IMonitorLogger logger, LogicalQueryNode targetRelation, 
             QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options, 
             LogicalSearchExplainNode rootParentExplainNode, ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving)
         {
@@ -3261,7 +3261,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return (true, comparisonQueryExecutingCard);
         }
 
-        private bool DetectExpressionInParamOfRelation(IList<QueryExecutingCardAboutVar> varsInfoList, IList<LogicalQueryNode> paramsListOfTargetRelation)
+        private bool DetectExpressionInParamOfRelation(IMonitorLogger logger, IList<QueryExecutingCardAboutVar> varsInfoList, IList<LogicalQueryNode> paramsListOfTargetRelation)
         {
             foreach (var varItem in varsInfoList)
             {
@@ -3276,7 +3276,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return false;
         }
 
-        private void FillExecutingCardForGroupLogicalQueryNode(LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void FillExecutingCardForGroupLogicalQueryNode(IMonitorLogger logger, LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
             LogicalSearchExplainNode currentExplainNode = null;
             LogicalSearchExplainNode resultExplainNode = null;
@@ -3358,7 +3358,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private bool CompareKnownInfoAndParamOfTargetRelation(QueryExecutingCardAboutKnownInfo knownInfo, LogicalQueryNode paramOfTargetRelation, ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource)
+        private bool CompareKnownInfoAndParamOfTargetRelation(IMonitorLogger logger, QueryExecutingCardAboutKnownInfo knownInfo, LogicalQueryNode paramOfTargetRelation, ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource)
         {
             if(CompareKnownInfoAndExpressionNode(knownInfo.Expression, paramOfTargetRelation, reasonOfFuzzyLogicResolving, options, queryExecutingCard, dataSource))
             {
@@ -3403,7 +3403,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return false;
         }
 
-        private bool CompareKnownInfoAndExpressionNode(LogicalQueryNode knownInfo, LogicalQueryNode expressionNode, ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource)
+        private bool CompareKnownInfoAndExpressionNode(IMonitorLogger logger, LogicalQueryNode knownInfo, LogicalQueryNode expressionNode, ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource)
         {
             var useInheritance = options.UseInheritance;
 
@@ -3440,7 +3440,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return EqualityCompare(knownInfo, expressionNode, additionalKeys_1, additionalKeys_2, reasonOfFuzzyLogicResolving, options, queryExecutingCard, dataSource);
         }
 
-        private void FillExecutingCardForCallingFromRelationForProduction(BaseRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void FillExecutingCardForCallingFromRelationForProduction(IMonitorLogger logger, BaseRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
             LogicalSearchExplainNode currentExplainNode = null;
 
@@ -3639,7 +3639,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         }
 
-        private void FillExecutingCardForCallingFromOtherPart(BaseRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        private void FillExecutingCardForCallingFromOtherPart(IMonitorLogger logger, BaseRulePart processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
         {
             LogicalSearchExplainNode currentExplainNode = null;
             LogicalSearchExplainNode resultExplainNode = null;
@@ -3703,7 +3703,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         }
 
-        private bool EqualityCompare(LogicalQueryNode expressionNode1, LogicalQueryNode expressionNode2, List<StrongIdentifierValue> additionalKeys_1, List<StrongIdentifierValue> additionalKeys_2, ReasonOfFuzzyLogicResolving reason, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource)
+        private bool EqualityCompare(IMonitorLogger logger, LogicalQueryNode expressionNode1, LogicalQueryNode expressionNode2, List<StrongIdentifierValue> additionalKeys_1, List<StrongIdentifierValue> additionalKeys_2, ReasonOfFuzzyLogicResolving reason, OptionsOfFillExecutingCard options, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource)
         {
             if(expressionNode1.IsNull && expressionNode2.IsNull)
             {

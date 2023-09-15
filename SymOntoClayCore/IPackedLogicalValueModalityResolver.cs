@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -29,6 +30,6 @@ namespace SymOntoClay.Core
 {
     public interface IPackedLogicalValueModalityResolver
     {
-        bool IsHigh(Value modalityValue);
+        bool IsHigh(IMonitorLogger logger, Value modalityValue);
     }
 }

@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -47,7 +48,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly ResolverOptions _options;
 
         /// <inheritdoc/>
-        public Value GetVarValue(StrongIdentifierValue varName)
+        public Value GetVarValue(IMonitorLogger logger, StrongIdentifierValue varName)
         {
             return _varsResolver.GetVarValue(varName, _localCodeExecutionContext, _options);
         }

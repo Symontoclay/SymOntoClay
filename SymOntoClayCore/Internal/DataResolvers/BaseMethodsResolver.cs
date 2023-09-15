@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,12 +49,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private static readonly StrongIdentifierValue _fuzzyTypeIdentifier = NameHelper.CreateName(StandardNamesConstants.FuzzyTypeName);
         private static readonly StrongIdentifierValue _numberTypeIdentifier = NameHelper.CreateName(StandardNamesConstants.NumberTypeName);
 
-        protected T EnumerableLocalCodeExecutionContext<T>(ILocalCodeExecutionContext localCodeExecutionContext, Func<ILocalCodeExecutionContext, T> func)
+        protected T EnumerableLocalCodeExecutionContext<T>(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, Func<ILocalCodeExecutionContext, T> func)
         {
             return EnumerableLocalCodeExecutionContext(localCodeExecutionContext, KindOfEnumerableLocalCodeExecutionContext.StepBetweenNewHolders, func);
         }
 
-        protected T EnumerableLocalCodeExecutionContext<T>(ILocalCodeExecutionContext localCodeExecutionContext, KindOfEnumerableLocalCodeExecutionContext kindOfEnumerableLocalCodeExecutionContext, Func<ILocalCodeExecutionContext, T> func)
+        protected T EnumerableLocalCodeExecutionContext<T>(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, KindOfEnumerableLocalCodeExecutionContext kindOfEnumerableLocalCodeExecutionContext, Func<ILocalCodeExecutionContext, T> func)
         {
             var result = func(localCodeExecutionContext);
 
@@ -85,7 +86,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private ILocalCodeExecutionContext GetParentLocalCodeExecutionContext(ILocalCodeExecutionContext localCodeExecutionContext, KindOfEnumerableLocalCodeExecutionContext kindOfEnumerableLocalCodeExecutionContext)
+        private ILocalCodeExecutionContext GetParentLocalCodeExecutionContext(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, KindOfEnumerableLocalCodeExecutionContext kindOfEnumerableLocalCodeExecutionContext)
         {
             switch (kindOfEnumerableLocalCodeExecutionContext)
             {
@@ -114,7 +115,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterByTypeOfParameters<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterByTypeOfParameters<T>(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<T>> source, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
             where T : AnnotatedItem, IExecutable
         {
             var result = new List<WeightedInheritanceResultItemWithStorageInfo<T>>();
@@ -136,7 +137,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterByTypeOfParameters<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterByTypeOfParameters<T>(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<T>> source, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
             where T : AnnotatedItem, IExecutable
         {
             var result = new List<WeightedInheritanceResultItemWithStorageInfo<T>>();
@@ -158,7 +159,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        protected List<uint> IsFit(IExecutable function, IDictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        protected List<uint> IsFit(IMonitorLogger logger, IExecutable function, IDictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var result = new List<uint>();
 
@@ -169,10 +170,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var argumentName = argument.Name;
 
                 var parameterValue = GetParameterValue(argumentName, namedParameters, localCodeExecutionContext);
-
-#if DEBUG
-
-#endif
 
                 if (parameterValue == null)
                 {
@@ -210,7 +207,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        protected List<uint> IsFit(IExecutable function, IList<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        protected List<uint> IsFit(IMonitorLogger logger, IExecutable function, IList<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var positionedParametersEnumerator = positionedParameters.GetEnumerator();
 
@@ -245,7 +242,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        protected Value GetParameterValue(StrongIdentifierValue argumentName, IDictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext)
+        protected Value GetParameterValue(IMonitorLogger logger, StrongIdentifierValue argumentName, IDictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             if (namedParameters.ContainsKey(argumentName))
             {
@@ -291,7 +288,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return null;
         }
 
-        protected T GetTargetValueFromList<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source, int paramsCount, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        protected T GetTargetValueFromList<T>(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<T>> source, int paramsCount, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
             where T : AnnotatedItem, IExecutable
         {
             CorrectParametersRankMatrixForSpecialCases(source);
@@ -434,7 +431,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return orderedList.FirstOrDefault()?.ResultItem;
         }
 
-        protected void CorrectParametersRankMatrixForSpecialCases<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source)
+        protected void CorrectParametersRankMatrixForSpecialCases<T>(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<T>> source)
             where T : AnnotatedItem, IExecutable
         {
             var advicesDict = CheckSpecialCasesInParameters(source);
@@ -487,7 +484,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        protected Dictionary<int, IFunctionArgument> ConvertArgumentsListToDictByPosition(IList<IFunctionArgument> argumentsList)
+        protected Dictionary<int, IFunctionArgument> ConvertArgumentsListToDictByPosition(IMonitorLogger logger, IList<IFunctionArgument> argumentsList)
         {
             var result = new Dictionary<int, IFunctionArgument>();
 
@@ -503,7 +500,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        protected Dictionary<int, StrongIdentifierValue> CheckSpecialCasesInParameters<T>(List<WeightedInheritanceResultItemWithStorageInfo<T>> source)
+        protected Dictionary<int, StrongIdentifierValue> CheckSpecialCasesInParameters<T>(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<T>> source)
             where T : AnnotatedItem, IExecutable
         {
             var result = new Dictionary<int, StrongIdentifierValue>();

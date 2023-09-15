@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,7 +31,7 @@ namespace SymOntoClay.Core
 {
     public interface IIdleActionItemsStorage : ISpecificStorage
     {
-        void Append(IdleActionItem item);
-        IList<WeightedInheritanceResultItem<IdleActionItem>> GetIdleActionsDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems);
+        void Append(IMonitorLogger logger, IdleActionItem item);
+        IList<WeightedInheritanceResultItem<IdleActionItem>> GetIdleActionsDirectly(IMonitorLogger logger, IList<WeightedInheritanceItem> weightedInheritanceItems);
     }
 }

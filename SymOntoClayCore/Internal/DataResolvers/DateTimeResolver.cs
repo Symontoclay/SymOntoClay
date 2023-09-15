@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using Newtonsoft.Json.Linq;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -38,7 +39,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private readonly IDateTimeProvider _dateTimeProvider;
 
-        public long ConvertTimeValueToTicks(Value value, KindOfDefaultTimeValue kindOfDefaultTimeValue, ILocalCodeExecutionContext localCodeExecutionContext)
+        public long ConvertTimeValueToTicks(IMonitorLogger logger, Value value, KindOfDefaultTimeValue kindOfDefaultTimeValue, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var kindOfValue = value.KindOfValue;
 
@@ -66,7 +67,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private long ConvertNumberValueToTicks(NumberValue value, KindOfDefaultTimeValue kindOfDefaultTimeValue)
+        private long ConvertNumberValueToTicks(IMonitorLogger logger, NumberValue value, KindOfDefaultTimeValue kindOfDefaultTimeValue)
         {
             var sysValue = Convert.ToInt64(value.SystemValue);
 

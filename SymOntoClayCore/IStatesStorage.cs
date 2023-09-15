@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,14 +31,14 @@ namespace SymOntoClay.Core
 {
     public interface IStatesStorage : ISpecificStorage
     {
-        void Append(StateDef state);
-        IList<WeightedInheritanceResultItem<StateDef>> GetStatesDirectly(StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems);
-        List<StrongIdentifierValue> AllStateNames();
-        List<StateDef> GetAllStatesListDirectly();
-        void SetDefaultStateName(StrongIdentifierValue name);
-        StrongIdentifierValue GetDefaultStateNameDirectly();
-        List<ActivationInfoOfStateDef> GetActivationInfoOfStateListDirectly();
-        void Append(MutuallyExclusiveStatesSet mutuallyExclusiveStatesSet);
-        List<MutuallyExclusiveStatesSet> GetMutuallyExclusiveStatesSetsListDirectly();
+        void Append(IMonitorLogger logger, StateDef state);
+        IList<WeightedInheritanceResultItem<StateDef>> GetStatesDirectly(IMonitorLogger logger, StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems);
+        List<StrongIdentifierValue> AllStateNames(IMonitorLogger logger);
+        List<StateDef> GetAllStatesListDirectly(IMonitorLogger logger);
+        void SetDefaultStateName(IMonitorLogger logger, StrongIdentifierValue name);
+        StrongIdentifierValue GetDefaultStateNameDirectly(IMonitorLogger logger);
+        List<ActivationInfoOfStateDef> GetActivationInfoOfStateListDirectly(IMonitorLogger logger);
+        void Append(IMonitorLogger logger, MutuallyExclusiveStatesSet mutuallyExclusiveStatesSet);
+        List<MutuallyExclusiveStatesSet> GetMutuallyExclusiveStatesSetsListDirectly(IMonitorLogger logger);
     }
 }

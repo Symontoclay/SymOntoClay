@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,8 +31,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public interface IChannelHandler
     {
-        Value Read(ILocalCodeExecutionContext localCodeExecutionContext);
-        Value Write(Value value, ILocalCodeExecutionContext localCodeExecutionContext);
+        Value Read(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext);
+        Value Write(IMonitorLogger logger, Value value, ILocalCodeExecutionContext localCodeExecutionContext);
         ulong GetLongHashCode();
     }
 }

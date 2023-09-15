@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -30,11 +31,11 @@ namespace SymOntoClay.Core
 {
     public interface IConditionalEntityHostSupport
     {
-        int GetInstanceId(StrongIdentifierValue id);
-        bool IsVisible(int instanceId);
-        bool CanBeTaken(int instanceId);
-        Vector3? GetPosition(int instanceId);
-        (float?, Vector3?) DistanceToAndPosition(int instanceId);
-        float? DistanceTo(int instanceId);
+        int GetInstanceId(IMonitorLogger logger, StrongIdentifierValue id);
+        bool IsVisible(IMonitorLogger logger, int instanceId);
+        bool CanBeTaken(IMonitorLogger logger, int instanceId);
+        Vector3? GetPosition(IMonitorLogger logger, int instanceId);
+        (float?, Vector3?) DistanceToAndPosition(IMonitorLogger logger, int instanceId);
+        float? DistanceTo(IMonitorLogger logger, int instanceId);
     }
 }

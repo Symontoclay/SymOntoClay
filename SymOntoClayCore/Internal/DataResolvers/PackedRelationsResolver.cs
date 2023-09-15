@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -47,7 +48,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly ResolverOptions _options;
 
         /// <inheritdoc/>
-        public RelationDescription GetRelation(StrongIdentifierValue name, int paramsCount)
+        public RelationDescription GetRelation(IMonitorLogger logger, StrongIdentifierValue name, int paramsCount)
         {
             return _relationsResolver.GetRelation(name, paramsCount, _localCodeExecutionContext, _options);
         }

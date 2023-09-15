@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,12 +46,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly InheritanceResolver _inheritanceResolver;
         private readonly ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
 
-        public List<IdleActionItem> Resolve(ILocalCodeExecutionContext localCodeExecutionContext)
+        public List<IdleActionItem> Resolve(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return Resolve(localCodeExecutionContext, _defaultOptions);
         }
 
-        public List<IdleActionItem> Resolve(ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<IdleActionItem> Resolve(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
@@ -73,7 +74,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return filteredList.Select(p => p.ResultItem).ToList();
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<IdleActionItem>> GetRawIdleActionItemList(List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        private List<WeightedInheritanceResultItemWithStorageInfo<IdleActionItem>> GetRawIdleActionItemList(IMonitorLogger logger, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             if (!storagesList.Any())
             {

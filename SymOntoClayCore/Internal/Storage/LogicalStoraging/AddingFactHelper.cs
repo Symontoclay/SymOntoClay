@@ -36,7 +36,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 {
     public static class AddingFactHelper
     {
-        public static IAddFactOrRuleResult CallEvent(MulticastDelegate onAddingFactEvent, RuleInstance ruleInstance, FuzzyLogicResolver fuzzyLogicResolver, ILocalCodeExecutionContext localCodeExecutionContext, IMonitorLogger logger)
+        public static IAddFactOrRuleResult CallEvent(IMonitorLogger logger, MulticastDelegate onAddingFactEvent, RuleInstance ruleInstance, FuzzyLogicResolver fuzzyLogicResolver, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var resultsOfCallList = new List<IAddFactOrRuleResult>();
 

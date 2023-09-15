@@ -39,7 +39,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public readonly float TruthThreshold = 0.75F;
         public readonly bool NullValueEquvivalent = false;
 
-        public bool Resolve(Value value)
+        public bool Resolve(IMonitorLogger logger, Value value)
         {
             var kindOfValue = value.KindOfValue;
 
@@ -61,7 +61,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             throw new NotImplementedException();
         }
 
-        public bool Resolve(LogicalValue value)
+        public bool Resolve(IMonitorLogger logger, LogicalValue value)
         {
             var systemValue = value.SystemValue;
 
@@ -73,7 +73,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return NullValueEquvivalent;
         }
 
-        public bool Resolve(NumberValue value)
+        public bool Resolve(IMonitorLogger logger, NumberValue value)
         {
             var systemValue = value.SystemValue;
 
@@ -85,12 +85,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return NullValueEquvivalent;
         }
 
-        public bool Resolve(double value)
+        public bool Resolve(IMonitorLogger logger, double value)
         {
             return value >= TruthThreshold;
         }
 
-        public bool Resolve(float value)
+        public bool Resolve(IMonitorLogger logger, float value)
         {
             return value >= TruthThreshold;
         }

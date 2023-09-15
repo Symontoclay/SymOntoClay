@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -29,8 +30,8 @@ namespace SymOntoClay.Core
 {
     public interface IHostSupport
     {
-        Vector3 ConvertFromRelativeToAbsolute(RelativeCoordinate relativeCoordinate);
-        Vector3 GetCurrentAbsolutePosition();
-        float GetDirectionToPosition(Vector3 position);
+        Vector3 ConvertFromRelativeToAbsolute(IMonitorLogger logger, RelativeCoordinate relativeCoordinate);
+        Vector3 GetCurrentAbsolutePosition(IMonitorLogger logger);
+        float GetDirectionToPosition(IMonitorLogger logger, Vector3 position);
     }
 }

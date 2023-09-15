@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -33,27 +34,27 @@ namespace SymOntoClay.Core
 {
     public interface ILogicalStorage: ISpecificStorage
     {
-        void Append(RuleInstance ruleInstance);
-        void Append(RuleInstance ruleInstance, bool isPrimary);
-        void Append(IList<RuleInstance> ruleInstancesList);
+        void Append(IMonitorLogger logger, RuleInstance ruleInstance);
+        void Append(IMonitorLogger logger, RuleInstance ruleInstance, bool isPrimary);
+        void Append(IMonitorLogger logger, IList<RuleInstance> ruleInstancesList);
 
-        void Remove(RuleInstance ruleInstance);
-        void Remove(IList<RuleInstance> ruleInstancesList);
-        void RemoveById(string id);
+        void Remove(IMonitorLogger logger, RuleInstance ruleInstance);
+        void Remove(IMonitorLogger logger, IList<RuleInstance> ruleInstancesList);
+        void RemoveById(IMonitorLogger logger, string id);
 
         event Action OnChanged;
         event Action<IList<StrongIdentifierValue>> OnChangedWithKeys;
 
         event Func<RuleInstance, IAddFactOrRuleResult> OnAddingFact;
 
-        IList<LogicalQueryNode> GetAllRelations(ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode);
-        IList<RuleInstance> GetAllOriginFacts();
-        IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode);
-        IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode);
-        IReadOnlyList<LogicalQueryNode> GetLogicalQueryNodes(IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy, IList<KindOfLogicalQueryNode> targetKindsOfItems);
+        IList<LogicalQueryNode> GetAllRelations(IMonitorLogger logger, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode);
+        IList<RuleInstance> GetAllOriginFacts(IMonitorLogger logger);
+        IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(IMonitorLogger logger, StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode);
+        IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(IMonitorLogger logger, StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode);
+        IReadOnlyList<LogicalQueryNode> GetLogicalQueryNodes(IMonitorLogger logger, IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy, IList<KindOfLogicalQueryNode> targetKindsOfItems);
 
 #if DEBUG
-        void DbgPrintFactsAndRules();
+        void DbgPrintFactsAndRules(IMonitorLogger logger);
 #endif
     }
 }

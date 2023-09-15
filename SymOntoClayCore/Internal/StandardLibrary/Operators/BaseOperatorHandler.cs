@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -41,7 +42,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
         private readonly ValueResolvingHelper _valueResolvingHelper;
 
-        protected Value TryResolveFromVarOrExpr(Value operand, ILocalCodeExecutionContext localCodeExecutionContext)
+        protected Value TryResolveFromVarOrExpr(IMonitorLogger logger, Value operand, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return _valueResolvingHelper.TryResolveFromVarOrExpr(operand, localCodeExecutionContext);
         }

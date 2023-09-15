@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -29,8 +30,8 @@ namespace SymOntoClay.Core.Internal
 {
     public interface IMetadataStorage : ISpecificStorage
     {
-        void Append(CodeItem codeItem);
+        void Append(IMonitorLogger logger, CodeItem codeItem);
         CodeItem MainCodeEntity { get; }
-        CodeItem GetByName(StrongIdentifierValue name);
+        CodeItem GetByName(IMonitorLogger logger, StrongIdentifierValue name);
     }
 }

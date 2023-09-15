@@ -110,16 +110,16 @@ namespace TestSandbox.Handlers
             _globalLogger.Info($"callMethodId = {callMethodId}");
 
             threadLogger.Parameter("1F7327DD-E8F8-4AD5-885D-B04257AD4041", callMethodId, "param1", 1);
-            threadLogger.Parameter("1F7327DD-E8F8-4AD5-885D-B04257AD4041", callMethodId, "param1", null);
-            threadLogger.Parameter("1F7327DD-E8F8-4AD5-885D-B04257AD4041", callMethodId, "param1", new Dictionary<int, int> { { 1, 2 } });
-            threadLogger.Parameter("1F7777DD-E8F8-4AD5-885D-B04257AD4041", callMethodId, "param2", new List<int> { 1, 2, 3, 4, 5 });
-            threadLogger.Parameter("1F7666DD-E8F8-4AD5-885D-B04257AD4041", callMethodId, "param3", new List<int> { 1, 2, 3, 4, 5 }.ToArray());
-            threadLogger.Parameter("1F7666DD-E7F8-4AD5-885D-B04257AD4041", callMethodId, "param4", new TstStruct { SomeValue = "Hi!" });
-            threadLogger.Parameter("1F7666DD-E7F8-4AD6-885D-B04257AD4041", callMethodId, "param5", "Hi");
-            threadLogger.Parameter("1F7666DD-E7F8-5AD5-885D-B04257AD4041", callMethodId, "param6", DateTime.Now);
-            threadLogger.Parameter("1F7666DD-E7F8-4BD5-885D-B04257AD4041", callMethodId, "param7", new TstClass { SomeValue = "Bazz" });
-            threadLogger.Parameter("1F7666DD-E7F9-4BD5-885D-B04257AD4041", callMethodId, "param8", KindOfMessage.Info);
-            threadLogger.Parameter("1F7666DD-E7F9-4BD5-885D-B04257AD4041", callMethodId, "param9", 1.6);
+            threadLogger.Parameter("0596BFC6-FBD9-4A62-8AEB-072B2067BF42", callMethodId, "param1", null);
+            threadLogger.Parameter("90AE7D5A-A9EC-4890-B686-71BD34FB197D", callMethodId, "param1", new Dictionary<int, int> { { 1, 2 } });
+            threadLogger.Parameter("C84B8335-347D-4510-945A-7293DDC2B4B9", callMethodId, "param2", new List<int> { 1, 2, 3, 4, 5 });
+            threadLogger.Parameter("0C23C9D2-358C-449F-9602-16E600F9936D", callMethodId, "param3", new List<int> { 1, 2, 3, 4, 5 }.ToArray());
+            threadLogger.Parameter("F6C17F86-4479-4723-AB55-4A70152F4414", callMethodId, "param4", new TstStruct { SomeValue = "Hi!" });
+            threadLogger.Parameter("2F6C3661-8164-4ECF-AC1D-A9CC86B5B098", callMethodId, "param5", "Hi");
+            threadLogger.Parameter("D110A580-2104-46C6-9059-B632C84EEB37", callMethodId, "param6", DateTime.Now);
+            threadLogger.Parameter("348B4E3F-10AE-44F3-8D1A-7B631B711B24", callMethodId, "param7", new TstClass { SomeValue = "Bazz" });
+            threadLogger.Parameter("6C87763C-A783-4910-8C4F-504FE012C559", callMethodId, "param8", KindOfMessage.Info);
+            threadLogger.Parameter("6F4CE980-C7FC-4DD2-AA83-3F125D3069C9", callMethodId, "param9", 1.6);
 
             threadLogger.Output("9053861C-4AD1-4C2D-ABAB-FC1CC5DB4834", "<Yes>");
 

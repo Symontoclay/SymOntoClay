@@ -32,6 +32,7 @@ using SymOntoClay.Core.Internal.Storage.SynonymsStoraging;
 using SymOntoClay.Core.Internal.Visitors;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -140,7 +141,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 }
             }
 
-            _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(Normalized, true);
+            _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(options?.EngineContext?.Logger, Normalized, true);
         }
 
         private void NPrepareDirty()
@@ -301,24 +302,24 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
         }
 
-        public IList<LogicalQueryNode> GetInheritanceRelations()
+        public IList<LogicalQueryNode> GetInheritanceRelations(IMonitorLogger logger)
         {
             if(KindOfRuleInstance != KindOfRuleInstance.Fact)
             {
                 return new List<LogicalQueryNode>();
             }
 
-            return PrimaryPart.GetInheritanceRelations();
+            return PrimaryPart.GetInheritanceRelations(logger);
         }
 
-        public IList<StrongIdentifierValue> GetStandaloneConcepts()
+        public IList<StrongIdentifierValue> GetStandaloneConcepts(IMonitorLogger logger)
         {
             if (KindOfRuleInstance != KindOfRuleInstance.Fact)
             {
                 return new List<StrongIdentifierValue>();
             }
 
-            return PrimaryPart.GetStandaloneConcepts();
+            return PrimaryPart.GetStandaloneConcepts(logger);
         }
 
         /// <inheritdoc/>
@@ -495,13 +496,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         IIdleActionItemsStorage IStorage.IdleActionItemsStorage => throw new NotImplementedException();
 
         /// <inheritdoc/>
-        void IStorage.AddParentStorage(IStorage storage) => throw new NotImplementedException();
+        void IStorage.AddParentStorage(IMonitorLogger logger, IStorage storage) => throw new NotImplementedException();
 
         /// <inheritdoc/>
-        void IStorage.RemoveParentStorage(IStorage storage) => throw new NotImplementedException();
+        void IStorage.RemoveParentStorage(IMonitorLogger logger, IStorage storage) => throw new NotImplementedException();
 
         /// <inheritdoc/>
-        void IStorage.CollectChainOfStorages(IList<StorageUsingOptions> result, IList<IStorage> usedStorages, int level, CollectChainOfStoragesOptions options)
+        void IStorage.CollectChainOfStorages(IMonitorLogger logger, IList<StorageUsingOptions> result, IList<IStorage> usedStorages, int level, CollectChainOfStoragesOptions options)
         {
             level++;
 
@@ -526,10 +527,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        void IStorage.CollectChainOfStorages(IList<IStorage> result) => throw new NotImplementedException();
+        void IStorage.CollectChainOfStorages(IMonitorLogger logger, IList<IStorage> result) => throw new NotImplementedException();
 
         /// <inheritdoc/>
-        IList<IStorage> IStorage.GetStorages() => throw new NotImplementedException();
+        IList<IStorage> IStorage.GetStorages(IMonitorLogger logger) => throw new NotImplementedException();
 
         /// <inheritdoc/>
         DefaultSettingsOfCodeEntity IStorage.DefaultSettingsOfCodeEntity { get; set; }
@@ -542,7 +543,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
 #if DEBUG
         /// <inheritdoc/>
-        void IStorage.DbgPrintFactsAndRules() => throw new NotImplementedException();
+        void IStorage.DbgPrintFactsAndRules(IMonitorLogger logger) => throw new NotImplementedException();
 #endif
         #endregion
 
@@ -554,22 +555,22 @@ namespace SymOntoClay.Core.Internal.CodeModel
         IStorage ISpecificStorage.Storage => this;
 
         /// <inheritdoc/>
-        void ILogicalStorage.Append(RuleInstance ruleInstance) => throw new NotImplementedException();
+        void ILogicalStorage.Append(IMonitorLogger logger, RuleInstance ruleInstance) => throw new NotImplementedException();
 
         /// <inheritdoc/>
-        void ILogicalStorage.Append(RuleInstance ruleInstance, bool isPrimary) => throw new NotImplementedException();
+        void ILogicalStorage.Append(IMonitorLogger logger, RuleInstance ruleInstance, bool isPrimary) => throw new NotImplementedException();
 
         /// <inheritdoc/>
-        void ILogicalStorage.Append(IList<RuleInstance> ruleInstancesList) => throw new NotImplementedException();
+        void ILogicalStorage.Append(IMonitorLogger logger, IList<RuleInstance> ruleInstancesList) => throw new NotImplementedException();
 
         /// <inheritdoc/>
-        void ILogicalStorage.Remove(RuleInstance ruleInstance) => throw new NotImplementedException();
+        void ILogicalStorage.Remove(IMonitorLogger logger, RuleInstance ruleInstance) => throw new NotImplementedException();
 
         /// <inheritdoc/>
-        void ILogicalStorage.Remove(IList<RuleInstance> ruleInstancesList) => throw new NotImplementedException();
+        void ILogicalStorage.Remove(IMonitorLogger logger, IList<RuleInstance> ruleInstancesList) => throw new NotImplementedException();
 
         /// <inheritdoc/>
-        void ILogicalStorage.RemoveById(string id) => throw new NotImplementedException();
+        void ILogicalStorage.RemoveById(IMonitorLogger logger, string id) => throw new NotImplementedException();
 
         /// <inheritdoc/>
         public event Action OnChanged;
@@ -581,7 +582,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public event Func<RuleInstance, IAddFactOrRuleResult> OnAddingFact;
 
         /// <inheritdoc/>
-        IList<LogicalQueryNode> ILogicalStorage.GetAllRelations(ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
+        IList<LogicalQueryNode> ILogicalStorage.GetAllRelations(IMonitorLogger logger, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
         {
             LogicalSearchExplainNode currentExplainNode = null;
 
@@ -596,11 +597,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
             }
 
-            return _commonPersistIndexedLogicalData.GetAllRelations();
+            return _commonPersistIndexedLogicalData.GetAllRelations(logger);
         }
 
         /// <inheritdoc/>
-        IList<RuleInstance> ILogicalStorage.GetAllOriginFacts()
+        IList<RuleInstance> ILogicalStorage.GetAllOriginFacts(IMonitorLogger logger)
         {
             if(KindOfRuleInstance == KindOfRuleInstance.Fact)
             {
@@ -611,7 +612,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        IList<BaseRulePart> ILogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
+        IList<BaseRulePart> ILogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(IMonitorLogger logger, StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
         {
             LogicalSearchExplainNode currentExplainNode = null;
 
@@ -627,11 +628,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
             }
 
-            return _commonPersistIndexedLogicalData.GetIndexedRulePartOfFactsByKeyOfRelation(name);
+            return _commonPersistIndexedLogicalData.GetIndexedRulePartOfFactsByKeyOfRelation(logger, name);
         }
 
         /// <inheritdoc/>
-        IList<BaseRulePart> ILogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
+        IList<BaseRulePart> ILogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(IMonitorLogger logger, StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
         {
             LogicalSearchExplainNode currentExplainNode = null;
 
@@ -647,17 +648,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
             }
 
-            return _commonPersistIndexedLogicalData.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name);
+            return _commonPersistIndexedLogicalData.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(logger, name);
         }
 
         /// <inheritdoc/>
-        public IReadOnlyList<LogicalQueryNode> GetLogicalQueryNodes(IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy, IList<KindOfLogicalQueryNode> targetKindsOfItems)
+        public IReadOnlyList<LogicalQueryNode> GetLogicalQueryNodes(IMonitorLogger logger, IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy, IList<KindOfLogicalQueryNode> targetKindsOfItems)
         {
-            return _commonPersistIndexedLogicalData.GetLogicalQueryNodes(exceptList, replacingNotResultsStrategy, targetKindsOfItems);
+            return _commonPersistIndexedLogicalData.GetLogicalQueryNodes(logger, exceptList, replacingNotResultsStrategy, targetKindsOfItems);
         }
 
         /// <inheritdoc/>
-        void ILogicalStorage.DbgPrintFactsAndRules() => throw new NotImplementedException();
+        void ILogicalStorage.DbgPrintFactsAndRules(IMonitorLogger logger) => throw new NotImplementedException();
 
         #endregion
     }

@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -55,11 +56,11 @@ namespace SymOntoClay.Core
         IVarStorage VarStorage { get; }
         IFuzzyLogicStorage FuzzyLogicStorage { get; }
         IIdleActionItemsStorage IdleActionItemsStorage { get; }
-        void AddParentStorage(IStorage storage);
-        void RemoveParentStorage(IStorage storage);
-        void CollectChainOfStorages(IList<StorageUsingOptions> result, IList<IStorage> usedStorages, int level, CollectChainOfStoragesOptions options);
-        void CollectChainOfStorages(IList<IStorage> result);
-        IList<IStorage> GetStorages();
+        void AddParentStorage(IMonitorLogger logger, IStorage storage);
+        void RemoveParentStorage(IMonitorLogger logger, IStorage storage);
+        void CollectChainOfStorages(IMonitorLogger logger, IList<StorageUsingOptions> result, IList<IStorage> usedStorages, int level, CollectChainOfStoragesOptions options);
+        void CollectChainOfStorages(IMonitorLogger logger, IList<IStorage> result);
+        IList<IStorage> GetStorages(IMonitorLogger logger);
         DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get; set; }
 
         List<StorageUsingOptions> CodeItemsStoragesList { get; set; }
@@ -67,7 +68,7 @@ namespace SymOntoClay.Core
         event Action OnParentStorageChanged;
 
 #if DEBUG
-        void DbgPrintFactsAndRules();
+        void DbgPrintFactsAndRules(IMonitorLogger logger);
 #endif
     }
 }

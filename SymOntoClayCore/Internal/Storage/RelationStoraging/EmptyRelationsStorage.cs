@@ -38,12 +38,12 @@ namespace SymOntoClay.Core.Internal.Storage.RelationStoraging
         }
 
         /// <inheritdoc/>
-        public void Append(RelationDescription relation)
+        public void Append(IMonitorLogger logger, RelationDescription relation)
         {
         }
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<RelationDescription>> GetRelationsDirectly(StrongIdentifierValue name, int paramsCount, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<RelationDescription>> GetRelationsDirectly(IMonitorLogger logger, StrongIdentifierValue name, int paramsCount, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             return new List<WeightedInheritanceResultItem<RelationDescription>>();
         }

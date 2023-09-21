@@ -45,12 +45,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public Dictionary<StrongIdentifierValue, IStorage> GetSuperClassStoragesDict(IMonitorLogger logger, IStorage storage, IInstance instance)
         {
-            return GetStoragesList(storage, KindOfStoragesList.CodeItems).Select(p => p.Storage).Where(p => p.Kind == KindOfStorage.SuperClass && p.Instance == instance).ToDictionary(p => p.TargetClassName, p => p);
+            return GetStoragesList(logger, storage, KindOfStoragesList.CodeItems).Select(p => p.Storage).Where(p => p.Kind == KindOfStorage.SuperClass && p.Instance == instance).ToDictionary(p => p.TargetClassName, p => p);
         }
 
         public List<StorageUsingOptions> GetStoragesList(IMonitorLogger logger, IStorage storage, KindOfStoragesList kindOfStoragesList = KindOfStoragesList.Full)
         {
-            return GetStoragesList(storage, null, kindOfStoragesList);
+            return GetStoragesList(logger, storage, null, kindOfStoragesList);
         }
         
         public List<StorageUsingOptions> GetStoragesList(IMonitorLogger logger, IStorage storage, CollectChainOfStoragesOptions options, KindOfStoragesList kindOfStoragesList = KindOfStoragesList.Full)
@@ -59,10 +59,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 case KindOfStoragesList.Full:
                 case KindOfStoragesList.CodeItems:
-                    return NGetStoragesList(storage, options, kindOfStoragesList);
+                    return NGetStoragesList(logger, storage, options, kindOfStoragesList);
 
                 case KindOfStoragesList.Var:
-                    return FilterStoragesForVarResolving(NGetStoragesList(storage, options, KindOfStoragesList.CodeItems));
+                    return FilterStoragesForVarResolving(logger, NGetStoragesList(logger, storage, options, KindOfStoragesList.CodeItems));
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfStoragesList), kindOfStoragesList, null);
@@ -160,7 +160,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var usedStorages = new List<IStorage>();
 
-            storage.CollectChainOfStorages(result, usedStorages, n, options);
+            storage.CollectChainOfStorages(logger, result, usedStorages, n, options);
 
             switch (kindOfStoragesList)
             {
@@ -182,7 +182,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterCodeItems<T>(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<T>> source, ILocalCodeExecutionContext localCodeExecutionContext)
             where T : CodeItem
         {
-            return FilterCodeItems<T>(source, localCodeExecutionContext.Holder, localCodeExecutionContext);
+            return FilterCodeItems<T>(logger, source, localCodeExecutionContext.Holder, localCodeExecutionContext);
         }
 
         protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterCodeItems<T>(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<T>> source, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext)
@@ -193,7 +193,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return new List<WeightedInheritanceResultItemWithStorageInfo<T>>();
             }
 
-            source = Filter(source);
+            source = Filter(logger, source);
 
             if (!source.Any())
             {
@@ -212,7 +212,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 var resultItem = item.ResultItem;
 
-                if (IsFitByTypeOfAccess(resultItem, holder, inheritanceResolver, localCodeExecutionContext, holderIsEntity, hasHolderInItems, false))
+                if (IsFitByTypeOfAccess(logger, resultItem, holder, inheritanceResolver, localCodeExecutionContext, holderIsEntity, hasHolderInItems, false))
                 {
                     result.Add(item);
                 }
@@ -244,7 +244,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (!holderIsEntity)
             {
-                var allStateNamesList = _context.Storage.GlobalStorage.StatesStorage.AllStateNames();
+                var allStateNamesList = _context.Storage.GlobalStorage.StatesStorage.AllStateNames(logger);
 
                 if (allStateNamesList.Any(p => p == holder))
                 {
@@ -262,7 +262,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var item in source)
             {
-                if(IsFitByTypeOfAccess(item, holder, inheritanceResolver, localCodeExecutionContext, holderIsEntity, hasHolderInItems, allowUnknown))
+                if(IsFitByTypeOfAccess(logger, item, holder, inheritanceResolver, localCodeExecutionContext, holderIsEntity, hasHolderInItems, allowUnknown))
                 {
                     result.Add(item);
                 }
@@ -270,14 +270,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 {
                     if(additionalHolder != null)
                     {
-                        if (IsFitByTypeOfAccess(item, additionalHolder, inheritanceResolver, localCodeExecutionContext, additionalHolderIsEntity, hasAdditionalHolderInItems, allowUnknown))
+                        if (IsFitByTypeOfAccess(logger, item, additionalHolder, inheritanceResolver, localCodeExecutionContext, additionalHolderIsEntity, hasAdditionalHolderInItems, allowUnknown))
                         {
                             result.Add(item);
                         }
                     }
                 }
             }
-
 
             return result;
         }
@@ -302,7 +301,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         }
                         else
                         {
-                            var distance = inheritanceResolver.GetDistance(holder, item.Holder, localCodeExecutionContext);
+                            var distance = inheritanceResolver.GetDistance(logger, holder, item.Holder, localCodeExecutionContext);
 
                             if (distance == 1)
                             {
@@ -323,7 +322,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             return true;
                         }
 
-                        var rank = inheritanceResolver.GetRawInheritanceRank(holder, item.Holder, localCodeExecutionContext);
+                        var rank = inheritanceResolver.GetRawInheritanceRank(logger, holder, item.Holder, localCodeExecutionContext);
 
                         if (rank > 0)
                         {

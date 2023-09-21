@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +43,7 @@ namespace SymOntoClay.Core.Internal.Storage.MetadataStoraging
         private Dictionary<StrongIdentifierValue, List<CodeItem>> _codeEntitiesDict = new Dictionary<StrongIdentifierValue, List<CodeItem>>();
 
         /// <inheritdoc/>
-        public void Append(CodeItem codeItem)
+        public void Append(IMonitorLogger logger, CodeItem codeItem)
         {
             lock (_lockObj)
             {
@@ -67,11 +68,11 @@ namespace SymOntoClay.Core.Internal.Storage.MetadataStoraging
                     _codeEntitiesDict[name] = new List<CodeItem>() { codeItem };
                 }
 
-                SetAsMainCodeEntity(codeItem);
+                SetAsMainCodeEntity(logger, codeItem);
             }
         }
 
-        private void SetAsMainCodeEntity(CodeItem codeEntity)
+        private void SetAsMainCodeEntity(IMonitorLogger logger, CodeItem codeEntity)
         {
             if (codeEntity.Kind == KindOfCodeEntity.App && codeEntity.CodeFile != null && codeEntity.CodeFile.IsMain)
             {
@@ -89,7 +90,7 @@ namespace SymOntoClay.Core.Internal.Storage.MetadataStoraging
         }
 
         /// <inheritdoc/>
-        public CodeItem GetByName(StrongIdentifierValue name)
+        public CodeItem GetByName(IMonitorLogger logger, StrongIdentifierValue name)
         {
             lock (_lockObj)
             {

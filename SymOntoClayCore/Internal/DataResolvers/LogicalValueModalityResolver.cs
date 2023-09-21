@@ -57,9 +57,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return false;
             }
 
-            var numberValue = _fuzzyLogicResolver.Resolve(modalityValue, localCodeExecutionContext);
+            var numberValue = _fuzzyLogicResolver.Resolve(logger, modalityValue, localCodeExecutionContext);
 
-            return _toSystemBoolResolver.Resolve(numberValue);
+            return _toSystemBoolResolver.Resolve(logger, numberValue);
         }
 
         public bool IsFit(IMonitorLogger logger, Value modalityValue, Value queryModalityValue, ILocalCodeExecutionContext localCodeExecutionContext)
@@ -78,10 +78,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 var exprValue = queryModalityValue.AsLogicalModalityExpressionValue;
 
-                return ProcessBoolExpression(modalityValue, exprValue.Expression, localCodeExecutionContext);
+                return ProcessBoolExpression(logger, modalityValue, exprValue.Expression, localCodeExecutionContext);
             }
 
-            return _fuzzyLogicResolver.Equals(modalityValue, queryModalityValue, localCodeExecutionContext);
+            return _fuzzyLogicResolver.Equals(logger, modalityValue, queryModalityValue, localCodeExecutionContext);
         }
 
         private bool ProcessBoolExpression(IMonitorLogger logger, Value modalityValue, LogicalModalityExpressionNode expressionNode, ILocalCodeExecutionContext localCodeExecutionContext)
@@ -89,13 +89,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             switch (expressionNode.Kind)
             {
                 case KindOfLogicalModalityExpressionNode.BinaryOperator:
-                    return ProcessBinaryOperator(modalityValue, expressionNode, localCodeExecutionContext);
+                    return ProcessBinaryOperator(logger, modalityValue, expressionNode, localCodeExecutionContext);
 
                 case KindOfLogicalModalityExpressionNode.UnaryOperator:
-                    return ProcessUnaryOperator(modalityValue, expressionNode, localCodeExecutionContext);
+                    return ProcessUnaryOperator(logger, modalityValue, expressionNode, localCodeExecutionContext);
 
                 case KindOfLogicalModalityExpressionNode.Group:
-                    return ProcessGroup(modalityValue, expressionNode, localCodeExecutionContext);
+                    return ProcessGroup(logger, modalityValue, expressionNode, localCodeExecutionContext);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(expressionNode.Kind), expressionNode.Kind, null);
@@ -107,10 +107,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             switch (expressionNode.Kind)
             {
                 case KindOfLogicalModalityExpressionNode.BlankIdentifier:
-                    return ProcessBlankIdentifier(modalityValue, expressionNode, localCodeExecutionContext);
+                    return ProcessBlankIdentifier(logger, modalityValue, expressionNode, localCodeExecutionContext);
 
                 case KindOfLogicalModalityExpressionNode.Value:
-                    return ProcessValue(modalityValue, expressionNode, localCodeExecutionContext);
+                    return ProcessValue(logger, modalityValue, expressionNode, localCodeExecutionContext);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(expressionNode.Kind), expressionNode.Kind, null);
@@ -128,74 +128,74 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 case KindOfOperator.Is:
                     {
-                        var left = ProcessValueExpression(modalityValue, expressionNode.Left, localCodeExecutionContext);
+                        var left = ProcessValueExpression(logger, modalityValue, expressionNode.Left, localCodeExecutionContext);
 
-                        var right = ProcessValueExpression(modalityValue, expressionNode.Right, localCodeExecutionContext);
+                        var right = ProcessValueExpression(logger, modalityValue, expressionNode.Right, localCodeExecutionContext);
 
-                        return _fuzzyLogicResolver.Equals(left, right, localCodeExecutionContext);
+                        return _fuzzyLogicResolver.Equals(logger, left, right, localCodeExecutionContext);
                     }
 
                 case KindOfOperator.IsNot:
                     {
-                        var left = ProcessValueExpression(modalityValue, expressionNode.Left, localCodeExecutionContext);
+                        var left = ProcessValueExpression(logger, modalityValue, expressionNode.Left, localCodeExecutionContext);
 
-                        var right = ProcessValueExpression(modalityValue, expressionNode.Right, localCodeExecutionContext);
+                        var right = ProcessValueExpression(logger, modalityValue, expressionNode.Right, localCodeExecutionContext);
 
-                        return !_fuzzyLogicResolver.Equals(left, right, localCodeExecutionContext);
+                        return !_fuzzyLogicResolver.Equals(logger, left, right, localCodeExecutionContext);
                     }
 
                 case KindOfOperator.And:
                     {
-                        var left = ProcessBoolExpression(modalityValue, expressionNode.Left, localCodeExecutionContext);
+                        var left = ProcessBoolExpression(logger, modalityValue, expressionNode.Left, localCodeExecutionContext);
 
-                        var right = ProcessBoolExpression(modalityValue, expressionNode.Right, localCodeExecutionContext);
+                        var right = ProcessBoolExpression(logger, modalityValue, expressionNode.Right, localCodeExecutionContext);
 
                         return left && right;
                     }
 
                 case KindOfOperator.Or:
                     {
-                        var left = ProcessBoolExpression(modalityValue, expressionNode.Left, localCodeExecutionContext);
+                        var left = ProcessBoolExpression(logger, modalityValue, expressionNode.Left, localCodeExecutionContext);
 
-                        var right = ProcessBoolExpression(modalityValue, expressionNode.Right, localCodeExecutionContext);
+                        var right = ProcessBoolExpression(logger, modalityValue, expressionNode.Right, localCodeExecutionContext);
 
                         return left || right;
                     }
 
                 case KindOfOperator.More:
                     {
-                        var left = ProcessValueExpression(modalityValue, expressionNode.Left, localCodeExecutionContext);
+                        var left = ProcessValueExpression(logger, modalityValue, expressionNode.Left, localCodeExecutionContext);
 
-                        var right = ProcessValueExpression(modalityValue, expressionNode.Right, localCodeExecutionContext);
+                        var right = ProcessValueExpression(logger, modalityValue, expressionNode.Right, localCodeExecutionContext);
 
-                        return _fuzzyLogicResolver.More(left, right, localCodeExecutionContext);
+                        return _fuzzyLogicResolver.More(logger, left, right, localCodeExecutionContext);
                     }
 
                 case KindOfOperator.MoreOrEqual:
                     {
-                        var left = ProcessValueExpression(modalityValue, expressionNode.Left, localCodeExecutionContext);
+                        var left = ProcessValueExpression(logger, modalityValue, expressionNode.Left, localCodeExecutionContext);
 
-                        var right = ProcessValueExpression(modalityValue, expressionNode.Right, localCodeExecutionContext);
+                        var right = ProcessValueExpression(logger, modalityValue, expressionNode.Right, localCodeExecutionContext);
 
-                        return _fuzzyLogicResolver.MoreOrEqual(left, right, localCodeExecutionContext);
+                        return _fuzzyLogicResolver.MoreOrEqual(logger, left, right, localCodeExecutionContext);
                     }
 
                 case KindOfOperator.Less:
                     {
-                        var left = ProcessValueExpression(modalityValue, expressionNode.Left, localCodeExecutionContext);
+                        var left = ProcessValueExpression(logger, modalityValue, expressionNode.Left, localCodeExecutionContext);
 
-                        var right = ProcessValueExpression(modalityValue, expressionNode.Right, localCodeExecutionContext);
+                        var right = ProcessValueExpression(logger, modalityValue, expressionNode.Right, localCodeExecutionContext);
 
-                        return _fuzzyLogicResolver.Less(left, right, localCodeExecutionContext);
+                        return _fuzzyLogicResolver.Less(logger, left, right, localCodeExecutionContext);
                     }
 
                 case KindOfOperator.LessOrEqual:
                     {
-                        var left = ProcessValueExpression(modalityValue, expressionNode.Left, localCodeExecutionContext);
+                        var left = ProcessValueExpression(logger, modalityValue, expressionNode.Left, localCodeExecutionContext);
 
-                        var right = ProcessValueExpression(modalityValue, expressionNode.Right, localCodeExecutionContext);
+                        var right = ProcessValueExpression(logger, modalityValue, expressionNode.Right, localCodeExecutionContext);
 
-                        return _fuzzyLogicResolver.LessOrEqual(left, right, localCodeExecutionContext);
+                        return _fuzzyLogicResolver.LessOrEqual(logger, left, right, localCodeExecutionContext);
                     }
 
                 default:
@@ -208,7 +208,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             switch (expressionNode.KindOfOperator)
             {
                 case KindOfOperator.Not:
-                    return !ProcessBoolExpression(modalityValue, expressionNode.Left, localCodeExecutionContext);
+                    return !ProcessBoolExpression(logger, modalityValue, expressionNode.Left, localCodeExecutionContext);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(expressionNode.KindOfOperator), expressionNode.KindOfOperator, null);
@@ -222,7 +222,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private bool ProcessGroup(IMonitorLogger logger, Value modalityValue, LogicalModalityExpressionNode expressionNode, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            return ProcessBoolExpression(modalityValue, expressionNode.Left, localCodeExecutionContext);
+            return ProcessBoolExpression(logger, modalityValue, expressionNode.Left, localCodeExecutionContext);
         }
     }
 }

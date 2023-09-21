@@ -48,18 +48,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         #region public methods
         public IExecutable Resolve(IMonitorLogger logger, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            return Resolve(name, localCodeExecutionContext, _defaultOptions);
+            return Resolve(logger, name, localCodeExecutionContext, _defaultOptions);
         }
 
         public IExecutable Resolve(IMonitorLogger logger, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-            var result = EnumerableLocalCodeExecutionContext<IExecutable>(localCodeExecutionContext, (ctx) =>
+            var result = EnumerableLocalCodeExecutionContext<IExecutable>(logger, localCodeExecutionContext, (ctx) =>
             {
-                var method = ResolveMethod(name, ctx, options);
+                var method = ResolveMethod(logger, name, ctx, options);
 
                 if (method == null)
                 {
-                    return ResolveAction(name, ctx, options);
+                    return ResolveAction(logger, name, ctx, options);
                 }
 
                 return method;
@@ -70,17 +70,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public IExecutable Resolve(IMonitorLogger logger, StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            return Resolve(name, namedParameters, localCodeExecutionContext, _defaultOptions);
+            return Resolve(logger, name, namedParameters, localCodeExecutionContext, _defaultOptions);
         }
 
         public IExecutable Resolve(IMonitorLogger logger, StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-            var result = EnumerableLocalCodeExecutionContext<IExecutable>(localCodeExecutionContext, (ctx) => {
-                var method = ResolveMethod(name, namedParameters, localCodeExecutionContext, options);
+            var result = EnumerableLocalCodeExecutionContext<IExecutable>(logger, localCodeExecutionContext, (ctx) => {
+                var method = ResolveMethod(logger, name, namedParameters, localCodeExecutionContext, options);
 
                 if (method == null)
                 {
-                    return ResolveAction(name, namedParameters, localCodeExecutionContext, options);
+                    return ResolveAction(logger, name, namedParameters, localCodeExecutionContext, options);
                 }
 
                 return method;
@@ -91,17 +91,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public IExecutable Resolve(IMonitorLogger logger, StrongIdentifierValue name, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            return Resolve(name, positionedParameters, localCodeExecutionContext, _defaultOptions);
+            return Resolve(logger, name, positionedParameters, localCodeExecutionContext, _defaultOptions);
         }
 
         public IExecutable Resolve(IMonitorLogger logger, StrongIdentifierValue name, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-            var result = EnumerableLocalCodeExecutionContext<IExecutable>(localCodeExecutionContext, (ctx) => {
-                var method = ResolveMethod(name, positionedParameters, localCodeExecutionContext, options);
+            var result = EnumerableLocalCodeExecutionContext<IExecutable>(logger, localCodeExecutionContext, (ctx) => {
+                var method = ResolveMethod(logger, name, positionedParameters, localCodeExecutionContext, options);
 
                 if (method == null)
                 {
-                    return ResolveAction(name, positionedParameters, localCodeExecutionContext, options);
+                    return ResolveAction(logger, name, positionedParameters, localCodeExecutionContext, options);
                 }
 
                 return method;
@@ -112,14 +112,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public bool IsFit(IMonitorLogger logger, Function function, KindOfFunctionParameters kindOfParameters, IDictionary<StrongIdentifierValue, Value> namedParameters, IList<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            return IsFit(function, kindOfParameters, namedParameters, positionedParameters, localCodeExecutionContext, _defaultOptions);
+            return IsFit(logger, function, kindOfParameters, namedParameters, positionedParameters, localCodeExecutionContext, _defaultOptions);
         }
 
         public bool IsFit(IMonitorLogger logger, Function function, KindOfFunctionParameters kindOfParameters, IDictionary<StrongIdentifierValue, Value> namedParameters, IList<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             if(namedParameters != null)
             {
-                namedParameters = NormalizeNamedParameters(namedParameters);
+                namedParameters = NormalizeNamedParameters(logger, namedParameters);
             }
 
             switch (kindOfParameters)
@@ -138,7 +138,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 case KindOfFunctionParameters.NamedParameters:
                     {
-                        var rankMatrix = IsFit(function, namedParameters, localCodeExecutionContext, options);
+                        var rankMatrix = IsFit(logger, function, namedParameters, localCodeExecutionContext, options);
 
                         if(rankMatrix == null)
                         {
@@ -150,7 +150,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 case KindOfFunctionParameters.PositionedParameters:
                     {
-                        var rankMatrix = IsFit(function, positionedParameters, localCodeExecutionContext, options);
+                        var rankMatrix = IsFit(logger, function, positionedParameters, localCodeExecutionContext, options);
 
                         if (rankMatrix == null)
                         {
@@ -177,21 +177,21 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var storage = localCodeExecutionContext.Storage;
 
-            var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
+            var storagesList = GetStoragesList(logger, storage, KindOfStoragesList.CodeItems);
 
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, localCodeExecutionContext, optionsForInheritanceResolver);
 
-            var rawList = GetRawMethodsList(name, 0, storagesList, weightedInheritanceItems);
+            var rawList = GetRawMethodsList(logger, name, 0, storagesList, weightedInheritanceItems);
 
             if (!rawList.Any())
             {
                 return null;
             }
 
-            var filteredList = FilterCodeItems(rawList, localCodeExecutionContext);
+            var filteredList = FilterCodeItems(logger, rawList, localCodeExecutionContext);
 
             if (!filteredList.Any())
             {
@@ -203,37 +203,37 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return filteredList.Single().ResultItem;
             }
 
-            return GetTargetValueFromList(filteredList, 0, localCodeExecutionContext, options);
+            return GetTargetValueFromList(logger, filteredList, 0, localCodeExecutionContext, options);
         }
 
         private IExecutable ResolveMethod(IMonitorLogger logger, StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
-            var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
+            var storagesList = GetStoragesList(logger, storage, KindOfStoragesList.CodeItems);
 
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, localCodeExecutionContext, optionsForInheritanceResolver);
 
-            var rawList = GetRawMethodsList(name, namedParameters.Count, storagesList, weightedInheritanceItems);
+            var rawList = GetRawMethodsList(logger, name, namedParameters.Count, storagesList, weightedInheritanceItems);
 
             if (!rawList.Any())
             {
                 return null;
             }
 
-            var filteredList = Filter(rawList);
+            var filteredList = Filter(logger, rawList);
 
             if (!filteredList.Any())
             {
                 return null;
             }
 
-            namedParameters = NormalizeNamedParameters(namedParameters);
+            namedParameters = NormalizeNamedParameters(logger, namedParameters);
 
-            filteredList = FilterByTypeOfParameters(filteredList, namedParameters, localCodeExecutionContext, options);
+            filteredList = FilterByTypeOfParameters(logger, filteredList, namedParameters, localCodeExecutionContext, options);
 
             if (!filteredList.Any())
             {
@@ -245,35 +245,35 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return filteredList.Single().ResultItem;
             }
 
-            return GetTargetValueFromList(filteredList, namedParameters.Count, localCodeExecutionContext, options);
+            return GetTargetValueFromList(logger, filteredList, namedParameters.Count, localCodeExecutionContext, options);
         }
 
         private IExecutable ResolveMethod(IMonitorLogger logger, StrongIdentifierValue name, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
-            var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
+            var storagesList = GetStoragesList(logger, storage, KindOfStoragesList.CodeItems);
 
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, localCodeExecutionContext, optionsForInheritanceResolver);
 
-            var rawList = GetRawMethodsList(name, positionedParameters.Count, storagesList, weightedInheritanceItems);
+            var rawList = GetRawMethodsList(logger, name, positionedParameters.Count, storagesList, weightedInheritanceItems);
 
             if (!rawList.Any())
             {
                 return null;
             }
 
-            var filteredList = Filter(rawList);
+            var filteredList = Filter(logger, rawList);
 
             if (!filteredList.Any())
             {
                 return null;
             }
 
-            filteredList = FilterByTypeOfParameters(filteredList, positionedParameters, localCodeExecutionContext, options);
+            filteredList = FilterByTypeOfParameters(logger, filteredList, positionedParameters, localCodeExecutionContext, options);
 
             if (!filteredList.Any())
             {
@@ -285,28 +285,28 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return filteredList.Single().ResultItem;
             }
 
-            return GetTargetValueFromList(filteredList, positionedParameters.Count, localCodeExecutionContext, options);
+            return GetTargetValueFromList(logger, filteredList, positionedParameters.Count, localCodeExecutionContext, options);
         }
 
         private IExecutable ResolveAction(IMonitorLogger logger, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
-            var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
+            var storagesList = GetStoragesList(logger, storage, KindOfStoragesList.CodeItems);
 
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, localCodeExecutionContext, optionsForInheritanceResolver);
 
-            var rawList = GetRawActionsList(name, 0, storagesList, weightedInheritanceItems);
+            var rawList = GetRawActionsList(logger, name, 0, storagesList, weightedInheritanceItems);
 
             if (!rawList.Any())
             {
                 return null;
             }
 
-            var filteredList = Filter(rawList);
+            var filteredList = Filter(logger, rawList);
 
             if (!filteredList.Any())
             {
@@ -318,37 +318,37 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return filteredList.Single().ResultItem;
             }
 
-            return GetTargetValueFromList(filteredList, 0, localCodeExecutionContext, options);
+            return GetTargetValueFromList(logger, filteredList, 0, localCodeExecutionContext, options);
         }
 
         private IExecutable ResolveAction(IMonitorLogger logger, StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
-            var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
+            var storagesList = GetStoragesList(logger, storage, KindOfStoragesList.CodeItems);
 
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, localCodeExecutionContext, optionsForInheritanceResolver);
 
-            var rawList = GetRawActionsList(name, namedParameters.Count, storagesList, weightedInheritanceItems);
+            var rawList = GetRawActionsList(logger, name, namedParameters.Count, storagesList, weightedInheritanceItems);
 
             if (!rawList.Any())
             {
                 return null;
             }
 
-            var filteredList = Filter(rawList);
+            var filteredList = Filter(logger, rawList);
 
             if (!filteredList.Any())
             {
                 return null;
             }
 
-            namedParameters = NormalizeNamedParameters(namedParameters);
+            namedParameters = NormalizeNamedParameters(logger, namedParameters);
 
-            filteredList = FilterByTypeOfParameters(filteredList, namedParameters, localCodeExecutionContext, options);
+            filteredList = FilterByTypeOfParameters(logger, filteredList, namedParameters, localCodeExecutionContext, options);
 
             if (!filteredList.Any())
             {
@@ -360,35 +360,35 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return filteredList.Single().ResultItem;
             }
 
-            return GetTargetValueFromList(filteredList, namedParameters.Count, localCodeExecutionContext, options);
+            return GetTargetValueFromList(logger, filteredList, namedParameters.Count, localCodeExecutionContext, options);
         }
 
         private IExecutable ResolveAction(IMonitorLogger logger, StrongIdentifierValue name, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
-            var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
+            var storagesList = GetStoragesList(logger, storage, KindOfStoragesList.CodeItems);
 
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, localCodeExecutionContext, optionsForInheritanceResolver);
 
-            var rawList = GetRawActionsList(name, positionedParameters.Count, storagesList, weightedInheritanceItems);
+            var rawList = GetRawActionsList(logger, name, positionedParameters.Count, storagesList, weightedInheritanceItems);
 
             if (!rawList.Any())
             {
                 return null;
             }
 
-            var filteredList = Filter(rawList);
+            var filteredList = Filter(logger, rawList);
 
             if (!filteredList.Any())
             {
                 return null;
             }
 
-            filteredList = FilterByTypeOfParameters(filteredList, positionedParameters, localCodeExecutionContext, options);
+            filteredList = FilterByTypeOfParameters(logger, filteredList, positionedParameters, localCodeExecutionContext, options);
 
             if (!filteredList.Any())
             {
@@ -400,7 +400,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return filteredList.Single().ResultItem;
             }
 
-            return GetTargetValueFromList(filteredList, positionedParameters.Count, localCodeExecutionContext, options);
+            return GetTargetValueFromList(logger, filteredList, positionedParameters.Count, localCodeExecutionContext, options);
         }
 
         private Dictionary<StrongIdentifierValue, Value> NormalizeNamedParameters(IMonitorLogger logger, IDictionary<StrongIdentifierValue, Value> source)
@@ -434,11 +434,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>> GetRawMethodsList(IMonitorLogger logger, StrongIdentifierValue name, int paramsCount, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
-            var synonymsList = _synonymsResolver.GetSynonyms(name, storagesList);
+            var synonymsList = _synonymsResolver.GetSynonyms(logger, name, storagesList);
 
             var result = new List<WeightedInheritanceResultItemWithStorageInfo<NamedFunction>>();
 
-            var itemsList = NGetRawMethodsList(name, paramsCount, storagesList, weightedInheritanceItems);
+            var itemsList = NGetRawMethodsList(logger, name, paramsCount, storagesList, weightedInheritanceItems);
 
             if(!itemsList.IsNullOrEmpty())
             {
@@ -447,7 +447,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach(var synonym in synonymsList)
             {
-                itemsList = NGetRawMethodsList(synonym, paramsCount, storagesList, weightedInheritanceItems);
+                itemsList = NGetRawMethodsList(logger, synonym, paramsCount, storagesList, weightedInheritanceItems);
 
                 if (!itemsList.IsNullOrEmpty())
                 {
@@ -464,7 +464,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var storageItem in storagesList)
             {
-                var itemsList = storageItem.Storage.MethodsStorage.GetNamedFunctionsDirectly(name, paramsCount, weightedInheritanceItems);
+                var itemsList = storageItem.Storage.MethodsStorage.GetNamedFunctionsDirectly(logger, name, paramsCount, weightedInheritanceItems);
 
                 if (!itemsList.Any())
                 {
@@ -485,11 +485,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private List<WeightedInheritanceResultItemWithStorageInfo<ActionPtr>> GetRawActionsList(IMonitorLogger logger, StrongIdentifierValue name, int paramsCount, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
-            var synonymsList = _synonymsResolver.GetSynonyms(name, storagesList);
+            var synonymsList = _synonymsResolver.GetSynonyms(logger, name, storagesList);
 
             var result = new List<WeightedInheritanceResultItemWithStorageInfo<ActionPtr>>();
 
-            var itemsList = NGetRawActionsList(name, paramsCount, storagesList, weightedInheritanceItems);
+            var itemsList = NGetRawActionsList(logger, name, paramsCount, storagesList, weightedInheritanceItems);
 
             if (!itemsList.IsNullOrEmpty())
             {
@@ -498,7 +498,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var synonym in synonymsList)
             {
-                itemsList = NGetRawActionsList(synonym, paramsCount, storagesList, weightedInheritanceItems);
+                itemsList = NGetRawActionsList(logger, synonym, paramsCount, storagesList, weightedInheritanceItems);
 
                 if (!itemsList.IsNullOrEmpty())
                 {
@@ -520,7 +520,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var storageItem in storagesList)
             {
-                var itemsList = storageItem.Storage.ActionsStorage.GetActionsDirectly(name, paramsCount, weightedInheritanceItems);
+                var itemsList = storageItem.Storage.ActionsStorage.GetActionsDirectly(logger, name, paramsCount, weightedInheritanceItems);
 
                 if (!itemsList.Any())
                 {

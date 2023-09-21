@@ -46,20 +46,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             switch (kindOfValue)
             {
                 case KindOfValue.NumberValue:
-                    return ConvertNumberValueToTicks(value.AsNumberValue, kindOfDefaultTimeValue);
+                    return ConvertNumberValueToTicks(logger, value.AsNumberValue, kindOfDefaultTimeValue);
 
                 case KindOfValue.StrongIdentifierValue:
                     {
                         ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving = null;
 
-                        return ConvertNumberValueToTicks(_context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(value.AsStrongIdentifierValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext), kindOfDefaultTimeValue);
+                        return ConvertNumberValueToTicks(logger, _context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(logger, value.AsStrongIdentifierValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext), kindOfDefaultTimeValue);
                     }
 
                 case KindOfValue.FuzzyLogicNonNumericSequenceValue:
                     {
                         ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving = null;
 
-                        return ConvertNumberValueToTicks(_context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(value.AsFuzzyLogicNonNumericSequenceValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext), kindOfDefaultTimeValue);
+                        return ConvertNumberValueToTicks(logger, _context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(logger, value.AsFuzzyLogicNonNumericSequenceValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext), kindOfDefaultTimeValue);
                     }
 
                 default:

@@ -30,6 +30,7 @@ using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -832,7 +833,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             FuzzyLogicNonNumericSequenceValue?.DiscoverAllAnnotations(result);
         }
 
-        public void DiscoverAllInheritanceRelations(IList<LogicalQueryNode> result)
+        public void DiscoverAllInheritanceRelations(IMonitorLogger logger, IList<LogicalQueryNode> result)
         {
             switch(Kind)
             {
@@ -855,18 +856,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     break;
 
                 case KindOfLogicalQueryNode.BinaryOperator:
-                    Left.DiscoverAllInheritanceRelations(result);
-                    Right.DiscoverAllInheritanceRelations(result);
+                    Left.DiscoverAllInheritanceRelations(logger, result);
+                    Right.DiscoverAllInheritanceRelations(logger, result);
                     break;
 
                 case KindOfLogicalQueryNode.UnaryOperator:
                 case KindOfLogicalQueryNode.Group:
-                    Left.DiscoverAllInheritanceRelations(result);
+                    Left.DiscoverAllInheritanceRelations(logger, result);
                     break;
 
                 case KindOfLogicalQueryNode.Fact:
                     {
-                        var inheritanceRelations = Fact.GetInheritanceRelations();
+                        var inheritanceRelations = Fact.GetInheritanceRelations(logger);
 
                         if(inheritanceRelations.Any())
                         {
@@ -883,7 +884,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
         }
 
-        public void DiscoverAllStandaloneConcepts(List<StrongIdentifierValue> result)
+        public void DiscoverAllStandaloneConcepts(IMonitorLogger logger, List<StrongIdentifierValue> result)
         {
             switch(Kind)
             {
@@ -895,7 +896,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                         }
                         else
                         {
-                            Left.DiscoverAllStandaloneConcepts(result);
+                            Left.DiscoverAllStandaloneConcepts(logger, result);
                         }
 
                         if(Right.Kind == KindOfLogicalQueryNode.Concept)
@@ -904,7 +905,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                         }
                         else
                         {
-                            Right.DiscoverAllStandaloneConcepts(result);
+                            Right.DiscoverAllStandaloneConcepts(logger, result);
                         }
                     }
                     break;
@@ -918,7 +919,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                         }
                         else
                         {
-                            Left.DiscoverAllStandaloneConcepts(result);
+                            Left.DiscoverAllStandaloneConcepts(logger, result);
                         }
                     }
                     break;

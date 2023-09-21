@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -40,20 +41,20 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly IUnaryOperatorHandler _operatorHandler;
 
         /// <inheritdoc/>
-        public Value Call(IList<Value> paramsList, ILocalCodeExecutionContext localCodeExecutionContext)
+        public Value Call(IMonitorLogger logger, IList<Value> paramsList, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var operand = paramsList[0];
             var anotation = paramsList[1];
 
-            return _operatorHandler.Call(operand, anotation, localCodeExecutionContext);
+            return _operatorHandler.Call(logger, operand, anotation, localCodeExecutionContext);
         }
 
         /// <inheritdoc/>
-        public Value Call(IDictionary<string, Value> paramsDict, Value anotation, ILocalCodeExecutionContext localCodeExecutionContext)
+        public Value Call(IMonitorLogger logger, IDictionary<string, Value> paramsDict, Value anotation, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var operand = paramsDict[_operandKey];
 
-            return _operatorHandler.Call(operand, anotation, localCodeExecutionContext);
+            return _operatorHandler.Call(logger, operand, anotation, localCodeExecutionContext);
         }
     }
 }

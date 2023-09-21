@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Storage.ActionsStoraging;
@@ -160,7 +161,7 @@ namespace SymOntoClay.Core.Internal.Storage
         /// <inheritdoc/>
         public List<StorageUsingOptions> CodeItemsStoragesList { get; set; }
 
-        public void AddConsolidatedStorage(IStorage storage)
+        public void AddConsolidatedStorage(IMonitorLogger logger, IStorage storage)
         {
             lock(_lockObj)
             {
@@ -171,12 +172,12 @@ namespace SymOntoClay.Core.Internal.Storage
 
                 _storages.Add(storage);
 
-                _logicalStorage.AddConsolidatedStorage(storage.LogicalStorage);
-                _inheritanceStorage.AddConsolidatedStorage(storage.InheritanceStorage);
+                _logicalStorage.AddConsolidatedStorage(logger, storage.LogicalStorage);
+                _inheritanceStorage.AddConsolidatedStorage(logger, storage.InheritanceStorage);
             }
         }
         
-        public void RemoveConsolidatedStorage(IStorage storage)
+        public void RemoveConsolidatedStorage(IMonitorLogger logger, IStorage storage)
         {
             lock (_lockObj)
             {
@@ -187,25 +188,25 @@ namespace SymOntoClay.Core.Internal.Storage
 
                 _storages.Remove(storage);
 
-                _logicalStorage.RemoveConsolidatedStorage(storage.LogicalStorage);
-                _inheritanceStorage.RemoveConsolidatedStorage(storage.InheritanceStorage);
+                _logicalStorage.RemoveConsolidatedStorage(logger, storage.LogicalStorage);
+                _inheritanceStorage.RemoveConsolidatedStorage(logger, storage.InheritanceStorage);
             }
         }
 
         /// <inheritdoc/>
-        public void AddParentStorage(IStorage storage)
+        public void AddParentStorage(IMonitorLogger logger, IStorage storage)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public void RemoveParentStorage(IStorage storage)
+        public void RemoveParentStorage(IMonitorLogger logger, IStorage storage)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        void IStorage.CollectChainOfStorages(IList<StorageUsingOptions> result, IList<IStorage> usedStorages, int level, CollectChainOfStoragesOptions options)
+        void IStorage.CollectChainOfStorages(IMonitorLogger logger, IList<StorageUsingOptions> result, IList<IStorage> usedStorages, int level, CollectChainOfStoragesOptions options)
         {
             if (usedStorages.Contains(this))
             {
@@ -213,7 +214,6 @@ namespace SymOntoClay.Core.Internal.Storage
             }
 
             usedStorages.Add(this);
-
 
             level++;
 
@@ -238,22 +238,22 @@ namespace SymOntoClay.Core.Internal.Storage
         }
 
         /// <inheritdoc/>
-        void IStorage.CollectChainOfStorages(IList<IStorage> result)
+        void IStorage.CollectChainOfStorages(IMonitorLogger logger, IList<IStorage> result)
         {
-            CollectChainOfStorages(result);
+            CollectChainOfStorages(logger, result);
         }
 
         /// <inheritdoc/>
-        public IList<IStorage> GetStorages()
+        public IList<IStorage> GetStorages(IMonitorLogger logger)
         {
             var result = new List<IStorage>();
 
-            CollectChainOfStorages(result);
+            CollectChainOfStorages(logger, result);
 
             return result;
         }
 
-        private void CollectChainOfStorages(IList<IStorage> result)
+        private void CollectChainOfStorages(IMonitorLogger logger, IList<IStorage> result)
         {
             if (result.Contains(this))
             {
@@ -268,13 +268,13 @@ namespace SymOntoClay.Core.Internal.Storage
 
 #if DEBUG
         /// <inheritdoc/>
-        public void DbgPrintFactsAndRules()
+        public void DbgPrintFactsAndRules(IMonitorLogger logger)
         {
-            Info("82B887B0-0CBB-43C7-94FC-A993862D5FE1", "Begin");
+            logger.Info("82B887B0-0CBB-43C7-94FC-A993862D5FE1", "Begin");
 
-            _logicalStorage.DbgPrintFactsAndRules();
+            _logicalStorage.DbgPrintFactsAndRules(logger);
 
-            Info("452B0BC5-2F78-469C-9A6B-12C89F770A7E", "End");
+            logger.Info("452B0BC5-2F78-469C-9A6B-12C89F770A7E", "End");
         }
 #endif
 

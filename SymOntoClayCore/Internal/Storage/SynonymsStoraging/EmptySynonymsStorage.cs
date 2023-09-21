@@ -42,12 +42,12 @@ namespace SymOntoClay.Core.Internal.Storage.SynonymsStoraging
         }
 
         /// <inheritdoc/>
-        public void Append(Synonym synonym)
+        public void Append(IMonitorLogger logger, Synonym synonym)
         {
         }
 
         /// <inheritdoc/>
-        public IList<StrongIdentifierValue> GetSynonymsDirectly(StrongIdentifierValue name)
+        public IList<StrongIdentifierValue> GetSynonymsDirectly(IMonitorLogger logger, StrongIdentifierValue name)
         {
             return new List<StrongIdentifierValue>();
         }

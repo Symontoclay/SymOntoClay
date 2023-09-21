@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -33,7 +34,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic
         public override KindOfFuzzyLogicOperatorFunction Kind => KindOfFuzzyLogicOperatorFunction.Very;
 
         /// <inheritdoc/>
-        public override double SystemCall(double x)
+        public override double SystemCall(IMonitorLogger logger, double x)
         {
             return SystemFuzzyLogicOperators.Very(x);
         }

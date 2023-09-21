@@ -33,6 +33,7 @@ using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -157,7 +158,7 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public event Action<IList<StrongIdentifierValue>> OnChanged;
 
-        public void Init()
+        public void Init(IMonitorLogger logger)
         {
             Observer_OnChanged();
         }
@@ -261,11 +262,11 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 if(_triggerConditionNodeObserverContext.IsOn)
                 {
-                    _globalLogicalStorage.Append(_ruleInstancesList);
+                    _globalLogicalStorage.Append(Logger, _ruleInstancesList);
                 }
                 else
                 {
-                    _globalLogicalStorage.Remove(_ruleInstancesList);
+                    _globalLogicalStorage.Remove(Logger, _ruleInstancesList);
                 }
             }
 
@@ -479,7 +480,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 foreach (var varItem in targetVarList)
                 {
-                    varStorage.Append(varItem);
+                    varStorage.Append(Logger, varItem);
                 }
 
                 RunSetHandler(localCodeExecutionContext);
@@ -532,7 +533,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 foreach (var varItem in targetVarList)
                 {
-                    varStorage.Append(varItem);
+                    varStorage.Append(Logger, varItem);
                 }
 
                 RunResetHandler(localCodeExecutionContext);

@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -36,13 +37,13 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic
         public abstract KindOfFuzzyLogicOperatorFunction Kind { get; }
 
         /// <inheritdoc/>
-        public double SystemCall(NumberValue x)
+        public double SystemCall(IMonitorLogger logger, NumberValue x)
         {
-            return SystemCall((double)x.GetSystemValue());
+            return SystemCall(logger, (double)x.GetSystemValue());
         }
 
         /// <inheritdoc/>
-        public abstract double SystemCall(double x);
+        public abstract double SystemCall(IMonitorLogger logger, double x);
 
         /// <inheritdoc/>
         public ulong GetLongHashCode()

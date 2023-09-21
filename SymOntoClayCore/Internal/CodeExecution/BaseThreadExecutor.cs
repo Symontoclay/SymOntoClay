@@ -610,7 +610,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var newInstance = instanceValue.AsInstanceValue.InstanceInfo;
 
-            var superClassesStoragesDict = _inheritanceResolver.GetSuperClassStoragesDict(newInstance.LocalCodeExecutionContext.Storage, newInstance);
+            var superClassesStoragesDict = _inheritanceResolver.GetSuperClassStoragesDict(Logger, newInstance.LocalCodeExecutionContext.Storage, newInstance);
 
             var executionsList = new List<(CodeFrame, IExecutionCoordinator)>();
 
@@ -619,15 +619,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             switch (kindOfParameters)
             {
                 case KindOfFunctionParameters.NoParameters:
-                    constructor = _constructorsResolver.ResolveWithSelfAndDirectInheritance(newInstance.Name, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                    constructor = _constructorsResolver.ResolveWithSelfAndDirectInheritance(Logger, newInstance.Name, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
                     break;
 
                 case KindOfFunctionParameters.NamedParameters:
-                    constructor = _constructorsResolver.ResolveWithSelfAndDirectInheritance(newInstance.Name, namedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                    constructor = _constructorsResolver.ResolveWithSelfAndDirectInheritance(Logger, newInstance.Name, namedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
                     break;
 
                 case KindOfFunctionParameters.PositionedParameters:
-                    constructor = _constructorsResolver.ResolveWithSelfAndDirectInheritance(newInstance.Name, positionedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                    constructor = _constructorsResolver.ResolveWithSelfAndDirectInheritance(Logger, newInstance.Name, positionedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
                     break;
 
                 default:
@@ -636,14 +636,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (constructor != null)
             {
-                var coordinator = ((IExecutable)constructor).GetCoordinator(_context, newInstance.LocalCodeExecutionContext);
+                var coordinator = ((IExecutable)constructor).GetCoordinator(Logger, _context, newInstance.LocalCodeExecutionContext);
 
-                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(constructor, kindOfParameters, namedParameters, positionedParameters, newInstance.LocalCodeExecutionContext, null);
+                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(Logger, constructor, kindOfParameters, namedParameters, positionedParameters, newInstance.LocalCodeExecutionContext, null);
 
                 executionsList.Add((newCodeFrame, coordinator));
             }
 
-            var preConstructors = _constructorsResolver.ResolvePreConstructors(newInstance.Name, newInstance.LocalCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+            var preConstructors = _constructorsResolver.ResolvePreConstructors(Logger, newInstance.Name, newInstance.LocalCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
             if (preConstructors.Any())
             {
@@ -660,9 +660,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     localCodeExecutionContext.OwnerStorage = targetStorage;
                     localCodeExecutionContext.Kind = KindOfLocalCodeExecutionContext.PreConstructor;
 
-                    var coordinator = ((IExecutable)preConstructor).GetCoordinator(_context, newInstance.LocalCodeExecutionContext);
+                    var coordinator = ((IExecutable)preConstructor).GetCoordinator(Logger, _context, newInstance.LocalCodeExecutionContext);
 
-                    var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(preConstructor, KindOfFunctionParameters.NoParameters, null, null, localCodeExecutionContext, null, true);
+                    var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(Logger, preConstructor, KindOfFunctionParameters.NoParameters, null, null, localCodeExecutionContext, null, true);
 
                     executionsList.Add((newCodeFrame, coordinator));
                 }
@@ -694,21 +694,21 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 case KindOfValue.CodeItem:
                     {
-                        var instanceValue = _context.InstancesStorage.CreateInstance(prototypeValue.AsCodeItem, _currentCodeFrame.LocalContext);
+                        var instanceValue = _context.InstancesStorage.CreateInstance(Logger, prototypeValue.AsCodeItem, _currentCodeFrame.LocalContext);
 
                         return instanceValue;
                     }
 
                 case KindOfValue.StrongIdentifierValue:
                     {
-                        var instanceValue = _context.InstancesStorage.CreateInstance(prototypeValue.AsStrongIdentifierValue, _currentCodeFrame.LocalContext);
+                        var instanceValue = _context.InstancesStorage.CreateInstance(Logger, prototypeValue.AsStrongIdentifierValue, _currentCodeFrame.LocalContext);
 
                         return instanceValue;
                     }
 
                 case KindOfValue.InstanceValue:
                     {
-                        var instanceValue = _context.InstancesStorage.CreateInstance(prototypeValue.AsInstanceValue, _currentCodeFrame.LocalContext);
+                        var instanceValue = _context.InstancesStorage.CreateInstance(Logger, prototypeValue.AsInstanceValue, _currentCodeFrame.LocalContext);
 
                         return instanceValue;
                     }
@@ -736,7 +736,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Broken;
 
-            _context.InstancesStorage.TryActivateDefaultState();
+            _context.InstancesStorage.TryActivateDefaultState(Logger);
 
             _currentCodeFrame.CurrentPosition++;
         }
@@ -749,9 +749,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Broken;
 
-            _globalLogicalStorage.Append(ruleInstance);
+            _globalLogicalStorage.Append(Logger, ruleInstance);
 
-            _context.InstancesStorage.TryActivateDefaultState();
+            _context.InstancesStorage.TryActivateDefaultState(Logger);
 
             _currentCodeFrame.CurrentPosition++;
         }
@@ -760,7 +760,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
 
-            _context.InstancesStorage.TryActivateDefaultState();
+            _context.InstancesStorage.TryActivateDefaultState(Logger);
 
             _currentCodeFrame.CurrentPosition++;
         }
@@ -776,7 +776,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var stateName = currentValue.AsStrongIdentifierValue;
 
-            _globalStorage.StatesStorage.SetDefaultStateName(stateName);
+            _globalStorage.StatesStorage.SetDefaultStateName(Logger, stateName);
 
             _currentCodeFrame.CurrentPosition++;
         }
@@ -792,11 +792,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var stateName = currentValue.AsStrongIdentifierValue;
 
-            var state = _statesResolver.Resolve(stateName, _currentCodeFrame.LocalContext);
+            var state = _statesResolver.Resolve(Logger, stateName, _currentCodeFrame.LocalContext);
 
             _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
 
-            _context.InstancesStorage.ActivateState(state);
+            _context.InstancesStorage.ActivateState(Logger, state);
 
             _currentCodeFrame.CurrentPosition++;
         }
@@ -963,7 +963,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var kindOfOperator = currentCommand.KindOfOperator;
 
-            var operatorInfo = _operatorsResolver.GetOperator(kindOfOperator, _currentCodeFrame.LocalContext);
+            var operatorInfo = _operatorsResolver.GetOperator(Logger, kindOfOperator, _currentCodeFrame.LocalContext);
 
             CallOperator(operatorInfo, paramsList);
 
@@ -980,7 +980,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 kindOfOperator = KindOfOperator.Is;
             }
 
-            var operatorInfo = _operatorsResolver.GetOperator(kindOfOperator, _currentCodeFrame.LocalContext);
+            var operatorInfo = _operatorsResolver.GetOperator(Logger, kindOfOperator, _currentCodeFrame.LocalContext);
 
             CallOperator(operatorInfo, paramsList);
 
@@ -1040,7 +1040,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             varPtr.Name = varName.AsStrongIdentifierValue;
 
-            _currentVarStorage.Append(varPtr);
+            _currentVarStorage.Append(Logger, varPtr);
 
             _currentCodeFrame.ValuesStack.Push(varName);
             _currentCodeFrame.CurrentPosition++;
@@ -1056,7 +1056,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var codeItem = prototypeValue.AsCodeItem;
 
-            _projectLoader.LoadCodeItem(codeItem, _currentCodeFrame.LocalContext.Storage);
+            _projectLoader.LoadCodeItem(Logger, codeItem, _currentCodeFrame.LocalContext.Storage);
 
             _currentCodeFrame.CurrentPosition++;
         }
@@ -1073,7 +1073,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     {
                         var waypointSourceValue = value.AsWaypointSourceValue;
 
-                        value = waypointSourceValue.ConvertToWaypointValue(_context, _currentCodeFrame.LocalContext);
+                        value = waypointSourceValue.ConvertToWaypointValue(Logger, _context, _currentCodeFrame.LocalContext);
                     }
                     break;
 
@@ -1081,7 +1081,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     {
                         var conditionalEntitySourceValue = value.AsConditionalEntitySourceValue;
 
-                        var conditionalEntityValue = conditionalEntitySourceValue.ConvertToConditionalEntityValue(_context, _currentCodeFrame.LocalContext);
+                        var conditionalEntityValue = conditionalEntitySourceValue.ConvertToConditionalEntityValue(Logger, _context, _currentCodeFrame.LocalContext);
                         conditionalEntityValue.Resolve();
                         value = conditionalEntityValue;
                     }
@@ -1121,7 +1121,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private Value TryResolveFromVarOrExpr(Value operand)
         {
-            return _valueResolvingHelper.TryResolveFromVarOrExpr(operand, _currentCodeFrame.LocalContext);
+            return _valueResolvingHelper.TryResolveFromVarOrExpr(Logger, operand, _currentCodeFrame.LocalContext);
         }
 
         private void Wait(ScriptCommand currentCommand)
@@ -1163,7 +1163,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (firstParameter.KindOfValue != KindOfValue.TaskValue)
                 {
-                    var timeoutSystemVal = _dateTimeResolver.ConvertTimeValueToTicks(firstParameter, DefaultTimeValues.TimeoutDefaultTimeValue, _currentCodeFrame.LocalContext);
+                    var timeoutSystemVal = _dateTimeResolver.ConvertTimeValueToTicks(Logger, firstParameter, DefaultTimeValues.TimeoutDefaultTimeValue, _currentCodeFrame.LocalContext);
 
                     var currentTick = _dateTimeProvider.CurrentTiks;
 
@@ -1218,10 +1218,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     return currentValue.AsLogicalValue.SystemValue;
 
                 case KindOfValue.NumberValue:
-                    return ValueConverter.ConvertNumberValueToLogicalValue(currentValue.AsNumberValue, _context).SystemValue;
+                    return ValueConverter.ConvertNumberValueToLogicalValue(Logger, currentValue.AsNumberValue, _context).SystemValue;
 
                 case KindOfValue.StrongIdentifierValue:
-                    return ValueConverter.ConvertStrongIdentifierValueToLogicalValue(currentValue.AsStrongIdentifierValue, _context).SystemValue;
+                    return ValueConverter.ConvertStrongIdentifierValueToLogicalValue(Logger, currentValue.AsStrongIdentifierValue, _context).SystemValue;
 
                 case KindOfValue.RuleInstance:
                     {
@@ -1232,7 +1232,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         searchOptions.LocalCodeExecutionContext = _currentCodeFrame.LocalContext;
                         searchOptions.ResolvingNotResultsStrategy = ResolvingNotResultsStrategy.Ignore;
 
-                        var searchResult = _logicalSearchResolver.Run(searchOptions);
+                        var searchResult = _logicalSearchResolver.Run(Logger, searchOptions);
 
                         if (searchResult.IsSuccess)
                         {
@@ -1285,7 +1285,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             _currentError = errorValue;
 
-            _globalLogicalStorage.Append(ruleInstance);
+            _globalLogicalStorage.Append(Logger, ruleInstance);
         }
 
         private bool CheckSEH()
@@ -1302,7 +1302,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 {
                     searchOptions.QueryExpression = sehItem.Condition;
 
-                    if (!_logicalSearchResolver.IsTruth(searchOptions))
+                    if (!_logicalSearchResolver.IsTruth(Logger, searchOptions))
                     {
                         continue;
                     }
@@ -1310,7 +1310,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (sehItem.VariableName != null && !sehItem.VariableName.IsEmpty)
                 {
-                    _currentVarStorage.SetValue(sehItem.VariableName, _currentError);
+                    _currentVarStorage.SetValue(Logger, sehItem.VariableName, _currentError);
                 }
 
                 _currentError = null;
@@ -1558,15 +1558,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             switch (kindOfParameters)
             {
                 case KindOfFunctionParameters.NoParameters:
-                    constructor = _constructorsResolver.ResolveOnlyOwn(constructorName, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                    constructor = _constructorsResolver.ResolveOnlyOwn(Logger, constructorName, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
                     break;
 
                 case KindOfFunctionParameters.NamedParameters:
-                    constructor = _constructorsResolver.ResolveOnlyOwn(constructorName, namedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                    constructor = _constructorsResolver.ResolveOnlyOwn(Logger, constructorName, namedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
                     break;
 
                 case KindOfFunctionParameters.PositionedParameters:
-                    constructor = _constructorsResolver.ResolveOnlyOwn(constructorName, positionedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                    constructor = _constructorsResolver.ResolveOnlyOwn(Logger, constructorName, positionedParameters, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
                     break;
 
                 default:
@@ -1583,7 +1583,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             optionsForInheritanceResolver.AddTopType = false;
             optionsForInheritanceResolver.OnlyDirectInheritance = true;
 
-            var superClassesList = _inheritanceResolver.GetSuperClassesKeysList(_currentCodeFrame.LocalContext.Owner, _currentCodeFrame.LocalContext, optionsForInheritanceResolver);
+            var superClassesList = _inheritanceResolver.GetSuperClassesKeysList(Logger, _currentCodeFrame.LocalContext.Owner, _currentCodeFrame.LocalContext, optionsForInheritanceResolver);
 
             if(!superClassesList.Any())
             {
@@ -1603,16 +1603,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             foreach(var targetSuperClass in targetSuperClassesList)
             {
-                var constructor = _constructorsResolver.ResolveOnlyOwn(targetSuperClass, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+                var constructor = _constructorsResolver.ResolveOnlyOwn(Logger, targetSuperClass, _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
 
                 if(constructor == null)
                 {
                     continue;
                 }
 
-                var coordinator = ((IExecutable)constructor).GetCoordinator(_context, _currentCodeFrame.LocalContext);
+                var coordinator = ((IExecutable)constructor).GetCoordinator(Logger, _context, _currentCodeFrame.LocalContext);
 
-                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(constructor, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, null);
+                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(Logger, constructor, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, null);
 
                 executionsList.Add((newCodeFrame, coordinator));
             }
@@ -1684,14 +1684,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ExecCallEvent(AnnotationSystemEvent annotationSystemEvent)
         {
-            var coordinator = ((IExecutable)annotationSystemEvent).GetCoordinator(_context, _currentCodeFrame.LocalContext);
+            var coordinator = ((IExecutable)annotationSystemEvent).GetCoordinator(Logger, _context, _currentCodeFrame.LocalContext);
 
             if (coordinator == null)
             {
                 coordinator = _currentCodeFrame.ExecutionCoordinator;
             }
 
-            var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(annotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, null, true);
+            var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(Logger, annotationSystemEvent, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, null, true);
 
             if (annotationSystemEvent.IsSync)
             {
@@ -1839,7 +1839,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 var processInfo = processCreatingResult.Process;
 
-                _instancesStorage.AppendAndTryStartProcessInfo(processInfo);
+                _instancesStorage.AppendAndTryStartProcessInfo(Logger, processInfo);
 
                 var timeout = GetTimeoutFromAnnotation(annotation);
                 var timeoutCancellationMode = GetTimeoutCancellationModeFromAnnotation(annotation);
@@ -1855,7 +1855,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         executionCoordinators = new List<IExecutionCoordinator>() { _executionCoordinator };
                     }
 
-                    ProcessInfoHelper.Wait(executionCoordinators, timeout, timeoutCancellationMode, _dateTimeProvider, processInfo);
+                    ProcessInfoHelper.Wait(Logger, executionCoordinators, timeout, timeoutCancellationMode, _dateTimeProvider, processInfo);
 
                     if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus == ActionExecutionStatus.Broken)
                     {
@@ -1930,13 +1930,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         }
 
                         Task.Run(() => {
-                            ProcessInfoHelper.Wait(executionCoordinators, timeout, timeoutCancellationMode, _dateTimeProvider, processInfo);
+                            ProcessInfoHelper.Wait(Logger, executionCoordinators, timeout, timeoutCancellationMode, _dateTimeProvider, processInfo);
                         });
                     }
 
                     if (completeAnnotationSystemEvent != null)
                     {
-                        processInfo.AddOnCompleteHandler(new ProcessInfoEventHandler(_context, Logger.Id, completeAnnotationSystemEvent, _currentCodeFrame, true));
+                        processInfo.AddOnCompleteHandler(Logger, new ProcessInfoEventHandler(_context, Logger.Id, completeAnnotationSystemEvent, _currentCodeFrame, true));
                     }
 
                     if (cancelAnnotationSystemEvent != null)
@@ -1946,7 +1946,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     if (weakCancelAnnotationSystemEvent != null)
                     {
-                        processInfo.AddOnWeakCanceledHandler(new ProcessInfoEventHandler(_context, Logger.Id, weakCancelAnnotationSystemEvent, _currentCodeFrame, true));
+                        processInfo.AddOnWeakCanceledHandler(Logger, new ProcessInfoEventHandler(_context, Logger.Id, weakCancelAnnotationSystemEvent, _currentCodeFrame, true));
                     }
 
                     if (errorAnnotationSystemEvent != null)
@@ -1974,15 +1974,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             switch(kindOfParameters)
             {
                 case KindOfFunctionParameters.NoParameters:
-                    method = _methodsResolver.Resolve(methodName, _currentCodeFrame.LocalContext);
+                    method = _methodsResolver.Resolve(Logger, methodName, _currentCodeFrame.LocalContext);
                     break;
 
                 case KindOfFunctionParameters.NamedParameters:
-                    method = _methodsResolver.Resolve(methodName, namedParameters, _currentCodeFrame.LocalContext);
+                    method = _methodsResolver.Resolve(Logger, methodName, namedParameters, _currentCodeFrame.LocalContext);
                     break;
 
                 case KindOfFunctionParameters.PositionedParameters:
-                    method = _methodsResolver.Resolve(methodName, positionedParameters, _currentCodeFrame.LocalContext);
+                    method = _methodsResolver.Resolve(Logger, methodName, positionedParameters, _currentCodeFrame.LocalContext);
                     break;
 
                 default:
@@ -2005,9 +2005,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ExecRuleInstanceValue(RuleInstance ruleInstance)
         {
-            var compiledCode = _converterFactToImperativeCode.Convert(ruleInstance, _currentCodeFrame.LocalContext);
+            var compiledCode = _converterFactToImperativeCode.Convert(Logger, ruleInstance, _currentCodeFrame.LocalContext);
 
-            var codeFrame = _codeFrameService.ConvertCompiledFunctionBodyToCodeFrame(compiledCode, _currentCodeFrame.LocalContext);
+            var codeFrame = _codeFrameService.ConvertCompiledFunctionBodyToCodeFrame(Logger, compiledCode, _currentCodeFrame.LocalContext);
 
             ExecuteCodeFrame(codeFrame, null, SyncOption.Sync);
         }
@@ -2021,7 +2021,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 return null;
             }
 
-            return _dateTimeResolver.ConvertTimeValueToTicks(initialValue, DefaultTimeValues.TimeoutDefaultTimeValue, _currentCodeFrame.LocalContext);
+            return _dateTimeResolver.ConvertTimeValueToTicks(Logger, initialValue, DefaultTimeValues.TimeoutDefaultTimeValue, _currentCodeFrame.LocalContext);
         }
 
         private TimeoutCancellationMode _defaultTimeoutCancellationMode = TimeoutCancellationMode.WeakCancel;
@@ -2069,7 +2069,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 return null;
             }
 
-            var numberValue = _numberValueLinearResolver.Resolve(initialValue, _currentCodeFrame.LocalContext);
+            var numberValue = _numberValueLinearResolver.Resolve(Logger, initialValue, _currentCodeFrame.LocalContext);
 
             if (numberValue == null || numberValue.KindOfValue == KindOfValue.NullValue)
             {
@@ -2086,7 +2086,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 return null;
             }
 
-            var initialValue = _annotationsResolver.GetSettings(annotation, settingName, _currentCodeFrame.LocalContext);
+            var initialValue = _annotationsResolver.GetSettings(Logger, annotation, settingName, _currentCodeFrame.LocalContext);
 
             if (initialValue == null || initialValue.KindOfValue == KindOfValue.NullValue)
             {
@@ -2122,15 +2122,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 switch(kindOfParameters)
                 {
                     case KindOfFunctionParameters.NoParameters:
-                        result = executable.SystemHandler.Call(new List<Value>(), targetLocalContext);
+                        result = executable.SystemHandler.Call(Logger, new List<Value>(), targetLocalContext);
                         break;
 
                     case KindOfFunctionParameters.PositionedParameters:
-                        result = executable.SystemHandler.Call(positionedParameters, targetLocalContext);
+                        result = executable.SystemHandler.Call(Logger, positionedParameters, targetLocalContext);
                         break;
 
                     case KindOfFunctionParameters.NamedParameters:
-                        result = executable.SystemHandler.Call(namedParameters.ToDictionary(p => p.Key.NameValue, p => p.Value), annotation, targetLocalContext);
+                        result = executable.SystemHandler.Call(Logger, namedParameters.ToDictionary(p => p.Key.NameValue, p => p.Value), annotation, targetLocalContext);
                         break;
 
                     default:
@@ -2162,10 +2162,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (executable.NeedActivation && !executable.IsActivated)
                 {
-                    executable = executable.Activate(_context, _currentCodeFrame.LocalContext, _executionCoordinator);
+                    executable = executable.Activate(Logger, _context, _currentCodeFrame.LocalContext, _executionCoordinator);
                 }
 
-                var coordinator = executable.GetCoordinator(_context, _currentCodeFrame.LocalContext);
+                var coordinator = executable.GetCoordinator(Logger, _context, _currentCodeFrame.LocalContext);
 
                 if (executable.UsingLocalCodeExecutionContextPreferences == UsingLocalCodeExecutionContextPreferences.UseOwnAsParent || executable.UsingLocalCodeExecutionContextPreferences == UsingLocalCodeExecutionContextPreferences.UseBothOwnAndCallerAsParent)
                 {
@@ -2174,7 +2174,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 var additionalSettings = GetAdditionalSettingsFromAnnotation(annotation, ownLocalCodeExecutionContext);
 
-                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(executable, kindOfParameters, namedParameters, positionedParameters, targetLocalContext, 
+                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(Logger, executable, kindOfParameters, namedParameters, positionedParameters, targetLocalContext, 
                     additionalSettings);
 
                 ExecuteCodeFrame(newCodeFrame, coordinator, syncOption, true, completeAnnotationSystemEvent, cancelAnnotationSystemEvent, weakCancelAnnotationSystemEvent, errorAnnotationSystemEvent);
@@ -2196,7 +2196,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var codeFrame = item.Item1;
                 var coordinator = item.Item2;
 
-                _context.InstancesStorage.AppendProcessInfo(codeFrame.ProcessInfo);
+                _context.InstancesStorage.AppendProcessInfo(Logger, codeFrame.ProcessInfo);
 
                 PrepareCodeFrameToSyncExecution(codeFrame, coordinator);
 
@@ -2252,7 +2252,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var currentProcessInfo = codeFrame.ProcessInfo;
 
-            _context.InstancesStorage.AppendProcessInfo(currentProcessInfo);
+            _context.InstancesStorage.AppendProcessInfo(Logger, currentProcessInfo);
 
             switch (syncOption)
             {
@@ -2263,7 +2263,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     if(increaceCurrentFramePosition)
                     {
                         targetCurrentCodeFrame.CurrentPosition++;
-                        targetCurrentCodeFrame.ProcessInfo.AddChild(currentProcessInfo);
+                        targetCurrentCodeFrame.ProcessInfo.AddChild(Logger, currentProcessInfo);
                     }
 
                     if (completeAnnotationSystemEvent != null)
@@ -2295,7 +2295,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 case SyncOption.IndependentAsync:
                 case SyncOption.ChildAsync:
-                    _codeFrameAsyncExecutor.AsyncExecuteCodeFrame(Logger.Id, codeFrame, targetCurrentCodeFrame, coordinator, syncOption, increaceCurrentFramePosition, completeAnnotationSystemEvent, cancelAnnotationSystemEvent, weakCancelAnnotationSystemEvent, errorAnnotationSystemEvent);
+                    _codeFrameAsyncExecutor.AsyncExecuteCodeFrame(Logger, Logger.Id, codeFrame, targetCurrentCodeFrame, coordinator, syncOption, increaceCurrentFramePosition, completeAnnotationSystemEvent, cancelAnnotationSystemEvent, weakCancelAnnotationSystemEvent, errorAnnotationSystemEvent);
                     break;
 
                 case SyncOption.PseudoSync:
@@ -2326,7 +2326,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 {
                     SetSpecialMarkOfCodeFrame(codeFrame, coordinator);
 
-                    _currentInstance.AddChildInstance(instance);
+                    _currentInstance.AddChildInstance(Logger, instance);
                 }
             }
 
@@ -2363,9 +2363,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var inheritenceItem = new InheritanceItem();
             DefaultSettingsOfCodeEntityHelper.SetUpInheritanceItem(inheritenceItem, _currentCodeFrame.LocalContext.Storage.DefaultSettingsOfCodeEntity);
 
-            var subName = _strongIdentifierLinearResolver.Resolve(paramsList[0], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+            var subName = _strongIdentifierLinearResolver.Resolve(Logger, paramsList[0], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
 
-            var superName = _strongIdentifierLinearResolver.Resolve(paramsList[1], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
+            var superName = _strongIdentifierLinearResolver.Resolve(Logger, paramsList[1], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
 
             var rank = paramsList[2];//_logicalValueLinearResolver.Resolve(paramsList[2], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions(), true);
 
@@ -2373,7 +2373,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             inheritenceItem.SuperName = superName;
             inheritenceItem.Rank = rank;
 
-            _globalStorage.InheritanceStorage.SetInheritance(inheritenceItem);
+            _globalStorage.InheritanceStorage.SetInheritance(Logger, inheritenceItem);
 
             _currentCodeFrame.CurrentPosition++;
         }
@@ -2389,13 +2389,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var superName = paramsList[1].AsStrongIdentifierValue;
 
-            var rank = _logicalValueLinearResolver.Resolve(paramsList[2], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions(), true).Inverse();
+            var rank = _logicalValueLinearResolver.Resolve(Logger, paramsList[2], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions(), true).Inverse();
 
             inheritenceItem.SubName = subName;
             inheritenceItem.SuperName = superName;
             inheritenceItem.Rank = rank;
 
-            _globalStorage.InheritanceStorage.SetInheritance(inheritenceItem);
+            _globalStorage.InheritanceStorage.SetInheritance(Logger, inheritenceItem);
 
             _currentCodeFrame.CurrentPosition++;
         }

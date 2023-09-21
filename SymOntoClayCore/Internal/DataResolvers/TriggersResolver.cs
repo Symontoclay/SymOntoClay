@@ -49,51 +49,51 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public List<InlineTrigger> ResolveLogicConditionalTriggersList(IMonitorLogger logger, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-            var storagesList = GetStoragesList(localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
+            var storagesList = GetStoragesList(logger, localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(holder, localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder, localCodeExecutionContext, optionsForInheritanceResolver);
 
-            var rawList = GetLogicConditionalRawList(storagesList, weightedInheritanceItems);
+            var rawList = GetLogicConditionalRawList(logger, storagesList, weightedInheritanceItems);
 
-            return OrderAndDistinct(rawList, localCodeExecutionContext, options).Select(p => p.ResultItem).ToList();
+            return OrderAndDistinct(logger, rawList, localCodeExecutionContext, options).Select(p => p.ResultItem).ToList();
         }
 
         public List<InlineTrigger> ResolveAddFactTriggersList(IMonitorLogger logger, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-            var storagesList = GetStoragesList(localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
+            var storagesList = GetStoragesList(logger, localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(holder, localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder, localCodeExecutionContext, optionsForInheritanceResolver);
 
-            var rawList = GetAddFactTriggersRawList(storagesList, weightedInheritanceItems);
+            var rawList = GetAddFactTriggersRawList(logger, storagesList, weightedInheritanceItems);
 
-            return OrderAndDistinct(rawList, localCodeExecutionContext, options).Select(p => p.ResultItem).ToList();
+            return OrderAndDistinct(logger, rawList, localCodeExecutionContext, options).Select(p => p.ResultItem).ToList();
         }
 
         public List<InlineTrigger> ResolveSystemEventsTriggersList(IMonitorLogger logger, KindOfSystemEventOfInlineTrigger kindOfSystemEvent, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-            var storagesList = GetStoragesList(localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
+            var storagesList = GetStoragesList(logger, localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(holder, localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, holder, localCodeExecutionContext, optionsForInheritanceResolver);
 
-            var rawList = GetSystemEventsRawList(kindOfSystemEvent, storagesList, weightedInheritanceItems);
+            var rawList = GetSystemEventsRawList(logger, kindOfSystemEvent, storagesList, weightedInheritanceItems);
 
-            return OrderAndDistinct(rawList, localCodeExecutionContext, options).Select(p => p.ResultItem).ToList();
+            return OrderAndDistinct(logger, rawList, localCodeExecutionContext, options).Select(p => p.ResultItem).ToList();
         }
 
         private List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>> OrderAndDistinct(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>> source, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var inheritanceOrderOptions = options.Clone();
 
-            return OrderAndDistinctByInheritance(source, inheritanceOrderOptions);
+            return OrderAndDistinctByInheritance(logger, source, inheritanceOrderOptions);
         }
 
         private List<WeightedInheritanceResultItemWithStorageInfo<InlineTrigger>> GetLogicConditionalRawList(IMonitorLogger logger, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
@@ -102,7 +102,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var storageItem in storagesList)
             {
-                var itemsList = storageItem.Storage.TriggersStorage.GetLogicConditionalTriggersDirectly(weightedInheritanceItems);
+                var itemsList = storageItem.Storage.TriggersStorage.GetLogicConditionalTriggersDirectly(logger, weightedInheritanceItems);
 
                 if (!itemsList.Any())
                 {
@@ -127,7 +127,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var storageItem in storagesList)
             {
-                var itemsList = storageItem.Storage.TriggersStorage.GetAddFactTriggersDirectly(weightedInheritanceItems);
+                var itemsList = storageItem.Storage.TriggersStorage.GetAddFactTriggersDirectly(logger, weightedInheritanceItems);
 
                 if (!itemsList.Any())
                 {
@@ -152,7 +152,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var storageItem in storagesList)
             {
-                var itemsList = storageItem.Storage.TriggersStorage.GetSystemEventsTriggersDirectly(kindOfSystemEvent, weightedInheritanceItems);
+                var itemsList = storageItem.Storage.TriggersStorage.GetSystemEventsTriggersDirectly(logger, kindOfSystemEvent, weightedInheritanceItems);
 
                 if (!itemsList.Any())
                 {
@@ -173,16 +173,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public INamedTriggerInstance ResolveNamedTriggerInstance(IMonitorLogger logger, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            return ResolveNamedTriggerInstance(name, localCodeExecutionContext, _defaultOptions);
+            return ResolveNamedTriggerInstance(logger, name, localCodeExecutionContext, _defaultOptions);
         }
 
         public INamedTriggerInstance ResolveNamedTriggerInstance(IMonitorLogger logger, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
-            var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
+            var storagesList = GetStoragesList(logger, storage, KindOfStoragesList.CodeItems);
 
-            var rawList = GetNamedTriggerInstanceRawList(name, storagesList, localCodeExecutionContext);
+            var rawList = GetNamedTriggerInstanceRawList(logger, name, storagesList, localCodeExecutionContext);
 
             if(!rawList.Any())
             {
@@ -199,11 +199,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private List<INamedTriggerInstance> GetNamedTriggerInstanceRawList(IMonitorLogger logger, StrongIdentifierValue name, List<StorageUsingOptions> storagesList, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            var result = NGetNamedTriggerInstanceRawList(name, storagesList);
+            var result = NGetNamedTriggerInstanceRawList(logger, name, storagesList);
 
             if(result.IsNullOrEmpty())
             {
-                result = GetNamedTriggerInstanceRawListFromSynonyms(name, storagesList, localCodeExecutionContext);
+                result = GetNamedTriggerInstanceRawListFromSynonyms(logger, name, storagesList, localCodeExecutionContext);
             }
 
             return result;
@@ -211,11 +211,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private List<INamedTriggerInstance> GetNamedTriggerInstanceRawListFromSynonyms(IMonitorLogger logger, StrongIdentifierValue name, List<StorageUsingOptions> storagesList, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            var synonymsList = _synonymsResolver.GetSynonyms(name, localCodeExecutionContext);
+            var synonymsList = _synonymsResolver.GetSynonyms(logger, name, localCodeExecutionContext);
 
             foreach (var synonym in synonymsList)
             {
-                var rawList = NGetNamedTriggerInstanceRawList(synonym, storagesList);
+                var rawList = NGetNamedTriggerInstanceRawList(logger, synonym, storagesList);
 
                 if (rawList.IsNullOrEmpty())
                 {
@@ -239,7 +239,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var storageItem in storagesList)
             {
-                var itemsList = storageItem.Storage.TriggersStorage.GetNamedTriggerInstancesDirectly(name);
+                var itemsList = storageItem.Storage.TriggersStorage.GetNamedTriggerInstancesDirectly(logger, name);
 
                 if (itemsList.IsNullOrEmpty())
                 {

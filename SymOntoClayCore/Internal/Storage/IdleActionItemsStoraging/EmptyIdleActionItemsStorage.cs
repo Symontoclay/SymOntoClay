@@ -38,12 +38,12 @@ namespace SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging
         }
 
         /// <inheritdoc/>
-        public void Append(IdleActionItem item)
+        public void Append(IMonitorLogger logger, IdleActionItem item)
         {
         }
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<IdleActionItem>> GetIdleActionsDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<IdleActionItem>> GetIdleActionsDirectly(IMonitorLogger logger, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             return new List<WeightedInheritanceResultItem<IdleActionItem>>();
         }

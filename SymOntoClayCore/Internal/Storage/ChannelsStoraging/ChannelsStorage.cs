@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,9 +44,9 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStoraging
         private readonly Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<Channel>>> _nonIndexedInfo = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<Channel>>>();
 
         /// <inheritdoc/>
-        public void Append(Channel channel)
+        public void Append(IMonitorLogger logger, Channel channel)
         {
-            AnnotatedItemHelper.CheckAndFillUpHolder(channel, _realStorageContext.MainStorageContext.CommonNamesStorage);
+            AnnotatedItemHelper.CheckAndFillUpHolder(logger, channel, _realStorageContext.MainStorageContext.CommonNamesStorage);
 
             lock(_lockObj)
             {
@@ -82,7 +83,7 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStoraging
         private static List<WeightedInheritanceResultItem<Channel>> _emptyChannelsList = new List<WeightedInheritanceResultItem<Channel>>();
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<Channel>> GetChannelsDirectly(StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<Channel>> GetChannelsDirectly(IMonitorLogger logger, StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             lock (_lockObj)
             {

@@ -28,6 +28,7 @@ using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,7 +79,7 @@ namespace SymOntoClay.Core.Internal.Instances
             localCodeExecutionContext.Holder = Name;
 
             _localCodeExecutionContext = localCodeExecutionContext;
-            RebuildSuperClassesStorages();
+            RebuildSuperClassesStorages(Logger);
 
             if (!varList.IsNullOrEmpty())
             {
@@ -86,7 +87,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 foreach(var varItem in varList)
                 {
-                    varStorage.Append(varItem);
+                    varStorage.Append(Logger, varItem);
                 }
             }
         }
@@ -134,12 +135,12 @@ namespace SymOntoClay.Core.Internal.Instances
         public ILocalCodeExecutionContext LocalCodeExecutionContext => _localCodeExecutionContext;
 
         /// <inheritdoc/>
-        public void CancelExecution()
+        public void CancelExecution(IMonitorLogger logger)
         {
             _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Canceled;
         }
 
-        public virtual void Init()
+        public virtual void Init(IMonitorLogger logger)
         {
             if (_parentExecutionCoordinator != null)
             {
@@ -157,21 +158,21 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
 
-            ApplyCodeDirectives();
+            ApplyCodeDirectives(logger);
 
-            RunPreConstructors();
-            RunConstructors();
+            RunPreConstructors(logger);
+            RunConstructors(logger);
 
-            RunInitialTriggers();
+            RunInitialTriggers(logger);
 
-            RunMutuallyExclusiveStatesSets();
+            RunMutuallyExclusiveStatesSets(logger);
 
-            RunExplicitStates();
+            RunExplicitStates(logger);
 
-            RunActivatorsOfStates();
-            RunDeactivatorsOfStates();
+            RunActivatorsOfStates(logger);
+            RunDeactivatorsOfStates(logger);
 
-            var targetAddingFactTriggersList = _triggersResolver.ResolveAddFactTriggersList(Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+            var targetAddingFactTriggersList = _triggersResolver.ResolveAddFactTriggersList(logger, Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
             if(targetAddingFactTriggersList.Any())
             {
@@ -192,7 +193,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
             }
 
-            var targetLogicConditionalTriggersList = _triggersResolver.ResolveLogicConditionalTriggersList(Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+            var targetLogicConditionalTriggersList = _triggersResolver.ResolveLogicConditionalTriggersList(logger, Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
             if (targetLogicConditionalTriggersList.Any())
             {
@@ -201,16 +202,16 @@ namespace SymOntoClay.Core.Internal.Instances
                     var triggerInstance = new LogicConditionalTriggerInstance(targetTrigger, this, _context, _storage, _localCodeExecutionContext);
                     _logicConditionalTriggersList.Add(triggerInstance);
 
-                    _globalTriggersStorage.Append(triggerInstance);
+                    _globalTriggersStorage.Append(logger, triggerInstance);
 
                     Task.Run(() => {
                         try
                         {
-                            triggerInstance.Init();
+                            triggerInstance.Init(logger);
                         }
                         catch (Exception e)
                         {
-                            Error("051F726C-D269-462E-9979-B715299269B2", e);
+                            logger.Error("051F726C-D269-462E-9979-B715299269B2", e);
                         }                        
                     });                    
                 }
@@ -219,9 +220,9 @@ namespace SymOntoClay.Core.Internal.Instances
             _instanceState = InstanceState.Initialized;            
         }
 
-        private void RebuildSuperClassesStorages()
+        private void RebuildSuperClassesStorages(IMonitorLogger logger)
         {
-            var superClassesList = _inheritanceResolver.GetSuperClassesKeysList(Name, _localCodeExecutionContext);
+            var superClassesList = _inheritanceResolver.GetSuperClassesKeysList(logger, Name, _localCodeExecutionContext);
 
             lock(_superClassesStoragesLockObj)
             {
@@ -244,7 +245,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
                             _superClassesStorages[key] = storage;
 
-                            _storage.AddParentStorage(storage);
+                            _storage.AddParentStorage(logger, storage);
                         }
                     }
 
@@ -262,19 +263,19 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        public virtual IList<IInstance> GetTopIndependentInstances()
+        public virtual IList<IInstance> GetTopIndependentInstances(IMonitorLogger logger)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public virtual bool ActivateIdleAction()
+        public virtual bool ActivateIdleAction(IMonitorLogger logger)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public void AddChildInstance(IInstance instance)
+        public void AddChildInstance(IMonitorLogger logger, IInstance instance)
         {
             lock(_childInstancesLockObj)
             {
@@ -285,12 +286,12 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 _childInstances.Add(instance);
 
-                instance.SetParent(this);
+                instance.SetParent(logger, this);
             }
         }
 
         /// <inheritdoc/>
-        public void RemoveChildInstance(IInstance instance)
+        public void RemoveChildInstance(IMonitorLogger logger, IInstance instance)
         {
             lock (_childInstancesLockObj)
             {
@@ -301,12 +302,12 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 _childInstances.Remove(instance);
 
-                instance.ResetParent(this);
+                instance.ResetParent(logger, this);
             }
         }
 
         /// <inheritdoc/>
-        public void SetParent(IInstance instance)
+        public void SetParent(IMonitorLogger logger, IInstance instance)
         {
             lock (_childInstancesLockObj)
             {
@@ -317,12 +318,12 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 _parentInstance = instance;
 
-                instance.AddChildInstance(this);
+                instance.AddChildInstance(logger, this);
             }
         }
 
         /// <inheritdoc/>
-        public void ResetParent(IInstance instance)
+        public void ResetParent(IMonitorLogger logger, IInstance instance)
         {
             lock (_childInstancesLockObj)
             {
@@ -333,26 +334,26 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 _parentInstance = null;
 
-                instance.RemoveChildInstance(this);
+                instance.RemoveChildInstance(logger, this);
             }
         }
 
-        protected virtual void ApplyCodeDirectives()
+        protected virtual void ApplyCodeDirectives(IMonitorLogger logger)
         {
         }
 
-        protected virtual void RunInitialTriggers()
+        protected virtual void RunInitialTriggers(IMonitorLogger logger)
         {
-            RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger.Enter);
+            RunLifecycleTriggers(logger, KindOfSystemEventOfInlineTrigger.Enter);
         }
 
-        protected virtual void RunPreConstructors()
+        protected virtual void RunPreConstructors(IMonitorLogger logger)
         {
-            var preConstructors = _constructorsResolver.ResolvePreConstructors(Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+            var preConstructors = _constructorsResolver.ResolvePreConstructors(logger, Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
             if (preConstructors.Any())
             {
-                var superClassesStoragesDict = _constructorsResolver.GetSuperClassStoragesDict(_localCodeExecutionContext.Storage, this);
+                var superClassesStoragesDict = _constructorsResolver.GetSuperClassStoragesDict(logger, _localCodeExecutionContext.Storage, this);
 
                 var processInitialInfoList = new List<ProcessInitialInfo>();
 
@@ -384,13 +385,13 @@ namespace SymOntoClay.Core.Internal.Instances
             }
         }
 
-        protected virtual void RunConstructors()
+        protected virtual void RunConstructors(IMonitorLogger logger)
         {
-            var constructorsList = _constructorsResolver.ResolveListWithSelfAndDirectInheritance(Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+            var constructorsList = _constructorsResolver.ResolveListWithSelfAndDirectInheritance(logger, Name, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
             if (constructorsList.Any())
             {
-                var superClassesStoragesDict = _constructorsResolver.GetSuperClassStoragesDict(_localCodeExecutionContext.Storage, this);
+                var superClassesStoragesDict = _constructorsResolver.GetSuperClassStoragesDict(logger, _localCodeExecutionContext.Storage, this);
 
                 var processInitialInfoList = new List<ProcessInitialInfo>();
 
@@ -423,25 +424,25 @@ namespace SymOntoClay.Core.Internal.Instances
             }
         }
 
-        protected void RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger kindOfSystemEvent)
+        protected void RunLifecycleTriggers(IMonitorLogger logger, KindOfSystemEventOfInlineTrigger kindOfSystemEvent)
         {
-            RunLifecycleTriggers(kindOfSystemEvent, Name);
+            RunLifecycleTriggers(logger, kindOfSystemEvent, Name);
         }
 
-        protected void RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IExecutionCoordinator executionCoordinator, bool normalOrder = true)
+        protected void RunLifecycleTriggers(IMonitorLogger logger, KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IExecutionCoordinator executionCoordinator, bool normalOrder = true)
         {
-            RunLifecycleTriggers(kindOfSystemEvent, Name, executionCoordinator, normalOrder);
+            RunLifecycleTriggers(logger, kindOfSystemEvent, Name, executionCoordinator, normalOrder);
         }
 
-        protected void RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, StrongIdentifierValue holder)
+        protected void RunLifecycleTriggers(IMonitorLogger logger, KindOfSystemEventOfInlineTrigger kindOfSystemEvent, StrongIdentifierValue holder)
         {
-            RunLifecycleTriggers(kindOfSystemEvent, holder, _executionCoordinator);
+            RunLifecycleTriggers(logger, kindOfSystemEvent, holder, _executionCoordinator);
         }
 
-        protected void RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, StrongIdentifierValue holder,
+        protected void RunLifecycleTriggers(IMonitorLogger logger, KindOfSystemEventOfInlineTrigger kindOfSystemEvent, StrongIdentifierValue holder,
             IExecutionCoordinator executionCoordinator, bool normalOrder = true)
         {
-            var targetSystemEventsTriggersList = _triggersResolver.ResolveSystemEventsTriggersList(kindOfSystemEvent, holder, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+            var targetSystemEventsTriggersList = _triggersResolver.ResolveSystemEventsTriggersList(logger, kindOfSystemEvent, holder, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
             if (targetSystemEventsTriggersList.Any())
             {
@@ -476,28 +477,28 @@ namespace SymOntoClay.Core.Internal.Instances
             }
         }
 
-        protected virtual void RunMutuallyExclusiveStatesSets()
+        protected virtual void RunMutuallyExclusiveStatesSets(IMonitorLogger logger)
         {
         }
 
-        protected virtual void RunExplicitStates()
+        protected virtual void RunExplicitStates(IMonitorLogger logger)
         {
         }
 
-        protected virtual void RunActivatorsOfStates()
+        protected virtual void RunActivatorsOfStates(IMonitorLogger logger)
         {
         }
 
-        protected virtual void RunDeactivatorsOfStates()
+        protected virtual void RunDeactivatorsOfStates(IMonitorLogger logger)
         {
         }
 
-        protected virtual void RunFinalizationTrigges()
+        protected virtual void RunFinalizationTrigges(IMonitorLogger logger)
         {
             var finalizationExecutionCoordinator = new ExecutionCoordinator(this);
             finalizationExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
 
-            RunLifecycleTriggers(KindOfSystemEventOfInlineTrigger.Leave, finalizationExecutionCoordinator, false);
+            RunLifecycleTriggers(logger, KindOfSystemEventOfInlineTrigger.Leave, finalizationExecutionCoordinator, false);
         }
 
         private void ParentExecutionCoordinator_OnFinished()
@@ -509,17 +510,17 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             if (_parentInstance != null)
             {
-                _parentInstance.RemoveChildInstance(this);
+                _parentInstance.RemoveChildInstance(Logger, this);
                 _parentInstance = null;
             }
 
-            RunFinalizationTrigges();
+            RunFinalizationTrigges(Logger);
 
             if(_childInstances.Any())
             {
                 foreach(var childInstance in _childInstances.ToList())
                 {
-                    childInstance.CancelExecution();
+                    childInstance.CancelExecution(Logger);
                 }
             }
 
@@ -528,31 +529,31 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        public virtual IExecutable GetExecutable(KindOfFunctionParameters kindOfParameters, IDictionary<StrongIdentifierValue, Value> namedParameters, IList<Value> positionedParameters)
+        public virtual IExecutable GetExecutable(IMonitorLogger logger, KindOfFunctionParameters kindOfParameters, IDictionary<StrongIdentifierValue, Value> namedParameters, IList<Value> positionedParameters)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public virtual void SetPropertyValue(StrongIdentifierValue propertyName, Value value)
+        public virtual void SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public virtual void SetVarValue(StrongIdentifierValue varName, Value value)
+        public virtual void SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public virtual Value GetPropertyValue(StrongIdentifierValue propertyName)
+        public virtual Value GetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public virtual Value GetVarValue(StrongIdentifierValue varName)
+        public virtual Value GetVarValue(IMonitorLogger logger, StrongIdentifierValue varName)
         {
             throw new NotImplementedException();
         }
@@ -567,7 +568,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             foreach (var triggerInstance in _logicConditionalTriggersList)
             {
-                _globalTriggersStorage.Remove(triggerInstance);
+                _globalTriggersStorage.Remove(Logger, triggerInstance);
 
                 triggerInstance.Dispose();
             }

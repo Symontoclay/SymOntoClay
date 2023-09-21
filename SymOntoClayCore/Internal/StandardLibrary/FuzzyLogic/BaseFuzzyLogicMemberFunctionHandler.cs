@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -53,13 +54,13 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic
         public abstract KindOfFuzzyLogicMemberFunction Kind { get; }
 
         /// <inheritdoc/>
-        public double SystemCall(NumberValue x)
+        public double SystemCall(IMonitorLogger logger, NumberValue x)
         {
-            return SystemCall((double)x.GetSystemValue());
+            return SystemCall(logger, (double)x.GetSystemValue());
         }
 
         /// <inheritdoc/>
-        public abstract double SystemCall(double x);
+        public abstract double SystemCall(IMonitorLogger logger, double x);
 
         private ulong? _longHashCode;
 
@@ -76,20 +77,20 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic
         }
 
         /// <inheritdoc/>
-        public NumberValue Defuzzificate()
+        public NumberValue Defuzzificate(IMonitorLogger logger)
         {
             return _deffuzificatedValue;
         }
 
         /// <inheritdoc/>
-        public NumberValue Defuzzificate(IEnumerable<IFuzzyLogicOperatorHandler> operatorHandlers)
+        public NumberValue Defuzzificate(IMonitorLogger logger, IEnumerable<IFuzzyLogicOperatorHandler> operatorHandlers)
         {
             var sysDeffuzificatedValue = Defuzzificator.Defuzzificate(_kindOfDefuzzification, _a, _b, (double x) => {
-                var result = SystemCall(x);
+                var result = SystemCall(logger, x);
 
                 foreach(var op in operatorHandlers)
                 {
-                    result = op.SystemCall(result);
+                    result = op.SystemCall(logger, result);
                 }
 
                 return result;
@@ -100,21 +101,21 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic
 
         private bool _isDirty = true;
 
-        public void CheckDirty()
+        public void CheckDirty(IMonitorLogger logger)
         {
             if (_isDirty)
             {
-                Check();
+                Check(logger);
                 _isDirty = false;
             }
         }
 
         /// <inheritdoc/>
-        public virtual void Check()
+        public virtual void Check(IMonitorLogger logger)
         {
             _longHashCode = LongHashCodeWeights.BaseOperatorWeight ^ (ulong)Math.Abs(Kind.GetHashCode());
 
-            var sysDeffuzificatedValue = Defuzzificator.Defuzzificate(_kindOfDefuzzification, _a, _b, (double x) => SystemCall(x));
+            var sysDeffuzificatedValue = Defuzzificator.Defuzzificate(_kindOfDefuzzification, _a, _b, (double x) => SystemCall(logger,x));
 
             _deffuzificatedValue = new NumberValue(sysDeffuzificatedValue);
         }

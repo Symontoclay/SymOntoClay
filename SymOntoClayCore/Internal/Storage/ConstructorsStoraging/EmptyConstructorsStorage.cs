@@ -41,23 +41,23 @@ namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
         }
 
         /// <inheritdoc/>
-        public void Append(Constructor constructor)
+        public void Append(IMonitorLogger logger, Constructor constructor)
         {
         }
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<Constructor>> GetConstructorsDirectly(int paramsCount, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<Constructor>> GetConstructorsDirectly(IMonitorLogger logger, int paramsCount, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             return EmptyConstructorsList;
         }
 
         /// <inheritdoc/>
-        public void AppendPreConstructor(Constructor preConstructor)
+        public void AppendPreConstructor(IMonitorLogger logger, Constructor preConstructor)
         {
         }
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<Constructor>> GetPreConstructorsDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<Constructor>> GetPreConstructorsDirectly(IMonitorLogger logger, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             return EmptyConstructorsList;
         }

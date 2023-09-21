@@ -47,7 +47,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public List<CodeItemDirective> Resolve(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            return Resolve(localCodeExecutionContext, _defaultOptions);
+            return Resolve(logger, localCodeExecutionContext, _defaultOptions);
         }
 
         public List<CodeItemDirective> Resolve(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
@@ -55,7 +55,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, localCodeExecutionContext, optionsForInheritanceResolver);
 
             if(!weightedInheritanceItems.Any())
             {
@@ -64,17 +64,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var storage = localCodeExecutionContext.Storage;
 
-#if DEBUG
-
-#endif
-
-            var globalStorage = GetStoragesList(storage, KindOfStoragesList.CodeItems).Single(p => p.Storage.Kind == KindOfStorage.Global).Storage;
+            var globalStorage = GetStoragesList(logger, storage, KindOfStoragesList.CodeItems).Single(p => p.Storage.Kind == KindOfStorage.Global).Storage;
 
             var resultsDict = new Dictionary<KindOfCodeItemDirective, CodeItemDirective>();
 
             foreach (var weightedInheritanceItem in weightedInheritanceItems)
             {
-                var codeItem = _metadataResolver.Resolve(weightedInheritanceItem.SuperName, localCodeExecutionContext);
+                var codeItem = _metadataResolver.Resolve(logger, weightedInheritanceItem.SuperName, localCodeExecutionContext);
 
                 if(codeItem == null)
                 {

@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeExecution.Helpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -32,8 +33,8 @@ namespace SymOntoClay.Core.Internal
 {
     public interface ICodeFrameService
     {
-        CodeFrame ConvertCompiledFunctionBodyToCodeFrame(CompiledFunctionBody compiledFunctionBody, ILocalCodeExecutionContext parentLocalCodeExecutionContext);
-        CodeFrame ConvertExecutableToCodeFrame(IExecutable function, KindOfFunctionParameters kindOfParameters,
+        CodeFrame ConvertCompiledFunctionBodyToCodeFrame(IMonitorLogger logger, CompiledFunctionBody compiledFunctionBody, ILocalCodeExecutionContext parentLocalCodeExecutionContext);
+        CodeFrame ConvertExecutableToCodeFrame(IMonitorLogger logger, IExecutable function, KindOfFunctionParameters kindOfParameters,
             Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             ILocalCodeExecutionContext parentLocalCodeExecutionContext, ConversionExecutableToCodeFrameAdditionalSettings additionalSettings = null, bool useParentLocalCodeExecutionContextDirectly = false);
     }

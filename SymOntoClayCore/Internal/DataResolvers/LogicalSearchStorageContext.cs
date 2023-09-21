@@ -61,14 +61,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public IList<T> Filter<T>(IMonitorLogger logger, IList<T> source, bool enableModalitiesControll) 
             where T : ILogicalSearchItem
         {
-            return Filter(source, enableModalitiesControll, null);
+            return Filter(logger, source, enableModalitiesControll, null);
         }
 
         /// <inheritdoc/>
         public IList<T> Filter<T>(IMonitorLogger logger, IList<T> source, IDictionary<RuleInstance, IItemWithModalities> additionalModalities) 
             where T : ILogicalSearchItem
         {
-            return Filter(source, true, additionalModalities);
+            return Filter(logger, source, true, additionalModalities);
         }
 
         /// <inheritdoc/>
@@ -80,7 +80,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return source;
             }
 
-            source = _logicalValueModalityResolver.FilterByTypeOfAccess(source, _localCodeExecutionContext, true);
+            source = _logicalValueModalityResolver.FilterByTypeOfAccess(logger, source, _localCodeExecutionContext, true);
 
             if (enableModalitiesControll)
             {
@@ -88,11 +88,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 {
                     if(additionalModalities == null)
                     {
-                        source = source.Where(p => _logicalValueModalityResolver.IsFit(p.ObligationModality, _obligationModality, _localCodeExecutionContext)).ToList();
+                        source = source.Where(p => _logicalValueModalityResolver.IsFit(logger, p.ObligationModality, _obligationModality, _localCodeExecutionContext)).ToList();
                     }
                     else
                     {
-                        source = source.Where(p => IsFit(p, p.ObligationModality, _obligationModality, _localCodeExecutionContext, KindOfCheckedModality.ObligationModality, additionalModalities)).ToList();
+                        source = source.Where(p => IsFit(logger, p, p.ObligationModality, _obligationModality, _localCodeExecutionContext, KindOfCheckedModality.ObligationModality, additionalModalities)).ToList();
                     }                    
                 }
 
@@ -100,11 +100,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 {
                     if (additionalModalities == null)
                     {
-                        source = source.Where(p => _logicalValueModalityResolver.IsFit(p.SelfObligationModality, _selfObligationModality, _localCodeExecutionContext)).ToList();
+                        source = source.Where(p => _logicalValueModalityResolver.IsFit(logger, p.SelfObligationModality, _selfObligationModality, _localCodeExecutionContext)).ToList();
                     }
                     else
                     {
-                        source = source.Where(p => IsFit(p, p.SelfObligationModality, _selfObligationModality, _localCodeExecutionContext, KindOfCheckedModality.SelfObligationModality, additionalModalities)).ToList();
+                        source = source.Where(p => IsFit(logger, p, p.SelfObligationModality, _selfObligationModality, _localCodeExecutionContext, KindOfCheckedModality.SelfObligationModality, additionalModalities)).ToList();
                     }                    
                 }
             }
@@ -144,13 +144,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 if(additionalModalityValue == null)
                 {
-                    return _logicalValueModalityResolver.IsFit(modalityValue, queryModalityValue, _localCodeExecutionContext);
+                    return _logicalValueModalityResolver.IsFit(logger, modalityValue, queryModalityValue, _localCodeExecutionContext);
                 }
 
-                return _logicalValueModalityResolver.IsFit(additionalModalityValue, queryModalityValue, _localCodeExecutionContext);
+                return _logicalValueModalityResolver.IsFit(logger, additionalModalityValue, queryModalityValue, _localCodeExecutionContext);
             }
 
-            return _logicalValueModalityResolver.IsFit(modalityValue, queryModalityValue, _localCodeExecutionContext);
+            return _logicalValueModalityResolver.IsFit(logger, modalityValue, queryModalityValue, _localCodeExecutionContext);
         }
     }
 }

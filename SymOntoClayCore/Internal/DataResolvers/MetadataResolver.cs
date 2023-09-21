@@ -47,23 +47,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public CodeItem Resolve(IMonitorLogger logger, StrongIdentifierValue prototypeName, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            return Resolve(prototypeName, localCodeExecutionContext, _defaultOptions);
+            return Resolve(logger, prototypeName, localCodeExecutionContext, _defaultOptions);
         }
 
         public CodeItem Resolve(IMonitorLogger logger, StrongIdentifierValue prototypeName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
-            var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
+            var storagesList = GetStoragesList(logger, storage, KindOfStoragesList.CodeItems);
 
-            var rawList = GetRawMetadataList(prototypeName, storagesList);
+            var rawList = GetRawMetadataList(logger, prototypeName, storagesList);
 
             if (!rawList.Any())
             {
                 return null;
             }
 
-            var filteredList = Filter(rawList);
+            var filteredList = Filter(logger, rawList);
 
             if (!filteredList.Any())
             {
@@ -85,11 +85,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return new List<CodeItem>();
             }
 
-            var synonymsList = _synonymsResolver.GetSynonyms(name, storagesList);
+            var synonymsList = _synonymsResolver.GetSynonyms(logger, name, storagesList);
 
             var result = new List<CodeItem>();
 
-            var itemsList = NGetRawMetadataList(name, storagesList);
+            var itemsList = NGetRawMetadataList(logger, name, storagesList);
 
             if (!itemsList.IsNullOrEmpty())
             {
@@ -98,7 +98,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var synonym in synonymsList)
             {
-                itemsList = NGetRawMetadataList(synonym, storagesList);
+                itemsList = NGetRawMetadataList(logger, synonym, storagesList);
 
                 if (!itemsList.IsNullOrEmpty())
                 {
@@ -115,7 +115,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var storageItem in storagesList)
             {
-                var codeItem = storageItem.Storage.MetadataStorage.GetByName(name);
+                var codeItem = storageItem.Storage.MetadataStorage.GetByName(logger, name);
 
                 if(codeItem == null)
                 {

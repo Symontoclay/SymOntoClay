@@ -38,35 +38,35 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
         }
 
         /// <inheritdoc/>
-        public void Append(InlineTrigger inlineTrigger)
+        public void Append(IMonitorLogger logger, InlineTrigger inlineTrigger)
         {
         }
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<InlineTrigger>> GetSystemEventsTriggersDirectly(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IList<WeightedInheritanceItem> weightedInheritanceItems)
-        {
-            return new List<WeightedInheritanceResultItem<InlineTrigger>>();
-        }
-
-        /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<InlineTrigger>> GetLogicConditionalTriggersDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<InlineTrigger>> GetSystemEventsTriggersDirectly(IMonitorLogger logger, KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             return new List<WeightedInheritanceResultItem<InlineTrigger>>();
         }
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<InlineTrigger>> GetAddFactTriggersDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<InlineTrigger>> GetLogicConditionalTriggersDirectly(IMonitorLogger logger, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             return new List<WeightedInheritanceResultItem<InlineTrigger>>();
         }
 
         /// <inheritdoc/>
-        public void Append(INamedTriggerInstance namedTriggerInstance)
+        public IList<WeightedInheritanceResultItem<InlineTrigger>> GetAddFactTriggersDirectly(IMonitorLogger logger, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        {
+            return new List<WeightedInheritanceResultItem<InlineTrigger>>();
+        }
+
+        /// <inheritdoc/>
+        public void Append(IMonitorLogger logger, INamedTriggerInstance namedTriggerInstance)
         {
         }
 
         /// <inheritdoc/>
-        public void Remove(INamedTriggerInstance namedTriggerInstance)
+        public void Remove(IMonitorLogger logger, INamedTriggerInstance namedTriggerInstance)
         {
         }
 
@@ -77,7 +77,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
         public event Action<IList<StrongIdentifierValue>> OnNamedTriggerInstanceChangedWithKeys;
 
         /// <inheritdoc/>
-        public IList<INamedTriggerInstance> GetNamedTriggerInstancesDirectly(StrongIdentifierValue name)
+        public IList<INamedTriggerInstance> GetNamedTriggerInstancesDirectly(IMonitorLogger logger, StrongIdentifierValue name)
         {
             return new List<INamedTriggerInstance>();
         }

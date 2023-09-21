@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -50,7 +51,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic
         private readonly double _b;
 
         /// <inheritdoc/>
-        public override double SystemCall(double x)
+        public override double SystemCall(IMonitorLogger logger, double x)
         {
             return SystemMemberFunctions.LFunction(x, _a, _b);
         }

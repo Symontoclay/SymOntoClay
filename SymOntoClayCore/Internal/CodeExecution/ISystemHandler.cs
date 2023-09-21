@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,7 +31,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public interface ISystemHandler
     {
-        Value Call(IList<Value> paramsList, ILocalCodeExecutionContext localCodeExecutionContext);
-        Value Call(IDictionary<string, Value> paramsDict, Value anotation, ILocalCodeExecutionContext localCodeExecutionContext);
+        Value Call(IMonitorLogger logger, IList<Value> paramsList, ILocalCodeExecutionContext localCodeExecutionContext);
+        Value Call(IMonitorLogger logger, IDictionary<string, Value> paramsDict, Value anotation, ILocalCodeExecutionContext localCodeExecutionContext);
     }
 }

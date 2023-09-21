@@ -49,14 +49,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public StrongIdentifierValue ResolveDefaultStateName(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            return ResolveDefaultStateName(localCodeExecutionContext, _defaultOptions);
+            return ResolveDefaultStateName(logger, localCodeExecutionContext, _defaultOptions);
         }
 
         public StrongIdentifierValue ResolveDefaultStateName(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
-            var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
+            var storagesList = GetStoragesList(logger, storage, KindOfStoragesList.CodeItems);
 
             if (!storagesList.Any())
             {
@@ -65,7 +65,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var storageItem in storagesList)
             {
-                var item = storageItem.Storage.StatesStorage.GetDefaultStateNameDirectly();
+                var item = storageItem.Storage.StatesStorage.GetDefaultStateNameDirectly(logger);
 
                 if(item != null)
                 {
@@ -78,28 +78,28 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public StateDef Resolve(IMonitorLogger logger, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            return Resolve(name, localCodeExecutionContext, _defaultOptions);
+            return Resolve(logger, name, localCodeExecutionContext, _defaultOptions);
         }
 
         public StateDef Resolve(IMonitorLogger logger, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
-            var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
+            var storagesList = GetStoragesList(logger, storage, KindOfStoragesList.CodeItems);
 
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, localCodeExecutionContext, optionsForInheritanceResolver);
 
-            var rawList = GetRawStatesList(name, storagesList, weightedInheritanceItems);
+            var rawList = GetRawStatesList(logger, name, storagesList, weightedInheritanceItems);
 
             if (!rawList.Any())
             {
                 return null;
             }
 
-            var filteredList = FilterCodeItems(rawList, localCodeExecutionContext);
+            var filteredList = FilterCodeItems(logger, rawList, localCodeExecutionContext);
 
             if (!filteredList.Any())
             {
@@ -111,19 +111,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return filteredList.Single().ResultItem;
             }
 
-            return OrderAndDistinctByInheritance(filteredList, options).FirstOrDefault()?.ResultItem;
+            return OrderAndDistinctByInheritance(logger, filteredList, options).FirstOrDefault()?.ResultItem;
         }
 
         public List<StateDef> ResolveAllStatesList(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            return ResolveAllStatesList(localCodeExecutionContext, _defaultOptions);
+            return ResolveAllStatesList(logger, localCodeExecutionContext, _defaultOptions);
         }
 
         public List<StateDef> ResolveAllStatesList(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
-            var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
+            var storagesList = GetStoragesList(logger, storage, KindOfStoragesList.CodeItems);
 
             if (!storagesList.Any())
             {
@@ -134,7 +134,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var storageItem in storagesList)
             {
-                var itemsList = storageItem.Storage.StatesStorage.GetAllStatesListDirectly();
+                var itemsList = storageItem.Storage.StatesStorage.GetAllStatesListDirectly(logger);
 
                 result.AddRange(itemsList);
             }
@@ -144,14 +144,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public List<ActivationInfoOfStateDef> ResolveActivationInfoOfStateList(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            return ResolveActivationInfoOfStateList(localCodeExecutionContext, _defaultOptions);
+            return ResolveActivationInfoOfStateList(logger, localCodeExecutionContext, _defaultOptions);
         }
         
         public List<ActivationInfoOfStateDef> ResolveActivationInfoOfStateList(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
-            var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
+            var storagesList = GetStoragesList(logger, storage, KindOfStoragesList.CodeItems);
 
             if (!storagesList.Any())
             {
@@ -162,7 +162,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var storageItem in storagesList)
             {
-                var itemsList = storageItem.Storage.StatesStorage.GetActivationInfoOfStateListDirectly();
+                var itemsList = storageItem.Storage.StatesStorage.GetActivationInfoOfStateListDirectly(logger);
 
                 result.AddRange(itemsList);
             }
@@ -172,14 +172,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public List<MutuallyExclusiveStatesSet> ResolveMutuallyExclusiveStatesSetsList(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            return ResolveMutuallyExclusiveStatesSetsList(localCodeExecutionContext, _defaultOptions);
+            return ResolveMutuallyExclusiveStatesSetsList(logger, localCodeExecutionContext, _defaultOptions);
         }
 
         public List<MutuallyExclusiveStatesSet> ResolveMutuallyExclusiveStatesSetsList(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
-            var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
+            var storagesList = GetStoragesList(logger, storage, KindOfStoragesList.CodeItems);
 
             if (!storagesList.Any())
             {
@@ -190,7 +190,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var storageItem in storagesList)
             {
-                var itemsList = storageItem.Storage.StatesStorage.GetMutuallyExclusiveStatesSetsListDirectly();
+                var itemsList = storageItem.Storage.StatesStorage.GetMutuallyExclusiveStatesSetsListDirectly(logger);
 
                 result.AddRange(itemsList);
             }
@@ -200,11 +200,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private List<WeightedInheritanceResultItemWithStorageInfo<StateDef>> GetRawStatesList(IMonitorLogger logger, StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
-            var result = NGetRawStatesList(name, storagesList, weightedInheritanceItems);
+            var result = NGetRawStatesList(logger, name, storagesList, weightedInheritanceItems);
 
             if (result.IsNullOrEmpty())
             {
-                result = GetRawStatesListFromSynonyms(name, storagesList, weightedInheritanceItems);
+                result = GetRawStatesListFromSynonyms(logger, name, storagesList, weightedInheritanceItems);
             }
 
             return result;
@@ -212,11 +212,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private List<WeightedInheritanceResultItemWithStorageInfo<StateDef>> GetRawStatesListFromSynonyms(IMonitorLogger logger, StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
-            var synonymsList = _synonymsResolver.GetSynonyms(name, storagesList);
+            var synonymsList = _synonymsResolver.GetSynonyms(logger, name, storagesList);
 
             foreach (var synonym in synonymsList)
             {
-                var rawList = NGetRawStatesList(synonym, storagesList, weightedInheritanceItems);
+                var rawList = NGetRawStatesList(logger, synonym, storagesList, weightedInheritanceItems);
 
                 if (rawList.IsNullOrEmpty())
                 {
@@ -240,7 +240,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var storageItem in storagesList)
             {
-                var itemsList = storageItem.Storage.StatesStorage.GetStatesDirectly(name, weightedInheritanceItems);
+                var itemsList = storageItem.Storage.StatesStorage.GetStatesDirectly(logger, name, weightedInheritanceItems);
 
                 if (!itemsList.Any())
                 {

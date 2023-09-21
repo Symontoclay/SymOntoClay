@@ -48,28 +48,28 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public List<IdleActionItem> Resolve(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            return Resolve(localCodeExecutionContext, _defaultOptions);
+            return Resolve(logger, localCodeExecutionContext, _defaultOptions);
         }
 
         public List<IdleActionItem> Resolve(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
-            var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
+            var storagesList = GetStoragesList(logger, storage, KindOfStoragesList.CodeItems);
 
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, localCodeExecutionContext, optionsForInheritanceResolver);
 
-            var rawList = GetRawIdleActionItemList(storagesList, weightedInheritanceItems);
+            var rawList = GetRawIdleActionItemList(logger, storagesList, weightedInheritanceItems);
 
             if (!rawList.Any())
             {
                 return null;
             }
 
-            var filteredList = FilterCodeItems(rawList, localCodeExecutionContext);
+            var filteredList = FilterCodeItems(logger, rawList, localCodeExecutionContext);
 
             return filteredList.Select(p => p.ResultItem).ToList();
         }
@@ -85,7 +85,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var storageItem in storagesList)
             {
-                var itemsList = storageItem.Storage.IdleActionItemsStorage.GetIdleActionsDirectly(weightedInheritanceItems);
+                var itemsList = storageItem.Storage.IdleActionItemsStorage.GetIdleActionsDirectly(logger, weightedInheritanceItems);
 
                 if (!itemsList.Any())
                 {

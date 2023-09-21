@@ -38,12 +38,12 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStoraging
         }
 
         /// <inheritdoc/>
-        public void Append(Channel channel)
+        public void Append(IMonitorLogger logger, Channel channel)
         {
         }
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<Channel>> GetChannelsDirectly(StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<Channel>> GetChannelsDirectly(IMonitorLogger logger, StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             return new List<WeightedInheritanceResultItem<Channel>>();
         }

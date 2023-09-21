@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace SymOntoClay.Core.Internal.Storage
 {
     public static class StorageHelper
     {
-        public static List<T> RemoveSameItems<T>(List<T> targetList, T item)
+        public static List<T> RemoveSameItems<T>(IMonitorLogger logger, List<T> targetList, T item)
             where T: IObjectWithLongHashCodes
         {
             var targetLongHashCode = item.GetLongHashCode();
@@ -46,7 +47,7 @@ namespace SymOntoClay.Core.Internal.Storage
             return itemsWithTheSameLongHashCodeList;
         }
 
-        public static List<int> GetParamsCountList(Function function)
+        public static List<int> GetParamsCountList(IMonitorLogger logger, Function function)
         {
             var result = new List<int>();
 

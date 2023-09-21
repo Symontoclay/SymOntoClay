@@ -28,6 +28,7 @@ using System.Text;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System.Linq;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Monitor.Common;
 
 namespace SymOntoClay.Core.Internal.Storage.MethodsStoraging
 {
@@ -43,22 +44,22 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStoraging
         private readonly Dictionary<StrongIdentifierValue, Dictionary<int, List<NamedFunction>>> _localNamedFunctionsDict = new Dictionary<StrongIdentifierValue, Dictionary<int, List<NamedFunction>>>();
 
         /// <inheritdoc/>
-        public void Append(NamedFunction namedFunction)
+        public void Append(IMonitorLogger logger, NamedFunction namedFunction)
         {
             lock (_lockObj)
             {
                 if (namedFunction.TypeOfAccess != TypeOfAccess.Local)
                 {
-                    AnnotatedItemHelper.CheckAndFillUpHolder(namedFunction, _realStorageContext.MainStorageContext.CommonNamesStorage);
+                    AnnotatedItemHelper.CheckAndFillUpHolder(logger, namedFunction, _realStorageContext.MainStorageContext.CommonNamesStorage);
                 }
 
                 namedFunction.CheckDirty();
 
                 var namedFunctionName = namedFunction.Name;
 
-                var paramsCountList = StorageHelper.GetParamsCountList(namedFunction);
+                var paramsCountList = StorageHelper.GetParamsCountList(logger, namedFunction);
 
-                var targetDict = GetDictByNames(namedFunction);
+                var targetDict = GetDictByNames(logger, namedFunction);
 
                 foreach (var count in paramsCountList)
                 {
@@ -66,7 +67,7 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStoraging
                     {
                         var targetList = targetDict[count];
 
-                        StorageHelper.RemoveSameItems(targetList, namedFunction);
+                        StorageHelper.RemoveSameItems(logger, targetList, namedFunction);
 
                         targetList.Add(namedFunction);
                     }
@@ -78,7 +79,7 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStoraging
             }
         }
 
-        private Dictionary<int, List<NamedFunction>> GetDictByNames(NamedFunction namedFunction)
+        private Dictionary<int, List<NamedFunction>> GetDictByNames(IMonitorLogger logger, NamedFunction namedFunction)
         {
             var name = namedFunction.Name;
 
@@ -124,7 +125,7 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStoraging
         private static List<WeightedInheritanceResultItem<NamedFunction>> _emptyNamedFunctionsList = new List<WeightedInheritanceResultItem<NamedFunction>>();
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<NamedFunction>> GetNamedFunctionsDirectly(StrongIdentifierValue name, int paramsCount, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<NamedFunction>> GetNamedFunctionsDirectly(IMonitorLogger logger, StrongIdentifierValue name, int paramsCount, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             lock (_lockObj)
             {

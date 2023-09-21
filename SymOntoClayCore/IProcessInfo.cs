@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -38,25 +39,25 @@ namespace SymOntoClay.Core
         ProcessStatus Status { get; set; }
         bool IsFinished { get; }
         IReadOnlyList<int> Devices { get; }
-        void Start();
-        void Cancel();
-        void WeakCancel();
+        void Start(IMonitorLogger logger);
+        void Cancel(IMonitorLogger logger);
+        void WeakCancel(IMonitorLogger logger);
         event ProcessInfoEvent OnFinish;
         event ProcessInfoEvent OnComplete;
         event ProcessInfoEvent OnWeakCanceled;
         float Priority { get; }
         float GlobalPriority { get; }
         IReadOnlyList<string> Friends { get; }
-        bool IsFriend(IProcessInfo other);
+        bool IsFriend(IMonitorLogger logger, IProcessInfo other);
         IProcessInfo ParentProcessInfo { get; set; }
         IReadOnlyList<IProcessInfo> GetChildrenProcessInfoList { get; }
-        void AddChild(IProcessInfo processInfo);
-        void RemoveChild(IProcessInfo processInfo);
-        void AddOnFinishHandler(IProcessInfoEventHandler handler);
-        void RemoveOnFinishHandler(IProcessInfoEventHandler handler);
-        void AddOnCompleteHandler(IProcessInfoEventHandler handler);
-        void RemoveOnCompleteHandler(IProcessInfoEventHandler handler);
-        void AddOnWeakCanceledHandler(IProcessInfoEventHandler handler);
-        void RemoveOnWeakCanceledHandler(IProcessInfoEventHandler handler);
+        void AddChild(IMonitorLogger logger, IProcessInfo processInfo);
+        void RemoveChild(IMonitorLogger logger, IProcessInfo processInfo);
+        void AddOnFinishHandler(IMonitorLogger logger, IProcessInfoEventHandler handler);
+        void RemoveOnFinishHandler(IMonitorLogger logger, IProcessInfoEventHandler handler);
+        void AddOnCompleteHandler(IMonitorLogger logger, IProcessInfoEventHandler handler);
+        void RemoveOnCompleteHandler(IMonitorLogger logger, IProcessInfoEventHandler handler);
+        void AddOnWeakCanceledHandler(IMonitorLogger logger, IProcessInfoEventHandler handler);
+        void RemoveOnWeakCanceledHandler(IMonitorLogger logger, IProcessInfoEventHandler handler);
     }
 }

@@ -29,6 +29,7 @@ using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,7 +69,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             }
         }
 
-        public void LoadCodeItem(CodeItem codeItem, IStorage targetStorage)
+        public void LoadCodeItem(IMonitorLogger logger, CodeItem codeItem, IStorage targetStorage)
         {
             var defferedLibsList = new List<string>();
 
@@ -82,12 +83,12 @@ namespace SymOntoClay.Core.Internal.Serialization
             }
         }
 
-        public List<string> LoadFromSourceFiles(IStorage targetStorage, string projectFile)
+        public List<string> LoadFromSourceFiles(IMonitorLogger logger, IStorage targetStorage, string projectFile)
         {
             return LoadFromSourceFiles(targetStorage, projectFile, string.Empty);
         }
 
-        public List<string> LoadFromSourceFiles(IStorage targetStorage, string projectFile, string id)
+        public List<string> LoadFromSourceFiles(IMonitorLogger logger, IStorage targetStorage, string projectFile, string id)
         {
             Init();
 
@@ -100,7 +101,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             return defferedLibsList;
         }
 
-        public List<string> LoadFromPaths(IStorage targetStorage, IList<string> sourceCodePaths)
+        public List<string> LoadFromPaths(IMonitorLogger logger, IStorage targetStorage, IList<string> sourceCodePaths)
         {
             Init();
 
@@ -117,7 +118,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             return defferedLibsList;
         }
 
-        private void ProcessFilesList(List<ParsedFileInfo> filesList, bool detectMainCodeEntity, IStorage targetStorage, List<string> defferedLibsList)
+        private void ProcessFilesList(IMonitorLogger logger, List<ParsedFileInfo> filesList, bool detectMainCodeEntity, IStorage targetStorage, List<string> defferedLibsList)
         {
 
             var parsedFilesList = _context.Parser.Parse(filesList, _defaultSettingsOfCodeEntity);
@@ -152,7 +153,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             SaveItems(parsedCodeEntitiesList, targetStorage, defferedLibsList);
         }
 
-        private void DetectMainCodeEntity(List<CodeItem> source)
+        private void DetectMainCodeEntity(IMonitorLogger logger, List<CodeItem> source)
         {
             var possibleMainCodeEntities = source.Where(p => p.Kind == KindOfCodeEntity.App || p.Kind == KindOfCodeEntity.World);
 
@@ -176,7 +177,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             }
         }
 
-        private List<CodeItem> LinearizeSubItems(List<CodeFile> source)
+        private List<CodeItem> LinearizeSubItems(IMonitorLogger logger, List<CodeFile> source)
         {
             var result = new List<CodeItem>();
 
@@ -188,7 +189,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             return result.Distinct().ToList();
         }
 
-        private List<CodeItem> LinearizeSubItems(CodeItem codeItem)
+        private List<CodeItem> LinearizeSubItems(IMonitorLogger logger, CodeItem codeItem)
         {
             var result = new List<CodeItem>();
 
@@ -197,7 +198,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             return result.Distinct().ToList();
         }
 
-        private void EnumerateSubItems(List<CodeItem> source, List<CodeItem> result)
+        private void EnumerateSubItems(IMonitorLogger logger, List<CodeItem> source, List<CodeItem> result)
         {
             if (source.IsNullOrEmpty())
             {
@@ -212,7 +213,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             }
         }
 
-        private void CheckHolderAndTypeOfAccess(List<CodeItem> source)
+        private void CheckHolderAndTypeOfAccess(IMonitorLogger logger, List<CodeItem> source)
         {
             foreach (var item in source)
             {
@@ -220,7 +221,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             }
         }
 
-        private void CheckHolderAndTypeOfAccess(CodeItem codeEntity)
+        private void CheckHolderAndTypeOfAccess(IMonitorLogger logger, CodeItem codeEntity)
         {
             var kind = codeEntity.Kind;
 
@@ -235,7 +236,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             }
         }
 
-        private void AddSystemDefinedSettings(List<CodeItem> source)
+        private void AddSystemDefinedSettings(IMonitorLogger logger, List<CodeItem> source)
         {
             foreach (var item in source)
             {
@@ -243,7 +244,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             }
         }
 
-        private void AddSystemDefinedSettings(CodeItem codeEntity)
+        private void AddSystemDefinedSettings(IMonitorLogger logger, CodeItem codeEntity)
         {
             switch (codeEntity.Kind)
             {
@@ -305,7 +306,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             }
         }
 
-        private void AddSystemDefinedSettingsToWorld(CodeItem codeEntity)
+        private void AddSystemDefinedSettingsToWorld(IMonitorLogger logger, CodeItem codeEntity)
         {
             var inheritanceItem = new InheritanceItem()
             {
@@ -319,7 +320,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             codeEntity.InheritanceItems.Add(inheritanceItem);
         }
 
-        private void AddSystemDefinedSettingsToApp(CodeItem codeEntity)
+        private void AddSystemDefinedSettingsToApp(IMonitorLogger logger, CodeItem codeEntity)
         {
             var inheritanceItem = new InheritanceItem()
             {
@@ -333,7 +334,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             codeEntity.InheritanceItems.Add(inheritanceItem);
         }
 
-        private void AddSystemDefinedSettingsToClass(CodeItem codeEntity)
+        private void AddSystemDefinedSettingsToClass(IMonitorLogger logger, CodeItem codeEntity)
         {
             var inheritanceItem = new InheritanceItem()
             {
@@ -347,7 +348,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             codeEntity.InheritanceItems.Add(inheritanceItem);
         }
 
-        private void AddSystemDefinedSettingsToAction(CodeItem codeEntity)
+        private void AddSystemDefinedSettingsToAction(IMonitorLogger logger, CodeItem codeEntity)
         {
             var inheritanceItem = new InheritanceItem()
             {
@@ -361,7 +362,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             codeEntity.InheritanceItems.Add(inheritanceItem);
         }
 
-        private void AddSystemDefinedSettingsToState(CodeItem codeEntity)
+        private void AddSystemDefinedSettingsToState(IMonitorLogger logger, CodeItem codeEntity)
         {
             var inheritanceItem = new InheritanceItem()
             {
@@ -375,7 +376,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             codeEntity.InheritanceItems.Add(inheritanceItem);
         }
 
-        private void SaveItems(List<CodeItem> source, IStorage targetStorage, List<string> defferedLibsList)
+        private void SaveItems(IMonitorLogger logger, List<CodeItem> source, IStorage targetStorage, List<string> defferedLibsList)
         {
             foreach (var item in source)
             {
@@ -383,7 +384,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             }
         }
 
-        private void SaveItem(CodeItem codeItem, IStorage targetStorage, List<string> defferedLibsList)
+        private void SaveItem(IMonitorLogger logger, CodeItem codeItem, IStorage targetStorage, List<string> defferedLibsList)
         {
             var codeEntityName = codeItem.Name;
 
@@ -507,7 +508,7 @@ namespace SymOntoClay.Core.Internal.Serialization
 
         }
 
-        private void GeneratePreConstructor(CodeItem codeItem, IStorage targetStorage)
+        private void GeneratePreConstructor(IMonitorLogger logger, CodeItem codeItem, IStorage targetStorage)
         {
             var subItems = codeItem.SubItems;
 
@@ -528,7 +529,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             }
         }
 
-        private void CheckCodeDirectives(CodeItem codeItem)
+        private void CheckCodeDirectives(IMonitorLogger logger, CodeItem codeItem)
         {
             var directives = codeItem.Directives;
 
@@ -582,7 +583,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             }
         }
 
-        private void ProcessImport(CodeItem codeItem, IStorage targetStorage, List<string> defferedLibsList)
+        private void ProcessImport(IMonitorLogger logger, CodeItem codeItem, IStorage targetStorage, List<string> defferedLibsList)
         {
             var importsList = codeItem.ImportsList;
 

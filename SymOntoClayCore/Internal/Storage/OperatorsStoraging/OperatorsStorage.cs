@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,9 +45,9 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStoraging
         private readonly Dictionary<KindOfOperator, Dictionary<StrongIdentifierValue, List<Operator>>> _nonIndexedInfo = new Dictionary<KindOfOperator, Dictionary<StrongIdentifierValue, List<Operator>>>();
 
         /// <inheritdoc/>
-        public void Append(Operator op)
+        public void Append(IMonitorLogger logger, Operator op)
         {
-            AnnotatedItemHelper.CheckAndFillUpHolder(op, _realStorageContext.MainStorageContext.CommonNamesStorage);
+            AnnotatedItemHelper.CheckAndFillUpHolder(logger, op, _realStorageContext.MainStorageContext.CommonNamesStorage);
 
             lock(_lockObj)
             {
@@ -60,7 +61,7 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStoraging
                     {
                         var targetList = dict[op.Holder];
 
-                        StorageHelper.RemoveSameItems(targetList, op);
+                        StorageHelper.RemoveSameItems(logger, targetList, op);
 
                         targetList.Add(op);
                     }
@@ -79,7 +80,7 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStoraging
         private static List<WeightedInheritanceResultItem<Operator>> _emptyOperatorsList = new List<WeightedInheritanceResultItem<Operator>>();
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<Operator>> GetOperatorsDirectly(KindOfOperator kindOfOperator, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<Operator>> GetOperatorsDirectly(IMonitorLogger logger, KindOfOperator kindOfOperator, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             lock (_lockObj)
             {

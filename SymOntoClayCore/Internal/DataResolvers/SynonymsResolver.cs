@@ -44,14 +44,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var storage = localCodeExecutionContext.Storage;
 
-            return GetSynonyms(name, storage);
+            return GetSynonyms(logger, name, storage);
         }
 
         public List<StrongIdentifierValue> GetSynonyms(IMonitorLogger logger, StrongIdentifierValue name, IStorage storage)
         {
-            var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
+            var storagesList = GetStoragesList(logger, storage, KindOfStoragesList.CodeItems);
 
-            return GetSynonyms(name, storagesList);
+            return GetSynonyms(logger, name, storagesList);
         }
 
         public List<StrongIdentifierValue> GetSynonyms(IMonitorLogger logger, StrongIdentifierValue name, List<StorageUsingOptions> storagesList)
@@ -66,7 +66,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 foreach (var processedItem in currentProcessedList)
                 {
-                    var synonymsList = GetSynonymsDirectly(processedItem, storagesList);
+                    var synonymsList = GetSynonymsDirectly(logger, processedItem, storagesList);
 
                     if (synonymsList == null)
                     {
@@ -102,7 +102,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach(var storageItem in storagesList)
             {
-                var itemsList = storageItem.Storage.SynonymsStorage.GetSynonymsDirectly(name);
+                var itemsList = storageItem.Storage.SynonymsStorage.GetSynonymsDirectly(logger, name);
 
                 if(itemsList == null)
                 {

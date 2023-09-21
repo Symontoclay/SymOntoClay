@@ -61,14 +61,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public NumberValue Resolve(IMonitorLogger logger, Value source, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            return Resolve(source, localCodeExecutionContext, _defaultOptions);
+            return Resolve(logger, source, localCodeExecutionContext, _defaultOptions);
         }
 
         public NumberValue Resolve(IMonitorLogger logger, Value source, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             if(source == null)
             {
-                return ValueConverter.ConvertNullValueToNumberValue(NullValue.Instance, _context);
+                return ValueConverter.ConvertNullValueToNumberValue(logger, NullValue.Instance, _context);
             }
 
             var sourceKind = source.KindOfValue;
@@ -76,10 +76,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             switch (sourceKind)
             {
                 case KindOfValue.NullValue:
-                    return ValueConverter.ConvertNullValueToNumberValue(source.AsNullValue, _context);
+                    return ValueConverter.ConvertNullValueToNumberValue(logger, source.AsNullValue, _context);
 
                 case KindOfValue.LogicalValue:
-                    return ValueConverter.ConvertLogicalValueToNumberValue(source.AsLogicalValue, _context);
+                    return ValueConverter.ConvertLogicalValueToNumberValue(logger, source.AsLogicalValue, _context);
 
                 case KindOfValue.NumberValue:
                     return source.AsNumberValue;
@@ -88,14 +88,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     {
                         ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving = null;
 
-                        return _context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(source.AsStrongIdentifierValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext);
+                        return _context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(logger, source.AsStrongIdentifierValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext);
                     }
 
                 case KindOfValue.FuzzyLogicNonNumericSequenceValue:
                     {
                         ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving = null;
 
-                        return _context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(source.AsFuzzyLogicNonNumericSequenceValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext);
+                        return _context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(logger, source.AsFuzzyLogicNonNumericSequenceValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext);
                     }
 
                 default:

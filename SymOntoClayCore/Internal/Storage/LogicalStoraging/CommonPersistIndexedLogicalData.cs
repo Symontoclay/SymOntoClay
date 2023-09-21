@@ -73,7 +73,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             switch (kind)
             {
                 case KindOfRuleInstance.Fact:
-                    NAddIndexedRulePartToKeysOfRelationsIndex(IndexedRulePartsOfFactsDict, indexedRuleInstance.PrimaryPart);
+                    NAddIndexedRulePartToKeysOfRelationsIndex(logger, IndexedRulePartsOfFactsDict, indexedRuleInstance.PrimaryPart);
                     break;
 
                 case KindOfRuleInstance.Rule:
@@ -82,14 +82,14 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                         
                         if (part_1.HasVars && part_1.IsActive && !part_1.HasQuestionVars && part_1.RelationsDict.Count == 1)
                         {
-                            NAddIndexedRulePartToKeysOfRelationsIndex(IndexedRulePartsWithOneRelationWithVarsDict, part_1);
+                            NAddIndexedRulePartToKeysOfRelationsIndex(logger, IndexedRulePartsWithOneRelationWithVarsDict, part_1);
                         }
 
                         foreach(var part_2 in indexedRuleInstance.SecondaryParts)
                         {
                             if (part_2.HasVars && part_2.IsActive && !part_2.HasQuestionVars && part_2.RelationsDict.Count == 1)
                             {
-                                NAddIndexedRulePartToKeysOfRelationsIndex(IndexedRulePartsWithOneRelationWithVarsDict, part_2);
+                                NAddIndexedRulePartToKeysOfRelationsIndex(logger, IndexedRulePartsWithOneRelationWithVarsDict, part_2);
                             }
                         }
                     }
@@ -114,7 +114,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             if(registerLeafs)
             {
-                NRegisterLogicalQueryNodeLeafs(indexedRuleInstance);
+                NRegisterLogicalQueryNodeLeafs(logger, indexedRuleInstance);
             }
         }
 
@@ -124,7 +124,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             foreach(var leafsDictKVPItem in leafsDict)
             {
-                NRegisterLogicalQueryNodeLeafs(leafsDictKVPItem.Key, leafsDictKVPItem.Value);
+                NRegisterLogicalQueryNodeLeafs(logger, leafsDictKVPItem.Key, leafsDictKVPItem.Value);
             }
         }
 
@@ -189,7 +189,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             switch (kind)
             {
                 case KindOfRuleInstance.Fact:
-                    NRemoveIndexedRulePartFromKeysOfRelationsIndex(IndexedRulePartsOfFactsDict, indexedRuleInstance.PrimaryPart);
+                    NRemoveIndexedRulePartFromKeysOfRelationsIndex(logger, IndexedRulePartsOfFactsDict, indexedRuleInstance.PrimaryPart);
                     break;
 
                 case KindOfRuleInstance.Rule:
@@ -198,14 +198,14 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                         if (part_1.HasVars && part_1.IsActive && !part_1.HasQuestionVars && part_1.RelationsDict.Count == 1)
                         {
-                            NRemoveIndexedRulePartFromKeysOfRelationsIndex(IndexedRulePartsWithOneRelationWithVarsDict, part_1);
+                            NRemoveIndexedRulePartFromKeysOfRelationsIndex(logger, IndexedRulePartsWithOneRelationWithVarsDict, part_1);
                         }
 
                         foreach(var part_2 in indexedRuleInstance.SecondaryParts)
                         {
                             if (part_2.HasVars && part_2.IsActive && !part_2.HasQuestionVars && part_2.RelationsDict.Count == 1)
                             {
-                                NRemoveIndexedRulePartFromKeysOfRelationsIndex(IndexedRulePartsWithOneRelationWithVarsDict, part_2);
+                                NRemoveIndexedRulePartFromKeysOfRelationsIndex(logger, IndexedRulePartsWithOneRelationWithVarsDict, part_2);
                             }
                         }
                     }

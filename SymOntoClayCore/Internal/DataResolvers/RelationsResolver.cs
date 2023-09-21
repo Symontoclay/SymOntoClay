@@ -51,41 +51,41 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public RelationDescription GetRelation(IMonitorLogger logger, StrongIdentifierValue name, int paramsCount, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            return GetRelation(name, paramsCount, localCodeExecutionContext, DefaultOptions);
+            return GetRelation(logger, name, paramsCount, localCodeExecutionContext, DefaultOptions);
         }
 
         public RelationDescription GetRelation(IMonitorLogger logger, StrongIdentifierValue name, int paramsCount, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
-            var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
+            var storagesList = GetStoragesList(logger, storage, KindOfStoragesList.CodeItems);
 
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, localCodeExecutionContext, optionsForInheritanceResolver);
 
-            var rawList = GetRawList(name, paramsCount, storagesList, weightedInheritanceItems);
+            var rawList = GetRawList(logger, name, paramsCount, storagesList, weightedInheritanceItems);
 
             if (!rawList.Any())
             {
                 return null;
             }
 
-            var filteredList = Filter(rawList);
+            var filteredList = Filter(logger, rawList);
 
-            var targetItem = ChooseTargetItem(filteredList);
+            var targetItem = ChooseTargetItem(logger, filteredList);
 
             return targetItem;
         }
 
         private List<WeightedInheritanceResultItemWithStorageInfo<RelationDescription>> GetRawList(IMonitorLogger logger, StrongIdentifierValue name, int paramsCount, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
-            var result = NGetRawList(name, paramsCount, storagesList, weightedInheritanceItems);
+            var result = NGetRawList(logger, name, paramsCount, storagesList, weightedInheritanceItems);
 
             if (result.IsNullOrEmpty())
             {
-                result = GetRawListFromSynonyms(name, paramsCount, storagesList, weightedInheritanceItems);
+                result = GetRawListFromSynonyms(logger, name, paramsCount, storagesList, weightedInheritanceItems);
             }
 
             return result;
@@ -93,11 +93,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private List<WeightedInheritanceResultItemWithStorageInfo<RelationDescription>> GetRawListFromSynonyms(IMonitorLogger logger, StrongIdentifierValue name, int paramsCount, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
-            var synonymsList = _synonymsResolver.GetSynonyms(name, storagesList);
+            var synonymsList = _synonymsResolver.GetSynonyms(logger, name, storagesList);
 
             foreach (var synonym in synonymsList)
             {
-                var rawList = NGetRawList(synonym, paramsCount, storagesList, weightedInheritanceItems);
+                var rawList = NGetRawList(logger, synonym, paramsCount, storagesList, weightedInheritanceItems);
 
                 if (rawList.IsNullOrEmpty())
                 {
@@ -121,7 +121,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var storageItem in storagesList)
             {
-                var itemsList = storageItem.Storage.RelationsStorage.GetRelationsDirectly(name, paramsCount, weightedInheritanceItems);
+                var itemsList = storageItem.Storage.RelationsStorage.GetRelationsDirectly(logger, name, paramsCount, weightedInheritanceItems);
 
                 if (!itemsList.Any())
                 {

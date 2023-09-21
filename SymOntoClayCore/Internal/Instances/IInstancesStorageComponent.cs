@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,25 +31,25 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public interface IInstancesStorageComponent
     {
-        void ActivateMainEntity();
-        void AppendProcessInfo(IProcessInfo processInfo);
-        void AppendAndTryStartProcessInfo(IProcessInfo processInfo);
+        void ActivateMainEntity(IMonitorLogger logger);
+        void AppendProcessInfo(IMonitorLogger logger, IProcessInfo processInfo);
+        void AppendAndTryStartProcessInfo(IMonitorLogger logger, IProcessInfo processInfo);
 
         event Action OnIdle;
-        int GetCountOfCurrentProcesses();
+        int GetCountOfCurrentProcesses(IMonitorLogger logger);
 
-        void ActivateState(StateDef state);
-        void TryActivateDefaultState();
+        void ActivateState(IMonitorLogger logger, StateDef state);
+        void TryActivateDefaultState(IMonitorLogger logger);
 
         AppInstance MainEntity { get; }
 
-        Value CreateInstance(StrongIdentifierValue prototypeName, ILocalCodeExecutionContext executionContext);
-        Value CreateInstance(InstanceValue instanceValue, ILocalCodeExecutionContext executionContext);
-        Value CreateInstance(CodeItem codeItem, ILocalCodeExecutionContext executionContext);
-        Value CreateInstance(ActionPtr actionPtr, ILocalCodeExecutionContext executionContext, IExecutionCoordinator executionCoordinator);
+        Value CreateInstance(IMonitorLogger logger, StrongIdentifierValue prototypeName, ILocalCodeExecutionContext executionContext);
+        Value CreateInstance(IMonitorLogger logger, InstanceValue instanceValue, ILocalCodeExecutionContext executionContext);
+        Value CreateInstance(IMonitorLogger logger, CodeItem codeItem, ILocalCodeExecutionContext executionContext);
+        Value CreateInstance(IMonitorLogger logger, ActionPtr actionPtr, ILocalCodeExecutionContext executionContext, IExecutionCoordinator executionCoordinator);
 
 #if DEBUG
-        void PrintProcessesList();
+        void PrintProcessesList(IMonitorLogger logger);
 #endif
     }
 }

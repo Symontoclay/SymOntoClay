@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -36,9 +37,9 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         }
 
         /// <inheritdoc/>
-        public Value Call(Value operand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
+        public Value Call(IMonitorLogger logger, Value operand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            operand = TryResolveFromVarOrExpr(operand, localCodeExecutionContext);
+            operand = TryResolveFromVarOrExpr(logger, operand, localCodeExecutionContext);
 
             if (operand.IsSystemNull)
             {

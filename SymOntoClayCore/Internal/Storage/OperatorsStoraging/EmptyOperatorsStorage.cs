@@ -39,12 +39,12 @@ namespace SymOntoClay.Core.Internal.Storage.OperatorsStoraging
         }
 
         /// <inheritdoc/>
-        public void Append(Operator op)
+        public void Append(IMonitorLogger logger, Operator op)
         {
         }
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<Operator>> GetOperatorsDirectly(KindOfOperator kindOfOperator, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<Operator>> GetOperatorsDirectly(IMonitorLogger logger, KindOfOperator kindOfOperator, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             return new List<WeightedInheritanceResultItem<Operator>>();
         }

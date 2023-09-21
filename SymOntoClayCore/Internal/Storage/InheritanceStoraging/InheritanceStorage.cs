@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,13 +52,13 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
         private readonly Dictionary<InheritanceItem, string> _factsIdRegistry = new Dictionary<InheritanceItem, string>();
 
         /// <inheritdoc/>
-        public void SetInheritance(InheritanceItem inheritanceItem)
+        public void SetInheritance(IMonitorLogger logger, InheritanceItem inheritanceItem)
         {
-            SetInheritance(inheritanceItem, true);
+            SetInheritance(logger, inheritanceItem, true);
         }
 
         /// <inheritdoc/>
-        public void SetInheritance(InheritanceItem inheritanceItem, bool isPrimary)
+        public void SetInheritance(IMonitorLogger logger, InheritanceItem inheritanceItem, bool isPrimary)
         {
             var subItem = inheritanceItem.SubName;
 
@@ -79,7 +80,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
                     {
                         var targetList = dict[superName];
 
-                        StorageHelper.RemoveSameItems(targetList, inheritanceItem);
+                        StorageHelper.RemoveSameItems(logger, targetList, inheritanceItem);
 
                         targetList.Add(inheritanceItem);
                     }
@@ -98,25 +99,25 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
 
             if(isPrimary && _kind != KindOfStorage.PublicFacts && _kind != KindOfStorage.PerceptedFacts)
             {
-                var inheritanceFact = CreateInheritanceFact(inheritanceItem);
+                var inheritanceFact = CreateInheritanceFact(logger, inheritanceItem);
 
                 lock(_factsIdRegistryLockObj)
                 {
                     _factsIdRegistry[inheritanceItem] = inheritanceFact.Name.NameValue;
                 }
 
-                _realStorageContext.LogicalStorage.Append(inheritanceFact, false);
+                _realStorageContext.LogicalStorage.Append(logger, inheritanceFact, false);
 
                 if(_kind == KindOfStorage.Global || _kind ==  KindOfStorage.Host || _kind == KindOfStorage.Categories)
                 {
-                    _inheritancePublicFactsReplicator.ProcessChangeInheritance(inheritanceItem.SubName, inheritanceItem.SuperName);
+                    _inheritancePublicFactsReplicator.ProcessChangeInheritance(logger, inheritanceItem.SubName, inheritanceItem.SuperName);
                 }
             }
 
         }
 
         /// <inheritdoc/>
-        public void RemoveInheritance(InheritanceItem inheritanceItem)
+        public void RemoveInheritance(IMonitorLogger logger, InheritanceItem inheritanceItem)
         {
             lock (_lockObj)
             {
@@ -139,13 +140,13 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
 
                         targetList.Remove(inheritanceItem);
 
-                        NRemoveIngeritanceFact(inheritanceItem);
+                        NRemoveIngeritanceFact(logger, inheritanceItem);
                     }
                 }
             }
         }
 
-        private void NRemoveIngeritanceFact(InheritanceItem inheritanceItem)
+        private void NRemoveIngeritanceFact(IMonitorLogger logger, InheritanceItem inheritanceItem)
         {
             lock (_factsIdRegistryLockObj)
             {
@@ -153,14 +154,14 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
                 {
                     var factId = _factsIdRegistry[inheritanceItem];
 
-                    _realStorageContext.LogicalStorage.RemoveById(factId);
+                    _realStorageContext.LogicalStorage.RemoveById(logger, factId);
 
                     _factsIdRegistry.Remove(inheritanceItem);
                 }
             }
         }
 
-        private RuleInstance CreateInheritanceFact(InheritanceItem inheritanceItem)
+        private RuleInstance CreateInheritanceFact(IMonitorLogger logger, InheritanceItem inheritanceItem)
         {
             var factName = NameHelper.CreateRuleOrFactName();
 
@@ -201,7 +202,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
         private static List<WeightedInheritanceResultItem<InheritanceItem>> _emptyItemsList = new List<WeightedInheritanceResultItem<InheritanceItem>>();
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<InheritanceItem>> GetItemsDirectly(StrongIdentifierValue subName)
+        public IList<WeightedInheritanceResultItem<InheritanceItem>> GetItemsDirectly(IMonitorLogger logger, StrongIdentifierValue subName)
         {
             lock (_lockObj)
             {

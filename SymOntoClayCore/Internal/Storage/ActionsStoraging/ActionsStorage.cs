@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,11 +44,11 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStoraging
         private readonly Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, Dictionary<int, List<ActionPtr>>>> _actionsDict = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, Dictionary<int, List<ActionPtr>>>>();
 
         /// <inheritdoc/>
-        public void Append(ActionDef action)
+        public void Append(IMonitorLogger logger, ActionDef action)
         {
             lock (_lockObj)
             {
-                AnnotatedItemHelper.CheckAndFillUpHolder(action, _realStorageContext.MainStorageContext.CommonNamesStorage);
+                AnnotatedItemHelper.CheckAndFillUpHolder(logger, action, _realStorageContext.MainStorageContext.CommonNamesStorage);
 
                 action.CheckDirty();
 
@@ -55,13 +56,13 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStoraging
 
                 var namesList = action.NamesList;
 
-                var paramsCountDict = GetParamsCountDict(action);
+                var paramsCountDict = GetParamsCountDict(logger, action);
 
                 var paramsCountList = paramsCountDict.Keys.ToList();
 
                 foreach(var name in namesList)
                 {
-                    var targetDict = GetDictByNames(holder, name);
+                    var targetDict = GetDictByNames(logger, holder, name);
 
                     foreach (var count in paramsCountList)
                     {
@@ -94,7 +95,7 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStoraging
         private static List<WeightedInheritanceResultItem<ActionPtr>> _emptyActionsList = new List<WeightedInheritanceResultItem<ActionPtr>>();
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<ActionPtr>> GetActionsDirectly(StrongIdentifierValue name, int paramsCount, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<ActionPtr>> GetActionsDirectly(IMonitorLogger logger, StrongIdentifierValue name, int paramsCount, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             lock (_lockObj)
             {
@@ -134,24 +135,24 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStoraging
             }
         }
 
-        private Dictionary<int, List<Operator>> GetParamsCountDict(ActionDef action)
+        private Dictionary<int, List<Operator>> GetParamsCountDict(IMonitorLogger logger, ActionDef action)
         {
             var result = new Dictionary<int, List<Operator>>();
 
             foreach(var op in action.Operators)
             {
-                var paramsCountList = GetParamsCountList(op);
+                var paramsCountList = GetParamsCountList(logger, op);
 
                 foreach(var count in paramsCountList)
                 {
-                    AddToDict(count, result, op);
+                    AddToDict(logger, count, result, op);
                 }
             }
 
             return result;
         }
 
-        private void AddToDict(int paramCount, Dictionary<int, List<Operator>> dict, Operator @operator)
+        private void AddToDict(IMonitorLogger logger, int paramCount, Dictionary<int, List<Operator>> dict, Operator @operator)
         {
             if(dict.ContainsKey(paramCount))
             {
@@ -168,7 +169,7 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStoraging
             dict[paramCount] = new List<Operator>() { @operator };
         }
 
-        private List<int> GetParamsCountList(Operator @operator)
+        private List<int> GetParamsCountList(IMonitorLogger logger, Operator @operator)
         {
             var result = new List<int>();
 
@@ -197,7 +198,7 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStoraging
             return result;
         }
 
-        private Dictionary<int, List<ActionPtr>> GetDictByNames(StrongIdentifierValue holder, StrongIdentifierValue name)
+        private Dictionary<int, List<ActionPtr>> GetDictByNames(IMonitorLogger logger, StrongIdentifierValue holder, StrongIdentifierValue name)
         {
             if (_actionsDict.ContainsKey(holder))
             {

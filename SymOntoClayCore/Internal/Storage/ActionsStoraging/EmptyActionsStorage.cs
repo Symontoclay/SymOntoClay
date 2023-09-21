@@ -38,12 +38,12 @@ namespace SymOntoClay.Core.Internal.Storage.ActionsStoraging
         }
 
         /// <inheritdoc/>
-        public void Append(ActionDef action)
+        public void Append(IMonitorLogger logger, ActionDef action)
         {
         }
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<ActionPtr>> GetActionsDirectly(StrongIdentifierValue name, int paramsCount, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<ActionPtr>> GetActionsDirectly(IMonitorLogger logger, StrongIdentifierValue name, int paramsCount, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             return new List<WeightedInheritanceResultItem<ActionPtr>>();
         }

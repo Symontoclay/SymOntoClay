@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -80,7 +81,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private bool _isBusy;
         private bool _needRepeat;
 
-        public void Init()
+        public void Init(IMonitorLogger logger)
         {
             lock (_lockObj)
             {
@@ -150,7 +151,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void DoSearch()
         {
-            var searchResult = _searcher.Run(_searchOptions);
+            var searchResult = _searcher.Run(Logger, _searchOptions);
 
             if (searchResult.IsSuccess)
             {
@@ -234,7 +235,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
                         var destVar = bindingVariables.GetDest(resultVar.NameOfVar);
 
-                        varStorage.SetValue(destVar, value);
+                        varStorage.SetValue(Logger, destVar, value);
                     }
                 }
 

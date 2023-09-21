@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
@@ -27,6 +28,7 @@ using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Serialization;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -75,15 +77,15 @@ namespace SymOntoClay.Core.Internal.Instances
 
             var globalStorage = _context.Storage.GlobalStorage;
 
-            globalStorage.VarStorage.SetSystemValue(_context.CommonNamesStorage.HostSystemVarName, new HostValue());
+            globalStorage.VarStorage.SetSystemValue(Logger, _context.CommonNamesStorage.HostSystemVarName, new HostValue());
         }
 
         /// <inheritdoc/>
-        public override void ActivateMainEntity()
+        public override void ActivateMainEntity(IMonitorLogger logger)
         {
             var globalStorage = _context.Storage.GlobalStorage;
 
-            var mainEntity = GetOrCreateMainEntity();
+            var mainEntity = GetOrCreateMainEntity(logger);
 
             if(mainEntity == null)
             {
@@ -110,21 +112,21 @@ namespace SymOntoClay.Core.Internal.Instances
                 _rootInstanceInfo = instanceInfo;
                 _namesDict[mainEntityName] = instanceInfo;
 
-                globalStorage.VarStorage.SetSystemValue(_context.CommonNamesStorage.SelfSystemVarName, new InstanceValue(instanceInfo));
+                globalStorage.VarStorage.SetSystemValue(logger, _context.CommonNamesStorage.SelfSystemVarName, new InstanceValue(instanceInfo));
             }
 
-            instanceInfo.Init();
+            instanceInfo.Init(logger);
 
             Task.Run(() => {
                 try
                 {
                     Thread.Sleep(100);
 
-                    DispatchIdleActions();
+                    DispatchIdleActions(logger);
                 }
                 catch (Exception e)
                 {
-                    Error("0E28EFF2-FA4B-46F2-A1B5-7CDF5C9B4862", e);
+                    logger.Error("0E28EFF2-FA4B-46F2-A1B5-7CDF5C9B4862", e);
                 }
             });
         }
@@ -134,7 +136,7 @@ namespace SymOntoClay.Core.Internal.Instances
             Task.Run(() => {
                 try
                 {
-                    DispatchIdleActions();
+                    DispatchIdleActions(Logger);
                 }
                 catch (Exception e)
                 {
@@ -143,20 +145,20 @@ namespace SymOntoClay.Core.Internal.Instances
             });
         }
 
-        private void DispatchIdleActions()
+        private void DispatchIdleActions(IMonitorLogger logger)
         {
-            var count = GetCountOfCurrentProcesses();
+            var count = GetCountOfCurrentProcesses(logger);
 
             if(count > 0)
             {
                 return;
             }
 
-            var rawListOfTopIndependentInstances = _rootInstanceInfo.GetTopIndependentInstances();
+            var rawListOfTopIndependentInstances = _rootInstanceInfo.GetTopIndependentInstances(logger);
 
             if(rawListOfTopIndependentInstances.Count == 1)
             {
-                rawListOfTopIndependentInstances.First().ActivateIdleAction();
+                rawListOfTopIndependentInstances.First().ActivateIdleAction(logger);
                 return;
             }
 
@@ -167,32 +169,32 @@ namespace SymOntoClay.Core.Internal.Instances
         public override AppInstance MainEntity => _rootInstanceInfo;
 
         /// <inheritdoc/>
-        public override void ActivateState(StateDef state)
+        public override void ActivateState(IMonitorLogger logger, StateDef state)
         {
-            _rootInstanceInfo.ActivateState(state);
+            _rootInstanceInfo.ActivateState(logger, state);
         }
 
         /// <inheritdoc/>
-        public override void TryActivateDefaultState()
+        public override void TryActivateDefaultState(IMonitorLogger logger)
         {
-            _rootInstanceInfo.TryActivateDefaultState();
+            _rootInstanceInfo.TryActivateDefaultState(logger);
         }
 
         /// <inheritdoc/>
-        public override void AppendProcessInfo(IProcessInfo processInfo)
+        public override void AppendProcessInfo(IMonitorLogger logger, IProcessInfo processInfo)
         {
             lock(_processLockObj)
             {
-                NTryAppendProcessInfo(processInfo);
+                NTryAppendProcessInfo(logger, processInfo);
             }
         }
 
         /// <inheritdoc/>
-        public override void AppendAndTryStartProcessInfo(IProcessInfo processInfo)
+        public override void AppendAndTryStartProcessInfo(IMonitorLogger logger, IProcessInfo processInfo)
         {
             if(processInfo.Devices.IsNullOrEmpty())
             {
-                NAppendAndTryStartProcessInfoWithoutDevices(processInfo);
+                NAppendAndTryStartProcessInfoWithoutDevices(logger, processInfo);
                 return;
             }
 
@@ -200,12 +202,12 @@ namespace SymOntoClay.Core.Internal.Instances
 
             lock (_processLockObj)
             {
-                if(!NTryAppendProcessInfo(processInfo))
+                if(!NTryAppendProcessInfo(logger, processInfo))
                 {
                     return;
                 }
 
-                var concurentProcessesInfoList = NGetConcurrentProcessesInfo(processInfo);
+                var concurentProcessesInfoList = NGetConcurrentProcessesInfo(logger, processInfo);
 
 #if DEBUG
                 //Log($"concurentProcessesInfoList?.Count = {concurentProcessesInfoList?.Count}");
@@ -213,7 +215,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 if(concurentProcessesInfoList.IsNullOrEmpty())
                 {
-                    NAppendAndTryStartProcessInfoWithDevices(processInfo);
+                    NAppendAndTryStartProcessInfoWithDevices(logger, processInfo);
                     return;
                 }
 
@@ -226,12 +228,12 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 if (concurentProcessesInfoList.All(p => p.ParentProcessInfo == processInfo.ParentProcessInfo))
                 {
-                    NAppendAndTryStartProcessInfoWithDevices(processInfo);
+                    NAppendAndTryStartProcessInfoWithDevices(logger, processInfo);
 
                     Task.Run(() => {
                         foreach (var concurentProcessInfo in concurentProcessesInfoList)
                         {
-                            concurentProcessInfo.Cancel();
+                            concurentProcessInfo.Cancel(logger);
                         }
                     });
 
@@ -246,12 +248,12 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 if (concurentProcessesInfoList.All(p => p.GlobalPriority >= globalPriority))
                 {
-                    NAppendAndTryStartProcessInfoWithDevices(processInfo);
+                    NAppendAndTryStartProcessInfoWithDevices(logger, processInfo);
 
                     Task.Run(() => { 
                         foreach(var concurentProcessInfo in concurentProcessesInfoList)
                         {
-                            concurentProcessInfo.Cancel();
+                            concurentProcessInfo.Cancel(logger);
                         }
                     });
 
@@ -259,10 +261,10 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
             }
 
-            processInfo.Cancel();
+            processInfo.Cancel(logger);
         }
 
-        private bool NTryAppendProcessInfo(IProcessInfo processInfo)
+        private bool NTryAppendProcessInfo(IMonitorLogger logger, IProcessInfo processInfo)
         {
             if (_processesInfoList.Contains(processInfo))
             {
@@ -282,17 +284,17 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 _processesInfoList.Remove(sender);
 
-                CheckCountOfActiveProcesses();
+                CheckCountOfActiveProcesses(Logger);
             }
         }
 
-        private void NAppendAndTryStartProcessInfoWithoutDevices(IProcessInfo processInfo)
+        private void NAppendAndTryStartProcessInfoWithoutDevices(IMonitorLogger logger, IProcessInfo processInfo)
         {
-            AppendProcessInfo(processInfo);
-            processInfo.Start();
+            AppendProcessInfo(logger, processInfo);
+            processInfo.Start(logger);
         }
 
-        private void NAppendAndTryStartProcessInfoWithDevices(IProcessInfo processInfo)
+        private void NAppendAndTryStartProcessInfoWithDevices(IMonitorLogger logger, IProcessInfo processInfo)
         {
             foreach (var device in processInfo.Devices)
             {
@@ -301,7 +303,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             processInfo.OnFinish += OnFinishProcessWithDevicesHandler;
 
-            processInfo.Start();
+            processInfo.Start(logger);
 
         }
 
@@ -317,14 +319,14 @@ namespace SymOntoClay.Core.Internal.Instances
                     }
                 }
 
-                CheckCountOfActiveProcesses();
+                CheckCountOfActiveProcesses(Logger);
             }
 
         }
 
-        private void CheckCountOfActiveProcesses()
+        private void CheckCountOfActiveProcesses(IMonitorLogger logger)
         {
-            var count = NGetCountOfCurrentProcesses();
+            var count = NGetCountOfCurrentProcesses(logger);
 
             if(count == 0)
             {
@@ -338,7 +340,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
         }
 
-        private int NGetCountOfCurrentProcesses()
+        private int NGetCountOfCurrentProcesses(IMonitorLogger logger)
         {
             return _processesInfoByDevicesDict.Count + _processesInfoList.Count; 
         }
@@ -347,15 +349,15 @@ namespace SymOntoClay.Core.Internal.Instances
         public override event Action OnIdle;
 
         /// <inheritdoc/>
-        public override int GetCountOfCurrentProcesses()
+        public override int GetCountOfCurrentProcesses(IMonitorLogger logger)
         {
             lock (_processLockObj)
             {
-                return NGetCountOfCurrentProcesses();
+                return NGetCountOfCurrentProcesses(logger);
             }
         }
 
-        private List<IProcessInfo> NGetConcurrentProcessesInfo(IProcessInfo processInfo)
+        private List<IProcessInfo> NGetConcurrentProcessesInfo(IMonitorLogger logger, IProcessInfo processInfo)
         {
             var result = new List<IProcessInfo>();
 
@@ -365,7 +367,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 {
                     var otherProcessInfo = _processesInfoByDevicesDict[device];
 
-                    if(!processInfo.IsFriend(otherProcessInfo))
+                    if(!processInfo.IsFriend(logger, otherProcessInfo))
                     {
                         result.Add(otherProcessInfo);
                     }                    
@@ -376,49 +378,49 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        public override Value CreateInstance(StrongIdentifierValue prototypeName, ILocalCodeExecutionContext executionContext)
+        public override Value CreateInstance(IMonitorLogger logger, StrongIdentifierValue prototypeName, ILocalCodeExecutionContext executionContext)
         {
-            var codeItem = _metadataResolver.Resolve(prototypeName, executionContext);
+            var codeItem = _metadataResolver.Resolve(logger, prototypeName, executionContext);
 
             if(codeItem == null)
             {
                 throw new NotImplementedException();
             }
 
-            return NCreateInstance(codeItem, executionContext, false);
+            return NCreateInstance(logger, codeItem, executionContext, false);
         }
 
         /// <inheritdoc/>
-        public override Value CreateInstance(InstanceValue instanceValue, ILocalCodeExecutionContext executionContext)
+        public override Value CreateInstance(IMonitorLogger logger, InstanceValue instanceValue, ILocalCodeExecutionContext executionContext)
         {
-            var codeItem = _metadataResolver.Resolve(instanceValue.InstanceInfo.Name, executionContext);
+            var codeItem = _metadataResolver.Resolve(logger, instanceValue.InstanceInfo.Name, executionContext);
 
             if (codeItem == null)
             {
                 throw new NotImplementedException();
             }
 
-            return NCreateInstance(codeItem, executionContext, false);
+            return NCreateInstance(logger, codeItem, executionContext, false);
         }
 
         /// <inheritdoc/>
-        public override Value CreateInstance(CodeItem codeItem, ILocalCodeExecutionContext executionContext)
+        public override Value CreateInstance(IMonitorLogger logger, CodeItem codeItem, ILocalCodeExecutionContext executionContext)
         {
-            return NCreateInstance(codeItem, executionContext, true);
+            return NCreateInstance(logger, codeItem, executionContext, true);
         }
 
-        private Value NCreateInstance(CodeItem codeItem, ILocalCodeExecutionContext executionContext, bool loadCodeItem)
+        private Value NCreateInstance(IMonitorLogger logger, CodeItem codeItem, ILocalCodeExecutionContext executionContext, bool loadCodeItem)
         {
-            var targetCodeItem = CreateAndSaveInstanceCodeItem(codeItem, NameHelper.CreateEntityName());
+            var targetCodeItem = CreateAndSaveInstanceCodeItem(logger, codeItem, NameHelper.CreateEntityName());
 
             var instance = new ObjectInstance(targetCodeItem, _context, executionContext.Storage, executionContext);
 
             if(loadCodeItem)
             {
-                _projectLoader.LoadCodeItem(codeItem, executionContext.Storage);
+                _projectLoader.LoadCodeItem(logger, codeItem, executionContext.Storage);
             }
 
-            instance.Init();
+            instance.Init(logger);
 
             var instanceValue = new InstanceValue(instance);
             instanceValue.CheckDirty();
@@ -427,15 +429,15 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        public override Value CreateInstance(ActionPtr actionPtr, ILocalCodeExecutionContext executionContext, IExecutionCoordinator executionCoordinator)
+        public override Value CreateInstance(IMonitorLogger logger, ActionPtr actionPtr, ILocalCodeExecutionContext executionContext, IExecutionCoordinator executionCoordinator)
         {
             var action = actionPtr.Action;
 
-            var targetCodeItem = CreateAndSaveInstanceCodeItem(action, NameHelper.CreateEntityName());
+            var targetCodeItem = CreateAndSaveInstanceCodeItem(logger, action, NameHelper.CreateEntityName());
 
             var actionInstance = new ActionInstance(targetCodeItem, actionPtr, _context, executionContext.Storage, executionContext, executionCoordinator);
 
-            actionInstance.Init();
+            actionInstance.Init(logger);
 
             var instanceValue = new ActionInstanceValue(actionInstance);
             instanceValue.CheckDirty();
@@ -445,7 +447,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
 #if DEBUG
         /// <inheritdoc/>
-        public override void PrintProcessesList()
+        public override void PrintProcessesList(IMonitorLogger logger)
         {
             List<IProcessInfo> tmpProcessesInfoList;
 
@@ -468,7 +470,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             sb.AppendLine("End ProcessesList");
 
-            Info("64404666-03BB-4163-996C-7813E654FD6F", sb.ToString());
+            logger.Info("64404666-03BB-4163-996C-7813E654FD6F", sb.ToString());
         }
 #endif
         /// <inheritdoc/>

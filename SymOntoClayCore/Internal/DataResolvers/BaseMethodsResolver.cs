@@ -51,7 +51,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         protected T EnumerableLocalCodeExecutionContext<T>(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, Func<ILocalCodeExecutionContext, T> func)
         {
-            return EnumerableLocalCodeExecutionContext(localCodeExecutionContext, KindOfEnumerableLocalCodeExecutionContext.StepBetweenNewHolders, func);
+            return EnumerableLocalCodeExecutionContext(logger, localCodeExecutionContext, KindOfEnumerableLocalCodeExecutionContext.StepBetweenNewHolders, func);
         }
 
         protected T EnumerableLocalCodeExecutionContext<T>(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, KindOfEnumerableLocalCodeExecutionContext kindOfEnumerableLocalCodeExecutionContext, Func<ILocalCodeExecutionContext, T> func)
@@ -70,7 +70,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             while(true)
             {
-                localCodeExecutionContext = GetParentLocalCodeExecutionContext(localCodeExecutionContext, kindOfEnumerableLocalCodeExecutionContext);
+                localCodeExecutionContext = GetParentLocalCodeExecutionContext(logger, localCodeExecutionContext, kindOfEnumerableLocalCodeExecutionContext);
 
                 if(localCodeExecutionContext == null)
                 {
@@ -122,7 +122,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var function in source)
             {
-                var rankMatrix = IsFit(function.ResultItem, namedParameters, localCodeExecutionContext, options);
+                var rankMatrix = IsFit(logger, function.ResultItem, namedParameters, localCodeExecutionContext, options);
 
                 if (rankMatrix == null)
                 {
@@ -144,7 +144,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var function in source)
             {
-                var rankMatrix = IsFit(function.ResultItem, positionedParameters, localCodeExecutionContext, options);
+                var rankMatrix = IsFit(logger, function.ResultItem, positionedParameters, localCodeExecutionContext, options);
 
                 if (rankMatrix == null)
                 {
@@ -169,7 +169,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 var argumentName = argument.Name;
 
-                var parameterValue = GetParameterValue(argumentName, namedParameters, localCodeExecutionContext);
+                var parameterValue = GetParameterValue(logger, argumentName, namedParameters, localCodeExecutionContext);
 
                 if (parameterValue == null)
                 {
@@ -188,7 +188,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 {
                     countOfUsedParameters++;
 
-                    var distance = _inheritanceResolver.GetDistance(argument.TypesList, parameterValue, localCodeExecutionContext, options);
+                    var distance = _inheritanceResolver.GetDistance(logger, argument.TypesList, parameterValue, localCodeExecutionContext, options);
 
                     if (!distance.HasValue)
                     {
@@ -229,7 +229,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 var parameterItem = positionedParametersEnumerator.Current;
 
-                var distance = _inheritanceResolver.GetDistance(argument.TypesList, parameterItem, localCodeExecutionContext, options);
+                var distance = _inheritanceResolver.GetDistance(logger, argument.TypesList, parameterItem, localCodeExecutionContext, options);
 
                 if (!distance.HasValue)
                 {
@@ -249,7 +249,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return namedParameters[argumentName];
             }
 
-            var synonymsList = _synonymsResolver.GetSynonyms(argumentName, localCodeExecutionContext);
+            var synonymsList = _synonymsResolver.GetSynonyms(logger, argumentName, localCodeExecutionContext);
 
             foreach (var synonym in synonymsList)
             {
@@ -268,7 +268,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var alternativeArgumentName = NameHelper.CreateAlternativeArgumentName(argumentName);
 
-            synonymsList = _synonymsResolver.GetSynonyms(alternativeArgumentName, localCodeExecutionContext);
+            synonymsList = _synonymsResolver.GetSynonyms(logger, alternativeArgumentName, localCodeExecutionContext);
 
             foreach (var synonym in synonymsList)
             {
@@ -291,7 +291,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         protected T GetTargetValueFromList<T>(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<T>> source, int paramsCount, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
             where T : AnnotatedItem, IExecutable
         {
-            CorrectParametersRankMatrixForSpecialCases(source);
+            CorrectParametersRankMatrixForSpecialCases(logger, source);
 
             IOrderedEnumerable<WeightedInheritanceResultItemWithStorageInfo<T>> orderedList = null;
 
@@ -434,7 +434,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         protected void CorrectParametersRankMatrixForSpecialCases<T>(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<T>> source)
             where T : AnnotatedItem, IExecutable
         {
-            var advicesDict = CheckSpecialCasesInParameters(source);
+            var advicesDict = CheckSpecialCasesInParameters(logger, source);
 
             if (advicesDict.Count == 0)
             {
@@ -446,7 +446,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var parametersRankMatrix = function.ParametersRankMatrix;
                 var argumentsList = function.ResultItem.Arguments;
 
-                var argumentsDict = ConvertArgumentsListToDictByPosition(argumentsList);
+                var argumentsDict = ConvertArgumentsListToDictByPosition(logger, argumentsList);
 
                 foreach (var advice in advicesDict)
                 {

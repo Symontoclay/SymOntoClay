@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -45,12 +46,12 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        public virtual void ActivateMainEntity()
+        public virtual void ActivateMainEntity(IMonitorLogger logger)
         {
-            GetOrCreateMainEntity();
+            GetOrCreateMainEntity(logger);
         }
 
-        protected CodeItem GetOrCreateMainEntity()
+        protected CodeItem GetOrCreateMainEntity(IMonitorLogger logger)
         {
             var globalStorage = _context.Storage.GlobalStorage;
 
@@ -70,29 +71,29 @@ namespace SymOntoClay.Core.Internal.Instances
             }
             else
             {
-                mainEntity = CreateAndSaveInstanceCodeItem(mainEntity);
+                mainEntity = CreateAndSaveInstanceCodeItem(logger, mainEntity);
             }
 
             return mainEntity;
         }
 
-        protected CodeItem CreateAndSaveInstanceCodeItem(CodeItem superCodeEntity)
+        protected CodeItem CreateAndSaveInstanceCodeItem(IMonitorLogger logger, CodeItem superCodeEntity)
         {
-            return CreateAndSaveInstanceCodeItem(superCodeEntity, _commonNamesStorage.SelfName);
+            return CreateAndSaveInstanceCodeItem(logger, superCodeEntity, _commonNamesStorage.SelfName);
         }
 
-        protected CodeItem CreateAndSaveInstanceCodeItem(CodeItem superCodeEntity, StrongIdentifierValue name)
+        protected CodeItem CreateAndSaveInstanceCodeItem(IMonitorLogger logger, CodeItem superCodeEntity, StrongIdentifierValue name)
         {
             var result = new InstanceCodeItem();
 
             result.Name = name;
 
-            FillUpAndRegisterInstance(result, superCodeEntity);
+            FillUpAndRegisterInstance(logger, result, superCodeEntity);
 
             return result;
         }
 
-        protected void FillUpAndRegisterInstance(CodeItem instance, CodeItem superCodeItem)
+        protected void FillUpAndRegisterInstance(IMonitorLogger logger, CodeItem instance, CodeItem superCodeItem)
         {
             if(instance.Holder == null)
             {
@@ -112,18 +113,18 @@ namespace SymOntoClay.Core.Internal.Instances
 
             var globalStorage = _context.Storage.GlobalStorage;
 
-            globalStorage.MetadataStorage.Append(instance);
-            globalStorage.InheritanceStorage.SetInheritance(inheritanceItem);
+            globalStorage.MetadataStorage.Append(logger, instance);
+            globalStorage.InheritanceStorage.SetInheritance(logger, inheritanceItem);
         }
 
         /// <inheritdoc/>
-        public virtual void AppendProcessInfo(IProcessInfo processInfo)
+        public virtual void AppendProcessInfo(IMonitorLogger logger, IProcessInfo processInfo)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public virtual void AppendAndTryStartProcessInfo(IProcessInfo processInfo)
+        public virtual void AppendAndTryStartProcessInfo(IMonitorLogger logger, IProcessInfo processInfo)
         {
             throw new NotImplementedException();
         }
@@ -132,19 +133,19 @@ namespace SymOntoClay.Core.Internal.Instances
         public virtual event Action OnIdle;
 
         /// <inheritdoc/>
-        public virtual int GetCountOfCurrentProcesses()
+        public virtual int GetCountOfCurrentProcesses(IMonitorLogger logger)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public virtual void ActivateState(StateDef state)
+        public virtual void ActivateState(IMonitorLogger logger, StateDef state)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public virtual void TryActivateDefaultState()
+        public virtual void TryActivateDefaultState(IMonitorLogger logger)
         {
             throw new NotImplementedException();
         }
@@ -153,32 +154,32 @@ namespace SymOntoClay.Core.Internal.Instances
         public virtual AppInstance MainEntity => null;
 
         /// <inheritdoc/>
-        public virtual Value CreateInstance(StrongIdentifierValue prototypeName, ILocalCodeExecutionContext executionContext)
+        public virtual Value CreateInstance(IMonitorLogger logger, StrongIdentifierValue prototypeName, ILocalCodeExecutionContext executionContext)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public virtual Value CreateInstance(InstanceValue instanceValue, ILocalCodeExecutionContext executionContext)
+        public virtual Value CreateInstance(IMonitorLogger logger, InstanceValue instanceValue, ILocalCodeExecutionContext executionContext)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public virtual Value CreateInstance(CodeItem codeItem, ILocalCodeExecutionContext executionContextx)
+        public virtual Value CreateInstance(IMonitorLogger logger, CodeItem codeItem, ILocalCodeExecutionContext executionContextx)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public virtual Value CreateInstance(ActionPtr actionPtr, ILocalCodeExecutionContext executionContext, IExecutionCoordinator executionCoordinator)
+        public virtual Value CreateInstance(IMonitorLogger logger, ActionPtr actionPtr, ILocalCodeExecutionContext executionContext, IExecutionCoordinator executionCoordinator)
         {
             throw new NotImplementedException();
         }
 
 #if DEBUG
         /// <inheritdoc/>
-        public virtual void PrintProcessesList()
+        public virtual void PrintProcessesList(IMonitorLogger logger)
         {
             throw new NotImplementedException();
         }

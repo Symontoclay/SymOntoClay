@@ -26,6 +26,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,9 +64,9 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
         private Dictionary<StrongIdentifierValue, List<INamedTriggerInstance>> _namedTriggerInstancesDict = new Dictionary<StrongIdentifierValue, List<INamedTriggerInstance>>();
 
         /// <inheritdoc/>
-        public void Append(InlineTrigger inlineTrigger)
+        public void Append(IMonitorLogger logger, InlineTrigger inlineTrigger)
         {
-            AnnotatedItemHelper.CheckAndFillUpHolder(inlineTrigger, _realStorageContext.MainStorageContext.CommonNamesStorage);
+            AnnotatedItemHelper.CheckAndFillUpHolder(logger, inlineTrigger, _realStorageContext.MainStorageContext.CommonNamesStorage);
 
             inlineTrigger.CheckDirty();
 
@@ -74,15 +75,15 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
             switch (kind)
             {
                 case KindOfInlineTrigger.SystemEvent:
-                    AppendSystemEvent(inlineTrigger);
+                    AppendSystemEvent(logger, inlineTrigger);
                     break;
 
                 case KindOfInlineTrigger.LogicConditional:
-                    AppendLogicConditional(inlineTrigger);
+                    AppendLogicConditional(logger, inlineTrigger);
                     break;
 
                 case KindOfInlineTrigger.AddFact:
-                    AppendAddFact(inlineTrigger);
+                    AppendAddFact(logger, inlineTrigger);
                     break;
 
                 default:
@@ -90,23 +91,23 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
             }
         }
 
-        private void AppendAddFact(InlineTrigger inlineTrigger)
+        private void AppendAddFact(IMonitorLogger logger, InlineTrigger inlineTrigger)
         {
             lock (_lockObj)
             {
-                ProcessAppendTrigger(inlineTrigger, _addFactsDict);
+                ProcessAppendTrigger(logger, inlineTrigger, _addFactsDict);
             }
         }
 
-        private void AppendLogicConditional(InlineTrigger inlineTrigger)
+        private void AppendLogicConditional(IMonitorLogger logger, InlineTrigger inlineTrigger)
         {
             lock (_lockObj)
             {
-                ProcessAppendTrigger(inlineTrigger, _logicConditionalsDict);
+                ProcessAppendTrigger(logger, inlineTrigger, _logicConditionalsDict);
             }
         }
 
-        private void ProcessAppendTrigger(InlineTrigger inlineTrigger, Dictionary<StrongIdentifierValue, List<InlineTrigger>> dictForStoraging)
+        private void ProcessAppendTrigger(IMonitorLogger logger, InlineTrigger inlineTrigger, Dictionary<StrongIdentifierValue, List<InlineTrigger>> dictForStoraging)
         {
             inlineTrigger.CheckDirty();
 
@@ -116,7 +117,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
             {
                 var targetList = dictForStoraging[holder];
 
-                StorageHelper.RemoveSameItems(targetList, inlineTrigger);
+                StorageHelper.RemoveSameItems(logger, targetList, inlineTrigger);
 
                 targetList.Add(inlineTrigger);
             }
@@ -126,7 +127,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
             }
         }
 
-        private void AppendSystemEvent(InlineTrigger inlineTrigger)
+        private void AppendSystemEvent(IMonitorLogger logger, InlineTrigger inlineTrigger)
         {
             lock (_lockObj)
             {
@@ -142,7 +143,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
                     {
                         var targetList = dict[holder];
 
-                        StorageHelper.RemoveSameItems(targetList, inlineTrigger);
+                        StorageHelper.RemoveSameItems(logger, targetList, inlineTrigger);
 
                         targetList.Add(inlineTrigger);
                     }
@@ -161,7 +162,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
         private static List<WeightedInheritanceResultItem<InlineTrigger>> _emptyTriggersList = new List<WeightedInheritanceResultItem<InlineTrigger>>();
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<InlineTrigger>> GetSystemEventsTriggersDirectly(KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<InlineTrigger>> GetSystemEventsTriggersDirectly(IMonitorLogger logger, KindOfSystemEventOfInlineTrigger kindOfSystemEvent, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             lock (_lockObj)
             {
@@ -199,7 +200,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
         }
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<InlineTrigger>> GetLogicConditionalTriggersDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<InlineTrigger>> GetLogicConditionalTriggersDirectly(IMonitorLogger logger, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             lock (_lockObj)
             {
@@ -208,12 +209,12 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
                     return _emptyTriggersList;
                 }
 
-                return GetTriggersDirectly(weightedInheritanceItems, _logicConditionalsDict);
+                return GetTriggersDirectly(logger, weightedInheritanceItems, _logicConditionalsDict);
             }
         }
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<InlineTrigger>> GetAddFactTriggersDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<InlineTrigger>> GetAddFactTriggersDirectly(IMonitorLogger logger, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             lock (_lockObj)
             {
@@ -222,11 +223,11 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
                     return _emptyTriggersList;
                 }
 
-                return GetTriggersDirectly(weightedInheritanceItems, _addFactsDict);
+                return GetTriggersDirectly(logger, weightedInheritanceItems, _addFactsDict);
             }                
         }
 
-        private IList<WeightedInheritanceResultItem<InlineTrigger>> GetTriggersDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems, Dictionary<StrongIdentifierValue, List<InlineTrigger>> dictForStoraging)
+        private IList<WeightedInheritanceResultItem<InlineTrigger>> GetTriggersDirectly(IMonitorLogger logger, IList<WeightedInheritanceItem> weightedInheritanceItems, Dictionary<StrongIdentifierValue, List<InlineTrigger>> dictForStoraging)
         {
             var result = new List<WeightedInheritanceResultItem<InlineTrigger>>();
 
@@ -249,7 +250,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
         }
 
         /// <inheritdoc/>
-        public void Append(INamedTriggerInstance namedTriggerInstance)
+        public void Append(IMonitorLogger logger, INamedTriggerInstance namedTriggerInstance)
         {
             lock (_lockObj)
             {
@@ -275,7 +276,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
                     {
                         var targetList = _namedTriggerInstancesDict[name];
 
-                        var itemsForRemoving = StorageHelper.RemoveSameItems(targetList, namedTriggerInstance);
+                        var itemsForRemoving = StorageHelper.RemoveSameItems(logger, targetList, namedTriggerInstance);
 
                         foreach (var itemForRemoving in itemsForRemoving)
                         {
@@ -294,7 +295,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
         }
 
         /// <inheritdoc/>
-        public void Remove(INamedTriggerInstance namedTriggerInstance)
+        public void Remove(IMonitorLogger logger, INamedTriggerInstance namedTriggerInstance)
         {
             lock (_lockObj)
             {
@@ -331,7 +332,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
         private static List<INamedTriggerInstance> _emptyNamedTriggerInstancesList = new List<INamedTriggerInstance>();
 
         /// <inheritdoc/>
-        public IList<INamedTriggerInstance> GetNamedTriggerInstancesDirectly(StrongIdentifierValue name)
+        public IList<INamedTriggerInstance> GetNamedTriggerInstancesDirectly(IMonitorLogger logger, StrongIdentifierValue name)
         {
             lock (_lockObj)
             {
@@ -357,10 +358,10 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
         private void NamedTriggerInstance_OnChanged(IList<StrongIdentifierValue> namesList)
         {
-            EmitOnChanged(namesList);
+            EmitOnChanged(Logger, namesList);
         }
 
-        protected void EmitOnChanged(IList<StrongIdentifierValue> namesList)
+        protected void EmitOnChanged(IMonitorLogger logger, IList<StrongIdentifierValue> namesList)
         {
             Task.Run(() => {
                 try
@@ -369,7 +370,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
                 }
                 catch (Exception e)
                 {
-                    Error("E2154301-E9FC-4720-B6D9-DC6B1ACF6FFA", e);
+                    logger.Error("E2154301-E9FC-4720-B6D9-DC6B1ACF6FFA", e);
                 }                
             });
 
@@ -380,14 +381,14 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
                 }
                 catch (Exception e)
                 {
-                    Error("5F87DF78-676E-4725-A534-A38299DCF1A5", e);
+                    logger.Error("5F87DF78-676E-4725-A534-A38299DCF1A5", e);
                 }                
             });
         }
 
         private void TriggersStorage_OnNamedTriggerInstanceChangedWithKeys(IList<StrongIdentifierValue> namesList)
         {
-            EmitOnChanged(namesList);
+            EmitOnChanged(Logger, namesList);
         }
 
         private void RealStorageContext_OnRemoveParentStorage(IStorage storage)

@@ -24,6 +24,7 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public List<SecondaryRulePart> SecondaryParts { get; set; } = new List<SecondaryRulePart>();
 
         /// <inheritdoc/>
-        public override IList<BaseRulePart> GetNextPartsList()
+        public override IList<BaseRulePart> GetNextPartsList(IMonitorLogger logger)
         {
             return SecondaryParts.Select(p => (BaseRulePart)p).ToList();
         }

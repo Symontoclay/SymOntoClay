@@ -51,29 +51,29 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var storage = localCodeExecutionContext.Storage;
 
-            var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
+            var storagesList = GetStoragesList(logger, storage, KindOfStoragesList.CodeItems);
 
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, localCodeExecutionContext, optionsForInheritanceResolver);
 
-            var rawList = GetRawList(name, storagesList, weightedInheritanceItems);
+            var rawList = GetRawList(logger, name, storagesList, weightedInheritanceItems);
 
-            var filteredList = Filter(rawList);
+            var filteredList = Filter(logger, rawList);
 
-            var targetItem = ChooseTargetItem(filteredList);
+            var targetItem = ChooseTargetItem(logger, filteredList);
 
             return targetItem;
         }
 
         private List<WeightedInheritanceResultItemWithStorageInfo<Channel>> GetRawList(IMonitorLogger logger, StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
-            var result = NGetRawList(name, storagesList, weightedInheritanceItems);
+            var result = NGetRawList(logger, name, storagesList, weightedInheritanceItems);
 
             if(result.IsNullOrEmpty())
             {
-                result = GetRawListFromSynonyms(name, storagesList, weightedInheritanceItems);
+                result = GetRawListFromSynonyms(logger, name, storagesList, weightedInheritanceItems);
             }
 
             return result;
@@ -81,11 +81,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private List<WeightedInheritanceResultItemWithStorageInfo<Channel>> GetRawListFromSynonyms(IMonitorLogger logger, StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
-            var synonymsList = _synonymsResolver.GetSynonyms(name, storagesList);
+            var synonymsList = _synonymsResolver.GetSynonyms(logger, name, storagesList);
 
             foreach(var synonym in synonymsList)
             {
-                var rawList = NGetRawList(synonym, storagesList, weightedInheritanceItems);
+                var rawList = NGetRawList(logger, synonym, storagesList, weightedInheritanceItems);
 
                 if(rawList.IsNullOrEmpty())
                 {
@@ -109,7 +109,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var storageItem in storagesList)
             {
-                var itemsList = storageItem.Storage.ChannelsStorage.GetChannelsDirectly(name, weightedInheritanceItems);
+                var itemsList = storageItem.Storage.ChannelsStorage.GetChannelsDirectly(logger, name, weightedInheritanceItems);
 
                 if (!itemsList.Any())
                 {

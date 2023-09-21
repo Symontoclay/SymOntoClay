@@ -38,6 +38,7 @@ using SymOntoClay.Core.Internal.Storage.SynonymsStoraging;
 using SymOntoClay.Core.Internal.Storage.TriggersStoraging;
 using SymOntoClay.Core.Internal.Storage.VarStoraging;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -205,7 +206,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public bool Enabled { get => !_realStorageContext.Disabled; set => _realStorageContext.Disabled = !value; }
 
         /// <inheritdoc/>
-        public void AddParentStorage(IStorage storage)
+        public void AddParentStorage(IMonitorLogger logger, IStorage storage)
         {
             lock (_lockObj)
             {
@@ -222,14 +223,14 @@ namespace SymOntoClay.Core.Internal.Storage
 
                 storage.OnParentStorageChanged += OnParentStorageChangedHandler;
 
-                _realStorageContext.EmitOnAddParentStorage(storage);         
+                _realStorageContext.EmitOnAddParentStorage(logger, storage);         
 
                 OnParentStorageChanged?.Invoke();
             }
         }
 
         /// <inheritdoc/>
-        public void RemoveParentStorage(IStorage storage)
+        public void RemoveParentStorage(IMonitorLogger logger, IStorage storage)
         {
             lock (_lockObj)
             {
@@ -243,7 +244,7 @@ namespace SymOntoClay.Core.Internal.Storage
 
                     storage.OnParentStorageChanged -= OnParentStorageChangedHandler;
 
-                    _realStorageContext.EmitOnRemoveParentStorage(storage);
+                    _realStorageContext.EmitOnRemoveParentStorage(logger, storage);
                     OnParentStorageChanged?.Invoke();
                 }
             }
@@ -257,7 +258,7 @@ namespace SymOntoClay.Core.Internal.Storage
         }
 
         /// <inheritdoc/>
-        void IStorage.CollectChainOfStorages(IList<StorageUsingOptions> result, IList<IStorage> usedStorages, int level, CollectChainOfStoragesOptions options)
+        void IStorage.CollectChainOfStorages(IMonitorLogger logger, IList<StorageUsingOptions> result, IList<IStorage> usedStorages, int level, CollectChainOfStoragesOptions options)
         {
             if (usedStorages.Contains(this))
             {
@@ -296,19 +297,19 @@ namespace SymOntoClay.Core.Internal.Storage
                 {
                     foreach (var parent in parentsList)
                     {
-                        parent.CollectChainOfStorages(result, usedStorages, level, options);
+                        parent.CollectChainOfStorages(logger, result, usedStorages, level, options);
                     }
                 }
             }
         }
 
         /// <inheritdoc/>
-        void IStorage.CollectChainOfStorages(IList<IStorage> result)
+        void IStorage.CollectChainOfStorages(IMonitorLogger logger, IList<IStorage> result)
         {
-            CollectChainOfStorages(result);
+            CollectChainOfStorages(logger, result);
         }
 
-        private void CollectChainOfStorages(IList<IStorage> result)
+        private void CollectChainOfStorages(IMonitorLogger logger, IList<IStorage> result)
         {
             if(result.Contains(this))
             {
@@ -325,18 +326,18 @@ namespace SymOntoClay.Core.Internal.Storage
                 {
                     foreach (var parent in parentsList)
                     {
-                        parent.CollectChainOfStorages(result);
+                        parent.CollectChainOfStorages(logger, result);
                     }
                 }
             }
         }
 
         /// <inheritdoc/>
-        public IList<IStorage> GetStorages()
+        public IList<IStorage> GetStorages(IMonitorLogger logger)
         {
             var result = new List<IStorage>();
 
-            CollectChainOfStorages(result);
+            CollectChainOfStorages(logger, result);
 
             return result;
         }
@@ -387,9 +388,9 @@ namespace SymOntoClay.Core.Internal.Storage
 
 #if DEBUG
         /// <inheritdoc/>
-        public void DbgPrintFactsAndRules()
+        public void DbgPrintFactsAndRules(IMonitorLogger logger)
         {
-            LogicalStorage.DbgPrintFactsAndRules();
+            LogicalStorage.DbgPrintFactsAndRules(logger);
         }
 #endif
 

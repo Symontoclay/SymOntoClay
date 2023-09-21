@@ -38,52 +38,52 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStoraging
         }
 
         /// <inheritdoc/>
-        public void Append(StateDef state)
+        public void Append(IMonitorLogger logger, StateDef state)
         {
         }
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<StateDef>> GetStatesDirectly(StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<StateDef>> GetStatesDirectly(IMonitorLogger logger, StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             return new List<WeightedInheritanceResultItem<StateDef>>();
         }
 
         /// <inheritdoc/>
-        public List<StrongIdentifierValue> AllStateNames()
+        public List<StrongIdentifierValue> AllStateNames(IMonitorLogger logger)
         {
             return new List<StrongIdentifierValue>();
         }
 
         /// <inheritdoc/>
-        public List<StateDef> GetAllStatesListDirectly()
+        public List<StateDef> GetAllStatesListDirectly(IMonitorLogger logger)
         {
             return new List<StateDef>();
         }
 
         /// <inheritdoc/>
-        public void SetDefaultStateName(StrongIdentifierValue name)
+        public void SetDefaultStateName(IMonitorLogger logger, StrongIdentifierValue name)
         {
         }
 
         /// <inheritdoc/>
-        public StrongIdentifierValue GetDefaultStateNameDirectly()
+        public StrongIdentifierValue GetDefaultStateNameDirectly(IMonitorLogger logger)
         {
             return null;
         }
 
         /// <inheritdoc/>
-        public List<ActivationInfoOfStateDef> GetActivationInfoOfStateListDirectly()
+        public List<ActivationInfoOfStateDef> GetActivationInfoOfStateListDirectly(IMonitorLogger logger)
         {
             return new List<ActivationInfoOfStateDef>();
         }
 
         /// <inheritdoc/>
-        public void Append(MutuallyExclusiveStatesSet mutuallyExclusiveStatesSet)
+        public void Append(IMonitorLogger logger, MutuallyExclusiveStatesSet mutuallyExclusiveStatesSet)
         {
         }
 
         /// <inheritdoc/>
-        public List<MutuallyExclusiveStatesSet> GetMutuallyExclusiveStatesSetsListDirectly()
+        public List<MutuallyExclusiveStatesSet> GetMutuallyExclusiveStatesSetsListDirectly(IMonitorLogger logger)
         {
             return new List<MutuallyExclusiveStatesSet>();
         }

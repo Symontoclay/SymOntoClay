@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -42,9 +43,9 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         private readonly VarsResolver _varsResolver;
 
         /// <inheritdoc/>
-        public Value Call(Value rightOperand, Value leftOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
+        public Value Call(IMonitorLogger logger, Value rightOperand, Value leftOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            rightOperand = TryResolveFromVarOrExpr(rightOperand, localCodeExecutionContext);
+            rightOperand = TryResolveFromVarOrExpr(logger, rightOperand, localCodeExecutionContext);
 
             var kindOfLeftOperand = leftOperand.KindOfValue;
 
@@ -65,11 +66,11 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                                     switch (kindOfRightOperand)
                                     {
                                         case KindOfValue.StrongIdentifierValue:
-                                            _varsResolver.SetVarValue(leftIdentifierValue, rightOperand, localCodeExecutionContext);
+                                            _varsResolver.SetVarValue(logger, leftIdentifierValue, rightOperand, localCodeExecutionContext);
                                             return rightOperand;
 
                                         default:
-                                            _varsResolver.SetVarValue(leftIdentifierValue, rightOperand, localCodeExecutionContext);
+                                            _varsResolver.SetVarValue(logger, leftIdentifierValue, rightOperand, localCodeExecutionContext);
                                             return rightOperand;
                                     }
                                 }

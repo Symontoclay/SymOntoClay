@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using NLog;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -31,25 +32,25 @@ namespace SymOntoClay.Core.Internal.Converters
     public static class ValueConverter
     {
 
-        public static LogicalValue ConvertNullValueToLogicalValue(NullValue source, IMainStorageContext mainStorageContext)
+        public static LogicalValue ConvertNullValueToLogicalValue(IMonitorLogger logger, NullValue source, IMainStorageContext mainStorageContext)
         {
             var result = new LogicalValue(null);
 
-            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext);
+            FillAnnotationsModalitiesAndSections(logger, source, result, mainStorageContext);
 
             return result;
         }
 
-        public static LogicalValue ConvertNumberValueToLogicalValue(NumberValue source, IMainStorageContext mainStorageContext)
+        public static LogicalValue ConvertNumberValueToLogicalValue(IMonitorLogger logger, NumberValue source, IMainStorageContext mainStorageContext)
         {
             var result = new LogicalValue((float?)source.AsNumberValue.SystemValue);
 
-            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext);
+            FillAnnotationsModalitiesAndSections(logger, source, result, mainStorageContext);
 
             return result;
         }
 
-        public static LogicalValue ConvertStrongIdentifierValueToLogicalValue(StrongIdentifierValue source, IMainStorageContext mainStorageContext)
+        public static LogicalValue ConvertStrongIdentifierValueToLogicalValue(IMonitorLogger logger, StrongIdentifierValue source, IMainStorageContext mainStorageContext)
         {
             var normalizedNameValue = source.NormalizedNameValue;
 
@@ -66,25 +67,25 @@ namespace SymOntoClay.Core.Internal.Converters
             }
         }
 
-        public static NumberValue ConvertNullValueToNumberValue(NullValue source, IMainStorageContext mainStorageContext)
+        public static NumberValue ConvertNullValueToNumberValue(IMonitorLogger logger, NullValue source, IMainStorageContext mainStorageContext)
         {
             var result = new NumberValue(null);
 
-            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext);
+            FillAnnotationsModalitiesAndSections(logger, source, result, mainStorageContext);
 
             return result;
         }
 
-        public static NumberValue ConvertLogicalValueToNumberValue(LogicalValue source, IMainStorageContext mainStorageContext)
+        public static NumberValue ConvertLogicalValueToNumberValue(IMonitorLogger logger, LogicalValue source, IMainStorageContext mainStorageContext)
         {
             var result = new NumberValue(source.AsLogicalValue.SystemValue);
 
-            FillAnnotationsModalitiesAndSections(source, result, mainStorageContext);
+            FillAnnotationsModalitiesAndSections(logger, source, result, mainStorageContext);
 
             return result;
         }
 
-        private static void FillAnnotationsModalitiesAndSections(AnnotatedItem source, AnnotatedItem dest, IMainStorageContext mainStorageContext)
+        private static void FillAnnotationsModalitiesAndSections(IMonitorLogger logger, AnnotatedItem source, AnnotatedItem dest, IMainStorageContext mainStorageContext)
         {
             dest.AppendAnnotations(source);
         }

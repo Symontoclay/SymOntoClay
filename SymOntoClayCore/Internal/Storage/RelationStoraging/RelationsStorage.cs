@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,13 +42,13 @@ namespace SymOntoClay.Core.Internal.Storage.RelationStoraging
         private readonly Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, Dictionary<int, List<RelationDescription>>>> _itemsDict = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, Dictionary<int, List<RelationDescription>>>>();
 
         /// <inheritdoc/>
-        public void Append(RelationDescription relation)
+        public void Append(IMonitorLogger logger, RelationDescription relation)
         {
             lock (_lockObj)
             {
                 if (relation.TypeOfAccess != TypeOfAccess.Local)
                 {
-                    AnnotatedItemHelper.CheckAndFillUpHolder(relation, _realStorageContext.MainStorageContext.CommonNamesStorage);
+                    AnnotatedItemHelper.CheckAndFillUpHolder(logger, relation, _realStorageContext.MainStorageContext.CommonNamesStorage);
                 }
 
                 relation.CheckDirty();
@@ -70,7 +71,7 @@ namespace SymOntoClay.Core.Internal.Storage.RelationStoraging
                         {
                             var targetList = targetDict[paramsCount];
 
-                            StorageHelper.RemoveSameItems(targetList, relation);
+                            StorageHelper.RemoveSameItems(logger, targetList, relation);
 
                             targetList.Add(relation);
                         }
@@ -105,7 +106,7 @@ namespace SymOntoClay.Core.Internal.Storage.RelationStoraging
         private static List<WeightedInheritanceResultItem<RelationDescription>> _emptyRelationsList = new List<WeightedInheritanceResultItem<RelationDescription>>();
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<RelationDescription>> GetRelationsDirectly(StrongIdentifierValue name, int paramsCount, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<RelationDescription>> GetRelationsDirectly(IMonitorLogger logger, StrongIdentifierValue name, int paramsCount, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             lock (_lockObj)
             {

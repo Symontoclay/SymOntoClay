@@ -42,7 +42,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public LogicalValue Resolve(IMonitorLogger logger, Value source, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-            return Resolve(source, localCodeExecutionContext, options, false);
+            return Resolve(logger, source, localCodeExecutionContext, options, false);
         }
 
         public LogicalValue Resolve(IMonitorLogger logger, Value source, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options, bool forInheritance)
@@ -52,13 +52,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             switch(sourceKind)
             {
                 case KindOfValue.NullValue:
-                    return ValueConverter.ConvertNullValueToLogicalValue(source.AsNullValue, _context);
+                    return ValueConverter.ConvertNullValueToLogicalValue(logger, source.AsNullValue, _context);
 
                 case KindOfValue.LogicalValue:
                     return source.AsLogicalValue;
 
                 case KindOfValue.NumberValue:
-                    return ValueConverter.ConvertNumberValueToLogicalValue(source.AsNumberValue, _context);
+                    return ValueConverter.ConvertNumberValueToLogicalValue(logger, source.AsNumberValue, _context);
 
                 case KindOfValue.StrongIdentifierValue:
                     {
@@ -69,7 +69,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             reasonOfFuzzyLogicResolving = new ReasonOfFuzzyLogicResolving() { Kind = KindOfReasonOfFuzzyLogicResolving.Inheritance };
                         }
 
-                        return ValueConverter.ConvertNumberValueToLogicalValue(_context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(source.AsStrongIdentifierValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext, options), _context);
+                        return ValueConverter.ConvertNumberValueToLogicalValue(logger, _context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(logger, source.AsStrongIdentifierValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext, options), _context);
                     }
 
                 case KindOfValue.FuzzyLogicNonNumericSequenceValue:
@@ -81,7 +81,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             reasonOfFuzzyLogicResolving = new ReasonOfFuzzyLogicResolving() { Kind = KindOfReasonOfFuzzyLogicResolving.Inheritance };
                         }
 
-                        return ValueConverter.ConvertNumberValueToLogicalValue(_context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(source.AsFuzzyLogicNonNumericSequenceValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext, options), _context);
+                        return ValueConverter.ConvertNumberValueToLogicalValue(logger, _context.DataResolversFactory.GetFuzzyLogicResolver().Resolve(logger, source.AsFuzzyLogicNonNumericSequenceValue, reasonOfFuzzyLogicResolving, localCodeExecutionContext, options), _context);
                     }
 
                 default:

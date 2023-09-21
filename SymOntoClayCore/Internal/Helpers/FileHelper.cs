@@ -23,6 +23,7 @@ SOFTWARE.*/
 using Newtonsoft.Json;
 using NLog;
 using SymOntoClay.Core.Internal.Parsing;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -36,7 +37,7 @@ namespace SymOntoClay.Core.Internal.Helpers
         private static List<string> _rootExtesions = new List<string>() { ".sobj", ".world", ".slib" };
         private static List<string> _sourceFileExtensions = new List<string>() { ".soc" };
 
-        public static List<ParsedFileInfo> GetParsedFilesInfo(string projectFileName, string id)
+        public static List<ParsedFileInfo> GetParsedFilesInfo(IMonitorLogger logger, string projectFileName, string id)
         {
             var fileInfo = new FileInfo(projectFileName);
 
@@ -69,7 +70,7 @@ namespace SymOntoClay.Core.Internal.Helpers
             return result;
         }
 
-        public static List<ParsedFileInfo> GetParsedFilesFromPaths(IList<string> sourceCodePaths)
+        public static List<ParsedFileInfo> GetParsedFilesFromPaths(IMonitorLogger logger, IList<string> sourceCodePaths)
         {
             var result = new List<ParsedFileInfo>();
 
@@ -86,7 +87,7 @@ namespace SymOntoClay.Core.Internal.Helpers
             return result;
         }
 
-        public static List<ParsedFileInfo> GetParsedFilesFromPath(string sourceCodePath)
+        public static List<ParsedFileInfo> GetParsedFilesFromPath(IMonitorLogger logger, string sourceCodePath)
         {
             var directory = new DirectoryInfo(sourceCodePath);
 
@@ -98,7 +99,7 @@ namespace SymOntoClay.Core.Internal.Helpers
             return result;
         }
 
-        private static void NGetParsedFilesInfoFromDirectory(DirectoryInfo directory, List<ParsedFileInfo> result, List<string> existingFilesList)
+        private static void NGetParsedFilesInfoFromDirectory(IMonitorLogger logger, DirectoryInfo directory, List<ParsedFileInfo> result, List<string> existingFilesList)
         {
             var filesList = directory.EnumerateFiles().Where(p => _sourceFileExtensions.Contains(p.Extension) && !existingFilesList.Contains(p.FullName)).Select(p => p.FullName);
 

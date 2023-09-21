@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,7 +62,7 @@ namespace SymOntoClay.Core.Internal.Storage
         private Dictionary<string, InheritanceItem> _inheritanceItemsDict = new Dictionary<string, InheritanceItem>();
 
         /// <inheritdoc/>
-        public void ProcessChangeInheritance(StrongIdentifierValue subName, StrongIdentifierValue superName)
+        public void ProcessChangeInheritance(IMonitorLogger logger, StrongIdentifierValue subName, StrongIdentifierValue superName)
         {
             lock(_lockObj)
             {
@@ -78,24 +79,24 @@ namespace SymOntoClay.Core.Internal.Storage
 
                     if(subName != _selfName && !_foundInheritanceKeysList.Contains(subName))
                     {
-                        Recalculate();
+                        Recalculate(logger);
                         return;
                     }
 
                     if (superName != _selfName && !_foundInheritanceKeysList.Contains(superName))
                     {
-                        Recalculate();
+                        Recalculate(logger);
                         return;
                     }
 
                     return;
                 }
 
-                Recalculate();
+                Recalculate(logger);
             }
         }
 
-        private void Recalculate()
+        private void Recalculate(IMonitorLogger logger)
         {
             if(_localCodeExecutionContext == null)
             {
@@ -113,7 +114,7 @@ namespace SymOntoClay.Core.Internal.Storage
                 };
             }
 
-            var weightedInheritanceItemsList = _inheritanceResolver.GetWeightedInheritanceItems(_selfName, _localCodeExecutionContext, _resolverOptions).Where(p => !p.OriginalItem?.IsSystemDefined ?? false);
+            var weightedInheritanceItemsList = _inheritanceResolver.GetWeightedInheritanceItems(logger, _selfName, _localCodeExecutionContext, _resolverOptions).Where(p => !p.OriginalItem?.IsSystemDefined ?? false);
 
             if (!weightedInheritanceItemsList.Any())
             {
@@ -137,9 +138,9 @@ namespace SymOntoClay.Core.Internal.Storage
 
                     var factStr = $"{{: >:{{ is({_selfNameForFacts}, {name}, 1) }} :}}";
 
-                    var fact = _logicQueryParseAndCache.GetLogicRuleOrFact(factStr);
+                    var fact = _logicQueryParseAndCache.GetLogicRuleOrFact(logger, factStr);
 
-                    _publicFactsStorage.Append(fact);
+                    _publicFactsStorage.Append(logger, fact);
 
                     _factsIdDict[name] = fact.Name.NameValue;
 
@@ -151,7 +152,7 @@ namespace SymOntoClay.Core.Internal.Storage
 
                     _inheritanceItemsDict[name] = addedInheritanceItem;
 
-                    _publicInheritanceStorage.SetInheritance(addedInheritanceItem);
+                    _publicInheritanceStorage.SetInheritance(logger, addedInheritanceItem);
                 }
             }
 
@@ -163,10 +164,10 @@ namespace SymOntoClay.Core.Internal.Storage
                 {
                     var name = id.NameValue;
 
-                    _publicFactsStorage.RemoveById(_factsIdDict[name]);
+                    _publicFactsStorage.RemoveById(logger, _factsIdDict[name]);
                     _factsIdDict.Remove(name);
 
-                    _publicInheritanceStorage.RemoveInheritance(_inheritanceItemsDict[name]);
+                    _publicInheritanceStorage.RemoveInheritance(logger, _inheritanceItemsDict[name]);
                     _inheritanceItemsDict.Remove(name);
                 }
             }

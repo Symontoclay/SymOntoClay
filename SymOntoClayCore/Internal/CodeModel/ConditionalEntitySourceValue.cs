@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -87,7 +88,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override ConditionalEntitySourceValue AsConditionalEntitySourceValue => this;
 
-        public ConditionalEntityValue ConvertToConditionalEntityValue(IEngineContext context, ILocalCodeExecutionContext localContext)
+        public ConditionalEntityValue ConvertToConditionalEntityValue(IMonitorLogger logger, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
             lock(_recalculatingLongHashCodeWithEngineContextLockObj)
             {

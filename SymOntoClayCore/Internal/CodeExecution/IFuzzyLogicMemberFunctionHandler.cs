@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Monitor.Common;
 using System.Collections.Generic;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
@@ -28,8 +29,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     public interface IFuzzyLogicMemberFunctionHandler: IFuzzyLogicHandler
     {
         KindOfFuzzyLogicMemberFunction Kind { get; }
-        NumberValue Defuzzificate();
-        NumberValue Defuzzificate(IEnumerable<IFuzzyLogicOperatorHandler> operatorHandlers);
-        void Check();
+        NumberValue Defuzzificate(IMonitorLogger logger);
+        NumberValue Defuzzificate(IMonitorLogger logger, IEnumerable<IFuzzyLogicOperatorHandler> operatorHandlers);
+        void Check(IMonitorLogger logger);
     }
 }

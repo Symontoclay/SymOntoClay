@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -47,10 +48,10 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         private readonly ChannelsResolver _channelsResolver;
 
         /// <inheritdoc/>
-        public Value Call(Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
+        public Value Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            leftOperand = TryResolveFromVarOrExpr(leftOperand, localCodeExecutionContext);
-            rightOperand = TryResolveFromVarOrExpr(rightOperand, localCodeExecutionContext);
+            leftOperand = TryResolveFromVarOrExpr(logger, leftOperand, localCodeExecutionContext);
+            rightOperand = TryResolveFromVarOrExpr(logger, rightOperand, localCodeExecutionContext);
 
             Value valueFromSource = null;
 
@@ -82,9 +83,9 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                 if(identifier.KindOfName == KindOfName.Channel)
                 {
-                    var channel = _channelsResolver.GetChannel(identifier, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+                    var channel = _channelsResolver.GetChannel(logger, identifier, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
-                    return channel.Handler.Write(valueFromSource, localCodeExecutionContext);
+                    return channel.Handler.Write(logger, valueFromSource, localCodeExecutionContext);
                 }
                 else
                 {

@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -41,7 +42,7 @@ namespace SymOntoClay.Core.Internal.Storage.SynonymsStoraging
         private readonly Dictionary<StrongIdentifierValue, List<StrongIdentifierValue>> _synonymsDict = new Dictionary<StrongIdentifierValue, List<StrongIdentifierValue>>();
 
         /// <inheritdoc/>
-        public void Append(Synonym synonym)
+        public void Append(IMonitorLogger logger, Synonym synonym)
         {
             lock (_lockObj)
             {
@@ -50,12 +51,12 @@ namespace SymOntoClay.Core.Internal.Storage.SynonymsStoraging
                 var name = synonym.Name;
                 var obj = synonym.Object;
 
-                AddWord(name, obj);
-                AddWord(obj, name);
+                AddWord(logger, name, obj);
+                AddWord(logger, obj, name);
             }
         }
 
-        private void AddWord(StrongIdentifierValue name, StrongIdentifierValue obj)
+        private void AddWord(IMonitorLogger logger, StrongIdentifierValue name, StrongIdentifierValue obj)
         {
             if(_synonymsDict.ContainsKey(name))
             {
@@ -73,7 +74,7 @@ namespace SymOntoClay.Core.Internal.Storage.SynonymsStoraging
         }
 
         /// <inheritdoc/>
-        public IList<StrongIdentifierValue> GetSynonymsDirectly(StrongIdentifierValue name)
+        public IList<StrongIdentifierValue> GetSynonymsDirectly(IMonitorLogger logger, StrongIdentifierValue name)
         {
             lock (_lockObj)
             {

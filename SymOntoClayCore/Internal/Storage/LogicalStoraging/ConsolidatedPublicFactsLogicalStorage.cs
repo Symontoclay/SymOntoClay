@@ -92,7 +92,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         /// <inheritdoc/>
         public event Func<RuleInstance, IAddFactOrRuleResult> OnAddingFact;
 
-        public void AddConsolidatedStorage(ILogicalStorage storage)
+        public void AddConsolidatedStorage(IMonitorLogger logger, ILogicalStorage storage)
         {
             lock(_lockObj)
             {
@@ -109,7 +109,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                     if(_enableOnAddingFactEvent == KindOfOnAddingFactEvent.Isolated)
                     {
-                        EmitOnAddingFactForNewStorage(storage);
+                        EmitOnAddingFactForNewStorage(logger, storage);
                     }                   
                 }
 
@@ -117,7 +117,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             }
         }
 
-        public void RemoveConsolidatedStorage(ILogicalStorage storage)
+        public void RemoveConsolidatedStorage(IMonitorLogger logger, ILogicalStorage storage)
         {
             lock (_lockObj)
             {
@@ -137,7 +137,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             }
         }
 
-        private void EmitOnChanged(IList<StrongIdentifierValue> usedKeysList)
+        private void EmitOnChanged(IMonitorLogger logger, IList<StrongIdentifierValue> usedKeysList)
         {
             Task.Run(() => {
                 try
@@ -146,7 +146,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 }
                 catch (Exception e)
                 {
-                    Error("6489EB1E-8E8B-4354-BC14-EA439E053431", e);
+                    logger.Error("6489EB1E-8E8B-4354-BC14-EA439E053431", e);
                 }                
             });
 
@@ -157,47 +157,47 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 }
                 catch (Exception e)
                 {
-                    Error("EAEB1532-7C12-459C-85F6-F488CCC6F90C", e);
+                    logger.Error("EAEB1532-7C12-459C-85F6-F488CCC6F90C", e);
                 }                
             });
         }
 
         private void LogicalStorage_OnChangedWithKeys(IList<StrongIdentifierValue> changedKeysList)
         {
-            EmitOnChanged(changedKeysList);
+            EmitOnChanged(Logger, changedKeysList);
         }
 
-        private void EmitOnAddingFactForNewStorage(ILogicalStorage storage)
+        private void EmitOnAddingFactForNewStorage(IMonitorLogger logger, ILogicalStorage storage)
         {
             Task.Run(() => {
                 try
                 {
-                    var allFactsList = storage.GetAllOriginFacts();
+                    var allFactsList = storage.GetAllOriginFacts(logger);
 
                     foreach(var fact in allFactsList)
                     {
-                        IsolatedProcessNewFact(fact);
+                        IsolatedProcessNewFact(logger, fact);
                     }
                 }
                 catch (Exception e)
                 {
-                    Error("5505F9AC-F874-4843-91D6-9CF97045326D", e);
+                    logger.Error("5505F9AC-F874-4843-91D6-9CF97045326D", e);
                 }
             });
         }
 
-        private IAddFactOrRuleResult EmitIsolatedOnAddingFact(RuleInstance ruleInstance)
+        private IAddFactOrRuleResult EmitIsolatedOnAddingFact(IMonitorLogger logger, RuleInstance ruleInstance)
         {
             if(OnAddingFact != null)
             {
                 Task.Run(() => {
                     try
                     {
-                        IsolatedProcessNewFact(ruleInstance);
+                        IsolatedProcessNewFact(logger, ruleInstance);
                     }
                     catch (Exception e)
                     {
-                        Error("932FA4A1-3216-4B1F-8B5E-DB7EB08A42D4", e);
+                        logger.Error("932FA4A1-3216-4B1F-8B5E-DB7EB08A42D4", e);
                     }
                 });
             }
@@ -205,7 +205,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             return new AddFactOrRuleResult() { KindOfResult = KindOfAddFactOrRuleResult.Accept };
         }
 
-        private void IsolatedProcessNewFact(RuleInstance ruleInstance)
+        private void IsolatedProcessNewFact(IMonitorLogger logger, RuleInstance ruleInstance)
         {
             lock(_onAddingFactLockObj)
             {
@@ -216,7 +216,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                 _processedOnAddingFacts.Add(ruleInstance);
 
-                var approvingRez = AddingFactHelper.CallEvent(OnAddingFact, ruleInstance, _fuzzyLogicResolver, _localCodeExecutionContext, Logger);
+                var approvingRez = AddingFactHelper.CallEvent(logger, OnAddingFact, ruleInstance, _fuzzyLogicResolver, _localCodeExecutionContext);
 
                 if (approvingRez == null)
                 {
@@ -259,7 +259,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     return OnAddingFact(ruleInstance);
 
                 case KindOfOnAddingFactEvent.Isolated:
-                    return EmitIsolatedOnAddingFact(ruleInstance);
+                    return EmitIsolatedOnAddingFact(Logger, ruleInstance);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_enableOnAddingFactEvent), _enableOnAddingFactEvent, null);
@@ -267,39 +267,39 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         }
 
         /// <inheritdoc/>
-        public void Append(RuleInstance ruleInstance)
+        public void Append(IMonitorLogger logger, RuleInstance ruleInstance)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public void Append(RuleInstance ruleInstance, bool isPrimary)
+        public void Append(IMonitorLogger logger, RuleInstance ruleInstance, bool isPrimary)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public void Append(IList<RuleInstance> ruleInstancesList)
+        public void Append(IMonitorLogger logger, IList<RuleInstance> ruleInstancesList)
         {
             throw new NotImplementedException();
         }
 
 #if DEBUG
         /// <inheritdoc/>
-        public void DbgPrintFactsAndRules()
+        public void DbgPrintFactsAndRules(IMonitorLogger logger)
         {
             lock (_lockObj)
             {
                 foreach (var storage in _logicalStorages)
                 {
-                    storage.DbgPrintFactsAndRules();
+                    storage.DbgPrintFactsAndRules(logger);
                 }
             }
         }
 #endif
 
         /// <inheritdoc/>
-        public IList<LogicalQueryNode> GetAllRelations(ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
+        public IList<LogicalQueryNode> GetAllRelations(IMonitorLogger logger, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
         {
             lock (_lockObj)
             {
@@ -336,7 +336,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                                 LogicalSearchExplainNode.LinkNodes(currentExplainNode, localResultExplainNode);
                             }
 
-                            var targetItemsList = storage.GetAllRelations(logicalSearchStorageContext, localResultExplainNode, rootParentExplainNode);
+                            var targetItemsList = storage.GetAllRelations(logger, logicalSearchStorageContext, localResultExplainNode, rootParentExplainNode);
 
                             if (localResultExplainNode != null)
                             {
@@ -390,7 +390,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                                     LogicalSearchExplainNode.LinkNodes(currentExplainNode, localResultExplainNode);
                                 }
 
-                                var targetItemsList = storage.GetAllRelations(null, localResultExplainNode, rootParentExplainNode);
+                                var targetItemsList = storage.GetAllRelations(logger, null, localResultExplainNode, rootParentExplainNode);
 
                                 if (localResultExplainNode != null)
                                 {
@@ -420,7 +420,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         }
 
         /// <inheritdoc/>
-        public IList<RuleInstance> GetAllOriginFacts()
+        public IList<RuleInstance> GetAllOriginFacts(IMonitorLogger logger)
         {
             lock (_lockObj)
             {
@@ -428,7 +428,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                 foreach (var storage in _logicalStorages)
                 {
-                    var targetItemsList = storage.GetAllOriginFacts();
+                    var targetItemsList = storage.GetAllOriginFacts(logger);
 
                     if (targetItemsList.IsNullOrEmpty())
                     {
@@ -443,7 +443,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         }
 
         /// <inheritdoc/>
-        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
+        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(IMonitorLogger logger, StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
         {
             lock (_lockObj)
             {
@@ -481,7 +481,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                                 LogicalSearchExplainNode.LinkNodes(currentExplainNode, localResultExplainNode);
                             }
 
-                            var targetItemsList = storage.GetIndexedRulePartOfFactsByKeyOfRelation(name, logicalSearchStorageContext, localResultExplainNode, rootParentExplainNode);
+                            var targetItemsList = storage.GetIndexedRulePartOfFactsByKeyOfRelation(logger, name, logicalSearchStorageContext, localResultExplainNode, rootParentExplainNode);
 
                             if (localResultExplainNode != null)
                             {
@@ -535,7 +535,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                                     LogicalSearchExplainNode.LinkNodes(currentExplainNode, localResultExplainNode);
                                 }
 
-                                var targetItemsList = storage.GetIndexedRulePartOfFactsByKeyOfRelation(name, null, localResultExplainNode, rootParentExplainNode);
+                                var targetItemsList = storage.GetIndexedRulePartOfFactsByKeyOfRelation(logger, name, null, localResultExplainNode, rootParentExplainNode);
 
                                 if (localResultExplainNode != null)
                                 {
@@ -582,7 +582,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         }
 
         /// <inheritdoc/>
-        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
+        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(IMonitorLogger logger, StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
         {
             lock (_lockObj)
             {
@@ -620,7 +620,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                                 LogicalSearchExplainNode.LinkNodes(currentExplainNode, localResultExplainNode);
                             }
 
-                            var targetItemsList = storage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name, logicalSearchStorageContext, localResultExplainNode, rootParentExplainNode);
+                            var targetItemsList = storage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(logger, name, logicalSearchStorageContext, localResultExplainNode, rootParentExplainNode);
 
                             if (localResultExplainNode != null)
                             {
@@ -674,7 +674,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                                     LogicalSearchExplainNode.LinkNodes(currentExplainNode, localResultExplainNode);
                                 }
 
-                                var targetItemsList = storage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name, null, localResultExplainNode, rootParentExplainNode);
+                                var targetItemsList = storage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(logger, name, null, localResultExplainNode, rootParentExplainNode);
 
                                 if (localResultExplainNode != null)
                                 {
@@ -721,7 +721,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         }
 
         /// <inheritdoc/>
-        public IReadOnlyList<LogicalQueryNode> GetLogicalQueryNodes(IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy, IList<KindOfLogicalQueryNode> targetKindsOfItems)
+        public IReadOnlyList<LogicalQueryNode> GetLogicalQueryNodes(IMonitorLogger logger, IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy, IList<KindOfLogicalQueryNode> targetKindsOfItems)
         {
             lock (_lockObj)
             {
@@ -729,7 +729,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                 foreach (var storage in _logicalStorages)
                 {
-                    var targetItemsList = storage.GetLogicalQueryNodes(exceptList, replacingNotResultsStrategy, targetKindsOfItems);
+                    var targetItemsList = storage.GetLogicalQueryNodes(logger, exceptList, replacingNotResultsStrategy, targetKindsOfItems);
 
                     if (targetItemsList.IsNullOrEmpty())
                     {
@@ -744,19 +744,19 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         }
 
         /// <inheritdoc/>
-        public void Remove(RuleInstance ruleInstance)
+        public void Remove(IMonitorLogger logger, RuleInstance ruleInstance)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public void Remove(IList<RuleInstance> ruleInstancesList)
+        public void Remove(IMonitorLogger logger, IList<RuleInstance> ruleInstancesList)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public void RemoveById(string id)
+        public void RemoveById(IMonitorLogger logger, string id)
         {
             throw new NotImplementedException();
         }

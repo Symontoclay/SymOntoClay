@@ -25,6 +25,7 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -49,7 +50,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
         }
 
         /// <inheritdoc/>
-        public Value Read(ILocalCodeExecutionContext localCodeExecutionContext)
+        public Value Read(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var result = new NullValue();
             
@@ -57,9 +58,9 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
         }
 
         /// <inheritdoc/>
-        public Value Write(Value value, ILocalCodeExecutionContext localCodeExecutionContext)
+        public Value Write(IMonitorLogger logger, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            Output("90A48AF8-3AF3-4D2B-B3FD-EB80ED2E25E0", value.ToHumanizedString());
+            logger.Output("90A48AF8-3AF3-4D2B-B3FD-EB80ED2E25E0", value.ToHumanizedString());
 
             return value;
         }

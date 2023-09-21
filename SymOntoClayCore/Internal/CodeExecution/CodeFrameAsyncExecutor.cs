@@ -20,8 +20,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Services;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -53,7 +55,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         //    AsyncExecuteCodeFrame(string.Empty, codeFrame, currentCodeFrame, coordinator, syncOption, increaceCurrentFramePosition, completeAnnotationSystemEvent, cancelAnnotationSystemEvent, weakCancelAnnotationSystemEvent, errorAnnotationSystemEvent);
         //}
 
-        public void AsyncExecuteCodeFrame(string parentThreadId, CodeFrame codeFrame, CodeFrame currentCodeFrame, IExecutionCoordinator coordinator, SyncOption syncOption, bool increaceCurrentFramePosition = true, AnnotationSystemEvent completeAnnotationSystemEvent = null, AnnotationSystemEvent cancelAnnotationSystemEvent = null, AnnotationSystemEvent weakCancelAnnotationSystemEvent = null, AnnotationSystemEvent errorAnnotationSystemEvent = null)
+        public void AsyncExecuteCodeFrame(IMonitorLogger logger, string parentThreadId, CodeFrame codeFrame, CodeFrame currentCodeFrame, IExecutionCoordinator coordinator, SyncOption syncOption, bool increaceCurrentFramePosition = true, AnnotationSystemEvent completeAnnotationSystemEvent = null, AnnotationSystemEvent cancelAnnotationSystemEvent = null, AnnotationSystemEvent weakCancelAnnotationSystemEvent = null, AnnotationSystemEvent errorAnnotationSystemEvent = null)
         {
             switch(syncOption)
             {

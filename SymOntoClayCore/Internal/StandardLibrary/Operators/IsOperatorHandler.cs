@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -52,10 +53,10 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         private readonly FuzzyLogicResolver _fuzzyLogicResolver;
 
         /// <inheritdoc/>
-        public Value Call(Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
+        public Value Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            leftOperand = TryResolveFromVarOrExpr(leftOperand, localCodeExecutionContext);
-            rightOperand = TryResolveFromVarOrExpr(rightOperand, localCodeExecutionContext);
+            leftOperand = TryResolveFromVarOrExpr(logger, leftOperand, localCodeExecutionContext);
+            rightOperand = TryResolveFromVarOrExpr(logger, rightOperand, localCodeExecutionContext);
 
             if (leftOperand.IsSystemNull && rightOperand.IsSystemNull)
             {
@@ -64,19 +65,19 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
             if(leftOperand.IsNumberValue && rightOperand.IsNumberValue)
             {
-                return CompareSystemValues((double)leftOperand.GetSystemValue(), (double)rightOperand.GetSystemValue());
+                return CompareSystemValues(logger, (double)leftOperand.GetSystemValue(), (double)rightOperand.GetSystemValue());
             }
 
             if(((leftOperand.IsNumberValue || leftOperand.IsLogicalValue) && (rightOperand.IsStrongIdentifierValue || rightOperand.IsFuzzyLogicNonNumericSequenceValue)) || ((leftOperand.IsStrongIdentifierValue || leftOperand.IsFuzzyLogicNonNumericSequenceValue) && (rightOperand.IsNumberValue || rightOperand.IsLogicalValue)))
             {
                 if((leftOperand.IsNumberValue || leftOperand.IsLogicalValue) && (rightOperand.IsStrongIdentifierValue || rightOperand.IsFuzzyLogicNonNumericSequenceValue))
                 {
-                    return CompareWithFuzzyLogic(leftOperand, rightOperand, localCodeExecutionContext);
+                    return CompareWithFuzzyLogic(logger, leftOperand, rightOperand, localCodeExecutionContext);
                 }
 
                 if((leftOperand.IsStrongIdentifierValue || leftOperand.IsFuzzyLogicNonNumericSequenceValue) && (rightOperand.IsNumberValue || rightOperand.IsLogicalValue))
                 {
-                    return CompareWithFuzzyLogic(rightOperand, leftOperand, localCodeExecutionContext);
+                    return CompareWithFuzzyLogic(logger, rightOperand, leftOperand, localCodeExecutionContext);
                 }
 
                 throw new NotImplementedException();
@@ -84,13 +85,13 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
             if ((leftOperand.IsStrongIdentifierValue || leftOperand.IsInstanceValue) && (leftOperand.IsStrongIdentifierValue || leftOperand.IsInstanceValue))
             {
-                return GetInheritanceRank(leftOperand, rightOperand, localCodeExecutionContext);
+                return GetInheritanceRank(logger, leftOperand, rightOperand, localCodeExecutionContext);
             }
 
             throw new NotImplementedException();
         }
 
-        private LogicalValue CompareWithFuzzyLogic(Value numOperand, Value fuzzyOperand, ILocalCodeExecutionContext localCodeExecutionContext)
+        private LogicalValue CompareWithFuzzyLogic(IMonitorLogger logger, Value numOperand, Value fuzzyOperand, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             NumberValue numVal = null;
 
@@ -123,18 +124,18 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                         switch (normalizedNameValue)
                         {
                             case "true":
-                                return CompareSystemValues((double)numVal.GetSystemValue(), 1);
+                                return CompareSystemValues(logger, (double)numVal.GetSystemValue(), 1);
 
                             case "false":
-                                return CompareSystemValues((double)numVal.GetSystemValue(), 0);
+                                return CompareSystemValues(logger, (double)numVal.GetSystemValue(), 0);
 
                             default:
-                                return new LogicalValue(_fuzzyLogicResolver.Equals(val, numVal, localCodeExecutionContext));
+                                return new LogicalValue(_fuzzyLogicResolver.Equals(logger, val, numVal, localCodeExecutionContext));
                         }
                     }
 
                 case KindOfValue.FuzzyLogicNonNumericSequenceValue:
-                    return new LogicalValue(_fuzzyLogicResolver.Equals(fuzzyOperand.AsFuzzyLogicNonNumericSequenceValue, numVal, localCodeExecutionContext));
+                    return new LogicalValue(_fuzzyLogicResolver.Equals(logger, fuzzyOperand.AsFuzzyLogicNonNumericSequenceValue, numVal, localCodeExecutionContext));
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(fuzzyKindOfValue), fuzzyKindOfValue, null);
@@ -143,18 +144,18 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             throw new NotImplementedException();
         }
 
-        private LogicalValue CompareSystemValues(double leftValue, double rightValue)
+        private LogicalValue CompareSystemValues(IMonitorLogger logger, double leftValue, double rightValue)
         {
             return new LogicalValue(leftValue == rightValue);
         }
 
-        private Value GetInheritanceRank(Value leftOperand, Value rightOperand, ILocalCodeExecutionContext localCodeExecutionContext)
+        private Value GetInheritanceRank(IMonitorLogger logger, Value leftOperand, Value rightOperand, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            var subName = _strongIdentifierLinearResolver.Resolve(leftOperand, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+            var subName = _strongIdentifierLinearResolver.Resolve(logger, leftOperand, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
-            var superName = _strongIdentifierLinearResolver.Resolve(rightOperand, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+            var superName = _strongIdentifierLinearResolver.Resolve(logger, rightOperand, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
-            return _inheritanceResolver.GetInheritanceRank(subName, superName, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+            return _inheritanceResolver.GetInheritanceRank(logger, subName, superName, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
         }
     }
 }

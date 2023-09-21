@@ -38,23 +38,23 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
         }
 
         /// <inheritdoc/>
-        public void Append(LinguisticVariable linguisticVariable)
+        public void Append(IMonitorLogger logger, LinguisticVariable linguisticVariable)
         {
         }
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<FuzzyLogicNonNumericValue>> GetNonNumericValuesDirectly(StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<FuzzyLogicNonNumericValue>> GetNonNumericValuesDirectly(IMonitorLogger logger, StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             return new List<WeightedInheritanceResultItem<FuzzyLogicNonNumericValue>>();
         }
 
         /// <inheritdoc/>
-        public void AppendDefaultOperator(FuzzyLogicOperator fuzzyLogicOperator)
+        public void AppendDefaultOperator(IMonitorLogger logger, FuzzyLogicOperator fuzzyLogicOperator)
         {
         }
 
         /// <inheritdoc/>
-        public FuzzyLogicOperator GetDefaultOperator(StrongIdentifierValue name)
+        public FuzzyLogicOperator GetDefaultOperator(IMonitorLogger logger, StrongIdentifierValue name)
         {
             return null;
         }

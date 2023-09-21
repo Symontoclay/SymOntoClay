@@ -38,35 +38,35 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
         }
 
         /// <inheritdoc/>
-        public void SetSystemValue(StrongIdentifierValue varName, Value value)
+        public void SetSystemValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value)
         {
         }
 
         /// <inheritdoc/>
-        public Value GetSystemValueDirectly(StrongIdentifierValue varName)
+        public Value GetSystemValueDirectly(IMonitorLogger logger, StrongIdentifierValue varName)
         {
             return null;
         }
 
         /// <inheritdoc/>
-        public void Append(Var varItem)
+        public void Append(IMonitorLogger logger, Var varItem)
         {
         }
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<Var>> GetVarDirectly(StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<Var>> GetVarDirectly(IMonitorLogger logger, StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             return new List<WeightedInheritanceResultItem<Var>>();
         }
 
         /// <inheritdoc/>
-        public Var GetLocalVarDirectly(StrongIdentifierValue name)
+        public Var GetLocalVarDirectly(IMonitorLogger logger, StrongIdentifierValue name)
         {
             return null;
         }
 
         /// <inheritdoc/>
-        public void SetValue(StrongIdentifierValue varName, Value value)
+        public void SetValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value)
         {
         }
 
@@ -78,7 +78,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
 #if DEBUG
         /// <inheritdoc/>
-        public void DbgPrintVariables()
+        public void DbgPrintVariables(IMonitorLogger logger)
         {
         }
 #endif

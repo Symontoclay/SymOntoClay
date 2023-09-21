@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,7 +52,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private StrongIdentifierValue _stateNameForAutomaticStart;
 
         /// <inheritdoc/>
-        public override IList<IInstance> GetTopIndependentInstances()
+        public override IList<IInstance> GetTopIndependentInstances(IMonitorLogger logger)
         {
             var result = new List<IInstance>() { this };
 
@@ -67,11 +68,11 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        protected override void ApplyCodeDirectives()
+        protected override void ApplyCodeDirectives(IMonitorLogger logger)
         {
             var codeItemDirectivesResolver = _context.DataResolversFactory.GetCodeItemDirectivesResolver();
 
-            var directivesList = codeItemDirectivesResolver.Resolve(_localCodeExecutionContext);
+            var directivesList = codeItemDirectivesResolver.Resolve(logger, _localCodeExecutionContext);
 
             foreach (var directive in directivesList)
             {
@@ -83,7 +84,7 @@ namespace SymOntoClay.Core.Internal.Instances
                         {
                             var directiveItem = directive.AsSetDefaultStateDirective;
 
-                            _storage.StatesStorage.SetDefaultStateName(directiveItem.StateName);
+                            _storage.StatesStorage.SetDefaultStateName(logger, directiveItem.StateName);
 
                             if(!directivesList.Any(p => p.KindOfCodeItemDirective == KindOfCodeItemDirective.SetState))
                             {
@@ -108,9 +109,9 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        protected override void RunMutuallyExclusiveStatesSets()
+        protected override void RunMutuallyExclusiveStatesSets(IMonitorLogger logger)
         {
-            var itemsList = _statesResolver.ResolveMutuallyExclusiveStatesSetsList(_localCodeExecutionContext);
+            var itemsList = _statesResolver.ResolveMutuallyExclusiveStatesSetsList(logger, _localCodeExecutionContext);
 
             if (itemsList.Any())
             {
@@ -135,16 +136,16 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        protected override void RunExplicitStates()
+        protected override void RunExplicitStates(IMonitorLogger logger)
         {
             if(_stateNameForAutomaticStart == null)
             {
                 return;
             }
 
-            var state = _statesResolver.Resolve(_stateNameForAutomaticStart, _localCodeExecutionContext);
+            var state = _statesResolver.Resolve(logger, _stateNameForAutomaticStart, _localCodeExecutionContext);
 
-            ActivateState(state);
+            ActivateState(logger, state);
 
         }
 
@@ -153,7 +154,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private readonly object _statesLockObj = new object();
 
-        public bool IsStateActivated(StrongIdentifierValue stateName)
+        public bool IsStateActivated(IMonitorLogger logger, StrongIdentifierValue stateName)
         {
             lock (_statesLockObj)
             {
@@ -166,12 +167,12 @@ namespace SymOntoClay.Core.Internal.Instances
             }
         }
 
-        public void ActivateState(StateDef state)
+        public void ActivateState(IMonitorLogger logger, StateDef state)
         {
-            ActivateState(state, null);
+            ActivateState(logger, state, null);
         }
 
-        public void ActivateState(StateDef state, List<Var> varList)
+        public void ActivateState(IMonitorLogger logger, StateDef state, List<Var> varList)
         {
             Task.Run(() => {
                 try
@@ -218,24 +219,24 @@ namespace SymOntoClay.Core.Internal.Instances
                         }
                     }
 
-                    stateInstance.Init();
+                    stateInstance.Init(logger);
                 }
                 catch(Exception e)
                 {
-                    Error("847C55BE-261F-401D-A398-B6C81C1E0143", e);
+                    logger.Error("847C55BE-261F-401D-A398-B6C81C1E0143", e);
                 }
             });
         }
 
-        public void TryActivateDefaultState()
+        public void TryActivateDefaultState(IMonitorLogger logger)
         {
-            var defaultStateName = _statesResolver.ResolveDefaultStateName(_localCodeExecutionContext);
+            var defaultStateName = _statesResolver.ResolveDefaultStateName(logger, _localCodeExecutionContext);
 
             if (defaultStateName != null)
             {
-                var state = _statesResolver.Resolve(defaultStateName, _localCodeExecutionContext);
+                var state = _statesResolver.Resolve(logger, defaultStateName, _localCodeExecutionContext);
 
-                ActivateState(state);
+                ActivateState(logger, state);
             }
         }
 
@@ -255,9 +256,9 @@ namespace SymOntoClay.Core.Internal.Instances
         private List<StateActivator> _stateActivators = new List<StateActivator>();
 
         /// <inheritdoc/>
-        protected override void RunActivatorsOfStates()
+        protected override void RunActivatorsOfStates(IMonitorLogger logger)
         {
-            var activatorsInfoList = _statesResolver.ResolveActivationInfoOfStateList(_localCodeExecutionContext);
+            var activatorsInfoList = _statesResolver.ResolveActivationInfoOfStateList(logger, _localCodeExecutionContext);
 
             if(!activatorsInfoList.Any())
             {
@@ -273,11 +274,11 @@ namespace SymOntoClay.Core.Internal.Instances
                 Task.Run(() => {
                     try
                     {
-                        activatorInstance.Init();
+                        activatorInstance.Init(logger);
                     }
                     catch (Exception e)
                     {
-                        Error("A1DA97E0-2863-409E-8CAD-9813CE8EEBBE", e);
+                        logger.Error("A1DA97E0-2863-409E-8CAD-9813CE8EEBBE", e);
                     }                    
                 });
             }

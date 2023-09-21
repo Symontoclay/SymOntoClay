@@ -50,7 +50,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
         /// <inheritdoc/>
         public IStorage Storage => _parent;
 
-        public void AddConsolidatedStorage(IInheritanceStorage storage)
+        public void AddConsolidatedStorage(IMonitorLogger logger, IInheritanceStorage storage)
         {
             lock (_lockObj)
             {
@@ -63,7 +63,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
             }
         }
 
-        public void RemoveConsolidatedStorage(IInheritanceStorage storage)
+        public void RemoveConsolidatedStorage(IMonitorLogger logger, IInheritanceStorage storage)
         {
             lock (_lockObj)
             {
@@ -77,7 +77,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
         }
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<InheritanceItem>> GetItemsDirectly(StrongIdentifierValue subName)
+        public IList<WeightedInheritanceResultItem<InheritanceItem>> GetItemsDirectly(IMonitorLogger logger, StrongIdentifierValue subName)
         {
             lock(_lockObj)
             {
@@ -85,7 +85,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
 
                 foreach(var storage in _inheritanceStorages)
                 {
-                    var targetList = storage.GetItemsDirectly(subName);
+                    var targetList = storage.GetItemsDirectly(logger, subName);
 
                     if(targetList == null)
                     {
@@ -100,25 +100,25 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
         }
 
         /// <inheritdoc/>
-        public void RemoveInheritance(InheritanceItem inheritanceItem)
+        public void RemoveInheritance(IMonitorLogger logger, InheritanceItem inheritanceItem)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public void SetInheritance(InheritanceItem inheritanceItem)
+        public void SetInheritance(IMonitorLogger logger, InheritanceItem inheritanceItem)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public void SetInheritance(InheritanceItem inheritanceItem, bool isPrimary)
+        public void SetInheritance(IMonitorLogger logger, InheritanceItem inheritanceItem, bool isPrimary)
         {
             throw new NotImplementedException();
         }
 
 #if DEBUG
-        public void DbgPrintInheritances()
+        public void DbgPrintInheritances(IMonitorLogger logger)
         {
             throw new NotImplementedException();
         }

@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -41,11 +42,11 @@ namespace SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging
         private Dictionary<StrongIdentifierValue, List<IdleActionItem>> _itemsDict = new Dictionary<StrongIdentifierValue, List<IdleActionItem>>();
 
         /// <inheritdoc/>
-        public void Append(IdleActionItem item)
+        public void Append(IMonitorLogger logger, IdleActionItem item)
         {
             lock(_lockObj)
             {
-                AnnotatedItemHelper.CheckAndFillUpHolder(item, _realStorageContext.MainStorageContext.CommonNamesStorage);
+                AnnotatedItemHelper.CheckAndFillUpHolder(logger, item, _realStorageContext.MainStorageContext.CommonNamesStorage);
 
                 item.CheckDirty();
 
@@ -68,7 +69,7 @@ namespace SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging
         private static List<WeightedInheritanceResultItem<IdleActionItem>> _emptyIdleActionsList = new List<WeightedInheritanceResultItem<IdleActionItem>>();
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<IdleActionItem>> GetIdleActionsDirectly(IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<IdleActionItem>> GetIdleActionsDirectly(IMonitorLogger logger, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             lock(_lockObj)
             {

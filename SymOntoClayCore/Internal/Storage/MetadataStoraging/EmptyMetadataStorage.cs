@@ -37,7 +37,7 @@ namespace SymOntoClay.Core.Internal.Storage.MetadataStoraging
         }
 
         /// <inheritdoc/>
-        public void Append(CodeItem codeItem)
+        public void Append(IMonitorLogger logger, CodeItem codeItem)
         {
         }
 
@@ -45,7 +45,7 @@ namespace SymOntoClay.Core.Internal.Storage.MetadataStoraging
         public CodeItem MainCodeEntity => null;
 
         /// <inheritdoc/>
-        public CodeItem GetByName(StrongIdentifierValue name)
+        public CodeItem GetByName(IMonitorLogger logger, StrongIdentifierValue name)
         {
             return null;
         }

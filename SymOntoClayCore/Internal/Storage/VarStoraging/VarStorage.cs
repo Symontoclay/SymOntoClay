@@ -24,6 +24,7 @@ using Newtonsoft.Json;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,7 +67,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
         private Dictionary<StrongIdentifierValue, Value> _systemVariables = new Dictionary<StrongIdentifierValue, Value>();
         
         /// <inheritdoc/>
-        public void SetSystemValue(StrongIdentifierValue varName, Value value)
+        public void SetSystemValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value)
         {
             lock(_lockObj)
             {
@@ -75,7 +76,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
         }
 
         /// <inheritdoc/>
-        public Value GetSystemValueDirectly(StrongIdentifierValue varName)
+        public Value GetSystemValueDirectly(IMonitorLogger logger, StrongIdentifierValue varName)
         {
             lock (_lockObj)
             {
@@ -94,15 +95,15 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
         }
 
         /// <inheritdoc/>
-        public void Append(Var varItem)
+        public void Append(IMonitorLogger logger, Var varItem)
         {
             lock (_lockObj)
             {
-                NAppendVar(varItem);
+                NAppendVar(logger, varItem);
             }
         }
 
-        private void NAppendVar(Var varItem)
+        private void NAppendVar(IMonitorLogger logger, Var varItem)
         {
             if(_allVariablesList.Contains(varItem))
             {
@@ -113,7 +114,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
             if (varItem.TypeOfAccess != TypeOfAccess.Local)
             {
-                AnnotatedItemHelper.CheckAndFillUpHolder(varItem, _realStorageContext.MainStorageContext.CommonNamesStorage);
+                AnnotatedItemHelper.CheckAndFillUpHolder(logger, varItem, _realStorageContext.MainStorageContext.CommonNamesStorage);
             }
 
             varItem.OnChanged += VarItem_OnChanged;
@@ -147,7 +148,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
             {
                 var targetList = dict[name];
 
-                var itemsForRemoving = StorageHelper.RemoveSameItems(targetList, varItem);
+                var itemsForRemoving = StorageHelper.RemoveSameItems(logger, targetList, varItem);
 
                 foreach(var itemForRemoving in itemsForRemoving)
                 {
@@ -166,7 +167,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
         private static List<WeightedInheritanceResultItem<Var>> _emptyVarsList = new List<WeightedInheritanceResultItem<Var>>();
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<Var>> GetVarDirectly(StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<Var>> GetVarDirectly(IMonitorLogger logger, StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             lock (_lockObj)
             {
@@ -209,7 +210,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
         }
 
         /// <inheritdoc/>
-        public Var GetLocalVarDirectly(StrongIdentifierValue name)
+        public Var GetLocalVarDirectly(IMonitorLogger logger, StrongIdentifierValue name)
         {
             lock (_lockObj)
             {
@@ -228,7 +229,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
         }
 
         /// <inheritdoc/>
-        public void SetValue(StrongIdentifierValue varName, Value value)
+        public void SetValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value)
         {
             lock (_lockObj)
             {
@@ -243,7 +244,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
                 
                 varItem.TypeOfAccess = TypeOfAccess.Local;
 
-                NAppendVar(varItem);
+                NAppendVar(logger, varItem);
 
                 varItem.Value = value;
             }
@@ -251,10 +252,10 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
         private void VarItem_OnChanged(StrongIdentifierValue name)
         {
-            EmitOnChanged(name);
+            EmitOnChanged(Logger, name);
         }
 
-        protected void EmitOnChanged(StrongIdentifierValue varName)
+        protected void EmitOnChanged(IMonitorLogger logger, StrongIdentifierValue varName)
         {
             Task.Run(() => {
                 try
@@ -263,7 +264,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
                 }
                 catch (Exception e)
                 {
-                    Error("7DF94442-83B7-401F-93B7-CFA75C98E6E6", e);
+                    logger.Error("7DF94442-83B7-401F-93B7-CFA75C98E6E6", e);
                 }                
             });
 
@@ -274,14 +275,14 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
                 }
                 catch (Exception e)
                 {
-                    Error("898152C4-535A-4BF1-8013-E6FDEF652622", e);
+                    logger.Error("898152C4-535A-4BF1-8013-E6FDEF652622", e);
                 }                
             });
         }
 
         private void VarStorage_OnChangedWithKeys(StrongIdentifierValue varName)
         {
-            EmitOnChanged(varName);
+            EmitOnChanged(Logger, varName);
         }
 
         private void RealStorageContext_OnRemoveParentStorage(IStorage storage)
@@ -323,7 +324,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
 #if DEBUG
         /// <inheritdoc/>
-        public void DbgPrintVariables()
+        public void DbgPrintVariables(IMonitorLogger logger)
         {
             lock (_lockObj)
             {
@@ -337,7 +338,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
                 sb.AppendLine($"({GetHashCode()}) End {_kind} of {_mainStorageContext.Id}");
 
-                Info("FE4DBAF2-5939-4194-8EA9-1D52F60D8F1A", sb.ToString());
+                logger.Info("FE4DBAF2-5939-4194-8EA9-1D52F60D8F1A", sb.ToString());
             }                
         }
 #endif

@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,38 +49,24 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
         private Dictionary<StrongIdentifierValue, FuzzyLogicOperator> _defaultOperatorsDict = new Dictionary<StrongIdentifierValue, FuzzyLogicOperator>();
 
         /// <inheritdoc/>
-        public void Append(LinguisticVariable linguisticVariable)
+        public void Append(IMonitorLogger logger, LinguisticVariable linguisticVariable)
         {
-            AnnotatedItemHelper.CheckAndFillUpHolder(linguisticVariable, _commonNamesStorage);
+            AnnotatedItemHelper.CheckAndFillUpHolder(logger, linguisticVariable, _commonNamesStorage);
 
             lock (_lockObj)
             {
-#if DEBUG
-
-
-
-
-
-
-
-#endif
-
                 linguisticVariable.CheckDirty();
-
-#if DEBUG
-
-#endif
 
                 var holder = linguisticVariable.Holder;
 
                 foreach (var fuzzyValue in linguisticVariable.Values)
                 {
-                    NAppendValue(fuzzyValue, holder);
+                    NAppendValue(logger, fuzzyValue, holder);
                 }
             }
         }
 
-        private void NAppendValue(FuzzyLogicNonNumericValue value, StrongIdentifierValue holder)
+        private void NAppendValue(IMonitorLogger logger, FuzzyLogicNonNumericValue value, StrongIdentifierValue holder)
         {
             var name = value.Name;
 
@@ -91,7 +78,7 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
                 {
                     var targetList = dict[holder];
 
-                    StorageHelper.RemoveSameItems(targetList, value);
+                    StorageHelper.RemoveSameItems(logger, targetList, value);
 
                     targetList.Add(value);
                 }
@@ -111,7 +98,7 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
         private static List<WeightedInheritanceResultItem<FuzzyLogicNonNumericValue>> _emptyNonNumericValuesList = new List<WeightedInheritanceResultItem<FuzzyLogicNonNumericValue>>();
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<FuzzyLogicNonNumericValue>> GetNonNumericValuesDirectly(StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<FuzzyLogicNonNumericValue>> GetNonNumericValuesDirectly(IMonitorLogger logger, StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             lock (_lockObj)
             {
@@ -149,7 +136,7 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
         }
 
         /// <inheritdoc/>
-        public void AppendDefaultOperator(FuzzyLogicOperator fuzzyLogicOperator)
+        public void AppendDefaultOperator(IMonitorLogger logger, FuzzyLogicOperator fuzzyLogicOperator)
         {
             lock (_lockObj)
             {
@@ -158,7 +145,7 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
         }
 
         /// <inheritdoc/>
-        public FuzzyLogicOperator GetDefaultOperator(StrongIdentifierValue name)
+        public FuzzyLogicOperator GetDefaultOperator(IMonitorLogger logger, StrongIdentifierValue name)
         {
             lock (_lockObj)
             {

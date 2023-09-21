@@ -38,6 +38,7 @@ using SymOntoClay.Core.Internal.Storage.SynonymsStoraging;
 using SymOntoClay.Core.Internal.Storage.TriggersStoraging;
 using SymOntoClay.Core.Internal.Storage.VarStoraging;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -70,12 +71,12 @@ namespace SymOntoClay.Core.Internal.Storage
         public bool EnableOnAddingFactEvent { get; set; }
         public bool Disabled { get; set; }
 
-        public void EmitOnAddParentStorage(IStorage storage)
+        public void EmitOnAddParentStorage(IMonitorLogger logger, IStorage storage)
         {
             OnAddParentStorage?.Invoke(storage);
         }
 
-        public void EmitOnRemoveParentStorage(IStorage storage)
+        public void EmitOnRemoveParentStorage(IMonitorLogger logger, IStorage storage)
         {
             OnRemoveParentStorage?.Invoke(storage);
         }

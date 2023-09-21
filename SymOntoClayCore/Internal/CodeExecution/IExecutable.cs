@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -31,19 +32,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public interface IExecutable: IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        IExecutionCoordinator GetCoordinator(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext);
+        IExecutionCoordinator GetCoordinator(IMonitorLogger logger, IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext);
         bool IsSystemDefined { get; }
         IList<IFunctionArgument> Arguments { get; }
         CompiledFunctionBody CompiledFunctionBody { get; }
         CodeItem CodeItem { get; }
         ISystemHandler SystemHandler { get; }
-        bool ContainsArgument(StrongIdentifierValue name);
+        bool ContainsArgument(IMonitorLogger logger, StrongIdentifierValue name);
         ILocalCodeExecutionContext OwnLocalCodeExecutionContext { get; }
         StrongIdentifierValue Holder { get; }
         bool NeedActivation { get; }
         bool IsActivated { get; }
         UsingLocalCodeExecutionContextPreferences UsingLocalCodeExecutionContextPreferences { get; }
-        IExecutable Activate(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext, IExecutionCoordinator executionCoordinator);
+        IExecutable Activate(IMonitorLogger logger, IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext, IExecutionCoordinator executionCoordinator);
         bool IsInstance { get; }
         IInstance AsInstance { get; }
     }

@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -29,7 +30,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
 {
     public static class AnnotatedItemHelper
     {
-        public static void CheckAndFillUpHolder(CodeItem item, ICommonNamesStorage commonNamesStorage)
+        public static void CheckAndFillUpHolder(IMonitorLogger logger, CodeItem item, ICommonNamesStorage commonNamesStorage)
         {
             if (item.Holder == null)
             {

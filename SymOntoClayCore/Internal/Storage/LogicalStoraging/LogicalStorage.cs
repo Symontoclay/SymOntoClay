@@ -28,6 +28,7 @@ using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -128,24 +129,24 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         }
 
         /// <inheritdoc/>
-        public void Append(RuleInstance ruleInstance)
+        public void Append(IMonitorLogger logger, RuleInstance ruleInstance)
         {
-            Append(ruleInstance, true);
+            Append(logger, ruleInstance, true);
         }
 
         /// <inheritdoc/>
-        public void Append(RuleInstance ruleInstance, bool isPrimary)
+        public void Append(IMonitorLogger logger, RuleInstance ruleInstance, bool isPrimary)
         {
             lock (_lockObj)
             {
-                var usedKeysList = NAppendAndReturnUsedKeysList(ruleInstance, isPrimary);
+                var usedKeysList = NAppendAndReturnUsedKeysList(logger, ruleInstance, isPrimary);
 
-                EmitOnChanged(usedKeysList);
+                EmitOnChanged(logger, usedKeysList);
             }
         }
 
         /// <inheritdoc/>
-        public void Append(IList<RuleInstance> ruleInstancesList)
+        public void Append(IMonitorLogger logger, IList<RuleInstance> ruleInstancesList)
         {
             lock (_lockObj)
             {
@@ -153,20 +154,20 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                 foreach(var item in ruleInstancesList)
                 {
-                    usedKeysList.AddRange(NAppendAndReturnUsedKeysList(item, true));
+                    usedKeysList.AddRange(NAppendAndReturnUsedKeysList(logger, item, true));
                 }
 
                 usedKeysList = usedKeysList.Distinct().ToList();
 
-                EmitOnChanged(usedKeysList);
+                EmitOnChanged(logger, usedKeysList);
             }
         }
 
-        private IList<StrongIdentifierValue> NAppendAndReturnUsedKeysList(RuleInstance ruleInstance, bool isPrimary)
+        private IList<StrongIdentifierValue> NAppendAndReturnUsedKeysList(IMonitorLogger logger, RuleInstance ruleInstance, bool isPrimary)
         {
             ruleInstance.CheckDirty();
 
-            if (NAppend(ruleInstance, isPrimary))
+            if (NAppend(logger, ruleInstance, isPrimary))
             {
                 var annotationsList = ruleInstance.GetAllAnnotations();
 
@@ -174,9 +175,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                 foreach (var annotationRuleInstance in annotationRuleInstancesList)
                 {
-                    NAppend(annotationRuleInstance, false);
+                    NAppend(logger, annotationRuleInstance, false);
                 }
-
 
                 return ruleInstance.Normalized.UsedKeysList.Concat(annotationRuleInstancesList.SelectMany(p => p.UsedKeysList)).Distinct().ToList();
             }
@@ -184,21 +184,16 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             return new List<StrongIdentifierValue>();
         }
 
-        private bool NAppend(RuleInstance ruleInstance, bool isPrimary)
+        private bool NAppend(IMonitorLogger logger, RuleInstance ruleInstance, bool isPrimary)
         {
-#if DEBUG
-
-#endif
-
-
             if (ruleInstance.TypeOfAccess != TypeOfAccess.Local)
             {
-                AnnotatedItemHelper.CheckAndFillUpHolder(ruleInstance, _realStorageContext.MainStorageContext.CommonNamesStorage);
+                AnnotatedItemHelper.CheckAndFillUpHolder(logger, ruleInstance, _realStorageContext.MainStorageContext.CommonNamesStorage);
             }
 
             if (_ruleInstancesList.Contains(ruleInstance))
             {
-                RefreshLifeTime(ruleInstance);
+                RefreshLifeTime(logger, ruleInstance);
 
                 return true;
             }
@@ -207,7 +202,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             if (_ruleInstancesDictById.ContainsKey(ruleInstanceId))
             {
-                RefreshLifeTime(ruleInstanceId);
+                RefreshLifeTime(logger, ruleInstanceId);
 
                 return true;
             }
@@ -216,7 +211,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             if (_ruleInstancesDict.ContainsKey(ruleInstanceName))
             {
-                RefreshLifeTime(ruleInstanceName);
+                RefreshLifeTime(logger, ruleInstanceName);
 
                 return true;
             }
@@ -225,7 +220,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             if(_ruleInstancesDictByHashCode.ContainsKey(longHashCode))
             {
-                RefreshLifeTime(longHashCode);
+                RefreshLifeTime(logger, longHashCode);
 
                 return true;
             }
@@ -234,11 +229,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             {
                 if(isPrimary && ruleInstance.KindOfRuleInstance == KindOfRuleInstance.Fact)
                 {
-                    var approvingRez = AddingFactHelper.CallEvent(OnAddingFact, ruleInstance, _fuzzyLogicResolver, _localCodeExecutionContext, Logger);
+                    var approvingRez = AddingFactHelper.CallEvent(logger, OnAddingFact, ruleInstance, _fuzzyLogicResolver, _localCodeExecutionContext);
 
                     if(_enableAddingRemovingFactLoggingInStorages)
                     {
-                        Info("E7837A32-70CC-4F89-9206-1DC386542546", $"({GetHashCode()}) approvingRez = {approvingRez}");
+                        logger.Info("E7837A32-70CC-4F89-9206-1DC386542546", $"({GetHashCode()}) approvingRez = {approvingRez}");
                     }
 
                     if (approvingRez != null)
@@ -267,7 +262,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             if(_enableAddingRemovingFactLoggingInStorages)
             {
-                Info("6D10091F-6FD6-4150-88DB-854F7CE890C8", $"({GetHashCode()}) NEXT ruleInstance = {ruleInstance.ToHumanizedString()}");
+                logger.Info("6D10091F-6FD6-4150-88DB-854F7CE890C8", $"({GetHashCode()}) NEXT ruleInstance = {ruleInstance.ToHumanizedString()}");
             }
 
             _ruleInstancesList.Add(ruleInstance);
@@ -282,11 +277,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             _ruleInstancesDictById[ruleInstanceId] = ruleInstance;
             _lifeTimeCycleById[ruleInstanceId] = DEFAULT_INITIAL_TIME;
 
-            _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(ruleInstance.Normalized, false);
+            _commonPersistIndexedLogicalData.NSetIndexedRuleInstanceToIndexData(logger, ruleInstance.Normalized, false);
 
             if(isPrimary && _kind != KindOfStorage.PublicFacts && _kind != KindOfStorage.PerceptedFacts)
             {
-                var inheritanceRelationsList = ruleInstance.GetInheritanceRelations();
+                var inheritanceRelationsList = ruleInstance.GetInheritanceRelations(logger);
 
                 if (inheritanceRelationsList.Any())
                 {
@@ -344,7 +339,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                         }
                         
                         inheritanceItem.KeysOfPrimaryRecords.Add(ruleInstanceName);
-                        inheritanceStorage.SetInheritance(inheritanceItem, false);
+                        inheritanceStorage.SetInheritance(logger, inheritanceItem, false);
                     }
                 }
             }
@@ -353,16 +348,16 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         }
 
         /// <inheritdoc/>
-        public void Remove(RuleInstance ruleInstance)
+        public void Remove(IMonitorLogger logger, RuleInstance ruleInstance)
         {
             lock (_lockObj)
             {
-                NRemove(ruleInstance);
+                NRemove(logger, ruleInstance);
             }
         }
 
         /// <inheritdoc/>
-        public void Remove(IList<RuleInstance> ruleInstancesList)
+        public void Remove(IMonitorLogger logger, IList<RuleInstance> ruleInstancesList)
         {
             lock (_lockObj)
             {
@@ -370,7 +365,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                 foreach(var item in ruleInstancesList)
                 {
-                    var tmpUsedKeysList = NRemoveAndReturnUsedKeysList(item);
+                    var tmpUsedKeysList = NRemoveAndReturnUsedKeysList(logger, item);
 
                     if(tmpUsedKeysList != null)
                     {
@@ -380,12 +375,12 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                 usedKeysList = usedKeysList.Distinct().ToList();
 
-                EmitOnChanged(usedKeysList);
+                EmitOnChanged(logger, usedKeysList);
             }
         }
 
         /// <inheritdoc/>
-        public void RemoveById(string id)
+        public void RemoveById(IMonitorLogger logger, string id)
         {
             lock (_lockObj)
             {
@@ -394,33 +389,33 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     return;
                 }
 
-                NRemoveById(id);
+                NRemoveById(logger, id);
             }
         }
 
-        private void NRemoveById(string id)
+        private void NRemoveById(IMonitorLogger logger, string id)
         {
             if (_ruleInstancesDictById.ContainsKey(id))
             {
-                NRemove(_ruleInstancesDictById[id]);
+                NRemove(logger, _ruleInstancesDictById[id]);
             }
         }
 
-        private void NRemove(RuleInstance ruleInstance)
+        private void NRemove(IMonitorLogger logger, RuleInstance ruleInstance)
         {
-            var usedKeysList = NRemoveAndReturnUsedKeysList(ruleInstance);
+            var usedKeysList = NRemoveAndReturnUsedKeysList(logger, ruleInstance);
 
             if (usedKeysList.IsNullOrEmpty())
             {
-                EmitOnChanged();
+                EmitOnChanged(logger);
             }
             else 
             { 
-                EmitOnChanged(usedKeysList);
+                EmitOnChanged(logger, usedKeysList);
             }
         }
 
-        private List<StrongIdentifierValue> NRemoveAndReturnUsedKeysList(RuleInstance ruleInstance)
+        private List<StrongIdentifierValue> NRemoveAndReturnUsedKeysList(IMonitorLogger logger, RuleInstance ruleInstance)
         {
             if (!_ruleInstancesList.Contains(ruleInstance))
             {
@@ -447,11 +442,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             _mutablePartsDict.Remove(ruleInstance);
 
-            _commonPersistIndexedLogicalData.NRemoveIndexedRuleInstanceFromIndexData(ruleInstance.Normalized);
+            _commonPersistIndexedLogicalData.NRemoveIndexedRuleInstanceFromIndexData(logger, ruleInstance.Normalized);
 
             if(_enableAddingRemovingFactLoggingInStorages)
             {
-                Info("62B03746-90F3-4BE7-9E69-71BBC71583E8", $"({GetHashCode()}) `{ruleInstanceId}` has been removed.");
+                logger.Info("62B03746-90F3-4BE7-9E69-71BBC71583E8", $"({GetHashCode()}) `{ruleInstanceId}` has been removed.");
             }
 
             return ruleInstance.UsedKeysList;
@@ -466,9 +461,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         /// <inheritdoc/>
         public event Func<RuleInstance, IAddFactOrRuleResult> OnAddingFact;
 
-        protected void EmitOnChanged(IList<StrongIdentifierValue> usedKeysList)
+        protected void EmitOnChanged(IMonitorLogger logger, IList<StrongIdentifierValue> usedKeysList)
         {
-            EmitOnChanged();
+            EmitOnChanged(logger);
 
             Task.Run(() => {
                 try
@@ -477,12 +472,12 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 }
                 catch (Exception e)
                 {
-                    Error("B845E1E0-802D-4F3C-A5E6-1140F1CF7D3B", e);
+                    logger.Error("B845E1E0-802D-4F3C-A5E6-1140F1CF7D3B", e);
                 }                
             });
         }
 
-        protected void EmitOnChanged()
+        protected void EmitOnChanged(IMonitorLogger logger)
         {
             Task.Run(() => {
                 try
@@ -491,19 +486,19 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 }
                 catch (Exception e)
                 {
-                    Error("DDC9388D-6FD6-44E6-8E24-CC13249A0914", e);
+                    logger.Error("DDC9388D-6FD6-44E6-8E24-CC13249A0914", e);
                 }
             });
         }
 
         private void LogicalStorage_OnChangedWithKeys(IList<StrongIdentifierValue> changedKeysList)
         {
-            EmitOnChanged(changedKeysList);
+            EmitOnChanged(Logger, changedKeysList);
         }
 
         private void LogicalStorage_OnChanged()
         {
-            EmitOnChanged();
+            EmitOnChanged(Logger);
         }
 
         private IAddFactOrRuleResult LogicalStorage_OnAddingFact(RuleInstance ruleInstance)
@@ -513,7 +508,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 return null;
             }
 
-            return AddingFactHelper.CallEvent(OnAddingFact, ruleInstance, _fuzzyLogicResolver, _localCodeExecutionContext, Logger);
+            return AddingFactHelper.CallEvent(Logger, OnAddingFact, ruleInstance, _fuzzyLogicResolver, _localCodeExecutionContext);
         }
 
         private void RealStorageContext_OnAddParentStorage(IStorage storage)
@@ -539,7 +534,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         private static List<LogicalQueryNode> _emptyLogicalQueryNodesList = new List<LogicalQueryNode>();
 
         /// <inheritdoc/>
-        public IList<LogicalQueryNode> GetAllRelations(ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
+        public IList<LogicalQueryNode> GetAllRelations(IMonitorLogger logger, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
         {
             lock (_lockObj)
             {
@@ -559,7 +554,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     };
                 }
 
-                var source = _commonPersistIndexedLogicalData.GetAllRelations();
+                var source = _commonPersistIndexedLogicalData.GetAllRelations(logger);
 
                 if (logicalSearchStorageContext == null || source.IsNullOrEmpty())
                 {
@@ -594,14 +589,14 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     LogicalSearchExplainNode.LinkNodes(intermediateResultExplainNode, currentExplainNode);
                 }
 
-                return logicalSearchStorageContext.Filter(source, true, _mutablePartsDict);
+                return logicalSearchStorageContext.Filter(logger, source, true, _mutablePartsDict);
             }
         }
 
         private static List<RuleInstance> _emptyRuleInstancesList = new List<RuleInstance>();
 
         /// <inheritdoc/>
-        public IList<RuleInstance> GetAllOriginFacts()
+        public IList<RuleInstance> GetAllOriginFacts(IMonitorLogger logger)
         {
             lock (_lockObj)
             {
@@ -617,7 +612,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         private static List<BaseRulePart> _emptyBaseRulePartsList = new List<BaseRulePart>();
 
         /// <inheritdoc/>
-        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
+        public IList<BaseRulePart> GetIndexedRulePartOfFactsByKeyOfRelation(IMonitorLogger logger, StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
         {
             lock (_lockObj)
             {
@@ -638,7 +633,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     };
                 }
 
-                var source = _commonPersistIndexedLogicalData.GetIndexedRulePartOfFactsByKeyOfRelation(name);
+                var source = _commonPersistIndexedLogicalData.GetIndexedRulePartOfFactsByKeyOfRelation(logger, name);
 
                 if (logicalSearchStorageContext == null || source.IsNullOrEmpty())
                 {
@@ -683,12 +678,12 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     LogicalSearchExplainNode.LinkNodes(intermediateResultExplainNode, currentExplainNode);
                 }
 
-                return logicalSearchStorageContext.Filter(source, true, _mutablePartsDict);
+                return logicalSearchStorageContext.Filter(logger, source, true, _mutablePartsDict);
             }
         }
 
         /// <inheritdoc/>
-        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
+        public IList<BaseRulePart> GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(IMonitorLogger logger, StrongIdentifierValue name, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
         {
             lock (_lockObj)
             {
@@ -709,7 +704,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     };
                 }
 
-                var source = _commonPersistIndexedLogicalData.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name);
+                var source = _commonPersistIndexedLogicalData.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(logger, name);
 
                 if (logicalSearchStorageContext == null || source.IsNullOrEmpty())
                 {
@@ -744,12 +739,12 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     LogicalSearchExplainNode.LinkNodes(intermediateResultExplainNode, currentExplainNode);
                 }
 
-                return logicalSearchStorageContext.Filter(source, false);
+                return logicalSearchStorageContext.Filter(logger, source, false);
             }
         }
 
         /// <inheritdoc/>
-        public IReadOnlyList<LogicalQueryNode> GetLogicalQueryNodes(IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy, IList<KindOfLogicalQueryNode> targetKindsOfItems)
+        public IReadOnlyList<LogicalQueryNode> GetLogicalQueryNodes(IMonitorLogger logger, IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy, IList<KindOfLogicalQueryNode> targetKindsOfItems)
         {
             lock (_lockObj)
             {
@@ -757,7 +752,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                 foreach (var ruleInstance in _ruleInstancesList)
                 {
-                    var targetItemsList = ruleInstance.GetLogicalQueryNodes(exceptList, replacingNotResultsStrategy, targetKindsOfItems);
+                    var targetItemsList = ruleInstance.GetLogicalQueryNodes(logger, exceptList, replacingNotResultsStrategy, targetKindsOfItems);
 
                     if (targetItemsList.IsNullOrEmpty())
                     {
@@ -773,7 +768,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
 #if DEBUG
         /// <inheritdoc/>
-        public void DbgPrintFactsAndRules()
+        public void DbgPrintFactsAndRules(IMonitorLogger logger)
         {
             lock (_lockObj)
             {
@@ -787,38 +782,38 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                 sb.AppendLine($"({GetHashCode()}) End {_kind} of {_mainStorageContext.Id}");
 
-                Info("5E9B4D48-9A71-4DC5-873E-19C0B90633A4", sb.ToString());
+                logger.Info("5E9B4D48-9A71-4DC5-873E-19C0B90633A4", sb.ToString());
             }
         }
 #endif
 
-        private void RefreshLifeTime(RuleInstance ruleInstance)
+        private void RefreshLifeTime(IMonitorLogger logger, RuleInstance ruleInstance)
         {
-            NRefreshLifeTime(ruleInstance.Name.NameValue);
+            NRefreshLifeTime(logger, ruleInstance.Name.NameValue);
         }
 
-        private void RefreshLifeTime(string ruleInstanceId)
+        private void RefreshLifeTime(IMonitorLogger logger, string ruleInstanceId)
         {
-            NRefreshLifeTime(ruleInstanceId);
+            NRefreshLifeTime(logger, ruleInstanceId);
         }
 
-        private void RefreshLifeTime(StrongIdentifierValue ruleInstanceName)
+        private void RefreshLifeTime(IMonitorLogger logger, StrongIdentifierValue ruleInstanceName)
         {
-            NRefreshLifeTime(ruleInstanceName.NameValue);
+            NRefreshLifeTime(logger, ruleInstanceName.NameValue);
         }
 
-        private void RefreshLifeTime(ulong longHashCode)
+        private void RefreshLifeTime(IMonitorLogger logger, ulong longHashCode)
         {
-            NRefreshLifeTime(_ruleInstancesDictByHashCode[longHashCode].Name.NameValue);
+            NRefreshLifeTime(logger, _ruleInstancesDictByHashCode[longHashCode].Name.NameValue);
         }
 
-        private void NRefreshLifeTime(string ruleInstanceId)
+        private void NRefreshLifeTime(IMonitorLogger logger, string ruleInstanceId)
         {
             _lifeTimeCycleById[ruleInstanceId] = DEFAULT_INITIAL_TIME;
 
             if (_enableAddingRemovingFactLoggingInStorages)
             {
-                Info("5CCBE7D4-4436-4F63-9AF0-0DC060ED3468", $"({GetHashCode()}) Lifetime of `{ruleInstanceId}` has been refreshed to {DEFAULT_INITIAL_TIME}.");
+                logger.Info("5CCBE7D4-4436-4F63-9AF0-0DC060ED3468", $"({GetHashCode()}) Lifetime of `{ruleInstanceId}` has been refreshed to {DEFAULT_INITIAL_TIME}.");
             }
         }
 
@@ -841,7 +836,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                             Info("B824F12A-AD19-4F62-9849-1E1D85870B5B", $"({GetHashCode()}) Put for deleting by end of life cycle: `{item}`");
                         }
 
-                        NRemoveById(item.Key);
+                        NRemoveById(Logger, item.Key);
                     }
                     else
                     {

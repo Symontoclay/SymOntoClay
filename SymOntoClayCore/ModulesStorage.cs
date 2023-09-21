@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
@@ -28,6 +29,7 @@ using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -120,7 +122,7 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public IList<IStorage> Import(IList<StrongIdentifierValue> namesList)
+        public IList<IStorage> Import(IMonitorLogger logger, IList<StrongIdentifierValue> namesList)
         {
             lock (_stateLockObj)
             {
@@ -143,14 +145,14 @@ namespace SymOntoClay.Core
 
                 foreach (var name in namesList)
                 {
-                    NLoadLib(name, result, loadedLibNames);
+                    NLoadLib(logger, name, result, loadedLibNames);
                 }
 
                 return result;
             }
         }
 
-        private void NLoadLib(StrongIdentifierValue name, List<IStorage> result, List<string> loadedLibNames)
+        private void NLoadLib(IMonitorLogger logger, StrongIdentifierValue name, List<IStorage> result, List<string> loadedLibNames)
         {
             var strName = name.NameValue;
 
@@ -171,20 +173,20 @@ namespace SymOntoClay.Core
 
                     foreach(var dependency in dependenciesList)
                     {
-                        NLoadLib(dependency, result, loadedLibNames);
+                        NLoadLib(logger, dependency, result, loadedLibNames);
                     }
                 }
             }
             else
             {
-                var libDirectory = GetLibDirectory(strName);
+                var libDirectory = GetLibDirectory(logger, strName);
 
                 if (string.IsNullOrWhiteSpace(libDirectory))
                 {
                     throw new FileNotFoundException($"Unable to find lib `{strName}`.");
                 }
 
-                var libFileName = GetLibFileName(libDirectory);
+                var libFileName = GetLibFileName(logger, libDirectory);
 
                 if (string.IsNullOrWhiteSpace(libFileName))
                 {
@@ -208,13 +210,13 @@ namespace SymOntoClay.Core
 
                     foreach (var defferedLib in defferedLibsList)
                     {
-                        NLoadLib(defferedLib, result, loadedLibNames);
+                        NLoadLib(logger, defferedLib, result, loadedLibNames);
                     }
                 }                
             }
         }
 
-        private string GetLibDirectory(string name)
+        private string GetLibDirectory(IMonitorLogger logger, string name)
         {
             name = name.Trim().ToLower();
 
@@ -236,7 +238,7 @@ namespace SymOntoClay.Core
             return string.Empty;
         }
 
-        private string GetLibFileName(string directoryName)
+        private string GetLibFileName(IMonitorLogger logger, string directoryName)
         {
             var files = Directory.EnumerateFiles(directoryName).Where(p => p.EndsWith(".slib"));
 

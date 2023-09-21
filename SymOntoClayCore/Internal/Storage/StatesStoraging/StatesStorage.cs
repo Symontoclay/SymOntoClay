@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,7 +49,7 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStoraging
         private readonly List<MutuallyExclusiveStatesSet> _mutuallyExclusiveStatesSetsList = new List<MutuallyExclusiveStatesSet>();
 
         /// <inheritdoc/>
-        public void Append(StateDef state)
+        public void Append(IMonitorLogger logger, StateDef state)
         {
             lock (_lockObj)
             {
@@ -57,7 +58,7 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStoraging
                     return;
                 }
 
-                AnnotatedItemHelper.CheckAndFillUpHolder(state, _realStorageContext.MainStorageContext.CommonNamesStorage);
+                AnnotatedItemHelper.CheckAndFillUpHolder(logger, state, _realStorageContext.MainStorageContext.CommonNamesStorage);
 
                 state.CheckDirty();
 
@@ -83,7 +84,7 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStoraging
                 {
                     var targetList = dict[name];
 
-                    var removedItemsList = StorageHelper.RemoveSameItems(targetList, state);
+                    var removedItemsList = StorageHelper.RemoveSameItems(logger, targetList, state);
 
                     targetList.Add(state);
 
@@ -124,7 +125,7 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStoraging
         private static List<WeightedInheritanceResultItem<StateDef>> _emptyWeightedStatesList = new List<WeightedInheritanceResultItem<StateDef>>();
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<StateDef>> GetStatesDirectly(StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<StateDef>> GetStatesDirectly(IMonitorLogger logger, StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             lock (_lockObj)
             {
@@ -162,7 +163,7 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStoraging
         private static List<StrongIdentifierValue> _emptyAllStateNamesList = new List<StrongIdentifierValue>();
 
         /// <inheritdoc/>
-        public List<StrongIdentifierValue> AllStateNames()
+        public List<StrongIdentifierValue> AllStateNames(IMonitorLogger logger)
         {
             lock (_lockObj)
             {
@@ -178,7 +179,7 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStoraging
         private static List<StateDef> _emptyAllStatesList = new List<StateDef>();
 
         /// <inheritdoc/>
-        public List<StateDef> GetAllStatesListDirectly()
+        public List<StateDef> GetAllStatesListDirectly(IMonitorLogger logger)
         {
             lock (_lockObj)
             {
@@ -192,7 +193,7 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStoraging
         }
 
         /// <inheritdoc/>
-        public void SetDefaultStateName(StrongIdentifierValue name)
+        public void SetDefaultStateName(IMonitorLogger logger, StrongIdentifierValue name)
         {
             lock (_lockObj)
             {
@@ -201,7 +202,7 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStoraging
         }
 
         /// <inheritdoc/>
-        public StrongIdentifierValue GetDefaultStateNameDirectly()
+        public StrongIdentifierValue GetDefaultStateNameDirectly(IMonitorLogger logger)
         {
             lock (_lockObj)
             {
@@ -217,7 +218,7 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStoraging
         private static List<ActivationInfoOfStateDef> _emptyActivationInfoOfStateList = new List<ActivationInfoOfStateDef>();
 
         /// <inheritdoc/>
-        public List<ActivationInfoOfStateDef> GetActivationInfoOfStateListDirectly()
+        public List<ActivationInfoOfStateDef> GetActivationInfoOfStateListDirectly(IMonitorLogger logger)
         {
             lock (_lockObj)
             {
@@ -231,7 +232,7 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStoraging
         }
 
         /// <inheritdoc/>
-        public void Append(MutuallyExclusiveStatesSet mutuallyExclusiveStatesSet)
+        public void Append(IMonitorLogger logger, MutuallyExclusiveStatesSet mutuallyExclusiveStatesSet)
         {
             lock (_lockObj)
             {
@@ -247,7 +248,7 @@ namespace SymOntoClay.Core.Internal.Storage.StatesStoraging
         private static List<MutuallyExclusiveStatesSet> _emptyMutuallyExclusiveStatesSetsList = new List<MutuallyExclusiveStatesSet>();
 
         /// <inheritdoc/>
-        public List<MutuallyExclusiveStatesSet> GetMutuallyExclusiveStatesSetsListDirectly()
+        public List<MutuallyExclusiveStatesSet> GetMutuallyExclusiveStatesSetsListDirectly(IMonitorLogger logger)
         {
             lock (_lockObj)
             {

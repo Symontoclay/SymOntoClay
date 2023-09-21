@@ -28,6 +28,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -97,7 +98,7 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public void Start()
+        public void Start(IMonitorLogger logger)
         {
             lock (_statusLockObj)
             {
@@ -113,7 +114,7 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public void Cancel()
+        public void Cancel(IMonitorLogger logger)
         {
             lock (_statusLockObj)
             {
@@ -129,7 +130,7 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public void WeakCancel()
+        public void WeakCancel(IMonitorLogger logger)
         {
             lock (_statusLockObj)
             {
@@ -153,7 +154,7 @@ namespace SymOntoClay.Core
             }
         }
 
-        private void ProcessSetStatus(ProcessStatus status)
+        private void ProcessSetStatus(IMonitorLogger logger, ProcessStatus status)
         {
             switch (status)
             {
@@ -176,42 +177,42 @@ namespace SymOntoClay.Core
             }
         }
 
-        protected virtual void ProcessPlatformStart()
+        protected virtual void ProcessPlatformStart(IMonitorLogger logger)
         {
         }
 
-        protected virtual void ProcessPlatformCancelation()
+        protected virtual void ProcessPlatformCancelation(IMonitorLogger logger)
         {
         }
 
-        private void EmitOnFinish()
+        private void EmitOnFinish(IMonitorLogger logger)
         {
             EmitOnFinishHandlers();
 
             InternalOnFinish?.Invoke(this);
         }
 
-        private void EmitOnComplete()
+        private void EmitOnComplete(IMonitorLogger logger)
         {
             EmitOnCompleteHandlers();
 
             InternalOnComplete?.Invoke(this);
         }
 
-        private void EmitOnWeakCanceled()
+        private void EmitOnWeakCanceled(IMonitorLogger logger)
         {
             EmitOnWeakCanceledHandlers();
 
             InternalOnWeakCanceled?.Invoke(this);
         }
 
-        private void ProcessGeneralFinishStatuses(ProcessStatus status)
+        private void ProcessGeneralFinishStatuses(IMonitorLogger logger, ProcessStatus status)
         {
             EmitOnFinish();
             NCancelChildren(status);
         }
 
-        private void NCancelChildren(ProcessStatus status)
+        private void NCancelChildren(IMonitorLogger logger, ProcessStatus status)
         {
             switch (status)
             {
@@ -306,7 +307,7 @@ namespace SymOntoClay.Core
 
         private event ProcessInfoEvent InternalOnWeakCanceled;
 
-        protected void CheckOnFinishStatus()
+        protected void CheckOnFinishStatus(IMonitorLogger logger)
         {
             if (NIsFinished)
             {
@@ -314,7 +315,7 @@ namespace SymOntoClay.Core
             }
         }
 
-        protected void CheckOnCompleteStatus()
+        protected void CheckOnCompleteStatus(IMonitorLogger logger)
         {
             if (_status == ProcessStatus.Completed)
             {
@@ -322,7 +323,7 @@ namespace SymOntoClay.Core
             }
         }
 
-        protected void CheckOnWeakCanceledStatus()
+        protected void CheckOnWeakCanceledStatus(IMonitorLogger logger)
         {
             if (_status == ProcessStatus.WeakCanceled)
             {
@@ -409,7 +410,7 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public void AddChild(IProcessInfo processInfo)
+        public void AddChild(IMonitorLogger logger, IProcessInfo processInfo)
         {
             lock (_parentAndChildrenLockObj)
             {
@@ -453,7 +454,7 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public void RemoveChild(IProcessInfo processInfo)
+        public void RemoveChild(IMonitorLogger logger, IProcessInfo processInfo)
         {
             lock (_parentAndChildrenLockObj)
             {
@@ -461,7 +462,7 @@ namespace SymOntoClay.Core
             }
         }
 
-        private void NRemoveChild(IProcessInfo processInfo)
+        private void NRemoveChild(IMonitorLogger logger, IProcessInfo processInfo)
         {
             if (!_childrenProcessInfoList.Contains(processInfo))
             {
@@ -480,7 +481,7 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public void AddOnFinishHandler(IProcessInfoEventHandler handler)
+        public void AddOnFinishHandler(IMonitorLogger logger, IProcessInfoEventHandler handler)
         {
             lock (_parentAndChildrenLockObj)
             {
@@ -506,7 +507,7 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public void RemoveOnFinishHandler(IProcessInfoEventHandler handler)
+        public void RemoveOnFinishHandler(IMonitorLogger logger, IProcessInfoEventHandler handler)
         {
             lock (_parentAndChildrenLockObj)
             {
@@ -524,7 +525,7 @@ namespace SymOntoClay.Core
             }
         }
 
-        protected void EmitOnFinishHandlers()
+        protected void EmitOnFinishHandlers(IMonitorLogger logger)
         {
             lock (_parentAndChildrenLockObj)
             {
@@ -536,7 +537,7 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public void AddOnCompleteHandler(IProcessInfoEventHandler handler)
+        public void AddOnCompleteHandler(IMonitorLogger logger, IProcessInfoEventHandler handler)
         {
             lock (_parentAndChildrenLockObj)
             {
@@ -562,7 +563,7 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public void RemoveOnCompleteHandler(IProcessInfoEventHandler handler)
+        public void RemoveOnCompleteHandler(IMonitorLogger logger, IProcessInfoEventHandler handler)
         {
             lock (_parentAndChildrenLockObj)
             {
@@ -580,7 +581,7 @@ namespace SymOntoClay.Core
             }
         }
 
-        protected void EmitOnCompleteHandlers()
+        protected void EmitOnCompleteHandlers(IMonitorLogger logger)
         {
             lock (_parentAndChildrenLockObj)
             {
@@ -592,7 +593,7 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public void AddOnWeakCanceledHandler(IProcessInfoEventHandler handler)
+        public void AddOnWeakCanceledHandler(IMonitorLogger logger, IProcessInfoEventHandler handler)
         {
             lock (_parentAndChildrenLockObj)
             {
@@ -618,7 +619,7 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public void RemoveOnWeakCanceledHandler(IProcessInfoEventHandler handler)
+        public void RemoveOnWeakCanceledHandler(IMonitorLogger logger, IProcessInfoEventHandler handler)
         {
             lock (_parentAndChildrenLockObj)
             {
@@ -636,7 +637,7 @@ namespace SymOntoClay.Core
             }
         }
 
-        protected void EmitOnWeakCanceledHandlers()
+        protected void EmitOnWeakCanceledHandlers(IMonitorLogger logger)
         {
             lock (_parentAndChildrenLockObj)
             {

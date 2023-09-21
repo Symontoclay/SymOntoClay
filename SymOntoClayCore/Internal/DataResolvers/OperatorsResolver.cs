@@ -45,25 +45,25 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public Operator GetOperator(IMonitorLogger logger, KindOfOperator kindOfOperator, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            return GetOperator(kindOfOperator, localCodeExecutionContext, _defaultOptions);
+            return GetOperator(logger, kindOfOperator, localCodeExecutionContext, _defaultOptions);
         }
 
         public Operator GetOperator(IMonitorLogger logger, KindOfOperator kindOfOperator, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
-            var storagesList = GetStoragesList(storage, KindOfStoragesList.CodeItems);
+            var storagesList = GetStoragesList(logger, storage, KindOfStoragesList.CodeItems);
 
             var optionsForInheritanceResolver = options.Clone();
             optionsForInheritanceResolver.AddSelf = true;
 
-            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(localCodeExecutionContext, optionsForInheritanceResolver);
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, localCodeExecutionContext, optionsForInheritanceResolver);
 
-            var rawList = GetRawList(kindOfOperator, storagesList, weightedInheritanceItems);
+            var rawList = GetRawList(logger, kindOfOperator, storagesList, weightedInheritanceItems);
 
-            var filteredList = Filter(rawList);
+            var filteredList = Filter(logger, rawList);
 
-            var targetOp = ChooseTargetItem(filteredList);
+            var targetOp = ChooseTargetItem(logger, filteredList);
 
             return targetOp;
         }
@@ -79,7 +79,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach(var storageItem in storagesList)
             {
-                var operatorsList = storageItem.Storage.OperatorsStorage.GetOperatorsDirectly(kindOfOperator, weightedInheritanceItems);
+                var operatorsList = storageItem.Storage.OperatorsStorage.GetOperatorsDirectly(logger, kindOfOperator, weightedInheritanceItems);
 
                 if(!operatorsList.Any())
                 {

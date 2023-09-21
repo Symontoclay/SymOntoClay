@@ -24,6 +24,7 @@ using Newtonsoft.Json;
 using NLog;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,12 +36,12 @@ namespace SymOntoClay.Core.Internal.Helpers
 {
     public static class ProcessInfoHelper
     {
-        public static void Wait(params IProcessInfo[] processes)
+        public static void Wait(IMonitorLogger logger, params IProcessInfo[] processes)
         {
             Wait(null, null, TimeoutCancellationMode.WeakCancel, null, processes);
         }
 
-        public static void Wait(List<IExecutionCoordinator> executionCoordinators, long? cancelAfter, TimeoutCancellationMode timeoutCancellationMode, IDateTimeProvider dateTimeProvider, params IProcessInfo[] processes)
+        public static void Wait(IMonitorLogger logger, List<IExecutionCoordinator> executionCoordinators, long? cancelAfter, TimeoutCancellationMode timeoutCancellationMode, IDateTimeProvider dateTimeProvider, params IProcessInfo[] processes)
         {
             if(processes.IsNullOrEmpty())
             {

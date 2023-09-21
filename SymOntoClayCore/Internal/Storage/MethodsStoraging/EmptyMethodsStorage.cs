@@ -38,12 +38,12 @@ namespace SymOntoClay.Core.Internal.Storage.MethodsStoraging
         }
 
         /// <inheritdoc/>
-        public void Append(NamedFunction namedFunction)
+        public void Append(IMonitorLogger logger, NamedFunction namedFunction)
         {
         }
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<NamedFunction>> GetNamedFunctionsDirectly(StrongIdentifierValue name, int paramsCount, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<NamedFunction>> GetNamedFunctionsDirectly(IMonitorLogger logger, StrongIdentifierValue name, int paramsCount, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             return new List<WeightedInheritanceResultItem<NamedFunction>>();
         }

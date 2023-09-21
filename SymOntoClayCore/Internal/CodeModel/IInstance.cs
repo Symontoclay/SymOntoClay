@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -37,17 +38,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
         float Priority { get; }
         IExecutionCoordinator ExecutionCoordinator { get; }
         ILocalCodeExecutionContext LocalCodeExecutionContext { get; }
-        void CancelExecution();
-        void AddChildInstance(IInstance instance);
-        void RemoveChildInstance(IInstance instance);
-        void SetParent(IInstance instance);
-        void ResetParent(IInstance instance);
-        IList<IInstance> GetTopIndependentInstances();
-        bool ActivateIdleAction();
-        IExecutable GetExecutable(KindOfFunctionParameters kindOfParameters, IDictionary<StrongIdentifierValue, Value> namedParameters, IList<Value> positionedParameters);
-        void SetPropertyValue(StrongIdentifierValue propertyName, Value value);
-        void SetVarValue(StrongIdentifierValue varName, Value value);
-        Value GetPropertyValue(StrongIdentifierValue propertyName);
-        Value GetVarValue(StrongIdentifierValue varName);
+        void CancelExecution(IMonitorLogger logger);
+        void AddChildInstance(IMonitorLogger logger, IInstance instance);
+        void RemoveChildInstance(IMonitorLogger logger, IInstance instance);
+        void SetParent(IMonitorLogger logger, IInstance instance);
+        void ResetParent(IMonitorLogger logger, IInstance instance);
+        IList<IInstance> GetTopIndependentInstances(IMonitorLogger logger);
+        bool ActivateIdleAction(IMonitorLogger logger);
+        IExecutable GetExecutable(IMonitorLogger logger, KindOfFunctionParameters kindOfParameters, IDictionary<StrongIdentifierValue, Value> namedParameters, IList<Value> positionedParameters);
+        void SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value);
+        void SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value);
+        Value GetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName);
+        Value GetVarValue(IMonitorLogger logger, StrongIdentifierValue varName);
     }
 }

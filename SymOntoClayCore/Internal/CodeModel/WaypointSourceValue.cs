@@ -26,6 +26,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -70,8 +71,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public Value Distance { get; private set; }
         public Value HorizontalAngle { get; private set; }
         public StrongIdentifierValue Name { get; private set; }
-
-        public WaypointValue ConvertToWaypointValue(IEngineContext context, ILocalCodeExecutionContext localContext)
+        
+        public WaypointValue ConvertToWaypointValue(IMonitorLogger logger, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
             var numberValueLinearResolver = context.DataResolversFactory.GetNumberValueLinearResolver();
 

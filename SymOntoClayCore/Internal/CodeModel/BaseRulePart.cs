@@ -25,6 +25,7 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -99,21 +100,21 @@ namespace SymOntoClay.Core.Internal.CodeModel
             Expression?.DiscoverAllAnnotations(result);
         }
 
-        public IList<LogicalQueryNode> GetInheritanceRelations()
+        public IList<LogicalQueryNode> GetInheritanceRelations(IMonitorLogger logger)
         {
             var result = new List<LogicalQueryNode>();
-            Expression.DiscoverAllInheritanceRelations(result);
+            Expression.DiscoverAllInheritanceRelations(logger, result);
             return result;
         }
 
-        public IList<StrongIdentifierValue> GetStandaloneConcepts()
+        public IList<StrongIdentifierValue> GetStandaloneConcepts(IMonitorLogger logger)
         {
             var result = new List<StrongIdentifierValue>();
-            Expression.DiscoverAllStandaloneConcepts(result);
+            Expression.DiscoverAllStandaloneConcepts(logger, result);
             return result.Distinct().ToList();
         }
 
-        public abstract IList<BaseRulePart> GetNextPartsList();
+        public abstract IList<BaseRulePart> GetNextPartsList(IMonitorLogger logger);
 
         public void PrepareDirty(RuleInstance ruleInstance)
         {

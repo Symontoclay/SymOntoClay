@@ -30,6 +30,7 @@ using SymOntoClay.Core.Internal.Compiling;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,7 +56,7 @@ namespace SymOntoClay.Core.Internal.Converters
         private readonly RelationsResolver _relationsResolver;
         private readonly StrongIdentifierValue _actName;
 
-        public CompiledFunctionBody Convert(RuleInstance ruleInstance, ILocalCodeExecutionContext localCodeExecutionContext)
+        public CompiledFunctionBody Convert(IMonitorLogger logger, RuleInstance ruleInstance, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var kindOfRuleInstance = ruleInstance.KindOfRuleInstance;
 
@@ -74,7 +75,7 @@ namespace SymOntoClay.Core.Internal.Converters
             return _compiler.Compile(statements);
         }
 
-        private List<AstStatement> ConvertFact(RuleInstance fact, ILocalCodeExecutionContext localCodeExecutionContext)
+        private List<AstStatement> ConvertFact(IMonitorLogger logger, RuleInstance fact, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var nodesList = GetSignificantNodesFromFact(fact, localCodeExecutionContext);
 
@@ -103,7 +104,7 @@ namespace SymOntoClay.Core.Internal.Converters
             return result;
         }
 
-        private AstStatement ConvertRelation(LogicalQueryNode relation, RuleInstance fact, ILocalCodeExecutionContext localCodeExecutionContext)
+        private AstStatement ConvertRelation(IMonitorLogger logger, LogicalQueryNode relation, RuleInstance fact, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var statement = new AstExpressionStatement();
             var callExpression = new CallingFunctionAstExpression();
@@ -209,7 +210,7 @@ namespace SymOntoClay.Core.Internal.Converters
             return statement;
         }
 
-        private List<LogicalQueryNode> GetNonActRelationsWithLogicalVarInFirstParameter(StrongIdentifierValue variableName, RuleInstance fact, LogicalQueryNode processedAction, ILocalCodeExecutionContext localCodeExecutionContext)
+        private List<LogicalQueryNode> GetNonActRelationsWithLogicalVarInFirstParameter(IMonitorLogger logger, StrongIdentifierValue variableName, RuleInstance fact, LogicalQueryNode processedAction, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var result = new List<LogicalQueryNode>();
 
@@ -218,7 +219,7 @@ namespace SymOntoClay.Core.Internal.Converters
             return result;
         }
 
-        private void GetNonActRelationsWithLogicalVarInFirstParameter(StrongIdentifierValue variableName, LogicalQueryNode node, LogicalQueryNode processedAction, List<LogicalQueryNode> result, ILocalCodeExecutionContext localCodeExecutionContext)
+        private void GetNonActRelationsWithLogicalVarInFirstParameter(IMonitorLogger logger, StrongIdentifierValue variableName, LogicalQueryNode node, LogicalQueryNode processedAction, List<LogicalQueryNode> result, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var kind = node.Kind;
 
@@ -298,7 +299,7 @@ namespace SymOntoClay.Core.Internal.Converters
             }
         }
 
-        private List<LogicalQueryNode> GetSignificantNodesFromFact(RuleInstance fact, ILocalCodeExecutionContext localCodeExecutionContext)
+        private List<LogicalQueryNode> GetSignificantNodesFromFact(IMonitorLogger logger, RuleInstance fact, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var result = new List<LogicalQueryNode>();
 
@@ -324,7 +325,7 @@ namespace SymOntoClay.Core.Internal.Converters
             return result;
         }
 
-        private List<LogicalQueryNode> GetRootRelationsFromFact(RuleInstance fact)
+        private List<LogicalQueryNode> GetRootRelationsFromFact(IMonitorLogger logger, RuleInstance fact)
         {
             var result = new List<LogicalQueryNode>();
 
@@ -333,7 +334,7 @@ namespace SymOntoClay.Core.Internal.Converters
             return result;
         }
 
-        private void GetRootRelationsFromFact(LogicalQueryNode node, List<LogicalQueryNode> result)
+        private void GetRootRelationsFromFact(IMonitorLogger logger, LogicalQueryNode node, List<LogicalQueryNode> result)
         {
             var kind = node.Kind;
 

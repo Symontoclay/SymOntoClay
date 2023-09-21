@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution.Helpers;
 using SymOntoClay.Core.Internal.Services;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -61,7 +62,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly object _lockObj = new object();
 
         /// <inheritdoc/>
-        public void Run()
+        public void Run(IMonitorLogger logger)
         {
             lock(_lockObj)
             {
@@ -76,10 +77,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 }                
             }
 
-            var lifeCycleEventCoordinator = _handler.GetCoordinator(_context, _currentCodeFrame.LocalContext);
-            var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(_handler, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, null, true);
+            var lifeCycleEventCoordinator = _handler.GetCoordinator(logger, _context, _currentCodeFrame.LocalContext);
+            var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(logger, _handler, KindOfFunctionParameters.NoParameters, null, null, _currentCodeFrame.LocalContext, null, true);
 
-            _codeFrameAsyncExecutor.AsyncExecuteCodeFrame(_parentThreadId, newCodeFrame, _currentCodeFrame, lifeCycleEventCoordinator, SyncOption.ChildAsync, false);
+            _codeFrameAsyncExecutor.AsyncExecuteCodeFrame(logger, _parentThreadId, newCodeFrame, _currentCodeFrame, lifeCycleEventCoordinator, SyncOption.ChildAsync, false);
         }
     }
 }

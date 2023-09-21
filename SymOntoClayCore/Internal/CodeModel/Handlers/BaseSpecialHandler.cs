@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -33,10 +34,10 @@ namespace SymOntoClay.Core.Internal.CodeModel.Handlers
     public abstract class BaseSpecialHandler : IExecutable, ISystemHandler
     {
         /// <inheritdoc/>
-        public abstract Value Call(IList<Value> paramsList, ILocalCodeExecutionContext localCodeExecutionContext);
+        public abstract Value Call(IMonitorLogger logger, IList<Value> paramsList, ILocalCodeExecutionContext localCodeExecutionContext);
 
         /// <inheritdoc/>
-        public abstract Value Call(IDictionary<string, Value> paramsDict, Value anotation, ILocalCodeExecutionContext localCodeExecutionContext);
+        public abstract Value Call(IMonitorLogger logger, IDictionary<string, Value> paramsDict, Value anotation, ILocalCodeExecutionContext localCodeExecutionContext);
 
         /// <inheritdoc/>
         public bool IsSystemDefined => true;
@@ -54,19 +55,19 @@ namespace SymOntoClay.Core.Internal.CodeModel.Handlers
         public ISystemHandler SystemHandler => this;
 
         /// <inheritdoc/>
-        public IExecutionCoordinator GetCoordinator(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
+        public IExecutionCoordinator GetCoordinator(IMonitorLogger logger, IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return null;
         }
 
         /// <inheritdoc/>
-        public IExecutable Activate(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext, IExecutionCoordinator executionCoordinator)
+        public IExecutable Activate(IMonitorLogger logger, IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext, IExecutionCoordinator executionCoordinator)
         {
             return this;
         }
 
         /// <inheritdoc/>
-        public bool ContainsArgument(StrongIdentifierValue name)
+        public bool ContainsArgument(IMonitorLogger logger, StrongIdentifierValue name)
         {
             return false;
         }

@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,7 +55,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public List<AstStatement> Statements { get; set; } = new List<AstStatement>();
         public CompiledFunctionBody CompiledFunctionBody { get; set; }        
 
-        public CompiledFunctionBody GetCompiledFunctionBody(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
+        public CompiledFunctionBody GetCompiledFunctionBody(IMonitorLogger logger, IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             if(CompiledFunctionBody != null)
             {
@@ -63,7 +64,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             if(RuleInstance != null)
             {
-                CompiledFunctionBody = context.ConvertersFactory.GetConverterFactToImperativeCode().Convert(RuleInstance, localCodeExecutionContext);
+                CompiledFunctionBody = context.ConvertersFactory.GetConverterFactToImperativeCode().Convert(logger, RuleInstance, localCodeExecutionContext);
                 return CompiledFunctionBody;
             }
 

@@ -20,12 +20,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,9 +48,9 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly Random _idleActionsRandom;
 
         /// <inheritdoc/>
-        public override bool ActivateIdleAction()
+        public override bool ActivateIdleAction(IMonitorLogger logger)
         {
-            var idleActionsList = _idleActionsResolver.Resolve(_localCodeExecutionContext);
+            var idleActionsList = _idleActionsResolver.Resolve(logger, _localCodeExecutionContext);
 
             if (idleActionsList.IsNullOrEmpty())
             {
@@ -57,19 +59,19 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if(idleActionsList.Count == 1)
             {
-                ActivateIdleAction(idleActionsList.First());
+                ActivateIdleAction(logger, idleActionsList.First());
 
                 return true;
             }
 
             var index = _idleActionsRandom.Next(0, idleActionsList.Count - 1);
 
-            ActivateIdleAction(idleActionsList[index]);
+            ActivateIdleAction(logger, idleActionsList[index]);
 
             return true;
         }
 
-        private void ActivateIdleAction(IdleActionItem idleActionItem)
+        private void ActivateIdleAction(IMonitorLogger logger, IdleActionItem idleActionItem)
         {
             var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
 
@@ -79,7 +81,7 @@ namespace SymOntoClay.Core.Internal.Instances
             localCodeExecutionContext.Holder = Name;
 
             var processInitialInfo = new ProcessInitialInfo();
-            processInitialInfo.CompiledFunctionBody = idleActionItem.GetCompiledFunctionBody(_context, localCodeExecutionContext);
+            processInitialInfo.CompiledFunctionBody = idleActionItem.GetCompiledFunctionBody(logger, _context, localCodeExecutionContext);
             processInitialInfo.LocalContext = localCodeExecutionContext;
             processInitialInfo.Metadata = idleActionItem;
             processInitialInfo.Instance = this;

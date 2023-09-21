@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,19 +56,19 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public ISystemHandler SystemHandler => null;
 
         /// <inheritdoc/>
-        public IExecutionCoordinator GetCoordinator(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
+        public IExecutionCoordinator GetCoordinator(IMonitorLogger logger, IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return null;
         }
 
         /// <inheritdoc/>
-        public IExecutable Activate(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext, IExecutionCoordinator executionCoordinator)
+        public IExecutable Activate(IMonitorLogger logger, IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext, IExecutionCoordinator executionCoordinator)
         {
             return this;
         }
 
         /// <inheritdoc/>
-        public bool ContainsArgument(StrongIdentifierValue name)
+        public bool ContainsArgument(IMonitorLogger logger, StrongIdentifierValue name)
         {
             return false;
         }

@@ -29,6 +29,7 @@ using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,19 +74,19 @@ namespace SymOntoClay.Core.Internal.CodeModel
         IList<IFunctionArgument> IExecutable.Arguments => _iArgumentsList;
 
         /// <inheritdoc/>
-        public bool ContainsArgument(StrongIdentifierValue name)
+        public bool ContainsArgument(IMonitorLogger logger, StrongIdentifierValue name)
         {
             return _argumentsDict.ContainsKey(name);
         }
 
         /// <inheritdoc/>
-        IExecutionCoordinator IExecutable.GetCoordinator(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
+        IExecutionCoordinator IExecutable.GetCoordinator(IMonitorLogger logger, IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return null;
         }
 
         /// <inheritdoc/>
-        IExecutable IExecutable.Activate(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext, IExecutionCoordinator executionCoordinator)
+        IExecutable IExecutable.Activate(IMonitorLogger logger, IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext, IExecutionCoordinator executionCoordinator)
         {
             return this;
         }

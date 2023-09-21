@@ -110,7 +110,7 @@ namespace SymOntoClay.Core
                 _status = ProcessStatus.Running;
             }
 
-            ProcessPlatformStart();
+            ProcessPlatformStart(logger);
         }
 
         /// <inheritdoc/>
@@ -159,20 +159,20 @@ namespace SymOntoClay.Core
             switch (status)
             {
                 case ProcessStatus.Completed:
-                    EmitOnComplete();
+                    EmitOnComplete(logger);
                     ProcessGeneralFinishStatuses(ProcessStatus.WeakCanceled);
                     break;
 
                 case ProcessStatus.WeakCanceled:
-                    EmitOnWeakCanceled();
+                    EmitOnWeakCanceled(logger);
                     ProcessGeneralFinishStatuses(ProcessStatus.WeakCanceled);
-                    ProcessPlatformCancelation();
+                    ProcessPlatformCancelation(logger);
                     break;
 
                 case ProcessStatus.Canceled:
                 case ProcessStatus.Faulted:
                     ProcessGeneralFinishStatuses(ProcessStatus.Canceled);
-                    ProcessPlatformCancelation();
+                    ProcessPlatformCancelation(logger);
                     break;
             }
         }
@@ -187,28 +187,28 @@ namespace SymOntoClay.Core
 
         private void EmitOnFinish(IMonitorLogger logger)
         {
-            EmitOnFinishHandlers();
+            EmitOnFinishHandlers(logger);
 
             InternalOnFinish?.Invoke(this);
         }
 
         private void EmitOnComplete(IMonitorLogger logger)
         {
-            EmitOnCompleteHandlers();
+            EmitOnCompleteHandlers(logger);
 
             InternalOnComplete?.Invoke(this);
         }
 
         private void EmitOnWeakCanceled(IMonitorLogger logger)
         {
-            EmitOnWeakCanceledHandlers();
+            EmitOnWeakCanceledHandlers(logger);
 
             InternalOnWeakCanceled?.Invoke(this);
         }
 
         private void ProcessGeneralFinishStatuses(IMonitorLogger logger, ProcessStatus status)
         {
-            EmitOnFinish();
+            EmitOnFinish(logger);
             NCancelChildren(status);
         }
 
@@ -219,14 +219,14 @@ namespace SymOntoClay.Core
                 case ProcessStatus.WeakCanceled:
                     foreach (var child in _childrenProcessInfoList.ToList())
                     {
-                        child.WeakCancel();
+                        child.WeakCancel(logger);
                     }
                     break;
 
                 case ProcessStatus.Canceled:
                     foreach (var child in _childrenProcessInfoList.ToList())
                     {
-                        child.Cancel();
+                        child.Cancel(logger);
                     }
                     break;
 
@@ -311,7 +311,7 @@ namespace SymOntoClay.Core
         {
             if (NIsFinished)
             {
-                EmitOnFinish();
+                EmitOnFinish(logger);
             }
         }
 
@@ -319,7 +319,7 @@ namespace SymOntoClay.Core
         {
             if (_status == ProcessStatus.Completed)
             {
-                EmitOnComplete();
+                EmitOnComplete(logger);
             }
         }
 
@@ -327,7 +327,7 @@ namespace SymOntoClay.Core
         {
             if (_status == ProcessStatus.WeakCanceled)
             {
-                EmitOnWeakCanceled();
+                EmitOnWeakCanceled(logger);
             }
         }
 
@@ -502,7 +502,7 @@ namespace SymOntoClay.Core
                     handler.ProcessInfo = this;
                 }
 
-                CheckOnFinishStatus();
+                CheckOnFinishStatus(logger);
             }
         }
 
@@ -531,7 +531,7 @@ namespace SymOntoClay.Core
             {
                 foreach (var item in _onFinishHandlersList)
                 {
-                    item.Run();
+                    item.Run(logger);
                 }
             }
         }
@@ -558,7 +558,7 @@ namespace SymOntoClay.Core
                     handler.ProcessInfo = this;
                 }
 
-                CheckOnCompleteStatus();
+                CheckOnCompleteStatus(logger);
             }
         }
 
@@ -587,7 +587,7 @@ namespace SymOntoClay.Core
             {
                 foreach (var item in _onCompleteHandlersList)
                 {
-                    item.Run();
+                    item.Run(logger);
                 }
             }
         }
@@ -614,7 +614,7 @@ namespace SymOntoClay.Core
                     handler.ProcessInfo = this;
                 }
 
-                CheckOnWeakCanceledStatus();
+                CheckOnWeakCanceledStatus(logger);
             }
         }
 
@@ -643,7 +643,7 @@ namespace SymOntoClay.Core
             {
                 foreach (var item in _onWeakCanceledHandlersList)
                 {
-                    item.Run();
+                    item.Run(logger);
                 }
             }
         }

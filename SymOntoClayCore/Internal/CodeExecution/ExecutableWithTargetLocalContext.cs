@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -61,21 +62,21 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public StrongIdentifierValue Holder => _executable.Holder;
 
         /// <inheritdoc/>
-        IExecutionCoordinator IExecutable.GetCoordinator(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
+        IExecutionCoordinator IExecutable.GetCoordinator(IMonitorLogger logger, IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            return _executable.GetCoordinator(context, localCodeExecutionContext);
+            return _executable.GetCoordinator(logger, context, localCodeExecutionContext);
         }
 
         /// <inheritdoc/>
-        IExecutable IExecutable.Activate(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext, IExecutionCoordinator executionCoordinator)
+        IExecutable IExecutable.Activate(IMonitorLogger logger, IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext, IExecutionCoordinator executionCoordinator)
         {
-            return _executable.Activate(context, localCodeExecutionContext, executionCoordinator);
+            return _executable.Activate(logger, context, localCodeExecutionContext, executionCoordinator);
         }
 
         /// <inheritdoc/>
-        public bool ContainsArgument(StrongIdentifierValue name)
+        public bool ContainsArgument(IMonitorLogger logger, StrongIdentifierValue name)
         {
-            return _executable.ContainsArgument(name);
+            return _executable.ContainsArgument(logger, name);
         }
 
         /// <inheritdoc/>

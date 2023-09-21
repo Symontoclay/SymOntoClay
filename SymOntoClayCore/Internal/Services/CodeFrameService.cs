@@ -28,6 +28,7 @@ using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Storage;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,9 +49,9 @@ namespace SymOntoClay.Core.Internal.Services
         private readonly BaseResolver _baseResolver;
 
         /// <inheritdoc/>
-        public CodeFrame ConvertCompiledFunctionBodyToCodeFrame(CompiledFunctionBody compiledFunctionBody, ILocalCodeExecutionContext parentLocalCodeExecutionContext)
+        public CodeFrame ConvertCompiledFunctionBodyToCodeFrame(IMonitorLogger logger, CompiledFunctionBody compiledFunctionBody, ILocalCodeExecutionContext parentLocalCodeExecutionContext)
         {
-            var storagesList = parentLocalCodeExecutionContext.Storage.GetStorages();
+            var storagesList = parentLocalCodeExecutionContext.Storage.GetStorages(logger);
 
             var localCodeExecutionContext = new LocalCodeExecutionContext(parentLocalCodeExecutionContext);
             var localStorageSettings = RealStorageSettingsHelper.Create(_context, storagesList.ToList(), false);
@@ -74,7 +75,7 @@ namespace SymOntoClay.Core.Internal.Services
         }
 
         /// <inheritdoc/>
-        public CodeFrame ConvertExecutableToCodeFrame(IExecutable function, KindOfFunctionParameters kindOfParameters,
+        public CodeFrame ConvertExecutableToCodeFrame(IMonitorLogger logger, IExecutable function, KindOfFunctionParameters kindOfParameters,
             Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             ILocalCodeExecutionContext parentLocalCodeExecutionContext, ConversionExecutableToCodeFrameAdditionalSettings additionalSettings = null, bool useParentLocalCodeExecutionContextDirectly = false)
         {
@@ -87,7 +88,7 @@ namespace SymOntoClay.Core.Internal.Services
             }
             else
             {
-                var storagesList = parentLocalCodeExecutionContext.Storage.GetStorages();
+                var storagesList = parentLocalCodeExecutionContext.Storage.GetStorages(logger);
 
                 var localCodeExecutionContext = new LocalCodeExecutionContext(parentLocalCodeExecutionContext);
                 var localStorageSettings = RealStorageSettingsHelper.Create(_context, storagesList.ToList(), additionalSettings?.AllowParentLocalStorages ?? false);
@@ -115,11 +116,11 @@ namespace SymOntoClay.Core.Internal.Services
                         break;
 
                     case KindOfFunctionParameters.PositionedParameters:
-                        FillUpPositionedParameters(localCodeExecutionContext, function, positionedParameters);
+                        FillUpPositionedParameters(logger, localCodeExecutionContext, function, positionedParameters);
                         break;
 
                     case KindOfFunctionParameters.NamedParameters:
-                        FillUpNamedParameters(localCodeExecutionContext, function, namedParameters);
+                        FillUpNamedParameters(logger, localCodeExecutionContext, function, namedParameters);
                         break;
 
                     default:
@@ -162,7 +163,7 @@ namespace SymOntoClay.Core.Internal.Services
                 {
                     var numberValueLinearResolver = _context.DataResolversFactory.GetNumberValueLinearResolver();
 
-                    var numberValue = numberValueLinearResolver.Resolve(codeItemPriority, parentLocalCodeExecutionContext);
+                    var numberValue = numberValueLinearResolver.Resolve(logger, codeItemPriority, parentLocalCodeExecutionContext);
 
                     if (!(numberValue == null || numberValue.KindOfValue == KindOfValue.NullValue))
                     {
@@ -174,7 +175,7 @@ namespace SymOntoClay.Core.Internal.Services
             return codeFrame;
         }
 
-        private void FillUpPositionedParameters(ILocalCodeExecutionContext localCodeExecutionContext, IExecutable function, List<Value> positionedParameters)
+        private void FillUpPositionedParameters(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, IExecutable function, List<Value> positionedParameters)
         {
             var varsStorage = localCodeExecutionContext.Storage.VarStorage;
 
@@ -186,7 +187,7 @@ namespace SymOntoClay.Core.Internal.Services
                 {
                     if (argument.HasDefaultValue)
                     {
-                        varsStorage.SetValue(argument.Name, argument.DefaultValue);
+                        varsStorage.SetValue(logger, argument.Name, argument.DefaultValue);
                         break;
                     }
 
@@ -195,11 +196,11 @@ namespace SymOntoClay.Core.Internal.Services
 
                 var parameterItem = positionedParametersEnumerator.Current;
 
-                varsStorage.SetValue(argument.Name, parameterItem);
+                varsStorage.SetValue(logger, argument.Name, parameterItem);
             }
         }
 
-        private void FillUpNamedParameters(ILocalCodeExecutionContext localCodeExecutionContext, IExecutable function, Dictionary<StrongIdentifierValue, Value> namedParameters)
+        private void FillUpNamedParameters(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, IExecutable function, Dictionary<StrongIdentifierValue, Value> namedParameters)
         {
             var varsStorage = localCodeExecutionContext.Storage.VarStorage;
 
@@ -226,7 +227,7 @@ namespace SymOntoClay.Core.Internal.Services
                         throw new ArgumentOutOfRangeException(nameof(kindOfParameterName), kindOfParameterName, null);
                 }
 
-                parameterName = CheckParameterName(parameterName, function, synonymsResolver, localCodeExecutionContext);
+                parameterName = CheckParameterName(logger, parameterName, function, synonymsResolver, localCodeExecutionContext);
 
                 if (parameterName == null)
                 {
@@ -236,7 +237,7 @@ namespace SymOntoClay.Core.Internal.Services
                 {
                     usedParameters.Add(parameterName);
 
-                    varsStorage.SetValue(parameterName, namedParameter.Value);
+                    varsStorage.SetValue(logger, parameterName, namedParameter.Value);
                 }
             }
 
@@ -253,7 +254,7 @@ namespace SymOntoClay.Core.Internal.Services
 
                     if (argument.HasDefaultValue)
                     {
-                        varsStorage.SetValue(argument.Name, argument.DefaultValue);
+                        varsStorage.SetValue(logger, argument.Name, argument.DefaultValue);
                         continue;
                     }
                     else
@@ -264,25 +265,25 @@ namespace SymOntoClay.Core.Internal.Services
             }
         }
 
-        private StrongIdentifierValue CheckParameterName(StrongIdentifierValue parameterName, IExecutable function, SynonymsResolver synonymsResolver, ILocalCodeExecutionContext localCodeExecutionContext)
+        private StrongIdentifierValue CheckParameterName(IMonitorLogger logger, StrongIdentifierValue parameterName, IExecutable function, SynonymsResolver synonymsResolver, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            if (function.ContainsArgument(parameterName))
+            if (function.ContainsArgument(logger, parameterName))
             {
                 return parameterName;
             }
 
-            var synonymsList = synonymsResolver.GetSynonyms(parameterName, localCodeExecutionContext);
+            var synonymsList = synonymsResolver.GetSynonyms(logger, parameterName, localCodeExecutionContext);
 
             foreach (var synonym in synonymsList)
             {
-                if (function.ContainsArgument(synonym))
+                if (function.ContainsArgument(logger, synonym))
                 {
                     return synonym;
                 }
 
                 var alternativeSynonym = NameHelper.CreateAlternativeArgumentName(synonym);
 
-                if (function.ContainsArgument(alternativeSynonym))
+                if (function.ContainsArgument(logger, alternativeSynonym))
                 {
                     return alternativeSynonym;
                 }
@@ -290,18 +291,18 @@ namespace SymOntoClay.Core.Internal.Services
 
             var alternativeParameterName = NameHelper.CreateAlternativeArgumentName(parameterName);
 
-            synonymsList = synonymsResolver.GetSynonyms(alternativeParameterName, localCodeExecutionContext);
+            synonymsList = synonymsResolver.GetSynonyms(logger, alternativeParameterName, localCodeExecutionContext);
 
             foreach (var synonym in synonymsList)
             {
-                if (function.ContainsArgument(synonym))
+                if (function.ContainsArgument(logger, synonym))
                 {
                     return synonym;
                 }
 
                 var alternativeSynonym = NameHelper.CreateAlternativeArgumentName(synonym);
 
-                if (function.ContainsArgument(alternativeSynonym))
+                if (function.ContainsArgument(logger, alternativeSynonym))
                 {
                     return alternativeSynonym;
                 }

@@ -24,6 +24,7 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -64,21 +65,21 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public ISystemHandler SystemHandler => _iOp.SystemHandler;
 
         /// <inheritdoc/>
-        public bool ContainsArgument(StrongIdentifierValue name)
+        public bool ContainsArgument(IMonitorLogger logger, StrongIdentifierValue name)
         {
-            return _iOp.ContainsArgument(name);
+            return _iOp.ContainsArgument(logger, name);
         }
 
         /// <inheritdoc/>
-        IExecutionCoordinator IExecutable.GetCoordinator(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
+        IExecutionCoordinator IExecutable.GetCoordinator(IMonitorLogger logger, IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return null;
         }
 
         /// <inheritdoc/>
-        IExecutable IExecutable.Activate(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext, IExecutionCoordinator executionCoordinator)
+        IExecutable IExecutable.Activate(IMonitorLogger logger, IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext, IExecutionCoordinator executionCoordinator)
         {
-            return context.InstancesStorage.CreateInstance(this, localCodeExecutionContext, executionCoordinator).AsActionInstanceValue.ActionInstance;
+            return context.InstancesStorage.CreateInstance(logger, this, localCodeExecutionContext, executionCoordinator).AsActionInstanceValue.ActionInstance;
         }
 
         /// <inheritdoc/>

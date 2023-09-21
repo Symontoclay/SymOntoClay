@@ -24,6 +24,7 @@ using NLog;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -41,18 +42,18 @@ namespace SymOntoClay.Core.Internal.CodeModel.Handlers
         private readonly CancellationTokenSource _cancellationTokenSource;
 
         /// <inheritdoc/>
-        public override Value Call(IList<Value> paramsList, ILocalCodeExecutionContext localCodeExecutionContext)
+        public override Value Call(IMonitorLogger logger, IList<Value> paramsList, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            return NCall();
+            return NCall(logger);
         }
 
         /// <inheritdoc/>
-        public override Value Call(IDictionary<string, Value> paramsDict, Value anotation, ILocalCodeExecutionContext localCodeExecutionContext)
+        public override Value Call(IMonitorLogger logger, IDictionary<string, Value> paramsDict, Value anotation, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            return NCall();
+            return NCall(logger);
         }
 
-        private Value NCall()
+        private Value NCall(IMonitorLogger logger)
         {
             _cancellationTokenSource.Cancel();
 

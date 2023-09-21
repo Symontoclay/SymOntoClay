@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Storage;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,7 +45,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private List<StateDeactivator> _stateDeactivators = new List<StateDeactivator>();
 
         /// <inheritdoc/>
-        protected override void RunDeactivatorsOfStates()
+        protected override void RunDeactivatorsOfStates(IMonitorLogger logger)
         {
             if(_codeItem.DeactivatingConditions.Any())
             {
@@ -54,7 +55,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
                     _stateDeactivators.Add(deactivatorInstance);
 
-                    deactivatorInstance.Init();
+                    deactivatorInstance.Init(logger);
                 }
             }
         }

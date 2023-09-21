@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Storage;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -57,11 +58,11 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly VarsResolver _varsResolver;
 
         /// <inheritdoc/>
-        public override IExecutable GetExecutable(KindOfFunctionParameters kindOfParameters, IDictionary<StrongIdentifierValue, Value> namedParameters, IList<Value> positionedParameters)
+        public override IExecutable GetExecutable(IMonitorLogger logger, KindOfFunctionParameters kindOfParameters, IDictionary<StrongIdentifierValue, Value> namedParameters, IList<Value> positionedParameters)
         {
             if(_function != null)
             {
-                if(_methodsResolver.IsFit(_function, kindOfParameters, namedParameters, positionedParameters, _localCodeExecutionContext))
+                if(_methodsResolver.IsFit(logger, _function, kindOfParameters, namedParameters, positionedParameters, _localCodeExecutionContext))
                 {
                     return _functionExecutable;
                 }
@@ -73,36 +74,36 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        public override void SetPropertyValue(StrongIdentifierValue propertyName, Value value)
+        public override void SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void SetVarValue(StrongIdentifierValue varName, Value value)
+        public override void SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value)
         {
-            _varsResolver.SetVarValue(varName, value, _localCodeExecutionContext);
+            _varsResolver.SetVarValue(logger, varName, value, _localCodeExecutionContext);
         }
 
         /// <inheritdoc/>
-        public override Value GetPropertyValue(StrongIdentifierValue propertyName)
+        public override Value GetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override Value GetVarValue(StrongIdentifierValue varName)
+        public override Value GetVarValue(IMonitorLogger logger, StrongIdentifierValue varName)
         {
-            return _varsResolver.GetVarValue(varName, _localCodeExecutionContext);
+            return _varsResolver.GetVarValue(logger, varName, _localCodeExecutionContext);
         }
 
         /// <inheritdoc/>
-        protected override void RunPreConstructors()
+        protected override void RunPreConstructors(IMonitorLogger logger)
         {
         }
 
         /// <inheritdoc/>
-        protected override void RunConstructors()
+        protected override void RunConstructors(IMonitorLogger logger)
         {
         }
     }

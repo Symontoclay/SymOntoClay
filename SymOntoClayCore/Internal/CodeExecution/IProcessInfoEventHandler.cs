@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -29,6 +30,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     public interface IProcessInfoEventHandler : IDisposable
     {
         IProcessInfo ProcessInfo { get; set; }
-        void Run();
+        void Run(IMonitorLogger logger);
     }
 }

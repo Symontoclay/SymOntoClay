@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -50,13 +51,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public ActionInstance ActionInstance { get; private set; }
 
         /// <inheritdoc/>
-        public IExecutionCoordinator GetCoordinator(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
+        public IExecutionCoordinator GetCoordinator(IMonitorLogger logger, IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public IExecutable Activate(IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext, IExecutionCoordinator executionCoordinator)
+        public IExecutable Activate(IMonitorLogger logger, IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext, IExecutionCoordinator executionCoordinator)
         {
             throw new NotImplementedException();
         }
@@ -95,9 +96,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public ISystemHandler SystemHandler => ActionInstance.SystemHandler;
 
         /// <inheritdoc/>
-        public bool ContainsArgument(StrongIdentifierValue name)
+        public bool ContainsArgument(IMonitorLogger logger, StrongIdentifierValue name)
         {
-            return ActionInstance.ContainsArgument(name);
+            return ActionInstance.ContainsArgument(logger, name);
         }
 
         /// <inheritdoc/>

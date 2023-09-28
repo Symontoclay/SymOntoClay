@@ -53,7 +53,7 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         protected override bool ShouldSearch()
         {
-            return !_appInstance.IsStateActivated(_stateName);
+            return !_appInstance.IsStateActivated(Logger, _stateName);
         }
 
         /// <inheritdoc/>
@@ -67,7 +67,7 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             if (_bindingVariables.Any())
             {
-                var storagesList = _baseResolver.GetStoragesList(localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
+                var storagesList = _baseResolver.GetStoragesList(Logger, localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
                 var targetStorage = storagesList.FirstOrDefault(p => p.Storage.Kind == KindOfStorage.Local);
 
@@ -79,8 +79,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 foreach(var varName in varNamesList)
                 {
-
-                    var varItem = targetVarStorage.GetLocalVarDirectly(varName);
+                    var varItem = targetVarStorage.GetLocalVarDirectly(Logger, varName);
 
                     if(varItem == null)
                     {
@@ -90,11 +89,11 @@ namespace SymOntoClay.Core.Internal.Instances
                     varList.Add(varItem);
                 }
 
-                _appInstance.ActivateState(_stateDef, varList);
+                _appInstance.ActivateState(Logger, _stateDef, varList);
             }
             else
             {
-                _appInstance.ActivateState(_stateDef);
+                _appInstance.ActivateState(Logger, _stateDef);
             }            
         }
     }

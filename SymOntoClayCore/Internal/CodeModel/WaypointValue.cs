@@ -53,7 +53,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             _context = context;
 
-            AbcoluteCoordinates = context.HostSupport.ConvertFromRelativeToAbsolute(new RelativeCoordinate() { Distance = distance, HorizontalAngle = horizontalAngle});
+            AbcoluteCoordinates = context.HostSupport.ConvertFromRelativeToAbsolute(Logger, new RelativeCoordinate() { Distance = distance, HorizontalAngle = horizontalAngle});
             Name = name;
         }
 

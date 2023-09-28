@@ -50,7 +50,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         /// <inheritdoc/>
         public Value GetVarValue(IMonitorLogger logger, StrongIdentifierValue varName)
         {
-            return _varsResolver.GetVarValue(varName, _localCodeExecutionContext, _options);
+            return _varsResolver.GetVarValue(logger, varName, _localCodeExecutionContext, _options);
         }
     }
 }

@@ -46,10 +46,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             switch (kindOfValue)
             {
                 case KindOfValue.LogicalValue:
-                    return Resolve(value.AsLogicalValue);
+                    return Resolve(logger, value.AsLogicalValue);
 
                 case KindOfValue.NumberValue:
-                    return Resolve(value.AsNumberValue);
+                    return Resolve(logger, value.AsNumberValue);
 
                 case KindOfValue.NullValue:
                     return NullValueEquvivalent;
@@ -67,7 +67,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if(systemValue.HasValue)
             {
-                return Resolve(systemValue.Value);
+                return Resolve(logger, systemValue.Value);
             }
 
             return NullValueEquvivalent;
@@ -79,7 +79,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (systemValue.HasValue)
             {
-                return Resolve(systemValue.Value);
+                return Resolve(logger, systemValue.Value);
             }
 
             return NullValueEquvivalent;

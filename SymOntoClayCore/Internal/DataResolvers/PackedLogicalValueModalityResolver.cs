@@ -43,7 +43,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         /// <inheritdoc/>
         public bool IsHigh(IMonitorLogger logger, Value modalityValue)
         {
-            return _logicalValueModalityResolver.IsHigh(modalityValue, _localCodeExecutionContext);
+            return _logicalValueModalityResolver.IsHigh(logger, modalityValue, _localCodeExecutionContext);
         }
     }
 }

@@ -49,7 +49,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
             _dateTimeResolver = engineContext.DataResolversFactory.GetDateTimeResolver();
 
-            _targetDuration = _dateTimeResolver.ConvertTimeValueToTicks(condition.Value, DefaultTimeValues.EachTimerDefaultTimeValue, localCodeExecutionContext);
+            _targetDuration = _dateTimeResolver.ConvertTimeValueToTicks(Logger, condition.Value, DefaultTimeValues.EachTimerDefaultTimeValue, localCodeExecutionContext);
 
             _activeObject = new AsyncActivePeriodicObject(engineContext.ActivePeriodicObjectContext);
             _activeObject.PeriodicMethod = NRun;

@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.CoreHelper;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -46,8 +47,8 @@ namespace SymOntoClay.UnityAsset.Core
         /// Another NPCs will percept the NPC as died.
         /// </summary>
         void Die();
-        string InsertFact(string text);
-        void RemoveFact(string id);
+        string InsertFact(IMonitorLogger logger, string text);
+        void RemoveFact(IMonitorLogger logger, string id);
 
         /// <summary>
         /// Returns storage that represents a backpack.
@@ -57,14 +58,16 @@ namespace SymOntoClay.UnityAsset.Core
         /// <summary>
         /// Adds a game object into backpack.
         /// </summary>
+        /// <param name="logger">Logger.</param>
         /// <param name="obj">Instance of the game object.</param>
-        void AddToBackpack(IGameObject obj);
+        void AddToBackpack(IMonitorLogger logger, IGameObject obj);
 
         /// <summary>
         /// Removes game object from backpack.
         /// </summary>
+        /// <param name="logger">Logger.</param>
         /// <param name="obj">Instance of the game object.</param>
-        void RemoveFromBackpack(IGameObject obj);
+        void RemoveFromBackpack(IMonitorLogger logger, IGameObject obj);
 
         /// <summary>
         /// Gets engine context. Onkly for debugging and testing!

@@ -52,7 +52,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         /// <inheritdoc/>
         public override (Value Value, bool IsPeriodic) Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
         {
-            return (_varsResolver.GetVarValue(_varName, _localCodeExecutionContext), false);
+            return (_varsResolver.GetVarValue(Logger, _varName, _localCodeExecutionContext), false);
         }
     }
 }

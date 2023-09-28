@@ -50,7 +50,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         /// <inheritdoc/>
         public List<StrongIdentifierValue> GetSynonyms(IMonitorLogger logger, StrongIdentifierValue name)
         {
-            return _synonymsResolver.GetSynonyms(name, _localCodeExecutionContext);
+            return _synonymsResolver.GetSynonyms(logger, name, _localCodeExecutionContext);
         }
     }
 }

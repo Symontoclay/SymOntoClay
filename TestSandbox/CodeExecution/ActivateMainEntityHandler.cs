@@ -50,7 +50,7 @@ namespace TestSandbox.CodeExecution
 
             var globalStorage = context.Storage.GlobalStorage;
 
-            var filesList = FileHelper.GetParsedFilesInfo(context.AppFile, context.Id);
+            var filesList = FileHelper.GetParsedFilesInfo(_logger, context.AppFile, context.Id);
 
 #if DEBUG
             _logger.Info("54D2CA26-DF1B-457E-92DE-521225BC9DF4", $"filesList.Count = {filesList.Count}");
@@ -78,7 +78,7 @@ namespace TestSandbox.CodeExecution
 
             foreach (var codeEntity in parsedCodeEntitiesList)
             {
-                metadataStorage.Append(codeEntity);
+                metadataStorage.Append(_logger, codeEntity);
             }
 
             var inlineTrigger = parsedCodeEntitiesList.FirstOrDefault(p => p.Kind == KindOfCodeEntity.InlineTrigger);
@@ -87,7 +87,7 @@ namespace TestSandbox.CodeExecution
 
             var triggersStorage = globalStorage.TriggersStorage;
 
-            triggersStorage.Append(inlineTrigger.AsInlineTrigger);
+            triggersStorage.Append(_logger, inlineTrigger.AsInlineTrigger);
 
             var mainEntity = metadataStorage.MainCodeEntity;
 
@@ -100,7 +100,7 @@ namespace TestSandbox.CodeExecution
             var localCodeExecutionContext = new LocalCodeExecutionContext();
             localCodeExecutionContext.Storage = globalStorage;
 
-            var targetTriggersList = triggersResolver.ResolveSystemEventsTriggersList(KindOfSystemEventOfInlineTrigger.Enter, mainEntity.Name, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+            var targetTriggersList = triggersResolver.ResolveSystemEventsTriggersList(_logger, KindOfSystemEventOfInlineTrigger.Enter, mainEntity.Name, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
 #if DEBUG
             _logger.Info("19A255FA-44E8-4B4C-995B-7A5D946E69C2", $"targetTriggersList = {targetTriggersList.WriteListToString()}");
@@ -108,7 +108,7 @@ namespace TestSandbox.CodeExecution
 
             var instancesStorage = context.InstancesStorage;
 
-            instancesStorage.ActivateMainEntity();
+            instancesStorage.ActivateMainEntity(_logger);
 
             Thread.Sleep(10000);
 

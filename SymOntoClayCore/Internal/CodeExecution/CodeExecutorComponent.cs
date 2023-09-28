@@ -26,6 +26,7 @@ using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -63,15 +64,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly ILocalCodeExecutionContext _globalExecutionContext;
 
         /// <inheritdoc/>
-        public Value ExecuteAsync(ProcessInitialInfo processInitialInfo)
+        public Value ExecuteAsync(IMonitorLogger logger, ProcessInitialInfo processInitialInfo)
         {
-            return ExecuteBatchAsync(new List<ProcessInitialInfo>() { processInitialInfo });
+            return ExecuteBatchAsync(logger, new List<ProcessInitialInfo>() { processInitialInfo });
         }
 
         /// <inheritdoc/>
-        public Value ExecuteBatchAsync(List<ProcessInitialInfo> processInitialInfoList)
+        public Value ExecuteBatchAsync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList)
         {
-            var codeFramesList = ConvertProcessInitialInfosToCodeFrames(processInitialInfoList);
+            var codeFramesList = ConvertProcessInitialInfosToCodeFrames(logger, processInitialInfoList);
 
             var threadExecutor = new AsyncThreadExecutor(_context);
             threadExecutor.SetCodeFrames(codeFramesList);
@@ -80,9 +81,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         /// <inheritdoc/>
-        public Value ExecuteBatchSync(List<ProcessInitialInfo> processInitialInfoList)
+        public Value ExecuteBatchSync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList)
         {
-            var codeFramesList = ConvertProcessInitialInfosToCodeFrames(processInitialInfoList);
+            var codeFramesList = ConvertProcessInitialInfosToCodeFrames(logger, processInitialInfoList);
 
             var threadExecutor = new SyncThreadExecutor(_context);
             threadExecutor.SetCodeFrames(codeFramesList);
@@ -90,7 +91,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             return threadExecutor.Start();
         }
 
-        private List<CodeFrame> ConvertProcessInitialInfosToCodeFrames(List<ProcessInitialInfo> processInitialInfoList)
+        private List<CodeFrame> ConvertProcessInitialInfosToCodeFrames(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList)
         {
             var codeFramesList = new List<CodeFrame>();
 
@@ -115,7 +116,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (codeItemPriority != null)
                 {
-                    var numberValue = _numberValueLinearResolver.Resolve(codeItemPriority, _globalExecutionContext);
+                    var numberValue = _numberValueLinearResolver.Resolve(logger, codeItemPriority, _globalExecutionContext);
 
                     if (!(numberValue == null || numberValue.KindOfValue == KindOfValue.NullValue))
                     {
@@ -123,7 +124,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     }
                 }
 
-                _context.InstancesStorage.AppendProcessInfo(processInfo);
+                _context.InstancesStorage.AppendProcessInfo(logger, processInfo);
 
                 codeFramesList.Add(codeFrame);
             }
@@ -132,27 +133,27 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         /// <inheritdoc/>
-        public Value CallOperator(KindOfOperator kindOfOperator, List<Value> paramsList, ILocalCodeExecutionContext parentLocalCodeExecutionContext)
+        public Value CallOperator(IMonitorLogger logger, KindOfOperator kindOfOperator, List<Value> paramsList, ILocalCodeExecutionContext parentLocalCodeExecutionContext)
         {
-            var operatorInfo = _operatorsResolver.GetOperator(kindOfOperator, parentLocalCodeExecutionContext);
+            var operatorInfo = _operatorsResolver.GetOperator(logger, kindOfOperator, parentLocalCodeExecutionContext);
 
-            return CallExecutableSync(operatorInfo, paramsList, parentLocalCodeExecutionContext);
+            return CallExecutableSync(logger, operatorInfo, paramsList, parentLocalCodeExecutionContext);
         }
 
         /// <inheritdoc/>
-        public Value CallExecutableSync(IExecutable executable, List<Value> positionedParameters, ILocalCodeExecutionContext parentLocalCodeExecutionContext)
+        public Value CallExecutableSync(IMonitorLogger logger, IExecutable executable, List<Value> positionedParameters, ILocalCodeExecutionContext parentLocalCodeExecutionContext)
         {
-            return CallExecutable(executable, KindOfFunctionParameters.PositionedParameters, null, positionedParameters, true, parentLocalCodeExecutionContext);
+            return CallExecutable(logger, executable, KindOfFunctionParameters.PositionedParameters, null, positionedParameters, true, parentLocalCodeExecutionContext);
         }
 
-        private Value CallExecutable(IExecutable executable, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, bool isSync, ILocalCodeExecutionContext parentLocalCodeExecutionContext)
+        private Value CallExecutable(IMonitorLogger logger, IExecutable executable, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, bool isSync, ILocalCodeExecutionContext parentLocalCodeExecutionContext)
         {
             if (executable == null)
             {
                 throw new ArgumentNullException(nameof(executable));
             }
 
-            var coordinator = executable.GetCoordinator(_context, parentLocalCodeExecutionContext);
+            var coordinator = executable.GetCoordinator(logger, _context, parentLocalCodeExecutionContext);
 
             if (executable.IsSystemDefined)
             {
@@ -161,7 +162,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 switch (kindOfParameters)
                 {
                     case KindOfFunctionParameters.PositionedParameters:
-                        result = executable.SystemHandler.Call(positionedParameters, parentLocalCodeExecutionContext);
+                        result = executable.SystemHandler.Call(logger, positionedParameters, parentLocalCodeExecutionContext);
                         break;
 
                     default:
@@ -172,9 +173,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
             else
             {
-                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(executable, kindOfParameters, namedParameters, positionedParameters, parentLocalCodeExecutionContext);
+                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(logger, executable, kindOfParameters, namedParameters, positionedParameters, parentLocalCodeExecutionContext);
 
-                _context.InstancesStorage.AppendProcessInfo(newCodeFrame.ProcessInfo);
+                _context.InstancesStorage.AppendProcessInfo(logger, newCodeFrame.ProcessInfo);
 
                 if (isSync)
                 {
@@ -200,12 +201,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         /// <inheritdoc/>
-        public Value CallFunctionSync(Value caller, KindOfFunctionParameters kindOfParameters, List<Value> parameters, ILocalCodeExecutionContext parentLocalCodeExecutionContext)
+        public Value CallFunctionSync(IMonitorLogger logger, Value caller, KindOfFunctionParameters kindOfParameters, List<Value> parameters, ILocalCodeExecutionContext parentLocalCodeExecutionContext)
         {
-            return CallFunction(caller, kindOfParameters, parameters, parentLocalCodeExecutionContext, true);
+            return CallFunction(logger, caller, kindOfParameters, parameters, parentLocalCodeExecutionContext, true);
         }
 
-        private Value CallFunction(Value caller, KindOfFunctionParameters kindOfParameters, List<Value> parameters, ILocalCodeExecutionContext parentLocalCodeExecutionContext, bool isSync)
+        private Value CallFunction(IMonitorLogger logger, Value caller, KindOfFunctionParameters kindOfParameters, List<Value> parameters, ILocalCodeExecutionContext parentLocalCodeExecutionContext, bool isSync)
         {
             Dictionary<StrongIdentifierValue, Value> namedParameters = null;
             List<Value> positionedParameters = null;
@@ -216,7 +217,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     break;
 
                 case KindOfFunctionParameters.NamedParameters:
-                    namedParameters = TakeNamedParameters(parameters);
+                    namedParameters = TakeNamedParameters(logger, parameters);
                     break;
 
                 case KindOfFunctionParameters.PositionedParameters:
@@ -229,18 +230,18 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (caller.IsPointRefValue)
             {
-                return CallPointRefValue(caller.AsPointRefValue, kindOfParameters, namedParameters, positionedParameters, isSync);
+                return CallPointRefValue(logger, caller.AsPointRefValue, kindOfParameters, namedParameters, positionedParameters, isSync);
             }
 
             if (caller.IsStrongIdentifierValue)
             {
-                return CallStrongIdentifierValue(caller.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, isSync, parentLocalCodeExecutionContext);
+                return CallStrongIdentifierValue(logger, caller.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, isSync, parentLocalCodeExecutionContext);
             }
 
             throw new NotImplementedException();
         }
 
-        private Dictionary<StrongIdentifierValue, Value> TakeNamedParameters(List<Value> rawParamsList)
+        private Dictionary<StrongIdentifierValue, Value> TakeNamedParameters(IMonitorLogger logger, List<Value> rawParamsList)
         {
             var result = new Dictionary<StrongIdentifierValue, Value>();
 
@@ -260,7 +261,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             return result;
         }
 
-        private Value CallPointRefValue(PointRefValue caller,
+        private Value CallPointRefValue(IMonitorLogger logger, PointRefValue caller,
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             bool isSync)
         {
@@ -272,7 +273,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             throw new NotImplementedException();
         }
 
-        private Value CallStrongIdentifierValue(StrongIdentifierValue methodName,
+        private Value CallStrongIdentifierValue(IMonitorLogger logger, StrongIdentifierValue methodName,
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             bool isSync, ILocalCodeExecutionContext parentLocalCodeExecutionContext)
         {
@@ -281,15 +282,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             switch (kindOfParameters)
             {
                 case KindOfFunctionParameters.NoParameters:
-                    method = _methodsResolver.Resolve(methodName, parentLocalCodeExecutionContext);
+                    method = _methodsResolver.Resolve(logger, methodName, parentLocalCodeExecutionContext);
                     break;
 
                 case KindOfFunctionParameters.NamedParameters:
-                    method = _methodsResolver.Resolve(methodName, namedParameters, parentLocalCodeExecutionContext);
+                    method = _methodsResolver.Resolve(logger, methodName, namedParameters, parentLocalCodeExecutionContext);
                     break;
 
                 case KindOfFunctionParameters.PositionedParameters:
-                    method = _methodsResolver.Resolve(methodName, positionedParameters, parentLocalCodeExecutionContext);
+                    method = _methodsResolver.Resolve(logger, methodName, positionedParameters, parentLocalCodeExecutionContext);
                     break;
 
                 default:
@@ -301,7 +302,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 throw new Exception($"Method '{methodName.NameValue}' is not found.");
             }
 
-            return CallExecutable(method, kindOfParameters, namedParameters, positionedParameters, isSync, parentLocalCodeExecutionContext);
+            return CallExecutable(logger, method, kindOfParameters, namedParameters, positionedParameters, isSync, parentLocalCodeExecutionContext);
         }
     }
 }

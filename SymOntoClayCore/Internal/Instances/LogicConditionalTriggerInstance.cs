@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using Newtonsoft.Json;
+using NLog;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
@@ -550,7 +551,7 @@ namespace SymOntoClay.Core.Internal.Instances
             processInitialInfo.Instance = _parent;
             processInitialInfo.ExecutionCoordinator = _executionCoordinator;
 
-            var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo);
+            var task = _context.CodeExecutor.ExecuteAsync(Logger, processInitialInfo);
         }
 
         private void RunResetHandler(ILocalCodeExecutionContext localCodeExecutionContext)
@@ -562,7 +563,7 @@ namespace SymOntoClay.Core.Internal.Instances
             processInitialInfo.Instance = _parent;
             processInitialInfo.ExecutionCoordinator = _executionCoordinator;
 
-            var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo);
+            var task = _context.CodeExecutor.ExecuteAsync(Logger, processInitialInfo);
         }
 
         /// <inheritdoc/>

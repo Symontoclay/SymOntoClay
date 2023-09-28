@@ -51,7 +51,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 if (identifier.KindOfName == KindOfName.Var || identifier.KindOfName == KindOfName.SystemVar)
                 {
-                    return _varsResolver.GetVarValue(identifier, localCodeExecutionContext);
+                    return _varsResolver.GetVarValue(logger, identifier, localCodeExecutionContext);
                 }
             }
 
@@ -66,9 +66,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return operand;
                 }
 
-                leftOperand = TryResolveFromVarOrExpr(leftOperand, localCodeExecutionContext);
+                leftOperand = TryResolveFromVarOrExpr(logger, leftOperand, localCodeExecutionContext);
 
-                return leftOperand.GetMemberValue(rightOperand.AsStrongIdentifierValue);
+                return leftOperand.GetMemberValue(logger, rightOperand.AsStrongIdentifierValue);
             }
 
             return operand;

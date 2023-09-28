@@ -563,12 +563,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 case "complete":
                 case "completed":
-                    targetObject.AddOnCompleteHandler(new ProcessInfoEventHandler(_context, Logger.Id, handler, _currentCodeFrame, true));
+                    targetObject.AddOnCompleteHandler(Logger, new ProcessInfoEventHandler(_context, Logger.Id, handler, _currentCodeFrame, true));
                     break;
 
                 case "weak cancel":
                 case "weak canceled":
-                    targetObject.AddOnWeakCanceledHandler(new ProcessInfoEventHandler(_context, Logger.Id, handler, _currentCodeFrame, true));
+                    targetObject.AddOnWeakCanceledHandler(Logger, new ProcessInfoEventHandler(_context, Logger.Id, handler, _currentCodeFrame, true));
                     break;
 
                 default:
@@ -1082,7 +1082,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         var conditionalEntitySourceValue = value.AsConditionalEntitySourceValue;
 
                         var conditionalEntityValue = conditionalEntitySourceValue.ConvertToConditionalEntityValue(Logger, _context, _currentCodeFrame.LocalContext);
-                        conditionalEntityValue.Resolve();
+                        conditionalEntityValue.Resolve(Logger);
                         value = conditionalEntityValue;
                     }
                     break;
@@ -1756,7 +1756,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             Value annotation, SyncOption syncOption)
         {
-            var executable = caller.GetExecutable(kindOfParameters, namedParameters, positionedParameters);
+            var executable = caller.GetExecutable(Logger, kindOfParameters, namedParameters, positionedParameters);
 
             CallExecutable(executable, executable.OwnLocalCodeExecutionContext, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
         }
@@ -1781,7 +1781,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var methodName = callerRightOperand.AsStrongIdentifierValue;
 
-            var method = callerLeftOperand.GetMethod(methodName, kindOfParameters, namedParameters, positionedParameters);
+            var method = callerLeftOperand.GetMethod(Logger, methodName, kindOfParameters, namedParameters, positionedParameters);
 
             CallExecutable(method, null, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
         }

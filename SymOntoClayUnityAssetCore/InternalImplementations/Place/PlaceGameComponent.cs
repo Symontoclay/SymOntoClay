@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal;
 using System;
 using System.Collections.Generic;
@@ -49,13 +50,13 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Place
         public override bool IsWaited => true;
 
         /// <inheritdoc/>
-        public override bool CanBeTakenBy(IEntity subject)
+        public override bool CanBeTakenBy(IMonitorLogger logger, IEntity subject)
         {
             return false;
         }
 
         /// <inheritdoc/>
-        public override Vector3? GetPosition()
+        public override Vector3? GetPosition(IMonitorLogger logger)
         {
             if (_allowPublicPosition)
             {
@@ -64,7 +65,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Place
                     return _useStaticPosition;
                 }
 
-                return _platformSupport.GetCurrentAbsolutePosition();
+                return _platformSupport.GetCurrentAbsolutePosition(logger);
             }
 
             return null;

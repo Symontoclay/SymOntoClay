@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
@@ -94,10 +95,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         public string IdForFacts => _idForFacts;
 
         /// <inheritdoc/>
-        public abstract bool CanBeTakenBy(IEntity subject);
+        public abstract bool CanBeTakenBy(IMonitorLogger logger, IEntity subject);
 
         /// <inheritdoc/>
-        public abstract Vector3? GetPosition();
+        public abstract Vector3? GetPosition(IMonitorLogger logger);
 
         /// <inheritdoc/>
         public virtual void LoadFromSourceCode()

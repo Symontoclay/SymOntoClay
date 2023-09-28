@@ -63,7 +63,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                 LoadTypesPlatformTypesConvertors();
             }
 
-
             _isInitialized = true;
         }
         
@@ -114,7 +113,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             {
                 var convertor = (IPlatformTypesConverter)Activator.CreateInstance(type);
 
-                PlatformTypesConvertorsRegistry.AddConvertor(convertor);
+                PlatformTypesConvertorsRegistry.AddConvertor(Logger, convertor);
             }
         }
 
@@ -130,7 +129,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         
         public void AddConvertor(IPlatformTypesConverter convertor)
         {
-            PlatformTypesConvertorsRegistry.AddConvertor(convertor);
+            PlatformTypesConvertorsRegistry.AddConvertor(Logger, convertor);
         }
 
         private bool _isInitialized;
@@ -256,7 +255,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             {
                 var publicFactsStorage = component.PublicFactsStorage;
 
-                StandaloneStorage.StandaloneStorage.WorldPublicFactsStorage.AddConsolidatedStorage(publicFactsStorage);
+                StandaloneStorage.StandaloneStorage.WorldPublicFactsStorage.AddConsolidatedStorage(Logger, publicFactsStorage);
             }
         }
 
@@ -276,7 +275,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
                     var publicFactsStorage = component.PublicFactsStorage;
 
-                    StandaloneStorage.StandaloneStorage.WorldPublicFactsStorage.RemoveConsolidatedStorage(publicFactsStorage);
+                    StandaloneStorage.StandaloneStorage.WorldPublicFactsStorage.RemoveConsolidatedStorage(Logger, publicFactsStorage);
                 }
             }
         }
@@ -291,7 +290,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     return false;
                 }
 
-                return _gameComponentsDictByInstanceId[instanceId].CanBeTakenBy(subject);
+                return _gameComponentsDictByInstanceId[instanceId].CanBeTakenBy(Logger, subject);
             }
         }
 
@@ -305,7 +304,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     return null;
                 }
 
-                return _gameComponentsDictByInstanceId[instanceId].GetPosition();
+                return _gameComponentsDictByInstanceId[instanceId].GetPosition(Logger);
             }
         }
 

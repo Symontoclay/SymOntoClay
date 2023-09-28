@@ -80,7 +80,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP.ATN
 
             var converterFactToCG = new ConverterFactToInternalCG(_logger);
 
-            var internalCG = converterFactToCG.Convert(ruleInstance, nlpContext);
+            var internalCG = converterFactToCG.Convert(_logger, ruleInstance, nlpContext);
 
             var converterInternalCGToPhraseStructure = new ConverterInternalCGToPhraseStructure(_logger, _wordsDict);
 
@@ -115,7 +115,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP.ATN
 
             var converterFactToCG = new ConverterFactToInternalCG(_logger);
 
-            var internalCG = converterFactToCG.Convert(ruleInstance, nlpContext);
+            var internalCG = converterFactToCG.Convert(_logger, ruleInstance, nlpContext);
 
             var converterInternalCGToPhraseStructure = new ConverterInternalCGToPhraseStructure(_logger, _wordsDict);
 
@@ -150,7 +150,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP.ATN
 
             var converterFactToCG = new ConverterFactToInternalCG(_logger);
 
-            var internalCG = converterFactToCG.Convert(ruleInstance, nlpContext);
+            var internalCG = converterFactToCG.Convert(_logger, ruleInstance, nlpContext);
 
             var converterInternalCGToPhraseStructure = new ConverterInternalCGToPhraseStructure(_logger, _wordsDict);
 

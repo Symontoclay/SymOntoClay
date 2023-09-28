@@ -24,6 +24,7 @@ using NLog;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -66,7 +67,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        protected override void SetPropertyValue(StrongIdentifierValue propertyName, Value value)
+        protected override void SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value)
         {
             var propertyNameStr = propertyName.NormalizedNameValue;
 

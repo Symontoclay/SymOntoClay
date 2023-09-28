@@ -81,7 +81,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                     }
 
                 case KindOfValue.PointRefValue:
-                    leftOperand.SetValue(rightOperand);
+                    leftOperand.SetValue(logger, rightOperand);
                     return rightOperand;
 
                 default:

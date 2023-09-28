@@ -104,7 +104,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                     break;
 
                 case KindOfValue.LogicalValue:
-                    numVal = ValueConverter.ConvertLogicalValueToNumberValue(numOperand.AsLogicalValue, _engineContext);
+                    numVal = ValueConverter.ConvertLogicalValueToNumberValue(logger, numOperand.AsLogicalValue, _engineContext);
                     break;
 
                 default:

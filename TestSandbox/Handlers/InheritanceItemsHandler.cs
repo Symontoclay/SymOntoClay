@@ -56,7 +56,7 @@ namespace TestSandbox.Handlers
 
             _logger.Info("EF5322F5-8263-47B6-A95B-A39249B41A29", $"inheritanceItem = {inheritanceItem}");
 
-            inheritanceStorage.SetInheritance(inheritanceItem);
+            inheritanceStorage.SetInheritance(_logger, inheritanceItem);
 
             inheritanceItem = new InheritanceItem();
             inheritanceItem.SubName = subName;
@@ -65,7 +65,7 @@ namespace TestSandbox.Handlers
 
             _logger.Info("1FF978A6-CDAA-46DD-A5BE-CFB2A561C68F", $"inheritanceItem = {inheritanceItem}");
 
-            inheritanceStorage.SetInheritance(inheritanceItem);
+            inheritanceStorage.SetInheritance(_logger, inheritanceItem);
 
             inheritanceItem = new InheritanceItem();
             inheritanceItem.SubName = subName;
@@ -74,9 +74,9 @@ namespace TestSandbox.Handlers
 
             _logger.Info("83E54C8F-F3A5-44DB-8E20-C4880A4F6162", $"inheritanceItem = {inheritanceItem}");
 
-            inheritanceStorage.SetInheritance(inheritanceItem);
+            inheritanceStorage.SetInheritance(_logger, inheritanceItem);
 
-            var list = inheritanceStorage.GetItemsDirectly(subName);
+            var list = inheritanceStorage.GetItemsDirectly(_logger, subName);
 
             _logger.Info("A6755979-C263-45DF-92FD-F5AEC3DEAF54", $"list.Count = {list.Count}");
             _logger.Info("0F084B37-A9AC-4597-A8C3-B9CA3963F17C", $"inheritanceItem = {list.WriteListToString()}");

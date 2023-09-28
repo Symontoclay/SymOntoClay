@@ -85,7 +85,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //Log($"exceptList = {exceptList.WriteListToString()}");
 #endif
 
-                var newLogicalQueryNodes = GetLogicalQueryNodes(exceptList, replacingNotResultsStrategy, storagesList);
+                var newLogicalQueryNodes = GetLogicalQueryNodes(logger, exceptList, replacingNotResultsStrategy, storagesList);
 
 #if DEBUG
                 //Log($"newLogicalQueryNodes = {newLogicalQueryNodes.WriteListToString()}");
@@ -94,7 +94,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 newResultVarsDict[varName] = newLogicalQueryNodes;
             }
 
-            return ConvertToResult<T>(newResultVarsDict);
+            return ConvertToResult<T>(logger, newResultVarsDict);
         }
 
         private static readonly List<KindOfLogicalQueryNode> EmptyTargetKindsOfItems = new List<KindOfLogicalQueryNode>();
@@ -107,7 +107,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var result = new List<T>();
 
-            ProcessConvertToResult(source, 0, keysList, new List<(StrongIdentifierValue, LogicalQueryNode)>(), ref result);
+            ProcessConvertToResult(logger, source, 0, keysList, new List<(StrongIdentifierValue, LogicalQueryNode)>(), ref result);
 
             return result;
         }
@@ -118,11 +118,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             if (n == keysList.Count - 1)
             {
-                ProcessConvertToResultFinalNode(source, n, keysList, currentValues, ref result);
+                ProcessConvertToResultFinalNode(logger, source, n, keysList, currentValues, ref result);
             }
             else
             {
-                ProcessConvertToResultIntermediateNode(source, n, keysList, currentValues, ref result);
+                ProcessConvertToResultIntermediateNode(logger, source, n, keysList, currentValues, ref result);
             }
         }
 
@@ -149,7 +149,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var newCurrentValues = currentValues.ToList();
                 newCurrentValues.Add((key, item));
 
-                ProcessConvertToResult(source, nextN, keysList, newCurrentValues, ref result);
+                ProcessConvertToResult(logger, source, nextN, keysList, newCurrentValues, ref result);
             }
         }
 
@@ -199,7 +199,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             return (exceptList.Select(p => p.Kind).ToList(), replacingNotResultsStrategy);
                         }
 
-                        return (GetOrderedKindOfLogicalQueryNodes(exceptList).ToList(), replacingNotResultsStrategy);
+                        return (GetOrderedKindOfLogicalQueryNodes(logger, exceptList).ToList(), replacingNotResultsStrategy);
                     }
 
                 case ReplacingNotResultsStrategy.FirstPresentNextOtherKindOfItems:
@@ -209,7 +209,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             return (exceptList.Select(p => p.Kind).ToList(), ReplacingNotResultsStrategy.AllKindOfItems);
                         }
 
-                        return (GetOrderedKindOfLogicalQueryNodes(exceptList).ToList(), ReplacingNotResultsStrategy.AllKindOfItems);
+                        return (GetOrderedKindOfLogicalQueryNodes(logger, exceptList).ToList(), ReplacingNotResultsStrategy.AllKindOfItems);
                     }
 
                 case ReplacingNotResultsStrategy.DominantKindOfItems:
@@ -219,7 +219,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                             return (exceptList.Select(p => p.Kind).ToList(), ReplacingNotResultsStrategy.PresentKindOfItems);
                         }
 
-                        return (GetOrderedKindOfLogicalQueryNodes(exceptList).Take(1).ToList(), ReplacingNotResultsStrategy.PresentKindOfItems);
+                        return (GetOrderedKindOfLogicalQueryNodes(logger, exceptList).Take(1).ToList(), ReplacingNotResultsStrategy.PresentKindOfItems);
                     }
 
                 default:
@@ -238,11 +238,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private List<LogicalQueryNode> GetLogicalQueryNodes(IMonitorLogger logger, IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy, List<StorageUsingOptions> storagesList)
         {
-            var calculateTargetKindsOfItemsResult = CalculateTargetKindsOfItems(exceptList, replacingNotResultsStrategy);
+            var calculateTargetKindsOfItemsResult = CalculateTargetKindsOfItems(logger, exceptList, replacingNotResultsStrategy);
 
             var targetKindsOfItems = calculateTargetKindsOfItemsResult.TargetKindsOfItems;
 
-            return SortLogicalQueryNodes(GetRawLogicalQueryNodes(exceptList, calculateTargetKindsOfItemsResult.ReplacingNotResultsStrategy, targetKindsOfItems, storagesList), replacingNotResultsStrategy, targetKindsOfItems);
+            return SortLogicalQueryNodes(logger, GetRawLogicalQueryNodes(logger, exceptList, calculateTargetKindsOfItemsResult.ReplacingNotResultsStrategy, targetKindsOfItems, storagesList), replacingNotResultsStrategy, targetKindsOfItems);
         }
 
         private List<LogicalQueryNode> GetRawLogicalQueryNodes(IMonitorLogger logger, IList<LogicalQueryNode> exceptList, ReplacingNotResultsStrategy replacingNotResultsStrategy, IList<KindOfLogicalQueryNode> targetKindsOfItems, List<StorageUsingOptions> storagesList)
@@ -251,7 +251,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var storageItem in storagesList)
             {
-                var itemsList = storageItem.Storage.LogicalStorage.GetLogicalQueryNodes(exceptList, replacingNotResultsStrategy, targetKindsOfItems);
+                var itemsList = storageItem.Storage.LogicalStorage.GetLogicalQueryNodes(logger, exceptList, replacingNotResultsStrategy, targetKindsOfItems);
 
                 if (itemsList.IsNullOrEmpty())
                 {

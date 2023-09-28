@@ -28,6 +28,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -62,21 +63,21 @@ namespace TestSandbox.CodeExecution
 
             _logger.Info($"op = {op}");
 
-            globalOperatorsStorage.Append(op);
+            globalOperatorsStorage.Append(_context.Logger, op);
 
             var operatorsResolver = _context.DataResolversFactory.GetOperatorsResolver();
 
             var localCodeExecutionContext = new LocalCodeExecutionContext();
             localCodeExecutionContext.Storage = globalStorage;
 
-            var targetOp = operatorsResolver.GetOperator(KindOfOperator.LeftRightStream, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+            var targetOp = operatorsResolver.GetOperator(_context.Logger, KindOfOperator.LeftRightStream, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
             _logger.Info($"targetOp = {targetOp}");
 
             _logger.Info("End");
         }
 
-        public Value Call(Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
+        public Value Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             _logger.Info($"leftOperand = {leftOperand}");
             _logger.Info($"rightOperand = {rightOperand}");

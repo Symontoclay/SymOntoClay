@@ -53,7 +53,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
             var paramsCount = command.ParamsCount;
             
-            var synonymsList = synonymsResolver?.GetSynonyms(NameHelper.CreateName(endPointName)).Select(p => p.NameValue).ToList();
+            var synonymsList = synonymsResolver?.GetSynonyms(logger, NameHelper.CreateName(endPointName)).Select(p => p.NameValue).ToList();
 
             foreach (var endpointsRegistry in endpointsRegistries.ToList())
             {
@@ -98,17 +98,17 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     return endPointsList.SingleOrDefault();
 
                 case KindOfCommandParameters.ParametersByDict:
-                    return NGetEndpointInfoByParametersByDict(endPointsList, command, synonymsResolver);
+                    return NGetEndpointInfoByParametersByDict(logger, endPointsList, command, synonymsResolver);
 
                 case KindOfCommandParameters.ParametersByList:
-                    return NGetEndpointInfoByParametersByList(endPointsList, command);
+                    return NGetEndpointInfoByParametersByList(logger, endPointsList, command);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfCommandParameters), kindOfCommandParameters, null);
             }
         }
 
-        private IEndpointInfo NGetEndpointInfoByParametersByList(IList<IEndpointInfo> endPointsList, ICommand command)
+        private IEndpointInfo NGetEndpointInfoByParametersByList(IMonitorLogger logger, IList<IEndpointInfo> endPointsList, ICommand command)
         {
             var resultList = new List<IEndpointInfo>();
 
@@ -130,7 +130,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
                     var targetArgument = argumentsListEnumerator.Current;
 
-                    if (!_platformTypesConvertorsRegistry.CanConvert(commandParamItem.GetType(), targetArgument.ParameterInfo.ParameterType))
+                    if (!_platformTypesConvertorsRegistry.CanConvert(logger, commandParamItem.GetType(), targetArgument.ParameterInfo.ParameterType))
                     {
                         isFitEndpoint = false;
                         break;
@@ -146,7 +146,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             return resultList.FirstOrDefault();
         }
 
-        private IEndpointInfo NGetEndpointInfoByParametersByDict(IList<IEndpointInfo> endPointsList, ICommand command, IPackedSynonymsResolver synonymsResolver)
+        private IEndpointInfo NGetEndpointInfoByParametersByDict(IMonitorLogger logger, IList<IEndpointInfo> endPointsList, ICommand command, IPackedSynonymsResolver synonymsResolver)
         {
             var resultList = new List<IEndpointInfo>();
 
@@ -169,7 +169,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
                     if (!argumentsDict.ContainsKey(commandParamItem.Key))
                     {
-                        var synonymsList = synonymsResolver?.GetSynonyms(NameHelper.CreateName(commandParamItem.Key)).Select(p => p.NameValue).ToList();
+                        var synonymsList = synonymsResolver?.GetSynonyms(logger, NameHelper.CreateName(commandParamItem.Key)).Select(p => p.NameValue).ToList();
 
                         var isSynonymFit = false;
 
@@ -201,7 +201,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
                     var targetArgument = argumentsDict[realParamName];
 
-                    if (!_platformTypesConvertorsRegistry.CanConvert(targetCommandValue.GetType(), targetArgument.ParameterInfo.ParameterType))
+                    if (!_platformTypesConvertorsRegistry.CanConvert(logger, targetCommandValue.GetType(), targetArgument.ParameterInfo.ParameterType))
                     {
                         isFitEndpoint = false;
                     }

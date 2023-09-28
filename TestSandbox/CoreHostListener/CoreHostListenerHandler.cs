@@ -119,13 +119,13 @@ namespace TestSandbox.CoreHostListener
 
                 _logger.Info("6A777CA4-CCF2-4E73-BD0C-9158EDD5163A", $"processInfo = {processInfo}");
 
-                processInfo.Start();
+                processInfo.Start(_logger);
 
                 Thread.Sleep(10000);
 
                 _logger.Info("96C7DAF4-E42C-450F-BF02-425223E4250B", "Cancel");
 
-                processInfo.Cancel();
+                processInfo.Cancel(_logger);
 
                 Thread.Sleep(10000);
             }
@@ -145,13 +145,13 @@ namespace TestSandbox.CoreHostListener
 
                 _logger.Info("70799BDA-A7AD-406A-BEAD-9E3363CDBE83", $"processInfo = {processInfo}");
 
-                processInfo.Start();
+                processInfo.Start(_logger);
 
                 Thread.Sleep(10000);
 
                 _logger.Info("1D370D08-B6B1-40FF-A491-6074A19F778C", "Cancel");
 
-                processInfo.Cancel();
+                processInfo.Cancel(_logger);
 
                 Thread.Sleep(10000);
             }

@@ -80,7 +80,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
                 targetLogicalSearchOptions.TargetStorage = processedRuleInstance;
             }
 
-            var searchResult = _searcher.Run(targetLogicalSearchOptions);
+            var searchResult = _searcher.Run(Logger, targetLogicalSearchOptions);
 
             if (!searchResult.IsSuccess)
             {

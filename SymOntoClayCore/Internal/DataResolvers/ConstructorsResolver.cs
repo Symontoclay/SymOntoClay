@@ -46,7 +46,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var storagesList = GetStoragesList(logger, localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
-            var rawList = GetRawList(0, storagesList, new List<WeightedInheritanceItem>() { InheritanceResolver.GetSelfWeightedInheritanceItem(logger, holder) });
+            var rawList = GetRawList(logger, 0, storagesList, new List<WeightedInheritanceItem>() { InheritanceResolver.GetSelfWeightedInheritanceItem(logger, holder) });
 
             return FilterRawListAndGetItem(logger, rawList, localCodeExecutionContext, options);
         }
@@ -55,7 +55,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var storagesList = GetStoragesList(logger, localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
-            var rawList = GetRawList(namedParameters.Count, storagesList, new List<WeightedInheritanceItem>() { InheritanceResolver.GetSelfWeightedInheritanceItem(logger, holder) });
+            var rawList = GetRawList(logger, namedParameters.Count, storagesList, new List<WeightedInheritanceItem>() { InheritanceResolver.GetSelfWeightedInheritanceItem(logger, holder) });
 
             return FilterRawListAndGetItem(logger, rawList, namedParameters, localCodeExecutionContext, options);
         }
@@ -64,7 +64,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var storagesList = GetStoragesList(logger, localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
-            var rawList = GetRawList(positionedParameters.Count, storagesList, new List<WeightedInheritanceItem>() { InheritanceResolver.GetSelfWeightedInheritanceItem(logger, holder) });
+            var rawList = GetRawList(logger, positionedParameters.Count, storagesList, new List<WeightedInheritanceItem>() { InheritanceResolver.GetSelfWeightedInheritanceItem(logger, holder) });
 
             return FilterRawListAndGetItem(logger, rawList, positionedParameters, localCodeExecutionContext, options);
         }

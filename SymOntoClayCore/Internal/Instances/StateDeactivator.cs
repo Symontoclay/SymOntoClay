@@ -43,7 +43,7 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
 
-            _context.InstancesStorage.TryActivateDefaultState();
+            _context.InstancesStorage.TryActivateDefaultState(Logger);
         }
     }
 }

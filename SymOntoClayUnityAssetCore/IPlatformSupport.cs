@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -30,9 +31,9 @@ namespace SymOntoClay.UnityAsset.Core
 {
     public interface IPlatformSupport
     {
-        Vector3 ConvertFromRelativeToAbsolute(RelativeCoordinate relativeCoordinate);
-        Vector3 GetCurrentAbsolutePosition();
-        float GetDirectionToPosition(Vector3 position);
-        bool CanBeTakenBy(IEntity subject);
+        Vector3 ConvertFromRelativeToAbsolute(IMonitorLogger logger, RelativeCoordinate relativeCoordinate);
+        Vector3 GetCurrentAbsolutePosition(IMonitorLogger logger);
+        float GetDirectionToPosition(IMonitorLogger logger, Vector3 position);
+        bool CanBeTakenBy(IMonitorLogger logger, IEntity subject);
     }
 }

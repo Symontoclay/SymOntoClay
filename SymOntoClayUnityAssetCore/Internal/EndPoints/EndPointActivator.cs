@@ -279,7 +279,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 {
                     var targetCommandValue = commandParamsEnumerator.Current;
 
-                    var targetValue = _platformTypesConvertorsRegistry.Convert(targetCommandValue.GetType(), targetArgument.ParameterInfo.ParameterType, targetCommandValue, context, localContext);
+                    var targetValue = _platformTypesConvertorsRegistry.Convert(logger, targetCommandValue.GetType(), targetArgument.ParameterInfo.ParameterType, targetCommandValue, context, localContext);
 
                     resultList.Add(targetValue);
                 }
@@ -347,7 +347,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 }
                 else
                 {
-                    var synonymsList = synonymsResolver?.GetSynonyms(NameHelper.CreateName(argumentName), localContext).Select(p => p.NameValue).ToList();
+                    var synonymsList = synonymsResolver?.GetSynonyms(logger, NameHelper.CreateName(argumentName), localContext).Select(p => p.NameValue).ToList();
 
                     if (!synonymsList.IsNullOrEmpty())
                     {
@@ -371,7 +371,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 {
                     var targetCommandValue = commandParamsDict[argumentName];
 
-                    var targetValue = _platformTypesConvertorsRegistry.Convert(targetCommandValue.GetType(), argumentInfo.ParameterInfo.ParameterType, targetCommandValue, context, localContext);
+                    var targetValue = _platformTypesConvertorsRegistry.Convert(logger, targetCommandValue.GetType(), argumentInfo.ParameterInfo.ParameterType, targetCommandValue, context, localContext);
 
                     resultList.Add(targetValue);
 

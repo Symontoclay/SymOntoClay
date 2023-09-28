@@ -44,7 +44,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 
         private readonly IMonitorLogger _logger;
 
-        public InternalConceptualGraph Convert(RuleInstance fact, INLPConverterContext nlpContext)
+        public InternalConceptualGraph Convert(IMonitorLogger logger, RuleInstance fact, INLPConverterContext nlpContext)
         {
             var outerConceptualGraph = new InternalConceptualGraph();
             var context = new ContextOfConverterFactToInternalCG();
@@ -53,7 +53,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             context.NLPContext = nlpContext;
 
             var factNode = new RuleInstanceNode(fact, context);
-            var factNodeResult = factNode.Run();
+            var factNodeResult = factNode.Run(logger);
 
             outerConceptualGraph.KindOfQuestion = KindOfQuestion.None;//tmp
             outerConceptualGraph.Tense = GrammaticalTenses.Present;//tmp
@@ -64,7 +64,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 
             var logicalValueModalityResolver = nlpContext.LogicalValueModalityResolver;
 
-            if (logicalValueModalityResolver.IsHigh(fact.ObligationModality) || logicalValueModalityResolver.IsHigh(fact.SelfObligationModality))
+            if (logicalValueModalityResolver.IsHigh(logger, fact.ObligationModality) || logicalValueModalityResolver.IsHigh(logger, fact.SelfObligationModality))
             {
                 outerConceptualGraph.Mood = GrammaticalMood.Imperative;
                 outerConceptualGraph.ObligationModality = ObligationModality.Imperative;

@@ -29,6 +29,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +41,7 @@ namespace SymOntoClay.Core
 {
     public abstract class BaseProcessInfo : IProcessInfo
     {
-        protected static ILogger _logger = LogManager.GetCurrentClassLogger();
+        protected static IMonitorLogger _logger = MonitorLoggerNLogImpementation.Instance;
 
         protected BaseProcessInfo()
         {
@@ -81,7 +82,7 @@ namespace SymOntoClay.Core
                     _status = value;
                 }
 
-                ProcessSetStatus(value);
+                ProcessSetStatus(_logger, value);
             }
         }
 
@@ -126,7 +127,7 @@ namespace SymOntoClay.Core
                 _status = ProcessStatus.Canceled;
             }
 
-            ProcessSetStatus(ProcessStatus.Canceled);
+            ProcessSetStatus(logger, ProcessStatus.Canceled);
         }
 
         /// <inheritdoc/>
@@ -142,7 +143,7 @@ namespace SymOntoClay.Core
                 _status = ProcessStatus.WeakCanceled;
             }
 
-            ProcessSetStatus(ProcessStatus.WeakCanceled);
+            ProcessSetStatus(logger, ProcessStatus.WeakCanceled);
         }
 
         protected bool NIsFinished
@@ -160,18 +161,18 @@ namespace SymOntoClay.Core
             {
                 case ProcessStatus.Completed:
                     EmitOnComplete(logger);
-                    ProcessGeneralFinishStatuses(ProcessStatus.WeakCanceled);
+                    ProcessGeneralFinishStatuses(logger, ProcessStatus.WeakCanceled);
                     break;
 
                 case ProcessStatus.WeakCanceled:
                     EmitOnWeakCanceled(logger);
-                    ProcessGeneralFinishStatuses(ProcessStatus.WeakCanceled);
+                    ProcessGeneralFinishStatuses(logger, ProcessStatus.WeakCanceled);
                     ProcessPlatformCancelation(logger);
                     break;
 
                 case ProcessStatus.Canceled:
                 case ProcessStatus.Faulted:
-                    ProcessGeneralFinishStatuses(ProcessStatus.Canceled);
+                    ProcessGeneralFinishStatuses(logger, ProcessStatus.Canceled);
                     ProcessPlatformCancelation(logger);
                     break;
             }
@@ -209,7 +210,7 @@ namespace SymOntoClay.Core
         private void ProcessGeneralFinishStatuses(IMonitorLogger logger, ProcessStatus status)
         {
             EmitOnFinish(logger);
-            NCancelChildren(status);
+            NCancelChildren(logger, status);
         }
 
         private void NCancelChildren(IMonitorLogger logger, ProcessStatus status)
@@ -244,7 +245,7 @@ namespace SymOntoClay.Core
                 {
                     InternalOnFinish += value;
 
-                    CheckOnFinishStatus();
+                    CheckOnFinishStatus(_logger);
                 }
             }
 
@@ -268,7 +269,7 @@ namespace SymOntoClay.Core
                 {
                     InternalOnComplete += value;
 
-                    CheckOnCompleteStatus();
+                    CheckOnCompleteStatus(_logger);
                 }
             }
 
@@ -292,7 +293,7 @@ namespace SymOntoClay.Core
                 {
                     InternalOnWeakCanceled += value;
 
-                    CheckOnWeakCanceledStatus();
+                    CheckOnWeakCanceledStatus(_logger);
                 }
             }
 
@@ -355,7 +356,7 @@ namespace SymOntoClay.Core
         public abstract IReadOnlyList<string> Friends { get; }
 
         /// <inheritdoc/>
-        public abstract bool IsFriend(IProcessInfo other);
+        public abstract bool IsFriend(IMonitorLogger logger, IProcessInfo other);
 
         /// <inheritdoc/>
         public IProcessInfo ParentProcessInfo
@@ -384,14 +385,14 @@ namespace SymOntoClay.Core
 
                     if (_parentProcessInfo != null)
                     {
-                        _parentProcessInfo.RemoveChild(this);
+                        _parentProcessInfo.RemoveChild(_logger, this);
                     }
 
                     _parentProcessInfo = value;
 
                     if (_parentProcessInfo != null)
                     {
-                        _parentProcessInfo.AddChild(this);
+                        _parentProcessInfo.AddChild(_logger, this);
                     }
                 }
             }
@@ -449,7 +450,7 @@ namespace SymOntoClay.Core
         {
             lock (_parentAndChildrenLockObj)
             {
-                NRemoveChild(processInfo);
+                NRemoveChild(_logger, processInfo);
             }
         }
 
@@ -458,7 +459,7 @@ namespace SymOntoClay.Core
         {
             lock (_parentAndChildrenLockObj)
             {
-                NRemoveChild(processInfo);
+                NRemoveChild(_logger, processInfo);
             }
         }
 

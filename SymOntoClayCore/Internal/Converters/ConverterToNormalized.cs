@@ -25,6 +25,8 @@ using NLog;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +36,8 @@ namespace SymOntoClay.Core.Internal.Converters
 {
     public static class ConverterToNormalized
     {
+        private static IMonitorLogger _logger = MonitorLoggerNLogImpementation.Instance;
+
         public static RuleInstance Convert(RuleInstance source, CheckDirtyOptions options)
         {
             var convertingContext = new Dictionary<object, object>();
@@ -425,7 +429,7 @@ namespace SymOntoClay.Core.Internal.Converters
 
             if (source.Kind == KindOfLogicalQueryNode.Value && source.Value.IsWaypointSourceValue && options != null && options.ConvertWaypointValueFromSource)
             {
-                result.Value = source.Value.AsWaypointSourceValue.ConvertToWaypointValue(options.EngineContext, options.LocalContext);
+                result.Value = source.Value.AsWaypointSourceValue.ConvertToWaypointValue(_logger, options.EngineContext, options.LocalContext);
             }
             else
             {

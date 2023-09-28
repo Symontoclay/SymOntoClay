@@ -337,15 +337,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            var factId = npc.InsertFact("{: see(I, #a) :}");
+            var factId = npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #b) :}");
+            npc.InsertFact(null, "{: see(I, #b) :}");
 
             Thread.Sleep(1000);
 
-            npc.RemoveFact(factId);
+            npc.RemoveFact(null, factId);
 
             Thread.Sleep(1000);
         }
@@ -402,15 +402,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            var factId = npc.InsertFact("{: see(I, #a) :}");
+            var factId = npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #b) :}");
+            npc.InsertFact(null, "{: see(I, #b) :}");
 
             Thread.Sleep(1000);
 
-            npc.RemoveFact(factId);
+            npc.RemoveFact(null, factId);
 
             Thread.Sleep(1000);
         }
@@ -455,9 +455,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
-            npc.InsertFact("{: barrel (#a) :}");
-            npc.InsertFact("distance(I, #a, 14.71526)");
+            npc.InsertFact(null, "{: see(I, #a) :}");
+            npc.InsertFact(null, "{: barrel (#a) :}");
+            npc.InsertFact(null, "distance(I, #a, 14.71526)");
 
             Thread.Sleep(1000);
         }
@@ -502,9 +502,9 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
-            npc.InsertFact("{: barrel (#a) :}");
-            npc.InsertFact("distance(I, #a, 14.71526)");
+            npc.InsertFact(null, "{: see(I, #a) :}");
+            npc.InsertFact(null, "{: barrel (#a) :}");
+            npc.InsertFact(null, "distance(I, #a, 14.71526)");
 
             Thread.Sleep(1000);
         }
@@ -658,11 +658,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            var factId = npc.InsertFact("{: see(I, #a) :}");
+            var factId = npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
 
-            npc.RemoveFact(factId);
+            npc.RemoveFact(null, factId);
 
             Thread.Sleep(1000);
         }
@@ -706,15 +706,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             Thread.Sleep(1000);
 
 
-            var factId = npc.InsertFact("{: see(I, #a) :}");
+            var factId = npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
 
-            npc.RemoveFact(factId);
+            npc.RemoveFact(null, factId);
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, barrel) :}");
+            npc.InsertFact(null, "{: see(I, barrel) :}");
 
             Thread.Sleep(1000);
         }
@@ -757,15 +757,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            var factId = npc.InsertFact("{: see(I, #a) :}");
+            var factId = npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, barrel) :}");
+            npc.InsertFact(null, "{: see(I, barrel) :}");
 
             Thread.Sleep(1000);
 
-            npc.RemoveFact(factId);
+            npc.RemoveFact(null, factId);
 
             Thread.Sleep(1000);
         }
@@ -808,15 +808,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            var factId = npc.InsertFact("{: see(I, #a) :}");
+            var factId = npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
 
-            npc.RemoveFact(factId);
+            npc.RemoveFact(null, factId);
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, barrel) :}");
+            npc.InsertFact(null, "{: see(I, barrel) :}");
 
             Thread.Sleep(1000);
         }
@@ -859,15 +859,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            var factId = npc.InsertFact("{: see(I, #a) :}");
+            var factId = npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, barrel) :}");
+            npc.InsertFact(null, "{: see(I, barrel) :}");
 
             Thread.Sleep(1000);
 
-            npc.RemoveFact(factId);
+            npc.RemoveFact(null, factId);
 
             Thread.Sleep(1000);
         }
@@ -927,11 +927,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, barrel) :}");
+            npc.InsertFact(null, "{: see(I, barrel) :}");
 
             Thread.Sleep(1000);
         }
@@ -974,16 +974,16 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            var factId = npc.InsertFact("{: see(I, #a) :}");
+            var factId = npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, barrel) :}");
+            npc.InsertFact(null, "{: see(I, barrel) :}");
 
             Thread.Sleep(1000);
 
-            npc.RemoveFact(factId);
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.RemoveFact(null, factId);
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1026,7 +1026,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(3000);
         }
@@ -1073,7 +1073,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1125,7 +1125,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1177,7 +1177,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1229,7 +1229,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1281,7 +1281,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1333,7 +1333,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1379,7 +1379,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1425,7 +1425,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1471,7 +1471,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1519,7 +1519,7 @@ app PeaceKeeper
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1563,7 +1563,7 @@ app PeaceKeeper
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1607,7 +1607,7 @@ app PeaceKeeper
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1647,7 +1647,7 @@ app PeaceKeeper
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1687,7 +1687,7 @@ app PeaceKeeper
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1727,7 +1727,7 @@ app PeaceKeeper
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1761,7 +1761,7 @@ app PeaceKeeper
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1795,7 +1795,7 @@ app PeaceKeeper
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1829,7 +1829,7 @@ app PeaceKeeper
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }

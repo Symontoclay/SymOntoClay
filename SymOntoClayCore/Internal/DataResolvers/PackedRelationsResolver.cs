@@ -50,7 +50,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         /// <inheritdoc/>
         public RelationDescription GetRelation(IMonitorLogger logger, StrongIdentifierValue name, int paramsCount)
         {
-            return _relationsResolver.GetRelation(name, paramsCount, _localCodeExecutionContext, _options);
+            return _relationsResolver.GetRelation(logger, name, paramsCount, _localCodeExecutionContext, _options);
         }
     }
 }

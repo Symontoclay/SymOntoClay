@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Storage.InheritanceStoraging;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Runtime;
@@ -64,47 +65,47 @@ namespace SymOntoClay.Core.Internal.Storage
         {
             if (!_settings.Categories.IsNullOrEmpty())
             {
-                NAddCategories(_settings.Categories);
+                NAddCategories(Logger, _settings.Categories);
             }
         }
 
         public IStorage Storage => _storage;
 
-        public void AddCategory(string category)
+        public void AddCategory(IMonitorLogger logger, string category)
         {
             lock(_lockObj)
             {
-                NAddCategory(category);
+                NAddCategory(logger, category);
             }
         }
 
-        public void AddCategories(List<string> categories)
+        public void AddCategories(IMonitorLogger logger, List<string> categories)
         {
             lock (_lockObj)
             {
-                NAddCategories(categories);
+                NAddCategories(logger, categories);
             }
         }
 
-        public void RemoveCategory(string category)
+        public void RemoveCategory(IMonitorLogger logger, string category)
         {
             lock (_lockObj)
             {
-                NRemoveCategory(category);
+                NRemoveCategory(logger, category);
             }
         }
 
-        public void RemoveCategories(List<string> categories)
+        public void RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
             lock (_lockObj)
             {
-                NRemoveCategories(categories);
+                NRemoveCategories(logger, categories);
             }
         }
 
         public bool EnableCategories { get => _storage.Enabled; set => _storage.Enabled = value; }
 
-        private void NAddCategory(string category)
+        private void NAddCategory(IMonitorLogger logger, string category)
         {
             if(string.IsNullOrWhiteSpace(category))
             {
@@ -129,18 +130,18 @@ namespace SymOntoClay.Core.Internal.Storage
 
             _categoriesDict.Add(categoryName, inheritanceItem);
 
-            _inheritanceStorage.SetInheritance(inheritanceItem);
+            _inheritanceStorage.SetInheritance(logger, inheritanceItem);
         }
 
-        private void NAddCategories(List<string> categories)
+        private void NAddCategories(IMonitorLogger logger, List<string> categories)
         {
             foreach(var category in categories)
             {
-                NAddCategory(category);
+                NAddCategory(logger, category);
             }
         }
 
-        private void NRemoveCategory(string category)
+        private void NRemoveCategory(IMonitorLogger logger, string category)
         {
             if (string.IsNullOrWhiteSpace(category))
             {
@@ -159,14 +160,14 @@ namespace SymOntoClay.Core.Internal.Storage
             var inheritanceItem = _categoriesDict[categoryName];
             _categoriesDict.Remove(categoryName);
 
-            _inheritanceStorage.RemoveInheritance(inheritanceItem);
+            _inheritanceStorage.RemoveInheritance(logger, inheritanceItem);
         }
 
-        private void NRemoveCategories(List<string> categories)
+        private void NRemoveCategories(IMonitorLogger logger, List<string> categories)
         {
             foreach (var category in categories)
             {
-                NRemoveCategory(category);
+                NRemoveCategory(logger, category);
             }
         }
 

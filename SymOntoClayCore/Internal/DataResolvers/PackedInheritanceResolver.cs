@@ -51,43 +51,43 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         /// <inheritdoc/>
         public Value GetInheritanceRank(IMonitorLogger logger, StrongIdentifierValue subName, StrongIdentifierValue superName)
         {
-            return _inheritanceResolver.GetInheritanceRank(subName, superName, _localCodeExecutionContext, _options);
+            return _inheritanceResolver.GetInheritanceRank(logger, subName, superName, _localCodeExecutionContext, _options);
         }
 
         /// <inheritdoc/>
         public float GetRawInheritanceRank(IMonitorLogger logger, StrongIdentifierValue subName, StrongIdentifierValue superName)
         {
-            return _inheritanceResolver.GetRawInheritanceRank(subName, superName, _localCodeExecutionContext, _options);
+            return _inheritanceResolver.GetRawInheritanceRank(logger, subName, superName, _localCodeExecutionContext, _options);
         }
 
         /// <inheritdoc/>
         public IList<StrongIdentifierValue> GetSuperClassesKeysList(IMonitorLogger logger, StrongIdentifierValue subName)
         {
-            return _inheritanceResolver.GetSuperClassesKeysList(subName, _localCodeExecutionContext, _options);
+            return _inheritanceResolver.GetSuperClassesKeysList(logger, subName, _localCodeExecutionContext, _options);
         }
 
         /// <inheritdoc/>
         public IList<WeightedInheritanceItem> GetWeightedInheritanceItems(IMonitorLogger logger, StrongIdentifierValue subName)
         {
-            return _inheritanceResolver.GetWeightedInheritanceItems(subName, _localCodeExecutionContext, _options);
+            return _inheritanceResolver.GetWeightedInheritanceItems(logger, subName, _localCodeExecutionContext, _options);
         }
 
         /// <inheritdoc/>
         public bool IsFit(IMonitorLogger logger, IList<StrongIdentifierValue> typeNamesList, Value value)
         {
-            return _inheritanceResolver.IsFit(typeNamesList, value, _localCodeExecutionContext, _options);
+            return _inheritanceResolver.IsFit(logger, typeNamesList, value, _localCodeExecutionContext, _options);
         }
 
         /// <inheritdoc/>
         public uint? GetDistance(IMonitorLogger logger, IList<StrongIdentifierValue> typeNamesList, Value value)
         {
-            return _inheritanceResolver.GetDistance(typeNamesList, value, _localCodeExecutionContext, _options);
+            return _inheritanceResolver.GetDistance(logger, typeNamesList, value, _localCodeExecutionContext, _options);
         }
 
         /// <inheritdoc/>
         public uint? GetDistance(IMonitorLogger logger, StrongIdentifierValue subName, StrongIdentifierValue superName)
         {
-            return _inheritanceResolver.GetDistance(subName, superName, _localCodeExecutionContext, _options);
+            return _inheritanceResolver.GetDistance(logger, subName, superName, _localCodeExecutionContext, _options);
         }
     }
 }

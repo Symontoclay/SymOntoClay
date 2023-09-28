@@ -120,7 +120,7 @@ namespace SymOntoClay.Core.Internal.Instances
             localCodeExecutionContext.MutablePart = mutablePart;
             localCodeExecutionContext.AddedRuleInstance = ruleInstance;
 
-            var storagesList = _baseResolver.GetStoragesList(localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
+            var storagesList = _baseResolver.GetStoragesList(Logger, localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
             var targetStorage = storagesList.FirstOrDefault(p => p.Storage.Kind == KindOfStorage.Local);
 
@@ -130,7 +130,7 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 ruleInstance.CheckDirty();
 
-                targetVarStorage.SetValue(_factBindingVariable, ruleInstance);
+                targetVarStorage.SetValue(Logger, _factBindingVariable, ruleInstance);
             }
 
             if (varsList.Any())
@@ -139,7 +139,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 foreach (var varItem in targetVarsList)
                 {
-                    targetVarStorage.Append(varItem);
+                    targetVarStorage.Append(Logger, varItem);
                 }
             }
 
@@ -150,7 +150,7 @@ namespace SymOntoClay.Core.Internal.Instances
             processInitialInfo.Instance = _parent;
             processInitialInfo.ExecutionCoordinator = _executionCoordinator;
 
-            var task = _context.CodeExecutor.ExecuteAsync(processInitialInfo).AsTaskValue;
+            var task = _context.CodeExecutor.ExecuteAsync(Logger, processInitialInfo).AsTaskValue;
 
             task.Wait();
 

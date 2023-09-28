@@ -27,21 +27,22 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using SymOntoClay.Core;
+using SymOntoClay.Monitor.Common;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Helpers
 {
     public static class PlatformTypesConverterHelper
     {
-        public static EntityValue GetResolvedEntityValue(StrongIdentifierValue identifier, IEngineContext context, ILocalCodeExecutionContext localContext)
+        public static EntityValue GetResolvedEntityValue(IMonitorLogger logger, StrongIdentifierValue identifier, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
             var entityValue = new EntityValue(identifier, context, localContext);
 
-            entityValue.Resolve();
+            entityValue.Resolve(logger);
 
             return entityValue;
         }
 
-        public static ConditionalEntityValue GetResolvedConditionalEntityValue(StrongIdentifierValue concept, IEngineContext context, ILocalCodeExecutionContext localContext)
+        public static ConditionalEntityValue GetResolvedConditionalEntityValue(IMonitorLogger logger, StrongIdentifierValue concept, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
             var entityConditionExpression = new EntityConditionExpressionNode() { Kind = KindOfLogicalQueryNode.Concept };
             entityConditionExpression.Name = concept;
@@ -49,8 +50,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters
             var conditionalEntitySourceValue = new ConditionalEntitySourceValue(entityConditionExpression);
             conditionalEntitySourceValue.CheckDirty();
 
-            var conditionalEntityValue = conditionalEntitySourceValue.ConvertToConditionalEntityValue(context, localContext);
-            conditionalEntityValue.Resolve();
+            var conditionalEntityValue = conditionalEntitySourceValue.ConvertToConditionalEntityValue(logger, context, localContext);
+            conditionalEntityValue.Resolve(logger);
 
             return conditionalEntityValue;
         }

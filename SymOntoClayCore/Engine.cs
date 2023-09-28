@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Helpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 
@@ -140,81 +141,81 @@ namespace SymOntoClay.Core
             }
         }
 
-        public string InsertPublicFact(string text)
+        public string InsertPublicFact(IMonitorLogger logger, string text)
         {
-            return _context.Storage.InsertPublicFact(text);
+            return _context.Storage.InsertPublicFact(logger, text);
         }
 
-        public string InsertPublicFact(RuleInstance fact)
+        public string InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
-            return _context.Storage.InsertPublicFact(fact);
+            return _context.Storage.InsertPublicFact(logger, fact);
         }
 
-        public void RemovePublicFact(string id)
+        public void RemovePublicFact(IMonitorLogger logger, string id)
         {
-            _context.Storage.RemovePublicFact(id);
+            _context.Storage.RemovePublicFact(logger, id);
         }
 
-        public string InsertFact(string text)
+        public string InsertFact(IMonitorLogger logger, string text)
         {
-            return _context.Storage.InsertFact(text);
+            return _context.Storage.InsertFact(logger, text);
         }
 
-        public void RemoveFact(string id)
+        public void RemoveFact(IMonitorLogger logger, string id)
         {
-            _context.Storage.RemoveFact(id);
+            _context.Storage.RemoveFact(logger, id);
         }
 
         public IStorage PublicFactsStorage => _context.Storage.PublicFactsStorage;
 
-        public void AddVisibleStorage(IStorage storage)
+        public void AddVisibleStorage(IMonitorLogger logger, IStorage storage)
         {
-            _context.Storage.AddVisibleStorage(storage);
+            _context.Storage.AddVisibleStorage(logger, storage);
         }
 
-        public void RemoveVisibleStorage(IStorage storage)
+        public void RemoveVisibleStorage(IMonitorLogger logger, IStorage storage)
         {
-            _context.Storage.RemoveVisibleStorage(storage);
+            _context.Storage.RemoveVisibleStorage(logger, storage);
         }
 
-        public string InsertPerceptedFact(string text)
+        public string InsertPerceptedFact(IMonitorLogger logger, string text)
         {
-            return _context.Storage.InsertPerceptedFact(text);
+            return _context.Storage.InsertPerceptedFact(logger, text);
         }
 
-        public void RemovePerceptedFact(string id)
+        public void RemovePerceptedFact(IMonitorLogger logger, string id)
         {
-            _context.Storage.RemovePerceptedFact(id);
+            _context.Storage.RemovePerceptedFact(logger, id);
         }
 
-        public void InsertListenedFact(string text)
+        public void InsertListenedFact(IMonitorLogger logger, string text)
         {
-            _context.Storage.InsertListenedFact(text);
+            _context.Storage.InsertListenedFact(logger, text);
         }
 
-        public void InsertListenedFact(RuleInstance fact)
+        public void InsertListenedFact(IMonitorLogger logger, RuleInstance fact)
         {
-            _context.Storage.InsertListenedFact(fact);
+            _context.Storage.InsertListenedFact(logger, fact);
         }
         
-        public void AddCategory(string category)
+        public void AddCategory(IMonitorLogger logger, string category)
         {
-            _context.Storage.AddCategory(category);
+            _context.Storage.AddCategory(logger, category);
         }
 
-        public void AddCategories(List<string> categories)
+        public void AddCategories(IMonitorLogger logger, List<string> categories)
         {
-            _context.Storage.AddCategories(categories);
+            _context.Storage.AddCategories(logger, categories);
         }
 
-        public void RemoveCategory(string category)
+        public void RemoveCategory(IMonitorLogger logger, string category)
         {
-            _context.Storage.RemoveCategory(category);
+            _context.Storage.RemoveCategory(logger, category);
         }
 
-        public void RemoveCategories(List<string> categories)
+        public void RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
-            _context.Storage.RemoveCategories(categories);
+            _context.Storage.RemoveCategories(logger, categories);
         }
 
         public bool EnableCategories { get => _context.Storage.EnableCategories; set => _context.Storage.EnableCategories = value; }

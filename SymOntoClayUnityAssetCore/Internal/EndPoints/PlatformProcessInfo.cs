@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,13 +56,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         public override string EndPointName => _endPointName;
 
         /// <inheritdoc/>
-        protected override void ProcessPlatformStart()
+        protected override void ProcessPlatformStart(IMonitorLogger logger)
         {
             _task.Start();
         }
 
         /// <inheritdoc/>
-        protected override void ProcessPlatformCancelation()
+        protected override void ProcessPlatformCancelation(IMonitorLogger logger)
         {
             _cancellationTokenSource.Cancel();
         }
@@ -73,7 +74,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         public override IReadOnlyList<string> Friends => _friends;
 
         /// <inheritdoc/>
-        public override bool IsFriend(IProcessInfo other)
+        public override bool IsFriend(IMonitorLogger logger, IProcessInfo other)
         {
             if ((!other.Friends.IsNullOrEmpty() && other.Friends.Any(p => p == EndPointName)) || (!Friends.IsNullOrEmpty() && Friends.Any(p => p == other.EndPointName)))
             {

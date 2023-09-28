@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.Internal.HostSupport;
 using SymOntoClay.UnityAsset.Core.Internal.SoundPerception;
@@ -86,19 +87,19 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 
         }
 
-        public string InsertPublicFact(string text)
+        public string InsertPublicFact(IMonitorLogger logger, string text)
         {
-            return HostStorage.InsertPublicFact(text);
+            return HostStorage.InsertPublicFact(logger, text);
         }
 
-        public string InsertPublicFact(RuleInstance fact)
+        public string InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
-            return HostStorage.InsertPublicFact(fact);
+            return HostStorage.InsertPublicFact(logger, fact);
         }
 
-        public void RemovePublicFact(string id)
+        public void RemovePublicFact(IMonitorLogger logger, string id)
         {
-            HostStorage.RemovePublicFact(id);
+            HostStorage.RemovePublicFact(logger, id);
         }
 
         public void PushSoundFact(float power, string text)
@@ -111,24 +112,24 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             _soundPublisher.PushSoundFact(power, fact);
         }
 
-        public void AddCategory(string category)
+        public void AddCategory(IMonitorLogger logger, string category)
         {
-            HostStorage.AddCategory(category);
+            HostStorage.AddCategory(logger, category);
         }
 
-        public void AddCategories(List<string> categories)
+        public void AddCategories(IMonitorLogger logger, List<string> categories)
         {
-            HostStorage.AddCategories(categories);
+            HostStorage.AddCategories(logger, categories);
         }
 
-        public void RemoveCategory(string category)
+        public void RemoveCategory(IMonitorLogger logger, string category)
         {
-            HostStorage.RemoveCategory(category);
+            HostStorage.RemoveCategory(logger, category);
         }
 
-        public void RemoveCategories(List<string> categories)
+        public void RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
-            HostStorage.RemoveCategories(categories);
+            HostStorage.RemoveCategories(logger, categories);
         }
 
         public bool EnableCategories { get => HostStorage.EnableCategories; set => HostStorage.EnableCategories = value; }

@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.DataResolvers;
@@ -166,7 +167,7 @@ namespace SymOntoClay.Core.Internal.Visitors
 
                 case KindOfLogicalQueryNode.Var:
                     {
-                        var value = _varsResolver.GetVarValue(logicalQueryNode.Name);
+                        var value = _varsResolver.GetVarValue(Logger, logicalQueryNode.Name);
 
                         if (value.IsStrongIdentifierValue)
                         {

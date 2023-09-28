@@ -44,11 +44,11 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
         private readonly ContextOfConverterFactToInternalCG _context;
         private readonly IMonitorLogger _logger;
 
-        public ResultOfNode Run()
+        public ResultOfNode Run(IMonitorLogger logger)
         {
-            var leftResult = LogicalQueryNodeProcessorFactory.Run(_operator.Left, _context);
+            var leftResult = LogicalQueryNodeProcessorFactory.Run(logger, _operator.Left, _context);
 
-            var rightResult = LogicalQueryNodeProcessorFactory.Run(_operator.Right, _context);
+            var rightResult = LogicalQueryNodeProcessorFactory.Run(logger, _operator.Right, _context);
 
             if(leftResult.KindOfResult == KindOfResultOfNode.ResolveVar && rightResult.KindOfResult == KindOfResultOfNode.ResolveVar)
             {

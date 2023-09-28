@@ -65,7 +65,7 @@ namespace SymOntoClay.Core.Internal.Converters
             switch (kindOfRuleInstance)
             {
                 case KindOfRuleInstance.Fact:
-                    statements = ConvertFact(ruleInstance, localCodeExecutionContext);
+                    statements = ConvertFact(logger, ruleInstance, localCodeExecutionContext);
                     break;
 
                 default:
@@ -77,7 +77,7 @@ namespace SymOntoClay.Core.Internal.Converters
 
         private List<AstStatement> ConvertFact(IMonitorLogger logger, RuleInstance fact, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            var nodesList = GetSignificantNodesFromFact(fact, localCodeExecutionContext);
+            var nodesList = GetSignificantNodesFromFact(logger, fact, localCodeExecutionContext);
 
             if(!nodesList.Any())
             {
@@ -93,7 +93,7 @@ namespace SymOntoClay.Core.Internal.Converters
                 switch(kind)
                 {
                     case KindOfLogicalQueryNode.Relation:
-                        result.Add(ConvertRelation(node, fact, localCodeExecutionContext));
+                        result.Add(ConvertRelation(logger, node, fact, localCodeExecutionContext));
                         break;
 
                     default:
@@ -148,7 +148,7 @@ namespace SymOntoClay.Core.Internal.Converters
                 {
                     var linkedVarName = linkedVar.Name;
 
-                    var relationParametersList = GetNonActRelationsWithLogicalVarInFirstParameter(linkedVarName, fact, relation, localCodeExecutionContext);
+                    var relationParametersList = GetNonActRelationsWithLogicalVarInFirstParameter(logger, linkedVarName, fact, relation, localCodeExecutionContext);
 
                     foreach(var relationParameter in relationParametersList)
                     {
@@ -214,7 +214,7 @@ namespace SymOntoClay.Core.Internal.Converters
         {
             var result = new List<LogicalQueryNode>();
 
-            GetNonActRelationsWithLogicalVarInFirstParameter(variableName, fact.PrimaryPart.Expression, processedAction, result, localCodeExecutionContext);
+            GetNonActRelationsWithLogicalVarInFirstParameter(logger, variableName, fact.PrimaryPart.Expression, processedAction, result, localCodeExecutionContext);
 
             return result;
         }
@@ -226,13 +226,13 @@ namespace SymOntoClay.Core.Internal.Converters
             switch(kind)
             {
                 case KindOfLogicalQueryNode.BinaryOperator:
-                    GetNonActRelationsWithLogicalVarInFirstParameter(variableName, node.Left, processedAction, result, localCodeExecutionContext);
-                    GetNonActRelationsWithLogicalVarInFirstParameter(variableName, node.Right, processedAction, result, localCodeExecutionContext);
+                    GetNonActRelationsWithLogicalVarInFirstParameter(logger, variableName, node.Left, processedAction, result, localCodeExecutionContext);
+                    GetNonActRelationsWithLogicalVarInFirstParameter(logger, variableName, node.Right, processedAction, result, localCodeExecutionContext);
                     break;
 
                 case KindOfLogicalQueryNode.UnaryOperator:
                 case KindOfLogicalQueryNode.Group:
-                    GetNonActRelationsWithLogicalVarInFirstParameter(variableName, node.Left, processedAction, result, localCodeExecutionContext);
+                    GetNonActRelationsWithLogicalVarInFirstParameter(logger, variableName, node.Left, processedAction, result, localCodeExecutionContext);
                     break;
 
                 case KindOfLogicalQueryNode.Relation:
@@ -246,7 +246,7 @@ namespace SymOntoClay.Core.Internal.Converters
 
                         var paramsCount = paramsList.Count;
 
-                        var relationInfo = _relationsResolver.GetRelation(node.Name, paramsCount, localCodeExecutionContext);
+                        var relationInfo = _relationsResolver.GetRelation(logger, node.Name, paramsCount, localCodeExecutionContext);
 
                         var isAct = relationInfo.InheritanceItems.Any(p => p.SuperName == _actName);
 
@@ -272,7 +272,7 @@ namespace SymOntoClay.Core.Internal.Converters
 
                                     foreach(var parameter in paramsList)
                                     {
-                                        GetNonActRelationsWithLogicalVarInFirstParameter(variableName, parameter, processedAction, result, localCodeExecutionContext);
+                                        GetNonActRelationsWithLogicalVarInFirstParameter(logger, variableName, parameter, processedAction, result, localCodeExecutionContext);
                                     }
                                 }
                                 break;
@@ -303,11 +303,11 @@ namespace SymOntoClay.Core.Internal.Converters
         {
             var result = new List<LogicalQueryNode>();
 
-            var rootRelationsList = GetRootRelationsFromFact(fact);
+            var rootRelationsList = GetRootRelationsFromFact(logger, fact);
 
             foreach (var relation in rootRelationsList)
             {
-                var relationInfo = _relationsResolver.GetRelation(relation.Name, relation.ParamsList.Count, localCodeExecutionContext);
+                var relationInfo = _relationsResolver.GetRelation(logger, relation.Name, relation.ParamsList.Count, localCodeExecutionContext);
 
                 if(relationInfo == null)
                 {
@@ -329,7 +329,7 @@ namespace SymOntoClay.Core.Internal.Converters
         {
             var result = new List<LogicalQueryNode>();
 
-            GetRootRelationsFromFact(fact.PrimaryPart.Expression, result);
+            GetRootRelationsFromFact(logger, fact.PrimaryPart.Expression, result);
 
             return result;
         }
@@ -341,13 +341,13 @@ namespace SymOntoClay.Core.Internal.Converters
             switch(kind)
             {
                 case KindOfLogicalQueryNode.BinaryOperator:
-                    GetRootRelationsFromFact(node.Left, result);
-                    GetRootRelationsFromFact(node.Right, result);
+                    GetRootRelationsFromFact(logger, node.Left, result);
+                    GetRootRelationsFromFact(logger, node.Right, result);
                     break;
 
                 case KindOfLogicalQueryNode.UnaryOperator:
                 case KindOfLogicalQueryNode.Group:
-                    GetRootRelationsFromFact(node.Left, result);
+                    GetRootRelationsFromFact(logger, node.Left, result);
                     break;
 
                 case KindOfLogicalQueryNode.Relation:

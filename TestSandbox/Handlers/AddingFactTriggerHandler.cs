@@ -69,7 +69,7 @@ namespace TestSandbox.Handlers
             Thread.Sleep(100);
 
             var factStr = "{: $x = {: act(M16, shoot) :} & hear(I, $x) & distance(I, $x, 15.588457107543945) & direction($x, 12) & point($x, #@[15.588457107543945, 12]) :}";
-            _npc.EngineContext.Storage.InsertListenedFact(factStr);
+            _npc.EngineContext.Storage.InsertListenedFact(_logger, factStr);
 
 
 

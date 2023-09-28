@@ -29,6 +29,7 @@ using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,7 +51,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             LogicalQuery = logicalQuery;
             Name = name;
 
-            var entityConstraintsConcepts = logicalQuery.GetStandaloneConcepts();
+            var entityConstraintsConcepts = logicalQuery.GetStandaloneConcepts(Logger);
 
             if(entityConstraintsConcepts.Any())
             {
@@ -102,23 +103,23 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override void Resolve()
+        public override void Resolve(IMonitorLogger logger)
         {
-            NResolve();
+            NResolve(logger);
         }
 
         /// <inheritdoc/>
-        protected override void CheckForUpdates()
+        protected override void CheckForUpdates(IMonitorLogger logger)
         {
             if (!_needUpdate)
             {
                 return;
             }
 
-            NResolve();
+            NResolve(logger);
         }
 
-        private void NResolve()
+        private void NResolve(IMonitorLogger logger)
         {
             try
             {
@@ -138,7 +139,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 //Log($"searchOptions.QueryExpression = {searchOptions.QueryExpression.ToHumanizedString()}");
 #endif
 
-                var searchResult = _searcher.Run(searchOptions);
+                var searchResult = _searcher.Run(logger, searchOptions);
 
 #if DEBUG
                 //Log($"searchResult.IsSuccess = {searchResult.IsSuccess}");
@@ -152,16 +153,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                     if (searchResult.Items.Count == 0)
                     {
-                        ResetCurrEntity();
+                        ResetCurrEntity(logger);
                     }
                     else
                     {
-                        ProcessResultWithItems(searchResult);
+                        ProcessResultWithItems(logger, searchResult);
                     }
                 }
                 else
                 {
-                    ResetCurrEntity();
+                    ResetCurrEntity(logger);
                 }
 
                 if(_specifiedOnce)
@@ -174,11 +175,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
             catch (Exception e)
             {
-                Error("90A3EEC7-6EAB-4318-82B1-3B285A55BE04", e);
+                logger.Error("90A3EEC7-6EAB-4318-82B1-3B285A55BE04", e);
             }
         }
 
-        private void ProcessResultWithItems(LogicalSearchResult searchResult)
+        private void ProcessResultWithItems(IMonitorLogger logger, LogicalSearchResult searchResult)
         {
             var foundIdsList = new List<StrongIdentifierValue>();
 
@@ -199,7 +200,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             //Log($"foundIdsList = {foundIdsList.WriteListToString()}");
 #endif
 
-            ProcessIdsList(foundIdsList);
+            ProcessIdsList(logger, foundIdsList);
         }
 
         /// <inheritdoc/>

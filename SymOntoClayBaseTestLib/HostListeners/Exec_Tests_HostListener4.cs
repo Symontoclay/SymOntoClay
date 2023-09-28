@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
@@ -34,17 +35,17 @@ namespace SymOntoClay.BaseTestLib.HostListeners
     public class Exec_Tests_HostListener4 : BaseHostListener
     {
         [BipedEndpoint("Go", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
-        public void GoToImpl(CancellationToken cancellationToken,
+        public void GoToImpl(CancellationToken cancellationToken, IMonitorLogger logger,
             [EndpointParam("To", KindOfEndpointParam.Position)] INavTarget navTarget,
             float speed = 12)
         {
-            _logger.Info("D0B89970-6652-453E-A51E-765EB7FF7762", $"GoToImpl Begin");
-            _logger.Info("A41F05F0-2C5A-45B3-ACB2-146F4D4D35CB", navTarget.Kind.ToString());
+            logger.Info("D0B89970-6652-453E-A51E-765EB7FF7762", $"GoToImpl Begin");
+            logger.Info("A41F05F0-2C5A-45B3-ACB2-146F4D4D35CB", navTarget.Kind.ToString());
             var entity = navTarget.Entity;
-            _logger.Info("8DB4669E-0D54-4536-A544-5E8E0BA28BA4", entity.InstanceId.ToString());
-            _logger.Info("498ED940-F675-4AC3-99C4-BEE8134F4929", entity.Id);
-            _logger.Info("785435A4-1581-4382-9A8F-5EC9DB9ED9FE", entity.Position.ToString());
-            _logger.Info("2DA83A73-CC23-4D67-B489-478DA0EDEF34", $"GoToImpl End");
+            logger.Info("8DB4669E-0D54-4536-A544-5E8E0BA28BA4", entity.InstanceId.ToString());
+            logger.Info("498ED940-F675-4AC3-99C4-BEE8134F4929", entity.Id);
+            logger.Info("785435A4-1581-4382-9A8F-5EC9DB9ED9FE", entity.Position.ToString());
+            logger.Info("2DA83A73-CC23-4D67-B489-478DA0EDEF34", $"GoToImpl End");
         }
     }
 }

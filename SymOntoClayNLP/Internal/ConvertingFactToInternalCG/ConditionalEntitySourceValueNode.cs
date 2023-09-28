@@ -45,7 +45,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
         private readonly ContextOfConverterFactToInternalCG _context;
         private readonly IMonitorLogger _logger;
 
-        public ResultOfNode Run()
+        public ResultOfNode Run(IMonitorLogger logger)
         {
             var outerConceptualGraph = new InternalConceptualGraph();
 
@@ -66,7 +66,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             else
             {
                 var factNode = new RuleInstanceNode(_value.LogicalQuery, context);
-                var factNodeResult = factNode.Run();
+                var factNodeResult = factNode.Run(logger);
 
             }
 

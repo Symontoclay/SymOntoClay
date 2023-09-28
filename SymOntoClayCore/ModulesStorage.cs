@@ -198,7 +198,7 @@ namespace SymOntoClay.Core
 
                 var storage = new LibStorage(storageSettings);
 
-                var defferedLibsList = _projectLoader.LoadFromSourceFiles(storage, libFileName).Select(p => NameHelper.CreateName(p)).ToList();
+                var defferedLibsList = _projectLoader.LoadFromSourceFiles(logger, storage, libFileName).Select(p => NameHelper.CreateName(p)).ToList();
 
                 _storagesDict[name] = storage;
 

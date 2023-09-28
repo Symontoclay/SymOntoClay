@@ -92,7 +92,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         LogicalSearchExplainNode.LinkNodes(currentExplainNode, localResultExplainNode);
                     }
 
-                    var targetRelationsList = dataSourcesSettings.Storage.LogicalStorage.GetAllRelations(logicalSearchStorageContext, localResultExplainNode, rootParentExplainNode);
+                    var targetRelationsList = dataSourcesSettings.Storage.LogicalStorage.GetAllRelations(logger, logicalSearchStorageContext, localResultExplainNode, rootParentExplainNode);
 
                     if (localResultExplainNode != null)
                     {
@@ -165,7 +165,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         LogicalSearchExplainNode.LinkNodes(currentExplainNode, localResultExplainNode);
                     }
 
-                    var rulePartsOfFactsList = dataSourcesSettings.Storage.LogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(name, logicalSearchStorageContext, localResultExplainNode, rootParentExplainNode);
+                    var rulePartsOfFactsList = dataSourcesSettings.Storage.LogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(logger, name, logicalSearchStorageContext, localResultExplainNode, rootParentExplainNode);
 
                     if(localResultExplainNode != null)
                     {
@@ -242,7 +242,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         LogicalSearchExplainNode.LinkNodes(currentExplainNode, localResultExplainNode);
                     }
 
-                    var rulePartWithOneRelationsList = dataSourcesSettings.Storage.LogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(name, logicalSearchStorageContext, localResultExplainNode, rootParentExplainNode);
+                    var rulePartWithOneRelationsList = dataSourcesSettings.Storage.LogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(logger, name, logicalSearchStorageContext, localResultExplainNode, rootParentExplainNode);
 
                     if (localResultExplainNode != null)
                     {

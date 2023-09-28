@@ -57,7 +57,7 @@ namespace TestSandbox.CodeExecution
             applicationInheritanceItem.SuperName = context.CommonNamesStorage.AppName;
             applicationInheritanceItem.Rank = new LogicalValue(1.0F);
 
-            context.Storage.GlobalStorage.InheritanceStorage.SetInheritance(applicationInheritanceItem);
+            context.Storage.GlobalStorage.InheritanceStorage.SetInheritance(_logger, applicationInheritanceItem);
 
             var compiledFunctionBody = new CompiledFunctionBody();
             

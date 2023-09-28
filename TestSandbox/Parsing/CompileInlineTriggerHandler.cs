@@ -49,7 +49,7 @@ namespace TestSandbox.Parsing
 
             var globalStorage = context.Storage.GlobalStorage;
 
-            var filesList = FileHelper.GetParsedFilesInfo(context.AppFile, context.Id);
+            var filesList = FileHelper.GetParsedFilesInfo(_logger, context.AppFile, context.Id);
 
 #if DEBUG
             _logger.Info("B3C4FE99-B0FA-426F-87CB-86963A26AE5F", $"filesList.Count = {filesList.Count}");
@@ -77,7 +77,7 @@ namespace TestSandbox.Parsing
 
             foreach (var codeEntity in parsedCodeEntitiesList)
             {
-                metadataStorage.Append(codeEntity);
+                metadataStorage.Append(_logger, codeEntity);
             }
 
             var inlineTrigger = parsedCodeEntitiesList.FirstOrDefault(p => p.Kind == KindOfCodeEntity.InlineTrigger);
@@ -86,7 +86,7 @@ namespace TestSandbox.Parsing
 
             var triggersStorage = globalStorage.TriggersStorage;
 
-            triggersStorage.Append(inlineTrigger.AsInlineTrigger);
+            triggersStorage.Append(_logger, inlineTrigger.AsInlineTrigger);
 
             var mainEntity = metadataStorage.MainCodeEntity;
 
@@ -99,7 +99,7 @@ namespace TestSandbox.Parsing
             var localCodeExecutionContext = new LocalCodeExecutionContext();
             localCodeExecutionContext.Storage = globalStorage;
 
-            var targetTriggersList = triggersResolver.ResolveSystemEventsTriggersList(KindOfSystemEventOfInlineTrigger.Enter, mainEntity.Name, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+            var targetTriggersList = triggersResolver.ResolveSystemEventsTriggersList(_logger, KindOfSystemEventOfInlineTrigger.Enter, mainEntity.Name, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
 #if DEBUG
             _logger.Info("D30E0ACA-3D8B-4352-B278-A5443311D169", $"targetTriggersList = {targetTriggersList.WriteListToString()}");

@@ -23,6 +23,8 @@ SOFTWARE.*/
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -31,6 +33,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class FuzzyLogicNonNumericValue : AnnotatedItem
     {
+        private static IMonitorLogger _logger = MonitorLoggerNLogImpementation.Instance;
+
         public StrongIdentifierValue Name { get; set; }
         public IFuzzyLogicMemberFunctionHandler Handler { get; set; }
         public LinguisticVariable Parent { get; set; }
@@ -77,7 +81,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public override void CalculateLongHashCodes(CheckDirtyOptions options)
         {
-            Handler.Check();
+            Handler.Check(_logger);
 
             Name?.CheckDirty(options);
 

@@ -76,9 +76,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var numberValueLinearResolver = context.DataResolversFactory.GetNumberValueLinearResolver();
 
-            var resolvedFirstParam = numberValueLinearResolver.Resolve(Distance, localContext, ResolverOptions.GetDefaultOptions());
+            var resolvedFirstParam = numberValueLinearResolver.Resolve(logger, Distance, localContext, ResolverOptions.GetDefaultOptions());
 
-            var resolvedSecondParam = numberValueLinearResolver.Resolve(HorizontalAngle, localContext, ResolverOptions.GetDefaultOptions());
+            var resolvedSecondParam = numberValueLinearResolver.Resolve(logger, HorizontalAngle, localContext, ResolverOptions.GetDefaultOptions());
 
             var result = new WaypointValue((float)(double)resolvedFirstParam.GetSystemValue(), (float)(double)resolvedSecondParam.GetSystemValue(), context);
 

@@ -65,19 +65,19 @@ namespace SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport
         public string IdForFacts => _idForFacts;
 
         /// <inheritdoc/>
-        public Vector3? Position => _hostSupport.GetCurrentAbsolutePosition();
+        public Vector3? Position => _hostSupport.GetCurrentAbsolutePosition(Logger);
 
         /// <inheritdoc/>
         public bool IsEmpty => false;
 
         /// <inheritdoc/>
-        public int GetInstanceId(StrongIdentifierValue id)
+        public int GetInstanceId(IMonitorLogger logger, StrongIdentifierValue id)
         {
             return _worldContext.GetInstanceIdByIdForFacts(id.NormalizedNameValue);
         }
 
         /// <inheritdoc/>
-        public bool IsVisible(int instanceId)
+        public bool IsVisible(IMonitorLogger logger, int instanceId)
         {
             if (_visionComponent == null)
             {
@@ -88,13 +88,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport
         }
 
         /// <inheritdoc/>
-        public bool CanBeTaken(int instanceId)
+        public bool CanBeTaken(IMonitorLogger logger, int instanceId)
         {
             return _worldContext.CanBeTakenBy(instanceId, this);
         }
 
         /// <inheritdoc/>
-        public Vector3? GetPosition(int instanceId)
+        public Vector3? GetPosition(IMonitorLogger logger, int instanceId)
         {
             if (_visionComponent != null)
             {
@@ -110,51 +110,51 @@ namespace SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport
         }
 
         /// <inheritdoc/>
-        public (float?, Vector3?) DistanceToAndPosition(int instanceId)
+        public (float?, Vector3?) DistanceToAndPosition(IMonitorLogger logger, int instanceId)
         {
-            var position = GetPosition(instanceId);
+            var position = GetPosition(logger, instanceId);
 
             if (position.HasValue)
             {
-                return (Vector3.Distance(_hostSupport.GetCurrentAbsolutePosition(), position.Value), position);
+                return (Vector3.Distance(_hostSupport.GetCurrentAbsolutePosition(logger), position.Value), position);
             }
 
             return (null, null);
         }
 
         /// <inheritdoc/>
-        public float? DistanceTo(int instanceId)
+        public float? DistanceTo(IMonitorLogger logger, int instanceId)
         {
-            return DistanceToAndPosition(instanceId).Item1;
+            return DistanceToAndPosition(logger, instanceId).Item1;
         }
 
         /// <inheritdoc/>
-        public void Specify(params EntityConstraints[] constraints)
-        {
-        }
-
-        /// <inheritdoc/>
-        public void SpecifyOnce(params EntityConstraints[] constraints)
+        public void Specify(IMonitorLogger logger, params EntityConstraints[] constraints)
         {
         }
 
         /// <inheritdoc/>
-        public void SpecifyOnce(IStorage storage)
+        public void SpecifyOnce(IMonitorLogger logger, params EntityConstraints[] constraints)
         {
         }
 
         /// <inheritdoc/>
-        public void Resolve()
+        public void SpecifyOnce(IMonitorLogger logger, IStorage storage)
         {
         }
 
         /// <inheritdoc/>
-        public void ResolveIfNeeds()
+        public void Resolve(IMonitorLogger logger)
         {
         }
 
         /// <inheritdoc/>
-        public IEntity GetNewEntity(string id)
+        public void ResolveIfNeeds(IMonitorLogger logger)
+        {
+        }
+
+        /// <inheritdoc/>
+        public IEntity GetNewEntity(IMonitorLogger logger, string id)
         {
             return null;
         }

@@ -58,7 +58,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
                 return;
             }
 
-            _soundBus.PushSound(_instanceId, power, _hostSupport.GetCurrentAbsolutePosition(), factStr);
+            _soundBus.PushSound(_instanceId, power, _hostSupport.GetCurrentAbsolutePosition(Logger), factStr);
         }
 
         /// <inheritdoc/>

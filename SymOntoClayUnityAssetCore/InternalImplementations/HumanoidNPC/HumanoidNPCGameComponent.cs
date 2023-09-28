@@ -24,6 +24,7 @@ using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Storage;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport;
 using SymOntoClay.UnityAsset.Core.Internal.HostSupport;
@@ -161,29 +162,29 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             }
         }
 
-        public string InsertPublicFact(string text)
+        public string InsertPublicFact(IMonitorLogger logger, string text)
         {
-            return _coreEngine.InsertPublicFact(text);
+            return _coreEngine.InsertPublicFact(logger, text);
         }
 
-        public string InsertPublicFact(RuleInstance fact)
+        public string InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
-            return _coreEngine.InsertPublicFact(fact);
+            return _coreEngine.InsertPublicFact(logger, fact);
         }
 
-        public void RemovePublicFact(string id)
+        public void RemovePublicFact(IMonitorLogger logger, string id)
         {
-            _coreEngine.RemovePublicFact(id);
+            _coreEngine.RemovePublicFact(logger, id);
         }
 
-        public string InsertFact(string text)
+        public string InsertFact(IMonitorLogger logger, string text)
         {
-            return _coreEngine.InsertFact(text);
+            return _coreEngine.InsertFact(logger, text);
         }
 
-        public void RemoveFact(string id)
+        public void RemoveFact(IMonitorLogger logger, string id)
         {
-            _coreEngine.RemoveFact(id);
+            _coreEngine.RemoveFact(logger, id);
         }
 
         public void PushSoundFact(float power, string text)
@@ -196,40 +197,40 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             _soundPublisher.PushSoundFact(power, fact);
         }
 
-        public void AddCategory(string category)
+        public void AddCategory(IMonitorLogger logger, string category)
         {
-            _coreEngine.AddCategory(category);
+            _coreEngine.AddCategory(logger, category);
         }
 
-        public void AddCategories(List<string> categories)
+        public void AddCategories(IMonitorLogger logger, List<string> categories)
         {
-            _coreEngine.AddCategories(categories);
+            _coreEngine.AddCategories(logger, categories);
         }
 
-        public void RemoveCategory(string category)
+        public void RemoveCategory(IMonitorLogger logger, string category)
         {
-            _coreEngine.RemoveCategory(category);
+            _coreEngine.RemoveCategory(logger, category);
         }
 
-        public void RemoveCategories(List<string> categories)
+        public void RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
-            _coreEngine.RemoveCategories(categories);
+            _coreEngine.RemoveCategories(logger, categories);
         }
 
         public bool EnableCategories { get => _coreEngine.EnableCategories; set => _coreEngine.EnableCategories = value; }
 
         /// <inheritdoc/>
-        public override bool CanBeTakenBy(IEntity subject)
+        public override bool CanBeTakenBy(IMonitorLogger logger, IEntity subject)
         {
             return false;
         }
 
         /// <inheritdoc/>
-        public override Vector3? GetPosition()
+        public override Vector3? GetPosition(IMonitorLogger logger)
         {
             if (_allowPublicPosition)
             {
-                return _hostSupport.GetCurrentAbsolutePosition();
+                return _hostSupport.GetCurrentAbsolutePosition(logger);
             }
 
             return null;
@@ -237,14 +238,14 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
         public IStorage BackpackStorage => _backpackStorage;
 
-        public void AddToBackpack(IGameObject obj)
+        public void AddToBackpack(IMonitorLogger logger, IGameObject obj)
         {
-            _backpackStorage.AddConsolidatedStorage(obj.PublicFactsStorage);
+            _backpackStorage.AddConsolidatedStorage(logger, obj.PublicFactsStorage);
         }
 
-        public void RemoveFromBackpack(IGameObject obj)
+        public void RemoveFromBackpack(IMonitorLogger logger, IGameObject obj)
         {
-            _backpackStorage.RemoveConsolidatedStorage(obj.PublicFactsStorage);
+            _backpackStorage.RemoveConsolidatedStorage(logger, obj.PublicFactsStorage);
         }
 
         /// <summary>

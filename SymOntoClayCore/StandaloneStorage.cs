@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -183,45 +184,45 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public string InsertPublicFact(string text)
+        public string InsertPublicFact(IMonitorLogger logger, string text)
         {
-            return _storageComponent.InsertPublicFact(text);
+            return _storageComponent.InsertPublicFact(logger, text);
         }
 
         /// <inheritdoc/>
-        public string InsertPublicFact(RuleInstance fact)
+        public string InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
-            return _storageComponent.InsertPublicFact(fact);
+            return _storageComponent.InsertPublicFact(logger, fact);
         }
 
         /// <inheritdoc/>
-        public void RemovePublicFact(string id)
+        public void RemovePublicFact(IMonitorLogger logger, string id)
         {
-            _storageComponent.RemovePublicFact(id);
+            _storageComponent.RemovePublicFact(logger, id);
         }
 
         /// <inheritdoc/>
-        public void AddCategory(string category)
+        public void AddCategory(IMonitorLogger logger, string category)
         {
-            _storageComponent.AddCategory(category);
+            _storageComponent.AddCategory(logger, category);
         }
 
         /// <inheritdoc/>
-        public void AddCategories(List<string> categories)
+        public void AddCategories(IMonitorLogger logger, List<string> categories)
         {
-            _storageComponent.AddCategories(categories);
+            _storageComponent.AddCategories(logger, categories);
         }
 
         /// <inheritdoc/>
-        public void RemoveCategory(string category)
+        public void RemoveCategory(IMonitorLogger logger, string category)
         {
-            _storageComponent.RemoveCategory(category);
+            _storageComponent.RemoveCategory(logger, category);
         }
 
         /// <inheritdoc/>
-        public void RemoveCategories(List<string> categories)
+        public void RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
-            _storageComponent.RemoveCategories(categories);
+            _storageComponent.RemoveCategories(logger, categories);
         }
 
         /// <inheritdoc/>

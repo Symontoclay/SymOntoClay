@@ -30,13 +30,13 @@
         <member name="P:SymOntoClay.Core.BaseProcessInfo.IsFinished">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.BaseProcessInfo.Start">
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.Start(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.BaseProcessInfo.Cancel">
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.Cancel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.BaseProcessInfo.WeakCancel">
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.WeakCancel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="E:SymOntoClay.Core.BaseProcessInfo.OnFinish">
@@ -60,7 +60,7 @@
         <member name="P:SymOntoClay.Core.BaseProcessInfo.Friends">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.BaseProcessInfo.IsFriend(SymOntoClay.Core.IProcessInfo)">
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.IsFriend(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.IProcessInfo)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.BaseProcessInfo.ParentProcessInfo">
@@ -69,28 +69,28 @@
         <member name="P:SymOntoClay.Core.BaseProcessInfo.GetChildrenProcessInfoList">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.BaseProcessInfo.AddChild(SymOntoClay.Core.IProcessInfo)">
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.AddChild(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.IProcessInfo)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.BaseProcessInfo.RemoveChild(SymOntoClay.Core.IProcessInfo)">
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.RemoveChild(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.IProcessInfo)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.BaseProcessInfo.AddOnFinishHandler(SymOntoClay.Core.Internal.CodeExecution.IProcessInfoEventHandler)">
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.AddOnFinishHandler(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeExecution.IProcessInfoEventHandler)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.BaseProcessInfo.RemoveOnFinishHandler(SymOntoClay.Core.Internal.CodeExecution.IProcessInfoEventHandler)">
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.RemoveOnFinishHandler(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeExecution.IProcessInfoEventHandler)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.BaseProcessInfo.AddOnCompleteHandler(SymOntoClay.Core.Internal.CodeExecution.IProcessInfoEventHandler)">
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.AddOnCompleteHandler(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeExecution.IProcessInfoEventHandler)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.BaseProcessInfo.RemoveOnCompleteHandler(SymOntoClay.Core.Internal.CodeExecution.IProcessInfoEventHandler)">
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.RemoveOnCompleteHandler(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeExecution.IProcessInfoEventHandler)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.BaseProcessInfo.AddOnWeakCanceledHandler(SymOntoClay.Core.Internal.CodeExecution.IProcessInfoEventHandler)">
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.AddOnWeakCanceledHandler(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeExecution.IProcessInfoEventHandler)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.BaseProcessInfo.RemoveOnWeakCanceledHandler(SymOntoClay.Core.Internal.CodeExecution.IProcessInfoEventHandler)">
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.RemoveOnWeakCanceledHandler(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeExecution.IProcessInfoEventHandler)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.BaseProcessInfo.Dispose">
@@ -264,43 +264,48 @@
             Returns <b>true</b> if the entity is not resolved, otherwise returns <b>false</b>.
             </summary>
         </member>
-        <member name="M:SymOntoClay.Core.IEntity.Specify(SymOntoClay.Core.EntityConstraints[])">
+        <member name="M:SymOntoClay.Core.IEntity.Specify(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.EntityConstraints[])">
             <summary>
             Sets constraints that will be used during resolving.
             It allows to resolve entity in way which is fit for the host-method.
             These constraints will be used every resolving.
             </summary>
+            <param name="logger">Logger.</param>
             <param name="constraints">Array of constraints.</param>
         </member>
-        <member name="M:SymOntoClay.Core.IEntity.SpecifyOnce(SymOntoClay.Core.EntityConstraints[])">
+        <member name="M:SymOntoClay.Core.IEntity.SpecifyOnce(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.EntityConstraints[])">
             <summary>
             Sets constraints that will be used during resolving.
             It allows to resolve entity in way which is fit for the host-method.
             These constraints will be used once.
             Next resolving will not use these constraints.
             </summary>
+            <param name="logger">Logger.</param>
             <param name="constraints">Array of constraints.</param>
         </member>
-        <member name="M:SymOntoClay.Core.IEntity.SpecifyOnce(SymOntoClay.Core.IStorage)">
+        <member name="M:SymOntoClay.Core.IEntity.SpecifyOnce(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.IStorage)">
             <summary>
             Sets backpack storage that will be used during resolving.
             It allows to resolve entity in way which is fit for the host-method.
             This backpack storage will be used once.
             Next resolving will not use this backpack storage.
             </summary>
+            <param name="logger">Logger.</param>
             <param name="storage">Backpack storage</param>
         </member>
-        <member name="M:SymOntoClay.Core.IEntity.Resolve">
+        <member name="M:SymOntoClay.Core.IEntity.Resolve(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <summary>
             Resolves (finds) entity with constraints or backpack storage.
             If entity has been previously resolved, the more fittable entity will has been found.
             </summary>
+            <param name="logger">Logger.</param>
         </member>
-        <member name="M:SymOntoClay.Core.IEntity.ResolveIfNeeds">
+        <member name="M:SymOntoClay.Core.IEntity.ResolveIfNeeds(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <summary>
             Resolves (finds) entity with constraints or backpack storage.
             If entity has been previously resolved, the method does nothing.
             </summary>
+            <param name="logger">Logger.</param>
         </member>
         <member name="P:SymOntoClay.Core.Internal.BaseComponent.IsDisposed">
             <inheritdoc/>
@@ -326,28 +331,28 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.Dispose">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BinaryOperatorSystemHandler.Call(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BinaryOperatorSystemHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BinaryOperatorSystemHandler.Call(System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BinaryOperatorSystemHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.ExecuteAsync(SymOntoClay.Core.Internal.CodeExecution.ProcessInitialInfo)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.ExecuteAsync(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeExecution.ProcessInitialInfo)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.ExecuteBatchAsync(System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeExecution.ProcessInitialInfo})">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.ExecuteBatchAsync(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeExecution.ProcessInitialInfo})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.ExecuteBatchSync(System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeExecution.ProcessInitialInfo})">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.ExecuteBatchSync(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeExecution.ProcessInitialInfo})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.CallOperator(SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.KindOfOperator,System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.CallOperator(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.KindOfOperator,System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.CallExecutableSync(SymOntoClay.Core.Internal.CodeExecution.IExecutable,System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.CallExecutableSync(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeExecution.IExecutable,System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.CallFunctionSync(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeExecutorComponent.CallFunctionSync(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrame.ToString">
@@ -449,13 +454,13 @@
         <member name="P:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.Holder">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.SymOntoClay#Core#Internal#CodeExecution#IExecutable#GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.SymOntoClay#Core#Internal#CodeExecution#IExecutable#GetCoordinator(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.ContainsArgument(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeExecution.ExecutableWithTargetLocalContext.NeedActivation">
@@ -569,7 +574,7 @@
         <member name="P:SymOntoClay.Core.Internal.CodeExecution.ProcessInfoEventHandler.ProcessInfo">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ProcessInfoEventHandler.Run">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ProcessInfoEventHandler.Run(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.ProcessInitialInfo.ToString">
@@ -673,10 +678,10 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.SEHItem.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.UnaryOperatorSystemHandler.Call(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.UnaryOperatorSystemHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.UnaryOperatorSystemHandler.Call(System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.UnaryOperatorSystemHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionDef.Kind">
@@ -728,10 +733,10 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.AsActionInstanceValue">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.GetCoordinator(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.Activate(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.GetSystemValue">
@@ -758,7 +763,7 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.SystemHandler">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.ContainsArgument(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionInstanceValue.OwnLocalCodeExecutionContext">
@@ -818,13 +823,13 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionPtr.SystemHandler">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.ContainsArgument(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.SymOntoClay#Core#Internal#CodeExecution#IExecutable#GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.SymOntoClay#Core#Internal#CodeExecution#IExecutable#GetCoordinator(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActionPtr.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ActionPtr.OwnLocalCodeExecutionContext">
@@ -1096,13 +1101,13 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent.SystemHandler">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent.GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent.GetCoordinator(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent.Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent.Activate(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent.ContainsArgument(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent.OwnLocalCodeExecutionContext">
@@ -2160,19 +2165,19 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.BaseEntityValue.IsEmpty">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseEntityValue.Specify(SymOntoClay.Core.EntityConstraints[])">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseEntityValue.Specify(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.EntityConstraints[])">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseEntityValue.SpecifyOnce(SymOntoClay.Core.EntityConstraints[])">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseEntityValue.SpecifyOnce(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.EntityConstraints[])">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseEntityValue.SpecifyOnce(SymOntoClay.Core.IStorage)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseEntityValue.SpecifyOnce(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.IStorage)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseEntityValue.ResolveIfNeeds">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseEntityValue.ResolveIfNeeds(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseEntityValue.Resolve">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseEntityValue.Resolve(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.BaseEntityValue.SymOntoClay#Core#INavTarget#Kind">
@@ -2515,10 +2520,10 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.NullValueEquals">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.Resolve">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.Resolve(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.CheckForUpdates">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.CheckForUpdates(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.KindOfValue">
@@ -2834,13 +2839,13 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Function.CodeItem">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Function.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Function.ContainsArgument(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Function.SymOntoClay#Core#Internal#CodeExecution#IExecutable#GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Function.SymOntoClay#Core#Internal#CodeExecution#IExecutable#GetCoordinator(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Function.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Function.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Function.OwnLocalCodeExecutionContext">
@@ -3030,10 +3035,10 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FuzzyLogicOperator.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.Call(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.Call(System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.IsSystemDefined">
@@ -3051,13 +3056,13 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.SystemHandler">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.GetCoordinator(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.Activate(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.ContainsArgument(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.OwnLocalCodeExecutionContext">
@@ -3108,10 +3113,10 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.CancellationTokenSourceCancelHandler.Call(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.CancellationTokenSourceCancelHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.CancellationTokenSourceCancelHandler.Call(System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.CancellationTokenSourceCancelHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.HostValue.KindOfValue">
@@ -3309,19 +3314,19 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.ToSystemString">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.GetExecutable(SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.Dictionary{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value},System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.GetExecutable(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.Dictionary{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value},System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.GetPropertyValue(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.GetPropertyValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.GetVarValue(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.GetVarValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.SetPropertyValue(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.SetPropertyValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.SetVarValue(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.SetVarValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.InstanceValue.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
@@ -3818,7 +3823,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.MutablePartOfRuleInstanceValue.ToSystemString">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.MutablePartOfRuleInstanceValue.SetPropertyValue(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.MutablePartOfRuleInstanceValue.SetPropertyValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.MutablePartOfRuleInstanceValue.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
@@ -4035,13 +4040,13 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Operator.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Arguments">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.ContainsArgument(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.SymOntoClay#Core#Internal#CodeExecution#IExecutable#GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.SymOntoClay#Core#Internal#CodeExecution#IExecutable#GetCoordinator(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Operator.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Operator.OwnLocalCodeExecutionContext">
@@ -4108,7 +4113,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.ToSystemString">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.SetValue(SymOntoClay.Core.Internal.CodeModel.Value)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.SetValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
@@ -4138,7 +4143,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart.GetNextPartsList">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart.GetNextPartsList(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -4483,19 +4488,19 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#IdleActionItemsStorage">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#AddParentStorage(SymOntoClay.Core.IStorage)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#AddParentStorage(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.IStorage)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#RemoveParentStorage(SymOntoClay.Core.IStorage)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#RemoveParentStorage(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.IStorage)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#CollectChainOfStorages(System.Collections.Generic.IList{SymOntoClay.Core.StorageUsingOptions},System.Collections.Generic.IList{SymOntoClay.Core.IStorage},System.Int32,SymOntoClay.Core.Internal.DataResolvers.CollectChainOfStoragesOptions)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#CollectChainOfStorages(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.StorageUsingOptions},System.Collections.Generic.IList{SymOntoClay.Core.IStorage},System.Int32,SymOntoClay.Core.Internal.DataResolvers.CollectChainOfStoragesOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#CollectChainOfStorages(System.Collections.Generic.IList{SymOntoClay.Core.IStorage})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#CollectChainOfStorages(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.IStorage})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#GetStorages">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#GetStorages(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#DefaultSettingsOfCodeEntity">
@@ -4507,7 +4512,7 @@
         <member name="E:SymOntoClay.Core.Internal.CodeModel.RuleInstance.OnParentStorageChanged">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#DbgPrintFactsAndRules">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#IStorage#DbgPrintFactsAndRules(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ISpecificStorage#Kind">
@@ -4516,22 +4521,22 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ISpecificStorage#Storage">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#Append(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#Append(SymOntoClay.Core.Internal.CodeModel.RuleInstance,System.Boolean)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.RuleInstance,System.Boolean)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#Append(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#Append(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#Remove(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#Remove(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#Remove(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#Remove(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#RemoveById(System.String)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#RemoveById(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
         <member name="E:SymOntoClay.Core.Internal.CodeModel.RuleInstance.OnChanged">
@@ -4543,25 +4548,25 @@
         <member name="E:SymOntoClay.Core.Internal.CodeModel.RuleInstance.OnAddingFact">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#GetAllRelations(SymOntoClay.Core.Internal.ILogicalSearchStorageContext,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#GetAllRelations(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.ILogicalSearchStorageContext,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#GetAllOriginFacts">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#GetAllOriginFacts(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#GetIndexedRulePartOfFactsByKeyOfRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.ILogicalSearchStorageContext,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#GetIndexedRulePartOfFactsByKeyOfRelation(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.ILogicalSearchStorageContext,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.ILogicalSearchStorageContext,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.ILogicalSearchStorageContext,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.GetLogicalQueryNodes(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode},SymOntoClay.Core.Internal.DataResolvers.ReplacingNotResultsStrategy,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.KindOfLogicalQueryNode})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.GetLogicalQueryNodes(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode},SymOntoClay.Core.Internal.DataResolvers.ReplacingNotResultsStrategy,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.KindOfLogicalQueryNode})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#DbgPrintFactsAndRules">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#DbgPrintFactsAndRules(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.SecondaryRulePart.GetNextPartsList">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.SecondaryRulePart.GetNextPartsList(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.SecondaryRulePart.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -4877,7 +4882,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.ToSystemString">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.GetMethod(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.Dictionary{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value},System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value})">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.GetMethod(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.Dictionary{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value},System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
@@ -5547,13 +5552,13 @@
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalSearchResultItem.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalSearchStorageContext.Filter``1(System.Collections.Generic.IList{``0},System.Boolean)">
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalSearchStorageContext.Filter``1(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{``0},System.Boolean)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalSearchStorageContext.Filter``1(System.Collections.Generic.IList{``0},System.Collections.Generic.IDictionary{SymOntoClay.Core.Internal.CodeModel.RuleInstance,SymOntoClay.Core.Internal.IItemWithModalities})">
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalSearchStorageContext.Filter``1(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{``0},System.Collections.Generic.IDictionary{SymOntoClay.Core.Internal.CodeModel.RuleInstance,SymOntoClay.Core.Internal.IItemWithModalities})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalSearchStorageContext.Filter``1(System.Collections.Generic.IList{``0},System.Boolean,System.Collections.Generic.IDictionary{SymOntoClay.Core.Internal.CodeModel.RuleInstance,SymOntoClay.Core.Internal.IItemWithModalities})">
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalSearchStorageContext.Filter``1(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{``0},System.Boolean,System.Collections.Generic.IDictionary{SymOntoClay.Core.Internal.CodeModel.RuleInstance,SymOntoClay.Core.Internal.IItemWithModalities})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.MergingResultOfTwoQueryExecutingCardAboutKnownInfoLists.ToString">
@@ -5583,37 +5588,37 @@
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.MergingResultOfTwoQueryExecutingCardAboutKnownInfoLists.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetInheritanceRank(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetInheritanceRank(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetRawInheritanceRank(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetRawInheritanceRank(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetSuperClassesKeysList(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetSuperClassesKeysList(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetWeightedInheritanceItems(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetWeightedInheritanceItems(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.IsFit(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue},SymOntoClay.Core.Internal.CodeModel.Value)">
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.IsFit(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue},SymOntoClay.Core.Internal.CodeModel.Value)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetDistance(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue},SymOntoClay.Core.Internal.CodeModel.Value)">
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetDistance(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue},SymOntoClay.Core.Internal.CodeModel.Value)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetDistance(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedInheritanceResolver.GetDistance(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedLogicalValueModalityResolver.IsHigh(SymOntoClay.Core.Internal.CodeModel.Value)">
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedLogicalValueModalityResolver.IsHigh(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedRelationsResolver.GetRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Int32)">
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedRelationsResolver.GetRelation(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Int32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedSynonymsResolver.GetSynonyms(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedSynonymsResolver.GetSynonyms(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedVarsResolver.GetVarValue(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PackedVarsResolver.GetVarValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.ReasonOfFuzzyLogicResolving.ToString">
@@ -6196,10 +6201,10 @@
         <member name="P:SymOntoClay.Core.Internal.Instances.ActionInstance.KindOfInstance">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.SymOntoClay#Core#Internal#CodeExecution#IExecutable#GetCoordinator(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.SymOntoClay#Core#Internal#CodeExecution#IExecutable#GetCoordinator(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.SymOntoClay#Core#Internal#CodeExecution#IExecutable#Activate(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.ActionInstance.IsSystemDefined">
@@ -6217,7 +6222,7 @@
         <member name="P:SymOntoClay.Core.Internal.Instances.ActionInstance.SystemHandler">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.ContainsArgument(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.ActionInstance.ContainsArgument(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.ActionInstance.OwnLocalCodeExecutionContext">
@@ -6256,19 +6261,19 @@
         <member name="P:SymOntoClay.Core.Internal.Instances.AppInstance.KindOfInstance">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.GetTopIndependentInstances">
+        <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.GetTopIndependentInstances(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.ApplyCodeDirectives">
+        <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.ApplyCodeDirectives(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.RunMutuallyExclusiveStatesSets">
+        <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.RunMutuallyExclusiveStatesSets(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.RunExplicitStates">
+        <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.RunExplicitStates(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.RunActivatorsOfStates">
+        <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.RunActivatorsOfStates(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.AppInstance.OnDisposed">
@@ -6304,7 +6309,7 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseAddingFactTriggerInstance.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseIndependentInstance.ActivateIdleAction">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseIndependentInstance.ActivateIdleAction(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.BaseInstance.KindOfInstance">
@@ -6322,40 +6327,40 @@
         <member name="P:SymOntoClay.Core.Internal.Instances.BaseInstance.LocalCodeExecutionContext">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.CancelExecution">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.CancelExecution(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.GetTopIndependentInstances">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.GetTopIndependentInstances(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.ActivateIdleAction">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.ActivateIdleAction(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.AddChildInstance(SymOntoClay.Core.Internal.CodeModel.IInstance)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.AddChildInstance(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.IInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.RemoveChildInstance(SymOntoClay.Core.Internal.CodeModel.IInstance)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.RemoveChildInstance(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.IInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.SetParent(SymOntoClay.Core.Internal.CodeModel.IInstance)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.SetParent(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.IInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.ResetParent(SymOntoClay.Core.Internal.CodeModel.IInstance)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.ResetParent(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.IInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.GetExecutable(SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.IDictionary{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value},System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value})">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.GetExecutable(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.IDictionary{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value},System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.SetPropertyValue(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.SetPropertyValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.SetVarValue(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.SetVarValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.GetPropertyValue(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.GetPropertyValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.GetVarValue(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.GetVarValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.OnDisposed">
@@ -6388,43 +6393,43 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.ActivateMainEntity">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.ActivateMainEntity(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.AppendProcessInfo(SymOntoClay.Core.IProcessInfo)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.AppendProcessInfo(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.IProcessInfo)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.AppendAndTryStartProcessInfo(SymOntoClay.Core.IProcessInfo)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.AppendAndTryStartProcessInfo(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.IProcessInfo)">
             <inheritdoc/>
         </member>
         <member name="E:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.OnIdle">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.GetCountOfCurrentProcesses">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.GetCountOfCurrentProcesses(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.ActivateState(SymOntoClay.Core.Internal.CodeModel.StateDef)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.ActivateState(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StateDef)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.TryActivateDefaultState">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.TryActivateDefaultState(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.MainEntity">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.CreateInstance(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.InstanceValue,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.CreateInstance(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.InstanceValue,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.CodeItem,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.CreateInstance(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.CodeItem,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.ActionPtr,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.CreateInstance(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.ActionPtr,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.PrintProcessesList">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.PrintProcessesList(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseSimpleConditionalTriggerInstance.OnDisposed">
@@ -6505,43 +6510,43 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.LoadFromSourceFiles">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.ActivateMainEntity">
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.ActivateMainEntity(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.MainEntity">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.ActivateState(SymOntoClay.Core.Internal.CodeModel.StateDef)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.ActivateState(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StateDef)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.TryActivateDefaultState">
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.TryActivateDefaultState(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.AppendProcessInfo(SymOntoClay.Core.IProcessInfo)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.AppendProcessInfo(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.IProcessInfo)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.AppendAndTryStartProcessInfo(SymOntoClay.Core.IProcessInfo)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.AppendAndTryStartProcessInfo(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.IProcessInfo)">
             <inheritdoc/>
         </member>
         <member name="E:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.OnIdle">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.GetCountOfCurrentProcesses">
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.GetCountOfCurrentProcesses(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.CreateInstance(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.InstanceValue,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.CreateInstance(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.InstanceValue,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.CodeItem,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.CreateInstance(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.CodeItem,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.CreateInstance(SymOntoClay.Core.Internal.CodeModel.ActionPtr,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.CreateInstance(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.ActionPtr,SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.IExecutionCoordinator)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.PrintProcessesList">
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.PrintProcessesList(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.OnDisposed">
@@ -6673,25 +6678,25 @@
         <member name="P:SymOntoClay.Core.Internal.Instances.ObjectInstance.KindOfInstance">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ObjectInstance.GetExecutable(SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.IDictionary{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value},System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value})">
+        <member name="M:SymOntoClay.Core.Internal.Instances.ObjectInstance.GetExecutable(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.IDictionary{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value},System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ObjectInstance.SetPropertyValue(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.ObjectInstance.SetPropertyValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ObjectInstance.SetVarValue(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.ObjectInstance.SetVarValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ObjectInstance.GetPropertyValue(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.ObjectInstance.GetPropertyValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ObjectInstance.GetVarValue(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.ObjectInstance.GetVarValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ObjectInstance.RunPreConstructors">
+        <member name="M:SymOntoClay.Core.Internal.Instances.ObjectInstance.RunPreConstructors(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ObjectInstance.RunConstructors">
+        <member name="M:SymOntoClay.Core.Internal.Instances.ObjectInstance.RunConstructors(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.ProcessInfo.EndPointName">
@@ -6703,7 +6708,7 @@
         <member name="P:SymOntoClay.Core.Internal.Instances.ProcessInfo.Friends">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.IsFriend(SymOntoClay.Core.IProcessInfo)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.IsFriend(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.IProcessInfo)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.OnDisposed">
@@ -6733,7 +6738,7 @@
         <member name="P:SymOntoClay.Core.Internal.Instances.StateInstance.KindOfInstance">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.RunDeactivatorsOfStates">
+        <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.RunDeactivatorsOfStates(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.ExecutionCoordinator_OnFinished">
@@ -7538,10 +7543,10 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Parser.ParseRuleInstance(System.String,System.Boolean)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Services.CodeFrameService.ConvertCompiledFunctionBodyToCodeFrame(SymOntoClay.Core.Internal.IndexedData.ScriptingData.CompiledFunctionBody,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.Services.CodeFrameService.ConvertCompiledFunctionBodyToCodeFrame(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.IndexedData.ScriptingData.CompiledFunctionBody,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Services.CodeFrameService.ConvertExecutableToCodeFrame(SymOntoClay.Core.Internal.CodeExecution.IExecutable,SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.Dictionary{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value},System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.Helpers.ConversionExecutableToCodeFrameAdditionalSettings,System.Boolean)">
+        <member name="M:SymOntoClay.Core.Internal.Services.CodeFrameService.ConvertExecutableToCodeFrame(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeExecution.IExecutable,SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.Dictionary{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value},System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.Helpers.ConversionExecutableToCodeFrameAdditionalSettings,System.Boolean)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Services.EntityConstraintsService.Init">
@@ -7565,40 +7570,40 @@
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.LogChannelHandler.GetLongHashCode">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.LogChannelHandler.Read(SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.LogChannelHandler.Read(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.LogChannelHandler.Write(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.LogChannelHandler.Write(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.SayChannelHandler.GetLongHashCode">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.SayChannelHandler.Read(SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.SayChannelHandler.Read(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.SayChannelHandler.Write(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Channels.SayChannelHandler.Write(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicMemberFunctionHandler.Kind">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicMemberFunctionHandler.SystemCall(SymOntoClay.Core.Internal.CodeModel.NumberValue)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicMemberFunctionHandler.SystemCall(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.NumberValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicMemberFunctionHandler.SystemCall(System.Double)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicMemberFunctionHandler.SystemCall(SymOntoClay.Monitor.Common.IMonitorLogger,System.Double)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicMemberFunctionHandler.GetLongHashCode">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicMemberFunctionHandler.Defuzzificate">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicMemberFunctionHandler.Defuzzificate(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicMemberFunctionHandler.Defuzzificate(System.Collections.Generic.IEnumerable{SymOntoClay.Core.Internal.CodeExecution.IFuzzyLogicOperatorHandler})">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicMemberFunctionHandler.Defuzzificate(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IEnumerable{SymOntoClay.Core.Internal.CodeExecution.IFuzzyLogicOperatorHandler})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicMemberFunctionHandler.Check">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicMemberFunctionHandler.Check(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicMemberFunctionHandler.ToString">
@@ -7640,10 +7645,10 @@
         <member name="P:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicOperatorHandler.Kind">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicOperatorHandler.SystemCall(SymOntoClay.Core.Internal.CodeModel.NumberValue)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicOperatorHandler.SystemCall(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.NumberValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicOperatorHandler.SystemCall(System.Double)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicOperatorHandler.SystemCall(SymOntoClay.Monitor.Common.IMonitorLogger,System.Double)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicOperatorHandler.GetLongHashCode">
@@ -7693,7 +7698,7 @@
         <member name="P:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.LFunctionFuzzyLogicMemberFunctionHandler.Kind">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.LFunctionFuzzyLogicMemberFunctionHandler.SystemCall(System.Double)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.LFunctionFuzzyLogicMemberFunctionHandler.SystemCall(SymOntoClay.Monitor.Common.IMonitorLogger,System.Double)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.LFunctionFuzzyLogicMemberFunctionHandler.PropertiesToString(System.UInt32)">
@@ -7708,7 +7713,7 @@
         <member name="P:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.SFunctionFuzzyLogicMemberFunctionHandler.Kind">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.SFunctionFuzzyLogicMemberFunctionHandler.SystemCall(System.Double)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.SFunctionFuzzyLogicMemberFunctionHandler.SystemCall(SymOntoClay.Monitor.Common.IMonitorLogger,System.Double)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.SFunctionFuzzyLogicMemberFunctionHandler.PropertiesToString(System.UInt32)">
@@ -7723,7 +7728,7 @@
         <member name="P:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.TrapezoidFuzzyLogicMemberFunctionHandler.Kind">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.TrapezoidFuzzyLogicMemberFunctionHandler.SystemCall(System.Double)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.TrapezoidFuzzyLogicMemberFunctionHandler.SystemCall(SymOntoClay.Monitor.Common.IMonitorLogger,System.Double)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.TrapezoidFuzzyLogicMemberFunctionHandler.PropertiesToString(System.UInt32)">
@@ -7738,76 +7743,79 @@
         <member name="P:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.VeryFuzzyLogicOperatorHandler.Kind">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.VeryFuzzyLogicOperatorHandler.SystemCall(System.Double)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.VeryFuzzyLogicOperatorHandler.SystemCall(SymOntoClay.Monitor.Common.IMonitorLogger,System.Double)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.AddOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.AddOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.AndOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.AndOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.AssignOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.AssignOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.CallLogicalQueryOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.BaseOperatorHandler.TryResolveFromVarOrExpr(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.DivOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.CallLogicalQueryOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.IsOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.DivOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.LeftRightStreamOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.IsOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.LessOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.LeftRightStreamOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.LessOrEqualOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.LessOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.MoreOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.LessOrEqualOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.MoreOrEqualOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.MoreOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.MulOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.MoreOrEqualOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.NotOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.MulOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.OrOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.NotOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.PointOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.OrOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.SubOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.PointOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.UnaryMinusOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.SubOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.UnaryPlusOperatorHandler.Call(SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.UnaryMinusOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.ActionsStoraging.ActionsStorage.Append(SymOntoClay.Core.Internal.CodeModel.ActionDef)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.Operators.UnaryPlusOperatorHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.ActionsStoraging.ActionsStorage.GetActionsDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Int32,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.ActionsStoraging.ActionsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.ActionDef)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.ActionsStoraging.ActionsStorage.GetActionsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Int32,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ActionsStoraging.ActionsStorage.OnDisposed">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.ActionsStoraging.EmptyActionsStorage.Append(SymOntoClay.Core.Internal.CodeModel.ActionDef)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.ActionsStoraging.EmptyActionsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.ActionDef)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.ActionsStoraging.EmptyActionsStorage.GetActionsDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Int32,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.ActionsStoraging.EmptyActionsStorage.GetActionsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Int32,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ActionStorageFactory.CreateStorage(SymOntoClay.Core.Internal.Storage.RealStorageSettings)">
@@ -7837,19 +7845,19 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.CategoriesStorageSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.ChannelsStoraging.ChannelsStorage.Append(SymOntoClay.Core.Internal.CodeModel.Channel)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.ChannelsStoraging.ChannelsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Channel)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.ChannelsStoraging.ChannelsStorage.GetChannelsDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.ChannelsStoraging.ChannelsStorage.GetChannelsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ChannelsStoraging.ChannelsStorage.OnDisposed">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.ChannelsStoraging.EmptyChannelsStorage.Append(SymOntoClay.Core.Internal.CodeModel.Channel)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.ChannelsStoraging.EmptyChannelsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Channel)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.ChannelsStoraging.EmptyChannelsStorage.GetChannelsDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.ChannelsStoraging.EmptyChannelsStorage.GetChannelsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.Kind">
@@ -7918,25 +7926,25 @@
         <member name="P:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.CodeItemsStoragesList">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.AddParentStorage(SymOntoClay.Core.IStorage)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.AddParentStorage(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.IStorage)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.RemoveParentStorage(SymOntoClay.Core.IStorage)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.RemoveParentStorage(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.IStorage)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.SymOntoClay#Core#IStorage#CollectChainOfStorages(System.Collections.Generic.IList{SymOntoClay.Core.StorageUsingOptions},System.Collections.Generic.IList{SymOntoClay.Core.IStorage},System.Int32,SymOntoClay.Core.Internal.DataResolvers.CollectChainOfStoragesOptions)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.SymOntoClay#Core#IStorage#CollectChainOfStorages(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.StorageUsingOptions},System.Collections.Generic.IList{SymOntoClay.Core.IStorage},System.Int32,SymOntoClay.Core.Internal.DataResolvers.CollectChainOfStoragesOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.SymOntoClay#Core#IStorage#CollectChainOfStorages(System.Collections.Generic.IList{SymOntoClay.Core.IStorage})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.SymOntoClay#Core#IStorage#CollectChainOfStorages(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.IStorage})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.GetStorages">
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.GetStorages(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="E:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.OnParentStorageChanged">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.DbgPrintFactsAndRules">
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.DbgPrintFactsAndRules(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorage.OnDisposed">
@@ -7978,73 +7986,73 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.ConsolidatedPublicFactsStorageSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.ConstructorsStorage.Append(SymOntoClay.Core.Internal.CodeModel.Constructor)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.ConstructorsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Constructor)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.ConstructorsStorage.GetConstructorsDirectly(System.Int32,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.ConstructorsStorage.GetConstructorsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,System.Int32,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.ConstructorsStorage.AppendPreConstructor(SymOntoClay.Core.Internal.CodeModel.Constructor)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.ConstructorsStorage.AppendPreConstructor(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Constructor)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.ConstructorsStorage.GetPreConstructorsDirectly(System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.ConstructorsStorage.GetPreConstructorsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.ConstructorsStorage.OnDisposed">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.EmptyConstructorsStorage.Append(SymOntoClay.Core.Internal.CodeModel.Constructor)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.EmptyConstructorsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Constructor)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.EmptyConstructorsStorage.GetConstructorsDirectly(System.Int32,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.EmptyConstructorsStorage.GetConstructorsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,System.Int32,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.EmptyConstructorsStorage.AppendPreConstructor(SymOntoClay.Core.Internal.CodeModel.Constructor)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.EmptyConstructorsStorage.AppendPreConstructor(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Constructor)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.EmptyConstructorsStorage.GetPreConstructorsDirectly(System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.EmptyConstructorsStorage.GetPreConstructorsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.FuzzyLogic.EmptyFuzzyLogicStorage.Append(SymOntoClay.Core.Internal.CodeModel.LinguisticVariable)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.FuzzyLogic.EmptyFuzzyLogicStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.LinguisticVariable)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.FuzzyLogic.EmptyFuzzyLogicStorage.GetNonNumericValuesDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.FuzzyLogic.EmptyFuzzyLogicStorage.GetNonNumericValuesDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.FuzzyLogic.EmptyFuzzyLogicStorage.AppendDefaultOperator(SymOntoClay.Core.Internal.CodeModel.FuzzyLogicOperator)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.FuzzyLogic.EmptyFuzzyLogicStorage.AppendDefaultOperator(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.FuzzyLogicOperator)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.FuzzyLogic.EmptyFuzzyLogicStorage.GetDefaultOperator(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.FuzzyLogic.EmptyFuzzyLogicStorage.GetDefaultOperator(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.FuzzyLogic.FuzzyLogicStorage.Append(SymOntoClay.Core.Internal.CodeModel.LinguisticVariable)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.FuzzyLogic.FuzzyLogicStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.LinguisticVariable)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.FuzzyLogic.FuzzyLogicStorage.GetNonNumericValuesDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.FuzzyLogic.FuzzyLogicStorage.GetNonNumericValuesDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.FuzzyLogic.FuzzyLogicStorage.AppendDefaultOperator(SymOntoClay.Core.Internal.CodeModel.FuzzyLogicOperator)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.FuzzyLogic.FuzzyLogicStorage.AppendDefaultOperator(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.FuzzyLogicOperator)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.FuzzyLogic.FuzzyLogicStorage.GetDefaultOperator(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.FuzzyLogic.FuzzyLogicStorage.GetDefaultOperator(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.FuzzyLogic.FuzzyLogicStorage.OnDisposed">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging.EmptyIdleActionItemsStorage.Append(SymOntoClay.Core.Internal.CodeModel.IdleActionItem)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging.EmptyIdleActionItemsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.IdleActionItem)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging.EmptyIdleActionItemsStorage.GetIdleActionsDirectly(System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging.EmptyIdleActionItemsStorage.GetIdleActionsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging.IdleActionItemsStorage.Append(SymOntoClay.Core.Internal.CodeModel.IdleActionItem)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging.IdleActionItemsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.IdleActionItem)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging.IdleActionItemsStorage.GetIdleActionsDirectly(System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.IdleActionItemsStoraging.IdleActionItemsStorage.GetIdleActionsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.InheritancePublicFactsReplicator.ProcessChangeInheritance(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.InheritancePublicFactsReplicator.ProcessChangeInheritance(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.ConsolidatedPublicFactsInheritanceStorage.Kind">
@@ -8053,31 +8061,31 @@
         <member name="P:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.ConsolidatedPublicFactsInheritanceStorage.Storage">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.ConsolidatedPublicFactsInheritanceStorage.GetItemsDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.ConsolidatedPublicFactsInheritanceStorage.GetItemsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.ConsolidatedPublicFactsInheritanceStorage.RemoveInheritance(SymOntoClay.Core.Internal.CodeModel.InheritanceItem)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.ConsolidatedPublicFactsInheritanceStorage.RemoveInheritance(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.InheritanceItem)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.ConsolidatedPublicFactsInheritanceStorage.SetInheritance(SymOntoClay.Core.Internal.CodeModel.InheritanceItem)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.ConsolidatedPublicFactsInheritanceStorage.SetInheritance(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.InheritanceItem)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.ConsolidatedPublicFactsInheritanceStorage.SetInheritance(SymOntoClay.Core.Internal.CodeModel.InheritanceItem,System.Boolean)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.ConsolidatedPublicFactsInheritanceStorage.SetInheritance(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.InheritanceItem,System.Boolean)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.ConsolidatedPublicFactsInheritanceStorage.OnDisposed">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.InheritanceStorage.SetInheritance(SymOntoClay.Core.Internal.CodeModel.InheritanceItem)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.InheritanceStorage.SetInheritance(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.InheritanceItem)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.InheritanceStorage.SetInheritance(SymOntoClay.Core.Internal.CodeModel.InheritanceItem,System.Boolean)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.InheritanceStorage.SetInheritance(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.InheritanceItem,System.Boolean)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.InheritanceStorage.RemoveInheritance(SymOntoClay.Core.Internal.CodeModel.InheritanceItem)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.InheritanceStorage.RemoveInheritance(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.InheritanceItem)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.InheritanceStorage.GetItemsDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.InheritanceStorage.GetItemsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.InheritanceStoraging.InheritanceStorage.OnDisposed">
@@ -8134,61 +8142,61 @@
         <member name="E:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.OnAddingFact">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.Append(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.Append(SymOntoClay.Core.Internal.CodeModel.RuleInstance,System.Boolean)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.RuleInstance,System.Boolean)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.Append(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.DbgPrintFactsAndRules">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.DbgPrintFactsAndRules(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.GetAllRelations(SymOntoClay.Core.Internal.ILogicalSearchStorageContext,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.GetAllRelations(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.ILogicalSearchStorageContext,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.GetAllOriginFacts">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.GetAllOriginFacts(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.ILogicalSearchStorageContext,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.ILogicalSearchStorageContext,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.ILogicalSearchStorageContext,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.ILogicalSearchStorageContext,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.GetLogicalQueryNodes(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode},SymOntoClay.Core.Internal.DataResolvers.ReplacingNotResultsStrategy,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.KindOfLogicalQueryNode})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.GetLogicalQueryNodes(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode},SymOntoClay.Core.Internal.DataResolvers.ReplacingNotResultsStrategy,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.KindOfLogicalQueryNode})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.Remove(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.Remove(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.Remove(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.Remove(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.RemoveById(System.String)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.RemoveById(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.OnDisposed">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.Append(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.Append(SymOntoClay.Core.Internal.CodeModel.RuleInstance,System.Boolean)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.RuleInstance,System.Boolean)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.Append(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.Remove(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.Remove(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.Remove(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.Remove(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.RuleInstance})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.RemoveById(System.String)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.RemoveById(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
         <member name="E:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.OnChanged">
@@ -8200,58 +8208,58 @@
         <member name="E:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.OnAddingFact">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.GetAllRelations(SymOntoClay.Core.Internal.ILogicalSearchStorageContext,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.GetAllRelations(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.ILogicalSearchStorageContext,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.GetAllOriginFacts">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.GetAllOriginFacts(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.ILogicalSearchStorageContext,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.GetIndexedRulePartOfFactsByKeyOfRelation(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.ILogicalSearchStorageContext,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.ILogicalSearchStorageContext,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.GetIndexedRulePartWithOneRelationWithVarsByKeyOfRelation(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.ILogicalSearchStorageContext,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.GetLogicalQueryNodes(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode},SymOntoClay.Core.Internal.DataResolvers.ReplacingNotResultsStrategy,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.KindOfLogicalQueryNode})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.GetLogicalQueryNodes(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode},SymOntoClay.Core.Internal.DataResolvers.ReplacingNotResultsStrategy,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.KindOfLogicalQueryNode})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.DbgPrintFactsAndRules">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.DbgPrintFactsAndRules(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.OnDisposed">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.MetadataStoraging.EmptyMetadataStorage.Append(SymOntoClay.Core.Internal.CodeModel.CodeItem)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.MetadataStoraging.EmptyMetadataStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.CodeItem)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.MetadataStoraging.EmptyMetadataStorage.MainCodeEntity">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.MetadataStoraging.EmptyMetadataStorage.GetByName(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.MetadataStoraging.EmptyMetadataStorage.GetByName(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.MetadataStoraging.MetadataStorage.Append(SymOntoClay.Core.Internal.CodeModel.CodeItem)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.MetadataStoraging.MetadataStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.CodeItem)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.MetadataStoraging.MetadataStorage.MainCodeEntity">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.MetadataStoraging.MetadataStorage.GetByName(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.MetadataStoraging.MetadataStorage.GetByName(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.MetadataStoraging.MetadataStorage.OnDisposed">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.MethodsStoraging.EmptyMethodsStorage.Append(SymOntoClay.Core.Internal.CodeModel.NamedFunction)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.MethodsStoraging.EmptyMethodsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.NamedFunction)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.MethodsStoraging.EmptyMethodsStorage.GetNamedFunctionsDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Int32,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.MethodsStoraging.EmptyMethodsStorage.GetNamedFunctionsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Int32,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.MethodsStoraging.MethodsStorage.Append(SymOntoClay.Core.Internal.CodeModel.NamedFunction)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.MethodsStoraging.MethodsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.NamedFunction)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.MethodsStoraging.MethodsStorage.GetNamedFunctionsDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Int32,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.MethodsStoraging.MethodsStorage.GetNamedFunctionsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Int32,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.MethodsStoraging.MethodsStorage.OnDisposed">
@@ -8260,16 +8268,16 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.ObjectStorageFactory.CreateStorage(SymOntoClay.Core.Internal.Storage.RealStorageSettings)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.OperatorsStoraging.EmptyOperatorsStorage.Append(SymOntoClay.Core.Internal.CodeModel.Operator)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.OperatorsStoraging.EmptyOperatorsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Operator)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.OperatorsStoraging.EmptyOperatorsStorage.GetOperatorsDirectly(SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.KindOfOperator,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.OperatorsStoraging.EmptyOperatorsStorage.GetOperatorsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.KindOfOperator,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.OperatorsStoraging.OperatorsStorage.Append(SymOntoClay.Core.Internal.CodeModel.Operator)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.OperatorsStoraging.OperatorsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Operator)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.OperatorsStoraging.OperatorsStorage.GetOperatorsDirectly(SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.KindOfOperator,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.OperatorsStoraging.OperatorsStorage.GetOperatorsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.KindOfOperator,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.OperatorsStoraging.OperatorsStorage.OnDisposed">
@@ -8335,19 +8343,19 @@
         <member name="P:SymOntoClay.Core.Internal.Storage.RealStorage.IdleActionItemsStorage">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.AddParentStorage(SymOntoClay.Core.IStorage)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.AddParentStorage(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.IStorage)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.RemoveParentStorage(SymOntoClay.Core.IStorage)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.RemoveParentStorage(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.IStorage)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.SymOntoClay#Core#IStorage#CollectChainOfStorages(System.Collections.Generic.IList{SymOntoClay.Core.StorageUsingOptions},System.Collections.Generic.IList{SymOntoClay.Core.IStorage},System.Int32,SymOntoClay.Core.Internal.DataResolvers.CollectChainOfStoragesOptions)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.SymOntoClay#Core#IStorage#CollectChainOfStorages(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.StorageUsingOptions},System.Collections.Generic.IList{SymOntoClay.Core.IStorage},System.Int32,SymOntoClay.Core.Internal.DataResolvers.CollectChainOfStoragesOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.SymOntoClay#Core#IStorage#CollectChainOfStorages(System.Collections.Generic.IList{SymOntoClay.Core.IStorage})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.SymOntoClay#Core#IStorage#CollectChainOfStorages(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.IStorage})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.GetStorages">
+        <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.GetStorages(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="E:SymOntoClay.Core.Internal.Storage.RealStorage.OnParentStorageChanged">
@@ -8365,7 +8373,7 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.Dispose">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.DbgPrintFactsAndRules">
+        <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.DbgPrintFactsAndRules(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.ToString">
@@ -8404,73 +8412,73 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.RealStorageSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.RelationStoraging.EmptyRelationsStorage.Append(SymOntoClay.Core.Internal.CodeModel.RelationDescription)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.RelationStoraging.EmptyRelationsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.RelationDescription)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.RelationStoraging.EmptyRelationsStorage.GetRelationsDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Int32,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.RelationStoraging.EmptyRelationsStorage.GetRelationsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Int32,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.RelationStoraging.RelationsStorage.Append(SymOntoClay.Core.Internal.CodeModel.RelationDescription)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.RelationStoraging.RelationsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.RelationDescription)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.RelationStoraging.RelationsStorage.GetRelationsDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Int32,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.RelationStoraging.RelationsStorage.GetRelationsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Int32,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.RelationStoraging.RelationsStorage.OnDisposed">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.EmptyStatesStorage.Append(SymOntoClay.Core.Internal.CodeModel.StateDef)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.EmptyStatesStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StateDef)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.EmptyStatesStorage.GetStatesDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.EmptyStatesStorage.GetStatesDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.EmptyStatesStorage.AllStateNames">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.EmptyStatesStorage.AllStateNames(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.EmptyStatesStorage.GetAllStatesListDirectly">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.EmptyStatesStorage.GetAllStatesListDirectly(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.EmptyStatesStorage.SetDefaultStateName(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.EmptyStatesStorage.SetDefaultStateName(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.EmptyStatesStorage.GetDefaultStateNameDirectly">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.EmptyStatesStorage.GetDefaultStateNameDirectly(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.EmptyStatesStorage.GetActivationInfoOfStateListDirectly">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.EmptyStatesStorage.GetActivationInfoOfStateListDirectly(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.EmptyStatesStorage.Append(SymOntoClay.Core.Internal.CodeModel.MutuallyExclusiveStatesSet)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.EmptyStatesStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.MutuallyExclusiveStatesSet)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.EmptyStatesStorage.GetMutuallyExclusiveStatesSetsListDirectly">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.EmptyStatesStorage.GetMutuallyExclusiveStatesSetsListDirectly(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.StatesStorage.Append(SymOntoClay.Core.Internal.CodeModel.StateDef)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.StatesStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StateDef)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.StatesStorage.GetStatesDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.StatesStorage.GetStatesDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.StatesStorage.AllStateNames">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.StatesStorage.AllStateNames(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.StatesStorage.GetAllStatesListDirectly">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.StatesStorage.GetAllStatesListDirectly(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.StatesStorage.SetDefaultStateName(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.StatesStorage.SetDefaultStateName(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.StatesStorage.GetDefaultStateNameDirectly">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.StatesStorage.GetDefaultStateNameDirectly(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.StatesStorage.GetActivationInfoOfStateListDirectly">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.StatesStorage.GetActivationInfoOfStateListDirectly(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.StatesStorage.Append(SymOntoClay.Core.Internal.CodeModel.MutuallyExclusiveStatesSet)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.StatesStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.MutuallyExclusiveStatesSet)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.StatesStorage.GetMutuallyExclusiveStatesSetsListDirectly">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.StatesStorage.GetMutuallyExclusiveStatesSetsListDirectly(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StateStorageFactory.CreateStorage(SymOntoClay.Core.Internal.Storage.RealStorageSettings)">
@@ -8491,43 +8499,43 @@
         <member name="P:SymOntoClay.Core.Internal.Storage.StorageComponent.WorldPublicFactsStorage">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.InsertPublicFact(System.String)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.InsertPublicFact(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.InsertPublicFact(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.InsertPublicFact(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.RemovePublicFact(System.String)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.RemovePublicFact(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.InsertFact(System.String)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.InsertFact(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.RemoveFact(System.String)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.RemoveFact(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.InsertPerceptedFact(System.String)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.InsertPerceptedFact(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.RemovePerceptedFact(System.String)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.RemovePerceptedFact(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.InsertListenedFact(System.String)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.InsertListenedFact(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.InsertListenedFact(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.InsertListenedFact(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.AddCategory(System.String)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.AddCategory(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.AddCategories(System.Collections.Generic.List{System.String})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.AddCategories(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.List{System.String})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.RemoveCategory(System.String)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.RemoveCategory(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.RemoveCategories(System.Collections.Generic.List{System.String})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.StorageComponent.RemoveCategories(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.List{System.String})">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.StorageComponent.EnableCategories">
@@ -8554,34 +8562,34 @@
         <member name="P:SymOntoClay.Core.Internal.Storage.SuperClassStorage.Instance">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.SynonymsStoraging.EmptySynonymsStorage.Append(SymOntoClay.Core.Internal.CodeModel.Synonym)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.SynonymsStoraging.EmptySynonymsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Synonym)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.SynonymsStoraging.EmptySynonymsStorage.GetSynonymsDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.SynonymsStoraging.EmptySynonymsStorage.GetSynonymsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.SynonymsStoraging.SynonymsStorage.Append(SymOntoClay.Core.Internal.CodeModel.Synonym)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.SynonymsStoraging.SynonymsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Synonym)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.SynonymsStoraging.SynonymsStorage.GetSynonymsDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.SynonymsStoraging.SynonymsStorage.GetSynonymsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.Append(SymOntoClay.Core.Internal.CodeModel.InlineTrigger)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.InlineTrigger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.GetSystemEventsTriggersDirectly(SymOntoClay.Core.Internal.CodeModel.KindOfSystemEventOfInlineTrigger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.GetSystemEventsTriggersDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.KindOfSystemEventOfInlineTrigger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.GetLogicConditionalTriggersDirectly(System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.GetLogicConditionalTriggersDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.GetAddFactTriggersDirectly(System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.GetAddFactTriggersDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.Append(SymOntoClay.Core.INamedTriggerInstance)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.INamedTriggerInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.Remove(SymOntoClay.Core.INamedTriggerInstance)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.Remove(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.INamedTriggerInstance)">
             <inheritdoc/>
         </member>
         <member name="E:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.OnNamedTriggerInstanceChanged">
@@ -8590,28 +8598,28 @@
         <member name="E:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.OnNamedTriggerInstanceChangedWithKeys">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.GetNamedTriggerInstancesDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.GetNamedTriggerInstancesDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.Append(SymOntoClay.Core.Internal.CodeModel.InlineTrigger)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.InlineTrigger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.GetSystemEventsTriggersDirectly(SymOntoClay.Core.Internal.CodeModel.KindOfSystemEventOfInlineTrigger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.GetSystemEventsTriggersDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.KindOfSystemEventOfInlineTrigger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.GetLogicConditionalTriggersDirectly(System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.GetLogicConditionalTriggersDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.GetAddFactTriggersDirectly(System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.GetAddFactTriggersDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.Append(SymOntoClay.Core.INamedTriggerInstance)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.INamedTriggerInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.Remove(SymOntoClay.Core.INamedTriggerInstance)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.Remove(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.INamedTriggerInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.GetNamedTriggerInstancesDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.GetNamedTriggerInstancesDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
         <member name="E:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.OnNamedTriggerInstanceChanged">
@@ -8623,22 +8631,22 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.OnDisposed">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.SetSystemValue(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.SetSystemValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.GetSystemValueDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.GetSystemValueDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.Append(SymOntoClay.Core.Internal.CodeModel.Var)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Var)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.GetVarDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.GetVarDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.GetLocalVarDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.GetLocalVarDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.SetValue(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.SetValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
             <inheritdoc/>
         </member>
         <member name="E:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.OnChanged">
@@ -8647,7 +8655,7 @@
         <member name="E:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.OnChangedWithKeys">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.DbgPrintVariables">
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.DbgPrintVariables(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="E:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.OnChanged">
@@ -8656,28 +8664,28 @@
         <member name="E:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.OnChangedWithKeys">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.SetSystemValue(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.SetSystemValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.GetSystemValueDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.GetSystemValueDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.Append(SymOntoClay.Core.Internal.CodeModel.Var)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Var)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.GetVarDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.GetVarDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.GetLocalVarDirectly(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.GetLocalVarDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.SetValue(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.SetValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.OnDisposed">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.DbgPrintVariables">
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.DbgPrintVariables(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Threads.ActivePeriodicObjectCommonContext.IsNeedWating">
@@ -8797,7 +8805,7 @@
         <member name="M:SymOntoClay.Core.ModulesStorage.SaveToImage(System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.ModulesStorage.Import(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue})">
+        <member name="M:SymOntoClay.Core.ModulesStorage.Import(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.ModulesStorageSettings.PropertiesToString(System.UInt32)">
@@ -8845,25 +8853,25 @@
         <member name="M:SymOntoClay.Core.StandaloneStorage.SaveToImage(System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.StandaloneStorage.InsertPublicFact(System.String)">
+        <member name="M:SymOntoClay.Core.StandaloneStorage.InsertPublicFact(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.StandaloneStorage.InsertPublicFact(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+        <member name="M:SymOntoClay.Core.StandaloneStorage.InsertPublicFact(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.StandaloneStorage.RemovePublicFact(System.String)">
+        <member name="M:SymOntoClay.Core.StandaloneStorage.RemovePublicFact(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.StandaloneStorage.AddCategory(System.String)">
+        <member name="M:SymOntoClay.Core.StandaloneStorage.AddCategory(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.StandaloneStorage.AddCategories(System.Collections.Generic.List{System.String})">
+        <member name="M:SymOntoClay.Core.StandaloneStorage.AddCategories(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.List{System.String})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.StandaloneStorage.RemoveCategory(System.String)">
+        <member name="M:SymOntoClay.Core.StandaloneStorage.RemoveCategory(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.StandaloneStorage.RemoveCategories(System.Collections.Generic.List{System.String})">
+        <member name="M:SymOntoClay.Core.StandaloneStorage.RemoveCategories(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.List{System.String})">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.StandaloneStorage.EnableCategories">

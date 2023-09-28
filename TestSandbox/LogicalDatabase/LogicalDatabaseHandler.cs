@@ -260,7 +260,7 @@ namespace TestSandbox.LogicalDatabase
 
             _logger.Info("90B7C219-2209-458E-84EE-C3475864AB54", $"parsedQuery = {parsedQuery}");
 
-            var inheritanceRelationsList = parsedQuery.GetInheritanceRelations();
+            var inheritanceRelationsList = parsedQuery.GetInheritanceRelations(_logger);
 
 
             var inheritanceItemsList = new List<InheritanceItem>();
@@ -309,7 +309,7 @@ namespace TestSandbox.LogicalDatabase
 
 
 
-            _context.Storage.GlobalStorage.LogicalStorage.Append(parsedQuery);
+            _context.Storage.GlobalStorage.LogicalStorage.Append(_logger, parsedQuery);
 
         }
 
@@ -348,7 +348,7 @@ namespace TestSandbox.LogicalDatabase
             localCodeExecutionContext.Holder = _context.CommonNamesStorage.DefaultHolder;
 
 
-            var searchResult = searcher.Run(searchOptions);
+            var searchResult = searcher.Run(_logger, searchOptions);
 
 
             _logger.Info("BF5C1994-CE03-49B0-9D2F-B0F83E6D7AFF", $"searchResult.IsSuccess = {searchResult.IsSuccess}");

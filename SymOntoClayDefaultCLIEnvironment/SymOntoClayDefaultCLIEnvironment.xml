@@ -4,16 +4,16 @@
         <name>SymOntoClay.DefaultCLIEnvironment</name>
     </assembly>
     <members>
-        <member name="M:SymOntoClay.DefaultCLIEnvironment.PlatformSupportCLIStub.ConvertFromRelativeToAbsolute(SymOntoClay.Core.RelativeCoordinate)">
+        <member name="M:SymOntoClay.DefaultCLIEnvironment.PlatformSupportCLIStub.ConvertFromRelativeToAbsolute(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.RelativeCoordinate)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.DefaultCLIEnvironment.PlatformSupportCLIStub.GetCurrentAbsolutePosition">
+        <member name="M:SymOntoClay.DefaultCLIEnvironment.PlatformSupportCLIStub.GetCurrentAbsolutePosition(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.DefaultCLIEnvironment.PlatformSupportCLIStub.GetDirectionToPosition(System.Numerics.Vector3)">
+        <member name="M:SymOntoClay.DefaultCLIEnvironment.PlatformSupportCLIStub.GetDirectionToPosition(SymOntoClay.Monitor.Common.IMonitorLogger,System.Numerics.Vector3)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.DefaultCLIEnvironment.PlatformSupportCLIStub.CanBeTakenBy(SymOntoClay.Core.IEntity)">
+        <member name="M:SymOntoClay.DefaultCLIEnvironment.PlatformSupportCLIStub.CanBeTakenBy(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.IEntity)">
             <inheritdoc/>
         </member>
     </members>

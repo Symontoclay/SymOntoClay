@@ -80,7 +80,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP
 
             var converterFactToCG = new ConverterFactToInternalCG(_logger);
 
-            var internalCG = converterFactToCG.Convert(ruleInstance, nlpContext);
+            var internalCG = converterFactToCG.Convert(_logger, ruleInstance, nlpContext);
 
             Assert.AreEqual(false, internalCG.IsNegation);
             Assert.AreEqual(KindOfQuestion.None, internalCG.KindOfQuestion);
@@ -132,7 +132,7 @@ n_5 -> n_6[lhead=cluster_2];
 
             var converterFactToCG = new ConverterFactToInternalCG(_logger);
 
-            var internalCG = converterFactToCG.Convert(ruleInstance, nlpContext);
+            var internalCG = converterFactToCG.Convert(_logger, ruleInstance, nlpContext);
 
             Assert.AreEqual(false, internalCG.IsNegation);
             Assert.AreEqual(KindOfQuestion.None, internalCG.KindOfQuestion);
@@ -188,7 +188,7 @@ n_7 -> n_6;
 
             var converterFactToCG = new ConverterFactToInternalCG(_logger);
 
-            var internalCG = converterFactToCG.Convert(ruleInstance, nlpContext);
+            var internalCG = converterFactToCG.Convert(_logger, ruleInstance, nlpContext);
 
             Assert.AreEqual(false, internalCG.IsNegation);
             Assert.AreEqual(KindOfQuestion.None, internalCG.KindOfQuestion);

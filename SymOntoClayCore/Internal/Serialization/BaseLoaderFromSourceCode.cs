@@ -53,17 +53,17 @@ namespace SymOntoClay.Core.Internal.Serialization
                 return;
             }
 
-            _projectLoader.LoadFromSourceFiles(_context.Storage.GlobalStorage, _context.AppFile, _context.Id);
+            _projectLoader.LoadFromSourceFiles(Logger, _context.Storage.GlobalStorage, _context.AppFile, _context.Id);
 
             var instancesStorage = _context.InstancesStorage;
 
-            instancesStorage.ActivateMainEntity();
+            instancesStorage.ActivateMainEntity(Logger);
 
         }
 
         public virtual void LoadFromPaths(IList<string> sourceCodePaths)
         {
-            _projectLoader.LoadFromPaths(_context.Storage.GlobalStorage, sourceCodePaths);
+            _projectLoader.LoadFromPaths(Logger, _context.Storage.GlobalStorage, sourceCodePaths);
         }
     }
 }

@@ -24,6 +24,8 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -50,34 +52,34 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public IProcessInfo ProcessInfo { get; private set; }
 
-        public void AddOnFinishHandler(IProcessInfoEventHandler handler)
+        public void AddOnFinishHandler(IMonitorLogger logger, IProcessInfoEventHandler handler)
         {
-            ProcessInfo.AddOnFinishHandler(handler);
+            ProcessInfo.AddOnFinishHandler(logger, handler);
         }
 
-        public void RemoveOnFinishHandler(IProcessInfoEventHandler handler)
+        public void RemoveOnFinishHandler(IMonitorLogger logger, IProcessInfoEventHandler handler)
         {
-            ProcessInfo.RemoveOnFinishHandler(handler);
+            ProcessInfo.RemoveOnFinishHandler(logger, handler);
         }
 
-        public void AddOnCompleteHandler(IProcessInfoEventHandler handler)
+        public void AddOnCompleteHandler(IMonitorLogger logger, IProcessInfoEventHandler handler)
         {
-            ProcessInfo.AddOnCompleteHandler(handler);
+            ProcessInfo.AddOnCompleteHandler(logger, handler);
         }
 
-        public void RemoveOnCompleteHandler(IProcessInfoEventHandler handler)
+        public void RemoveOnCompleteHandler(IMonitorLogger logger, IProcessInfoEventHandler handler)
         {
-            ProcessInfo.RemoveOnCompleteHandler(handler);
+            ProcessInfo.RemoveOnCompleteHandler(logger, handler);
         }
 
-        public void AddOnWeakCanceledHandler(IProcessInfoEventHandler handler)
+        public void AddOnWeakCanceledHandler(IMonitorLogger logger, IProcessInfoEventHandler handler)
         {
-            ProcessInfo.AddOnWeakCanceledHandler(handler);
+            ProcessInfo.AddOnWeakCanceledHandler(logger, handler);
         }
 
-        public void RemoveOnWeakCanceledHandler(IProcessInfoEventHandler handler)
+        public void RemoveOnWeakCanceledHandler(IMonitorLogger logger, IProcessInfoEventHandler handler)
         {
-            ProcessInfo.RemoveOnWeakCanceledHandler(handler);
+            ProcessInfo.RemoveOnWeakCanceledHandler(logger, handler);
         }
 
         /// <inheritdoc/>

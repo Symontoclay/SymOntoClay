@@ -50,7 +50,7 @@ namespace SymOntoClay.NLP
         private readonly IMonitorLogger _logger;
 
         /// <inheritdoc/>
-        public IList<RuleInstance> Convert(string text)
+        public IList<RuleInstance> Convert(IMonitorLogger logger, string text)
         {
             var result = new List<RuleInstance>();
 
@@ -90,11 +90,11 @@ namespace SymOntoClay.NLP
         }
 
         /// <inheritdoc/>
-        public string Convert(RuleInstance fact, INLPConverterContext nlpContext)
+        public string Convert(IMonitorLogger logger, RuleInstance fact, INLPConverterContext nlpContext)
         {
             var converterFactToCG = new ConverterFactToInternalCG(_logger);
 
-            var internalCG = converterFactToCG.Convert(fact, nlpContext);
+            var internalCG = converterFactToCG.Convert(logger, fact, nlpContext);
 
             var converterInternalCGToPhraseStructure = new ConverterInternalCGToPhraseStructure(_logger, _wordsDict);
 

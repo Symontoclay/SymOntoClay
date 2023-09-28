@@ -73,7 +73,7 @@ namespace SymOntoClay.Core.Internal.Services
 
             _randomConstraintsList = new List<StrongIdentifierValue>() { _randomConstraintName };
 
-            var synonymsOfRandomConstraintName = _synonymsResolver.GetSynonyms(_randomConstraintName, _globalExecutionContext);
+            var synonymsOfRandomConstraintName = _synonymsResolver.GetSynonyms(Logger, _randomConstraintName, _globalExecutionContext);
 
             if(!synonymsOfRandomConstraintName.IsNullOrEmpty())
             {
@@ -86,7 +86,7 @@ namespace SymOntoClay.Core.Internal.Services
 
             _nearestConstraintsList = new List<StrongIdentifierValue> { _nearestConstraintName };
 
-            var synonymsOfNearestConstraintName = _synonymsResolver.GetSynonyms(_nearestConstraintName, _globalExecutionContext);
+            var synonymsOfNearestConstraintName = _synonymsResolver.GetSynonyms(Logger, _nearestConstraintName, _globalExecutionContext);
 
             if (!synonymsOfNearestConstraintName.IsNullOrEmpty())
             {

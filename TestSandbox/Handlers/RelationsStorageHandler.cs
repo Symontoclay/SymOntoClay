@@ -131,10 +131,10 @@ namespace TestSandbox.Handlers
 
             foreach (var item in relation.InheritanceItems)
             {
-                inheritanceStorage.SetInheritance(item);
+                inheritanceStorage.SetInheritance(_logger, item);
             }
 
-            globalStorage.RelationsStorage.Append(relation);
+            globalStorage.RelationsStorage.Append(_logger, relation);
         }
     }
 }

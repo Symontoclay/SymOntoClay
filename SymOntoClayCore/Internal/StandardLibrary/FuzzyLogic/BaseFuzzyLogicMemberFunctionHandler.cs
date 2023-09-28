@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -33,6 +34,8 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic
 {
     public abstract class BaseFuzzyLogicMemberFunctionHandler: IFuzzyLogicMemberFunctionHandler
     {
+        private static IMonitorLogger _logger = MonitorLoggerNLogImpementation.Instance;
+
         protected BaseFuzzyLogicMemberFunctionHandler(double a, double b)
             : this(KindOfDefuzzification.CoG, a, b)
         {
@@ -69,7 +72,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic
         {
             if (!_longHashCode.HasValue)
             {
-                Check();
+                Check(_logger);
                 _isDirty = false;
             }
 

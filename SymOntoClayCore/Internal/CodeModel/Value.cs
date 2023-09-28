@@ -26,6 +26,7 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -167,18 +168,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
             throw new NotImplementedException();
         }
 
-        public void SetMemberValue(StrongIdentifierValue memberName, Value value)
+        public void SetMemberValue(IMonitorLogger logger, StrongIdentifierValue memberName, Value value)
         {
             var kindOfName = memberName.KindOfName;
 
             switch (kindOfName)
             {
                 case KindOfName.Var:
-                    SetVarValue(memberName, value);
+                    SetVarValue(logger, memberName, value);
                     break;
 
                 case KindOfName.Concept:
-                    SetPropertyValue(memberName, value);
+                    SetPropertyValue(logger, memberName, value);
                     break;
 
                 default:
@@ -186,55 +187,55 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
         }
 
-        protected virtual void SetPropertyValue(StrongIdentifierValue propertyName, Value value)
+        protected virtual void SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value)
         {
              throw new NotImplementedException();
         }
 
-        protected virtual void SetVarValue(StrongIdentifierValue varName, Value value)
+        protected virtual void SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value)
         {
             throw new NotImplementedException();
         }
 
-        public virtual void SetValue(Value value)
+        public virtual void SetValue(IMonitorLogger logger, Value value)
         {
             throw new NotImplementedException();
         }
 
-        public Value GetMemberValue(StrongIdentifierValue memberName)
+        public Value GetMemberValue(IMonitorLogger logger, StrongIdentifierValue memberName)
         {
             var kindOfName = memberName.KindOfName;
 
             switch (kindOfName)
             {
                 case KindOfName.Var:
-                    return GetVarValue(memberName);
+                    return GetVarValue(logger, memberName);
 
                 case KindOfName.Concept:
-                    return GetPropertyValue(memberName);
+                    return GetPropertyValue(logger, memberName);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
             }
         }
 
-        protected virtual Value GetPropertyValue(StrongIdentifierValue propertyName)
+        protected virtual Value GetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName)
         {
             throw new NotImplementedException();
         }
 
-        protected virtual Value GetVarValue(StrongIdentifierValue varName)
+        protected virtual Value GetVarValue(IMonitorLogger logger, StrongIdentifierValue varName)
         {
             throw new NotImplementedException();
         }
 
-        public virtual IExecutable GetMethod(StrongIdentifierValue methodName,
+        public virtual IExecutable GetMethod(IMonitorLogger logger, StrongIdentifierValue methodName,
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters)
         {
             return null;
         }
 
-        public virtual IExecutable GetExecutable(KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters)
+        public virtual IExecutable GetExecutable(IMonitorLogger logger, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters)
         {
             throw new NotImplementedException();
         }

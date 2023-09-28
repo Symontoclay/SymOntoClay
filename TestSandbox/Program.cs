@@ -95,7 +95,7 @@ namespace TestSandbox
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
             //TstLogFileBuilderParameterValueConverterToString();
-            TstLogFileBuilder();
+            //TstLogFileBuilder();
             //TstMonitor();
             //TstCreateListByVarsDict();
             //TstDetectDoninantItems();
@@ -171,7 +171,7 @@ namespace TestSandbox
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            //TstGeneralStartHandler();//<=
+            TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -550,7 +550,7 @@ namespace TestSandbox
             localCodeExecutionContext.Storage = engineContext.Storage.GlobalStorage;
             localCodeExecutionContext.Holder = NameHelper.CreateName(engineContext.Id);
 
-            var compiledCode = engineContext.ConvertersFactory.GetConverterFactToImperativeCode().Convert(fact, localCodeExecutionContext);
+            var compiledCode = engineContext.ConvertersFactory.GetConverterFactToImperativeCode().Convert(_logger, fact, localCodeExecutionContext);
 
             _logger.Info("C815E21A-3AEF-4647-83E5-70C42708C2FB", $"compiledCode = {compiledCode.ToDbgString()}");
 
@@ -1115,7 +1115,7 @@ action Go
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(_logger, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
 
@@ -1208,17 +1208,17 @@ action Go
 
 
             var trapezoid = new TrapezoidFuzzyLogicMemberFunctionHandler(0.3, 0.4, 0.6, 0.7);
-            trapezoid.CheckDirty();
+            trapezoid.CheckDirty(_logger);
 
-            var defuzzificatedValue = trapezoid.Defuzzificate();
+            var defuzzificatedValue = trapezoid.Defuzzificate(_logger);
 
             _logger.Info("7DC833D8-2E97-488E-8BE7-D6659810BC35", $"defuzzificatedValue = {defuzzificatedValue}");
 
-            var naiveVeryDefuzzificatedValue = veryHandler.SystemCall(defuzzificatedValue);
+            var naiveVeryDefuzzificatedValue = veryHandler.SystemCall(_logger, defuzzificatedValue);
 
             _logger.Info("E2598E54-7922-4975-A847-76D36B317CFD", $"naiveVeryDefuzzificatedValue = {naiveVeryDefuzzificatedValue}");
 
-            defuzzificatedValue = trapezoid.Defuzzificate(new List<IFuzzyLogicOperatorHandler>() { veryHandler });
+            defuzzificatedValue = trapezoid.Defuzzificate(_logger, new List<IFuzzyLogicOperatorHandler>() { veryHandler });
 
             _logger.Info("1B0BD8F5-A296-43BD-B79B-16779B4977C3", $"defuzzificatedValue = {defuzzificatedValue}");
 
@@ -1530,7 +1530,7 @@ action Go
             child_1.ParentProcessInfo = parentProcessInfo;
 
             var child_2 = new ProcessInfo();
-            parentProcessInfo.AddChild(child_2);
+            parentProcessInfo.AddChild(_logger, child_2);
 
             _logger.Info("789033F5-F42A-46E0-9E02-26E9AFBECE22", $"parentProcessInfo = {parentProcessInfo}");
 
@@ -1555,7 +1555,7 @@ action Go
 
             _logger.Info("CF7047B1-3563-4026-ABB0-539205FD069B", "task.Start()");
 
-            ProcessInfoHelper.Wait(processInfo);
+            ProcessInfoHelper.Wait(_logger, processInfo);
 
             _logger.Info("FF2656B1-8AA9-4CF6-B0E5-8877FC49EAE6", "End");
         }
@@ -1982,7 +1982,7 @@ action Go
 
             var id = "#020ED339-6313-459A-900D-92F809CEBDC5";
 
-            var resultList = FileHelper.GetParsedFilesInfo(fileName, id);
+            var resultList = FileHelper.GetParsedFilesInfo(_logger, fileName, id);
 
             _logger.Info("F5A00933-4051-4D62-89EF-9C8A63E49072", $"resultList = {JsonConvert.SerializeObject(resultList, Formatting.Indented)}");
 

@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints;
 using System;
@@ -61,18 +62,18 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
         public override bool IsWaited => true;
 
         /// <inheritdoc/>
-        public override bool CanBeTakenBy(IEntity subject)
+        public override bool CanBeTakenBy(IMonitorLogger logger, IEntity subject)
         {
             if(_platformSupport == null)
             {
                 return false;
             }
 
-            return _platformSupport.CanBeTakenBy(subject);
+            return _platformSupport.CanBeTakenBy(logger, subject);
         }
 
         /// <inheritdoc/>
-        public override Vector3? GetPosition()
+        public override Vector3? GetPosition(IMonitorLogger logger)
         {
             if(_allowPublicPosition)
             {
@@ -81,7 +82,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
                     return _useStaticPosition;
                 }
 
-                return _platformSupport.GetCurrentAbsolutePosition();
+                return _platformSupport.GetCurrentAbsolutePosition(logger);
             }
 
             return null;

@@ -873,7 +873,7 @@ state Attacking
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, enemy) :}");
+            npc.InsertFact(null, "{: see(I, enemy) :}");
 
             Thread.Sleep(1000);
         }
@@ -1030,11 +1030,11 @@ state Attacking
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, enemy) :}");
+            npc.InsertFact(null, "{: see(I, enemy) :}");
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, barrel) :}");
+            npc.InsertFact(null, "{: see(I, barrel) :}");
 
             Thread.Sleep(1000);
         }
@@ -1166,11 +1166,11 @@ state Attacking
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, enemy) :}");
+            npc.InsertFact(null, "{: see(I, enemy) :}");
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, barrel) :}");
+            npc.InsertFact(null, "{: see(I, barrel) :}");
 
             Thread.Sleep(1000);
         }
@@ -1808,7 +1808,7 @@ state Attacking
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1941,7 +1941,7 @@ action Kill
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, barrel) :}");
+            npc.InsertFact(null, "{: see(I, barrel) :}");
 
             Thread.Sleep(1000);
         }

@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Storage;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -33,16 +34,16 @@ namespace SymOntoClay.Core
     {
         IStorageComponent StorageComponent { get; }
         IStorage Storage { get; }
-        string InsertPublicFact(string text);
-        string InsertPublicFact(RuleInstance fact);
-        void RemovePublicFact(string id);
+        string InsertPublicFact(IMonitorLogger logger, string text);
+        string InsertPublicFact(IMonitorLogger logger, RuleInstance fact);
+        void RemovePublicFact(IMonitorLogger logger, string id);
         IStorage PublicFactsStorage { get; }
         ConsolidatedPublicFactsStorage WorldPublicFactsStorage { get; }
         IMainStorageContext Context { get; }
-        void AddCategory(string category);
-        void AddCategories(List<string> categories);
-        void RemoveCategory(string category);
-        void RemoveCategories(List<string> categories);
+        void AddCategory(IMonitorLogger logger, string category);
+        void AddCategories(IMonitorLogger logger, List<string> categories);
+        void RemoveCategory(IMonitorLogger logger, string category);
+        void RemoveCategories(IMonitorLogger logger, List<string> categories);
         bool EnableCategories { get; set; }
     }
 }

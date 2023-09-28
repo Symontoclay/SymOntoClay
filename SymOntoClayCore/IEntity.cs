@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -65,8 +66,9 @@ namespace SymOntoClay.Core
         /// It allows to resolve entity in way which is fit for the host-method.
         /// These constraints will be used every resolving.
         /// </summary>
+        /// <param name="logger">Logger.</param>
         /// <param name="constraints">Array of constraints.</param>
-        void Specify(params EntityConstraints[] constraints);
+        void Specify(IMonitorLogger logger, params EntityConstraints[] constraints);
 
         /// <summary>
         /// Sets constraints that will be used during resolving.
@@ -74,8 +76,9 @@ namespace SymOntoClay.Core
         /// These constraints will be used once.
         /// Next resolving will not use these constraints.
         /// </summary>
+        /// <param name="logger">Logger.</param>
         /// <param name="constraints">Array of constraints.</param>
-        void SpecifyOnce(params EntityConstraints[] constraints);
+        void SpecifyOnce(IMonitorLogger logger, params EntityConstraints[] constraints);
 
         /// <summary>
         /// Sets backpack storage that will be used during resolving.
@@ -83,21 +86,24 @@ namespace SymOntoClay.Core
         /// This backpack storage will be used once.
         /// Next resolving will not use this backpack storage.
         /// </summary>
+        /// <param name="logger">Logger.</param>
         /// <param name="storage">Backpack storage</param>
-        void SpecifyOnce(IStorage storage);
+        void SpecifyOnce(IMonitorLogger logger, IStorage storage);
 
         /// <summary>
         /// Resolves (finds) entity with constraints or backpack storage.
         /// If entity has been previously resolved, the more fittable entity will has been found.
         /// </summary>
-        void Resolve();
+        /// <param name="logger">Logger.</param>
+        void Resolve(IMonitorLogger logger);
 
         /// <summary>
         /// Resolves (finds) entity with constraints or backpack storage.
         /// If entity has been previously resolved, the method does nothing.
         /// </summary>
-        void ResolveIfNeeds();
+        /// <param name="logger">Logger.</param>
+        void ResolveIfNeeds(IMonitorLogger logger);
 
-        IEntity GetNewEntity(string id);
+        IEntity GetNewEntity(IMonitorLogger logger, string id);
     }
 }

@@ -74,6 +74,7 @@ namespace SymOntoClay.UnityAsset.Core.World
             }
         }
 
+        /// <inheritdoc/>
         public void AddConvertor(IPlatformTypesConverter convertor)
         {
             lock (_lockObj)
@@ -170,19 +171,19 @@ namespace SymOntoClay.UnityAsset.Core.World
         }
 
         /// <inheritdoc/>
-        public string InsertPublicFact(string text)
+        public string InsertPublicFact(IMonitorLogger logger, string text)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public string InsertPublicFact(RuleInstance fact)
+        public string InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public void RemovePublicFact(string id)
+        public void RemovePublicFact(IMonitorLogger logger, string id)
         {
             throw new NotImplementedException();
         }
@@ -203,25 +204,25 @@ namespace SymOntoClay.UnityAsset.Core.World
         public IStandardFactsBuilder StandardFactsBuilder => throw new NotImplementedException();
 
         /// <inheritdoc/>
-        public void AddCategory(string category)
+        public void AddCategory(IMonitorLogger logger, string category)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public void AddCategories(List<string> categories)
+        public void AddCategories(IMonitorLogger logger, List<string> categories)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public void RemoveCategory(string category)
+        public void RemoveCategory(IMonitorLogger logger, string category)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public void RemoveCategories(List<string> categories)
+        public void RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
             throw new NotImplementedException();
         }

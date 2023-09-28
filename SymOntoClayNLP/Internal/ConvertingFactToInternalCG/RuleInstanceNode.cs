@@ -43,22 +43,22 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
         private readonly ContextOfConverterFactToInternalCG _context;
         private readonly IMonitorLogger _logger;
 
-        public ResultOfNode Run()
+        public ResultOfNode Run(IMonitorLogger logger)
         {
             var result = new ResultOfNode();
             result.KindOfResult = KindOfResultOfNode.ProcessFact;
 
-            Convert(_fact.PrimaryPart, result);
+            Convert(logger, _fact.PrimaryPart, result);
 
             return result;
         }
 
-        private void Convert(PrimaryRulePart primaryPart, ResultOfNode result)
+        private void Convert(IMonitorLogger logger, PrimaryRulePart primaryPart, ResultOfNode result)
         {
             _context.CurrentRulePart = primaryPart;
 
-            var exprResult = LogicalQueryNodeProcessorFactory.Run(primaryPart.Expression, _context);
-
+            var exprResult = LogicalQueryNodeProcessorFactory.Run(logger, primaryPart.Expression, _context);
+            
         }
     }
 }

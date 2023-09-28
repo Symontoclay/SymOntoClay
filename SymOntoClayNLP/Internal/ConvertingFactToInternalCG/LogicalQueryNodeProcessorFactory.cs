@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -29,7 +30,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 {
     public static class LogicalQueryNodeProcessorFactory
     {
-        public static ResultOfNode Run(LogicalQueryNode expression, ContextOfConverterFactToInternalCG context)
+        public static ResultOfNode Run(IMonitorLogger logger, LogicalQueryNode expression, ContextOfConverterFactToInternalCG context)
         {
             var kind = expression.Kind;
 
@@ -38,7 +39,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
                 case KindOfLogicalQueryNode.Relation:
                     {
                         var node = new RelationNode(expression, context);
-                        return node.Run();
+                        return node.Run(logger);
                     }
 
                 case KindOfLogicalQueryNode.Concept:
@@ -48,7 +49,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
                     }
 
                 case KindOfLogicalQueryNode.Value:
-                    return Run(expression.Value, context);
+                    return Run(logger, expression.Value, context);
 
                 case KindOfLogicalQueryNode.LogicalVar:
                     {
@@ -65,7 +66,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
                             case KindOfOperatorOfLogicalQueryNode.And:
                                 {
                                     var node = new BinaryOperatorAndNode(expression, context);
-                                    return node.Run();
+                                    return node.Run(logger);
                                 }
 
                             default:
@@ -78,7 +79,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             }
         }
 
-        private static ResultOfNode Run(Value value, ContextOfConverterFactToInternalCG context)
+        private static ResultOfNode Run(IMonitorLogger logger, Value value, ContextOfConverterFactToInternalCG context)
         {
             var kindOfValue = value.KindOfValue;
 
@@ -87,7 +88,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
                 case KindOfValue.ConditionalEntitySourceValue:
                     {
                         var node = new ConditionalEntitySourceValueNode(value.AsConditionalEntitySourceValue, context);
-                        return node.Run();
+                        return node.Run(logger);
                     }
 
                 default:

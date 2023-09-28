@@ -67,7 +67,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 
             var initialResult = _node.Run(varList, processedRuleInstance);
 
-            return (_toSystemBoolResolver.Resolve(initialResult.Value), initialResult.IsPeriodic);
+            return (_toSystemBoolResolver.Resolve(Logger, initialResult.Value), initialResult.IsPeriodic);
         }
     }
 }

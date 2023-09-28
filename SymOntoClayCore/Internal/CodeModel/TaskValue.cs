@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal.CodeModel.Handlers;
 using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -131,7 +132,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override IExecutable GetMethod(StrongIdentifierValue methodName, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters)
+        public override IExecutable GetMethod(IMonitorLogger logger, StrongIdentifierValue methodName, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters)
         {
             var methodNameStr = methodName.NormalizedNameValue;
 
@@ -140,7 +141,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             switch (methodNameStr)
             {
                 case "cancel":
-                    method = GetCancelMethod(kindOfParameters);
+                    method = GetCancelMethod(logger, kindOfParameters);
                     break;
 
             }
@@ -150,12 +151,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 return method;
             }
 
-            return base.GetMethod(methodName, kindOfParameters, namedParameters, positionedParameters);
+            return base.GetMethod(logger, methodName, kindOfParameters, namedParameters, positionedParameters);
         }
 
         private readonly CancellationTokenSourceCancelHandler _cancellationTokenSourceCancelHandler;
 
-        private IExecutable GetCancelMethod(KindOfFunctionParameters kindOfParameters)
+        private IExecutable GetCancelMethod(IMonitorLogger logger, KindOfFunctionParameters kindOfParameters)
         {
             if(kindOfParameters != KindOfFunctionParameters.NoParameters)
             {

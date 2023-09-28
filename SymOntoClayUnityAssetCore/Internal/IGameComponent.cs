@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core;
 using SymOntoClay.CoreHelper;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -40,7 +41,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         void RunInMainThread(Action function);
         TResult RunInMainThread<TResult>(Func<TResult> function);
         IStorage PublicFactsStorage { get; }
-        bool CanBeTakenBy(IEntity subject);
-        Vector3? GetPosition();
+        bool CanBeTakenBy(IMonitorLogger logger, IEntity subject);
+        Vector3? GetPosition(IMonitorLogger logger);
     }
 }

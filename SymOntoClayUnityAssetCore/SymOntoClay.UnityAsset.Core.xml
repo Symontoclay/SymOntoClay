@@ -246,16 +246,18 @@
             Returns storage that represents a backpack.
             </summary>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.IHumanoidNPC.AddToBackpack(SymOntoClay.UnityAsset.Core.IGameObject)">
+        <member name="M:SymOntoClay.UnityAsset.Core.IHumanoidNPC.AddToBackpack(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.UnityAsset.Core.IGameObject)">
             <summary>
             Adds a game object into backpack.
             </summary>
+            <param name="logger">Logger.</param>
             <param name="obj">Instance of the game object.</param>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.IHumanoidNPC.RemoveFromBackpack(SymOntoClay.UnityAsset.Core.IGameObject)">
+        <member name="M:SymOntoClay.UnityAsset.Core.IHumanoidNPC.RemoveFromBackpack(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.UnityAsset.Core.IGameObject)">
             <summary>
             Removes game object from backpack.
             </summary>
+            <param name="logger">Logger.</param>
             <param name="obj">Instance of the game object.</param>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.IHumanoidNPC.EngineContext">
@@ -309,10 +311,10 @@
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectGameComponent.IsWaited">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectGameComponent.CanBeTakenBy(SymOntoClay.Core.IEntity)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectGameComponent.CanBeTakenBy(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.IEntity)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectGameComponent.GetPosition">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectGameComponent.GetPosition(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation">
@@ -333,13 +335,13 @@
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.RunInMainThread``1(System.Func{``0})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.InsertPublicFact(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.InsertPublicFact(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.InsertPublicFact(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.InsertPublicFact(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.RemovePublicFact(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.RemovePublicFact(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.PushSoundFact(System.Single,System.String)">
@@ -348,16 +350,16 @@
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.PushSoundFact(System.Single,SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.AddCategory(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.AddCategory(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.AddCategories(System.Collections.Generic.List{System.String})">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.AddCategories(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.List{System.String})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.RemoveCategory(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.RemoveCategory(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.RemoveCategories(System.Collections.Generic.List{System.String})">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.RemoveCategories(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.List{System.String})">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject.GameObjectImplementation.EnableCategories">
@@ -399,10 +401,10 @@
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.IsWaited">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.CanBeTakenBy(SymOntoClay.Core.IEntity)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.CanBeTakenBy(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.IEntity)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.GetPosition">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.GetPosition(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.EngineContext">
@@ -449,19 +451,19 @@
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.GetManualControlledObjects">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.InsertPublicFact(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.InsertPublicFact(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.InsertPublicFact(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.InsertPublicFact(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.RemovePublicFact(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.RemovePublicFact(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.InsertFact(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.InsertFact(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.RemoveFact(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.RemoveFact(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.PushSoundFact(System.Single,System.String)">
@@ -470,16 +472,16 @@
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.PushSoundFact(System.Single,SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.AddCategory(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.AddCategory(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.AddCategories(System.Collections.Generic.List{System.String})">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.AddCategories(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.List{System.String})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.RemoveCategory(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.RemoveCategory(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.RemoveCategories(System.Collections.Generic.List{System.String})">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.RemoveCategories(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.List{System.String})">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.EnableCategories">
@@ -488,10 +490,10 @@
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.BackpackStorage">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.AddToBackpack(SymOntoClay.UnityAsset.Core.IGameObject)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.AddToBackpack(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.UnityAsset.Core.IGameObject)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.RemoveFromBackpack(SymOntoClay.UnityAsset.Core.IGameObject)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.RemoveFromBackpack(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.UnityAsset.Core.IGameObject)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCImplementation.EngineContext">
@@ -533,10 +535,10 @@
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceGameComponent.IsWaited">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceGameComponent.CanBeTakenBy(SymOntoClay.Core.IEntity)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceGameComponent.CanBeTakenBy(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.IEntity)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceGameComponent.GetPosition">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceGameComponent.GetPosition(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation">
@@ -560,13 +562,13 @@
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.RunInMainThread``1(System.Func{``0})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.InsertPublicFact(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.InsertPublicFact(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.InsertPublicFact(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.InsertPublicFact(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.RemovePublicFact(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.RemovePublicFact(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.PushSoundFact(System.Single,System.String)">
@@ -575,16 +577,16 @@
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.PushSoundFact(System.Single,SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.AddCategory(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.AddCategory(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.AddCategories(System.Collections.Generic.List{System.String})">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.AddCategories(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.List{System.String})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.RemoveCategory(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.RemoveCategory(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.RemoveCategories(System.Collections.Generic.List{System.String})">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.RemoveCategories(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.List{System.String})">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.Place.PlaceImplementation.EnableCategories">
@@ -602,10 +604,10 @@
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerGameComponent.IsWaited">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerGameComponent.CanBeTakenBy(SymOntoClay.Core.IEntity)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerGameComponent.CanBeTakenBy(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.IEntity)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerGameComponent.GetPosition">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerGameComponent.GetPosition(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation">
@@ -629,13 +631,13 @@
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.RunInMainThread``1(System.Func{``0})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.InsertPublicFact(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.InsertPublicFact(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.InsertPublicFact(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.InsertPublicFact(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.RemovePublicFact(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.RemovePublicFact(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.PushSoundFact(System.Single,System.String)">
@@ -644,16 +646,16 @@
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.PushSoundFact(System.Single,SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.AddCategory(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.AddCategory(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.AddCategories(System.Collections.Generic.List{System.String})">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.AddCategories(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.List{System.String})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.RemoveCategory(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.RemoveCategory(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.RemoveCategories(System.Collections.Generic.List{System.String})">
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.RemoveCategories(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.List{System.String})">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.Player.PlayerImlementation.EnableCategories">
@@ -686,6 +688,9 @@
         <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.SetSettings(SymOntoClay.UnityAsset.Core.WorldSettings)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.AddConvertor(SymOntoClay.UnityAsset.Core.IPlatformTypesConverter)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.World.WorldCore.EnableLogging">
             <inheritdoc/>
         </member>
@@ -713,13 +718,13 @@
         <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.GetPlace(SymOntoClay.UnityAsset.Core.PlaceSettings)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.InsertPublicFact(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.InsertPublicFact(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.InsertPublicFact(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.InsertPublicFact(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.RemovePublicFact(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.RemovePublicFact(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.PushSoundFact(System.Single,System.String)">
@@ -731,16 +736,16 @@
         <member name="P:SymOntoClay.UnityAsset.Core.World.WorldCore.StandardFactsBuilder">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.AddCategory(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.AddCategory(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.AddCategories(System.Collections.Generic.List{System.String})">
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.AddCategories(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.List{System.String})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.RemoveCategory(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.RemoveCategory(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.RemoveCategories(System.Collections.Generic.List{System.String})">
+        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.RemoveCategories(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.List{System.String})">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.World.WorldCore.EnableCategories">
@@ -809,10 +814,10 @@
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.IdForFacts">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.CanBeTakenBy(SymOntoClay.Core.IEntity)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.CanBeTakenBy(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.IEntity)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.GetPosition">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.GetPosition(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.LoadFromSourceCode">
@@ -851,40 +856,40 @@
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.IsEmpty">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.GetInstanceId(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.GetInstanceId(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.IsVisible(System.Int32)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.IsVisible(SymOntoClay.Monitor.Common.IMonitorLogger,System.Int32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.CanBeTaken(System.Int32)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.CanBeTaken(SymOntoClay.Monitor.Common.IMonitorLogger,System.Int32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.GetPosition(System.Int32)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.GetPosition(SymOntoClay.Monitor.Common.IMonitorLogger,System.Int32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.DistanceToAndPosition(System.Int32)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.DistanceToAndPosition(SymOntoClay.Monitor.Common.IMonitorLogger,System.Int32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.DistanceTo(System.Int32)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.DistanceTo(SymOntoClay.Monitor.Common.IMonitorLogger,System.Int32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.Specify(SymOntoClay.Core.EntityConstraints[])">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.Specify(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.EntityConstraints[])">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.SpecifyOnce(SymOntoClay.Core.EntityConstraints[])">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.SpecifyOnce(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.EntityConstraints[])">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.SpecifyOnce(SymOntoClay.Core.IStorage)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.SpecifyOnce(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.IStorage)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.Resolve">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.Resolve(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.ResolveIfNeeds">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.ResolveIfNeeds(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.GetNewEntity(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.GetNewEntity(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider.TicksToSecondsMultiplicator">
@@ -1043,10 +1048,10 @@
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.EndPointName">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.ProcessPlatformStart">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.ProcessPlatformStart(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.ProcessPlatformCancelation">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.ProcessPlatformCancelation(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.Devices">
@@ -1055,7 +1060,7 @@
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.Friends">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.IsFriend(SymOntoClay.Core.IProcessInfo)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.IsFriend(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.IProcessInfo)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.PlatformProcessInfo.OnDisposed">
@@ -1097,16 +1102,16 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.ProcessCreatingResult.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.HostSupport.HostSupportComponent.ConvertFromRelativeToAbsolute(SymOntoClay.Core.RelativeCoordinate)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.HostSupport.HostSupportComponent.ConvertFromRelativeToAbsolute(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.RelativeCoordinate)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.HostSupport.HostSupportComponent.GetCurrentAbsolutePosition">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.HostSupport.HostSupportComponent.GetCurrentAbsolutePosition(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.HostSupport.HostSupportComponent.GetDirectionToPosition(System.Numerics.Vector3)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.HostSupport.HostSupportComponent.GetDirectionToPosition(SymOntoClay.Monitor.Common.IMonitorLogger,System.Numerics.Vector3)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache.GetLogicRuleOrFact(System.String)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache.LogicQueryParseAndCache.GetLogicRuleOrFact(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.SoundPerception.BaseSoundReceiverComponent.InstanceId">
@@ -1169,10 +1174,10 @@
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.BasePlatformTypesConverter.CanConvertToCoreType">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.BasePlatformTypesConverter.ConvertToCoreType(System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.BasePlatformTypesConverter.ConvertToCoreType(SymOntoClay.Monitor.Common.IMonitorLogger,System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.BasePlatformTypesConverter.ConvertToPlatformType(System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.BasePlatformTypesConverter.ConvertToPlatformType(SymOntoClay.Monitor.Common.IMonitorLogger,System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.BasePlatformTypesConverter.ToString">
@@ -1214,10 +1219,10 @@
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.EntityAndStrongIdentifierValueConverter.CanConvertToCoreType">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.EntityAndStrongIdentifierValueConverter.ConvertToCoreType(System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.EntityAndStrongIdentifierValueConverter.ConvertToCoreType(SymOntoClay.Monitor.Common.IMonitorLogger,System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.EntityAndStrongIdentifierValueConverter.ConvertToPlatformType(System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.EntityAndStrongIdentifierValueConverter.ConvertToPlatformType(SymOntoClay.Monitor.Common.IMonitorLogger,System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.FloatAndNumberValueConverter.PlatformType">
@@ -1232,10 +1237,10 @@
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.FloatAndNumberValueConverter.CanConvertToCoreType">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.FloatAndNumberValueConverter.ConvertToCoreType(System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.FloatAndNumberValueConverter.ConvertToCoreType(SymOntoClay.Monitor.Common.IMonitorLogger,System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.FloatAndNumberValueConverter.ConvertToPlatformType(System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.FloatAndNumberValueConverter.ConvertToPlatformType(SymOntoClay.Monitor.Common.IMonitorLogger,System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.NavTargetAndStrongIdentifierValueConverter.PlatformType">
@@ -1250,10 +1255,10 @@
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.NavTargetAndStrongIdentifierValueConverter.CanConvertToCoreType">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.NavTargetAndStrongIdentifierValueConverter.ConvertToCoreType(System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.NavTargetAndStrongIdentifierValueConverter.ConvertToCoreType(SymOntoClay.Monitor.Common.IMonitorLogger,System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.NavTargetAndStrongIdentifierValueConverter.ConvertToPlatformType(System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.NavTargetAndStrongIdentifierValueConverter.ConvertToPlatformType(SymOntoClay.Monitor.Common.IMonitorLogger,System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndIEntityConverter.PlatformType">
@@ -1268,10 +1273,10 @@
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndIEntityConverter.CanConvertToCoreType">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndIEntityConverter.ConvertToCoreType(System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndIEntityConverter.ConvertToCoreType(SymOntoClay.Monitor.Common.IMonitorLogger,System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndIEntityConverter.ConvertToPlatformType(System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndIEntityConverter.ConvertToPlatformType(SymOntoClay.Monitor.Common.IMonitorLogger,System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndStrongIdentifierValueConverter.PlatformType">
@@ -1286,10 +1291,10 @@
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndStrongIdentifierValueConverter.CanConvertToCoreType">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndStrongIdentifierValueConverter.ConvertToCoreType(System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndStrongIdentifierValueConverter.ConvertToCoreType(SymOntoClay.Monitor.Common.IMonitorLogger,System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndStrongIdentifierValueConverter.ConvertToPlatformType(System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndStrongIdentifierValueConverter.ConvertToPlatformType(SymOntoClay.Monitor.Common.IMonitorLogger,System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndWayPointValueConverter.PlatformType">
@@ -1304,19 +1309,19 @@
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndWayPointValueConverter.CanConvertToCoreType">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndWayPointValueConverter.ConvertToCoreType(System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndWayPointValueConverter.ConvertToCoreType(SymOntoClay.Monitor.Common.IMonitorLogger,System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndWayPointValueConverter.ConvertToPlatformType(System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Vector3AndWayPointValueConverter.ConvertToPlatformType(SymOntoClay.Monitor.Common.IMonitorLogger,System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.PlatformTypesConvertersRegistry.AddConvertor(SymOntoClay.UnityAsset.Core.IPlatformTypesConverter)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.PlatformTypesConvertersRegistry.AddConvertor(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.UnityAsset.Core.IPlatformTypesConverter)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.PlatformTypesConvertersRegistry.CanConvert(System.Type,System.Type)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.PlatformTypesConvertersRegistry.CanConvert(SymOntoClay.Monitor.Common.IMonitorLogger,System.Type,System.Type)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.PlatformTypesConvertersRegistry.Convert(System.Type,System.Type,System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.PlatformTypesConvertersRegistry.Convert(SymOntoClay.Monitor.Common.IMonitorLogger,System.Type,System.Type,System.Object,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.Vision.VisionComponent.OnDisposed">

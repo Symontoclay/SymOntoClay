@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,7 +73,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return SystemValue;
         }
 
-        public RuleInstance ToRuleInstance(IEngineContext engineContext)
+        public RuleInstance ToRuleInstance(IMonitorLogger logger, IEngineContext engineContext)
         {
             lock(_toRuleInstanceValueLockObj)
             {
@@ -90,7 +91,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     throw new ArgumentNullException(nameof(converter));
                 }
 
-                var factsList = converter.Convert(_usedSystemValueForRuleInstanceValue);
+                var factsList = converter.Convert(logger, _usedSystemValueForRuleInstanceValue);
 
                 if(factsList.IsNullOrEmpty())
                 {

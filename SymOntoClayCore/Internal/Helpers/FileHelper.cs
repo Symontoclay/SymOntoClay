@@ -65,7 +65,7 @@ namespace SymOntoClay.Core.Internal.Helpers
 
             var directory = fileInfo.Directory;
 
-            NGetParsedFilesInfoFromDirectory(directory, result, existingFilesList);
+            NGetParsedFilesInfoFromDirectory(logger, directory, result, existingFilesList);
 
             return result;
         }
@@ -76,7 +76,7 @@ namespace SymOntoClay.Core.Internal.Helpers
 
             foreach(var path in sourceCodePaths)
             {
-                var itemsList = GetParsedFilesFromPath(path);
+                var itemsList = GetParsedFilesFromPath(logger, path);
 
                 if(itemsList.Any())
                 {
@@ -94,7 +94,7 @@ namespace SymOntoClay.Core.Internal.Helpers
             var result = new List<ParsedFileInfo>();
             var existingFilesList = new List<string>();
 
-            NGetParsedFilesInfoFromDirectory(directory, result, existingFilesList);
+            NGetParsedFilesInfoFromDirectory(logger, directory, result, existingFilesList);
 
             return result;
         }
@@ -117,7 +117,7 @@ namespace SymOntoClay.Core.Internal.Helpers
 
             foreach(var dir in directoriesList)
             {
-                NGetParsedFilesInfoFromDirectory(dir, result, existingFilesList);
+                NGetParsedFilesInfoFromDirectory(logger, dir, result, existingFilesList);
             }
         }
     }

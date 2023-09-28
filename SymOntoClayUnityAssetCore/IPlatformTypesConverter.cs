@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using SymOntoClay.Core;
+using SymOntoClay.Monitor.Common;
 
 namespace SymOntoClay.UnityAsset.Core
 {
@@ -36,7 +37,7 @@ namespace SymOntoClay.UnityAsset.Core
         Type CoreType { get; }
         bool CanConvertToPlatformType { get; }
         bool CanConvertToCoreType { get; }
-        object ConvertToPlatformType(object coreObject, IEngineContext context, ILocalCodeExecutionContext localContext);
-        object ConvertToCoreType(object platformObject, IEngineContext context, ILocalCodeExecutionContext localContext);
+        object ConvertToPlatformType(IMonitorLogger logger, object coreObject, IEngineContext context, ILocalCodeExecutionContext localContext);
+        object ConvertToCoreType(IMonitorLogger logger, object platformObject, IEngineContext context, ILocalCodeExecutionContext localContext);
     }
 }

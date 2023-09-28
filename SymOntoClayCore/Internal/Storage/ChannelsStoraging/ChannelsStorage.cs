@@ -64,7 +64,7 @@ namespace SymOntoClay.Core.Internal.Storage.ChannelsStoraging
                     {
                         var targetList = dict[holder];
 
-                        StorageHelper.RemoveSameItems(targetList, channel);
+                        StorageHelper.RemoveSameItems(logger, targetList, channel);
 
                         targetList.Add(channel);
                     }

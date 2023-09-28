@@ -80,26 +80,26 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (syncOption == SyncOption.ChildAsync)
             {
-                targetCurrentCodeFrame.ProcessInfo.AddChild(currentProcessInfo);
+                targetCurrentCodeFrame.ProcessInfo.AddChild(logger, currentProcessInfo);
             }
 
             var threadId = Guid.NewGuid().ToString("D");
 
-            var logger = _context.MonitorNode.CreateThreadLogger("0FBA9877-ACBB-48F1-8CAF-B73CAF435653", threadId, parentThreadId: parentThreadId);
+            var newLogger = _context.MonitorNode.CreateThreadLogger("0FBA9877-ACBB-48F1-8CAF-B73CAF435653", threadId, parentThreadId: parentThreadId);
 
-            var threadExecutor = new AsyncThreadExecutor(_context, logger);
+            var threadExecutor = new AsyncThreadExecutor(_context, newLogger);
             threadExecutor.SetCodeFrame(codeFrame);
 
             var task = threadExecutor.Start();
 
             if (completeAnnotationSystemEvent != null)
             {
-                currentProcessInfo.AddOnCompleteHandler(new ProcessInfoEventHandler(_context, threadId, completeAnnotationSystemEvent, currentCodeFrame, true));
+                currentProcessInfo.AddOnCompleteHandler(logger, new ProcessInfoEventHandler(_context, threadId, completeAnnotationSystemEvent, currentCodeFrame, true));
             }
 
             if (weakCancelAnnotationSystemEvent != null)
             {
-                currentProcessInfo.AddOnWeakCanceledHandler(new ProcessInfoEventHandler(_context, threadId, weakCancelAnnotationSystemEvent, currentCodeFrame, true));
+                currentProcessInfo.AddOnWeakCanceledHandler(logger, new ProcessInfoEventHandler(_context, threadId, weakCancelAnnotationSystemEvent, currentCodeFrame, true));
             }
 
             if (cancelAnnotationSystemEvent != null)

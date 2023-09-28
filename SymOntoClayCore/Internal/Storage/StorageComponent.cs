@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Parsing;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -80,7 +81,6 @@ namespace SymOntoClay.Core.Internal.Storage
 
         /// <inheritdoc/>
         public ConsolidatedPublicFactsStorage WorldPublicFactsStorage => _worldPublicFactsStorage;
-
 
         public void LoadFromSourceCode(IEngineContext engineContext = null)
         {
@@ -236,7 +236,7 @@ namespace SymOntoClay.Core.Internal.Storage
             return result;
         }
 
-        private RuleInstance ParseFact(string text)
+        private RuleInstance ParseFact(IMonitorLogger logger, string text)
         {
             if (string.IsNullOrWhiteSpace(text))
             {
@@ -248,23 +248,33 @@ namespace SymOntoClay.Core.Internal.Storage
                 text = $"{{: {text} :}}";
             }
 
-            return _logicQueryParseAndCache.GetLogicRuleOrFact(text);
+            return _logicQueryParseAndCache.GetLogicRuleOrFact(logger, text);
         }
 
         /// <inheritdoc/>
-        public string InsertPublicFact(string text)
+        public string InsertPublicFact(IMonitorLogger logger, string text)
         {
-            var fact = ParseFact(text);
+            if(logger == null)
+            {
+                logger = Logger;
+            }
 
-            return InsertPublicFact(fact);
+            var fact = ParseFact(logger, text);
+
+            return InsertPublicFact(logger, fact);
         }
 
         /// <inheritdoc/>
-        public string InsertPublicFact(RuleInstance fact)
+        public string InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             if (fact == null)
             {
                 return string.Empty;
+            }
+
+            if (logger == null)
+            {
+                logger = Logger;
             }
 
             var checkDirtyOptions = new CheckDirtyOptions()
@@ -276,65 +286,93 @@ namespace SymOntoClay.Core.Internal.Storage
 
             fact.CalculateLongHashCodes(checkDirtyOptions);
 
-            _publicFactsStorage.LogicalStorage.Append(fact);
+            _publicFactsStorage.LogicalStorage.Append(logger, fact);
 
-            _selfFactsStorage.LogicalStorage.Append(fact);
+            _selfFactsStorage.LogicalStorage.Append(logger, fact);
 
             return fact.Name.NameValue;
         }
 
         /// <inheritdoc/>
-        public void RemovePublicFact(string id)
+        public void RemovePublicFact(IMonitorLogger logger, string id)
         {
             if(string.IsNullOrWhiteSpace(id))
             {
                 return;
             }
 
-            _publicFactsStorage.LogicalStorage.RemoveById(id);
+            if (logger == null)
+            {
+                logger = Logger;
+            }
 
-            _selfFactsStorage.LogicalStorage.RemoveById(id);
+            _publicFactsStorage.LogicalStorage.RemoveById(logger, id);
 
-
+            _selfFactsStorage.LogicalStorage.RemoveById(logger, id);
         }
 
         /// <inheritdoc/>
-        public string InsertFact(string text)
+        public string InsertFact(IMonitorLogger logger, string text)
         {
-            var fact = ParseFact(text);
+            if (logger == null)
+            {
+                logger = Logger;
+            }
+
+            var fact = ParseFact(logger, text);
 
             if (fact == null)
             {
                 return string.Empty;
             }
 
-            _globalStorage.LogicalStorage.Append(fact);
+            _globalStorage.LogicalStorage.Append(logger, fact);
 
             return fact.Name.NameValue;
         }
 
         /// <inheritdoc/>
-        public void RemoveFact(string id)
+        public void RemoveFact(IMonitorLogger logger, string id)
         {
-            _globalStorage.LogicalStorage.RemoveById(id);
+            if (logger == null)
+            {
+                logger = Logger;
+            }
+
+            _globalStorage.LogicalStorage.RemoveById(logger, id);
         }
 
-        public void AddVisibleStorage(IStorage storage)
+        public void AddVisibleStorage(IMonitorLogger logger, IStorage storage)
         {
-            _visibleFactsStorage.AddConsolidatedStorage(storage);
+            if (logger == null)
+            {
+                logger = Logger;
+            }
+
+            _visibleFactsStorage.AddConsolidatedStorage(logger, storage);
         }
 
-        public void RemoveVisibleStorage(IStorage storage)
+        public void RemoveVisibleStorage(IMonitorLogger logger, IStorage storage)
         {
-            _visibleFactsStorage.RemoveConsolidatedStorage(storage);
+            if (logger == null)
+            {
+                logger = Logger;
+            }
+
+            _visibleFactsStorage.RemoveConsolidatedStorage(logger, storage);
         }
 
         /// <inheritdoc/>
-        public string InsertPerceptedFact(string text)
+        public string InsertPerceptedFact(IMonitorLogger logger, string text)
         {
             if (string.IsNullOrWhiteSpace(text))
             {
                 return string.Empty;
+            }
+
+            if (logger == null)
+            {
+                logger = Logger;
             }
 
             if (!text.StartsWith("{:"))
@@ -342,57 +380,92 @@ namespace SymOntoClay.Core.Internal.Storage
                 text = $"{{: {text} :}}";
             }
 
-            var fact = _logicQueryParseAndCache.GetLogicRuleOrFact(text);
+            var fact = _logicQueryParseAndCache.GetLogicRuleOrFact(logger, text);
 
-            _perceptedFactsStorage.LogicalStorage.Append(fact);
+            _perceptedFactsStorage.LogicalStorage.Append(logger, fact);
 
             return fact.Name.NameValue;
         }
 
         /// <inheritdoc/>
-        public void RemovePerceptedFact(string id)
+        public void RemovePerceptedFact(IMonitorLogger logger, string id)
         {
-            _perceptedFactsStorage.LogicalStorage.RemoveById(id);
+            if (logger == null)
+            {
+                logger = Logger;
+            }
+
+            _perceptedFactsStorage.LogicalStorage.RemoveById(logger, id);
         }
 
         /// <inheritdoc/>
-        public void InsertListenedFact(string text)
+        public void InsertListenedFact(IMonitorLogger logger, string text)
         {
+            if (logger == null)
+            {
+                logger = Logger;
+            }
+
             var fact = _parser.ParseRuleInstance(text, false);
 
-            InsertListenedFact(fact);
+            InsertListenedFact(logger, fact);
         }
 
         /// <inheritdoc/>
-        public void InsertListenedFact(RuleInstance fact)
+        public void InsertListenedFact(IMonitorLogger logger, RuleInstance fact)
         {
+            if (logger == null)
+            {
+                logger = Logger;
+            }
+
             fact.CheckDirty(_checkDirtyOptions);
 
-            _listenedFactsStorage.LogicalStorage.Append(fact);
+            _listenedFactsStorage.LogicalStorage.Append(logger, fact);
         }
 
         /// <inheritdoc/>
-        public void AddCategory(string category)
+        public void AddCategory(IMonitorLogger logger, string category)
         {
-            _categoriesStorage.AddCategory(category);
+            if (logger == null)
+            {
+                logger = Logger;
+            }
+
+            _categoriesStorage.AddCategory(logger, category);
         }
 
         /// <inheritdoc/>
-        public void AddCategories(List<string> categories)
+        public void AddCategories(IMonitorLogger logger, List<string> categories)
         {
-            _categoriesStorage.AddCategories(categories);
+            if (logger == null)
+            {
+                logger = Logger;
+            }
+
+            _categoriesStorage.AddCategories(logger, categories);
         }
 
         /// <inheritdoc/>
-        public void RemoveCategory(string category)
+        public void RemoveCategory(IMonitorLogger logger, string category)
         {
-            _categoriesStorage.RemoveCategory(category);
+            if (logger == null)
+            {
+                logger = Logger;
+            }
+
+            _categoriesStorage.RemoveCategory(logger, category);
         }
 
         /// <inheritdoc/>
-        public void RemoveCategories(List<string> categories)
+        public void RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
-            _categoriesStorage.RemoveCategories(categories);
+            if (logger == null)
+            {
+                logger = Logger;
+            }
+
+            _categoriesStorage.RemoveCategories(logger, categories);
         }
 
         /// <inheritdoc/>

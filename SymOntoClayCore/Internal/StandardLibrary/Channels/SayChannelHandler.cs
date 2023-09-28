@@ -66,11 +66,11 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
             switch(kindOfValue)
             {
                 case KindOfValue.RuleInstance:
-                    ProcessRuleInstanceValue(value.AsRuleInstance);
+                    ProcessRuleInstanceValue(logger, value.AsRuleInstance);
                     break;
 
                 case KindOfValue.StringValue:
-                    ProcessStringValue(value.AsStringValue);
+                    ProcessStringValue(logger, value.AsStringValue);
                     break;
 
                 default:
@@ -82,16 +82,16 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
 
         private float DefaultSoundPower = 50;
 
-        private void ProcessRuleInstanceValue(RuleInstance value)
+        private void ProcessRuleInstanceValue(IMonitorLogger logger, RuleInstance value)
         {
             _soundPublisherProvider?.PushSpeechFact(DefaultSoundPower, value);
         }
 
-        private void ProcessStringValue(StringValue value)
+        private void ProcessStringValue(IMonitorLogger logger, StringValue value)
         {
-            var factValue = value.ToRuleInstance(_engineContext);
+            var factValue = value.ToRuleInstance(logger, _engineContext);
 
-            ProcessRuleInstanceValue(factValue);
+            ProcessRuleInstanceValue(logger, factValue);
         }
     }
 }

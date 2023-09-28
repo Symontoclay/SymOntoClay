@@ -54,7 +54,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         private readonly IStandardFactsBuilder _standardFactsBuilder;
 
         /// <inheritdoc/>
-        public override Vector3 Position => _hostSupport.GetCurrentAbsolutePosition();
+        public override Vector3 Position => _hostSupport.GetCurrentAbsolutePosition(Logger);
 
         /// <inheritdoc/>
         public override double Threshold => 0;
@@ -70,7 +70,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         {
             var convertedQuery = ConvertQuery(power, distance, position, query);
 
-            _coreEngine.InsertListenedFact(convertedQuery);
+            _coreEngine.InsertListenedFact(Logger, convertedQuery);
         }
 
         /// <inheritdoc/>
@@ -78,13 +78,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         {
             var convertedQuery = ConvertQuery(power, distance, position, fact);
 
-            _coreEngine.InsertListenedFact(convertedQuery);
+            _coreEngine.InsertListenedFact(Logger, convertedQuery);
         }
 
         /// <inheritdoc/>
         protected override float GetDirectionToPosition(Vector3 position)
         {
-            return _hostSupport.GetDirectionToPosition(position);
+            return _hostSupport.GetDirectionToPosition(Logger, position);
         }
 
         /// <inheritdoc/>

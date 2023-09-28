@@ -380,7 +380,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     processInitialInfoList.Add(processInitialInfo);
                 }
 
-                var taskValue = _context.CodeExecutor.ExecuteBatchSync(processInitialInfoList);
+                var taskValue = _context.CodeExecutor.ExecuteBatchSync(logger, processInitialInfoList);
 
             }
         }
@@ -419,7 +419,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     processInitialInfoList.Add(processInitialInfo);
                 }
 
-                var taskValue = _context.CodeExecutor.ExecuteBatchSync(processInitialInfoList);
+                var taskValue = _context.CodeExecutor.ExecuteBatchSync(logger, processInitialInfoList);
 
             }
         }
@@ -472,7 +472,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     processInitialInfoList.Add(processInitialInfo);
                 }
 
-                var taskValue = _context.CodeExecutor.ExecuteBatchAsync(processInitialInfoList);
+                var taskValue = _context.CodeExecutor.ExecuteBatchAsync(logger, processInitialInfoList);
 
             }
         }

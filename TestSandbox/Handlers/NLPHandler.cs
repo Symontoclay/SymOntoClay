@@ -101,7 +101,7 @@ namespace TestSandbox.Handlers
 
             var converterFactToCG = new ConverterFactToInternalCG(_logger);
 
-            var internalCG = converterFactToCG.Convert(ruleInstance, nlpContext);
+            var internalCG = converterFactToCG.Convert(_logger, ruleInstance, nlpContext);
         }
 
         private void Case5()
@@ -117,7 +117,7 @@ namespace TestSandbox.Handlers
 
             var converterFactToCG = new ConverterFactToInternalCG(_logger);
 
-            var internalCG = converterFactToCG.Convert(ruleInstance, nlpContext);
+            var internalCG = converterFactToCG.Convert(_logger, ruleInstance, nlpContext);
 
             _logger.Info("D567EE1F-31CA-4452-A64A-D3DFF71980AF", $"internalCG = {internalCG}");
 
@@ -143,7 +143,7 @@ namespace TestSandbox.Handlers
 
             _logger.Info("F3B33F6C-CCDC-4B35-B788-612CCA64343C", $"ruleInstance = {ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}");
 
-            var text = _converter.Convert(ruleInstance, nlpContext);
+            var text = _converter.Convert(_logger, ruleInstance, nlpContext);
 
             _logger.Info("5921CBCF-BF51-49E6-BBB6-76FB82077785", $"text = '{text}'");
         }
@@ -161,7 +161,7 @@ namespace TestSandbox.Handlers
             _logger.Info("537F688B-DAD3-4DF0-A711-AE56FA09288D", $"text = {text}");
 #endif
 
-            var ruleInstancesList = _converter.Convert(text);
+            var ruleInstancesList = _converter.Convert(_logger, text);
 
             _logger.Info("10C0ECF0-DB82-44E0-A2B0-9902B9D9F829", $"ruleInstancesList.Count = {ruleInstancesList.Count}");
 
@@ -251,7 +251,7 @@ namespace TestSandbox.Handlers
 
         private void Case1()
         {
-            var result = _converter.Convert("I like my cat.()!.?,...:;-1234567890 M1$nrg, #erty3, @maror, 3% can't");
+            var result = _converter.Convert(_logger, "I like my cat.()!.?,...:;-1234567890 M1$nrg, #erty3, @maror, 3% can't");
 
             _logger.Info("AC298F94-50AE-49C1-B91C-FB5F91840733", $"result.Count = {result.Count}");
 

@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
@@ -41,21 +42,21 @@ namespace SymOntoClay.BaseTestLib
         private readonly IPlatformSupport _platformSupport;
 
         /// <inheritdoc/>
-        public Vector3 ConvertFromRelativeToAbsolute(RelativeCoordinate relativeCoordinate)
+        public Vector3 ConvertFromRelativeToAbsolute(IMonitorLogger logger, RelativeCoordinate relativeCoordinate)
         {
-            return _platformSupport.ConvertFromRelativeToAbsolute(relativeCoordinate);
+            return _platformSupport.ConvertFromRelativeToAbsolute(logger, relativeCoordinate);
         }
 
         /// <inheritdoc/>
-        public Vector3 GetCurrentAbsolutePosition()
+        public Vector3 GetCurrentAbsolutePosition(IMonitorLogger logger)
         {
-            return _platformSupport.GetCurrentAbsolutePosition();
+            return _platformSupport.GetCurrentAbsolutePosition(logger);
         }
 
         /// <inheritdoc/>
-        public float GetDirectionToPosition(Vector3 position)
+        public float GetDirectionToPosition(IMonitorLogger logger, Vector3 position)
         {
-            return _platformSupport.GetDirectionToPosition(position);
+            return _platformSupport.GetDirectionToPosition(logger, position);
         }
     }
 }

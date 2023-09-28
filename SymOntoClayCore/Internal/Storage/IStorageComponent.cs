@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -34,19 +35,19 @@ namespace SymOntoClay.Core.Internal.Storage
         IStorage PerceptedFactsStorage { get; }
         IStorage ListenedFactsStorage { get; }
         ConsolidatedPublicFactsStorage WorldPublicFactsStorage { get; }
-        string InsertPublicFact(string text);
-        string InsertPublicFact(RuleInstance fact);
-        void RemovePublicFact(string id);
-        string InsertFact(string text);
-        void RemoveFact(string id);
-        string InsertPerceptedFact(string text);
-        void RemovePerceptedFact(string id);
-        void InsertListenedFact(string text);
-        void InsertListenedFact(RuleInstance fact);
-        void AddCategory(string category);
-        void AddCategories(List<string> categories);
-        void RemoveCategory(string category);
-        void RemoveCategories(List<string> categories);
+        string InsertPublicFact(IMonitorLogger logger, string text);
+        string InsertPublicFact(IMonitorLogger logger, RuleInstance fact);
+        void RemovePublicFact(IMonitorLogger logger, string id);
+        string InsertFact(IMonitorLogger logger, string text);
+        void RemoveFact(IMonitorLogger logger, string id);
+        string InsertPerceptedFact(IMonitorLogger logger, string text);
+        void RemovePerceptedFact(IMonitorLogger logger, string id);
+        void InsertListenedFact(IMonitorLogger logger, string text);
+        void InsertListenedFact(IMonitorLogger logger, RuleInstance fact);
+        void AddCategory(IMonitorLogger logger, string category);
+        void AddCategories(IMonitorLogger logger, List<string> categories);
+        void RemoveCategory(IMonitorLogger logger, string category);
+        void RemoveCategories(IMonitorLogger logger, List<string> categories);
         bool EnableCategories { get; set; }
     }
 }

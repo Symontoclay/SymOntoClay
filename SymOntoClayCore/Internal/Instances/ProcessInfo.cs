@@ -26,6 +26,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -47,7 +48,7 @@ namespace SymOntoClay.Core.Internal.Instances
         public override IReadOnlyList<string> Friends => _friends;
 
         /// <inheritdoc/>
-        public override bool IsFriend(IProcessInfo other)
+        public override bool IsFriend(IMonitorLogger logger, IProcessInfo other)
         {
             return false;
         }

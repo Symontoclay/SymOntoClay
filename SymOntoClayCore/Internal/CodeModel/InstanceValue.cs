@@ -26,6 +26,7 @@ using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -63,33 +64,33 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override IExecutable GetExecutable(KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters)
+        public override IExecutable GetExecutable(IMonitorLogger logger, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters)
         {
-            return InstanceInfo.GetExecutable(kindOfParameters, namedParameters, positionedParameters);
+            return InstanceInfo.GetExecutable(logger, kindOfParameters, namedParameters, positionedParameters);
         }
 
         /// <inheritdoc/>
-        protected override Value GetPropertyValue(StrongIdentifierValue propertyName)
+        protected override Value GetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName)
         {
-            return InstanceInfo.GetPropertyValue(propertyName);
+            return InstanceInfo.GetPropertyValue(logger, propertyName);
         }
 
         /// <inheritdoc/>
-        protected override Value GetVarValue(StrongIdentifierValue varName)
+        protected override Value GetVarValue(IMonitorLogger logger, StrongIdentifierValue varName)
         {
-            return InstanceInfo.GetVarValue(varName);
+            return InstanceInfo.GetVarValue(logger, varName);
         }
 
         /// <inheritdoc/>
-        protected override void SetPropertyValue(StrongIdentifierValue propertyName, Value value)
+        protected override void SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value)
         {
-            InstanceInfo.SetPropertyValue(propertyName, value);
+            InstanceInfo.SetPropertyValue(logger, propertyName, value);
         }
 
         /// <inheritdoc/>
-        protected override void SetVarValue(StrongIdentifierValue varName, Value value)
+        protected override void SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value)
         {
-            InstanceInfo.SetVarValue(varName, value);
+            InstanceInfo.SetVarValue(logger, varName, value);
         }
 
         /// <inheritdoc/>

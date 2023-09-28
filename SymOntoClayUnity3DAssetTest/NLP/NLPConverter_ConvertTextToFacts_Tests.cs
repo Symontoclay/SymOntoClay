@@ -58,7 +58,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP
 
             var converter = new NLPConverter(_logger, _wordsDict);
 
-            var ruleInstancesList = converter.Convert(text);
+            var ruleInstancesList = converter.Convert(_logger, text);
 
             Assert.AreEqual(1, ruleInstancesList.Count);
 
@@ -77,7 +77,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP
 
             var converter = new NLPConverter(_logger, _wordsDict);
 
-            var ruleInstancesList = converter.Convert(text);
+            var ruleInstancesList = converter.Convert(_logger, text);
 
             Assert.AreEqual(1, ruleInstancesList.Count);
 

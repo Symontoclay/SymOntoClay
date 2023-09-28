@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,11 +31,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public interface ICodeExecutorComponent
     {
-        Value ExecuteBatchAsync(List<ProcessInitialInfo> processInitialInfoList);
-        Value ExecuteBatchSync(List<ProcessInitialInfo> processInitialInfoList);
-        Value ExecuteAsync(ProcessInitialInfo processInitialInfo);
-        Value CallOperator(KindOfOperator kindOfOperator, List<Value> paramsList, ILocalCodeExecutionContext parentLocalCodeExecutionContext);
-        Value CallExecutableSync(IExecutable executable, List<Value> positionedParameters, ILocalCodeExecutionContext parentLocalCodeExecutionContext);
-        Value CallFunctionSync(Value caller, KindOfFunctionParameters kindOfParameters, List<Value> parameters, ILocalCodeExecutionContext parentLocalCodeExecutionContext);
+        Value ExecuteBatchAsync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList);
+        Value ExecuteBatchSync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList);
+        Value ExecuteAsync(IMonitorLogger logger, ProcessInitialInfo processInitialInfo);
+        Value CallOperator(IMonitorLogger logger, KindOfOperator kindOfOperator, List<Value> paramsList, ILocalCodeExecutionContext parentLocalCodeExecutionContext);
+        Value CallExecutableSync(IMonitorLogger logger, IExecutable executable, List<Value> positionedParameters, ILocalCodeExecutionContext parentLocalCodeExecutionContext);
+        Value CallFunctionSync(IMonitorLogger logger, Value caller, KindOfFunctionParameters kindOfParameters, List<Value> parameters, ILocalCodeExecutionContext parentLocalCodeExecutionContext);
     }
 }

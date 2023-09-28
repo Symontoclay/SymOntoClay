@@ -98,7 +98,7 @@ action Go
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -170,7 +170,7 @@ action Go
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -350,7 +350,7 @@ action Go
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -421,7 +421,7 @@ action `my Go 1` alias `Go`
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -492,7 +492,7 @@ action `my Go 1` alias `Go`, Run
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -563,7 +563,7 @@ action `my Go 1` alias `Go`, `Run`
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -635,7 +635,7 @@ action `my Go 1` alias `Go` is `base app`
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -706,7 +706,7 @@ action `my Go 1` alias `Go`, Run is `base app`
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -777,7 +777,7 @@ action `my Go 1` alias `Go`, `Run` is `base app`
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -848,7 +848,7 @@ action `Go` is `base app`
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -919,7 +919,7 @@ action Go is `base app`
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -987,7 +987,7 @@ action Go
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1078,7 +1078,7 @@ action Go
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1288,7 +1288,7 @@ action Go
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }
@@ -1346,7 +1346,7 @@ action Go
 
             Thread.Sleep(1000);
 
-            npc.InsertFact("{: see(I, #a) :}");
+            npc.InsertFact(null, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
         }

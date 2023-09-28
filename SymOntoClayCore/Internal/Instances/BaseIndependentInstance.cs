@@ -87,7 +87,7 @@ namespace SymOntoClay.Core.Internal.Instances
             processInitialInfo.Instance = this;
             processInitialInfo.ExecutionCoordinator = _executionCoordinator;
 
-            var taskValue = _context.CodeExecutor.ExecuteAsync(processInitialInfo);
+            var taskValue = _context.CodeExecutor.ExecuteAsync(logger, processInitialInfo);
 
         }
     }

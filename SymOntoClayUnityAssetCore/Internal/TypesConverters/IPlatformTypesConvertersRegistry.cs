@@ -26,13 +26,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using SymOntoClay.Core;
+using SymOntoClay.Monitor.Common;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
 {
     public interface IPlatformTypesConvertersRegistry
     {
-        void AddConvertor(IPlatformTypesConverter convertor);
-        bool CanConvert(Type source, Type dest);
-        object Convert(Type sourceType, Type destType, object sourceValue, IEngineContext context, ILocalCodeExecutionContext localContext);
+        void AddConvertor(IMonitorLogger logger, IPlatformTypesConverter convertor);
+        bool CanConvert(IMonitorLogger logger, Type source, Type dest);
+        object Convert(IMonitorLogger logger, Type sourceType, Type destType, object sourceValue, IEngineContext context, ILocalCodeExecutionContext localContext);
     }
 }

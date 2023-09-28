@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.InternalImplementations;
@@ -41,13 +42,13 @@ namespace TestSandbox.CoreHostListener
         public override IStorage PublicFactsStorage => throw new NotImplementedException();
 
         /// <inheritdoc/>
-        public override bool CanBeTakenBy(IEntity subject)
+        public override bool CanBeTakenBy(IMonitorLogger logger, IEntity subject)
         {
             return true;
         }
 
         /// <inheritdoc/>
-        public override Vector3? GetPosition()
+        public override Vector3? GetPosition(IMonitorLogger logger)
         {
             return null;
         }

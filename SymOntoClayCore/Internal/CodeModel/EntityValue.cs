@@ -42,7 +42,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             _context = context;
             _localContext = localContext;
 
-            SetCurrEntity(identifier);
+            SetCurrEntity(context.Logger, identifier);
         }
 
         private IEngineContext _context;

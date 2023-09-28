@@ -410,7 +410,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                                 intermediateResultExplainNode.RelationsList = result;
                             }
 
-                            return logicalSearchStorageContext.Filter(result, _mutablePartsDict);
+                            return logicalSearchStorageContext.Filter(logger, result, _mutablePartsDict);
                         }
 
                     default:
@@ -555,7 +555,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                                 intermediateResultExplainNode.BaseRulePartList = initialResult;
                             }
 
-                            initialResult = logicalSearchStorageContext.Filter(initialResult, _mutablePartsDict).ToList();
+                            initialResult = logicalSearchStorageContext.Filter(logger, initialResult, _mutablePartsDict).ToList();
                         }
                         break;
 
@@ -694,7 +694,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                                 intermediateResultExplainNode.BaseRulePartList = initialResult;
                             }
 
-                            initialResult = logicalSearchStorageContext.Filter(initialResult, false).ToList();
+                            initialResult = logicalSearchStorageContext.Filter(logger, initialResult, false).ToList();
                         }
                         break;
 

@@ -100,8 +100,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             var resultMutablePart = new MutablePartOfRuleInstance() { Parent = ruleInstance };
             result.MutablePart = resultMutablePart;
 
-            resultMutablePart.ObligationModality = MathValueHelper.Max(rawObligationsModalitiesList.Select(p => fuzzyLogicResolver.Resolve(p, localCodeExecutionContext)));
-            resultMutablePart.SelfObligationModality = MathValueHelper.Max(rawSelfObligationsModalitiesList.Select(p => fuzzyLogicResolver.Resolve(p, localCodeExecutionContext)));
+            resultMutablePart.ObligationModality = MathValueHelper.Max(rawObligationsModalitiesList.Select(p => fuzzyLogicResolver.Resolve(logger, p, localCodeExecutionContext)));
+            resultMutablePart.SelfObligationModality = MathValueHelper.Max(rawSelfObligationsModalitiesList.Select(p => fuzzyLogicResolver.Resolve(logger, p, localCodeExecutionContext)));
 
             return result;
         }

@@ -24,6 +24,7 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -63,11 +64,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override void SetValue(Value value)
+        public override void SetValue(IMonitorLogger logger, Value value)
         {
             if(RightOperand.IsStrongIdentifierValue)
             {
-                LeftOperand.SetMemberValue(RightOperand.AsStrongIdentifierValue, value);
+                LeftOperand.SetMemberValue(logger, RightOperand.AsStrongIdentifierValue, value);
                 return;
             }
 

@@ -95,7 +95,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
                 }
             }
 
-            return (_codeExecutor.CallFunctionSync(caller, _kindOfparameters, paramsList, _localCodeExecutionContext), false);
+            return (_codeExecutor.CallFunctionSync(Logger, caller, _kindOfparameters, paramsList, _localCodeExecutionContext), false);
         }
 
         private (Value Value, bool IsPeriodic) RunUnaryOperator(List<List<Var>> varList, RuleInstance processedRuleInstance)
@@ -107,7 +107,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
             paramsList.Add(leftResult.Value);
             paramsList.Add(NullValue.Instance);
 
-            return (_codeExecutor.CallOperator(_kindOfOperator, paramsList, _localCodeExecutionContext), leftResult.IsPeriodic);
+            return (_codeExecutor.CallOperator(Logger, _kindOfOperator, paramsList, _localCodeExecutionContext), leftResult.IsPeriodic);
         }
     }
 }

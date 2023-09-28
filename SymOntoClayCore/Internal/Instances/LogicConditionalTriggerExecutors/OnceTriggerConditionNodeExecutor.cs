@@ -47,7 +47,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
             _dateTimeProvider = engineContext.DateTimeProvider;
             _dateTimeResolver = engineContext.DataResolversFactory.GetDateTimeResolver();
 
-            _targetDuration = _dateTimeResolver.ConvertTimeValueToTicks(condition.Value, DefaultTimeValues.OnceTimerDefaultTimeValue, localCodeExecutionContext);
+            _targetDuration = _dateTimeResolver.ConvertTimeValueToTicks(Logger, condition.Value, DefaultTimeValues.OnceTimerDefaultTimeValue, localCodeExecutionContext);
         }
 
         private readonly TriggerConditionNodeObserverContext _context;

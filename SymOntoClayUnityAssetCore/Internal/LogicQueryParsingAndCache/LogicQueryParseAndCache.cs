@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.Parsing;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,7 +53,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache
         private readonly Dictionary<string, RuleInstance> _cache = new Dictionary<string, RuleInstance>();
 
         /// <inheritdoc/>
-        public RuleInstance GetLogicRuleOrFact(string text)
+        public RuleInstance GetLogicRuleOrFact(IMonitorLogger logger, string text)
         {
             var textKey = text.Replace(" ", string.Empty).Trim();
 

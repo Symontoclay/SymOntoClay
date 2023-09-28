@@ -72,7 +72,7 @@ namespace SymOntoClay.Core.Tests
             Thread.Sleep(1000);
 
             var factStr = "{: $x = {: act(M16, shoot) :} & hear(I, $x) & distance(I, $x, 15.588457107543945) & direction($x, 12) & point($x, #@[15.588457107543945, 12]) :}";
-            npc.EngineContext.Storage.InsertListenedFact(factStr);
+            npc.EngineContext.Storage.InsertListenedFact(null, factStr);
 
             Thread.Sleep(1000);
         }
@@ -174,7 +174,7 @@ namespace SymOntoClay.Core.Tests
             Thread.Sleep(1000);
 
             var factStr = "{: $x = {: act(M16, shoot) :} & hear(I, $x) & distance(I, $x, 15.588457107543945) & direction($x, 12) & point($x, #@[15.588457107543945, 12]) :}";
-            npc.EngineContext.Storage.InsertListenedFact(factStr);
+            npc.EngineContext.Storage.InsertListenedFact(null, factStr);
 
             Thread.Sleep(1000);
         }
@@ -226,7 +226,7 @@ namespace SymOntoClay.Core.Tests
             Thread.Sleep(1000);
 
             var factStr = "{: $x = {: act(M16, shoot) :} & hear(I, $x) & distance(I, $x, 15.588457107543945) & direction($x, 12) & point($x, #@[15.588457107543945, 12]) :}";
-            npc.EngineContext.Storage.InsertListenedFact(factStr);
+            npc.EngineContext.Storage.InsertListenedFact(null, factStr);
 
             Thread.Sleep(1000);
         }
@@ -264,7 +264,7 @@ namespace SymOntoClay.Core.Tests
             Thread.Sleep(1000);
 
             var factStr = "{: $x = {: act(M16, shoot) :} & hear(I, $x) & distance(I, $x, 15.588457107543945) & direction($x, 12) & point($x, #@[15.588457107543945, 12]) :}";
-            npc.EngineContext.Storage.InsertListenedFact(factStr);
+            npc.EngineContext.Storage.InsertListenedFact(null, factStr);
 
             Thread.Sleep(1000);
         }
@@ -359,7 +359,7 @@ namespace SymOntoClay.Core.Tests
             Thread.Sleep(1000);
 
             var factStr = "{: $x = {: act(M16, shoot) :} & hear(I, $x) & distance(I, $x, 15.588457107543945) & direction($x, 12) & point($x, #@[15.588457107543945, 12]) :}";
-            npc.EngineContext.Storage.InsertListenedFact(factStr);
+            npc.EngineContext.Storage.InsertListenedFact(null, factStr);
 
             Thread.Sleep(1000);
         }
@@ -405,7 +405,7 @@ namespace SymOntoClay.Core.Tests
             Thread.Sleep(1000);
 
             var factStr = "{: $x = {: act(M16, shoot) :} & hear(I, $x) & distance(I, $x, 15.588457107543945) & direction($x, 12) & point($x, #@[15.588457107543945, 12]) :}";
-            npc.EngineContext.Storage.InsertListenedFact(factStr);
+            npc.EngineContext.Storage.InsertListenedFact(null, factStr);
 
             Thread.Sleep(1000);
         }
@@ -463,7 +463,7 @@ namespace SymOntoClay.Core.Tests
             Thread.Sleep(1000);
 
             var factStr = "{: $x = {: act(M16, shoot) :} & hear(I, $x) & distance(I, $x, 15.588457107543945) & direction($x, 12) & point($x, #@[15.588457107543945, 12]) :}";
-            npc.EngineContext.Storage.InsertListenedFact(factStr);
+            npc.EngineContext.Storage.InsertListenedFact(null, factStr);
 
             Thread.Sleep(1000);
         }
@@ -561,7 +561,7 @@ namespace SymOntoClay.Core.Tests
             Thread.Sleep(1000);
 
             var factStr = "{: $x = {: act(M16, shoot) :} & hear(I, $x) & distance(I, $x, 15.588457107543945) & direction($x, 12) & point($x, #@[15.588457107543945, 12]) :}";
-            npc.EngineContext.Storage.InsertListenedFact(factStr);
+            npc.EngineContext.Storage.InsertListenedFact(null, factStr);
 
             Thread.Sleep(1000);
         }

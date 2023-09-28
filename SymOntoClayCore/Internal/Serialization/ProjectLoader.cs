@@ -73,30 +73,30 @@ namespace SymOntoClay.Core.Internal.Serialization
         {
             var defferedLibsList = new List<string>();
 
-            SaveItem(codeItem, targetStorage, defferedLibsList);
+            SaveItem(logger, codeItem, targetStorage, defferedLibsList);
 
-            var subItems = LinearizeSubItems(codeItem);
+            var subItems = LinearizeSubItems(logger, codeItem);
 
             if(subItems.Any())
             {
-                SaveItems(subItems, targetStorage, defferedLibsList);
+                SaveItems(logger, subItems, targetStorage, defferedLibsList);
             }
         }
 
         public List<string> LoadFromSourceFiles(IMonitorLogger logger, IStorage targetStorage, string projectFile)
         {
-            return LoadFromSourceFiles(targetStorage, projectFile, string.Empty);
+            return LoadFromSourceFiles(logger, targetStorage, projectFile, string.Empty);
         }
 
         public List<string> LoadFromSourceFiles(IMonitorLogger logger, IStorage targetStorage, string projectFile, string id)
         {
             Init();
 
-            var filesList = FileHelper.GetParsedFilesInfo(projectFile, id);
+            var filesList = FileHelper.GetParsedFilesInfo(logger, projectFile, id);
 
             var defferedLibsList = new List<string>();
 
-            ProcessFilesList(filesList, true, targetStorage, defferedLibsList);
+            ProcessFilesList(logger, filesList, true, targetStorage, defferedLibsList);
 
             return defferedLibsList;
         }
@@ -105,7 +105,7 @@ namespace SymOntoClay.Core.Internal.Serialization
         {
             Init();
 
-            var filesList = FileHelper.GetParsedFilesFromPaths(sourceCodePaths);
+            var filesList = FileHelper.GetParsedFilesFromPaths(logger, sourceCodePaths);
 
 #if DEBUG
 
@@ -113,7 +113,7 @@ namespace SymOntoClay.Core.Internal.Serialization
 
             var defferedLibsList = new List<string>();
 
-            ProcessFilesList(filesList, false, targetStorage, defferedLibsList);
+            ProcessFilesList(logger, filesList, false, targetStorage, defferedLibsList);
 
             return defferedLibsList;
         }
@@ -127,7 +127,7 @@ namespace SymOntoClay.Core.Internal.Serialization
 
 #endif
 
-            var parsedCodeEntitiesList = LinearizeSubItems(parsedFilesList);
+            var parsedCodeEntitiesList = LinearizeSubItems(logger, parsedFilesList);
 
 #if DEBUG
 
@@ -135,22 +135,22 @@ namespace SymOntoClay.Core.Internal.Serialization
 
             if (detectMainCodeEntity)
             {
-                DetectMainCodeEntity(parsedCodeEntitiesList);
+                DetectMainCodeEntity(logger, parsedCodeEntitiesList);
             }
 
 #if DEBUG
 
 #endif
 
-            CheckHolderAndTypeOfAccess(parsedCodeEntitiesList);
+            CheckHolderAndTypeOfAccess(logger, parsedCodeEntitiesList);
 
-            AddSystemDefinedSettings(parsedCodeEntitiesList);
+            AddSystemDefinedSettings(logger, parsedCodeEntitiesList);
 
 #if DEBUG
 
 #endif
 
-            SaveItems(parsedCodeEntitiesList, targetStorage, defferedLibsList);
+            SaveItems(logger, parsedCodeEntitiesList, targetStorage, defferedLibsList);
         }
 
         private void DetectMainCodeEntity(IMonitorLogger logger, List<CodeItem> source)
@@ -183,7 +183,7 @@ namespace SymOntoClay.Core.Internal.Serialization
 
             foreach (var item in source)
             {
-                EnumerateSubItems(item.CodeEntities, result);
+                EnumerateSubItems(logger, item.CodeEntities, result);
             }
 
             return result.Distinct().ToList();
@@ -193,7 +193,7 @@ namespace SymOntoClay.Core.Internal.Serialization
         {
             var result = new List<CodeItem>();
 
-            EnumerateSubItems(codeItem.SubItems, result);
+            EnumerateSubItems(logger, codeItem.SubItems, result);
 
             return result.Distinct().ToList();
         }
@@ -209,7 +209,7 @@ namespace SymOntoClay.Core.Internal.Serialization
 
             foreach (var item in source)
             {
-                EnumerateSubItems(item.SubItems, result);
+                EnumerateSubItems(logger, item.SubItems, result);
             }
         }
 
@@ -217,7 +217,7 @@ namespace SymOntoClay.Core.Internal.Serialization
         {
             foreach (var item in source)
             {
-                CheckHolderAndTypeOfAccess(item);
+                CheckHolderAndTypeOfAccess(logger, item);
             }
         }
 
@@ -240,7 +240,7 @@ namespace SymOntoClay.Core.Internal.Serialization
         {
             foreach (var item in source)
             {
-                AddSystemDefinedSettings(item);
+                AddSystemDefinedSettings(logger, item);
             }
         }
 
@@ -249,26 +249,26 @@ namespace SymOntoClay.Core.Internal.Serialization
             switch (codeEntity.Kind)
             {
                 case KindOfCodeEntity.World:
-                    AddSystemDefinedSettingsToWorld(codeEntity);
+                    AddSystemDefinedSettingsToWorld(logger, codeEntity);
                     break;
 
                 case KindOfCodeEntity.App:
-                    AddSystemDefinedSettingsToApp(codeEntity);
+                    AddSystemDefinedSettingsToApp(logger, codeEntity);
                     break;
 
                 case KindOfCodeEntity.Lib:
                     break;
 
                 case KindOfCodeEntity.Class:
-                    AddSystemDefinedSettingsToClass(codeEntity);
+                    AddSystemDefinedSettingsToClass(logger, codeEntity);
                     break;
 
                 case KindOfCodeEntity.Action:
-                    AddSystemDefinedSettingsToAction(codeEntity);
+                    AddSystemDefinedSettingsToAction(logger, codeEntity);
                     break;
 
                 case KindOfCodeEntity.State:
-                    AddSystemDefinedSettingsToState(codeEntity);
+                    AddSystemDefinedSettingsToState(logger, codeEntity);
                     break;
 
                 case KindOfCodeEntity.InlineTrigger:
@@ -380,7 +380,7 @@ namespace SymOntoClay.Core.Internal.Serialization
         {
             foreach (var item in source)
             {
-                SaveItem(item, targetStorage, defferedLibsList);
+                SaveItem(logger, item, targetStorage, defferedLibsList);
             }
         }
 
@@ -390,13 +390,13 @@ namespace SymOntoClay.Core.Internal.Serialization
 
             var metadataStorage = targetStorage.MetadataStorage;
 
-            metadataStorage.Append(codeItem);
+            metadataStorage.Append(logger, codeItem);
 
             var inheritanceStorage = targetStorage.InheritanceStorage;
 
             foreach (var inheritanceItem in codeItem.InheritanceItems)
             {
-                inheritanceStorage.SetInheritance(inheritanceItem);
+                inheritanceStorage.SetInheritance(logger, inheritanceItem);
             }
 
             var kindOfEntity = codeItem.Kind;
@@ -404,34 +404,34 @@ namespace SymOntoClay.Core.Internal.Serialization
             switch (kindOfEntity)
             {
                 case KindOfCodeEntity.World:
-                    ProcessImport(codeItem, targetStorage, defferedLibsList);
-                    GeneratePreConstructor(codeItem, targetStorage);
+                    ProcessImport(logger, codeItem, targetStorage, defferedLibsList);
+                    GeneratePreConstructor(logger, codeItem, targetStorage);
                     break;
 
                 case KindOfCodeEntity.App:
-                    ProcessImport(codeItem, targetStorage, defferedLibsList);
-                    GeneratePreConstructor(codeItem, targetStorage);
+                    ProcessImport(logger, codeItem, targetStorage, defferedLibsList);
+                    GeneratePreConstructor(logger, codeItem, targetStorage);
                     break;
 
                 case KindOfCodeEntity.Lib:
-                    ProcessImport(codeItem, targetStorage, defferedLibsList);
-                    GeneratePreConstructor(codeItem, targetStorage);
+                    ProcessImport(logger, codeItem, targetStorage, defferedLibsList);
+                    GeneratePreConstructor(logger, codeItem, targetStorage);
                     break;
 
                 case KindOfCodeEntity.Class:
-                    GeneratePreConstructor(codeItem, targetStorage);
+                    GeneratePreConstructor(logger, codeItem, targetStorage);
                     break;
 
                 case KindOfCodeEntity.AnonymousObject:
-                    GeneratePreConstructor(codeItem, targetStorage);
+                    GeneratePreConstructor(logger, codeItem, targetStorage);
                     break;
 
                 case KindOfCodeEntity.InlineTrigger:
-                    targetStorage.TriggersStorage.Append(codeItem.AsInlineTrigger);
+                    targetStorage.TriggersStorage.Append(logger, codeItem.AsInlineTrigger);
                     break;
 
                 case KindOfCodeEntity.RelationDescription:
-                    targetStorage.RelationsStorage.Append(codeItem.AsRelationDescription);
+                    targetStorage.RelationsStorage.Append(logger, codeItem.AsRelationDescription);
                     break;
 
                 case KindOfCodeEntity.RuleOrFact:
@@ -443,31 +443,31 @@ namespace SymOntoClay.Core.Internal.Serialization
                             throw new Exception($"SymOntoClay does not support parameterized rule or facts on object declaration.");
                         }
 
-                        targetStorage.LogicalStorage.Append(ruleInstance);
+                        targetStorage.LogicalStorage.Append(logger, ruleInstance);
 
                     }
                     break;
 
                 case KindOfCodeEntity.LinguisticVariable:
-                    targetStorage.FuzzyLogicStorage.Append(codeItem.AsLinguisticVariable);
+                    targetStorage.FuzzyLogicStorage.Append(logger, codeItem.AsLinguisticVariable);
                     break;
 
                 case KindOfCodeEntity.Function:
-                    targetStorage.MethodsStorage.Append(codeItem.AsNamedFunction);
+                    targetStorage.MethodsStorage.Append(logger, codeItem.AsNamedFunction);
                     break;
 
                 case KindOfCodeEntity.Constructor:
-                    targetStorage.ConstructorsStorage.Append(codeItem.AsConstructor);
+                    targetStorage.ConstructorsStorage.Append(logger, codeItem.AsConstructor);
                     break;
 
                 case KindOfCodeEntity.Action:
-                    targetStorage.ActionsStorage.Append(codeItem.AsAction);
-                    GeneratePreConstructor(codeItem, targetStorage);
+                    targetStorage.ActionsStorage.Append(logger, codeItem.AsAction);
+                    GeneratePreConstructor(logger, codeItem, targetStorage);
                     break;
 
                 case KindOfCodeEntity.State:
-                    targetStorage.StatesStorage.Append(codeItem.AsState);
-                    GeneratePreConstructor(codeItem, targetStorage);
+                    targetStorage.StatesStorage.Append(logger, codeItem.AsState);
+                    GeneratePreConstructor(logger, codeItem, targetStorage);
                     break;
 
                 case KindOfCodeEntity.Operator:
@@ -481,18 +481,18 @@ namespace SymOntoClay.Core.Internal.Serialization
                     break;
 
                 case KindOfCodeEntity.MutuallyExclusiveStatesSet:
-                    targetStorage.StatesStorage.Append(codeItem.AsMutuallyExclusiveStatesSet);
+                    targetStorage.StatesStorage.Append(logger, codeItem.AsMutuallyExclusiveStatesSet);
                     break;
 
                 case KindOfCodeEntity.Synonym:
-                    targetStorage.SynonymsStorage.Append(codeItem.AsSynonym);
+                    targetStorage.SynonymsStorage.Append(logger, codeItem.AsSynonym);
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfEntity), kindOfEntity, null);
             }
 
-            CheckCodeDirectives(codeItem);
+            CheckCodeDirectives(logger, codeItem);
 
             var idleActionItems = codeItem.IdleActionItems;
 
@@ -502,7 +502,7 @@ namespace SymOntoClay.Core.Internal.Serialization
 
                 foreach (var idleActionItem in idleActionItems)
                 {
-                    idleActionItemsStorage.Append(idleActionItem);
+                    idleActionItemsStorage.Append(logger, idleActionItem);
                 }
             }
 
@@ -524,7 +524,7 @@ namespace SymOntoClay.Core.Internal.Serialization
                     preConstructor.CompiledFunctionBody = compiledBody;
                     preConstructor.Holder = codeItem.Name;
 
-                    targetStorage.ConstructorsStorage.AppendPreConstructor(preConstructor);
+                    targetStorage.ConstructorsStorage.AppendPreConstructor(logger, preConstructor);
                 }
             }
         }
@@ -598,20 +598,20 @@ namespace SymOntoClay.Core.Internal.Serialization
                 return;
             }
 
-            var libsList = _context.ModulesStorage.Import(importsList);
+            var libsList = _context.ModulesStorage.Import(logger, importsList);
 
             if(!libsList.Any())
             {
                 return;
             }
 
-            var existingStorages = targetStorage.GetStorages();
+            var existingStorages = targetStorage.GetStorages(logger);
 
             var storagesForAdding = libsList.Except(existingStorages);
 
             foreach(var storageForAdding in storagesForAdding)
             {
-                targetStorage.AddParentStorage(storageForAdding);
+                targetStorage.AddParentStorage(logger, storageForAdding);
             }
         }
     }

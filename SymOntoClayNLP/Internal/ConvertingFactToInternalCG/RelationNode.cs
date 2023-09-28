@@ -20,10 +20,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.NLP.Internal.CG;
 using SymOntoClay.NLP.Internal.Dot;
 using SymOntoClay.NLP.Internal.InternalCG;
@@ -52,7 +54,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
         private readonly IPackedRelationsResolver _relationsResolver;
         private readonly IPackedInheritanceResolver _inheritanceResolver;
         
-        public ResultOfNode Run()
+        public ResultOfNode Run(IMonitorLogger logger)
         {
             if(_context.VisitedRelations.ContainsKey(_relation))
             {
@@ -69,18 +71,18 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             switch (relationName)
             {
                 case SpecialNamesOfRelations.PossessName:
-                    return ProcessPossessRelation();
+                    return ProcessPossessRelation(logger);
 
                 default:
-                    return ProcessRelation();
+                    return ProcessRelation(logger);
             }
         }
 
-        private ResultOfNode ProcessPossessRelation()
+        private ResultOfNode ProcessPossessRelation(IMonitorLogger logger)
         {
             var relationName = _relation.Name;
 
-            var relationDescription = _relationsResolver.GetRelation(relationName, _relation.ParamsList.Count);
+            var relationDescription = _relationsResolver.GetRelation(logger, relationName, _relation.ParamsList.Count);
 
             if (relationDescription == null)
             {
@@ -100,7 +102,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 
             foreach (var param in _relation.ParamsList)
             {
-                var paramResult = LogicalQueryNodeProcessorFactory.Run(param, _context);
+                var paramResult = LogicalQueryNodeProcessorFactory.Run(logger, param, _context);
 
                 var paramDescription = relationDescription.Arguments[n];
                 n++;
@@ -131,18 +133,18 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             return result;
         }
 
-        private ResultOfNode ProcessRelation()
+        private ResultOfNode ProcessRelation(IMonitorLogger logger)
         {
             var relationName = _relation.Name;
 
-            var relationDescription = _relationsResolver.GetRelation(relationName, _relation.ParamsList.Count);
+            var relationDescription = _relationsResolver.GetRelation(logger, relationName, _relation.ParamsList.Count);
 
             if (relationDescription == null)
             {
                 throw new Exception($"Relation `{_relation.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}` is not described!");
             }
             
-            var superClassesList = _inheritanceResolver.GetSuperClassesKeysList(relationName);
+            var superClassesList = _inheritanceResolver.GetSuperClassesKeysList(logger, relationName);
 
             var isState = superClassesList.Any(p => p.NormalizedNameValue == "state");
             var isAct = superClassesList.Any(p => p.NormalizedNameValue == "act");
@@ -150,7 +152,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 
             if(isState || isAct || isEvent)
             {
-                return ProcessStateActOrEventRelation(relationDescription, superClassesList);
+                return ProcessStateActOrEventRelation(logger, relationDescription, superClassesList);
             }
 
             var result = new ResultOfNode();
@@ -166,7 +168,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 
             foreach (var param in _relation.ParamsList)
             {
-                var paramResult = LogicalQueryNodeProcessorFactory.Run(param, _context);
+                var paramResult = LogicalQueryNodeProcessorFactory.Run(logger, param, _context);
 
                 var paramDescription = relationDescription.Arguments[n];
                 n++;
@@ -189,7 +191,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
             return result;
         }
 
-        private ResultOfNode ProcessStateActOrEventRelation(RelationDescription relationDescription, IList<StrongIdentifierValue> superClassesList)
+        private ResultOfNode ProcessStateActOrEventRelation(IMonitorLogger logger, RelationDescription relationDescription, IList<StrongIdentifierValue> superClassesList)
         {
             var relationName = _relation.Name;
 
@@ -210,7 +212,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 
             foreach (var param in _relation.ParamsList)
             {
-                var paramResult = LogicalQueryNodeProcessorFactory.Run(param, _context);
+                var paramResult = LogicalQueryNodeProcessorFactory.Run(logger, param, _context);
 
                 var paramDescription = relationDescription.Arguments[n];
                 n++;

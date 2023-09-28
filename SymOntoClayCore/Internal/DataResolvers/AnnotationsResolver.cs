@@ -50,7 +50,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return value;
             }
 
-            var synonymsList = _synonymsResolver.GetSynonyms(key, localCodeExecutionContext);
+            var synonymsList = _synonymsResolver.GetSynonyms(logger, key, localCodeExecutionContext);
 
             foreach (var synonym in synonymsList)
             {

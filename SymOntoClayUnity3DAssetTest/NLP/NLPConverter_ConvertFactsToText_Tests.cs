@@ -80,7 +80,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP
 
             var converter = new NLPConverter(_logger, _wordsDict);
 
-            var text = converter.Convert(ruleInstance, nlpContext);
+            var text = converter.Convert(_logger, ruleInstance, nlpContext);
 
             Assert.AreEqual("I like my cat.", text);
         }
@@ -97,7 +97,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP
 
             var converter = new NLPConverter(_logger, _wordsDict);
 
-            var text = converter.Convert(ruleInstance, nlpContext);
+            var text = converter.Convert(_logger, ruleInstance, nlpContext);
 
             Assert.AreEqual("Go to green place.", text);
         }
@@ -114,7 +114,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP
 
             var converter = new NLPConverter(_logger, _wordsDict);
 
-            var text = converter.Convert(ruleInstance, nlpContext);
+            var text = converter.Convert(_logger, ruleInstance, nlpContext);
 
             Assert.AreEqual("Someone goes self to green place.", text);
         }

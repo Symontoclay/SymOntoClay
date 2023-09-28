@@ -63,7 +63,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
 
-            globalOperatorsStorage.Append(op);
+            globalOperatorsStorage.Append(Logger, op);
 
             op = new Operator
             {
@@ -73,7 +73,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
 
-            globalOperatorsStorage.Append(op);
+            globalOperatorsStorage.Append(Logger, op);
 
             op = new Operator
             {
@@ -83,7 +83,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
 
-            globalOperatorsStorage.Append(op);
+            globalOperatorsStorage.Append(Logger, op);
 
             op = new Operator
             {
@@ -93,7 +93,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
 
-            globalOperatorsStorage.Append(op);
+            globalOperatorsStorage.Append(Logger, op);
 
             op = new Operator
             {
@@ -103,8 +103,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
 
-            globalOperatorsStorage.Append(op);
-
+            globalOperatorsStorage.Append(Logger, op);
 
             op = new Operator
             {
@@ -114,7 +113,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
 
-            globalOperatorsStorage.Append(op);
+            globalOperatorsStorage.Append(Logger, op);
 
             op = new Operator
             {
@@ -124,7 +123,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
 
-            globalOperatorsStorage.Append(op);
+            globalOperatorsStorage.Append(Logger, op);
 
             op = new Operator
             {
@@ -134,7 +133,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
 
-            globalOperatorsStorage.Append(op);
+            globalOperatorsStorage.Append(Logger, op);
 
             op = new Operator
             {
@@ -144,7 +143,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
 
-            globalOperatorsStorage.Append(op);
+            globalOperatorsStorage.Append(Logger, op);
 
             op = new Operator
             {
@@ -154,7 +153,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
 
-            globalOperatorsStorage.Append(op);
+            globalOperatorsStorage.Append(Logger, op);
 
             op = new Operator
             {
@@ -164,7 +163,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
 
-            globalOperatorsStorage.Append(op);
+            globalOperatorsStorage.Append(Logger, op);
 
 
             op = new Operator
@@ -175,7 +174,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
 
-            globalOperatorsStorage.Append(op);
+            globalOperatorsStorage.Append(Logger, op);
 
             op = new Operator
             {
@@ -185,7 +184,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
 
-            globalOperatorsStorage.Append(op);
+            globalOperatorsStorage.Append(Logger, op);
 
             op = new Operator
             {
@@ -195,7 +194,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
 
-            globalOperatorsStorage.Append(op);
+            globalOperatorsStorage.Append(Logger, op);
 
             op = new Operator
             {
@@ -205,7 +204,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
 
-            globalOperatorsStorage.Append(op);
+            globalOperatorsStorage.Append(Logger, op);
 
             op = new Operator
             {
@@ -215,7 +214,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
 
-            globalOperatorsStorage.Append(op);
+            globalOperatorsStorage.Append(Logger, op);
 
             op = new Operator
             {
@@ -225,7 +224,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
 
-            globalOperatorsStorage.Append(op);
+            globalOperatorsStorage.Append(Logger, op);
 
             op = new Operator
             {
@@ -235,7 +234,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 Holder = _context.CommonNamesStorage.DefaultHolder
             };
 
-            globalOperatorsStorage.Append(op);
+            globalOperatorsStorage.Append(Logger, op);
         }
 
         private void RegChannels()
@@ -253,7 +252,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 Holder = holder
             };
 
-            globalChannelsStorage.Append(channel);
+            globalChannelsStorage.Append(Logger, channel);
 
             name = NameHelper.CreateName("@>say");
 
@@ -264,7 +263,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
                 Holder = holder
             };
 
-            globalChannelsStorage.Append(channel);
+            globalChannelsStorage.Append(Logger, channel);
         }
 
         private void RegFuzzyLogicOperators()
@@ -276,7 +275,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary
             very.Name = NameHelper.CreateName("very");
             very.Handler = new VeryFuzzyLogicOperatorHandler();
 
-            globalFuzzyLogicStorage.AppendDefaultOperator(very);
+            globalFuzzyLogicStorage.AppendDefaultOperator(Logger, very);
         }
     }
 }

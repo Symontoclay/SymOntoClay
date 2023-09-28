@@ -3909,7 +3909,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 {
                     var conditionalEntityValue = value.AsConditionalEntityValue;
 
-                    var conditionalEntityId = conditionalEntityValue.ResolveAndGetEntityId();
+                    var conditionalEntityId = conditionalEntityValue.ResolveAndGetEntityId(logger);
 
 
                     return entityName == conditionalEntityId;

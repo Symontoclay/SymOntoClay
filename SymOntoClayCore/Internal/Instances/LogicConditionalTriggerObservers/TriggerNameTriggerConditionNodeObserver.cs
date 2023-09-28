@@ -44,7 +44,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
             _storage = storage;
             _synonymsResolver = engineContext.DataResolversFactory.GetSynonymsResolver();
 
-            _synonymsList = _synonymsResolver.GetSynonyms(_triggerName, storage);
+            _synonymsList = _synonymsResolver.GetSynonyms(Logger, _triggerName, storage);
 
             storage.TriggersStorage.OnNamedTriggerInstanceChangedWithKeys += TriggersStorage_OnNamedTriggerInstanceChangedWithKeys;
         }

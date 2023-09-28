@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -48,7 +49,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         private IConditionalEntityHostSupport _conditionalEntityHostSupport;
         private readonly Random _random = new Random();
 
-        protected virtual void CheckForUpdates()
+        protected virtual void CheckForUpdates(IMonitorLogger logger)
         {
         }
 
@@ -57,7 +58,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             get
             {
-                CheckForUpdates();
+                CheckForUpdates(Logger);
 
                 return _instanceId;
             }
@@ -68,7 +69,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             get
             {
-                CheckForUpdates();
+                CheckForUpdates(Logger);
 
                 return _id;
             }
@@ -79,7 +80,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             get
             {
-                CheckForUpdates();
+                CheckForUpdates(Logger);
 
                 return _idForFacts;
             }
@@ -90,7 +91,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             get
             {
-                CheckForUpdates();
+                CheckForUpdates(Logger);
 
                 return _position;
             }
@@ -106,7 +107,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public void Specify(params EntityConstraints[] constraints)
+        public void Specify(IMonitorLogger logger, params EntityConstraints[] constraints)
         {
             _constraints = constraints;
             _onceStorage = null;
@@ -115,7 +116,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public void SpecifyOnce(params EntityConstraints[] constraints)
+        public void SpecifyOnce(IMonitorLogger logger, params EntityConstraints[] constraints)
         {
             _constraints = constraints;
             _onceStorage = null;
@@ -124,7 +125,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public void SpecifyOnce(IStorage storage)
+        public void SpecifyOnce(IMonitorLogger logger, IStorage storage)
         {
             _constraints = null;
             _specifiedOnce = true;
@@ -133,17 +134,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public void ResolveIfNeeds()
+        public void ResolveIfNeeds(IMonitorLogger logger)
         {
-            CheckForUpdates();
+            CheckForUpdates(logger);
         }
 
         /// <inheritdoc/>
-        public virtual void Resolve()
+        public virtual void Resolve(IMonitorLogger logger)
         {
         }
 
-        public virtual IEntity GetNewEntity(string id)
+        public virtual IEntity GetNewEntity(IMonitorLogger logger, string id)
         {
             if(string.IsNullOrWhiteSpace(id))
             {
@@ -159,7 +160,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             var entityValue = new EntityValue(identifier, _context, _localContext);
 
-            entityValue.Resolve();
+            entityValue.Resolve(logger);
 
             return entityValue;
         }
@@ -192,15 +193,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public StrongIdentifierValue EntityId => _entityId;
 
-        public StrongIdentifierValue ResolveAndGetEntityId()
+        public StrongIdentifierValue ResolveAndGetEntityId(IMonitorLogger logger)
         {
             if(_entityId == null || _entityId.IsEmpty)
             {
-                Resolve();
+                Resolve(logger);
             }
             else
             {
-                ResolveIfNeeds();
+                ResolveIfNeeds(logger);
             }
             
             return _entityId;
@@ -213,17 +214,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
             public Vector3? Position { get; set; }
         }
 
-        protected void ProcessIdsList(List<StrongIdentifierValue> idsList)
+        protected void ProcessIdsList(IMonitorLogger logger, List<StrongIdentifierValue> idsList)
         {
             if (!idsList.Any())
             {
-                ResetCurrEntity();
+                ResetCurrEntity(logger);
                 return;
             }
 
             if (_constraints.IsNullOrEmpty())
             {
-                SetCurrEntity(idsList.First());
+                SetCurrEntity(logger, idsList.First());
                 return;
             }
 
@@ -237,7 +238,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 //Log($"foundId = {foundId}");
 #endif
 
-                var instanceId = _conditionalEntityHostSupport.GetInstanceId(foundId);
+                var instanceId = _conditionalEntityHostSupport.GetInstanceId(logger, foundId);
 
 #if DEBUG
                 //Log($"instanceId = {instanceId}");
@@ -268,21 +269,21 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     switch (constraint)
                     {
                         case EntityConstraints.CanBeTaken:
-                            if (!_conditionalEntityHostSupport.CanBeTaken(instanceId))
+                            if (!_conditionalEntityHostSupport.CanBeTaken(logger, instanceId))
                             {
                                 isFit = false;
                             }
                             break;
 
                         case EntityConstraints.OnlyVisible:
-                            if (!_conditionalEntityHostSupport.IsVisible(instanceId))
+                            if (!_conditionalEntityHostSupport.IsVisible(logger, instanceId))
                             {
                                 isFit = false;
                             }
                             break;
 
                         case EntityConstraints.OnlyInvisible:
-                            if (_conditionalEntityHostSupport.IsVisible(instanceId))
+                            if (_conditionalEntityHostSupport.IsVisible(logger, instanceId))
                             {
                                 isFit = false;
                             }
@@ -290,7 +291,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                         case EntityConstraints.Nearest:
                             {
-                                var distanceToAndPosition = _conditionalEntityHostSupport.DistanceToAndPosition(instanceId);
+                                var distanceToAndPosition = _conditionalEntityHostSupport.DistanceToAndPosition(logger, instanceId);
 
                                 var distance = distanceToAndPosition.Item1;
 
@@ -359,7 +360,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 if(!currentPosition.HasValue)
                 {
-                    var distanceToAndPosition = _conditionalEntityHostSupport.DistanceToAndPosition(instanceId);
+                    var distanceToAndPosition = _conditionalEntityHostSupport.DistanceToAndPosition(logger, instanceId);
                     currentPosition = distanceToAndPosition.Item2;
                 }
 
@@ -377,7 +378,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             if (!filteredItemsList.Any())
             {
-                ResetCurrEntity();
+                ResetCurrEntity(logger);
                 return;
             }
 
@@ -398,27 +399,27 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 targetFilteredItem = filteredItemsList.First();
             }
 
-            SetCurrEntity(targetFilteredItem.Id, targetFilteredItem.InstanceId, targetFilteredItem.Position);
+            SetCurrEntity(logger, targetFilteredItem.Id, targetFilteredItem.InstanceId, targetFilteredItem.Position);
         }
 
-        protected void SetCurrEntity(StrongIdentifierValue id)
+        protected void SetCurrEntity(IMonitorLogger logger, StrongIdentifierValue id)
         {
-            var instanceId = _conditionalEntityHostSupport.GetInstanceId(id);
+            var instanceId = _conditionalEntityHostSupport.GetInstanceId(logger, id);
 
             if (instanceId == 0)
             {
-                ResetCurrEntity();
+                ResetCurrEntity(logger);
                 return;
             }
 
-            SetCurrEntity(id, instanceId, null);
+            SetCurrEntity(logger, id, instanceId, null);
         }
 
-        private void SetCurrEntity(StrongIdentifierValue id, int instanceId, Vector3? position)
+        private void SetCurrEntity(IMonitorLogger logger, StrongIdentifierValue id, int instanceId, Vector3? position)
         {
             if (!position.HasValue)
             {
-                position = _conditionalEntityHostSupport.GetPosition(instanceId);
+                position = _conditionalEntityHostSupport.GetPosition(logger, instanceId);
             }
 
             _entityId = id;
@@ -429,7 +430,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             _isEmpty = false;
         }
 
-        protected void ResetCurrEntity()
+        protected void ResetCurrEntity(IMonitorLogger logger)
         {
             _id = string.Empty;
             _entityId = StrongIdentifierValue.Empty;

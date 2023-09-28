@@ -38,7 +38,7 @@ namespace SymOntoClay.Core.Internal.Helpers
     {
         public static void Wait(IMonitorLogger logger, params IProcessInfo[] processes)
         {
-            Wait(null, null, TimeoutCancellationMode.WeakCancel, null, processes);
+            Wait(logger, null, null, TimeoutCancellationMode.WeakCancel, null, processes);
         }
 
         public static void Wait(IMonitorLogger logger, List<IExecutionCoordinator> executionCoordinators, long? cancelAfter, TimeoutCancellationMode timeoutCancellationMode, IDateTimeProvider dateTimeProvider, params IProcessInfo[] processes)
@@ -70,14 +70,14 @@ namespace SymOntoClay.Core.Internal.Helpers
                         {
                             foreach (var proc in processes)
                             {
-                                proc.Cancel();
+                                proc.Cancel(logger);
                             }
                         }
                         else
                         {
                             foreach (var proc in processes)
                             {
-                                proc.WeakCancel();
+                                proc.WeakCancel(logger);
                             }
                         }
 
@@ -98,11 +98,11 @@ namespace SymOntoClay.Core.Internal.Helpers
                             switch(timeoutCancellationMode)
                             {
                                 case TimeoutCancellationMode.WeakCancel:
-                                    proc.WeakCancel();
+                                    proc.WeakCancel(logger);
                                     break;
 
                                 case TimeoutCancellationMode.Cancel:
-                                    proc.Cancel();
+                                    proc.Cancel(logger);
                                     break;
 
                                 default:

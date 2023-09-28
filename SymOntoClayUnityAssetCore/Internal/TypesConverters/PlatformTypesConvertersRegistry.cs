@@ -48,7 +48,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
         private readonly Dictionary<Type, Dictionary<Type, IPlatformTypesConverter>> _convertorsDict = new Dictionary<Type, Dictionary<Type, IPlatformTypesConverter>>();
 
         /// <inheritdoc/>
-        public void AddConvertor(IPlatformTypesConverter convertor)
+        public void AddConvertor(IMonitorLogger logger, IPlatformTypesConverter convertor)
         {
             lock (_lockObj)
             {
@@ -87,47 +87,42 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
         }
 
         /// <inheritdoc/>
-        public bool CanConvert(Type source, Type dest)
+        public bool CanConvert(IMonitorLogger logger, Type source, Type dest)
         {
             lock (_lockObj)
             {
-#if DEBUG
-
-#endif
-
                 if (source == _nullValueType && (dest.IsClass || dest.IsInterface || (dest.IsGenericType && dest.FullName.StartsWith("System.Nullable"))))
                 {
                     return true;
                 }
 
-                if(NCanConvert(source, dest))
+                if(NCanConvert(logger, source, dest))
                 {
                     return true;
                 }
 
-                var baseSourceTypes = ObjectHelper.GetAllBaseTypes(source).Where(p => !IsTooGeneralType(p)).ToList();
+                var baseSourceTypes = ObjectHelper.GetAllBaseTypes(source).Where(p => !IsTooGeneralType(logger, p)).ToList();
 
                 foreach (var baseSourceType in baseSourceTypes)
                 {
-                    if (NCanConvert(baseSourceType, dest))
+                    if (NCanConvert(logger, baseSourceType, dest))
                     {
                         return true;
                     }
                 }
 
-                var baseDestTypes = ObjectHelper.GetAllBaseTypes(dest).Where(p => !IsTooGeneralType(p)).ToList();
+                var baseDestTypes = ObjectHelper.GetAllBaseTypes(dest).Where(p => !IsTooGeneralType(logger, p)).ToList();
 
                 foreach(var baseDestType in baseDestTypes)
                 {
-
-                    if (NCanConvert(source, baseDestType))
+                    if (NCanConvert(logger, source, baseDestType))
                     {
                         return true;
                     }
 
                     foreach (var baseSourceType in baseSourceTypes)
                     {
-                        if (NCanConvert(baseSourceType, baseDestType))
+                        if (NCanConvert(logger, baseSourceType, baseDestType))
                         {
                             return true;
                         }
@@ -138,7 +133,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
             }
         }
 
-        private bool IsTooGeneralType(Type type)
+        private bool IsTooGeneralType(IMonitorLogger logger, Type type)
         {
             if(type == typeof(object))
             {
@@ -208,7 +203,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
             return false;
         }
 
-        private bool NCanConvert(Type source, Type dest)
+        private bool NCanConvert(IMonitorLogger logger, Type source, Type dest)
         {
             if (_convertorsDict.ContainsKey(source))
             {
@@ -232,14 +227,14 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
 
             if (dest.IsGenericType && dest.FullName.StartsWith("System.Nullable"))
             {
-                return CanConvert(source, dest.GenericTypeArguments[0]);
+                return CanConvert(logger, source, dest.GenericTypeArguments[0]);
             }
 
             return false;
         }
 
         /// <inheritdoc/>
-        public object Convert(Type sourceType, Type destType, object sourceValue, IEngineContext context, ILocalCodeExecutionContext localContext)
+        public object Convert(IMonitorLogger logger, Type sourceType, Type destType, object sourceValue, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
             if (sourceType == _nullValueType)
             {
@@ -248,7 +243,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
 
             lock (_lockObj)
             {
-                var nConvertResult = NConvert(sourceType, destType, sourceValue, context, localContext);
+                var nConvertResult = NConvert(logger, sourceType, destType, sourceValue, context, localContext);
 
                 if(nConvertResult.Item2)
                 {
@@ -259,7 +254,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
 
                 foreach (var baseSourceType in baseSourceTypes)
                 {
-                    nConvertResult = NConvert(baseSourceType, destType, sourceValue, context, localContext);
+                    nConvertResult = NConvert(logger, baseSourceType, destType, sourceValue, context, localContext);
 
                     if (nConvertResult.Item2)
                     {
@@ -271,7 +266,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
 
                 foreach (var baseDestType in baseDestTypes)
                 {
-                    nConvertResult = NConvert(sourceType, baseDestType, sourceValue, context, localContext);
+                    nConvertResult = NConvert(logger, sourceType, baseDestType, sourceValue, context, localContext);
 
                     if (nConvertResult.Item2)
                     {
@@ -280,7 +275,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
 
                     foreach (var baseSourceType in baseSourceTypes)
                     {
-                        nConvertResult = NConvert(baseSourceType, baseDestType, sourceValue, context, localContext);
+                        nConvertResult = NConvert(logger, baseSourceType, baseDestType, sourceValue, context, localContext);
 
                         if (nConvertResult.Item2)
                         {
@@ -293,7 +288,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
             }
         }
 
-        private (object, bool) NConvert(Type sourceType, Type destType, object sourceValue, IEngineContext context, ILocalCodeExecutionContext localContext)
+        private (object, bool) NConvert(IMonitorLogger logger, Type sourceType, Type destType, object sourceValue, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
             if (_convertorsDict.ContainsKey(sourceType))
             {
@@ -305,16 +300,16 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
 
                     if (convertor.CoreType == sourceType)
                     {
-                        return (convertor.ConvertToPlatformType(sourceValue, context, localContext), true);
+                        return (convertor.ConvertToPlatformType(logger, sourceValue, context, localContext), true);
                     }
 
-                    return (convertor.ConvertToCoreType(sourceValue, context, localContext), true);
+                    return (convertor.ConvertToCoreType(logger, sourceValue, context, localContext), true);
                 }
             }
 
             if (destType.IsGenericType && destType.FullName.StartsWith("System.Nullable"))
             {
-                return NConvert(sourceType, destType.GenericTypeArguments[0], sourceValue, context, localContext);
+                return NConvert(logger, sourceType, destType.GenericTypeArguments[0], sourceValue, context, localContext);
             }
 
             return (sourceValue, false);

@@ -28,6 +28,7 @@ using SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.Hel
 using System;
 using System.Collections.Generic;
 using System.Text;
+using SymOntoClay.Monitor.Common;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters
 {
@@ -47,13 +48,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters
         public override bool CanConvertToCoreType => false;
 
         /// <inheritdoc/>
-        public override object ConvertToCoreType(object platformObject, IEngineContext context, ILocalCodeExecutionContext localContext)
+        public override object ConvertToCoreType(IMonitorLogger logger, object platformObject, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override object ConvertToPlatformType(object coreObject, IEngineContext context, ILocalCodeExecutionContext localContext)
+        public override object ConvertToPlatformType(IMonitorLogger logger, object coreObject, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
             var identifier = (StrongIdentifierValue)coreObject;
 
@@ -62,26 +63,26 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters
             switch (kindOfName)
             {
                 case KindOfName.Entity:
-                    return ConvertEntityToPlatformType(identifier, context, localContext);
+                    return ConvertEntityToPlatformType(logger, identifier, context, localContext);
 
                 case KindOfName.Concept:
-                    return ConvertConceptToPlatformType(identifier, context, localContext);
+                    return ConvertConceptToPlatformType(logger, identifier, context, localContext);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
             }
         }
 
-        private object ConvertEntityToPlatformType(StrongIdentifierValue identifier, IEngineContext context, ILocalCodeExecutionContext localContext)
+        private object ConvertEntityToPlatformType(IMonitorLogger logger, StrongIdentifierValue identifier, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
-            var entityValue = PlatformTypesConverterHelper.GetResolvedEntityValue(identifier, context, localContext);
+            var entityValue = PlatformTypesConverterHelper.GetResolvedEntityValue(logger, identifier, context, localContext);
 
             return entityValue;
         }
 
-        private object ConvertConceptToPlatformType(StrongIdentifierValue concept, IEngineContext context, ILocalCodeExecutionContext localContext)
+        private object ConvertConceptToPlatformType(IMonitorLogger logger, StrongIdentifierValue concept, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
-            var conditionalEntityValue = PlatformTypesConverterHelper.GetResolvedConditionalEntityValue(concept, context, localContext);
+            var conditionalEntityValue = PlatformTypesConverterHelper.GetResolvedConditionalEntityValue(logger, concept, context, localContext);
 
             return conditionalEntityValue;
         }

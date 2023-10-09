@@ -12,6 +12,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder
     public class LogFileCreatorOptions : IObjectToString
     {
         public string SourceDirectoryName { get; set; }
+        public List<string>
+        public List<string>
+        [Obsolete]
         public string OutputFileName { get; set; }
         public IEnumerable<KindOfMessage> KindOfMessages { get; set; }
         public IEnumerable<BaseMessageTextRowOptionItem> Layout { get; set; }
@@ -34,7 +37,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(SourceDirectoryName)} = {SourceDirectoryName}");
+            sb.PrintPODList(n, nameof(), );
+            sb.PrintPODList(n, nameof(), );
             sb.AppendLine($"{spaces}{nameof(OutputFileName)} = {OutputFileName}");
+            sb.AppendLine($"{spaces}{nameof()} = {}");
             sb.PrintPODList(n, nameof(KindOfMessages), KindOfMessages);
             sb.PrintObjListProp(n, nameof(Layout), Layout);
             //sb.AppendLine($"{spaces}{nameof()} = {}");

@@ -9,7 +9,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.TextRowOptionItems
     public class LongDateTimeStampTextRowOptionItem : DateTimeStampTextRowOptionItem
     {
         public LongDateTimeStampTextRowOptionItem()
-            : base("yyyy-MM-dd HH:mm:ss.ffff")
+            : base(LogFileBuilderConstants.LongDateTimeFormat)
         {
         }
     }

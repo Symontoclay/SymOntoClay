@@ -1,20 +1,19 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
-using SymOntoClay.Monitor.Common.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SymOntoClay.Monitor.LogFileBuilder.TextRowOptionItems
+namespace SymOntoClay.Monitor.LogFileBuilder.FileNameTemplateOptionItems
 {
-    public class DateTimeStampTextRowOptionItem : BaseMessageTextRowOptionItem
+    public class DateTimeStampFileNameTemplateOptionItem : BaseFileNameTemplateOptionItem
     {
-        public DateTimeStampTextRowOptionItem()
+        public DateTimeStampFileNameTemplateOptionItem()
         {
         }
 
-        public DateTimeStampTextRowOptionItem(string format)
+        public DateTimeStampFileNameTemplateOptionItem(string format)
         {
             Format = format;
         }
@@ -22,9 +21,19 @@ namespace SymOntoClay.Monitor.LogFileBuilder.TextRowOptionItems
         public string Format { get; set; }
 
         /// <inheritdoc/>
-        protected override string GetContent(BaseMessage message)
+        public override string GetText(string nodeId, string threadId)
         {
-            return message.DateTimeStamp.ToString(Format);
+            if (IfNodeIdExists && string.IsNullOrWhiteSpace(nodeId))
+            {
+                return string.Empty;
+            }
+
+            if (IfThreadIdExists && string.IsNullOrWhiteSpace(threadId))
+            {
+                return string.Empty;
+            }
+
+            return DateTime.Now.ToString(Format);
         }
 
         /// <inheritdoc/>

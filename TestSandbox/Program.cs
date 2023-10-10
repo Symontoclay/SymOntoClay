@@ -95,7 +95,7 @@ namespace TestSandbox
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
             //TstLogFileBuilderParameterValueConverterToString();
-            //TstLogFileBuilder();
+            TstLogFileBuilder();
             //TstMonitor();
             //TstCreateListByVarsDict();
             //TstDetectDoninantItems();
@@ -171,7 +171,7 @@ namespace TestSandbox
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -208,45 +208,8 @@ namespace TestSandbox
         {
             _globalLogger.Info("Begin");
 
-            //var sourceDirectoryName = @"c:\Users\Acer\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesDir\2023_09_02_19_58_24\soldier 1\";
-            var sourceDirectoryName = @"c:\Users\Acer\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesDir\2023_09_08_16_34_10\soldier 1\";
-
-            _globalLogger.Info($"sourceDirectoryName = {sourceDirectoryName}");
-
-            var logFileName = Path.Combine(Directory.GetCurrentDirectory(), "mylog.txt");
-
-            _globalLogger.Info($"logFileName = {logFileName}");
-
-            var options = new LogFileCreatorOptions()
-            {
-                SourceDirectoryName = sourceDirectoryName,
-                OutputFileName = logFileName,
-                KindOfMessages = new List<KindOfMessage>()
-                {
-                    //KindOfMessage.Info
-                },
-                Layout = new List<BaseMessageTextRowOptionItem>
-                {
-                    new LongDateTimeStampTextRowOptionItem(),
-                    new SpaceTextRowOptionItem(),
-                    new MessagePointIdTextRowOptionItem(),
-                    new SpaceTextRowOptionItem(),
-                    new ClassFullNameTextRowOptionItem(),
-                    new SpaceTextRowOptionItem(),
-                    new MemberNameTextRowOptionItem(),
-                    new SpaceTextRowOptionItem(),
-                    new KindOfMessageTextRowOptionItem
-                    {
-                        TextTransformation = TextTransformations.UpperCase
-                    },
-                    new SpaceTextRowOptionItem(),
-                    new MessageContentTextRowOptionItem()
-                }
-            };
-
-            _globalLogger.Info($"options = {options}");
-
-            LogFileCreator.Run(options);
+            var handler = new LogFileBuilderHandler();
+            handler.Run();
 
             _globalLogger.Info("End");
         }

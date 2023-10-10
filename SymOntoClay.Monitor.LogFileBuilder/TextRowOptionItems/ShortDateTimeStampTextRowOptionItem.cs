@@ -9,7 +9,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.TextRowOptionItems
     public class ShortDateTimeStampTextRowOptionItem : DateTimeStampTextRowOptionItem
     {
         public ShortDateTimeStampTextRowOptionItem()
-            : base("yyyy-MM-dd")
+            : base(LogFileBuilderConstants.ShortDateTimeFormat)
         {
         }
     }

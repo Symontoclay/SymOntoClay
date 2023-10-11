@@ -56,7 +56,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             //_globalLogger.Info($"jsonStr = {jsonStr}");
 #endif
 
-            if(typeName.Equals("null", StringComparison.OrdinalIgnoreCase))
+            if(typeName == null || typeName.Equals("null", StringComparison.OrdinalIgnoreCase))
             {
                 return "NULL";
             }

@@ -23,16 +23,102 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("Begin");
 
-            Case3();
+            //Case4();
+            //Case3();
             //Case2();
-            //Case1();
+            Case1();
 
             _logger.Info("End");
         }
 
+        private void Case4()
+        {
+            var logsOutputDirectory = Path.Combine(Directory.GetCurrentDirectory(), "tst_logs");
+
+            Directory.CreateDirectory(logsOutputDirectory);
+
+            var options = new FileStreamsStorageOptions()
+            {
+                OutputDirectory = logsOutputDirectory,
+                FileNameTemplate = new List<BaseFileNameTemplateOptionItem>()
+                {
+                    new NodeIdFileNameTemplateOptionItem(),
+                    new TextFileNameTemplateOptionItem()
+                    {
+                        Text = "_",
+                        IfNodeIdExists = true
+                    },
+                    new ThreadIdFileNameTemplateOptionItem(),
+                    new TextFileNameTemplateOptionItem()
+                    {
+                        Text = "_",
+                        IfThreadIdExists = true
+                    },
+                    new LongDateTimeFileNameTemplateOptionItem(),
+                    new TextFileNameTemplateOptionItem()
+                    {
+                        Text = ".log"
+                    }
+                },
+                SeparateOutputByNodes = true,
+                SeparateOutputByThreads = true
+            };
+
+            _logger.Info($"options = {options}");
+
+            using var fileStreamsStorage = new FileStreamsStorage(options);
+
+            var sw = fileStreamsStorage.GetStreamWriter(string.Empty, string.Empty);
+            sw.WriteLine("Hello world!");
+
+            var sw1 = fileStreamsStorage.GetStreamWriter("1", string.Empty);
+            sw1.WriteLine("Hi!");
+
+            var sw2 = fileStreamsStorage.GetStreamWriter("1", "1");
+            sw2.WriteLine("The Beatles!");
+
+            var sw3 = fileStreamsStorage.GetStreamWriter(string.Empty, "1");
+            sw3.WriteLine("Ups!");
+        }
+
         private void Case3()
         {
+            var fileNameTemplate = new List<BaseFileNameTemplateOptionItem>()
+            {
+                new NodeIdFileNameTemplateOptionItem(),
+                new TextFileNameTemplateOptionItem()
+                {
+                    Text = "_",
+                    IfNodeIdExists = true
+                },
+                new ThreadIdFileNameTemplateOptionItem(),
+                new TextFileNameTemplateOptionItem()
+                {
+                    Text = "_",
+                    IfThreadIdExists = true
+                },
+                new LongDateTimeFileNameTemplateOptionItem(),
+                new TextFileNameTemplateOptionItem()
+                {
+                    Text = ".log"
+                }
+            };
 
+            _logger.Info($"fileNameTemplate = {fileNameTemplate.WriteListToString()}");
+
+            var nodeId = "1";
+            var threadId = "2";
+
+            var sb = new StringBuilder();
+
+            foreach (var item in fileNameTemplate)
+            {
+                sb.Append(item.GetText(nodeId, threadId));
+
+                //_logger.Info($"sb = {sb}");
+            }
+
+            _logger.Info($"sb = {sb}");
         }
 
         private void Case2()
@@ -72,7 +158,8 @@ namespace TestSandbox.Handlers
         private void Case1()
         {
             //var sourceDirectoryName = @"c:\Users\Acer\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesDir\2023_09_02_19_58_24\soldier 1\";
-            var sourceDirectoryName = @"c:\Users\Acer\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesDir\2023_09_08_16_34_10\soldier 1\";
+            //var sourceDirectoryName = @"c:\Users\Acer\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesDir\2023_09_08_16_34_10\soldier 1\";
+            var sourceDirectoryName = @"c:\Users\sergiy.tolkachov\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesDir\2023_09_01_11_38_52\";
 
             _logger.Info($"sourceDirectoryName = {sourceDirectoryName}");
 
@@ -80,11 +167,37 @@ namespace TestSandbox.Handlers
 
             _logger.Info($"logFileName = {logFileName}");
 
+            var logsOutputDirectory = Path.Combine(Directory.GetCurrentDirectory(), "tst_logs");
+
+            Directory.CreateDirectory(logsOutputDirectory);
+
             var options = new LogFileCreatorOptions()
             {
                 SourceDirectoryName = sourceDirectoryName,
                 OutputFileName = logFileName,
-                OutputDirectory = Directory.GetCurrentDirectory(),
+                OutputDirectory = logsOutputDirectory,
+                FileNameTemplate = new List<BaseFileNameTemplateOptionItem>()
+                {
+                    new NodeIdFileNameTemplateOptionItem(),
+                    new TextFileNameTemplateOptionItem()
+                    {
+                        Text = "_",
+                        IfNodeIdExists = true
+                    },
+                    new ThreadIdFileNameTemplateOptionItem(),
+                    new TextFileNameTemplateOptionItem()
+                    {
+                        Text = "_",
+                        IfThreadIdExists = true
+                    },
+                    new LongDateTimeFileNameTemplateOptionItem(),
+                    new TextFileNameTemplateOptionItem()
+                    {
+                        Text = ".log"
+                    }
+                },
+                SeparateOutputByNodes = true,
+                SeparateOutputByThreads = false,
                 KindOfMessages = new List<KindOfMessage>()
                 {
                     //KindOfMessage.Info

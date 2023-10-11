@@ -1,4 +1,6 @@
-﻿using SymOntoClay.Monitor.Common.Data;
+﻿using NLog;
+using SymOntoClay.Monitor.Common.Data;
+using SymOntoClay.Monitor.LogFileBuilder.FileNameTemplateOptionItems;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,38 +13,54 @@ namespace SymOntoClay.Monitor.LogFileBuilder
     public static class LogFileCreator
     {
 #if DEBUG
-        //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static void Run(LogFileCreatorOptions options)
         {
 #if DEBUG
-            //_globalLogger.Info($"options = {options}");
+            _logger.Info($"options = {options}");
 #endif
 
             var fileNamesList = MessageFilesReader.GetFileNames(options.SourceDirectoryName, options.KindOfMessages).OrderBy(p => p.Item1.GlobalMessageNumber).ToList();
 
-            using var sw = new StreamWriter(options.OutputFileName);
+            var fileStreamsStorageOptions = new FileStreamsStorageOptions()
+            {
+                OutputDirectory = options.OutputDirectory,
+                FileNameTemplate = options.FileNameTemplate,
+                SeparateOutputByNodes = options.SeparateOutputByNodes,
+                SeparateOutputByThreads = options.SeparateOutputByThreads
+            };
+
+#if DEBUG
+            _logger.Info($"fileStreamsStorageOptions = {fileStreamsStorageOptions}");
+#endif
+
+            using var fileStreamsStorage = new FileStreamsStorage(fileStreamsStorageOptions);
+
+            //using var sw = new StreamWriter(options.OutputFileName);
 
             var rowOptionsList = options.Layout;
 
             foreach (var fileName in fileNamesList)
             {
 #if DEBUG
-                //_globalLogger.Info($"fileName = {fileName}");
+                _logger.Info($"fileName = {fileName}");
 #endif
 
                 var text = File.ReadAllText(fileName.Item2);
 
 #if DEBUG
-                //_globalLogger.Info($"text = {text}");
+                _logger.Info($"text = {text}");
 #endif
 
                 var message = MessagesFactory.ReadMessage(text, fileName.Item1.KindOfMessage);
 
 #if DEBUG
-                //_globalLogger.Info($"message = {message}");
+                _logger.Info($"message = {message}");
 #endif
+
+                var sw = fileStreamsStorage.GetStreamWriter(message.NodeId, message.ThreadId);
 
                 var rowSb = new StringBuilder();
 
@@ -52,7 +70,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 }
 
 #if DEBUG
-                //_globalLogger.Info($"rowSb = {rowSb}");
+                _logger.Info($"rowSb = {rowSb}");
 #endif
 
                 sw.WriteLine(rowSb);

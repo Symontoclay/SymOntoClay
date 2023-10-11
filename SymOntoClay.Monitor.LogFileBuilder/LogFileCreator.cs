@@ -60,6 +60,16 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 _logger.Info($"message = {message}");
 #endif
 
+                if(!options.TargetNodes?.Any(p => p.Equals(message.NodeId, StringComparison.OrdinalIgnoreCase)) ?? false)
+                {
+                    continue;
+                }
+
+                if(!options.TargetThreads?.Any(p => p.Equals(message.ThreadId, StringComparison.OrdinalIgnoreCase)) ?? false)
+                {
+                    continue;
+                }
+
                 var sw = fileStreamsStorage.GetStreamWriter(message.NodeId, message.ThreadId);
 
                 var rowSb = new StringBuilder();

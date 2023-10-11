@@ -1,4 +1,5 @@
-﻿using SymOntoClay.CoreHelper.DebugHelpers;
+﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.Monitor.LogFileBuilder.FileNameTemplateOptionItems;
 using SymOntoClay.Monitor.LogFileBuilder.TextRowOptionItems;
@@ -23,6 +24,36 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public bool SeparateOutputByThreads { get; set; }
         public IEnumerable<KindOfMessage> KindOfMessages { get; set; }
         public IEnumerable<BaseMessageTextRowOptionItem> Layout { get; set; }
+
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
+        public LogFileCreatorOptions Clone()
+        {
+            var context = new Dictionary<object, object>();
+            return Clone(context);
+        }
+
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="CloneWithContext"]/*' />
+        public LogFileCreatorOptions Clone(Dictionary<object, object> context)
+        {
+            if (context.ContainsKey(this))
+            {
+                return (LogFileCreatorOptions)context[this];
+            }
+
+            var result = new LogFileCreatorOptions();
+            result.SourceDirectoryName = SourceDirectoryName;
+            result.TargetNodes = TargetNodes?.ToList();
+            result.TargetThreads = TargetThreads?.ToList();
+            result.OutputFileName = OutputFileName;
+            result.OutputDirectory = OutputDirectory;
+            result.FileNameTemplate = FileNameTemplate?.ToList();
+            result.SeparateOutputByNodes = SeparateOutputByNodes;
+            result.SeparateOutputByThreads = SeparateOutputByThreads;
+            result.KindOfMessages = KindOfMessages?.ToList();
+            result.Layout = Layout?.ToList();
+            
+            return result;
+        }
 
         /// <inheritdoc/>
         public override string ToString()

@@ -173,6 +173,14 @@ namespace TestSandbox.Handlers
 
             var options = new LogFileCreatorOptions()
             {
+                TargetNodes = new List<string>
+                {
+                    "soldier 1"
+                },
+                TargetThreads = new List<string>
+                {
+                    "f5f7ed91-77e5-45f5-88f5-b7530d111bd5"
+                },
                 SourceDirectoryName = sourceDirectoryName,
                 OutputFileName = logFileName,
                 OutputDirectory = logsOutputDirectory,
@@ -211,6 +219,8 @@ namespace TestSandbox.Handlers
                     new ClassFullNameTextRowOptionItem(),
                     new SpaceTextRowOptionItem(),
                     new MemberNameTextRowOptionItem(),
+                    new SpaceTextRowOptionItem(),
+                    new ThreadIdTextRowOptionItem(),
                     new SpaceTextRowOptionItem(),
                     new KindOfMessageTextRowOptionItem
                     {

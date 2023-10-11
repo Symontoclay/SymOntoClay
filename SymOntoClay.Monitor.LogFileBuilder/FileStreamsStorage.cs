@@ -11,35 +11,35 @@ namespace SymOntoClay.Monitor.LogFileBuilder
     public class FileStreamsStorage: IDisposable
     {
 #if DEBUG
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        //private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
         public FileStreamsStorage(FileStreamsStorageOptions options)
         {
             _options = options;
-
-            _mainStreamWriter = new StreamWriter(Path.Combine(options.OutputDirectory, GetFileName(string.Empty, string.Empty)));
         }
 
         private readonly FileStreamsStorageOptions _options;
-        private readonly StreamWriter _mainStreamWriter;
+        private StreamWriter _mainStreamWriter;
         private readonly Dictionary<string, Dictionary<string, StreamWriter>> _streamWritersDict = new Dictionary<string, Dictionary<string, StreamWriter>>();
+
+        private StreamWriter MainStreamWriter => _mainStreamWriter ??= new StreamWriter(Path.Combine(_options.OutputDirectory, GetFileName(string.Empty, string.Empty)));
 
         public StreamWriter GetStreamWriter(string nodeId, string threadId)
         {
 #if DEBUG
-            _logger.Info($"nodeId = {nodeId}");
-            _logger.Info($"threadId = {threadId}");
+            //_logger.Info($"nodeId = {nodeId}");
+            //_logger.Info($"threadId = {threadId}");
 #endif
 
             if(string.IsNullOrWhiteSpace(nodeId) && string.IsNullOrWhiteSpace(threadId))
             {
-                return _mainStreamWriter;
+                return MainStreamWriter;
             }
 
             if(!_options.SeparateOutputByNodes && !_options.SeparateOutputByNodes)
             {
-                return _mainStreamWriter;
+                return MainStreamWriter;
             }
 
             if(string.IsNullOrWhiteSpace(nodeId))
@@ -58,7 +58,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
                 if (!_options.SeparateOutputByThreads)
                 {
-                    throw new NotImplementedException();
+                    return dict[string.Empty];
                 }
 
                 if (dict.ContainsKey(threadId))
@@ -78,7 +78,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
                 if(!_options.SeparateOutputByThreads)
                 {
-                    throw new NotImplementedException();
+                    var stream = new StreamWriter(Path.Combine(_options.OutputDirectory, GetFileName(nodeId, string.Empty)));
+                    dict[string.Empty] = stream;
+                    _streamWritersDict[nodeId] = dict;
+                    return stream;
                 }
 
                 {
@@ -106,7 +109,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         /// <inheritdoc/>
         public void Dispose()
         {
-            _mainStreamWriter.Dispose();
+            _mainStreamWriter?.Dispose();
 
             foreach(var nodeDict in _streamWritersDict.Values)
             {

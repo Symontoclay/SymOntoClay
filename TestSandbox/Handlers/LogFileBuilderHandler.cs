@@ -23,12 +23,102 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("Begin");
 
+            Case5();
             //Case4();
             //Case3();
             //Case2();
-            Case1();
+            //Case1();
 
             _logger.Info("End");
+        }
+
+        private void Case5()
+        {
+            //var sourceDirectoryName = @"c:\Users\Acer\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesDir\2023_09_02_19_58_24\soldier 1\";
+            //var sourceDirectoryName = @"c:\Users\Acer\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesDir\2023_09_08_16_34_10\soldier 1\";
+            var sourceDirectoryName = @"c:\Users\sergiy.tolkachov\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesDir\2023_09_01_11_38_52\";
+
+            _logger.Info($"sourceDirectoryName = {sourceDirectoryName}");
+
+            var logFileName = Path.Combine(Directory.GetCurrentDirectory(), "mylog.txt");
+
+            _logger.Info($"logFileName = {logFileName}");
+
+            var logsOutputDirectory = Path.Combine(Directory.GetCurrentDirectory(), "tst_logs");
+
+            Directory.CreateDirectory(logsOutputDirectory);
+
+            var options = new LogFileCreatorOptions()
+            {
+                TargetNodes = new List<string>
+                {
+                    "soldier 1"
+                },
+                TargetThreads = new List<string>
+                {
+                    "f5f7ed91-77e5-45f5-88f5-b7530d111bd5"
+                },
+                FileNameTemplate = new List<BaseFileNameTemplateOptionItem>()
+                {
+                    new NodeIdFileNameTemplateOptionItem(),
+                    new TextFileNameTemplateOptionItem()
+                    {
+                        Text = "_",
+                        IfNodeIdExists = true
+                    },
+                    new ThreadIdFileNameTemplateOptionItem(),
+                    new TextFileNameTemplateOptionItem()
+                    {
+                        Text = "_",
+                        IfThreadIdExists = true
+                    },
+                    new LongDateTimeFileNameTemplateOptionItem(),
+                    new TextFileNameTemplateOptionItem()
+                    {
+                        Text = ".log"
+                    }
+                },
+                SeparateOutputByNodes = true,
+                SeparateOutputByThreads = false,
+                KindOfMessages = new List<KindOfMessage>()
+                {
+                    //KindOfMessage.Info
+                },
+                Layout = new List<BaseMessageTextRowOptionItem>
+                {
+                    new LongDateTimeStampTextRowOptionItem(),
+                    new SpaceTextRowOptionItem(),
+                    new MessagePointIdTextRowOptionItem(),
+                    new SpaceTextRowOptionItem(),
+                    new ClassFullNameTextRowOptionItem(),
+                    new SpaceTextRowOptionItem(),
+                    new MemberNameTextRowOptionItem(),
+                    new SpaceTextRowOptionItem(),
+                    new ThreadIdTextRowOptionItem(),
+                    new SpaceTextRowOptionItem(),
+                    new KindOfMessageTextRowOptionItem
+                    {
+                        TextTransformation = TextTransformations.UpperCase
+                    },
+                    new SpaceTextRowOptionItem(),
+                    new MessageContentTextRowOptionItem()
+                }
+            };
+
+            _logger.Info($"options = {options}");
+
+            var sourceOptions = new LogFileCreatorOptions()
+            {
+                SourceDirectoryName = sourceDirectoryName,
+                OutputFileName = logFileName,
+                OutputDirectory = logsOutputDirectory
+            };
+
+            _logger.Info($"sourceOptions = {sourceOptions}");
+
+            options.Write(sourceOptions);
+
+            _logger.Info($"options (2) = {options}");
         }
 
         private void Case4()

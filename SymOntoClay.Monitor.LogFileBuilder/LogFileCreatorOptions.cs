@@ -55,6 +55,59 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return result;
         }
 
+        public void Write(LogFileCreatorOptions source)
+        {
+            if(source.SourceDirectoryName != null)
+            {
+                SourceDirectoryName = source.SourceDirectoryName;
+            }
+
+            if (source.TargetNodes != null)
+            {
+                TargetNodes = source.TargetNodes.ToList();
+            }
+
+            if (source.TargetThreads != null)
+            {
+                TargetThreads = source.TargetThreads.ToList();
+            }
+
+            if (source.OutputFileName != null)
+            {
+                OutputFileName = source.OutputFileName;
+            }
+
+            if (source.OutputDirectory != null)
+            {
+                OutputDirectory = source.OutputDirectory;
+            }
+
+            if (source.FileNameTemplate != null)
+            {
+                FileNameTemplate = source.FileNameTemplate.ToList();
+            }
+
+            if (source.SeparateOutputByNodes != null)
+            {
+                SeparateOutputByNodes = source.SeparateOutputByNodes;
+            }
+
+            if (source.SeparateOutputByThreads != null)
+            {
+                SeparateOutputByThreads = source.SeparateOutputByThreads;
+            }
+
+            if (source.KindOfMessages != null)
+            {
+                KindOfMessages = source.KindOfMessages.ToList();
+            }
+
+            if (source.Layout != null)
+            {
+                Layout = source.Layout.ToList();
+            }
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {

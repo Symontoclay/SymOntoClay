@@ -105,35 +105,17 @@ namespace TestSandbox.Handlers
 
             Thread.Sleep(500);
 
-            var logFileName = Path.Combine(Directory.GetCurrentDirectory(), "logs", $"mylog_{monitor.SessionDirectoryName}.txt");
+            var logsOutputDirectory = Path.Combine(Directory.GetCurrentDirectory(), "logs");
 
-            _globalLogger.Info($"logFileName = {logFileName}");
+            _globalLogger.Info($"logsOutputDirectory = {logsOutputDirectory}");
 
-            var options = new LogFileCreatorOptions()
+            var options = LogFileCreatorOptions.DefaultOptions;
+
+            options.Write(new LogFileCreatorOptions()
             {
                 SourceDirectoryName = sourceDirectoryName,
-                OutputFileName = logFileName,
-                KindOfMessages = new List<KindOfMessage>()
-                {
-                    //KindOfMessage.Info,
-                    //KindOfMessage.Output
-                },
-                Layout = new List<BaseMessageTextRowOptionItem>
-                {
-                    new LongDateTimeStampTextRowOptionItem(),
-                    new SpaceTextRowOptionItem(),
-                    new MessagePointIdTextRowOptionItem(),
-                    new SpaceTextRowOptionItem(),
-                    new MemberNameTextRowOptionItem(),
-                    new SpaceTextRowOptionItem(),
-                    new KindOfMessageTextRowOptionItem
-                    {
-                        TextTransformation = TextTransformations.UpperCase
-                    },
-                    new SpaceTextRowOptionItem(),
-                    new MessageContentTextRowOptionItem()
-                }
-            };
+                OutputDirectory = logsOutputDirectory
+            });
 
             _globalLogger.Info($"options = {options}");
 

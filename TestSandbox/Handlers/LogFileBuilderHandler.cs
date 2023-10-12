@@ -23,13 +23,51 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("Begin");
 
-            Case5();
+            Case6();
+            //Case5();
             //Case4();
             //Case3();
             //Case2();
             //Case1();
 
             _logger.Info("End");
+        }
+
+        private void Case6()
+        {
+            //var sourceDirectoryName = @"c:\Users\Acer\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesDir\2023_09_02_19_58_24\soldier 1\";
+            //var sourceDirectoryName = @"c:\Users\Acer\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesDir\2023_09_08_16_34_10\soldier 1\";
+            var sourceDirectoryName = @"c:\Users\sergiy.tolkachov\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesDir\2023_09_01_11_38_52\";
+
+            _logger.Info($"sourceDirectoryName = {sourceDirectoryName}");
+
+            var logsOutputDirectory = Path.Combine(Directory.GetCurrentDirectory(), "tst_logs");
+
+            Directory.CreateDirectory(logsOutputDirectory);
+
+            var options = LogFileCreatorOptions.DefaultOptions;
+
+            _logger.Info($"options = {options}");
+
+            var sourceOptions = new LogFileCreatorOptions()
+            {
+                TargetNodes = new List<string>
+                {
+                    "soldier 1"
+                },
+                TargetThreads = new List<string>
+                {
+                    "f5f7ed91-77e5-45f5-88f5-b7530d111bd5"
+                },
+                SourceDirectoryName = sourceDirectoryName,
+                OutputDirectory = logsOutputDirectory
+            };
+
+            _logger.Info($"sourceOptions = {sourceOptions}");
+
+            options.Write(sourceOptions);
+
+            _logger.Info($"options (2) = {options}");
         }
 
         private void Case5()
@@ -40,24 +78,12 @@ namespace TestSandbox.Handlers
 
             _logger.Info($"sourceDirectoryName = {sourceDirectoryName}");
 
-            var logFileName = Path.Combine(Directory.GetCurrentDirectory(), "mylog.txt");
-
-            _logger.Info($"logFileName = {logFileName}");
-
             var logsOutputDirectory = Path.Combine(Directory.GetCurrentDirectory(), "tst_logs");
 
             Directory.CreateDirectory(logsOutputDirectory);
 
             var options = new LogFileCreatorOptions()
             {
-                TargetNodes = new List<string>
-                {
-                    "soldier 1"
-                },
-                TargetThreads = new List<string>
-                {
-                    "f5f7ed91-77e5-45f5-88f5-b7530d111bd5"
-                },
                 FileNameTemplate = new List<BaseFileNameTemplateOptionItem>()
                 {
                     new NodeIdFileNameTemplateOptionItem(),
@@ -109,8 +135,15 @@ namespace TestSandbox.Handlers
 
             var sourceOptions = new LogFileCreatorOptions()
             {
+                TargetNodes = new List<string>
+                {
+                    "soldier 1"
+                },
+                TargetThreads = new List<string>
+                {
+                    "f5f7ed91-77e5-45f5-88f5-b7530d111bd5"
+                },
                 SourceDirectoryName = sourceDirectoryName,
-                OutputFileName = logFileName,
                 OutputDirectory = logsOutputDirectory
             };
 
@@ -253,10 +286,6 @@ namespace TestSandbox.Handlers
 
             _logger.Info($"sourceDirectoryName = {sourceDirectoryName}");
 
-            var logFileName = Path.Combine(Directory.GetCurrentDirectory(), "mylog.txt");
-
-            _logger.Info($"logFileName = {logFileName}");
-
             var logsOutputDirectory = Path.Combine(Directory.GetCurrentDirectory(), "tst_logs");
 
             Directory.CreateDirectory(logsOutputDirectory);
@@ -272,7 +301,6 @@ namespace TestSandbox.Handlers
                     "f5f7ed91-77e5-45f5-88f5-b7530d111bd5"
                 },
                 SourceDirectoryName = sourceDirectoryName,
-                OutputFileName = logFileName,
                 OutputDirectory = logsOutputDirectory,
                 FileNameTemplate = new List<BaseFileNameTemplateOptionItem>()
                 {

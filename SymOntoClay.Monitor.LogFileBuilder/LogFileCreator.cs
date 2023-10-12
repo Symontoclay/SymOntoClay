@@ -28,8 +28,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             {
                 OutputDirectory = options.OutputDirectory,
                 FileNameTemplate = options.FileNameTemplate,
-                SeparateOutputByNodes = options.SeparateOutputByNodes,
-                SeparateOutputByThreads = options.SeparateOutputByThreads
+                SeparateOutputByNodes = options.SeparateOutputByNodes ?? false,
+                SeparateOutputByThreads = options.SeparateOutputByThreads ?? false
             };
 
 #if DEBUG

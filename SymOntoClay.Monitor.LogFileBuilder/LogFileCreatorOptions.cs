@@ -16,12 +16,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public string SourceDirectoryName { get; set; }
         public IEnumerable<string> TargetNodes { get; set; }
         public IEnumerable<string> TargetThreads { get; set; }
-        [Obsolete]
-        public string OutputFileName { get; set; }
         public string OutputDirectory { get; set; }
         public IEnumerable<BaseFileNameTemplateOptionItem> FileNameTemplate { get; set; }
-        public bool SeparateOutputByNodes { get; set; }
-        public bool SeparateOutputByThreads { get; set; }
+        public bool? SeparateOutputByNodes { get; set; }
+        public bool? SeparateOutputByThreads { get; set; }
         public IEnumerable<KindOfMessage> KindOfMessages { get; set; }
         public IEnumerable<BaseMessageTextRowOptionItem> Layout { get; set; }
 
@@ -44,7 +42,6 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             result.SourceDirectoryName = SourceDirectoryName;
             result.TargetNodes = TargetNodes?.ToList();
             result.TargetThreads = TargetThreads?.ToList();
-            result.OutputFileName = OutputFileName;
             result.OutputDirectory = OutputDirectory;
             result.FileNameTemplate = FileNameTemplate?.ToList();
             result.SeparateOutputByNodes = SeparateOutputByNodes;
@@ -70,11 +67,6 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             if (source.TargetThreads != null)
             {
                 TargetThreads = source.TargetThreads.ToList();
-            }
-
-            if (source.OutputFileName != null)
-            {
-                OutputFileName = source.OutputFileName;
             }
 
             if (source.OutputDirectory != null)
@@ -128,7 +120,6 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             sb.AppendLine($"{spaces}{nameof(SourceDirectoryName)} = {SourceDirectoryName}");
             sb.PrintPODList(n, nameof(TargetNodes), TargetNodes);
             sb.PrintPODList(n, nameof(TargetThreads), TargetThreads);
-            sb.AppendLine($"{spaces}{nameof(OutputFileName)} = {OutputFileName}");
             sb.AppendLine($"{spaces}{nameof(OutputDirectory)} = {OutputDirectory}");
             sb.PrintObjListProp(n, nameof(FileNameTemplate), FileNameTemplate);
             sb.AppendLine($"{spaces}{nameof(SeparateOutputByNodes)} = {SeparateOutputByNodes}");
@@ -138,5 +129,54 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             //sb.AppendLine($"{spaces}{nameof()} = {}");
             return sb.ToString();
         }
+
+        public static LogFileCreatorOptions DefaultOptions => new LogFileCreatorOptions()
+        {
+            FileNameTemplate = new List<BaseFileNameTemplateOptionItem>()
+             {
+                new NodeIdFileNameTemplateOptionItem(),
+                new TextFileNameTemplateOptionItem()
+                {
+                    Text = "_",
+                    IfNodeIdExists = true
+                },
+                new ThreadIdFileNameTemplateOptionItem(),
+                new TextFileNameTemplateOptionItem()
+                {
+                    Text = "_",
+                    IfThreadIdExists = true
+                },
+                new LongDateTimeFileNameTemplateOptionItem(),
+                new TextFileNameTemplateOptionItem()
+                {
+                    Text = ".log"
+                }
+            },
+            SeparateOutputByNodes = true,
+            SeparateOutputByThreads = false,
+            KindOfMessages = new List<KindOfMessage>()
+            {
+                //KindOfMessage.Info
+            },
+            Layout = new List<BaseMessageTextRowOptionItem>
+            {
+                new LongDateTimeStampTextRowOptionItem(),
+                new SpaceTextRowOptionItem(),
+                new MessagePointIdTextRowOptionItem(),
+                new SpaceTextRowOptionItem(),
+                new ClassFullNameTextRowOptionItem(),
+                new SpaceTextRowOptionItem(),
+                new MemberNameTextRowOptionItem(),
+                new SpaceTextRowOptionItem(),
+                new ThreadIdTextRowOptionItem(),
+                new SpaceTextRowOptionItem(),
+                new KindOfMessageTextRowOptionItem
+                {
+                    TextTransformation = TextTransformations.UpperCase
+                },
+                new SpaceTextRowOptionItem(),
+                new MessageContentTextRowOptionItem()
+            }
+        };
     }
 }

@@ -95,7 +95,7 @@ namespace TestSandbox
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
             //TstLogFileBuilderParameterValueConverterToString();
-            //TstLogFileBuilder();
+            TstLogFileBuilder();
             //TstMonitor();
             //TstCreateListByVarsDict();
             //TstDetectDoninantItems();
@@ -171,7 +171,7 @@ namespace TestSandbox
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);

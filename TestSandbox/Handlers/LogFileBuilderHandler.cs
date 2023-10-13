@@ -23,7 +23,8 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("Begin");
 
-            Case6();
+            Case7();
+            //Case6();
             //Case5();
             //Case4();
             //Case3();
@@ -31,6 +32,39 @@ namespace TestSandbox.Handlers
             //Case1();
 
             _logger.Info("End");
+        }
+
+        private void Case7()
+        {
+            var cfg = new LogFileCreatorInheritableOptions();
+
+            cfg.Write(LogFileCreatorOptions.DefaultOptions);
+
+            var sourceDirectoryName = @"c:\Users\sergiy.tolkachov\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesDir\2023_09_01_11_38_52\";
+
+            _logger.Info($"sourceDirectoryName = {sourceDirectoryName}");
+
+            var logsOutputDirectory = Path.Combine(Directory.GetCurrentDirectory(), "tst_logs");
+
+            var sourceOptions = new LogFileCreatorOptions()
+            {
+                TargetNodes = new List<string>
+                {
+                    "soldier 1"
+                },
+                TargetThreads = new List<string>
+                {
+                    "f5f7ed91-77e5-45f5-88f5-b7530d111bd5"
+                },
+                SourceDirectoryName = sourceDirectoryName,
+                OutputDirectory = logsOutputDirectory
+            };
+
+            _logger.Info($"sourceOptions = {sourceOptions}");
+
+            cfg.Write(sourceOptions);
+
+            _logger.Info($"cfg = {cfg}");
         }
 
         private void Case6()

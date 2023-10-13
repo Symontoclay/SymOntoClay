@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.CLI.Helpers;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,19 @@ namespace SymOntoClay.Monitor.LogFileBuilder
     {
         /// <inheritdoc/>
         public string ParentCfg { get; set; }
+
+        /// <inheritdoc/>
+        void IInheritableConfiguration.Write(SymOntoClay.CLI.Helpers.IInheritableConfiguration source)
+        {
+            var originalSource = source as LogFileCreatorOptions;
+
+            if (originalSource != null)
+            {
+                throw new ArgumentNullException(nameof(originalSource));
+            }
+
+            base.Write(originalSource);
+        }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

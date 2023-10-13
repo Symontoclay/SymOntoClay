@@ -10,5 +10,6 @@ namespace SymOntoClay.CLI.Helpers
     public interface IInheritableConfiguration: IObjectToString
     {
         string ParentCfg { get; }
+        void Write(IInheritableConfiguration source);
     }
 }

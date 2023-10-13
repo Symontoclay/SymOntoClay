@@ -12,6 +12,8 @@ using System.Text;
 using System.Threading.Tasks;
 using SymOntoClay.Monitor.LogFileBuilder.FileNameTemplateOptionItems;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using Newtonsoft.Json;
+using SymOntoClay.CLI.Helpers;
 
 namespace TestSandbox.Handlers
 {
@@ -23,7 +25,8 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("Begin");
 
-            Case7();
+            Case8();
+            //Case7();
             //Case6();
             //Case5();
             //Case4();
@@ -34,15 +37,28 @@ namespace TestSandbox.Handlers
             _logger.Info("End");
         }
 
+        private void Case8()
+        {
+            var configFileName = Path.Combine(Directory.GetCurrentDirectory(), "logFileCreatorOptions.json");
+
+            _logger.Info($"configFileName = {configFileName}");
+
+            var cfg = InheritableConfigurationReader.Read<LogFileCreatorInheritableOptions>(configFileName);
+
+            _logger.Info($"cfg = {cfg}");
+        }
+
         private void Case7()
         {
             var cfg = new LogFileCreatorInheritableOptions();
 
-            cfg.Write(LogFileCreatorOptions.DefaultOptions);
+            //cfg.Write(LogFileCreatorOptions.DefaultOptions);
 
             var sourceDirectoryName = @"c:\Users\sergiy.tolkachov\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesDir\2023_09_01_11_38_52\";
 
             _logger.Info($"sourceDirectoryName = {sourceDirectoryName}");
+
+            cfg.ParentCfg = "parent-LogFileCreatorOptions.json";
 
             var logsOutputDirectory = Path.Combine(Directory.GetCurrentDirectory(), "tst_logs");
 
@@ -65,6 +81,13 @@ namespace TestSandbox.Handlers
             cfg.Write(sourceOptions);
 
             _logger.Info($"cfg = {cfg}");
+
+            //var fileName = Path.Combine(Directory.GetCurrentDirectory(), "parent-LogFileCreatorOptions.json");
+            var fileName = Path.Combine(Directory.GetCurrentDirectory(), "logFileCreatorOptions.json");
+
+            _logger.Info($"fileName = {fileName}");
+
+            File.WriteAllText(fileName, JsonConvert.SerializeObject(cfg, Formatting.Indented));
         }
 
         private void Case6()

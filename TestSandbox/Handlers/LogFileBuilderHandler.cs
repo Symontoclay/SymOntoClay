@@ -25,8 +25,8 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("Begin");
 
-            Case8();
-            //Case7();
+            //Case8();
+            Case7();
             //Case6();
             //Case5();
             //Case4();
@@ -39,7 +39,8 @@ namespace TestSandbox.Handlers
 
         private void Case8()
         {
-            var configFileName = Path.Combine(Directory.GetCurrentDirectory(), "logFileCreatorOptions.json");
+            //var configFileName = Path.Combine(Directory.GetCurrentDirectory(), "logFileCreatorOptions.json");
+            var configFileName = Path.Combine(Directory.GetCurrentDirectory(), "parent-LogFileCreatorOptions_1.json");
 
             _logger.Info($"configFileName = {configFileName}");
 
@@ -52,13 +53,13 @@ namespace TestSandbox.Handlers
         {
             var cfg = new LogFileCreatorInheritableOptions();
 
-            //cfg.Write(LogFileCreatorOptions.DefaultOptions);
+            cfg.Write(LogFileCreatorOptions.DefaultOptions);
 
             var sourceDirectoryName = @"c:\Users\sergiy.tolkachov\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesDir\2023_09_01_11_38_52\";
 
             _logger.Info($"sourceDirectoryName = {sourceDirectoryName}");
 
-            cfg.ParentCfg = "parent-LogFileCreatorOptions.json";
+            //cfg.ParentCfg = "parent-LogFileCreatorOptions.json";
 
             var logsOutputDirectory = Path.Combine(Directory.GetCurrentDirectory(), "tst_logs");
 
@@ -78,12 +79,12 @@ namespace TestSandbox.Handlers
 
             _logger.Info($"sourceOptions = {sourceOptions}");
 
-            cfg.Write(sourceOptions);
+            //cfg.Write(sourceOptions);
 
             _logger.Info($"cfg = {cfg}");
 
-            //var fileName = Path.Combine(Directory.GetCurrentDirectory(), "parent-LogFileCreatorOptions.json");
-            var fileName = Path.Combine(Directory.GetCurrentDirectory(), "logFileCreatorOptions.json");
+            var fileName = Path.Combine(Directory.GetCurrentDirectory(), "parent-LogFileCreatorOptions.json");
+            //var fileName = Path.Combine(Directory.GetCurrentDirectory(), "logFileCreatorOptions.json");
 
             _logger.Info($"fileName = {fileName}");
 

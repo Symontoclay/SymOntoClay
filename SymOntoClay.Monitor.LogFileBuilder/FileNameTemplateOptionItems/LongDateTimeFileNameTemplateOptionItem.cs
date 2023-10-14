@@ -12,5 +12,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FileNameTemplateOptionItems
             : base(LogFileBuilderConstants.LongDateTimeFormat)
         {
         }
+
+        /// <inheritdoc/>
+        public override string ItemName { get => "LongDateTime"; set => throw new NotImplementedException(); }
     }
 }

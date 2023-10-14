@@ -7,13 +7,54 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.LogFileBuilder.FileNameTemplateOptionItems
 {
-    public abstract class BaseFileNameTemplateOptionItem : IObjectToString
+    public class BaseFileNameTemplateOptionItem : IObjectToString
     {
-        public abstract string GetText(string nodeId, string threadId);
+        public virtual string GetText(string nodeId, string threadId)
+        {
+            return (_internalRef ??= InternalRefFactory()).GetText(nodeId, threadId);
+        }
+
+        private BaseFileNameTemplateOptionItem _internalRef;
+
+        private BaseFileNameTemplateOptionItem InternalRefFactory()
+        {
+            switch(ItemName)
+            {
+                case "DateTimeStamp":
+                    return new DateTimeStampFileNameTemplateOptionItem(Format);
+
+                case "LongDateTime":
+                    return new LongDateTimeFileNameTemplateOptionItem();
+
+                case "ShortDateTime":
+                    return new ShortDateTimeFileNameTemplateOptionItem();
+
+                case "NodeId":
+                    return new NodeIdFileNameTemplateOptionItem();
+
+                case "SpaceText":
+                    return new SpaceTextFileNameTemplateOptionItem()
+                    {
+                        Widht = Widht
+                    };
+
+                case "Text":
+                    return new TextFileNameTemplateOptionItem(Text);
+
+                case "ThreadId":
+                    return new ThreadIdFileNameTemplateOptionItem();
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(ItemName), ItemName, null);
+            }
+        }
 
         public virtual string ItemName { get; set; }
         public bool IfNodeIdExists { get; set; }
         public bool IfThreadIdExists { get; set; }
+        public string Format { get; set; }
+        public uint Widht { get; set; } = 1;
+        public string Text { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -40,6 +81,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FileNameTemplateOptionItems
             sb.AppendLine($"{spaces}{nameof(ItemName)} = {ItemName}");
             sb.AppendLine($"{spaces}{nameof(IfNodeIdExists)} = {IfNodeIdExists}");
             sb.AppendLine($"{spaces}{nameof(IfThreadIdExists)} = {IfThreadIdExists}");
+            sb.AppendLine($"{spaces}{nameof(Text)} = {Text}");
+            sb.AppendLine($"{spaces}{nameof(Widht)} = {Widht}");
+            sb.AppendLine($"{spaces}{nameof(Format)} = {Format}");
             return sb.ToString();
         }
     }

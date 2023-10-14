@@ -25,8 +25,8 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("Begin");
 
-            //Case8();
-            Case7();
+            Case8();
+            //Case7();
             //Case6();
             //Case5();
             //Case4();
@@ -47,6 +47,24 @@ namespace TestSandbox.Handlers
             var cfg = InheritableConfigurationReader.Read<LogFileCreatorInheritableOptions>(configFileName);
 
             _logger.Info($"cfg = {cfg}");
+
+            var fileNameTemplate = cfg.FileNameTemplate;
+
+            _logger.Info($"fileNameTemplate = {fileNameTemplate.WriteListToString()}");
+
+            var nodeId = "1";
+            var threadId = "2";
+
+            var sb = new StringBuilder();
+
+            foreach (var item in fileNameTemplate)
+            {
+                sb.Append(item.GetText(nodeId, threadId));
+
+                //_logger.Info($"sb = {sb}");
+            }
+
+            _logger.Info($"sb = {sb}");
         }
 
         private void Case7()

@@ -11,7 +11,6 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FileNameTemplateOptionItems
     {
         public abstract string GetText(string nodeId, string threadId);
 
-        public virtual string ItemName { get; set; }
         public bool IfNodeIdExists { get; set; }
         public bool IfThreadIdExists { get; set; }
 
@@ -37,7 +36,6 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FileNameTemplateOptionItems
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{nameof(ItemName)} = {ItemName}");
             sb.AppendLine($"{spaces}{nameof(IfNodeIdExists)} = {IfNodeIdExists}");
             sb.AppendLine($"{spaces}{nameof(IfThreadIdExists)} = {IfThreadIdExists}");
             return sb.ToString();

@@ -9,9 +9,6 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FileNameTemplateOptionItems
 {
     public class SpaceTextFileNameTemplateOptionItem : BaseFileNameTemplateOptionItem
     {
-        /// <inheritdoc/>
-        public override string ItemName { get => "SpaceText"; set => throw new NotImplementedException(); }
-
         public uint Widht { get; set; } = 1;
 
         /// <inheritdoc/>

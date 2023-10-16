@@ -18,9 +18,6 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FileNameTemplateOptionItems
             Format = format;
         }
 
-        /// <inheritdoc/>
-        public override string ItemName { get => "DateTimeStamp"; set => throw new NotImplementedException(); }
-
         public string Format { get; set; }
 
         /// <inheritdoc/>

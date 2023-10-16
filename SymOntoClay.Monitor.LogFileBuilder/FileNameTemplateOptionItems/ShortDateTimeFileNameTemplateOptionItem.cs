@@ -12,8 +12,5 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FileNameTemplateOptionItems
             : base(LogFileBuilderConstants.ShortDateTimeFormat)
         {
         }
-
-        /// <inheritdoc/>
-        public override string ItemName { get => "ShortDateTime"; set => throw new NotImplementedException(); }
     }
 }

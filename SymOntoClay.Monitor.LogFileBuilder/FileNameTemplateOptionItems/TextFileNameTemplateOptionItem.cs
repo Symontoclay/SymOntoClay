@@ -18,9 +18,6 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FileNameTemplateOptionItems
             Text = text;
         }
 
-        /// <inheritdoc/>
-        public override string ItemName { get => "Text"; set => throw new NotImplementedException(); }
-
         public string Text {  get; set; }
 
         /// <inheritdoc/>

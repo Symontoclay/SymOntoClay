@@ -21,6 +21,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FileNameTemplateOptionItems
         /// <inheritdoc/>
         public override string ItemName { get => "Text"; set => throw new NotImplementedException(); }
 
+        public string Text {  get; set; }
+
         /// <inheritdoc/>
         public override string GetText(string nodeId, string threadId)
         {
@@ -40,6 +42,19 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FileNameTemplateOptionItems
             }
 
             return Text;
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(Text)} = {Text}");
+
+            sb.Append(base.PropertiesToString(n));
+
+            return sb.ToString();
         }
     }
 }

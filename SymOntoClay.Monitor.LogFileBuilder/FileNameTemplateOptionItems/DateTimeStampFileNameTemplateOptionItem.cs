@@ -21,6 +21,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FileNameTemplateOptionItems
         /// <inheritdoc/>
         public override string ItemName { get => "DateTimeStamp"; set => throw new NotImplementedException(); }
 
+        public string Format { get; set; }
+
         /// <inheritdoc/>
         public override string GetText(string nodeId, string threadId)
         {
@@ -35,6 +37,19 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FileNameTemplateOptionItems
             }
 
             return DateTime.Now.ToString(Format);
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(Format)} = {Format}");
+
+            sb.Append(base.PropertiesToString(n));
+
+            return sb.ToString();
         }
     }
 }

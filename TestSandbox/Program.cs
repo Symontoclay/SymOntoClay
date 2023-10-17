@@ -94,6 +94,8 @@ namespace TestSandbox
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            _globalLogger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
+
             //TstLogFileBuilderParameterValueConverterToString();
             TstLogFileBuilder();
             //TstMonitor();

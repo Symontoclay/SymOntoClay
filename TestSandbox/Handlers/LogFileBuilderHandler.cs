@@ -25,7 +25,8 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("Begin");
 
-            Case8();
+            Case9();
+            //Case8();
             //Case7();
             //Case6();
             //Case5();
@@ -35,6 +36,20 @@ namespace TestSandbox.Handlers
             //Case1();
 
             _logger.Info("End");
+        }
+
+        private void Case9()
+        {
+            RunLogFileBuilderProgramMain("");
+        }
+
+        private void RunLogFileBuilderProgramMain(string args)
+        {
+            _logger.Info($"args = '{args}'");
+
+            var cmdStrList = new List<string>();
+
+            SymOntoClay.Monitor.LogFileBuilder.Program.Main(cmdStrList.ToArray());
         }
 
         private void Case8()
@@ -87,7 +102,12 @@ namespace TestSandbox.Handlers
 
             _logger.Info($"fileName = {fileName}");
 
-            File.WriteAllText(fileName, JsonConvert.SerializeObject(cfg, Formatting.Indented));
+            var jsonSerializerSettings = new JsonSerializerSettings()
+            {
+                TypeNameHandling = TypeNameHandling.Auto
+            };
+
+            File.WriteAllText(fileName, JsonConvert.SerializeObject(cfg, Formatting.Indented, jsonSerializerSettings));
         }
 
         private void Case6()

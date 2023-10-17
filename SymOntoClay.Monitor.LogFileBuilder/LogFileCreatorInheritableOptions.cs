@@ -19,7 +19,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         {
             var originalSource = source as LogFileCreatorOptions;
 
-            if (originalSource != null)
+            if (originalSource == null)
             {
                 throw new ArgumentNullException(nameof(originalSource));
             }

@@ -27,6 +27,11 @@ namespace SymOntoClay.CLI.Helpers
             return NRead<T>(fileName, ref processedFileNames);
         }
 
+        private static readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings()
+        {
+            TypeNameHandling = TypeNameHandling.Auto
+        };
+
         private static T NRead<T>(string fileName, ref List<string> processedFileNames)
             where T : class, IInheritableConfiguration
         {
@@ -40,7 +45,7 @@ namespace SymOntoClay.CLI.Helpers
                 throw new Exception($"The file '{fileName}' has been used previously. A cyclic dependence happened.");
             }
 
-            var cfg = JsonConvert.DeserializeObject<T>(File.ReadAllText(fileName));
+            var cfg = JsonConvert.DeserializeObject<T>(File.ReadAllText(fileName), _jsonSerializerSettings);
 
 #if DEBUG
             _logger.Info($"cfg = {cfg}");

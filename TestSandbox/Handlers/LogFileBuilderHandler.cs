@@ -40,14 +40,16 @@ namespace TestSandbox.Handlers
 
         private void Case9()
         {
-            RunLogFileBuilderProgramMain("");
+            RunLogFileBuilderProgramMain("--i c:\\Users\\sergiy.tolkachov\\source\\repos\\ --nologo");
         }
 
         private void RunLogFileBuilderProgramMain(string args)
         {
             _logger.Info($"args = '{args}'");
 
-            var cmdStrList = new List<string>();
+            var cmdStrList = args.Split(' ');
+
+            _logger.Info($"cmdStrList = '{cmdStrList.WritePODListToString()}'");
 
             SymOntoClay.Monitor.LogFileBuilder.Program.Main(cmdStrList.ToArray());
         }

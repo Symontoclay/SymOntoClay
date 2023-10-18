@@ -1,12 +1,34 @@
-﻿using System;
+﻿using NLog;
+using SymOntoClay.CoreHelper;
+using System;
+using System.Configuration;
+using System.IO;
 
 namespace SymOntoClay.Monitor.LogFileBuilder
 {
     public class Program
     {
+        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+
         public static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
+            EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
+
+            var defaultConfig = ConfigurationManager.AppSettings["defaultConfiguration"];
+
+#if DEBUG
+            _logger.Info($"defaultConfig = {defaultConfig}");
+#endif
+
+            var app = new LogFileBuilderApp();
+            app.Run(args, defaultConfig);
+        }
+
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            _logger.Info($"e.ExceptionObject = {e.ExceptionObject}");
         }
     }
 }

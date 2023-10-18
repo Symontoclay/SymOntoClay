@@ -8,6 +8,7 @@
 	<ItemGroup>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="NLog" Version="5.1.4" />
+		<PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -17,6 +18,15 @@
 	  <ProjectReference Include="..\SymOntoClay.Monitor\SymOntoClay.Monitor.csproj" />
 	  <ProjectReference Include="..\SymOntoClayCoreHelper\SymOntoClayCoreHelper.csproj" />
 	  <ProjectReference Include="..\SymOntoClayCore\SymOntoClayCore.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="default-LogFileCreatorOptions.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="NLog.config">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 	
 	

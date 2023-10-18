@@ -25,7 +25,8 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("Begin");
 
-            Case9();
+            //Case9();
+            Case8a();
             //Case8();
             //Case7();
             //Case6();
@@ -52,6 +53,25 @@ namespace TestSandbox.Handlers
             _logger.Info($"cmdStrList = '{cmdStrList.WritePODListToString()}'");
 
             SymOntoClay.Monitor.LogFileBuilder.Program.Main(cmdStrList.ToArray());
+        }
+
+        private void Case8a()
+        {
+            var defaultConfigFileName = Path.Combine(Directory.GetCurrentDirectory(), "default-LogFileCreatorOptions.json");
+
+            _logger.Info($"defaultConfigFileName = {defaultConfigFileName}");
+
+            var defaultCfg = InheritableConfigurationReader.Read<LogFileCreatorInheritableOptions>(defaultConfigFileName);
+
+            _logger.Info($"defaultCfg = {defaultCfg}");
+
+            var configFileName = Path.Combine(Directory.GetCurrentDirectory(), "logFileCreatorOptions.json");
+
+            _logger.Info($"configFileName = {configFileName}");
+
+            var cfg = InheritableConfigurationReader.Read<LogFileCreatorInheritableOptions>(configFileName, defaultCfg);
+
+            _logger.Info($"cfg = {cfg}");
         }
 
         private void Case8()

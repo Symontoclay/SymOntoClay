@@ -12,7 +12,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 {
     public class LogFileBuilderApp
     {
+#if DEBUG
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+#endif
 
         public void Run(string[] args, string defaultConfigurationFileName)
         {

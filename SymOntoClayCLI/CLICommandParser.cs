@@ -37,7 +37,7 @@ namespace SymOntoClay.CLI
         public static CLICommand Parse(string[] args)
         {
             var argsList = args.ToList();
-
+            
             var command = new CLICommand();
 
             while(argsList.Any())

@@ -14,6 +14,7 @@ using SymOntoClay.Monitor.LogFileBuilder.FileNameTemplateOptionItems;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using Newtonsoft.Json;
 using SymOntoClay.CLI.Helpers;
+using TestSandbox.CommandLines;
 
 namespace TestSandbox.Handlers
 {
@@ -25,8 +26,9 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("Begin");
 
+            Case10();
             //Case9();
-            Case8a();
+            //Case8a();
             //Case8();
             //Case7();
             //Case6();
@@ -39,9 +41,42 @@ namespace TestSandbox.Handlers
             _logger.Info("End");
         }
 
+        private void Case10()
+        {
+            var cmdArg = @"--i c:\Users\sergiy.tolkachov\source\repos\ --nologo";
+
+            _logger.Info($"cmdArg = '{cmdArg}'");
+
+            var cmdStrList = cmdArg.Split(' ');
+
+            _logger.Info($"cmdStrList = '{cmdStrList.WritePODListToString()}'");
+
+            var parser = new CommandLineParser();
+            parser.RegisterArgument(new CommandLineArgumentOptions
+            {
+                Name = "--input",
+                Aliases = new List<string>
+                {
+                    "--i"
+                },
+                Kind = KindOfCommandLineArgument.SingleValue,
+                IsDefault = true
+            });
+
+            parser.RegisterArgument(new CommandLineArgumentOptions
+            {
+                Name = "--nologo",
+                Kind = KindOfCommandLineArgument.Flag
+            });
+
+            var result = parser.Parse(cmdStrList);
+
+            _logger.Info($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
+        }
+
         private void Case9()
         {
-            RunLogFileBuilderProgramMain("--i c:\\Users\\sergiy.tolkachov\\source\\repos\\ --nologo");
+            RunLogFileBuilderProgramMain(@"--i c:\Users\sergiy.tolkachov\source\repos\ --nologo");
         }
 
         private void RunLogFileBuilderProgramMain(string args)
@@ -50,7 +85,7 @@ namespace TestSandbox.Handlers
 
             var cmdStrList = args.Split(' ');
 
-            _logger.Info($"cmdStrList = '{cmdStrList.WritePODListToString()}'");
+            _logger.Info($"cmdStrList = {cmdStrList.WritePODListToString()}");
 
             SymOntoClay.Monitor.LogFileBuilder.Program.Main(cmdStrList.ToArray());
         }

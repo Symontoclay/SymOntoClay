@@ -10,12 +10,12 @@ namespace TestSandbox.CommandLines
 {
     public class CommandLineParser
     {
-        private enum State
-        {
-            Init,
-            GotArgumentName,
-            GotArgumentValue
-        }
+        //private enum State
+        //{
+        //    Init,
+        //    GotArgumentName,
+        //    GotArgumentValue
+        //}
 
 #if DEBUG
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
@@ -53,55 +53,58 @@ namespace TestSandbox.CommandLines
 
             var rawResultDict = new Dictionary<string, List<object>>();
 
-            foreach (string arg in args)
-            {
-#if DEBUG
-                _logger.Info($"arg = '{arg}'");
-                _logger.Info($"state = {state}");
-                _logger.Info($"currentCommandLineArgumentOptions = {currentCommandLineArgumentOptions}");
-                _logger.Info($"currentArgumentName = '{currentArgumentName}'");
-                _logger.Info($"currentRawResultList = {currentRawResultList?.WritePODListToString()}");
-#endif
+            var argsList = new Queue<string> args.ToList();
 
-                switch (state)
-                {
-                    case State.Init:
-                        {
-                            if(_argumentOptionsDict.ContainsKey(arg))
-                            {
-                                currentCommandLineArgumentOptions = _argumentOptionsDict[arg];
-                                currentArgumentName = currentCommandLineArgumentOptions.Name;
 
-                                if(rawResultDict.ContainsKey(currentArgumentName))
-                                {
-                                    currentRawResultList = rawResultDict[currentArgumentName];
-                                }
-                                else
-                                {
-                                    currentRawResultList = new List<object>();
-                                    rawResultDict[currentArgumentName] = currentRawResultList;
-                                }
+//            foreach (string arg in args)
+//            {
+//#if DEBUG
+//                _logger.Info($"arg = '{arg}'");
+//                _logger.Info($"state = {state}");
+//                _logger.Info($"currentCommandLineArgumentOptions = {currentCommandLineArgumentOptions}");
+//                _logger.Info($"currentArgumentName = '{currentArgumentName}'");
+//                _logger.Info($"currentRawResultList = {currentRawResultList?.WritePODListToString()}");
+//#endif
 
-                                state = State.GotArgumentName;
-                                break;
-                            }
-                            else
-                            {
-                                throw new NotImplementedException();
-                            }
+//                switch (state)
+//                {
+//                    case State.Init:
+//                        {
+//                            if(_argumentOptionsDict.ContainsKey(arg))
+//                            {
+//                                currentCommandLineArgumentOptions = _argumentOptionsDict[arg];
+//                                currentArgumentName = currentCommandLineArgumentOptions.Name;
 
-                            throw new NotImplementedException();
-                        }
+//                                if(rawResultDict.ContainsKey(currentArgumentName))
+//                                {
+//                                    currentRawResultList = rawResultDict[currentArgumentName];
+//                                }
+//                                else
+//                                {
+//                                    currentRawResultList = new List<object>();
+//                                    rawResultDict[currentArgumentName] = currentRawResultList;
+//                                }
 
-                    case State.GotArgumentName:
-                        {
-                            throw new NotImplementedException();
-                        }
+//                                state = State.GotArgumentName;
+//                                break;
+//                            }
+//                            else
+//                            {
+//                                throw new NotImplementedException();
+//                            }
 
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(state), state, null);
-                }
-            }
+//                            throw new NotImplementedException();
+//                        }
+
+//                    case State.GotArgumentName:
+//                        {
+//                            throw new NotImplementedException();
+//                        }
+
+//                    default:
+//                        throw new ArgumentOutOfRangeException(nameof(state), state, null);
+//                }
+//            }
 
             //throw new NotImplementedException();
             return new Dictionary<string, object>();

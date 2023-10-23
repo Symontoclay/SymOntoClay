@@ -96,8 +96,9 @@ namespace TestSandbox
 
             _globalLogger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 
+            TstCommandLineParserHandler();
             //TstLogFileBuilderParameterValueConverterToString();
-            TstLogFileBuilder();
+            //TstLogFileBuilder();
             //TstMonitor();
             //TstCreateListByVarsDict();
             //TstDetectDoninantItems();
@@ -177,6 +178,16 @@ namespace TestSandbox
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstCommandLineParserHandler()
+        {
+            _globalLogger.Info("Begin");
+
+            var handler = new CommandLineParserHandler();
+            handler.Run();
+
+            _globalLogger.Info("End");
         }
 
         private static void TstLogFileBuilderParameterValueConverterToString()

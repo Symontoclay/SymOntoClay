@@ -28,7 +28,9 @@ namespace TestSandbox.CommandLines
             _logger.Info($"argumentOptions = {argumentOptions}");
 #endif
 
-            foreach(var name in argumentOptions.Names)
+            _argumentOptionsList.Add(argumentOptions);
+
+            foreach (var name in argumentOptions.Names)
             {
 #if DEBUG
                 _logger.Info($"name = {name}");
@@ -39,6 +41,7 @@ namespace TestSandbox.CommandLines
         }
 
         private Dictionary<string, CommandLineArgumentOptions> _argumentOptionsDict = new Dictionary<string, CommandLineArgumentOptions>();
+        private List<CommandLineArgumentOptions> _argumentOptionsList = new List<CommandLineArgumentOptions>();
 
         public Dictionary<string, object> Parse(string[] args)
         {
@@ -46,7 +49,17 @@ namespace TestSandbox.CommandLines
             _logger.Info($"args = {args.WritePODListToString()}");
 #endif
 
-            //var state = State.Init;
+            var defaultCommandLineArgumentOptionsList = _argumentOptionsList.Where(p => p.IsDefault).ToList();
+
+#if DEBUG
+            _logger.Info($"defaultCommandLineArgumentOptionsList = {JsonConvert.SerializeObject(defaultCommandLineArgumentOptionsList, Formatting.Indented)}");
+#endif
+
+            var defaultCommandLineArgumentOptions = defaultCommandLineArgumentOptionsList.SingleOrDefault();
+
+#if DEBUG
+            _logger.Info($"defaultCommandLineArgumentOptions = {JsonConvert.SerializeObject(defaultCommandLineArgumentOptions, Formatting.Indented)}");
+#endif
 
             CommandLineArgumentOptions currentCommandLineArgumentOptions = null;
             var currentArgumentName = string.Empty;
@@ -83,7 +96,14 @@ namespace TestSandbox.CommandLines
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        if(defaultCommandLineArgumentOptions == null)
+                        {
+                            throw new NotImplementedException();
+                        }
+                        else
+                        {
+                            throw new NotImplementedException();
+                        }
                     }
 
                     isFirstIteration = false;
@@ -106,65 +126,63 @@ namespace TestSandbox.CommandLines
             _logger.Info($"rawResultDict = {JsonConvert.SerializeObject(rawResultDict, Formatting.Indented)}");
 #endif
 
+            var result = new Dictionary<string, object>();
 
-            //            foreach (string arg in args)
-            //            {
-            //#if DEBUG
-            //                _logger.Info($"arg = '{arg}'");
-            //                _logger.Info($"state = {state}");
-            //                _logger.Info($"currentCommandLineArgumentOptions = {currentCommandLineArgumentOptions}");
-            //                _logger.Info($"currentArgumentName = '{currentArgumentName}'");
-            //                _logger.Info($"currentRawResultList = {currentRawResultList?.WritePODListToString()}");
-            //#endif
+            foreach(var item in rawResultDict)
+            {
+                var arg = item.Key;
 
-            //                switch (state)
-            //                {
-            //                    case State.Init:
-            //                        {
-            //                            if(_argumentOptionsDict.ContainsKey(arg))
-            //                            {
-            //                                currentCommandLineArgumentOptions = _argumentOptionsDict[arg];
-            //                                currentArgumentName = currentCommandLineArgumentOptions.Name;
+                var valuesList = item.Value;
+#if DEBUG
+                _logger.Info($"arg = {arg}");
+                _logger.Info($"valuesList = {JsonConvert.SerializeObject(valuesList, Formatting.Indented)}");
+#endif
 
-            //                                if(rawResultDict.ContainsKey(currentArgumentName))
-            //                                {
-            //                                    currentRawResultList = rawResultDict[currentArgumentName];
-            //                                }
-            //                                else
-            //                                {
-            //                                    currentRawResultList = new List<object>();
-            //                                    rawResultDict[currentArgumentName] = currentRawResultList;
-            //                                }
+                var commandLineArgumentOptions = _argumentOptionsDict[arg];
 
-            //                                state = State.GotArgumentName;
-            //                                break;
-            //                            }
-            //                            else
-            //                            {
-            //                                throw new NotImplementedException();
-            //                            }
+#if DEBUG
+                _logger.Info($"commandLineArgumentOptions = {JsonConvert.SerializeObject(commandLineArgumentOptions, Formatting.Indented)}");
+#endif
 
-            //                            throw new NotImplementedException();
-            //                        }
+                var commandLineArgumentOptionsKind = commandLineArgumentOptions.Kind;
 
-            //                    case State.GotArgumentName:
-            //                        {
-            //                            throw new NotImplementedException();
-            //                        }
+#if DEBUG
+                _logger.Info($"commandLineArgumentOptionsKind = {commandLineArgumentOptionsKind}");
+#endif
 
-            //                    default:
-            //                        throw new ArgumentOutOfRangeException(nameof(state), state, null);
-            //                }
-            //            }
+                switch(commandLineArgumentOptionsKind)
+                {
+                    case KindOfCommandLineArgument.Flag:
+                        result[arg] = valuesList == null ? false : true;
+                        break;
 
-            //throw new NotImplementedException();
-            return new Dictionary<string, object>();
+                    case KindOfCommandLineArgument.SingleValue:
+                        result[arg] = valuesList.FirstOrDefault();
+                        break;
+
+                    case KindOfCommandLineArgument.List:
+                    case KindOfCommandLineArgument.SingleValueOrList:
+                        result[arg] = valuesList;
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(commandLineArgumentOptionsKind), commandLineArgumentOptionsKind, null);
+                }
+            }
+
+            return result;
         }
 
         private void InitCurrentArgument(string arg, ref CommandLineArgumentOptions currentCommandLineArgumentOptions, ref string currentArgumentName, 
             ref List<object> currentRawResultList, ref Dictionary<string, List<object>> rawResultDict)
         {
             currentCommandLineArgumentOptions = _argumentOptionsDict[arg];
+
+            FillUpCurrentArgumentVars();
+        }
+
+        private void FillUpCurrentArgumentVars()
+        {
             currentArgumentName = currentCommandLineArgumentOptions.Name;
 
             if (rawResultDict.ContainsKey(currentArgumentName))

@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestSandbox.CommandLines
+namespace SymOntoClay.CLI.Helpers
 {
     public class CommandLineArgumentOptions : IObjectToString
     {
         public string Name { get; set; }
-        public List<string> Aliases {  get; set; }
+        public List<string> Aliases { get; set; }
         public List<string> Names => new List<string> { Name }.Concat(Aliases ?? new List<string>()).ToList();
         public KindOfCommandLineArgument Kind { get; set; }
         public bool IsUnique { get; set; }

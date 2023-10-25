@@ -7,17 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestSandbox.CommandLines
+namespace SymOntoClay.CLI.Helpers
 {
     public class CommandLineParser
     {
-        //private enum State
-        //{
-        //    Init,
-        //    GotArgumentName,
-        //    GotArgumentValue
-        //}
-
 #if DEBUG
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 #endif
@@ -55,6 +48,11 @@ namespace TestSandbox.CommandLines
             _logger.Info($"defaultCommandLineArgumentOptionsList = {JsonConvert.SerializeObject(defaultCommandLineArgumentOptionsList, Formatting.Indented)}");
 #endif
 
+            if (defaultCommandLineArgumentOptionsList.Count > 1)
+            {
+                throw new Exception($"Too many options set as default: {string.Join(", ", defaultCommandLineArgumentOptionsList.Select(p => $"'{p.Name}'"))}. There can be only one default option.");
+            }
+
             var defaultCommandLineArgumentOptions = defaultCommandLineArgumentOptionsList.SingleOrDefault();
 
 #if DEBUG
@@ -71,9 +69,9 @@ namespace TestSandbox.CommandLines
 
             var isFirstIteration = true;
 
-            while(argsList.Any())
+            while (argsList.Any())
             {
-                var arg = argsList.Dequeue();
+                var arg = argsList.Peek();
 
 #if DEBUG
                 _logger.Info($"arg = '{arg}'");
@@ -84,6 +82,8 @@ namespace TestSandbox.CommandLines
                 {
                     if (_argumentOptionsDict.ContainsKey(arg))
                     {
+                        argsList.Dequeue();
+
                         InitCurrentArgument(arg, ref currentCommandLineArgumentOptions, ref currentArgumentName, ref currentRawResultList, ref rawResultDict);
 
 #if DEBUG
@@ -92,17 +92,28 @@ namespace TestSandbox.CommandLines
                         _logger.Info($"currentRawResultList = {currentRawResultList?.WritePODListToString()}");
 #endif
 
-                        TryReadValues(argsList, currentCommandLineArgumentOptions, currentRawResultList);
+                        TryReadValues(arg, argsList, currentCommandLineArgumentOptions, currentRawResultList);
                     }
                     else
                     {
-                        if(defaultCommandLineArgumentOptions == null)
+                        if (defaultCommandLineArgumentOptions == null)
                         {
-                            throw new NotImplementedException();
+                            throw new Exception($"There was value '{arg}' without any option. But there is not any option declared as default.");
                         }
                         else
                         {
-                            throw new NotImplementedException();
+                            currentCommandLineArgumentOptions = defaultCommandLineArgumentOptions;
+
+                            FillUpCurrentArgumentVars(currentCommandLineArgumentOptions, ref currentArgumentName,
+                                ref currentRawResultList, ref rawResultDict);
+
+#if DEBUG
+                            _logger.Info($"currentCommandLineArgumentOptions = {currentCommandLineArgumentOptions}");
+                            _logger.Info($"currentArgumentName = '{currentArgumentName}'");
+                            _logger.Info($"currentRawResultList = {currentRawResultList?.WritePODListToString()}");
+#endif
+
+                            TryReadValues(currentArgumentName, argsList, currentCommandLineArgumentOptions, currentRawResultList);
                         }
                     }
 
@@ -110,6 +121,8 @@ namespace TestSandbox.CommandLines
                 }
                 else
                 {
+                    argsList.Dequeue();
+
                     InitCurrentArgument(arg, ref currentCommandLineArgumentOptions, ref currentArgumentName, ref currentRawResultList, ref rawResultDict);
 
 #if DEBUG
@@ -118,7 +131,7 @@ namespace TestSandbox.CommandLines
                     _logger.Info($"currentRawResultList = {currentRawResultList?.WritePODListToString()}");
 #endif
 
-                    TryReadValues(argsList, currentCommandLineArgumentOptions, currentRawResultList);
+                    TryReadValues(arg, argsList, currentCommandLineArgumentOptions, currentRawResultList);
                 }
             }
 
@@ -128,7 +141,7 @@ namespace TestSandbox.CommandLines
 
             var result = new Dictionary<string, object>();
 
-            foreach(var item in rawResultDict)
+            foreach (var item in rawResultDict)
             {
                 var arg = item.Key;
 
@@ -150,7 +163,7 @@ namespace TestSandbox.CommandLines
                 _logger.Info($"commandLineArgumentOptionsKind = {commandLineArgumentOptionsKind}");
 #endif
 
-                switch(commandLineArgumentOptionsKind)
+                switch (commandLineArgumentOptionsKind)
                 {
                     case KindOfCommandLineArgument.Flag:
                         result[arg] = valuesList == null ? false : true;
@@ -173,15 +186,17 @@ namespace TestSandbox.CommandLines
             return result;
         }
 
-        private void InitCurrentArgument(string arg, ref CommandLineArgumentOptions currentCommandLineArgumentOptions, ref string currentArgumentName, 
+        private void InitCurrentArgument(string arg, ref CommandLineArgumentOptions currentCommandLineArgumentOptions, ref string currentArgumentName,
             ref List<object> currentRawResultList, ref Dictionary<string, List<object>> rawResultDict)
         {
             currentCommandLineArgumentOptions = _argumentOptionsDict[arg];
 
-            FillUpCurrentArgumentVars();
+            FillUpCurrentArgumentVars(currentCommandLineArgumentOptions, ref currentArgumentName,
+            ref currentRawResultList, ref rawResultDict);
         }
 
-        private void FillUpCurrentArgumentVars()
+        private void FillUpCurrentArgumentVars(CommandLineArgumentOptions currentCommandLineArgumentOptions, ref string currentArgumentName,
+            ref List<object> currentRawResultList, ref Dictionary<string, List<object>> rawResultDict)
         {
             currentArgumentName = currentCommandLineArgumentOptions.Name;
 
@@ -196,9 +211,10 @@ namespace TestSandbox.CommandLines
             }
         }
 
-        private void TryReadValues(Queue<string> argsList, CommandLineArgumentOptions currentCommandLineArgumentOptions, List<object> currentRawResultList)
+        private void TryReadValues(string currentOriginalCommandLineArgumentOptionsName, Queue<string> argsList, CommandLineArgumentOptions currentCommandLineArgumentOptions, List<object> currentRawResultList)
         {
 #if DEBUG
+            _logger.Info($"currentOriginalCommandLineArgumentOptionsName = '{currentOriginalCommandLineArgumentOptionsName}'");
             _logger.Info($"currentCommandLineArgumentOptions = {currentCommandLineArgumentOptions}");
 #endif
 
@@ -210,7 +226,7 @@ namespace TestSandbox.CommandLines
                 _logger.Info($"arg = '{arg}'");
 #endif
 
-                if(_argumentOptionsDict.ContainsKey(arg))
+                if (_argumentOptionsDict.ContainsKey(arg))
                 {
                     return;
                 }
@@ -227,10 +243,10 @@ namespace TestSandbox.CommandLines
                 _logger.Info($"currentCommandLineArgumentOptionsKind = {currentCommandLineArgumentOptionsKind}");
 #endif
 
-                switch(currentCommandLineArgumentOptionsKind)
+                switch (currentCommandLineArgumentOptionsKind)
                 {
                     case KindOfCommandLineArgument.Flag:
-                        throw new NotImplementedException();
+                        throw new Exception($"Option '{currentOriginalCommandLineArgumentOptionsName}' is a flag. It cannot have an argument '{arg}'.");
 
                     case KindOfCommandLineArgument.List:
                     case KindOfCommandLineArgument.SingleValueOrList:
@@ -244,7 +260,7 @@ namespace TestSandbox.CommandLines
 
                     default:
                         throw new ArgumentOutOfRangeException(nameof(currentCommandLineArgumentOptionsKind), currentCommandLineArgumentOptionsKind, null);
-                }                
+                }
             }
         }
     }

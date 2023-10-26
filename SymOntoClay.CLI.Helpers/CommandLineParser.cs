@@ -12,21 +12,26 @@ namespace SymOntoClay.CLI.Helpers
     public class CommandLineParser
     {
 #if DEBUG
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        //private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
         public void RegisterArgument(CommandLineArgumentOptions argumentOptions)
         {
 #if DEBUG
-            _logger.Info($"argumentOptions = {argumentOptions}");
+            //_logger.Info($"argumentOptions = {argumentOptions}");
 #endif
+
+            if(string.IsNullOrWhiteSpace(argumentOptions.Name))
+            {
+                throw new Exception($"Name of option cannot be null or empty.");
+            }
 
             _argumentOptionsList.Add(argumentOptions);
 
             foreach (var name in argumentOptions.Names)
             {
 #if DEBUG
-                _logger.Info($"name = {name}");
+                //_logger.Info($"name = {name}");
 #endif
 
                 _argumentOptionsDict[name] = argumentOptions;
@@ -39,13 +44,13 @@ namespace SymOntoClay.CLI.Helpers
         public Dictionary<string, object> Parse(string[] args)
         {
 #if DEBUG
-            _logger.Info($"args = {args.WritePODListToString()}");
+            //_logger.Info($"args = {args.WritePODListToString()}");
 #endif
 
             var defaultCommandLineArgumentOptionsList = _argumentOptionsList.Where(p => p.IsDefault).ToList();
 
 #if DEBUG
-            _logger.Info($"defaultCommandLineArgumentOptionsList = {JsonConvert.SerializeObject(defaultCommandLineArgumentOptionsList, Formatting.Indented)}");
+            //_logger.Info($"defaultCommandLineArgumentOptionsList = {JsonConvert.SerializeObject(defaultCommandLineArgumentOptionsList, Formatting.Indented)}");
 #endif
 
             if (defaultCommandLineArgumentOptionsList.Count > 1)
@@ -56,7 +61,7 @@ namespace SymOntoClay.CLI.Helpers
             var defaultCommandLineArgumentOptions = defaultCommandLineArgumentOptionsList.SingleOrDefault();
 
 #if DEBUG
-            _logger.Info($"defaultCommandLineArgumentOptions = {JsonConvert.SerializeObject(defaultCommandLineArgumentOptions, Formatting.Indented)}");
+            //_logger.Info($"defaultCommandLineArgumentOptions = {JsonConvert.SerializeObject(defaultCommandLineArgumentOptions, Formatting.Indented)}");
 #endif
 
             CommandLineArgumentOptions currentCommandLineArgumentOptions = null;
@@ -74,8 +79,8 @@ namespace SymOntoClay.CLI.Helpers
                 var arg = argsList.Peek();
 
 #if DEBUG
-                _logger.Info($"arg = '{arg}'");
-                _logger.Info($"isFirstIteration = {isFirstIteration}");
+                //_logger.Info($"arg = '{arg}'");
+                //_logger.Info($"isFirstIteration = {isFirstIteration}");
 #endif
 
                 if (isFirstIteration)
@@ -87,9 +92,9 @@ namespace SymOntoClay.CLI.Helpers
                         InitCurrentArgument(arg, ref currentCommandLineArgumentOptions, ref currentArgumentName, ref currentRawResultList, ref rawResultDict);
 
 #if DEBUG
-                        _logger.Info($"currentCommandLineArgumentOptions = {currentCommandLineArgumentOptions}");
-                        _logger.Info($"currentArgumentName = '{currentArgumentName}'");
-                        _logger.Info($"currentRawResultList = {currentRawResultList?.WritePODListToString()}");
+                        //_logger.Info($"currentCommandLineArgumentOptions = {currentCommandLineArgumentOptions}");
+                        //_logger.Info($"currentArgumentName = '{currentArgumentName}'");
+                        //_logger.Info($"currentRawResultList = {currentRawResultList?.WritePODListToString()}");
 #endif
 
                         TryReadValues(arg, argsList, currentCommandLineArgumentOptions, currentRawResultList);
@@ -108,9 +113,9 @@ namespace SymOntoClay.CLI.Helpers
                                 ref currentRawResultList, ref rawResultDict);
 
 #if DEBUG
-                            _logger.Info($"currentCommandLineArgumentOptions = {currentCommandLineArgumentOptions}");
-                            _logger.Info($"currentArgumentName = '{currentArgumentName}'");
-                            _logger.Info($"currentRawResultList = {currentRawResultList?.WritePODListToString()}");
+                            //_logger.Info($"currentCommandLineArgumentOptions = {currentCommandLineArgumentOptions}");
+                            //_logger.Info($"currentArgumentName = '{currentArgumentName}'");
+                            //_logger.Info($"currentRawResultList = {currentRawResultList?.WritePODListToString()}");
 #endif
 
                             TryReadValues(currentArgumentName, argsList, currentCommandLineArgumentOptions, currentRawResultList);
@@ -126,9 +131,9 @@ namespace SymOntoClay.CLI.Helpers
                     InitCurrentArgument(arg, ref currentCommandLineArgumentOptions, ref currentArgumentName, ref currentRawResultList, ref rawResultDict);
 
 #if DEBUG
-                    _logger.Info($"currentCommandLineArgumentOptions = {currentCommandLineArgumentOptions}");
-                    _logger.Info($"currentArgumentName = '{currentArgumentName}'");
-                    _logger.Info($"currentRawResultList = {currentRawResultList?.WritePODListToString()}");
+                    //_logger.Info($"currentCommandLineArgumentOptions = {currentCommandLineArgumentOptions}");
+                    //_logger.Info($"currentArgumentName = '{currentArgumentName}'");
+                    //_logger.Info($"currentRawResultList = {currentRawResultList?.WritePODListToString()}");
 #endif
 
                     TryReadValues(arg, argsList, currentCommandLineArgumentOptions, currentRawResultList);
@@ -136,7 +141,7 @@ namespace SymOntoClay.CLI.Helpers
             }
 
 #if DEBUG
-            _logger.Info($"rawResultDict = {JsonConvert.SerializeObject(rawResultDict, Formatting.Indented)}");
+            //_logger.Info($"rawResultDict = {JsonConvert.SerializeObject(rawResultDict, Formatting.Indented)}");
 #endif
 
             var result = new Dictionary<string, object>();
@@ -147,20 +152,20 @@ namespace SymOntoClay.CLI.Helpers
 
                 var valuesList = item.Value;
 #if DEBUG
-                _logger.Info($"arg = {arg}");
-                _logger.Info($"valuesList = {JsonConvert.SerializeObject(valuesList, Formatting.Indented)}");
+                //_logger.Info($"arg = {arg}");
+                //_logger.Info($"valuesList = {JsonConvert.SerializeObject(valuesList, Formatting.Indented)}");
 #endif
 
                 var commandLineArgumentOptions = _argumentOptionsDict[arg];
 
 #if DEBUG
-                _logger.Info($"commandLineArgumentOptions = {JsonConvert.SerializeObject(commandLineArgumentOptions, Formatting.Indented)}");
+                //_logger.Info($"commandLineArgumentOptions = {JsonConvert.SerializeObject(commandLineArgumentOptions, Formatting.Indented)}");
 #endif
 
                 var commandLineArgumentOptionsKind = commandLineArgumentOptions.Kind;
 
 #if DEBUG
-                _logger.Info($"commandLineArgumentOptionsKind = {commandLineArgumentOptionsKind}");
+                //_logger.Info($"commandLineArgumentOptionsKind = {commandLineArgumentOptionsKind}");
 #endif
 
                 switch (commandLineArgumentOptionsKind)
@@ -214,8 +219,8 @@ namespace SymOntoClay.CLI.Helpers
         private void TryReadValues(string currentOriginalCommandLineArgumentOptionsName, Queue<string> argsList, CommandLineArgumentOptions currentCommandLineArgumentOptions, List<object> currentRawResultList)
         {
 #if DEBUG
-            _logger.Info($"currentOriginalCommandLineArgumentOptionsName = '{currentOriginalCommandLineArgumentOptionsName}'");
-            _logger.Info($"currentCommandLineArgumentOptions = {currentCommandLineArgumentOptions}");
+            //_logger.Info($"currentOriginalCommandLineArgumentOptionsName = '{currentOriginalCommandLineArgumentOptionsName}'");
+            //_logger.Info($"currentCommandLineArgumentOptions = {currentCommandLineArgumentOptions}");
 #endif
 
             while (argsList.Any())
@@ -223,7 +228,7 @@ namespace SymOntoClay.CLI.Helpers
                 var arg = argsList.Peek();
 
 #if DEBUG
-                _logger.Info($"arg = '{arg}'");
+                //_logger.Info($"arg = '{arg}'");
 #endif
 
                 if (_argumentOptionsDict.ContainsKey(arg))
@@ -234,13 +239,13 @@ namespace SymOntoClay.CLI.Helpers
                 argsList.Dequeue();
 
 #if DEBUG
-                _logger.Info($"arg NEXT = '{arg}'");
+                //_logger.Info($"arg NEXT = '{arg}'");
 #endif
 
                 var currentCommandLineArgumentOptionsKind = currentCommandLineArgumentOptions.Kind;
 
 #if DEBUG
-                _logger.Info($"currentCommandLineArgumentOptionsKind = {currentCommandLineArgumentOptionsKind}");
+                //_logger.Info($"currentCommandLineArgumentOptionsKind = {currentCommandLineArgumentOptionsKind}");
 #endif
 
                 switch (currentCommandLineArgumentOptionsKind)

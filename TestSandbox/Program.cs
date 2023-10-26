@@ -96,9 +96,9 @@ namespace TestSandbox
 
             _globalLogger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 
-            TstCommandLineParserHandler();
+            //TstCommandLineParserHandler();
             //TstLogFileBuilderParameterValueConverterToString();
-            //TstLogFileBuilder();
+            TstLogFileBuilder();
             //TstMonitor();
             //TstCreateListByVarsDict();
             //TstDetectDoninantItems();

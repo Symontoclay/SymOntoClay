@@ -1,4 +1,5 @@
-﻿using NLog;
+﻿using Newtonsoft.Json;
+using NLog;
 using SymOntoClay.CLI.Helpers;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -35,7 +36,120 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             _logger.Info($"defaultConfiguration = {defaultConfiguration}");
 #endif
 
+            var logFileBuilderOptions = ParseArgs(args);
+
+#if DEBUG
+            _logger.Info($"logFileBuilderOptions = {JsonConvert.SerializeObject(logFileBuilderOptions, Formatting.Indented)}");
+#endif
+
             throw new NotImplementedException();
+        }
+
+        private LogFileBuilderOptions ParseArgs(string[] args)
+        {
+            var parser = CreateAndInitParser();
+
+            var parsedArgs = parser.Parse(args);
+
+#if DEBUG
+            _logger.Info($"parsedArgs = {JsonConvert.SerializeObject(parsedArgs, Formatting.Indented)}");
+#endif
+
+            var logFileBuilderOptions = new LogFileBuilderOptions()
+            {
+                IsHelp = (parsedArgs.TryGetValue("--help", out var isHelp) ? (bool)isHelp : default(bool)),
+                Input = (parsedArgs.TryGetValue("--input", out var input) ? (string)input : default(string)),
+                Output = (parsedArgs.TryGetValue("--output", out var output) ? (string)output : default(string)),
+                NoLogo = (parsedArgs.TryGetValue("--nologo", out var nologo) ? (bool)nologo : default(bool)),
+                TargetNodeId = (parsedArgs.TryGetValue("--target-nodeid", out var targetNodeId) ? (string)targetNodeId : default(string)),
+                TargetThreadId = (parsedArgs.TryGetValue("--target-threadid", out var targetThreadId) ? (string)targetThreadId : default(string)),
+                SplitByNodes = (parsedArgs.TryGetValue("--split-by-nodes", out var splitByNodes) ? (bool)splitByNodes : default(bool)),
+                SplitByThreads = (parsedArgs.TryGetValue("--split-by-threads", out var splitByThreads) ? (bool)splitByThreads : default(bool)),
+                ConfigurationFileName = (parsedArgs.TryGetValue("--configuration", out var configurationFileName) ? (string)configurationFileName : default(string))
+            };
+
+            return logFileBuilderOptions;
+        }
+
+        private CommandLineParser CreateAndInitParser()
+        {
+            var parser = new CommandLineParser();
+
+            parser.RegisterArgument(new CommandLineArgumentOptions
+            {
+                Name = "--help",
+                Aliases = new List<string>
+                {
+                    "--?",
+                    "--h"
+                },
+                Kind = KindOfCommandLineArgument.Flag
+            });
+
+            parser.RegisterArgument(new CommandLineArgumentOptions
+            {
+                Name = "--input",
+                Aliases = new List<string>
+                {
+                    "--i"
+                },
+                Kind = KindOfCommandLineArgument.SingleValue,
+                IsDefault = true
+            });
+
+            parser.RegisterArgument(new CommandLineArgumentOptions
+            {
+                Name = "--output",
+                Aliases = new List<string>
+                {
+                    "--o"
+                },
+                Kind = KindOfCommandLineArgument.SingleValue
+            });
+
+            parser.RegisterArgument(new CommandLineArgumentOptions
+            {
+                Name = "--nologo",
+                Kind = KindOfCommandLineArgument.Flag
+            });
+
+            parser.RegisterArgument(new CommandLineArgumentOptions
+            {
+                Name = "--target-nodeid",
+                Kind = KindOfCommandLineArgument.SingleValue
+            });
+
+            parser.RegisterArgument(new CommandLineArgumentOptions
+            {
+                Name = "--target-threadid",
+                Kind = KindOfCommandLineArgument.SingleValue
+            });
+
+            parser.RegisterArgument(new CommandLineArgumentOptions
+            {
+                Name = "--split-by-nodes",
+                Kind = KindOfCommandLineArgument.Flag
+            });
+
+            parser.RegisterArgument(new CommandLineArgumentOptions
+            {
+                Name = "--split-by-threads",
+                Kind = KindOfCommandLineArgument.Flag
+            });
+
+            parser.RegisterArgument(new CommandLineArgumentOptions
+            {
+                Name = "--configuration",
+                Aliases = new List<string>
+                {
+                    "--c",
+                    "--cfg",
+                    "--config"
+                },
+                Kind = KindOfCommandLineArgument.SingleValue
+            });
+
+            return parser;
         }
     }
 }

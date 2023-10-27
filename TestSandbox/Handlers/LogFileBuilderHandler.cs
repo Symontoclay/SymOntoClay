@@ -26,9 +26,10 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("Begin");
 
+            Case12();
             //Case11();
             //Case10();
-            Case9();
+            //Case9();
             //Case8a();
             //Case8();
             //Case7();
@@ -40,6 +41,11 @@ namespace TestSandbox.Handlers
             //Case1();
 
             _logger.Info("End");
+        }
+
+        private void Case12()
+        {
+            RunLogFileBuilderProgramMain(string.Empty);
         }
 
         private void Case11()

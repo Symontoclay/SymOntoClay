@@ -40,6 +40,7 @@ using System.Linq;
 using SymOntoClay.ProjectFiles;
 using SymOntoClay.NLP;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.CLI.Helpers;
 
 namespace SymOntoClay.CLI
 {

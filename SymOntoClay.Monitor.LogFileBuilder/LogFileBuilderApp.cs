@@ -5,6 +5,7 @@ using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,6 +42,21 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 #if DEBUG
             _logger.Info($"logFileBuilderOptions = {JsonConvert.SerializeObject(logFileBuilderOptions, Formatting.Indented)}");
 #endif
+
+            if(logFileBuilderOptions.IsHelp)
+            {
+                throw new NotImplementedException();
+            }
+
+            if(string.IsNullOrWhiteSpace(logFileBuilderOptions.Output))
+            {
+                logFileBuilderOptions.Output = Directory.GetCurrentDirectory();
+            }
+
+            if (string.IsNullOrWhiteSpace(logFileBuilderOptions.Input))
+            {
+                logFileBuilderOptions.Input = Directory.GetCurrentDirectory();
+            }
 
             throw new NotImplementedException();
         }
@@ -150,6 +166,16 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             });
 
             return parser;
+        }
+
+        private void PrintHeader()
+        {
+            ConsoleWrapper.WriteText($"Copyright © 2020 - {DateTime.Today.Year:####} Sergiy Tolkachov aka metatypeman");
+        }
+
+        private void PrintHelp()
+        {
+            throw new NotImplementedException();
         }
     }
 }

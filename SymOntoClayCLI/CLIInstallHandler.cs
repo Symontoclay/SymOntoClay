@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
+using SymOntoClay.CLI.Helpers;
 using SymOntoClay.ProjectFiles;
 using System;
 using System.Collections.Generic;

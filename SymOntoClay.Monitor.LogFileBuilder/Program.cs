@@ -1,4 +1,5 @@
 ﻿using NLog;
+using SymOntoClay.CLI.Helpers;
 using SymOntoClay.CoreHelper;
 using System;
 using System.Configuration;
@@ -15,6 +16,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
+
+#if DEBUG
+            ConsoleWrapper.WriteOutputToTextFileAsParallel = true;
+#endif
 
             var defaultConfig = ConfigurationManager.AppSettings["defaultConfiguration"];
 

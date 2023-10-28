@@ -15,8 +15,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public bool NoLogo { get; set; }
         public string TargetNodeId { get; set; }
         public string TargetThreadId { get; set; }
-        public bool SplitByNodes { get; set; }
-        public bool SplitByThreads { get; set; }
+        public bool? SplitByNodes { get; set; }
+        public bool? SplitByThreads { get; set; }
         public string ConfigurationFileName { get; set; }
 
         /// <inheritdoc/>

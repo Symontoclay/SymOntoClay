@@ -73,7 +73,41 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             _logger.Info($"options = {options}");
 #endif
 
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(options.SourceDirectoryName))
+            {
+                options.SourceDirectoryName = logFileBuilderOptions.Input;
+            }
+
+            if (string.IsNullOrWhiteSpace(options.OutputDirectory))
+            {
+                options.OutputDirectory = logFileBuilderOptions.Output;
+            }
+
+            if(!string.IsNullOrWhiteSpace(logFileBuilderOptions.TargetNodeId))
+            {
+                options.TargetNodes = new List<string>() { logFileBuilderOptions.TargetNodeId };
+            }
+
+            if (!string.IsNullOrWhiteSpace(logFileBuilderOptions.TargetThreadId))
+            {
+                options.TargetThreads = new List<string>() { logFileBuilderOptions.TargetThreadId };
+            }
+
+            if (logFileBuilderOptions.SplitByNodes.HasValue)
+            {
+                options.SeparateOutputByNodes = logFileBuilderOptions.SplitByNodes;
+            }
+
+            if (logFileBuilderOptions.SplitByThreads.HasValue)
+            {
+                options.SeparateOutputByThreads = logFileBuilderOptions.SplitByThreads;
+            }
+
+#if DEBUG
+            _logger.Info($"options (2) = {options}");
+#endif
+
+            LogFileCreator.Run(options);
         }
 
         private LogFileBuilderOptions ParseArgs(string[] args)
@@ -94,8 +128,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 NoLogo = (parsedArgs.TryGetValue("--nologo", out var nologo) ? (bool)nologo : default(bool)),
                 TargetNodeId = (parsedArgs.TryGetValue("--target-nodeid", out var targetNodeId) ? (string)targetNodeId : default(string)),
                 TargetThreadId = (parsedArgs.TryGetValue("--target-threadid", out var targetThreadId) ? (string)targetThreadId : default(string)),
-                SplitByNodes = (parsedArgs.TryGetValue("--split-by-nodes", out var splitByNodes) ? (bool)splitByNodes : default(bool)),
-                SplitByThreads = (parsedArgs.TryGetValue("--split-by-threads", out var splitByThreads) ? (bool)splitByThreads : default(bool)),
+                SplitByNodes = (parsedArgs.TryGetValue("--split-by-nodes", out var splitByNodes) ? (bool)splitByNodes : null),
+                SplitByThreads = (parsedArgs.TryGetValue("--split-by-threads", out var splitByThreads) ? (bool)splitByThreads : null),
                 ConfigurationFileName = (parsedArgs.TryGetValue("--configuration", out var configurationFileName) ? (string)configurationFileName : default(string))
             };
 
@@ -193,14 +227,31 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             throw new NotImplementedException();
         }
 
-        private LogFileCreatorInheritableOptions LoadOptions(LogFileCreatorInheritableOptions defaultConfiguration, string configurationFileName)
+        private LogFileCreatorOptions LoadOptions(LogFileCreatorInheritableOptions defaultConfiguration, string configurationFileName)
         {
 #if DEBUG
             _logger.Info($"defaultConfiguration = {defaultConfiguration}");
             _logger.Info($"configurationFileName = {configurationFileName}");
 #endif
+            
+            if(defaultConfiguration == null)
+            {
+                if(string.IsNullOrWhiteSpace(configurationFileName))
+                {
+                    return LogFileCreatorInheritableOptions.DefaultOptions;
+                }
+                else
+                {
+                    return InheritableConfigurationReader.Read<LogFileCreatorInheritableOptions>(configurationFileName);
+                }
+            }
 
-            throw new NotImplementedException();
+            if(string.IsNullOrWhiteSpace(configurationFileName))
+            {
+                return defaultConfiguration;
+            }
+
+            return InheritableConfigurationReader.Read<LogFileCreatorInheritableOptions>(configurationFileName, defaultConfiguration);
         }
     }
 }

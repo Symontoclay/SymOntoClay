@@ -72,8 +72,8 @@ namespace TestSandbox.Handlers
                 NoLogo = (parsedCmd.TryGetValue("--nologo", out var nologo) ? (bool)nologo : default(bool)),
                 TargetNodeId = (parsedCmd.TryGetValue("--target-nodeid", out var targetNodeId) ? (string)targetNodeId : default(string)),
                 TargetThreadId = (parsedCmd.TryGetValue("--target-threadid", out var targetThreadId) ? (string)targetThreadId : default(string)),
-                SplitByNodes = (parsedCmd.TryGetValue("--split-by-nodes", out var splitByNodes) ? (bool)splitByNodes : default(bool)),
-                SplitByThreads = (parsedCmd.TryGetValue("--split-by-threads", out var splitByThreads) ? (bool)splitByThreads : default(bool)),
+                SplitByNodes = (parsedCmd.TryGetValue("--split-by-nodes", out var splitByNodes) ? (bool)splitByNodes : null),
+                SplitByThreads = (parsedCmd.TryGetValue("--split-by-threads", out var splitByThreads) ? (bool)splitByThreads : null),
                 ConfigurationFileName = (parsedCmd.TryGetValue("--configuration", out var configurationFileName) ? (string)configurationFileName : default(string))
             };
 

@@ -48,6 +48,11 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 throw new NotImplementedException();
             }
 
+            if(!logFileBuilderOptions.NoLogo)
+            {
+                PrintHeader();
+            }
+
             if(string.IsNullOrWhiteSpace(logFileBuilderOptions.Output))
             {
                 logFileBuilderOptions.Output = Directory.GetCurrentDirectory();
@@ -57,6 +62,16 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             {
                 logFileBuilderOptions.Input = Directory.GetCurrentDirectory();
             }
+
+#if DEBUG
+            _logger.Info($"logFileBuilderOptions (2) = {JsonConvert.SerializeObject(logFileBuilderOptions, Formatting.Indented)}");
+#endif
+
+            var options = LoadOptions(defaultConfiguration, logFileBuilderOptions.ConfigurationFileName);
+
+#if DEBUG
+            _logger.Info($"options = {options}");
+#endif
 
             throw new NotImplementedException();
         }
@@ -175,6 +190,16 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
         private void PrintHelp()
         {
+            throw new NotImplementedException();
+        }
+
+        private LogFileCreatorInheritableOptions LoadOptions(LogFileCreatorInheritableOptions defaultConfiguration, string configurationFileName)
+        {
+#if DEBUG
+            _logger.Info($"defaultConfiguration = {defaultConfiguration}");
+            _logger.Info($"configurationFileName = {configurationFileName}");
+#endif
+
             throw new NotImplementedException();
         }
     }

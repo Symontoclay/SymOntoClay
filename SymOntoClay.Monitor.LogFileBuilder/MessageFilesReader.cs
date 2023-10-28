@@ -34,7 +34,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             //_globalLogger.Info($"targetDirectoryName = {targetDirectoryName}");
 #endif
 
-            var filesList = Directory.GetFiles(targetDirectoryName).Select(p => (FileCacheItemInfo.GetFileInfo(p), p));
+            var filesList = Directory.GetFiles(targetDirectoryName).Where(p => p.EndsWith(FileCacheItemInfo.FileExt)).Select(p => (FileCacheItemInfo.GetFileInfo(p), p));
 
             if (targetKindOfMessages?.Any() ?? false)
             {

@@ -23,6 +23,8 @@ namespace SymOntoClay.Monitor.Internal.FileCache
             return value.Replace("_", "-").Replace(" ", "-").Trim();
         }
 
+        public static string FileExt = ".soc_msg";
+
         public static string GetFileName(string nodeId, string threadId, ulong messageNumber, ulong globalMessageNumber, KindOfMessage kindOfMessage)
         {
 #if DEBUG
@@ -33,25 +35,25 @@ namespace SymOntoClay.Monitor.Internal.FileCache
             //_globalLogger.Info($"kindOfMessage = {kindOfMessage}");
 #endif
 
-            return $"{PrepareString(nodeId)}_{PrepareString(threadId)}_{messageNumber}_{globalMessageNumber}_{(int)kindOfMessage}.json";
+            return $"{PrepareString(nodeId)}_{PrepareString(threadId)}_{messageNumber}_{globalMessageNumber}_{(int)kindOfMessage}{FileExt}";
         }
 
         public static (string NodeId, string ThreadId, ulong MessageNumber, ulong GlobalMessageNumber, KindOfMessage KindOfMessage) GetFileInfo(string fileName)
         {
 #if DEBUG
-            _globalLogger.Info($"fileName = {fileName}");
+            //_globalLogger.Info($"fileName = {fileName}");
 #endif
 
             var slashPos = Math.Max(fileName.LastIndexOf('\\'), fileName.LastIndexOf('/'));
 
 #if DEBUG
-            _globalLogger.Info($"slashPos = {slashPos}");
+            //_globalLogger.Info($"slashPos = {slashPos}");
 #endif
 
             var name = fileName.Substring(slashPos + 1);
 
 #if DEBUG
-            _globalLogger.Info($"name = {name}");
+            //_globalLogger.Info($"name = {name}");
 #endif
 
             var nodeId = string.Empty;
@@ -63,57 +65,72 @@ namespace SymOntoClay.Monitor.Internal.FileCache
             var pos = name.IndexOf('_');
 
 #if DEBUG
-            _globalLogger.Info($"pos = {pos}");
+            //_globalLogger.Info($"pos = {pos}");
 #endif
 
-            nodeId = name.Substring(0, pos);
+            if(pos > -1)
+            {
+                nodeId = name.Substring(0, pos);
+            }            
 
             var oldPos = pos;
 
             pos = name.IndexOf('_', oldPos + 1);
 
 #if DEBUG
-            _globalLogger.Info($"pos (2) = {pos}");
+            //_globalLogger.Info($"pos (2) = {pos}");
 #endif
 
-            threadId = name.Substring(oldPos + 1, pos - oldPos - 1);
+            if(pos > -1)
+            {
+                threadId = name.Substring(oldPos + 1, pos - oldPos - 1);
+            }            
 
             oldPos = pos;
 
             pos = name.IndexOf('_', oldPos + 1);
 
 #if DEBUG
-            _globalLogger.Info($"pos (3) = {pos}");
+            //_globalLogger.Info($"pos (3) = {pos}");
 #endif
 
-            messageNumber = ulong.Parse(name.Substring(oldPos + 1, pos - oldPos - 1));
+            if(pos > -1)
+            {
+                messageNumber = ulong.Parse(name.Substring(oldPos + 1, pos - oldPos - 1));
+            }            
 
             oldPos = pos;
 
             pos = name.IndexOf('_', oldPos + 1);
 
 #if DEBUG
-            _globalLogger.Info($"pos (4) = {pos}");
+            //_globalLogger.Info($"pos (4) = {pos}");
 #endif
 
-            globalMessageNumber = ulong.Parse(name.Substring(oldPos + 1, pos - oldPos - 1));
+            if(pos > -1)
+            {
+                globalMessageNumber = ulong.Parse(name.Substring(oldPos + 1, pos - oldPos - 1));
+            }
 
             oldPos = pos;
 
             pos = name.IndexOf('.', oldPos + 1);
 
 #if DEBUG
-            _globalLogger.Info($"pos (5) = {pos}");
+            //_globalLogger.Info($"pos (5) = {pos}");
 #endif
 
-            kindOfMessage = (KindOfMessage)int.Parse(name.Substring(oldPos + 1, pos - oldPos - 1));
+            if(pos > -1)
+            {
+                kindOfMessage = (KindOfMessage)int.Parse(name.Substring(oldPos + 1, pos - oldPos - 1));
+            }
 
 #if DEBUG
-            _globalLogger.Info($"nodeId = '{nodeId}'");
-            _globalLogger.Info($"threadId = '{threadId}'");
-            _globalLogger.Info($"messageNumber = {messageNumber}");
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
-            _globalLogger.Info($"kindOfMessage = {kindOfMessage}");
+            //_globalLogger.Info($"nodeId = '{nodeId}'");
+            //_globalLogger.Info($"threadId = '{threadId}'");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"kindOfMessage = {kindOfMessage}");
 #endif
 
             return (nodeId, threadId, messageNumber, globalMessageNumber, kindOfMessage);

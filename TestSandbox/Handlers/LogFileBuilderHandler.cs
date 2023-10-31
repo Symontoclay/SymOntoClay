@@ -26,7 +26,8 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("Begin");
 
-            Case12();
+            Case13();
+            //Case12();
             //Case11();
             //Case10();
             //Case9();
@@ -41,6 +42,11 @@ namespace TestSandbox.Handlers
             //Case1();
 
             _logger.Info("End");
+        }
+
+        private void Case13()
+        {
+            RunLogFileBuilderProgramMain(@"--i c:\Users\Acer\AppData\Roaming\SymOntoClayAsset\NpcLogMessages\2023_10_31_21_28_17\ --o c:\Users\Acer\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesLogsOutputDir\ --target-nodeid #BlueSoldier");
         }
 
         private void Case12()

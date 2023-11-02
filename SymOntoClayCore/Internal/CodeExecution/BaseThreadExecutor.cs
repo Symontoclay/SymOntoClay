@@ -1720,6 +1720,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
             Info("B480D9AB-70E4-4D5B-BFC0-AB9274AD0A64", $"caller = {caller}");
+            Info("B480D9AB-70E4-4D5B-BFC0-AB9274AD0A64", $"caller = {caller.ToHumanizedString()}");
 #endif
 
             Dictionary<StrongIdentifierValue, Value> namedParameters = null;
@@ -2005,7 +2006,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            Info("010446DC-DBA6-43A8-B128-3B42625803C6", $" = {method == null}");
+            Info("010446DC-DBA6-43A8-B128-3B42625803C6", $"method == null = {method == null}");
 #endif
 
             if (method == null)

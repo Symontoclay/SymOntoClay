@@ -74,9 +74,11 @@ namespace SymOntoClay.Monitor.Internal
             _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
+            var callMethodId = Guid.NewGuid().ToString("D");
+
             if (!_features.EnableCallMethod)
             {
-                return messagePointId;
+                return callMethodId;
             }
 
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
@@ -130,7 +132,7 @@ namespace SymOntoClay.Monitor.Internal
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
             });
 
-            return messagePointId;
+            return callMethodId;
         }
 
         /// <inheritdoc/>

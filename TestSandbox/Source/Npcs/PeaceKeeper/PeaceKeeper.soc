@@ -4,6 +4,24 @@
 	{
 	    'Begin' >> @>log;
 
+	    go();
+
+		'End' >> @>log;
+	}
+
+	fun go()
+	{
+	    'Begin go' >> @>log;
+		'End go' >> @>log;
+	}
+}
+
+/*app PeaceKeeper
+{
+    on Enter =>
+	{
+	    'Begin' >> @>log;
+
 	    go~~();
 
 		'End' >> @>log;
@@ -18,7 +36,7 @@
 	{
 	    @@host.`stop`~~();
 	}
-}
+}*/
 
 /*app PeaceKeeper
 {

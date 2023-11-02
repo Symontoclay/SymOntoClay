@@ -282,7 +282,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 }
 
 #if DEBUG
-                //Log($"currentCodeFrame.ToDbgString() = {currentCodeFrame.ToDbgString()}");
+                //Info("C5B6E668-F7A6-4F76-915D-5472418CF697", $"currentCodeFrame.ToDbgString() = {currentCodeFrame.ToDbgString()}");
 #endif
 
                 var currentPosition = currentCodeFrame.CurrentPosition;
@@ -1705,11 +1705,22 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void CallFunction(KindOfFunctionParameters kindOfParameters, int parametersCount, SyncOption syncOption)
         {
+#if DEBUG
+            Info("7F3384D3-5741-41D8-89CD-4A0A515AA647", "Begin");
+            Info("7B518325-43A0-4457-BA92-BC77E99C96BE", $"kindOfParameters = {kindOfParameters}");
+            Info("D793791F-5F17-478E-8243-A5FA6F944D85", $"parametersCount = {parametersCount}");
+            Info("606CEBF8-80AE-4767-B341-BE1FDF2A26F6", $"syncOption = {syncOption}");
+#endif
+
             var valueStack = _currentCodeFrame.ValuesStack;
 
             var annotation = valueStack.Pop();
 
             var caller = TryResolveFromVarOrExpr(valueStack.Pop());
+
+#if DEBUG
+            Info("B480D9AB-70E4-4D5B-BFC0-AB9274AD0A64", $"caller = {caller}");
+#endif
 
             Dictionary<StrongIdentifierValue, Value> namedParameters = null;
             List<Value> positionedParameters = null;
@@ -1969,6 +1980,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             Value annotation, SyncOption syncOption, bool mayCallHost)
         {
+#if DEBUG
+            Info("03ED4F39-8D56-49C9-9E33-80B4C7674FEA", $"methodName = {methodName}");
+#endif
+
             IExecutable method = null;
 
             switch(kindOfParameters)
@@ -1988,6 +2003,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
             }
+
+#if DEBUG
+            Info("010446DC-DBA6-43A8-B128-3B42625803C6", $" = {method == null}");
+#endif
 
             if (method == null)
             {
@@ -2108,12 +2127,23 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void CallExecutable(IExecutable executable, ILocalCodeExecutionContext ownLocalCodeExecutionContext, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, Value annotation, SyncOption syncOption)
         {
-            if(executable == null)
+#if DEBUG
+            Info("B39E497B-B02E-41DD-AC8F-A69910597590", $"Begin");
+            Info("8248ABAF-2A3B-44CB-A229-365F0FF8DC8B", $"executable == null = {executable == null}");
+            Info("93048AF5-9F86-417D-9C67-05707B8421EF", $"kindOfParameters = {kindOfParameters}");
+            Info("B235F9CD-642F-46C3-A1E8-52CA99572538", $"syncOption = {syncOption}");
+#endif
+
+            if (executable == null)
             {
                 throw new ArgumentNullException(nameof(executable));
             }
 
             var targetLocalContext = ownLocalCodeExecutionContext == null? _currentCodeFrame.LocalContext : ownLocalCodeExecutionContext;
+
+#if DEBUG
+            Info("4496A69E-77C4-4A6F-A2CF-D53E98F466A0", $"executable.IsSystemDefined = {executable.IsSystemDefined}");
+#endif
 
             if (executable.IsSystemDefined)
             {

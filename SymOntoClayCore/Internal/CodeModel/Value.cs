@@ -33,7 +33,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public abstract class Value: AnnotatedItem, IEquatable<Value>
+    public abstract class Value: AnnotatedItem, IEquatable<Value>, IMonitoredMethodIdentifier, IMonitorSerializable
     {
         public abstract KindOfValue KindOfValue { get; }
 
@@ -249,6 +249,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="CloneWithContext"]/*' />
         public abstract Value CloneValue(Dictionary<object, object> context);
+
+        /// <inheritdoc/>
+        public virtual string ToLabel()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public virtual object ToMonitorSerializableObject()
+        {
+            throw new NotImplementedException();
+        }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

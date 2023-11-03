@@ -61,6 +61,16 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        public string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            return CallMethod(messagePointId, methodIdentifier.ToLabel(), memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public string CallMethod(string messagePointId, string methodName,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -120,6 +130,7 @@ namespace SymOntoClay.Monitor.Internal
                     MessageNumber = messageNumber,
                     MessagePointId = messagePointId,
                     ClassFullName = classFullName,
+                    CallMethodId = callMethodId,
                     MemberName = memberName,
                     SourceFilePath = sourceFilePath,
                     SourceLineNumber = sourceLineNumber

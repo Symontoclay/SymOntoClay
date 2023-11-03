@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using System.Reflection;
 
 namespace SymOntoClay.Monitor
 {
@@ -338,6 +339,16 @@ namespace SymOntoClay.Monitor
             }
 
             return nodeSettings;
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            return _monitorLoggerImpl.CallMethod(messagePointId, methodIdentifier, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>

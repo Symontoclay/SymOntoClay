@@ -12,6 +12,7 @@ namespace SymOntoClay.Monitor.Common.Data
         /// <inheritdoc/>
         public override KindOfMessage KindOfMessage => KindOfMessage.CallMethod;
 
+        public string CallMethodId { get; set; }
         public string MethodName { get; set; }
 
         /// <inheritdoc/>
@@ -20,6 +21,7 @@ namespace SymOntoClay.Monitor.Common.Data
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(CallMethodId)} = {CallMethodId}");
             sb.AppendLine($"{spaces}{nameof(MethodName)} = {MethodName}");
 
             sb.Append(base.PropertiesToString(n));

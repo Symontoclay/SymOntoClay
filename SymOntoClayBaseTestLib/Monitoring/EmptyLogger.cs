@@ -14,12 +14,21 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         public virtual string Id => nameof(EmptyLogger);
 
         /// <inheritdoc/>
+        public string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            return Guid.NewGuid().ToString("D");
+        }
+
+        /// <inheritdoc/>
         public string CallMethod(string messagePointId, string methodName,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            return messagePointId;
+            return Guid.NewGuid().ToString("D");
         }
 
         /// <inheritdoc/>

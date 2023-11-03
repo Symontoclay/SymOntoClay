@@ -288,6 +288,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return NameValue;
         }
 
+        /// <inheritdoc/>
+        public override string ToLabel()
+        {
+            return NameValue;
+        }
+
         private static bool IsSystemNullOrEmpty(StrongIdentifierValue value)
         {
             if(value == null)

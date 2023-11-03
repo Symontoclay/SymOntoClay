@@ -4833,6 +4833,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.ToLabel">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Synonym.Kind">
             <inheritdoc/>
         </member>
@@ -4931,6 +4934,12 @@
             <summary>
 			Clones the instance using special context and returns cloned instance.
 		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Value.ToLabel">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Value.ToMonitorSerializableObject">
+            <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Value.PropertiesToString(System.UInt32)">
             <inheritdoc/>

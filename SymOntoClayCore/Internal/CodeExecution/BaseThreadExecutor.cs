@@ -1723,6 +1723,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             Info("B480D9AB-70E4-4D5B-BFC0-AB9274AD0A64", $"caller = {caller.ToHumanizedString()}");
 #endif
 
+            var callMethodId = Logger.CallMethod("7854EEB4-52A1-4B41-95BD-5417B983EB27", caller);
+
+#if DEBUG
+            Info("06192378-BE2C-4F6E-9664-C6DFF60EBDDE", $"callMethodId = {callMethodId}");
+#endif
+
             Dictionary<StrongIdentifierValue, Value> namedParameters = null;
             List<Value> positionedParameters = null;
 
@@ -1733,10 +1739,24 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 case KindOfFunctionParameters.NamedParameters:
                     namedParameters = TakeNamedParameters(parametersCount, true);
+                    foreach(var item in namedParameters)
+                    {
+                        Logger.Parameter("1DF0F0FD-D7CE-49E1-91A7-A62A5A75C4CD", callMethodId, item.Key.ToLabel(), item.Value?.ToMonitorSerializableObject());
+                    }
                     break;
 
                 case KindOfFunctionParameters.PositionedParameters:
                     positionedParameters = TakePositionedParameters(parametersCount, true);
+                    {
+                        var n = 0;
+
+                        foreach (var item in positionedParameters)
+                        {
+                            n++;
+
+                            Logger.Parameter("44E75D5D-FF36-4696-9174-243ED77568AE", callMethodId, n.ToString(), item?.ToMonitorSerializableObject());
+                        }
+                    }
                     break;
 
                 default:

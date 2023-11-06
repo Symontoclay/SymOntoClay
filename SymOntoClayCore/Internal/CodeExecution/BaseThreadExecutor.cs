@@ -1766,18 +1766,27 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             if (caller.IsPointRefValue)
             {
                 CallPointRefValue(callMethodId, caller.AsPointRefValue, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
+
+                Logger.EndCallMethod("A96D8714-A701-4367-844C-51B0F2AD95F5", callMethodId);
+
                 return;
             }
 
             if (caller.IsStrongIdentifierValue)
             {
                 CallStrongIdentifierValue(callMethodId, caller.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption, true);
+
+                Logger.EndCallMethod("EAEBB22E-DAD3-4359-9EA6-B5B73EF65587", callMethodId);
+
                 return;
             }
 
             if(caller.IsInstanceValue)
             {
                 CallInstanceValue(callMethodId, caller.AsInstanceValue, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
+
+                Logger.EndCallMethod("8AFEC685-DFF0-4C36-9942-A475C4313BEF", callMethodId);
+
                 return;
             }
 

@@ -38,6 +38,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 case KindOfMessage.Parameter:
                     return GetParameter(message as ParameterMessage);
 
+                case KindOfMessage.EndCallMethod:
+                    return GetEndCallMethod(message as EndCallMethodMessage);
+
                 case KindOfMessage.Output:
                     return GetOutput(message as OutputMessage);
 
@@ -99,6 +102,11 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 #endif
 
             return tmpResult;
+        }
+
+        private static string GetEndCallMethod(EndCallMethodMessage message)
+        {
+            return $"<{message.CallMethodId}>";
         }
 
         private static string GetOutput(OutputMessage message)

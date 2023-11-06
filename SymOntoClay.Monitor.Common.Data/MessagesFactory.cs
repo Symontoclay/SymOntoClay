@@ -34,6 +34,9 @@ namespace SymOntoClay.Monitor.Common.Data
                 case KindOfMessage.Parameter:
                     return JsonConvert.DeserializeObject<ParameterMessage>(content);
 
+                case KindOfMessage.EndCallMethod:
+                    return JsonConvert.DeserializeObject<EndCallMethodMessage>(content);
+
                 case KindOfMessage.Output:
                     return JsonConvert.DeserializeObject<OutputMessage>(content);
 

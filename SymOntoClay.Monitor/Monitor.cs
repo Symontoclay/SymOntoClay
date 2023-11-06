@@ -78,6 +78,16 @@ namespace SymOntoClay.Monitor
                 {
                     EnableCallMethod = true,
                     EnableParameter = true,
+                    EnableEndCallMethod = true,
+                    EnableMethodResolving = true,
+                    EnableEndMethodResolving = true,
+                    EnableActionResolving = true,
+                    EnableEndActionResolving = true,
+                    EnableHostMethodResolving = true,
+                    EnableEndHostMethodResolving = true,
+                    EnableHostMethodExecution = true,
+                    EnableEndMethodExecution = true,
+                    EnableSystemExpr = true,
                     EnableOutput = true,
                     EnableTrace = true,
                     EnableDebug = true,
@@ -146,6 +156,14 @@ namespace SymOntoClay.Monitor
             get
             {
                 return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableParameter;
+            }
+        }
+
+        bool IMonitorFeatures.EnableEndCallMethod
+        {
+            get
+            {
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableEndCallMethod;
             }
         }
 
@@ -401,6 +419,16 @@ namespace SymOntoClay.Monitor
             [CallerLineNumber] int sourceLineNumber = 0)
         {
             _monitorLoggerImpl.Parameter(messagePointId, callMethodId, methodIdentifier, parameterValue, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void EndCallMethod(string messagePointId, string callMethodId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.EndCallMethod(messagePointId, callMethodId, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>

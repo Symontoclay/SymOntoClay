@@ -16,6 +16,9 @@ namespace SymOntoClay.Monitor.Internal
         public bool EnableParameter { get; set; }
 
         /// <inheritdoc/>
+        public bool EnableEndCallMethod { get; set; }
+
+        /// <inheritdoc/>
         public bool EnableOutput { get; set; }
 
         /// <inheritdoc/>
@@ -42,6 +45,7 @@ namespace SymOntoClay.Monitor.Internal
             var result = new MonitorFeatures();
             result.EnableCallMethod = EnableCallMethod;
             result.EnableParameter = EnableParameter;
+            result.EnableEndCallMethod = EnableEndCallMethod;
             result.EnableOutput = EnableOutput;
             result.EnableTrace = EnableTrace;
             result.EnableDebug = EnableDebug;
@@ -72,6 +76,7 @@ namespace SymOntoClay.Monitor.Internal
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(EnableCallMethod)} = {EnableCallMethod}");
             sb.AppendLine($"{spaces}{nameof(EnableParameter)} = {EnableParameter}");
+            sb.AppendLine($"{spaces}{nameof(EnableEndCallMethod)} = {EnableEndCallMethod}");
             sb.AppendLine($"{spaces}{nameof(EnableOutput)} = {EnableOutput}");
             sb.AppendLine($"{spaces}{nameof(EnableTrace)} = {EnableTrace}");
             sb.AppendLine($"{spaces}{nameof(EnableDebug)} = {EnableDebug}");

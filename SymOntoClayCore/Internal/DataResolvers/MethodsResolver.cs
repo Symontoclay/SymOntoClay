@@ -46,20 +46,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         #endregion
         
         #region public methods
-        public IExecutable Resolve(IMonitorLogger logger, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext)
+        public IExecutable Resolve(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            return Resolve(logger, name, localCodeExecutionContext, _defaultOptions);
+            return Resolve(logger, callMethodId, name, localCodeExecutionContext, _defaultOptions);
         }
 
-        public IExecutable Resolve(IMonitorLogger logger, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public IExecutable Resolve(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var result = EnumerableLocalCodeExecutionContext<IExecutable>(logger, localCodeExecutionContext, (ctx) =>
             {
-                var method = ResolveMethod(logger, name, ctx, options);
+                var method = ResolveMethod(logger, callMethodId, name, ctx, options);
 
                 if (method == null)
                 {
-                    return ResolveAction(logger, name, ctx, options);
+                    return ResolveAction(logger, callMethodId, name, ctx, options);
                 }
 
                 return method;
@@ -68,19 +68,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        public IExecutable Resolve(IMonitorLogger logger, StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext)
+        public IExecutable Resolve(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            return Resolve(logger, name, namedParameters, localCodeExecutionContext, _defaultOptions);
+            return Resolve(logger, callMethodId, name, namedParameters, localCodeExecutionContext, _defaultOptions);
         }
 
-        public IExecutable Resolve(IMonitorLogger logger, StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public IExecutable Resolve(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var result = EnumerableLocalCodeExecutionContext<IExecutable>(logger, localCodeExecutionContext, (ctx) => {
-                var method = ResolveMethod(logger, name, namedParameters, localCodeExecutionContext, options);
+                var method = ResolveMethod(logger, callMethodId, name, namedParameters, localCodeExecutionContext, options);
 
                 if (method == null)
                 {
-                    return ResolveAction(logger, name, namedParameters, localCodeExecutionContext, options);
+                    return ResolveAction(logger, callMethodId, name, namedParameters, localCodeExecutionContext, options);
                 }
 
                 return method;
@@ -89,19 +89,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        public IExecutable Resolve(IMonitorLogger logger, StrongIdentifierValue name, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext)
+        public IExecutable Resolve(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            return Resolve(logger, name, positionedParameters, localCodeExecutionContext, _defaultOptions);
+            return Resolve(logger, callMethodId, name, positionedParameters, localCodeExecutionContext, _defaultOptions);
         }
 
-        public IExecutable Resolve(IMonitorLogger logger, StrongIdentifierValue name, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public IExecutable Resolve(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var result = EnumerableLocalCodeExecutionContext<IExecutable>(logger, localCodeExecutionContext, (ctx) => {
-                var method = ResolveMethod(logger, name, positionedParameters, localCodeExecutionContext, options);
+                var method = ResolveMethod(logger, callMethodId, name, positionedParameters, localCodeExecutionContext, options);
 
                 if (method == null)
                 {
-                    return ResolveAction(logger, name, positionedParameters, localCodeExecutionContext, options);
+                    return ResolveAction(logger, callMethodId, name, positionedParameters, localCodeExecutionContext, options);
                 }
 
                 return method;
@@ -173,7 +173,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         #endregion
 
         #region private methods
-        private IExecutable ResolveMethod(IMonitorLogger logger, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private IExecutable ResolveMethod(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
@@ -206,7 +206,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return GetTargetValueFromList(logger, filteredList, 0, localCodeExecutionContext, options);
         }
 
-        private IExecutable ResolveMethod(IMonitorLogger logger, StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private IExecutable ResolveMethod(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
@@ -248,7 +248,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return GetTargetValueFromList(logger, filteredList, namedParameters.Count, localCodeExecutionContext, options);
         }
 
-        private IExecutable ResolveMethod(IMonitorLogger logger, StrongIdentifierValue name, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private IExecutable ResolveMethod(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
@@ -288,7 +288,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return GetTargetValueFromList(logger, filteredList, positionedParameters.Count, localCodeExecutionContext, options);
         }
 
-        private IExecutable ResolveAction(IMonitorLogger logger, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private IExecutable ResolveAction(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
@@ -321,7 +321,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return GetTargetValueFromList(logger, filteredList, 0, localCodeExecutionContext, options);
         }
 
-        private IExecutable ResolveAction(IMonitorLogger logger, StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private IExecutable ResolveAction(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 
@@ -363,7 +363,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return GetTargetValueFromList(logger, filteredList, namedParameters.Count, localCodeExecutionContext, options);
         }
 
-        private IExecutable ResolveAction(IMonitorLogger logger, StrongIdentifierValue name, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private IExecutable ResolveAction(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storage = localCodeExecutionContext.Storage;
 

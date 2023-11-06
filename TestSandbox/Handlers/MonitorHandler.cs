@@ -105,7 +105,7 @@ namespace TestSandbox.Handlers
 
             threadLogger.Info("0F7377DC-E8F8-4AD5-885D-B04257AD4041", "Other message");
 
-            var callMethodId = threadLogger.CallMethod("74B6789F-FA63-4732-A4F6-642B3F4B7ABA", "Method1");
+            var callMethodId = threadLogger.CallMethod("74B6789F-FA63-4732-A4F6-642B3F4B7ABA", "Method1", true);
 
             _globalLogger.Info($"callMethodId = {callMethodId}");
 

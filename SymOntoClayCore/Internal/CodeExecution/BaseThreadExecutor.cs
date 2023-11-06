@@ -1723,7 +1723,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             Info("B480D9AB-70E4-4D5B-BFC0-AB9274AD0A64", $"caller = {caller.ToHumanizedString()}");
 #endif
 
-            var callMethodId = Logger.CallMethod("7854EEB4-52A1-4B41-95BD-5417B983EB27", caller);
+            var callMethodId = Logger.CallMethod("7854EEB4-52A1-4B41-95BD-5417B983EB27", caller, syncOption == SyncOption.Sync);
 
 #if DEBUG
             Info("06192378-BE2C-4F6E-9664-C6DFF60EBDDE", $"callMethodId = {callMethodId}");
@@ -1765,38 +1765,48 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (caller.IsPointRefValue)
             {
-                CallPointRefValue(caller.AsPointRefValue, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
+                CallPointRefValue(callMethodId, caller.AsPointRefValue, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
                 return;
             }
 
             if (caller.IsStrongIdentifierValue)
             {
-                CallStrongIdentifierValue(caller.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption, true);
+                CallStrongIdentifierValue(callMethodId, caller.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption, true);
                 return;
             }
 
             if(caller.IsInstanceValue)
             {
-                CallInstanceValue(caller.AsInstanceValue, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
+                CallInstanceValue(callMethodId, caller.AsInstanceValue, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
                 return;
             }
 
             throw new NotImplementedException();
         }
 
-        private void CallInstanceValue(InstanceValue caller,
+        private void CallInstanceValue(string callMethodId, InstanceValue caller,
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             Value annotation, SyncOption syncOption)
         {
+            if (!string.IsNullOrWhiteSpace(callMethodId))
+            {
+                throw new NotSupportedException();
+            }
+
             var executable = caller.GetExecutable(Logger, kindOfParameters, namedParameters, positionedParameters);
 
             CallExecutable(executable, executable.OwnLocalCodeExecutionContext, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
         }
 
-        private void CallPointRefValue(PointRefValue caller,
+        private void CallPointRefValue(string callMethodId, PointRefValue caller,
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             Value annotation, SyncOption syncOption)
         {
+            if (!string.IsNullOrWhiteSpace(callMethodId))
+            {
+                throw new NotSupportedException();
+            }
+
             var callerLeftOperand = caller.LeftOperand;
             var callerRightOperand = caller.RightOperand;
 
@@ -1997,7 +2007,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             throw new NotImplementedException();
         }
 
-        private void CallStrongIdentifierValue(StrongIdentifierValue methodName,
+        private void CallStrongIdentifierValue(string callMethodId, StrongIdentifierValue methodName,
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             Value annotation, SyncOption syncOption, bool mayCallHost)
         {
@@ -2010,15 +2020,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             switch(kindOfParameters)
             {
                 case KindOfFunctionParameters.NoParameters:
-                    method = _methodsResolver.Resolve(Logger, methodName, _currentCodeFrame.LocalContext);
+                    method = _methodsResolver.Resolve(Logger, callMethodId, methodName, _currentCodeFrame.LocalContext);
                     break;
 
                 case KindOfFunctionParameters.NamedParameters:
-                    method = _methodsResolver.Resolve(Logger, methodName, namedParameters, _currentCodeFrame.LocalContext);
+                    method = _methodsResolver.Resolve(Logger, callMethodId, methodName, namedParameters, _currentCodeFrame.LocalContext);
                     break;
 
                 case KindOfFunctionParameters.PositionedParameters:
-                    method = _methodsResolver.Resolve(Logger, methodName, positionedParameters, _currentCodeFrame.LocalContext);
+                    method = _methodsResolver.Resolve(Logger, callMethodId, methodName, positionedParameters, _currentCodeFrame.LocalContext);
                     break;
 
                 default:
@@ -2028,6 +2038,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #if DEBUG
             Info("010446DC-DBA6-43A8-B128-3B42625803C6", $"method == null = {method == null}");
 #endif
+
+            //if (!string.IsNullOrWhiteSpace(callMethodId))
+            //{
+            //    throw new NotSupportedException();
+            //}
 
             if (method == null)
             {

@@ -12,11 +12,13 @@ namespace SymOntoClay.Monitor.Common
         string Id { get; }
 
         string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
+            bool isSynk,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);
 
         string CallMethod(string messagePointId, string methodName,
+            bool isSynk,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);

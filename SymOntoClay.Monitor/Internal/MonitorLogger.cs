@@ -62,16 +62,18 @@ namespace SymOntoClay.Monitor.Internal
         /// <inheritdoc/>
         [MethodForLoggingSupport]
         public string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
+            bool isSynk,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            return CallMethod(messagePointId, methodIdentifier.ToLabel(), memberName, sourceFilePath, sourceLineNumber);
+            return CallMethod(messagePointId, methodIdentifier.ToLabel(), isSynk, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
         public string CallMethod(string messagePointId, string methodName,
+            bool isSynk,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
@@ -80,6 +82,7 @@ namespace SymOntoClay.Monitor.Internal
             _globalLogger.Info($"messagePointId = {messagePointId}");
             _globalLogger.Info($"methodName = {methodName}");
             _globalLogger.Info($"memberName = {memberName}");
+            _globalLogger.Info($"isSynk = {isSynk}");
             _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
             _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
@@ -132,6 +135,7 @@ namespace SymOntoClay.Monitor.Internal
                     ClassFullName = classFullName,
                     CallMethodId = callMethodId,
                     MemberName = memberName,
+                    IsSynk = isSynk,
                     SourceFilePath = sourceFilePath,
                     SourceLineNumber = sourceLineNumber
                 };

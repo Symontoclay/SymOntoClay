@@ -282,15 +282,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             switch (kindOfParameters)
             {
                 case KindOfFunctionParameters.NoParameters:
-                    method = _methodsResolver.Resolve(logger, methodName, parentLocalCodeExecutionContext);
+                    method = _methodsResolver.Resolve(logger, string.Empty, methodName, parentLocalCodeExecutionContext);
                     break;
 
                 case KindOfFunctionParameters.NamedParameters:
-                    method = _methodsResolver.Resolve(logger, methodName, namedParameters, parentLocalCodeExecutionContext);
+                    method = _methodsResolver.Resolve(logger, string.Empty, methodName, namedParameters, parentLocalCodeExecutionContext);
                     break;
 
                 case KindOfFunctionParameters.PositionedParameters:
-                    method = _methodsResolver.Resolve(logger, methodName, positionedParameters, parentLocalCodeExecutionContext);
+                    method = _methodsResolver.Resolve(logger, string.Empty, methodName, positionedParameters, parentLocalCodeExecutionContext);
                     break;
 
                 default:

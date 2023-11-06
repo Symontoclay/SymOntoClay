@@ -14,6 +14,7 @@ namespace SymOntoClay.Monitor.Common.Data
 
         public string CallMethodId { get; set; }
         public string MethodName { get; set; }
+        public bool IsSynk { get; set; }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
@@ -23,6 +24,7 @@ namespace SymOntoClay.Monitor.Common.Data
 
             sb.AppendLine($"{spaces}{nameof(CallMethodId)} = {CallMethodId}");
             sb.AppendLine($"{spaces}{nameof(MethodName)} = {MethodName}");
+            sb.AppendLine($"{spaces}{nameof(IsSynk)} = {IsSynk}");
 
             sb.Append(base.PropertiesToString(n));
 

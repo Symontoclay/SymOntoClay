@@ -288,21 +288,23 @@ namespace SymOntoClay.Monitor.Internal
         /// <inheritdoc/>
         [MethodForLoggingSupport]
         public string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
+            bool isSynk,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            return _monitorLoggerImpl.CallMethod(messagePointId, methodIdentifier, memberName, sourceFilePath, sourceLineNumber);
+            return _monitorLoggerImpl.CallMethod(messagePointId, methodIdentifier, isSynk, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
         public string CallMethod(string messagePointId, string methodName,
+            bool isSynk,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            return _monitorLoggerImpl.CallMethod(messagePointId, methodName, memberName, sourceFilePath, sourceLineNumber);
+            return _monitorLoggerImpl.CallMethod(messagePointId, methodName, isSynk, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>

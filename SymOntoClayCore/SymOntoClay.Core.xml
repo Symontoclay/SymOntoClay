@@ -4016,6 +4016,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.ToMonitorSerializableObject">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Operator.Kind">
             <inheritdoc/>
         </member>
@@ -4939,6 +4942,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Value.ToMonitorSerializableObject">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Value.SymOntoClay#Monitor#Common#IMonitoredHumanizedObject#ToHumanizedString">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Value.PropertiesToString(System.UInt32)">

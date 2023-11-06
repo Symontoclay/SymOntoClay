@@ -11,6 +11,7 @@ namespace SymOntoClay.Monitor.Common.Data
     {
         public string TypeName { get; set; }
         public string Base64Content { get; set; }
+        public string HumanizedString { get; set; }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
@@ -20,6 +21,7 @@ namespace SymOntoClay.Monitor.Common.Data
 
             sb.AppendLine($"{spaces}{nameof(TypeName)} = {TypeName}");
             sb.AppendLine($"{spaces}{nameof(Base64Content)} = {Base64Content}");
+            sb.AppendLine($"{spaces}{nameof(HumanizedString)} = {HumanizedString}");
 
             sb.Append(base.PropertiesToString(n));
 

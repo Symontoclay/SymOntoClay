@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SymOntoClay.Monitor.Common
 {
-    public interface IMonitorSerializable
+    public interface IMonitoredSerializableObject
     {
         object ToMonitorSerializableObject();
     }

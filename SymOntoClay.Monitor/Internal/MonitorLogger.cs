@@ -6,6 +6,7 @@ using SymOntoClay.Monitor.Internal.FileCache;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
@@ -67,7 +68,23 @@ namespace SymOntoClay.Monitor.Internal
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            return CallMethod(messagePointId, methodIdentifier.ToLabel(), isSynk, memberName, sourceFilePath, sourceLineNumber);
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"methodIdentifier = {methodIdentifier.ToLabel()}");
+            _globalLogger.Info($"memberName = {memberName}");
+            _globalLogger.Info($"isSynk = {isSynk}");
+            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+            var callMethodId = GetCallMethodId();
+
+            if (!_features.EnableCallMethod)
+            {
+                return callMethodId;
+            }
+
+            return NCallMethod(messagePointId, methodIdentifier.ToLabel(), isSynk, callMethodId, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>
@@ -87,13 +104,24 @@ namespace SymOntoClay.Monitor.Internal
             _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
-            var callMethodId = Guid.NewGuid().ToString("D");
+            var callMethodId = GetCallMethodId();
 
             if (!_features.EnableCallMethod)
             {
                 return callMethodId;
             }
 
+            return NCallMethod(messagePointId, methodName, isSynk, callMethodId, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        [MethodForLoggingSupport]
+        private string NCallMethod(string messagePointId, string methodName,
+            bool isSynk,
+            string callMethodId,
+            string memberName,
+            string sourceFilePath,
+            int sourceLineNumber)
+        {
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
@@ -150,6 +178,13 @@ namespace SymOntoClay.Monitor.Internal
             return callMethodId;
         }
 
+        private static string GetCallMethodId()
+        {
+            return Guid.NewGuid().ToString("D");
+        }
+
+        private const string NULL_LITERAL = "null";
+
         /// <inheritdoc/>
         [MethodForLoggingSupport]
         public void Parameter(string messagePointId, string callMethodId, string parameterName, object parameterValue,
@@ -175,6 +210,117 @@ namespace SymOntoClay.Monitor.Internal
             {
                 return;
             }
+
+            NParameter(messagePointId, callMethodId, parameterName, parameterValue, parameterValue?.ToString() ?? NULL_LITERAL, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void Parameter(string messagePointId, string callMethodId, string parameterName, IMonitoredObject parameterValue,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"callMethodId = {callMethodId}");
+            _globalLogger.Info($"parameterName = {parameterName}");
+            _globalLogger.Info($"parameterValue = {parameterValue}");
+            _globalLogger.Info($"parameterValue?.GetType().FullName = {parameterValue?.GetType().FullName}");
+            _globalLogger.Info($"parameterValue?.GetType().IsClass = {parameterValue?.GetType().IsClass}");
+            _globalLogger.Info($"parameterValue?.GetType().IsPrimitive = {parameterValue?.GetType().IsPrimitive}");
+            _globalLogger.Info($"parameterValue?.GetType().IsEnum = {parameterValue?.GetType().IsEnum}");
+            _globalLogger.Info($"memberName = {memberName}");
+            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+            if (!_features.EnableParameter)
+            {
+                return;
+            }
+
+            NParameter(messagePointId, callMethodId, parameterName, parameterValue?.ToMonitorSerializableObject(), parameterValue.ToHumanizedString(), memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void Parameter(string messagePointId, string callMethodId, IMonitoredMethodIdentifier methodIdentifier, object parameterValue,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"callMethodId = {callMethodId}");
+            _globalLogger.Info($"methodIdentifier = {methodIdentifier.ToLabel()}");
+            _globalLogger.Info($"parameterValue = {parameterValue}");
+            _globalLogger.Info($"parameterValue?.GetType().FullName = {parameterValue?.GetType().FullName}");
+            _globalLogger.Info($"parameterValue?.GetType().IsClass = {parameterValue?.GetType().IsClass}");
+            _globalLogger.Info($"parameterValue?.GetType().IsPrimitive = {parameterValue?.GetType().IsPrimitive}");
+            _globalLogger.Info($"parameterValue?.GetType().IsEnum = {parameterValue?.GetType().IsEnum}");
+            _globalLogger.Info($"memberName = {memberName}");
+            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+            if (!_features.EnableParameter)
+            {
+                return;
+            }
+
+            NParameter(messagePointId, callMethodId, methodIdentifier.ToLabel(), parameterValue, parameterValue?.ToString() ?? NULL_LITERAL, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void Parameter(string messagePointId, string callMethodId, IMonitoredMethodIdentifier methodIdentifier, IMonitoredObject parameterValue,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"callMethodId = {callMethodId}");
+            _globalLogger.Info($"methodIdentifier = {methodIdentifier.ToLabel()}");
+            _globalLogger.Info($"parameterValue = {parameterValue}");
+            _globalLogger.Info($"parameterValue?.GetType().FullName = {parameterValue?.GetType().FullName}");
+            _globalLogger.Info($"parameterValue?.GetType().IsClass = {parameterValue?.GetType().IsClass}");
+            _globalLogger.Info($"parameterValue?.GetType().IsPrimitive = {parameterValue?.GetType().IsPrimitive}");
+            _globalLogger.Info($"parameterValue?.GetType().IsEnum = {parameterValue?.GetType().IsEnum}");
+            _globalLogger.Info($"memberName = {memberName}");
+            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+            if (!_features.EnableParameter)
+            {
+                return;
+            }
+
+            NParameter(messagePointId, callMethodId, methodIdentifier.ToLabel(), parameterValue?.ToMonitorSerializableObject(), parameterValue.ToHumanizedString(), memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        private void NParameter(string messagePointId, string callMethodId, string parameterName, object parameterValue,
+            string parameterHumanizedString,
+            string memberName,
+            string sourceFilePath,
+            int sourceLineNumber)
+        {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"callMethodId = {callMethodId}");
+            _globalLogger.Info($"parameterName = {parameterName}");
+            _globalLogger.Info($"parameterValue = {parameterValue}");
+            _globalLogger.Info($"parameterValue?.GetType().FullName = {parameterValue?.GetType().FullName}");
+            _globalLogger.Info($"parameterValue?.GetType().IsClass = {parameterValue?.GetType().IsClass}");
+            _globalLogger.Info($"parameterValue?.GetType().IsPrimitive = {parameterValue?.GetType().IsPrimitive}");
+            _globalLogger.Info($"parameterValue?.GetType().IsEnum = {parameterValue?.GetType().IsEnum}");
+            _globalLogger.Info($"parameterHumanizedString = {parameterHumanizedString}");
+            _globalLogger.Info($"memberName = {memberName}");
+            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
 
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
@@ -221,8 +367,9 @@ namespace SymOntoClay.Monitor.Internal
                 var messageInfo = new ParameterMessage
                 {
                     ParameterName = parameterName,
-                    TypeName = parameterValue?.GetType().FullName ?? "null",
+                    TypeName = parameterValue?.GetType().FullName ?? NULL_LITERAL,
                     Base64Content = base64Str,
+                    HumanizedString = parameterHumanizedString,
                     CallMethodId = callMethodId,
                     DateTimeStamp = now,
                     NodeId = _nodeId,

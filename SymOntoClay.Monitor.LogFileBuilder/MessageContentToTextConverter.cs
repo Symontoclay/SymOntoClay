@@ -87,12 +87,12 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
         private static string GetCallMethod(CallMethodMessage message)
         {
-            return message.MethodName;
+            return $"<{message.CallMethodId}> {message.MethodName}";
         }
 
         private static string GetParameter(ParameterMessage message)
         {
-            var tmpResult = $"Parameter of {message.CallMethodId}: '{message.ParameterName}' = {ObjectToHumanizedStringConverter.FromBase64StringToHumanizedString(message.Base64Content, message.TypeName)}";
+            var tmpResult = $"Parameter of <{message.CallMethodId}>: '{message.ParameterName}' = {message.HumanizedString}";//{ObjectToHumanizedStringConverter.FromBase64StringToHumanizedString(message.Base64Content, message.TypeName)}
 
 #if DEBUG
             //_globalLogger.Info($"tmpResult = {tmpResult}");

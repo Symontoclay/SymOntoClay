@@ -33,7 +33,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public abstract class Value: AnnotatedItem, IEquatable<Value>, IMonitoredMethodIdentifier, IMonitorSerializable
+    public abstract class Value: AnnotatedItem, IEquatable<Value>, IMonitoredMethodIdentifier, IMonitoredObject
     {
         public abstract KindOfValue KindOfValue { get; }
 
@@ -260,6 +260,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual object ToMonitorSerializableObject()
         {
             throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        string IMonitoredHumanizedObject.ToHumanizedString()
+        {
+            return ToHumanizedString();
         }
 
         /// <inheritdoc/>

@@ -4,14 +4,15 @@
 	{
 	    'Begin' >> @>log;
 
-	    go();
+	    go(1);
 
 		'End' >> @>log;
 	}
 
-	fun go()
+	fun go(@val)
 	{
 	    'Begin go' >> @>log;
+		@val >> @>log;
 		'End go' >> @>log;
 	}
 }

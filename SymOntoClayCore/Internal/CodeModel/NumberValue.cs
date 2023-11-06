@@ -201,5 +201,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             return SystemValue.Value.ToString(CultureInfo.InvariantCulture);
         }
+
+        /// <inheritdoc/>
+        public override object ToMonitorSerializableObject()
+        {
+            return SystemValue;
+        }
     }
 }

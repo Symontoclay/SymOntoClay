@@ -1741,7 +1741,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     namedParameters = TakeNamedParameters(parametersCount, true);
                     foreach(var item in namedParameters)
                     {
-                        Logger.Parameter("1DF0F0FD-D7CE-49E1-91A7-A62A5A75C4CD", callMethodId, item.Key.ToLabel(), item.Value?.ToMonitorSerializableObject());
+                        Logger.Parameter("1DF0F0FD-D7CE-49E1-91A7-A62A5A75C4CD", callMethodId, item.Key, item.Value);
                     }
                     break;
 
@@ -1754,7 +1754,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         {
                             n++;
 
-                            Logger.Parameter("44E75D5D-FF36-4696-9174-243ED77568AE", callMethodId, n.ToString(), item?.ToMonitorSerializableObject());
+                            Logger.Parameter("44E75D5D-FF36-4696-9174-243ED77568AE", callMethodId, n.ToString(), item);
                         }
                     }
                     break;

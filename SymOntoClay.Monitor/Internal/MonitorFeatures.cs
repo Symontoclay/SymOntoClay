@@ -19,6 +19,33 @@ namespace SymOntoClay.Monitor.Internal
         public bool EnableEndCallMethod { get; set; }
 
         /// <inheritdoc/>
+        public bool EnableMethodResolving { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableEndMethodResolving { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableActionResolving { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableEndActionResolving { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableHostMethodResolving { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableEndHostMethodResolving { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableHostMethodExecution { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableEndHostMethodExecution { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableSystemExpr { get; set; }
+
+        /// <inheritdoc/>
         public bool EnableOutput { get; set; }
 
         /// <inheritdoc/>
@@ -46,6 +73,15 @@ namespace SymOntoClay.Monitor.Internal
             result.EnableCallMethod = EnableCallMethod;
             result.EnableParameter = EnableParameter;
             result.EnableEndCallMethod = EnableEndCallMethod;
+            result.EnableMethodResolving = EnableMethodResolving;
+            result.EnableEndMethodResolving = EnableEndMethodResolving;
+            result.EnableActionResolving = EnableActionResolving;
+            result.EnableEndActionResolving = EnableEndActionResolving;
+            result.EnableHostMethodResolving = EnableHostMethodResolving;
+            result.EnableEndHostMethodResolving = EnableEndHostMethodResolving;
+            result.EnableHostMethodExecution = EnableHostMethodExecution;
+            result.EnableEndHostMethodExecution = EnableEndHostMethodExecution;
+            result.EnableSystemExpr = EnableSystemExpr;
             result.EnableOutput = EnableOutput;
             result.EnableTrace = EnableTrace;
             result.EnableDebug = EnableDebug;
@@ -77,6 +113,15 @@ namespace SymOntoClay.Monitor.Internal
             sb.AppendLine($"{spaces}{nameof(EnableCallMethod)} = {EnableCallMethod}");
             sb.AppendLine($"{spaces}{nameof(EnableParameter)} = {EnableParameter}");
             sb.AppendLine($"{spaces}{nameof(EnableEndCallMethod)} = {EnableEndCallMethod}");
+            sb.AppendLine($"{spaces}{nameof(EnableMethodResolving)} = {EnableMethodResolving}");
+            sb.AppendLine($"{spaces}{nameof(EnableEndMethodResolving)} = {EnableEndMethodResolving}");
+            sb.AppendLine($"{spaces}{nameof(EnableActionResolving)} = {EnableActionResolving}");
+            sb.AppendLine($"{spaces}{nameof(EnableEndActionResolving)} = {EnableEndActionResolving}");
+            sb.AppendLine($"{spaces}{nameof(EnableHostMethodResolving)} = {EnableHostMethodResolving}");
+            sb.AppendLine($"{spaces}{nameof(EnableEndHostMethodResolving)} = {EnableEndHostMethodResolving}");
+            sb.AppendLine($"{spaces}{nameof(EnableHostMethodExecution)} = {EnableHostMethodExecution}");
+            sb.AppendLine($"{spaces}{nameof(EnableEndHostMethodExecution)} = {EnableEndHostMethodExecution}");
+            sb.AppendLine($"{spaces}{nameof(EnableSystemExpr)} = {EnableSystemExpr}");
             sb.AppendLine($"{spaces}{nameof(EnableOutput)} = {EnableOutput}");
             sb.AppendLine($"{spaces}{nameof(EnableTrace)} = {EnableTrace}");
             sb.AppendLine($"{spaces}{nameof(EnableDebug)} = {EnableDebug}");

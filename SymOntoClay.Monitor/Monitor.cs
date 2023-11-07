@@ -86,7 +86,7 @@ namespace SymOntoClay.Monitor
                     EnableHostMethodResolving = true,
                     EnableEndHostMethodResolving = true,
                     EnableHostMethodExecution = true,
-                    EnableEndMethodExecution = true,
+                    EnableEndHostMethodExecution = true,
                     EnableSystemExpr = true,
                     EnableOutput = true,
                     EnableTrace = true,
@@ -164,6 +164,79 @@ namespace SymOntoClay.Monitor
             get
             {
                 return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableEndCallMethod;
+            }
+        }
+
+
+        bool IMonitorFeatures.EnableMethodResolving
+        { 
+            get
+            {
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableMethodResolving;
+            }
+        }
+
+        bool IMonitorFeatures.EnableEndMethodResolving
+        {
+            get
+            {
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableEndMethodResolving;
+            }
+        }
+
+        bool IMonitorFeatures.EnableActionResolving
+        {
+            get
+            {
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableActionResolving;
+            }
+        }
+
+        bool IMonitorFeatures.EnableEndActionResolving
+        { 
+            get
+            {
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableEndActionResolving;
+            }
+        }
+
+        bool IMonitorFeatures.EnableHostMethodResolving
+        { 
+            get
+            {
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableHostMethodResolving;
+            }
+        }
+
+        bool IMonitorFeatures.EnableEndHostMethodResolving
+        { 
+            get
+            {
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableEndHostMethodResolving;
+            }
+        }
+
+        bool IMonitorFeatures.EnableHostMethodExecution
+        { 
+            get
+            {
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableHostMethodExecution;
+            }
+        }
+
+        bool IMonitorFeatures.EnableEndHostMethodExecution
+        { 
+            get
+            {
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableEndHostMethodExecution;
+            }
+        }
+
+        bool IMonitorFeatures.EnableSystemExpr
+        { 
+            get
+            {
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableSystemExpr;
             }
         }
 

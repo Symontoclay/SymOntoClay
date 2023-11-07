@@ -96,6 +96,78 @@ namespace SymOntoClay.Monitor.Internal
             }
         }
 
+        bool IMonitorFeatures.EnableMethodResolving 
+        { 
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableMethodResolving;
+            }
+        }
+
+        bool IMonitorFeatures.EnableEndMethodResolving 
+        { 
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableEndMethodResolving;
+            }
+        }
+
+        bool IMonitorFeatures.EnableActionResolving
+        { 
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableActionResolving;
+            }
+        }
+
+        bool IMonitorFeatures.EnableEndActionResolving
+        { 
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableEndActionResolving;
+            }
+        }
+
+        bool IMonitorFeatures.EnableHostMethodResolving
+        { 
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableHostMethodResolving;
+            }
+        }
+
+        bool IMonitorFeatures.EnableEndHostMethodResolving
+        { 
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableEndHostMethodResolving;
+            }
+        }
+
+        bool IMonitorFeatures.EnableHostMethodExecution
+        { 
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableHostMethodExecution;
+            }
+        }
+
+        bool IMonitorFeatures.EnableEndHostMethodExecution
+        {
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableEndHostMethodExecution;
+            }
+        }
+
+        bool IMonitorFeatures.EnableSystemExpr
+        {
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableSystemExpr;
+            }
+        }
+
         bool IMonitorFeatures.EnableOutput
         {
             get

@@ -10,15 +10,15 @@ namespace SymOntoClay.Monitor.Internal
         bool EnableCallMethod { get; }
         bool EnableParameter { get; }
         bool EnableEndCallMethod { get; }
-        EnableMethodResolving = true,
-                    EnableEndMethodResolving = true,
-                    EnableActionResolving = true,
-                    EnableEndActionResolving = true,
-                    EnableHostMethodResolving = true,
-                    EnableEndHostMethodResolving = true,
-                    EnableHostMethodExecution = true,
-                    EnableEndMethodExecution = true,
-                    EnableSystemExpr = true,
+        bool EnableMethodResolving { get; }
+        bool EnableEndMethodResolving { get; }
+        bool EnableActionResolving { get; }
+        bool EnableEndActionResolving { get; }
+        bool EnableHostMethodResolving { get; }
+        bool EnableEndHostMethodResolving { get; }
+        bool EnableHostMethodExecution { get; }
+        bool EnableEndHostMethodExecution { get; }
+        bool EnableSystemExpr { get; }
         bool EnableOutput { get; }
         bool EnableTrace { get; }
         bool EnableDebug { get; }

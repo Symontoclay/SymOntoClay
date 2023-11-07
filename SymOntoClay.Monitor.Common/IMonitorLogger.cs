@@ -48,6 +48,18 @@ namespace SymOntoClay.Monitor.Common
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);
 
+        /*
+        bool EnableMethodResolving { get; }
+        bool EnableEndMethodResolving { get; }
+        bool EnableActionResolving { get; }
+        bool EnableEndActionResolving { get; }
+        bool EnableHostMethodResolving { get; }
+        bool EnableEndHostMethodResolving { get; }
+        bool EnableHostMethodExecution { get; }
+        bool EnableEndMethodExecution { get; }
+        bool EnableSystemExpr { get; }
+         */
+
         //from channel
         void Output(string messagePointId, string message,
             [CallerMemberName] string memberName = "",

@@ -460,6 +460,18 @@ namespace SymOntoClay.Monitor.Internal
             });
         }
 
+        /*
+        bool EnableMethodResolving { get; }
+        bool EnableEndMethodResolving { get; }
+        bool EnableActionResolving { get; }
+        bool EnableEndActionResolving { get; }
+        bool EnableHostMethodResolving { get; }
+        bool EnableEndHostMethodResolving { get; }
+        bool EnableHostMethodExecution { get; }
+        bool EnableEndMethodExecution { get; }
+        bool EnableSystemExpr { get; }
+         */
+
         /// <inheritdoc/>
         [MethodForLoggingSupport]
         public void Output(string messagePointId, string message,

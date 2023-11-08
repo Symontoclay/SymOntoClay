@@ -36,7 +36,11 @@ namespace SymOntoClay.Monitor.Internal
         /// <inheritdoc/>
         public bool EnableEndHostMethodResolving { get; set; }
 
+        /// <inheritdoc/>
+        public bool EnableHostMethodActivation { get; set; }
 
+        /// <inheritdoc/>
+        public bool EnableEndHostMethodActivation { get; set; }
 
         /// <inheritdoc/>
         public bool EnableHostMethodExecution { get; set; }
@@ -81,6 +85,8 @@ namespace SymOntoClay.Monitor.Internal
             result.EnableEndActionResolving = EnableEndActionResolving;
             result.EnableHostMethodResolving = EnableHostMethodResolving;
             result.EnableEndHostMethodResolving = EnableEndHostMethodResolving;
+            result.EnableHostMethodActivation = EnableHostMethodActivation;
+            result.EnableEndHostMethodActivation = EnableEndHostMethodActivation;
             result.EnableHostMethodExecution = EnableHostMethodExecution;
             result.EnableEndHostMethodExecution = EnableEndHostMethodExecution;
             result.EnableSystemExpr = EnableSystemExpr;
@@ -121,6 +127,8 @@ namespace SymOntoClay.Monitor.Internal
             sb.AppendLine($"{spaces}{nameof(EnableEndActionResolving)} = {EnableEndActionResolving}");
             sb.AppendLine($"{spaces}{nameof(EnableHostMethodResolving)} = {EnableHostMethodResolving}");
             sb.AppendLine($"{spaces}{nameof(EnableEndHostMethodResolving)} = {EnableEndHostMethodResolving}");
+            sb.AppendLine($"{spaces}{nameof(EnableHostMethodActivation)} = {EnableHostMethodActivation}");
+            sb.AppendLine($"{spaces}{nameof(EnableEndHostMethodActivation)} = {EnableEndHostMethodActivation}");
             sb.AppendLine($"{spaces}{nameof(EnableHostMethodExecution)} = {EnableHostMethodExecution}");
             sb.AppendLine($"{spaces}{nameof(EnableEndHostMethodExecution)} = {EnableEndHostMethodExecution}");
             sb.AppendLine($"{spaces}{nameof(EnableSystemExpr)} = {EnableSystemExpr}");

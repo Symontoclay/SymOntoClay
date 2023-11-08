@@ -460,17 +460,717 @@ namespace SymOntoClay.Monitor.Internal
             });
         }
 
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void MethodResolving(string messagePointId, string callMethodId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"callMethodId = {callMethodId}");
+#endif
+
+            if (!_features.EnableMethodResolving)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            Task.Run(() => {
+#if DEBUG
+                _globalLogger.Info($"NEXT");
+#endif
+
+                var messageInfo = new MethodResolvingMessage
+                {
+                    CallMethodId = callMethodId,
+                    DateTimeStamp = now,
+                    NodeId = _nodeId,
+                    ThreadId = _threadId,
+                    GlobalMessageNumber = globalMessageNumber,
+                    MessageNumber = messageNumber,
+                    MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
+                    MemberName = memberName,
+                    SourceFilePath = sourceFilePath,
+                    SourceLineNumber = sourceLineNumber
+                };
+
+#if DEBUG
+                _globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
+            });
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void EndMethodResolving(string messagePointId, string callMethodId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"callMethodId = {callMethodId}");
+#endif
+
+            if (!_features.EnableEndMethodResolving)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            Task.Run(() => {
+#if DEBUG
+                _globalLogger.Info($"NEXT");
+#endif
+
+                var messageInfo = new EndMethodResolvingMessage
+                {
+                    CallMethodId = callMethodId,
+                    DateTimeStamp = now,
+                    NodeId = _nodeId,
+                    ThreadId = _threadId,
+                    GlobalMessageNumber = globalMessageNumber,
+                    MessageNumber = messageNumber,
+                    MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
+                    MemberName = memberName,
+                    SourceFilePath = sourceFilePath,
+                    SourceLineNumber = sourceLineNumber
+                };
+
+#if DEBUG
+                _globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
+            });
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void ActionResolving(string messagePointId, string callMethodId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"callMethodId = {callMethodId}");
+#endif
+
+            if (!_features.EnableActionResolving)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            Task.Run(() => {
+#if DEBUG
+                _globalLogger.Info($"NEXT");
+#endif
+
+                var messageInfo = new ActionResolvingMessage
+                {
+                    CallMethodId = callMethodId,
+                    DateTimeStamp = now,
+                    NodeId = _nodeId,
+                    ThreadId = _threadId,
+                    GlobalMessageNumber = globalMessageNumber,
+                    MessageNumber = messageNumber,
+                    MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
+                    MemberName = memberName,
+                    SourceFilePath = sourceFilePath,
+                    SourceLineNumber = sourceLineNumber
+                };
+
+#if DEBUG
+                _globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
+            });
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void EndActionResolving(string messagePointId, string callMethodId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"callMethodId = {callMethodId}");
+#endif
+
+            if (!_features.EnableEndActionResolving)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            Task.Run(() => {
+#if DEBUG
+                _globalLogger.Info($"NEXT");
+#endif
+
+                var messageInfo = new EndActionResolvingMessage
+                {
+                    CallMethodId = callMethodId,
+                    DateTimeStamp = now,
+                    NodeId = _nodeId,
+                    ThreadId = _threadId,
+                    GlobalMessageNumber = globalMessageNumber,
+                    MessageNumber = messageNumber,
+                    MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
+                    MemberName = memberName,
+                    SourceFilePath = sourceFilePath,
+                    SourceLineNumber = sourceLineNumber
+                };
+
+#if DEBUG
+                _globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
+            });
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void HostMethodResolving(string messagePointId, string callMethodId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"callMethodId = {callMethodId}");
+#endif
+
+            if (!_features.EnableHostMethodResolving)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            Task.Run(() => {
+#if DEBUG
+                _globalLogger.Info($"NEXT");
+#endif
+
+                var messageInfo = new HostMethodResolvingMessage
+                {
+                    CallMethodId = callMethodId,
+                    DateTimeStamp = now,
+                    NodeId = _nodeId,
+                    ThreadId = _threadId,
+                    GlobalMessageNumber = globalMessageNumber,
+                    MessageNumber = messageNumber,
+                    MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
+                    MemberName = memberName,
+                    SourceFilePath = sourceFilePath,
+                    SourceLineNumber = sourceLineNumber
+                };
+
+#if DEBUG
+                _globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
+            });
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void EndHostMethodResolving(string messagePointId, string callMethodId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"callMethodId = {callMethodId}");
+#endif
+
+            if (!_features.EnableEndHostMethodResolving)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            Task.Run(() => {
+#if DEBUG
+                _globalLogger.Info($"NEXT");
+#endif
+
+                var messageInfo = new EndHostMethodResolvingMessage
+                {
+                    CallMethodId = callMethodId,
+                    DateTimeStamp = now,
+                    NodeId = _nodeId,
+                    ThreadId = _threadId,
+                    GlobalMessageNumber = globalMessageNumber,
+                    MessageNumber = messageNumber,
+                    MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
+                    MemberName = memberName,
+                    SourceFilePath = sourceFilePath,
+                    SourceLineNumber = sourceLineNumber
+                };
+
+#if DEBUG
+                _globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
+            });
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void HostMethodActivation(string messagePointId, string callMethodId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"callMethodId = {callMethodId}");
+#endif
+
+            if (!_features.EnableHostMethodActivation)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            Task.Run(() => {
+#if DEBUG
+                _globalLogger.Info($"NEXT");
+#endif
+
+                var messageInfo = new HostMethodActivationMessage
+                {
+                    CallMethodId = callMethodId,
+                    DateTimeStamp = now,
+                    NodeId = _nodeId,
+                    ThreadId = _threadId,
+                    GlobalMessageNumber = globalMessageNumber,
+                    MessageNumber = messageNumber,
+                    MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
+                    MemberName = memberName,
+                    SourceFilePath = sourceFilePath,
+                    SourceLineNumber = sourceLineNumber
+                };
+
+#if DEBUG
+                _globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
+            });
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void EndHostMethodActivation(string messagePointId, string callMethodId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"callMethodId = {callMethodId}");
+#endif
+
+            if (!_features.EnableEndHostMethodActivation)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            Task.Run(() => {
+#if DEBUG
+                _globalLogger.Info($"NEXT");
+#endif
+
+                var messageInfo = new EndHostMethodActivationMessage
+                {
+                    CallMethodId = callMethodId,
+                    DateTimeStamp = now,
+                    NodeId = _nodeId,
+                    ThreadId = _threadId,
+                    GlobalMessageNumber = globalMessageNumber,
+                    MessageNumber = messageNumber,
+                    MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
+                    MemberName = memberName,
+                    SourceFilePath = sourceFilePath,
+                    SourceLineNumber = sourceLineNumber
+                };
+
+#if DEBUG
+                _globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
+            });
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void HostMethodExecution(string messagePointId, string callMethodId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"callMethodId = {callMethodId}");
+#endif
+
+            if (!_features.EnableHostMethodExecution)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            Task.Run(() => {
+#if DEBUG
+                _globalLogger.Info($"NEXT");
+#endif
+
+                var messageInfo = new HostMethodExecutionMessage
+                {
+                    CallMethodId = callMethodId,
+                    DateTimeStamp = now,
+                    NodeId = _nodeId,
+                    ThreadId = _threadId,
+                    GlobalMessageNumber = globalMessageNumber,
+                    MessageNumber = messageNumber,
+                    MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
+                    MemberName = memberName,
+                    SourceFilePath = sourceFilePath,
+                    SourceLineNumber = sourceLineNumber
+                };
+
+#if DEBUG
+                _globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
+            });
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void EndHostMethodExecution(string messagePointId, string callMethodId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"callMethodId = {callMethodId}");
+#endif
+
+            if (!_features.EnableEndHostMethodExecution)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            Task.Run(() => {
+#if DEBUG
+                _globalLogger.Info($"NEXT");
+#endif
+
+                var messageInfo = new EndHostMethodExecutionMessage
+                {
+                    CallMethodId = callMethodId,
+                    DateTimeStamp = now,
+                    NodeId = _nodeId,
+                    ThreadId = _threadId,
+                    GlobalMessageNumber = globalMessageNumber,
+                    MessageNumber = messageNumber,
+                    MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
+                    MemberName = memberName,
+                    SourceFilePath = sourceFilePath,
+                    SourceLineNumber = sourceLineNumber
+                };
+
+#if DEBUG
+                _globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
+            });
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void SystemExpr(string messagePointId, string callMethodId, string exprLabel, object exprValue,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0);
+
         /*
-        bool EnableMethodResolving { get; }
-        bool EnableEndMethodResolving { get; }
-        bool EnableActionResolving { get; }
-        bool EnableEndActionResolving { get; }
-        bool EnableHostMethodResolving { get; }
-        bool EnableEndHostMethodResolving { get; }
-        bool EnableHostMethodExecution { get; }
-        bool EnableEndHostMethodExecution { get; }
         bool EnableSystemExpr { get; }
-         */
+*/
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void SystemExpr(string messagePointId, string callMethodId, string exprLabel, IMonitoredObject exprValue,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0);
+
+        /*
+bool EnableSystemExpr { get; }
+*/
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]

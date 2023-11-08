@@ -53,7 +53,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         private readonly IPlatformTypesConvertersRegistry _platformTypesConvertorsRegistry;
         private readonly IInvokerInMainThread _invokingInMainThread;
 
-        public IProcessInfo Activate(IMonitorLogger logger, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext)
+        public IProcessInfo Activate(IMonitorLogger logger, string callMethodId, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
 #if DEBUG
             //Log($"endpointInfo = {endpointInfo}");
@@ -79,11 +79,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
             if (endpointInfo.NeedMainThread)
             {
-                task = CreateTaskForMainThread(cancellationToken, logger, endpointInfo, paramsList, processInfo);
+                task = CreateTaskForMainThread(cancellationToken, logger, callMethodId, endpointInfo, paramsList, processInfo);
             }
             else
             {
-                task = CreateTaskForUsualThread(cancellationToken, logger, endpointInfo, paramsList, processInfo);
+                task = CreateTaskForUsualThread(cancellationToken, logger, callMethodId, endpointInfo, paramsList, processInfo);
             }
             
             processInfo.SetTask(task);
@@ -95,7 +95,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             return processInfo;
         }
 
-        private Task CreateTaskForMainThread(CancellationToken cancellationToken, IMonitorLogger logger, IEndpointInfo endpointInfo, object[] paramsList, PlatformProcessInfo processInfo)
+        private Task CreateTaskForMainThread(CancellationToken cancellationToken, IMonitorLogger logger, string callMethodId, IEndpointInfo endpointInfo, object[] paramsList, PlatformProcessInfo processInfo)
         {
             var platformListener = endpointInfo.Object;
 
@@ -104,13 +104,15 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 try
                 {
                     _invokingInMainThread.RunInMainThread(() => {
-                        Invoke(endpointInfo.MethodInfo, platformListener, paramsList, logger);
+                        Invoke(callMethodId, endpointInfo.MethodInfo, platformListener, paramsList, logger);
                     });
 
                     processInfo.Status = ProcessStatus.Completed;
                 }
                 catch (TargetInvocationException e)
                 {
+                    logger.EndHostMethodExecution("C85DF3C9-3CC1-4BCF-BCFD-F200A96590B9", callMethodId);
+
                     if (e.InnerException.GetType() == typeof(OperationCanceledException))
                     {
                         if (processInfo.Status != ProcessStatus.Canceled && processInfo.Status != ProcessStatus.WeakCanceled)
@@ -127,6 +129,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 }
                 catch (Exception e)
                 {
+                    logger.EndHostMethodExecution("F5A7A3BA-DCA4-4ECF-959E-D96405BD75C2", callMethodId);
+
                     logger.Error("B713C1AF-C89B-4430-9AA3-1751BF5D4C51", e);
 
                     processInfo.Status = ProcessStatus.Faulted;
@@ -137,7 +141,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             return task;
         }
 
-        private Task CreateTaskForUsualThread(CancellationToken cancellationToken, IMonitorLogger logger, IEndpointInfo endpointInfo, object[] paramsList, PlatformProcessInfo processInfo)
+        private Task CreateTaskForUsualThread(CancellationToken cancellationToken, IMonitorLogger logger, string callMethodId, IEndpointInfo endpointInfo, object[] paramsList, PlatformProcessInfo processInfo)
         {
             var platformListener = endpointInfo.Object;
 
@@ -145,12 +149,14 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             {
                 try
                 {
-                    Invoke(endpointInfo.MethodInfo, platformListener, paramsList, logger);
+                    Invoke(callMethodId, endpointInfo.MethodInfo, platformListener, paramsList, logger);
 
                     processInfo.Status = ProcessStatus.Completed;
                 }
                 catch (TargetInvocationException e)
                 {
+                    logger.EndHostMethodExecution("85E1D8C1-7BD6-418C-AF34-AB3BD3C0A004", callMethodId);
+
                     if (e.InnerException.GetType() == typeof(OperationCanceledException))
                     {
                         if (processInfo.Status != ProcessStatus.Canceled && processInfo.Status != ProcessStatus.WeakCanceled)
@@ -167,6 +173,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 }
                 catch (Exception e)
                 {
+                    logger.EndHostMethodExecution("65DFD0B6-17E3-4EFE-8D8A-4C3FEA3EC5ED", callMethodId);
+
                     logger.Error("B459B0E1-D3D8-441A-B13C-3D1145FE09C0", e);
 
                     processInfo.Status = ProcessStatus.Faulted;
@@ -177,12 +185,14 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             return task;
         }
 
-        private void Invoke(MethodInfo methodInfo, object platformListener, object[] paramsList, IMonitorLogger logger)
+        private void Invoke(string callMethodId, MethodInfo methodInfo, object platformListener, object[] paramsList, IMonitorLogger logger)
         {
 #if DEBUG
             //Log($"methodInfo.Name = {methodInfo.Name}");
             //Log($"methodInfo.ReturnType?.FullName = {methodInfo.ReturnType?.FullName}");
 #endif
+
+            logger.HostMethodExecution("4F646D89-6D1A-46A1-AB72-D12B533782D2", callMethodId);
 
             var result = methodInfo.Invoke(platformListener, paramsList);
 
@@ -190,16 +200,24 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             //Log($"result = {result}");
 #endif
 
-            if (result != null)
+            if (result == null)
+            {
+                logger.EndHostMethodExecution("ED84B4D9-8305-426C-A7B4-C33175EA6633", callMethodId);
+            }
+            else
             {
                 if (methodInfo.ReturnType == typeof(Task))
                 {
                     var resultTask = (Task)result;
 
                     resultTask.Wait();
+
+                    logger.EndHostMethodExecution("3D8D1D61-2C7B-443F-BE35-5FCF29603DCB", callMethodId);
                 }
                 else
                 {
+                    logger.EndHostMethodExecution("F43BC09E-70DE-4E13-8475-C091AFA69499", callMethodId);
+
                     throw new NotSupportedException($"Return type `{methodInfo.ReturnType.FullName}` is not supported.");
                 }
             }

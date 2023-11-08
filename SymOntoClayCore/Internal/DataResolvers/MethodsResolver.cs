@@ -175,6 +175,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         #region private methods
         private IExecutable ResolveMethod(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
+            logger.MethodResolving("976907DE-71BF-4083-8AC4-7CEB631CCF2B", callMethodId);
+
             var storage = localCodeExecutionContext.Storage;
 
             var storagesList = GetStoragesList(logger, storage, KindOfStoragesList.CodeItems);
@@ -188,6 +190,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (!rawList.Any())
             {
+                logger.EndMethodResolving("82F40AB7-4635-4F1F-9F98-1BCB038D439C", callMethodId);
+
                 return null;
             }
 
@@ -195,19 +199,33 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (!filteredList.Any())
             {
+                logger.EndMethodResolving("4D692F7C-4B2B-4AB2-8AB6-0E7D0EE7FFAC", callMethodId);
+
                 return null;
             }
 
             if (filteredList.Count == 1)
             {
-                return filteredList.Single().ResultItem;
+                var result = filteredList.Single().ResultItem;
+
+                logger.EndMethodResolving("C0E1449A-BD6E-4D7E-818D-2920F3DF8E54", callMethodId);
+
+                return result;
             }
 
-            return GetTargetValueFromList(logger, filteredList, 0, localCodeExecutionContext, options);
+            {
+                var result = GetTargetValueFromList(logger, filteredList, 0, localCodeExecutionContext, options);
+
+                logger.EndMethodResolving("F09F2B55-078C-41C6-8C7E-D173A5EFFC05", callMethodId);
+
+                return result;
+            }
         }
 
         private IExecutable ResolveMethod(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
+            logger.MethodResolving("484228EB-B4DA-4663-AEC3-F7DA1CFCD6A0", callMethodId);
+
             var storage = localCodeExecutionContext.Storage;
 
             var storagesList = GetStoragesList(logger, storage, KindOfStoragesList.CodeItems);
@@ -221,6 +239,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (!rawList.Any())
             {
+                logger.EndMethodResolving("BECFBC51-514F-4A07-A6A2-13FF45016CA1", callMethodId);
+
                 return null;
             }
 
@@ -228,6 +248,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (!filteredList.Any())
             {
+                logger.EndMethodResolving("80CEDD3B-6A2A-4646-A113-09C23FCF5905", callMethodId);
+
                 return null;
             }
 
@@ -237,19 +259,33 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (!filteredList.Any())
             {
+                logger.EndMethodResolving("896A47B7-3088-4906-AD9D-5E062BCDE360", callMethodId);
+
                 return null;
             }
 
             if (filteredList.Count == 1)
             {
-                return filteredList.Single().ResultItem;
+                var result = filteredList.Single().ResultItem;
+
+                logger.EndMethodResolving("2959C0BA-89F9-4F3F-9150-CB0D2CE2B049", callMethodId);
+
+                return result;
             }
 
-            return GetTargetValueFromList(logger, filteredList, namedParameters.Count, localCodeExecutionContext, options);
+            {
+                var result = GetTargetValueFromList(logger, filteredList, namedParameters.Count, localCodeExecutionContext, options);
+
+                logger.EndMethodResolving("9827CC29-F394-47E1-84BC-28A24E8217A6", callMethodId);
+
+                return result;
+            }
         }
 
         private IExecutable ResolveMethod(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
+            logger.MethodResolving("0D121D2D-4396-4D2B-A10E-D8869F837EE0", callMethodId);
+
             var storage = localCodeExecutionContext.Storage;
 
             var storagesList = GetStoragesList(logger, storage, KindOfStoragesList.CodeItems);
@@ -263,6 +299,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (!rawList.Any())
             {
+                logger.EndMethodResolving("39FC45C0-48BB-402F-98B1-CA78B61F3E18", callMethodId);
+
                 return null;
             }
 
@@ -270,6 +308,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (!filteredList.Any())
             {
+                logger.EndMethodResolving("5F8E02C0-CB45-414B-9C4B-626B45CEBFDC", callMethodId);
+
                 return null;
             }
 
@@ -277,19 +317,33 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (!filteredList.Any())
             {
+                logger.EndMethodResolving("E45B48C6-8AF8-4097-AC65-2DB0DBF2AF4B", callMethodId);
+
                 return null;
             }
 
             if (filteredList.Count == 1)
             {
-                return filteredList.Single().ResultItem;
+                var result = filteredList.Single().ResultItem;
+
+                logger.EndMethodResolving("FE6647BE-2E28-4E2E-8D44-0A22EB6B27E7", callMethodId);
+
+                return result;
             }
 
-            return GetTargetValueFromList(logger, filteredList, positionedParameters.Count, localCodeExecutionContext, options);
+            {
+                var result = GetTargetValueFromList(logger, filteredList, positionedParameters.Count, localCodeExecutionContext, options);
+
+                logger.EndMethodResolving("159D1775-2BB9-4536-8303-88665B085540", callMethodId);
+
+                return result;
+            }
         }
 
         private IExecutable ResolveAction(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
+            logger.ActionResolving("ECC4EA61-A29D-4C1C-9BA5-C92A929BAFC2", callMethodId);
+
             var storage = localCodeExecutionContext.Storage;
 
             var storagesList = GetStoragesList(logger, storage, KindOfStoragesList.CodeItems);
@@ -303,6 +357,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (!rawList.Any())
             {
+                logger.EndActionResolving("F8D2EF38-CC0F-44C9-8909-37EAE7B8A3BB", callMethodId);
+
                 return null;
             }
 
@@ -310,19 +366,33 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (!filteredList.Any())
             {
+                logger.EndActionResolving("97839DFB-130F-4655-83E5-02A998B3E422", callMethodId);
+
                 return null;
             }
 
             if (filteredList.Count == 1)
             {
-                return filteredList.Single().ResultItem;
+                var result = filteredList.Single().ResultItem;
+
+                logger.EndActionResolving("62FDF518-9FB9-44E5-84FF-C3DE20FB6E92", callMethodId);
+
+                return result;
             }
 
-            return GetTargetValueFromList(logger, filteredList, 0, localCodeExecutionContext, options);
+            {
+                var result = GetTargetValueFromList(logger, filteredList, 0, localCodeExecutionContext, options);
+
+                logger.EndActionResolving("41E4F23F-99A2-4D7A-BDBB-A585CE78787B", callMethodId);
+
+                return result;
+            }            
         }
 
         private IExecutable ResolveAction(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, Dictionary<StrongIdentifierValue, Value> namedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
+            logger.ActionResolving("E91CA7A9-F2EE-4766-A597-63636B76C6F0", callMethodId);
+
             var storage = localCodeExecutionContext.Storage;
 
             var storagesList = GetStoragesList(logger, storage, KindOfStoragesList.CodeItems);
@@ -336,6 +406,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (!rawList.Any())
             {
+                logger.EndActionResolving("CDACA6DB-ACBA-4448-BB97-1D1D4D8D4D69", callMethodId);
+
                 return null;
             }
 
@@ -343,6 +415,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (!filteredList.Any())
             {
+                logger.EndActionResolving("B6EF8E7A-6780-4897-A29D-9AC488A22109", callMethodId);
+
                 return null;
             }
 
@@ -352,19 +426,33 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (!filteredList.Any())
             {
+                logger.EndActionResolving("1B75500A-5FD6-4056-A7F4-66B16A199466", callMethodId);
+
                 return null;
             }
 
             if (filteredList.Count == 1)
             {
-                return filteredList.Single().ResultItem;
+                var result = filteredList.Single().ResultItem;
+
+                logger.EndActionResolving("2CE7572C-28B9-4238-B7D7-324D647AAD7B", callMethodId);
+
+                return result;
             }
 
-            return GetTargetValueFromList(logger, filteredList, namedParameters.Count, localCodeExecutionContext, options);
+            {
+                var result = GetTargetValueFromList(logger, filteredList, namedParameters.Count, localCodeExecutionContext, options);
+
+                logger.EndActionResolving("CB480087-B5F7-40AB-BFAE-8D149B4871F0", callMethodId);
+
+                return result;
+            }            
         }
 
         private IExecutable ResolveAction(IMonitorLogger logger, string callMethodId, StrongIdentifierValue name, List<Value> positionedParameters, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
+            logger.ActionResolving("8A6FE64C-3B5E-4C1F-AA2F-B8DC23D7399C", callMethodId);
+
             var storage = localCodeExecutionContext.Storage;
 
             var storagesList = GetStoragesList(logger, storage, KindOfStoragesList.CodeItems);
@@ -378,6 +466,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (!rawList.Any())
             {
+                logger.EndActionResolving("E3D6128D-9A88-4024-B2B9-0C8AF9EC31B5", callMethodId);
+
                 return null;
             }
 
@@ -385,6 +475,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (!filteredList.Any())
             {
+                logger.EndActionResolving("779C98FF-5A9C-4CE9-89C8-0E625B3A743C", callMethodId);
+
                 return null;
             }
 
@@ -392,15 +484,27 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (!filteredList.Any())
             {
+                logger.EndActionResolving("04FBF727-95AD-45A6-8559-CBDA33FACAA6", callMethodId);
+
                 return null;
             }
 
             if (filteredList.Count == 1)
             {
-                return filteredList.Single().ResultItem;
+                var result = filteredList.Single().ResultItem;
+
+                logger.EndActionResolving("A34370C9-70B0-4B2E-A3A4-0313D7D25D38", callMethodId);
+
+                return result;
             }
 
-            return GetTargetValueFromList(logger, filteredList, positionedParameters.Count, localCodeExecutionContext, options);
+            {
+                var result = GetTargetValueFromList(logger, filteredList, positionedParameters.Count, localCodeExecutionContext, options);
+
+                logger.EndActionResolving("4C6AADA0-3ABC-4B71-87B7-C04AC654833C", callMethodId);
+
+                return result;
+            }
         }
 
         private Dictionary<StrongIdentifierValue, Value> NormalizeNamedParameters(IMonitorLogger logger, IDictionary<StrongIdentifierValue, Value> source)

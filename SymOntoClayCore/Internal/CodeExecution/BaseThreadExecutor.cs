@@ -1797,11 +1797,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             Value annotation, SyncOption syncOption)
         {
-            if (!string.IsNullOrWhiteSpace(callMethodId))
-            {
-                throw new NotSupportedException();
-            }
-
             var executable = caller.GetExecutable(Logger, kindOfParameters, namedParameters, positionedParameters);
 
             CallExecutable(executable, executable.OwnLocalCodeExecutionContext, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
@@ -1811,17 +1806,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             Value annotation, SyncOption syncOption)
         {
-            if (!string.IsNullOrWhiteSpace(callMethodId))
-            {
-                throw new NotSupportedException();
-            }
-
             var callerLeftOperand = caller.LeftOperand;
             var callerRightOperand = caller.RightOperand;
 
             if (callerLeftOperand.IsHostValue)
             {
-                CallHost(callerRightOperand.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
+                CallHost(callMethodId, callerRightOperand.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
                 return;
             }
 
@@ -1837,7 +1827,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             CallExecutable(method, null, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
         }
 
-        private void CallHost(StrongIdentifierValue methodName, 
+        private void CallHost(string callMethodId, StrongIdentifierValue methodName, 
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             Value annotation, SyncOption syncOption)
         {
@@ -1880,17 +1870,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 annotationSystemEventsDict.TryGetValue(KindOfAnnotationSystemEvent.Error, out errorAnnotationSystemEvent);
             }
 
-            var processCreatingResult = _hostListener.CreateProcess(GetTargetLogger(syncOption), command, _context, _currentCodeFrame.LocalContext);
+            var processCreatingResult = _hostListener.CreateProcess(GetTargetLogger(syncOption), callMethodId, command, _context, _currentCodeFrame.LocalContext);
 
 #if DEBUG
             //Log($"processCreatingResult.IsSuccessful = {processCreatingResult.IsSuccessful}");
 #endif
 
+            Logger.SystemExpr("3D14A97D-41AB-4E21-82AF-2AC810BAE68F", callMethodId, "processCreatingResult", processCreatingResult);
+
             if (processCreatingResult.IsSuccessful)
             {
                 var processInfo = processCreatingResult.Process;
 
-                _instancesStorage.AppendAndTryStartProcessInfo(Logger, processInfo);
+                _instancesStorage.AppendAndTryStartProcessInfo(Logger, callMethodId, processInfo);
 
                 var timeout = GetTimeoutFromAnnotation(annotation);
                 var timeoutCancellationMode = GetTimeoutCancellationModeFromAnnotation(annotation);
@@ -2057,7 +2049,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 if(mayCallHost)
                 {
-                    CallHost(methodName, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
+                    CallHost(callMethodId, methodName, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
                     return;
                 }
 

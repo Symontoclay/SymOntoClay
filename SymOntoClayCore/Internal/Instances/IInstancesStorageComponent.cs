@@ -33,7 +33,7 @@ namespace SymOntoClay.Core.Internal.Instances
     {
         void ActivateMainEntity(IMonitorLogger logger);
         void AppendProcessInfo(IMonitorLogger logger, IProcessInfo processInfo);
-        void AppendAndTryStartProcessInfo(IMonitorLogger logger, IProcessInfo processInfo);
+        void AppendAndTryStartProcessInfo(IMonitorLogger logger, string callMethodId, IProcessInfo processInfo);
 
         event Action OnIdle;
         int GetCountOfCurrentProcesses(IMonitorLogger logger);

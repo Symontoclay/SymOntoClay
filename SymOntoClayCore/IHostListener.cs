@@ -31,6 +31,6 @@ namespace SymOntoClay.Core
 {
     public interface IHostListener
     {
-        IProcessCreatingResult CreateProcess(IMonitorLogger logger, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext);
+        IProcessCreatingResult CreateProcess(IMonitorLogger logger, string callMethodId, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext);
     }
 }

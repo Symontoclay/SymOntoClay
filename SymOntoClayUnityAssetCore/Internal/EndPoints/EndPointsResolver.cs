@@ -45,8 +45,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
         private readonly IPlatformTypesConvertersRegistry _platformTypesConvertorsRegistry;
 
-        public IEndpointInfo GetEndpointInfo(IMonitorLogger logger, ICommand command, IList<IEndpointsRegistry> endpointsRegistries, IPackedSynonymsResolver synonymsResolver)
+        public IEndpointInfo GetEndpointInfo(IMonitorLogger logger, string callMethodId, ICommand command, IList<IEndpointsRegistry> endpointsRegistries, IPackedSynonymsResolver synonymsResolver)
         {
+            logger.HostMethodResolving("AA671383-16F9-4805-849A-AA978959A28D", callMethodId);
+
             var endPointsList = new List<IEndpointInfo>();
 
             var endPointName = NameHelper.UnShieldString(command.Name.NameValue);
@@ -82,6 +84,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
             if (endPointsList == null)
             {
+                logger.EndHostMethodResolving("ECCFFB47-7D66-4739-93AC-D006CBAF0570", callMethodId);
+
                 return null;
             }
 
@@ -95,13 +99,31 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             switch (kindOfCommandParameters)
             {
                 case KindOfCommandParameters.NoParameters:
-                    return endPointsList.SingleOrDefault();
+                    {
+                        var result = endPointsList.SingleOrDefault();
+
+                        logger.EndHostMethodResolving("1A37CE56-1FBD-4FA8-AD29-71FFCD6EC79C", callMethodId);
+
+                        return result;
+                    }
 
                 case KindOfCommandParameters.ParametersByDict:
-                    return NGetEndpointInfoByParametersByDict(logger, endPointsList, command, synonymsResolver);
+                    {
+                        var result = NGetEndpointInfoByParametersByDict(logger, endPointsList, command, synonymsResolver);
+
+                        logger.EndHostMethodResolving("7936DE46-9012-4D74-B950-A1121E0BCBF5", callMethodId);
+
+                        return result;
+                    }
 
                 case KindOfCommandParameters.ParametersByList:
-                    return NGetEndpointInfoByParametersByList(logger, endPointsList, command);
+                    {
+                        var result = NGetEndpointInfoByParametersByList(logger, endPointsList, command);
+
+                        logger.EndHostMethodResolving("92CD4B4A-1C4D-463D-AE58-98014CD77CF1", callMethodId);
+
+                        return result;
+                    }
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfCommandParameters), kindOfCommandParameters, null);

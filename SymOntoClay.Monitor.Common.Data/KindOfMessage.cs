@@ -20,6 +20,8 @@ namespace SymOntoClay.Monitor.Common.Data
         EndActionResolving,
         HostMethodResolving,
         EndHostMethodResolving,
+        HostMethodActivation,
+        EndHostMethodActivation,
         HostMethodExecution,
         EndMethodExecution,
         SystemExpr,

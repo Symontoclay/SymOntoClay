@@ -6414,7 +6414,7 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.AppendProcessInfo(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.IProcessInfo)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.AppendAndTryStartProcessInfo(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.IProcessInfo)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.AppendAndTryStartProcessInfo(SymOntoClay.Monitor.Common.IMonitorLogger,System.String,SymOntoClay.Core.IProcessInfo)">
             <inheritdoc/>
         </member>
         <member name="E:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.OnIdle">
@@ -6540,7 +6540,7 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.AppendProcessInfo(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.IProcessInfo)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.AppendAndTryStartProcessInfo(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.IProcessInfo)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.AppendAndTryStartProcessInfo(SymOntoClay.Monitor.Common.IMonitorLogger,System.String,SymOntoClay.Core.IProcessInfo)">
             <inheritdoc/>
         </member>
         <member name="E:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.OnIdle">

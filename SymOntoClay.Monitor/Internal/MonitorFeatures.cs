@@ -36,6 +36,8 @@ namespace SymOntoClay.Monitor.Internal
         /// <inheritdoc/>
         public bool EnableEndHostMethodResolving { get; set; }
 
+
+
         /// <inheritdoc/>
         public bool EnableHostMethodExecution { get; set; }
 

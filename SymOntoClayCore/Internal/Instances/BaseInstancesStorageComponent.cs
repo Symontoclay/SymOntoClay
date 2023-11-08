@@ -124,7 +124,7 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        public virtual void AppendAndTryStartProcessInfo(IMonitorLogger logger, IProcessInfo processInfo)
+        public virtual void AppendAndTryStartProcessInfo(IMonitorLogger logger, string callMethodId, IProcessInfo processInfo)
         {
             throw new NotImplementedException();
         }

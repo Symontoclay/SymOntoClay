@@ -85,6 +85,8 @@ namespace SymOntoClay.Monitor
                     EnableEndActionResolving = true,
                     EnableHostMethodResolving = true,
                     EnableEndHostMethodResolving = true,
+                    EnableHostMethodActivation = true,
+                    EnableEndHostMethodActivation = true,
                     EnableHostMethodExecution = true,
                     EnableEndHostMethodExecution = true,
                     EnableSystemExpr = true,

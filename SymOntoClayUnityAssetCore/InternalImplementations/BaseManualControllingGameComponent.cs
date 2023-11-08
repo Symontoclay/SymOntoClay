@@ -133,26 +133,26 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         }
 
         /// <inheritdoc/>
-        public IProcessCreatingResult CreateProcess(IMonitorLogger logger, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext)
+        public IProcessCreatingResult CreateProcess(IMonitorLogger logger, string callMethodId, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
             try
             {
                 var packedSynonymsResolver = new PackedSynonymsResolver(context.DataResolversFactory.GetSynonymsResolver(), localContext);
 
-                var endPointInfo = _endPointsResolver.GetEndpointInfo(logger, command, _endpointsRegistries, packedSynonymsResolver);
+                var endPointInfo = _endPointsResolver.GetEndpointInfo(logger, callMethodId, command, _endpointsRegistries, packedSynonymsResolver);
 
                 if (endPointInfo == null)
                 {
                     return new ProcessCreatingResult();
                 }
 
-                var processInfo = _endPointActivator.Activate(logger, endPointInfo, command, context, localContext);
+                var processInfo = _endPointActivator.Activate(logger, callMethodId, endPointInfo, command, context, localContext);
 
                 return new ProcessCreatingResult(processInfo);
             }
             catch (Exception e)
             {
-                Error("D61FB02A-C84A-4959-9F72-67F9479600CB", e);
+                logger.Error("D61FB02A-C84A-4959-9F72-67F9479600CB", e);
 
                 return new ProcessCreatingResult(e);
             }

@@ -109,13 +109,13 @@ namespace TestSandbox.CoreHostListener
             _logger.Info("B1C4B68E-9161-443E-8B95-F5E31AD8E7D6", $"command = {command}");
 
 
-            var endPointInfo = endPointsResolver.GetEndpointInfo(_logger, command, endpointsRegistries, null);
+            var endPointInfo = endPointsResolver.GetEndpointInfo(_logger, string.Empty, command, endpointsRegistries, null);
 
             _logger.Info("AADBA393-119B-4566-A1CA-67BA8B3613B1", $"endPointInfo = {endPointInfo}");
 
             if(endPointInfo != null)
             {
-                var processInfo = endPointActivator.Activate(_logger, endPointInfo, command, null, null);
+                var processInfo = endPointActivator.Activate(_logger, string.Empty, endPointInfo, command, null, null);
 
                 _logger.Info("6A777CA4-CCF2-4E73-BD0C-9158EDD5163A", $"processInfo = {processInfo}");
 
@@ -135,13 +135,13 @@ namespace TestSandbox.CoreHostListener
             command = new Command();
             command.Name = methodName;
 
-            endPointInfo = endPointsResolver.GetEndpointInfo(_logger, command, endpointsRegistries, null);
+            endPointInfo = endPointsResolver.GetEndpointInfo(_logger, string.Empty, command, endpointsRegistries, null);
 
             _logger.Info("0385006F-F10B-4FD6-AE62-906552DCCD6A", $"endPointInfo = {endPointInfo}");
 
             if (endPointInfo != null)
             {
-                var processInfo = endPointActivator.Activate(_logger, endPointInfo, command, null, null);
+                var processInfo = endPointActivator.Activate(_logger, string.Empty, endPointInfo, command, null, null);
 
                 _logger.Info("70799BDA-A7AD-406A-BEAD-9E3363CDBE83", $"processInfo = {processInfo}");
 

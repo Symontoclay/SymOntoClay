@@ -128,7 +128,7 @@ namespace TestSandbox.CoreHostListener
 
         private void ExecuteCommand(TstBaseManualControllingGameComponent tstBaseManualControllingGameComponent, ICommand command)
         {
-            var result = tstBaseManualControllingGameComponent.CreateProcess(_logger, command, null, null);
+            var result = tstBaseManualControllingGameComponent.CreateProcess(_logger, string.Empty, command, null, null);
 
             _logger.Info("42C7917C-89F0-487E-A7E4-32A994FB98B8", $"result = {result}");
 

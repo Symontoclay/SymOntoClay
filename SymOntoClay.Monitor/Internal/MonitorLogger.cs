@@ -211,7 +211,7 @@ namespace SymOntoClay.Monitor.Internal
                 return;
             }
 
-            NParameter(messagePointId, callMethodId, parameterName, parameterValue, parameterValue?.ToString() ?? NULL_LITERAL, memberName, sourceFilePath, sourceLineNumber);
+            NLabeledValue<ParameterMessage>(messagePointId, callMethodId, parameterName, parameterValue, parameterValue?.ToString() ?? NULL_LITERAL, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>
@@ -240,7 +240,7 @@ namespace SymOntoClay.Monitor.Internal
                 return;
             }
 
-            NParameter(messagePointId, callMethodId, parameterName, parameterValue?.ToMonitorSerializableObject(), parameterValue.ToHumanizedString(), memberName, sourceFilePath, sourceLineNumber);
+            NLabeledValue<ParameterMessage>(messagePointId, callMethodId, parameterName, parameterValue?.ToMonitorSerializableObject(), parameterValue.ToHumanizedString(), memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>
@@ -269,7 +269,7 @@ namespace SymOntoClay.Monitor.Internal
                 return;
             }
 
-            NParameter(messagePointId, callMethodId, methodIdentifier.ToLabel(), parameterValue, parameterValue?.ToString() ?? NULL_LITERAL, memberName, sourceFilePath, sourceLineNumber);
+            NLabeledValue<ParameterMessage>(messagePointId, callMethodId, methodIdentifier.ToLabel(), parameterValue, parameterValue?.ToString() ?? NULL_LITERAL, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>
@@ -298,25 +298,26 @@ namespace SymOntoClay.Monitor.Internal
                 return;
             }
 
-            NParameter(messagePointId, callMethodId, methodIdentifier.ToLabel(), parameterValue?.ToMonitorSerializableObject(), parameterValue.ToHumanizedString(), memberName, sourceFilePath, sourceLineNumber);
+            NLabeledValue<ParameterMessage>(messagePointId, callMethodId, methodIdentifier.ToLabel(), parameterValue?.ToMonitorSerializableObject(), parameterValue.ToHumanizedString(), memberName, sourceFilePath, sourceLineNumber);
         }
 
-        private void NParameter(string messagePointId, string callMethodId, string parameterName, object parameterValue,
-            string parameterHumanizedString,
+        private void NLabeledValue<T>(string messagePointId, string callMethodId, string label, object value,
+            string valueHumanizedString,
             string memberName,
             string sourceFilePath,
             int sourceLineNumber)
+            where T: BaseLabeledValueMessage, new()
         {
 #if DEBUG
             _globalLogger.Info($"messagePointId = {messagePointId}");
             _globalLogger.Info($"callMethodId = {callMethodId}");
-            _globalLogger.Info($"parameterName = {parameterName}");
-            _globalLogger.Info($"parameterValue = {parameterValue}");
-            _globalLogger.Info($"parameterValue?.GetType().FullName = {parameterValue?.GetType().FullName}");
-            _globalLogger.Info($"parameterValue?.GetType().IsClass = {parameterValue?.GetType().IsClass}");
-            _globalLogger.Info($"parameterValue?.GetType().IsPrimitive = {parameterValue?.GetType().IsPrimitive}");
-            _globalLogger.Info($"parameterValue?.GetType().IsEnum = {parameterValue?.GetType().IsEnum}");
-            _globalLogger.Info($"parameterHumanizedString = {parameterHumanizedString}");
+            _globalLogger.Info($"label = {label}");
+            _globalLogger.Info($"value = {value}");
+            _globalLogger.Info($"value?.GetType().FullName = {value?.GetType().FullName}");
+            _globalLogger.Info($"value?.GetType().IsClass = {value?.GetType().IsClass}");
+            _globalLogger.Info($"value?.GetType().IsPrimitive = {value?.GetType().IsPrimitive}");
+            _globalLogger.Info($"value?.GetType().IsEnum = {value?.GetType().IsEnum}");
+            _globalLogger.Info($"valueHumanizedString = {valueHumanizedString}");
             _globalLogger.Info($"memberName = {memberName}");
             _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
             _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
@@ -344,7 +345,7 @@ namespace SymOntoClay.Monitor.Internal
                 memberName = callInfo.MethodName;
             }
 
-            var jsonStr = JsonConvert.SerializeObject(parameterValue, _jsonSerializerSettings);
+            var jsonStr = JsonConvert.SerializeObject(value, _jsonSerializerSettings);
 
 #if DEBUG
             _globalLogger.Info($"jsonStr = {jsonStr}");
@@ -364,12 +365,12 @@ namespace SymOntoClay.Monitor.Internal
                 _globalLogger.Info($"NEXT");
 #endif
 
-                var messageInfo = new ParameterMessage
+                var messageInfo = new T
                 {
-                    ParameterName = parameterName,
-                    TypeName = parameterValue?.GetType().FullName ?? NULL_LITERAL,
+                    Label = label,
+                    TypeName = value?.GetType().FullName ?? NULL_LITERAL,
                     Base64Content = base64Str,
-                    HumanizedString = parameterHumanizedString,
+                    HumanizedString = valueHumanizedString,
                     CallMethodId = callMethodId,
                     DateTimeStamp = now,
                     NodeId = _nodeId,
@@ -1155,22 +1156,58 @@ namespace SymOntoClay.Monitor.Internal
         public void SystemExpr(string messagePointId, string callMethodId, string exprLabel, object exprValue,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
-            [CallerLineNumber] int sourceLineNumber = 0);
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"callMethodId = {callMethodId}");
+            _globalLogger.Info($"exprLabel = {exprLabel}");
+            _globalLogger.Info($"exprValue = {exprValue}");
+            _globalLogger.Info($"exprValue?.GetType().FullName = {exprValue?.GetType().FullName}");
+            _globalLogger.Info($"exprValue?.GetType().IsClass = {exprValue?.GetType().IsClass}");
+            _globalLogger.Info($"exprValue?.GetType().IsPrimitive = {exprValue?.GetType().IsPrimitive}");
+            _globalLogger.Info($"exprValue?.GetType().IsEnum = {exprValue?.GetType().IsEnum}");
+            _globalLogger.Info($"memberName = {memberName}");
+            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
 
-        /*
-        bool EnableSystemExpr { get; }
-*/
+            if (!_features.EnableSystemExpr)
+            {
+                return;
+            }
+
+            NLabeledValue<SystemExprMessage>(messagePointId, callMethodId, exprLabel, exprValue, exprValue?.ToString() ?? NULL_LITERAL, memberName, sourceFilePath, sourceLineNumber);
+        }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
         public void SystemExpr(string messagePointId, string callMethodId, string exprLabel, IMonitoredObject exprValue,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
-            [CallerLineNumber] int sourceLineNumber = 0);
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"callMethodId = {callMethodId}");
+            _globalLogger.Info($"exprLabel = {exprLabel}");
+            _globalLogger.Info($"exprValue = {exprValue}");
+            _globalLogger.Info($"exprValue?.GetType().FullName = {exprValue?.GetType().FullName}");
+            _globalLogger.Info($"exprValue?.GetType().IsClass = {exprValue?.GetType().IsClass}");
+            _globalLogger.Info($"exprValue?.GetType().IsPrimitive = {exprValue?.GetType().IsPrimitive}");
+            _globalLogger.Info($"exprValue?.GetType().IsEnum = {exprValue?.GetType().IsEnum}");
+            _globalLogger.Info($"memberName = {memberName}");
+            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
 
-        /*
-bool EnableSystemExpr { get; }
-*/
+            if (!_features.EnableSystemExpr)
+            {
+                return;
+            }
+
+            NLabeledValue<SystemExprMessage>(messagePointId, callMethodId, exprLabel, exprValue?.ToMonitorSerializableObject(), exprValue.ToHumanizedString(), memberName, sourceFilePath, sourceLineNumber);
+        }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]

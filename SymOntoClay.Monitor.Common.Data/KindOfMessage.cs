@@ -23,7 +23,7 @@ namespace SymOntoClay.Monitor.Common.Data
         HostMethodActivation,
         EndHostMethodActivation,
         HostMethodExecution,
-        EndMethodExecution,
+        EndHostMethodExecution,
         SystemExpr,
         Output,
         Trace,

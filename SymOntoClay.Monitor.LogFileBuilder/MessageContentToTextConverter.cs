@@ -41,6 +41,39 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 case KindOfMessage.EndCallMethod:
                     return GetEndCallMethod(message as EndCallMethodMessage);
 
+                case KindOfMessage.MethodResolving:
+                    return Get(message as Message);
+
+                case KindOfMessage.EndMethodResolving:
+                    return Get(message as Message);
+
+                case KindOfMessage.ActionResolving:
+                    return Get(message as Message);
+
+                case KindOfMessage.EndActionResolving:
+                    return Get(message as Message);
+
+                case KindOfMessage.HostMethodResolving:
+                    return Get(message as Message);
+
+                case KindOfMessage.EndHostMethodResolving:
+                    return Get(message as Message);
+
+                case KindOfMessage.HostMethodActivation:
+                    return Get(message as Message);
+
+                case KindOfMessage.EndHostMethodActivation:
+                    return Get(message as Message);
+
+                case KindOfMessage.HostMethodExecution:
+                    return Get(message as Message);
+
+                case KindOfMessage.EndHostMethodExecution:
+                    return Get(message as Message);
+
+                case KindOfMessage.SystemExpr:
+                    return Get(message as Message);
+
                 case KindOfMessage.Output:
                     return GetOutput(message as OutputMessage);
 
@@ -95,7 +128,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
         private static string GetParameter(ParameterMessage message)
         {
-            var tmpResult = $"Parameter of <{message.CallMethodId}>: '{message.ParameterName}' = {message.HumanizedString}";//{ObjectToHumanizedStringConverter.FromBase64StringToHumanizedString(message.Base64Content, message.TypeName)}
+            var tmpResult = $"Parameter of <{message.CallMethodId}>: '{message.Label}' = {message.HumanizedString}";//{ObjectToHumanizedStringConverter.FromBase64StringToHumanizedString(message.Base64Content, message.TypeName)}
 
 #if DEBUG
             //_globalLogger.Info($"tmpResult = {tmpResult}");

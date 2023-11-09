@@ -37,6 +37,39 @@ namespace SymOntoClay.Monitor.Common.Data
                 case KindOfMessage.EndCallMethod:
                     return JsonConvert.DeserializeObject<EndCallMethodMessage>(content);
 
+                case KindOfMessage.MethodResolving:
+                    return JsonConvert.DeserializeObject<MethodResolvingMessage>(content);
+
+                case KindOfMessage.EndMethodResolving:
+                    return JsonConvert.DeserializeObject<EndMethodResolvingMessage>(content);
+
+                case KindOfMessage.ActionResolving:
+                    return JsonConvert.DeserializeObject<ActionResolvingMessage>(content);
+
+                case KindOfMessage.EndActionResolving:
+                    return JsonConvert.DeserializeObject<EndActionResolvingMessage>(content);
+
+                case KindOfMessage.HostMethodResolving:
+                    return JsonConvert.DeserializeObject<HostMethodResolvingMessage>(content);
+
+                case KindOfMessage.EndHostMethodResolving:
+                    return JsonConvert.DeserializeObject<EndHostMethodResolvingMessage>(content);
+
+                case KindOfMessage.HostMethodActivation:
+                    return JsonConvert.DeserializeObject<HostMethodActivationMessage>(content);
+
+                case KindOfMessage.EndHostMethodActivation:
+                    return JsonConvert.DeserializeObject<EndHostMethodActivationMessage>(content);
+
+                case KindOfMessage.HostMethodExecution:
+                    return JsonConvert.DeserializeObject<HostMethodExecutionMessage>(content);
+
+                case KindOfMessage.EndHostMethodExecution:
+                    return JsonConvert.DeserializeObject<EndHostMethodExecutionMessage>(content);
+
+                case KindOfMessage.SystemExpr:
+                    return JsonConvert.DeserializeObject<SystemExprMessage>(content);
+
                 case KindOfMessage.Output:
                     return JsonConvert.DeserializeObject<OutputMessage>(content);
 

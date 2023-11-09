@@ -7,27 +7,9 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.Common.Data
 {
-    public class ParameterMessage : BaseValueMessage
+    public class ParameterMessage : BaseLabeledValueMessage
     {
         /// <inheritdoc/>
         public override KindOfMessage KindOfMessage => KindOfMessage.Parameter;
-
-        public string CallMethodId { get; set; }
-
-        public string ParameterName { get; set; }
-
-        /// <inheritdoc/>
-        protected override string PropertiesToString(uint n)
-        {
-            var spaces = DisplayHelper.Spaces(n);
-            var sb = new StringBuilder();
-
-            sb.AppendLine($"{spaces}{nameof(CallMethodId)} = {CallMethodId}");
-            sb.AppendLine($"{spaces}{nameof(ParameterName)} = {ParameterName}");
-
-            sb.Append(base.PropertiesToString(n));
-
-            return sb.ToString();
-        }
     }
 }

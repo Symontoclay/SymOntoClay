@@ -7,6 +7,6 @@ namespace SymOntoClay.Monitor.Common.Data
     public class EndHostMethodExecutionMessage: BaseMethodMessage
     {
         /// <inheritdoc/>
-        public override KindOfMessage KindOfMessage => KindOfMessage.EndMethodExecution;
+        public override KindOfMessage KindOfMessage => KindOfMessage.EndHostMethodExecution;
     }
 }

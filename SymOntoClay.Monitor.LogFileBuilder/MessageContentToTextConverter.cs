@@ -42,37 +42,37 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                     return GetEndCallMethod(message as EndCallMethodMessage);
 
                 case KindOfMessage.MethodResolving:
-                    return Get(message as Message);
+                    return GetMethodResolving(message as MethodResolvingMessage);
 
                 case KindOfMessage.EndMethodResolving:
-                    return Get(message as Message);
+                    return GetEndMethodResolving(message as EndMethodResolvingMessage);
 
                 case KindOfMessage.ActionResolving:
-                    return Get(message as Message);
+                    return GetActionResolving(message as ActionResolvingMessage);
 
                 case KindOfMessage.EndActionResolving:
-                    return Get(message as Message);
+                    return GetEndActionResolving(message as EndActionResolvingMessage);
 
                 case KindOfMessage.HostMethodResolving:
-                    return Get(message as Message);
+                    return GetHostMethodResolving(message as HostMethodResolvingMessage);
 
                 case KindOfMessage.EndHostMethodResolving:
-                    return Get(message as Message);
+                    return GetEndHostMethodResolving(message as EndHostMethodResolvingMessage);
 
                 case KindOfMessage.HostMethodActivation:
-                    return Get(message as Message);
+                    return GetHostMethodActivation(message as HostMethodActivationMessage);
 
                 case KindOfMessage.EndHostMethodActivation:
-                    return Get(message as Message);
+                    return GetEndHostMethodActivation(message as EndHostMethodActivationMessage);
 
                 case KindOfMessage.HostMethodExecution:
-                    return Get(message as Message);
+                    return GetHostMethodExecution(message as HostMethodExecutionMessage);
 
                 case KindOfMessage.EndHostMethodExecution:
-                    return Get(message as Message);
+                    return GetEndHostMethodExecution(message as EndHostMethodExecutionMessage);
 
                 case KindOfMessage.SystemExpr:
-                    return Get(message as Message);
+                    return GetSystemExpr(message as SystemExprMessage);
 
                 case KindOfMessage.Output:
                     return GetOutput(message as OutputMessage);
@@ -140,6 +140,67 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private static string GetEndCallMethod(EndCallMethodMessage message)
         {
             return $"<{message.CallMethodId}>";
+        }
+
+        private static string GetMethodResolving(MethodResolvingMessage message)
+        {
+            return $"<{message.CallMethodId}>";
+        }
+
+        private static string GetEndMethodResolving(EndMethodResolvingMessage message)
+        {
+            return $"<{message.CallMethodId}>";
+        }
+
+        private static string GetActionResolving(ActionResolvingMessage message)
+        {
+            return $"<{message.CallMethodId}>";
+        }
+
+        private static string GetEndActionResolving(EndActionResolvingMessage message)
+        {
+            return $"<{message.CallMethodId}>";
+        }
+
+        private static string GetHostMethodResolving(HostMethodResolvingMessage message)
+        {
+            return $"<{message.CallMethodId}>";
+        }
+
+        private static string GetEndHostMethodResolving(EndHostMethodResolvingMessage message)
+        {
+            return $"<{message.CallMethodId}>";
+        }
+
+        private static string GetHostMethodActivation(HostMethodActivationMessage message)
+        {
+            return $"<{message.CallMethodId}>";
+        }
+
+        private static string GetEndHostMethodActivation(EndHostMethodActivationMessage message)
+        {
+            return $"<{message.CallMethodId}>";
+        }
+
+        private static string GetHostMethodExecution(HostMethodExecutionMessage message)
+        {
+            return $"<{message.CallMethodId}>";
+        }
+
+        private static string GetEndHostMethodExecution(EndHostMethodExecutionMessage message)
+        {
+            return $"<{message.CallMethodId}>";
+        }
+
+        private static string GetSystemExpr(SystemExprMessage message)
+        {
+            var tmpResult = $"Expression of <{message.CallMethodId}>: '{message.Label}' = {message.HumanizedString}";//{ObjectToHumanizedStringConverter.FromBase64StringToHumanizedString(message.Base64Content, message.TypeName)}
+
+#if DEBUG
+            //_globalLogger.Info($"tmpResult = {tmpResult}");
+#endif
+
+            return tmpResult;
         }
 
         private static string GetOutput(OutputMessage message)

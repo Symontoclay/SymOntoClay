@@ -192,13 +192,13 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public override void AppendAndTryStartProcessInfo(IMonitorLogger logger, string callMethodId, IProcessInfo processInfo)
         {
-            logger.HostMethodActivation("AC8691B4-D646-4844-B15A-7C18DD1E665E", callMethodId);
+            logger.HostMethodStarting("AC8691B4-D646-4844-B15A-7C18DD1E665E", callMethodId);
 
             if (processInfo.Devices.IsNullOrEmpty())
             {
                 NAppendAndTryStartProcessInfoWithoutDevices(logger, processInfo);
 
-                logger.EndHostMethodActivation("BDBADA62-94E7-416B-A266-C7AFA5DE7BEA", callMethodId);
+                logger.EndHostMethodStarting("BDBADA62-94E7-416B-A266-C7AFA5DE7BEA", callMethodId);
 
                 return;
             }
@@ -209,7 +209,7 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 if(!NTryAppendProcessInfo(logger, processInfo))
                 {
-                    logger.EndHostMethodActivation("83DE51D1-341C-4E4E-A9BA-630C68495F8F", callMethodId);
+                    logger.EndHostMethodStarting("83DE51D1-341C-4E4E-A9BA-630C68495F8F", callMethodId);
 
                     return;
                 }
@@ -224,7 +224,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 {
                     NAppendAndTryStartProcessInfoWithDevices(logger, processInfo);
 
-                    logger.EndHostMethodActivation("FF147E42-AB42-4CA3-95CF-A68A7787B69F", callMethodId);
+                    logger.EndHostMethodStarting("FF147E42-AB42-4CA3-95CF-A68A7787B69F", callMethodId);
 
                     return;
                 }
@@ -247,7 +247,7 @@ namespace SymOntoClay.Core.Internal.Instances
                         }
                     });
 
-                    logger.EndHostMethodActivation("CE34E46B-9E41-419C-87B3-4CC0A172B8B4", callMethodId);
+                    logger.EndHostMethodStarting("CE34E46B-9E41-419C-87B3-4CC0A172B8B4", callMethodId);
 
                     return;
                 }
@@ -269,7 +269,7 @@ namespace SymOntoClay.Core.Internal.Instances
                         }
                     });
 
-                    logger.EndHostMethodActivation("743973AD-3272-42BB-B832-0F7EB63AE9E1", callMethodId);
+                    logger.EndHostMethodStarting("743973AD-3272-42BB-B832-0F7EB63AE9E1", callMethodId);
 
                     return;
                 }
@@ -277,7 +277,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             processInfo.Cancel(logger);
 
-            logger.EndHostMethodActivation("1510E6AF-F4EB-4BA3-AC44-78BDE3E92EE7", callMethodId);
+            logger.EndHostMethodStarting("1510E6AF-F4EB-4BA3-AC44-78BDE3E92EE7", callMethodId);
         }
 
         private bool NTryAppendProcessInfo(IMonitorLogger logger, IProcessInfo processInfo)

@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -174,6 +175,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 platformEndpointArgumentInfo.PositionNumber = n;
 
                 if (n == 0 && parameter.ParameterType == typeof(CancellationToken))
+                {
+                    platformEndpointArgumentInfo.IsSystemDefiend = true;
+                }
+
+                if(n == 1 && parameter.ParameterType == typeof(IMonitorLogger))
                 {
                     platformEndpointArgumentInfo.IsSystemDefiend = true;
                 }

@@ -1834,7 +1834,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #if DEBUG
             //Log($"methodName = {methodName.ToHumanizedString()}");
 #endif
-
+            
             var command = new Command();
             command.Name = methodName;
 
@@ -1872,15 +1872,21 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var processCreatingResult = _hostListener.CreateProcess(GetTargetLogger(syncOption), callMethodId, command, _context, _currentCodeFrame.LocalContext);
 
-#if DEBUG
-            //Log($"processCreatingResult.IsSuccessful = {processCreatingResult.IsSuccessful}");
-#endif
+            Logger.SystemExpr("3D14A97D-41AB-4E21-82AF-2AC810BAE68F", callMethodId, "processCreatingResult.IsSuccessful", processCreatingResult.IsSuccessful);
 
-            Logger.SystemExpr("3D14A97D-41AB-4E21-82AF-2AC810BAE68F", callMethodId, "processCreatingResult", processCreatingResult);
+#if DEBUG
+            Info("91939B48-DB56-416A-90BB-F13F4A613796", $"processCreatingResult = {processCreatingResult}");
+#endif
 
             if (processCreatingResult.IsSuccessful)
             {
                 var processInfo = processCreatingResult.Process;
+
+                Logger.SystemExpr("8235EAFC-9BA3-427B-BF09-9509265D9B1E", callMethodId, "processInfo.EndPointName", processInfo.EndPointName);
+                Logger.SystemExpr("C618CB67-0C92-492D-8708-A77311FDDCE3", callMethodId, "processInfo.Devices", processInfo.Devices.WritePODListToString());
+                Logger.SystemExpr("ED733C9C-CBBB-487B-904B-E01D1AB75E81", callMethodId, "processInfo.Friends", processInfo.Friends.WritePODListToString());
+                Logger.SystemExpr("C3AA40B1-CEB6-4B23-ADEB-C8EC56EC9898", callMethodId, "processInfo.Priority", processInfo.Priority);
+                Logger.SystemExpr("7AC1BA89-C65D-4CC8-B715-75198F141CDB", callMethodId, "processInfo.GlobalPriority", processInfo.GlobalPriority);
 
                 _instancesStorage.AppendAndTryStartProcessInfo(Logger, callMethodId, processInfo);
 

@@ -57,6 +57,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             
             var synonymsList = synonymsResolver?.GetSynonyms(logger, NameHelper.CreateName(endPointName)).Select(p => p.NameValue).ToList();
 
+            logger.SystemExpr("69BD7A53-01CC-4105-A37D-BE674676622A", callMethodId, nameof(paramsCount), paramsCount);
+
             foreach (var endpointsRegistry in endpointsRegistries.ToList())
             {
                 var targetEndPointsList = endpointsRegistry.GetEndpointsInfoListDirectly(endPointName, paramsCount);
@@ -91,7 +93,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
             if(endPointsList.Any(p => p.KindOfEndpoint == KindOfEndpointInfo.GenericCall))
             {
-                return endPointsList.FirstOrDefault(p => p.KindOfEndpoint == KindOfEndpointInfo.GenericCall);
+                var result = endPointsList.FirstOrDefault(p => p.KindOfEndpoint == KindOfEndpointInfo.GenericCall);
+
+                logger.EndHostMethodResolving("51AB7328-4AD2-41B2-ACBA-7372E93B0A07", callMethodId);
+
+                return result;
             }
 
             var kindOfCommandParameters = command.KindOfCommandParameters;

@@ -9,6 +9,9 @@ namespace SymOntoClay.Monitor.Common
 {
     public interface IMonitorLogger
     {
+        /// <summary>
+        /// Gets logger Id.
+        /// </summary>
         string Id { get; }
 
         string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
@@ -84,6 +87,16 @@ namespace SymOntoClay.Monitor.Common
             [CallerLineNumber] int sourceLineNumber = 0);
 
         void EndHostMethodActivation(string messagePointId, string callMethodId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0);
+
+        void HostMethodStarting(string messagePointId, string callMethodId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0);
+
+        void EndHostMethodStarting(string messagePointId, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);

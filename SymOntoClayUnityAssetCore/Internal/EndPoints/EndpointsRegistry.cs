@@ -110,6 +110,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
             var argumentsList = endpointInfo.Arguments;
 
+#if DEBUG
+            //Info("FA4480A1-55F6-46A8-ADC0-860786DEC851", $"endpointInfo.Name = {endpointInfo.Name}");
+            //Info("6ECA534D-4E3D-4F6A-BD6E-6E5DE360AC33", $"argumentsList = {argumentsList.WriteListToString()}");
+#endif
+
             if (!argumentsList.Any())
             {
                 result.Add(0);

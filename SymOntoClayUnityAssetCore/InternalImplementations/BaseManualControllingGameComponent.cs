@@ -33,6 +33,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.CoreHelper.DebugHelpers;
 
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 {
@@ -141,10 +142,15 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 
                 var endPointInfo = _endPointsResolver.GetEndpointInfo(logger, callMethodId, command, _endpointsRegistries, packedSynonymsResolver);
 
+                logger.SystemExpr("9C43C9A5-6D3A-420F-A97E-1399F66AA196", callMethodId, "endPointInfo != null", endPointInfo != null);
+
                 if (endPointInfo == null)
                 {
                     return new ProcessCreatingResult();
                 }
+
+                logger.SystemExpr("23122C03-0F23-4CF8-8BC6-C46871CD5B3A", callMethodId, "endPointInfo.Name", endPointInfo.Name);
+                logger.SystemExpr("DB3AE13D-FE1E-467C-B407-2A4548C826CF", callMethodId, "endPointInfo.Devices", endPointInfo.Devices.WritePODListToString());
 
                 var processInfo = _endPointActivator.Activate(logger, callMethodId, endPointInfo, command, context, localContext);
 

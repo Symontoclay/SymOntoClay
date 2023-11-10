@@ -55,6 +55,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
         public IProcessInfo Activate(IMonitorLogger logger, string callMethodId, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
+            logger.HostMethodActivation("D5CAB261-7931-433C-971F-3054EFCF9AC7", callMethodId);
+
 #if DEBUG
             //Log($"endpointInfo = {endpointInfo}");
             //Log($"command = {command}");
@@ -91,6 +93,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 #if DEBUG
             //Log($"NEXT");
 #endif
+
+            logger.EndHostMethodActivation("3F85C6A1-3470-44E3-BCEE-A1954E723DDA", callMethodId);
 
             return processInfo;
         }

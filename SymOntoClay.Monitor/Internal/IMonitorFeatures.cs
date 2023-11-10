@@ -18,6 +18,8 @@ namespace SymOntoClay.Monitor.Internal
         bool EnableEndHostMethodResolving { get; }
         bool EnableHostMethodActivation { get; }
         bool EnableEndHostMethodActivation { get; }
+        bool EnableHostMethodStarting { get; }
+        bool EnableEndHostMethodStarting { get; }
         bool EnableHostMethodExecution { get; }
         bool EnableEndHostMethodExecution { get; }
         bool EnableSystemExpr { get; }

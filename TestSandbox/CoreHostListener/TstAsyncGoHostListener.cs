@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.BaseTestLib.HostListeners;
 using SymOntoClay.Core;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
@@ -35,20 +36,20 @@ namespace TestSandbox.CoreHostListener
     public class TstAsyncGoHostListener : BaseHostListener
     {
         [BipedEndpoint("Go", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
-        public async Task GoToImpl(CancellationToken cancellationToken,
+        public async Task GoToImpl(CancellationToken cancellationToken, IMonitorLogger logger,
             [EndpointParam("To", KindOfEndpointParam.Position)] INavTarget navTarget,
             float speed = 12)
         {
-            _logger.Info("13095D9A-60D2-4F90-B4D0-B86347BFE14B", $"GoToImpl Begin");
-            _logger.Info("2D0BBA68-71A8-4634-ACDF-F698184559EF", $"navTarget.Kind = {navTarget.Kind}");
+            logger.Info("13095D9A-60D2-4F90-B4D0-B86347BFE14B", $"GoToImpl Begin");
+            logger.Info("2D0BBA68-71A8-4634-ACDF-F698184559EF", $"navTarget.Kind = {navTarget.Kind}");
             var entity = navTarget.Entity;
-            _logger.Info("7170FAF4-E2C1-4B2E-BED5-62923C162CD8", $"entity.InstanceId = {entity.InstanceId}");
-            _logger.Info("30532211-925F-4E4C-A615-952BC335C12B", $"entity.Id = {entity.Id}");
-            _logger.Info("DE7754AD-469B-4BAD-9ADC-D8051147CE3B", $"entity.Position = {entity.Position}");
+            logger.Info("7170FAF4-E2C1-4B2E-BED5-62923C162CD8", $"entity.InstanceId = {entity.InstanceId}");
+            logger.Info("30532211-925F-4E4C-A615-952BC335C12B", $"entity.Id = {entity.Id}");
+            logger.Info("DE7754AD-469B-4BAD-9ADC-D8051147CE3B", $"entity.Position = {entity.Position}");
 
             await SomeMethod();
 
-            _logger.Info("729E564E-FFA8-456B-A09C-D9BE819C73DA", $"GoToImpl End");
+            logger.Info("729E564E-FFA8-456B-A09C-D9BE819C73DA", $"GoToImpl End");
         }
 
         private Task SomeMethod()
@@ -58,7 +59,7 @@ namespace TestSandbox.CoreHostListener
 
         /*
          [BipedEndpoint("Go", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
-        public async void GoToImpl(CancellationToken cancellationToken,
+        public async void GoToImpl(CancellationToken cancellationToken, IMonitorLogger logger,
         [EndpointParam("To", KindOfEndpointParam.Position)] INavTarget target,
         float speed = 12)
          */

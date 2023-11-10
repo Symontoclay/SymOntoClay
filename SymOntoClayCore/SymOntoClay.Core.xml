@@ -4131,6 +4131,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.ToLabel">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>

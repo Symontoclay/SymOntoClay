@@ -34,14 +34,12 @@ namespace TestSandbox.CoreHostListener
 {
     public class TstGunPlatformHostListener
     {
-        private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
-
         [BipedEndpoint]
-        public void Shoot(CancellationToken cancellationToken)
+        public void Shoot(CancellationToken cancellationToken, IMonitorLogger logger)
         {
-            _logger.Info("1CD1CC43-BB28-4F09-A45B-374AF9E37B6C", "Begin");
+            logger.Info("1CD1CC43-BB28-4F09-A45B-374AF9E37B6C", "Begin");
 
-            _logger.Info("A5289F2B-EEF7-456F-975C-C05D830D1F05", "End");
+            logger.Info("A5289F2B-EEF7-456F-975C-C05D830D1F05", "End");
         }
     }
 }

@@ -29,26 +29,27 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using SymOntoClay.Monitor.Common;
 
 namespace TestSandbox.CoreHostListener
 {
     public class TstGoHostListener : BaseHostListener
     {
         [BipedEndpoint("Go", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
-        public void GoToImpl(CancellationToken cancellationToken,
+        public void GoToImpl(CancellationToken cancellationToken, IMonitorLogger logger,
             [EndpointParam("To", KindOfEndpointParam.Position)] INavTarget navTarget,
             float speed = 12)
         {
-            _logger.Info("FDAF0616-4EEB-4FF6-A30D-789B10DE2472", $"GoToImpl Begin");
-            _logger.Info("35A18046-C1D0-49BB-817A-4EEA05007A30", $"navTarget.Kind = {navTarget.Kind}");
+            logger.Info("FDAF0616-4EEB-4FF6-A30D-789B10DE2472", $"GoToImpl Begin");
+            logger.Info("35A18046-C1D0-49BB-817A-4EEA05007A30", $"navTarget.Kind = {navTarget.Kind}");
             var entity = navTarget.Entity;
-            _logger.Info("B2201525-B34E-4E68-9F64-7B33525B08C6", $"entity.InstanceId = {entity.InstanceId}");
-            _logger.Info("03B35534-77FF-45E0-B362-3F5216521200", $"entity.Id = {entity.Id}");
-            _logger.Info("54C307CD-DA2A-48E4-B420-F438A0C6D61B", $"entity.Position = {entity.Position}");
+            logger.Info("B2201525-B34E-4E68-9F64-7B33525B08C6", $"entity.InstanceId = {entity.InstanceId}");
+            logger.Info("03B35534-77FF-45E0-B362-3F5216521200", $"entity.Id = {entity.Id}");
+            logger.Info("54C307CD-DA2A-48E4-B420-F438A0C6D61B", $"entity.Position = {entity.Position}");
 
             Thread.Sleep(10000);
 
-            _logger.Info("AAFCC9C1-A54B-4C0D-A698-7938FA8F1133", $"GoToImpl End");
+            logger.Info("AAFCC9C1-A54B-4C0D-A698-7938FA8F1133", $"GoToImpl End");
         }
     }
 }

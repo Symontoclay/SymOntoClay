@@ -171,11 +171,11 @@ namespace SymOntoClay.BaseTestLib.HostListeners
 
         public void SetLogger(IMonitorLogger logger)
         {
-            _logger = logger;
+            //_logger = logger;
             _onEnterHandlersRegistry.SetLogger(logger);
         }
 
-        protected IMonitorLogger _logger;
+        //protected IMonitorLogger _logger;
 
         private static object _lockObj = new object();
 

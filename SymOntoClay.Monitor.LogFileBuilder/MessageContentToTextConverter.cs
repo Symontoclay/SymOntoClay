@@ -123,7 +123,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
         private static string GetCallMethod(CallMethodMessage message)
         {
-            return $"<{message.CallMethodId}> {message.MethodName}";
+            return $"<{message.CallMethodId}> [{(message.IsSynk ? "sync" : "async" )}] {message.MethodName}";
         }
 
         private static string GetParameter(ParameterMessage message)

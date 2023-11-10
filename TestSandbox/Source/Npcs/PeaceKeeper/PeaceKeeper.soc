@@ -4,16 +4,9 @@
 	{
 	    'Begin' >> @>log;
 
-	    go(1);
+	    @@host.`stop`();
 
 		'End' >> @>log;
-	}
-
-	fun go(@val)
-	{
-	    'Begin go' >> @>log;
-		@val >> @>log;
-		'End go' >> @>log;
 	}
 }
 

@@ -149,6 +149,24 @@ namespace SymOntoClay.BaseTestLib.Monitoring
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        public void HostMethodStarting(string messagePointId, string callMethodId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void EndHostMethodStarting(string messagePointId, string callMethodId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public void HostMethodExecution(string messagePointId, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

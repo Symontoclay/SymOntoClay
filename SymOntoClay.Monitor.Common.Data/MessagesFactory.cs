@@ -61,6 +61,12 @@ namespace SymOntoClay.Monitor.Common.Data
                 case KindOfMessage.EndHostMethodActivation:
                     return JsonConvert.DeserializeObject<EndHostMethodActivationMessage>(content);
 
+                case KindOfMessage.HostMethodStarting:
+                    return JsonConvert.DeserializeObject<HostMethodStartingMessage>(content);
+
+                case KindOfMessage.EndHostMethodStarting:
+                    return JsonConvert.DeserializeObject<EndHostMethodStartingMessage>(content);
+
                 case KindOfMessage.HostMethodExecution:
                     return JsonConvert.DeserializeObject<HostMethodExecutionMessage>(content);
 

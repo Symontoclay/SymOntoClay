@@ -65,6 +65,12 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 case KindOfMessage.EndHostMethodActivation:
                     return GetEndHostMethodActivation(message as EndHostMethodActivationMessage);
 
+                case KindOfMessage.HostMethodStarting:
+                    return GetHostMethodStarting(message as HostMethodStartingMessage);
+
+                case KindOfMessage.EndHostMethodStarting:
+                    return GetEndHostMethodStarting(message as EndHostMethodStartingMessage);
+
                 case KindOfMessage.HostMethodExecution:
                     return GetHostMethodExecution(message as HostMethodExecutionMessage);
 
@@ -178,6 +184,16 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         }
 
         private static string GetEndHostMethodActivation(EndHostMethodActivationMessage message)
+        {
+            return $"<{message.CallMethodId}>";
+        }
+
+        private static string GetHostMethodStarting(HostMethodStartingMessage message)
+        {
+            return $"<{message.CallMethodId}>";
+        }
+
+        private static string GetEndHostMethodStarting(EndHostMethodStartingMessage message)
         {
             return $"<{message.CallMethodId}>";
         }

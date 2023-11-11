@@ -43,6 +43,12 @@ namespace SymOntoClay.Monitor.Internal
         public bool EnableEndHostMethodActivation { get; set; }
 
         /// <inheritdoc/>
+        public bool EnableHostMethodStarting { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableEndHostMethodStarting { get; set; }
+
+        /// <inheritdoc/>
         public bool EnableHostMethodExecution { get; set; }
 
         /// <inheritdoc/>
@@ -87,6 +93,8 @@ namespace SymOntoClay.Monitor.Internal
             result.EnableEndHostMethodResolving = EnableEndHostMethodResolving;
             result.EnableHostMethodActivation = EnableHostMethodActivation;
             result.EnableEndHostMethodActivation = EnableEndHostMethodActivation;
+            result.EnableHostMethodStarting = EnableHostMethodStarting;
+            result.EnableEndHostMethodStarting = EnableEndHostMethodStarting;
             result.EnableHostMethodExecution = EnableHostMethodExecution;
             result.EnableEndHostMethodExecution = EnableEndHostMethodExecution;
             result.EnableSystemExpr = EnableSystemExpr;
@@ -98,7 +106,7 @@ namespace SymOntoClay.Monitor.Internal
             result.EnableError = EnableError;
             result.EnableFatal = EnableFatal;
 
-            return result ;
+            return result;
         }
 
         /// <inheritdoc/>
@@ -129,6 +137,8 @@ namespace SymOntoClay.Monitor.Internal
             sb.AppendLine($"{spaces}{nameof(EnableEndHostMethodResolving)} = {EnableEndHostMethodResolving}");
             sb.AppendLine($"{spaces}{nameof(EnableHostMethodActivation)} = {EnableHostMethodActivation}");
             sb.AppendLine($"{spaces}{nameof(EnableEndHostMethodActivation)} = {EnableEndHostMethodActivation}");
+            sb.AppendLine($"{spaces}{nameof(EnableHostMethodStarting)} = {EnableHostMethodStarting}");
+            sb.AppendLine($"{spaces}{nameof(EnableEndHostMethodStarting)} = {EnableEndHostMethodStarting}");
             sb.AppendLine($"{spaces}{nameof(EnableHostMethodExecution)} = {EnableHostMethodExecution}");
             sb.AppendLine($"{spaces}{nameof(EnableEndHostMethodExecution)} = {EnableEndHostMethodExecution}");
             sb.AppendLine($"{spaces}{nameof(EnableSystemExpr)} = {EnableSystemExpr}");

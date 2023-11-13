@@ -216,6 +216,8 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 var concurentProcessesInfoList = NGetConcurrentProcessesInfo(logger, processInfo);
 
+                logger.SystemExpr("CDB5B558-4B52-45B6-8895-1363D5C9CC9A", callMethodId, "concurentProcessesInfoList?.Count", concurentProcessesInfoList?.Count);
+
 #if DEBUG
                 //Log($"concurentProcessesInfoList?.Count = {concurentProcessesInfoList?.Count}");
 #endif
@@ -229,6 +231,23 @@ namespace SymOntoClay.Core.Internal.Instances
                     return;
                 }
 
+                logger.SystemExpr("42E919AE-92D5-4CD9-8C01-2A4F58AC677F", callMethodId, "processInfo.Id", processInfo.Id);
+                logger.SystemExpr("0FD04996-7061-45EA-BB11-8FA24E3EECE5", callMethodId, "processInfo.EndPointName", processInfo.EndPointName);
+                logger.SystemExpr("E92FEE12-B3FC-421C-8F26-E0B7437BE000", callMethodId, "processInfo.ParentProcessInfo?.Id", processInfo.ParentProcessInfo?.Id);
+                logger.SystemExpr("95926019-C495-4C1F-B7F5-70ECF36FCDD6", callMethodId, "processInfo.ParentProcessInfo?.EndPointName", processInfo.ParentProcessInfo?.EndPointName);
+                logger.SystemExpr("753A6B07-2245-4665-AFED-D604167812E0", callMethodId, "processInfo.Priority", processInfo.Priority);
+                logger.SystemExpr("D68CB34F-4DFC-4E5D-B195-E7CFF77E6FCD", callMethodId, "processInfo.GlobalPriority", processInfo.GlobalPriority);
+
+                foreach (var concurentProcessInfo in concurentProcessesInfoList)
+                {
+                    logger.SystemExpr("FE0EF35D-0350-40FE-9CBB-74A5A621A0D7", callMethodId, "concurentProcessInfo.Id", concurentProcessInfo.Id);
+                    logger.SystemExpr("24ACC2B2-813D-4C0E-B090-1A4F93589311", callMethodId, "concurentProcessInfo.EndPointName", concurentProcessInfo.EndPointName);
+                    logger.SystemExpr("85D18388-F4AC-4C83-82B5-5B6BC1574170", callMethodId, "concurentProcessInfo.ParentProcessInfo?.Id", concurentProcessInfo.ParentProcessInfo?.Id);
+                    logger.SystemExpr("B1C490A2-54A9-49D9-9B0D-D474B37784A8", callMethodId, "concurentProcessInfo.ParentProcessInfo?.EndPointName", concurentProcessInfo.ParentProcessInfo?.EndPointName);
+                    logger.SystemExpr("DC95F5D5-2D3F-41F9-B115-E824919E4EF9", callMethodId, "concurentProcessInfo.Priority", concurentProcessInfo.Priority);
+                    logger.SystemExpr("4FD9E70B-C7A0-4BD6-8831-C9D189016C64", callMethodId, "concurentProcessInfo.GlobalPriority", concurentProcessInfo.GlobalPriority);
+                }
+
 #if DEBUG
                 //foreach(var tmpProcessInfo in concurentProcessesInfoList)
                 //{
@@ -236,7 +255,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 //}
 #endif
 
-                if (concurentProcessesInfoList.All(p => p.ParentProcessInfo == processInfo.ParentProcessInfo))
+                if (concurentProcessesInfoList.All(p => p.ParentProcessInfo != null && p.ParentProcessInfo == processInfo.ParentProcessInfo))
                 {
                     NAppendAndTryStartProcessInfoWithDevices(logger, processInfo);
 

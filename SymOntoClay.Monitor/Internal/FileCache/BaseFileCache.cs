@@ -10,7 +10,7 @@ namespace SymOntoClay.Monitor.Internal.FileCache
     public abstract class BaseFileCache : IFileCache
     {
 #if DEBUG
-        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+        //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
         protected BaseFileCache(string directory)
@@ -29,14 +29,14 @@ namespace SymOntoClay.Monitor.Internal.FileCache
         public void WriteFile(string fileName, string messageText)
         {
 #if DEBUG
-            _globalLogger.Info($"messageText = {messageText}");
-            _globalLogger.Info($"messageText = {messageText}");
+            //_globalLogger.Info($"messageText = {messageText}");
+            //_globalLogger.Info($"messageText = {messageText}");
 #endif
 
             var fullFileName = Path.Combine(_directory, fileName);
 
 #if DEBUG
-            _globalLogger.Info($"fullFileName = {fullFileName}");
+            //_globalLogger.Info($"fullFileName = {fullFileName}");
 #endif
 
             File.WriteAllText(fullFileName, messageText);

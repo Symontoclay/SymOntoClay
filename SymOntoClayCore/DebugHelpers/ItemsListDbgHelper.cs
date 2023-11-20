@@ -21,10 +21,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.DebugHelpers
@@ -61,6 +64,24 @@ namespace SymOntoClay.Core.DebugHelpers
             }
             sb.AppendLine("End List");
             return sb.ToString();
+        }
+
+        public static string WriteIProcessInfoToToHumanizedString(this IProcessInfo processInfo, IMonitorLogger logger)
+        {
+#if DEBUG
+            //DebugLogger.Instance.Info("Begin");
+#endif
+
+            var processesInfoList = ProcessInfoHelper.ConvertToHierarchyList(logger, processInfo);
+
+            //foreach(var item in processesInfoList)
+            //{
+#if DEBUG
+            //DebugLogger.Instance.Info($"item.Id = {item.Id};item.EndPointName = {item.EndPointName}; item.Priority = {item.Priority}; item.Priority = {item.GlobalPriority}");
+#endif
+            //}
+
+            return string.Join(" -> ", processesInfoList.Select(item => $"({item.Id}) {item.EndPointName} [{item.Priority};{item.GlobalPriority}]"));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace SymOntoClay.Monitor.Internal
     public class MonitorLogger : IMonitorLogger
     {
 #if DEBUG
-        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+        //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
         public MonitorLogger(IMonitorLoggerContext context)
@@ -69,12 +69,12 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"methodIdentifier = {methodIdentifier.ToLabel()}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"isSynk = {isSynk}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"methodIdentifier = {methodIdentifier.ToLabel()}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"isSynk = {isSynk}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             var callMethodId = GetCallMethodId();
@@ -96,12 +96,12 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"methodName = {methodName}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"isSynk = {isSynk}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"methodName = {methodName}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"isSynk = {isSynk}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             var callMethodId = GetCallMethodId();
@@ -125,13 +125,13 @@ namespace SymOntoClay.Monitor.Internal
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
 #endif
 
             var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
             var classFullName = string.Empty;
@@ -148,7 +148,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new CallMethodMessage
@@ -169,7 +169,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -193,17 +193,17 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"callMethodId = {callMethodId}");
-            _globalLogger.Info($"parameterName = {parameterName}");
-            _globalLogger.Info($"parameterValue = {parameterValue}");
-            _globalLogger.Info($"parameterValue?.GetType().FullName = {parameterValue?.GetType().FullName}");
-            _globalLogger.Info($"parameterValue?.GetType().IsClass = {parameterValue?.GetType().IsClass}");
-            _globalLogger.Info($"parameterValue?.GetType().IsPrimitive = {parameterValue?.GetType().IsPrimitive}");
-            _globalLogger.Info($"parameterValue?.GetType().IsEnum = {parameterValue?.GetType().IsEnum}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"callMethodId = {callMethodId}");
+            //_globalLogger.Info($"parameterName = {parameterName}");
+            //_globalLogger.Info($"parameterValue = {parameterValue}");
+            //_globalLogger.Info($"parameterValue?.GetType().FullName = {parameterValue?.GetType().FullName}");
+            //_globalLogger.Info($"parameterValue?.GetType().IsClass = {parameterValue?.GetType().IsClass}");
+            //_globalLogger.Info($"parameterValue?.GetType().IsPrimitive = {parameterValue?.GetType().IsPrimitive}");
+            //_globalLogger.Info($"parameterValue?.GetType().IsEnum = {parameterValue?.GetType().IsEnum}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             if (!_features.EnableParameter)
@@ -222,17 +222,17 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"callMethodId = {callMethodId}");
-            _globalLogger.Info($"parameterName = {parameterName}");
-            _globalLogger.Info($"parameterValue = {parameterValue}");
-            _globalLogger.Info($"parameterValue?.GetType().FullName = {parameterValue?.GetType().FullName}");
-            _globalLogger.Info($"parameterValue?.GetType().IsClass = {parameterValue?.GetType().IsClass}");
-            _globalLogger.Info($"parameterValue?.GetType().IsPrimitive = {parameterValue?.GetType().IsPrimitive}");
-            _globalLogger.Info($"parameterValue?.GetType().IsEnum = {parameterValue?.GetType().IsEnum}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"callMethodId = {callMethodId}");
+            //_globalLogger.Info($"parameterName = {parameterName}");
+            //_globalLogger.Info($"parameterValue = {parameterValue}");
+            //_globalLogger.Info($"parameterValue?.GetType().FullName = {parameterValue?.GetType().FullName}");
+            //_globalLogger.Info($"parameterValue?.GetType().IsClass = {parameterValue?.GetType().IsClass}");
+            //_globalLogger.Info($"parameterValue?.GetType().IsPrimitive = {parameterValue?.GetType().IsPrimitive}");
+            //_globalLogger.Info($"parameterValue?.GetType().IsEnum = {parameterValue?.GetType().IsEnum}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             if (!_features.EnableParameter)
@@ -251,17 +251,17 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"callMethodId = {callMethodId}");
-            _globalLogger.Info($"methodIdentifier = {methodIdentifier.ToLabel()}");
-            _globalLogger.Info($"parameterValue = {parameterValue}");
-            _globalLogger.Info($"parameterValue?.GetType().FullName = {parameterValue?.GetType().FullName}");
-            _globalLogger.Info($"parameterValue?.GetType().IsClass = {parameterValue?.GetType().IsClass}");
-            _globalLogger.Info($"parameterValue?.GetType().IsPrimitive = {parameterValue?.GetType().IsPrimitive}");
-            _globalLogger.Info($"parameterValue?.GetType().IsEnum = {parameterValue?.GetType().IsEnum}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"callMethodId = {callMethodId}");
+            //_globalLogger.Info($"methodIdentifier = {methodIdentifier.ToLabel()}");
+            //_globalLogger.Info($"parameterValue = {parameterValue}");
+            //_globalLogger.Info($"parameterValue?.GetType().FullName = {parameterValue?.GetType().FullName}");
+            //_globalLogger.Info($"parameterValue?.GetType().IsClass = {parameterValue?.GetType().IsClass}");
+            //_globalLogger.Info($"parameterValue?.GetType().IsPrimitive = {parameterValue?.GetType().IsPrimitive}");
+            //_globalLogger.Info($"parameterValue?.GetType().IsEnum = {parameterValue?.GetType().IsEnum}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             if (!_features.EnableParameter)
@@ -280,17 +280,17 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"callMethodId = {callMethodId}");
-            _globalLogger.Info($"methodIdentifier = {methodIdentifier.ToLabel()}");
-            _globalLogger.Info($"parameterValue = {parameterValue}");
-            _globalLogger.Info($"parameterValue?.GetType().FullName = {parameterValue?.GetType().FullName}");
-            _globalLogger.Info($"parameterValue?.GetType().IsClass = {parameterValue?.GetType().IsClass}");
-            _globalLogger.Info($"parameterValue?.GetType().IsPrimitive = {parameterValue?.GetType().IsPrimitive}");
-            _globalLogger.Info($"parameterValue?.GetType().IsEnum = {parameterValue?.GetType().IsEnum}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"callMethodId = {callMethodId}");
+            //_globalLogger.Info($"methodIdentifier = {methodIdentifier.ToLabel()}");
+            //_globalLogger.Info($"parameterValue = {parameterValue}");
+            //_globalLogger.Info($"parameterValue?.GetType().FullName = {parameterValue?.GetType().FullName}");
+            //_globalLogger.Info($"parameterValue?.GetType().IsClass = {parameterValue?.GetType().IsClass}");
+            //_globalLogger.Info($"parameterValue?.GetType().IsPrimitive = {parameterValue?.GetType().IsPrimitive}");
+            //_globalLogger.Info($"parameterValue?.GetType().IsEnum = {parameterValue?.GetType().IsEnum}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             if (!_features.EnableParameter)
@@ -309,30 +309,30 @@ namespace SymOntoClay.Monitor.Internal
             where T: BaseLabeledValueMessage, new()
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"callMethodId = {callMethodId}");
-            _globalLogger.Info($"label = {label}");
-            _globalLogger.Info($"value = {value}");
-            _globalLogger.Info($"value?.GetType().FullName = {value?.GetType().FullName}");
-            _globalLogger.Info($"value?.GetType().IsClass = {value?.GetType().IsClass}");
-            _globalLogger.Info($"value?.GetType().IsPrimitive = {value?.GetType().IsPrimitive}");
-            _globalLogger.Info($"value?.GetType().IsEnum = {value?.GetType().IsEnum}");
-            _globalLogger.Info($"valueHumanizedString = {valueHumanizedString}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"callMethodId = {callMethodId}");
+            //_globalLogger.Info($"label = {label}");
+            //_globalLogger.Info($"value = {value}");
+            //_globalLogger.Info($"value?.GetType().FullName = {value?.GetType().FullName}");
+            //_globalLogger.Info($"value?.GetType().IsClass = {value?.GetType().IsClass}");
+            //_globalLogger.Info($"value?.GetType().IsPrimitive = {value?.GetType().IsPrimitive}");
+            //_globalLogger.Info($"value?.GetType().IsEnum = {value?.GetType().IsEnum}");
+            //_globalLogger.Info($"valueHumanizedString = {valueHumanizedString}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
 #endif
 
             var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
             var classFullName = string.Empty;
@@ -348,21 +348,21 @@ namespace SymOntoClay.Monitor.Internal
             var jsonStr = JsonConvert.SerializeObject(value, _jsonSerializerSettings);
 
 #if DEBUG
-            _globalLogger.Info($"jsonStr = {jsonStr}");
+            //_globalLogger.Info($"jsonStr = {jsonStr}");
 #endif
 
             var plainTextBytes = Encoding.UTF8.GetBytes(jsonStr);
             var base64Str = Convert.ToBase64String(plainTextBytes);
 
 #if DEBUG
-            _globalLogger.Info($"base64Str = {base64Str}");
+            //_globalLogger.Info($"base64Str = {base64Str}");
 #endif
 
             var now = DateTime.Now;
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new T
@@ -385,7 +385,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -400,8 +400,8 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"callMethodId = {callMethodId}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"callMethodId = {callMethodId}");
 #endif
 
             if (!_features.EnableEndCallMethod)
@@ -412,13 +412,13 @@ namespace SymOntoClay.Monitor.Internal
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
 #endif
 
             var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
             var classFullName = string.Empty;
@@ -435,7 +435,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new EndCallMethodMessage
@@ -454,7 +454,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -469,8 +469,8 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"callMethodId = {callMethodId}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"callMethodId = {callMethodId}");
 #endif
 
             if (!_features.EnableMethodResolving)
@@ -481,13 +481,13 @@ namespace SymOntoClay.Monitor.Internal
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
 #endif
 
             var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
             var classFullName = string.Empty;
@@ -504,7 +504,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new MethodResolvingMessage
@@ -523,7 +523,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -538,8 +538,8 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"callMethodId = {callMethodId}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"callMethodId = {callMethodId}");
 #endif
 
             if (!_features.EnableEndMethodResolving)
@@ -550,13 +550,13 @@ namespace SymOntoClay.Monitor.Internal
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
 #endif
 
             var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
             var classFullName = string.Empty;
@@ -573,7 +573,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new EndMethodResolvingMessage
@@ -592,7 +592,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -607,8 +607,8 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"callMethodId = {callMethodId}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"callMethodId = {callMethodId}");
 #endif
 
             if (!_features.EnableActionResolving)
@@ -619,13 +619,13 @@ namespace SymOntoClay.Monitor.Internal
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
 #endif
 
             var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
             var classFullName = string.Empty;
@@ -642,7 +642,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new ActionResolvingMessage
@@ -661,7 +661,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -676,8 +676,8 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"callMethodId = {callMethodId}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"callMethodId = {callMethodId}");
 #endif
 
             if (!_features.EnableEndActionResolving)
@@ -688,13 +688,13 @@ namespace SymOntoClay.Monitor.Internal
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
 #endif
 
             var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
             var classFullName = string.Empty;
@@ -711,7 +711,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new EndActionResolvingMessage
@@ -730,7 +730,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -745,8 +745,8 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"callMethodId = {callMethodId}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"callMethodId = {callMethodId}");
 #endif
 
             if (!_features.EnableHostMethodResolving)
@@ -757,13 +757,13 @@ namespace SymOntoClay.Monitor.Internal
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
 #endif
 
             var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
             var classFullName = string.Empty;
@@ -780,7 +780,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new HostMethodResolvingMessage
@@ -799,7 +799,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -814,8 +814,8 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"callMethodId = {callMethodId}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"callMethodId = {callMethodId}");
 #endif
 
             if (!_features.EnableEndHostMethodResolving)
@@ -826,13 +826,13 @@ namespace SymOntoClay.Monitor.Internal
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
 #endif
 
             var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
             var classFullName = string.Empty;
@@ -849,7 +849,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new EndHostMethodResolvingMessage
@@ -868,7 +868,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -883,8 +883,8 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"callMethodId = {callMethodId}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"callMethodId = {callMethodId}");
 #endif
 
             if (!_features.EnableHostMethodActivation)
@@ -895,13 +895,13 @@ namespace SymOntoClay.Monitor.Internal
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
 #endif
 
             var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
             var classFullName = string.Empty;
@@ -918,7 +918,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new HostMethodActivationMessage
@@ -937,7 +937,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -952,8 +952,8 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"callMethodId = {callMethodId}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"callMethodId = {callMethodId}");
 #endif
 
             if (!_features.EnableEndHostMethodActivation)
@@ -964,13 +964,13 @@ namespace SymOntoClay.Monitor.Internal
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
 #endif
 
             var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
             var classFullName = string.Empty;
@@ -987,7 +987,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new EndHostMethodActivationMessage
@@ -1006,7 +1006,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -1021,8 +1021,8 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"callMethodId = {callMethodId}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"callMethodId = {callMethodId}");
 #endif
 
             if (!_features.EnableHostMethodStarting)
@@ -1033,13 +1033,13 @@ namespace SymOntoClay.Monitor.Internal
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
 #endif
 
             var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
             var classFullName = string.Empty;
@@ -1056,7 +1056,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new HostMethodStartingMessage
@@ -1075,7 +1075,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -1090,8 +1090,8 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"callMethodId = {callMethodId}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"callMethodId = {callMethodId}");
 #endif
 
             if (!_features.EnableEndHostMethodStarting)
@@ -1102,13 +1102,13 @@ namespace SymOntoClay.Monitor.Internal
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
 #endif
 
             var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
             var classFullName = string.Empty;
@@ -1125,7 +1125,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new EndHostMethodStartingMessage
@@ -1144,7 +1144,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -1159,8 +1159,8 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"callMethodId = {callMethodId}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"callMethodId = {callMethodId}");
 #endif
 
             if (!_features.EnableHostMethodExecution)
@@ -1171,13 +1171,13 @@ namespace SymOntoClay.Monitor.Internal
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
 #endif
 
             var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
             var classFullName = string.Empty;
@@ -1194,7 +1194,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new HostMethodExecutionMessage
@@ -1213,7 +1213,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -1228,8 +1228,8 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"callMethodId = {callMethodId}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"callMethodId = {callMethodId}");
 #endif
 
             if (!_features.EnableEndHostMethodExecution)
@@ -1240,13 +1240,13 @@ namespace SymOntoClay.Monitor.Internal
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
 #endif
 
             var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
             var classFullName = string.Empty;
@@ -1263,7 +1263,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new EndHostMethodExecutionMessage
@@ -1282,7 +1282,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -1297,17 +1297,17 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"callMethodId = {callMethodId}");
-            _globalLogger.Info($"exprLabel = {exprLabel}");
-            _globalLogger.Info($"exprValue = {exprValue}");
-            _globalLogger.Info($"exprValue?.GetType().FullName = {exprValue?.GetType().FullName}");
-            _globalLogger.Info($"exprValue?.GetType().IsClass = {exprValue?.GetType().IsClass}");
-            _globalLogger.Info($"exprValue?.GetType().IsPrimitive = {exprValue?.GetType().IsPrimitive}");
-            _globalLogger.Info($"exprValue?.GetType().IsEnum = {exprValue?.GetType().IsEnum}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"callMethodId = {callMethodId}");
+            //_globalLogger.Info($"exprLabel = {exprLabel}");
+            //_globalLogger.Info($"exprValue = {exprValue}");
+            //_globalLogger.Info($"exprValue?.GetType().FullName = {exprValue?.GetType().FullName}");
+            //_globalLogger.Info($"exprValue?.GetType().IsClass = {exprValue?.GetType().IsClass}");
+            //_globalLogger.Info($"exprValue?.GetType().IsPrimitive = {exprValue?.GetType().IsPrimitive}");
+            //_globalLogger.Info($"exprValue?.GetType().IsEnum = {exprValue?.GetType().IsEnum}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             if (!_features.EnableSystemExpr)
@@ -1326,17 +1326,17 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"callMethodId = {callMethodId}");
-            _globalLogger.Info($"exprLabel = {exprLabel}");
-            _globalLogger.Info($"exprValue = {exprValue}");
-            _globalLogger.Info($"exprValue?.GetType().FullName = {exprValue?.GetType().FullName}");
-            _globalLogger.Info($"exprValue?.GetType().IsClass = {exprValue?.GetType().IsClass}");
-            _globalLogger.Info($"exprValue?.GetType().IsPrimitive = {exprValue?.GetType().IsPrimitive}");
-            _globalLogger.Info($"exprValue?.GetType().IsEnum = {exprValue?.GetType().IsEnum}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"callMethodId = {callMethodId}");
+            //_globalLogger.Info($"exprLabel = {exprLabel}");
+            //_globalLogger.Info($"exprValue = {exprValue}");
+            //_globalLogger.Info($"exprValue?.GetType().FullName = {exprValue?.GetType().FullName}");
+            //_globalLogger.Info($"exprValue?.GetType().IsClass = {exprValue?.GetType().IsClass}");
+            //_globalLogger.Info($"exprValue?.GetType().IsPrimitive = {exprValue?.GetType().IsPrimitive}");
+            //_globalLogger.Info($"exprValue?.GetType().IsEnum = {exprValue?.GetType().IsEnum}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             if (!_features.EnableSystemExpr)
@@ -1355,11 +1355,11 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"message = {message}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             if (!_features.EnableOutput)
@@ -1370,13 +1370,13 @@ namespace SymOntoClay.Monitor.Internal
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
 #endif
 
             var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
             var classFullName = string.Empty;
@@ -1403,7 +1403,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new OutputMessage
@@ -1422,7 +1422,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -1437,11 +1437,11 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"message = {message}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             if (!_features.EnableTrace)
@@ -1452,13 +1452,13 @@ namespace SymOntoClay.Monitor.Internal
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
 #endif
 
             var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
             var classFullName = string.Empty;
@@ -1483,7 +1483,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new TraceMessage
@@ -1502,7 +1502,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -1517,11 +1517,11 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"message = {message}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             if (!_features.EnableDebug)
@@ -1532,13 +1532,13 @@ namespace SymOntoClay.Monitor.Internal
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
 #endif
 
             var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
             var classFullName = string.Empty;
@@ -1563,7 +1563,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new DebugMessage
@@ -1582,7 +1582,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -1597,11 +1597,11 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"message = {message}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             if (!_features.EnableInfo)
@@ -1612,13 +1612,13 @@ namespace SymOntoClay.Monitor.Internal
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
 #endif
 
             var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
             var classFullName = string.Empty;
@@ -1643,7 +1643,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new InfoMessage
@@ -1662,7 +1662,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -1677,11 +1677,11 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"message = {message}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             if (!_features.EnableWarn)
@@ -1692,13 +1692,13 @@ namespace SymOntoClay.Monitor.Internal
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
 #endif
 
             var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
             var classFullName = string.Empty;
@@ -1723,7 +1723,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new WarnMessage
@@ -1742,7 +1742,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -1757,11 +1757,11 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"message = {message}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             if (!_features.EnableError)
@@ -1772,13 +1772,13 @@ namespace SymOntoClay.Monitor.Internal
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
 #endif
 
             var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
             var classFullName = string.Empty;
@@ -1805,7 +1805,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new ErrorMessage
@@ -1824,7 +1824,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -1849,11 +1849,11 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"message = {message}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             if (!_features.EnableFatal)
@@ -1864,13 +1864,13 @@ namespace SymOntoClay.Monitor.Internal
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
 #endif
 
             var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
             var classFullName = string.Empty;
@@ -1897,7 +1897,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new FatalMessage
@@ -1916,7 +1916,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);

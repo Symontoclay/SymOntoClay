@@ -21,10 +21,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.Serialization;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -220,9 +222,10 @@ namespace SymOntoClay.Core.Internal.Instances
 
 #if DEBUG
                 //Log($"concurentProcessesInfoList?.Count = {concurentProcessesInfoList?.Count}");
+                //Info("DE893262-B4D1-4E7D-AA83-418A86546F3B", processInfo.WriteIProcessInfoToToHumanizedString());
 #endif
 
-                if(concurentProcessesInfoList.IsNullOrEmpty())
+                if (concurentProcessesInfoList.IsNullOrEmpty())
                 {
                     NAppendAndTryStartProcessInfoWithDevices(logger, processInfo);
 
@@ -231,21 +234,24 @@ namespace SymOntoClay.Core.Internal.Instances
                     return;
                 }
 
-                logger.SystemExpr("42E919AE-92D5-4CD9-8C01-2A4F58AC677F", callMethodId, "processInfo.Id", processInfo.Id);
-                logger.SystemExpr("0FD04996-7061-45EA-BB11-8FA24E3EECE5", callMethodId, "processInfo.EndPointName", processInfo.EndPointName);
-                logger.SystemExpr("E92FEE12-B3FC-421C-8F26-E0B7437BE000", callMethodId, "processInfo.ParentProcessInfo?.Id", processInfo.ParentProcessInfo?.Id);
-                logger.SystemExpr("95926019-C495-4C1F-B7F5-70ECF36FCDD6", callMethodId, "processInfo.ParentProcessInfo?.EndPointName", processInfo.ParentProcessInfo?.EndPointName);
-                logger.SystemExpr("753A6B07-2245-4665-AFED-D604167812E0", callMethodId, "processInfo.Priority", processInfo.Priority);
-                logger.SystemExpr("D68CB34F-4DFC-4E5D-B195-E7CFF77E6FCD", callMethodId, "processInfo.GlobalPriority", processInfo.GlobalPriority);
+                logger.SystemExpr("D7883965-350D-4E3A-9031-FB5FF76E46D1", callMethodId, "processInfo", processInfo.WriteIProcessInfoToToHumanizedString(logger));
+
+                //logger.SystemExpr("42E919AE-92D5-4CD9-8C01-2A4F58AC677F", callMethodId, "processInfo.Id", processInfo.Id);
+                //logger.SystemExpr("0FD04996-7061-45EA-BB11-8FA24E3EECE5", callMethodId, "processInfo.EndPointName", processInfo.EndPointName);
+                //logger.SystemExpr("E92FEE12-B3FC-421C-8F26-E0B7437BE000", callMethodId, "processInfo.ParentProcessInfo?.Id", processInfo.ParentProcessInfo?.Id);
+                //logger.SystemExpr("95926019-C495-4C1F-B7F5-70ECF36FCDD6", callMethodId, "processInfo.ParentProcessInfo?.EndPointName", processInfo.ParentProcessInfo?.EndPointName);
+                //logger.SystemExpr("753A6B07-2245-4665-AFED-D604167812E0", callMethodId, "processInfo.Priority", processInfo.Priority);
+                //logger.SystemExpr("D68CB34F-4DFC-4E5D-B195-E7CFF77E6FCD", callMethodId, "processInfo.GlobalPriority", processInfo.GlobalPriority);
 
                 foreach (var concurentProcessInfo in concurentProcessesInfoList)
                 {
-                    logger.SystemExpr("FE0EF35D-0350-40FE-9CBB-74A5A621A0D7", callMethodId, "concurentProcessInfo.Id", concurentProcessInfo.Id);
-                    logger.SystemExpr("24ACC2B2-813D-4C0E-B090-1A4F93589311", callMethodId, "concurentProcessInfo.EndPointName", concurentProcessInfo.EndPointName);
-                    logger.SystemExpr("85D18388-F4AC-4C83-82B5-5B6BC1574170", callMethodId, "concurentProcessInfo.ParentProcessInfo?.Id", concurentProcessInfo.ParentProcessInfo?.Id);
-                    logger.SystemExpr("B1C490A2-54A9-49D9-9B0D-D474B37784A8", callMethodId, "concurentProcessInfo.ParentProcessInfo?.EndPointName", concurentProcessInfo.ParentProcessInfo?.EndPointName);
-                    logger.SystemExpr("DC95F5D5-2D3F-41F9-B115-E824919E4EF9", callMethodId, "concurentProcessInfo.Priority", concurentProcessInfo.Priority);
-                    logger.SystemExpr("4FD9E70B-C7A0-4BD6-8831-C9D189016C64", callMethodId, "concurentProcessInfo.GlobalPriority", concurentProcessInfo.GlobalPriority);
+                    logger.SystemExpr("A815BA9A-C55F-4342-BE3D-1356FC79F277", callMethodId, "concurentProcessInfo", concurentProcessInfo.WriteIProcessInfoToToHumanizedString(logger));
+                    //logger.SystemExpr("FE0EF35D-0350-40FE-9CBB-74A5A621A0D7", callMethodId, "concurentProcessInfo.Id", concurentProcessInfo.Id);
+                    //logger.SystemExpr("24ACC2B2-813D-4C0E-B090-1A4F93589311", callMethodId, "concurentProcessInfo.EndPointName", concurentProcessInfo.EndPointName);
+                    //logger.SystemExpr("85D18388-F4AC-4C83-82B5-5B6BC1574170", callMethodId, "concurentProcessInfo.ParentProcessInfo?.Id", concurentProcessInfo.ParentProcessInfo?.Id);
+                    //logger.SystemExpr("B1C490A2-54A9-49D9-9B0D-D474B37784A8", callMethodId, "concurentProcessInfo.ParentProcessInfo?.EndPointName", concurentProcessInfo.ParentProcessInfo?.EndPointName);
+                    //logger.SystemExpr("DC95F5D5-2D3F-41F9-B115-E824919E4EF9", callMethodId, "concurentProcessInfo.Priority", concurentProcessInfo.Priority);
+                    //logger.SystemExpr("4FD9E70B-C7A0-4BD6-8831-C9D189016C64", callMethodId, "concurentProcessInfo.GlobalPriority", concurentProcessInfo.GlobalPriority);
                 }
 
 #if DEBUG
@@ -255,40 +261,57 @@ namespace SymOntoClay.Core.Internal.Instances
                 //}
 #endif
 
-                if (concurentProcessesInfoList.All(p => p.ParentProcessInfo != null && p.ParentProcessInfo == processInfo.ParentProcessInfo))
+                //if (concurentProcessesInfoList.All(p => p.ParentProcessInfo != null && p.ParentProcessInfo == processInfo.ParentProcessInfo))
+                //{
+                //    NAppendAndTryStartProcessInfoWithDevices(logger, processInfo);
+
+                //    Task.Run(() => {
+                //        foreach (var concurentProcessInfo in concurentProcessesInfoList)
+                //        {
+                //            concurentProcessInfo.Cancel(logger);
+                //        }
+                //    });
+
+                //    logger.EndHostMethodStarting("CE34E46B-9E41-419C-87B3-4CC0A172B8B4", callMethodId);
+
+                //    return;
+                //}
+
+                //var globalPriority = processInfo.GlobalPriority;
+
+#if DEBUG
+                //Log($"globalPriority = {globalPriority}");
+#endif
+
+                //if (concurentProcessesInfoList.All(p => p.GlobalPriority <= globalPriority))
+                //{
+                //    NAppendAndTryStartProcessInfoWithDevices(logger, processInfo);
+
+                //    Task.Run(() => { 
+                //        foreach(var concurentProcessInfo in concurentProcessesInfoList)
+                //        {
+                //            concurentProcessInfo.Cancel(logger);
+                //        }
+                //    });
+
+                //    logger.EndHostMethodStarting("743973AD-3272-42BB-B832-0F7EB63AE9E1", callMethodId);
+
+                //    return;
+                //}
+
+                if(concurentProcessesInfoList.All(y => ProcessInfoHelper.Compare(logger, processInfo, y) >=0))
                 {
                     NAppendAndTryStartProcessInfoWithDevices(logger, processInfo);
 
-                    Task.Run(() => {
+                    Task.Run(() =>
+                    {
                         foreach (var concurentProcessInfo in concurentProcessesInfoList)
                         {
                             concurentProcessInfo.Cancel(logger);
                         }
                     });
 
-                    logger.EndHostMethodStarting("CE34E46B-9E41-419C-87B3-4CC0A172B8B4", callMethodId);
-
-                    return;
-                }
-
-                var globalPriority = processInfo.GlobalPriority;
-
-#if DEBUG
-                //Log($"globalPriority = {globalPriority}");
-#endif
-
-                if (concurentProcessesInfoList.All(p => p.GlobalPriority >= globalPriority))
-                {
-                    NAppendAndTryStartProcessInfoWithDevices(logger, processInfo);
-
-                    Task.Run(() => { 
-                        foreach(var concurentProcessInfo in concurentProcessesInfoList)
-                        {
-                            concurentProcessInfo.Cancel(logger);
-                        }
-                    });
-
-                    logger.EndHostMethodStarting("743973AD-3272-42BB-B832-0F7EB63AE9E1", callMethodId);
+                    logger.EndHostMethodStarting("A919AF23-C7E3-4678-97AA-1E2E596B9EE1", callMethodId);
 
                     return;
                 }

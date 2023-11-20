@@ -26,6 +26,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.Monitor.Common;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -116,6 +117,93 @@ namespace SymOntoClay.Core.Internal.Helpers
 
                 Thread.Sleep(100);
             }
+        }
+
+        public static int Compare(IMonitorLogger logger, IProcessInfo x, IProcessInfo y)
+        {
+            if(x.ParentProcessInfo == null && y.ParentProcessInfo == null)
+            {
+                return ComparePriority(logger, x.Priority, y.Priority);
+            }
+
+            var xHierarchyList = ConvertToHierarchyList(logger, x);
+            var yHierarchyList = ConvertToHierarchyList(logger, y);
+
+            var xEnumerator = xHierarchyList.GetEnumerator();
+            var yEnumerator = yHierarchyList.GetEnumerator();
+
+            float lastXPriority = 0f;
+            float lastYPriority = 0f;
+
+            while(true)
+            {
+                var isFinished = true;
+
+                if (xEnumerator.MoveNext())
+                {
+                    lastXPriority = xEnumerator.Current.Priority;
+                    isFinished = false;
+                }
+
+                if (yEnumerator.MoveNext())
+                {
+                    lastYPriority = yEnumerator.Current.Priority;
+                    isFinished = false;
+                }
+
+                if (isFinished)
+                {
+                    return 0;
+                }
+
+                if (lastXPriority > lastYPriority)
+                {
+                    return 1;
+                }
+
+                if (lastXPriority < lastYPriority)
+                {
+                    return -1;
+                }
+            }
+        }
+
+        private static int ComparePriority(IMonitorLogger logger, float x, float y)
+        {
+            if(x == y)
+            {
+                return 0;
+            }
+
+            if(x > y)
+            {
+                return 1;
+            }
+
+            return -1;
+        }
+
+        public static List<IProcessInfo> ConvertToHierarchyList(IMonitorLogger logger, IProcessInfo processInfo)
+        {
+            var processesInfoList = new List<IProcessInfo>();
+
+            var procI = processInfo;
+
+            do
+            {
+#if DEBUG
+                //DebugLogger.Instance.Info($"processInfo.Id = {processInfo.Id};processInfo.EndPointName = {processInfo.EndPointName}; processInfo.Priority = {processInfo.Priority}; processInfo.Priority = {processInfo.GlobalPriority}");
+#endif
+
+                processesInfoList.Add(procI);
+
+                procI = procI.ParentProcessInfo;
+            }
+            while (procI != null);
+
+            processesInfoList.Reverse();
+
+            return processesInfoList;
         }
     }
 }

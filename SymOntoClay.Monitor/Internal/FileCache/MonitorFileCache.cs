@@ -10,15 +10,15 @@ namespace SymOntoClay.Monitor.Internal.FileCache
     public class MonitorFileCache : BaseFileCache
     {
 #if DEBUG
-        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+        //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
         public MonitorFileCache(string messagesDir, string sessionName)
             : base(Path.Combine(messagesDir, sessionName))
         {
 #if DEBUG
-            _globalLogger.Info($"messagesDir = {messagesDir}");
-            _globalLogger.Info($"sessionName = {sessionName}");
+            //_globalLogger.Info($"messagesDir = {messagesDir}");
+            //_globalLogger.Info($"sessionName = {sessionName}");
 #endif
         }
 

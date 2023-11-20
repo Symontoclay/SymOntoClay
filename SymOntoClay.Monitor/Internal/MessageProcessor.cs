@@ -12,7 +12,7 @@ namespace SymOntoClay.Monitor.Internal
     public class MessageProcessor
     {
 #if DEBUG
-        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+        //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
         private readonly IRemoteMonitor _remoteMonitor;
@@ -27,20 +27,20 @@ namespace SymOntoClay.Monitor.Internal
         public void ProcessMessage(BaseMessage message, IFileCache fileCache, bool enableRemoteConnection)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
-            _globalLogger.Info($"enableRemoteConnection = {enableRemoteConnection}");
+            //_globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"enableRemoteConnection = {enableRemoteConnection}");
 #endif
 
             var text = JsonConvert.SerializeObject(message);
 
 #if DEBUG
-            _globalLogger.Info($"text = {text}");
+            //_globalLogger.Info($"text = {text}");
 #endif
 
             var fileName = FileCacheItemInfo.GetFileName(message.NodeId, message.ThreadId, message.MessageNumber, message.GlobalMessageNumber, message.KindOfMessage);
 
 #if DEBUG
-            _globalLogger.Info($"fileName = {fileName}");
+            //_globalLogger.Info($"fileName = {fileName}");
 #endif
 
             fileCache.WriteFile(fileName, text);
@@ -58,7 +58,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"envelope = {envelope}");
+                //_globalLogger.Info($"envelope = {envelope}");
 #endif
 
                 _remoteMonitor.WriteMessage(envelope);

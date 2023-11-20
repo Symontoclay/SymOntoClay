@@ -16,7 +16,7 @@ namespace SymOntoClay.Monitor
     public class Monitor : IMonitorLoggerContext, IMonitorFeatures, IMonitor
     {
 #if DEBUG
-        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+        //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
         private readonly MonitorContext _monitorContext;
@@ -45,7 +45,7 @@ namespace SymOntoClay.Monitor
         public Monitor(MonitorSettings monitorSettings)
         {
 #if DEBUG
-            _globalLogger.Info($"monitorSettings = {monitorSettings}");
+            //_globalLogger.Info($"monitorSettings = {monitorSettings}");
 #endif
             
             _nodesSettings = monitorSettings.NodesSettings;
@@ -404,23 +404,23 @@ namespace SymOntoClay.Monitor
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"nodeId = {nodeId}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"nodeId = {nodeId}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"messageNumber = {messageNumber}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
 #endif
 
             var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
             var classFullName = string.Empty;
@@ -437,7 +437,7 @@ namespace SymOntoClay.Monitor
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new CreateMotitorNodeMessage
@@ -454,7 +454,7 @@ namespace SymOntoClay.Monitor
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _baseMonitorSettings.EnableRemoteConnection);

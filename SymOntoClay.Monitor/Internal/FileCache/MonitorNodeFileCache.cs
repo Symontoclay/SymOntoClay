@@ -10,7 +10,7 @@ namespace SymOntoClay.Monitor.Internal.FileCache
     public class MonitorNodeFileCache : BaseFileCache
     {
 #if DEBUG
-        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+        //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
         private readonly string _nodeId;
@@ -19,8 +19,8 @@ namespace SymOntoClay.Monitor.Internal.FileCache
             : base(Path.Combine(rootMessagesDir, nodeId))
         {
 #if DEBUG
-            _globalLogger.Info($"rootMessagesDir = {rootMessagesDir}");
-            _globalLogger.Info($"nodeId = {nodeId}");
+            //_globalLogger.Info($"rootMessagesDir = {rootMessagesDir}");
+            //_globalLogger.Info($"nodeId = {nodeId}");
 #endif
 
             _nodeId = nodeId;

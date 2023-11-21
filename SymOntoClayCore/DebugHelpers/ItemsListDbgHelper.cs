@@ -81,7 +81,7 @@ namespace SymOntoClay.Core.DebugHelpers
 #endif
             //}
 
-            return string.Join(" -> ", processesInfoList.Select(item => $"({item.Id}) {item.EndPointName} [{item.Priority};{item.GlobalPriority}]"));
+            return string.Join(" -> ", processesInfoList.Select(item => $"({item.Id}) {item.EndPointName} [{item.Priority}]"));
         }
     }
 }

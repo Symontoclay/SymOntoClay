@@ -523,7 +523,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             foreach(var processInfo in tmpProcessesInfoList)
             {
-                sb.AppendLine($"{spaces}{processInfo.Id} {processInfo.Status} {processInfo.Priority} {processInfo.GlobalPriority}");
+                sb.AppendLine($"{spaces}{processInfo.Id} {processInfo.Status} [{processInfo.Priority}]");
             }
 
             sb.AppendLine("End ProcessesList");

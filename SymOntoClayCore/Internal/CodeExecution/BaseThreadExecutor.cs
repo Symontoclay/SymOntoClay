@@ -1886,7 +1886,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 Logger.SystemExpr("C618CB67-0C92-492D-8708-A77311FDDCE3", callMethodId, "processInfo.Devices", processInfo.Devices.WritePODListToString());
                 Logger.SystemExpr("ED733C9C-CBBB-487B-904B-E01D1AB75E81", callMethodId, "processInfo.Friends", processInfo.Friends.WritePODListToString());
                 Logger.SystemExpr("C3AA40B1-CEB6-4B23-ADEB-C8EC56EC9898", callMethodId, "processInfo.Priority", processInfo.Priority);
-                Logger.SystemExpr("7AC1BA89-C65D-4CC8-B715-75198F141CDB", callMethodId, "processInfo.GlobalPriority", processInfo.GlobalPriority);
 
                 _instancesStorage.AppendAndTryStartProcessInfo(Logger, callMethodId, processInfo);
 

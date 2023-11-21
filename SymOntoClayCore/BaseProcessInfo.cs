@@ -339,20 +339,6 @@ namespace SymOntoClay.Core
         public float Priority { get; set; } = PrioritiesOfProcesses.Normal;
 
         /// <inheritdoc/>
-        public float GlobalPriority
-        {
-            get
-            {
-                if(ParentProcessInfo == null)
-                {
-                    return Priority;
-                }
-
-                return Priority * ParentProcessInfo.GlobalPriority;
-            }
-        }
-
-        /// <inheritdoc/>
         public abstract IReadOnlyList<string> Friends { get; }
 
         /// <inheritdoc/>
@@ -741,7 +727,6 @@ namespace SymOntoClay.Core
             sb.PrintPODList(n, nameof(Friends), Friends);
 
             sb.AppendLine($"{spaces}{nameof(Priority)} = {Priority}");
-            sb.AppendLine($"{spaces}{nameof(GlobalPriority)} = {GlobalPriority}");
 
             sb.PrintBriefObjProp(n, nameof(ParentProcessInfo), ParentProcessInfo);
             sb.PrintObjListProp(n, "Children", GetChildrenProcessInfoList);
@@ -780,7 +765,6 @@ namespace SymOntoClay.Core
             sb.PrintPODList(n, nameof(Friends), Friends);
 
             sb.AppendLine($"{spaces}{nameof(Priority)} = {Priority}");
-            sb.AppendLine($"{spaces}{nameof(GlobalPriority)} = {GlobalPriority}");
 
             sb.PrintBriefObjProp(n, nameof(ParentProcessInfo), ParentProcessInfo);
             sb.PrintShortObjListProp(n, "Children", GetChildrenProcessInfoList);
@@ -819,7 +803,6 @@ namespace SymOntoClay.Core
             sb.PrintPODList(n, nameof(Friends), Friends);
 
             sb.AppendLine($"{spaces}{nameof(Priority)} = {Priority}");
-            sb.AppendLine($"{spaces}{nameof(GlobalPriority)} = {GlobalPriority}");
 
             sb.PrintExisting(n, nameof(ParentProcessInfo), ParentProcessInfo);
             sb.PrintExistingList(n, "Children", GetChildrenProcessInfoList);

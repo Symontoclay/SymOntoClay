@@ -54,9 +54,6 @@
         <member name="P:SymOntoClay.Core.BaseProcessInfo.Priority">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.BaseProcessInfo.GlobalPriority">
-            <inheritdoc/>
-        </member>
         <member name="P:SymOntoClay.Core.BaseProcessInfo.Friends">
             <inheritdoc/>
         </member>

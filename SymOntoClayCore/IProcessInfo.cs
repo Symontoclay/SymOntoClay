@@ -46,7 +46,6 @@ namespace SymOntoClay.Core
         event ProcessInfoEvent OnComplete;
         event ProcessInfoEvent OnWeakCanceled;
         float Priority { get; }
-        float GlobalPriority { get; }
         IReadOnlyList<string> Friends { get; }
         bool IsFriend(IMonitorLogger logger, IProcessInfo other);
         IProcessInfo ParentProcessInfo { get; set; }

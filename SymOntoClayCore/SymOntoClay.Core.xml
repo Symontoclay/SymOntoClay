@@ -4013,7 +4013,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.ToMonitorSerializableObject">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.NumberValue.ToMonitorSerializableObject(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Operator.Kind">
@@ -4128,7 +4128,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.ToLabel">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.PropertiesToString(System.UInt32)">
@@ -4836,7 +4836,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.ToLabel">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Synonym.Kind">
@@ -4938,13 +4938,13 @@
 			Clones the instance using special context and returns cloned instance.
 		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Value.ToLabel">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Value.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Value.ToMonitorSerializableObject">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Value.ToMonitorSerializableObject(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Value.SymOntoClay#Monitor#Common#IMonitoredHumanizedObject#ToHumanizedString">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Value.SymOntoClay#Monitor#Common#IMonitoredHumanizedObject#ToHumanizedString(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Value.PropertiesToString(System.UInt32)">

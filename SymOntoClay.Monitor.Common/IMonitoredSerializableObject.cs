@@ -6,6 +6,6 @@ namespace SymOntoClay.Monitor.Common
 {
     public interface IMonitoredSerializableObject
     {
-        object ToMonitorSerializableObject();
+        object ToMonitorSerializableObject(IMonitorLogger logger);
     }
 }

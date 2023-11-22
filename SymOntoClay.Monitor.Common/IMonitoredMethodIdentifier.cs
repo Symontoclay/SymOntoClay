@@ -6,6 +6,6 @@ namespace SymOntoClay.Monitor.Common
 {
     public interface IMonitoredMethodIdentifier
     {
-        string ToLabel();
+        string ToLabel(IMonitorLogger logger);
     }
 }

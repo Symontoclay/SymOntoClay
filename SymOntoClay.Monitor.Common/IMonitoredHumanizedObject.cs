@@ -6,6 +6,6 @@ namespace SymOntoClay.Monitor.Common
 {
     public interface IMonitoredHumanizedObject
     {
-        string ToHumanizedString();
+        string ToHumanizedString(IMonitorLogger logger);
     }
 }

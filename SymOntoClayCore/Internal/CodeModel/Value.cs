@@ -251,19 +251,23 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public abstract Value CloneValue(Dictionary<object, object> context);
 
         /// <inheritdoc/>
-        public virtual string ToLabel()
+        public virtual string ToLabel(IMonitorLogger logger)
         {
+            logger.Info("BFB092D3-44EE-4609-8BC9-796F56B00FD5", GetType().FullName);
+
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public virtual object ToMonitorSerializableObject()
+        public virtual object ToMonitorSerializableObject(IMonitorLogger logger)
         {
+            logger.Info("19CE9FAD-574D-4261-AF9A-17B929ECE2F7", GetType().FullName);
+
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        string IMonitoredHumanizedObject.ToHumanizedString()
+        string IMonitoredHumanizedObject.ToHumanizedString(IMonitorLogger logger)
         {
             return ToHumanizedString();
         }

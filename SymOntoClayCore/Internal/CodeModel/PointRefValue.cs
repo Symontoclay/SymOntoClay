@@ -125,7 +125,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override string ToLabel()
+        public override string ToLabel(IMonitorLogger logger)
         {
             return ToHumanizedString();
         }

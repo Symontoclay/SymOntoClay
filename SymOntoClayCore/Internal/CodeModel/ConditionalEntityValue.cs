@@ -24,6 +24,7 @@ using Newtonsoft.Json;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.CodeModel.MonitorSerializableObjects;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Storage;
@@ -269,9 +270,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
             Name?.DiscoverAllAnnotations(result);
         }
 
+        /// <inheritdoc/>
         public override object ToMonitorSerializableObject(IMonitorLogger logger)
         {
-            throw new NotImplementedException();
+            var result = new ConditionalEntityValueMonitorSerializableObject();
+            result.Name = Name?.ToHumanizedString();
+            result.Expression = Expression?.ToHumanizedString();
+            result.LogicalQuery = LogicalQuery?.ToHumanizedString();
+
+            FillUpBaseEntityValueMonitorSerializableObject(result, logger);
+
+            return result;
         }
 
         /// <inheritdoc/>

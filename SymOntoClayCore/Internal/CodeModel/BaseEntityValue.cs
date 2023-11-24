@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.CodeModel.MonitorSerializableObjects;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.Monitor.Common;
 using System;
@@ -438,6 +439,19 @@ namespace SymOntoClay.Core.Internal.CodeModel
             _instanceId = 0;
             _position = null;
             _isEmpty = true;
+        }
+
+        protected void FillUpBaseEntityValueMonitorSerializableObject(BaseEntityValueMonitorSerializableObject obj, IMonitorLogger logger)
+        {
+            obj.EntityId = _entityId?.ToHumanizedString();
+            obj.Id = _id;
+            obj.IdForFacts = _idForFacts;
+            obj.InstanceId = _instanceId;
+            obj.Position = _position;
+            obj.IsEmpty = _isEmpty;
+            obj.Constraints = _constraints?.Select(p => (int)p).ToArray();
+            obj.SpecifiedOnce = _specifiedOnce;
+            obj.OnceStorage = _onceStorage?.ToBriefString();
         }
     }
 }

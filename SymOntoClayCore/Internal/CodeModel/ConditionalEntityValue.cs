@@ -269,6 +269,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
             Name?.DiscoverAllAnnotations(result);
         }
 
+        public override object ToMonitorSerializableObject(IMonitorLogger logger)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {

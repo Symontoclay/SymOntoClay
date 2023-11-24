@@ -334,7 +334,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             return PropertiesToString(n);
         }
-
+        
         protected virtual string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);

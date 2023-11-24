@@ -3,6 +3,20 @@
     on Enter =>
 	{
 	    'Begin' >> @>log;
+		go(#@(waypoint & random));
+		'End' >> @>log;
+	}
+
+	fun go(@target)
+	{
+	}
+}
+
+/*app PeaceKeeper
+{
+    on Enter =>
+	{
+	    'Begin' >> @>log;
 
 	    go~~();
 		walk~~();
@@ -19,7 +33,7 @@
 	{
 	    @@host.`stop`();
 	}
-}
+}*/
 
 /*app PeaceKeeper
 {

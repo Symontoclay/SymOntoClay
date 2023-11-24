@@ -3765,6 +3765,15 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LogicalValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.MonitorSerializableObjects.BaseEntityValueMonitorSerializableObject.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.MonitorSerializableObjects.BaseEntityValueMonitorSerializableObject.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.MonitorSerializableObjects.BaseEntityValueMonitorSerializableObject.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.MutablePartOfRuleInstance.Clone">
             <summary>
 			Clones the instance and returns cloned instance.

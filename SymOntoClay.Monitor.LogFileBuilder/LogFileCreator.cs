@@ -13,13 +13,13 @@ namespace SymOntoClay.Monitor.LogFileBuilder
     public static class LogFileCreator
     {
 #if DEBUG
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        //private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
         public static void Run(LogFileCreatorOptions options)
         {
 #if DEBUG
-            _logger.Info($"options = {options}");
+            //_logger.Info($"options = {options}");
 #endif
 
             var fileNamesList = MessageFilesReader.GetFileNames(options.SourceDirectoryName, options.KindOfMessages).OrderBy(p => p.Item1.GlobalMessageNumber).ToList();
@@ -33,7 +33,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             };
 
 #if DEBUG
-            _logger.Info($"fileStreamsStorageOptions = {fileStreamsStorageOptions}");
+            //_logger.Info($"fileStreamsStorageOptions = {fileStreamsStorageOptions}");
 #endif
 
             using var fileStreamsStorage = new FileStreamsStorage(fileStreamsStorageOptions);
@@ -45,19 +45,19 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             foreach (var fileName in fileNamesList)
             {
 #if DEBUG
-                _logger.Info($"fileName = {fileName}");
+                //_logger.Info($"fileName = {fileName}");
 #endif
 
                 var text = File.ReadAllText(fileName.Item2);
 
 #if DEBUG
-                _logger.Info($"text = {text}");
+                //_logger.Info($"text = {text}");
 #endif
 
                 var message = MessagesFactory.ReadMessage(text, fileName.Item1.KindOfMessage);
 
 #if DEBUG
-                _logger.Info($"message = {message}");
+                //_logger.Info($"message = {message}");
 #endif
 
                 if(!options.TargetNodes?.Any(p => p.Equals(message.NodeId, StringComparison.OrdinalIgnoreCase)) ?? false)
@@ -80,7 +80,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 }
 
 #if DEBUG
-                _logger.Info($"rowSb = {rowSb}");
+                //_logger.Info($"rowSb = {rowSb}");
 #endif
 
                 sw.WriteLine(rowSb);

@@ -120,7 +120,7 @@ namespace TestSandbox.Handlers
                 OutputDirectory = logsOutputDirectory
             });
 
-            _globalLogger.Info($"options = {options}");
+            //_globalLogger.Info($"options = {options}");
 
             LogFileCreator.Run(options);
 

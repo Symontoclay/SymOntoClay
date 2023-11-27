@@ -322,6 +322,7 @@ namespace SymOntoClay.Monitor.Internal
         }
 
         /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public IThreadLogger CreateThreadLogger(string messagePointId, string threadId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -341,6 +342,7 @@ namespace SymOntoClay.Monitor.Internal
         }
 
         /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public IThreadLogger CreateThreadLogger(string messagePointId, string threadId, string parentThreadId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

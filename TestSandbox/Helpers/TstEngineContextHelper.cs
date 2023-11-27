@@ -147,7 +147,8 @@ namespace TestSandbox.Helpers
                 MessagesDir = monitorMessagesDir,
                 KindOfLogicalSearchExplain = KindOfLogicalSearchExplain.None,
                 LogicalSearchExplainDumpDir = Directory.GetCurrentDirectory(),
-                EnableAddingRemovingFactLoggingInStorages = false
+                EnableAddingRemovingFactLoggingInStorages = false,
+                EnableFullCallInfo = true
             };
 
             if(factorySettings.PlatformLogger != null)

@@ -12,7 +12,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.TextRowOptionItems
         /// <inheritdoc/>
         protected override string GetContent(BaseMessage message)
         {
-            return message.ThreadId;
+            return $"ThreadId: {message.ThreadId}";
         }
     }
 }

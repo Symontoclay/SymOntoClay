@@ -301,6 +301,7 @@ namespace SymOntoClay.Monitor.Internal
             NLabeledValue<ParameterMessage>(messagePointId, callMethodId, methodIdentifier.ToLabel(this), parameterValue?.ToMonitorSerializableObject(this), parameterValue.ToHumanizedString(this), memberName, sourceFilePath, sourceLineNumber);
         }
 
+        [MethodForLoggingSupport]
         private void NLabeledValue<T>(string messagePointId, string callMethodId, string label, object value,
             string valueHumanizedString,
             string memberName,

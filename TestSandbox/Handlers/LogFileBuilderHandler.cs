@@ -594,11 +594,11 @@ namespace TestSandbox.Handlers
                     new SpaceTextRowOptionItem(),
                     new MessagePointIdTextRowOptionItem(),
                     new SpaceTextRowOptionItem(),
+                    new ThreadIdTextRowOptionItem(),
+                    new SpaceTextRowOptionItem(),
                     new ClassFullNameTextRowOptionItem(),
                     new SpaceTextRowOptionItem(),
                     new MemberNameTextRowOptionItem(),
-                    new SpaceTextRowOptionItem(),
-                    new ThreadIdTextRowOptionItem(),
                     new SpaceTextRowOptionItem(),
                     new KindOfMessageTextRowOptionItem
                     {

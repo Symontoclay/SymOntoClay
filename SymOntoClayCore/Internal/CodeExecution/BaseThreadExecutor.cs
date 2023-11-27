@@ -282,7 +282,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 }
 
 #if DEBUG
-                //Info("C5B6E668-F7A6-4F76-915D-5472418CF697", $"currentCodeFrame.ToDbgString() = {currentCodeFrame.ToDbgString()}");
+                Info("C5B6E668-F7A6-4F76-915D-5472418CF697", $"currentCodeFrame.ToDbgString() = {currentCodeFrame.ToDbgString()}");
 #endif
 
                 var currentPosition = currentCodeFrame.CurrentPosition;

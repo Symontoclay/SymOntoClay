@@ -398,6 +398,7 @@ namespace SymOntoClay.Monitor
         public bool EnableRemoteConnection { get => _baseMonitorSettings.EnableRemoteConnection; set => _baseMonitorSettings.EnableRemoteConnection = value; }
 
         /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public IMonitorNode CreateMotitorNode(string messagePointId, string nodeId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

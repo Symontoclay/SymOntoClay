@@ -23,6 +23,8 @@ namespace SymOntoClay.Monitor.Internal
         bool EnableHostMethodExecution { get; }
         bool EnableEndHostMethodExecution { get; }
         bool EnableSystemExpr { get; }
+        bool EnableCodeFrame { get; }
+        bool EnableLeaveThreadExecutor { get; }
         bool EnableOutput { get; }
         bool EnableTrace { get; }
         bool EnableDebug { get; }

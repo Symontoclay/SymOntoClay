@@ -225,6 +225,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (currentCodeFrame == null)
                 {
+                    Logger.LeaveThreadExecutor("6173F3EA-CFD0-4603-9A6E-FF06C6866DAD");
+
                     return false;
                 }
 
@@ -281,9 +283,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     return true;
                 }
 
-#if DEBUG
-                Info("C5B6E668-F7A6-4F76-915D-5472418CF697", $"currentCodeFrame.ToDbgString() = {currentCodeFrame.ToDbgString()}");
-#endif
+                Logger.CodeFrame("C5B6E668-F7A6-4F76-915D-5472418CF697", currentCodeFrame.ToDbgString());
 
                 var currentPosition = currentCodeFrame.CurrentPosition;
 
@@ -1550,7 +1550,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             if (constructorName == _defaultCtorName)
             {
                 constructorName = _currentCodeFrame.LocalContext.Owner;
-
             }
 
             IExecutable constructor = null;

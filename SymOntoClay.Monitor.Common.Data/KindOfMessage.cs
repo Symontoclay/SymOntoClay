@@ -27,6 +27,8 @@ namespace SymOntoClay.Monitor.Common.Data
         HostMethodExecution,
         EndHostMethodExecution,
         SystemExpr,
+        CodeFrame,
+        LeaveThreadExecutor,
         Output,
         Trace,
         Debug,

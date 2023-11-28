@@ -58,6 +58,12 @@ namespace SymOntoClay.Monitor.Internal
         public bool EnableSystemExpr { get; set; }
 
         /// <inheritdoc/>
+        public bool EnableCodeFrame { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableLeaveThreadExecutor { get; set; }
+
+        /// <inheritdoc/>
         public bool EnableOutput { get; set; }
 
         /// <inheritdoc/>
@@ -98,6 +104,8 @@ namespace SymOntoClay.Monitor.Internal
             result.EnableHostMethodExecution = EnableHostMethodExecution;
             result.EnableEndHostMethodExecution = EnableEndHostMethodExecution;
             result.EnableSystemExpr = EnableSystemExpr;
+            result.EnableCodeFrame = EnableCodeFrame;
+            result.EnableLeaveThreadExecutor = EnableLeaveThreadExecutor;
             result.EnableOutput = EnableOutput;
             result.EnableTrace = EnableTrace;
             result.EnableDebug = EnableDebug;
@@ -142,6 +150,8 @@ namespace SymOntoClay.Monitor.Internal
             sb.AppendLine($"{spaces}{nameof(EnableHostMethodExecution)} = {EnableHostMethodExecution}");
             sb.AppendLine($"{spaces}{nameof(EnableEndHostMethodExecution)} = {EnableEndHostMethodExecution}");
             sb.AppendLine($"{spaces}{nameof(EnableSystemExpr)} = {EnableSystemExpr}");
+            sb.AppendLine($"{spaces}{nameof(EnableCodeFrame)} = {EnableCodeFrame}");
+            sb.AppendLine($"{spaces}{nameof(EnableLeaveThreadExecutor)} = {EnableLeaveThreadExecutor}");
             sb.AppendLine($"{spaces}{nameof(EnableOutput)} = {EnableOutput}");
             sb.AppendLine($"{spaces}{nameof(EnableTrace)} = {EnableTrace}");
             sb.AppendLine($"{spaces}{nameof(EnableDebug)} = {EnableDebug}");

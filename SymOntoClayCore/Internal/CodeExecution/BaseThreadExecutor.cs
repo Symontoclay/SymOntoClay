@@ -1365,11 +1365,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
         }
 
-        private void GoBackToPrevCodeFrame()
-        {
-            GoBackToPrevCodeFrame(ActionExecutionStatus.None);
-        }
-
         private void GoBackToPrevCodeFrame(ActionExecutionStatus targetActionExecutionStatus)
         {
             if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus == ActionExecutionStatus.Executing)

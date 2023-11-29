@@ -76,6 +76,12 @@ namespace SymOntoClay.Monitor.Common.Data
                 case KindOfMessage.SystemExpr:
                     return JsonConvert.DeserializeObject<SystemExprMessage>(content);
 
+                case KindOfMessage.CodeFrame:
+                    return JsonConvert.DeserializeObject<CodeFrameMessage>(content);
+
+                case KindOfMessage.LeaveThreadExecutor:
+                    return JsonConvert.DeserializeObject<LeaveThreadExecutorMessage>(content);
+
                 case KindOfMessage.Output:
                     return JsonConvert.DeserializeObject<OutputMessage>(content);
 

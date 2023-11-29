@@ -23,7 +23,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 #endif
 
             var kindOfMessage = message.KindOfMessage;
-            
+
             switch (kindOfMessage)
             {
                 case KindOfMessage.CreateMotitorNode:
@@ -80,6 +80,12 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 case KindOfMessage.SystemExpr:
                     return GetSystemExpr(message as SystemExprMessage);
 
+                case KindOfMessage.CodeFrame:
+                    return GetCodeFrame(message as CodeFrameMessage);
+
+                case KindOfMessage.LeaveThreadExecutor:
+                    return GetLeaveThreadExecutor(message as LeaveThreadExecutorMessage);
+
                 case KindOfMessage.Output:
                     return GetOutput(message as OutputMessage);
 
@@ -119,7 +125,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             var sb = new StringBuilder($"MotitorNode '{message.NodeId}' has created ThreadLogger '{message.ThreadId}'");
 
-            if(!string.IsNullOrWhiteSpace(message.ParentThreadId))
+            if (!string.IsNullOrWhiteSpace(message.ParentThreadId))
             {
                 sb.Append($" with ParentThreadId '{message.ParentThreadId}'");
             }
@@ -129,7 +135,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
         private static string GetCallMethod(CallMethodMessage message)
         {
-            return $"<{message.CallMethodId}> [{(message.IsSynk ? "sync" : "async" )}] {message.MethodName}";
+            return $"<{message.CallMethodId}> [{(message.IsSynk ? "sync" : "async")}] {message.MethodName}";
         }
 
         private static string GetParameter(ParameterMessage message)
@@ -217,6 +223,16 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 #endif
 
             return tmpResult;
+        }
+
+        private static string GetCodeFrame(CodeFrameMessage message)
+        {
+            return $"\n{message.HumanizedStr}\n";
+        }
+
+        private static string GetLeaveThreadExecutor(LeaveThreadExecutorMessage message)
+        {
+            return string.Empty;
         }
 
         private static string GetOutput(OutputMessage message)

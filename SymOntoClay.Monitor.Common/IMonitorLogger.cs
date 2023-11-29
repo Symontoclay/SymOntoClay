@@ -131,6 +131,11 @@ namespace SymOntoClay.Monitor.Common
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);
 
+        void GoBackToPrevCodeFrame(string messagePointId, int targetActionExecutionStatus, string targetActionExecutionStatusStr,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0);
+
         //from channel
         void Output(string messagePointId, string message,
             [CallerMemberName] string memberName = "",

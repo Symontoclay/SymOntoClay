@@ -86,6 +86,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 case KindOfMessage.LeaveThreadExecutor:
                     return GetLeaveThreadExecutor(message as LeaveThreadExecutorMessage);
 
+                case KindOfMessage.GoBackToPrevCodeFrame:
+                    return GetGoBackToPrevCodeFrame(message as GoBackToPrevCodeFrameMessage);
+
                 case KindOfMessage.Output:
                     return GetOutput(message as OutputMessage);
 
@@ -233,6 +236,11 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private static string GetLeaveThreadExecutor(LeaveThreadExecutorMessage message)
         {
             return string.Empty;
+        }
+
+        public static string GetGoBackToPrevCodeFrame(GoBackToPrevCodeFrameMessage message)
+        {
+            return message.TargetActionExecutionStatusStr;
         }
 
         private static string GetOutput(OutputMessage message)

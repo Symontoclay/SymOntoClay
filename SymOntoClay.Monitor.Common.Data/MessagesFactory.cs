@@ -82,6 +82,9 @@ namespace SymOntoClay.Monitor.Common.Data
                 case KindOfMessage.LeaveThreadExecutor:
                     return JsonConvert.DeserializeObject<LeaveThreadExecutorMessage>(content);
 
+                case KindOfMessage.GoBackToPrevCodeFrame:
+                    return JsonConvert.DeserializeObject<GoBackToPrevCodeFrameMessage>(content);
+
                 case KindOfMessage.Output:
                     return JsonConvert.DeserializeObject<OutputMessage>(content);
 

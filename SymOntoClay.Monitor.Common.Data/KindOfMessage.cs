@@ -29,6 +29,7 @@ namespace SymOntoClay.Monitor.Common.Data
         SystemExpr,
         CodeFrame,
         LeaveThreadExecutor,
+        GoBackToPrevCodeFrame,
         Output,
         Trace,
         Debug,

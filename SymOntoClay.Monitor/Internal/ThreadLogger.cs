@@ -216,6 +216,14 @@ namespace SymOntoClay.Monitor.Internal
             }
         }
 
+        bool IMonitorFeatures.EnableGoBackToPrevCodeFrame
+        {
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableGoBackToPrevCodeFrame;
+            }
+        }
+
         bool IMonitorFeatures.EnableOutput
         {
             get
@@ -313,6 +321,7 @@ namespace SymOntoClay.Monitor.Internal
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableSystemExpr)} = {monitorFeatures.EnableSystemExpr}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableCodeFrame)} = {monitorFeatures.EnableCodeFrame}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableLeaveThreadExecutor)} = {monitorFeatures.EnableLeaveThreadExecutor}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableGoBackToPrevCodeFrame)} = {monitorFeatures.EnableGoBackToPrevCodeFrame}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableOutput)} = {monitorFeatures.EnableOutput}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableTrace)} = {monitorFeatures.EnableTrace}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableDebug)} = {monitorFeatures.EnableDebug}");
@@ -554,6 +563,16 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
             _monitorLoggerImpl.LeaveThreadExecutor(messagePointId, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void GoBackToPrevCodeFrame(string messagePointId, int targetActionExecutionStatus, string targetActionExecutionStatusStr,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.GoBackToPrevCodeFrame(messagePointId, targetActionExecutionStatus, targetActionExecutionStatusStr, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>

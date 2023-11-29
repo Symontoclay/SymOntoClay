@@ -64,6 +64,9 @@ namespace SymOntoClay.Monitor.Internal
         public bool EnableLeaveThreadExecutor { get; set; }
 
         /// <inheritdoc/>
+        public bool EnableGoBackToPrevCodeFrame { get; set; }
+
+        /// <inheritdoc/>
         public bool EnableOutput { get; set; }
 
         /// <inheritdoc/>
@@ -106,6 +109,7 @@ namespace SymOntoClay.Monitor.Internal
             result.EnableSystemExpr = EnableSystemExpr;
             result.EnableCodeFrame = EnableCodeFrame;
             result.EnableLeaveThreadExecutor = EnableLeaveThreadExecutor;
+            result.EnableGoBackToPrevCodeFrame = EnableGoBackToPrevCodeFrame;
             result.EnableOutput = EnableOutput;
             result.EnableTrace = EnableTrace;
             result.EnableDebug = EnableDebug;
@@ -152,6 +156,7 @@ namespace SymOntoClay.Monitor.Internal
             sb.AppendLine($"{spaces}{nameof(EnableSystemExpr)} = {EnableSystemExpr}");
             sb.AppendLine($"{spaces}{nameof(EnableCodeFrame)} = {EnableCodeFrame}");
             sb.AppendLine($"{spaces}{nameof(EnableLeaveThreadExecutor)} = {EnableLeaveThreadExecutor}");
+            sb.AppendLine($"{spaces}{nameof(EnableGoBackToPrevCodeFrame)} = {EnableGoBackToPrevCodeFrame}");
             sb.AppendLine($"{spaces}{nameof(EnableOutput)} = {EnableOutput}");
             sb.AppendLine($"{spaces}{nameof(EnableTrace)} = {EnableTrace}");
             sb.AppendLine($"{spaces}{nameof(EnableDebug)} = {EnableDebug}");

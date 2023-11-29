@@ -232,19 +232,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus != ActionExecutionStatus.Executing)
                 {
-                    GoBackToPrevCodeFrame(_executionCoordinator.ExecutionStatus);
+                    GoBackToPrevCodeFrame("E6E7605D-E9C3-4FF6-A70B-4C28F77F9A64", _executionCoordinator.ExecutionStatus);
                     return true;
                 }
 
                 if (currentCodeFrame.ProcessInfo.Status == ProcessStatus.Canceled)
                 {
-                    GoBackToPrevCodeFrame(ActionExecutionStatus.Canceled);
+                    GoBackToPrevCodeFrame("B691C44F-4168-4EDB-B113-D59E8E6A2A45", ActionExecutionStatus.Canceled);
                     return true;
                 }
 
                 if (currentCodeFrame.ProcessInfo.Status == ProcessStatus.WeakCanceled)
                 {
-                    GoBackToPrevCodeFrame(ActionExecutionStatus.WeakCanceled);
+                    GoBackToPrevCodeFrame("8C345CC8-A8EA-4241-8C93-17E6ADA6D33A", ActionExecutionStatus.WeakCanceled);
                     return true;
                 }
 
@@ -261,11 +261,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         switch(timeoutCancellationMode)
                         {
                             case TimeoutCancellationMode.WeakCancel:
-                                GoBackToPrevCodeFrame(ActionExecutionStatus.WeakCanceled);
+                                GoBackToPrevCodeFrame("AD20A217-8A76-43C8-ADDC-44DE270229B1", ActionExecutionStatus.WeakCanceled);
                                 break;
 
                             case TimeoutCancellationMode.Cancel:
-                                GoBackToPrevCodeFrame(ActionExecutionStatus.Canceled);
+                                GoBackToPrevCodeFrame("0D771BAF-D08B-4869-9A8E-CCE324382C83", ActionExecutionStatus.Canceled);
                                 break;
 
                             default:
@@ -279,7 +279,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (cancellationToken.IsCancellationRequested)
                 {
-                    GoBackToPrevCodeFrame(ActionExecutionStatus.Canceled);
+                    GoBackToPrevCodeFrame("1F90CC1F-99B5-49FA-A661-754A81E0BC7B", ActionExecutionStatus.Canceled);
                     return true;
                 }
 
@@ -291,12 +291,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (currentPosition >= compiledFunctionBodyCommands.Count)
                 {
-                    GoBackToPrevCodeFrame(ActionExecutionStatus.Complete);
+                    GoBackToPrevCodeFrame("9B3F7A86-FA93-4F76-A4C6-B0C0D54D2D0D", ActionExecutionStatus.Complete);
                     return true;
                 }
 
                 if (!CheckReturnedInfo())
                 {
+                    Logger.LeaveThreadExecutor("D2D3002E-9A1B-4847-9394-B845AA13559F");
                     return false;
                 }
 
@@ -807,7 +808,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Completed;
 
-            GoBackToPrevCodeFrame(ActionExecutionStatus.Complete);
+            GoBackToPrevCodeFrame("E2204170-6974-4F11-83F0-D078939C58C4", ActionExecutionStatus.Complete);
 
             if (_currentCodeFrame == null)
             {
@@ -823,7 +824,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Completed;
 
-            GoBackToPrevCodeFrame(ActionExecutionStatus.Complete);
+            GoBackToPrevCodeFrame("7CA393A1-A3B8-48B5-BFF9-F7BA38048B13", ActionExecutionStatus.Complete);
 
             var currentValue = NullValue.Instance;
 
@@ -1265,7 +1266,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Faulted;
 
-                GoBackToPrevCodeFrame(ActionExecutionStatus.Faulted);
+                GoBackToPrevCodeFrame("7521D54F-D408-4098-9B77-29BD014AF10C", ActionExecutionStatus.Faulted);
             }
             else
             {
@@ -1273,7 +1274,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 {
                     _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Faulted;
 
-                    GoBackToPrevCodeFrame(ActionExecutionStatus.Faulted);
+                    GoBackToPrevCodeFrame("1115613F-CEE0-4FA3-8E04-554B1C8B3E4E", ActionExecutionStatus.Faulted);
                 }
             }
         }
@@ -1365,8 +1366,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
         }
 
-        private void GoBackToPrevCodeFrame(ActionExecutionStatus targetActionExecutionStatus)
+        private void GoBackToPrevCodeFrame(string messagePointId, ActionExecutionStatus targetActionExecutionStatus)
         {
+            Logger.GoBackToPrevCodeFrame(messagePointId, (int)targetActionExecutionStatus, targetActionExecutionStatus.ToString());
+
             if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus == ActionExecutionStatus.Executing)
             {
                 var specialMark = _currentCodeFrame.SpecialMark;
@@ -1452,7 +1455,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 {
                     _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Canceled;
 
-                    GoBackToPrevCodeFrame(ActionExecutionStatus.Canceled);
+                    GoBackToPrevCodeFrame("BCE9BB8B-31E5-4A1F-ADED-A9E6733A535C", ActionExecutionStatus.Canceled);
                     return;
                 }
 
@@ -1938,7 +1941,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                             _isCanceled = true;
 
-                            GoBackToPrevCodeFrame(ActionExecutionStatus.Canceled);
+                            GoBackToPrevCodeFrame("3D0329B2-6EAC-470C-AA88-D1DEC6E41374", ActionExecutionStatus.Canceled);
                             return;
 
                         case ProcessStatus.Faulted:
@@ -1949,7 +1952,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                                 throw new NotImplementedException();
                             }
 
-                            GoBackToPrevCodeFrame(ActionExecutionStatus.Faulted);
+                            GoBackToPrevCodeFrame("05D7C078-24B4-4189-81F2-59BDA492A1D2", ActionExecutionStatus.Faulted);
                             return;
                     }
                 }

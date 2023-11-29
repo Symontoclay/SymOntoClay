@@ -203,6 +203,14 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         }
 
         /// <inheritdoc/>
+        public void GoBackToPrevCodeFrame(string messagePointId, int targetActionExecutionStatus, string targetActionExecutionStatusStr,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+        }
+
+        /// <inheritdoc/>
         public void Output(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

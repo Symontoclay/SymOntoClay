@@ -3,6 +3,29 @@
     on Enter =>
 	{
 	    'Begin' >> @>log;
+		go();
+		'End' >> @>log;
+	}
+
+	fun go()
+	{
+		'Begin go' >> @>log;
+		kill();
+		'End go' >> @>log;
+	}
+
+	fun kill()
+	{
+	    'Begin kill' >> @>log;
+		'End kill' >> @>log;
+	}
+}
+
+/*app PeaceKeeper
+{
+    on Enter =>
+	{
+	    'Begin' >> @>log;
 		go(#@(waypoint & random));
 		'End' >> @>log;
 	}
@@ -10,7 +33,7 @@
 	fun go(@target)
 	{
 	}
-}
+}*/
 
 /*app PeaceKeeper
 {

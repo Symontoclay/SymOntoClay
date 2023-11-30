@@ -1716,8 +1716,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var caller = TryResolveFromVarOrExpr(valueStack.Pop());
 
 #if DEBUG
-            //Info("B480D9AB-70E4-4D5B-BFC0-AB9274AD0A64", $"caller = {caller}");
-            //Info("B480D9AB-70E4-4D5B-BFC0-AB9274AD0A64", $"caller = {caller.ToHumanizedString()}");
+            Info("B480D9AB-70E4-4D5B-BFC0-AB9274AD0A64", $"caller = {caller}");
+            Info("B480D9AB-70E4-4D5B-BFC0-AB9274AD0A64", $"caller = {caller.ToHumanizedString()}");
+            Info("A513C3A8-C4EB-4398-9B59-3B929A7FDAFF", $"_currentCodeFrame.ProcessInfo = {_currentCodeFrame.ProcessInfo}");
 #endif
 
             var callMethodId = Logger.CallMethod("7854EEB4-52A1-4B41-95BD-5417B983EB27", caller, syncOption == SyncOption.Sync);

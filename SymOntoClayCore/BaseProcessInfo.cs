@@ -42,7 +42,7 @@ namespace SymOntoClay.Core
     public abstract class BaseProcessInfo : IProcessInfo
     {
         protected static IMonitorLogger _logger = MonitorLoggerNLogImpementation.Instance;
-
+        
         protected BaseProcessInfo()
         {
             Id = NameHelper.GetNewEntityNameString();

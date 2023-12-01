@@ -130,5 +130,22 @@ namespace SymOntoClay.Core.Internal.IndexedData
         {
             return $"{NameOfVar?.ToHumanizedString(options)}: {FoundExpression?.ToHumanizedString(options)}";
         }
+
+        /// <inheritdoc/>
+        public string ToHumanizedLabel(HumanizedOptions options = HumanizedOptions.ShowAll)
+        {
+            var opt = new DebugHelperOptions()
+            {
+                HumanizedOptions = options
+            };
+
+            return ToHumanizedLabel(opt);
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            return ToHumanizedString(options);
+        }
     }
 }

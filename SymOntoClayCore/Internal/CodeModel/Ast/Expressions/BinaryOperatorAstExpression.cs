@@ -148,5 +148,11 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
 
             return sb.ToString();
         }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedLabel(DebugHelperOptions options)
+        {
+
+        }
     }
 }

@@ -30,5 +30,7 @@ namespace SymOntoClay.Core.DebugHelpers
     {
         string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll);
         string ToHumanizedString(DebugHelperOptions options);
+        string ToHumanizedLabel(HumanizedOptions options = HumanizedOptions.ShowAll);
+        string ToHumanizedLabel(DebugHelperOptions options);
     }
 }

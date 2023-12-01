@@ -135,5 +135,11 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         {
             return $"wait {string.Join(",", Items?.Select(p => p.ToHumanizedString(options)))};";
         }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedLabel(DebugHelperOptions options)
+        {
+
+        }
     }
 }

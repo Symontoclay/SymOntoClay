@@ -36,7 +36,7 @@ namespace SymOntoClay.Core
     {
         string Id { get; }
         string EndPointName { get; }
-        string HumanizedLabel { get; }
+        //string HumanizedLabel { get; }
         ProcessStatus Status { get; set; }
         bool IsFinished { get; }
         IReadOnlyList<int> Devices { get; }

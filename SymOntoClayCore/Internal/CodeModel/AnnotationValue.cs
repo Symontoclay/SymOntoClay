@@ -167,5 +167,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             return "[:-- Annotation --:]";
         }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedLabel(DebugHelperOptions options)
+        {
+
+        }
     }
 }

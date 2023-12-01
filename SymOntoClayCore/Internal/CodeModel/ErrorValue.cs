@@ -162,5 +162,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             return $"ERROR {RuleInstance.ToHumanizedString(options)}";
         }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            return ToHumanizedString(options);
+        }
     }
 }

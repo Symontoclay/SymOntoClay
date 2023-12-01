@@ -125,5 +125,11 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         {
             throw new NotImplementedException();
         }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

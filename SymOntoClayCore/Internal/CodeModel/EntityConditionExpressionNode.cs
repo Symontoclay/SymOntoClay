@@ -256,5 +256,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             return DebugHelperForEntityConditionExpression.ToString(this, options);
         }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            return ToHumanizedString(options);
+        }
     }
 }

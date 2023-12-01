@@ -109,10 +109,5 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
         }
-
-        public string GetHumanizeDbgString()
-        {
-            return DebugHelperForRuleInstance.ToString(this);
-        }
     }
 }

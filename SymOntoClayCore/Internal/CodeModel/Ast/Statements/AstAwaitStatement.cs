@@ -59,5 +59,11 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         {
             return "await";
         }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedLabel(DebugHelperOptions options)
+        {
+
+        }
     }
 }

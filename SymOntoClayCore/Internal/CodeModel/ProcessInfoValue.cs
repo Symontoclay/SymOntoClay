@@ -170,5 +170,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             return $"proc: {ProcessInfo.Id} ({ProcessInfo.Status})";
         }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedLabel(DebugHelperOptions options)
+        {
+
+        }
     }
 }

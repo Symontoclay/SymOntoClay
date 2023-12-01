@@ -128,5 +128,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             return "ref: @@Host";
         }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            
+        }
     }
 }

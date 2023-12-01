@@ -79,5 +79,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             throw new NotImplementedException();
         }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

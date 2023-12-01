@@ -142,5 +142,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.RawStatements
         {
             throw new NotImplementedException();
         }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -234,5 +234,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             return $"`{_debugView}`";
         }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedLabel(DebugHelperOptions options)
+        {
+
+        }
     }
 }

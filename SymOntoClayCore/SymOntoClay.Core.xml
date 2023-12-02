@@ -4374,9 +4374,6 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
@@ -5119,9 +5116,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Synonym.Kind">

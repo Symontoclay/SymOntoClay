@@ -251,11 +251,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public abstract Value CloneValue(Dictionary<object, object> context);
 
         /// <inheritdoc/>
-        public virtual string ToLabel(IMonitorLogger logger)
+        public string ToLabel(IMonitorLogger logger)
         {
-            logger.Info("BFB092D3-44EE-4609-8BC9-796F56B00FD5", GetType().FullName);
-
-            throw new NotImplementedException();
+            return ToHumanizedLabel();
         }
 
         /// <inheritdoc/>

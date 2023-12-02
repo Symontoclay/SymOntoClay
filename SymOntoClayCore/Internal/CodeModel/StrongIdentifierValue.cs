@@ -295,12 +295,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return NToHumanizedString();
         }
 
-        /// <inheritdoc/>
-        public override string ToLabel(IMonitorLogger logger)
-        {
-            return NToHumanizedString();
-        }
-
         private string NToHumanizedString()
         {
             return NameValue;

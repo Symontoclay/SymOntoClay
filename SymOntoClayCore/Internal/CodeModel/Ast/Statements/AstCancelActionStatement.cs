@@ -57,13 +57,18 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            return "cancel action;";
+            return NToHumanizedString();
         }
 
         /// <inheritdoc/>
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
-            
+            return NToHumanizedString();
+        }
+
+        private string NToHumanizedString()
+        {
+            return "cancel action;";
         }
     }
 }

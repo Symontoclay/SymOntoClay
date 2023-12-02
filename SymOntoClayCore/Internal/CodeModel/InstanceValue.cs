@@ -174,5 +174,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             return $"ref: {InstanceInfo.Name.NameValue}";
         }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            return NToHumanizedString();
+        }
     }
 }

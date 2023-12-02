@@ -204,5 +204,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             return $"#@[{Distance.ToHumanizedString(options)}, {HorizontalAngle.ToHumanizedString(options)}]";
         }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            return ToHumanizedString(options);
+        }
     }
 }

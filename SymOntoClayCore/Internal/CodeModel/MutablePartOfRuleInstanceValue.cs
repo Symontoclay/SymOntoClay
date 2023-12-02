@@ -178,5 +178,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             return DebugHelperForRuleInstance.ToString(MutablePartOfRuleInstance.Parent, opt);
         }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            return ToHumanizedString(options);
+        }
     }
 }

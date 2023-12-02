@@ -237,6 +237,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
+            return NToHumanizedString();
+        }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            return NToHumanizedString();
+        }
+
+        private string NToHumanizedString()
+        {
             var sb = new StringBuilder();
 
             if (LeftBoundary == null)
@@ -278,12 +289,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
 
             return sb.ToString();
-        }
-
-        /// <inheritdoc/>
-        public override string ToHumanizedLabel(DebugHelperOptions options)
-        {
-
         }
     }
 }

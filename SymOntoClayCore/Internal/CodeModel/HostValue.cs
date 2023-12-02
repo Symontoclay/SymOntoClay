@@ -132,7 +132,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
-            
+            return NToHumanizedString();
         }
     }
 }

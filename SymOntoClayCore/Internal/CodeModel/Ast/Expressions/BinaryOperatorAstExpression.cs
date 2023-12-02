@@ -152,7 +152,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         /// <inheritdoc/>
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
-
+            return ToHumanizedString(options);
         }
     }
 }

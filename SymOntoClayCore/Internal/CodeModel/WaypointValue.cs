@@ -199,6 +199,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
+            return NToHumanizedString();
+        }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            return NToHumanizedString();
+        }
+
+        private string NToHumanizedString()
+        {
             if (Name != null && !Name.IsEmpty)
             {
                 return $"{Name.NameValue}[{Distance.ToString(CultureInfo.InvariantCulture)}, {HorizontalAngle.ToString(CultureInfo.InvariantCulture)}]";

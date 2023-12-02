@@ -215,5 +215,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             return SystemValue.Value.ToString(CultureInfo.InvariantCulture);
         }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            return NToHumanizedString();
+        }
     }
 }

@@ -204,6 +204,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
+        public override string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            return NToHumanizedString();
+        }
+
+        /// <inheritdoc/>
         public override object ToMonitorSerializableObject(IMonitorLogger logger)
         {
             return SystemValue;

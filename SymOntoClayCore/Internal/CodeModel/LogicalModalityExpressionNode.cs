@@ -176,5 +176,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             return DebugHelperForLogicalModalityExpression.ToString(this, options);
         }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            return ToHumanizedString(options);
+        }
     }
 }

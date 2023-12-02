@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
@@ -32,11 +33,10 @@ namespace SymOntoClay.Core
 {
     public delegate void ProcessInfoEvent(IProcessInfo sender);
 
-    public interface IProcessInfo : IDisposable, IObjectToString, IObjectToShortString, IObjectToBriefString
+    public interface IProcessInfo : IDisposable, IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToHumanizedString
     {
         string Id { get; }
         string EndPointName { get; }
-        //string HumanizedLabel { get; }
         ProcessStatus Status { get; set; }
         bool IsFinished { get; }
         IReadOnlyList<int> Devices { get; }

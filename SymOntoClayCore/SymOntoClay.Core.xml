@@ -120,6 +120,18 @@
         <member name="M:SymOntoClay.Core.BaseProcessInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.BaseStorageSettings.Id">
             <summary>
             Gets or sets unique Id.

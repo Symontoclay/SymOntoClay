@@ -23,6 +23,7 @@ SOFTWARE.*/
 using Newtonsoft.Json.Linq;
 using NLog;
 using NLog.Fluent;
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
@@ -808,6 +809,45 @@ namespace SymOntoClay.Core
             sb.PrintExistingList(n, "Children", GetChildrenProcessInfoList);
 
             return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
+        {
+            var opt = new DebugHelperOptions()
+            {
+                HumanizedOptions = options
+            };
+
+            return ToHumanizedString(opt);
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedString(DebugHelperOptions options)
+        {
+            return NToHumanizedString();
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedLabel(HumanizedOptions options = HumanizedOptions.ShowAll)
+        {
+            var opt = new DebugHelperOptions()
+            {
+                HumanizedOptions = options
+            };
+
+            return ToHumanizedLabel(opt);
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            return NToHumanizedString();
+        }
+
+        private string NToHumanizedString()
+        {
+            return $"proc: {Id} ({Status})";
         }
     }
 }

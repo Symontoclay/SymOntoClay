@@ -168,18 +168,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            return NToHumanizedString();
+            return ProcessInfo.ToHumanizedString(options);
         }
 
         /// <inheritdoc/>
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
-            return NToHumanizedString();
-        }
-
-        private string NToHumanizedString()
-        {
-            return $"proc: {ProcessInfo.Id} ({ProcessInfo.Status})";
+            return ToHumanizedString(options);
         }
     }
 }

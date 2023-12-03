@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -251,10 +252,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public abstract Value CloneValue(Dictionary<object, object> context);
 
         /// <inheritdoc/>
-        public string ToLabel(IMonitorLogger logger)
-        {
-            return ToHumanizedLabel();
-        }
+        public abstract MonitoredHumanizedLabel ToLabel(IMonitorLogger logger);
 
         /// <inheritdoc/>
         public virtual object ToMonitorSerializableObject(IMonitorLogger logger)

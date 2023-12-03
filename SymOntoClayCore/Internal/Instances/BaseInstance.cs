@@ -29,6 +29,7 @@ using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -687,6 +688,60 @@ namespace SymOntoClay.Core.Internal.Instances
             sb.AppendLine($"{spaces}{nameof(_instanceState)} = {_instanceState}");
 
             return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
+        {
+            var opt = new DebugHelperOptions()
+            {
+                HumanizedOptions = options
+            };
+
+            return ToHumanizedString(opt);
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedString(DebugHelperOptions options)
+        {
+            return NToHumanizedString();
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedLabel(HumanizedOptions options = HumanizedOptions.ShowAll)
+        {
+            var opt = new DebugHelperOptions()
+            {
+                HumanizedOptions = options
+            };
+
+            return ToHumanizedLabel(opt);
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            return NToHumanizedString();
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedString(IMonitorLogger logger)
+        {
+            return NToHumanizedString();
+        }
+
+        private string NToHumanizedString()
+        {
+            return $"ref: {Name.NameValue}";
+        }
+
+        /// <inheritdoc/>
+        public MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
+        {
+            return new MonitoredHumanizedLabel()
+            {
+                Label = NToHumanizedString()
+            };
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,8 @@ namespace SymOntoClay.Monitor.Common.Data
         public override KindOfMessage KindOfMessage => KindOfMessage.CallMethod;
 
         public string CallMethodId { get; set; }
-        public string MethodName { get; set; }
+        public MonitoredHumanizedLabel MethodLabel { get; set; }
+        public string AltMethodName { get; set; }
         public bool IsSynk { get; set; }
 
         /// <inheritdoc/>
@@ -23,7 +25,8 @@ namespace SymOntoClay.Monitor.Common.Data
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(CallMethodId)} = {CallMethodId}");
-            sb.AppendLine($"{spaces}{nameof(MethodName)} = {MethodName}");
+            sb.PrintObjProp(n, nameof(MethodLabel), MethodLabel);
+            sb.AppendLine($"{spaces}{nameof(AltMethodName)} = {AltMethodName}");
             sb.AppendLine($"{spaces}{nameof(IsSynk)} = {IsSynk}");
 
             sb.Append(base.PropertiesToString(n));

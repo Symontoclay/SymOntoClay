@@ -13,7 +13,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
     public static class MessageContentToTextConverter
     {
 #if DEBUG
-        //private static readonly global::NLog.ILogger _globalLogger = global::NLog.LogManager.GetCurrentClassLogger();
+        private static readonly global::NLog.ILogger _globalLogger = global::NLog.LogManager.GetCurrentClassLogger();
 #endif
 
         public static string GetText(BaseMessage message)
@@ -138,11 +138,49 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
         private static string GetCallMethod(CallMethodMessage message)
         {
-            return $"<{message.CallMethodId}> [{(message.IsSynk ? "sync" : "async")}] {message.MethodName}";
+            var sb = new StringBuilder($"<{message.CallMethodId}> [{(message.IsSynk ? "sync" : "async")}]");
+
+            if(string.IsNullOrWhiteSpace(message.AltMethodName))
+            {
+                var methodLabel = message.MethodLabel;
+
+                if(!string.IsNullOrWhiteSpace(methodLabel.KindOfCodeItemDescriptor))
+                {
+                    throw new NotImplementedException();
+                }
+
+                sb.Append($" {methodLabel.Label}");
+
+                if (methodLabel.Signatures?.Any() ?? false)
+                {
+#if DEBUG
+                    _globalLogger.Info($"message = {message}");
+#endif
+
+                    throw new NotImplementedException();
+                }
+
+                if (methodLabel.Values?.Any() ?? false)
+                {
+#if DEBUG
+                    _globalLogger.Info($"message = {message}");
+#endif
+
+                    throw new NotImplementedException();
+                }
+            }
+            else
+            {
+                sb.Append($" {message.AltMethodName}");
+            }
+
+            return sb.ToString();
         }
 
         private static string GetParameter(ParameterMessage message)
         {
+            fix me
+
             var tmpResult = $"Parameter of <{message.CallMethodId}>: '{message.Label}' = {message.HumanizedString}";//{ObjectToHumanizedStringConverter.FromBase64StringToHumanizedString(message.Base64Content, message.TypeName)}
 
 #if DEBUG
@@ -219,6 +257,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
         private static string GetSystemExpr(SystemExprMessage message)
         {
+            fix me
+
             var tmpResult = $"Expression of <{message.CallMethodId}>: '{message.Label}' = {message.HumanizedString}";//{ObjectToHumanizedStringConverter.FromBase64StringToHumanizedString(message.Base64Content, message.TypeName)}
 
 #if DEBUG

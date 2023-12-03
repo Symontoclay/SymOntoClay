@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -167,18 +168,19 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            return NToHumanizedString();
-        }
-
-        private string NToHumanizedString()
-        {
-            return $"ref: {InstanceInfo.Name.NameValue}";
+            return InstanceInfo.ToHumanizedString(options);
         }
 
         /// <inheritdoc/>
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
-            return NToHumanizedString();
+            return InstanceInfo.ToHumanizedLabel(options);
+        }
+
+        /// <inheritdoc/>
+        public override MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
+        {
+            return InstanceInfo.ToLabel(logger);
         }
     }
 }

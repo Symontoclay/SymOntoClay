@@ -25,6 +25,8 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common.Models;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -216,6 +218,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
 
             return $"#@[{Distance.ToString(CultureInfo.InvariantCulture)}, {HorizontalAngle.ToString(CultureInfo.InvariantCulture)}]";
+        }
+
+        /// <inheritdoc/>
+        public override MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
+        {
+            return new MonitoredHumanizedLabel()
+            {
+                Label = NToHumanizedString()
+            };
         }
     }
 }

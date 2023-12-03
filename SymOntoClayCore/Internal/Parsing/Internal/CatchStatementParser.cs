@@ -193,7 +193,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             }
         }
 
-        private void ParseBody()
+        private new void ParseBody()
         {
             _context.Recovery(_currToken);
             var parser = new FunctionBodyParser(_context);

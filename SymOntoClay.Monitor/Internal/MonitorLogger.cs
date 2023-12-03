@@ -2,6 +2,7 @@
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Data;
+using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.Internal.FileCache;
 using System;
 using System.Collections.Generic;
@@ -84,7 +85,7 @@ namespace SymOntoClay.Monitor.Internal
                 return callMethodId;
             }
 
-            return NCallMethod(messagePointId, methodIdentifier.ToLabel(this), isSynk, callMethodId, memberName, sourceFilePath, sourceLineNumber);
+            return NCallMethod(messagePointId, methodIdentifier, string.Empty, isSynk, callMethodId, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>
@@ -111,11 +112,11 @@ namespace SymOntoClay.Monitor.Internal
                 return callMethodId;
             }
 
-            return NCallMethod(messagePointId, methodName, isSynk, callMethodId, memberName, sourceFilePath, sourceLineNumber);
+            return NCallMethod(messagePointId, null, methodName, isSynk, callMethodId, memberName, sourceFilePath, sourceLineNumber);
         }
 
         [MethodForLoggingSupport]
-        private string NCallMethod(string messagePointId, string methodName,
+        private string NCallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier, string altMethodName,
             bool isSynk,
             string callMethodId,
             string memberName,
@@ -153,7 +154,8 @@ namespace SymOntoClay.Monitor.Internal
 
                 var messageInfo = new CallMethodMessage
                 {
-                    MethodName = methodName,
+                    AltMethodName = altMethodName,
+                    MethodLabel = methodIdentifier.ToLabel(this),
                     DateTimeStamp = now,
                     NodeId = _nodeId,
                     ThreadId = _threadId,
@@ -211,7 +213,7 @@ namespace SymOntoClay.Monitor.Internal
                 return;
             }
 
-            NLabeledValue<ParameterMessage>(messagePointId, callMethodId, parameterName, parameterValue, parameterValue?.ToString() ?? NULL_LITERAL, memberName, sourceFilePath, sourceLineNumber);
+            NLabeledValue<ParameterMessage>(messagePointId, callMethodId, null, parameterName, parameterValue, parameterValue?.ToString() ?? NULL_LITERAL, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>
@@ -240,7 +242,7 @@ namespace SymOntoClay.Monitor.Internal
                 return;
             }
 
-            NLabeledValue<ParameterMessage>(messagePointId, callMethodId, parameterName, parameterValue?.ToMonitorSerializableObject(this), parameterValue.ToHumanizedString(this), memberName, sourceFilePath, sourceLineNumber);
+            NLabeledValue<ParameterMessage>(messagePointId, callMethodId, null, parameterName, parameterValue?.ToMonitorSerializableObject(this), parameterValue.ToHumanizedString(this), memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>
@@ -269,7 +271,7 @@ namespace SymOntoClay.Monitor.Internal
                 return;
             }
 
-            NLabeledValue<ParameterMessage>(messagePointId, callMethodId, methodIdentifier.ToLabel(this), parameterValue, parameterValue?.ToString() ?? NULL_LITERAL, memberName, sourceFilePath, sourceLineNumber);
+            NLabeledValue<ParameterMessage>(messagePointId, callMethodId, methodIdentifier.ToLabel(this), string.Empty, parameterValue, parameterValue?.ToString() ?? NULL_LITERAL, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>
@@ -298,11 +300,11 @@ namespace SymOntoClay.Monitor.Internal
                 return;
             }
 
-            NLabeledValue<ParameterMessage>(messagePointId, callMethodId, methodIdentifier.ToLabel(this), parameterValue?.ToMonitorSerializableObject(this), parameterValue.ToHumanizedString(this), memberName, sourceFilePath, sourceLineNumber);
+            NLabeledValue<ParameterMessage>(messagePointId, callMethodId, methodIdentifier.ToLabel(this), string.Empty, parameterValue?.ToMonitorSerializableObject(this), parameterValue.ToHumanizedString(this), memberName, sourceFilePath, sourceLineNumber);
         }
 
         [MethodForLoggingSupport]
-        private void NLabeledValue<T>(string messagePointId, string callMethodId, string label, object value,
+        private void NLabeledValue<T>(string messagePointId, string callMethodId, MonitoredHumanizedLabel label, string altLabel, object value,
             string valueHumanizedString,
             string memberName,
             string sourceFilePath,
@@ -369,6 +371,7 @@ namespace SymOntoClay.Monitor.Internal
                 var messageInfo = new T
                 {
                     Label = label,
+                    AltLabel = altLabel,
                     TypeName = value?.GetType().FullName ?? NULL_LITERAL,
                     Base64Content = base64Str,
                     HumanizedString = valueHumanizedString,
@@ -1316,7 +1319,7 @@ namespace SymOntoClay.Monitor.Internal
                 return;
             }
 
-            NLabeledValue<SystemExprMessage>(messagePointId, callMethodId, exprLabel, exprValue, exprValue?.ToString() ?? NULL_LITERAL, memberName, sourceFilePath, sourceLineNumber);
+            NLabeledValue<SystemExprMessage>(messagePointId, callMethodId, null, exprLabel, exprValue, exprValue?.ToString() ?? NULL_LITERAL, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>
@@ -1345,7 +1348,7 @@ namespace SymOntoClay.Monitor.Internal
                 return;
             }
 
-            NLabeledValue<SystemExprMessage>(messagePointId, callMethodId, exprLabel, exprValue?.ToMonitorSerializableObject(this), exprValue.ToHumanizedString(this), memberName, sourceFilePath, sourceLineNumber);
+            NLabeledValue<SystemExprMessage>(messagePointId, callMethodId, null, exprLabel, exprValue?.ToMonitorSerializableObject(this), exprValue.ToHumanizedString(this), memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>

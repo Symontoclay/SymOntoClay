@@ -24,6 +24,8 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -105,6 +107,36 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     item.DiscoverAllAnnotations(result);
                 }
             }
+        }
+
+        public MonitoredHumanizedMethodArgument ToMonitoredHumanizedMethodArgument(IMonitorLogger logger)
+        {
+            var result = new MonitoredHumanizedMethodArgument()
+            {
+                HumanizedStr = Name?.ToHumanizedString()
+            };
+
+            if (!TypesList.IsNullOrEmpty())
+            {
+                var typesList = new List<string>();
+
+                foreach (var item in TypesList)
+                {
+                    typesList.Add(item.ToHumanizedString());
+                }
+
+                result.TypesList = typesList;
+            }
+
+            if(HasDefaultValue)
+            {
+                result.DefaultValue = new MonitoredHumanizedMethodParameterValue
+                {
+                    HumanizedStr = DefaultValue.ToHumanizedString()
+                };
+            }
+
+            return result;
         }
 
         /// <inheritdoc/>
@@ -189,7 +221,35 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public string ToHumanizedString(DebugHelperOptions options)
         {
-            throw new NotImplementedException();
+            var sb = new StringBuilder(Name?.ToHumanizedString(options));
+
+            if (!TypesList.IsNullOrEmpty())
+            {
+                var typesList = new List<string>();
+
+                foreach (var item in TypesList)
+                {
+                    typesList.Add(item.ToHumanizedString(options));
+                }
+
+                sb.Append(": ");
+
+                if (typesList.Count == 1)
+                {
+                    sb.Append(typesList.Single());
+                }
+                else
+                {
+                    sb.Append($"({string.Join("|", typesList)})");
+                }
+            }
+
+            if(HasDefaultValue)
+            {
+                sb.Append($" = {DefaultValue.ToHumanizedString(options)}");
+            }
+
+            return sb.ToString();
         }
     }
 }

@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -279,6 +280,31 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
             return ToHumanizedString(options);
+        }
+
+        /// <inheritdoc/>
+        public override MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
+        {
+            var result = new MonitoredHumanizedLabel()
+            {
+                KindOfCodeItemDescriptor = "fun"
+            };
+
+            result.Label = Name.NameValue;
+
+            if (!Arguments.IsNullOrEmpty())
+            {
+                var signatures = new List<MonitoredHumanizedMethodArgument>();
+
+                foreach (var argument in Arguments)
+                {
+                    signatures.Add(argument.ToMonitoredHumanizedMethodArgument(logger));
+                }
+
+                result.Signatures = signatures;
+            }
+
+            return result;
         }
     }
 }

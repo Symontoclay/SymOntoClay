@@ -30,6 +30,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.NLog;
 using System;
 using System.Collections.Generic;
@@ -848,6 +849,18 @@ namespace SymOntoClay.Core
         private string NToHumanizedString()
         {
             return $"proc: {Id} ({Status})";
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedString(IMonitorLogger logger)
+        {
+            return NToHumanizedString();
+        }
+
+        /// <inheritdoc/>
+        public MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
+        {
+            throw new NotImplementedException();
         }
     }
 }

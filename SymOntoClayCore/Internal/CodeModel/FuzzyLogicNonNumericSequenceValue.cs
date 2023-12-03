@@ -24,6 +24,8 @@ using NLog;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common.Models;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -239,6 +241,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
             return NToHumanizedString();
+        }
+
+        /// <inheritdoc/>
+        public override MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
+        {
+            return new MonitoredHumanizedLabel()
+            {
+                Label = NToHumanizedString()
+            };
         }
     }
 }

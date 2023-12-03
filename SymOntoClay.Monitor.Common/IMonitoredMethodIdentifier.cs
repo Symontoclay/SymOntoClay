@@ -4,8 +4,7 @@ using System.Text;
 
 namespace SymOntoClay.Monitor.Common
 {
-    public interface IMonitoredMethodIdentifier
+    public interface IMonitoredMethodIdentifier: IMonitoredHumanizedObject
     {
-        string ToLabel(IMonitorLogger logger);
     }
 }

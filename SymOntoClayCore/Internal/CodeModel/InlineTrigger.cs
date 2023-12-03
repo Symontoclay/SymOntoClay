@@ -33,6 +33,8 @@ using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.Common.Models;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
@@ -279,6 +281,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         /// <inheritdoc/>
         public override string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public override MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
         {
             throw new NotImplementedException();
         }

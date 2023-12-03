@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.NLog;
 using System;
 using System.Collections.Generic;
@@ -174,7 +175,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
-            return ToHumanizedString(options);
+            return ProcessInfo.ToHumanizedLabel(options);
+        }
+
+        /// <inheritdoc/>
+        public override MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
+        {
+            return ProcessInfo.ToLabel(logger);
         }
     }
 }

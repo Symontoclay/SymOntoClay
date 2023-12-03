@@ -22,6 +22,8 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common.Models;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -289,6 +291,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
 
             return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public override MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
+        {
+            return new MonitoredHumanizedLabel()
+            {
+                Label = NToHumanizedString()
+            };
         }
     }
 }

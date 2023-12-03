@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +10,8 @@ namespace SymOntoClay.Monitor.Common.Data
     {
         public string CallMethodId { get; set; }
 
-        public string Label { get; set; }
+        public MonitoredHumanizedLabel Label { get; set; }
+        public string AltLabel { get; set; }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
@@ -18,7 +20,8 @@ namespace SymOntoClay.Monitor.Common.Data
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(CallMethodId)} = {CallMethodId}");
-            sb.AppendLine($"{spaces}{nameof(Label)} = {Label}");
+            sb.AppendLine($"{spaces}{nameof(AltLabel)} = {AltLabel}");
+            sb.PrintObjProp(n, nameof(Label), Label);
 
             sb.Append(base.PropertiesToString(n));
 

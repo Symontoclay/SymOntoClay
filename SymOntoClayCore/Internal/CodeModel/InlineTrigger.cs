@@ -282,7 +282,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
-            throw new NotImplementedException();
+            switch (KindOfInlineTrigger)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(KindOfInlineTrigger), KindOfInlineTrigger, null);
+            }
         }
 
         /// <inheritdoc/>

@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.Monitor.Common.Data;
+using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -136,52 +137,56 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return sb.ToString();
         }
 
-        private static string GetCallMethod(CallMethodMessage message)
+        private static string GetMonitoredHumanizedLabel(MonitoredHumanizedLabel label)
         {
-            var sb = new StringBuilder($"<{message.CallMethodId}> [{(message.IsSynk ? "sync" : "async")}]");
+            var sb = new StringBuilder();
 
-            if(string.IsNullOrWhiteSpace(message.AltMethodName))
+            if (!string.IsNullOrWhiteSpace(label.KindOfCodeItemDescriptor))
             {
-                var methodLabel = message.MethodLabel;
-
-                if(!string.IsNullOrWhiteSpace(methodLabel.KindOfCodeItemDescriptor))
-                {
-                    throw new NotImplementedException();
-                }
-
-                sb.Append($" {methodLabel.Label}");
-
-                if (methodLabel.Signatures?.Any() ?? false)
-                {
-#if DEBUG
-                    _globalLogger.Info($"message = {message}");
-#endif
-
-                    throw new NotImplementedException();
-                }
-
-                if (methodLabel.Values?.Any() ?? false)
-                {
-#if DEBUG
-                    _globalLogger.Info($"message = {message}");
-#endif
-
-                    throw new NotImplementedException();
-                }
+                throw new NotImplementedException();
             }
-            else
+
+            sb.Append($" {label.Label}");
+
+            if (label.Signatures?.Any() ?? false)
             {
-                sb.Append($" {message.AltMethodName}");
+#if DEBUG
+                _globalLogger.Info($"label = {label}");
+#endif
+
+                throw new NotImplementedException();
+            }
+
+            if (label.Values?.Any() ?? false)
+            {
+#if DEBUG
+                _globalLogger.Info($"label = {label}");
+#endif
+
+                throw new NotImplementedException();
             }
 
             return sb.ToString();
         }
 
+        private static string GetMonitoredHumanizedLabel(MonitoredHumanizedLabel label, string altLabel)
+        {
+            if (string.IsNullOrWhiteSpace(altLabel))
+            {
+                return GetMonitoredHumanizedLabel(label);
+            }
+
+            return altLabel;
+        }
+
+        private static string GetCallMethod(CallMethodMessage message)
+        {
+            return $"<{message.CallMethodId}> [{(message.IsSynk ? "sync" : "async")}] {GetMonitoredHumanizedLabel(message.MethodLabel, message.AltMethodName)}";
+        }
+
         private static string GetParameter(ParameterMessage message)
         {
-            fix me
-
-            var tmpResult = $"Parameter of <{message.CallMethodId}>: '{message.Label}' = {message.HumanizedString}";//{ObjectToHumanizedStringConverter.FromBase64StringToHumanizedString(message.Base64Content, message.TypeName)}
+            var tmpResult = $"Parameter of <{message.CallMethodId}>: '{GetMonitoredHumanizedLabel(message.Label, message.AltLabel)}' = {message.HumanizedString}";//{ObjectToHumanizedStringConverter.FromBase64StringToHumanizedString(message.Base64Content, message.TypeName)}
 
 #if DEBUG
             //_globalLogger.Info($"tmpResult = {tmpResult}");
@@ -257,9 +262,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
         private static string GetSystemExpr(SystemExprMessage message)
         {
-            fix me
-
-            var tmpResult = $"Expression of <{message.CallMethodId}>: '{message.Label}' = {message.HumanizedString}";//{ObjectToHumanizedStringConverter.FromBase64StringToHumanizedString(message.Base64Content, message.TypeName)}
+            var tmpResult = $"Expression of <{message.CallMethodId}>: '{GetMonitoredHumanizedLabel(message.Label, message.AltLabel)}' = {message.HumanizedString}";//{ObjectToHumanizedStringConverter.FromBase64StringToHumanizedString(message.Base64Content, message.TypeName)}
 
 #if DEBUG
             //_globalLogger.Info($"tmpResult = {tmpResult}");

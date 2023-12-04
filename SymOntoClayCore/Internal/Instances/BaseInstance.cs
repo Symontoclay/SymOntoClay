@@ -456,6 +456,11 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 foreach (var targetTrigger in targetSystemEventsTriggersList)
                 {
+#if DEBUG
+                    logger.Info("F67C5A2A-2397-403A-BE32-175BB091FF37", $"targetTrigger.KindOfInlineTrigger = {targetTrigger.KindOfInlineTrigger}");
+                    logger.Info("1153D67C-BC9E-4DA9-9AA8-484E26472D27", $"targetTrigger.KindOfSystemEvent = {targetTrigger.KindOfSystemEvent}");
+                    logger.Info("651D3594-EB5A-4E8F-8D33-A0B70A9E9E5F", $"{nameof(targetTrigger)} = {targetTrigger.ToHumanizedLabel()}");
+#endif
                     var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
 
                     var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);

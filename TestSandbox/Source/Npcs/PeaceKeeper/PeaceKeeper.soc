@@ -3,11 +3,11 @@
     on Enter =>
 	{
 	    'Begin' >> @>log;
-		go();
+		go(1);
 		'End' >> @>log;
 	}
 
-	fun go()
+	fun go(@target)
 	{
 		'Begin go' >> @>log;
 		kill();

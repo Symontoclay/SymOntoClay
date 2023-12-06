@@ -35,6 +35,7 @@ using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
+using SymOntoClay.Monitor.NLog;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
@@ -273,10 +274,53 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return sb.ToString();
         }
 
+#if DEBUG
+        private static IMonitorLogger _logger = MonitorLoggerNLogImpementation.Instance;
+#endif
+
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            throw new NotImplementedException();
+            var hasSetStatements = !SetStatements.IsNullOrEmpty();
+            var hasResetStatements = !ResetStatements.IsNullOrEmpty();
+
+            var sb = new StringBuilder();
+            sb.AppendLine(ToHumanizedLabel(options));
+
+            if(hasSetStatements && hasResetStatements)
+            {
+                switch(DoubleConditionsStrategy)
+                {
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(DoubleConditionsStrategy), DoubleConditionsStrategy, null);
+                }
+            }
+
+            sb.AppendLine("{");
+            if (hasSetStatements)
+            {
+                foreach (var item in SetStatements)
+                {
+                    sb.AppendLine(item.ToHumanizedString(options));
+                }
+            }
+            sb.AppendLine("}");
+            if (hasResetStatements)
+            {
+                sb.AppendLine("else");
+                sb.AppendLine("{");
+                foreach (var item in ResetStatements)
+                {
+                    sb.AppendLine(item.ToHumanizedString(options));
+                }
+                sb.AppendLine("}");
+            }
+
+#if DEBUG
+            //_logger.Info("7A2CE6E6-8321-4A35-8106-FA135753A417", $"sb = {sb}");
+#endif
+
+            return sb.ToString();
         }
 
         /// <inheritdoc/>
@@ -284,15 +328,33 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             switch (KindOfInlineTrigger)
             {
+                case KindOfInlineTrigger.SystemEvent:
+                    return SystemEventToHumanizedLabel(options);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(KindOfInlineTrigger), KindOfInlineTrigger, null);
+            }
+        }
+
+        private string SystemEventToHumanizedLabel(DebugHelperOptions options)
+        {
+            switch(KindOfSystemEvent)
+            {
+                case KindOfSystemEventOfInlineTrigger.Enter:
+                    return "on Enter";
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(KindOfSystemEvent), KindOfSystemEvent, null);
             }
         }
 
         /// <inheritdoc/>
         public override MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
         {
-            throw new NotImplementedException();
+            return new MonitoredHumanizedLabel()
+            {
+                Label = ToHumanizedLabel()
+            };
         }
     }
 }

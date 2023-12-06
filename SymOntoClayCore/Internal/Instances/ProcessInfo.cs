@@ -22,11 +22,14 @@ SOFTWARE.*/
 
 using Newtonsoft.Json.Linq;
 using NLog;
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -102,6 +105,77 @@ namespace SymOntoClay.Core.Internal.Instances
             sb.Append(base.PropertiesToBriefString(n));
 
             return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString(DebugHelperOptions options)
+        {
+            var sb = new StringBuilder($"proc: {Id} ({Status})");
+
+            var metadata = CodeFrame?.Metadata;
+
+            if (metadata != null)
+            {
+                sb.Append($" {metadata.ToHumanizedString(options)}");
+            }
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            var sb = new StringBuilder($"proc: {Id} ({Status})");
+
+            var metadata = CodeFrame?.Metadata;
+
+            if (metadata != null)
+            {
+                sb.Append($" {metadata.ToHumanizedLabel(options)}");
+            }
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString(IMonitorLogger logger)
+        {
+            return ToHumanizedString();
+        }
+
+        /// <inheritdoc/>
+        public override MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
+        {
+#if DEBUG
+            //logger.Info("3814F1B0-CBF4-42B0-926F-543960BF81BE", $"CodeFrame?.Metadata.ToLabel(logger) = {CodeFrame?.Metadata.ToLabel(logger)}");
+#endif
+
+            var result = new MonitoredHumanizedLabel();
+
+            var sb = new StringBuilder($"proc: {Id} ({Status})");
+
+            var metadata = CodeFrame?.Metadata;
+
+            if(metadata != null)
+            {
+                var metadataLabel = metadata.ToLabel(logger);
+
+                result.KindOfCodeItemDescriptor = metadataLabel.KindOfCodeItemDescriptor;
+
+                var metadataLabelStr = metadataLabel.Label;
+
+                if (!string.IsNullOrWhiteSpace(metadataLabelStr))
+                {
+                    sb.Append($" {metadataLabelStr}");
+                }
+
+                result.Signatures = metadataLabel.Signatures;
+                metadataLabel.Values = metadataLabel.Values;
+            }
+
+            result.Label = sb.ToString();
+
+            return result;
         }
     }
 }

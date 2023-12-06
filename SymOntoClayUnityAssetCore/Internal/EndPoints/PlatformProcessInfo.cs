@@ -23,11 +23,13 @@ SOFTWARE.*/
 using Newtonsoft.Json;
 using NLog;
 using SymOntoClay.Core;
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -105,5 +107,34 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         private Task _task;
         private readonly CancellationTokenSource _cancellationTokenSource;
         #endregion
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString(DebugHelperOptions options)
+        {
+            return NToHumanizedString();
+        }
+
+        private string NToHumanizedString()
+        {
+            return $"proc: {Id} ({Status})";
+        }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            return NToHumanizedString();
+        }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString(IMonitorLogger logger)
+        {
+            return NToHumanizedString();
+        }
+
+        /// <inheritdoc/>
+        public override MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

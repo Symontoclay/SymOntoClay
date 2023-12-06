@@ -232,34 +232,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var sb = new StringBuilder();
 
-            if(options?.EnableMark ?? false)
-            {
-                sb.Append("fun");
-            }
-
-            if(Name != null && !IsAnonymous)
-            {
-                sb.Append($" {Name.NameValue}");
-            }
-
-            if(!Arguments.IsNullOrEmpty() || ((options?.EnableParamsIfEmpty ?? false) && Arguments.IsNullOrEmpty()))
-            {
-                sb.Append("(");
-
-                if (!Arguments.IsNullOrEmpty())
-                {
-                    var argumentsList = new List<string>();
-
-                    foreach (var argument in Arguments)
-                    {
-                        argumentsList.Add(argument.ToHumanizedString(options));
-                    }
-
-                    sb.Append(string.Join(", ", argumentsList));
-                }
-
-                sb.Append(")");
-            }
+            sb.AppendLine(ToHumanizedLabel(options));
 
             sb.AppendLine("{");
 
@@ -279,7 +252,38 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
-            return ToHumanizedString(options);
+            var sb = new StringBuilder();
+
+            if (options?.EnableMark ?? false)
+            {
+                sb.Append("fun");
+            }
+
+            if (Name != null && !IsAnonymous)
+            {
+                sb.Append($" {Name.NameValue}");
+            }
+
+            if (!Arguments.IsNullOrEmpty() || ((options?.EnableParamsIfEmpty ?? false) && Arguments.IsNullOrEmpty()))
+            {
+                sb.Append("(");
+
+                if (!Arguments.IsNullOrEmpty())
+                {
+                    var argumentsList = new List<string>();
+
+                    foreach (var argument in Arguments)
+                    {
+                        argumentsList.Add(argument.ToHumanizedString(options));
+                    }
+
+                    sb.Append(string.Join(", ", argumentsList));
+                }
+
+                sb.Append(")");
+            }
+
+            return sb.ToString();
         }
 
         /// <inheritdoc/>

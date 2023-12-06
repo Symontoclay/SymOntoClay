@@ -811,7 +811,7 @@ namespace SymOntoClay.Core
 
             return sb.ToString();
         }
-
+        
         /// <inheritdoc/>
         public string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
         {
@@ -824,10 +824,7 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public string ToHumanizedString(DebugHelperOptions options)
-        {
-            return NToHumanizedString();
-        }
+        public abstract string ToHumanizedString(DebugHelperOptions options);
 
         /// <inheritdoc/>
         public string ToHumanizedLabel(HumanizedOptions options = HumanizedOptions.ShowAll)
@@ -841,7 +838,17 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public string ToHumanizedLabel(DebugHelperOptions options)
+        public abstract string ToHumanizedLabel(DebugHelperOptions options);
+
+        /// <inheritdoc/>
+        public abstract string ToHumanizedString(IMonitorLogger logger);
+
+        /// <inheritdoc/>
+        public abstract MonitoredHumanizedLabel ToLabel(IMonitorLogger logger);
+
+        /*
+        /// <inheritdoc/>
+        public string ToHumanizedString(DebugHelperOptions options)
         {
             return NToHumanizedString();
         }
@@ -849,6 +856,12 @@ namespace SymOntoClay.Core
         private string NToHumanizedString()
         {
             return $"proc: {Id} ({Status})";
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            return NToHumanizedString();
         }
 
         /// <inheritdoc/>
@@ -862,5 +875,6 @@ namespace SymOntoClay.Core
         {
             throw new NotImplementedException();
         }
+        */
     }
 }

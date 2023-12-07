@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Core.Internal.Instances;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -42,6 +43,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public ILocalCodeExecutionContext LocalContext { get; set; }
         public ProcessInfo ProcessInfo { get; set; }
         public CodeItem Metadata { get; set; }
+        public Dictionary<StrongIdentifierValue, Value> Arguments { get; private set; } = new Dictionary<StrongIdentifierValue, Value>();
+        public string CallMethodId { get; set; }
         public IInstance Instance { get; set; }
         public IExecutionCoordinator ExecutionCoordinator { get; set; }
         public SpecialMarkOfCodeFrame SpecialMark { get; set; } = SpecialMarkOfCodeFrame.None;
@@ -92,6 +95,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintBriefObjProp(n, nameof(ProcessInfo), ProcessInfo);
 
             sb.PrintObjProp(n, nameof(Metadata), Metadata);
+            sb.PrintObjDict_1_Prop(n, nameof(Arguments), Arguments);
+            sb.AppendLine($"{spaces}{nameof(CallMethodId)} = {CallMethodId}");
             sb.PrintObjProp(n, nameof(Instance), Instance);
             sb.PrintObjProp(n, nameof(ExecutionCoordinator), ExecutionCoordinator);
             sb.AppendLine($"{spaces}{nameof(SpecialMark)} = {SpecialMark}");
@@ -145,6 +150,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintBriefObjProp(n, nameof(ProcessInfo), ProcessInfo);
 
             sb.PrintShortObjProp(n, nameof(Metadata), Metadata);
+            sb.PrintShortObjDict_1_Prop(n, nameof(Arguments), Arguments);
+            sb.AppendLine($"{spaces}{nameof(CallMethodId)} = {CallMethodId}");
             sb.PrintShortObjProp(n, nameof(Instance), Instance);
             sb.PrintShortObjProp(n, nameof(ExecutionCoordinator), ExecutionCoordinator);
             sb.AppendLine($"{spaces}{nameof(SpecialMark)} = {SpecialMark}");
@@ -198,6 +205,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintExisting(n, nameof(ProcessInfo), ProcessInfo);
 
             sb.PrintBriefObjProp(n, nameof(Metadata), Metadata);
+            sb.PrintBriefObjDict_1_Prop(n, nameof(Arguments), Arguments);
+            sb.AppendLine($"{spaces}{nameof(CallMethodId)} = {CallMethodId}");
             sb.PrintBriefObjProp(n, nameof(Instance), Instance);
             sb.PrintBriefObjProp(n, nameof(ExecutionCoordinator), ExecutionCoordinator);
             sb.AppendLine($"{spaces}{nameof(SpecialMark)} = {SpecialMark}");
@@ -236,11 +245,27 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var nextN = n + DisplayHelper.IndentationStep;
             var nextNSpaces = DisplayHelper.Spaces(nextN);
             var sb = new StringBuilder();
-            if(Instance != null)
+            sb.AppendLine($"{spaces}CallMethodId: {CallMethodId}");
+            if (Instance != null)
             {
                 sb.AppendLine($"{spaces}Instance: {Instance.Name.NameValue}");
             }
-            
+
+            if(Metadata != null)
+            {
+                sb.AppendLine($"{spaces}{Metadata.ToHumanizedLabel()}");
+            }
+
+            sb.AppendLine($"{spaces}Begin Arguments");
+            if (!Arguments.IsNullOrEmpty())
+            {
+                foreach(var item in Arguments)
+                {
+                    sb.AppendLine($"{nextNSpaces}{item.Key.ToHumanizedLabel()} = {item.Value.ToHumanizedLabel()}");
+                }
+            }
+            sb.AppendLine($"{spaces}End Arguments");
+
             sb.AppendLine($"{spaces}Begin Code");
 
             foreach (var commandItem in CompiledFunctionBody.Commands)

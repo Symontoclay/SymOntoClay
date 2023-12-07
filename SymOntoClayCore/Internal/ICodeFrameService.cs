@@ -37,5 +37,8 @@ namespace SymOntoClay.Core.Internal
         CodeFrame ConvertExecutableToCodeFrame(IMonitorLogger logger, IExecutable function, KindOfFunctionParameters kindOfParameters,
             Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             ILocalCodeExecutionContext parentLocalCodeExecutionContext, ConversionExecutableToCodeFrameAdditionalSettings additionalSettings = null, bool useParentLocalCodeExecutionContextDirectly = false);
+        CodeFrame ConvertExecutableToCodeFrame(IMonitorLogger logger, string callMethodId, IExecutable function, KindOfFunctionParameters kindOfParameters,
+            Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
+            ILocalCodeExecutionContext parentLocalCodeExecutionContext, ConversionExecutableToCodeFrameAdditionalSettings additionalSettings = null, bool useParentLocalCodeExecutionContextDirectly = false);
     }
 }

@@ -79,10 +79,21 @@ namespace SymOntoClay.Core.Internal.Services
             Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             ILocalCodeExecutionContext parentLocalCodeExecutionContext, ConversionExecutableToCodeFrameAdditionalSettings additionalSettings = null, bool useParentLocalCodeExecutionContextDirectly = false)
         {
+            return ConvertExecutableToCodeFrame(logger, string.Empty, function, kindOfParameters,
+            namedParameters, positionedParameters,
+            parentLocalCodeExecutionContext, additionalSettings, useParentLocalCodeExecutionContextDirectly);
+        }
+
+        /// <inheritdoc/>
+        public CodeFrame ConvertExecutableToCodeFrame(IMonitorLogger logger, string callMethodId, IExecutable function, KindOfFunctionParameters kindOfParameters,
+            Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
+            ILocalCodeExecutionContext parentLocalCodeExecutionContext, ConversionExecutableToCodeFrameAdditionalSettings additionalSettings = null, bool useParentLocalCodeExecutionContextDirectly = false)
+        {
             var codeFrame = new CodeFrame();
             codeFrame.CompiledFunctionBody = function.CompiledFunctionBody;
+            codeFrame.CallMethodId = callMethodId;
 
-            if(useParentLocalCodeExecutionContextDirectly)
+            if (useParentLocalCodeExecutionContextDirectly)
             {
                 codeFrame.LocalContext = parentLocalCodeExecutionContext;
             }
@@ -106,6 +117,8 @@ namespace SymOntoClay.Core.Internal.Services
                     localCodeExecutionContext.OwnerStorage = storagesList.SingleOrDefault(p => p.Kind == KindOfStorage.SuperClass && p.TargetClassName == functionHolder);
                 }
 
+                var codeFrameArguments = codeFrame.Arguments;
+
                 switch (kindOfParameters)
                 {
                     case KindOfFunctionParameters.NoParameters:
@@ -116,11 +129,11 @@ namespace SymOntoClay.Core.Internal.Services
                         break;
 
                     case KindOfFunctionParameters.PositionedParameters:
-                        FillUpPositionedParameters(logger, localCodeExecutionContext, function, positionedParameters);
+                        FillUpPositionedParameters(logger, localCodeExecutionContext, function, positionedParameters, ref codeFrameArguments);
                         break;
 
                     case KindOfFunctionParameters.NamedParameters:
-                        FillUpNamedParameters(logger, localCodeExecutionContext, function, namedParameters);
+                        FillUpNamedParameters(logger, localCodeExecutionContext, function, namedParameters, ref codeFrameArguments);
                         break;
 
                     default:
@@ -175,7 +188,7 @@ namespace SymOntoClay.Core.Internal.Services
             return codeFrame;
         }
 
-        private void FillUpPositionedParameters(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, IExecutable function, List<Value> positionedParameters)
+        private void FillUpPositionedParameters(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, IExecutable function, List<Value> positionedParameters, ref Dictionary<StrongIdentifierValue, Value> codeFrameArguments)
         {
             var varsStorage = localCodeExecutionContext.Storage.VarStorage;
 
@@ -188,6 +201,7 @@ namespace SymOntoClay.Core.Internal.Services
                     if (argument.HasDefaultValue)
                     {
                         varsStorage.SetValue(logger, argument.Name, argument.DefaultValue);
+                        codeFrameArguments[argument.Name] = argument.DefaultValue;
                         break;
                     }
 
@@ -197,10 +211,11 @@ namespace SymOntoClay.Core.Internal.Services
                 var parameterItem = positionedParametersEnumerator.Current;
 
                 varsStorage.SetValue(logger, argument.Name, parameterItem);
+                codeFrameArguments[argument.Name] = parameterItem;
             }
         }
 
-        private void FillUpNamedParameters(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, IExecutable function, Dictionary<StrongIdentifierValue, Value> namedParameters)
+        private void FillUpNamedParameters(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, IExecutable function, Dictionary<StrongIdentifierValue, Value> namedParameters, ref Dictionary<StrongIdentifierValue, Value> codeFrameArguments)
         {
             var varsStorage = localCodeExecutionContext.Storage.VarStorage;
 
@@ -238,6 +253,7 @@ namespace SymOntoClay.Core.Internal.Services
                     usedParameters.Add(parameterName);
 
                     varsStorage.SetValue(logger, parameterName, namedParameter.Value);
+                    codeFrameArguments[parameterName] = namedParameter.Value;
                 }
             }
 
@@ -255,6 +271,7 @@ namespace SymOntoClay.Core.Internal.Services
                     if (argument.HasDefaultValue)
                     {
                         varsStorage.SetValue(logger, argument.Name, argument.DefaultValue);
+                        codeFrameArguments[argument.Name] = argument.DefaultValue;
                         continue;
                     }
                     else

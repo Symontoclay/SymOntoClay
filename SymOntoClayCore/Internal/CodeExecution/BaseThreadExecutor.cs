@@ -1799,7 +1799,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             var executable = caller.GetExecutable(Logger, kindOfParameters, namedParameters, positionedParameters);
 
-            CallExecutable(executable, executable.OwnLocalCodeExecutionContext, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
+            CallExecutable(callMethodId, executable, executable.OwnLocalCodeExecutionContext, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
         }
 
         private void CallPointRefValue(string callMethodId, PointRefValue caller,
@@ -1824,7 +1824,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var method = callerLeftOperand.GetMethod(Logger, methodName, kindOfParameters, namedParameters, positionedParameters);
 
-            CallExecutable(method, null, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
+            CallExecutable(callMethodId, method, null, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
         }
 
         private void CallHost(string callMethodId, StrongIdentifierValue methodName, 
@@ -2056,7 +2056,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 throw new Exception($"Method '{methodName.NameValue}' is not found.");
             }
 
-            CallExecutable(method, null, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
+            CallExecutable(callMethodId, method, null, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
         }
 
         private void ExecRuleInstanceValue(RuleInstance ruleInstance)
@@ -2164,6 +2164,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void CallExecutable(IExecutable executable, ILocalCodeExecutionContext ownLocalCodeExecutionContext, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, Value annotation, SyncOption syncOption)
         {
+            CallExecutable(string.Empty, executable, ownLocalCodeExecutionContext, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
+        }
+
+        private void CallExecutable(string callMethodId, IExecutable executable, ILocalCodeExecutionContext ownLocalCodeExecutionContext, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, Value annotation, SyncOption syncOption)
+        {
 #if DEBUG
             //Info("B39E497B-B02E-41DD-AC8F-A69910597590", $"Begin");
             //Info("8248ABAF-2A3B-44CB-A229-365F0FF8DC8B", $"executable == null = {executable == null}");
@@ -2241,7 +2246,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 var additionalSettings = GetAdditionalSettingsFromAnnotation(annotation, ownLocalCodeExecutionContext);
 
-                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(Logger, executable, kindOfParameters, namedParameters, positionedParameters, targetLocalContext, 
+                var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(Logger, callMethodId, executable, kindOfParameters, namedParameters, positionedParameters, targetLocalContext, 
                     additionalSettings);
 
                 ExecuteCodeFrame(newCodeFrame, coordinator, syncOption, true, completeAnnotationSystemEvent, cancelAnnotationSystemEvent, weakCancelAnnotationSystemEvent, errorAnnotationSystemEvent);

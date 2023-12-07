@@ -8041,6 +8041,9 @@
         <member name="M:SymOntoClay.Core.Internal.Services.CodeFrameService.ConvertExecutableToCodeFrame(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeExecution.IExecutable,SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.Dictionary{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value},System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.Helpers.ConversionExecutableToCodeFrameAdditionalSettings,System.Boolean)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Services.CodeFrameService.ConvertExecutableToCodeFrame(SymOntoClay.Monitor.Common.IMonitorLogger,System.String,SymOntoClay.Core.Internal.CodeExecution.IExecutable,SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.Dictionary{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value},System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext,SymOntoClay.Core.Internal.CodeExecution.Helpers.ConversionExecutableToCodeFrameAdditionalSettings,System.Boolean)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Services.EntityConstraintsService.Init">
             <inheritdoc/>
         </member>

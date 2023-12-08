@@ -154,6 +154,8 @@ namespace SymOntoClay.Core.Internal.Instances
 
             var sb = new StringBuilder($"proc: {Id} ({Status})");
 
+            result.CallMethodId = CodeFrame.CallMethodId;
+
             var metadata = CodeFrame?.Metadata;
 
             if(metadata != null)
@@ -171,6 +173,17 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 result.Signatures = metadataLabel.Signatures;
                 metadataLabel.Values = metadataLabel.Values;
+            }
+
+            var arguments = CodeFrame?.Arguments;
+
+#if DEBUG
+            logger.Info("FB3E7263-9699-4D49-8140-D84B5B814F71", $"arguments = {arguments.WriteDict_1_ToString()}");
+#endif
+
+            if (arguments != null)
+            {
+                throw new NotImplementedException();
             }
 
             result.Label = sb.ToString();

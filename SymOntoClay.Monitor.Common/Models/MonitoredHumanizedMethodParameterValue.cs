@@ -7,7 +7,8 @@ namespace SymOntoClay.Monitor.Common.Models
 {
     public class MonitoredHumanizedMethodParameterValue : IObjectToString
     {
-        public string HumanizedStr { get; set; }
+        public string NameHumanizedStr { get; set; }
+        public string ValueHumanizedStr { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -27,7 +28,8 @@ namespace SymOntoClay.Monitor.Common.Models
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{nameof(HumanizedStr)} = {HumanizedStr}");
+            sb.AppendLine($"{spaces}{nameof(NameHumanizedStr)} = {NameHumanizedStr}");
+            sb.AppendLine($"{spaces}{nameof(ValueHumanizedStr)} = {ValueHumanizedStr}");
 
             return sb.ToString();
         }

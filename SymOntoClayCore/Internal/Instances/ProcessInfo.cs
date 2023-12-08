@@ -119,6 +119,27 @@ namespace SymOntoClay.Core.Internal.Instances
                 sb.Append($" {metadata.ToHumanizedString(options)}");
             }
 
+            var callMethodId = CodeFrame?.CallMethodId;
+
+            if (string.IsNullOrWhiteSpace(callMethodId))
+            {
+                sb.Append($" <CallMethodId: {callMethodId}>");
+            }
+
+            var arguments = CodeFrame?.Arguments;
+
+            if(!arguments.IsNullOrEmpty())
+            {
+                var argsStrList = new List<string>();
+
+                foreach (var arg in arguments) 
+                {
+                    argsStrList.Add($"{arg.Key.ToHumanizedLabel(options)}: {arg.Value.ToHumanizedLabel(options)}");
+                }
+
+                sb.Append($" <{string.Join(", ", argsStrList)}>");
+            }
+
             return sb.ToString();
         }
 
@@ -132,6 +153,27 @@ namespace SymOntoClay.Core.Internal.Instances
             if (metadata != null)
             {
                 sb.Append($" {metadata.ToHumanizedLabel(options)}");
+            }
+
+            var callMethodId = CodeFrame?.CallMethodId;
+
+            if(string.IsNullOrWhiteSpace(callMethodId))
+            {
+                sb.Append($" <CallMethodId: {callMethodId}> ");
+            }
+
+            var arguments = CodeFrame?.Arguments;
+
+            if (!arguments.IsNullOrEmpty())
+            {
+                var argsStrList = new List<string>();
+
+                foreach (var arg in arguments)
+                {
+                    argsStrList.Add($"{arg.Key.ToHumanizedLabel(options)}: {arg.Value.ToHumanizedLabel(options)}");
+                }
+
+                sb.Append($" <{string.Join(", ", argsStrList)}>");
             }
 
             return sb.ToString();
@@ -154,7 +196,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             var sb = new StringBuilder($"proc: {Id} ({Status})");
 
-            result.CallMethodId = CodeFrame.CallMethodId;
+            result.CallMethodId = CodeFrame?.CallMethodId;
 
             var metadata = CodeFrame?.Metadata;
 
@@ -183,7 +225,18 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if (arguments != null)
             {
-                throw new NotImplementedException();
+                var values = new List<MonitoredHumanizedMethodParameterValue>();
+
+                foreach (var argument in arguments)
+                {
+                    var item = new MonitoredHumanizedMethodParameterValue();
+                    item.NameHumanizedStr = argument.Key.ToHumanizedLabel();
+                    item.ValueHumanizedStr = argument.Value.ToHumanizedLabel();
+
+                    values.Add(item);
+                }
+
+                result.Values = values;
             }
 
             result.Label = sb.ToString();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SymOntoClay.Monitor.Common.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -15,6 +16,13 @@ namespace SymOntoClay.Monitor.Common
         string Id { get; }
 
         string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
+            bool isSynk,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0);
+
+        string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
+            List<MonitoredHumanizedLabel> chainOfProcessInfo,
             bool isSynk,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

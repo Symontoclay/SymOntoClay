@@ -16,6 +16,7 @@ namespace SymOntoClay.Monitor.Common.Data
         public string CallMethodId { get; set; }
         public MonitoredHumanizedLabel MethodLabel { get; set; }
         public string AltMethodName { get; set; }
+        public List<MonitoredHumanizedLabel> ChainOfProcessInfo { get; set; }
         public bool IsSynk { get; set; }
 
         /// <inheritdoc/>
@@ -27,6 +28,7 @@ namespace SymOntoClay.Monitor.Common.Data
             sb.AppendLine($"{spaces}{nameof(CallMethodId)} = {CallMethodId}");
             sb.PrintObjProp(n, nameof(MethodLabel), MethodLabel);
             sb.AppendLine($"{spaces}{nameof(AltMethodName)} = {AltMethodName}");
+            sb.PrintObjListProp(n, nameof(ChainOfProcessInfo), ChainOfProcessInfo);
             sb.AppendLine($"{spaces}{nameof(IsSynk)} = {IsSynk}");
 
             sb.Append(base.PropertiesToString(n));

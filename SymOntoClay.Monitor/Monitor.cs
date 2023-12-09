@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System.Reflection;
+using SymOntoClay.Monitor.Common.Models;
 
 namespace SymOntoClay.Monitor
 {
@@ -522,6 +523,18 @@ namespace SymOntoClay.Monitor
             [CallerLineNumber] int sourceLineNumber = 0)
         {
             return _monitorLoggerImpl.CallMethod(messagePointId, methodIdentifier, isSynk, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
+            List<MonitoredHumanizedLabel> chainOfProcessInfo,
+            bool isSynk,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            return _monitorLoggerImpl.CallMethod(messagePointId, methodIdentifier, chainOfProcessInfo, isSynk, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>

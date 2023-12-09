@@ -85,7 +85,35 @@ namespace SymOntoClay.Monitor.Internal
                 return callMethodId;
             }
 
-            return NCallMethod(messagePointId, methodIdentifier, string.Empty, isSynk, callMethodId, memberName, sourceFilePath, sourceLineNumber);
+            return NCallMethod(messagePointId, methodIdentifier, string.Empty, null, isSynk, callMethodId, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
+            List<MonitoredHumanizedLabel> chainOfProcessInfo,
+            bool isSynk,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"methodIdentifier = {methodIdentifier.ToLabel()}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"isSynk = {isSynk}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+            var callMethodId = GetCallMethodId();
+
+            if (!_features.EnableCallMethod)
+            {
+                return callMethodId;
+            }
+
+            return NCallMethod(messagePointId, methodIdentifier, string.Empty, chainOfProcessInfo, isSynk, callMethodId, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>
@@ -112,11 +140,12 @@ namespace SymOntoClay.Monitor.Internal
                 return callMethodId;
             }
 
-            return NCallMethod(messagePointId, null, methodName, isSynk, callMethodId, memberName, sourceFilePath, sourceLineNumber);
+            return NCallMethod(messagePointId, null, methodName, null, isSynk, callMethodId, memberName, sourceFilePath, sourceLineNumber);
         }
 
         [MethodForLoggingSupport]
         private string NCallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier, string altMethodName,
+            List<MonitoredHumanizedLabel> chainOfProcessInfo,
             bool isSynk,
             string callMethodId,
             string memberName,
@@ -156,6 +185,7 @@ namespace SymOntoClay.Monitor.Internal
                 {
                     AltMethodName = altMethodName,
                     MethodLabel = methodIdentifier.ToLabel(this),
+                    ChainOfProcessInfo = chainOfProcessInfo,
                     DateTimeStamp = now,
                     NodeId = _nodeId,
                     ThreadId = _threadId,

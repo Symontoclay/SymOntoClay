@@ -4,10 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 
 namespace SymOntoClay.Monitor.LogFileBuilder
 {
@@ -141,14 +142,25 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         {
             var sb = new StringBuilder();
 
-            if (!string.IsNullOrWhiteSpace(label.KindOfCodeItemDescriptor))
+            var kindOfCodeItemDescriptor = label.KindOfCodeItemDescriptor;
+
+            if (!string.IsNullOrWhiteSpace(kindOfCodeItemDescriptor))
             {
-                throw new NotImplementedException();
+                if(kindOfCodeItemDescriptor != "fun")
+                {
+#if DEBUG
+                    _globalLogger.Info($"label = {label}");
+#endif
+
+                    throw new NotImplementedException();
+                }
             }
 
             sb.Append($" {label.Label}");
 
-            if (label.Signatures?.Any() ?? false)
+            var signatures = label.Signatures;
+
+            if (signatures?.Any() ?? false)
             {
 #if DEBUG
                 _globalLogger.Info($"label = {label}");
@@ -181,7 +193,25 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
         private static string GetCallMethod(CallMethodMessage message)
         {
-            return $"<{message.CallMethodId}> [{(message.IsSynk ? "sync" : "async")}] {GetMonitoredHumanizedLabel(message.MethodLabel, message.AltMethodName)}";
+            var labelsStrList = new List<string>();
+
+            var chainOfProcessInfo = message.ChainOfProcessInfo;
+
+            if (!chainOfProcessInfo.IsNullOrEmpty())
+            {
+#if DEBUG
+                _globalLogger.Info($"message = {message}");
+#endif
+
+                foreach(var item in chainOfProcessInfo)
+                {
+                    labelsStrList.Add(GetMonitoredHumanizedLabel(item));
+                }
+            }
+
+            labelsStrList.Add(GetMonitoredHumanizedLabel(message.MethodLabel, message.AltMethodName));
+
+            return $"<{message.CallMethodId}> [{(message.IsSynk ? "sync" : "async")}] {string.Join("->", labelsStrList)}";
         }
 
         private static string GetParameter(ParameterMessage message)

@@ -1,6 +1,7 @@
 ﻿using NLog;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,18 @@ namespace SymOntoClay.Monitor.NLog
         /// <inheritdoc/>
         [MethodForLoggingSupport]
         public string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
+            bool isSynk,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
+            List<MonitoredHumanizedLabel> chainOfProcessInfo,
             bool isSynk,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

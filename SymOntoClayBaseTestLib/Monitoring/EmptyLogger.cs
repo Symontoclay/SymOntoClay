@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,17 @@ namespace SymOntoClay.BaseTestLib.Monitoring
 
         /// <inheritdoc/>
         public string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
+            bool isSynk,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            return Guid.NewGuid().ToString("D");
+        }
+
+        /// <inheritdoc/>
+        public string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
+            List<MonitoredHumanizedLabel> chainOfProcessInfo,
             bool isSynk,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

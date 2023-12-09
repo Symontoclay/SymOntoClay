@@ -60,7 +60,7 @@ namespace SymOntoClay.Core
         void RemoveOnCompleteHandler(IMonitorLogger logger, IProcessInfoEventHandler handler);
         void AddOnWeakCanceledHandler(IMonitorLogger logger, IProcessInfoEventHandler handler);
         void RemoveOnWeakCanceledHandler(IMonitorLogger logger, IProcessInfoEventHandler handler);
-        IReadOnlyList<MonitoredHumanizedLabel> ToChainOfProcessInfoLabels(IMonitorLogger logger);
+        List<MonitoredHumanizedLabel> ToChainOfProcessInfoLabels(IMonitorLogger logger);
         void CollectChainOfProcessInfoLabels(IMonitorLogger logger, IList<MonitoredHumanizedLabel> result, IList<IProcessInfo> usedProcessInfo);
     }
 }

@@ -294,7 +294,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 KindOfCodeItemDescriptor = "fun"
             };
 
-            result.Label = Name.NameValue;
+            result.Label = $"fun {Name.NameValue}";
 
             if (!Arguments.IsNullOrEmpty())
             {

@@ -847,7 +847,7 @@ namespace SymOntoClay.Core
         public abstract MonitoredHumanizedLabel ToLabel(IMonitorLogger logger);
 
         /// <inheritdoc/>
-        public IReadOnlyList<MonitoredHumanizedLabel> ToChainOfProcessInfoLabels(IMonitorLogger logger)
+        public List<MonitoredHumanizedLabel> ToChainOfProcessInfoLabels(IMonitorLogger logger)
         {
             var result = new List<MonitoredHumanizedLabel>();
             var usedProcessInfo = new List<IProcessInfo>();

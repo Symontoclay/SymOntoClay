@@ -121,7 +121,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             var callMethodId = CodeFrame?.CallMethodId;
 
-            if (string.IsNullOrWhiteSpace(callMethodId))
+            if (!string.IsNullOrWhiteSpace(callMethodId))
             {
                 sb.Append($" <CallMethodId: {callMethodId}>");
             }
@@ -157,9 +157,9 @@ namespace SymOntoClay.Core.Internal.Instances
 
             var callMethodId = CodeFrame?.CallMethodId;
 
-            if(string.IsNullOrWhiteSpace(callMethodId))
+            if(!string.IsNullOrWhiteSpace(callMethodId))
             {
-                sb.Append($" <CallMethodId: {callMethodId}> ");
+                sb.Append($" <CallMethodId: {callMethodId}>");
             }
 
             var arguments = CodeFrame?.Arguments;

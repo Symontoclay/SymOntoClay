@@ -138,6 +138,12 @@
         <member name="M:SymOntoClay.Core.BaseProcessInfo.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.ToChainOfProcessInfoLabels(SymOntoClay.Monitor.Common.IMonitorLogger)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.CollectChainOfProcessInfoLabels(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Monitor.Common.Models.MonitoredHumanizedLabel},System.Collections.Generic.IList{SymOntoClay.Core.IProcessInfo})">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.BaseStorageSettings.Id">
             <summary>
             Gets or sets unique Id.

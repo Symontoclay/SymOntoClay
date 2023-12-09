@@ -24,6 +24,7 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -59,5 +60,7 @@ namespace SymOntoClay.Core
         void RemoveOnCompleteHandler(IMonitorLogger logger, IProcessInfoEventHandler handler);
         void AddOnWeakCanceledHandler(IMonitorLogger logger, IProcessInfoEventHandler handler);
         void RemoveOnWeakCanceledHandler(IMonitorLogger logger, IProcessInfoEventHandler handler);
+        IReadOnlyList<MonitoredHumanizedLabel> ToChainOfProcessInfoLabels(IMonitorLogger logger);
+        void CollectChainOfProcessInfoLabels(IMonitorLogger logger, IList<MonitoredHumanizedLabel> result, IList<IProcessInfo> usedProcessInfo);
     }
 }

@@ -846,6 +846,37 @@ namespace SymOntoClay.Core
         /// <inheritdoc/>
         public abstract MonitoredHumanizedLabel ToLabel(IMonitorLogger logger);
 
+        /// <inheritdoc/>
+        public IReadOnlyList<MonitoredHumanizedLabel> ToChainOfProcessInfoLabels(IMonitorLogger logger)
+        {
+            var result = new List<MonitoredHumanizedLabel>();
+            var usedProcessInfo = new List<IProcessInfo>();
+
+            CollectChainOfProcessInfoLabels(logger, result, usedProcessInfo);
+
+            result.Reverse();
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public void CollectChainOfProcessInfoLabels(IMonitorLogger logger, IList<MonitoredHumanizedLabel> result, IList<IProcessInfo> usedProcessInfo)
+        {
+            if(usedProcessInfo.Contains(this))
+            {
+                return;
+            }
+
+            usedProcessInfo.Add(this);
+
+            result.Add(ToLabel(logger));
+
+            if(ParentProcessInfo != null)
+            {
+                ParentProcessInfo.CollectChainOfProcessInfoLabels(logger, result, usedProcessInfo);
+            }
+        }
+
         /*
         /// <inheritdoc/>
         public string ToHumanizedString(DebugHelperOptions options)

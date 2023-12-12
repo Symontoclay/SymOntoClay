@@ -180,7 +180,15 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                     TextTransformation = TextTransformations.UpperCase
                 },
                 new SpaceTextRowOptionItem(),
-                new MessageContentTextRowOptionItem()
+                new MessageContentTextRowOptionItem
+                {
+                    EnableCallMethodIdOfMethodLabel = true,
+                    EnableMethodSignatureArguments = true,
+                    EnableTypesListOfMethodSignatureArguments = true,
+                    EnableDefaultValueOfMethodSignatureArguments = true,
+                    EnablePassedVauesOfMethodLabel = true,
+                    EnableChainOfProcessInfo = true
+                }
             }
         };
     }

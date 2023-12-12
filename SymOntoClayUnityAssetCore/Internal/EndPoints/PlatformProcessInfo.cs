@@ -24,6 +24,7 @@ using Newtonsoft.Json;
 using NLog;
 using SymOntoClay.Core;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
@@ -41,12 +42,14 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 {
     public class PlatformProcessInfo : BaseProcessInfo
     {
-        public PlatformProcessInfo(CancellationTokenSource cancellationTokenSource, string endPointName, IReadOnlyList<int> devices, IReadOnlyList<string> friends)
+        public PlatformProcessInfo(CancellationTokenSource cancellationTokenSource, string endPointName, Dictionary<string, Value> arguments, IReadOnlyList<int> devices, IReadOnlyList<string> friends, string callMethodId)
         {
             _cancellationTokenSource = cancellationTokenSource;
             _endPointName = endPointName;
+            _arguments = arguments;
             _devices = devices;
             _friends = friends;
+            _callMethodId = callMethodId;
         }
 
         public void SetTask(Task task)
@@ -102,8 +105,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
         #region private fields
         private readonly string _endPointName;
+        private readonly Dictionary<string, Value> _arguments;
         private readonly IReadOnlyList<int> _devices;
         private readonly IReadOnlyList<string> _friends;
+        private readonly string _callMethodId;
         private Task _task;
         private readonly CancellationTokenSource _cancellationTokenSource;
         #endregion
@@ -111,30 +116,81 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            return NToHumanizedString();
-        }
+            var sb = new StringBuilder($"proc: {Id} ({Status})");
 
-        private string NToHumanizedString()
-        {
-            return $"proc: {Id} ({Status})";
+            if (!_arguments.IsNullOrEmpty())
+            {
+                var argsStrList = new List<string>();
+
+                foreach (var arg in _arguments)
+                {
+                    argsStrList.Add($"{arg.Key} = {arg.Value.ToHumanizedLabel(options)}");
+                }
+
+                sb.Append($" <{string.Join(", ", argsStrList)}>");
+            }
+
+            return sb.ToString();
         }
 
         /// <inheritdoc/>
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
-            return NToHumanizedString();
+            var sb = new StringBuilder($"proc: {Id} ({Status})");
+
+            if (!_arguments.IsNullOrEmpty())
+            {
+                var argsStrList = new List<string>();
+
+                foreach (var arg in _arguments)
+                {
+                    argsStrList.Add($"{arg.Key} = {arg.Value.ToHumanizedLabel(options)}");
+                }
+
+                sb.Append($" <{string.Join(", ", argsStrList)}>");
+            }
+
+            return sb.ToString();
         }
 
         /// <inheritdoc/>
         public override string ToHumanizedString(IMonitorLogger logger)
         {
-            return NToHumanizedString();
+            return ToHumanizedString();
         }
 
         /// <inheritdoc/>
         public override MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
         {
-            throw new NotImplementedException();
+            var result = new MonitoredHumanizedLabel();
+
+            var sb = new StringBuilder($"proc: {Id} ({Status})");
+
+            result.CallMethodId = _callMethodId;
+
+#if DEBUG
+            logger.Info("58B26851-2F4D-417F-823B-F6EA0970DA68", $"arguments = {_arguments.WriteDict_3_ToString()}");
+#endif
+
+            if (_arguments != null)
+            {
+                var values = new List<MonitoredHumanizedMethodParameterValue>();
+
+                foreach (var argument in _arguments)
+                {
+                    var item = new MonitoredHumanizedMethodParameterValue();
+                    item.NameHumanizedStr = argument.Key;
+                    item.ValueHumanizedStr = argument.Value.ToHumanizedLabel();
+
+                    values.Add(item);
+                }
+
+                result.Values = values;
+            }
+
+            result.Label = sb.ToString();
+
+            return result;
         }
     }
 }

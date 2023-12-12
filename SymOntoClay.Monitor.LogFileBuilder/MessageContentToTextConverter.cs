@@ -301,17 +301,20 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         {
             var labelsStrList = new List<string>();
 
-            var chainOfProcessInfo = message.ChainOfProcessInfo;
-
-            if (!chainOfProcessInfo.IsNullOrEmpty())
+            if(_options.EnableChainOfProcessInfo)
             {
+                var chainOfProcessInfo = message.ChainOfProcessInfo;
+
+                if (!chainOfProcessInfo.IsNullOrEmpty())
+                {
 #if DEBUG
-                _globalLogger.Info($"message = {message}");
+                    _globalLogger.Info($"message = {message}");
 #endif
 
-                foreach(var item in chainOfProcessInfo)
-                {
-                    labelsStrList.Add(GetMonitoredHumanizedLabel(item));
+                    foreach (var item in chainOfProcessInfo)
+                    {
+                        labelsStrList.Add(GetMonitoredHumanizedLabel(item));
+                    }
                 }
             }
 

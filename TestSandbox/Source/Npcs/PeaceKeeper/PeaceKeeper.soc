@@ -17,6 +17,10 @@
 	fun kill()
 	{
 	    'Begin kill' >> @>log;
+
+		//@@host.`stop`();
+		@@host.`rotate`(30);
+
 		'End kill' >> @>log;
 	}
 }

@@ -13,5 +13,6 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         bool EnableTypesListOfMethodSignatureArguments { get; }
         bool EnableDefaultValueOfMethodSignatureArguments { get; }
         bool EnablePassedVauesOfMethodLabel { get; }
+        bool EnableChainOfProcessInfo { get; }
     }
 }

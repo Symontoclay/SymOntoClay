@@ -387,7 +387,15 @@ namespace TestSandbox.Handlers
                         TextTransformation = TextTransformations.UpperCase
                     },
                     new SpaceTextRowOptionItem(),
-                    new MessageContentTextRowOptionItem()
+                    new MessageContentTextRowOptionItem
+                    {
+                        EnableCallMethodIdOfMethodLabel = true,
+                        EnableMethodSignatureArguments = true,
+                        EnableTypesListOfMethodSignatureArguments = true,
+                        EnableDefaultValueOfMethodSignatureArguments = true,
+                        EnablePassedVauesOfMethodLabel = true,
+                        EnableChainOfProcessInfo = true
+                    }
                 }
             };
 
@@ -605,7 +613,15 @@ namespace TestSandbox.Handlers
                         TextTransformation = TextTransformations.UpperCase
                     },
                     new SpaceTextRowOptionItem(),
-                    new MessageContentTextRowOptionItem()
+                    new MessageContentTextRowOptionItem
+                    {
+                        EnableCallMethodIdOfMethodLabel = true,
+                        EnableMethodSignatureArguments = true,
+                        EnableTypesListOfMethodSignatureArguments = true,
+                        EnableDefaultValueOfMethodSignatureArguments = true,
+                        EnablePassedVauesOfMethodLabel = true,
+                        EnableChainOfProcessInfo = true
+                    }
                 }
             };
 

@@ -134,7 +134,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 foreach (var arg in arguments) 
                 {
-                    argsStrList.Add($"{arg.Key.ToHumanizedLabel(options)}: {arg.Value.ToHumanizedLabel(options)}");
+                    argsStrList.Add($"{arg.Key.ToHumanizedLabel(options)} = {arg.Value.ToHumanizedLabel(options)}");
                 }
 
                 sb.Append($" <{string.Join(", ", argsStrList)}>");

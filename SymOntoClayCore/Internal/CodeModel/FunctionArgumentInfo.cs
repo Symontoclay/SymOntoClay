@@ -132,7 +132,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             {
                 result.DefaultValue = new MonitoredHumanizedMethodParameterValue
                 {
-                    NameHumanizedStr = Name?.ToHumanizedString(),
                     ValueHumanizedStr = DefaultValue.ToHumanizedString()
                 };
             }

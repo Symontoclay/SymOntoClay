@@ -7,12 +7,19 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.LogFileBuilder.TextRowOptionItems
 {
-    public class MessageContentTextRowOptionItem : BaseMessageTextRowOptionItem
+    public class MessageContentTextRowOptionItem : BaseMessageTextRowOptionItem, IMessageContentToTextConverterOptions
     {
+        public MessageContentTextRowOptionItem() 
+        {
+            _messageContentToTextConverter = new MessageContentToTextConverter(this);
+        }
+
+        private readonly MessageContentToTextConverter _messageContentToTextConverter;
+
         /// <inheritdoc/>
         protected override string GetContent(BaseMessage message)
         {
-            return MessageContentToTextConverter.GetText(message);
+            return _messageContentToTextConverter.GetText(message);
         }
     }
 }

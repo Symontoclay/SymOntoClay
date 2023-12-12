@@ -12,13 +12,20 @@ using SymOntoClay.CoreHelper.CollectionsHelpers;
 
 namespace SymOntoClay.Monitor.LogFileBuilder
 {
-    public static class MessageContentToTextConverter
+    public class MessageContentToTextConverter
     {
 #if DEBUG
-        private static readonly global::NLog.ILogger _globalLogger = global::NLog.LogManager.GetCurrentClassLogger();
+        private readonly global::NLog.ILogger _globalLogger = global::NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        public static string GetText(BaseMessage message)
+        public MessageContentToTextConverter(IMessageContentToTextConverterOptions options)
+        {
+            _options = options;
+        }
+
+        private readonly IMessageContentToTextConverterOptions _options;
+
+        public string GetText(BaseMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
@@ -117,12 +124,12 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             }
         }
 
-        private static string GetCreateMotitorNode(CreateMotitorNodeMessage message)
+        private string GetCreateMotitorNode(CreateMotitorNodeMessage message)
         {
             return $"MotitorNode '{message.NodeId}' has been created";
         }
 
-        private static string GetCreateThreadLogger(CreateThreadLoggerMessage message)
+        private string GetCreateThreadLogger(CreateThreadLoggerMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
@@ -138,8 +145,73 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return sb.ToString();
         }
 
-        private static string GetMonitoredHumanizedLabel(MonitoredHumanizedLabel label)
+        private string GetMonitoredHumanizedMethodArgument(MonitoredHumanizedMethodArgument argument)
         {
+#if DEBUG
+            _globalLogger.Info($"argument = {argument}");
+#endif
+
+            var sb = new StringBuilder(argument.HumanizedStr);
+
+            if(_options.EnableTypesListOfMethodSignatureArguments)
+            {
+                var typesList = argument.TypesList;
+
+                if (typesList?.Any() ?? false)
+                {
+                    sb.Append(": ");
+
+                    if (typesList.Count == 1)
+                    {
+                        sb.Append(typesList.Single());
+                    }
+                    else
+                    {
+                        sb.Append($"({string.Join("|", typesList)})");
+                    }
+                }
+            }
+
+            if(_options.EnableDefaultValueOfMethodSignatureArguments)
+            {
+                var defaultValue = argument.DefaultValue;
+
+                if (defaultValue != null)
+                {
+                    sb.Append($" = {GetMonitoredHumanizedMethodParameterValue(defaultValue)}");
+                }
+            }
+
+#if DEBUG
+            _globalLogger.Info($"sb = {sb}");
+#endif
+
+            return sb.ToString();
+        }
+
+        private string GetMonitoredHumanizedMethodParameterValue(MonitoredHumanizedMethodParameterValue value)
+        {
+#if DEBUG
+            _globalLogger.Info($"value = {value}");
+#endif
+
+            var nameHumanizedStr = value.NameHumanizedStr;
+            var valueHumanizedStr = value.ValueHumanizedStr;
+
+            if(string.IsNullOrWhiteSpace(nameHumanizedStr))
+            {
+                return valueHumanizedStr;
+            }
+
+            return $"{nameHumanizedStr} = {valueHumanizedStr}";
+        }
+
+        private string GetMonitoredHumanizedLabel(MonitoredHumanizedLabel label)
+        {
+#if DEBUG
+            _globalLogger.Info($"label = {label}");
+#endif
+
             var sb = new StringBuilder();
 
             var kindOfCodeItemDescriptor = label.KindOfCodeItemDescriptor;
@@ -158,30 +230,64 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             sb.Append($" {label.Label}");
 
-            var signatures = label.Signatures;
-
-            if (signatures?.Any() ?? false)
+            if(_options.EnableMethodSignatureArguments)
             {
+                var signatures = label.Signatures;
+
+                if (signatures != null)
+                {
 #if DEBUG
-                _globalLogger.Info($"label = {label}");
+                    _globalLogger.Info($"label = {label}");
 #endif
 
-                throw new NotImplementedException();
+                    sb.Append("(");
+
+                    var signaturesStrList = new List<string>();
+
+                    foreach (var item in signatures)
+                    {
+                        signaturesStrList.Add(GetMonitoredHumanizedMethodArgument(item));
+                    }
+
+                    sb.Append(")");
+                }
             }
 
-            if (label.Values?.Any() ?? false)
+            if(_options.EnableCallMethodIdOfMethodLabel)
             {
+                var callMethodId = label.CallMethodId;
+
+                if (!string.IsNullOrWhiteSpace(callMethodId))
+                {
+                    sb.Append($" <CallMethodId: {callMethodId}>");
+                }
+            }
+
+            if(_options.EnablePassedVauesOfMethodLabel)
+            {
+                var values = label.Values;
+
+                if (values?.Any() ?? false)
+                {
 #if DEBUG
-                _globalLogger.Info($"label = {label}");
+                    _globalLogger.Info($"label = {label}");
 #endif
 
-                throw new NotImplementedException();
+                    var valuesStrList = new List<string>();
+
+                    foreach (var item in values)
+                    {
+                        valuesStrList.Add(GetMonitoredHumanizedMethodParameterValue(item));
+                    }
+
+                    sb.Append($" <{string.Join(", ", valuesStrList)}>");
+                }
             }
 
             return sb.ToString();
         }
 
-        private static string GetMonitoredHumanizedLabel(MonitoredHumanizedLabel label, string altLabel)
+        private string GetMonitoredHumanizedLabel(MonitoredHumanizedLabel label, string altLabel)
         {
             if (string.IsNullOrWhiteSpace(altLabel))
             {
@@ -191,7 +297,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return altLabel;
         }
 
-        private static string GetCallMethod(CallMethodMessage message)
+        private string GetCallMethod(CallMethodMessage message)
         {
             var labelsStrList = new List<string>();
 
@@ -211,10 +317,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             labelsStrList.Add(GetMonitoredHumanizedLabel(message.MethodLabel, message.AltMethodName));
 
-            return $"<{message.CallMethodId}> [{(message.IsSynk ? "sync" : "async")}] {string.Join("->", labelsStrList)}";
+            return $"<{message.CallMethodId}> [{(message.IsSynk ? "sync" : "async")}] {string.Join(" -> ", labelsStrList)}";
         }
 
-        private static string GetParameter(ParameterMessage message)
+        private string GetParameter(ParameterMessage message)
         {
             var tmpResult = $"Parameter of <{message.CallMethodId}>: '{GetMonitoredHumanizedLabel(message.Label, message.AltLabel)}' = {message.HumanizedString}";//{ObjectToHumanizedStringConverter.FromBase64StringToHumanizedString(message.Base64Content, message.TypeName)}
 
@@ -225,72 +331,72 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return tmpResult;
         }
 
-        private static string GetEndCallMethod(EndCallMethodMessage message)
+        private string GetEndCallMethod(EndCallMethodMessage message)
         {
             return $"<{message.CallMethodId}>";
         }
 
-        private static string GetMethodResolving(MethodResolvingMessage message)
+        private string GetMethodResolving(MethodResolvingMessage message)
         {
             return $"<{message.CallMethodId}>";
         }
 
-        private static string GetEndMethodResolving(EndMethodResolvingMessage message)
+        private string GetEndMethodResolving(EndMethodResolvingMessage message)
         {
             return $"<{message.CallMethodId}>";
         }
 
-        private static string GetActionResolving(ActionResolvingMessage message)
+        private string GetActionResolving(ActionResolvingMessage message)
         {
             return $"<{message.CallMethodId}>";
         }
 
-        private static string GetEndActionResolving(EndActionResolvingMessage message)
+        private string GetEndActionResolving(EndActionResolvingMessage message)
         {
             return $"<{message.CallMethodId}>";
         }
 
-        private static string GetHostMethodResolving(HostMethodResolvingMessage message)
+        private string GetHostMethodResolving(HostMethodResolvingMessage message)
         {
             return $"<{message.CallMethodId}>";
         }
 
-        private static string GetEndHostMethodResolving(EndHostMethodResolvingMessage message)
+        private string GetEndHostMethodResolving(EndHostMethodResolvingMessage message)
         {
             return $"<{message.CallMethodId}>";
         }
 
-        private static string GetHostMethodActivation(HostMethodActivationMessage message)
+        private string GetHostMethodActivation(HostMethodActivationMessage message)
         {
             return $"<{message.CallMethodId}>";
         }
 
-        private static string GetEndHostMethodActivation(EndHostMethodActivationMessage message)
+        private string GetEndHostMethodActivation(EndHostMethodActivationMessage message)
         {
             return $"<{message.CallMethodId}>";
         }
 
-        private static string GetHostMethodStarting(HostMethodStartingMessage message)
+        private string GetHostMethodStarting(HostMethodStartingMessage message)
         {
             return $"<{message.CallMethodId}>";
         }
 
-        private static string GetEndHostMethodStarting(EndHostMethodStartingMessage message)
+        private string GetEndHostMethodStarting(EndHostMethodStartingMessage message)
         {
             return $"<{message.CallMethodId}>";
         }
 
-        private static string GetHostMethodExecution(HostMethodExecutionMessage message)
+        private string GetHostMethodExecution(HostMethodExecutionMessage message)
         {
             return $"<{message.CallMethodId}>";
         }
 
-        private static string GetEndHostMethodExecution(EndHostMethodExecutionMessage message)
+        private string GetEndHostMethodExecution(EndHostMethodExecutionMessage message)
         {
             return $"<{message.CallMethodId}>";
         }
 
-        private static string GetSystemExpr(SystemExprMessage message)
+        private string GetSystemExpr(SystemExprMessage message)
         {
             var tmpResult = $"Expression of <{message.CallMethodId}>: '{GetMonitoredHumanizedLabel(message.Label, message.AltLabel)}' = {message.HumanizedString}";//{ObjectToHumanizedStringConverter.FromBase64StringToHumanizedString(message.Base64Content, message.TypeName)}
 
@@ -301,12 +407,12 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return tmpResult;
         }
 
-        private static string GetCodeFrame(CodeFrameMessage message)
+        private string GetCodeFrame(CodeFrameMessage message)
         {
             return $"\n{message.HumanizedStr}\n";
         }
 
-        private static string GetLeaveThreadExecutor(LeaveThreadExecutorMessage message)
+        private string GetLeaveThreadExecutor(LeaveThreadExecutorMessage message)
         {
             return string.Empty;
         }
@@ -316,7 +422,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return message.TargetActionExecutionStatusStr;
         }
 
-        private static string GetOutput(OutputMessage message)
+        private string GetOutput(OutputMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
@@ -325,7 +431,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return message.Message;
         }
 
-        private static string GetTrace(TraceMessage message)
+        private string GetTrace(TraceMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
@@ -334,7 +440,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return message.Message;
         }
 
-        private static string GetDebug(DebugMessage message)
+        private string GetDebug(DebugMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
@@ -343,7 +449,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return message.Message;
         }
 
-        private static string GetInfoMessage(InfoMessage message)
+        private string GetInfoMessage(InfoMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
@@ -352,7 +458,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return message.Message;
         }
 
-        private static string GetWarn(WarnMessage message)
+        private string GetWarn(WarnMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
@@ -361,7 +467,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return message.Message;
         }
 
-        private static string GetError(ErrorMessage message)
+        private string GetError(ErrorMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
@@ -370,7 +476,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return message.Message;
         }
 
-        private static string GetFatal(FatalMessage message)
+        private string GetFatal(FatalMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");

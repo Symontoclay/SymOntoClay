@@ -169,7 +169,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             result.CallMethodId = _callMethodId;
 
 #if DEBUG
-            logger.Info("58B26851-2F4D-417F-823B-F6EA0970DA68", $"arguments = {_arguments.WriteDict_3_ToString()}");
+            //logger.Info("58B26851-2F4D-417F-823B-F6EA0970DA68", $"arguments = {_arguments.WriteDict_3_ToString()}");
 #endif
 
             if (_arguments != null)

@@ -220,7 +220,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var arguments = CodeFrame?.Arguments;
 
 #if DEBUG
-            logger.Info("FB3E7263-9699-4D49-8140-D84B5B814F71", $"arguments = {arguments.WriteDict_1_ToString()}");
+            //logger.Info("FB3E7263-9699-4D49-8140-D84B5B814F71", $"arguments = {arguments.WriteDict_1_ToString()}");
 #endif
 
             if (arguments != null)

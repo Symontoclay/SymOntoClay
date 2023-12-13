@@ -359,9 +359,18 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
             var paramsInfoDict = new Dictionary<string, Value>();
 
-            resultList.Add(command.ParamsList.Select(p => (object)p).ToList());
+            var commandParamsList = command.ParamsList;
 
-            throw new NotImplementedException();
+            var n = 0;
+
+            foreach (var commandParam in commandParamsList)
+            {
+                n++;
+
+                paramsInfoDict[n.ToString()] = commandParam;
+            }
+
+            resultList.Add(commandParamsList.Select(p => (object)p).ToList());
 
             return (resultList.ToArray(), paramsInfoDict);
         }

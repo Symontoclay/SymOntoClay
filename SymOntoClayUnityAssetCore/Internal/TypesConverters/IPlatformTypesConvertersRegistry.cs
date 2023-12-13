@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Text;
 using SymOntoClay.Core;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Core.Internal.CodeModel;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
 {
@@ -35,5 +36,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
         void AddConvertor(IMonitorLogger logger, IPlatformTypesConverter convertor);
         bool CanConvert(IMonitorLogger logger, Type source, Type dest);
         object Convert(IMonitorLogger logger, Type sourceType, Type destType, object sourceValue, IEngineContext context, ILocalCodeExecutionContext localContext);
+        Value ConvertToValue(IMonitorLogger logger, Type sourceType, object sourceValue, IEngineContext context, ILocalCodeExecutionContext localContext);
     }
 }

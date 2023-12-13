@@ -314,5 +314,16 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
 
             return (sourceValue, false);
         }
+
+        /// <inheritdoc/>
+        public Value ConvertToValue(IMonitorLogger logger, Type sourceType, object sourceValue, IEngineContext context, ILocalCodeExecutionContext localContext)
+        {
+#if DEBUG
+            logger.Info("FC273C9B-1CC9-4621-A2F0-2F43C8652748", $"sourceType.FullName = {sourceType.FullName}");
+            logger.Info("0C2C5887-CA2F-4202-8D98-B726461CA131", $"sourceValue = {sourceValue}");
+#endif
+
+            throw new NotImplementedException();
+        }
     }
 }

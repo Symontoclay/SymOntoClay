@@ -332,7 +332,17 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     {
                         var defaultValue = targetArgument.DefaultValue;
 
+#if DEBUG
+                        logger.Info("F02CAE5B-0DCD-4592-A0DA-F2A3B04AD43A", $"defaultValue = {defaultValue}");
+#endif
+
                         resultList.Add(defaultValue);
+
+                        var targetValue = _platformTypesConvertorsRegistry.ConvertToValue(logger, targetArgument.ParameterInfo.ParameterType, defaultValue, context, localContext);
+
+#if DEBUG
+                        logger.Info("9BBB6671-EB99-4686-B64A-990ED54D52B7", $"targetValue = {targetValue}");
+#endif
 
                         throw new NotImplementedException();
                         //paramsInfoDict[targetArgument.Name] = _platformTypesConvertorsRegistry.Convert(logger, targetCommandValue.GetType(), targetArgument.ParameterInfo.ParameterType, targetCommandValue, context, localContext);
@@ -352,14 +362,15 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             {
                 resultList.Add(logger);
             }
-            
+
+            var commandParamsList = command.ParamsList;
+
             resultList.Add(command.Name.NameValue);
             resultList.Add(false);
             resultList.Add(null);
+            resultList.Add(commandParamsList.Select(p => (object)p).ToList());
 
             var paramsInfoDict = new Dictionary<string, Value>();
-
-            var commandParamsList = command.ParamsList;
 
             var n = 0;
 
@@ -369,8 +380,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
                 paramsInfoDict[n.ToString()] = commandParam;
             }
-
-            resultList.Add(commandParamsList.Select(p => (object)p).ToList());
 
             return (resultList.ToArray(), paramsInfoDict);
         }
@@ -469,12 +478,17 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             resultList.Add(command.Name.NameValue);
             resultList.Add(true);
 
-            var paramsInfoDict = new Dictionary<string, Value>();
+            var commandParamsDict = command.ParamsDict;
 
-            resultList.Add(command.ParamsDict.ToDictionary(p => p.Key.NameValue, p => (object)(p.Value.ToHumanizedString())));
+            resultList.Add(commandParamsDict.ToDictionary(p => p.Key.NameValue, p => (object)(p.Value.ToHumanizedString())));
             resultList.Add(null);
 
-            throw new NotImplementedException();
+            var paramsInfoDict = new Dictionary<string, Value>();
+
+            foreach(var item in commandParamsDict)
+            {
+                paramsInfoDict[item.Key.NameValue] = item.Value;
+            }
 
             return (resultList.ToArray(), paramsInfoDict);
         }

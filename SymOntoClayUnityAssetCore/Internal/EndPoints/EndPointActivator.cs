@@ -69,7 +69,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             var mapParamsResult = MapParams(cancellationToken, logger, endpointInfo, command, context, localContext);
 
 #if DEBUG
-            logger.Info("E2184458-2DA5-4E34-A224-BEA16B24A5F2", $"mapParamsResult.Item2 = {mapParamsResult.Item2.WriteDict_3_ToString()}");
+            //logger.Info("E2184458-2DA5-4E34-A224-BEA16B24A5F2", $"mapParamsResult.Item2 = {mapParamsResult.Item2.WriteDict_3_ToString()}");
 #endif
 
             var paramsList = mapParamsResult.Item1;
@@ -306,7 +306,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             foreach (var targetArgument in argumentsList)
             {
 #if DEBUG
-                logger.Info("9D618C3F-ECC9-455C-B599-75B90FDCD8DF", $"targetArgument = {targetArgument}");
+                //logger.Info("9D618C3F-ECC9-455C-B599-75B90FDCD8DF", $"targetArgument = {targetArgument}");
 #endif
 
                 if(commandParamsEnumerator.MoveNext())
@@ -314,13 +314,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     var targetCommandValue = commandParamsEnumerator.Current;
 
 #if DEBUG
-                    logger.Info("8C8E39EC-C031-475F-8159-61DF0B6D50D4", $"targetCommandValue = {targetCommandValue}");
+                    //logger.Info("8C8E39EC-C031-475F-8159-61DF0B6D50D4", $"targetCommandValue = {targetCommandValue}");
 #endif
 
                     var targetValue = _platformTypesConvertorsRegistry.Convert(logger, targetCommandValue.GetType(), targetArgument.ParameterInfo.ParameterType, targetCommandValue, context, localContext);
 
 #if DEBUG
-                    logger.Info("5A1FA843-D41C-462D-99B7-D27CDBA312BC", $"targetValue = {targetValue}");
+                    //logger.Info("5A1FA843-D41C-462D-99B7-D27CDBA312BC", $"targetValue = {targetValue}");
 #endif
 
                     resultList.Add(targetValue);
@@ -333,7 +333,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                         var defaultValue = targetArgument.DefaultValue;
 
 #if DEBUG
-                        logger.Info("F02CAE5B-0DCD-4592-A0DA-F2A3B04AD43A", $"defaultValue = {defaultValue}");
+                        //logger.Info("F02CAE5B-0DCD-4592-A0DA-F2A3B04AD43A", $"defaultValue = {defaultValue}");
 #endif
 
                         resultList.Add(defaultValue);
@@ -341,7 +341,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                         var targetValue = _platformTypesConvertorsRegistry.ConvertToValue(logger, targetArgument.ParameterInfo.ParameterType, defaultValue, context, localContext);
 
 #if DEBUG
-                        logger.Info("9BBB6671-EB99-4686-B64A-990ED54D52B7", $"targetValue = {targetValue}");
+                        //logger.Info("9BBB6671-EB99-4686-B64A-990ED54D52B7", $"targetValue = {targetValue}");
 #endif
 
                         paramsInfoDict[targetArgument.Name] = targetValue;
@@ -461,7 +461,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     var targetValue = _platformTypesConvertorsRegistry.ConvertToValue(logger, argumentInfo.ParameterInfo.ParameterType, defaultValue, context, localContext);
 
 #if DEBUG
-                    logger.Info("4B521F80-DD63-4CA1-896C-E820C5B35F45", $"targetValue = {targetValue}");
+                    //logger.Info("4B521F80-DD63-4CA1-896C-E820C5B35F45", $"targetValue = {targetValue}");
 #endif
 
                     paramsInfoDict[argumentName] = targetValue;

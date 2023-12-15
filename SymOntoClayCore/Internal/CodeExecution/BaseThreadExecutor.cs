@@ -1716,17 +1716,17 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var caller = TryResolveFromVarOrExpr(valueStack.Pop());
 
 #if DEBUG
-            Info("B480D9AB-70E4-4D5B-BFC0-AB9274AD0A64", $"caller = {caller}");
-            Info("B480D9AB-70E4-4D5B-BFC0-AB9274AD0A64", $"caller = {caller.ToHumanizedString()}");
-            Info("5D38AC5A-D24F-4CA3-9AA7-7D9A76DF0BA7", $"_currentCodeFrame.ProcessInfo.ToHumanizedLabel() = {_currentCodeFrame.ProcessInfo.ToHumanizedLabel()}");
+            //Info("B480D9AB-70E4-4D5B-BFC0-AB9274AD0A64", $"caller = {caller}");
+            //Info("B480D9AB-70E4-4D5B-BFC0-AB9274AD0A64", $"caller = {caller.ToHumanizedString()}");
+            //Info("5D38AC5A-D24F-4CA3-9AA7-7D9A76DF0BA7", $"_currentCodeFrame.ProcessInfo.ToHumanizedLabel() = {_currentCodeFrame.ProcessInfo.ToHumanizedLabel()}");
             //Info("A513C3A8-C4EB-4398-9B59-3B929A7FDAFF", $"_currentCodeFrame.ProcessInfo.ToHumanizedString() = {_currentCodeFrame.ProcessInfo.ToHumanizedString()}");
-            Info("A513C3A8-C4EB-4398-9B59-3B929A7FDAFF", $"_currentCodeFrame.ProcessInfo.ToLabel(Logger) = {_currentCodeFrame.ProcessInfo.ToLabel(Logger)}");
+            //Info("A513C3A8-C4EB-4398-9B59-3B929A7FDAFF", $"_currentCodeFrame.ProcessInfo.ToLabel(Logger) = {_currentCodeFrame.ProcessInfo.ToLabel(Logger)}");
 #endif
 
             var chainOfProcessInfo = _currentCodeFrame.ProcessInfo.ToChainOfProcessInfoLabels(Logger);
 
 #if DEBUG
-            Info("36B2ED7D-786B-4B1E-B46B-7CEF2728A45C", $"chainOfProcessInfo = {chainOfProcessInfo.WriteListToString()}");
+            //Info("36B2ED7D-786B-4B1E-B46B-7CEF2728A45C", $"chainOfProcessInfo = {chainOfProcessInfo.WriteListToString()}");
 #endif
 
             var callMethodId = Logger.CallMethod("7854EEB4-52A1-4B41-95BD-5417B983EB27", caller, chainOfProcessInfo, syncOption == SyncOption.Sync);

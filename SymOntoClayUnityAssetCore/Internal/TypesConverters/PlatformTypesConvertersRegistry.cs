@@ -323,7 +323,53 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
             logger.Info("0C2C5887-CA2F-4202-8D98-B726461CA131", $"sourceValue = {sourceValue}");
 #endif
 
+            if(sourceValue == null)
+            {
+                return NullValue.Instance;
+            }
+
+            if (sourceType.IsGenericType && sourceType.FullName.StartsWith("System.Nullable"))
+            {
+#if DEBUG
+                logger.Info("D33D3FE7-AC0C-498E-9189-CF73E089B37F", $"sourceType.GenericTypeArguments[0] = {sourceType.GenericTypeArguments[0]}");
+#endif
+
+                return NConvertToValue(logger, sourceType.GenericTypeArguments[0], sourceValue, context, localContext);
+            }
+
+            return NConvertToValue(logger, sourceType, sourceValue, context, localContext);
+        }
+
+        private Value NConvertToValue(IMonitorLogger logger, Type sourceType, object sourceValue, IEngineContext context, ILocalCodeExecutionContext localContext)
+        {
+#if DEBUG
+            logger.Info("BBE87F7A-E429-4428-A57D-2FE844A6138F", $"sourceType.FullName = {sourceType.FullName}");
+            logger.Info("6DB7DD53-4148-4F9F-8B2B-73510EBBEE8E", $"sourceValue = {sourceValue}");
+#endif
+
+            if (sourceType == typeof(float) || 
+                sourceType == typeof(double) ||
+                sourceType == typeof(decimal) ||
+                sourceType == typeof(sbyte) ||
+                sourceType == typeof(byte) ||
+                sourceType == typeof(short) ||
+                sourceType == typeof(ushort) ||
+                sourceType == typeof(int) ||
+                sourceType == typeof(uint) ||
+                sourceType == typeof(long) ||
+                sourceType == typeof(ulong))
+            {
+                return CreateNumberValue(System.Convert.ToDouble(sourceValue));
+            }
+
             throw new NotImplementedException();
+        }
+
+        private NumberValue CreateNumberValue(double? systemValue)
+        {
+            var result = new NumberValue(systemValue);
+            result.CheckDirty();
+            return result;
         }
     }
 }

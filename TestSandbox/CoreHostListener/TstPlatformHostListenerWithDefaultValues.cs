@@ -14,7 +14,7 @@ namespace TestSandbox.CoreHostListener
     {
         [DebuggerHidden]
         [BipedEndpoint("Rotate", DeviceOfBiped.RightLeg, DeviceOfBiped.LeftLeg)]
-        public void RotateImpl(CancellationToken cancellationToken, IMonitorLogger logger, float? direction, float speed = 2)
+        public void RotateImpl(CancellationToken cancellationToken, IMonitorLogger logger, float? direction, float? speed = 2)
         {
 #if DEBUG
             logger.Info("768F6328-1015-4862-8ADA-45560D425970", $"RotateImpl Begin direction = {direction}; speed = {speed}");

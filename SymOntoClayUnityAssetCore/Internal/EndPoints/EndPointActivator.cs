@@ -344,8 +344,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                         logger.Info("9BBB6671-EB99-4686-B64A-990ED54D52B7", $"targetValue = {targetValue}");
 #endif
 
-                        throw new NotImplementedException();
-                        //paramsInfoDict[targetArgument.Name] = _platformTypesConvertorsRegistry.Convert(logger, targetCommandValue.GetType(), targetArgument.ParameterInfo.ParameterType, targetCommandValue, context, localContext);
+                        paramsInfoDict[targetArgument.Name] = targetValue;
                     }
                 }
             }
@@ -455,10 +454,17 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
                 if(argumentInfo.HasDefaultValue)
                 {
-                    resultList.Add(argumentInfo.DefaultValue);
+                    var defaultValue = argumentInfo.DefaultValue;
 
-                    throw new NotImplementedException();
-                    //paramsInfoDict[targetArgument.Name] = _platformTypesConvertorsRegistry.Convert(logger, targetCommandValue.GetType(), targetArgument.ParameterInfo.ParameterType, targetCommandValue, context, localContext);
+                    resultList.Add(defaultValue);
+
+                    var targetValue = _platformTypesConvertorsRegistry.ConvertToValue(logger, argumentInfo.ParameterInfo.ParameterType, defaultValue, context, localContext);
+
+#if DEBUG
+                    logger.Info("4B521F80-DD63-4CA1-896C-E820C5B35F45", $"targetValue = {targetValue}");
+#endif
+
+                    paramsInfoDict[argumentName] = targetValue;
                 }
             }
 

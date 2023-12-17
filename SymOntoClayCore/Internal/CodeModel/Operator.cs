@@ -24,6 +24,7 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
@@ -31,6 +32,7 @@ using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
+using SymOntoClay.Monitor.NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +42,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class Operator : CodeItem, IExecutable
     {
+#if DEBUG
+        //private static IMonitorLogger _logger = MonitorLoggerNLogImpementation.Instance;
+#endif
+
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.Operator;
 
@@ -249,19 +255,83 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            throw new NotImplementedException();
+            var sb = new StringBuilder();
+
+            sb.AppendLine(ToHumanizedLabel(options));
+
+            sb.AppendLine("{");
+
+            if (!Statements.IsNullOrEmpty())
+            {
+                foreach(var statement in Statements)
+                {
+                    sb.AppendLine(statement.ToHumanizedString(options));
+                }
+            }
+
+            sb.AppendLine("}");
+
+            return sb.ToString();
         }
 
         /// <inheritdoc/>
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
-            throw new NotImplementedException();
+            var sb = new StringBuilder();
+
+            sb.Append($"op {OperatorsHelper.GetSymbol(KindOfOperator)}");
+            
+            if(Arguments != null)
+            {
+                sb.Append("(");
+
+                var argsStrList = new List<string>();
+
+                foreach(var item in Arguments)
+                {
+                    argsStrList.Add(item.ToHumanizedString(options));
+                }
+
+                sb.Append(string.Join(", ", argsStrList));
+
+                sb.Append(")");
+            }
+
+            if(IsSystemDefined)
+            {
+                sb.Append(" [system]");
+            }
+
+            return sb.ToString();
         }
 
         /// <inheritdoc/>
         public override MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
         {
-            throw new NotImplementedException();
+#if DEBUG
+            //logger.Info("ACAD278E-B157-459E-BB3E-E825AC4622DC", this.ToString());
+#endif
+
+            var result = new MonitoredHumanizedLabel()
+            {
+                KindOfCodeItemDescriptor = "op"
+            };
+
+            result.Label = $"op {OperatorsHelper.GetSymbol(KindOfOperator)}";
+
+            if (!Arguments.IsNullOrEmpty())
+            {
+                var signatures = new List<MonitoredHumanizedMethodArgument>();
+
+                foreach (var argument in Arguments)
+                {
+                    signatures.Add(argument.ToMonitoredHumanizedMethodArgument(logger));
+                }
+
+                result.Signatures = signatures;
+            }
+
+            return result;
         }
     }
 }

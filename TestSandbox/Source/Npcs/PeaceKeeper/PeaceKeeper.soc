@@ -3,26 +3,31 @@
     on Enter =>
 	{
 	    'Begin' >> @>log;
-		go(1);
+		//go(1);
 		'End' >> @>log;
 	}
 
-	fun go(@target)
+	on {: see(I, #a) :}
 	{
-		'Begin go' >> @>log;
-		kill();
-		'End go' >> @>log;
+	    'D' >> @>log;
 	}
 
-	fun kill()
-	{
-	    'Begin kill' >> @>log;
+	//fun go(@target)
+	//{
+	//	'Begin go' >> @>log;
+	//	kill();
+	//	'End go' >> @>log;
+	//}
+
+	//fun kill()
+	//{
+	//    'Begin kill' >> @>log;
 
 		//@@host.`stop`();
-		@@host.`rotate`(30);
+	//	@@host.`rotate`(30);
 
-		'End kill' >> @>log;
-	}
+	//	'End kill' >> @>log;
+	//}
 }
 
 /*app PeaceKeeper

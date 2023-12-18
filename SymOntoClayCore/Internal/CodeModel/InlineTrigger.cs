@@ -331,6 +331,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 case KindOfInlineTrigger.SystemEvent:
                     return SystemEventToHumanizedLabel(options);
 
+                case KindOfInlineTrigger.LogicConditional:
+                    return LogicConditionalToHumanizedLabel(options);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(KindOfInlineTrigger), KindOfInlineTrigger, null);
             }
@@ -346,6 +349,19 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 default:
                     throw new ArgumentOutOfRangeException(nameof(KindOfSystemEvent), KindOfSystemEvent, null);
             }
+        }
+
+        private string LogicConditionalToHumanizedLabel(DebugHelperOptions options)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine(ToString());//tmp
+
+            var hasSetStatements = !SetStatements.IsNullOrEmpty();
+            var hasResetStatements = !ResetStatements.IsNullOrEmpty();
+
+            
+
+            return sb.ToString();
         }
 
         /// <inheritdoc/>

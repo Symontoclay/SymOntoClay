@@ -21,6 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
+using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -29,7 +31,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class BindingVariables : IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class BindingVariables : IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToHumanizedString
     {
         public BindingVariables()
         {
@@ -171,6 +173,52 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
             sb.PrintBriefObjListProp(n, "BindingVariables", _source);
             return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
+        {
+            var opt = new DebugHelperOptions()
+            {
+                HumanizedOptions = options
+            };
+
+            return ToHumanizedString(opt);
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedString(DebugHelperOptions options)
+        {
+            return ToHumanizedLabel(options);
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedLabel(HumanizedOptions options = HumanizedOptions.ShowAll)
+        {
+            var opt = new DebugHelperOptions()
+            {
+                HumanizedOptions = options
+            };
+
+            return ToHumanizedLabel(opt);
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            if (_source.IsNullOrEmpty())
+            {
+                return string.Empty;
+            }
+
+            var strList = new List<string>();
+
+            foreach (var item in _source)
+            {
+                strList.Add(item.ToHumanizedLabel(options));
+            }
+
+            return $"({string.Join(", ", strList)})";
         }
     }
 }

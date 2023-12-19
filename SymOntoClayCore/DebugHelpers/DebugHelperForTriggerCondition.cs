@@ -34,103 +34,103 @@ namespace SymOntoClay.Core.DebugHelpers
 {
     public static class DebugHelperForTriggerCondition
     {
-        public static string ToString(TriggerConditionNode source)
+        public static string ToString(TriggerConditionNode source, DebugHelperOptions options)
         {
             switch (source.Kind)
             {
                 case KindOfTriggerConditionNode.Concept:
                 case KindOfTriggerConditionNode.Entity:
                 case KindOfTriggerConditionNode.Var:
-                    return ConceptToString(source);
+                    return ConceptToString(source, options);
 
                 case KindOfTriggerConditionNode.EntityRef:
-                    return EntityRefToString(source);
+                    return EntityRefToString(source, options);
 
                 case KindOfTriggerConditionNode.EntityCondition:
-                    return EntityConditionToString(source);
+                    return EntityConditionToString(source, options);
 
                 case KindOfTriggerConditionNode.BinaryOperator:
-                    return BinaryOperatorToString(source);
+                    return BinaryOperatorToString(source, options);
 
                 case KindOfTriggerConditionNode.UnaryOperator:
-                    return UnaryOperatorToString(source);
+                    return UnaryOperatorToString(source, options);
 
                 case KindOfTriggerConditionNode.Value:
-                    return ValueToString(source);
+                    return ValueToString(source, options);
 
                 case KindOfTriggerConditionNode.Group:
-                    return GroupToString(source);
+                    return GroupToString(source, options);
 
                 case KindOfTriggerConditionNode.FuzzyLogicNonNumericSequence:
-                    return FuzzyLogicNonNumericSequenceToString(source);
+                    return FuzzyLogicNonNumericSequenceToString(source, options);
 
                 case KindOfTriggerConditionNode.Fact:
-                    return FactToString(source);
+                    return FactToString(source, options);
 
                 case KindOfTriggerConditionNode.Duration:
-                    return DurationToString(source);
+                    return DurationToString(source, options);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(source.Kind), source.Kind, null);
             }
         }
 
-        private static string ConceptToString(TriggerConditionNode source)
+        private static string ConceptToString(TriggerConditionNode source, DebugHelperOptions options)
         {
             return source.Name.NameValue;
         }
         
-        private static string EntityRefToString(TriggerConditionNode source)
+        private static string EntityRefToString(TriggerConditionNode source, DebugHelperOptions options)
         {
             throw new NotImplementedException();
         }
 
-        private static string EntityConditionToString(TriggerConditionNode source)
+        private static string EntityConditionToString(TriggerConditionNode source, DebugHelperOptions options)
         {
             throw new NotImplementedException();
         }
 
-        private static string BinaryOperatorToString(TriggerConditionNode source)
+        private static string BinaryOperatorToString(TriggerConditionNode source, DebugHelperOptions options)
         {
-            return $"{ToString(source.Left)} {OperatorsHelper.GetSymbol(source.KindOfOperator)} {ToString(source.Right)}";
+            return $"{ToString(source.Left, options)} {OperatorsHelper.GetSymbol(source.KindOfOperator)} {ToString(source.Right, options)}";
         }
 
-        private static string UnaryOperatorToString(TriggerConditionNode source)
+        private static string UnaryOperatorToString(TriggerConditionNode source, DebugHelperOptions options)
         {
             if(source.KindOfOperator == KindOfOperator.CallFunction)
             {
-                return CallFunctionToString(source);
+                return CallFunctionToString(source, options);
             }
 
-            return $" {OperatorsHelper.GetSymbol(source.KindOfOperator)} {ToString(source.Left)}";
+            return $" {OperatorsHelper.GetSymbol(source.KindOfOperator)} {ToString(source.Left, options)}";
         }
 
-        private static string ValueToString(TriggerConditionNode source)
+        private static string ValueToString(TriggerConditionNode source, DebugHelperOptions options)
         {
-            return DebugHelperForRuleInstance.ToString(source.Value);
+            return DebugHelperForRuleInstance.ToString(source.Value, options);
         }
 
-        private static string GroupToString(TriggerConditionNode source)
+        private static string GroupToString(TriggerConditionNode source, DebugHelperOptions options)
         {
-            return $"({ToString(source.Left)})";
+            return $"({ToString(source.Left, options)})";
         }
 
-        private static string FuzzyLogicNonNumericSequenceToString(TriggerConditionNode source)
+        private static string FuzzyLogicNonNumericSequenceToString(TriggerConditionNode source, DebugHelperOptions options)
         {
             return source.FuzzyLogicNonNumericSequenceValue.DebugView;
         }
 
-        private static string FactToString(TriggerConditionNode source)
+        private static string FactToString(TriggerConditionNode source, DebugHelperOptions options)
         {
-            return DebugHelperForRuleInstance.ToString(source.RuleInstance);
+            return DebugHelperForRuleInstance.ToString(source.RuleInstance, options);
         }
 
-        private static string DurationToString(TriggerConditionNode source)
+        private static string DurationToString(TriggerConditionNode source, DebugHelperOptions options)
         {
-            return $"duration {source.Value.ToHumanizedString()}";
+            return $"duration {source.Value.ToHumanizedString(options)}";
         }
 
-        private static string CallFunctionToString(TriggerConditionNode source)
+        private static string CallFunctionToString(TriggerConditionNode source, DebugHelperOptions options)
         {
             var resultParamsList = new List<string>();
 
@@ -146,12 +146,12 @@ namespace SymOntoClay.Core.DebugHelpers
                 {
                     foreach (var param in sourceParamsList)
                     {
-                        resultParamsList.Add(ToString(param));
+                        resultParamsList.Add(ToString(param, options));
                     }
                 }
             }
 
-            return $"{ToString(source.Left)} ({string.Join(",", resultParamsList)})";
+            return $"{ToString(source.Left, options)} ({string.Join(",", resultParamsList)})";
         }
     }
 }

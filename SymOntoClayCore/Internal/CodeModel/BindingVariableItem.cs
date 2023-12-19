@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class BindingVariableItem: IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class BindingVariableItem: IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToHumanizedString
     {
         public KindOfBindingVariable Kind { get; set; } = KindOfBindingVariable.Unknown;
         public StrongIdentifierValue LeftVariable { get; set; }
@@ -129,6 +130,60 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(Kind)} = {Kind}");
             sb.PrintBriefObjProp(n, nameof(LeftVariable), LeftVariable);
             sb.PrintBriefObjProp(n, nameof(RightVariable), RightVariable);
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
+        {
+            var opt = new DebugHelperOptions()
+            {
+                HumanizedOptions = options
+            };
+
+            return ToHumanizedString(opt);
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedString(DebugHelperOptions options)
+        {
+            return ToHumanizedLabel(options);
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedLabel(HumanizedOptions options = HumanizedOptions.ShowAll)
+        {
+            var opt = new DebugHelperOptions()
+            {
+                HumanizedOptions = options
+            };
+
+            return ToHumanizedLabel(opt);
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            var sb = new StringBuilder();
+
+            sb.Append(LeftVariable.ToHumanizedLabel(options));
+
+            switch(Kind)
+            {
+                case KindOfBindingVariable.LeftToRignt:
+                    sb.Append(" >> ");
+                    break;
+
+                case KindOfBindingVariable.RightToLeft:
+                    sb.Append(" << ");
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
+            }
+
+            sb.Append(RightVariable.ToHumanizedLabel(options));
 
             return sb.ToString();
         }

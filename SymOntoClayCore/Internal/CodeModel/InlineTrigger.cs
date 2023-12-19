@@ -287,15 +287,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
             sb.AppendLine(ToHumanizedLabel(options));
 
-            if(hasSetStatements && hasResetStatements)
-            {
-                switch(DoubleConditionsStrategy)
-                {
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(DoubleConditionsStrategy), DoubleConditionsStrategy, null);
-                }
-            }
-
             sb.AppendLine("{");
             if (hasSetStatements)
             {
@@ -356,10 +347,47 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
             sb.AppendLine(ToString());//tmp
 
-            var hasSetStatements = !SetStatements.IsNullOrEmpty();
-            var hasResetStatements = !ResetStatements.IsNullOrEmpty();
+            var hasSetCondition = SetCondition != null;
+            var hasResetCondition = ResetCondition != null;
 
+            if(hasSetCondition)
+            {
+                sb.Append($"on {SetCondition.ToHumanizedLabel(options)}");
+
+                if(SetBindingVariables != null)
+                {
+                    var str = SetBindingVariables.ToHumanizedLabel(options);
+
+                    if(!string.IsNullOrWhiteSpace(str))
+                    {
+                        sb.Append($" {str}");
+                    }                    
+                }
+            }
             
+            if(hasResetCondition)
+            {
+                sb.Append($"down on {ResetCondition.ToHumanizedLabel(options)}");
+
+                if (ResetBindingVariables != null)
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
+            if (hasSetCondition && hasResetCondition)
+            {
+                switch (DoubleConditionsStrategy)
+                {
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(DoubleConditionsStrategy), DoubleConditionsStrategy, null);
+                }
+            }
+
+            if(Priority != null)
+            {
+                throw new NotImplementedException();
+            }
 
             return sb.ToString();
         }

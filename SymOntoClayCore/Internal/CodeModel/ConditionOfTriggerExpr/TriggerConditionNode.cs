@@ -224,13 +224,13 @@ namespace SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            return DebugHelperForTriggerCondition.ToString(this);
+            return DebugHelperForTriggerCondition.ToString(this, options);
         }
 
         /// <inheritdoc/>
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
-            throw new NotImplementedException();
+            return DebugHelperForTriggerCondition.ToString(this, options);
         }
     }
 }

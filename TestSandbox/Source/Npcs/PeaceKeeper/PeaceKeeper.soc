@@ -7,7 +7,7 @@
 		'End' >> @>log;
 	}
 
-	on {: see(I, #a) :} down on {: see(I, barrel) :} (down)
+	on {: see(I, #a) :} as `trigger 1` alias `Alarm trigger`, trigger_5 with priority 1
 	{
 	    'D' >> @>log;
 	}

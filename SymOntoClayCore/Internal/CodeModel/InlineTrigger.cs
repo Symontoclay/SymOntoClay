@@ -275,7 +275,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
 #if DEBUG
-        private static IMonitorLogger _logger = MonitorLoggerNLogImpementation.Instance;
+        //private static IMonitorLogger _logger = MonitorLoggerNLogImpementation.Instance;
 #endif
 
         /// <inheritdoc/>
@@ -367,11 +367,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
             
             if(hasResetCondition)
             {
-                sb.Append($"down on {ResetCondition.ToHumanizedLabel(options)}");
+                sb.Append($" down on {ResetCondition.ToHumanizedLabel(options)}");
 
                 if (ResetBindingVariables != null)
                 {
-                    throw new NotImplementedException();
+                    var str = ResetBindingVariables.ToHumanizedLabel(options);
+
+                    if (!string.IsNullOrWhiteSpace(str))
+                    {
+                        throw new NotImplementedException();
+                    }
                 }
             }
 
@@ -379,14 +384,46 @@ namespace SymOntoClay.Core.Internal.CodeModel
             {
                 switch (DoubleConditionsStrategy)
                 {
+                    case DoubleConditionsStrategy.Equal:
+                        sb.Append($" (=)");
+                        break;
+
+                    case DoubleConditionsStrategy.PriorSet:
+                        sb.Append($" (set)");
+                        break;
+
+                    case DoubleConditionsStrategy.PriorReset:
+                        sb.Append($" (down)");
+                        break;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(DoubleConditionsStrategy), DoubleConditionsStrategy, null);
                 }
             }
 
+            if(Name != null)
+            {
+                sb.Append($" as {Name.ToHumanizedLabel(options)}");
+            }
+
+            if(!NamesList.IsNullOrEmpty())
+            {
+                var strList = new List<string>();
+
+                foreach(var nameItem in NamesList.Where(p => Name != null && p != Name))
+                {
+                    strList.Add(nameItem.ToHumanizedLabel(options));
+                }
+
+                if(strList.Any())
+                {
+                    sb.Append($" alias {string.Join(", ", strList)}");
+                }
+            }
+
             if(Priority != null)
             {
-                throw new NotImplementedException();
+                sb.Append($" with priority {Priority.ToHumanizedLabel(options)}");
             }
 
             return sb.ToString();

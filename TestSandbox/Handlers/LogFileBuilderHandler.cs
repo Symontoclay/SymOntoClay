@@ -46,7 +46,7 @@ namespace TestSandbox.Handlers
 
         private void Case13()
         {
-            RunLogFileBuilderProgramMain(@"--i c:\Users\Acer\AppData\Roaming\SymOntoClayAsset\NpcLogMessages\2023_12_17_15_20_24\ --o c:\Users\Acer\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesLogsOutputDir\ --target-nodeid #BlueSoldier");
+            RunLogFileBuilderProgramMain(@"--i c:\Users\Acer\AppData\Roaming\SymOntoClayAsset\NpcLogMessages\2023_12_20_20_14_16\ --o c:\Users\Acer\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesLogsOutputDir\ --target-nodeid #BlueSoldier");
         }
 
         private void Case12()

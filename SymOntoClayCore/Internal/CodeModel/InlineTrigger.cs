@@ -337,6 +337,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 case KindOfSystemEventOfInlineTrigger.Enter:
                     return "on Enter";
 
+                case KindOfSystemEventOfInlineTrigger.Leave:
+                    return "on Leave";
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(KindOfSystemEvent), KindOfSystemEvent, null);
             }

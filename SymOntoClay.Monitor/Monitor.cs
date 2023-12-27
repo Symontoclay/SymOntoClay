@@ -96,6 +96,8 @@ namespace SymOntoClay.Monitor
                     EnableCodeFrame = true,
                     EnableLeaveThreadExecutor = true,
                     EnableGoBackToPrevCodeFrame = true,
+                    EnableCancel = true,
+                    EnableWeakCancel = true,
                     EnableOutput = true,
                     EnableTrace = true,
                     EnableDebug = true,
@@ -304,6 +306,22 @@ namespace SymOntoClay.Monitor
             }
         }
 
+        bool IMonitorFeatures.EnableCancel
+        {
+            get
+            {
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableCancel;
+            }
+        }
+
+        bool IMonitorFeatures.EnableWeakCancel
+        {
+            get
+            {
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableWeakCancel;
+            }
+        }
+
         bool IMonitorFeatures.EnableOutput
         {
             get
@@ -402,6 +420,8 @@ namespace SymOntoClay.Monitor
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableCodeFrame)} = {monitorFeatures.EnableCodeFrame}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableLeaveThreadExecutor)} = {monitorFeatures.EnableLeaveThreadExecutor}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableGoBackToPrevCodeFrame)} = {monitorFeatures.EnableGoBackToPrevCodeFrame}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableCancel)} = {monitorFeatures.EnableCancel}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableWeakCancel)} = {monitorFeatures.EnableWeakCancel}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableOutput)} = {monitorFeatures.EnableOutput}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableTrace)} = {monitorFeatures.EnableTrace}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableDebug)} = {monitorFeatures.EnableDebug}");
@@ -766,6 +786,26 @@ namespace SymOntoClay.Monitor
             [CallerLineNumber] int sourceLineNumber = 0)
         {
             _monitorLoggerImpl.GoBackToPrevCodeFrame(messagePointId, targetActionExecutionStatus, targetActionExecutionStatusStr, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void Cancel(string messagePointId, Enum reasonOfChangeStatus, List<string> changersIds, string callMethodId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.Cancel(messagePointId, reasonOfChangeStatus, changersIds, callMethodId, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void WeakCancel(string messagePointId, Enum reasonOfChangeStatus, List<string> changersIds, string callMethodId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.WeakCancel(messagePointId, reasonOfChangeStatus, changersIds, callMethodId, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>

@@ -69,16 +69,20 @@ namespace SymOntoClay.Core.Internal.Helpers
                     {
                         if (executionCoordinators.Any(p => p.ExecutionStatus == ActionExecutionStatus.Canceled))
                         {
+                            var cancelledExecutionCoordinatorsIds = executionCoordinators.Where(p => p.ExecutionStatus == ActionExecutionStatus.Canceled).Select(p => p.Id).ToList();
+
                             foreach (var proc in processes)
                             {
-                                proc.Cancel(logger);
+                                proc.Cancel(logger, "15E111BA-A585-46AB-A73E-9A554CD128C4", ReasonOfChangeStatus.ByExecutionCoordinator, cancelledExecutionCoordinatorsIds);
                             }
                         }
                         else
                         {
+                            var executionCoordinatorsIds = executionCoordinators.Select(p => p.Id).ToList();
+
                             foreach (var proc in processes)
                             {
-                                proc.WeakCancel(logger);
+                                proc.WeakCancel(logger, "589446A0-232E-4D86-A7F1-4E0A42BC13B8", ReasonOfChangeStatus.ByExecutionCoordinator, executionCoordinatorsIds);
                             }
                         }
 
@@ -99,11 +103,11 @@ namespace SymOntoClay.Core.Internal.Helpers
                             switch(timeoutCancellationMode)
                             {
                                 case TimeoutCancellationMode.WeakCancel:
-                                    proc.WeakCancel(logger);
+                                    proc.WeakCancel(logger, "6F69A1A8-5C55-4B33-B711-BDD4C4F39F83", ReasonOfChangeStatus.ByTimeout);
                                     break;
 
                                 case TimeoutCancellationMode.Cancel:
-                                    proc.Cancel(logger);
+                                    proc.Cancel(logger, "208DD252-4216-40B9-BAAE-5049EBE3ED61", ReasonOfChangeStatus.ByTimeout);
                                     break;
 
                                 default:

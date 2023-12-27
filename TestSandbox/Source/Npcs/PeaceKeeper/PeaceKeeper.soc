@@ -1,4 +1,4 @@
-﻿app PeaceKeeper
+﻿/*app PeaceKeeper
 {
     on Enter =>
 	{
@@ -28,7 +28,7 @@
 
 	//	'End kill' >> @>log;
 	//}
-}
+}*/
 
 /*app PeaceKeeper
 {
@@ -44,7 +44,7 @@
 	}
 }*/
 
-/*app PeaceKeeper
+app PeaceKeeper
 {
     on Enter =>
 	{
@@ -65,7 +65,7 @@
 	{
 	    @@host.`stop`();
 	}
-}*/
+}
 
 /*app PeaceKeeper
 {

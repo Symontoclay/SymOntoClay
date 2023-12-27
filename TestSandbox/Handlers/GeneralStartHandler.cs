@@ -62,8 +62,8 @@ namespace TestSandbox.Handlers
             //var platformListener = new TstPlatformHostListener();
             //var platformListener = new HostMethods_Tests_HostListener();
             //var platformListener = new FullGeneralized_Tests_HostListener();
-            //var platformListener = new TstBattleRoyaleHostListener();
-            var platformListener = new TstPlatformHostListenerWithDefaultValues();
+            var platformListener = new TstBattleRoyaleHostListener();
+            //var platformListener = new TstPlatformHostListenerWithDefaultValues();
 
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.HostListener = platformListener;

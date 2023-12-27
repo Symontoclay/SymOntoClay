@@ -144,7 +144,7 @@ namespace TestSandbox.CoreHostListener
 
                 _logger.Info("70D31FCD-3A07-4CE7-AA79-1CEF5CFACD2A", "Cancel");
 
-                processInfo.Cancel(_logger);
+                processInfo.Cancel(_logger, "CCE32AB3-7969-4686-BFBD-7A9E65805273", ReasonOfChangeStatus.Unknown);
 
                 Thread.Sleep(1000);
             }

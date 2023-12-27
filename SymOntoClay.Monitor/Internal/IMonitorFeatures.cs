@@ -26,6 +26,8 @@ namespace SymOntoClay.Monitor.Internal
         bool EnableCodeFrame { get; }
         bool EnableLeaveThreadExecutor { get; }
         bool EnableGoBackToPrevCodeFrame { get; }
+        bool EnableCancel { get; }
+        bool EnableWeakCancel { get; }
         bool EnableOutput { get; }
         bool EnableTrace { get; }
         bool EnableDebug { get; }

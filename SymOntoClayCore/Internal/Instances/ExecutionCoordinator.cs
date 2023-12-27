@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -34,10 +35,14 @@ namespace SymOntoClay.Core.Internal.Instances
         public ExecutionCoordinator(IInstance instance)
         {
             _instance = instance;
+            Id = NameHelper.GetNewEntityNameString();
         }
 
         private readonly IInstance _instance;
         private readonly object _lockObj = new object();
+
+        /// <inheritdoc/>
+        public string Id { get; private set; }
 
         /// <inheritdoc/>
         public IInstance Instance => _instance;

@@ -225,6 +225,22 @@ namespace SymOntoClay.Monitor.Internal
             }
         }
 
+        bool IMonitorFeatures.EnableCancel
+        { 
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableCancel;
+            }
+        }
+
+        bool IMonitorFeatures.EnableWeakCancel
+        { 
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableWeakCancel;
+            }
+        }
+
         bool IMonitorFeatures.EnableOutput
         {
             get
@@ -323,6 +339,8 @@ namespace SymOntoClay.Monitor.Internal
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableCodeFrame)} = {monitorFeatures.EnableCodeFrame}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableLeaveThreadExecutor)} = {monitorFeatures.EnableLeaveThreadExecutor}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableGoBackToPrevCodeFrame)} = {monitorFeatures.EnableGoBackToPrevCodeFrame}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableCancel)} = {monitorFeatures.EnableCancel}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableWeakCancel)} = {monitorFeatures.EnableWeakCancel}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableOutput)} = {monitorFeatures.EnableOutput}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableTrace)} = {monitorFeatures.EnableTrace}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableDebug)} = {monitorFeatures.EnableDebug}");
@@ -586,6 +604,26 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
             _monitorLoggerImpl.GoBackToPrevCodeFrame(messagePointId, targetActionExecutionStatus, targetActionExecutionStatusStr, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void Cancel(string messagePointId, Enum reasonOfChangeStatus, List<string> changersIds, string callMethodId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.Cancel(messagePointId, reasonOfChangeStatus, changersIds, callMethodId, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void WeakCancel(string messagePointId, Enum reasonOfChangeStatus, List<string> changersIds, string callMethodId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.WeakCancel(messagePointId, reasonOfChangeStatus, changersIds, callMethodId, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>

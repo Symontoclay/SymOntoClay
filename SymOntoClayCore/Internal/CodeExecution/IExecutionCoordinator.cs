@@ -31,6 +31,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public interface IExecutionCoordinator : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
+        string Id { get; }
         IInstance Instance { get; }
         KindOfInstance KindOfInstance { get; }
         ActionExecutionStatus ExecutionStatus { get; set; }

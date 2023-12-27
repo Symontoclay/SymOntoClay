@@ -30,6 +30,8 @@ namespace SymOntoClay.Monitor.Common.Data
         CodeFrame,
         LeaveThreadExecutor,
         GoBackToPrevCodeFrame,
+        Cancel,
+        WeakCancel,
         Output,
         Trace,
         Debug,

@@ -125,7 +125,7 @@ namespace TestSandbox.CoreHostListener
 
                 _logger.Info("96C7DAF4-E42C-450F-BF02-425223E4250B", "Cancel");
 
-                processInfo.Cancel(_logger);
+                processInfo.Cancel(_logger, "D1291FEB-831A-41BF-9273-8C1DE533E227", ReasonOfChangeStatus.Unknown);
 
                 Thread.Sleep(10000);
             }
@@ -151,7 +151,7 @@ namespace TestSandbox.CoreHostListener
 
                 _logger.Info("1D370D08-B6B1-40FF-A491-6074A19F778C", "Cancel");
 
-                processInfo.Cancel(_logger);
+                processInfo.Cancel(_logger, "BD1CFCAA-2FF8-43AD-913D-C2F225309FBF", ReasonOfChangeStatus.Unknown);
 
                 Thread.Sleep(10000);
             }

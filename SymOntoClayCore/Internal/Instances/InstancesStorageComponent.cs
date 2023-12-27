@@ -307,7 +307,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     {
                         foreach (var concurentProcessInfo in concurentProcessesInfoList)
                         {
-                            concurentProcessInfo.Cancel(logger);
+                            concurentProcessInfo.Cancel(logger, "74AFBE25-AE89-4971-BC06-716048826194", ReasonOfChangeStatus.ByConcurrentProcess, processInfo.Id, callMethodId);
                         }
                     });
 
@@ -317,7 +317,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
             }
 
-            processInfo.Cancel(logger);
+            processInfo.Cancel(logger, "1EC35613-F68C-4D31-AA72-0B07F9FD10B7", ReasonOfChangeStatus.CouldNotBeStartedByLowPriority, callMethodId: callMethodId);
 
             logger.EndHostMethodStarting("1510E6AF-F4EB-4BA3-AC44-78BDE3E92EE7", callMethodId);
         }

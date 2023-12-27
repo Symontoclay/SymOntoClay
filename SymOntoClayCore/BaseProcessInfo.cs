@@ -57,7 +57,7 @@ namespace SymOntoClay.Core
         public abstract string EndPointName { get; }
 
         /// <inheritdoc/>
-        public ProcessStatus Status 
+        public ProcessStatus Status
         {
             get
             {
@@ -84,7 +84,7 @@ namespace SymOntoClay.Core
                     _status = value;
                 }
 
-                ProcessSetStatus(_logger, value);
+                ProcessSetStatus(_logger, value, callMethodId: string.Empty);
             }
         }
 
@@ -117,7 +117,13 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public void Cancel(IMonitorLogger logger)
+        public void Cancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, string changerId = "", string callMethodId = "")
+        {
+            Cancel(logger, messagePointId, reasonOfChangeStatus, string.IsNullOrWhiteSpace(changerId) ? null : new List<string> { changerId }, callMethodId);
+        }
+
+        /// <inheritdoc/>
+        public void Cancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, List<string> changersIds, string callMethodId = "")
         {
             lock (_statusLockObj)
             {
@@ -129,11 +135,19 @@ namespace SymOntoClay.Core
                 _status = ProcessStatus.Canceled;
             }
 
-            ProcessSetStatus(logger, ProcessStatus.Canceled);
+            logger.Cancel(messagePointId, reasonOfChangeStatus, changersIds, callMethodId);
+
+            ProcessSetStatus(logger, ProcessStatus.Canceled, callMethodId);
         }
 
         /// <inheritdoc/>
-        public void WeakCancel(IMonitorLogger logger)
+        public void WeakCancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, string changerId = "", string callMethodId = "")
+        {
+            WeakCancel(logger, messagePointId, reasonOfChangeStatus, string.IsNullOrWhiteSpace(changerId) ? null : new List<string> { changerId }, callMethodId);
+        }
+
+        /// <inheritdoc/>
+        public void WeakCancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, List<string> changersIds, string callMethodId = "")
         {
             lock (_statusLockObj)
             {
@@ -145,7 +159,9 @@ namespace SymOntoClay.Core
                 _status = ProcessStatus.WeakCanceled;
             }
 
-            ProcessSetStatus(logger, ProcessStatus.WeakCanceled);
+            logger.WeakCancel(messagePointId, reasonOfChangeStatus, changersIds, callMethodId);
+
+            ProcessSetStatus(logger, ProcessStatus.WeakCanceled, callMethodId);
         }
 
         protected bool NIsFinished
@@ -157,24 +173,24 @@ namespace SymOntoClay.Core
             }
         }
 
-        private void ProcessSetStatus(IMonitorLogger logger, ProcessStatus status)
+        private void ProcessSetStatus(IMonitorLogger logger, ProcessStatus status, string callMethodId)
         {
             switch (status)
             {
                 case ProcessStatus.Completed:
                     EmitOnComplete(logger);
-                    ProcessGeneralFinishStatuses(logger, ProcessStatus.WeakCanceled);
+                    ProcessGeneralFinishStatuses(logger, ProcessStatus.WeakCanceled, callMethodId);
                     break;
 
                 case ProcessStatus.WeakCanceled:
                     EmitOnWeakCanceled(logger);
-                    ProcessGeneralFinishStatuses(logger, ProcessStatus.WeakCanceled);
+                    ProcessGeneralFinishStatuses(logger, ProcessStatus.WeakCanceled, callMethodId);
                     ProcessPlatformCancelation(logger);
                     break;
 
                 case ProcessStatus.Canceled:
                 case ProcessStatus.Faulted:
-                    ProcessGeneralFinishStatuses(logger, ProcessStatus.Canceled);
+                    ProcessGeneralFinishStatuses(logger, ProcessStatus.Canceled, callMethodId);
                     ProcessPlatformCancelation(logger);
                     break;
             }
@@ -209,27 +225,27 @@ namespace SymOntoClay.Core
             InternalOnWeakCanceled?.Invoke(this);
         }
 
-        private void ProcessGeneralFinishStatuses(IMonitorLogger logger, ProcessStatus status)
+        private void ProcessGeneralFinishStatuses(IMonitorLogger logger, ProcessStatus status, string callMethodId)
         {
             EmitOnFinish(logger);
-            NCancelChildren(logger, status);
+            NCancelChildren(logger, status, callMethodId);
         }
 
-        private void NCancelChildren(IMonitorLogger logger, ProcessStatus status)
+        private void NCancelChildren(IMonitorLogger logger, ProcessStatus status, string callMethodId)
         {
             switch (status)
             {
                 case ProcessStatus.WeakCanceled:
                     foreach (var child in _childrenProcessInfoList.ToList())
                     {
-                        child.WeakCancel(logger);
+                        child.WeakCancel(logger, "256BA91B-55AE-4ABB-BCE6-44CE5CFD5A2F", ReasonOfChangeStatus.ByParentProcess, Id, callMethodId);
                     }
                     break;
 
                 case ProcessStatus.Canceled:
                     foreach (var child in _childrenProcessInfoList.ToList())
                     {
-                        child.Cancel(logger);
+                        child.Cancel(logger, "B710370A-6267-43F4-89FA-EF73F86A576E", ReasonOfChangeStatus.ByParentProcess, Id, callMethodId);
                     }
                     break;
 

@@ -38,7 +38,11 @@ namespace SymOntoClay.Core
     {
         string Id { get; }
         string EndPointName { get; }
-        ProcessStatus Status { get; set; }
+        
+        ProcessStatus Status { get; }
+
+        void SetStatus(IMonitorLogger logger, string messagePointId, ProcessStatus status);
+
         bool IsFinished { get; }
         IReadOnlyList<int> Devices { get; }
         void Start(IMonitorLogger logger);

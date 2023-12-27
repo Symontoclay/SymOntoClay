@@ -66,26 +66,27 @@ namespace SymOntoClay.Core
                     return _status;
                 }
             }
+        }
 
-            set
+        /// <inheritdoc/>
+        public void SetStatus(IMonitorLogger logger, string messagePointId, ProcessStatus status)
+        {
+            lock (_statusLockObj)
             {
-                lock (_statusLockObj)
+                if (_status == status)
                 {
-                    if (_status == value)
-                    {
-                        return;
-                    }
-
-                    if (NIsFinished && value != ProcessStatus.WeakCanceled)
-                    {
-                        return;
-                    }
-
-                    _status = value;
+                    return;
                 }
 
-                ProcessSetStatus(_logger, value, callMethodId: string.Empty);
+                if (NIsFinished && status != ProcessStatus.WeakCanceled)
+                {
+                    return;
+                }
+
+                _status = status;
             }
+
+            ProcessSetStatus(logger, status, callMethodId: string.Empty);
         }
 
         /// <inheritdoc/>

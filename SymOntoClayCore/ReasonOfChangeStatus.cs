@@ -10,6 +10,7 @@ namespace SymOntoClay.Core
         ByConcurrentProcess,
         CouldNotBeStartedByLowPriority,
         ByParentProcess,
+        ByParentInstance,
         ByExecutionCoordinator,
         ByTimeout
     }

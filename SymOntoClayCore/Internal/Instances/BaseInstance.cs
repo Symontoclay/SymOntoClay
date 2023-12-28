@@ -136,9 +136,17 @@ namespace SymOntoClay.Core.Internal.Instances
         public ILocalCodeExecutionContext LocalCodeExecutionContext => _localCodeExecutionContext;
 
         /// <inheritdoc/>
-        public void CancelExecution(IMonitorLogger logger)
+        public void CancelExecution(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, string changerId = "", string callMethodId = "")
         {
-            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Canceled;
+            CancelExecution(logger, messagePointId, reasonOfChangeStatus, string.IsNullOrWhiteSpace(changerId) ? null : new List<string> { changerId }, callMethodId);
+        }
+
+        /// <inheritdoc/>
+        public void CancelExecution(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, List<string> changersIds, string callMethodId = "")
+        {
+            //LOG_ME
+
+            _executionCoordinator.SetExecutionStatus(logger, "64A3F029-7F5D-4DB7-9ECC-83DD59A2973C", ActionExecutionStatus.Canceled);
         }
 
         public virtual void Init(IMonitorLogger logger)
@@ -147,7 +155,7 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 if(_parentExecutionCoordinator.IsFinished)
                 {
-                    _executionCoordinator.ExecutionStatus = ActionExecutionStatus.WeakCanceled;
+                    _executionCoordinator.SetExecutionStatus(logger, "710212D6-2705-4C71-A44A-780ECAA3B9C5", ActionExecutionStatus.WeakCanceled);
                     _instanceState = InstanceState.Initialized;
                     return;
                 }
@@ -157,7 +165,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _instanceState = InstanceState.Initializing;
 
-            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
+            _executionCoordinator.SetExecutionStatus(logger, "5ED62258-1580-4877-A8A0-1DDCBF7FF05A", ActionExecutionStatus.Executing);
 
             ApplyCodeDirectives(logger);
 
@@ -504,14 +512,14 @@ namespace SymOntoClay.Core.Internal.Instances
         protected virtual void RunFinalizationTrigges(IMonitorLogger logger)
         {
             var finalizationExecutionCoordinator = new ExecutionCoordinator(this);
-            finalizationExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Executing;
+            finalizationExecutionCoordinator.SetExecutionStatus(logger, "86865B32-9839-4442-8EEF-5522E6DAADB4", ActionExecutionStatus.Executing);
 
             RunLifecycleTriggers(logger, KindOfSystemEventOfInlineTrigger.Leave, finalizationExecutionCoordinator, false);
         }
 
         private void ParentExecutionCoordinator_OnFinished()
         {
-            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.WeakCanceled;
+            _executionCoordinator.SetExecutionStatus(Logger, "898C6E87-54F5-41CA-8B3F-08B8BBF95135", ActionExecutionStatus.WeakCanceled);
         }
 
         protected virtual void ExecutionCoordinator_OnFinished()
@@ -528,7 +536,7 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 foreach(var childInstance in _childInstances.ToList())
                 {
-                    childInstance.CancelExecution(Logger);
+                    childInstance.CancelExecution(Logger, "D39D5646-20AC-43FB-95A5-90125E0F2DFB", ReasonOfChangeStatus.ByParentInstance, Name?.ToHumanizedLabel());
                 }
             }
 

@@ -1520,11 +1520,11 @@ action Go
             var processInfo = new ProcessInfo();
 
             var task = new Task(() => {
-                processInfo.Status = ProcessStatus.Running;
+                processInfo.SetStatus(_logger, "7237984F-0628-432D-AE80-F01AE12D48B0", ProcessStatus.Running);
 
                 Thread.Sleep(10000);
 
-                processInfo.Status = ProcessStatus.Completed;
+                processInfo.SetStatus(_logger, "B6BEFCA3-C7CB-4348-BCE4-6FED8675E5A0", ProcessStatus.Completed);
             });
 
             task.Start();

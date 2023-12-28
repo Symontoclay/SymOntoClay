@@ -84,7 +84,7 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             if (_executionCoordinator.ExecutionStatus == ActionExecutionStatus.Executing)
             {
-                _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Canceled;
+                _executionCoordinator.SetExecutionStatus(Logger, "E5B59D5E-0F95-43EC-85A3-EFE74CDD327A", ActionExecutionStatus.Canceled);
             }
 
             foreach (var stateDeactivator in _stateDeactivators)

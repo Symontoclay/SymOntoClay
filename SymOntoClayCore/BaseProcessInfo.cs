@@ -86,6 +86,8 @@ namespace SymOntoClay.Core
                 _status = status;
             }
 
+            //LOG_ME
+
             ProcessSetStatus(logger, status, callMethodId: string.Empty);
         }
 

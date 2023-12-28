@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -34,7 +35,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         string Id { get; }
         IInstance Instance { get; }
         KindOfInstance KindOfInstance { get; }
-        ActionExecutionStatus ExecutionStatus { get; set; }
+        ActionExecutionStatus ExecutionStatus { get; }
+        void SetExecutionStatus(IMonitorLogger logger, string messagePointId, ActionExecutionStatus actionExecutionStatus);
         bool IsFinished { get; }
         RuleInstance RuleInstance { get; set; }
         event Action OnFinished;

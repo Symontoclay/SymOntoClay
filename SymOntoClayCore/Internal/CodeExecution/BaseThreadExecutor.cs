@@ -186,7 +186,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (setAsRunning)
             {
-                _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Running;
+                _currentCodeFrame.ProcessInfo.SetStatus(Logger, "FBF59E50-D35C-487E-9B49-8C7D5DBFAB7D", ProcessStatus.Running);
             }
         }
 
@@ -197,13 +197,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             foreach (var codeFrame in reverseCodeFramesList)
             {
-                codeFrame.ProcessInfo.Status = ProcessStatus.WaitingToRun;
+                codeFrame.ProcessInfo.SetStatus(Logger, "20582FBC-C298-4BAF-B969-B7B63A3B5754", ProcessStatus.WaitingToRun);
 
                 SetCodeFrame(codeFrame, false);
             }
 
-            _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Running;
-
+            _currentCodeFrame.ProcessInfo.SetStatus(Logger, "756FCA0C-6645-4CCA-B865-6A7220476D27", ProcessStatus.Running);
         }
 
         public Value Start()
@@ -735,7 +734,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessBreakState()
         {
-            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Broken;
+            _executionCoordinator.SetExecutionStatus(Logger, "CF70D9D9-E756-48E8-A607-81908686F0FF", ActionExecutionStatus.Broken);
 
             _context.InstancesStorage.TryActivateDefaultState(Logger);
 
@@ -748,7 +747,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var ruleInstance = currentValue.AsRuleInstance;
 
-            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Broken;
+            _executionCoordinator.SetExecutionStatus(Logger, "21485F40-AC82-40AE-AC79-505EDAFFB4CF", ActionExecutionStatus.Broken);
 
             _globalLogicalStorage.Append(Logger, ruleInstance);
 
@@ -759,7 +758,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessCompleteState()
         {
-            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
+            _executionCoordinator.SetExecutionStatus(Logger, "184BFA9F-BD34-4D55-BF25-B6AD83AA0722", ActionExecutionStatus.Complete);
 
             _context.InstancesStorage.TryActivateDefaultState(Logger);
 
@@ -795,7 +794,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var state = _statesResolver.Resolve(Logger, stateName, _currentCodeFrame.LocalContext);
 
-            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
+            _executionCoordinator.SetExecutionStatus(Logger, "59AD587D-5C99-4A38-817D-E826992E6D5C", ActionExecutionStatus.Complete);
 
             _context.InstancesStorage.ActivateState(Logger, state);
 
@@ -806,7 +805,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             var currentValue = TryResolveFromVarOrExpr(_currentCodeFrame.ValuesStack.Pop());
 
-            _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Completed;
+            _currentCodeFrame.ProcessInfo.SetStatus(Logger, "17EFD6A4-C466-4A2E-AB3E-E7C90CC3547C", ProcessStatus.Completed);
 
             GoBackToPrevCodeFrame("E2204170-6974-4F11-83F0-D078939C58C4", ActionExecutionStatus.Complete);
 
@@ -822,7 +821,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessReturn()
         {
-            _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Completed;
+            _currentCodeFrame.ProcessInfo.SetStatus(Logger, "F5B17665-B1A7-4B65-AF3A-F487CEC75F30", ProcessStatus.Completed);
 
             GoBackToPrevCodeFrame("7CA393A1-A3B8-48B5-BFF9-F7BA38048B13", ActionExecutionStatus.Complete);
 
@@ -846,28 +845,28 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             _executionCoordinator.RuleInstance = ruleInstance;
 
-            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Broken;
+            _executionCoordinator.SetExecutionStatus(Logger, "1A5CCCF7-2F52-45C7-B408-5E4B23662225", ActionExecutionStatus.Broken);
 
             _currentCodeFrame.CurrentPosition++;
         }
 
         private void ProcessCompleteAction()
         {
-            _currentCodeFrame.ExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
+            _currentCodeFrame.ExecutionCoordinator.SetExecutionStatus(Logger, "516B31E8-44B5-4B5A-8101-DDBF1D7DD8D0", ActionExecutionStatus.Complete);
 
             _currentCodeFrame.CurrentPosition++;
         }
 
         private void ProcessCancelAction()
         {
-            _currentCodeFrame.ExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.Canceled;
+            _currentCodeFrame.ExecutionCoordinator.SetExecutionStatus(Logger, "74A41530-6EFB-42D4-A88B-52651BC84519", ActionExecutionStatus.Canceled);
 
             _currentCodeFrame.CurrentPosition++;
         }
 
         private void ProcessWeakCancelAction()
         {
-            _currentCodeFrame.ExecutionCoordinator.ExecutionStatus = ActionExecutionStatus.WeakCanceled;
+            _currentCodeFrame.ExecutionCoordinator.SetExecutionStatus(Logger, "5F5779B1-4D20-455A-9756-4AF0009245DE", ActionExecutionStatus.WeakCanceled);
 
             _currentCodeFrame.CurrentPosition++;
         }
@@ -992,9 +991,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 result = result.AsLogicalValue.Inverse();
 
                 _currentCodeFrame.ValuesStack.Push(result);
-
             }
-
         }
 
         private void ProcessVarDecl(ScriptCommand currentCommand)
@@ -1264,7 +1261,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (_currentCodeFrame.CurrentSEHGroup == null)
             {
-                _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Faulted;
+                _currentCodeFrame.ProcessInfo.SetStatus(Logger, "39056815-6732-4045-9CC1-A72D4B64DAE5", ProcessStatus.Faulted);
 
                 GoBackToPrevCodeFrame("7521D54F-D408-4098-9B77-29BD014AF10C", ActionExecutionStatus.Faulted);
             }
@@ -1272,7 +1269,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 if (!CheckSEH())
                 {
-                    _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Faulted;
+                    _currentCodeFrame.ProcessInfo.SetStatus(Logger, "2A75FFA8-314B-4408-A5AE-6EE13EFC6DFB", ProcessStatus.Faulted);
 
                     GoBackToPrevCodeFrame("1115613F-CEE0-4FA3-8E04-554B1C8B3E4E", ActionExecutionStatus.Faulted);
                 }
@@ -1384,7 +1381,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         {
                             break;
                         }
-                        _executionCoordinator.ExecutionStatus = targetActionExecutionStatus;
+                        _executionCoordinator.SetExecutionStatus(Logger, "5289017C-43D5-4842-93FA-2369A1A039CA", targetActionExecutionStatus);
                         break;
 
                     default:
@@ -1403,20 +1400,20 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 switch (targetActionExecutionStatus)
                 {
                     case ActionExecutionStatus.Complete:
-                        currentProcessInfo.Status = ProcessStatus.Completed;
+                        currentProcessInfo.SetStatus(Logger, "0215F946-3816-4B78-84EA-516296FE2002", ProcessStatus.Completed);
                         break;
 
                     case ActionExecutionStatus.Broken:
                     case ActionExecutionStatus.Faulted:
-                        currentProcessInfo.Status = ProcessStatus.Faulted;
+                        currentProcessInfo.SetStatus(Logger, "9CEF77A9-3A9A-4806-9898-C62353BC7AA9", ProcessStatus.Faulted);
                         break;
 
                     case ActionExecutionStatus.WeakCanceled:
-                        currentProcessInfo.Status = ProcessStatus.WeakCanceled;
+                        currentProcessInfo.SetStatus(Logger, "BF6BB611-E243-4CB5-A71F-6211CC131B6F", ProcessStatus.WeakCanceled);
                         break;
 
                     case ActionExecutionStatus.Canceled:
-                        currentProcessInfo.Status = ProcessStatus.Canceled;
+                        currentProcessInfo.SetStatus(Logger, "14F8DA0A-7CE8-499F-B50A-9AEA95E9012E", ProcessStatus.Canceled);
                         _isCanceled = true;
                         break;
 
@@ -1431,11 +1428,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 switch (targetActionExecutionStatus)
                 {
                     case ActionExecutionStatus.WeakCanceled:
-                        currentProcessInfo.Status = ProcessStatus.WeakCanceled;
+                        currentProcessInfo.SetStatus(Logger, "5C7F33A6-B618-4739-8027-0C24ED73A590", ProcessStatus.WeakCanceled);
                         break;
 
                     case ActionExecutionStatus.Canceled:
-                        currentProcessInfo.Status = ProcessStatus.Canceled;
+                        currentProcessInfo.SetStatus(Logger, "E7CE8CC3-2746-4B86-A5E5-538E46189311", ProcessStatus.Canceled);
                         _isCanceled = true;
                         break;
                 }
@@ -1453,7 +1450,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (_isCanceled)
                 {
-                    _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Canceled;
+                    _currentCodeFrame.ProcessInfo.SetStatus(Logger, "54F2D438-718E-43AB-BEDD-CC8C024FE4AD", ProcessStatus.Canceled);
 
                     GoBackToPrevCodeFrame("BCE9BB8B-31E5-4A1F-ADED-A9E6733A535C", ActionExecutionStatus.Canceled);
                     return;
@@ -1941,7 +1938,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             break;
 
                         case ProcessStatus.Canceled:
-                            _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Canceled;
+                            _currentCodeFrame.ProcessInfo.SetStatus(Logger, "60EE6E1D-1FCE-4E43-AF5F-2FDB574CCDE0", ProcessStatus.Canceled);
 
                             if (cancelAnnotationSystemEvent != null)
                             {
@@ -1954,7 +1951,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             return;
 
                         case ProcessStatus.Faulted:
-                            _currentCodeFrame.ProcessInfo.Status = ProcessStatus.Faulted;
+                            _currentCodeFrame.ProcessInfo.SetStatus(Logger, "CF28AF35-A9E0-4BBB-9079-9EB77CBC51A5", ProcessStatus.Faulted);
 
                             if (errorAnnotationSystemEvent != null)
                             {

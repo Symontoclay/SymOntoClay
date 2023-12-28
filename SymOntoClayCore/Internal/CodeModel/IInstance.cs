@@ -39,7 +39,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         float Priority { get; }
         IExecutionCoordinator ExecutionCoordinator { get; }
         ILocalCodeExecutionContext LocalCodeExecutionContext { get; }
-        void CancelExecution(IMonitorLogger logger);
+        void CancelExecution(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, string changerId = "", string callMethodId = "");
+        void CancelExecution(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, List<string> changersIds, string callMethodId = "");
         void AddChildInstance(IMonitorLogger logger, IInstance instance);
         void RemoveChildInstance(IMonitorLogger logger, IInstance instance);
         void SetParent(IMonitorLogger logger, IInstance instance);

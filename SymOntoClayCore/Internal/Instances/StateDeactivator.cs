@@ -41,7 +41,7 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         protected override void RunHandler(ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            _executionCoordinator.ExecutionStatus = ActionExecutionStatus.Complete;
+            _executionCoordinator.SetExecutionStatus(Logger, "52604BCE-A94D-435A-9446-B692775FB45A", ActionExecutionStatus.Complete);
 
             _context.InstancesStorage.TryActivateDefaultState(Logger);
         }

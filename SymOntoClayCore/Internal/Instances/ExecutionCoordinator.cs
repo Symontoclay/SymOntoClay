@@ -20,10 +20,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using Newtonsoft.Json.Linq;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -62,31 +64,34 @@ namespace SymOntoClay.Core.Internal.Instances
                     return _executionStatus;
                 }
             }
+        }
 
-            set 
+        /// <inheritdoc/>
+        public void SetExecutionStatus(IMonitorLogger logger, string messagePointId, ActionExecutionStatus actionExecutionStatus)
+        {
+            lock (_lockObj)
             {
-                lock (_lockObj)
+                if (_executionStatus == actionExecutionStatus)
                 {
-                    if(_executionStatus == value)
+                    return;
+                }
+
+                _executionStatus = actionExecutionStatus;
+
+                var currIsFinished = _executionStatus != ActionExecutionStatus.Executing;
+
+                if (currIsFinished != _isFinished)
+                {
+                    _isFinished = currIsFinished;
+
+                    if (currIsFinished)
                     {
-                        return;
-                    }
-
-                    _executionStatus = value;
-
-                    var currIsFinished = _executionStatus != ActionExecutionStatus.Executing;
-
-                    if(currIsFinished != _isFinished)
-                    {
-                        _isFinished = currIsFinished;
-
-                        if (currIsFinished)
-                        {
-                            InternalOnFinish?.Invoke();
-                        }
+                        InternalOnFinish?.Invoke();
                     }
                 }
             }
+
+            //LOG_ME
         }
 
         private ActionExecutionStatus _executionStatus;

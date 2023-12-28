@@ -205,7 +205,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 return;
             }
 
-            processInfo.Status = ProcessStatus.WaitingForResources;
+            processInfo.SetStatus(logger, "1B56EBB2-08E8-47EC-AB31-528709F7A93F", ProcessStatus.WaitingForResources);
 
             lock (_processLockObj)
             {

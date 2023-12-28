@@ -117,7 +117,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                         Invoke(callMethodId, endpointInfo.MethodInfo, platformListener, paramsList, logger);
                     });
 
-                    processInfo.Status = ProcessStatus.Completed;
+                    processInfo.SetStatus(logger, "87FE8620-1044-4645-9FBD-650E0402EB1C", ProcessStatus.Completed);
                 }
                 catch (TargetInvocationException e)
                 {
@@ -127,7 +127,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     {
                         if (processInfo.Status != ProcessStatus.Canceled && processInfo.Status != ProcessStatus.WeakCanceled)
                         {
-                            processInfo.Status = ProcessStatus.Canceled;
+                            processInfo.SetStatus(logger, "23AABB3A-2FD8-4FA0-B371-6172E41BFD26", ProcessStatus.Canceled);
                         }
                     }
                     else
@@ -143,7 +143,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
                     logger.Error("B713C1AF-C89B-4430-9AA3-1751BF5D4C51", e);
 
-                    processInfo.Status = ProcessStatus.Faulted;
+                    processInfo.SetStatus(logger, "4EF49830-6C8B-499E-BC46-D71104191808", ProcessStatus.Faulted);
                 }
 
             }, cancellationToken);
@@ -161,7 +161,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 {
                     Invoke(callMethodId, endpointInfo.MethodInfo, platformListener, paramsList, logger);
 
-                    processInfo.Status = ProcessStatus.Completed;
+                    processInfo.SetStatus(logger, "37907BF0-B51E-4D54-A2C1-21C0F4938965", ProcessStatus.Completed);
                 }
                 catch (TargetInvocationException e)
                 {
@@ -171,7 +171,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     {
                         if (processInfo.Status != ProcessStatus.Canceled && processInfo.Status != ProcessStatus.WeakCanceled)
                         {
-                            processInfo.Status = ProcessStatus.Canceled;
+                            processInfo.SetStatus(logger, "850EB9E4-49CB-4CBB-8986-9FF7475809BD", ProcessStatus.Canceled);
                         }
                     }
                     else
@@ -183,11 +183,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 }
                 catch (Exception e)
                 {
-                    logger.EndHostMethodExecution("65DFD0B6-17E3-4EFE-8D8A-4C3FEA3EC5ED", callMethodId);
-
                     logger.Error("B459B0E1-D3D8-441A-B13C-3D1145FE09C0", e);
 
-                    processInfo.Status = ProcessStatus.Faulted;
+                    logger.EndHostMethodExecution("65DFD0B6-17E3-4EFE-8D8A-4C3FEA3EC5ED", callMethodId);
+
+                    processInfo.SetStatus(logger, "47C8A8EC-3B92-42F7-AF7F-E7D765919383", ProcessStatus.Faulted);
                 }
 
             }, cancellationToken);

@@ -29,6 +29,7 @@ using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
@@ -76,6 +77,8 @@ namespace SymOntoClay.Core.Internal.Instances
                     return;
                 }
 
+                Task.Run(() => { logger.SetExecutionCoordinatorStatus(messagePointId, actionExecutionStatus); });
+                
                 _executionStatus = actionExecutionStatus;
 
                 var currIsFinished = _executionStatus != ActionExecutionStatus.Executing;
@@ -90,8 +93,6 @@ namespace SymOntoClay.Core.Internal.Instances
                     }
                 }
             }
-
-            //LOG_ME
         }
 
         private ActionExecutionStatus _executionStatus;

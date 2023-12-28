@@ -1599,7 +1599,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void Cancel(string messagePointId, Enum reasonOfChangeStatus, List<string> changersIds, string callMethodId,
+        public void CancelProcessInfo(string messagePointId, Enum reasonOfChangeStatus, List<string> changersIds, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
@@ -1614,7 +1614,7 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
-            if (!_features.EnableCancel)
+            if (!_features.EnableCancelProcessInfo)
             {
                 return;
             }
@@ -1648,7 +1648,7 @@ namespace SymOntoClay.Monitor.Internal
                 //_globalLogger.Info($"NEXT");
 #endif
 
-                var messageInfo = new CancelMessage
+                var messageInfo = new CancelProcessInfoMessage
                 {
                     ReasonOfChangeStatus = Convert.ToInt32(reasonOfChangeStatus),
                     ReasonOfChangeStatusStr = reasonOfChangeStatus?.ToString(),
@@ -1676,7 +1676,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void WeakCancel(string messagePointId, Enum reasonOfChangeStatus, List<string> changersIds, string callMethodId,
+        public void WeakCancelProcessInfo(string messagePointId, Enum reasonOfChangeStatus, List<string> changersIds, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
@@ -1691,7 +1691,7 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
-            if (!_features.EnableWeakCancel)
+            if (!_features.EnableWeakCancelProcessInfo)
             {
                 return;
             }
@@ -1725,12 +1725,235 @@ namespace SymOntoClay.Monitor.Internal
                 //_globalLogger.Info($"NEXT");
 #endif
 
-                var messageInfo = new WeakCancelMessage
+                var messageInfo = new WeakCancelProcessInfoMessage
                 {
                     ReasonOfChangeStatus = Convert.ToInt32(reasonOfChangeStatus),
                     ReasonOfChangeStatusStr = reasonOfChangeStatus?.ToString(),
                     ChangersIds = changersIds,
                     CallMethodId = callMethodId,
+                    DateTimeStamp = now,
+                    NodeId = _nodeId,
+                    ThreadId = _threadId,
+                    GlobalMessageNumber = globalMessageNumber,
+                    MessageNumber = messageNumber,
+                    MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
+                    MemberName = memberName,
+                    SourceFilePath = sourceFilePath,
+                    SourceLineNumber = sourceLineNumber
+                };
+
+#if DEBUG
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
+            });
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void CancelInstanceExecution(string messagePointId, Enum reasonOfChangeStatus, List<string> changersIds, string callMethodId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"reasonOfChangeStatus = {reasonOfChangeStatus}");
+            //_globalLogger.Info($"changersIds = {changersIds.WritePODListToString()}");
+            //_globalLogger.Info($"callMethodId = {callMethodId}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+            if (!_features.EnableCancelInstanceExecution)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            Task.Run(() => {
+#if DEBUG
+                //_globalLogger.Info($"NEXT");
+#endif
+
+                var messageInfo = new CancelInstanceExecutionMessage
+                {
+                    ReasonOfChangeStatus = Convert.ToInt32(reasonOfChangeStatus),
+                    ReasonOfChangeStatusStr = reasonOfChangeStatus?.ToString(),
+                    ChangersIds = changersIds,
+                    CallMethodId = callMethodId,
+                    DateTimeStamp = now,
+                    NodeId = _nodeId,
+                    ThreadId = _threadId,
+                    GlobalMessageNumber = globalMessageNumber,
+                    MessageNumber = messageNumber,
+                    MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
+                    MemberName = memberName,
+                    SourceFilePath = sourceFilePath,
+                    SourceLineNumber = sourceLineNumber
+                };
+
+#if DEBUG
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
+            });
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void SetExecutionCoordinatorStatus(string messagePointId, Enum status,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"status = {status}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+            if (!_features.)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            Task.Run(() => {
+#if DEBUG
+                //_globalLogger.Info($"NEXT");
+#endif
+
+                var messageInfo = new Message
+                {
+                    Status = Convert.ToInt32(status),
+                    StatusStr = status?.ToString(),
+                    DateTimeStamp = now,
+                    NodeId = _nodeId,
+                    ThreadId = _threadId,
+                    GlobalMessageNumber = globalMessageNumber,
+                    MessageNumber = messageNumber,
+                    MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
+                    MemberName = memberName,
+                    SourceFilePath = sourceFilePath,
+                    SourceLineNumber = sourceLineNumber
+                };
+
+#if DEBUG
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
+            });
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void SetProcessInfoStatus(string messagePointId, Enum status,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"status = {status}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+            if (!_features.)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            Task.Run(() => {
+#if DEBUG
+                //_globalLogger.Info($"NEXT");
+#endif
+
+                var messageInfo = new Message
+                {
+                    Status = Convert.ToInt32(status),
+                    StatusStr = status?.ToString(),
                     DateTimeStamp = now,
                     NodeId = _nodeId,
                     ThreadId = _threadId,

@@ -223,7 +223,7 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         }
 
         /// <inheritdoc/>
-        public void Cancel(string messagePointId, Enum reasonOfChangeStatus, List<string> changersIds, string callMethodId,
+        public void CancelProcessInfo(string messagePointId, Enum reasonOfChangeStatus, List<string> changersIds, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
@@ -231,7 +231,7 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         }
 
         /// <inheritdoc/>
-        public void WeakCancel(string messagePointId, Enum reasonOfChangeStatus, List<string> changersIds, string callMethodId,
+        public void WeakCancelProcessInfo(string messagePointId, Enum reasonOfChangeStatus, List<string> changersIds, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)

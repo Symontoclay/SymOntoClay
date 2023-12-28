@@ -289,7 +289,7 @@ namespace SymOntoClay.Monitor.NLog
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void Cancel(string messagePointId, Enum reasonOfChangeStatus, List<string> changersIds, string callMethodId,
+        public void CancelProcessInfo(string messagePointId, Enum reasonOfChangeStatus, List<string> changersIds, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
@@ -299,7 +299,37 @@ namespace SymOntoClay.Monitor.NLog
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void WeakCancel(string messagePointId, Enum reasonOfChangeStatus, List<string> changersIds, string callMethodId,
+        public void WeakCancelProcessInfo(string messagePointId, Enum reasonOfChangeStatus, List<string> changersIds, string callMethodId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void CancelInstanceExecution(string messagePointId, Enum reasonOfChangeStatus, List<string> changersIds, string callMethodId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void SetExecutionCoordinatorStatus(string messagePointId, Enum status,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void SetProcessInfoStatus(string messagePointId, Enum status,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)

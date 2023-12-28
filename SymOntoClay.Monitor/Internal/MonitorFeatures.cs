@@ -67,10 +67,19 @@ namespace SymOntoClay.Monitor.Internal
         public bool EnableGoBackToPrevCodeFrame { get; set; }
 
         /// <inheritdoc/>
-        public bool EnableCancel { get; set; }
+        public bool EnableCancelProcessInfo { get; set; }
 
         /// <inheritdoc/>
-        public bool EnableWeakCancel { get; set; }
+        public bool EnableWeakCancelProcessInfo { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableCancelInstanceExecution { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableSetExecutionCoordinatorStatus { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableSetProcessInfoStatus { get; set; }
 
         /// <inheritdoc/>
         public bool EnableOutput { get; set; }
@@ -116,8 +125,11 @@ namespace SymOntoClay.Monitor.Internal
             result.EnableCodeFrame = EnableCodeFrame;
             result.EnableLeaveThreadExecutor = EnableLeaveThreadExecutor;
             result.EnableGoBackToPrevCodeFrame = EnableGoBackToPrevCodeFrame;
-            result.EnableCancel = EnableCancel;
-            result.EnableWeakCancel = EnableWeakCancel;
+            result.EnableCancelProcessInfo = EnableCancelProcessInfo;
+            result.EnableWeakCancelProcessInfo = EnableWeakCancelProcessInfo;
+            result.EnableCancelInstanceExecution = EnableCancelInstanceExecution;
+            result.EnableSetExecutionCoordinatorStatus = EnableSetExecutionCoordinatorStatus;
+            result.EnableSetProcessInfoStatus = EnableSetProcessInfoStatus;
             result.EnableOutput = EnableOutput;
             result.EnableTrace = EnableTrace;
             result.EnableDebug = EnableDebug;
@@ -165,8 +177,11 @@ namespace SymOntoClay.Monitor.Internal
             sb.AppendLine($"{spaces}{nameof(EnableCodeFrame)} = {EnableCodeFrame}");
             sb.AppendLine($"{spaces}{nameof(EnableLeaveThreadExecutor)} = {EnableLeaveThreadExecutor}");
             sb.AppendLine($"{spaces}{nameof(EnableGoBackToPrevCodeFrame)} = {EnableGoBackToPrevCodeFrame}");
-            sb.AppendLine($"{spaces}{nameof(EnableCancel)} = {EnableCancel}");
-            sb.AppendLine($"{spaces}{nameof(EnableWeakCancel)} = {EnableWeakCancel}");
+            sb.AppendLine($"{spaces}{nameof(EnableCancelProcessInfo)} = {EnableCancelProcessInfo}");
+            sb.AppendLine($"{spaces}{nameof(EnableWeakCancelProcessInfo)} = {EnableWeakCancelProcessInfo}");
+            sb.AppendLine($"{spaces}{nameof(EnableCancelInstanceExecution)} = {EnableCancelInstanceExecution}");
+            sb.AppendLine($"{spaces}{nameof(EnableSetExecutionCoordinatorStatus)} = {EnableSetExecutionCoordinatorStatus}");
+            sb.AppendLine($"{spaces}{nameof(EnableSetProcessInfoStatus)} = {EnableSetProcessInfoStatus}");
             sb.AppendLine($"{spaces}{nameof(EnableOutput)} = {EnableOutput}");
             sb.AppendLine($"{spaces}{nameof(EnableTrace)} = {EnableTrace}");
             sb.AppendLine($"{spaces}{nameof(EnableDebug)} = {EnableDebug}");

@@ -144,12 +144,27 @@ namespace SymOntoClay.Monitor.Common
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);
 
-        void Cancel(string messagePointId, Enum reasonOfChangeStatus, List<string> changersIds, string callMethodId,
+        void CancelProcessInfo(string messagePointId, Enum reasonOfChangeStatus, List<string> changersIds, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);
 
-        void WeakCancel(string messagePointId, Enum reasonOfChangeStatus, List<string> changersIds, string callMethodId,
+        void WeakCancelProcessInfo(string messagePointId, Enum reasonOfChangeStatus, List<string> changersIds, string callMethodId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0);
+
+        void CancelInstanceExecution(string messagePointId, Enum reasonOfChangeStatus, List<string> changersIds, string callMethodId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0);
+
+        void SetExecutionCoordinatorStatus(string messagePointId, Enum status,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0);
+
+        void SetProcessInfoStatus(string messagePointId, Enum status,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);

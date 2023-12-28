@@ -144,7 +144,7 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public void CancelExecution(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, List<string> changersIds, string callMethodId = "")
         {
-            //LOG_ME
+            logger.CancelInstanceExecution(messagePointId, reasonOfChangeStatus, changersIds, callMethodId);
 
             _executionCoordinator.SetExecutionStatus(logger, "64A3F029-7F5D-4DB7-9ECC-83DD59A2973C", ActionExecutionStatus.Canceled);
         }

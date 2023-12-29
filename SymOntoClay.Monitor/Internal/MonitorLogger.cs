@@ -1843,7 +1843,7 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
-            if (!_features.)
+            if (!_features.EnableSetExecutionCoordinatorStatus)
             {
                 return;
             }
@@ -1877,7 +1877,7 @@ namespace SymOntoClay.Monitor.Internal
                 //_globalLogger.Info($"NEXT");
 #endif
 
-                var messageInfo = new Message
+                var messageInfo = new SetExecutionCoordinatorStatusMessage
                 {
                     Status = Convert.ToInt32(status),
                     StatusStr = status?.ToString(),
@@ -1916,7 +1916,7 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
-            if (!_features.)
+            if (!_features.EnableSetProcessInfoStatus)
             {
                 return;
             }
@@ -1950,7 +1950,7 @@ namespace SymOntoClay.Monitor.Internal
                 //_globalLogger.Info($"NEXT");
 #endif
 
-                var messageInfo = new Message
+                var messageInfo = new SetProcessInfoStatusMessage
                 {
                     Status = Convert.ToInt32(status),
                     StatusStr = status?.ToString(),

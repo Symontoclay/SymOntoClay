@@ -33,6 +33,8 @@ namespace SymOntoClay.Monitor.Common.Data
         CancelProcessInfo,
         WeakCancelProcessInfo,
         CancelInstanceExecution,
+        SetExecutionCoordinatorStatus,
+        SetProcessInfoStatus,
         Output,
         Trace,
         Debug,

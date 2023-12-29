@@ -85,6 +85,21 @@ namespace SymOntoClay.Monitor.Common.Data
                 case KindOfMessage.GoBackToPrevCodeFrame:
                     return JsonConvert.DeserializeObject<GoBackToPrevCodeFrameMessage>(content);
 
+                case KindOfMessage.CancelProcessInfo:
+                    return JsonConvert.DeserializeObject<CancelProcessInfoMessage>(content);
+
+                case KindOfMessage.WeakCancelProcessInfo:
+                    return JsonConvert.DeserializeObject<WeakCancelProcessInfoMessage>(content);
+
+                case KindOfMessage.CancelInstanceExecution:
+                    return JsonConvert.DeserializeObject<CancelInstanceExecutionMessage>(content);
+
+                case KindOfMessage.SetExecutionCoordinatorStatus:
+                    return JsonConvert.DeserializeObject<SetExecutionCoordinatorStatusMessage>(content);
+
+                case KindOfMessage.SetProcessInfoStatus:
+                    return JsonConvert.DeserializeObject<SetProcessInfoStatusMessage>(content);
+
                 case KindOfMessage.Output:
                     return JsonConvert.DeserializeObject<OutputMessage>(content);
 

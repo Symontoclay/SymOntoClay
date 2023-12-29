@@ -239,6 +239,30 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         }
 
         /// <inheritdoc/>
+        public void CancelInstanceExecution(string messagePointId, Enum reasonOfChangeStatus, List<string> changersIds, string callMethodId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void SetExecutionCoordinatorStatus(string messagePointId, Enum status,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void SetProcessInfoStatus(string messagePointId, Enum status,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+        }
+
+        /// <inheritdoc/>
         public void Output(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

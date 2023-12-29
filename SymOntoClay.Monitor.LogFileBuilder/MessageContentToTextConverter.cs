@@ -98,6 +98,21 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 case KindOfMessage.GoBackToPrevCodeFrame:
                     return GetGoBackToPrevCodeFrame(message as GoBackToPrevCodeFrameMessage);
 
+                case KindOfMessage.CancelProcessInfo:
+                    return GetCancelProcessInfo(message as CancelProcessInfoMessage);
+
+                case KindOfMessage.WeakCancelProcessInfo:
+                    return GetWeakCancelProcessInfo(message as WeakCancelProcessInfoMessage);
+
+                case KindOfMessage.CancelInstanceExecution:
+                    return GetCancelInstanceExecution(message as CancelInstanceExecutionMessage);
+
+                case KindOfMessage.SetExecutionCoordinatorStatus:
+                    return GetSetExecutionCoordinatorStatus(message as SetExecutionCoordinatorStatusMessage);
+
+                case KindOfMessage.SetProcessInfoStatus:
+                    return GetSetProcessInfoStatus(message as SetProcessInfoStatusMessage);
+
                 case KindOfMessage.Output:
                     return GetOutput(message as OutputMessage);
 
@@ -420,9 +435,54 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return string.Empty;
         }
 
-        public static string GetGoBackToPrevCodeFrame(GoBackToPrevCodeFrameMessage message)
+        public string GetGoBackToPrevCodeFrame(GoBackToPrevCodeFrameMessage message)
         {
             return message.TargetActionExecutionStatusStr;
+        }
+
+        public string GetCancelProcessInfo(CancelProcessInfoMessage message)
+        {
+#if DEBUG
+            _globalLogger.Info($"message = {message}");
+#endif
+
+            throw new NotImplementedException();
+        }
+
+        public string GetWeakCancelProcessInfo(WeakCancelProcessInfoMessage message)
+        {
+#if DEBUG
+            _globalLogger.Info($"message = {message}");
+#endif
+
+            throw new NotImplementedException();
+        }
+
+        public string GetCancelInstanceExecution(CancelInstanceExecutionMessage message)
+        {
+#if DEBUG
+            _globalLogger.Info($"message = {message}");
+#endif
+
+            throw new NotImplementedException();
+        }
+
+        public string GetSetExecutionCoordinatorStatus(SetExecutionCoordinatorStatusMessage message)
+        {
+#if DEBUG
+            //_globalLogger.Info($"message = {message}");
+#endif
+
+            return message.StatusStr;
+        }
+
+        public string GetSetProcessInfoStatus(SetProcessInfoStatusMessage message)
+        {
+#if DEBUG
+            //_globalLogger.Info($"message = {message}");
+#endif
+
+            return message.StatusStr;
         }
 
         private string GetOutput(OutputMessage message)

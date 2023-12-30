@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Monitor.Internal
+namespace SymOntoClay.Monitor.Common
 {
     public interface IMonitorFeatures : IObjectToString
     {

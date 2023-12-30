@@ -470,7 +470,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public string GetSetExecutionCoordinatorStatus(SetExecutionCoordinatorStatusMessage message)
         {
 #if DEBUG
-            //_globalLogger.Info($"message = {message}");
+            _globalLogger.Info($"message = {message}");
 #endif
 
             return message.StatusStr;
@@ -479,7 +479,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public string GetSetProcessInfoStatus(SetProcessInfoStatusMessage message)
         {
 #if DEBUG
-            //_globalLogger.Info($"message = {message}");
+            _globalLogger.Info($"message = {message}");
 #endif
 
             return message.StatusStr;

@@ -56,6 +56,10 @@ namespace SymOntoClay.Monitor.Internal
         /// <inheritdoc/>
         public string Id => throw new NotImplementedException();
 
+        bool IMonitorLogger.IsReal => throw new NotImplementedException();
+
+        IMonitorFeatures IMonitorLogger.MonitorFeatures => throw new NotImplementedException();
+
         private readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings()
         {
             PreserveReferencesHandling = PreserveReferencesHandling.All

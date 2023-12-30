@@ -15,6 +15,10 @@ namespace SymOntoClay.Monitor.Common
         /// </summary>
         string Id { get; }
 
+        bool IsReal { get; }
+
+        IMonitorFeatures MonitorFeatures { get; }
+
         string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
             bool isSynk,
             [CallerMemberName] string memberName = "",

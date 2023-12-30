@@ -5,26 +5,9 @@ using System.Text;
 
 namespace SymOntoClay.Monitor.Common.Data
 {
-    public class SetExecutionCoordinatorStatusMessage: BaseMessage
+    public class SetExecutionCoordinatorStatusMessage: BaseSetStatusMessage
     {
         /// <inheritdoc/>
         public override KindOfMessage KindOfMessage => KindOfMessage.SetExecutionCoordinatorStatus;
-
-        public int Status { get; set; }
-        public string StatusStr { get; set; }
-
-        /// <inheritdoc/>
-        protected override string PropertiesToString(uint n)
-        {
-            var spaces = DisplayHelper.Spaces(n);
-            var sb = new StringBuilder();
-
-            sb.AppendLine($"{spaces}{nameof(Status)} = {Status}");
-            sb.AppendLine($"{spaces}{nameof(StatusStr)} = {StatusStr}");
-
-            sb.Append(base.PropertiesToString(n));
-
-            return sb.ToString();
-        }
     }
 }

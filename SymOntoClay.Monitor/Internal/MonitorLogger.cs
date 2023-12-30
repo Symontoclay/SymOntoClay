@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -1653,6 +1654,7 @@ namespace SymOntoClay.Monitor.Internal
 
                 var messageInfo = new CancelProcessInfoMessage
                 {
+                    CancelledObjId
                     ReasonOfChangeStatus = Convert.ToInt32(reasonOfChangeStatus),
                     ReasonOfChangeStatusStr = reasonOfChangeStatus?.ToString(),
                     ChangersIds = changersIds,
@@ -1730,6 +1732,7 @@ namespace SymOntoClay.Monitor.Internal
 
                 var messageInfo = new WeakCancelProcessInfoMessage
                 {
+                    CancelledObjId
                     ReasonOfChangeStatus = Convert.ToInt32(reasonOfChangeStatus),
                     ReasonOfChangeStatusStr = reasonOfChangeStatus?.ToString(),
                     ChangersIds = changersIds,
@@ -1807,6 +1810,7 @@ namespace SymOntoClay.Monitor.Internal
 
                 var messageInfo = new CancelInstanceExecutionMessage
                 {
+                    CancelledObjId
                     ReasonOfChangeStatus = Convert.ToInt32(reasonOfChangeStatus),
                     ReasonOfChangeStatusStr = reasonOfChangeStatus?.ToString(),
                     ChangersIds = changersIds,
@@ -1882,8 +1886,13 @@ namespace SymOntoClay.Monitor.Internal
 
                 var messageInfo = new SetExecutionCoordinatorStatusMessage
                 {
+                    ObjId
                     Status = Convert.ToInt32(status),
                     StatusStr = status?.ToString(),
+                    PrevStatus
+                    PrevStatusStr
+                    Changers
+                    CallMethodId
                     DateTimeStamp = now,
                     NodeId = _nodeId,
                     ThreadId = _threadId,
@@ -1955,8 +1964,13 @@ namespace SymOntoClay.Monitor.Internal
 
                 var messageInfo = new SetProcessInfoStatusMessage
                 {
+                    ObjId
                     Status = Convert.ToInt32(status),
                     StatusStr = status?.ToString(),
+                    PrevStatus
+                    PrevStatusStr
+                    Changers
+                    CallMethodId
                     DateTimeStamp = now,
                     NodeId = _nodeId,
                     ThreadId = _threadId,

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SymOntoClay.Monitor.Common
 {
-    public struct Changer
+    public class Changer
     {
         public Changer(KindOfChanger kindOfChanger, string id)
         {

@@ -136,15 +136,15 @@ namespace SymOntoClay.Core.Internal.Instances
         public ILocalCodeExecutionContext LocalCodeExecutionContext => _localCodeExecutionContext;
 
         /// <inheritdoc/>
-        public void CancelExecution(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, string changerId = "", string callMethodId = "")
+        public void CancelExecution(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, Changer changer = null, string callMethodId = "")
         {
-            CancelExecution(logger, messagePointId, reasonOfChangeStatus, string.IsNullOrWhiteSpace(changerId) ? null : new List<string> { changerId }, callMethodId);
+            CancelExecution(logger, messagePointId, reasonOfChangeStatus, changer == null ? null : new List<Changer> { changer }, callMethodId);
         }
 
         /// <inheritdoc/>
-        public void CancelExecution(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, List<string> changersIds, string callMethodId = "")
+        public void CancelExecution(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, List<Changer> changers, string callMethodId = "")
         {
-            logger.CancelInstanceExecution(messagePointId, reasonOfChangeStatus, changersIds, callMethodId);
+            logger.CancelInstanceExecution(messagePointId, Name.ToHumanizedLabel(), reasonOfChangeStatus, changers, callMethodId);
 
             _executionCoordinator.SetExecutionStatus(logger, "64A3F029-7F5D-4DB7-9ECC-83DD59A2973C", ActionExecutionStatus.Canceled);
         }
@@ -534,9 +534,11 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if(_childInstances.Any())
             {
+                var changer = new Changer(KindOfChanger.Instance, Name?.ToHumanizedLabel());
+
                 foreach(var childInstance in _childInstances.ToList())
                 {
-                    childInstance.CancelExecution(Logger, "D39D5646-20AC-43FB-95A5-90125E0F2DFB", ReasonOfChangeStatus.ByParentInstance, Name?.ToHumanizedLabel());
+                    childInstance.CancelExecution(Logger, "D39D5646-20AC-43FB-95A5-90125E0F2DFB", ReasonOfChangeStatus.ByParentInstance, changer);
                 }
             }
 

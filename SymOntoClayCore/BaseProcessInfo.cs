@@ -71,6 +71,8 @@ namespace SymOntoClay.Core
         /// <inheritdoc/>
         public void SetStatus(IMonitorLogger logger, string messagePointId, ProcessStatus status)
         {
+            var prevStatus = _status;
+
             lock (_statusLockObj)
             {
                 if (_status == status)
@@ -83,10 +85,12 @@ namespace SymOntoClay.Core
                     return;
                 }
 
+                prevStatus = _status;
+
                 _status = status;
             }
 
-            logger.SetProcessInfoStatus(messagePointId, status);
+            logger.SetProcessInfoStatus(messagePointId, Id, status, prevStatus, null, null);
 
             ProcessSetStatus(logger, status, callMethodId: string.Empty);
         }
@@ -120,13 +124,13 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public void Cancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, string changerId = "", string callMethodId = "")
+        public void Cancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, Changer changer = null, string callMethodId = "")
         {
-            Cancel(logger, messagePointId, reasonOfChangeStatus, string.IsNullOrWhiteSpace(changerId) ? null : new List<string> { changerId }, callMethodId);
+            Cancel(logger, messagePointId, reasonOfChangeStatus, changer == null ? null : new List<Changer> { changer }, callMethodId);
         }
 
         /// <inheritdoc/>
-        public void Cancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, List<string> changersIds, string callMethodId = "")
+        public void Cancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, List<Changer> changers, string callMethodId = "")
         {
             lock (_statusLockObj)
             {
@@ -138,19 +142,19 @@ namespace SymOntoClay.Core
                 _status = ProcessStatus.Canceled;
             }
 
-            logger.CancelProcessInfo(messagePointId, reasonOfChangeStatus, changersIds, callMethodId);
+            logger.CancelProcessInfo(messagePointId, Id, reasonOfChangeStatus, changers, callMethodId);
 
             ProcessSetStatus(logger, ProcessStatus.Canceled, callMethodId);
         }
 
         /// <inheritdoc/>
-        public void WeakCancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, string changerId = "", string callMethodId = "")
+        public void WeakCancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, Changer changer = null, string callMethodId = "")
         {
-            WeakCancel(logger, messagePointId, reasonOfChangeStatus, string.IsNullOrWhiteSpace(changerId) ? null : new List<string> { changerId }, callMethodId);
+            WeakCancel(logger, messagePointId, reasonOfChangeStatus, changer == null ? null : new List<Changer> { changer }, callMethodId);
         }
 
         /// <inheritdoc/>
-        public void WeakCancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, List<string> changersIds, string callMethodId = "")
+        public void WeakCancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, List<Changer> changers, string callMethodId = "")
         {
             lock (_statusLockObj)
             {
@@ -162,7 +166,7 @@ namespace SymOntoClay.Core
                 _status = ProcessStatus.WeakCanceled;
             }
 
-            logger.WeakCancelProcessInfo(messagePointId, reasonOfChangeStatus, changersIds, callMethodId);
+            logger.WeakCancelProcessInfo(messagePointId, Id, reasonOfChangeStatus, changers, callMethodId);
 
             ProcessSetStatus(logger, ProcessStatus.WeakCanceled, callMethodId);
         }
@@ -236,19 +240,21 @@ namespace SymOntoClay.Core
 
         private void NCancelChildren(IMonitorLogger logger, ProcessStatus status, string callMethodId)
         {
+            var changer = new Changer(KindOfChanger.ProcessInfo, Id);
+
             switch (status)
             {
                 case ProcessStatus.WeakCanceled:
                     foreach (var child in _childrenProcessInfoList.ToList())
                     {
-                        child.WeakCancel(logger, "256BA91B-55AE-4ABB-BCE6-44CE5CFD5A2F", ReasonOfChangeStatus.ByParentProcess, Id, callMethodId);
+                        child.WeakCancel(logger, "256BA91B-55AE-4ABB-BCE6-44CE5CFD5A2F", ReasonOfChangeStatus.ByParentProcess, changer, callMethodId);
                     }
                     break;
 
                 case ProcessStatus.Canceled:
                     foreach (var child in _childrenProcessInfoList.ToList())
                     {
-                        child.Cancel(logger, "B710370A-6267-43F4-89FA-EF73F86A576E", ReasonOfChangeStatus.ByParentProcess, Id, callMethodId);
+                        child.Cancel(logger, "B710370A-6267-43F4-89FA-EF73F86A576E", ReasonOfChangeStatus.ByParentProcess, changer, callMethodId);
                     }
                     break;
 

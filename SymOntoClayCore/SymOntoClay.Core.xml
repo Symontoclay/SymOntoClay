@@ -36,16 +36,16 @@
         <member name="M:SymOntoClay.Core.BaseProcessInfo.Start(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.BaseProcessInfo.Cancel(SymOntoClay.Monitor.Common.IMonitorLogger,System.String,SymOntoClay.Core.ReasonOfChangeStatus,System.String,System.String)">
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.Cancel(SymOntoClay.Monitor.Common.IMonitorLogger,System.String,SymOntoClay.Core.ReasonOfChangeStatus,SymOntoClay.Monitor.Common.Changer,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.BaseProcessInfo.Cancel(SymOntoClay.Monitor.Common.IMonitorLogger,System.String,SymOntoClay.Core.ReasonOfChangeStatus,System.Collections.Generic.List{System.String},System.String)">
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.Cancel(SymOntoClay.Monitor.Common.IMonitorLogger,System.String,SymOntoClay.Core.ReasonOfChangeStatus,System.Collections.Generic.List{SymOntoClay.Monitor.Common.Changer},System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.BaseProcessInfo.WeakCancel(SymOntoClay.Monitor.Common.IMonitorLogger,System.String,SymOntoClay.Core.ReasonOfChangeStatus,System.String,System.String)">
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.WeakCancel(SymOntoClay.Monitor.Common.IMonitorLogger,System.String,SymOntoClay.Core.ReasonOfChangeStatus,SymOntoClay.Monitor.Common.Changer,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.BaseProcessInfo.WeakCancel(SymOntoClay.Monitor.Common.IMonitorLogger,System.String,SymOntoClay.Core.ReasonOfChangeStatus,System.Collections.Generic.List{System.String},System.String)">
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.WeakCancel(SymOntoClay.Monitor.Common.IMonitorLogger,System.String,SymOntoClay.Core.ReasonOfChangeStatus,System.Collections.Generic.List{SymOntoClay.Monitor.Common.Changer},System.String)">
             <inheritdoc/>
         </member>
         <member name="E:SymOntoClay.Core.BaseProcessInfo.OnFinish">
@@ -6825,10 +6825,10 @@
         <member name="P:SymOntoClay.Core.Internal.Instances.BaseInstance.LocalCodeExecutionContext">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.CancelExecution(SymOntoClay.Monitor.Common.IMonitorLogger,System.String,SymOntoClay.Core.ReasonOfChangeStatus,System.String,System.String)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.CancelExecution(SymOntoClay.Monitor.Common.IMonitorLogger,System.String,SymOntoClay.Core.ReasonOfChangeStatus,SymOntoClay.Monitor.Common.Changer,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.CancelExecution(SymOntoClay.Monitor.Common.IMonitorLogger,System.String,SymOntoClay.Core.ReasonOfChangeStatus,System.Collections.Generic.List{System.String},System.String)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.CancelExecution(SymOntoClay.Monitor.Common.IMonitorLogger,System.String,SymOntoClay.Core.ReasonOfChangeStatus,System.Collections.Generic.List{SymOntoClay.Monitor.Common.Changer},System.String)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.GetTopIndependentInstances(SymOntoClay.Monitor.Common.IMonitorLogger)">

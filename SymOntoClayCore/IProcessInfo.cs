@@ -46,10 +46,10 @@ namespace SymOntoClay.Core
         bool IsFinished { get; }
         IReadOnlyList<int> Devices { get; }
         void Start(IMonitorLogger logger);
-        void Cancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, string changerId = "", string callMethodId = "");
-        void Cancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, List<string> changersIds, string callMethodId = "");
-        void WeakCancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, string changerId = "", string callMethodId = "");
-        void WeakCancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, List<string> changersIds, string callMethodId = "");
+        void Cancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, Changer changer = null, string callMethodId = "");
+        void Cancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, List<Changer> changers, string callMethodId = "");
+        void WeakCancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, Changer changer = null, string callMethodId = "");
+        void WeakCancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, List<Changer> changers, string callMethodId = "");
         event ProcessInfoEvent OnFinish;
         event ProcessInfoEvent OnComplete;
         event ProcessInfoEvent OnWeakCanceled;

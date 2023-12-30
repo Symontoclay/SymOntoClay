@@ -307,7 +307,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     {
                         foreach (var concurentProcessInfo in concurentProcessesInfoList)
                         {
-                            concurentProcessInfo.Cancel(logger, "74AFBE25-AE89-4971-BC06-716048826194", ReasonOfChangeStatus.ByConcurrentProcess, processInfo.Id, callMethodId);
+                            concurentProcessInfo.Cancel(logger, "74AFBE25-AE89-4971-BC06-716048826194", ReasonOfChangeStatus.ByConcurrentProcess, new Changer(KindOfChanger.ProcessInfo, processInfo.Id), callMethodId);
                         }
                     });
 

@@ -69,20 +69,20 @@ namespace SymOntoClay.Core.Internal.Helpers
                     {
                         if (executionCoordinators.Any(p => p.ExecutionStatus == ActionExecutionStatus.Canceled))
                         {
-                            var cancelledExecutionCoordinatorsIds = executionCoordinators.Where(p => p.ExecutionStatus == ActionExecutionStatus.Canceled).Select(p => p.Id).ToList();
+                            var cancelledExecutionCoordinatorsChangers = executionCoordinators.Where(p => p.ExecutionStatus == ActionExecutionStatus.Canceled).Select(p => new Changer(KindOfChanger.ExecutionCoordinator, p.Id)).ToList();
 
                             foreach (var proc in processes)
                             {
-                                proc.Cancel(logger, "15E111BA-A585-46AB-A73E-9A554CD128C4", ReasonOfChangeStatus.ByExecutionCoordinator, cancelledExecutionCoordinatorsIds);
+                                proc.Cancel(logger, "15E111BA-A585-46AB-A73E-9A554CD128C4", ReasonOfChangeStatus.ByExecutionCoordinator, cancelledExecutionCoordinatorsChangers);
                             }
                         }
                         else
                         {
-                            var executionCoordinatorsIds = executionCoordinators.Select(p => p.Id).ToList();
+                            var executionCoordinatorsChangers = executionCoordinators.Select(p => new Changer(KindOfChanger.ExecutionCoordinator, p.Id)).ToList();
 
                             foreach (var proc in processes)
                             {
-                                proc.WeakCancel(logger, "589446A0-232E-4D86-A7F1-4E0A42BC13B8", ReasonOfChangeStatus.ByExecutionCoordinator, executionCoordinatorsIds);
+                                proc.WeakCancel(logger, "589446A0-232E-4D86-A7F1-4E0A42BC13B8", ReasonOfChangeStatus.ByExecutionCoordinator, executionCoordinatorsChangers);
                             }
                         }
 

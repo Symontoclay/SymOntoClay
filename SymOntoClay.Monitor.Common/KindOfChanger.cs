@@ -6,6 +6,9 @@ namespace SymOntoClay.Monitor.Common
 {
     public enum KindOfChanger
     {
-        Unknown
+        Unknown,
+        ProcessInfo,
+        Instance,
+        ExecutionCoordinator
     }
 }

@@ -77,7 +77,9 @@ namespace SymOntoClay.Core.Internal.Instances
                     return;
                 }
 
-                Task.Run(() => { logger.SetExecutionCoordinatorStatus(messagePointId, actionExecutionStatus); });
+                var prevExecutionStatus = _executionStatus;
+
+                Task.Run(() => { logger.SetExecutionCoordinatorStatus(messagePointId, Id, actionExecutionStatus, prevExecutionStatus, null, string.Empty); });
                 
                 _executionStatus = actionExecutionStatus;
 

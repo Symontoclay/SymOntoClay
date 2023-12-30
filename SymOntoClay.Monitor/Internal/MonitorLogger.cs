@@ -53,8 +53,7 @@ namespace SymOntoClay.Monitor.Internal
         private readonly Action<string> _outputHandler;
         private readonly Action<string> _errorHandler;
 
-        /// <inheritdoc/>
-        public string Id => throw new NotImplementedException();
+        string IMonitorLogger.Id => throw new NotImplementedException();
 
         bool IMonitorLogger.IsReal => throw new NotImplementedException();
 

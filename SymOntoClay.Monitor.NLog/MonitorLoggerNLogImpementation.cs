@@ -34,6 +34,11 @@ namespace SymOntoClay.Monitor.NLog
         public string Id => "MonitorLoggerNLogImpementation";
 
         /// <inheritdoc/>
+        public bool IsReal => false;
+
+        IMonitorFeatures IMonitorLogger.MonitorFeatures => throw new NotImplementedException();
+
+        /// <inheritdoc/>
         [MethodForLoggingSupport]
         public string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
             bool isSynk,

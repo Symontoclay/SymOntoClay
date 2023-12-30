@@ -16,6 +16,11 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         public virtual string Id => nameof(EmptyLogger);
 
         /// <inheritdoc/>
+        public bool IsReal => false;
+
+        IMonitorFeatures IMonitorLogger.MonitorFeatures => throw new NotImplementedException();
+
+        /// <inheritdoc/>
         public string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
             bool isSynk,
             [CallerMemberName] string memberName = "",

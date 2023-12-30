@@ -156,6 +156,12 @@ namespace SymOntoClay.Monitor
         string IMonitorLoggerContext.NodeId => string.Empty;
         string IMonitorLoggerContext.ThreadId => string.Empty;
 
+        /// <inheritdoc/>
+        public bool IsReal => true;
+
+        /// <inheritdoc/>
+        public IMonitorFeatures MonitorFeatures => this;
+
         bool IMonitorFeatures.EnableCallMethod
         {
             get

@@ -1929,9 +1929,9 @@ namespace SymOntoClay.Monitor.Internal
         {
 #if DEBUG
             //_globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"processInfoId = {processInfoId}");
-            _globalLogger.Info($"status = {status}");
-            _globalLogger.Info($"prevStatus = {prevStatus}");
+            //_globalLogger.Info($"processInfoId = {processInfoId}");
+            //_globalLogger.Info($"status = {status}");
+            //_globalLogger.Info($"prevStatus = {prevStatus}");
             //_globalLogger.Info($"changers = {changers.WriteListToString()}");
             //_globalLogger.Info($"callMethodId = {callMethodId}");
             //_globalLogger.Info($"memberName = {memberName}");

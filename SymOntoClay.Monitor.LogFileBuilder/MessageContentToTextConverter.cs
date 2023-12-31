@@ -9,6 +9,8 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
+using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 
 namespace SymOntoClay.Monitor.LogFileBuilder
 {
@@ -440,13 +442,34 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return message.TargetActionExecutionStatusStr;
         }
 
+        private string GetChangers(List<Changer> changers)
+        {
+#if DEBUG
+            _globalLogger.Info($"changers = {changers.WriteListToString()}");
+#endif
+
+            throw new NotImplementedException();
+        }
+
         public string GetCancelProcessInfo(CancelProcessInfoMessage message)
         {
 #if DEBUG
             _globalLogger.Info($"message = {message}");
 #endif
 
-            throw new NotImplementedException();
+            var sb = new StringBuilder($"ProcessInfo [{message.CancelledObjId}] was cancelled");
+
+            if(!message.Changers.IsNullOrEmpty())
+            {
+                sb.Append($" by {GetChangers(message.Changers)}");
+            }
+
+            if(!string.IsNullOrWhiteSpace(message.CallMethodId))
+            {
+                sb.Append($" when CallMethodId = {message.CallMethodId}");
+            }
+
+            return sb.ToString();
         }
 
         public string GetWeakCancelProcessInfo(WeakCancelProcessInfoMessage message)

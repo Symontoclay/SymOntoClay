@@ -19,7 +19,7 @@ namespace SymOntoClay.Monitor.Internal
     public class MonitorLogger : IMonitorLogger
     {
 #if DEBUG
-        //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
         public MonitorLogger(IMonitorLoggerContext context)
@@ -1603,15 +1603,16 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void CancelProcessInfo(string messagePointId, Enum reasonOfChangeStatus, List<string> changersIds, string callMethodId,
+        public void CancelProcessInfo(string messagePointId, string processInfoId, Enum reasonOfChangeStatus, List<Changer> changers, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
             //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"processInfoId = {processInfoId}");
             //_globalLogger.Info($"reasonOfChangeStatus = {reasonOfChangeStatus}");
-            //_globalLogger.Info($"changersIds = {changersIds.WritePODListToString()}");
+            //_globalLogger.Info($"changers = {changers.WriteListToString()}");
             //_globalLogger.Info($"callMethodId = {callMethodId}");
             //_globalLogger.Info($"memberName = {memberName}");
             //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
@@ -1654,10 +1655,10 @@ namespace SymOntoClay.Monitor.Internal
 
                 var messageInfo = new CancelProcessInfoMessage
                 {
-                    CancelledObjId
+                    CancelledObjId = processInfoId,
                     ReasonOfChangeStatus = Convert.ToInt32(reasonOfChangeStatus),
                     ReasonOfChangeStatusStr = reasonOfChangeStatus?.ToString(),
-                    ChangersIds = changersIds,
+                    Changers = changers,
                     CallMethodId = callMethodId,
                     DateTimeStamp = now,
                     NodeId = _nodeId,
@@ -1681,15 +1682,16 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void WeakCancelProcessInfo(string messagePointId, Enum reasonOfChangeStatus, List<string> changersIds, string callMethodId,
+        public void WeakCancelProcessInfo(string messagePointId, string processInfoId, Enum reasonOfChangeStatus, List<Changer> changers, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
             //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"processInfoId = {processInfoId}");
             //_globalLogger.Info($"reasonOfChangeStatus = {reasonOfChangeStatus}");
-            //_globalLogger.Info($"changersIds = {changersIds.WritePODListToString()}");
+            //_globalLogger.Info($"changers = {changers.WriteListToString()}");
             //_globalLogger.Info($"callMethodId = {callMethodId}");
             //_globalLogger.Info($"memberName = {memberName}");
             //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
@@ -1732,10 +1734,10 @@ namespace SymOntoClay.Monitor.Internal
 
                 var messageInfo = new WeakCancelProcessInfoMessage
                 {
-                    CancelledObjId
+                    CancelledObjId = processInfoId,
                     ReasonOfChangeStatus = Convert.ToInt32(reasonOfChangeStatus),
                     ReasonOfChangeStatusStr = reasonOfChangeStatus?.ToString(),
-                    ChangersIds = changersIds,
+                    Changers = changers,
                     CallMethodId = callMethodId,
                     DateTimeStamp = now,
                     NodeId = _nodeId,
@@ -1759,15 +1761,16 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void CancelInstanceExecution(string messagePointId, Enum reasonOfChangeStatus, List<string> changersIds, string callMethodId,
+        public void CancelInstanceExecution(string messagePointId, string instanceId, Enum reasonOfChangeStatus, List<Changer> changers, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
             //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"instanceId = {instanceId}");
             //_globalLogger.Info($"reasonOfChangeStatus = {reasonOfChangeStatus}");
-            //_globalLogger.Info($"changersIds = {changersIds.WritePODListToString()}");
+            //_globalLogger.Info($"changers = {changers.WriteListToString()}");
             //_globalLogger.Info($"callMethodId = {callMethodId}");
             //_globalLogger.Info($"memberName = {memberName}");
             //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
@@ -1810,10 +1813,10 @@ namespace SymOntoClay.Monitor.Internal
 
                 var messageInfo = new CancelInstanceExecutionMessage
                 {
-                    CancelledObjId
+                    CancelledObjId = instanceId,
                     ReasonOfChangeStatus = Convert.ToInt32(reasonOfChangeStatus),
                     ReasonOfChangeStatusStr = reasonOfChangeStatus?.ToString(),
-                    ChangersIds = changersIds,
+                    Changers = changers,
                     CallMethodId = callMethodId,
                     DateTimeStamp = now,
                     NodeId = _nodeId,
@@ -1837,14 +1840,18 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void SetExecutionCoordinatorStatus(string messagePointId, Enum status,
+        public void SetExecutionCoordinatorStatus(string messagePointId, string executionCoordinatorId, Enum status, Enum prevStatus, List<Changer> changers, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
             //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"executionCoordinatorId = {executionCoordinatorId}");
             //_globalLogger.Info($"status = {status}");
+            //_globalLogger.Info($"prevStatus = {prevStatus}");
+            //_globalLogger.Info($"changers = {changers.WriteListToString()}");
+            //_globalLogger.Info($"callMethodId = {callMethodId}");
             //_globalLogger.Info($"memberName = {memberName}");
             //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
             //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
@@ -1886,13 +1893,13 @@ namespace SymOntoClay.Monitor.Internal
 
                 var messageInfo = new SetExecutionCoordinatorStatusMessage
                 {
-                    ObjId
+                    ObjId = executionCoordinatorId,
                     Status = Convert.ToInt32(status),
                     StatusStr = status?.ToString(),
-                    PrevStatus
-                    PrevStatusStr
-                    Changers
-                    CallMethodId
+                    PrevStatus = Convert.ToInt32(prevStatus),
+                    PrevStatusStr = prevStatus?.ToString(),
+                    Changers = changers,
+                    CallMethodId = callMethodId,
                     DateTimeStamp = now,
                     NodeId = _nodeId,
                     ThreadId = _threadId,
@@ -1915,14 +1922,18 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void SetProcessInfoStatus(string messagePointId, Enum status,
+        public void SetProcessInfoStatus(string messagePointId, string processInfoId, Enum status, Enum prevStatus, List<Changer> changers, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
             //_globalLogger.Info($"messagePointId = {messagePointId}");
-            //_globalLogger.Info($"status = {status}");
+            _globalLogger.Info($"processInfoId = {processInfoId}");
+            _globalLogger.Info($"status = {status}");
+            _globalLogger.Info($"prevStatus = {prevStatus}");
+            //_globalLogger.Info($"changers = {changers.WriteListToString()}");
+            //_globalLogger.Info($"callMethodId = {callMethodId}");
             //_globalLogger.Info($"memberName = {memberName}");
             //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
             //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
@@ -1964,13 +1975,13 @@ namespace SymOntoClay.Monitor.Internal
 
                 var messageInfo = new SetProcessInfoStatusMessage
                 {
-                    ObjId
+                    ObjId = processInfoId,
                     Status = Convert.ToInt32(status),
                     StatusStr = status?.ToString(),
-                    PrevStatus
-                    PrevStatusStr
-                    Changers
-                    CallMethodId
+                    PrevStatus = Convert.ToInt32(prevStatus),
+                    PrevStatusStr = prevStatus?.ToString(),
+                    Changers = changers,
+                    CallMethodId = callMethodId,
                     DateTimeStamp = now,
                     NodeId = _nodeId,
                     ThreadId = _threadId,

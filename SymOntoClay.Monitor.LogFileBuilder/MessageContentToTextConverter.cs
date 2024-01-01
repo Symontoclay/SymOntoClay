@@ -165,7 +165,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetMonitoredHumanizedMethodArgument(MonitoredHumanizedMethodArgument argument)
         {
 #if DEBUG
-            _globalLogger.Info($"argument = {argument}");
+            //_globalLogger.Info($"argument = {argument}");
 #endif
 
             var sb = new StringBuilder(argument.HumanizedStr);
@@ -200,7 +200,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             }
 
 #if DEBUG
-            _globalLogger.Info($"sb = {sb}");
+            //_globalLogger.Info($"sb = {sb}");
 #endif
 
             return sb.ToString();
@@ -209,7 +209,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetMonitoredHumanizedMethodParameterValue(MonitoredHumanizedMethodParameterValue value)
         {
 #if DEBUG
-            _globalLogger.Info($"value = {value}");
+            //_globalLogger.Info($"value = {value}");
 #endif
 
             var nameHumanizedStr = value.NameHumanizedStr;
@@ -226,7 +226,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetMonitoredHumanizedLabel(MonitoredHumanizedLabel label)
         {
 #if DEBUG
-            _globalLogger.Info($"label = {label}");
+            //_globalLogger.Info($"label = {label}");
 #endif
 
             var sb = new StringBuilder();
@@ -254,7 +254,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 if (signatures != null)
                 {
 #if DEBUG
-                    _globalLogger.Info($"label = {label}");
+                    //_globalLogger.Info($"label = {label}");
 #endif
 
                     sb.Append("(");
@@ -287,7 +287,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 if (values?.Any() ?? false)
                 {
 #if DEBUG
-                    _globalLogger.Info($"label = {label}");
+                    //_globalLogger.Info($"label = {label}");
 #endif
 
                     var valuesStrList = new List<string>();
@@ -325,7 +325,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 if (!chainOfProcessInfo.IsNullOrEmpty())
                 {
 #if DEBUG
-                    _globalLogger.Info($"message = {message}");
+                    //_globalLogger.Info($"message = {message}");
 #endif
 
                     foreach (var item in chainOfProcessInfo)
@@ -445,7 +445,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetChangers(List<Changer> changers)
         {
 #if DEBUG
-            _globalLogger.Info($"changers = {changers.WriteListToString()}");
+            //_globalLogger.Info($"changers = {changers.WriteListToString()}");
 #endif
 
             return $"[{string.Join(", ", changers.Select(p => $"{p.KindOfChanger}: {p.Id}"))}]";
@@ -454,7 +454,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public string GetCancelProcessInfo(CancelProcessInfoMessage message)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
             var sb = new StringBuilder($"ProcessInfo [{message.CancelledObjId}] was cancelled");
@@ -475,7 +475,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public string GetWeakCancelProcessInfo(WeakCancelProcessInfoMessage message)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
             var sb = new StringBuilder($"ProcessInfo [{message.CancelledObjId}] was weak cancelled");
@@ -496,7 +496,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public string GetCancelInstanceExecution(CancelInstanceExecutionMessage message)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
             var sb = new StringBuilder($"Instance [{message.CancelledObjId}] was cancelled");
@@ -517,21 +517,57 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public string GetSetExecutionCoordinatorStatus(SetExecutionCoordinatorStatusMessage message)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
-            //return message.StatusStr;
-            throw new NotImplementedException();
+            var sb = new StringBuilder($"Set status {message.StatusStr}");
+
+            if(message.PrevStatus != 0)
+            {
+                sb.Append($" ({message.StatusStr} -> {message.PrevStatusStr})");
+            }
+
+            sb.Append($" for execution coordinator {message.ObjId}");
+
+            if (!message.Changers.IsNullOrEmpty())
+            {
+                sb.Append($" by {GetChangers(message.Changers)}");
+            }
+
+            if (!string.IsNullOrWhiteSpace(message.CallMethodId))
+            {
+                sb.Append($" when CallMethodId = {message.CallMethodId}");
+            }
+             
+            return sb.ToString();
         }
 
         public string GetSetProcessInfoStatus(SetProcessInfoStatusMessage message)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
-            //return message.StatusStr;
-            throw new NotImplementedException();
+            var sb = new StringBuilder($"Set status {message.StatusStr}");
+
+            if (message.PrevStatus != 0)
+            {
+                sb.Append($" ({message.StatusStr} -> {message.PrevStatusStr})");
+            }
+
+            sb.Append($" for process info {message.ObjId}");
+
+            if (!message.Changers.IsNullOrEmpty())
+            {
+                sb.Append($" by {GetChangers(message.Changers)}");
+            }
+
+            if (!string.IsNullOrWhiteSpace(message.CallMethodId))
+            {
+                sb.Append($" when CallMethodId = {message.CallMethodId}");
+            }
+
+            return sb.ToString();
         }
 
         private string GetOutput(OutputMessage message)

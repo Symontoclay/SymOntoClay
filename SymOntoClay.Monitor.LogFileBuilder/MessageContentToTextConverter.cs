@@ -499,7 +499,19 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             _globalLogger.Info($"message = {message}");
 #endif
 
-            throw new NotImplementedException();
+            var sb = new StringBuilder($"Instance [{message.CancelledObjId}] was cancelled");
+
+            if (!message.Changers.IsNullOrEmpty())
+            {
+                sb.Append($" by {GetChangers(message.Changers)}");
+            }
+
+            if (!string.IsNullOrWhiteSpace(message.CallMethodId))
+            {
+                sb.Append($" when CallMethodId = {message.CallMethodId}");
+            }
+
+            return sb.ToString();
         }
 
         public string GetSetExecutionCoordinatorStatus(SetExecutionCoordinatorStatusMessage message)

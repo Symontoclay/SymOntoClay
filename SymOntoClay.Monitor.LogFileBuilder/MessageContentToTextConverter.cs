@@ -448,7 +448,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             _globalLogger.Info($"changers = {changers.WriteListToString()}");
 #endif
 
-            throw new NotImplementedException();
+            return $"[{string.Join(", ", changers.Select(p => $"{p.KindOfChanger}: {p.Id}"))}]";
         }
 
         public string GetCancelProcessInfo(CancelProcessInfoMessage message)
@@ -478,7 +478,19 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             _globalLogger.Info($"message = {message}");
 #endif
 
-            throw new NotImplementedException();
+            var sb = new StringBuilder($"ProcessInfo [{message.CancelledObjId}] was weak cancelled");
+
+            if (!message.Changers.IsNullOrEmpty())
+            {
+                sb.Append($" by {GetChangers(message.Changers)}");
+            }
+
+            if (!string.IsNullOrWhiteSpace(message.CallMethodId))
+            {
+                sb.Append($" when CallMethodId = {message.CallMethodId}");
+            }
+
+            return sb.ToString();
         }
 
         public string GetCancelInstanceExecution(CancelInstanceExecutionMessage message)
@@ -496,7 +508,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             _globalLogger.Info($"message = {message}");
 #endif
 
-            return message.StatusStr;
+            //return message.StatusStr;
+            throw new NotImplementedException();
         }
 
         public string GetSetProcessInfoStatus(SetProcessInfoStatusMessage message)
@@ -505,7 +518,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             _globalLogger.Info($"message = {message}");
 #endif
 
-            return message.StatusStr;
+            //return message.StatusStr;
+            throw new NotImplementedException();
         }
 
         private string GetOutput(OutputMessage message)

@@ -35,6 +35,7 @@ namespace SymOntoClay.Monitor.Common.Data
         CancelInstanceExecution,
         SetExecutionCoordinatorStatus,
         SetProcessInfoStatus,
+        RunLifecycleTrigger,
         Output,
         Trace,
         Debug,

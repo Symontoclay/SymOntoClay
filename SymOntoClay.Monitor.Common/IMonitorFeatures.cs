@@ -31,6 +31,7 @@ namespace SymOntoClay.Monitor.Common
         bool EnableCancelInstanceExecution { get; }
         bool EnableSetExecutionCoordinatorStatus { get; }
         bool EnableSetProcessInfoStatus { get; }
+        bool EnableRunLifecycleTrigger { get; }
         bool EnableOutput { get; }
         bool EnableTrace { get; }
         bool EnableDebug { get; }

@@ -1,4 +1,4 @@
-﻿/*app PeaceKeeper
+﻿app PeaceKeeper
 {
     on Enter =>
 	{
@@ -7,10 +7,10 @@
 		'End' >> @>log;
 	}
 
-	on {: see(I, #a) :} as `trigger 1` alias `Alarm trigger`, trigger_5 with priority 1
-	{
-	    'D' >> @>log;
-	}
+	//on {: see(I, #a) :} as `trigger 1` alias `Alarm trigger`, trigger_5 with priority 1
+	//{
+	//    'D' >> @>log;
+	//}
 
 	//fun go(@target)
 	//{
@@ -28,7 +28,7 @@
 
 	//	'End kill' >> @>log;
 	//}
-}*/
+}
 
 /*app PeaceKeeper
 {
@@ -44,7 +44,7 @@
 	}
 }*/
 
-app PeaceKeeper
+/*app PeaceKeeper
 {
     on Enter =>
 	{
@@ -65,7 +65,7 @@ app PeaceKeeper
 	{
 	    @@host.`stop`();
 	}
-}
+}*/
 
 /*app PeaceKeeper
 {

@@ -101,6 +101,7 @@ namespace SymOntoClay.Monitor
                     EnableCancelInstanceExecution = true,
                     EnableSetExecutionCoordinatorStatus = true,
                     EnableSetProcessInfoStatus = true,
+                    EnableRunLifecycleTrigger = true,
                     EnableOutput = true,
                     EnableTrace = true,
                     EnableDebug = true,
@@ -355,6 +356,14 @@ namespace SymOntoClay.Monitor
             }
         }
 
+        bool IMonitorFeatures.EnableRunLifecycleTrigger
+        {
+            get
+            {
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableRunLifecycleTrigger;
+            }
+        }
+
         bool IMonitorFeatures.EnableOutput
         {
             get
@@ -458,6 +467,7 @@ namespace SymOntoClay.Monitor
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableCancelInstanceExecution)} = {monitorFeatures.EnableCancelInstanceExecution}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableSetExecutionCoordinatorStatus)} = {monitorFeatures.EnableSetExecutionCoordinatorStatus}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableSetProcessInfoStatus)} = {monitorFeatures.EnableSetProcessInfoStatus}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableRunLifecycleTrigger)} = {monitorFeatures.EnableRunLifecycleTrigger}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableOutput)} = {monitorFeatures.EnableOutput}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableTrace)} = {monitorFeatures.EnableTrace}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableDebug)} = {monitorFeatures.EnableDebug}");
@@ -872,6 +882,16 @@ namespace SymOntoClay.Monitor
             [CallerLineNumber] int sourceLineNumber = 0)
         {
             _monitorLoggerImpl.SetProcessInfoStatus(messagePointId, processInfoId, status, prevStatus, changers, callMethodId, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void RunLifecycleTrigger(string messagePointId, string instanceId, string holder, Enum kindOfSystemEvent,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.RunLifecycleTrigger(messagePointId, instanceId, holder, kindOfSystemEvent, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>

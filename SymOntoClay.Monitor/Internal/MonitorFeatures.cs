@@ -83,6 +83,9 @@ namespace SymOntoClay.Monitor.Internal
         public bool EnableSetProcessInfoStatus { get; set; }
 
         /// <inheritdoc/>
+        public bool EnableRunLifecycleTrigger { get; set; }
+
+        /// <inheritdoc/>
         public bool EnableOutput { get; set; }
 
         /// <inheritdoc/>
@@ -131,6 +134,7 @@ namespace SymOntoClay.Monitor.Internal
             result.EnableCancelInstanceExecution = EnableCancelInstanceExecution;
             result.EnableSetExecutionCoordinatorStatus = EnableSetExecutionCoordinatorStatus;
             result.EnableSetProcessInfoStatus = EnableSetProcessInfoStatus;
+            result.EnableRunLifecycleTrigger = EnableRunLifecycleTrigger;
             result.EnableOutput = EnableOutput;
             result.EnableTrace = EnableTrace;
             result.EnableDebug = EnableDebug;
@@ -183,6 +187,7 @@ namespace SymOntoClay.Monitor.Internal
             sb.AppendLine($"{spaces}{nameof(EnableCancelInstanceExecution)} = {EnableCancelInstanceExecution}");
             sb.AppendLine($"{spaces}{nameof(EnableSetExecutionCoordinatorStatus)} = {EnableSetExecutionCoordinatorStatus}");
             sb.AppendLine($"{spaces}{nameof(EnableSetProcessInfoStatus)} = {EnableSetProcessInfoStatus}");
+            sb.AppendLine($"{spaces}{nameof(EnableRunLifecycleTrigger)} = {EnableRunLifecycleTrigger}");
             sb.AppendLine($"{spaces}{nameof(EnableOutput)} = {EnableOutput}");
             sb.AppendLine($"{spaces}{nameof(EnableTrace)} = {EnableTrace}");
             sb.AppendLine($"{spaces}{nameof(EnableDebug)} = {EnableDebug}");

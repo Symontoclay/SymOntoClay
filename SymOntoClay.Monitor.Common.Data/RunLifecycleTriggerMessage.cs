@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,6 +15,7 @@ namespace SymOntoClay.Monitor.Common.Data
         public string Holder { get; set; }
         public int Status { get; set; }
         public string StatusStr { get; set; }
+        public MonitoredHumanizedLabel Label { get; set; }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
@@ -25,6 +27,7 @@ namespace SymOntoClay.Monitor.Common.Data
             sb.AppendLine($"{spaces}{nameof(Holder)} = {Holder}");
             sb.AppendLine($"{spaces}{nameof(Status)} = {Status}");
             sb.AppendLine($"{spaces}{nameof(StatusStr)} = {StatusStr}");
+            sb.PrintObjProp(n, nameof(Label), Label);
 
             sb.Append(base.PropertiesToString(n));
 

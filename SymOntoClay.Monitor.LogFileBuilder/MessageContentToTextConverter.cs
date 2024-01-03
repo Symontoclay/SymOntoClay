@@ -115,6 +115,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 case KindOfMessage.SetProcessInfoStatus:
                     return GetSetProcessInfoStatus(message as SetProcessInfoStatusMessage);
 
+                case KindOfMessage.RunLifecycleTrigger:
+                    return GetRunLifecycleTrigger(message as RunLifecycleTriggerMessage);
+
                 case KindOfMessage.Output:
                     return GetOutput(message as OutputMessage);
 
@@ -565,6 +568,27 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             if (!string.IsNullOrWhiteSpace(message.CallMethodId))
             {
                 sb.Append($" when CallMethodId = {message.CallMethodId}");
+            }
+
+            return sb.ToString();
+        }
+
+        private string GetRunLifecycleTrigger(RunLifecycleTriggerMessage message)
+        {
+#if DEBUG
+            //_globalLogger.Info($"message = {message}");
+#endif
+
+            var sb = new StringBuilder(message.StatusStr);
+
+            if(!string.IsNullOrWhiteSpace(message.InstanceId))
+            {
+                sb.Append($" Instance: {message.InstanceId}");
+            }
+
+            if (!string.IsNullOrWhiteSpace(message.Holder))
+            {
+                sb.Append($" Holder: {message.Holder}");
             }
 
             return sb.ToString();

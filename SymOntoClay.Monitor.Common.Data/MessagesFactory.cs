@@ -100,6 +100,9 @@ namespace SymOntoClay.Monitor.Common.Data
                 case KindOfMessage.SetProcessInfoStatus:
                     return JsonConvert.DeserializeObject<SetProcessInfoStatusMessage>(content);
 
+                case KindOfMessage.RunLifecycleTrigger:
+                    return JsonConvert.DeserializeObject<RunLifecycleTriggerMessage>(content);
+
                 case KindOfMessage.Output:
                     return JsonConvert.DeserializeObject<OutputMessage>(content);
 

@@ -70,7 +70,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         /// <inheritdoc/>
+        public Value ExecuteAsync(IMonitorLogger logger, ProcessInitialInfo processInitialInfo, string parentThreadLoggerId)
+        {
+            return ExecuteBatchAsync(logger, new List<ProcessInitialInfo>() { processInitialInfo }, parentThreadLoggerId);
+        }
+
+        /// <inheritdoc/>
         public Value ExecuteBatchAsync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList)
+        {
+            return ExecuteBatchAsync(logger, processInitialInfoList, string.Empty);
+        }
+
+        /// <inheritdoc/>
+        public Value ExecuteBatchAsync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList, string parentThreadLoggerId)
         {
             var codeFramesList = ConvertProcessInitialInfosToCodeFrames(logger, processInitialInfoList);
 

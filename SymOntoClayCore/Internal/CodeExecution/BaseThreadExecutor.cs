@@ -60,6 +60,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             return (context.MonitorNode.CreateThreadLogger("71899838-D655-4B97-890D-0017F326F002", threadId), threadId);
         }
 
+        protected static (IMonitorLogger Logger, string ThreadId) CreateInitParams(IEngineContext context, string parentThreadId)
+        {
+            var threadId = Guid.NewGuid().ToString("D");
+            return (context.MonitorNode.CreateThreadLogger(messagePointId: "BB6BCC54-A80C-4AE6-A2D5-338A35EF1AB3", threadId: threadId, parentThreadId: parentThreadId), threadId);
+        }
+
         protected BaseThreadExecutor(IEngineContext context, IActivePeriodicObject activeObject, (IMonitorLogger Logger, string ThreadId) initData)
             : this(context, activeObject, initData.Logger, initData.ThreadId)
         {

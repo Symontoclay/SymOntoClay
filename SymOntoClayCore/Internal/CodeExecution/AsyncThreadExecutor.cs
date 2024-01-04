@@ -35,8 +35,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
         }
 
-        public AsyncThreadExecutor(IEngineContext context, string threadId)
-            : this(context, context.MonitorNode.CreateThreadLogger("8D41CD9A-26BA-405F-8AC2-A3468DCD2CA4", threadId), threadId)
+        public AsyncThreadExecutor(IEngineContext context, string parentThreadId)
+            : base(context, new AsyncActivePeriodicObject(context.ActivePeriodicObjectContext), BaseThreadExecutor.CreateInitParams(context, parentThreadId))
         {
         }
         

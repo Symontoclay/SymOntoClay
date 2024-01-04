@@ -452,9 +452,9 @@ namespace SymOntoClay.Core.Internal.Instances
             IExecutionCoordinator executionCoordinator, bool normalOrder = true)
         {
 #if DEBUG
-            logger.Info("025CA7CC-B1BA-4BD5-802A-B6F94E138F55", $"kindOfSystemEvent = {kindOfSystemEvent}");
-            logger.Info("40735ECF-A7D4-4F87-9756-F90A6FCE2856", $"holder = {holder}");
-            logger.Info("B8A1FBCD-50B3-4CD0-A817-07323E59E929", $"Name = {Name}");
+            //logger.Info("025CA7CC-B1BA-4BD5-802A-B6F94E138F55", $"kindOfSystemEvent = {kindOfSystemEvent}");
+            //logger.Info("40735ECF-A7D4-4F87-9756-F90A6FCE2856", $"holder = {holder}");
+            //logger.Info("B8A1FBCD-50B3-4CD0-A817-07323E59E929", $"Name = {Name}");
 #endif
 
             var targetSystemEventsTriggersList = _triggersResolver.ResolveSystemEventsTriggersList(logger, kindOfSystemEvent, holder, _localCodeExecutionContext, ResolverOptions.GetDefaultOptions());

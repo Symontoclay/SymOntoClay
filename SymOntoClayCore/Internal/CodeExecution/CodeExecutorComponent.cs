@@ -86,7 +86,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             var codeFramesList = ConvertProcessInitialInfosToCodeFrames(logger, processInitialInfoList);
 
-            var threadExecutor = new AsyncThreadExecutor(_context);
+            var threadExecutor = new AsyncThreadExecutor(_context, parentThreadLoggerId);
             threadExecutor.SetCodeFrames(codeFramesList);
 
             return threadExecutor.Start();

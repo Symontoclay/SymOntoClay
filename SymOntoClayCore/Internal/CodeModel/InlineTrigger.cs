@@ -348,8 +348,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         private string LogicConditionalToHumanizedLabel(DebugHelperOptions options)
         {
             var sb = new StringBuilder();
-            sb.AppendLine(ToString());//tmp
-
+            
             var hasSetCondition = SetCondition != null;
             var hasResetCondition = ResetCondition != null;
 

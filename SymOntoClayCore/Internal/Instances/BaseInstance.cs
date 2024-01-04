@@ -221,8 +221,8 @@ namespace SymOntoClay.Core.Internal.Instances
                         catch (Exception e)
                         {
                             logger.Error("051F726C-D269-462E-9979-B715299269B2", e);
-                        }                        
-                    });                    
+                        }
+                    });
                 }
             }
 

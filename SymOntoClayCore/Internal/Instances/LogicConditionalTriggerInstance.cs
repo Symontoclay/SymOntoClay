@@ -110,7 +110,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 _resetConditionalTriggerObserver.OnChanged += Observer_OnChanged;
             }
         }
-
+        
         private readonly TriggerConditionNodeObserverContext _triggerConditionNodeObserverContext;
         private readonly IDateTimeProvider _dateTimeProvider;
 
@@ -205,11 +205,14 @@ namespace SymOntoClay.Core.Internal.Instances
                     Error("7F5F198A-15CF-401F-9759-870B738DD315", e);
                 }
             });
-
         }
 
         private void DoSearch()
         {
+#if DEBUG
+            Info("8817B327-D587-4D5E-A5B6-25D7DFED1FDA", "DoSearch Begin");
+#endif
+
             var oldIsOn = _triggerConditionNodeObserverContext.IsOn;
 
             if (_hasResetConditions)
@@ -278,6 +281,9 @@ namespace SymOntoClay.Core.Internal.Instances
                 });
             }
 
+#if DEBUG
+            Info("4BB95054-441B-4372-9B33-7429D189BF5D", "DoSearch End");
+#endif
         }
 
         private void DoSearchWithEqualConditions()
@@ -316,7 +322,6 @@ namespace SymOntoClay.Core.Internal.Instances
                     _triggerConditionNodeObserverContext.IsOn = false;
                 }
             }
-
         }
 
         private void DoSearchWithPriorSetCondition()
@@ -338,7 +343,6 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 RunResetCondition();
             }
-
         }
 
         private void DoSearchWithPriorResetCondition()
@@ -378,7 +382,6 @@ namespace SymOntoClay.Core.Internal.Instances
                     }
                 }
             }
-
         }
 
         private void RunResetCondition()
@@ -399,7 +402,6 @@ namespace SymOntoClay.Core.Internal.Instances
                     }
                 }
             }
-
         }
 
         private void DoSearchWithNoResetCondition()
@@ -426,7 +428,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 _triggerConditionNodeObserverContext.IsOn = false;
             }
-
         }
 
         private void ProcessSetResultWithNoItems(bool isPeriodic)
@@ -457,7 +458,6 @@ namespace SymOntoClay.Core.Internal.Instances
             localCodeExecutionContext.Holder = _parent.Name;
 
             RunSetHandler(localCodeExecutionContext);
-
         }
 
         private void ProcessSetResultWithItems(List<List<Var>> varList)

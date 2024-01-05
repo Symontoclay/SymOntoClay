@@ -2835,6 +2835,12 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr.TriggerConditionNode.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr.TriggerConditionNode.ToHumanizedString(SymOntoClay.Monitor.Common.IMonitorLogger)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr.TriggerConditionNode.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Constructor.Kind">
             <inheritdoc/>
         </member>

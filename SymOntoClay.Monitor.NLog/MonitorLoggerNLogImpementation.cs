@@ -354,6 +354,56 @@ namespace SymOntoClay.Monitor.NLog
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        public string DoTriggerSearch(string messagePointId, string instanceId, string holder, MonitoredHumanizedLabel trigger,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void EndDoTriggerSearch(string messagePointId, string doTriggerSearchId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void SetConditionalTrigger(string messagePointId, string doTriggerSearchId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void ResetConditionalTrigger(string messagePointId, string doTriggerSearchId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void RunSetExprOfConditionalTrigger(string messagePointId, string doTriggerSearchId, MonitoredHumanizedLabel expr,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public void Output(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

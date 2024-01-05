@@ -25,6 +25,7 @@ using NLog;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors;
@@ -40,6 +41,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Collections.Specialized.BitVector32;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
@@ -48,6 +50,8 @@ namespace SymOntoClay.Core.Internal.Instances
         public LogicConditionalTriggerInstance(InlineTrigger trigger, BaseInstance parent, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext)
             : base(context.Logger)
         {
+            Id = NameHelper.GetNewEntityNameString();
+
             _executionCoordinator = parent.ExecutionCoordinator;
             _context = context;
             _globalLogicalStorage = context.Storage.GlobalStorage.LogicalStorage;
@@ -111,6 +115,8 @@ namespace SymOntoClay.Core.Internal.Instances
             }
         }
         
+        public string Id { get; }
+
         private readonly TriggerConditionNodeObserverContext _triggerConditionNodeObserverContext;
         private readonly IDateTimeProvider _dateTimeProvider;
 
@@ -170,48 +176,61 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 try
                 {
-                    lock (_lockObj)
-                    {
-                        if (_isBusy)
-                        {
-                            _needRepeat = true;
-                            return;
-                        }
+                    var threadId = Guid.NewGuid().ToString("D");
+                    var logger = _context.MonitorNode.CreateThreadLogger("3D06FC1B-69EB-49B4-B4A1-0184EE31A8D1", threadId: threadId, parentThreadId: Logger.Id);
 
-                        _isBusy = true;
-                        _needRepeat = false;
-                    }
-
-                    DoSearch();
-
-                    while (true)
-                    {
-                        lock (_lockObj)
-                        {
-                            if (!_needRepeat)
-                            {
-                                _isBusy = false;
-                                return;
-                            }
-
-                            _needRepeat = false;
-                        }
-
-                        DoSearch();
-                    }
+                    NObserver_OnChanged(logger);
                 }
                 catch (Exception e)
                 {
-                    Error("7F5F198A-15CF-401F-9759-870B738DD315", e);
+                    Error("7198C9A6-69B0-42F1-A1B2-44D2B42781CD", e);
                 }
             });
         }
 
-        private void DoSearch()
+        private void NObserver_OnChanged(IMonitorLogger logger)
         {
-#if DEBUG
-            Info("8817B327-D587-4D5E-A5B6-25D7DFED1FDA", "DoSearch Begin");
-#endif
+            try
+            {
+                lock (_lockObj)
+                {
+                    if (_isBusy)
+                    {
+                        _needRepeat = true;
+                        return;
+                    }
+
+                    _isBusy = true;
+                    _needRepeat = false;
+                }
+
+                DoSearch(logger);
+
+                while (true)
+                {
+                    lock (_lockObj)
+                    {
+                        if (!_needRepeat)
+                        {
+                            _isBusy = false;
+                            return;
+                        }
+
+                        _needRepeat = false;
+                    }
+
+                    DoSearch(logger);
+                }
+            }
+            catch (Exception e)
+            {
+                logger.Error("7F5F198A-15CF-401F-9759-870B738DD315", e);
+            }
+        }
+
+        private void DoSearch(IMonitorLogger logger)
+        {
+            var doTriggerSearchId = logger.DoTriggerSearch("8817B327-D587-4D5E-A5B6-25D7DFED1FDA", _parent.Name.ToHumanizedLabel(), _trigger.Holder.ToHumanizedLabel(), _trigger.ToLabel(logger));
 
             var oldIsOn = _triggerConditionNodeObserverContext.IsOn;
 
@@ -220,15 +239,15 @@ namespace SymOntoClay.Core.Internal.Instances
                 switch(_trigger.DoubleConditionsStrategy)
                 {
                     case DoubleConditionsStrategy.Equal:
-                        DoSearchWithEqualConditions();
+                        DoSearchWithEqualConditions(logger, doTriggerSearchId);
                         break;
 
                     case DoubleConditionsStrategy.PriorSet:
-                        DoSearchWithPriorSetCondition();
+                        DoSearchWithPriorSetCondition(logger, doTriggerSearchId);
                         break;
 
                     case DoubleConditionsStrategy.PriorReset:
-                        DoSearchWithPriorResetCondition();
+                        DoSearchWithPriorResetCondition(logger, doTriggerSearchId);
                         break;
 
                     default:
@@ -237,7 +256,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
             else
             {
-                DoSearchWithNoResetCondition();
+                DoSearchWithNoResetCondition(logger, doTriggerSearchId);
             }
 
             if(_triggerConditionNodeObserverContext.IsOn)
@@ -281,24 +300,40 @@ namespace SymOntoClay.Core.Internal.Instances
                 });
             }
 
-#if DEBUG
-            Info("4BB95054-441B-4372-9B33-7429D189BF5D", "DoSearch End");
-#endif
+            logger.EndDoTriggerSearch("4BB95054-441B-4372-9B33-7429D189BF5D", doTriggerSearchId);
         }
 
-        private void DoSearchWithEqualConditions()
+        private void SetIsOn(IMonitorLogger logger, string messagePointId, string doTriggerSearchId, bool value)
         {
+            _triggerConditionNodeObserverContext.IsOn = value;
+
+            if (value)
+            {
+                logger.SetConditionalTrigger(messagePointId, doTriggerSearchId);
+            }
+            else
+            {
+                logger.ResetConditionalTrigger(messagePointId, doTriggerSearchId);
+            }            
+        }
+
+        private void DoSearchWithEqualConditions(IMonitorLogger logger, string doTriggerSearchId)
+        {
+            logger.RunSetExprOfConditionalTrigger("A086FCF0-5824-48A4-A7E9-EC01A47EC153", doTriggerSearchId, _trigger.SetCondition.ToLabel(logger));
+
             var setResult = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
+
+            logger.EndRunSetExprOfConditionalTrigger("BA00EF62-0857-41D7-AD90-50716AAA1342", doTriggerSearchId, _trigger.SetCondition.ToLabel(logger), setResult.IsSuccess, setResult.IsPeriodic, setVarList.Select(p => p.Select(x => x.ToLabel(logger)).ToList()).ToList());
 
             if (setResult.IsSuccess)
             {
                 if (setVarList.Any())
                 {
-                    ProcessSetResultWithItems(setVarList);
+                    ProcessSetResultWithItems(logger, doTriggerSearchId, setVarList);
                 }
                 else
                 {
-                    ProcessSetResultWithNoItems(setResult.IsPeriodic);
+                    ProcessSetResultWithNoItems(logger, doTriggerSearchId, setResult.IsPeriodic);
                 }
             }
 
@@ -310,42 +345,46 @@ namespace SymOntoClay.Core.Internal.Instances
                 {
                     if (resetVarList.Any())
                     {
-                        ProcessResetResultWithItems(resetVarList);
+                        ProcessResetResultWithItems(logger, doTriggerSearchId, resetVarList);
                     }
                     else
                     {
-                        ProcessResetResultWithNoItems();
+                        ProcessResetResultWithNoItems(logger, doTriggerSearchId);
                     }
                 }
                 else
                 {
-                    _triggerConditionNodeObserverContext.IsOn = false;
+                    SetIsOn(logger, "259BEBE8-D672-40CD-8787-D512DB29FB55", doTriggerSearchId, false);
                 }
             }
         }
 
-        private void DoSearchWithPriorSetCondition()
+        private void DoSearchWithPriorSetCondition(IMonitorLogger logger, string doTriggerSearchId)
         {
+            logger.RunSetExprOfConditionalTrigger("DE4F238D-59EB-4463-A549-3A52BA64EEEB", doTriggerSearchId, _trigger.SetCondition.ToLabel(logger));
+
             var setResult = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
+
+            logger.EndRunSetExprOfConditionalTrigger(, doTriggerSearchId, _trigger.SetCondition.ToLabel(logger), setResult.IsSuccess, setResult.IsPeriodic, setVarList.Select(p => p.Select(x => x.ToLabel(logger)).ToList()).ToList());
 
             if (setResult.IsSuccess)
             {
                 if (setVarList.Any())
                 {
-                    ProcessSetResultWithItems(setVarList);
+                    ProcessSetResultWithItems(logger, doTriggerSearchId, setVarList);
                 }
                 else
                 {
-                    ProcessSetResultWithNoItems(setResult.IsPeriodic);
+                    ProcessSetResultWithNoItems(logger, doTriggerSearchId, setResult.IsPeriodic);
                 }
             }
             else
             {
-                RunResetCondition();
+                RunResetCondition(logger, doTriggerSearchId);
             }
         }
 
-        private void DoSearchWithPriorResetCondition()
+        private void DoSearchWithPriorResetCondition(IMonitorLogger logger, string doTriggerSearchId)
         {
             var resetResult = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList);
 
@@ -355,11 +394,11 @@ namespace SymOntoClay.Core.Internal.Instances
                 {
                     if (resetVarList.Any())
                     {
-                        ProcessResetResultWithItems(resetVarList);
+                        ProcessResetResultWithItems(logger, doTriggerSearchId, resetVarList);
                     }
                     else
                     {
-                        ProcessResetResultWithNoItems();
+                        ProcessResetResultWithNoItems(logger, doTriggerSearchId);
                     }
                 }
             }
@@ -367,24 +406,28 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 if(!_triggerConditionNodeObserverContext.IsOn)
                 {
+                    logger.RunSetExprOfConditionalTrigger("1A43B211-4EA2-492C-A4F2-E4EA44C21E09", doTriggerSearchId, _trigger.SetCondition.ToLabel(logger));
+
                     var setResult = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
 
-                    if(setResult.IsSuccess)
+                    logger.EndRunSetExprOfConditionalTrigger(, doTriggerSearchId, _trigger.SetCondition.ToLabel(logger), setResult.IsSuccess, setResult.IsPeriodic, setVarList.Select(p => p.Select(x => x.ToLabel(logger)).ToList()).ToList());
+
+                    if (setResult.IsSuccess)
                     {
                         if (setVarList.Any())
                         {
-                            ProcessSetResultWithItems(setVarList);
+                            ProcessSetResultWithItems(logger, doTriggerSearchId, setVarList);
                         }
                         else
                         {
-                            ProcessSetResultWithNoItems(setResult.IsPeriodic);
+                            ProcessSetResultWithNoItems(logger, doTriggerSearchId, setResult.IsPeriodic);
                         }
                     }
                 }
             }
         }
 
-        private void RunResetCondition()
+        private void RunResetCondition(IMonitorLogger logger, string doTriggerSearchId)
         {
             var resetResult = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList);
 
@@ -394,43 +437,47 @@ namespace SymOntoClay.Core.Internal.Instances
                 {
                     if (resetVarList.Any())
                     {
-                        ProcessResetResultWithItems(resetVarList);
+                        ProcessResetResultWithItems(logger, doTriggerSearchId, resetVarList);
                     }
                     else
                     {
-                        ProcessResetResultWithNoItems();
+                        ProcessResetResultWithNoItems(logger, doTriggerSearchId);
                     }
                 }
             }
         }
 
-        private void DoSearchWithNoResetCondition()
+        private void DoSearchWithNoResetCondition(IMonitorLogger logger, string doTriggerSearchId)
         {
+            logger.RunSetExprOfConditionalTrigger("E5C33894-4D43-41C5-86AF-FB31ABCF9699", doTriggerSearchId, _trigger.SetCondition.ToLabel(logger));
+
             var setResult = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
+
+            logger.EndRunSetExprOfConditionalTrigger(, doTriggerSearchId, _trigger.SetCondition.ToLabel(logger), setResult.IsSuccess, setResult.IsPeriodic, setVarList.Select(p => p.Select(x => x.ToLabel(logger)).ToList()).ToList());
 
             if (setResult.IsSuccess)
             {
                 if (setVarList.Any())
                 {
-                    ProcessSetResultWithItems(setVarList);
+                    ProcessSetResultWithItems(logger, doTriggerSearchId, setVarList);
                 }
                 else
                 {
-                    ProcessSetResultWithNoItems(setResult.IsPeriodic);
+                    ProcessSetResultWithNoItems(logger, doTriggerSearchId, setResult.IsPeriodic);
                 }
             }
             else
             {
                 if (_hasResetHandler)
                 {
-                    ProcessResetResultWithNoItems();
+                    ProcessResetResultWithNoItems(logger, doTriggerSearchId);
                 }
 
-                _triggerConditionNodeObserverContext.IsOn = false;
+                SetIsOn(logger, "9DBF33D0-ABAE-43DF-A0ED-DB2D153791F0", doTriggerSearchId, false);
             }
         }
 
-        private void ProcessSetResultWithNoItems(bool isPeriodic)
+        private void ProcessSetResultWithNoItems(IMonitorLogger logger, string doTriggerSearchId, bool isPeriodic)
         {
             if (_triggerConditionNodeObserverContext.IsOn)
             {
@@ -439,7 +486,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if(!isPeriodic || _hasResetHandler)
             {
-                _triggerConditionNodeObserverContext.IsOn = true;
+                SetIsOn(logger, "16A8DE52-E9A1-4CE1-BE8F-DA4FDC526977", doTriggerSearchId, true);
             }
             else
             {
@@ -457,12 +504,12 @@ namespace SymOntoClay.Core.Internal.Instances
             localCodeExecutionContext.Storage = storage;
             localCodeExecutionContext.Holder = _parent.Name;
 
-            RunSetHandler(localCodeExecutionContext);
+            RunSetHandler(logger, doTriggerSearchId, localCodeExecutionContext);
         }
 
-        private void ProcessSetResultWithItems(List<List<Var>> varList)
+        private void ProcessSetResultWithItems(IMonitorLogger logger, string doTriggerSearchId, List<List<Var>> varList)
         {
-            _triggerConditionNodeObserverContext.IsOn = true;
+            SetIsOn(logger, "C91DAF33-135D-44C9-B6DE-155F59D1DB80", doTriggerSearchId, true);
 
             if (_hasRuleInstancesList)
             {
@@ -484,19 +531,18 @@ namespace SymOntoClay.Core.Internal.Instances
                     varStorage.Append(Logger, varItem);
                 }
 
-                RunSetHandler(localCodeExecutionContext);
+                RunSetHandler(logger, doTriggerSearchId, localCodeExecutionContext);
             }
-
         }
 
-        private void ProcessResetResultWithNoItems()
+        private void ProcessResetResultWithNoItems(IMonitorLogger logger, string doTriggerSearchId)
         {
             if(!_triggerConditionNodeObserverContext.IsOn)
             {
                 return;
             }
 
-            _triggerConditionNodeObserverContext.IsOn = false;
+            SetIsOn(logger, "C0FBDBCB-0F4E-4BBB-9973-E43D89D9C1CE", doTriggerSearchId, false);
 
             if (_hasRuleInstancesList)
             {
@@ -509,13 +555,12 @@ namespace SymOntoClay.Core.Internal.Instances
             localCodeExecutionContext.Storage = storage;
             localCodeExecutionContext.Holder = _parent.Name;
 
-            RunResetHandler(localCodeExecutionContext);
-
+            RunResetHandler(logger, doTriggerSearchId, localCodeExecutionContext);
         }
 
-        private void ProcessResetResultWithItems(List<List<Var>> varList)
+        private void ProcessResetResultWithItems(IMonitorLogger logger, string doTriggerSearchId, List<List<Var>> varList)
         {
-            _triggerConditionNodeObserverContext.IsOn = false;
+            SetIsOn(logger, "ABF47267-915E-467E-93D1-E44A548A3D1D", doTriggerSearchId, false);
 
             if (_hasRuleInstancesList)
             {
@@ -537,12 +582,11 @@ namespace SymOntoClay.Core.Internal.Instances
                     varStorage.Append(Logger, varItem);
                 }
 
-                RunResetHandler(localCodeExecutionContext);
+                RunResetHandler(logger, doTriggerSearchId, localCodeExecutionContext);
             }
-
         }
 
-        private void RunSetHandler(ILocalCodeExecutionContext localCodeExecutionContext)
+        private void RunSetHandler(IMonitorLogger logger, string doTriggerSearchId, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var processInitialInfo = new ProcessInitialInfo();
             processInitialInfo.CompiledFunctionBody = _trigger.SetCompiledFunctionBody;
@@ -554,7 +598,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var task = _context.CodeExecutor.ExecuteAsync(Logger, processInitialInfo);
         }
 
-        private void RunResetHandler(ILocalCodeExecutionContext localCodeExecutionContext)
+        private void RunResetHandler(IMonitorLogger logger, string doTriggerSearchId, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var processInitialInfo = new ProcessInitialInfo();
             processInitialInfo.CompiledFunctionBody = _trigger.ResetCompiledFunctionBody;
@@ -601,6 +645,7 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+            sb.Append($"{spaces}{nameof(Id)} = {Id}");
             return sb.ToString();
         }
 
@@ -621,6 +666,7 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+            sb.Append($"{spaces}{nameof(Id)} = {Id}");
             return sb.ToString();
         }
 
@@ -641,6 +687,7 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+            sb.Append($"{spaces}{nameof(Id)} = {Id}");
             return sb.ToString();
         }
     }

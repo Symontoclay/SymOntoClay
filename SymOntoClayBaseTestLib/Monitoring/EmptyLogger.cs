@@ -276,6 +276,47 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         }
 
         /// <inheritdoc/>
+        public string DoTriggerSearch(string messagePointId, string instanceId, string holder, MonitoredHumanizedLabel trigger,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            return Guid.NewGuid().ToString("D");
+        }
+
+        /// <inheritdoc/>
+        public void EndDoTriggerSearch(string messagePointId, string doTriggerSearchId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void SetConditionalTrigger(string messagePointId, string doTriggerSearchId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void RunSetExprOfConditionalTrigger(string messagePointId, string doTriggerSearchId, MonitoredHumanizedLabel expr,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void ResetConditionalTrigger(string messagePointId, string doTriggerSearchId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+        }
+
+        /// <inheritdoc/>
         public void Output(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

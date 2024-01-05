@@ -710,6 +710,56 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        public string DoTriggerSearch(string messagePointId, string instanceId, string holder, MonitoredHumanizedLabel trigger,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            return _monitorLoggerImpl.DoTriggerSearch(messagePointId, instanceId, holder, trigger, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void EndDoTriggerSearch(string messagePointId, string doTriggerSearchId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.EndDoTriggerSearch(messagePointId, doTriggerSearchId, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void SetConditionalTrigger(string messagePointId, string doTriggerSearchId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.SetConditionalTrigger(messagePointId, doTriggerSearchId, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void ResetConditionalTrigger(string messagePointId, string doTriggerSearchId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.ResetConditionalTrigger(messagePointId, doTriggerSearchId, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void RunSetExprOfConditionalTrigger(string messagePointId, string doTriggerSearchId, MonitoredHumanizedLabel expr,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.RunSetExprOfConditionalTrigger(messagePointId, doTriggerSearchId, expr, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public void Output(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

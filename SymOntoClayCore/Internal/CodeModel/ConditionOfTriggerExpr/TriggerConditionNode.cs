@@ -26,6 +26,8 @@ using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +35,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr
 {
-    public class TriggerConditionNode : AnnotatedItem, IAstNode
+    public class TriggerConditionNode : AnnotatedItem, IAstNode, IMonitoredHumanizedObject
     {
         public KindOfTriggerConditionNode Kind { get; set; } = KindOfTriggerConditionNode.Unknown;
         public KindOfOperator KindOfOperator { get; set; } = KindOfOperator.Unknown;
@@ -231,6 +233,21 @@ namespace SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
             return DebugHelperForTriggerCondition.ToString(this, options);
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedString(IMonitorLogger logger)
+        {
+            return ToHumanizedString();
+        }
+
+        /// <inheritdoc/>
+        public MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
+        {
+            return new MonitoredHumanizedLabel()
+            {
+                Label = ToHumanizedLabel()
+            };
         }
     }
 }

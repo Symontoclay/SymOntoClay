@@ -365,7 +365,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             var setResult = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
 
-            logger.EndRunSetExprOfConditionalTrigger(, doTriggerSearchId, _trigger.SetCondition.ToLabel(logger), setResult.IsSuccess, setResult.IsPeriodic, setVarList.Select(p => p.Select(x => x.ToLabel(logger)).ToList()).ToList());
+            logger.EndRunSetExprOfConditionalTrigger("B8DEBAFF-87B5-4305-87B1-5E27CFB4E5A0", doTriggerSearchId, _trigger.SetCondition.ToLabel(logger), setResult.IsSuccess, setResult.IsPeriodic, setVarList.Select(p => p.Select(x => x.ToLabel(logger)).ToList()).ToList());
 
             if (setResult.IsSuccess)
             {
@@ -410,7 +410,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
                     var setResult = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
 
-                    logger.EndRunSetExprOfConditionalTrigger(, doTriggerSearchId, _trigger.SetCondition.ToLabel(logger), setResult.IsSuccess, setResult.IsPeriodic, setVarList.Select(p => p.Select(x => x.ToLabel(logger)).ToList()).ToList());
+                    logger.EndRunSetExprOfConditionalTrigger("BA80E9DA-39C0-4E5A-8527-BD97FA711919", doTriggerSearchId, _trigger.SetCondition.ToLabel(logger), setResult.IsSuccess, setResult.IsPeriodic, setVarList.Select(p => p.Select(x => x.ToLabel(logger)).ToList()).ToList());
 
                     if (setResult.IsSuccess)
                     {
@@ -453,7 +453,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             var setResult = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
 
-            logger.EndRunSetExprOfConditionalTrigger(, doTriggerSearchId, _trigger.SetCondition.ToLabel(logger), setResult.IsSuccess, setResult.IsPeriodic, setVarList.Select(p => p.Select(x => x.ToLabel(logger)).ToList()).ToList());
+            logger.EndRunSetExprOfConditionalTrigger("6BEB4E66-8CD3-4A08-923E-1D0B2CB93A98", doTriggerSearchId, _trigger.SetCondition.ToLabel(logger), setResult.IsSuccess, setResult.IsPeriodic, setVarList.Select(p => p.Select(x => x.ToLabel(logger)).ToList()).ToList());
 
             if (setResult.IsSuccess)
             {

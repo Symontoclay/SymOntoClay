@@ -288,6 +288,70 @@ namespace SymOntoClay.Monitor.Internal
             }
         }
 
+        bool IMonitorFeatures.EnableDoTriggerSearch
+        {
+            get
+            {
+                ;
+            }
+        }
+
+        bool IMonitorFeatures.EnableEndDoTriggerSearch
+        {
+            get
+            {
+                ;
+            }
+        }
+
+        bool IMonitorFeatures.EnableSetConditionalTrigger
+        {
+            get
+            {
+                ;
+            }
+        }
+
+        bool IMonitorFeatures.EnableResetConditionalTrigger
+        {
+            get
+            {
+                ;
+            }
+        }
+
+        bool IMonitorFeatures.EnableRunSetExprOfConditionalTrigger
+        {
+            get
+            {
+                ;
+            }
+        }
+
+        bool IMonitorFeatures.EnableEndRunSetExprOfConditionalTrigger
+        {
+            get
+            {
+                ;
+            }
+        }
+
+        bool IMonitorFeatures.EnableRunResetExprOfConditionalTrigger
+        {
+            get
+            {
+                ;
+            }
+        }
+
+        bool IMonitorFeatures.EnableEndRunResetExprOfConditionalTrigger
+        {
+            get
+            {
+                ;
+            }
+        }
+
         bool IMonitorFeatures.EnableOutput
         {
             get
@@ -398,6 +462,14 @@ namespace SymOntoClay.Monitor.Internal
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableSetExecutionCoordinatorStatus)} = {monitorFeatures.EnableSetExecutionCoordinatorStatus}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableSetProcessInfoStatus)} = {monitorFeatures.EnableSetProcessInfoStatus}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableRunLifecycleTrigger)} = {monitorFeatures.EnableRunLifecycleTrigger}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableDoTriggerSearch)} = {monitorFeatures.EnableDoTriggerSearch}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableEndDoTriggerSearch)} = {monitorFeatures.EnableEndDoTriggerSearch}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableSetConditionalTrigger)} = {monitorFeatures.EnableSetConditionalTrigger}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableResetConditionalTrigger)} = {monitorFeatures.EnableResetConditionalTrigger}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableRunSetExprOfConditionalTrigger)} = {monitorFeatures.EnableRunSetExprOfConditionalTrigger}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableEndRunSetExprOfConditionalTrigger)} = {monitorFeatures.EnableEndRunSetExprOfConditionalTrigger}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableRunResetExprOfConditionalTrigger)} = {monitorFeatures.EnableRunResetExprOfConditionalTrigger}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableEndRunResetExprOfConditionalTrigger)} = {monitorFeatures.EnableEndRunResetExprOfConditionalTrigger}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableOutput)} = {monitorFeatures.EnableOutput}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableTrace)} = {monitorFeatures.EnableTrace}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableDebug)} = {monitorFeatures.EnableDebug}");
@@ -874,6 +946,27 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
             _monitorLoggerImpl.EndRunSetExprOfConditionalTrigger(messagePointId, doTriggerSearchId, expr, isSuccess, isPeriodic, fetchedResults, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void RunResetExprOfConditionalTrigger(string messagePointId, string doTriggerSearchId, MonitoredHumanizedLabel expr,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.RunResetExprOfConditionalTrigger(messagePointId, doTriggerSearchId, expr, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void EndRunResetExprOfConditionalTrigger(string messagePointId, string doTriggerSearchId, MonitoredHumanizedLabel expr,
+            bool isSuccess, bool isPeriodic, List<List<MonitoredHumanizedLabel>> fetchedResults,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.EndRunResetExprOfConditionalTrigger(messagePointId, doTriggerSearchId, expr, isSuccess, isPeriodic, fetchedResults, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>

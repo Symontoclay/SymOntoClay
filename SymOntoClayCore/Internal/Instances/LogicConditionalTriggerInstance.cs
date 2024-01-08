@@ -337,7 +337,11 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
             }
 
+            logger.RunResetExprOfConditionalTrigger("C9EC20E0-ED95-4C49-A878-2F9FFE9B3891", doTriggerSearchId, _trigger.SetCondition.ToLabel(logger));
+
             var resetResult = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList);
+
+            logger.EndRunResetExprOfConditionalTrigger("235D11A4-0374-47C1-B7CD-CB6D7FC53BFF", doTriggerSearchId, _trigger.SetCondition.ToLabel(logger), resetResult.IsSuccess, resetResult.IsPeriodic, resetVarList.Select(p => p.Select(x => x.ToLabel(logger)).ToList()).ToList());
 
             if (resetResult.IsSuccess)
             {
@@ -386,9 +390,13 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void DoSearchWithPriorResetCondition(IMonitorLogger logger, string doTriggerSearchId)
         {
+            logger.RunResetExprOfConditionalTrigger("22CA222E-ABB4-42E0-A0E2-4A2DCE2AD5A4", doTriggerSearchId, _trigger.SetCondition.ToLabel(logger));
+
             var resetResult = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList);
 
-            if(resetResult.IsSuccess)
+            logger.EndRunResetExprOfConditionalTrigger("36EED605-9DAC-4706-A880-4734648535C9", doTriggerSearchId, _trigger.SetCondition.ToLabel(logger), resetResult.IsSuccess, resetResult.IsPeriodic, resetVarList.Select(p => p.Select(x => x.ToLabel(logger)).ToList()).ToList());
+
+            if (resetResult.IsSuccess)
             {
                 if (_hasResetHandler)
                 {
@@ -429,7 +437,11 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void RunResetCondition(IMonitorLogger logger, string doTriggerSearchId)
         {
+            logger.RunResetExprOfConditionalTrigger("6AFE26AA-AC1B-4286-B8B9-2EEB53A9B973", doTriggerSearchId, _trigger.SetCondition.ToLabel(logger));
+
             var resetResult = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList);
+
+            logger.EndRunResetExprOfConditionalTrigger("92237553-81D4-4123-B98A-F350D9087024", doTriggerSearchId, _trigger.SetCondition.ToLabel(logger), resetResult.IsSuccess, resetResult.IsPeriodic, resetVarList.Select(p => p.Select(x => x.ToLabel(logger)).ToList()).ToList());
 
             if (resetResult.IsSuccess)
             {

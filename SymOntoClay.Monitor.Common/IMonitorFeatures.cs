@@ -32,6 +32,14 @@ namespace SymOntoClay.Monitor.Common
         bool EnableSetExecutionCoordinatorStatus { get; }
         bool EnableSetProcessInfoStatus { get; }
         bool EnableRunLifecycleTrigger { get; }
+        bool EnableDoTriggerSearch { get; }
+        bool EnableEndDoTriggerSearch { get; }
+        bool EnableSetConditionalTrigger { get; }
+        bool EnableResetConditionalTrigger { get; }
+        bool EnableRunSetExprOfConditionalTrigger { get; }
+        bool EnableEndRunSetExprOfConditionalTrigger { get; }
+        bool EnableRunResetExprOfConditionalTrigger { get; }
+        bool EnableEndRunResetExprOfConditionalTrigger { get; }
         bool EnableOutput { get; }
         bool EnableTrace { get; }
         bool EnableDebug { get; }

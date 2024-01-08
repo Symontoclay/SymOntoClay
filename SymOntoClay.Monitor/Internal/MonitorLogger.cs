@@ -2086,7 +2086,18 @@ namespace SymOntoClay.Monitor.Internal
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            return string.Empty;
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"instanceId = {instanceId}");
+            _globalLogger.Info($"holder = {holder}");
+            _globalLogger.Info($"trigger = {trigger}");
+            _globalLogger.Info($"memberName = {memberName}");
+            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+            var doTriggerSearchId = Guid.NewGuid().ToString("D");
+            return doTriggerSearchId;
         }
 
         /// <inheritdoc/>
@@ -2096,6 +2107,13 @@ namespace SymOntoClay.Monitor.Internal
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"doTriggerSearchId = {doTriggerSearchId}");
+            _globalLogger.Info($"memberName = {memberName}");
+            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
         }
 
         /// <inheritdoc/>
@@ -2105,6 +2123,13 @@ namespace SymOntoClay.Monitor.Internal
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"doTriggerSearchId = {doTriggerSearchId}");
+            _globalLogger.Info($"memberName = {memberName}");
+            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
         }
 
         /// <inheritdoc/>
@@ -2114,6 +2139,13 @@ namespace SymOntoClay.Monitor.Internal
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"doTriggerSearchId = {doTriggerSearchId}");
+            _globalLogger.Info($"memberName = {memberName}");
+            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
         }
 
         /// <inheritdoc/>
@@ -2123,6 +2155,13 @@ namespace SymOntoClay.Monitor.Internal
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"expr = {expr}");
+            _globalLogger.Info($"memberName = {memberName}");
+            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
         }
 
         /// <inheritdoc/>
@@ -2133,6 +2172,52 @@ namespace SymOntoClay.Monitor.Internal
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"expr = {expr}");
+            _globalLogger.Info($"isSuccess = {isSuccess}");
+            _globalLogger.Info($"isPeriodic = {isPeriodic}");
+            _globalLogger.Info($"fetchedResults = {JsonConvert.SerializeObject(fetchedResults, Formatting.Indented)}");
+            _globalLogger.Info($"memberName = {memberName}");
+            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void RunResetExprOfConditionalTrigger(string messagePointId, string doTriggerSearchId, MonitoredHumanizedLabel expr,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"expr = {expr}");
+            _globalLogger.Info($"memberName = {memberName}");
+            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void EndRunResetExprOfConditionalTrigger(string messagePointId, string doTriggerSearchId, MonitoredHumanizedLabel expr,
+            bool isSuccess, bool isPeriodic, List<List<MonitoredHumanizedLabel>> fetchedResults,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"expr = {expr}");
+            _globalLogger.Info($"isSuccess = {isSuccess}");
+            _globalLogger.Info($"isPeriodic = {isPeriodic}");
+            _globalLogger.Info($"fetchedResults = {JsonConvert.SerializeObject(fetchedResults, Formatting.Indented)}");
+            _globalLogger.Info($"memberName = {memberName}");
+            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
         }
 
         /// <inheritdoc/>

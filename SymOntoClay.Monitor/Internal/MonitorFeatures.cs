@@ -86,6 +86,30 @@ namespace SymOntoClay.Monitor.Internal
         public bool EnableRunLifecycleTrigger { get; set; }
 
         /// <inheritdoc/>
+        public bool EnableDoTriggerSearch { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableEndDoTriggerSearch { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableSetConditionalTrigger { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableResetConditionalTrigger { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableRunSetExprOfConditionalTrigger { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableEndRunSetExprOfConditionalTrigger { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableRunResetExprOfConditionalTrigger { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableEndRunResetExprOfConditionalTrigger { get; set; }
+
+        /// <inheritdoc/>
         public bool EnableOutput { get; set; }
 
         /// <inheritdoc/>
@@ -135,6 +159,14 @@ namespace SymOntoClay.Monitor.Internal
             result.EnableSetExecutionCoordinatorStatus = EnableSetExecutionCoordinatorStatus;
             result.EnableSetProcessInfoStatus = EnableSetProcessInfoStatus;
             result.EnableRunLifecycleTrigger = EnableRunLifecycleTrigger;
+            result.EnableDoTriggerSearch = EnableDoTriggerSearch;
+            result.EnableEndDoTriggerSearch = EnableEndDoTriggerSearch;
+            result.EnableSetConditionalTrigger = EnableSetConditionalTrigger;
+            result.EnableResetConditionalTrigger = EnableResetConditionalTrigger;
+            result.EnableRunSetExprOfConditionalTrigger = EnableRunSetExprOfConditionalTrigger;
+            result.EnableEndRunSetExprOfConditionalTrigger = EnableEndRunSetExprOfConditionalTrigger;
+            result.EnableRunResetExprOfConditionalTrigger = EnableRunResetExprOfConditionalTrigger;
+            result.EnableEndRunResetExprOfConditionalTrigger = EnableEndRunResetExprOfConditionalTrigger;
             result.EnableOutput = EnableOutput;
             result.EnableTrace = EnableTrace;
             result.EnableDebug = EnableDebug;
@@ -188,6 +220,14 @@ namespace SymOntoClay.Monitor.Internal
             sb.AppendLine($"{spaces}{nameof(EnableSetExecutionCoordinatorStatus)} = {EnableSetExecutionCoordinatorStatus}");
             sb.AppendLine($"{spaces}{nameof(EnableSetProcessInfoStatus)} = {EnableSetProcessInfoStatus}");
             sb.AppendLine($"{spaces}{nameof(EnableRunLifecycleTrigger)} = {EnableRunLifecycleTrigger}");
+            sb.AppendLine($"{spaces}{nameof(EnableDoTriggerSearch)} = {EnableDoTriggerSearch}");
+            sb.AppendLine($"{spaces}{nameof(EnableEndDoTriggerSearch)} = {EnableEndDoTriggerSearch}");
+            sb.AppendLine($"{spaces}{nameof(EnableSetConditionalTrigger)} = {EnableSetConditionalTrigger}");
+            sb.AppendLine($"{spaces}{nameof(EnableResetConditionalTrigger)} = {EnableResetConditionalTrigger}");
+            sb.AppendLine($"{spaces}{nameof(EnableRunSetExprOfConditionalTrigger)} = {EnableRunSetExprOfConditionalTrigger}");
+            sb.AppendLine($"{spaces}{nameof(EnableEndRunSetExprOfConditionalTrigger)} = {EnableEndRunSetExprOfConditionalTrigger}");
+            sb.AppendLine($"{spaces}{nameof(EnableRunResetExprOfConditionalTrigger)} = {EnableRunResetExprOfConditionalTrigger}");
+            sb.AppendLine($"{spaces}{nameof(EnableEndRunResetExprOfConditionalTrigger)} = {EnableEndRunResetExprOfConditionalTrigger}");
             sb.AppendLine($"{spaces}{nameof(EnableOutput)} = {EnableOutput}");
             sb.AppendLine($"{spaces}{nameof(EnableTrace)} = {EnableTrace}");
             sb.AppendLine($"{spaces}{nameof(EnableDebug)} = {EnableDebug}");

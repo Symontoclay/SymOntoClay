@@ -376,7 +376,7 @@ namespace SymOntoClay.Monitor
         { 
             get
             {
-                ;
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableDoTriggerSearch;
             }
         }
 
@@ -384,7 +384,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                ;
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableEndDoTriggerSearch;
             }
         }
 
@@ -392,7 +392,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                ;
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableSetConditionalTrigger;
             }
         }
 
@@ -400,7 +400,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                ;
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableResetConditionalTrigger;
             }
         }
 
@@ -408,7 +408,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                ;
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableRunSetExprOfConditionalTrigger;
             }
         }
 
@@ -416,7 +416,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                ;
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableEndRunSetExprOfConditionalTrigger;
             }
         }
 
@@ -424,7 +424,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                ;
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableRunResetExprOfConditionalTrigger;
             }
         }
 
@@ -432,7 +432,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                ;
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableEndRunResetExprOfConditionalTrigger;
             }
         }
 

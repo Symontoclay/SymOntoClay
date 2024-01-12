@@ -283,7 +283,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                ;
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableDoTriggerSearch;
             }
         }
 
@@ -291,7 +291,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                ;
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableEndDoTriggerSearch;
             }
         }
 
@@ -299,7 +299,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                ;
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableSetConditionalTrigger;
             }
         }
 
@@ -307,7 +307,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                ;
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableResetConditionalTrigger;
             }
         }
 
@@ -315,7 +315,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                ;
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableRunSetExprOfConditionalTrigger;
             }
         }
 
@@ -323,7 +323,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                ;
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableEndRunSetExprOfConditionalTrigger;
             }
         }
 
@@ -331,7 +331,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                ;
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableRunResetExprOfConditionalTrigger;
             }
         }
 
@@ -339,7 +339,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                ;
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableEndRunResetExprOfConditionalTrigger;
             }
         }
 

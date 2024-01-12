@@ -103,6 +103,30 @@ namespace SymOntoClay.Monitor.Common.Data
                 case KindOfMessage.RunLifecycleTrigger:
                     return JsonConvert.DeserializeObject<RunLifecycleTriggerMessage>(content);
 
+                case KindOfMessage.DoTriggerSearch:
+                    return JsonConvert.DeserializeObject<DoTriggerSearchMessage>(content);
+
+                case KindOfMessage.EndDoTriggerSearch:
+                    return JsonConvert.DeserializeObject<EndDoTriggerSearchMessage>(content);
+
+                case KindOfMessage.SetConditionalTrigger:
+                    return JsonConvert.DeserializeObject<SetConditionalTriggerMessage>(content);
+
+                case KindOfMessage.ResetConditionalTrigger:
+                    return JsonConvert.DeserializeObject<ResetConditionalTriggerMessage>(content);
+
+                case KindOfMessage.RunSetExprOfConditionalTrigger:
+                    return JsonConvert.DeserializeObject<RunSetExprOfConditionalTriggerMessage>(content);
+
+                case KindOfMessage.EndRunSetExprOfConditionalTrigger:
+                    return JsonConvert.DeserializeObject<EndRunSetExprOfConditionalTriggerMessage>(content);
+
+                case KindOfMessage.RunResetExprOfConditionalTrigger:
+                    return JsonConvert.DeserializeObject<RunResetExprOfConditionalTriggerMessage>(content);
+
+                case KindOfMessage.EndRunResetExprOfConditionalTrigger:
+                    return JsonConvert.DeserializeObject<EndRunResetExprOfConditionalTriggerMessage>(content);
+
                 case KindOfMessage.Output:
                     return JsonConvert.DeserializeObject<OutputMessage>(content);
 

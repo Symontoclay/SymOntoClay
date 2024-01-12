@@ -2097,6 +2097,66 @@ namespace SymOntoClay.Monitor.Internal
 #endif
 
             var doTriggerSearchId = Guid.NewGuid().ToString("D");
+
+            if (!_features.EnableDoTriggerSearch)
+            {
+                return doTriggerSearchId;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            Task.Run(() => {
+#if DEBUG
+                _globalLogger.Info($"NEXT");
+#endif
+
+                var messageInfo = new DoTriggerSearchMessage
+                {
+                    DoTriggerSearchId = doTriggerSearchId,
+                    InstanceId = instanceId,
+                    Holder = holder,
+                    TriggerLabel = trigger,
+                    DateTimeStamp = now,
+                    NodeId = _nodeId,
+                    ThreadId = _threadId,
+                    GlobalMessageNumber = globalMessageNumber,
+                    MessageNumber = messageNumber,
+                    MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
+                    MemberName = memberName,
+                    SourceFilePath = sourceFilePath,
+                    SourceLineNumber = sourceLineNumber
+                };
+
+#if DEBUG
+                _globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
+            });
+
             return doTriggerSearchId;
         }
 
@@ -2114,6 +2174,62 @@ namespace SymOntoClay.Monitor.Internal
             _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
             _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
+
+            if (!_features.EnableEndDoTriggerSearch)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            Task.Run(() => {
+#if DEBUG
+                _globalLogger.Info($"NEXT");
+#endif
+
+                var messageInfo = new EndDoTriggerSearchMessage
+                {
+                    DoTriggerSearchId = doTriggerSearchId,
+                    DateTimeStamp = now,
+                    NodeId = _nodeId,
+                    ThreadId = _threadId,
+                    GlobalMessageNumber = globalMessageNumber,
+                    MessageNumber = messageNumber,
+                    MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
+                    MemberName = memberName,
+                    SourceFilePath = sourceFilePath,
+                    SourceLineNumber = sourceLineNumber
+                };
+
+#if DEBUG
+                _globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
+            });
         }
 
         /// <inheritdoc/>
@@ -2130,6 +2246,62 @@ namespace SymOntoClay.Monitor.Internal
             _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
             _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
+
+            if (!_features.EnableSetConditionalTrigger)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            Task.Run(() => {
+#if DEBUG
+                _globalLogger.Info($"NEXT");
+#endif
+
+                var messageInfo = new SetConditionalTriggerMessage
+                {
+                    DoTriggerSearchId = doTriggerSearchId,
+                    DateTimeStamp = now,
+                    NodeId = _nodeId,
+                    ThreadId = _threadId,
+                    GlobalMessageNumber = globalMessageNumber,
+                    MessageNumber = messageNumber,
+                    MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
+                    MemberName = memberName,
+                    SourceFilePath = sourceFilePath,
+                    SourceLineNumber = sourceLineNumber
+                };
+
+#if DEBUG
+                _globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
+            });
         }
 
         /// <inheritdoc/>
@@ -2146,6 +2318,62 @@ namespace SymOntoClay.Monitor.Internal
             _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
             _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
+
+            if (!_features.EnableResetConditionalTrigger)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            Task.Run(() => {
+#if DEBUG
+                _globalLogger.Info($"NEXT");
+#endif
+
+                var messageInfo = new ResetConditionalTriggerMessage
+                {
+                    DoTriggerSearchId = doTriggerSearchId,
+                    DateTimeStamp = now,
+                    NodeId = _nodeId,
+                    ThreadId = _threadId,
+                    GlobalMessageNumber = globalMessageNumber,
+                    MessageNumber = messageNumber,
+                    MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
+                    MemberName = memberName,
+                    SourceFilePath = sourceFilePath,
+                    SourceLineNumber = sourceLineNumber
+                };
+
+#if DEBUG
+                _globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
+            });
         }
 
         /// <inheritdoc/>
@@ -2162,6 +2390,63 @@ namespace SymOntoClay.Monitor.Internal
             _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
             _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
+
+            if (!_features.EnableRunSetExprOfConditionalTrigger)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            Task.Run(() => {
+#if DEBUG
+                _globalLogger.Info($"NEXT");
+#endif
+
+                var messageInfo = new RunSetExprOfConditionalTriggerMessage
+                {
+                    DoTriggerSearchId = doTriggerSearchId,
+                    ExprLabel = expr,
+                    DateTimeStamp = now,
+                    NodeId = _nodeId,
+                    ThreadId = _threadId,
+                    GlobalMessageNumber = globalMessageNumber,
+                    MessageNumber = messageNumber,
+                    MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
+                    MemberName = memberName,
+                    SourceFilePath = sourceFilePath,
+                    SourceLineNumber = sourceLineNumber
+                };
+
+#if DEBUG
+                _globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
+            });
         }
 
         /// <inheritdoc/>
@@ -2182,6 +2467,66 @@ namespace SymOntoClay.Monitor.Internal
             _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
             _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
+
+            if (!_features.EnableEndRunSetExprOfConditionalTrigger)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            Task.Run(() => {
+#if DEBUG
+                _globalLogger.Info($"NEXT");
+#endif
+
+                var messageInfo = new EndRunSetExprOfConditionalTriggerMessage
+                {
+                    DoTriggerSearchId = doTriggerSearchId,
+                    ExprLabel = expr,
+                    IsSuccess = isSuccess,
+                    IsPeriodic = isPeriodic,
+                    FetchedResults = fetchedResults,
+                    DateTimeStamp = now,
+                    NodeId = _nodeId,
+                    ThreadId = _threadId,
+                    GlobalMessageNumber = globalMessageNumber,
+                    MessageNumber = messageNumber,
+                    MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
+                    MemberName = memberName,
+                    SourceFilePath = sourceFilePath,
+                    SourceLineNumber = sourceLineNumber
+                };
+
+#if DEBUG
+                _globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
+            });
         }
 
         /// <inheritdoc/>
@@ -2198,6 +2543,63 @@ namespace SymOntoClay.Monitor.Internal
             _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
             _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
+
+            if (!_features.EnableRunResetExprOfConditionalTrigger)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            Task.Run(() => {
+#if DEBUG
+                _globalLogger.Info($"NEXT");
+#endif
+
+                var messageInfo = new RunResetExprOfConditionalTriggerMessage
+                {
+                    DoTriggerSearchId = doTriggerSearchId,
+                    ExprLabel = expr,
+                    DateTimeStamp = now,
+                    NodeId = _nodeId,
+                    ThreadId = _threadId,
+                    GlobalMessageNumber = globalMessageNumber,
+                    MessageNumber = messageNumber,
+                    MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
+                    MemberName = memberName,
+                    SourceFilePath = sourceFilePath,
+                    SourceLineNumber = sourceLineNumber
+                };
+
+#if DEBUG
+                _globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
+            });
         }
 
         /// <inheritdoc/>
@@ -2218,6 +2620,66 @@ namespace SymOntoClay.Monitor.Internal
             _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
             _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
+
+            if (!_features.EnableEndRunResetExprOfConditionalTrigger)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            Task.Run(() => {
+#if DEBUG
+                _globalLogger.Info($"NEXT");
+#endif
+
+                var messageInfo = new EndRunResetExprOfConditionalTriggerMessage
+                {
+                    DoTriggerSearchId = doTriggerSearchId,
+                    ExprLabel = expr,
+                    IsSuccess = isSuccess,
+                    IsPeriodic = isPeriodic,
+                    FetchedResults = fetchedResults,
+                    DateTimeStamp = now,
+                    NodeId = _nodeId,
+                    ThreadId = _threadId,
+                    GlobalMessageNumber = globalMessageNumber,
+                    MessageNumber = messageNumber,
+                    MessagePointId = messagePointId,
+                    ClassFullName = classFullName,
+                    MemberName = memberName,
+                    SourceFilePath = sourceFilePath,
+                    SourceLineNumber = sourceLineNumber
+                };
+
+#if DEBUG
+                _globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
+            });
         }
 
         /// <inheritdoc/>

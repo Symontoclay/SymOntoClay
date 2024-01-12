@@ -118,6 +118,30 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 case KindOfMessage.RunLifecycleTrigger:
                     return GetRunLifecycleTrigger(message as RunLifecycleTriggerMessage);
 
+                case KindOfMessage.DoTriggerSearch:
+                    return GetDoTriggerSearch(message as DoTriggerSearchMessage);
+
+                case KindOfMessage.EndDoTriggerSearch:
+                    return GetEndDoTriggerSearch(message as EndDoTriggerSearchMessage);
+
+                case KindOfMessage.SetConditionalTrigger:
+                    return GetSetConditionalTrigger(message as SetConditionalTriggerMessage);
+
+                case KindOfMessage.ResetConditionalTrigger:
+                    return GetResetConditionalTrigger(message as ResetConditionalTriggerMessage);
+
+                case KindOfMessage.RunSetExprOfConditionalTrigger:
+                    return GetRunSetExprOfConditionalTrigger(message as RunSetExprOfConditionalTriggerMessage);
+
+                case KindOfMessage.EndRunSetExprOfConditionalTrigger:
+                    return GetEndRunSetExprOfConditionalTrigger(message as EndRunSetExprOfConditionalTriggerMessage);
+
+                case KindOfMessage.RunResetExprOfConditionalTrigger:
+                    return GetRunResetExprOfConditionalTrigger(message as RunResetExprOfConditionalTriggerMessage);
+
+                case KindOfMessage.EndRunResetExprOfConditionalTrigger:
+                    return GetEndRunResetExprOfConditionalTrigger(message as EndRunResetExprOfConditionalTriggerMessage);
+
                 case KindOfMessage.Output:
                     return GetOutput(message as OutputMessage);
 
@@ -592,6 +616,103 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             }
 
             return sb.ToString();
+        }
+
+        private string GetDoTriggerSearch(DoTriggerSearchMessage message)
+        {
+#if DEBUG
+            _globalLogger.Info($"message = {message}");
+#endif
+
+            var sb = new StringBuilder($"{message.TriggerLabel.Label} <{message.DoTriggerSearchId}>");
+
+            if (!string.IsNullOrWhiteSpace(message.InstanceId))
+            {
+                sb.Append($" Instance: {message.InstanceId}");
+            }
+
+            if (!string.IsNullOrWhiteSpace(message.Holder))
+            {
+                sb.Append($" Holder: {message.Holder}");
+            }
+
+            return sb.ToString();
+        }
+
+        private string GetEndDoTriggerSearch(EndDoTriggerSearchMessage message)
+        {
+#if DEBUG
+            _globalLogger.Info($"message = {message}");
+#endif
+
+            return $"<{message.DoTriggerSearchId}>";
+        }
+
+        private string GetSetConditionalTrigger(SetConditionalTriggerMessage message)
+        {
+#if DEBUG
+            _globalLogger.Info($"message = {message}");
+#endif
+
+            return $"<{message.DoTriggerSearchId}>";
+        }
+
+        private string GetResetConditionalTrigger(ResetConditionalTriggerMessage message)
+        {
+#if DEBUG
+            _globalLogger.Info($"message = {message}");
+#endif
+
+            return $"<{message.DoTriggerSearchId}>";
+        }
+
+        private string GetRunSetExprOfConditionalTrigger(RunSetExprOfConditionalTriggerMessage message)
+        {
+            return GetBaseRunExprOfConditionalTriggerMessage(message);
+        }
+
+        private string GetBaseRunExprOfConditionalTriggerMessage(BaseRunExprOfConditionalTriggerMessage message)
+        {
+#if DEBUG
+            _globalLogger.Info($"message = {message}");
+#endif
+
+            return $"{message.ExprLabel.Label} <{message.DoTriggerSearchId}>";
+        }
+
+        private string GetEndRunSetExprOfConditionalTrigger(EndRunSetExprOfConditionalTriggerMessage message)
+        {
+            return GetBaseEndRunExprOfConditionalTriggerMessage(message);
+        }
+
+        private string GetBaseEndRunExprOfConditionalTriggerMessage(BaseEndRunExprOfConditionalTriggerMessage message)
+        {
+#if DEBUG
+            _globalLogger.Info($"message = {message}");
+#endif
+            var sb = new StringBuilder($"{message.ExprLabel.Label} <{message.DoTriggerSearchId}> {(message.IsSuccess ? "success" : "failed")}");
+
+            if(message.IsPeriodic)
+            {
+                sb.Append(" periodic");
+            }
+
+            if(!message.FetchedResults.IsNullOrEmpty())
+            {
+                throw new NotImplementedException();
+            }
+
+            return sb.ToString();
+        }
+
+        private string GetRunResetExprOfConditionalTrigger(RunResetExprOfConditionalTriggerMessage message)
+        {
+            return GetBaseRunExprOfConditionalTriggerMessage(message);
+        }
+
+        private string GetEndRunResetExprOfConditionalTrigger(EndRunResetExprOfConditionalTriggerMessage message)
+        {
+            return GetBaseEndRunExprOfConditionalTriggerMessage(message);
         }
 
         private string GetOutput(OutputMessage message)

@@ -40,7 +40,7 @@ namespace SymOntoClay.Monitor.Internal
         public ThreadLogger(string threadId, MonitorNodeContext monitorNodeContext)
         {
 #if DEBUG
-            _globalLogger.Info($"threadId = {threadId}");
+            //_globalLogger.Info($"threadId = {threadId}");
 #endif
 
             _monitorNodeContext = monitorNodeContext;

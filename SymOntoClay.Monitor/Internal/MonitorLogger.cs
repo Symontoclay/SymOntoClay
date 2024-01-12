@@ -2010,13 +2010,13 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"instanceId = {instanceId}");
-            _globalLogger.Info($"holder = {holder}");
-            _globalLogger.Info($"kindOfSystemEvent = {kindOfSystemEvent}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"instanceId = {instanceId}");
+            //_globalLogger.Info($"holder = {holder}");
+            //_globalLogger.Info($"kindOfSystemEvent = {kindOfSystemEvent}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             if (!_features.EnableRunLifecycleTrigger)
@@ -2050,7 +2050,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new RunLifecycleTriggerMessage
@@ -2072,7 +2072,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -2087,13 +2087,13 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"instanceId = {instanceId}");
-            _globalLogger.Info($"holder = {holder}");
-            _globalLogger.Info($"trigger = {trigger}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"instanceId = {instanceId}");
+            //_globalLogger.Info($"holder = {holder}");
+            //_globalLogger.Info($"trigger = {trigger}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             var doTriggerSearchId = Guid.NewGuid().ToString("D");
@@ -2129,7 +2129,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new DoTriggerSearchMessage
@@ -2151,7 +2151,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -2168,11 +2168,11 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"doTriggerSearchId = {doTriggerSearchId}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"doTriggerSearchId = {doTriggerSearchId}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             if (!_features.EnableEndDoTriggerSearch)
@@ -2206,7 +2206,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new EndDoTriggerSearchMessage
@@ -2225,7 +2225,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -2240,11 +2240,11 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"doTriggerSearchId = {doTriggerSearchId}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"doTriggerSearchId = {doTriggerSearchId}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             if (!_features.EnableSetConditionalTrigger)
@@ -2278,7 +2278,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new SetConditionalTriggerMessage
@@ -2297,7 +2297,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -2312,11 +2312,11 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"doTriggerSearchId = {doTriggerSearchId}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"doTriggerSearchId = {doTriggerSearchId}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             if (!_features.EnableResetConditionalTrigger)
@@ -2350,7 +2350,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new ResetConditionalTriggerMessage
@@ -2369,7 +2369,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -2384,11 +2384,11 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"expr = {expr}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"expr = {expr}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             if (!_features.EnableRunSetExprOfConditionalTrigger)
@@ -2422,7 +2422,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new RunSetExprOfConditionalTriggerMessage
@@ -2442,7 +2442,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -2458,14 +2458,14 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"expr = {expr}");
-            _globalLogger.Info($"isSuccess = {isSuccess}");
-            _globalLogger.Info($"isPeriodic = {isPeriodic}");
-            _globalLogger.Info($"fetchedResults = {JsonConvert.SerializeObject(fetchedResults, Formatting.Indented)}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"expr = {expr}");
+            //_globalLogger.Info($"isSuccess = {isSuccess}");
+            //_globalLogger.Info($"isPeriodic = {isPeriodic}");
+            //_globalLogger.Info($"fetchedResults = {JsonConvert.SerializeObject(fetchedResults, Formatting.Indented)}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             if (!_features.EnableEndRunSetExprOfConditionalTrigger)
@@ -2499,7 +2499,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new EndRunSetExprOfConditionalTriggerMessage
@@ -2522,7 +2522,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -2537,11 +2537,11 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"expr = {expr}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"expr = {expr}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             if (!_features.EnableRunResetExprOfConditionalTrigger)
@@ -2575,7 +2575,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new RunResetExprOfConditionalTriggerMessage
@@ -2595,7 +2595,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
@@ -2611,14 +2611,14 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"expr = {expr}");
-            _globalLogger.Info($"isSuccess = {isSuccess}");
-            _globalLogger.Info($"isPeriodic = {isPeriodic}");
-            _globalLogger.Info($"fetchedResults = {JsonConvert.SerializeObject(fetchedResults, Formatting.Indented)}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"expr = {expr}");
+            //_globalLogger.Info($"isSuccess = {isSuccess}");
+            //_globalLogger.Info($"isPeriodic = {isPeriodic}");
+            //_globalLogger.Info($"fetchedResults = {JsonConvert.SerializeObject(fetchedResults, Formatting.Indented)}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             if (!_features.EnableEndRunResetExprOfConditionalTrigger)
@@ -2652,7 +2652,7 @@ namespace SymOntoClay.Monitor.Internal
 
             Task.Run(() => {
 #if DEBUG
-                _globalLogger.Info($"NEXT");
+                //_globalLogger.Info($"NEXT");
 #endif
 
                 var messageInfo = new EndRunResetExprOfConditionalTriggerMessage
@@ -2675,7 +2675,7 @@ namespace SymOntoClay.Monitor.Internal
                 };
 
 #if DEBUG
-                _globalLogger.Info($"messageInfo = {messageInfo}");
+                //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);

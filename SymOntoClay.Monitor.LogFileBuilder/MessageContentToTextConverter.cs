@@ -621,7 +621,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetDoTriggerSearch(DoTriggerSearchMessage message)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
             var sb = new StringBuilder($"{message.TriggerLabel.Label} <{message.DoTriggerSearchId}>");
@@ -642,7 +642,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetEndDoTriggerSearch(EndDoTriggerSearchMessage message)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
             return $"<{message.DoTriggerSearchId}>";
@@ -651,7 +651,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetSetConditionalTrigger(SetConditionalTriggerMessage message)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
             return $"<{message.DoTriggerSearchId}>";
@@ -660,7 +660,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetResetConditionalTrigger(ResetConditionalTriggerMessage message)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
             return $"<{message.DoTriggerSearchId}>";
@@ -674,7 +674,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetBaseRunExprOfConditionalTriggerMessage(BaseRunExprOfConditionalTriggerMessage message)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
             return $"{message.ExprLabel.Label} <{message.DoTriggerSearchId}>";
@@ -688,8 +688,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetBaseEndRunExprOfConditionalTriggerMessage(BaseEndRunExprOfConditionalTriggerMessage message)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
+
             var sb = new StringBuilder($"{message.ExprLabel.Label} <{message.DoTriggerSearchId}> {(message.IsSuccess ? "success" : "failed")}");
 
             if(message.IsPeriodic)
@@ -699,6 +700,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             if(!message.FetchedResults.IsNullOrEmpty())
             {
+#if DEBUG
+                _globalLogger.Info($"message = {message}");
+#endif
+
                 throw new NotImplementedException();
             }
 

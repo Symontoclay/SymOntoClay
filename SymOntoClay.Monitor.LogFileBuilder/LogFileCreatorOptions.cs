@@ -22,6 +22,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public bool? SeparateOutputByThreads { get; set; }
         public IEnumerable<KindOfMessage> KindOfMessages { get; set; }
         public IEnumerable<BaseMessageTextRowOptionItem> Layout { get; set; }
+        public bool Silent { get; set; }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
         public LogFileCreatorOptions Clone()
@@ -48,7 +49,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             result.SeparateOutputByThreads = SeparateOutputByThreads;
             result.KindOfMessages = KindOfMessages?.ToList();
             result.Layout = Layout?.ToList();
-            
+            result.Silent = Silent;
+
             return result;
         }
 
@@ -98,6 +100,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             {
                 Layout = source.Layout.ToList();
             }
+
+            Silent = source.Silent;
         }
 
         /// <inheritdoc/>
@@ -130,7 +134,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             sb.AppendLine($"{spaces}{nameof(SeparateOutputByNodes)} = {SeparateOutputByNodes}");
             sb.AppendLine($"{spaces}{nameof(SeparateOutputByThreads)} = {SeparateOutputByThreads}");
             sb.PrintPODList(n, nameof(KindOfMessages), KindOfMessages);
-            sb.PrintObjListProp(n, nameof(Layout), Layout);
+            sb.PrintObjListProp(n, nameof(Layout), Layout); 
+            sb.AppendLine($"{spaces}{nameof(Silent)} = {Silent}");
             //sb.AppendLine($"{spaces}{nameof()} = {}");
             return sb.ToString();
         }

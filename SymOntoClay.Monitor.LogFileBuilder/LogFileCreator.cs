@@ -13,16 +13,34 @@ namespace SymOntoClay.Monitor.LogFileBuilder
     public static class LogFileCreator
     {
 #if DEBUG
-        //private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
-        public static void Run(LogFileCreatorOptions options)
+        public static void Run(LogFileCreatorOptions options, ILogger logger)
         {
 #if DEBUG
-            //_logger.Info($"options = {options}");
+            _logger.Info($"options = {options}");
 #endif
 
+            var showStages = (!options.Silent) && (logger != null);
+
+#if DEBUG
+            _logger.Info($"showStages = {showStages}");
+#endif
+
+            if(showStages)
+            {
+                logger.Info("Fetching file names");
+            }
+
             var fileNamesList = MessageFilesReader.GetFileNames(options.SourceDirectoryName, options.KindOfMessages).OrderBy(p => p.Item1.GlobalMessageNumber).ToList();
+
+            var fileNamesListCount = fileNamesList.Count;
+
+            if (showStages)
+            {
+                logger.Info($"Fetched {fileNamesListCount} file names");
+            }
 
             var fileStreamsStorageOptions = new FileStreamsStorageOptions()
             {
@@ -42,8 +60,16 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             var rowOptionsList = options.Layout;
 
+            var n = 0;
+
             foreach (var fileName in fileNamesList)
             {
+                if(showStages)
+                {
+                    n++;
+                    logger.Info($"{n} from {fileNamesListCount}");
+                }
+
 #if DEBUG
                 //_logger.Info($"fileName = {fileName}");
 #endif
@@ -84,6 +110,11 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 #endif
 
                 sw.WriteLine(rowSb);
+            }
+
+            if (showStages)
+            {
+                logger.Info($"All fetched {fileNamesListCount} file names processed");
             }
         }
     }

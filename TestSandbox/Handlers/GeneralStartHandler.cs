@@ -123,7 +123,7 @@ namespace TestSandbox.Handlers
 
             //_globalLogger.Info($"options = {options}");
 
-            LogFileCreator.Run(options);
+            LogFileCreator.Run(options, _globalLogger);
 
             _globalLogger.Info("End");
         }

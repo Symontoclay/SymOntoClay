@@ -110,6 +110,11 @@ namespace SymOntoClay.Monitor.Internal
         public bool EnableEndRunResetExprOfConditionalTrigger { get; set; }
 
         /// <inheritdoc/>
+        public bool IsEnabledAnyConditionalTriggerFeature => EnableDoTriggerSearch || EnableEndDoTriggerSearch || EnableSetConditionalTrigger
+            || EnableResetConditionalTrigger || EnableRunSetExprOfConditionalTrigger || EnableEndRunSetExprOfConditionalTrigger ||
+            EnableRunResetExprOfConditionalTrigger || EnableEndRunResetExprOfConditionalTrigger;
+
+        /// <inheritdoc/>
         public bool EnableOutput { get; set; }
 
         /// <inheritdoc/>
@@ -228,6 +233,7 @@ namespace SymOntoClay.Monitor.Internal
             sb.AppendLine($"{spaces}{nameof(EnableEndRunSetExprOfConditionalTrigger)} = {EnableEndRunSetExprOfConditionalTrigger}");
             sb.AppendLine($"{spaces}{nameof(EnableRunResetExprOfConditionalTrigger)} = {EnableRunResetExprOfConditionalTrigger}");
             sb.AppendLine($"{spaces}{nameof(EnableEndRunResetExprOfConditionalTrigger)} = {EnableEndRunResetExprOfConditionalTrigger}");
+            sb.AppendLine($"{spaces}{nameof(IsEnabledAnyConditionalTriggerFeature)} = {IsEnabledAnyConditionalTriggerFeature}");
             sb.AppendLine($"{spaces}{nameof(EnableOutput)} = {EnableOutput}");
             sb.AppendLine($"{spaces}{nameof(EnableTrace)} = {EnableTrace}");
             sb.AppendLine($"{spaces}{nameof(EnableDebug)} = {EnableDebug}");

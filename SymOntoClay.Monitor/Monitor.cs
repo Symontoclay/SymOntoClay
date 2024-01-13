@@ -436,6 +436,16 @@ namespace SymOntoClay.Monitor
             }
         }
 
+        bool IMonitorFeatures.IsEnabledAnyConditionalTriggerFeature
+        {
+            get
+            {
+                return _TopSysEnable && _baseMonitorSettings.Enable && (_features.EnableDoTriggerSearch || _features.EnableEndDoTriggerSearch || _features.EnableSetConditionalTrigger ||
+                    _features.EnableResetConditionalTrigger || _features.EnableRunSetExprOfConditionalTrigger || _features.EnableEndRunSetExprOfConditionalTrigger || _features.EnableRunResetExprOfConditionalTrigger ||
+                    _features.EnableEndRunResetExprOfConditionalTrigger);
+            }
+        }
+
         bool IMonitorFeatures.EnableOutput
         {
             get
@@ -548,6 +558,7 @@ namespace SymOntoClay.Monitor
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableEndRunSetExprOfConditionalTrigger)} = {monitorFeatures.EnableEndRunSetExprOfConditionalTrigger}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableRunResetExprOfConditionalTrigger)} = {monitorFeatures.EnableRunResetExprOfConditionalTrigger}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableEndRunResetExprOfConditionalTrigger)} = {monitorFeatures.EnableEndRunResetExprOfConditionalTrigger}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.IsEnabledAnyConditionalTriggerFeature)} = {monitorFeatures.IsEnabledAnyConditionalTriggerFeature}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableOutput)} = {monitorFeatures.EnableOutput}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableTrace)} = {monitorFeatures.EnableTrace}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableDebug)} = {monitorFeatures.EnableDebug}");

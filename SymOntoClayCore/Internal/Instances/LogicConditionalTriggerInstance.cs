@@ -176,10 +176,29 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 try
                 {
-                    var threadId = Guid.NewGuid().ToString("D");
-                    var logger = _context.MonitorNode.CreateThreadLogger("3D06FC1B-69EB-49B4-B4A1-0184EE31A8D1", threadId: threadId, parentThreadId: Logger.Id);
+#if DEBUG
+                    //Info("84B814BD-AFF4-487A-996C-8EF10370313E", $"_context.MonitorNode.MonitorFeatures.EnableDoTriggerSearch = {_context.MonitorNode.MonitorFeatures.EnableDoTriggerSearch}");
+                    //Info("F9FC404C-A769-472E-9DD5-0DD0181C7067", $"_context.MonitorNode.MonitorFeatures.EnableEndDoTriggerSearch = {_context.MonitorNode.MonitorFeatures.EnableEndDoTriggerSearch}");
+                    //Info("30E67EBB-82EE-4A40-B6B3-4575A155A105", $"_context.MonitorNode.MonitorFeatures.EnableSetConditionalTrigger = {_context.MonitorNode.MonitorFeatures.EnableSetConditionalTrigger}");
+                    //Info("EA951532-84FD-436C-A933-ACE3DBED3AD6", $"_context.MonitorNode.MonitorFeatures.EnableResetConditionalTrigger = {_context.MonitorNode.MonitorFeatures.EnableResetConditionalTrigger}");
+                    //Info("FED7C283-674F-4211-AF7E-DD643772DDC6", $"_context.MonitorNode.MonitorFeatures.EnableRunSetExprOfConditionalTrigger = {_context.MonitorNode.MonitorFeatures.EnableRunSetExprOfConditionalTrigger}");
+                    //Info("42D93A77-E53A-41DE-9B2C-B4289F611FCA", $"_context.MonitorNode.MonitorFeatures.EnableEndRunSetExprOfConditionalTrigger = {_context.MonitorNode.MonitorFeatures.EnableEndRunSetExprOfConditionalTrigger}");
+                    //Info("300C4325-C78D-47CB-9131-D072F274686F", $"_context.MonitorNode.MonitorFeatures.EnableRunResetExprOfConditionalTrigger = {_context.MonitorNode.MonitorFeatures.EnableRunResetExprOfConditionalTrigger}");
+                    //Info("B52D9F68-D6A9-4078-8F1A-D375C16E3EC1", $"_context.MonitorNode.MonitorFeatures.EnableEndRunResetExprOfConditionalTrigger = {_context.MonitorNode.MonitorFeatures.EnableEndRunResetExprOfConditionalTrigger}");
+                    //Info("091598FB-B589-4E81-B56A-57CD66A91134", $"_context.MonitorNode.MonitorFeatures.IsEnabledAnyConditionalTriggerFeature = {_context.MonitorNode.MonitorFeatures.IsEnabledAnyConditionalTriggerFeature}");
+#endif
 
-                    NObserver_OnChanged(logger);
+                    if(_context.MonitorNode.MonitorFeatures.IsEnabledAnyConditionalTriggerFeature)
+                    {
+                        var threadId = Guid.NewGuid().ToString("D");
+                        var logger = _context.MonitorNode.CreateThreadLogger("3D06FC1B-69EB-49B4-B4A1-0184EE31A8D1", threadId: threadId, parentThreadId: Logger.Id);
+
+                        NObserver_OnChanged(logger);
+                    }
+                    else
+                    {
+                        NObserver_OnChanged(Logger);
+                    }
                 }
                 catch (Exception e)
                 {

@@ -68,6 +68,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
                 {
                     var stream = new StreamWriter(Path.Combine(_options.OutputDirectory, GetFileName(nodeId, threadId)));
+                    stream.AutoFlush = true;
                     dict[threadId] = stream;
                     return stream;
                 }
@@ -79,6 +80,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 if(!_options.SeparateOutputByThreads)
                 {
                     var stream = new StreamWriter(Path.Combine(_options.OutputDirectory, GetFileName(nodeId, string.Empty)));
+                    stream.AutoFlush = true;
                     dict[string.Empty] = stream;
                     _streamWritersDict[nodeId] = dict;
                     return stream;
@@ -86,6 +88,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
                 {
                     var stream = new StreamWriter(Path.Combine(_options.OutputDirectory, GetFileName(nodeId, threadId)));
+                    stream.AutoFlush = true;
                     dict[threadId] = stream;
                     _streamWritersDict[nodeId] = dict;
                     return stream;

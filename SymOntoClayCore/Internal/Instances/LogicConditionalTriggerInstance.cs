@@ -40,6 +40,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using static System.Collections.Specialized.BitVector32;
 
@@ -71,8 +72,6 @@ namespace SymOntoClay.Core.Internal.Instances
             _localCodeExecutionContext = localCodeExecutionContext;
 
             _triggerConditionNodeObserverContext = new TriggerConditionNodeObserverContext(context, _storage, parent.Name);
-
-
 
             _ruleInstancesList = _trigger.RuleInstancesList;
 
@@ -113,6 +112,9 @@ namespace SymOntoClay.Core.Internal.Instances
                 _resetConditionalTriggerObserver = new LogicConditionalTriggerObserver(_triggerConditionNodeObserverContext, trigger.ResetCondition, KindOfTriggerCondition.ResetCondition, _setConditionalTriggerExecutor.LocalCodeExecutionContext);
                 _resetConditionalTriggerObserver.OnChanged += Observer_OnChanged;
             }
+
+            _activeObject = new AsyncActivePeriodicObject(context.ActivePeriodicObjectContext);
+            _activeObject.PeriodicMethod = Handler;
         }
         
         public string Id { get; }
@@ -137,12 +139,17 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly LogicConditionalTriggerExecutor _resetConditionalTriggerExecutor;
 
         private readonly object _lockObj = new object();
+        private bool _needRun;
+
+        private int _runInterval = 1000;
+
         private bool _isBusy;
         private bool _needRepeat;
 
-
         private readonly bool _hasResetConditions;
         private readonly bool _hasResetHandler;
+
+        private IActivePeriodicObject _activeObject;
 
         /// <inheritdoc/>
         public IList<StrongIdentifierValue> NamesList => _namesList;
@@ -167,44 +174,50 @@ namespace SymOntoClay.Core.Internal.Instances
 
         public void Init(IMonitorLogger logger)
         {
-            Observer_OnChanged();
+            _activeObject.Start();
+
+            _needRun = true;
         }
 
         private void Observer_OnChanged()
         {
-            Task.Run(() =>
+            lock (_lockObj)
             {
-                try
-                {
+                _needRun = true;
+            }
+        }
+
+        private bool Handler(CancellationToken cancellationToken)
+        {
+            try
+            {
 #if DEBUG
-                    //Info("84B814BD-AFF4-487A-996C-8EF10370313E", $"_context.MonitorNode.MonitorFeatures.EnableDoTriggerSearch = {_context.MonitorNode.MonitorFeatures.EnableDoTriggerSearch}");
-                    //Info("F9FC404C-A769-472E-9DD5-0DD0181C7067", $"_context.MonitorNode.MonitorFeatures.EnableEndDoTriggerSearch = {_context.MonitorNode.MonitorFeatures.EnableEndDoTriggerSearch}");
-                    //Info("30E67EBB-82EE-4A40-B6B3-4575A155A105", $"_context.MonitorNode.MonitorFeatures.EnableSetConditionalTrigger = {_context.MonitorNode.MonitorFeatures.EnableSetConditionalTrigger}");
-                    //Info("EA951532-84FD-436C-A933-ACE3DBED3AD6", $"_context.MonitorNode.MonitorFeatures.EnableResetConditionalTrigger = {_context.MonitorNode.MonitorFeatures.EnableResetConditionalTrigger}");
-                    //Info("FED7C283-674F-4211-AF7E-DD643772DDC6", $"_context.MonitorNode.MonitorFeatures.EnableRunSetExprOfConditionalTrigger = {_context.MonitorNode.MonitorFeatures.EnableRunSetExprOfConditionalTrigger}");
-                    //Info("42D93A77-E53A-41DE-9B2C-B4289F611FCA", $"_context.MonitorNode.MonitorFeatures.EnableEndRunSetExprOfConditionalTrigger = {_context.MonitorNode.MonitorFeatures.EnableEndRunSetExprOfConditionalTrigger}");
-                    //Info("300C4325-C78D-47CB-9131-D072F274686F", $"_context.MonitorNode.MonitorFeatures.EnableRunResetExprOfConditionalTrigger = {_context.MonitorNode.MonitorFeatures.EnableRunResetExprOfConditionalTrigger}");
-                    //Info("B52D9F68-D6A9-4078-8F1A-D375C16E3EC1", $"_context.MonitorNode.MonitorFeatures.EnableEndRunResetExprOfConditionalTrigger = {_context.MonitorNode.MonitorFeatures.EnableEndRunResetExprOfConditionalTrigger}");
-                    //Info("091598FB-B589-4E81-B56A-57CD66A91134", $"_context.MonitorNode.MonitorFeatures.IsEnabledAnyConditionalTriggerFeature = {_context.MonitorNode.MonitorFeatures.IsEnabledAnyConditionalTriggerFeature}");
+                Info("0611DFCC-6C77-4E9D-A587-96BC0E9189D7", "Run");
 #endif
 
-                    if(_context.MonitorNode.MonitorFeatures.IsEnabledAnyConditionalTriggerFeature)
-                    {
-                        var threadId = Guid.NewGuid().ToString("D");
-                        var logger = _context.MonitorNode.CreateThreadLogger("3D06FC1B-69EB-49B4-B4A1-0184EE31A8D1", threadId: threadId, parentThreadId: Logger.Id);
-
-                        NObserver_OnChanged(logger);
-                    }
-                    else
-                    {
-                        NObserver_OnChanged(Logger);
-                    }
-                }
-                catch (Exception e)
+                lock (_lockObj)
                 {
-                    Error("7198C9A6-69B0-42F1-A1B2-44D2B42781CD", e);
+                    if (!_needRun) 
+                    {
+                        Thread.Sleep(_runInterval);
+                        return true;
+                    }
+
+                    _needRun = false;
                 }
-            });
+
+                DoSearch(Logger);
+
+                Thread.Sleep(_runInterval);
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Error("BB283A28-43CB-4B3B-957A-054B699039EE", e);
+
+                throw;
+            }
         }
 
         private void NObserver_OnChanged(IMonitorLogger logger)

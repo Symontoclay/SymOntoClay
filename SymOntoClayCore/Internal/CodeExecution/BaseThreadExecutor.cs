@@ -510,9 +510,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
             catch (Exception e)
             {
-#if DEBUG
-                //It should be used by the Thread executor's ThreadLogger
                 Error("55249ED6-2612-4CAE-8073-0164016F1C03", e);
+
+#if DEBUG
                 Info("AAAF2B02-51E1-469D-89DB-F9DA59C98984", $"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 

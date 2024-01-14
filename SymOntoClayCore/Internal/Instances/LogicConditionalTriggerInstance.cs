@@ -143,9 +143,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private int _runInterval = 1000;
 
-        private bool _isBusy;
-        private bool _needRepeat;
-
         private readonly bool _hasResetConditions;
         private readonly bool _hasResetHandler;
 
@@ -217,46 +214,6 @@ namespace SymOntoClay.Core.Internal.Instances
                 Error("BB283A28-43CB-4B3B-957A-054B699039EE", e);
 
                 throw;
-            }
-        }
-
-        private void NObserver_OnChanged(IMonitorLogger logger)
-        {
-            try
-            {
-                lock (_lockObj)
-                {
-                    if (_isBusy)
-                    {
-                        _needRepeat = true;
-                        return;
-                    }
-
-                    _isBusy = true;
-                    _needRepeat = false;
-                }
-
-                DoSearch(logger);
-
-                while (true)
-                {
-                    lock (_lockObj)
-                    {
-                        if (!_needRepeat)
-                        {
-                            _isBusy = false;
-                            return;
-                        }
-
-                        _needRepeat = false;
-                    }
-
-                    DoSearch(logger);
-                }
-            }
-            catch (Exception e)
-            {
-                logger.Error("7F5F198A-15CF-401F-9759-870B738DD315", e);
             }
         }
 

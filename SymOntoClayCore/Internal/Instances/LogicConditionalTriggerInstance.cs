@@ -189,7 +189,7 @@ namespace SymOntoClay.Core.Internal.Instances
             try
             {
 #if DEBUG
-                Info("0611DFCC-6C77-4E9D-A587-96BC0E9189D7", "Run");
+                //Info("0611DFCC-6C77-4E9D-A587-96BC0E9189D7", "Run");
 #endif
 
                 lock (_lockObj)

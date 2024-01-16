@@ -213,23 +213,77 @@ namespace SymOntoClay.Core
 
         private void EmitOnFinish(IMonitorLogger logger)
         {
-            EmitOnFinishHandlers(logger);
+            Task.Run(() => {
+                try
+                {
+                    EmitOnFinishHandlers(logger);
+                }
+                catch (Exception e)
+                {
+                    logger?.Error("C264171B-3DC3-446D-A051-26475CFDDC8D", e);
+                }
+            });
 
-            InternalOnFinish?.Invoke(this);
+            Task.Run(() => {
+                try
+                {
+                    InternalOnFinish?.Invoke(this);
+                }
+                catch (Exception e)
+                {
+                    logger?.Error("967167E4-5BE3-454B-8ECE-51E94E5FE2F5", e);
+                }
+            });
         }
 
         private void EmitOnComplete(IMonitorLogger logger)
         {
-            EmitOnCompleteHandlers(logger);
+            Task.Run(() => {
+                try
+                {
+                    EmitOnCompleteHandlers(logger);
+                }
+                catch (Exception e)
+                {
+                    logger?.Error("6D0C6064-16A3-4068-8CB2-9E9CBADF4A1F", e);
+                }
+            });
 
-            InternalOnComplete?.Invoke(this);
+            Task.Run(() => {
+                try
+                {
+                    InternalOnComplete?.Invoke(this);
+                }
+                catch (Exception e)
+                {
+                    logger?.Error("5FBF7D65-AC62-4CDD-A795-D31288197D63", e);
+                }
+            });
         }
 
         private void EmitOnWeakCanceled(IMonitorLogger logger)
         {
-            EmitOnWeakCanceledHandlers(logger);
-
-            InternalOnWeakCanceled?.Invoke(this);
+            Task.Run(() => {
+                try
+                {
+                    EmitOnWeakCanceledHandlers(logger);
+                }
+                catch (Exception e)
+                {
+                    logger?.Error("84FFE90C-057B-4EFB-8DC5-34EB3B26C7B3", e);
+                }
+            });
+            
+            Task.Run(() => {
+                try
+                {
+                    InternalOnWeakCanceled?.Invoke(this);
+                }
+                catch (Exception e)
+                {
+                    logger?.Error("AC84A17A-32EC-4031-BE64-BD39E04ECFB9", e);
+                }
+            });
         }
 
         private void ProcessGeneralFinishStatuses(IMonitorLogger logger, ProcessStatus status, string callMethodId)

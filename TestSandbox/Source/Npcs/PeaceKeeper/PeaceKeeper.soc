@@ -3,14 +3,17 @@
     on Enter =>
 	{
 	    'Begin' >> @>log;
-		//go(1);
+	    @@host.`stop`();
+	    @@host.`rotate`(30);
+		@@host.`rotate`(-60);
+		@@host.`rotate`(30);
 		'End' >> @>log;
 	}
 
-	on {: see(I, #a) :} as `trigger 1` alias `Alarm trigger`, trigger_5 with priority 1
-	{
-	    'D' >> @>log;
-	}
+	//on {: see(I, #a) :} as `trigger 1` alias `Alarm trigger`, trigger_5 with priority 1
+	//{
+	//    'D' >> @>log;
+	//}
 
 	//fun go(@target)
 	//{

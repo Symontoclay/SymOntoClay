@@ -117,6 +117,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                         Invoke(callMethodId, endpointInfo.MethodInfo, platformListener, paramsList, logger);
                     });
 
+#if DEBUG
+                    logger.Info("1DDE78B8-7984-4221-B2B2-CEE22E00879A", $"after Invoke");
+#endif
+
                     processInfo.SetStatus(logger, "87FE8620-1044-4645-9FBD-650E0402EB1C", ProcessStatus.Completed);
                 }
                 catch (TargetInvocationException e)
@@ -160,6 +164,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 try
                 {
                     Invoke(callMethodId, endpointInfo.MethodInfo, platformListener, paramsList, logger);
+
+#if DEBUG
+                    logger.Info("F606E8C6-444B-4B89-8D1E-9DC34F5C1267", $"after Invoke");
+#endif
 
                     processInfo.SetStatus(logger, "37907BF0-B51E-4D54-A2C1-21C0F4938965", ProcessStatus.Completed);
                 }

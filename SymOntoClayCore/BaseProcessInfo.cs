@@ -74,32 +74,32 @@ namespace SymOntoClay.Core
             var prevStatus = _status;
 
 #if DEBUG
-            logger.Info("C6214028-0F57-4737-BDE5-9B15803E41AC", $"status = {status};prevStatus = {prevStatus}");
+            logger.Info("C6214028-0F57-4737-BDE5-9B15803E41AC", $"status = {status};prevStatus = {prevStatus};{ToHumanizedLabel()}");
 #endif
 
             lock (_statusLockObj)
             {
 #if DEBUG
-                logger.Info("589BA5A4-25D5-45A4-B6AD-2303154435F4", $"A");
+                logger.Info("589BA5A4-25D5-45A4-B6AD-2303154435F4", $"A;{ToHumanizedLabel()}");
 #endif
 
                 if (_status == status)
                 {
 #if DEBUG
-                    logger.Info("04F8EF32-7543-49FB-BA03-9803245DD3D1", $"B");
+                    logger.Info("04F8EF32-7543-49FB-BA03-9803245DD3D1", $"B;{ToHumanizedLabel()}");
 #endif
 
                     return;
                 }
 
 #if DEBUG
-                logger.Info("75FD0D05-6208-4EC0-8FCD-864D3AEA68AE", $"C");
+                logger.Info("75FD0D05-6208-4EC0-8FCD-864D3AEA68AE", $"C;{ToHumanizedLabel()}");
 #endif
 
-                if (NIsFinished && status != ProcessStatus.WeakCanceled)
+                if (NIsFinished(logger) && status != ProcessStatus.WeakCanceled)
                 {
 #if DEBUG
-                    logger.Info("D1E26BCE-1076-410D-A350-2189CE993B12", $"D");
+                    logger.Info("D1E26BCE-1076-410D-A350-2189CE993B12", $"D;{ToHumanizedLabel()}");
 #endif
 
                     return;
@@ -111,7 +111,7 @@ namespace SymOntoClay.Core
             }
 
 #if DEBUG
-            logger.Info("40E621E1-49BD-4F9B-B8CB-C36699D70524", $"E");
+            logger.Info("40E621E1-49BD-4F9B-B8CB-C36699D70524", $"E;{ToHumanizedLabel()}");
 #endif
 
             logger.SetProcessInfoStatus(messagePointId, Id, status, prevStatus, null, null);
@@ -120,23 +120,20 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public bool IsFinished
+        public bool IsFinished(IMonitorLogger logger)
         {
-            get
+            lock (_statusLockObj)
             {
-                lock (_statusLockObj)
-                {
-                    return NIsFinished;
-                }
+                return NIsFinished(logger);
             }
         }
 
         /// <inheritdoc/>
         public void Start(IMonitorLogger logger)
-        {
+        {Please! Log this method!
             lock (_statusLockObj)
             {
-                if (NIsFinished || _status == ProcessStatus.Running)
+                if (NIsFinished(logger) || _status == ProcessStatus.Running)
                 {
                     return;
                 }
@@ -158,7 +155,7 @@ namespace SymOntoClay.Core
         {
             lock (_statusLockObj)
             {
-                if (NIsFinished)
+                if (NIsFinished(logger))
                 {
                     return;
                 }
@@ -182,7 +179,7 @@ namespace SymOntoClay.Core
         {
             lock (_statusLockObj)
             {
-                if (NIsFinished)
+                if (NIsFinished(logger))
                 {
                     return;
                 }
@@ -195,13 +192,15 @@ namespace SymOntoClay.Core
             ProcessSetStatus(logger, ProcessStatus.WeakCanceled, callMethodId);
         }
 
-        protected bool NIsFinished
+        protected bool NIsFinished(IMonitorLogger logger)
         {
-            get
-            {
-                var status = _status;
-                return status == ProcessStatus.Completed || status == ProcessStatus.Canceled || status == ProcessStatus.WeakCanceled || status == ProcessStatus.Faulted;
-            }
+            var status = _status;
+
+#if DEBUG
+            logger?.Info("94B8136D-0648-41A0-90E9-856B2F557BE6", $"status = {status};{ToHumanizedLabel()}");
+#endif
+
+            return status == ProcessStatus.Completed || status == ProcessStatus.Canceled || status == ProcessStatus.WeakCanceled || status == ProcessStatus.Faulted;
         }
 
         private void ProcessSetStatus(IMonitorLogger logger, ProcessStatus status, string callMethodId)
@@ -415,7 +414,7 @@ namespace SymOntoClay.Core
 
         protected void CheckOnFinishStatus(IMonitorLogger logger)
         {
-            if (NIsFinished)
+            if (NIsFinished(logger))
             {
                 EmitOnFinish(logger);
             }
@@ -827,7 +826,7 @@ namespace SymOntoClay.Core
             sb.AppendLine($"{spaces}{nameof(Id)} = {Id}");
             sb.AppendLine($"{spaces}{nameof(EndPointName)} = {EndPointName}");
             sb.AppendLine($"{spaces}{nameof(Status)} = {Status}");
-            sb.AppendLine($"{spaces}{nameof(IsFinished)} = {IsFinished}");
+            sb.AppendLine($"{spaces}{nameof(IsFinished)} = {IsFinished(null)}");
             sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
             sb.PrintPODList(n, nameof(Friends), Friends);
 
@@ -865,7 +864,7 @@ namespace SymOntoClay.Core
             sb.AppendLine($"{spaces}{nameof(Id)} = {Id}");
             sb.AppendLine($"{spaces}{nameof(EndPointName)} = {EndPointName}");
             sb.AppendLine($"{spaces}{nameof(Status)} = {Status}");
-            sb.AppendLine($"{spaces}{nameof(IsFinished)} = {IsFinished}");
+            sb.AppendLine($"{spaces}{nameof(IsFinished)} = {IsFinished(null)}");
             sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
             sb.PrintPODList(n, nameof(Friends), Friends);
 
@@ -903,7 +902,7 @@ namespace SymOntoClay.Core
             sb.AppendLine($"{spaces}{nameof(Id)} = {Id}");
             sb.AppendLine($"{spaces}{nameof(EndPointName)} = {EndPointName}");
             sb.AppendLine($"{spaces}{nameof(Status)} = {Status}");
-            sb.AppendLine($"{spaces}{nameof(IsFinished)} = {IsFinished}");
+            sb.AppendLine($"{spaces}{nameof(IsFinished)} = {IsFinished(null)}");
             sb.PrintValueTypesListProp(n, nameof(Devices), Devices);
             sb.PrintPODList(n, nameof(Friends), Friends);
 

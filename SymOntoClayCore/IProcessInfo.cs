@@ -43,7 +43,7 @@ namespace SymOntoClay.Core
 
         void SetStatus(IMonitorLogger logger, string messagePointId, ProcessStatus status);
 
-        bool IsFinished { get; }
+        bool IsFinished(IMonitorLogger logger);
         IReadOnlyList<int> Devices { get; }
         void Start(IMonitorLogger logger);
         void Cancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, Changer changer = null, string callMethodId = "");

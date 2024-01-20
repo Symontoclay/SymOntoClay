@@ -60,10 +60,10 @@ namespace SymOntoClay.Core.Internal.Helpers
             while(true)
             {
 #if DEBUG
-                logger.Info("F473B943-69C3-4B34-8D86-F7538F3A85B2", $"processes = {processes.Select(p => $"{p.Id}:{p.IsFinished}").WritePODListToString()}");
+                logger.Info("F473B943-69C3-4B34-8D86-F7538F3A85B2", $"processes = {processes.Select(p => $"{p.Id}:{p.IsFinished(logger)};{p.ToHumanizedLabel()}").WritePODListToString()}");
 #endif
 
-                if (processes.All(p => p.IsFinished))
+                if (processes.All(p => p.IsFinished(logger)))
                 {
                     return;
                 }

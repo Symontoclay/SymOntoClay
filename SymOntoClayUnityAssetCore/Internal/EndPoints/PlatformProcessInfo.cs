@@ -63,7 +63,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         /// <inheritdoc/>
         protected override void ProcessPlatformStart(IMonitorLogger logger)
         {
+            logger.Info("3B8AD3FD-CF36-4C4F-8C2D-E8217EAEDEE0", $"Before _task.Start();{ToHumanizedLabel()}");
+
             _task.Start();
+
+            logger.Info("26E52663-E5B6-4442-8917-2A6E73B90540", $"After _task.Start();{ToHumanizedLabel()}");
         }
 
         /// <inheritdoc/>
@@ -94,7 +98,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         {
             lock (_statusLockObj)
             {
-                if(!NIsFinished)
+                if(!NIsFinished(_logger))
                 {
                     _cancellationTokenSource.Cancel();
                 }
@@ -116,7 +120,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            var sb = new StringBuilder($"proc: {Id} ({Status})");
+            var sb = new StringBuilder($"proc: {Id} ({Status}); {EndPointName}");
 
             if (!_arguments.IsNullOrEmpty())
             {
@@ -136,7 +140,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         /// <inheritdoc/>
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
-            var sb = new StringBuilder($"proc: {Id} ({Status})");
+            var sb = new StringBuilder($"proc: {Id} ({Status}); {EndPointName}");
 
             if (!_arguments.IsNullOrEmpty())
             {
@@ -164,7 +168,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         {
             var result = new MonitoredHumanizedLabel();
 
-            var sb = new StringBuilder($"proc: {Id} ({Status})");
+            var sb = new StringBuilder($"proc: {Id} ({Status}); {EndPointName}");
 
             result.CallMethodId = _callMethodId;
 

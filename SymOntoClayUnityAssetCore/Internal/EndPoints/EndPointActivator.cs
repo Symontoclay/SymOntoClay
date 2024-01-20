@@ -166,13 +166,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     Invoke(callMethodId, endpointInfo.MethodInfo, platformListener, paramsList, logger);
 
 #if DEBUG
-                    logger.Info("F606E8C6-444B-4B89-8D1E-9DC34F5C1267", $"after Invoke");
+                    logger.Info("F606E8C6-444B-4B89-8D1E-9DC34F5C1267", $"after Invoke processInfo.Id = {processInfo.Id};{processInfo.ToHumanizedLabel()}");
 #endif
 
                     processInfo.SetStatus(logger, "37907BF0-B51E-4D54-A2C1-21C0F4938965", ProcessStatus.Completed);
 
 #if DEBUG
-                    logger.Info("E9B7098B-06AD-4597-9FE7-D770E3C70FC5", $"after (2) Invoke");
+                    logger.Info("E9B7098B-06AD-4597-9FE7-D770E3C70FC5", $"after (2) Invoke processInfo.Id = {processInfo.Id};{processInfo.ToHumanizedLabel()}");
 #endif
                 }
                 catch (TargetInvocationException e)
@@ -203,7 +203,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                 }
 
 #if DEBUG
-                logger.Info("A046851F-4CB5-46D5-ADB0-2A3C61984000", $"Invoke End");
+                logger.Info("A046851F-4CB5-46D5-ADB0-2A3C61984000", $"Invoke End processInfo.Id = {processInfo.Id};{processInfo.ToHumanizedLabel()}");
 #endif
             }, cancellationToken);
 
@@ -213,8 +213,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         private void Invoke(string callMethodId, MethodInfo methodInfo, object platformListener, object[] paramsList, IMonitorLogger logger)
         {
 #if DEBUG
-            //Log($"methodInfo.Name = {methodInfo.Name}");
-            //Log($"methodInfo.ReturnType?.FullName = {methodInfo.ReturnType?.FullName}");
+            logger.Info("B178E16A-3FB8-4394-9BC0-3FAB4C0C21B8", $"methodInfo.Name = {methodInfo.Name}");
+            logger.Info("170AEADF-AA02-4AF9-81FC-D3F3DEAF9F6E", $"methodInfo.ReturnType?.FullName = {methodInfo.ReturnType?.FullName}");
 #endif
 
             logger.HostMethodExecution("4F646D89-6D1A-46A1-AB72-D12B533782D2", callMethodId);
@@ -222,7 +222,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             var result = methodInfo.Invoke(platformListener, paramsList);
 
 #if DEBUG
-            //Log($"result = {result}");
+            logger.Info("E88720B6-2A95-4CA3-AEC4-825300868095", $"result = {result}");
 #endif
 
             if (result == null)

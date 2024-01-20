@@ -1912,7 +1912,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         executionCoordinators = new List<IExecutionCoordinator>() { _executionCoordinator };
                     }
 
+#if DEBUG
+                    Info("20507B37-E3DE-460B-9E4E-40F079D3EFB1", $"Before ProcessInfoHelper.Wait");
+#endif
+
                     ProcessInfoHelper.Wait(Logger, executionCoordinators, timeout, timeoutCancellationMode, _dateTimeProvider, processInfo);
+
+#if DEBUG
+                    Info("EEB44353-D9EF-4AA9-8535-0A10F686BA2B", $"After ProcessInfoHelper.Wait");
+#endif
 
                     if (_executionCoordinator != null && _executionCoordinator.ExecutionStatus == ActionExecutionStatus.Broken)
                     {

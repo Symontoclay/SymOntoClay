@@ -24,6 +24,7 @@ using Newtonsoft.Json;
 using NLog;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
+using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections;
@@ -58,7 +59,11 @@ namespace SymOntoClay.Core.Internal.Helpers
 
             while(true)
             {
-                if(processes.All(p => p.IsFinished))
+#if DEBUG
+                logger.Info("F473B943-69C3-4B34-8D86-F7538F3A85B2", $"processes = {processes.Select(p => $"{p.Id}:{p.IsFinished}").WritePODListToString()}");
+#endif
+
+                if (processes.All(p => p.IsFinished))
                 {
                     return;
                 }

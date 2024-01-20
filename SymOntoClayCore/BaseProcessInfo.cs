@@ -73,15 +73,35 @@ namespace SymOntoClay.Core
         {
             var prevStatus = _status;
 
+#if DEBUG
+            logger.Info("C6214028-0F57-4737-BDE5-9B15803E41AC", $"status = {status};prevStatus = {prevStatus}");
+#endif
+
             lock (_statusLockObj)
             {
+#if DEBUG
+                logger.Info("589BA5A4-25D5-45A4-B6AD-2303154435F4", $"A");
+#endif
+
                 if (_status == status)
                 {
+#if DEBUG
+                    logger.Info("04F8EF32-7543-49FB-BA03-9803245DD3D1", $"B");
+#endif
+
                     return;
                 }
 
+#if DEBUG
+                logger.Info("75FD0D05-6208-4EC0-8FCD-864D3AEA68AE", $"C");
+#endif
+
                 if (NIsFinished && status != ProcessStatus.WeakCanceled)
                 {
+#if DEBUG
+                    logger.Info("D1E26BCE-1076-410D-A350-2189CE993B12", $"D");
+#endif
+
                     return;
                 }
 
@@ -89,6 +109,10 @@ namespace SymOntoClay.Core
 
                 _status = status;
             }
+
+#if DEBUG
+            logger.Info("40E621E1-49BD-4F9B-B8CB-C36699D70524", $"E");
+#endif
 
             logger.SetProcessInfoStatus(messagePointId, Id, status, prevStatus, null, null);
 

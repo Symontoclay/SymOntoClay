@@ -45,7 +45,7 @@ namespace SymOntoClay.Core
 
         bool IsFinished(IMonitorLogger logger);
         IReadOnlyList<int> Devices { get; }
-        void Start(IMonitorLogger logger);
+        void Start(IMonitorLogger logger, string messagePointId);
         void Cancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, Changer changer = null, string callMethodId = "");
         void Cancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, List<Changer> changers, string callMethodId = "");
         void WeakCancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, Changer changer = null, string callMethodId = "");

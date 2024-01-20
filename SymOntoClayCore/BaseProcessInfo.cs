@@ -129,7 +129,7 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public void Start(IMonitorLogger logger)
+        public void Start(IMonitorLogger logger, string messagePointId)
         {Please! Log this method!
             lock (_statusLockObj)
             {

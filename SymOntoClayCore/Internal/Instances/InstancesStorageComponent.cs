@@ -349,7 +349,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private void NAppendAndTryStartProcessInfoWithoutDevices(IMonitorLogger logger, IProcessInfo processInfo)
         {
             AppendProcessInfo(logger, processInfo);
-            processInfo.Start(logger);
+            processInfo.Start(logger, "D2165E11-EE8E-4802-A01E-F01A2F523DA3");
         }
 
         private void NAppendAndTryStartProcessInfoWithDevices(IMonitorLogger logger, IProcessInfo processInfo)
@@ -361,7 +361,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             processInfo.OnFinish += OnFinishProcessWithDevicesHandler;
 
-            processInfo.Start(logger);
+            processInfo.Start(logger, "5E6C3B30-3111-49AC-BE18-2CCC6C523277");
 
         }
 

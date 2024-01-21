@@ -119,7 +119,7 @@ namespace TestSandbox.CoreHostListener
 
                 _logger.Info("6A777CA4-CCF2-4E73-BD0C-9158EDD5163A", $"processInfo = {processInfo}");
 
-                processInfo.Start(_logger);
+                processInfo.Start(_logger, "AD3BF8CF-8495-40CC-964F-EC6A279F2855");
 
                 Thread.Sleep(10000);
 
@@ -145,7 +145,7 @@ namespace TestSandbox.CoreHostListener
 
                 _logger.Info("70799BDA-A7AD-406A-BEAD-9E3363CDBE83", $"processInfo = {processInfo}");
 
-                processInfo.Start(_logger);
+                processInfo.Start(_logger, "140358E4-558C-47A1-90DD-D6E6A6068131");
 
                 Thread.Sleep(10000);
 

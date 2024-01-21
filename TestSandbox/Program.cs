@@ -96,6 +96,7 @@ namespace TestSandbox
 
             _globalLogger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 
+            //TstThreadPoolCount();
             //TstCommandLineParserHandler();
             //TstLogFileBuilderParameterValueConverterToString();
             TstLogFileBuilder();
@@ -178,6 +179,25 @@ namespace TestSandbox
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstThreadPoolCount()
+        {
+            _globalLogger.Info("Begin");
+
+            ThreadPool.GetMinThreads(out var workerThreadsMin, out var completionPortThreadsMin);
+
+            _globalLogger.Info($"workerThreadsMin = {workerThreadsMin}");
+            _globalLogger.Info($"completionPortThreadsMin = {completionPortThreadsMin}");
+
+            ThreadPool.GetMaxThreads(out var workerThreadsMax, out var completionPortThreadsMax);
+
+            _globalLogger.Info($"workerThreadsMax = {workerThreadsMax}");
+            _globalLogger.Info($"completionPortThreadsMax = {completionPortThreadsMax}");
+
+            ThreadPool.SetMinThreads(workerThreadsMax, completionPortThreadsMax);
+
+            _globalLogger.Info("End");
         }
 
         private static void TstCommandLineParserHandler()

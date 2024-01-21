@@ -34,6 +34,7 @@ using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.NLog;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -130,18 +131,42 @@ namespace SymOntoClay.Core
 
         /// <inheritdoc/>
         public void Start(IMonitorLogger logger, string messagePointId)
-        {Please! Log this method!
+        {
+#if DEBUG
+            logger.Info("0D259105-3AC7-4973-96A4-2AF245D343C3", $"Begin;messagePointId = {messagePointId};{ToHumanizedLabel()}");
+#endif
+
             lock (_statusLockObj)
             {
+#if DEBUG
+                logger.Info("4ABAF301-7B54-4896-9436-4C39FB12226E", $"_status = {_status};messagePointId = {messagePointId};{ToHumanizedLabel()}");
+#endif
+
                 if (NIsFinished(logger) || _status == ProcessStatus.Running)
                 {
+#if DEBUG
+                    logger.Info("A01EADE3-B58F-45A5-922A-A5ACD3DF2C6A", $"ret!!!;messagePointId = {messagePointId};{ToHumanizedLabel()}");
+#endif
+
                     return;
                 }
+
+#if DEBUG
+                logger.Info("65078904-72F8-45F3-AF73-BE63EFD1CA3D", $"Before;messagePointId = {messagePointId};{ToHumanizedLabel()}");
+#endif
 
                 _status = ProcessStatus.Running;
             }
 
+#if DEBUG
+            logger.Info("02CEB02F-F4E0-4AFF-96FB-20493F10EC8C", $"After _status = {_status};messagePointId = {messagePointId};{ToHumanizedLabel()}");
+#endif
+
             ProcessPlatformStart(logger);
+
+#if DEBUG
+            logger.Info("1EBCDD00-707D-4988-9BFF-6E5E97D050E9", $"End ;messagePointId = {messagePointId};{ToHumanizedLabel()}");
+#endif
         }
 
         /// <inheritdoc/>

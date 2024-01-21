@@ -161,6 +161,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 
             var task = new Task(() =>
             {
+#if DEBUG
+                logger.Info("9C2487EB-BCCF-4CF2-8F06-EBE4EF8FAC93", $"Begin Run processInfo.Id = {processInfo.Id};{processInfo.ToHumanizedLabel()}");
+#endif
+
                 try
                 {
                     Invoke(callMethodId, endpointInfo.MethodInfo, platformListener, paramsList, logger);

@@ -138,7 +138,7 @@ namespace TestSandbox.CoreHostListener
 
                 _logger.Info("3C3BAA91-5333-44C4-955C-AE8EEAD4B83A", $"processInfo = {processInfo}");
 
-                processInfo.Start(_logger);
+                processInfo.Start(_logger, "C412BC26-DE48-4E1E-ADB5-BA8E9E8E89D1");
 
                 Thread.Sleep(5000);
 

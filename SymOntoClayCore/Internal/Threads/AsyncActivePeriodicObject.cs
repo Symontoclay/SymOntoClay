@@ -39,7 +39,7 @@ namespace SymOntoClay.Core.Internal.Threads
 
             context.AddChildActiveObject(this);
         }
-
+        
         private readonly IActivePeriodicObjectContext _context;
 
 #if DEBUG
@@ -96,7 +96,7 @@ namespace SymOntoClay.Core.Internal.Threads
                 var cancellationTokenSource = new CancellationTokenSource();
                 var cancellationToken = cancellationTokenSource.Token;
 
-                var task = new Task(() => {
+                var task = new ThreadTask(() => {
                     var autoResetEvent = _context.WaitEvent;
 
                     while (true)

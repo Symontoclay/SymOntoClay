@@ -27,6 +27,7 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
@@ -53,7 +54,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             _callMethodId = callMethodId;
         }
 
-        public void SetTask(Task task)
+        public void SetTask(ThreadTask task)
         {
             _task = task;
         }
@@ -120,7 +121,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         private readonly IReadOnlyList<int> _devices;
         private readonly IReadOnlyList<string> _friends;
         private readonly string _callMethodId;
-        private Task _task;
+        private ThreadTask _task;
         private readonly CancellationTokenSource _cancellationTokenSource;
         #endregion
 

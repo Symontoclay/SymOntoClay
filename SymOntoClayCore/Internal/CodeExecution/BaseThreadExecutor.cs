@@ -162,9 +162,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private bool _isCanceled;
 
         private long? _endOfTargetDuration;
-        private List<Task> _waitedTasksList;
+        private List<ThreadTask> _waitedTasksList;
         private List<IProcessInfo> _waitedProcessInfoList;
-        private Task _pseudoSyncTask;
+        private ThreadTask _pseudoSyncTask;
 
         private readonly StrongIdentifierValue _defaultCtorName;
         private readonly StrongIdentifierValue _timeoutName;
@@ -1146,7 +1146,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (!_waitedTasksList.IsNullOrEmpty() || !_waitedProcessInfoList.IsNullOrEmpty())
             {
-                if ((_waitedTasksList != null && _waitedTasksList.Any(p => p.Status == TaskStatus.Running)) || 
+                if ((_waitedTasksList != null && _waitedTasksList.Any(p => p.Status == ThreadTaskStatus.Running)) || 
                     (_waitedProcessInfoList != null && _waitedProcessInfoList.Any(p => p.Status == ProcessStatus.Running)))
                 {
                     return;
@@ -1672,7 +1672,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 return;
             }
 
-            if (_pseudoSyncTask.Status == TaskStatus.Running)
+            if (_pseudoSyncTask.Status == ThreadTaskStatus.Running)
             {
                 return;
             }

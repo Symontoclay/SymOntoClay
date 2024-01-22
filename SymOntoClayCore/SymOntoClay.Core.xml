@@ -9315,6 +9315,51 @@
         <member name="M:SymOntoClay.Core.Internal.Threads.SyncActivePeriodicObject.Dispose">
             <inheritdoc/>
         </member>
+        <member name="T:SymOntoClay.Core.Internal.Threads.ThreadTaskStatus">
+            <summary>
+            Represents the current stage in the lifecycle of a ThreadTask.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Threads.ThreadTaskStatus.Created">
+            <summary>
+            The task has been initialized but has not yet been scheduled.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Threads.ThreadTaskStatus.WaitingForActivation">
+            <summary>
+            The task is waiting to be activated and scheduled.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Threads.ThreadTaskStatus.WaitingToRun">
+            <summary>
+            The task has been scheduled for execution but has not yet begun executing.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Threads.ThreadTaskStatus.Running">
+            <summary>
+            The task is running but has not yet completed.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Threads.ThreadTaskStatus.WaitingForChildrenToComplete">
+            <summary>
+            The task has finished executing and is implicitly waiting for attached child tasks to complete.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Threads.ThreadTaskStatus.RanToCompletion">
+            <summary>
+            The task completed execution successfully.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Threads.ThreadTaskStatus.Canceled">
+            <summary>
+            The task acknowledged cancellation by throwing an OperationCanceledException with its own CancellationToken while the token was in signaled state, or the task's CancellationToken was already signaled before the task started executing.
+            </summary>
+        </member>
+        <member name="F:SymOntoClay.Core.Internal.Threads.ThreadTaskStatus.Faulted">
+            <summary>
+            The task completed due to an unhandled exception.
+            </summary>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Visitors.ContainsNullValueLogicalVisitor.VisitRuleInstance(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>

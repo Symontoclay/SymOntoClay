@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
@@ -77,7 +78,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             //Log($"paramsList?.Length = {paramsList?.Length}");
 #endif
 
-            Task task = null;
+            ThreadTask task = null;
             var processInfo = new PlatformProcessInfo(cancellationTokenSource, endpointInfo.Name, mapParamsResult.Item2, endpointInfo.Devices, endpointInfo.Friends, callMethodId);
 
 #if DEBUG
@@ -105,11 +106,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             return processInfo;
         }
 
-        private Task CreateTaskForMainThread(CancellationToken cancellationToken, IMonitorLogger logger, string callMethodId, IEndpointInfo endpointInfo, object[] paramsList, PlatformProcessInfo processInfo)
+        private ThreadTask CreateTaskForMainThread(CancellationToken cancellationToken, IMonitorLogger logger, string callMethodId, IEndpointInfo endpointInfo, object[] paramsList, PlatformProcessInfo processInfo)
         {
             var platformListener = endpointInfo.Object;
 
-            var task = new Task(() =>
+            var task = new ThreadTask(() =>
             {
                 try
                 {
@@ -155,11 +156,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             return task;
         }
 
-        private Task CreateTaskForUsualThread(CancellationToken cancellationToken, IMonitorLogger logger, string callMethodId, IEndpointInfo endpointInfo, object[] paramsList, PlatformProcessInfo processInfo)
+        private ThreadTask CreateTaskForUsualThread(CancellationToken cancellationToken, IMonitorLogger logger, string callMethodId, IEndpointInfo endpointInfo, object[] paramsList, PlatformProcessInfo processInfo)
         {
             var platformListener = endpointInfo.Object;
 
-            var task = new Task(() =>
+            var task = new ThreadTask(() =>
             {
 #if DEBUG
                 logger.Info("9C2487EB-BCCF-4CF2-8F06-EBE4EF8FAC93", $"Begin Run processInfo.Id = {processInfo.Id};{processInfo.ToHumanizedLabel()}");
@@ -192,9 +193,23 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     }
                     else
                     {
-#if DEBUG
-                        logger.Info("BC5E40E6-9992-437B-AA1F-D3E0FB13B323", $"e = {e}");
-#endif
+                        logger.Error("BC5E40E6-9992-437B-AA1F-D3E0FB13B323", e);
+                    }
+                }
+                catch(AggregateException e)
+                {
+                    logger.EndHostMethodExecution("A7CBFD6F-FF4F-4CC3-86D3-3055195446A9", callMethodId);
+
+                    if(e.InnerException.GetType() == typeof(TaskCanceledException))
+                    {
+                        if (processInfo.Status != ProcessStatus.Canceled && processInfo.Status != ProcessStatus.WeakCanceled)
+                        {
+                            processInfo.SetStatus(logger, "91A69F14-8F87-468E-8D35-825FA27A21EE", ProcessStatus.Canceled);
+                        }
+                    }
+                    else
+                    {
+                        logger.Error("7B913760-AD5F-4050-B354-876A90F7C7A0", e);
                     }
                 }
                 catch (Exception e)

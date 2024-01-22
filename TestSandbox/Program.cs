@@ -77,6 +77,7 @@ using SymOntoClay.Monitor.NLog;
 using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.Monitor.LogFileBuilder.TextRowOptionItems;
 using SymOntoClay.Monitor.LogFileBuilder;
+using SymOntoClay.Core.Internal.Threads;
 
 namespace TestSandbox
 {
@@ -96,6 +97,7 @@ namespace TestSandbox
 
             _globalLogger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 
+            //TstThreadTask();
             //TstThreadPoolCount();
             //TstCommandLineParserHandler();
             //TstLogFileBuilderParameterValueConverterToString();
@@ -179,6 +181,27 @@ namespace TestSandbox
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstThreadTask()
+        {
+            _globalLogger.Info("Begin");
+
+            var task = new ThreadTask(() => {
+                _globalLogger.Info("Run");
+            });
+
+            task.OnStarted += () => { _globalLogger.Info("task.OnStarted"); };
+            task.OnCanceled += () => { _globalLogger.Info("task.OnCanceled"); };
+            task.OnCompleted += () => { _globalLogger.Info("task.OnCompleted"); };
+            task.OnCompletedSuccessfully += () => { _globalLogger.Info("task.OnCompletedSuccessfully"); };
+            task.OnFaulted += () => { _globalLogger.Info("task.OnFaulted"); };
+
+            task.Start();
+
+            Thread.Sleep(1000);
+
+            _globalLogger.Info("End");
         }
 
         private static void TstThreadPoolCount()
@@ -388,7 +411,7 @@ namespace TestSandbox
             var source1 = new CancellationTokenSource();
             var token1 = source1.Token;
 
-            var task = Task.Run(() => {
+            var task = ThreadTask.Run(() => {
                 _logger.Info("EB024ABD-0889-4DEF-A6E9-1D36CA08F839", "Hi!");
 
                 Thread.Sleep(10000);

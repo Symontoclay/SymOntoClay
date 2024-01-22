@@ -26,6 +26,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel.Handlers;
 using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
@@ -39,7 +40,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class TaskValue : Value
     {
-        public TaskValue(Task systemTask, CancellationTokenSource cancellationTokenSource)
+        public TaskValue(ThreadTask systemTask, CancellationTokenSource cancellationTokenSource)
         {
             SystemTask = systemTask;
             _cancellationTokenSource = cancellationTokenSource;
@@ -57,7 +58,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override TaskValue AsTaskValue => this;
 
         public string TaskId { get; set; }
-        public Task SystemTask { get; set; }
+        public ThreadTask SystemTask { get; set; }
         private readonly CancellationTokenSource _cancellationTokenSource;
 
         public event Action OnComplete
@@ -99,7 +100,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                     switch (SystemTask.Status)
                     {
-                        case TaskStatus.RanToCompletion:
+                        case ThreadTaskStatus.RanToCompletion:
                             InternalOnComplete?.Invoke();
                             break;
 

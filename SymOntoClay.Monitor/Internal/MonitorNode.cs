@@ -428,6 +428,9 @@ namespace SymOntoClay.Monitor.Internal
         public bool EnableFullCallInfo => _baseMonitorSettings.EnableFullCallInfo && _monitorContext.Settings.EnableFullCallInfo;
 
         /// <inheritdoc/>
+        public bool EnableAsyncMessageCreation => _baseMonitorSettings.EnableAsyncMessageCreation && _monitorContext.Settings.EnableAsyncMessageCreation;
+
+        /// <inheritdoc/>
         public override string ToString()
         {
             return ToString(0u);
@@ -554,32 +557,39 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                var messageInfo = new CreateThreadLoggerMessage
-                {
-                    ParentThreadId = parentThreadId,
-                    DateTimeStamp = now,
-                    NodeId = _nodeId,
-                    ThreadId = threadId,
-                    GlobalMessageNumber = globalMessageNumber,
-                    MessageNumber = messageNumber,
-                    MessagePointId = messagePointId,
-                    ClassFullName = classFullName,
-                    MemberName = memberName,
-                    SourceFilePath = sourceFilePath,
-                    SourceLineNumber = sourceLineNumber
-                };
+            var messageInfo = new CreateThreadLoggerMessage
+            {
+                ParentThreadId = parentThreadId,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
 
 #if DEBUG
-                //_globalLogger.Info($"messageInfo = {messageInfo}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
+            if(EnableAsyncMessageCreation)
+            {
+                Task.Run(() => {
+#if DEBUG
+                    //_globalLogger.Info($"NEXT");
+#endif
+
+                    _messageProcessor.ProcessMessage(messageInfo, _fileCache, _baseMonitorSettings.EnableRemoteConnection && _monitorContext.Settings.EnableRemoteConnection);
+                });
+            }
+            else
+            {
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _baseMonitorSettings.EnableRemoteConnection && _monitorContext.Settings.EnableRemoteConnection);
-            });
+            }
 
             return new ThreadLogger(threadId, _monitorNodeContext);
         }

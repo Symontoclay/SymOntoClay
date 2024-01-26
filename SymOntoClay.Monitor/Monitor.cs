@@ -506,6 +506,9 @@ namespace SymOntoClay.Monitor
         public bool EnableFullCallInfo => _baseMonitorSettings.EnableFullCallInfo;
 
         /// <inheritdoc/>
+        public bool EnableAsyncMessageCreation => _baseMonitorSettings.EnableAsyncMessageCreation;
+
+        /// <inheritdoc/>
         public override string ToString()
         {
             return ToString(0u);
@@ -587,6 +590,7 @@ namespace SymOntoClay.Monitor
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public IMonitorNode CreateMotitorNode(string messagePointId, string nodeId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

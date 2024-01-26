@@ -413,6 +413,9 @@ namespace SymOntoClay.Monitor.Internal
         public bool EnableFullCallInfo => _baseMonitorSettings.EnableFullCallInfo && _monitorContext.Settings.EnableFullCallInfo;
 
         /// <inheritdoc/>
+        public bool EnableAsyncMessageCreation => _baseMonitorSettings.EnableAsyncMessageCreation && _monitorContext.Settings.EnableAsyncMessageCreation;
+
+        /// <inheritdoc/>
         public override string ToString()
         {
             return ToString(0u);

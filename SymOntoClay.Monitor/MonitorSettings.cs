@@ -35,7 +35,7 @@ namespace SymOntoClay.Monitor
             sb.PrintExisting(n, nameof(ErrorHandler), ErrorHandler);
             sb.PrintExistingList(n, nameof(PlatformLoggers), PlatformLoggers);
             sb.PrintObjDict_3_Prop(n, nameof(NodesSettings), NodesSettings);
-            sb.AppendLine($"{spaces}{nameof(EnableOnlyDirectlySetUpNodes)} = {EnableOnlyDirectlySetUpNodes}");
+            sb.AppendLine($"{spaces}{nameof(EnableOnlyDirectlySetUpNodes)} = {EnableOnlyDirectlySetUpNodes}");            
             sb.Append(base.PropertiesToString(n));
 
             return sb.ToString();

@@ -148,6 +148,7 @@ namespace SymOntoClay.Monitor.Internal
         }
 
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         private string NCallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier, string altMethodName,
             List<MonitoredHumanizedLabel> chainOfProcessInfo,
             bool isSynk,
@@ -338,6 +339,7 @@ namespace SymOntoClay.Monitor.Internal
         }
 
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         private void NLabeledValue<T>(string messagePointId, string callMethodId, MonitoredHumanizedLabel label, string altLabel, object value,
             string valueHumanizedString,
             string memberName,
@@ -432,6 +434,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void EndCallMethod(string messagePointId, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -501,6 +504,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void MethodResolving(string messagePointId, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -570,6 +574,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void EndMethodResolving(string messagePointId, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -639,6 +644,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void ActionResolving(string messagePointId, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -708,6 +714,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void EndActionResolving(string messagePointId, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -777,6 +784,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void HostMethodResolving(string messagePointId, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -846,6 +854,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void EndHostMethodResolving(string messagePointId, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -915,6 +924,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void HostMethodActivation(string messagePointId, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -984,6 +994,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void EndHostMethodActivation(string messagePointId, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -1053,6 +1064,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void HostMethodStarting(string messagePointId, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -1122,6 +1134,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void EndHostMethodStarting(string messagePointId, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -1191,6 +1204,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void HostMethodExecution(string messagePointId, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -1260,6 +1274,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void EndHostMethodExecution(string messagePointId, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -1387,6 +1402,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void CodeFrame(string messagePointId, string humanizedStr,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -1459,6 +1475,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void LeaveThreadExecutor(string messagePointId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -1529,6 +1546,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void GoBackToPrevCodeFrame(string messagePointId, int targetActionExecutionStatus, string targetActionExecutionStatusStr,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -1603,6 +1621,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void CancelProcessInfo(string messagePointId, string processInfoId, Enum reasonOfChangeStatus, List<Changer> changers, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -1682,6 +1701,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void WeakCancelProcessInfo(string messagePointId, string processInfoId, Enum reasonOfChangeStatus, List<Changer> changers, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -1761,6 +1781,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void CancelInstanceExecution(string messagePointId, string instanceId, Enum reasonOfChangeStatus, List<Changer> changers, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -1840,6 +1861,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void SetExecutionCoordinatorStatus(string messagePointId, string executionCoordinatorId, Enum status, Enum prevStatus, List<Changer> changers, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -1922,6 +1944,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void SetProcessInfoStatus(string messagePointId, string processInfoId, Enum status, Enum prevStatus, List<Changer> changers, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -2004,6 +2027,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void RunLifecycleTrigger(string messagePointId, string instanceId, string holder, Enum kindOfSystemEvent,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -2081,6 +2105,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public string DoTriggerSearch(string messagePointId, string instanceId, string holder, MonitoredHumanizedLabel trigger,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -2162,6 +2187,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void EndDoTriggerSearch(string messagePointId, string doTriggerSearchId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -2234,6 +2260,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void SetConditionalTrigger(string messagePointId, string doTriggerSearchId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -2306,6 +2333,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void ResetConditionalTrigger(string messagePointId, string doTriggerSearchId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -2378,6 +2406,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void RunSetExprOfConditionalTrigger(string messagePointId, string doTriggerSearchId, MonitoredHumanizedLabel expr,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -2451,6 +2480,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void EndRunSetExprOfConditionalTrigger(string messagePointId, string doTriggerSearchId, MonitoredHumanizedLabel expr,
             bool isSuccess, bool isPeriodic, List<List<MonitoredHumanizedLabel>> fetchedResults,
             [CallerMemberName] string memberName = "",
@@ -2531,6 +2561,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void RunResetExprOfConditionalTrigger(string messagePointId, string doTriggerSearchId, MonitoredHumanizedLabel expr,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -2604,6 +2635,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void EndRunResetExprOfConditionalTrigger(string messagePointId, string doTriggerSearchId, MonitoredHumanizedLabel expr,
             bool isSuccess, bool isPeriodic, List<List<MonitoredHumanizedLabel>> fetchedResults,
             [CallerMemberName] string memberName = "",
@@ -2684,6 +2716,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void Output(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -2766,6 +2799,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void Trace(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -2846,6 +2880,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void Debug(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -2926,6 +2961,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void Info(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -3006,6 +3042,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void Warn(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -3086,6 +3123,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void Error(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -3178,6 +3216,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void Fatal(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

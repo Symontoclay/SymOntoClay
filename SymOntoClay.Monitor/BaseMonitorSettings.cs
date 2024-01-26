@@ -22,6 +22,8 @@ namespace SymOntoClay.Monitor
 
         public bool EnableFullCallInfo { get; set; }
 
+        public bool EnableAsyncMessageCreation { get; set; }
+
         public MonitorFeatures Features { get; set; }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
@@ -35,6 +37,7 @@ namespace SymOntoClay.Monitor
             result.LogicalSearchExplainDumpDir = LogicalSearchExplainDumpDir;
             result.EnableAddingRemovingFactLoggingInStorages = EnableAddingRemovingFactLoggingInStorages;
             result.EnableFullCallInfo = EnableFullCallInfo;
+            result.EnableAsyncMessageCreation = EnableAsyncMessageCreation;
             result.Features = Features?.Clone();
 
             return result;
@@ -68,6 +71,7 @@ namespace SymOntoClay.Monitor
             sb.AppendLine($"{spaces}{nameof(LogicalSearchExplainDumpDir)} = {LogicalSearchExplainDumpDir}");
             sb.AppendLine($"{spaces}{nameof(EnableAddingRemovingFactLoggingInStorages)} = {EnableAddingRemovingFactLoggingInStorages}");
             sb.AppendLine($"{spaces}{nameof(EnableFullCallInfo)} = {EnableFullCallInfo}");
+            sb.AppendLine($"{spaces}{nameof(EnableAsyncMessageCreation)} = {EnableAsyncMessageCreation}");
             sb.PrintObjProp(n, nameof(Features), Features);
             return sb.ToString();
         }

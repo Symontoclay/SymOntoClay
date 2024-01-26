@@ -106,6 +106,7 @@ namespace SymOntoClay.Core.Internal.Threads
             {
                 var threadDelegate = new ThreadStart(RunDelegate);
                 _thread = new Thread(threadDelegate);
+                _thread.IsBackground = true;
             }
 
             _thread.Start();

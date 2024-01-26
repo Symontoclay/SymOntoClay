@@ -551,7 +551,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             if(message.PrevStatus != 0)
             {
-                sb.Append($" ({message.StatusStr} -> {message.PrevStatusStr})");
+                sb.Append($" ({message.PrevStatusStr} -> {message.StatusStr})");
             }
 
             sb.Append($" for execution coordinator {message.ObjId}");
@@ -579,7 +579,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             if (message.PrevStatus != 0)
             {
-                sb.Append($" ({message.StatusStr} -> {message.PrevStatusStr})");
+                sb.Append($" ({message.PrevStatusStr} -> {message.StatusStr})");
             }
 
             sb.Append($" for process info {message.ObjId}");

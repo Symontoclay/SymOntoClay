@@ -178,6 +178,10 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void Observer_OnChanged()
         {
+#if DEBUG
+            //Info("5AF67C00-E174-436C-9BB0-95889FCE46F9", $"Observer_OnChanged();{_trigger.ToHumanizedLabel()}");
+#endif
+
             lock (_lockObj)
             {
                 _needRun = true;
@@ -189,7 +193,7 @@ namespace SymOntoClay.Core.Internal.Instances
             try
             {
 #if DEBUG
-                //Info("0611DFCC-6C77-4E9D-A587-96BC0E9189D7", "Run");
+                Info("0611DFCC-6C77-4E9D-A587-96BC0E9189D7", $"_needRun = {_needRun};{_trigger.ToHumanizedLabel()}");
 #endif
 
                 lock (_lockObj)
@@ -480,12 +484,20 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void ProcessSetResultWithNoItems(IMonitorLogger logger, string doTriggerSearchId, bool isPeriodic)
         {
+#if DEBUG
+            Info("7E59750A-B72A-4569-8FEF-A69F609EE24C", $"doTriggerSearchId = {doTriggerSearchId};isPeriodic = {isPeriodic};_triggerConditionNodeObserverContext.IsOn = {_triggerConditionNodeObserverContext.IsOn};{_trigger.ToHumanizedLabel()}");
+#endif
+
             if (_triggerConditionNodeObserverContext.IsOn)
             {
                 return;
             }
 
-            if(!isPeriodic || _hasResetHandler)
+#if DEBUG
+            Info("0C92CC19-B678-4E6C-9142-602A2BC2FAFD", $"doTriggerSearchId = {doTriggerSearchId};isPeriodic = {isPeriodic};_hasResetHandler = {_hasResetHandler};{_trigger.ToHumanizedLabel()}");
+#endif
+
+            if (!isPeriodic || _hasResetHandler)
             {
                 SetIsOn(logger, "16A8DE52-E9A1-4CE1-BE8F-DA4FDC526977", doTriggerSearchId, true);
             }
@@ -494,10 +506,18 @@ namespace SymOntoClay.Core.Internal.Instances
                 _triggerConditionNodeObserverContext.InitialSetTime = _dateTimeProvider.CurrentTiks;
             }
 
-            if(_hasRuleInstancesList)
+#if DEBUG
+            Info("792CF069-8EF7-421E-A0B3-52B938FC05B6", $"doTriggerSearchId = {doTriggerSearchId};_hasRuleInstancesList = {_hasRuleInstancesList};{_trigger.ToHumanizedLabel()}");
+#endif
+
+            if (_hasRuleInstancesList)
             {
                 return;
             }
+
+#if DEBUG
+            Info("DE5D95AD-4B0F-48AF-A125-5DF09F26F8FD", $"doTriggerSearchId = {doTriggerSearchId};Run!!!!!!!!!!!!;{_trigger.ToHumanizedLabel()}");
+#endif
 
             var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
             var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);
@@ -614,6 +634,8 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
+            _activeObject.Dispose();
+
             _setConditionalTriggerObserver.OnChanged -= Observer_OnChanged;
             _setConditionalTriggerObserver.Dispose();
 

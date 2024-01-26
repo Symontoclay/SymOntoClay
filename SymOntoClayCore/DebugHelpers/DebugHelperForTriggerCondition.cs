@@ -70,6 +70,12 @@ namespace SymOntoClay.Core.DebugHelpers
                 case KindOfTriggerConditionNode.Duration:
                     return DurationToString(source, options);
 
+                case KindOfTriggerConditionNode.Each:
+                    return EachToString(source, options);
+
+                case KindOfTriggerConditionNode.Once:
+                    return OnceToString(source, options);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(source.Kind), source.Kind, null);
             }
@@ -128,6 +134,16 @@ namespace SymOntoClay.Core.DebugHelpers
         private static string DurationToString(TriggerConditionNode source, DebugHelperOptions options)
         {
             return $"duration {source.Value.ToHumanizedString(options)}";
+        }
+
+        private static string EachToString(TriggerConditionNode source, DebugHelperOptions options)
+        {
+            return $"each {source.Value.ToHumanizedString(options)}";
+        }
+
+        private static string OnceToString(TriggerConditionNode source, DebugHelperOptions options)
+        {
+            throw new NotImplementedException();
         }
 
         private static string CallFunctionToString(TriggerConditionNode source, DebugHelperOptions options)

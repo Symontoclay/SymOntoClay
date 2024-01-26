@@ -590,7 +590,6 @@ namespace SymOntoClay.Monitor
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public IMonitorNode CreateMotitorNode(string messagePointId, string nodeId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -628,30 +627,37 @@ namespace SymOntoClay.Monitor
 
             var now = DateTime.Now;
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                var messageInfo = new CreateMotitorNodeMessage
-                {
-                    DateTimeStamp = now,
-                    NodeId = nodeId,
-                    GlobalMessageNumber = globalMessageNumber,
-                    MessageNumber = messageNumber,
-                    MessagePointId = messagePointId,
-                    ClassFullName = classFullName,
-                    MemberName = memberName,
-                    SourceFilePath = sourceFilePath,
-                    SourceLineNumber = sourceLineNumber
-                };
+            var messageInfo = new CreateMotitorNodeMessage
+            {
+                DateTimeStamp = now,
+                NodeId = nodeId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
 
 #if DEBUG
-                //_globalLogger.Info($"messageInfo = {messageInfo}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
+            if(EnableAsyncMessageCreation)
+            {
+                Task.Run(() => {
+#if DEBUG
+                    //_globalLogger.Info($"NEXT");
+#endif
+
+                    _messageProcessor.ProcessMessage(messageInfo, _fileCache, _baseMonitorSettings.EnableRemoteConnection);
+                });
+            }
+            else
+            {
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _baseMonitorSettings.EnableRemoteConnection);
-            });
+            }
 
             var nodeSettings = GetMotitorNodeSettings(nodeId);
 

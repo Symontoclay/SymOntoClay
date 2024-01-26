@@ -58,8 +58,37 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override TaskValue AsTaskValue => this;
 
         public string TaskId { get; set; }
-        public ThreadTask SystemTask { get; set; }
+        public ThreadTask SystemTask 
+        { 
+            get
+            {
+                return _systemTask;
+            }
+
+            set
+            {
+                if (_systemTask == value)
+                {
+                    return;
+                }
+
+                if(_systemTask != null)
+                {
+                    _systemTask.OnCompletedSuccessfully -= OnCompleteHandler;
+                }
+
+                _systemTask = value;
+
+                if (_systemTask != null)
+                {
+                    _systemTask.OnCompletedSuccessfully += OnCompleteHandler;
+                }
+            }
+        }
+
         private readonly CancellationTokenSource _cancellationTokenSource;
+
+        private ThreadTask _systemTask;
 
         public event Action OnComplete
         {
@@ -67,7 +96,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
             {
                 InternalOnComplete += value;
 
-                CheckTaskEventWatcher();
+                if(_systemTask != null)
+                {
+                    if(_systemTask.Status == ThreadTaskStatus.RanToCompletion)
+                    {
+                        value?.Invoke();
+                    }
+                }
             }
 
             remove 
@@ -78,42 +113,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private event Action InternalOnComplete;
 
-        private object _checkTaskEventWatcherLockObj = new object();
-        private Task _checkTaskEventWatcher;
+        private object _checkOnCompleteLockObj = new object();
 
-        private void CheckTaskEventWatcher()
+        private void OnCompleteHandler()
         {
-            lock(_checkTaskEventWatcherLockObj)
-            {
-                if(SystemTask == null)
-                {
-                    return;
-                }
-
-                if(_checkTaskEventWatcher != null)
-                {
-                    return;
-                }
-
-                _checkTaskEventWatcher = Task.Run(() => {
-                    SystemTask.Wait();
-
-                    switch (SystemTask.Status)
-                    {
-                        case ThreadTaskStatus.RanToCompletion:
-                            InternalOnComplete?.Invoke();
-                            break;
-
-                        default:
-                            break;
-                    }
-                });
-            }
+            InternalOnComplete?.Invoke();
         }
 
         public void Wait()
         {
-            SystemTask?.Wait();
+            _systemTask?.Wait();
         }
 
         public void Cancel()
@@ -124,7 +133,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override object GetSystemValue()
         {
-            return SystemTask;
+            return _systemTask;
         }
 
         /// <inheritdoc/>
@@ -171,7 +180,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            return base.CalculateLongHashCode(options) ^ (ulong)TaskId.GetHashCode() ^ (ulong)Math.Abs(SystemTask?.GetHashCode() ?? 0);
+            return base.CalculateLongHashCode(options) ^ (ulong)TaskId.GetHashCode() ^ (ulong)Math.Abs(_systemTask?.GetHashCode() ?? 0);
         }
 
         /// <inheritdoc/>
@@ -188,7 +197,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 return (Value)context[this];
             }
 
-            var result = new TaskValue(SystemTask, _cancellationTokenSource);
+            var result = new TaskValue(_systemTask, _cancellationTokenSource);
             context[this] = result;
 
             result.TaskId = TaskId;
@@ -203,7 +212,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(TaskId)} = {TaskId}");
-            sb.AppendLine($"{spaces}SystemTask?.Status = {SystemTask?.Status}");
+            sb.AppendLine($"{spaces}SystemTask?.Status = {_systemTask?.Status}");
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -215,7 +224,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(TaskId)} = {TaskId}");
-            sb.AppendLine($"{spaces}SystemTask?.Status = {SystemTask?.Status}");
+            sb.AppendLine($"{spaces}SystemTask?.Status = {_systemTask?.Status}");
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -227,7 +236,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(TaskId)} = {TaskId}");
-            sb.AppendLine($"{spaces}SystemTask?.Status = {SystemTask?.Status}");
+            sb.AppendLine($"{spaces}SystemTask?.Status = {_systemTask?.Status}");
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

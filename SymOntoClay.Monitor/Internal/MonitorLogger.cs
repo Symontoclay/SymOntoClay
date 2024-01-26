@@ -148,7 +148,6 @@ namespace SymOntoClay.Monitor.Internal
         }
 
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         private string NCallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier, string altMethodName,
             List<MonitoredHumanizedLabel> chainOfProcessInfo,
             bool isSynk,
@@ -204,13 +203,7 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
 
             return callMethodId;
         }
@@ -339,7 +332,6 @@ namespace SymOntoClay.Monitor.Internal
         }
 
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         private void NLabeledValue<T>(string messagePointId, string callMethodId, MonitoredHumanizedLabel label, string altLabel, object value,
             string valueHumanizedString,
             string memberName,
@@ -423,18 +415,11 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void EndCallMethod(string messagePointId, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -493,18 +478,11 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void MethodResolving(string messagePointId, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -563,18 +541,11 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void EndMethodResolving(string messagePointId, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -633,18 +604,11 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void ActionResolving(string messagePointId, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -703,18 +667,11 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void EndActionResolving(string messagePointId, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -773,18 +730,11 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void HostMethodResolving(string messagePointId, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -843,18 +793,11 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void EndHostMethodResolving(string messagePointId, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -913,18 +856,11 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void HostMethodActivation(string messagePointId, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -983,18 +919,11 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void EndHostMethodActivation(string messagePointId, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -1053,18 +982,11 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void HostMethodStarting(string messagePointId, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -1123,18 +1045,11 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void EndHostMethodStarting(string messagePointId, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -1193,18 +1108,11 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void HostMethodExecution(string messagePointId, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -1263,18 +1171,11 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void EndHostMethodExecution(string messagePointId, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -1314,32 +1215,26 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                var messageInfo = new EndHostMethodExecutionMessage
-                {
-                    CallMethodId = callMethodId,
-                    DateTimeStamp = now,
-                    NodeId = _nodeId,
-                    ThreadId = _threadId,
-                    GlobalMessageNumber = globalMessageNumber,
-                    MessageNumber = messageNumber,
-                    MessagePointId = messagePointId,
-                    ClassFullName = classFullName,
-                    MemberName = memberName,
-                    SourceFilePath = sourceFilePath,
-                    SourceLineNumber = sourceLineNumber
-                };
+            var messageInfo = new EndHostMethodExecutionMessage
+            {
+                CallMethodId = callMethodId,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
 
 #if DEBUG
-                //_globalLogger.Info($"messageInfo = {messageInfo}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
@@ -1402,7 +1297,6 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void CodeFrame(string messagePointId, string humanizedStr,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -1445,37 +1339,30 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                var messageInfo = new CodeFrameMessage
-                {
-                    HumanizedStr = humanizedStr,
-                    DateTimeStamp = now,
-                    NodeId = _nodeId,
-                    ThreadId = _threadId,
-                    GlobalMessageNumber = globalMessageNumber,
-                    MessageNumber = messageNumber,
-                    MessagePointId = messagePointId,
-                    ClassFullName = classFullName,
-                    MemberName = memberName,
-                    SourceFilePath = sourceFilePath,
-                    SourceLineNumber = sourceLineNumber
-                };
+            var messageInfo = new CodeFrameMessage
+            {
+                HumanizedStr = humanizedStr,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
 
 #if DEBUG
-                //_globalLogger.Info($"messageInfo = {messageInfo}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void LeaveThreadExecutor(string messagePointId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -1517,36 +1404,29 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                var messageInfo = new LeaveThreadExecutorMessage
-                {
-                    DateTimeStamp = now,
-                    NodeId = _nodeId,
-                    ThreadId = _threadId,
-                    GlobalMessageNumber = globalMessageNumber,
-                    MessageNumber = messageNumber,
-                    MessagePointId = messagePointId,
-                    ClassFullName = classFullName,
-                    MemberName = memberName,
-                    SourceFilePath = sourceFilePath,
-                    SourceLineNumber = sourceLineNumber
-                };
+            var messageInfo = new LeaveThreadExecutorMessage
+            {
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
 
 #if DEBUG
-                //_globalLogger.Info($"messageInfo = {messageInfo}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void GoBackToPrevCodeFrame(string messagePointId, int targetActionExecutionStatus, string targetActionExecutionStatusStr,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -1590,38 +1470,31 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                var messageInfo = new GoBackToPrevCodeFrameMessage
-                {
-                    TargetActionExecutionStatus = targetActionExecutionStatus,
-                    TargetActionExecutionStatusStr = targetActionExecutionStatusStr,
-                    DateTimeStamp = now,
-                    NodeId = _nodeId,
-                    ThreadId = _threadId,
-                    GlobalMessageNumber = globalMessageNumber,
-                    MessageNumber = messageNumber,
-                    MessagePointId = messagePointId,
-                    ClassFullName = classFullName,
-                    MemberName = memberName,
-                    SourceFilePath = sourceFilePath,
-                    SourceLineNumber = sourceLineNumber
-                };
+            var messageInfo = new GoBackToPrevCodeFrameMessage
+            {
+                TargetActionExecutionStatus = targetActionExecutionStatus,
+                TargetActionExecutionStatusStr = targetActionExecutionStatusStr,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
 
 #if DEBUG
-                //_globalLogger.Info($"messageInfo = {messageInfo}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void CancelProcessInfo(string messagePointId, string processInfoId, Enum reasonOfChangeStatus, List<Changer> changers, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -1667,41 +1540,34 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                var messageInfo = new CancelProcessInfoMessage
-                {
-                    CancelledObjId = processInfoId,
-                    ReasonOfChangeStatus = Convert.ToInt32(reasonOfChangeStatus),
-                    ReasonOfChangeStatusStr = reasonOfChangeStatus?.ToString(),
-                    Changers = changers,
-                    CallMethodId = callMethodId,
-                    DateTimeStamp = now,
-                    NodeId = _nodeId,
-                    ThreadId = _threadId,
-                    GlobalMessageNumber = globalMessageNumber,
-                    MessageNumber = messageNumber,
-                    MessagePointId = messagePointId,
-                    ClassFullName = classFullName,
-                    MemberName = memberName,
-                    SourceFilePath = sourceFilePath,
-                    SourceLineNumber = sourceLineNumber
-                };
+            var messageInfo = new CancelProcessInfoMessage
+            {
+                CancelledObjId = processInfoId,
+                ReasonOfChangeStatus = Convert.ToInt32(reasonOfChangeStatus),
+                ReasonOfChangeStatusStr = reasonOfChangeStatus?.ToString(),
+                Changers = changers,
+                CallMethodId = callMethodId,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
 
 #if DEBUG
-                //_globalLogger.Info($"messageInfo = {messageInfo}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void WeakCancelProcessInfo(string messagePointId, string processInfoId, Enum reasonOfChangeStatus, List<Changer> changers, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -1747,41 +1613,34 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                var messageInfo = new WeakCancelProcessInfoMessage
-                {
-                    CancelledObjId = processInfoId,
-                    ReasonOfChangeStatus = Convert.ToInt32(reasonOfChangeStatus),
-                    ReasonOfChangeStatusStr = reasonOfChangeStatus?.ToString(),
-                    Changers = changers,
-                    CallMethodId = callMethodId,
-                    DateTimeStamp = now,
-                    NodeId = _nodeId,
-                    ThreadId = _threadId,
-                    GlobalMessageNumber = globalMessageNumber,
-                    MessageNumber = messageNumber,
-                    MessagePointId = messagePointId,
-                    ClassFullName = classFullName,
-                    MemberName = memberName,
-                    SourceFilePath = sourceFilePath,
-                    SourceLineNumber = sourceLineNumber
-                };
+            var messageInfo = new WeakCancelProcessInfoMessage
+            {
+                CancelledObjId = processInfoId,
+                ReasonOfChangeStatus = Convert.ToInt32(reasonOfChangeStatus),
+                ReasonOfChangeStatusStr = reasonOfChangeStatus?.ToString(),
+                Changers = changers,
+                CallMethodId = callMethodId,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
 
 #if DEBUG
-                //_globalLogger.Info($"messageInfo = {messageInfo}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void CancelInstanceExecution(string messagePointId, string instanceId, Enum reasonOfChangeStatus, List<Changer> changers, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -1827,41 +1686,34 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                var messageInfo = new CancelInstanceExecutionMessage
-                {
-                    CancelledObjId = instanceId,
-                    ReasonOfChangeStatus = Convert.ToInt32(reasonOfChangeStatus),
-                    ReasonOfChangeStatusStr = reasonOfChangeStatus?.ToString(),
-                    Changers = changers,
-                    CallMethodId = callMethodId,
-                    DateTimeStamp = now,
-                    NodeId = _nodeId,
-                    ThreadId = _threadId,
-                    GlobalMessageNumber = globalMessageNumber,
-                    MessageNumber = messageNumber,
-                    MessagePointId = messagePointId,
-                    ClassFullName = classFullName,
-                    MemberName = memberName,
-                    SourceFilePath = sourceFilePath,
-                    SourceLineNumber = sourceLineNumber
-                };
+            var messageInfo = new CancelInstanceExecutionMessage
+            {
+                CancelledObjId = instanceId,
+                ReasonOfChangeStatus = Convert.ToInt32(reasonOfChangeStatus),
+                ReasonOfChangeStatusStr = reasonOfChangeStatus?.ToString(),
+                Changers = changers,
+                CallMethodId = callMethodId,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
 
 #if DEBUG
-                //_globalLogger.Info($"messageInfo = {messageInfo}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void SetExecutionCoordinatorStatus(string messagePointId, string executionCoordinatorId, Enum status, Enum prevStatus, List<Changer> changers, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -1908,43 +1760,36 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                var messageInfo = new SetExecutionCoordinatorStatusMessage
-                {
-                    ObjId = executionCoordinatorId,
-                    Status = Convert.ToInt32(status),
-                    StatusStr = status?.ToString(),
-                    PrevStatus = Convert.ToInt32(prevStatus),
-                    PrevStatusStr = prevStatus?.ToString(),
-                    Changers = changers,
-                    CallMethodId = callMethodId,
-                    DateTimeStamp = now,
-                    NodeId = _nodeId,
-                    ThreadId = _threadId,
-                    GlobalMessageNumber = globalMessageNumber,
-                    MessageNumber = messageNumber,
-                    MessagePointId = messagePointId,
-                    ClassFullName = classFullName,
-                    MemberName = memberName,
-                    SourceFilePath = sourceFilePath,
-                    SourceLineNumber = sourceLineNumber
-                };
+            var messageInfo = new SetExecutionCoordinatorStatusMessage
+            {
+                ObjId = executionCoordinatorId,
+                Status = Convert.ToInt32(status),
+                StatusStr = status?.ToString(),
+                PrevStatus = Convert.ToInt32(prevStatus),
+                PrevStatusStr = prevStatus?.ToString(),
+                Changers = changers,
+                CallMethodId = callMethodId,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
 
 #if DEBUG
-                //_globalLogger.Info($"messageInfo = {messageInfo}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void SetProcessInfoStatus(string messagePointId, string processInfoId, Enum status, Enum prevStatus, List<Changer> changers, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -1991,43 +1836,36 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                var messageInfo = new SetProcessInfoStatusMessage
-                {
-                    ObjId = processInfoId,
-                    Status = Convert.ToInt32(status),
-                    StatusStr = status?.ToString(),
-                    PrevStatus = Convert.ToInt32(prevStatus),
-                    PrevStatusStr = prevStatus?.ToString(),
-                    Changers = changers,
-                    CallMethodId = callMethodId,
-                    DateTimeStamp = now,
-                    NodeId = _nodeId,
-                    ThreadId = _threadId,
-                    GlobalMessageNumber = globalMessageNumber,
-                    MessageNumber = messageNumber,
-                    MessagePointId = messagePointId,
-                    ClassFullName = classFullName,
-                    MemberName = memberName,
-                    SourceFilePath = sourceFilePath,
-                    SourceLineNumber = sourceLineNumber
-                };
+            var messageInfo = new SetProcessInfoStatusMessage
+            {
+                ObjId = processInfoId,
+                Status = Convert.ToInt32(status),
+                StatusStr = status?.ToString(),
+                PrevStatus = Convert.ToInt32(prevStatus),
+                PrevStatusStr = prevStatus?.ToString(),
+                Changers = changers,
+                CallMethodId = callMethodId,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
 
 #if DEBUG
-                //_globalLogger.Info($"messageInfo = {messageInfo}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void RunLifecycleTrigger(string messagePointId, string instanceId, string holder, Enum kindOfSystemEvent,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -2072,40 +1910,33 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                var messageInfo = new RunLifecycleTriggerMessage
-                {
-                    InstanceId = instanceId,
-                    Holder = holder,
-                    Status = Convert.ToInt32(kindOfSystemEvent),
-                    StatusStr = kindOfSystemEvent?.ToString(),
-                    DateTimeStamp = now,
-                    NodeId = _nodeId,
-                    ThreadId = _threadId,
-                    GlobalMessageNumber = globalMessageNumber,
-                    MessageNumber = messageNumber,
-                    MessagePointId = messagePointId,
-                    ClassFullName = classFullName,
-                    MemberName = memberName,
-                    SourceFilePath = sourceFilePath,
-                    SourceLineNumber = sourceLineNumber
-                };
+            var messageInfo = new RunLifecycleTriggerMessage
+            {
+                InstanceId = instanceId,
+                Holder = holder,
+                Status = Convert.ToInt32(kindOfSystemEvent),
+                StatusStr = kindOfSystemEvent?.ToString(),
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
 
 #if DEBUG
-                //_globalLogger.Info($"messageInfo = {messageInfo}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public string DoTriggerSearch(string messagePointId, string instanceId, string holder, MonitoredHumanizedLabel trigger,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -2152,42 +1983,35 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                var messageInfo = new DoTriggerSearchMessage
-                {
-                    DoTriggerSearchId = doTriggerSearchId,
-                    InstanceId = instanceId,
-                    Holder = holder,
-                    TriggerLabel = trigger,
-                    DateTimeStamp = now,
-                    NodeId = _nodeId,
-                    ThreadId = _threadId,
-                    GlobalMessageNumber = globalMessageNumber,
-                    MessageNumber = messageNumber,
-                    MessagePointId = messagePointId,
-                    ClassFullName = classFullName,
-                    MemberName = memberName,
-                    SourceFilePath = sourceFilePath,
-                    SourceLineNumber = sourceLineNumber
-                };
+            var messageInfo = new DoTriggerSearchMessage
+            {
+                DoTriggerSearchId = doTriggerSearchId,
+                InstanceId = instanceId,
+                Holder = holder,
+                TriggerLabel = trigger,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
 
 #if DEBUG
-                //_globalLogger.Info($"messageInfo = {messageInfo}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
 
             return doTriggerSearchId;
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void EndDoTriggerSearch(string messagePointId, string doTriggerSearchId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -2230,37 +2054,30 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                var messageInfo = new EndDoTriggerSearchMessage
-                {
-                    DoTriggerSearchId = doTriggerSearchId,
-                    DateTimeStamp = now,
-                    NodeId = _nodeId,
-                    ThreadId = _threadId,
-                    GlobalMessageNumber = globalMessageNumber,
-                    MessageNumber = messageNumber,
-                    MessagePointId = messagePointId,
-                    ClassFullName = classFullName,
-                    MemberName = memberName,
-                    SourceFilePath = sourceFilePath,
-                    SourceLineNumber = sourceLineNumber
-                };
+            var messageInfo = new EndDoTriggerSearchMessage
+            {
+                DoTriggerSearchId = doTriggerSearchId,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
 
 #if DEBUG
-                //_globalLogger.Info($"messageInfo = {messageInfo}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void SetConditionalTrigger(string messagePointId, string doTriggerSearchId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -2303,37 +2120,30 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                var messageInfo = new SetConditionalTriggerMessage
-                {
-                    DoTriggerSearchId = doTriggerSearchId,
-                    DateTimeStamp = now,
-                    NodeId = _nodeId,
-                    ThreadId = _threadId,
-                    GlobalMessageNumber = globalMessageNumber,
-                    MessageNumber = messageNumber,
-                    MessagePointId = messagePointId,
-                    ClassFullName = classFullName,
-                    MemberName = memberName,
-                    SourceFilePath = sourceFilePath,
-                    SourceLineNumber = sourceLineNumber
-                };
+            var messageInfo = new SetConditionalTriggerMessage
+            {
+                DoTriggerSearchId = doTriggerSearchId,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
 
 #if DEBUG
-                //_globalLogger.Info($"messageInfo = {messageInfo}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void ResetConditionalTrigger(string messagePointId, string doTriggerSearchId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -2376,37 +2186,30 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                var messageInfo = new ResetConditionalTriggerMessage
-                {
-                    DoTriggerSearchId = doTriggerSearchId,
-                    DateTimeStamp = now,
-                    NodeId = _nodeId,
-                    ThreadId = _threadId,
-                    GlobalMessageNumber = globalMessageNumber,
-                    MessageNumber = messageNumber,
-                    MessagePointId = messagePointId,
-                    ClassFullName = classFullName,
-                    MemberName = memberName,
-                    SourceFilePath = sourceFilePath,
-                    SourceLineNumber = sourceLineNumber
-                };
+            var messageInfo = new ResetConditionalTriggerMessage
+            {
+                DoTriggerSearchId = doTriggerSearchId,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
 
 #if DEBUG
-                //_globalLogger.Info($"messageInfo = {messageInfo}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void RunSetExprOfConditionalTrigger(string messagePointId, string doTriggerSearchId, MonitoredHumanizedLabel expr,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -2449,38 +2252,31 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                var messageInfo = new RunSetExprOfConditionalTriggerMessage
-                {
-                    DoTriggerSearchId = doTriggerSearchId,
-                    ExprLabel = expr,
-                    DateTimeStamp = now,
-                    NodeId = _nodeId,
-                    ThreadId = _threadId,
-                    GlobalMessageNumber = globalMessageNumber,
-                    MessageNumber = messageNumber,
-                    MessagePointId = messagePointId,
-                    ClassFullName = classFullName,
-                    MemberName = memberName,
-                    SourceFilePath = sourceFilePath,
-                    SourceLineNumber = sourceLineNumber
-                };
+            var messageInfo = new RunSetExprOfConditionalTriggerMessage
+            {
+                DoTriggerSearchId = doTriggerSearchId,
+                ExprLabel = expr,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
 
 #if DEBUG
-                //_globalLogger.Info($"messageInfo = {messageInfo}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void EndRunSetExprOfConditionalTrigger(string messagePointId, string doTriggerSearchId, MonitoredHumanizedLabel expr,
             bool isSuccess, bool isPeriodic, List<List<MonitoredHumanizedLabel>> fetchedResults,
             [CallerMemberName] string memberName = "",
@@ -2527,41 +2323,34 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                var messageInfo = new EndRunSetExprOfConditionalTriggerMessage
-                {
-                    DoTriggerSearchId = doTriggerSearchId,
-                    ExprLabel = expr,
-                    IsSuccess = isSuccess,
-                    IsPeriodic = isPeriodic,
-                    FetchedResults = fetchedResults,
-                    DateTimeStamp = now,
-                    NodeId = _nodeId,
-                    ThreadId = _threadId,
-                    GlobalMessageNumber = globalMessageNumber,
-                    MessageNumber = messageNumber,
-                    MessagePointId = messagePointId,
-                    ClassFullName = classFullName,
-                    MemberName = memberName,
-                    SourceFilePath = sourceFilePath,
-                    SourceLineNumber = sourceLineNumber
-                };
+            var messageInfo = new EndRunSetExprOfConditionalTriggerMessage
+            {
+                DoTriggerSearchId = doTriggerSearchId,
+                ExprLabel = expr,
+                IsSuccess = isSuccess,
+                IsPeriodic = isPeriodic,
+                FetchedResults = fetchedResults,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
 
 #if DEBUG
-                //_globalLogger.Info($"messageInfo = {messageInfo}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void RunResetExprOfConditionalTrigger(string messagePointId, string doTriggerSearchId, MonitoredHumanizedLabel expr,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -2604,38 +2393,31 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                var messageInfo = new RunResetExprOfConditionalTriggerMessage
-                {
-                    DoTriggerSearchId = doTriggerSearchId,
-                    ExprLabel = expr,
-                    DateTimeStamp = now,
-                    NodeId = _nodeId,
-                    ThreadId = _threadId,
-                    GlobalMessageNumber = globalMessageNumber,
-                    MessageNumber = messageNumber,
-                    MessagePointId = messagePointId,
-                    ClassFullName = classFullName,
-                    MemberName = memberName,
-                    SourceFilePath = sourceFilePath,
-                    SourceLineNumber = sourceLineNumber
-                };
+            var messageInfo = new RunResetExprOfConditionalTriggerMessage
+            {
+                DoTriggerSearchId = doTriggerSearchId,
+                ExprLabel = expr,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
 
 #if DEBUG
-                //_globalLogger.Info($"messageInfo = {messageInfo}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void EndRunResetExprOfConditionalTrigger(string messagePointId, string doTriggerSearchId, MonitoredHumanizedLabel expr,
             bool isSuccess, bool isPeriodic, List<List<MonitoredHumanizedLabel>> fetchedResults,
             [CallerMemberName] string memberName = "",
@@ -2682,41 +2464,34 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                var messageInfo = new EndRunResetExprOfConditionalTriggerMessage
-                {
-                    DoTriggerSearchId = doTriggerSearchId,
-                    ExprLabel = expr,
-                    IsSuccess = isSuccess,
-                    IsPeriodic = isPeriodic,
-                    FetchedResults = fetchedResults,
-                    DateTimeStamp = now,
-                    NodeId = _nodeId,
-                    ThreadId = _threadId,
-                    GlobalMessageNumber = globalMessageNumber,
-                    MessageNumber = messageNumber,
-                    MessagePointId = messagePointId,
-                    ClassFullName = classFullName,
-                    MemberName = memberName,
-                    SourceFilePath = sourceFilePath,
-                    SourceLineNumber = sourceLineNumber
-                };
+            var messageInfo = new EndRunResetExprOfConditionalTriggerMessage
+            {
+                DoTriggerSearchId = doTriggerSearchId,
+                ExprLabel = expr,
+                IsSuccess = isSuccess,
+                IsPeriodic = isPeriodic,
+                FetchedResults = fetchedResults,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
 
 #if DEBUG
-                //_globalLogger.Info($"messageInfo = {messageInfo}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void Output(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -2769,37 +2544,30 @@ namespace SymOntoClay.Monitor.Internal
                 }
             }
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                var messageInfo = new OutputMessage
-                {
-                    Message = message,
-                    DateTimeStamp = now,
-                    NodeId = _nodeId,
-                    ThreadId = _threadId,
-                    GlobalMessageNumber = globalMessageNumber,
-                    MessageNumber = messageNumber,
-                    MessagePointId = messagePointId,
-                    ClassFullName = classFullName,
-                    MemberName = memberName,
-                    SourceFilePath = sourceFilePath,
-                    SourceLineNumber = sourceLineNumber
-                };
+            var messageInfo = new OutputMessage
+            {
+                Message = message,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
 
 #if DEBUG
-                //_globalLogger.Info($"messageInfo = {messageInfo}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void Trace(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -2850,37 +2618,30 @@ namespace SymOntoClay.Monitor.Internal
                 }
             }
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                var messageInfo = new TraceMessage
-                {
-                    Message = message,
-                    DateTimeStamp = now,
-                    NodeId = _nodeId,
-                    ThreadId = _threadId,
-                    GlobalMessageNumber = globalMessageNumber,
-                    MessageNumber = messageNumber,
-                    MessagePointId = messagePointId,
-                    ClassFullName = classFullName,
-                    MemberName = memberName,
-                    SourceFilePath = sourceFilePath,
-                    SourceLineNumber = sourceLineNumber
-                };
+            var messageInfo = new TraceMessage
+            {
+                Message = message,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
 
 #if DEBUG
-                //_globalLogger.Info($"messageInfo = {messageInfo}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void Debug(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -2931,37 +2692,30 @@ namespace SymOntoClay.Monitor.Internal
                 }
             }
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                var messageInfo = new DebugMessage
-                {
-                    Message = message,
-                    DateTimeStamp = now,
-                    NodeId = _nodeId,
-                    ThreadId = _threadId,
-                    GlobalMessageNumber = globalMessageNumber,
-                    MessageNumber = messageNumber,
-                    MessagePointId = messagePointId,
-                    ClassFullName = classFullName,
-                    MemberName = memberName,
-                    SourceFilePath = sourceFilePath,
-                    SourceLineNumber = sourceLineNumber
-                };
+            var messageInfo = new DebugMessage
+            {
+                Message = message,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
 
 #if DEBUG
-                //_globalLogger.Info($"messageInfo = {messageInfo}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void Info(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -3012,37 +2766,30 @@ namespace SymOntoClay.Monitor.Internal
                 }
             }
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                var messageInfo = new InfoMessage
-                {
-                    Message = message,
-                    DateTimeStamp = now,
-                    NodeId = _nodeId,
-                    ThreadId = _threadId,
-                    GlobalMessageNumber = globalMessageNumber,
-                    MessageNumber = messageNumber,
-                    MessagePointId = messagePointId,
-                    ClassFullName = classFullName,
-                    MemberName = memberName,
-                    SourceFilePath = sourceFilePath,
-                    SourceLineNumber = sourceLineNumber
-                };
+            var messageInfo = new InfoMessage
+            {
+                Message = message,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
 
 #if DEBUG
-                //_globalLogger.Info($"messageInfo = {messageInfo}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void Warn(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -3093,37 +2840,30 @@ namespace SymOntoClay.Monitor.Internal
                 }
             }
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                var messageInfo = new WarnMessage
-                {
-                    Message = message,
-                    DateTimeStamp = now,
-                    NodeId = _nodeId,
-                    ThreadId = _threadId,
-                    GlobalMessageNumber = globalMessageNumber,
-                    MessageNumber = messageNumber,
-                    MessagePointId = messagePointId,
-                    ClassFullName = classFullName,
-                    MemberName = memberName,
-                    SourceFilePath = sourceFilePath,
-                    SourceLineNumber = sourceLineNumber
-                };
+            var messageInfo = new WarnMessage
+            {
+                Message = message,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
 
 #if DEBUG
-                //_globalLogger.Info($"messageInfo = {messageInfo}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void Error(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -3176,32 +2916,26 @@ namespace SymOntoClay.Monitor.Internal
                 }
             }
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                var messageInfo = new ErrorMessage
-                {
-                    Message = message,
-                    DateTimeStamp = now,
-                    NodeId = _nodeId,
-                    ThreadId = _threadId,
-                    GlobalMessageNumber = globalMessageNumber,
-                    MessageNumber = messageNumber,
-                    MessagePointId = messagePointId,
-                    ClassFullName = classFullName,
-                    MemberName = memberName,
-                    SourceFilePath = sourceFilePath,
-                    SourceLineNumber = sourceLineNumber
-                };
+            var messageInfo = new ErrorMessage
+            {
+                Message = message,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
 
 #if DEBUG
-                //_globalLogger.Info($"messageInfo = {messageInfo}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
@@ -3216,7 +2950,6 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        [Obsolete("Implement EnableAsyncMessageCreation", true)]
         public void Fatal(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
@@ -3269,32 +3002,26 @@ namespace SymOntoClay.Monitor.Internal
                 }
             }
 
-            Task.Run(() => {
-#if DEBUG
-                //_globalLogger.Info($"NEXT");
-#endif
-
-                var messageInfo = new FatalMessage
-                {
-                    Message = message,
-                    DateTimeStamp = now,
-                    NodeId = _nodeId,
-                    ThreadId = _threadId,
-                    GlobalMessageNumber = globalMessageNumber,
-                    MessageNumber = messageNumber,
-                    MessagePointId = messagePointId,
-                    ClassFullName = classFullName,
-                    MemberName = memberName,
-                    SourceFilePath = sourceFilePath,
-                    SourceLineNumber = sourceLineNumber
-                };
+            var messageInfo = new FatalMessage
+            {
+                Message = message,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
 
 #if DEBUG
-                //_globalLogger.Info($"messageInfo = {messageInfo}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-            });
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
@@ -3305,6 +3032,24 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
             Fatal(messagePointId, exception?.ToString(), memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        private void ProcessMessage(BaseMessage messageInfo)
+        {
+            if (_context.EnableAsyncMessageCreation)
+            {
+                Task.Run(() => {
+#if DEBUG
+                    //_globalLogger.Info($"NEXT");
+#endif
+
+                    _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
+                });
+            }
+            else
+            {
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
+            }
         }
     }
 }

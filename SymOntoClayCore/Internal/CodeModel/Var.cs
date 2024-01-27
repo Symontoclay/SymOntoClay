@@ -34,6 +34,9 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
+    /// <summary>
+    /// Represents a variable.
+    /// </summary>
     public class Var: CodeItem
     {
         private static ILogger _logger = LogManager.GetCurrentClassLogger();

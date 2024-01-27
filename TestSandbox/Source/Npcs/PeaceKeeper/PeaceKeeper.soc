@@ -12,9 +12,15 @@
 
 action Go 
 {
+    on leave 
+	{
+	   `stop shoot`(); 
+	}
+
     op () => 
     {
         'Begin Go' >> @>log;
+		shoot();
         await;
         'End Go' >> @>log;
     }
@@ -25,6 +31,20 @@ action Go
         @x >> @>log;
         complete action;
     }
+
+    fun shoot()
+	{
+	    'Begin shoot' >> @>log;
+	    //@@host.`start shoot`();
+		'End shoot' >> @>log;
+	}
+
+	fun `stop shoot`()
+	{
+	    'Begin stop shoot' >> @>log;
+	    //@@host.`stop shoot`();
+		'End stop shoot' >> @>log;
+	}
 }
 
 /*app PeaceKeeper

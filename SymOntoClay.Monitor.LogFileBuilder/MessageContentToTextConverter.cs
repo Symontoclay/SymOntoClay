@@ -262,7 +262,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             if (!string.IsNullOrWhiteSpace(kindOfCodeItemDescriptor))
             {
-                if(kindOfCodeItemDescriptor != "fun")
+                if(kindOfCodeItemDescriptor != "fun" 
+                    && kindOfCodeItemDescriptor != "op")
                 {
 #if DEBUG
                     _globalLogger.Info($"label = {label}");

@@ -5421,6 +5421,11 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Value.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="T:SymOntoClay.Core.Internal.CodeModel.Var">
+            <summary>
+            Represents a variable.
+            </summary>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Var.Kind">
             <inheritdoc/>
         </member>

@@ -9315,9 +9315,40 @@
         <member name="M:SymOntoClay.Core.Internal.Threads.SyncActivePeriodicObject.Dispose">
             <inheritdoc/>
         </member>
+        <member name="T:SymOntoClay.Core.Internal.Threads.ThreadTask">
+            <summary>
+            Represents an asynchronous operation.
+            This is a wrapper over Thread.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Threads.ThreadTask.Status">
+            <summary>
+            Gets the <see cref="T:SymOntoClay.Core.Internal.Threads.ThreadTaskStatus"/> of this task.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Threads.ThreadTask.IsCanceled">
+            <summary>
+            Gets whether this task has completed execution due to being canceled.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Threads.ThreadTask.IsCompleted">
+            <summary>
+            Gets a value that indicates whether the task has completed.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Threads.ThreadTask.IsCompletedSuccessfully">
+            <summary>
+            Gets whether the task ran to completion.
+            </summary>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Threads.ThreadTask.IsFaulted">
+            <summary>
+            Gets whether the task completed due to an unhandled exception.
+            </summary>
+        </member>
         <member name="T:SymOntoClay.Core.Internal.Threads.ThreadTaskStatus">
             <summary>
-            Represents the current stage in the lifecycle of a ThreadTask.
+            Represents the current stage in the lifecycle of a <see cref="T:SymOntoClay.Core.Internal.Threads.ThreadTask"/>.
             </summary>
         </member>
         <member name="F:SymOntoClay.Core.Internal.Threads.ThreadTaskStatus.Created">
@@ -9352,7 +9383,7 @@
         </member>
         <member name="F:SymOntoClay.Core.Internal.Threads.ThreadTaskStatus.Canceled">
             <summary>
-            The task acknowledged cancellation by throwing an OperationCanceledException with its own CancellationToken while the token was in signaled state, or the task's CancellationToken was already signaled before the task started executing.
+            The task acknowledged cancellation by throwing an <see cref="T:System.OperationCanceledException"/> with its own <see cref="T:System.Threading.CancellationToken"/> while the token was in signaled state, or the task's <see cref="T:System.Threading.CancellationToken"/> was already signaled before the task started executing.
             </summary>
         </member>
         <member name="F:SymOntoClay.Core.Internal.Threads.ThreadTaskStatus.Faulted">

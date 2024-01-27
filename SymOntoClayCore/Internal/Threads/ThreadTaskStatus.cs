@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Threads
 {
     /// <summary>
-    /// Represents the current stage in the lifecycle of a ThreadTask.
+    /// Represents the current stage in the lifecycle of a <see cref="ThreadTask"/>.
     /// </summary>
     public enum ThreadTaskStatus
     {
@@ -34,7 +35,7 @@ namespace SymOntoClay.Core.Internal.Threads
         /// </summary>
         RanToCompletion = 5,
         /// <summary>
-        /// The task acknowledged cancellation by throwing an OperationCanceledException with its own CancellationToken while the token was in signaled state, or the task's CancellationToken was already signaled before the task started executing.
+        /// The task acknowledged cancellation by throwing an <see cref="OperationCanceledException"/> with its own <see cref="CancellationToken"/> while the token was in signaled state, or the task's <see cref="CancellationToken"/> was already signaled before the task started executing.
         /// </summary>
         Canceled = 6,
         /// <summary>

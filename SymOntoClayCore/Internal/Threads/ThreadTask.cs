@@ -5,6 +5,10 @@ using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Threads
 {
+    /// <summary>
+    /// Represents an asynchronous operation.
+    /// This is a wrapper over Thread.
+    /// </summary>
     public class ThreadTask
     {
 #if DEBUG
@@ -35,6 +39,9 @@ namespace SymOntoClay.Core.Internal.Threads
             _action = action;
         }
 
+        /// <summary>
+        /// Gets the <see cref="ThreadTaskStatus"/> of this task.
+        /// </summary>
         public ThreadTaskStatus Status
         {
             get
@@ -46,6 +53,9 @@ namespace SymOntoClay.Core.Internal.Threads
             }
         }
 
+        /// <summary>
+        /// Gets whether this task has completed execution due to being canceled.
+        /// </summary>
         public bool IsCanceled
         {
             get
@@ -57,6 +67,9 @@ namespace SymOntoClay.Core.Internal.Threads
             }
         }
 
+        /// <summary>
+        /// Gets a value that indicates whether the task has completed.
+        /// </summary>
         public bool IsCompleted
         {
             get
@@ -68,6 +81,9 @@ namespace SymOntoClay.Core.Internal.Threads
             }
         }
 
+        /// <summary>
+        /// Gets whether the task ran to completion.
+        /// </summary>
         public bool IsCompletedSuccessfully
         {
             get
@@ -79,6 +95,9 @@ namespace SymOntoClay.Core.Internal.Threads
             }
         }
 
+        /// <summary>
+        /// Gets whether the task completed due to an unhandled exception.
+        /// </summary>
         public bool IsFaulted
         {
             get

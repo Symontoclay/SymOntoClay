@@ -698,13 +698,28 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 sb.Append(" periodic");
             }
 
-            if(!message.FetchedResults.IsNullOrEmpty())
+            var fetchedResults = message.FetchedResults;
+
+            if (!fetchedResults.IsNullOrEmpty())
             {
 #if DEBUG
-                _globalLogger.Info($"message = {message}");
+                //_globalLogger.Info($"message = {message}");
 #endif
 
-                throw new NotImplementedException();
+                sb.AppendLine();
+                sb.AppendLine("Fetched results:");
+
+                foreach(var result in fetchedResults)
+                {
+                    var strList = new List<string>();
+
+                    foreach (var item in result)
+                    {
+                        strList.Add(item.Label);
+                    }
+
+                    sb.AppendLine(string.Join("; ", strList));
+                }
             }
 
             return sb.ToString();

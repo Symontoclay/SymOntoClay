@@ -1,6 +1,35 @@
 ﻿app PeaceKeeper
 {
     on Enter =>
+    {
+        'Begin' >> @>log;
+ 
+        Go();
+
+        'End' >> @>log;
+    }
+}
+
+action Go 
+{
+    op () => 
+    {
+        'Begin Go' >> @>log;
+        await;
+        'End Go' >> @>log;
+    }
+
+    on {: see(I, $x) :} ($x >> @x) => 
+    {
+        'on Fired' >> @>log;
+        @x >> @>log;
+        complete action;
+    }
+}
+
+/*app PeaceKeeper
+{
+    on Enter =>
 	{
 	    'Begin' >> @>log;
 	    @@host.`stop`();
@@ -31,7 +60,7 @@
 
 	//	'End kill' >> @>log;
 	//}
-}
+}*/
 
 /*app PeaceKeeper
 {

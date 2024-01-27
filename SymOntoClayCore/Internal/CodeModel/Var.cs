@@ -173,18 +173,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            return NToHumanizedString();
+            return NToHumanizedString(options);
         }
 
         /// <inheritdoc/>
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
-            return NToHumanizedString();
+            return NToHumanizedString(options);
         }
 
-        private string NToHumanizedString()
+        private string NToHumanizedString(DebugHelperOptions options)
         {
-            return $"{Name.NameValue}: {TypesListToHumanizedString()}";
+            return $"{Name.NameValue}: {TypesListToHumanizedString()} = {(Value == null ? "NULL" : Value.ToHumanizedLabel(options))}";
         }
 
         /// <inheritdoc/>
@@ -192,7 +192,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             return new MonitoredHumanizedLabel()
             {
-                Label = NToHumanizedString()
+                Label = ToHumanizedLabel()
             };
         }
     }

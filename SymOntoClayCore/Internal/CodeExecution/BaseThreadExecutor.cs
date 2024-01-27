@@ -858,6 +858,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessCompleteAction()
         {
+#if DEBUG
+            Info("0296A5A0-3003-4813-A858-D0A55C68E98B", $"_currentCodeFrame.ExecutionCoordinator.Id = {_currentCodeFrame.ExecutionCoordinator.Id}");
+            Info("2586FC9C-3B5F-4653-B89C-005F58A26E5C", $"_currentCodeFrame.ProcessInfo.ToHumanizedLabel() = {_currentCodeFrame.ProcessInfo.ToHumanizedLabel()}");
+#endif
+
             _currentCodeFrame.ExecutionCoordinator.SetExecutionStatus(Logger, "516B31E8-44B5-4B5A-8101-DDBF1D7DD8D0", ActionExecutionStatus.Complete);
 
             _currentCodeFrame.CurrentPosition++;

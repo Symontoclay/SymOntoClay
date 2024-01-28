@@ -40,5 +40,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         bool IsFinished { get; }
         RuleInstance RuleInstance { get; set; }
         event Action OnFinished;
+
+        void AddProcessInfo(IProcessInfo processInfo);
     }
 }

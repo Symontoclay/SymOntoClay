@@ -22,12 +22,14 @@ SOFTWARE.*/
 
 using Newtonsoft.Json.Linq;
 using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CodeExecution.Helpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -91,6 +93,32 @@ namespace SymOntoClay.Core.Internal.Instances
 
                     if (currIsFinished)
                     {
+                        lock(_processInfosLockObj)
+                        {
+#if DEBUG
+                            logger.Info("A93BAEB1-27A0-4BE2-842F-38660C091ED5", $"actionExecutionStatus = {actionExecutionStatus}; prevExecutionStatus = {prevExecutionStatus}");
+                            logger.Info("E7B51F9E-DC79-422D-90BE-4EAE0D43B9CD", $"_processInfosList.Count = {_processInfosList.Count}");
+#endif
+
+                            if(_processInfosList.Any())
+                            {
+                                var processInfoStatus = ActionExecutionStatusHelper.ToProcessStatus(actionExecutionStatus);
+
+#if DEBUG
+                                logger.Info("EA00316D-C87D-4AFB-8ECA-E6D38405CECC", $"processInfoStatus = {processInfoStatus}");
+#endif
+
+                                foreach (var processInfo in _processInfosList)
+                                {
+#if DEBUG
+                                    logger.Info("A4B5CAF6-F550-415D-B76D-95EC6F7471A4", $"processInfo = {processInfo.ToHumanizedLabel()}");
+#endif
+
+                                    processInfo.SetStatus(logger, messagePointId, processInfoStatus);
+                                }
+                            }
+                        }
+
                         InternalOnFinish?.Invoke();
                     }
                 }
@@ -153,6 +181,23 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         private event Action InternalOnFinish;
+
+        /// <inheritdoc/>
+        public void AddProcessInfo(IProcessInfo processInfo)
+        {
+            lock(_processInfosLockObj)
+            {
+                if(_processInfosList.Contains(processInfo))
+                {
+                    return;
+                }
+
+                _processInfosList.Add(processInfo);
+            }
+        }
+
+        private readonly object _processInfosLockObj = new object();
+        private List<IProcessInfo> _processInfosList = new List<IProcessInfo>();
 
         /// <inheritdoc/>
         public override string ToString()

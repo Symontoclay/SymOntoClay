@@ -101,7 +101,7 @@ namespace TestSandbox
             //TstThreadPoolCount();
             //TstCommandLineParserHandler();
             //TstLogFileBuilderParameterValueConverterToString();
-            //TstLogFileBuilder();
+            TstLogFileBuilder();
             //TstMonitor();
             //TstCreateListByVarsDict();
             //TstDetectDoninantItems();
@@ -177,7 +177,7 @@ namespace TestSandbox
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);

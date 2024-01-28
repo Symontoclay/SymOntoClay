@@ -1637,34 +1637,39 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     return;
                 }
 
-                var lastProcessStatus = currentCodeFrame.LastProcessStatus.Value;
+                var lastProcessStatus = currentCodeFrame.LastProcessStatus;
 
-                switch (lastProcessStatus)
+                if(lastProcessStatus.HasValue)
                 {
-                    case ProcessStatus.Completed:
-                        {
-                            var completeAnnotationSystemEvent = currentCodeFrame.CompleteAnnotationSystemEvent;
+                    var lastProcessStatusValue = lastProcessStatus.Value;
 
-                            if (completeAnnotationSystemEvent != null)
+                    switch (lastProcessStatusValue)
+                    {
+                        case ProcessStatus.Completed:
                             {
-                                ExecCallEvent(completeAnnotationSystemEvent);
+                                var completeAnnotationSystemEvent = currentCodeFrame.CompleteAnnotationSystemEvent;
+
+                                if (completeAnnotationSystemEvent != null)
+                                {
+                                    ExecCallEvent(completeAnnotationSystemEvent);
+                                }
                             }
-                        }
-                        break;
+                            break;
 
-                    case ProcessStatus.WeakCanceled:
-                        {
-                            var weakCancelAnnotationSystemEvent = currentCodeFrame.WeakCancelAnnotationSystemEvent;
-
-                            if(weakCancelAnnotationSystemEvent != null)
+                        case ProcessStatus.WeakCanceled:
                             {
-                                ExecCallEvent(weakCancelAnnotationSystemEvent);
-                            }
-                        }
-                        break;
+                                var weakCancelAnnotationSystemEvent = currentCodeFrame.WeakCancelAnnotationSystemEvent;
 
-                    default:
-                        break;
+                                if (weakCancelAnnotationSystemEvent != null)
+                                {
+                                    ExecCallEvent(weakCancelAnnotationSystemEvent);
+                                }
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
                 }
 
                 currentCodeFrame.NeedsExecCallEvent = false;
@@ -2290,7 +2295,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var codeFrame = item.Item1;
                 var coordinator = item.Item2;
 
-                _context.InstancesStorage.AppendProcessInfo(Logger, codeFrame.ProcessInfo);
+                var processInfo = codeFrame.ProcessInfo;
+
+                coordinator?.AddProcessInfo(processInfo);
+                _context.InstancesStorage.AppendProcessInfo(Logger, processInfo);
 
                 PrepareCodeFrameToSyncExecution(codeFrame, coordinator);
 
@@ -2345,6 +2353,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
             var currentProcessInfo = codeFrame.ProcessInfo;
+
+            coordinator?.AddProcessInfo(currentProcessInfo);
 
             _context.InstancesStorage.AppendProcessInfo(Logger, currentProcessInfo);
 

@@ -7022,6 +7022,9 @@
         <member name="E:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator.OnFinished">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator.AddProcessInfo(SymOntoClay.Core.IProcessInfo)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator.ToString">
             <inheritdoc/>
         </member>

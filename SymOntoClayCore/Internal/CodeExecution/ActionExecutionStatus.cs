@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.Instances;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -37,7 +38,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         WeakCanceled,
         /// <summary>
         /// Special status for options of convertors.
-        /// It is not used in real ExecutionCoordinator.
+        /// It is not used in real <see cref="ExecutionCoordinator"/>.
         /// </summary>
         None
     }

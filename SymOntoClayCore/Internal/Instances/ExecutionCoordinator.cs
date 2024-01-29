@@ -96,8 +96,8 @@ namespace SymOntoClay.Core.Internal.Instances
                         lock(_processInfosLockObj)
                         {
 #if DEBUG
-                            logger.Info("A93BAEB1-27A0-4BE2-842F-38660C091ED5", $"actionExecutionStatus = {actionExecutionStatus}; prevExecutionStatus = {prevExecutionStatus}");
-                            logger.Info("E7B51F9E-DC79-422D-90BE-4EAE0D43B9CD", $"_processInfosList.Count = {_processInfosList.Count}");
+                            //logger.Info("A93BAEB1-27A0-4BE2-842F-38660C091ED5", $"actionExecutionStatus = {actionExecutionStatus}; prevExecutionStatus = {prevExecutionStatus}");
+                            //logger.Info("E7B51F9E-DC79-422D-90BE-4EAE0D43B9CD", $"_processInfosList.Count = {_processInfosList.Count}");
 #endif
 
                             if(_processInfosList.Any())
@@ -105,13 +105,13 @@ namespace SymOntoClay.Core.Internal.Instances
                                 var processInfoStatus = ActionExecutionStatusHelper.ToProcessStatus(actionExecutionStatus);
 
 #if DEBUG
-                                logger.Info("EA00316D-C87D-4AFB-8ECA-E6D38405CECC", $"processInfoStatus = {processInfoStatus}");
+                                //logger.Info("EA00316D-C87D-4AFB-8ECA-E6D38405CECC", $"processInfoStatus = {processInfoStatus}");
 #endif
 
                                 foreach (var processInfo in _processInfosList)
                                 {
 #if DEBUG
-                                    logger.Info("A4B5CAF6-F550-415D-B76D-95EC6F7471A4", $"processInfo = {processInfo.ToHumanizedLabel()}");
+                                    //logger.Info("A4B5CAF6-F550-415D-B76D-95EC6F7471A4", $"processInfo = {processInfo.ToHumanizedLabel()}");
 #endif
 
                                     processInfo.SetStatus(logger, messagePointId, processInfoStatus);

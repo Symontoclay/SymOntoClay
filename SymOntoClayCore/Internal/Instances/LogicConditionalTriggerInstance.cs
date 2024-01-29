@@ -484,7 +484,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private void ProcessSetResultWithNoItems(IMonitorLogger logger, string doTriggerSearchId, bool isPeriodic)
         {
 #if DEBUG
-            Info("7E59750A-B72A-4569-8FEF-A69F609EE24C", $"doTriggerSearchId = {doTriggerSearchId};isPeriodic = {isPeriodic};_triggerConditionNodeObserverContext.IsOn = {_triggerConditionNodeObserverContext.IsOn};{_trigger.ToHumanizedLabel()}");
+            //Info("7E59750A-B72A-4569-8FEF-A69F609EE24C", $"doTriggerSearchId = {doTriggerSearchId};isPeriodic = {isPeriodic};_triggerConditionNodeObserverContext.IsOn = {_triggerConditionNodeObserverContext.IsOn};{_trigger.ToHumanizedLabel()}");
 #endif
 
             if (_triggerConditionNodeObserverContext.IsOn)
@@ -493,7 +493,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Info("0C92CC19-B678-4E6C-9142-602A2BC2FAFD", $"doTriggerSearchId = {doTriggerSearchId};isPeriodic = {isPeriodic};_hasResetHandler = {_hasResetHandler};{_trigger.ToHumanizedLabel()}");
+            //Info("0C92CC19-B678-4E6C-9142-602A2BC2FAFD", $"doTriggerSearchId = {doTriggerSearchId};isPeriodic = {isPeriodic};_hasResetHandler = {_hasResetHandler};{_trigger.ToHumanizedLabel()}");
 #endif
 
             if (!isPeriodic || _hasResetHandler)
@@ -506,7 +506,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Info("792CF069-8EF7-421E-A0B3-52B938FC05B6", $"doTriggerSearchId = {doTriggerSearchId};_hasRuleInstancesList = {_hasRuleInstancesList};{_trigger.ToHumanizedLabel()}");
+            //Info("792CF069-8EF7-421E-A0B3-52B938FC05B6", $"doTriggerSearchId = {doTriggerSearchId};_hasRuleInstancesList = {_hasRuleInstancesList};{_trigger.ToHumanizedLabel()}");
 #endif
 
             if (_hasRuleInstancesList)
@@ -515,7 +515,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
 #if DEBUG
-            Info("DE5D95AD-4B0F-48AF-A125-5DF09F26F8FD", $"doTriggerSearchId = {doTriggerSearchId};Run!!!!!!!!!!!!;{_trigger.ToHumanizedLabel()}");
+            //Info("DE5D95AD-4B0F-48AF-A125-5DF09F26F8FD", $"doTriggerSearchId = {doTriggerSearchId};Run!!!!!!!!!!!!;{_trigger.ToHumanizedLabel()}");
 #endif
 
             var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);

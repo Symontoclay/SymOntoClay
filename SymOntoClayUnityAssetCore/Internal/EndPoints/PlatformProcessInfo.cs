@@ -66,15 +66,14 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         protected override void ProcessPlatformStart(IMonitorLogger logger)
         {
 #if DEBUG
-            logger.Info("3B8AD3FD-CF36-4C4F-8C2D-E8217EAEDEE0", $"Before _task.Start();{ToHumanizedLabel()}");
-            logger.Info("EE039A53-4B2C-4A3F-8D4D-6FD2E5A917A6", $"_task.Status = {_task.Status};{ToHumanizedLabel()}");
+            //logger.Info("3B8AD3FD-CF36-4C4F-8C2D-E8217EAEDEE0", $"Before _task.Start();{ToHumanizedLabel()}");
+            //logger.Info("EE039A53-4B2C-4A3F-8D4D-6FD2E5A917A6", $"_task.Status = {_task.Status};{ToHumanizedLabel()}");
 #endif
             _task.Start();
-            //_task.RunSynchronously();
 
 #if DEBUG
-            logger.Info("26E52663-E5B6-4442-8917-2A6E73B90540", $"After _task.Start();{ToHumanizedLabel()}");
-            logger.Info("5BB6B976-1374-451B-AB2E-B37CDCFA89CD", $"_task.Status = {_task.Status};{ToHumanizedLabel()}");
+            //logger.Info("26E52663-E5B6-4442-8917-2A6E73B90540", $"After _task.Start();{ToHumanizedLabel()}");
+            //logger.Info("5BB6B976-1374-451B-AB2E-B37CDCFA89CD", $"_task.Status = {_task.Status};{ToHumanizedLabel()}");
 #endif
         }
 

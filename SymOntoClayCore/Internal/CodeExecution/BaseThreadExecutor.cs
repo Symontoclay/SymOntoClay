@@ -523,7 +523,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private IMonitorLogger GetTargetLogger(SyncOption syncOption)
         {
 #if DEBUG
-            Info("E95DAA22-EB38-4D72-8C0B-D8A74DB6076D", $"syncOptions = {syncOption}");
+            //Info("E95DAA22-EB38-4D72-8C0B-D8A74DB6076D", $"syncOptions = {syncOption}");
 #endif
 
             switch(syncOption)
@@ -537,7 +537,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 case SyncOption.ChildAsync:
                     {
 #if DEBUG
-                        Info("2F56F914-3967-4260-86A3-083281AD50AA", $"Logger.Id = {Logger.Id}");
+                        //Info("2F56F914-3967-4260-86A3-083281AD50AA", $"Logger.Id = {Logger.Id}");
 #endif
 
                         return _context.MonitorNode.CreateThreadLogger("D855D49C-25C6-4A2B-8951-DEB4A2139E74", Guid.NewGuid().ToString("D"), parentThreadId: Logger.Id);

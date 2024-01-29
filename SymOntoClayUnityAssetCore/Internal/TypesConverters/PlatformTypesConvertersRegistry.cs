@@ -319,8 +319,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
         public Value ConvertToValue(IMonitorLogger logger, Type sourceType, object sourceValue, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
 #if DEBUG
-            logger.Info("FC273C9B-1CC9-4621-A2F0-2F43C8652748", $"sourceType.FullName = {sourceType.FullName}");
-            logger.Info("0C2C5887-CA2F-4202-8D98-B726461CA131", $"sourceValue = {sourceValue}");
+            //logger.Info("FC273C9B-1CC9-4621-A2F0-2F43C8652748", $"sourceType.FullName = {sourceType.FullName}");
+            //logger.Info("0C2C5887-CA2F-4202-8D98-B726461CA131", $"sourceValue = {sourceValue}");
 #endif
 
             if(sourceValue == null)
@@ -343,8 +343,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
         private Value NConvertToValue(IMonitorLogger logger, Type sourceType, object sourceValue, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
 #if DEBUG
-            logger.Info("BBE87F7A-E429-4428-A57D-2FE844A6138F", $"sourceType.FullName = {sourceType.FullName}");
-            logger.Info("6DB7DD53-4148-4F9F-8B2B-73510EBBEE8E", $"sourceValue = {sourceValue}");
+            //logger.Info("BBE87F7A-E429-4428-A57D-2FE844A6138F", $"sourceType.FullName = {sourceType.FullName}");
+            //logger.Info("6DB7DD53-4148-4F9F-8B2B-73510EBBEE8E", $"sourceValue = {sourceValue}");
 #endif
 
             if (sourceType == typeof(float) || 

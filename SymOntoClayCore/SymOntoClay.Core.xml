@@ -355,7 +355,7 @@
         <member name="F:SymOntoClay.Core.Internal.CodeExecution.ActionExecutionStatus.None">
             <summary>
             Special status for options of convertors.
-            It is not used in real ExecutionCoordinator.
+            It is not used in real <see cref="T:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator"/>.
             </summary>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.Dispose">

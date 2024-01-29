@@ -139,9 +139,9 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly LogicConditionalTriggerExecutor _resetConditionalTriggerExecutor;
 
         private readonly object _lockObj = new object();
-        private bool _needRun;
+        private volatile bool _needRun;
 
-        private int _runInterval = 1000;
+        private int _runInterval = 100;
 
         private readonly bool _hasResetConditions;
         private readonly bool _hasResetHandler;
@@ -193,14 +193,15 @@ namespace SymOntoClay.Core.Internal.Instances
             try
             {
 #if DEBUG
-                Info("0611DFCC-6C77-4E9D-A587-96BC0E9189D7", $"_needRun = {_needRun};{_trigger.ToHumanizedLabel()}");
+                //Info("0611DFCC-6C77-4E9D-A587-96BC0E9189D7", $"_needRun = {_needRun};{_trigger.ToHumanizedLabel()}");
 #endif
+
+                Thread.Sleep(_runInterval);
 
                 lock (_lockObj)
                 {
-                    if (!_needRun) 
+                    if (!_needRun)
                     {
-                        Thread.Sleep(_runInterval);
                         return true;
                     }
 
@@ -208,8 +209,6 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
 
                 DoSearch(Logger);
-
-                Thread.Sleep(_runInterval);
 
                 return true;
             }

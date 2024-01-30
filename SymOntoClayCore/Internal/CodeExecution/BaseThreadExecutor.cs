@@ -164,7 +164,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private long? _endOfTargetDuration;
         private List<ThreadTask> _waitedTasksList;
         private List<IProcessInfo> _waitedProcessInfoList;
-        private ThreadTask _pseudoSyncTask;
 
         private readonly StrongIdentifierValue _defaultCtorName;
         private readonly StrongIdentifierValue _timeoutName;
@@ -1642,12 +1641,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void ProcessExecCallEvent()
         {
             var currentCodeFrame = _currentCodeFrame;
+            var pseudoSyncTask = currentCodeFrame.PseudoSyncTask;
 
 #if DEBUG
-            Info("AD8D2320-FA82-4575-ACF6-638EF422A493", $"_pseudoSyncTask == null = {_pseudoSyncTask == null}");
+            Info("AD8D2320-FA82-4575-ACF6-638EF422A493", $"pseudoSyncTask == null = {pseudoSyncTask == null}");
 #endif
 
-            if (_pseudoSyncTask == null)
+            if (pseudoSyncTask == null)
             {
 #if DEBUG
                 Info("5AEFA952-C546-4367-9F92-AEBB86D23A7D", $"currentCodeFrame.NeedsExecCallEvent = {currentCodeFrame.NeedsExecCallEvent}");
@@ -1709,15 +1709,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            Info("51153D21-72AF-488E-A475-F40A667117CC", $"_pseudoSyncTask?.Status = {_pseudoSyncTask?.Status}");
+            Info("51153D21-72AF-488E-A475-F40A667117CC", $"pseudoSyncTask?.Status = {pseudoSyncTask?.Status}");
 #endif
 
-            if (_pseudoSyncTask.Status == ThreadTaskStatus.Running)
+            if (pseudoSyncTask.Status == ThreadTaskStatus.Running)
             {
                 return;
             }
 
-            _pseudoSyncTask = null;
+            currentCodeFrame.PseudoSyncTask = null;
 
             _currentCodeFrame.CurrentPosition++;
         }
@@ -2445,7 +2445,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                         var task = threadExecutor.Start();
 
-                        _pseudoSyncTask = task.AsTaskValue.SystemTask;
+                        targetCurrentCodeFrame.PseudoSyncTask = task.AsTaskValue.SystemTask;
                     }
                     break;
 

@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Core.Internal.Instances;
+using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -60,6 +61,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public AnnotationSystemEvent CancelAnnotationSystemEvent { get; set; }
         public AnnotationSystemEvent WeakCancelAnnotationSystemEvent { get; set; }
         public AnnotationSystemEvent ErrorAnnotationSystemEvent { get; set; }
+        public ThreadTask PseudoSyncTask { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -112,6 +114,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintObjProp(n, nameof(CancelAnnotationSystemEvent), CancelAnnotationSystemEvent);
             sb.PrintObjProp(n, nameof(WeakCancelAnnotationSystemEvent), WeakCancelAnnotationSystemEvent);
             sb.PrintObjProp(n, nameof(ErrorAnnotationSystemEvent), ErrorAnnotationSystemEvent);
+            sb.PrintExisting(n, nameof(PseudoSyncTask), PseudoSyncTask);
 
             return sb.ToString();
         }
@@ -167,6 +170,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintShortObjProp(n, nameof(CancelAnnotationSystemEvent), CancelAnnotationSystemEvent);
             sb.PrintShortObjProp(n, nameof(WeakCancelAnnotationSystemEvent), WeakCancelAnnotationSystemEvent);
             sb.PrintShortObjProp(n, nameof(ErrorAnnotationSystemEvent), ErrorAnnotationSystemEvent);
+            sb.PrintExisting(n, nameof(PseudoSyncTask), PseudoSyncTask);
 
             return sb.ToString();
         }
@@ -222,6 +226,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintExisting(n, nameof(CancelAnnotationSystemEvent), CancelAnnotationSystemEvent);
             sb.PrintExisting(n, nameof(WeakCancelAnnotationSystemEvent), WeakCancelAnnotationSystemEvent);
             sb.PrintExisting(n, nameof(ErrorAnnotationSystemEvent), ErrorAnnotationSystemEvent);
+            sb.PrintExisting(n, nameof(PseudoSyncTask), PseudoSyncTask);
 
             return sb.ToString();
         }

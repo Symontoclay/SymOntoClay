@@ -1672,5 +1672,65 @@ action kill
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void Case9()
+        {
+            var text = @"app PeaceKeeper
+{
+    on Enter =>
+    {
+        'Begin' >> @>log;
+ 
+        Go();
+
+        'End' >> @>log;
+    }
+}
+
+action Go
+{
+    op () => 
+    {
+        'Begin Go' >> @>log;
+		Run()[: on complete { 'on complete Run' >> @>log; complete action;} :];
+		'After Run' >> @>log;
+        await;
+        'End Go' >> @>log;
+    }
+}
+
+action Run
+{
+    op () => 
+    {
+        'Begin Run' >> @>log;
+		Swim()[: on complete { 'on complete Swim' >> @>log; complete action;} :];
+		'After Swim' >> @>log;
+        await;
+        'End Run' >> @>log;
+    }
+}
+
+action Swim
+{
+    op () => 
+    {
+        'Begin Swim' >> @>log;
+        await;
+        'End Swim' >> @>log;
+    }
+
+	on {: see(I, $x) :} ($x >> @x) => 
+    {
+        'on Fired' >> @>log;
+        @x >> @>log;
+        complete action;
+    }
+}";
+
+            throw new NotImplementedException();
+        }
     }
 }

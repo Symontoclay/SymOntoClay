@@ -858,8 +858,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void ProcessCompleteAction()
         {
 #if DEBUG
-            Info("0296A5A0-3003-4813-A858-D0A55C68E98B", $"_currentCodeFrame.ExecutionCoordinator.Id = {_currentCodeFrame.ExecutionCoordinator.Id}");
-            Info("2586FC9C-3B5F-4653-B89C-005F58A26E5C", $"_currentCodeFrame.ProcessInfo.ToHumanizedLabel() = {_currentCodeFrame.ProcessInfo.ToHumanizedLabel()}");
+            //Info("0296A5A0-3003-4813-A858-D0A55C68E98B", $"_currentCodeFrame.ExecutionCoordinator.Id = {_currentCodeFrame.ExecutionCoordinator.Id}");
+            //Info("2586FC9C-3B5F-4653-B89C-005F58A26E5C", $"_currentCodeFrame.ProcessInfo.ToHumanizedLabel() = {_currentCodeFrame.ProcessInfo.ToHumanizedLabel()}");
 #endif
 
             _currentCodeFrame.ExecutionCoordinator.SetExecutionStatus(Logger, "516B31E8-44B5-4B5A-8101-DDBF1D7DD8D0", ActionExecutionStatus.Complete);
@@ -1376,7 +1376,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void GoBackToPrevCodeFrame(string messagePointId, ActionExecutionStatus targetActionExecutionStatus)
         {
 #if DEBUG
-            Info("A557578A-7C45-4D7E-B5F6-66CEE6E99D6F", $"messagePointId = {messagePointId}; targetActionExecutionStatus = {targetActionExecutionStatus}");
+            //Info("A557578A-7C45-4D7E-B5F6-66CEE6E99D6F", $"messagePointId = {messagePointId}; targetActionExecutionStatus = {targetActionExecutionStatus}");
 #endif
 
             Logger.GoBackToPrevCodeFrame(messagePointId, (int)targetActionExecutionStatus, targetActionExecutionStatus.ToString());
@@ -1405,12 +1405,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var currentProcessInfo = _currentCodeFrame.ProcessInfo;
 
-            ProcessStatus? lastProcessStatus = null;
-
             var currentProcessInfoStatus = currentProcessInfo.Status;
 
 #if DEBUG
-            Info("E03BAE1E-DD4F-4474-93B3-06CE775797FA", $"messagePointId = {messagePointId}; currentProcessInfoStatus = {currentProcessInfoStatus}");
+            //Info("E03BAE1E-DD4F-4474-93B3-06CE775797FA", $"messagePointId = {messagePointId}; currentProcessInfoStatus = {currentProcessInfoStatus}");
 #endif
 
             if (currentProcessInfoStatus == ProcessStatus.Running)
@@ -1438,8 +1436,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     default:
                         throw new ArgumentOutOfRangeException(nameof(targetActionExecutionStatus), targetActionExecutionStatus, null);
                 }
-
-                //lastProcessStatus = currentProcessInfo.Status;
             }
             else
             {
@@ -1456,7 +1452,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 }
             }
 
-            lastProcessStatus = currentProcessInfo.Status;
+            var lastProcessStatus = currentProcessInfo.Status;
 
             _codeFrames.Pop();
 
@@ -1477,7 +1473,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 }
 
 #if DEBUG
-                Info("454EF07F-92AC-4285-8438-17F27291BD65", $"messagePointId = {messagePointId}; lastProcessStatus = {lastProcessStatus}");
+                //Info("454EF07F-92AC-4285-8438-17F27291BD65", $"messagePointId = {messagePointId}; lastProcessStatus = {lastProcessStatus}");
 #endif
 
                 SetUpCurrentCodeFrame(lastProcessStatus);
@@ -1644,13 +1640,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var pseudoSyncTask = currentCodeFrame.PseudoSyncTask;
 
 #if DEBUG
-            Info("AD8D2320-FA82-4575-ACF6-638EF422A493", $"pseudoSyncTask == null = {pseudoSyncTask == null}");
+            //Info("AD8D2320-FA82-4575-ACF6-638EF422A493", $"pseudoSyncTask == null = {pseudoSyncTask == null}");
 #endif
 
             if (pseudoSyncTask == null)
             {
 #if DEBUG
-                Info("5AEFA952-C546-4367-9F92-AEBB86D23A7D", $"currentCodeFrame.NeedsExecCallEvent = {currentCodeFrame.NeedsExecCallEvent}");
+                //Info("5AEFA952-C546-4367-9F92-AEBB86D23A7D", $"currentCodeFrame.NeedsExecCallEvent = {currentCodeFrame.NeedsExecCallEvent}");
 #endif
 
                 if (!currentCodeFrame.NeedsExecCallEvent)
@@ -1662,7 +1658,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var lastProcessStatus = currentCodeFrame.LastProcessStatus;
 
 #if DEBUG
-                Info("B3BCD764-486B-4DF0-90CA-3120249A00D7", $"lastProcessStatus = {lastProcessStatus}");
+                //Info("B3BCD764-486B-4DF0-90CA-3120249A00D7", $"lastProcessStatus = {lastProcessStatus}");
 #endif
 
                 if(lastProcessStatus.HasValue)
@@ -1709,7 +1705,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
 #if DEBUG
-            Info("51153D21-72AF-488E-A475-F40A667117CC", $"pseudoSyncTask?.Status = {pseudoSyncTask?.Status}");
+            //Info("51153D21-72AF-488E-A475-F40A667117CC", $"pseudoSyncTask?.Status = {pseudoSyncTask?.Status}");
 #endif
 
             if (pseudoSyncTask.Status == ThreadTaskStatus.Running)
@@ -2241,7 +2237,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var targetLocalContext = ownLocalCodeExecutionContext == null? _currentCodeFrame.LocalContext : ownLocalCodeExecutionContext;
 
 #if DEBUG
-            Info("4496A69E-77C4-4A6F-A2CF-D53E98F466A0", $"executable.IsSystemDefined = {executable.IsSystemDefined}");
+            //Info("4496A69E-77C4-4A6F-A2CF-D53E98F466A0", $"executable.IsSystemDefined = {executable.IsSystemDefined}");
 #endif
 
             if (executable.IsSystemDefined)
@@ -2434,10 +2430,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 case SyncOption.PseudoSync:
                     {
-#if DEBUG
-                        Info("F4E6FFD9-0354-4266-812B-5310EC7EE63B", $"case SyncOption.PseudoSync: codeFrame = {codeFrame.ToDbgString()}");
-#endif
-
                         PrepareCodeFrameToSyncExecution(codeFrame, coordinator);
 
                         var threadExecutor = new AsyncThreadExecutor(_context);

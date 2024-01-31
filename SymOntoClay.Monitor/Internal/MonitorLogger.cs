@@ -1495,7 +1495,75 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void CancelProcessInfo(string messagePointId, string processInfoId, Enum reasonOfChangeStatus, List<Changer> changers, string callMethodId,
+        public void StartProcessInfo(string messagePointId, string processInfoId, MonitoredHumanizedLabel processInfo,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"processInfoId = {processInfoId}");
+            _globalLogger.Info($"processInfo = {processInfo}");
+            _globalLogger.Info($"memberName = {memberName}");
+            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+            if (!_features.EnableStartProcessInfo)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            var messageInfo = new StartProcessInfoMessage
+            {
+                ProcessInfo = processInfo,
+                ProcessInfoId = processInfoId,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
+
+#if DEBUG
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+            ProcessMessage(messageInfo);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void CancelProcessInfo(string messagePointId, string processInfoId, MonitoredHumanizedLabel processInfo, Enum reasonOfChangeStatus, List<Changer> changers, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
@@ -1503,6 +1571,7 @@ namespace SymOntoClay.Monitor.Internal
 #if DEBUG
             //_globalLogger.Info($"messagePointId = {messagePointId}");
             //_globalLogger.Info($"processInfoId = {processInfoId}");
+            //_globalLogger.Info($"processInfo = {processInfo}");
             //_globalLogger.Info($"reasonOfChangeStatus = {reasonOfChangeStatus}");
             //_globalLogger.Info($"changers = {changers.WriteListToString()}");
             //_globalLogger.Info($"callMethodId = {callMethodId}");
@@ -1542,6 +1611,7 @@ namespace SymOntoClay.Monitor.Internal
 
             var messageInfo = new CancelProcessInfoMessage
             {
+                ProcessInfo = processInfo,
                 CancelledObjId = processInfoId,
                 ReasonOfChangeStatus = Convert.ToInt32(reasonOfChangeStatus),
                 ReasonOfChangeStatusStr = reasonOfChangeStatus?.ToString(),
@@ -1568,7 +1638,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void WeakCancelProcessInfo(string messagePointId, string processInfoId, Enum reasonOfChangeStatus, List<Changer> changers, string callMethodId,
+        public void WeakCancelProcessInfo(string messagePointId, string processInfoId, MonitoredHumanizedLabel processInfo, Enum reasonOfChangeStatus, List<Changer> changers, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
@@ -1576,6 +1646,7 @@ namespace SymOntoClay.Monitor.Internal
 #if DEBUG
             //_globalLogger.Info($"messagePointId = {messagePointId}");
             //_globalLogger.Info($"processInfoId = {processInfoId}");
+            //_globalLogger.Info($"processInfo = {processInfo}");
             //_globalLogger.Info($"reasonOfChangeStatus = {reasonOfChangeStatus}");
             //_globalLogger.Info($"changers = {changers.WriteListToString()}");
             //_globalLogger.Info($"callMethodId = {callMethodId}");
@@ -1615,6 +1686,7 @@ namespace SymOntoClay.Monitor.Internal
 
             var messageInfo = new WeakCancelProcessInfoMessage
             {
+                ProcessInfo = processInfo,
                 CancelledObjId = processInfoId,
                 ReasonOfChangeStatus = Convert.ToInt32(reasonOfChangeStatus),
                 ReasonOfChangeStatusStr = reasonOfChangeStatus?.ToString(),
@@ -1790,7 +1862,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void SetProcessInfoStatus(string messagePointId, string processInfoId, Enum status, Enum prevStatus, List<Changer> changers, string callMethodId,
+        public void SetProcessInfoStatus(string messagePointId, string processInfoId, MonitoredHumanizedLabel processInfo, Enum status, Enum prevStatus, List<Changer> changers, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
@@ -1798,6 +1870,7 @@ namespace SymOntoClay.Monitor.Internal
 #if DEBUG
             //_globalLogger.Info($"messagePointId = {messagePointId}");
             //_globalLogger.Info($"processInfoId = {processInfoId}");
+            //_globalLogger.Info($"processInfo = {processInfo}");
             //_globalLogger.Info($"status = {status}");
             //_globalLogger.Info($"prevStatus = {prevStatus}");
             //_globalLogger.Info($"changers = {changers.WriteListToString()}");
@@ -1838,12 +1911,85 @@ namespace SymOntoClay.Monitor.Internal
 
             var messageInfo = new SetProcessInfoStatusMessage
             {
+                ProcessInfo = processInfo,
                 ObjId = processInfoId,
                 Status = Convert.ToInt32(status),
                 StatusStr = status?.ToString(),
                 PrevStatus = Convert.ToInt32(prevStatus),
                 PrevStatusStr = prevStatus?.ToString(),
                 Changers = changers,
+                CallMethodId = callMethodId,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
+
+#if DEBUG
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+            ProcessMessage(messageInfo);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void WaitProcessInfo(string messagePointId, string waitingProcessInfoId, MonitoredHumanizedLabel waitingProcessInfo, List<MonitoredHumanizedLabel> processes, string callMethodId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"waitingProcessInfoId = {waitingProcessInfoId}");
+            //_globalLogger.Info($"waitingProcessInfo = {waitingProcessInfo}");
+            //_globalLogger.Info($"processes = {processes.WriteListToString()}");
+            //_globalLogger.Info($"callMethodId = {callMethodId}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+            if (!_features.EnableWaitProcessInfo)
+            {
+                return;
+            }
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            var messageInfo = new WaitProcessInfoMessage
+            {
+                WaitingProcessInfo = waitingProcessInfo,
+                WaitingProcessInfoId = waitingProcessInfoId,
+                Processes = processes,
                 CallMethodId = callMethodId,
                 DateTimeStamp = now,
                 NodeId = _nodeId,

@@ -59,7 +59,7 @@ namespace SymOntoClay.Core.Internal.Helpers
 
             while(true)
             {
-                logger.Wait("77298A46-278C-4DC9-B124-BB71D068EBB1", waitingProcess?.Id, waitingProcess?.ToLabel(logger), processes.Select(p => p.ToLabel(logger)).ToList(), callMethodId);
+                logger.WaitProcessInfo("77298A46-278C-4DC9-B124-BB71D068EBB1", waitingProcess?.Id, waitingProcess?.ToLabel(logger), processes.Select(p => p.ToLabel(logger)).ToList(), callMethodId);
 
 #if DEBUG
                 //logger.Info("F473B943-69C3-4B34-8D86-F7538F3A85B2", $"processes = {processes.Select(p => $"{p.Id}:{p.IsFinished(logger)};{p.ToHumanizedLabel()}").WritePODListToString()}");

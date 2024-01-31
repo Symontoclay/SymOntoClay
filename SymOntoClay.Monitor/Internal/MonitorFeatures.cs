@@ -68,6 +68,9 @@ namespace SymOntoClay.Monitor.Internal
         public bool EnableGoBackToPrevCodeFrame { get; set; }
 
         /// <inheritdoc/>
+        public bool EnableStartProcessInfo { get; set; }
+
+        /// <inheritdoc/>
         public bool EnableCancelProcessInfo { get; set; }
 
         /// <inheritdoc/>
@@ -81,6 +84,9 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         public bool EnableSetProcessInfoStatus { get; set; }
+
+        /// <inheritdoc/>
+        public bool EnableWaitProcessInfo { get; set; }
 
         /// <inheritdoc/>
         public bool EnableRunLifecycleTrigger { get; set; }
@@ -158,11 +164,13 @@ namespace SymOntoClay.Monitor.Internal
             result.EnableCodeFrame = EnableCodeFrame;
             result.EnableLeaveThreadExecutor = EnableLeaveThreadExecutor;
             result.EnableGoBackToPrevCodeFrame = EnableGoBackToPrevCodeFrame;
+            result.EnableStartProcessInfo = EnableStartProcessInfo;
             result.EnableCancelProcessInfo = EnableCancelProcessInfo;
             result.EnableWeakCancelProcessInfo = EnableWeakCancelProcessInfo;
             result.EnableCancelInstanceExecution = EnableCancelInstanceExecution;
             result.EnableSetExecutionCoordinatorStatus = EnableSetExecutionCoordinatorStatus;
             result.EnableSetProcessInfoStatus = EnableSetProcessInfoStatus;
+            result.EnableWaitProcessInfo = EnableWaitProcessInfo;
             result.EnableRunLifecycleTrigger = EnableRunLifecycleTrigger;
             result.EnableDoTriggerSearch = EnableDoTriggerSearch;
             result.EnableEndDoTriggerSearch = EnableEndDoTriggerSearch;
@@ -219,11 +227,13 @@ namespace SymOntoClay.Monitor.Internal
             sb.AppendLine($"{spaces}{nameof(EnableCodeFrame)} = {EnableCodeFrame}");
             sb.AppendLine($"{spaces}{nameof(EnableLeaveThreadExecutor)} = {EnableLeaveThreadExecutor}");
             sb.AppendLine($"{spaces}{nameof(EnableGoBackToPrevCodeFrame)} = {EnableGoBackToPrevCodeFrame}");
+            sb.AppendLine($"{spaces}{nameof(EnableStartProcessInfo)} = {EnableStartProcessInfo}");
             sb.AppendLine($"{spaces}{nameof(EnableCancelProcessInfo)} = {EnableCancelProcessInfo}");
             sb.AppendLine($"{spaces}{nameof(EnableWeakCancelProcessInfo)} = {EnableWeakCancelProcessInfo}");
             sb.AppendLine($"{spaces}{nameof(EnableCancelInstanceExecution)} = {EnableCancelInstanceExecution}");
             sb.AppendLine($"{spaces}{nameof(EnableSetExecutionCoordinatorStatus)} = {EnableSetExecutionCoordinatorStatus}");
             sb.AppendLine($"{spaces}{nameof(EnableSetProcessInfoStatus)} = {EnableSetProcessInfoStatus}");
+            sb.AppendLine($"{spaces}{nameof(EnableWaitProcessInfo)} = {EnableWaitProcessInfo}");
             sb.AppendLine($"{spaces}{nameof(EnableRunLifecycleTrigger)} = {EnableRunLifecycleTrigger}");
             sb.AppendLine($"{spaces}{nameof(EnableDoTriggerSearch)} = {EnableDoTriggerSearch}");
             sb.AppendLine($"{spaces}{nameof(EnableEndDoTriggerSearch)} = {EnableEndDoTriggerSearch}");

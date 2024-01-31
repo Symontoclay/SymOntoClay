@@ -26,11 +26,13 @@ namespace SymOntoClay.Monitor.Common
         bool EnableCodeFrame { get; }
         bool EnableLeaveThreadExecutor { get; }
         bool EnableGoBackToPrevCodeFrame { get; }
+        bool EnableStartProcessInfo { get; }
         bool EnableCancelProcessInfo { get; }
         bool EnableWeakCancelProcessInfo { get; }
         bool EnableCancelInstanceExecution { get; }
         bool EnableSetExecutionCoordinatorStatus { get; }
         bool EnableSetProcessInfoStatus { get; }
+        bool EnableWaitProcessInfo { get; }
         bool EnableRunLifecycleTrigger { get; }
         bool EnableDoTriggerSearch { get; }
         bool EnableEndDoTriggerSearch { get; }

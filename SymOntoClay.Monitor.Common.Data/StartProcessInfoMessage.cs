@@ -6,11 +6,12 @@ using System.Text;
 
 namespace SymOntoClay.Monitor.Common.Data
 {
-    public class CancelProcessInfoMessage: BaseCancelMessage
+    public class StartProcessInfoMessage: BaseMessage
     {
         /// <inheritdoc/>
-        public override KindOfMessage KindOfMessage => KindOfMessage.CancelProcessInfo;
+        public override KindOfMessage KindOfMessage => KindOfMessage.StartProcessInfo;
 
+        public string ProcessInfoId {  get; set; }
         public MonitoredHumanizedLabel ProcessInfo { get; set; }
 
         /// <inheritdoc/>
@@ -19,6 +20,7 @@ namespace SymOntoClay.Monitor.Common.Data
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(ProcessInfoId)} = {ProcessInfoId}");
             sb.PrintObjProp(n, nameof(ProcessInfo), ProcessInfo);
 
             sb.Append(base.PropertiesToString(n));

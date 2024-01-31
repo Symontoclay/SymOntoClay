@@ -96,11 +96,13 @@ namespace SymOntoClay.Monitor
                     EnableCodeFrame = true,
                     EnableLeaveThreadExecutor = true,
                     EnableGoBackToPrevCodeFrame = true,
+                    EnableStartProcessInfo = true,
                     EnableCancelProcessInfo = true,
                     EnableWeakCancelProcessInfo = true,
                     EnableCancelInstanceExecution = true,
                     EnableSetExecutionCoordinatorStatus = true,
                     EnableSetProcessInfoStatus = true,
+                    EnableWaitProcessInfo = true,
                     EnableRunLifecycleTrigger = true,
 
                     EnableDoTriggerSearch = true,
@@ -326,6 +328,14 @@ namespace SymOntoClay.Monitor
             }
         }
 
+        bool IMonitorFeatures.EnableStartProcessInfo
+        {
+            get
+            {
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableStartProcessInfo;
+            }
+        }
+
         bool IMonitorFeatures.EnableCancelProcessInfo
         {
             get
@@ -363,6 +373,14 @@ namespace SymOntoClay.Monitor
             get
             {
                 return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableSetProcessInfoStatus;
+            }
+        }
+
+        bool IMonitorFeatures.EnableWaitProcessInfo
+        {
+            get
+            {
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableWaitProcessInfo;
             }
         }
 
@@ -549,11 +567,13 @@ namespace SymOntoClay.Monitor
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableCodeFrame)} = {monitorFeatures.EnableCodeFrame}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableLeaveThreadExecutor)} = {monitorFeatures.EnableLeaveThreadExecutor}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableGoBackToPrevCodeFrame)} = {monitorFeatures.EnableGoBackToPrevCodeFrame}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableStartProcessInfo)} = {monitorFeatures.EnableStartProcessInfo}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableCancelProcessInfo)} = {monitorFeatures.EnableCancelProcessInfo}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableWeakCancelProcessInfo)} = {monitorFeatures.EnableWeakCancelProcessInfo}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableCancelInstanceExecution)} = {monitorFeatures.EnableCancelInstanceExecution}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableSetExecutionCoordinatorStatus)} = {monitorFeatures.EnableSetExecutionCoordinatorStatus}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableSetProcessInfoStatus)} = {monitorFeatures.EnableSetProcessInfoStatus}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableWaitProcessInfo)} = {monitorFeatures.EnableWaitProcessInfo}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableRunLifecycleTrigger)} = {monitorFeatures.EnableRunLifecycleTrigger}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableDoTriggerSearch)} = {monitorFeatures.EnableDoTriggerSearch}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableEndDoTriggerSearch)} = {monitorFeatures.EnableEndDoTriggerSearch}");
@@ -939,22 +959,32 @@ namespace SymOntoClay.Monitor
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void CancelProcessInfo(string messagePointId, string processInfoId, Enum reasonOfChangeStatus, List<Changer> changers, string callMethodId,
+        public void StartProcessInfo(string messagePointId, string processInfoId, MonitoredHumanizedLabel processInfo,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            _monitorLoggerImpl.CancelProcessInfo(messagePointId, processInfoId, reasonOfChangeStatus, changers, callMethodId, memberName, sourceFilePath, sourceLineNumber);
+            _monitorLoggerImpl.StartProcessInfo(messagePointId, processInfoId, processInfo, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void WeakCancelProcessInfo(string messagePointId, string processInfoId, Enum reasonOfChangeStatus, List<Changer> changers, string callMethodId,
+        public void CancelProcessInfo(string messagePointId, string processInfoId, MonitoredHumanizedLabel processInfo, Enum reasonOfChangeStatus, List<Changer> changers, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            _monitorLoggerImpl.WeakCancelProcessInfo(messagePointId, processInfoId, reasonOfChangeStatus, changers, callMethodId, memberName, sourceFilePath, sourceLineNumber);
+            _monitorLoggerImpl.CancelProcessInfo(messagePointId, processInfoId, processInfo, reasonOfChangeStatus, changers, callMethodId, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void WeakCancelProcessInfo(string messagePointId, string processInfoId, MonitoredHumanizedLabel processInfo, Enum reasonOfChangeStatus, List<Changer> changers, string callMethodId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.WeakCancelProcessInfo(messagePointId, processInfoId, processInfo, reasonOfChangeStatus, changers, callMethodId, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>
@@ -979,12 +1009,22 @@ namespace SymOntoClay.Monitor
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void SetProcessInfoStatus(string messagePointId, string processInfoId, Enum status, Enum prevStatus, List<Changer> changers, string callMethodId,
+        public void SetProcessInfoStatus(string messagePointId, string processInfoId, MonitoredHumanizedLabel processInfo, Enum status, Enum prevStatus, List<Changer> changers, string callMethodId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            _monitorLoggerImpl.SetProcessInfoStatus(messagePointId, processInfoId, status, prevStatus, changers, callMethodId, memberName, sourceFilePath, sourceLineNumber);
+            _monitorLoggerImpl.SetProcessInfoStatus(messagePointId, processInfoId, processInfo, status, prevStatus, changers, callMethodId, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void WaitProcessInfo(string messagePointId, string waitingProcessInfoId, MonitoredHumanizedLabel waitingProcessInfo, List<MonitoredHumanizedLabel> processes, string callMethodId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.WaitProcessInfo(messagePointId, waitingProcessInfoId, waitingProcessInfo, processes, callMethodId, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>

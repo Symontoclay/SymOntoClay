@@ -1920,7 +1920,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             Logger.SystemExpr("3D14A97D-41AB-4E21-82AF-2AC810BAE68F", callMethodId, "processCreatingResult.IsSuccessful", processCreatingResult.IsSuccessful);
 
 #if DEBUG
-            Info("91939B48-DB56-416A-90BB-F13F4A613796", $"processCreatingResult = {processCreatingResult}");
+            //Info("91939B48-DB56-416A-90BB-F13F4A613796", $"processCreatingResult = {processCreatingResult}");
 #endif
 
             if (processCreatingResult.IsSuccessful)
@@ -1939,7 +1939,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (syncOption == SyncOption.Sync)
                 {
-                    processInfo.ParentProcessInfo = _currentCodeFrame.ProcessInfo;
+                    var currentProcessInfo = _currentCodeFrame.ProcessInfo;
+
+                    processInfo.ParentProcessInfo = currentProcessInfo;
 
                     List<IExecutionCoordinator> executionCoordinators = null;
 
@@ -1952,7 +1954,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     Info("20507B37-E3DE-460B-9E4E-40F079D3EFB1", $"Before ProcessInfoHelper.Wait");
 #endif
 
-                    ProcessInfoHelper.Wait(Logger, executionCoordinators, timeout, timeoutCancellationMode, _dateTimeProvider, processInfo);
+                    ProcessInfoHelper.Wait(Logger, callMethodId, currentProcessInfo, executionCoordinators, timeout, timeoutCancellationMode, _dateTimeProvider, processInfo);
 
 #if DEBUG
                     Info("EEB44353-D9EF-4AA9-8535-0A10F686BA2B", $"After ProcessInfoHelper.Wait");
@@ -2014,11 +2016,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 }
                 else
                 {
+                    var currentProcessInfo = _currentCodeFrame.ProcessInfo;
+
                     var processInfoValue = new ProcessInfoValue(processInfo);
 
                     if (syncOption == SyncOption.ChildAsync)
                     {
-                        processInfo.ParentProcessInfo = _currentCodeFrame.ProcessInfo;
+                        processInfo.ParentProcessInfo = currentProcessInfo;
                     }
 
                     if(timeout.HasValue)
@@ -2031,7 +2035,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         }
 
                         Task.Run(() => {
-                            ProcessInfoHelper.Wait(Logger, executionCoordinators, timeout, timeoutCancellationMode, _dateTimeProvider, processInfo);
+                            ProcessInfoHelper.Wait(Logger, callMethodId, currentProcessInfo, executionCoordinators, timeout, timeoutCancellationMode, _dateTimeProvider, processInfo);
                         });
                     }
 

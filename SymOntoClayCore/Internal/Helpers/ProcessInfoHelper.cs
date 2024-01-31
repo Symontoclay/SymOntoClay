@@ -40,10 +40,10 @@ namespace SymOntoClay.Core.Internal.Helpers
     {
         public static void Wait(IMonitorLogger logger, params IProcessInfo[] processes)
         {
-            Wait(logger, null, null, TimeoutCancellationMode.WeakCancel, null, processes);
+            Wait(logger, string.Empty, null, null, null, TimeoutCancellationMode.WeakCancel, null, processes);
         }
 
-        public static void Wait(IMonitorLogger logger, List<IExecutionCoordinator> executionCoordinators, long? cancelAfter, TimeoutCancellationMode timeoutCancellationMode, IDateTimeProvider dateTimeProvider, params IProcessInfo[] processes)
+        public static void Wait(IMonitorLogger logger, string callMethodId, IProcessInfo waitingProcess, List<IExecutionCoordinator> executionCoordinators, long? cancelAfter, TimeoutCancellationMode timeoutCancellationMode, IDateTimeProvider dateTimeProvider, params IProcessInfo[] processes)
         {
             if(processes.IsNullOrEmpty())
             {
@@ -59,8 +59,10 @@ namespace SymOntoClay.Core.Internal.Helpers
 
             while(true)
             {
+                logger.Wait("77298A46-278C-4DC9-B124-BB71D068EBB1", waitingProcess?.Id, waitingProcess?.ToLabel(logger), processes.Select(p => p.ToLabel(logger)).ToList(), callMethodId);
+
 #if DEBUG
-                logger.Info("F473B943-69C3-4B34-8D86-F7538F3A85B2", $"processes = {processes.Select(p => $"{p.Id}:{p.IsFinished(logger)};{p.ToHumanizedLabel()}").WritePODListToString()}");
+                //logger.Info("F473B943-69C3-4B34-8D86-F7538F3A85B2", $"processes = {processes.Select(p => $"{p.Id}:{p.IsFinished(logger)};{p.ToHumanizedLabel()}").WritePODListToString()}");
 #endif
 
                 if (processes.All(p => p.IsFinished(logger)))

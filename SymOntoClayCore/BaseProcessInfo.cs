@@ -115,7 +115,7 @@ namespace SymOntoClay.Core
             //logger.Info("40E621E1-49BD-4F9B-B8CB-C36699D70524", $"E;{ToHumanizedLabel()}");
 #endif
 
-            logger.SetProcessInfoStatus(messagePointId, Id, status, prevStatus, null, null);
+            logger.SetProcessInfoStatus(messagePointId, Id, ToLabel(logger), status, prevStatus, null, null);
 
             ProcessSetStatus(logger, status, callMethodId: string.Empty);
         }
@@ -158,8 +158,10 @@ namespace SymOntoClay.Core
                 _status = ProcessStatus.Running;
             }
 
+            logger.StartProcessInfo(messagePointId, Id, ToLabel(logger));
+
 #if DEBUG
-            logger.Info("02CEB02F-F4E0-4AFF-96FB-20493F10EC8C", $"After _status = {_status};messagePointId = {messagePointId};{ToHumanizedLabel()}");
+            //logger.Info("02CEB02F-F4E0-4AFF-96FB-20493F10EC8C", $"After _status = {_status};messagePointId = {messagePointId};{ToHumanizedLabel()}");
 #endif
 
             ProcessPlatformStart(logger);
@@ -188,7 +190,7 @@ namespace SymOntoClay.Core
                 _status = ProcessStatus.Canceled;
             }
 
-            logger.CancelProcessInfo(messagePointId, Id, reasonOfChangeStatus, changers, callMethodId);
+            logger.CancelProcessInfo(messagePointId, Id, ToLabel(logger), reasonOfChangeStatus, changers, callMethodId);
 
             ProcessSetStatus(logger, ProcessStatus.Canceled, callMethodId);
         }
@@ -212,7 +214,7 @@ namespace SymOntoClay.Core
                 _status = ProcessStatus.WeakCanceled;
             }
 
-            logger.WeakCancelProcessInfo(messagePointId, Id, reasonOfChangeStatus, changers, callMethodId);
+            logger.WeakCancelProcessInfo(messagePointId, Id, ToLabel(logger), reasonOfChangeStatus, changers, callMethodId);
 
             ProcessSetStatus(logger, ProcessStatus.WeakCanceled, callMethodId);
         }

@@ -1,4 +1,4 @@
-﻿app PeaceKeeper
+﻿/*app PeaceKeeper
 {
     on Enter =>
     {
@@ -49,7 +49,7 @@ action Swim
         @x >> @>log;
         complete action;
     }
-}
+}*/
 
 /*app PeaceKeeper
 {
@@ -100,7 +100,7 @@ action Go
 	}
 }*/
 
-/*app PeaceKeeper
+app PeaceKeeper
 {
     on Enter =>
 	{
@@ -133,7 +133,7 @@ action Go
 
 	//	'End kill' >> @>log;
 	//}
-}*/
+}
 
 /*app PeaceKeeper
 {

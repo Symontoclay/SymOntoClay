@@ -159,7 +159,7 @@ namespace SymOntoClay.Core
             }
 
 #if DEBUG
-            //logger.Info("02CEB02F-F4E0-4AFF-96FB-20493F10EC8C", $"After _status = {_status};messagePointId = {messagePointId};{ToHumanizedLabel()}");
+            logger.Info("02CEB02F-F4E0-4AFF-96FB-20493F10EC8C", $"After _status = {_status};messagePointId = {messagePointId};{ToHumanizedLabel()}");
 #endif
 
             ProcessPlatformStart(logger);

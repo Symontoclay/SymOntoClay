@@ -485,13 +485,23 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return $"[{string.Join(", ", changers.Select(p => $"{p.KindOfChanger}: {p.Id}"))}]";
         }
 
+        private string GetProcessInfo(MonitoredHumanizedLabel processInfo, string processInfoId)
+        {
+            if(processInfo == null)
+            {
+                return processInfoId;
+            }
+
+            return GetMonitoredHumanizedLabel(processInfo);
+        }
+
         private string GetStartProcessInfo(StartProcessInfoMessage message)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
-            throw new NotImplementedException();
+            return $"ProcessInfo [{GetProcessInfo(message.ProcessInfo, message.ProcessInfoId)}] has been started";
         }
 
         public string GetCancelProcessInfo(CancelProcessInfoMessage message)
@@ -500,16 +510,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            var sb = new StringBuilder($"ProcessInfo [{message.CancelledObjId}] was cancelled");
-
-            if(message.ProcessInfo != null)
-            {
-#if DEBUG
-                _globalLogger.Info($"message = {message}");
-#endif
-
-                throw new NotImplementedException();
-            }
+            var sb = new StringBuilder($"ProcessInfo [GetProcessInfo(message.ProcessInfo, message.CancelledObjId)] has been cancelled");
 
             if(!message.Changers.IsNullOrEmpty())
             {
@@ -530,16 +531,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            var sb = new StringBuilder($"ProcessInfo [{message.CancelledObjId}] was weak cancelled");
-
-            if (message.ProcessInfo != null)
-            {
-#if DEBUG
-                _globalLogger.Info($"message = {message}");
-#endif
-
-                throw new NotImplementedException();
-            }
+            var sb = new StringBuilder($"ProcessInfo [{GetProcessInfo(message.ProcessInfo, message.CancelledObjId)}] has been weak cancelled");
 
             if (!message.Changers.IsNullOrEmpty())
             {
@@ -616,16 +608,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 sb.Append($" ({message.PrevStatusStr} -> {message.StatusStr})");
             }
 
-            sb.Append($" for process info {message.ObjId}");
-
-            if (message.ProcessInfo != null)
-            {
-#if DEBUG
-                _globalLogger.Info($"message = {message}");
-#endif
-
-                throw new NotImplementedException();
-            }
+            sb.Append($" for process info [{GetProcessInfo(message.ProcessInfo, message.ObjId)}]");
 
             if (!message.Changers.IsNullOrEmpty())
             {
@@ -643,10 +626,24 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetWaitProcessInfo(WaitProcessInfoMessage message)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
-            throw new NotImplementedException();
+            var sb = new StringBuilder($"ProcessInfo [{GetProcessInfo(message.WaitingProcessInfo, message.WaitingProcessInfoId)}]");
+
+            if (!string.IsNullOrWhiteSpace(message.CallMethodId))
+            {
+                sb.Append($" when CallMethodId = {message.CallMethodId}");
+            }
+
+            sb.AppendLine($" is waiting for:");
+
+            foreach(var item in message.Processes)
+            {
+                sb.AppendLine(GetMonitoredHumanizedLabel(item));
+            }
+
+            return sb.ToString();
         }
 
         private string GetRunLifecycleTrigger(RunLifecycleTriggerMessage message)

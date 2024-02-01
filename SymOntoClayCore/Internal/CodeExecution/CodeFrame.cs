@@ -256,8 +256,20 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 sb.AppendLine($"{spaces}Instance: {Instance.Name.NameValue}");
             }
 
+            if(ExecutionCoordinator != null)
+            {
+                sb.AppendLine($"{spaces}ExecutionCoordinator: {ExecutionCoordinator.Id}");
+            }
+
             if(Metadata != null)
             {
+                var holder = Metadata.Holder;
+
+                if(holder != null)
+                {
+                    sb.AppendLine($"{spaces}Holder: {holder.NameValue}");
+                }
+
                 sb.AppendLine($"{spaces}{Metadata.ToHumanizedLabel()}");
             }
 

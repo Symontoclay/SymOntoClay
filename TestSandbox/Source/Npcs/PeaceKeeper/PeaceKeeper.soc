@@ -1,4 +1,19 @@
-﻿/*app PeaceKeeper
+﻿app PeaceKeeper
+{
+    idle actions
+    {
+        go();
+    }
+
+	fun go()
+	{
+		'Begin Go' >> @>log;
+		wait 2;
+		'End Go' >> @>log;
+	}
+}
+
+/*app PeaceKeeper
 {
     on Enter =>
     {
@@ -100,7 +115,7 @@ action Go
 	}
 }*/
 
-app PeaceKeeper
+/*app PeaceKeeper
 {
     on Enter =>
 	{
@@ -133,7 +148,7 @@ app PeaceKeeper
 
 	//	'End kill' >> @>log;
 	//}
-}
+}*/
 
 /*app PeaceKeeper
 {

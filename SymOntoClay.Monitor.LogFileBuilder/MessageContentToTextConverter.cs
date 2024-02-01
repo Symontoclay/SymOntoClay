@@ -148,6 +148,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 case KindOfMessage.EndRunResetExprOfConditionalTrigger:
                     return GetEndRunResetExprOfConditionalTrigger(message as EndRunResetExprOfConditionalTriggerMessage);
 
+                case KindOfMessage.ActivateIdleAction:
+                    return GetActivateIdleAction(message as ActivateIdleActionMessage);
+
                 case KindOfMessage.Output:
                     return GetOutput(message as OutputMessage);
 
@@ -782,6 +785,15 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetEndRunResetExprOfConditionalTrigger(EndRunResetExprOfConditionalTriggerMessage message)
         {
             return GetBaseEndRunExprOfConditionalTriggerMessage(message);
+        }
+
+        private string GetActivateIdleAction(ActivateIdleActionMessage message)
+        {
+#if DEBUG
+            //_globalLogger.Info($"message = {message}");
+#endif
+
+            return GetMonitoredHumanizedLabel(message.ActivatedAction);
         }
 
         private string GetOutput(OutputMessage message)

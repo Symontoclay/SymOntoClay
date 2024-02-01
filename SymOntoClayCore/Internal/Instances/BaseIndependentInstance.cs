@@ -73,6 +73,12 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void ActivateIdleAction(IMonitorLogger logger, IdleActionItem idleActionItem)
         {
+            logger.ActivateIdleAction("1833EDB9-9B58-4338-AFD2-795500BEB060", idleActionItem.ToLabel(logger));
+
+#if DEBUG
+            //logger.Info("DB893B55-F574-466A-BDE2-9326253534C2", $"idleActionItem = {idleActionItem.ToLabel(logger)}");
+#endif
+
             var localCodeExecutionContext = new LocalCodeExecutionContext(_localCodeExecutionContext);
 
             var localStorageSettings = RealStorageSettingsHelper.Create(_context, _storage);

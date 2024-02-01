@@ -43,6 +43,7 @@ namespace SymOntoClay.Monitor.Common
         bool EnableRunResetExprOfConditionalTrigger { get; }
         bool EnableEndRunResetExprOfConditionalTrigger { get; }
         bool IsEnabledAnyConditionalTriggerFeature { get; }
+        bool EnableActivateIdleAction { get; }
         bool EnableOutput { get; }
         bool EnableTrace { get; }
         bool EnableDebug { get; }

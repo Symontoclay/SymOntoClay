@@ -133,6 +133,9 @@ namespace SymOntoClay.Monitor.Common.Data
                 case KindOfMessage.EndRunResetExprOfConditionalTrigger:
                     return JsonConvert.DeserializeObject<EndRunResetExprOfConditionalTriggerMessage>(content);
 
+                case KindOfMessage.ActivateIdleAction:
+                    return JsonConvert.DeserializeObject<ActivateIdleActionMessage>(content);
+
                 case KindOfMessage.Output:
                     return JsonConvert.DeserializeObject<OutputMessage>(content);
 

@@ -114,6 +114,8 @@ namespace SymOntoClay.Monitor
                     EnableRunResetExprOfConditionalTrigger = true,
                     EnableEndRunResetExprOfConditionalTrigger = true,
 
+                    EnableActivateIdleAction = true,
+
                     EnableOutput = true,
                     EnableTrace = true,
                     EnableDebug = true,
@@ -466,6 +468,14 @@ namespace SymOntoClay.Monitor
             }
         }
 
+        bool IMonitorFeatures.EnableActivateIdleAction
+        {
+            get
+            {
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableActivateIdleAction;
+            }
+        }
+
         bool IMonitorFeatures.EnableOutput
         {
             get
@@ -584,6 +594,7 @@ namespace SymOntoClay.Monitor
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableRunResetExprOfConditionalTrigger)} = {monitorFeatures.EnableRunResetExprOfConditionalTrigger}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableEndRunResetExprOfConditionalTrigger)} = {monitorFeatures.EnableEndRunResetExprOfConditionalTrigger}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.IsEnabledAnyConditionalTriggerFeature)} = {monitorFeatures.IsEnabledAnyConditionalTriggerFeature}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableActivateIdleAction)} = {monitorFeatures.EnableActivateIdleAction}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableOutput)} = {monitorFeatures.EnableOutput}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableTrace)} = {monitorFeatures.EnableTrace}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableDebug)} = {monitorFeatures.EnableDebug}");
@@ -1117,6 +1128,16 @@ namespace SymOntoClay.Monitor
             [CallerLineNumber] int sourceLineNumber = 0)
         {
             _monitorLoggerImpl.EndRunResetExprOfConditionalTrigger(messagePointId, doTriggerSearchId, expr, isSuccess, isPeriodic, fetchedResults, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void ActivateIdleAction(string messagePointId, MonitoredHumanizedLabel activatedAction,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.ActivateIdleAction(messagePointId, activatedAction, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>

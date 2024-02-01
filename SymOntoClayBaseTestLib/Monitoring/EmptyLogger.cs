@@ -358,6 +358,13 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         {
         }
 
+        public void ActivateIdleAction(string messagePointId, MonitoredHumanizedLabel activatedAction,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+        }
+
         /// <inheritdoc/>
         public void Output(string messagePointId, string message,
             [CallerMemberName] string memberName = "",

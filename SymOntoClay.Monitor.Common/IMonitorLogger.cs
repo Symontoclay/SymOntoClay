@@ -230,6 +230,11 @@ namespace SymOntoClay.Monitor.Common
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);
 
+        void ActivateIdleAction(string messagePointId, MonitoredHumanizedLabel activatedAction,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0);
+
         //from channel
         void Output(string messagePointId, string message,
             [CallerMemberName] string memberName = "",

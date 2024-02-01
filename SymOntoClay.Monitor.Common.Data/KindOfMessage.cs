@@ -46,6 +46,7 @@ namespace SymOntoClay.Monitor.Common.Data
         EndRunSetExprOfConditionalTrigger,
         RunResetExprOfConditionalTrigger,
         EndRunResetExprOfConditionalTrigger,
+        ActivateIdleAction,
         Output,
         Trace,
         Debug,

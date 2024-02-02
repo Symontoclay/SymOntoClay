@@ -1,5 +1,15 @@
 ﻿app PeaceKeeper
 {
+	{: male(#Tom) :}
+	{: parent(#Piter, #Tom) :}
+	
+	on Enter => {
+	    select {: son($x, $y) :} >> @>log;
+	}
+}
+
+/*app PeaceKeeper
+{
     idle actions
     {
         go();
@@ -11,7 +21,7 @@
 		wait 2;
 		'End Go' >> @>log;
 	}
-}
+}*/
 
 /*app PeaceKeeper
 {

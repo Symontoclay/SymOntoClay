@@ -3700,18 +3700,33 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return true;
             }
 
-            if (expressionNode1.Kind == KindOfLogicalQueryNode.LogicalVar && (expressionNode2.Kind == KindOfLogicalQueryNode.Concept || expressionNode2.Kind == KindOfLogicalQueryNode.Entity))
+            if ((expressionNode1.Kind == KindOfLogicalQueryNode.LogicalVar && (expressionNode2.Kind == KindOfLogicalQueryNode.Concept || expressionNode2.Kind == KindOfLogicalQueryNode.Entity))
+                || (expressionNode2.Kind == KindOfLogicalQueryNode.LogicalVar && (expressionNode1.Kind == KindOfLogicalQueryNode.Concept || expressionNode1.Kind == KindOfLogicalQueryNode.Entity)))
             {
+                StrongIdentifierValue nameOfVar = null;
+                LogicalQueryNode foundExpression = null;
+
+                if (expressionNode1.Kind == KindOfLogicalQueryNode.LogicalVar)
+                {
+                    nameOfVar = expressionNode1.Name;
+                    foundExpression = expressionNode2;
+                }
+                else
+                {
+                    nameOfVar = expressionNode2.Name;
+                    foundExpression = expressionNode1;
+                }
+
                 var resultOfQueryToRelation = new ResultOfQueryToRelation();
 
                 var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
-                resultOfVarOfQueryToRelation.NameOfVar = expressionNode1.Name;
-                resultOfVarOfQueryToRelation.FoundExpression = expressionNode2;
+                resultOfVarOfQueryToRelation.NameOfVar = nameOfVar;
+                resultOfVarOfQueryToRelation.FoundExpression = foundExpression;
                 resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Add(resultOfVarOfQueryToRelation);
 
                 queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);
 
-                queryExecutingCard.UsedKeysList.Add(expressionNode2.Name);
+                queryExecutingCard.UsedKeysList.Add(foundExpression.Name);
 
                 return true;
             }

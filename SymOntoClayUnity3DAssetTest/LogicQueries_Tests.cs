@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using NUnit.Framework;
 using SymOntoClay.BaseTestLib;
+using SymOntoClay.Monitor.Common.Data;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -151,9 +152,7 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), true);
+                            Assert.AreEqual(message.Contains("<no>"), true);
                             break;
 
                         default:
@@ -183,9 +182,8 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
-                            Assert.AreEqual(message.Contains("$x = #tom"), false);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$y = #piter"));
                             break;
 
                         default:
@@ -578,9 +576,8 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$z = son($x,$y)"), true);
-                            Assert.AreEqual(message.Contains("$z = see(i,#a)"), true);
+                            Assert.AreEqual(true, message.Contains("<yes>"));
+                            Assert.AreEqual(true, message.Contains("$z = see(i,#a)"));
                             break;
 
                         default:

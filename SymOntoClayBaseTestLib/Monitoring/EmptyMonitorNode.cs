@@ -10,8 +10,15 @@ namespace SymOntoClay.BaseTestLib.Monitoring
 {
     public class EmptyMonitorNode : EmptyLogger, IMonitorNode
     {
-        /// <inheritdoc/>
-        public override string Id => Guid.NewGuid().ToString("D");
+        public EmptyMonitorNode()
+            : this(Guid.NewGuid().ToString("D"))
+        {
+        }
+
+        public EmptyMonitorNode(string nodeId)
+            : base(nodeId)
+        {
+        }
 
         /// <inheritdoc/>
         public bool Enable { get; set; }

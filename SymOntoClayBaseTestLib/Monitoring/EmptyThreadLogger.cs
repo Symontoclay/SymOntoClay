@@ -15,13 +15,8 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         }
 
         public EmptyThreadLogger(string threadId)
+            : base(threadId)
         {
-            _threadId = threadId;
         }
-
-        private readonly string _threadId;
-
-        /// <inheritdoc/>
-        public override string Id => _threadId;
     }
 }

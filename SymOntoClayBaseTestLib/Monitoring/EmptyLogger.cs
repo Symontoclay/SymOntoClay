@@ -12,8 +12,19 @@ namespace SymOntoClay.BaseTestLib.Monitoring
 {
     public class EmptyLogger : IMonitorLogger, IPlatformLogger
     {
+        public EmptyLogger()
+        { 
+        }
+
+        public EmptyLogger(string id)
+        {
+            _id = id;
+        }
+
+        private readonly string _id = nameof(EmptyLogger);
+
         /// <inheritdoc/>
-        public virtual string Id => nameof(EmptyLogger);
+        public virtual string Id => _id;
 
         /// <inheritdoc/>
         public bool IsReal => false;

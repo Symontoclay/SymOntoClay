@@ -209,6 +209,8 @@ namespace SymOntoClay.BaseTestLib
                 monitorSettings.PlatformLoggers = new List<IPlatformLogger>() { factorySettings.PlatformLogger };
             }
 
+            settings.Monitor = new EmptyMonitor(monitorSettings);
+
             return settings;
         }
 

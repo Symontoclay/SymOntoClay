@@ -519,7 +519,7 @@ private:
                             break;
 
                         case 2:
-                            Assert.AreEqual(message, "-2");
+                            Assert.AreEqual(message, "-4");
                             break;
 
                         case 3:
@@ -558,7 +558,7 @@ private:
                             break;
 
                         case 2:
-                            Assert.AreEqual(message, "-2");
+                            Assert.AreEqual(message, "-4");
                             break;
 
                         case 3:

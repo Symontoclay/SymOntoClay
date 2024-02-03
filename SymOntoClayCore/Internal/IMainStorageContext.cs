@@ -62,8 +62,6 @@ namespace SymOntoClay.Core.Internal
         IInstancesStorageComponent InstancesStorage { get; }
         IModulesStorage ModulesStorage { get; }
 
-        ILoggingProvider LoggingProvider { get; }
-
         IServicesFactory ServicesFactory { get; }
     }
 }

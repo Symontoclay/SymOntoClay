@@ -475,6 +475,16 @@ namespace SymOntoClay.Monitor.NLog
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        public string LogicalSearchExplain(string messagePointId, string dotStr, MonitoredHumanizedLabel query,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public void Output(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

@@ -13,13 +13,13 @@ namespace SymOntoClay.Monitor.Internal.FileCache
         //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        public ThreadLoggerFileCache(string rootMessagesDir, string nodeId, string theadId)
-            : base(Path.Combine(rootMessagesDir, theadId))
+        public ThreadLoggerFileCache(string absoluteDirectory, string relativeDirectory, string nodeId, string threadId)
+            : base(Path.Combine(absoluteDirectory, threadId), Path.Combine(relativeDirectory, threadId))
         {
 #if DEBUG
-            //_globalLogger.Info($"rootMessagesDir = {rootMessagesDir}");
+            //_globalLogger.Info($"absoluteDirectory = {absoluteDirectory}");
             //_globalLogger.Info($"nodeId = {nodeId}");
-            //_globalLogger.Info($"theadId = {theadId}");
+            //_globalLogger.Info($"threadId = {threadId}");
 #endif
         }
     }

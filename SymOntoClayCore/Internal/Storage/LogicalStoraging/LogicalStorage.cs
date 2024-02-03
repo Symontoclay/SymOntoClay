@@ -57,7 +57,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             _lifeTimeCycleById = new Dictionary<string, int>();
             _mutablePartsDict = new Dictionary<RuleInstance, IItemWithModalities>();
             _commonPersistIndexedLogicalData = new CommonPersistIndexedLogicalData(logger);
-            _loggingProvider = realStorageContext.MainStorageContext.LoggingProvider;
             _enableAddingRemovingFactLoggingInStorages = logger.EnableAddingRemovingFactLoggingInStorages;
 
             foreach (var parentStorage in _parentLogicalStoragesList)
@@ -110,7 +109,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         private Dictionary<string, RuleInstance> _ruleInstancesDictById;
         private Dictionary<string, int> _lifeTimeCycleById;
         private Dictionary<RuleInstance, IItemWithModalities> _mutablePartsDict;
-        private readonly ILoggingProvider _loggingProvider;
         private readonly bool _enableAddingRemovingFactLoggingInStorages;
 
         private readonly CommonPersistIndexedLogicalData _commonPersistIndexedLogicalData;

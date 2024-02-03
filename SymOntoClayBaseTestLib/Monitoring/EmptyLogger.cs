@@ -378,11 +378,21 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         {
         }
 
+        /// <inheritdoc/>
         public void ActivateIdleAction(string messagePointId, MonitoredHumanizedLabel activatedAction,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
+        }
+
+        /// <inheritdoc/>
+        public string LogicalSearchExplain(string messagePointId, string dotStr, MonitoredHumanizedLabel query,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            return string.Empty;
         }
 
         /// <inheritdoc/>

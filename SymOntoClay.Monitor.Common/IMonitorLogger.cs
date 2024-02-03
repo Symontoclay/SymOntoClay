@@ -20,7 +20,10 @@ namespace SymOntoClay.Monitor.Common
         IMonitorFeatures MonitorFeatures { get; }
 
         KindOfLogicalSearchExplain KindOfLogicalSearchExplain { get; }
+
+        [Obsolete("This is no longer used outside the library.")]
         string LogicalSearchExplainDumpDir { get; }
+
         bool EnableAddingRemovingFactLoggingInStorages { get; }
 
         string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
@@ -235,6 +238,11 @@ namespace SymOntoClay.Monitor.Common
             [CallerLineNumber] int sourceLineNumber = 0);
 
         void ActivateIdleAction(string messagePointId, MonitoredHumanizedLabel activatedAction,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0);
+
+        string LogicalSearchExplain(string messagePointId, string dotStr, MonitoredHumanizedLabel query,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);

@@ -14,7 +14,7 @@ namespace SymOntoClay.Monitor.Internal.FileCache
 #endif
 
         public MonitorFileCache(string messagesDir, string sessionName)
-            : base(Path.Combine(messagesDir, sessionName))
+            : base(Path.Combine(messagesDir, sessionName), string.Empty)
         {
 #if DEBUG
             //_globalLogger.Info($"messagesDir = {messagesDir}");
@@ -24,7 +24,7 @@ namespace SymOntoClay.Monitor.Internal.FileCache
 
         public MonitorNodeFileCache CreateMonitorNodeFileCache(string nodeId)
         {
-            return new MonitorNodeFileCache(_directory, nodeId);
+            return new MonitorNodeFileCache(_absoluteDirectory, _relativeDirectory, nodeId);
         }
     }
 }

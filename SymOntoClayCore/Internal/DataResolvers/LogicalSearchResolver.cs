@@ -142,7 +142,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"queryExpression = {queryExpression.ToHumanizedString()}");
 #endif
 
-            var loggingProvider = _context.LoggingProvider;
             var kindOfLogicalSearchExplain = logger.KindOfLogicalSearchExplain;
 
             LogicalSearchExplainNode rootExplainNode = null;
@@ -272,11 +271,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 if(kindOfLogicalSearchExplain == KindOfLogicalSearchExplain.DumpAlways)
                 {
-                    var dumpFileName = loggingProvider.DumpToDotFile(rootExplainNode);
-
-                    logger.Info("F90D67DA-ED62-4AFC-B84D-BA658F77D689", $"The explanation of query `{queryExpression.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}` has been dumped into file `{dumpFileName}`.");
+                    LogLogicalSearchExplain(logger, "43E6CC35-BFAD-441B-8C50-7A9E027EB544", rootExplainNode, queryExpression);
                 }
-
             }
             catch (Exception e)
             {
@@ -289,7 +285,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 if (kindOfLogicalSearchExplain == KindOfLogicalSearchExplain.DumpIfError || kindOfLogicalSearchExplain == KindOfLogicalSearchExplain.DumpAlways)
                 {
-                    var dumpFileName = loggingProvider.DumpToDotFile(rootExplainNode);
+                    var dumpFileName = LogLogicalSearchExplain(logger, "A8F977DE-F56A-45E5-B422-49FB0C1AEC44", rootExplainNode, queryExpression);
 
                     sb.AppendLine($"The explanation has been dumped into file `{dumpFileName}`.");
                 }
@@ -302,6 +298,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             return result;
+        }
+
+        private string LogLogicalSearchExplain(IMonitorLogger logger, string messagePointId, LogicalSearchExplainNode explainNode, RuleInstance queryExpression)
+        {
+            var dotStr = DebugHelperForLogicalSearchExplainNode.ToDot(explainNode);
+
+            return logger.LogicalSearchExplain(messagePointId, dotStr, queryExpression.ToLabel(logger));
         }
 
         private void AppendResults(IMonitorLogger logger, QueryExecutingCardForIndexedPersistLogicalData sourceQueryExecutingCard, QueryExecutingCardForIndexedPersistLogicalData destQueryExecutingCard, bool setIsSuccessIfTrue = false)

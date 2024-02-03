@@ -84,7 +84,7 @@ namespace SymOntoClay.Monitor.Internal
         public KindOfLogicalSearchExplain KindOfLogicalSearchExplain => _baseMonitorSettings.KindOfLogicalSearchExplain;
 
         /// <inheritdoc/>
-        public string LogicalSearchExplainDumpDir => _fileCache.DirectoryName;
+        public string LogicalSearchExplainDumpDir => _fileCache.AbsoluteDirectoryName;
 
         /// <inheritdoc/>
         public bool EnableAddingRemovingFactLoggingInStorages => _baseMonitorSettings.EnableAddingRemovingFactLoggingInStorages;
@@ -1054,6 +1054,16 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
             _monitorLoggerImpl.ActivateIdleAction(messagePointId, activatedAction, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public string LogicalSearchExplain(string messagePointId, string dotStr, MonitoredHumanizedLabel query,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            return _monitorLoggerImpl.LogicalSearchExplain(messagePointId, dotStr, query, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>

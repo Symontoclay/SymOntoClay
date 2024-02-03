@@ -6,6 +6,7 @@ using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.Internal.FileCache;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -2709,6 +2710,56 @@ namespace SymOntoClay.Monitor.Internal
 #endif
 
             ProcessMessage(messageInfo);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public string LogicalSearchExplain(string messagePointId, string dotStr, MonitoredHumanizedLabel query,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"dotStr = {dotStr}");
+            _globalLogger.Info($"query = {query}");
+            _globalLogger.Info($"memberName = {memberName}");
+            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+#if DEBUG
+            _globalLogger.Info($"_fileCache.AbsoluteDirectoryName = {_fileCache.AbsoluteDirectoryName}");
+#endif
+
+#if DEBUG
+            _globalLogger.Info($"_fileCache.RelativeDirectoryName = {_fileCache.RelativeDirectoryName}");
+#endif
+
+            var fileName = $"query_{Guid.NewGuid().ToString("D").Substring(0, 8)}.dot";
+
+#if DEBUG
+            _globalLogger.Info($"fileName = {fileName}");
+#endif
+
+            var absoluteFileName = Path.Combine(_fileCache.AbsoluteDirectoryName, fileName);
+
+#if DEBUG
+            _globalLogger.Info($"absoluteFileName = {absoluteFileName}");
+#endif
+
+            var relativeFileName = Path.Combine(_fileCache.RelativeDirectoryName, fileName);
+
+#if DEBUG
+            _globalLogger.Info($"relativeFileName = {relativeFileName}");
+#endif
+
+            File.WriteAllText(absoluteFileName, dotStr);
+
+            //TODO: Make special message about result with relativeFileName and query.
+            throw new NotImplementedException();
+
+            //return relativeFileName;
         }
 
         /// <inheritdoc/>

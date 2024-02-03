@@ -28,7 +28,6 @@ using SymOntoClay.Core.Internal.Compiling;
 using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Instances;
-using SymOntoClay.Core.Internal.Logging;
 using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.Core.Internal.Serialization;
 using SymOntoClay.Core.Internal.Services;
@@ -130,8 +129,6 @@ namespace SymOntoClay.Core.Internal.Helpers
 
             context.ActivePeriodicObjectContext = new ActivePeriodicObjectContext(settings.SyncContext);
             context.ModulesStorage = settings.ModulesStorage;
-
-            context.LogicalSearchExplainProvider = new LoggingProvider(context, settings);
 
             context.ServicesFactory = new ServicesFactory(context);
         }

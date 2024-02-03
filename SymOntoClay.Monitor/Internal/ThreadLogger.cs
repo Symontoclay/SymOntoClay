@@ -75,6 +75,15 @@ namespace SymOntoClay.Monitor.Internal
         public bool IsReal => true;
 
         /// <inheritdoc/>
+        public KindOfLogicalSearchExplain KindOfLogicalSearchExplain => _baseMonitorSettings.KindOfLogicalSearchExplain;
+
+        /// <inheritdoc/>
+        public string LogicalSearchExplainDumpDir => _fileCache.DirectoryName;
+
+        /// <inheritdoc/>
+        public bool EnableAddingRemovingFactLoggingInStorages => _baseMonitorSettings.EnableAddingRemovingFactLoggingInStorages;
+
+        /// <inheritdoc/>
         public IMonitorFeatures MonitorFeatures => this;
 
         bool IMonitorLoggerContext.EnableRemoteConnection => _baseMonitorSettings.EnableRemoteConnection && _monitorContext.Settings.EnableRemoteConnection;

@@ -29,15 +29,6 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         public string SessionDirectoryFullName => string.Empty;
 
         /// <inheritdoc/>
-        public KindOfLogicalSearchExplain KindOfLogicalSearchExplain => KindOfLogicalSearchExplain.None;
-
-        /// <inheritdoc/>
-        public string LogicalSearchExplainDumpDir => string.Empty;
-
-        /// <inheritdoc/>
-        public bool EnableAddingRemovingFactLoggingInStorages => false;
-
-        /// <inheritdoc/>
         public IMonitorNode CreateMotitorNode(string messagePointId, string nodeId, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
         {
             return new EmptyMonitorNode(nodeId);

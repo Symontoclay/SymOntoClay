@@ -19,6 +19,10 @@ namespace SymOntoClay.Monitor.Common
 
         IMonitorFeatures MonitorFeatures { get; }
 
+        KindOfLogicalSearchExplain KindOfLogicalSearchExplain { get; }
+        string LogicalSearchExplainDumpDir { get; }
+        bool EnableAddingRemovingFactLoggingInStorages { get; }
+
         string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
             bool isSynk,
             [CallerMemberName] string memberName = "",

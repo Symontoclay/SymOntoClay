@@ -19,9 +19,5 @@ namespace SymOntoClay.Monitor.Common
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);
-
-        KindOfLogicalSearchExplain KindOfLogicalSearchExplain { get; }
-        string LogicalSearchExplainDumpDir { get; }
-        bool EnableAddingRemovingFactLoggingInStorages { get; }
     }
 }

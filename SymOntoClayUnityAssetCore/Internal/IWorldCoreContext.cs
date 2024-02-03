@@ -40,8 +40,5 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         IPlatformTypesConvertersRegistry PlatformTypesConvertors { get; }
         IDateTimeProvider DateTimeProvider { get; }
         ILogicQueryParseAndCache LogicQueryParseAndCache { get; }
-        KindOfLogicalSearchExplain KindOfLogicalSearchExplain { get; }
-        string LogicalSearchExplainDumpDir { get; }
-        bool EnableAddingRemovingFactLoggingInStorages { get; }
     }
 }

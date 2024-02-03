@@ -82,10 +82,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             Monitor = settings.Monitor;            
             MonitorNode = Monitor.CreateMotitorNode("6B299F25-9FD9-46BE-A833-9C52B279444F", "world");
             Logger = MonitorNode;
-
-            KindOfLogicalSearchExplain = Monitor.KindOfLogicalSearchExplain;
-            LogicalSearchExplainDumpDir = Monitor.LogicalSearchExplainDumpDir;
-            EnableAddingRemovingFactLoggingInStorages = Monitor.EnableAddingRemovingFactLoggingInStorages;
         }
 
         private void CreateComponents(WorldSettings settings)
@@ -183,18 +179,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         public LogicQueryParseAndCache LogicQueryParseAndCache { get; private set; }
         ILogicQueryParseAndCache IWorldCoreGameComponentContext.LogicQueryParseAndCache => LogicQueryParseAndCache;
         ILogicQueryParseAndCache IWorldCoreContext.LogicQueryParseAndCache => LogicQueryParseAndCache;
-
-        public KindOfLogicalSearchExplain KindOfLogicalSearchExplain { get; private set; }
-        KindOfLogicalSearchExplain IWorldCoreGameComponentContext.KindOfLogicalSearchExplain => KindOfLogicalSearchExplain;
-        KindOfLogicalSearchExplain IWorldCoreContext.KindOfLogicalSearchExplain => KindOfLogicalSearchExplain;
-
-        public bool EnableAddingRemovingFactLoggingInStorages { get; private set; }
-        bool IWorldCoreGameComponentContext.EnableAddingRemovingFactLoggingInStorages => EnableAddingRemovingFactLoggingInStorages;
-        bool IWorldCoreContext.EnableAddingRemovingFactLoggingInStorages => EnableAddingRemovingFactLoggingInStorages;
-
-        public string LogicalSearchExplainDumpDir { get; private set; }
-        string IWorldCoreGameComponentContext.LogicalSearchExplainDumpDir => LogicalSearchExplainDumpDir;
-        string IWorldCoreContext.LogicalSearchExplainDumpDir => LogicalSearchExplainDumpDir;
 
         private readonly object _worldComponentsListLockObj = new object();
         private readonly List<IWorldCoreComponent> _worldComponentsList = new List<IWorldCoreComponent>();

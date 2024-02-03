@@ -119,14 +119,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 var packedVarsResolver = new PackedVarsResolver(_varsResolver, options.LocalCodeExecutionContext);
 
-                var resolveVariablesLogicalVisitor = new ResolveVariablesLogicalVisitor(_context.Logger);
+                var resolveVariablesLogicalVisitor = new ResolveVariablesLogicalVisitor(logger);
                 resolveVariablesLogicalVisitor.Run(queryExpression, packedVarsResolver);
 
                 queryExpression.CheckDirty();
 
                 if (options.IgnoreIfNullValueInImperativeVariables)
                 {
-                    var containsNullValueLogicalVisitor = new ContainsNullValueLogicalVisitor(_context.Logger);
+                    var containsNullValueLogicalVisitor = new ContainsNullValueLogicalVisitor(logger);
 
                     if(containsNullValueLogicalVisitor.Run(queryExpression))
                     {
@@ -143,7 +143,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
 
             var loggingProvider = _context.LoggingProvider;
-            var kindOfLogicalSearchExplain = loggingProvider.KindOfLogicalSearchExplain;
+            var kindOfLogicalSearchExplain = logger.KindOfLogicalSearchExplain;
 
             LogicalSearchExplainNode rootExplainNode = null;
             
@@ -272,7 +272,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 if(kindOfLogicalSearchExplain == KindOfLogicalSearchExplain.DumpAlways)
                 {
-                    var dumpFileName = loggingProvider.DumpToFile(rootExplainNode);
+                    var dumpFileName = loggingProvider.DumpToDotFile(rootExplainNode);
 
                     logger.Info("F90D67DA-ED62-4AFC-B84D-BA658F77D689", $"The explanation of query `{queryExpression.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}` has been dumped into file `{dumpFileName}`.");
                 }
@@ -289,7 +289,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 if (kindOfLogicalSearchExplain == KindOfLogicalSearchExplain.DumpIfError || kindOfLogicalSearchExplain == KindOfLogicalSearchExplain.DumpAlways)
                 {
-                    var dumpFileName = loggingProvider.DumpToFile(rootExplainNode);
+                    var dumpFileName = loggingProvider.DumpToDotFile(rootExplainNode);
 
                     sb.AppendLine($"The explanation has been dumped into file `{dumpFileName}`.");
                 }

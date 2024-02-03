@@ -81,6 +81,15 @@ namespace SymOntoClay.Monitor.Internal
         string IMonitorLoggerContext.ThreadId => string.Empty;
 
         /// <inheritdoc/>
+        public KindOfLogicalSearchExplain KindOfLogicalSearchExplain => _baseMonitorSettings.KindOfLogicalSearchExplain;
+
+        /// <inheritdoc/>
+        public string LogicalSearchExplainDumpDir => _fileCache.DirectoryName;
+
+        /// <inheritdoc/>
+        public bool EnableAddingRemovingFactLoggingInStorages => _baseMonitorSettings.EnableAddingRemovingFactLoggingInStorages;
+
+        /// <inheritdoc/>
         public bool IsReal => true;
 
         /// <inheritdoc/>

@@ -26,6 +26,7 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConverters;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 
@@ -57,8 +58,5 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         ISoundBus SoundBus { get; }
         INLPConverterFactory NLPConverterFactory { get; }
         IStandardFactsBuilder StandardFactsBuilder { get; }
-        KindOfLogicalSearchExplain KindOfLogicalSearchExplain { get; }
-        string LogicalSearchExplainDumpDir { get; }
-        bool EnableAddingRemovingFactLoggingInStorages { get; }
     }
 }

@@ -145,8 +145,8 @@ namespace TestSandbox.Helpers
             {
                 Enable = true,
                 MessagesDir = monitorMessagesDir,
-                KindOfLogicalSearchExplain = KindOfLogicalSearchExplain.None,
-                LogicalSearchExplainDumpDir = Directory.GetCurrentDirectory(),
+                KindOfLogicalSearchExplain = KindOfLogicalSearchExplain.DumpAlways,//KindOfLogicalSearchExplain.None,
+                //LogicalSearchExplainDumpDir = Directory.GetCurrentDirectory(),
                 EnableAddingRemovingFactLoggingInStorages = false,
                 EnableFullCallInfo = true
             };

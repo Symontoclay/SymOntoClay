@@ -37,23 +37,14 @@ namespace SymOntoClay.Core.Internal.Logging
             : base(context.Logger)
         {
             _id = context.Id;
-            KindOfLogicalSearchExplain = settings.KindOfLogicalSearchExplain;
-            _logicalSearchExplainDumpDir = settings.LogicalSearchExplainDumpDir;
-            EnableAddingRemovingFactLoggingInStorages = settings.EnableAddingRemovingFactLoggingInStorages;
-
+            _logicalSearchExplainDumpDir = context.Logger.LogicalSearchExplainDumpDir;
         }
 
         private readonly string _logicalSearchExplainDumpDir;
         private readonly string _id;
 
         /// <inheritdoc/>
-        public KindOfLogicalSearchExplain KindOfLogicalSearchExplain { get; private set; }
-
-        /// <inheritdoc/>
-        public bool EnableAddingRemovingFactLoggingInStorages { get; private set; }
-
-        /// <inheritdoc/>
-        public string DumpToFile(LogicalSearchExplainNode explainNode)
+        public string DumpToDotFile(LogicalSearchExplainNode explainNode)
         {
             var fileName = Path.Combine(_logicalSearchExplainDumpDir, $"{_id}_query_{Guid.NewGuid().ToString("D").Substring(0, 8)}.dot");
 

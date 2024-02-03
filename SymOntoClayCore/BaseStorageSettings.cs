@@ -56,10 +56,6 @@ namespace SymOntoClay.Core
 
         public ILogicQueryParseAndCache LogicQueryParseAndCache { get; set; }
 
-        public KindOfLogicalSearchExplain KindOfLogicalSearchExplain { get; set; } = KindOfLogicalSearchExplain.None;
-        public string LogicalSearchExplainDumpDir { get; set; }
-        public bool EnableAddingRemovingFactLoggingInStorages { get; set; }
-
         public List<string> Categories { get; set; }
         public bool EnableCategories { get; set; }
 
@@ -76,9 +72,6 @@ namespace SymOntoClay.Core
             sb.PrintExisting(n, nameof(ModulesStorage), ModulesStorage);
             sb.PrintExisting(n, nameof(ParentStorage), ParentStorage);
             sb.PrintExisting(n, nameof(LogicQueryParseAndCache), LogicQueryParseAndCache);
-            sb.AppendLine($"{spaces}{nameof(KindOfLogicalSearchExplain)} = {KindOfLogicalSearchExplain}");
-            sb.AppendLine($"{spaces}{nameof(LogicalSearchExplainDumpDir)} = {LogicalSearchExplainDumpDir}");
-            sb.AppendLine($"{spaces}{nameof(EnableAddingRemovingFactLoggingInStorages)} = {EnableAddingRemovingFactLoggingInStorages}");
 
             sb.PrintPODListProp(n, nameof(Categories), Categories);
             sb.AppendLine($"{spaces}{nameof(EnableCategories)} = {EnableCategories}");

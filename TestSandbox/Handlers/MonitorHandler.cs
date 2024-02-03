@@ -49,7 +49,7 @@ namespace TestSandbox.Handlers
                 MessagesDir = Path.Combine(Directory.GetCurrentDirectory(), "MessagesDir"),
                 OutputHandler = message => { _globalLogger.Info($"message = {message}"); },
                 KindOfLogicalSearchExplain = KindOfLogicalSearchExplain.None,
-                LogicalSearchExplainDumpDir = Directory.GetCurrentDirectory(),
+                //LogicalSearchExplainDumpDir = Directory.GetCurrentDirectory(),
                 EnableAddingRemovingFactLoggingInStorages = false,
                 PlatformLoggers = new List<IPlatformLogger>() { /*ConsoleLogger.Instance,*/ CommonNLogLogger.Instance },
                 EnableFullCallInfo = true,

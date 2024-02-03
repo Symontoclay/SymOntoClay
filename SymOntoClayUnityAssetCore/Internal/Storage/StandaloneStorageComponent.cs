@@ -46,10 +46,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Storage
             standaloneStorageSettings.AppFile = settings.HostFile;
             standaloneStorageSettings.LogicQueryParseAndCache = coreContext.LogicQueryParseAndCache;
 
-            standaloneStorageSettings.KindOfLogicalSearchExplain = coreContext.KindOfLogicalSearchExplain;
-            standaloneStorageSettings.LogicalSearchExplainDumpDir = coreContext.LogicalSearchExplainDumpDir;
-            standaloneStorageSettings.EnableAddingRemovingFactLoggingInStorages = coreContext.EnableAddingRemovingFactLoggingInStorages;
-
             _standaloneStorage = new StandaloneStorage(standaloneStorageSettings);
         }
 

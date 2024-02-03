@@ -17,7 +17,6 @@ namespace SymOntoClay.Monitor
         public bool EnableRemoteConnection { get; set; }
 
         public KindOfLogicalSearchExplain KindOfLogicalSearchExplain { get; set; } = KindOfLogicalSearchExplain.None;
-        public string LogicalSearchExplainDumpDir { get; set; }
         public bool EnableAddingRemovingFactLoggingInStorages { get; set; }
 
         public bool EnableFullCallInfo { get; set; }
@@ -34,7 +33,6 @@ namespace SymOntoClay.Monitor
             result.Enable = Enable;
             result.EnableRemoteConnection = EnableRemoteConnection;
             result.KindOfLogicalSearchExplain = KindOfLogicalSearchExplain;
-            result.LogicalSearchExplainDumpDir = LogicalSearchExplainDumpDir;
             result.EnableAddingRemovingFactLoggingInStorages = EnableAddingRemovingFactLoggingInStorages;
             result.EnableFullCallInfo = EnableFullCallInfo;
             result.EnableAsyncMessageCreation = EnableAsyncMessageCreation;
@@ -68,7 +66,6 @@ namespace SymOntoClay.Monitor
             sb.AppendLine($"{spaces}{nameof(Enable)} = {Enable}");
             sb.AppendLine($"{spaces}{nameof(EnableRemoteConnection)} = {EnableRemoteConnection}");
             sb.AppendLine($"{spaces}{nameof(KindOfLogicalSearchExplain)} = {KindOfLogicalSearchExplain}");
-            sb.AppendLine($"{spaces}{nameof(LogicalSearchExplainDumpDir)} = {LogicalSearchExplainDumpDir}");
             sb.AppendLine($"{spaces}{nameof(EnableAddingRemovingFactLoggingInStorages)} = {EnableAddingRemovingFactLoggingInStorages}");
             sb.AppendLine($"{spaces}{nameof(EnableFullCallInfo)} = {EnableFullCallInfo}");
             sb.AppendLine($"{spaces}{nameof(EnableAsyncMessageCreation)} = {EnableAsyncMessageCreation}");

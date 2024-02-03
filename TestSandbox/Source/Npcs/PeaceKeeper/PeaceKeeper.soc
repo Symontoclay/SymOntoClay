@@ -1,11 +1,17 @@
 ﻿app PeaceKeeper
 {
-	{: male(#Tom) :}
-	{: parent(#Piter, #Tom) :}
-	
-	on Enter => {
-	    select {: son($x, $y) :} >> @>log;
-	}
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        'End' >> @>log;
+    }
+
+	on {: see(I, $x) :} ($x >> @x) => 
+    {
+        'on Fired' >> @>log;
+        @x >> @>log;
+        complete action;
+    }
 }
 
 /*app PeaceKeeper

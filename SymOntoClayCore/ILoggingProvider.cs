@@ -28,10 +28,10 @@ using System.Text;
 
 namespace SymOntoClay.Core
 {
+    //[Obsolete("It should be moved to monitoring")]
     public interface ILoggingProvider
     {
-        KindOfLogicalSearchExplain KindOfLogicalSearchExplain { get; }
-        string DumpToFile(LogicalSearchExplainNode explainNode);
-        bool EnableAddingRemovingFactLoggingInStorages { get; }
+        //[Obsolete("It should be moved to monitoring")]
+        string DumpToDotFile(LogicalSearchExplainNode explainNode);
     }
 }

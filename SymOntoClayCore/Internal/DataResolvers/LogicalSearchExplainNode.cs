@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public LogicalSearchExplainNode(LogicalSearchExplainNode rootParent)
         {
             RootParent = rootParent;
-
+            
             if(rootParent != null)
             {
                 var commonChildren = rootParent.CommonChildren;
@@ -69,7 +69,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public IList<QueryExecutingCardAboutVar> VarsInfoList { get; set; }
         public IList<QueryExecutingCardAboutKnownInfo> KnownInfoList { get; set; }
 
-
         public static void LinkNodes(LogicalSearchExplainNode parent, LogicalSearchExplainNode child)
         {
             var parentChildren = parent.Children;
@@ -80,10 +79,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
             
             child.Parent = parent;
-
-
-
-
         }
 
         public static void ResetParent(LogicalSearchExplainNode child)

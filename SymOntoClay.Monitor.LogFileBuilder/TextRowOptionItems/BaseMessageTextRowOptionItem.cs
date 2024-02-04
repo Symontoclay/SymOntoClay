@@ -12,9 +12,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder.TextRowOptionItems
     {
         public TextTransformations TextTransformation { get; set; } = TextTransformations.None;
 
-        public virtual string GetText(BaseMessage message)
+        public virtual string GetText(BaseMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
-            var content = GetContent(message);
+            var content = GetContent(message, logFileCreatorContext);
 
             switch (TextTransformation)
             {
@@ -32,7 +32,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.TextRowOptionItems
             }
         }
 
-        protected abstract string GetContent(BaseMessage message);
+        protected abstract string GetContent(BaseMessage message, ILogFileCreatorContext logFileCreatorContext);
 
         /// <inheritdoc/>
         public override string ToString()

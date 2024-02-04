@@ -22,6 +22,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             _logger.Info($"options = {options}");
 #endif
 
+            var logFileCreatorContext = new LogFileCreatorContext();
+
             var showStages = (!options.Silent) && (logger != null);
 
 #if DEBUG
@@ -102,7 +104,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
                 foreach (var rowOption in rowOptionsList)
                 {
-                    rowSb.Append(rowOption.GetText(message));
+                    rowSb.Append(rowOption.GetText(message, logFileCreatorContext));
                 }
 
 #if DEBUG

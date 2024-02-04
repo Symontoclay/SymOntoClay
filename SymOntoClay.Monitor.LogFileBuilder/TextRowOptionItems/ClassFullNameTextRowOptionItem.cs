@@ -10,7 +10,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.TextRowOptionItems
     public class ClassFullNameTextRowOptionItem : BaseMessageTextRowOptionItem
     {
         /// <inheritdoc/>
-        protected override string GetContent(BaseMessage message)
+        protected override string GetContent(BaseMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
             return message.ClassFullName;
         }

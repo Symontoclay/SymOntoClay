@@ -27,7 +27,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
         private readonly IMessageContentToTextConverterOptions _options;
 
-        public string GetText(BaseMessage message)
+        public string GetText(BaseMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
@@ -152,7 +152,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                     return GetActivateIdleAction(message as ActivateIdleActionMessage);
 
                 case KindOfMessage.LogicalSearchExplain:
-                    return GetLogicalSearchExplain(message as LogicalSearchExplainMessage);
+                    return GetLogicalSearchExplain(message as LogicalSearchExplainMessage, logFileCreatorContext);
 
                 case KindOfMessage.Output:
                     return GetOutput(message as OutputMessage);
@@ -808,7 +808,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return message.Message;
         }
 
-        private string GetLogicalSearchExplain(LogicalSearchExplainMessage message)
+        private string GetLogicalSearchExplain(LogicalSearchExplainMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
             _globalLogger.Info($"message = {message}");
@@ -821,7 +821,13 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             _globalLogger.Info($"dotStr = {dotStr}");
 #endif
 
-            throw new NotImplementedException();
+            var fileName = logFileCreatorContext.ConvertDotStrToImg(dotStr);
+
+#if DEBUG
+            _globalLogger.Info($"fileName = {fileName}");
+#endif
+
+            return $"{GetMonitoredHumanizedLabel(message.Query)}: {fileName}";
         }
 
         private string GetTrace(TraceMessage message)

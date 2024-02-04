@@ -610,9 +610,6 @@ namespace SymOntoClay.Monitor
         public KindOfLogicalSearchExplain KindOfLogicalSearchExplain => _baseMonitorSettings.KindOfLogicalSearchExplain;
 
         /// <inheritdoc/>
-        public string LogicalSearchExplainDumpDir => _fileCache.AbsoluteDirectoryName;
-
-        /// <inheritdoc/>
         public bool EnableAddingRemovingFactLoggingInStorages => _baseMonitorSettings.EnableAddingRemovingFactLoggingInStorages;
 
         /// <inheritdoc/>

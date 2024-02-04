@@ -21,9 +21,6 @@ namespace SymOntoClay.Monitor.Common
 
         KindOfLogicalSearchExplain KindOfLogicalSearchExplain { get; }
 
-        [Obsolete("This is no longer used outside the library.")]
-        string LogicalSearchExplainDumpDir { get; }
-
         bool EnableAddingRemovingFactLoggingInStorages { get; }
 
         string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,

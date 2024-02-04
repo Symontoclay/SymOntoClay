@@ -33,9 +33,6 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         public KindOfLogicalSearchExplain KindOfLogicalSearchExplain => KindOfLogicalSearchExplain.None;
 
         /// <inheritdoc/>
-        public string LogicalSearchExplainDumpDir => string.Empty;
-
-        /// <inheritdoc/>
         public bool EnableAddingRemovingFactLoggingInStorages => false;
 
         IMonitorFeatures IMonitorLogger.MonitorFeatures => throw new NotImplementedException();

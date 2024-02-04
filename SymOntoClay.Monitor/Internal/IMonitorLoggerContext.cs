@@ -22,7 +22,6 @@ namespace SymOntoClay.Monitor.Internal
         bool EnableFullCallInfo { get; }
         bool EnableAsyncMessageCreation { get; }
         KindOfLogicalSearchExplain KindOfLogicalSearchExplain { get; }
-        string LogicalSearchExplainDumpDir { get; }
         bool EnableAddingRemovingFactLoggingInStorages { get; }
     }
 }

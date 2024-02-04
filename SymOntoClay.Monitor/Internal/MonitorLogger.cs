@@ -65,9 +65,6 @@ namespace SymOntoClay.Monitor.Internal
         public KindOfLogicalSearchExplain KindOfLogicalSearchExplain => _context.KindOfLogicalSearchExplain;
 
         /// <inheritdoc/>
-        public string LogicalSearchExplainDumpDir => _context.LogicalSearchExplainDumpDir;
-
-        /// <inheritdoc/>
         public bool EnableAddingRemovingFactLoggingInStorages => _context.EnableAddingRemovingFactLoggingInStorages;
 
         private readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings()

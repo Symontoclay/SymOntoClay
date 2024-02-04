@@ -814,6 +814,13 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             _globalLogger.Info($"message = {message}");
 #endif
 
+            var bytes = Convert.FromBase64String(message.DotContent);
+            var dotStr = Encoding.UTF8.GetString(bytes);
+
+#if DEBUG
+            _globalLogger.Info($"dotStr = {dotStr}");
+#endif
+
             throw new NotImplementedException();
         }
 

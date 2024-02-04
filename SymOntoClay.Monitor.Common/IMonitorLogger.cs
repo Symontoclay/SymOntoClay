@@ -239,7 +239,7 @@ namespace SymOntoClay.Monitor.Common
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);
 
-        string LogicalSearchExplain(string messagePointId, string dotStr, MonitoredHumanizedLabel query,
+        ulong LogicalSearchExplain(string messagePointId, string dotStr, MonitoredHumanizedLabel query,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);

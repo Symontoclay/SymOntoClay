@@ -136,6 +136,9 @@ namespace SymOntoClay.Monitor.Common.Data
                 case KindOfMessage.ActivateIdleAction:
                     return JsonConvert.DeserializeObject<ActivateIdleActionMessage>(content);
 
+                case KindOfMessage.LogicalSearchExplain:
+                    return JsonConvert.DeserializeObject<LogicalSearchExplainMessage>(content);
+
                 case KindOfMessage.Output:
                     return JsonConvert.DeserializeObject<OutputMessage>(content);
 

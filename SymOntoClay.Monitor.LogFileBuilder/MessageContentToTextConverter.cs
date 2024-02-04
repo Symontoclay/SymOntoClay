@@ -151,6 +151,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 case KindOfMessage.ActivateIdleAction:
                     return GetActivateIdleAction(message as ActivateIdleActionMessage);
 
+                case KindOfMessage.LogicalSearchExplain:
+                    return GetLogicalSearchExplain(message as LogicalSearchExplainMessage);
+
                 case KindOfMessage.Output:
                     return GetOutput(message as OutputMessage);
 
@@ -803,6 +806,15 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 #endif
 
             return message.Message;
+        }
+
+        private string GetLogicalSearchExplain(LogicalSearchExplainMessage message)
+        {
+#if DEBUG
+            _globalLogger.Info($"message = {message}");
+#endif
+
+            throw new NotImplementedException();
         }
 
         private string GetTrace(TraceMessage message)

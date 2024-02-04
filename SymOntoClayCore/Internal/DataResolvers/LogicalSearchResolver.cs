@@ -285,9 +285,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 if (kindOfLogicalSearchExplain == KindOfLogicalSearchExplain.DumpIfError || kindOfLogicalSearchExplain == KindOfLogicalSearchExplain.DumpAlways)
                 {
-                    var dumpFileName = LogLogicalSearchExplain(logger, "A8F977DE-F56A-45E5-B422-49FB0C1AEC44", rootExplainNode, queryExpression);
+                    var messageNumber = LogLogicalSearchExplain(logger, "A8F977DE-F56A-45E5-B422-49FB0C1AEC44", rootExplainNode, queryExpression);
 
-                    sb.AppendLine($"The explanation has been dumped into file `{dumpFileName}`.");
+                    sb.AppendLine($"The explanation has been dumped into message `{messageNumber}`.");
                 }
 
                 logger.Error("01C3750D-32DB-4563-840D-3A865B22304D", sb.ToString());
@@ -300,7 +300,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        private string LogLogicalSearchExplain(IMonitorLogger logger, string messagePointId, LogicalSearchExplainNode explainNode, RuleInstance queryExpression)
+        private ulong LogLogicalSearchExplain(IMonitorLogger logger, string messagePointId, LogicalSearchExplainNode explainNode, RuleInstance queryExpression)
         {
             var dotStr = DebugHelperForLogicalSearchExplainNode.ToDot(explainNode);
 

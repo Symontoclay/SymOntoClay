@@ -387,12 +387,12 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         }
 
         /// <inheritdoc/>
-        public string LogicalSearchExplain(string messagePointId, string dotStr, MonitoredHumanizedLabel query,
+        public ulong LogicalSearchExplain(string messagePointId, string dotStr, MonitoredHumanizedLabel query,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            return string.Empty;
+            return 0u;
         }
 
         /// <inheritdoc/>

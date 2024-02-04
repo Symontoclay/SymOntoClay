@@ -338,6 +338,11 @@ namespace SymOntoClay.Monitor.Internal
             NLabeledValue<ParameterMessage>(messagePointId, callMethodId, methodIdentifier.ToLabel(this), string.Empty, parameterValue?.ToMonitorSerializableObject(this), parameterValue.ToHumanizedString(this), memberName, sourceFilePath, sourceLineNumber);
         }
 
+        private string ToBase64String(string value)
+        {
+            return Convert.ToBase64String(Encoding.UTF8.GetBytes(value));
+        }
+
         [MethodForLoggingSupport]
         private void NLabeledValue<T>(string messagePointId, string callMethodId, MonitoredHumanizedLabel label, string altLabel, object value,
             string valueHumanizedString,
@@ -389,8 +394,7 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"jsonStr = {jsonStr}");
 #endif
 
-            var plainTextBytes = Encoding.UTF8.GetBytes(jsonStr);
-            var base64Str = Convert.ToBase64String(plainTextBytes);
+            var base64Str = ToBase64String(jsonStr);
 
 #if DEBUG
             //_globalLogger.Info($"base64Str = {base64Str}");
@@ -2711,52 +2715,73 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public string LogicalSearchExplain(string messagePointId, string dotStr, MonitoredHumanizedLabel query,
+        public ulong LogicalSearchExplain(string messagePointId, string dotStr, MonitoredHumanizedLabel query,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
             //_globalLogger.Info($"dotStr = {dotStr}");
-            _globalLogger.Info($"query = {query}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"query = {query}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"_fileCache.AbsoluteDirectoryName = {_fileCache.AbsoluteDirectoryName}");
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
 #endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
 
 #if DEBUG
-            _globalLogger.Info($"_fileCache.RelativeDirectoryName = {_fileCache.RelativeDirectoryName}");
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
 #endif
 
-            var fileName = $"query_{Guid.NewGuid().ToString("D").Substring(0, 8)}.dot";
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var base64Str = ToBase64String(dotStr);
 
 #if DEBUG
-            _globalLogger.Info($"fileName = {fileName}");
+            //_globalLogger.Info($"base64Str = {base64Str}");
 #endif
 
-            var absoluteFileName = Path.Combine(_fileCache.AbsoluteDirectoryName, fileName);
+            var now = DateTime.Now;
+
+            var messageInfo = new LogicalSearchExplainMessage
+            {
+                DotContent = base64Str,
+                Query = query,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
 
 #if DEBUG
-            _globalLogger.Info($"absoluteFileName = {absoluteFileName}");
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
 #endif
 
-            var relativeFileName = Path.Combine(_fileCache.RelativeDirectoryName, fileName);
+            ProcessMessage(messageInfo);
 
-#if DEBUG
-            _globalLogger.Info($"relativeFileName = {relativeFileName}");
-#endif
-
-            File.WriteAllText(absoluteFileName, dotStr);
-
-            //TODO: Make special message about result with relativeFileName and query.
-            throw new NotImplementedException();
-
-            //return relativeFileName;
+            return globalMessageNumber;
         }
 
         /// <inheritdoc/>

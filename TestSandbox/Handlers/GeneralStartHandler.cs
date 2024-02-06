@@ -118,7 +118,8 @@ namespace TestSandbox.Handlers
             options.Write(new LogFileCreatorOptions()
             {
                 SourceDirectoryName = sourceDirectoryName,
-                OutputDirectory = logsOutputDirectory
+                OutputDirectory = logsOutputDirectory,
+                DotAppPath = @"%USERPROFILE%\Downloads\Graphviz\bin\dot.exe"
             });
 
             //_globalLogger.Info($"options = {options}");

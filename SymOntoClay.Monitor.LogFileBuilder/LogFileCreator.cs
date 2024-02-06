@@ -1,4 +1,5 @@
 ﻿using NLog;
+using SymOntoClay.CoreHelper;
 using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.Monitor.LogFileBuilder.FileNameTemplateOptionItems;
 using System;
@@ -22,7 +23,15 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             _logger.Info($"options = {options}");
 #endif
 
-            var logFileCreatorContext = new LogFileCreatorContext();
+            options = options.Clone();
+
+            PrepareOptions(options, logger);
+
+#if DEBUG
+            _logger.Info($"options (after) = {options}");
+#endif
+
+            var logFileCreatorContext = new LogFileCreatorContext(dotAppPath: options.DotAppPath, outputDirectory: options.OutputDirectory);
 
             var showStages = (!options.Silent) && (logger != null);
 
@@ -117,6 +126,18 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             if (showStages)
             {
                 logger.Info($"All fetched {fileNamesListCount} file names processed");
+            }
+        }
+
+        public static void PrepareOptions(LogFileCreatorOptions options, ILogger logger)
+        {
+#if DEBUG
+            _logger.Info($"options = {options}");
+#endif
+
+            if (!string.IsNullOrWhiteSpace(options.DotAppPath))
+            {
+                options.DotAppPath = EVPath.Normalize(options.DotAppPath);
             }
         }
     }

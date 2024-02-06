@@ -23,6 +23,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public IEnumerable<KindOfMessage> KindOfMessages { get; set; }
         public IEnumerable<BaseMessageTextRowOptionItem> Layout { get; set; }
         public bool Silent { get; set; }
+        public string DotAppPath { get; set; }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
         public LogFileCreatorOptions Clone()
@@ -50,6 +51,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             result.KindOfMessages = KindOfMessages?.ToList();
             result.Layout = Layout?.ToList();
             result.Silent = Silent;
+            result.DotAppPath = DotAppPath;
 
             return result;
         }
@@ -102,6 +104,11 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             }
 
             Silent = source.Silent;
+
+            if(source.DotAppPath != null)
+            {
+                DotAppPath = source.DotAppPath;
+            }
         }
 
         /// <inheritdoc/>
@@ -136,6 +143,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             sb.PrintPODList(n, nameof(KindOfMessages), KindOfMessages);
             sb.PrintObjListProp(n, nameof(Layout), Layout); 
             sb.AppendLine($"{spaces}{nameof(Silent)} = {Silent}");
+            sb.AppendLine($"{spaces}{nameof(DotAppPath)} = {DotAppPath}");
             //sb.AppendLine($"{spaces}{nameof()} = {}");
             return sb.ToString();
         }

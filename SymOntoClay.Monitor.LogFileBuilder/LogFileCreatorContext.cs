@@ -15,19 +15,21 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
-        public LogFileCreatorContext() 
+        public LogFileCreatorContext(string dotAppPath, string outputDirectory) 
         {
-            _tempDir = Directory.GetCurrentDirectory();//tmp
+            _dotAppPath = dotAppPath;
+            _outputDirectory = outputDirectory;
+
+            _tempDir = Environment.GetEnvironmentVariable("TEMP");
 
 #if DEBUG
             _gbcLogger.Info($"_tempDir = {_tempDir}");
 #endif
-
-
         }
 
         private readonly string _tempDir;
-        private readonly string _appPath = @"c:\Users\Acer\Downloads\Graphviz\bin\dot.exe";//tmp
+        private readonly string _dotAppPath;
+        private readonly string _outputDirectory;
 
         /// <inheritdoc/>
         public string ConvertDotStrToImg(string dotStr)
@@ -47,22 +49,22 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             File.WriteAllText(dotFileName, dotStr);
 
 #if DEBUG
-            _gbcLogger.Info($"_appPath = {_appPath}");
+            _gbcLogger.Info($"_dotAppPath = {_dotAppPath}");
 #endif
 
-            var svgFile = Path.Combine(_tempDir, $"{initialName}.svg");
+            var svgFile = Path.Combine(_outputDirectory, $"{initialName}.svg");
 
 #if DEBUG
             _gbcLogger.Info($"svgFile = {svgFile}");
 #endif
 
-            var cmdArgs = $"-Tsvg \"{dotFileName}\" -O\"{svgFile}\"";
+            var cmdArgs = $"-Tsvg \"{dotFileName}\" -o \"{svgFile}\"";
 
 #if DEBUG
             _gbcLogger.Info($"cmdArgs = {cmdArgs}");
 #endif
 
-            using (var proc = Process.Start(_appPath, cmdArgs))
+            using (var proc = Process.Start(_dotAppPath, cmdArgs))
             {
                 proc.WaitForExit();
 

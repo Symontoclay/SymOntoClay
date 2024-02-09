@@ -22,8 +22,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public bool? SeparateOutputByThreads { get; set; }
         public IEnumerable<KindOfMessage> KindOfMessages { get; set; }
         public IEnumerable<BaseMessageTextRowOptionItem> Layout { get; set; }
-        public bool Silent { get; set; }
+        public bool? Silent { get; set; }
         public string DotAppPath { get; set; }
+        public bool? ToHtml { get; set; }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
         public LogFileCreatorOptions Clone()
@@ -52,6 +53,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             result.Layout = Layout?.ToList();
             result.Silent = Silent;
             result.DotAppPath = DotAppPath;
+            result.ToHtml = ToHtml;
 
             return result;
         }
@@ -103,11 +105,19 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 Layout = source.Layout.ToList();
             }
 
-            Silent = source.Silent;
+            if(source.Silent.HasValue)
+            {
+                Silent = source.Silent;
+            }
 
             if(source.DotAppPath != null)
             {
                 DotAppPath = source.DotAppPath;
+            }
+
+            if (source.ToHtml.HasValue)
+            {
+                ToHtml = source.ToHtml;
             }
         }
 
@@ -144,6 +154,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             sb.PrintObjListProp(n, nameof(Layout), Layout); 
             sb.AppendLine($"{spaces}{nameof(Silent)} = {Silent}");
             sb.AppendLine($"{spaces}{nameof(DotAppPath)} = {DotAppPath}");
+            sb.AppendLine($"{spaces}{nameof(ToHtml)} = {ToHtml}");
             //sb.AppendLine($"{spaces}{nameof()} = {}");
             return sb.ToString();
         }
@@ -165,7 +176,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                     IfThreadIdExists = true
                 },
                 new LongDateTimeFileNameTemplateOptionItem(),
-                new TextFileNameTemplateOptionItem()
+                new ExtensionFileNameTemplateOptionItem()
                 {
                     Text = ".log"
                 }

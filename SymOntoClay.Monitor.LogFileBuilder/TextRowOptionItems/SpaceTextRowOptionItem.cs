@@ -17,7 +17,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.TextRowOptionItems
         }
 
         /// <inheritdoc/>
-        protected override string GetContent(BaseMessage message, ILogFileCreatorContext logFileCreatorContext)
+        protected override string GetContent(BaseMessage message, ILogFileCreatorContext logFileCreatorContext, string targetFileName)
         {
             return DisplayHelper.Spaces(Widht);
         }

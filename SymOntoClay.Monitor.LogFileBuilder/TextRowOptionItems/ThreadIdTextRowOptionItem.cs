@@ -10,7 +10,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.TextRowOptionItems
     public class ThreadIdTextRowOptionItem : BaseMessageTextRowOptionItem
     {
         /// <inheritdoc/>
-        protected override string GetContent(BaseMessage message, ILogFileCreatorContext logFileCreatorContext)
+        protected override string GetContent(BaseMessage message, ILogFileCreatorContext logFileCreatorContext, string targetFileName)
         {
             return $"ThreadId: {message.ThreadId}";
         }

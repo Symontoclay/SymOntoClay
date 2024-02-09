@@ -27,7 +27,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
         private readonly IMessageContentToTextConverterOptions _options;
 
-        public string GetText(BaseMessage message, ILogFileCreatorContext logFileCreatorContext)
+        public string GetText(BaseMessage message, ILogFileCreatorContext logFileCreatorContext, string targetFileName)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
@@ -152,7 +152,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                     return GetActivateIdleAction(message as ActivateIdleActionMessage);
 
                 case KindOfMessage.LogicalSearchExplain:
-                    return GetLogicalSearchExplain(message as LogicalSearchExplainMessage, logFileCreatorContext);
+                    return GetLogicalSearchExplain(message as LogicalSearchExplainMessage, logFileCreatorContext, targetFileName);
 
                 case KindOfMessage.Output:
                     return GetOutput(message as OutputMessage);
@@ -808,9 +808,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return message.Message;
         }
 
-        private string GetLogicalSearchExplain(LogicalSearchExplainMessage message, ILogFileCreatorContext logFileCreatorContext)
+        private string GetLogicalSearchExplain(LogicalSearchExplainMessage message, ILogFileCreatorContext logFileCreatorContext, string targetFileName)
         {
 #if DEBUG
+            _globalLogger.Info($"targetFileName = {targetFileName}");
             _globalLogger.Info($"message = {message}");
 #endif
 
@@ -821,13 +822,13 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             _globalLogger.Info($"dotStr = {dotStr}");
 #endif
 
-            var fileName = logFileCreatorContext.ConvertDotStrToImg(dotStr);
+            var fileName = logFileCreatorContext.ConvertDotStrToImg(dotStr, targetFileName);
 
 #if DEBUG
             _globalLogger.Info($"fileName = {fileName}");
 #endif
 
-            return $"{GetMonitoredHumanizedLabel(message.Query)}: {fileName}";
+            return $"{GetMonitoredHumanizedLabel(message.Query)}: {logFileCreatorContext.CreateImgLink(fileName.AbsoluteName, fileName.RelativeName)}";
         }
 
         private string GetTrace(TraceMessage message)

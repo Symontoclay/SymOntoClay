@@ -119,7 +119,8 @@ namespace TestSandbox.Handlers
             {
                 SourceDirectoryName = sourceDirectoryName,
                 OutputDirectory = logsOutputDirectory,
-                DotAppPath = @"%USERPROFILE%\Downloads\Graphviz\bin\dot.exe"
+                DotAppPath = @"%USERPROFILE%\Downloads\Graphviz\bin\dot.exe",
+                ToHtml = true
             });
 
             //_globalLogger.Info($"options = {options}");

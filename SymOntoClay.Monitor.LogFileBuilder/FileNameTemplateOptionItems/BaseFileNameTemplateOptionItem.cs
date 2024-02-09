@@ -14,6 +14,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FileNameTemplateOptionItems
         public bool IfNodeIdExists { get; set; }
         public bool IfThreadIdExists { get; set; }
 
+        public virtual bool IsExtension => false;
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -38,6 +40,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.FileNameTemplateOptionItems
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(IfNodeIdExists)} = {IfNodeIdExists}");
             sb.AppendLine($"{spaces}{nameof(IfThreadIdExists)} = {IfThreadIdExists}");
+            sb.AppendLine($"{spaces}{nameof(IsExtension)} = {IsExtension}");
             return sb.ToString();
         }
     }

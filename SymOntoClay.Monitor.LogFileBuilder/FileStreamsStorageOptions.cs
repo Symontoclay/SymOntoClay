@@ -14,6 +14,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public IEnumerable<BaseFileNameTemplateOptionItem> FileNameTemplate { get; set; }
         public bool SeparateOutputByNodes { get; set; }
         public bool SeparateOutputByThreads { get; set; }
+        public bool ToHtml { get; set; }
+        public ILogFileCreatorContext LogFileCreatorContext { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -36,6 +38,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             sb.PrintObjListProp(n, nameof(FileNameTemplate), FileNameTemplate);
             sb.AppendLine($"{spaces}{nameof(SeparateOutputByNodes)} = {SeparateOutputByNodes}");
             sb.AppendLine($"{spaces}{nameof(SeparateOutputByThreads)} = {SeparateOutputByThreads}");
+            sb.AppendLine($"{spaces}{nameof(ToHtml)} = {ToHtml}");
+            sb.PrintExisting(n, nameof(LogFileCreatorContext), LogFileCreatorContext);
             return sb.ToString();
         }
     }

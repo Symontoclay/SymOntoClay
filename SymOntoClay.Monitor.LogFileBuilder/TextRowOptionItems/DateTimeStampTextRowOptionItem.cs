@@ -22,7 +22,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.TextRowOptionItems
         public string Format { get; set; }
 
         /// <inheritdoc/>
-        protected override string GetContent(BaseMessage message, ILogFileCreatorContext logFileCreatorContext)
+        protected override string GetContent(BaseMessage message, ILogFileCreatorContext logFileCreatorContext, string targetFileName)
         {
             return message.DateTimeStamp.ToString(Format);
         }

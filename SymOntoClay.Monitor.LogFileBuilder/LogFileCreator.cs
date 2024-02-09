@@ -31,9 +31,15 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             _logger.Info($"options (after) = {options}");
 #endif
 
-            var logFileCreatorContext = new LogFileCreatorContext(dotAppPath: options.DotAppPath, outputDirectory: options.OutputDirectory);
+            var toHtml = options.ToHtml ?? false;
 
-            var showStages = (!options.Silent) && (logger != null);
+            var logFileCreatorContext = new LogFileCreatorContext(
+                dotAppPath: options.DotAppPath, 
+                outputDirectory: options.OutputDirectory, 
+                toHtml: toHtml,
+                fileNameTemplate: options.FileNameTemplate);
+
+            var showStages = (!(options.Silent ?? false)) && (logger != null);
 
 #if DEBUG
             _logger.Info($"showStages = {showStages}");
@@ -58,7 +64,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 OutputDirectory = options.OutputDirectory,
                 FileNameTemplate = options.FileNameTemplate,
                 SeparateOutputByNodes = options.SeparateOutputByNodes ?? false,
-                SeparateOutputByThreads = options.SeparateOutputByThreads ?? false
+                SeparateOutputByThreads = options.SeparateOutputByThreads ?? false,
+                ToHtml = toHtml,
+                LogFileCreatorContext = logFileCreatorContext
             };
 
 #if DEBUG
@@ -109,18 +117,24 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
                 var sw = fileStreamsStorage.GetStreamWriter(message.NodeId, message.ThreadId);
 
+                var targetFileName = fileStreamsStorage.GetFileName(message.NodeId, message.ThreadId).Replace("#", string.Empty);
+
+#if DEBUG
+                _logger.Info($"targetFileName = {targetFileName}");
+#endif
+
                 var rowSb = new StringBuilder();
 
                 foreach (var rowOption in rowOptionsList)
                 {
-                    rowSb.Append(rowOption.GetText(message, logFileCreatorContext));
+                    rowSb.Append(rowOption.GetText(message, logFileCreatorContext, targetFileName));
                 }
 
 #if DEBUG
                 //_logger.Info($"rowSb = {rowSb}");
 #endif
 
-                sw.WriteLine(rowSb);
+                sw.WriteLine(logFileCreatorContext.DecorateItem(rowSb.ToString()));
             }
 
             if (showStages)

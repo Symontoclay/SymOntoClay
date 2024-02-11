@@ -12,7 +12,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.TextRowOptionItems
         /// <inheritdoc/>
         protected override string GetContent(BaseMessage message, ILogFileCreatorContext logFileCreatorContext, string targetFileName)
         {
-            return message.GlobalMessageNumber.ToString();
+            return $"{message.GlobalMessageNumber.ToString()}: ";
         }
     }
 }

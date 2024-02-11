@@ -287,7 +287,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 {
                     var messageNumber = LogLogicalSearchExplain(logger, "A8F977DE-F56A-45E5-B422-49FB0C1AEC44", rootExplainNode, queryExpression);
 
-                    sb.AppendLine($"The explanation has been dumped into message `{messageNumber}`.");
+                    sb.AppendLine($"The explanation has been dumped into message msg::ref({messageNumber}).");
                 }
 
                 logger.Error("01C3750D-32DB-4563-840D-3A865B22304D", sb.ToString());

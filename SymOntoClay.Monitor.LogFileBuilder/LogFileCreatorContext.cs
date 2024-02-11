@@ -86,11 +86,14 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         }
 
         /// <inheritdoc/>
-        public string DecorateItem(string content)
+        public string DecorateItem(ulong globalMessageNumber, string content)
         {
             if(_toHtml)
             {
-                return $"<p>{content}</p>";
+                return $"""
+                <a name="id_{globalMessageNumber}"/>
+                <p>{content}</p>
+                """;
             }
 
             return content;
@@ -185,6 +188,69 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             }
 
             return imgFileName;
+        }
+
+        public string ResolveMessagesRefs(string content)
+        {
+#if DEBUG
+            //_gbcLogger.Info($"content = {content}");
+#endif
+
+            if(!content.Contains("msg::ref"))
+            {
+                return content;
+            }
+
+            int pos = 0;
+
+            while((pos = content.IndexOf("msg::ref", pos)) != -1)
+            {
+#if DEBUG
+                //_gbcLogger.Info($"pos = {pos}");
+#endif
+
+                var openBraketPoint = content.IndexOf("(", pos);
+
+#if DEBUG
+                //_gbcLogger.Info($"openBraketPoint = {openBraketPoint}");
+#endif
+
+                var closeBraketPoint = content.IndexOf(")", pos);
+
+#if DEBUG
+                //_gbcLogger.Info($"closeBraketPoint = {closeBraketPoint}");
+#endif
+
+                var expr = content.Substring(pos, closeBraketPoint - pos + 1);
+
+#if DEBUG
+                //_gbcLogger.Info($"expr = `{expr}`");
+#endif
+
+                var messageGlobalNumberStr = content.Substring(openBraketPoint + 1, closeBraketPoint - openBraketPoint - 1);
+
+#if DEBUG
+                //_gbcLogger.Info($"messageGlobalNumberStr = `{messageGlobalNumberStr}`");
+#endif
+
+                content = content.Replace(expr, ResolveMessagesRef(messageGlobalNumberStr));
+            }
+
+#if DEBUG
+            //_gbcLogger.Info($"content (after) = {content}");
+#endif
+
+            return content;
+        }
+
+        private string ResolveMessagesRef(string messageGlobalNumberStr)
+        {
+            if(_toHtml)
+            {
+                return $"`<a href=\"#id_{messageGlobalNumberStr}\">{messageGlobalNumberStr}</a>`";
+            }
+
+            return $"`{messageGlobalNumberStr}`";
         }
     }
 }

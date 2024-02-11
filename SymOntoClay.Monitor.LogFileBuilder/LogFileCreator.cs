@@ -117,6 +117,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
                 var sw = fileStreamsStorage.GetStreamWriter(message.NodeId, message.ThreadId);
 
+#if DEBUG
+                //_logger.Info($"message.GlobalMessageNumber = {message.GlobalMessageNumber}");
+#endif
+
                 var targetFileName = fileStreamsStorage.GetFileName(message.NodeId, message.ThreadId).Replace("#", string.Empty);
 
 #if DEBUG
@@ -134,7 +138,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 //_logger.Info($"rowSb = {rowSb}");
 #endif
 
-                sw.WriteLine(logFileCreatorContext.DecorateItem(rowSb.ToString()));
+                sw.WriteLine(logFileCreatorContext.DecorateItem(message.GlobalMessageNumber, rowSb.ToString()));
             }
 
             if (showStages)

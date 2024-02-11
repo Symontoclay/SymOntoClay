@@ -158,22 +158,22 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                     return GetOutput(message as OutputMessage);
 
                 case KindOfMessage.Trace:
-                    return GetTrace(message as TraceMessage);
+                    return GetTrace(message as TraceMessage, logFileCreatorContext);
 
                 case KindOfMessage.Debug:
-                    return GetDebug(message as DebugMessage);
+                    return GetDebug(message as DebugMessage, logFileCreatorContext);
 
                 case KindOfMessage.Info:
-                    return GetInfoMessage(message as InfoMessage);
+                    return GetInfoMessage(message as InfoMessage, logFileCreatorContext);
 
                 case KindOfMessage.Warn:
-                    return GetWarn(message as WarnMessage);
+                    return GetWarn(message as WarnMessage, logFileCreatorContext);
 
                 case KindOfMessage.Error:
-                    return GetError(message as ErrorMessage);
+                    return GetError(message as ErrorMessage, logFileCreatorContext);
 
                 case KindOfMessage.Fatal:
-                    return GetFatal(message as FatalMessage);
+                    return GetFatal(message as FatalMessage, logFileCreatorContext);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfMessage), kindOfMessage, null);
@@ -831,58 +831,58 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return $"{GetMonitoredHumanizedLabel(message.Query)}: {logFileCreatorContext.CreateImgLink(fileName.AbsoluteName, fileName.RelativeName)}";
         }
 
-        private string GetTrace(TraceMessage message)
+        private string GetTrace(TraceMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            return message.Message;
+            return logFileCreatorContext.ResolveMessagesRefs(message.Message);
         }
 
-        private string GetDebug(DebugMessage message)
+        private string GetDebug(DebugMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            return message.Message;
+            return logFileCreatorContext.ResolveMessagesRefs(message.Message);
         }
 
-        private string GetInfoMessage(InfoMessage message)
+        private string GetInfoMessage(InfoMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            return message.Message;
+            return logFileCreatorContext.ResolveMessagesRefs(message.Message);
         }
 
-        private string GetWarn(WarnMessage message)
+        private string GetWarn(WarnMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            return message.Message;
+            return logFileCreatorContext.ResolveMessagesRefs(message.Message);
         }
 
-        private string GetError(ErrorMessage message)
+        private string GetError(ErrorMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            return message.Message;
+            return logFileCreatorContext.ResolveMessagesRefs(message.Message);
         }
 
-        private string GetFatal(FatalMessage message)
+        private string GetFatal(FatalMessage message, ILogFileCreatorContext logFileCreatorContext)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            return message.Message;
+            return logFileCreatorContext.ResolveMessagesRefs(message.Message);
         }
     }
 }

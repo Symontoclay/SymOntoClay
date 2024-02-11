@@ -11,8 +11,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         string GetFileExtension();
         string DecorateFileHeader();
         string DecorateFileFooter();
-        string DecorateItem(string content);
+        string DecorateItem(ulong globalMessageNumber, string content);
         (string AbsoluteName, string RelativeName) ConvertDotStrToImg(string dotStr, string targetFileName);
         string CreateImgLink(string imgFileName, string relativeFileName);
+        string ResolveMessagesRefs(string content);
     }
 }

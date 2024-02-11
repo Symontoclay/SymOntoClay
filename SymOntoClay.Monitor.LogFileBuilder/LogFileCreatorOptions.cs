@@ -189,6 +189,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             },
             Layout = new List<BaseMessageTextRowOptionItem>
             {
+                new GlobalMessageNumberTextRowOptionItem(),
                 new LongDateTimeStampTextRowOptionItem(),
                 new SpaceTextRowOptionItem(),
                 new MessagePointIdTextRowOptionItem(),

@@ -811,21 +811,21 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private string GetLogicalSearchExplain(LogicalSearchExplainMessage message, ILogFileCreatorContext logFileCreatorContext, string targetFileName)
         {
 #if DEBUG
-            _globalLogger.Info($"targetFileName = {targetFileName}");
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"targetFileName = {targetFileName}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
             var bytes = Convert.FromBase64String(message.DotContent);
             var dotStr = Encoding.UTF8.GetString(bytes);
 
 #if DEBUG
-            _globalLogger.Info($"dotStr = {dotStr}");
+            //_globalLogger.Info($"dotStr = {dotStr}");
 #endif
 
             var fileName = logFileCreatorContext.ConvertDotStrToImg(dotStr, targetFileName);
 
 #if DEBUG
-            _globalLogger.Info($"fileName = {fileName}");
+            //_globalLogger.Info($"fileName = {fileName}");
 #endif
 
             return $"{GetMonitoredHumanizedLabel(message.Query)}: {logFileCreatorContext.CreateImgLink(fileName.AbsoluteName, fileName.RelativeName)}";

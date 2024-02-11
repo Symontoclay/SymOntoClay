@@ -13,7 +13,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
     public class LogFileCreatorContext: ILogFileCreatorContext
     {
 #if DEBUG
-        private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
+        //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
         public LogFileCreatorContext(string dotAppPath, string outputDirectory, bool toHtml, IEnumerable<BaseFileNameTemplateOptionItem> fileNameTemplate) 
@@ -22,7 +22,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             _fileNameTemplate = fileNameTemplate;
 
 #if DEBUG
-            _gbcLogger.Info($"_toHtml = {_toHtml}");
+            //_gbcLogger.Info($"_toHtml = {_toHtml}");
 #endif
 
             _dotAppPath = dotAppPath;
@@ -31,7 +31,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             _tempDir = Environment.GetEnvironmentVariable("TEMP");
 
 #if DEBUG
-            _gbcLogger.Info($"_tempDir = {_tempDir}");
+            //_gbcLogger.Info($"_tempDir = {_tempDir}");
 #endif
 
             _fileExtension = GetFileExtension();
@@ -100,26 +100,26 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public (string AbsoluteName, string RelativeName) ConvertDotStrToImg(string dotStr, string targetFileName)
         {
 #if DEBUG
-            _gbcLogger.Info($"_toHtml = {_toHtml}");
-            _gbcLogger.Info($"targetFileName = {targetFileName}");
+            //_gbcLogger.Info($"_toHtml = {_toHtml}");
+            //_gbcLogger.Info($"targetFileName = {targetFileName}");
 #endif
 
             var initialName = $"query_{Guid.NewGuid().ToString("D").Substring(0, 8)}";
 
 #if DEBUG
-            _gbcLogger.Info($"initialName = {initialName}");
+            //_gbcLogger.Info($"initialName = {initialName}");
 #endif
 
             var dotFileName = Path.Combine(_tempDir, $"{initialName}.dot");
 
 #if DEBUG
-            _gbcLogger.Info($"dotFileName = {dotFileName}");
+            //_gbcLogger.Info($"dotFileName = {dotFileName}");
 #endif
 
             File.WriteAllText(dotFileName, dotStr);
 
 #if DEBUG
-            _gbcLogger.Info($"_dotAppPath = {_dotAppPath}");
+            //_gbcLogger.Info($"_dotAppPath = {_dotAppPath}");
 #endif
 
             var imgOutputDirectoryResult = GetImgOutputDirectory(targetFileName);
@@ -129,13 +129,13 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             var svgFile = Path.Combine(imgOutputDirectoryResult.AbsoluteName, $"{initialName}.svg");
 
 #if DEBUG
-            _gbcLogger.Info($"svgFile = {svgFile}");
+            //_gbcLogger.Info($"svgFile = {svgFile}");
 #endif
 
             var cmdArgs = $"-Tsvg \"{dotFileName}\" -o \"{svgFile}\"";
 
 #if DEBUG
-            _gbcLogger.Info($"cmdArgs = {cmdArgs}");
+            //_gbcLogger.Info($"cmdArgs = {cmdArgs}");
 #endif
 
             using (var proc = Process.Start(_dotAppPath, cmdArgs))
@@ -143,7 +143,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 proc.WaitForExit();
 
 #if DEBUG
-                _gbcLogger.Info($"proc.ExitCode = {proc.ExitCode}");
+                //_gbcLogger.Info($"proc.ExitCode = {proc.ExitCode}");
 #endif
             }
 
@@ -155,8 +155,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private (string AbsoluteName, string RelativeName) GetImgOutputDirectory(string targetFileName)
         {
 #if DEBUG
-            _gbcLogger.Info($"_toHtml = {_toHtml}");
-            _gbcLogger.Info($"targetFileName = {targetFileName}");
+            //_gbcLogger.Info($"_toHtml = {_toHtml}");
+            //_gbcLogger.Info($"targetFileName = {targetFileName}");
 #endif
 
             if (_toHtml)
@@ -175,8 +175,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public string CreateImgLink(string imgFileName, string relativeFileName)
         {
 #if DEBUG
-            _gbcLogger.Info($"imgFileName = {imgFileName}");
-            _gbcLogger.Info($"relativeFileName = {relativeFileName}");
+            //_gbcLogger.Info($"imgFileName = {imgFileName}");
+            //_gbcLogger.Info($"relativeFileName = {relativeFileName}");
 #endif
 
             if (_toHtml)

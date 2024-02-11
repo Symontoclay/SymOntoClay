@@ -13,7 +13,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
     public class FileStreamsStorage: IDisposable
     {
 #if DEBUG
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        //private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
         public FileStreamsStorage(FileStreamsStorageOptions options)
@@ -61,8 +61,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public StreamWriter GetStreamWriter(string nodeId, string threadId)
         {
 #if DEBUG
-            _logger.Info($"nodeId = {nodeId}");
-            _logger.Info($"threadId = {threadId}");
+            //_logger.Info($"nodeId = {nodeId}");
+            //_logger.Info($"threadId = {threadId}");
 #endif
 
             if(string.IsNullOrWhiteSpace(nodeId) && string.IsNullOrWhiteSpace(threadId))
@@ -156,8 +156,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public string GetFileName(string nodeId, string threadId)
         {
 #if DEBUG
-            _logger.Info($"nodeId = {nodeId}");
-            _logger.Info($"threadId = {threadId}");
+            //_logger.Info($"nodeId = {nodeId}");
+            //_logger.Info($"threadId = {threadId}");
 #endif
 
             if (string.IsNullOrWhiteSpace(nodeId) && string.IsNullOrWhiteSpace(threadId))
@@ -196,7 +196,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public void Dispose()
         {
 #if DEBUG
-            _logger.Info("Dispose()");
+            //_logger.Info("Dispose()");
 #endif
 
             var toHtml = _options.ToHtml;

@@ -139,6 +139,9 @@ namespace SymOntoClay.Monitor.Common.Data
                 case KindOfMessage.LogicalSearchExplain:
                     return JsonConvert.DeserializeObject<LogicalSearchExplainMessage>(content);
 
+                case KindOfMessage.AddFactToLogicalStorage:
+                    return JsonConvert.DeserializeObject<AddFactToLogicalStorageMessage>(content);
+
                 case KindOfMessage.Output:
                     return JsonConvert.DeserializeObject<OutputMessage>(content);
 

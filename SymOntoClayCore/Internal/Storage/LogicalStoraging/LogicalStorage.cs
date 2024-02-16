@@ -29,6 +29,7 @@ using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -262,7 +263,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             if(_enableAddingRemovingFactLoggingInStorages)
             {
-                logger.Info("6D10091F-6FD6-4150-88DB-854F7CE890C8", $"({GetHashCode()}) NEXT ruleInstance = {ruleInstance.ToHumanizedString()}");
+                logger.AddFactToLogicalStorage("6D10091F-6FD6-4150-88DB-854F7CE890C8", ruleInstance.ToLabel(logger), this.ToLabel(logger));
             }
 
             _ruleInstancesList.Add(ruleInstance);
@@ -766,27 +767,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             }
         }
 
-#if DEBUG
-        /// <inheritdoc/>
-        public void DbgPrintFactsAndRules(IMonitorLogger logger)
-        {
-            lock (_lockObj)
-            {
-                var sb = new StringBuilder();
-                sb.AppendLine($"({GetHashCode()}) Begin {_kind} of {_mainStorageContext.Id}");
-
-                foreach (var ruleInstance in _ruleInstancesList)
-                {
-                    sb.AppendLine(DebugHelperForRuleInstance.ToString(ruleInstance));
-                }
-
-                sb.AppendLine($"({GetHashCode()}) End {_kind} of {_mainStorageContext.Id}");
-
-                logger.Info("5E9B4D48-9A71-4DC5-873E-19C0B90633A4", sb.ToString());
-            }
-        }
-#endif
-
         private void RefreshLifeTime(IMonitorLogger logger, RuleInstance ruleInstance)
         {
             NRefreshLifeTime(logger, ruleInstance.Name.NameValue);
@@ -864,6 +844,178 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             _realStorageContext.OnRemoveParentStorage -= RealStorageContext_OnRemoveParentStorage;
 
             base.OnDisposed();
+        }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return ToString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToString(uint n)
+        {
+            return this.GetDefaultToStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToString.PropertiesToString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}HashCode = {GetHashCode()}");
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {_kind}");
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string ToShortString()
+        {
+            return ToShortString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToShortString(uint n)
+        {
+            return this.GetDefaultToShortStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToShortString.PropertiesToShortString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}HashCode = {GetHashCode()}");
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {_kind}");
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string ToBriefString()
+        {
+            return ToBriefString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToBriefString(uint n)
+        {
+            return this.GetDefaultToBriefStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToBriefString.PropertiesToBriefString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}HashCode = {GetHashCode()}");
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {_kind}");
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string ToDbgString()
+        {
+            return ToDbgString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToDbgString(uint n)
+        {
+            return this.GetDefaultToDbgStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToDbgString.PropertiesToDbgString(uint n)
+        {
+            return PropertiesToDbgString(n);
+        }
+
+        private string PropertiesToDbgString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var nextN = n + DisplayHelper.IndentationStep;
+            var nextNSpaces = DisplayHelper.Spaces(nextN);
+
+            List<RuleInstance> ruleInstancesList = null;
+
+            lock (_lockObj)
+            {
+                ruleInstancesList = _ruleInstancesList.ToList();
+            }
+
+            var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}({GetHashCode()}) Begin {_kind} of {_mainStorageContext.Id}");
+
+            foreach (var ruleInstance in ruleInstancesList)
+            {
+                sb.Append(nextNSpaces);
+                sb.AppendLine(DebugHelperForRuleInstance.ToString(ruleInstance));
+            }
+
+            sb.AppendLine($"{spaces}({GetHashCode()}) End {_kind} of {_mainStorageContext.Id}");
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public void DbgPrintFactsAndRules(IMonitorLogger logger)
+        {
+            logger.Info("5E9B4D48-9A71-4DC5-873E-19C0B90633A4", PropertiesToDbgString(0u));
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
+        {
+            var opt = new DebugHelperOptions()
+            {
+                HumanizedOptions = options
+            };
+
+            return ToHumanizedString(opt);
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedString(DebugHelperOptions options)
+        {
+            return NToHumanizedLabel();
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedLabel(HumanizedOptions options = HumanizedOptions.ShowAll)
+        {
+            var opt = new DebugHelperOptions()
+            {
+                HumanizedOptions = options
+            };
+
+            return ToHumanizedLabel(opt);
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            return NToHumanizedLabel();
+        }
+
+        private string NToHumanizedLabel()
+        {
+            return $"Logical storage {GetHashCode()}:{_kind}";
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedString(IMonitorLogger logger)
+        {
+            return ToHumanizedString();
+        }
+
+        /// <inheritdoc/>
+        public MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
+        {
+            return new MonitoredHumanizedLabel()
+            {
+                Label = ToHumanizedLabel()
+            };
         }
     }
 }

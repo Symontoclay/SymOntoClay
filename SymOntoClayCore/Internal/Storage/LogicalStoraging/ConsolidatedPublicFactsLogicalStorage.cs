@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
@@ -27,6 +28,7 @@ using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -283,20 +285,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         {
             throw new NotImplementedException();
         }
-
-#if DEBUG
-        /// <inheritdoc/>
-        public void DbgPrintFactsAndRules(IMonitorLogger logger)
-        {
-            lock (_lockObj)
-            {
-                foreach (var storage in _logicalStorages)
-                {
-                    storage.DbgPrintFactsAndRules(logger);
-                }
-            }
-        }
-#endif
 
         /// <inheritdoc/>
         public IList<LogicalQueryNode> GetAllRelations(IMonitorLogger logger, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)
@@ -790,6 +778,186 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             }
 
             base.OnDisposed();
+        }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return ToString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToString(uint n)
+        {
+            return this.GetDefaultToStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToString.PropertiesToString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}HashCode = {GetHashCode()}");
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {_kind}");
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string ToShortString()
+        {
+            return ToShortString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToShortString(uint n)
+        {
+            return this.GetDefaultToShortStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToShortString.PropertiesToShortString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}HashCode = {GetHashCode()}");
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {_kind}");
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string ToBriefString()
+        {
+            return ToBriefString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToBriefString(uint n)
+        {
+            return this.GetDefaultToBriefStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToBriefString.PropertiesToBriefString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}HashCode = {GetHashCode()}");
+            sb.AppendLine($"{spaces}{nameof(Kind)} = {_kind}");
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string ToDbgString()
+        {
+            return ToDbgString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToDbgString(uint n)
+        {
+            return this.GetDefaultToDbgStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToDbgString.PropertiesToDbgString(uint n)
+        {
+            return PropertiesToDbgString(n);
+        }
+
+        private string PropertiesToDbgString(uint n)
+        {
+            List<ILogicalStorage> logicalStorages = null;
+
+            lock (_lockObj)
+            {
+                logicalStorages = logicalStorages.ToList();
+            }
+
+            var spaces = DisplayHelper.Spaces(n);
+            var nextN = n + DisplayHelper.IndentationStep;
+
+            var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}({GetHashCode()}) Begin {_kind}");
+
+            foreach (var storage in logicalStorages)
+            {
+                sb.AppendLine(storage.ToDbgString(nextN));
+            }
+
+            sb.AppendLine($"{spaces}({GetHashCode()}) End {_kind}");
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public void DbgPrintFactsAndRules(IMonitorLogger logger)
+        {
+            List<ILogicalStorage> logicalStorages = null;
+
+            lock (_lockObj)
+            {
+                logicalStorages = logicalStorages.ToList();
+            }
+
+            foreach (var storage in logicalStorages)
+            {
+                storage.DbgPrintFactsAndRules(logger);
+            }
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
+        {
+            var opt = new DebugHelperOptions()
+            {
+                HumanizedOptions = options
+            };
+
+            return ToHumanizedString(opt);
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedString(DebugHelperOptions options)
+        {
+            return NToHumanizedLabel();
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedLabel(HumanizedOptions options = HumanizedOptions.ShowAll)
+        {
+            var opt = new DebugHelperOptions()
+            {
+                HumanizedOptions = options
+            };
+
+            return ToHumanizedLabel(opt);
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            return NToHumanizedLabel();
+        }
+
+        private string NToHumanizedLabel()
+        {
+            return $"Logical storage {GetHashCode()}:{_kind}";
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedString(IMonitorLogger logger)
+        {
+            return ToHumanizedString();
+        }
+
+        /// <inheritdoc/>
+        public MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
+        {
+            return new MonitoredHumanizedLabel()
+            {
+                Label = ToHumanizedLabel()
+            };
         }
     }
 }

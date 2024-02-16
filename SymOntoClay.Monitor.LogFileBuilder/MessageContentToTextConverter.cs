@@ -154,6 +154,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 case KindOfMessage.LogicalSearchExplain:
                     return GetLogicalSearchExplain(message as LogicalSearchExplainMessage, logFileCreatorContext, targetFileName);
 
+                case KindOfMessage.AddFactOrRuleTriggerResult:
+                    return GetAddFactOrRuleTriggerResult(message as AddFactOrRuleTriggerResultMessage);
+
                 case KindOfMessage.AddFactToLogicalStorage:
                     return GetAddFactToLogicalStorage(message as AddFactToLogicalStorageMessage);
 
@@ -270,6 +273,11 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 #if DEBUG
             //_globalLogger.Info($"label = {label}");
 #endif
+
+            if(label == null)
+            {
+                return "NULL";
+            }
 
             var sb = new StringBuilder();
 
@@ -800,6 +808,15 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 #endif
 
             return GetMonitoredHumanizedLabel(message.ActivatedAction);
+        }
+
+        private string GetAddFactOrRuleTriggerResult(AddFactOrRuleTriggerResultMessage message)
+        {
+#if DEBUG
+            //_globalLogger.Info($"message = {message}");
+#endif
+
+            return $"{GetMonitoredHumanizedLabel(message.LogicalStorage)}: {GetMonitoredHumanizedLabel(message.Fact)} Result: {GetMonitoredHumanizedLabel(message.Result)}";
         }
 
         private string GetAddFactToLogicalStorage(AddFactToLogicalStorageMessage message)

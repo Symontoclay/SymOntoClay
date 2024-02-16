@@ -396,6 +396,15 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         }
 
         /// <inheritdoc/>
+        public void AddFactOrRuleTriggerResult(string messagePointId, MonitoredHumanizedLabel fact, MonitoredHumanizedLabel logicalStorage,
+            MonitoredHumanizedLabel result,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+        }
+
+        /// <inheritdoc/>
         public void AddFactToLogicalStorage(string messagePointId, MonitoredHumanizedLabel fact, MonitoredHumanizedLabel logicalStorage,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

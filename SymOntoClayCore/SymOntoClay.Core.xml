@@ -8681,6 +8681,33 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.AddFactOrRuleResult.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.AddFactOrRuleResult.ToDbgString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.AddFactOrRuleResult.ToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.AddFactOrRuleResult.SymOntoClay#CoreHelper#DebugHelpers#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.AddFactOrRuleResult.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.AddFactOrRuleResult.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.AddFactOrRuleResult.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.AddFactOrRuleResult.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.AddFactOrRuleResult.ToHumanizedString(SymOntoClay.Monitor.Common.IMonitorLogger)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.AddFactOrRuleResult.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.Kind">
             <inheritdoc/>
         </member>

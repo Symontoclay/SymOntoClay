@@ -234,7 +234,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                     if(_enableAddingRemovingFactLoggingInStorages)
                     {
-                        logger.Info("E7837A32-70CC-4F89-9206-1DC386542546", $"({GetHashCode()}) approvingRez = {approvingRez}");
+                        logger.AddFactOrRuleTriggerResult("E7837A32-70CC-4F89-9206-1DC386542546", ruleInstance.ToLabel(logger), this.ToLabel(logger), approvingRez?.ToLabel(logger));
                     }
 
                     if (approvingRez != null)
@@ -447,7 +447,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             if(_enableAddingRemovingFactLoggingInStorages)
             {
-                logger.Info("62B03746-90F3-4BE7-9E69-71BBC71583E8", $"({GetHashCode()}) `{ruleInstanceId}` has been removed.");
+                logger.Info("62B03746-90F3-4BE7-9E69-71BBC71583E8", $"({GetHashCode()}) `{ruleInstanceId}` {ruleInstance?.ToHumanizedLabel()} has been removed.");
             }
 
             return ruleInstance.UsedKeysList;
@@ -767,6 +767,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             }
         }
 
+        private RuleInstance GetRuleInstancesByStringId(string id)
+        {
+            return _ruleInstancesDictById.TryGetValue(id, out var ruleInstance) ? ruleInstance : null;
+        }
+
         private void RefreshLifeTime(IMonitorLogger logger, RuleInstance ruleInstance)
         {
             NRefreshLifeTime(logger, ruleInstance.Name.NameValue);
@@ -793,7 +798,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             if (_enableAddingRemovingFactLoggingInStorages)
             {
-                logger.Info("5CCBE7D4-4436-4F63-9AF0-0DC060ED3468", $"({GetHashCode()}) Lifetime of `{ruleInstanceId}` has been refreshed to {DEFAULT_INITIAL_TIME}.");
+                logger.Info("5CCBE7D4-4436-4F63-9AF0-0DC060ED3468", $"({GetHashCode()}) Lifetime of `{ruleInstanceId}` {GetRuleInstancesByStringId(ruleInstanceId)?.ToHumanizedLabel()} has been refreshed to {DEFAULT_INITIAL_TIME}.");
             }
         }
 
@@ -813,7 +818,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     {
                         if(_enableAddingRemovingFactLoggingInStorages)
                         {
-                            Info("B824F12A-AD19-4F62-9849-1E1D85870B5B", $"({GetHashCode()}) Put for deleting by end of life cycle: `{item}`");
+                            
+                            Info("B824F12A-AD19-4F62-9849-1E1D85870B5B", $"({GetHashCode()}) Put for deleting by end of life cycle: `{item.Key}` {GetRuleInstancesByStringId(item.Key)?.ToHumanizedLabel()}");
                         }
 
                         NRemoveById(Logger, item.Key);

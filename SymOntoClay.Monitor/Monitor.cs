@@ -1149,6 +1149,17 @@ namespace SymOntoClay.Monitor
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        public void AddFactOrRuleTriggerResult(string messagePointId, MonitoredHumanizedLabel fact, MonitoredHumanizedLabel logicalStorage,
+            MonitoredHumanizedLabel result,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.AddFactOrRuleTriggerResult(messagePointId, fact, logicalStorage, result, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public void AddFactToLogicalStorage(string messagePointId, MonitoredHumanizedLabel fact, MonitoredHumanizedLabel logicalStorage,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

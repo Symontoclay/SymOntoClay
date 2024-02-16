@@ -48,6 +48,7 @@ namespace SymOntoClay.Monitor.Common.Data
         EndRunResetExprOfConditionalTrigger,
         ActivateIdleAction,
         LogicalSearchExplain,
+        AddFactOrRuleTriggerResult,
         AddFactToLogicalStorage,
         Output,
         Trace,

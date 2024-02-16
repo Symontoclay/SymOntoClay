@@ -20,8 +20,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common.Models;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -109,6 +112,89 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             sb.PrintBriefObjProp(n, nameof(MutablePart), MutablePart);
 
             return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string ToDbgString()
+        {
+            return ToDbgString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToDbgString(uint n)
+        {
+            return this.GetDefaultToDbgStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToDbgString.PropertiesToDbgString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(KindOfResult)} = {KindOfResult}");
+            sb.PrintBriefObjProp(n, nameof(MutablePart), MutablePart);
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
+        {
+            var opt = new DebugHelperOptions()
+            {
+                HumanizedOptions = options
+            };
+
+            return ToHumanizedString(opt);
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedString(DebugHelperOptions options)
+        {
+            return NToHumanizedLabel();
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedLabel(HumanizedOptions options = HumanizedOptions.ShowAll)
+        {
+            var opt = new DebugHelperOptions()
+            {
+                HumanizedOptions = options
+            };
+
+            return ToHumanizedLabel(opt);
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            return NToHumanizedLabel();
+        }
+
+        private string NToHumanizedLabel()
+        {
+            if(MutablePart != null)
+            {
+                throw new NotImplementedException();
+            }
+
+            return $"{KindOfResult}";
+        }
+
+        /// <inheritdoc/>
+        public string ToHumanizedString(IMonitorLogger logger)
+        {
+            return ToHumanizedString();
+        }
+
+        /// <inheritdoc/>
+        public MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
+        {
+            return new MonitoredHumanizedLabel()
+            {
+                Label = ToHumanizedLabel()
+            };
         }
     }
 }

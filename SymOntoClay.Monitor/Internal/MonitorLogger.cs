@@ -2787,18 +2787,84 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        public void AddFactOrRuleTriggerResult(string messagePointId, MonitoredHumanizedLabel fact, MonitoredHumanizedLabel logicalStorage,
+            MonitoredHumanizedLabel result,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"fact = {fact}");
+            //_globalLogger.Info($"logicalStorage = {logicalStorage}");
+            //_globalLogger.Info($"result = {result}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            var messageInfo = new AddFactOrRuleTriggerResultMessage
+            {
+                Fact = fact,
+                LogicalStorage = logicalStorage,
+                Result = result,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
+
+#if DEBUG
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+            ProcessMessage(messageInfo);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public void AddFactToLogicalStorage(string messagePointId, MonitoredHumanizedLabel fact, MonitoredHumanizedLabel logicalStorage,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"fact = {fact}");
-            _globalLogger.Info($"logicalStorage = {logicalStorage}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"fact = {fact}");
+            //_globalLogger.Info($"logicalStorage = {logicalStorage}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             var messageNumber = _messageNumberGenerator.GetMessageNumber();

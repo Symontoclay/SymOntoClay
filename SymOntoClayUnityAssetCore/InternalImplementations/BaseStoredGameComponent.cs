@@ -78,7 +78,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         {
             base.LoadFromSourceCode();
 
-                HostStorage.LoadFromSourceCode();
+            HostStorage.LoadFromSourceCode();
 
             _worldContext.AddPublicFactsStorage(this);
 

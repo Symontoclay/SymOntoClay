@@ -103,6 +103,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 options.SeparateOutputByThreads = logFileBuilderOptions.SplitByThreads;
             }
 
+            options.ToHtml = true;
+            options.DotAppPath = @"%USERPROFILE%\Downloads\Graphviz\bin\dot.exe";
+
 #if DEBUG
             _logger.Info($"options (2) = {options}");
 #endif

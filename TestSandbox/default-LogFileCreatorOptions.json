@@ -34,7 +34,7 @@
       "IfThreadIdExists": false
     },
     {
-      "$type": "SymOntoClay.Monitor.LogFileBuilder.FileNameTemplateOptionItems.TextFileNameTemplateOptionItem, SymOntoClay.Monitor.LogFileBuilder",
+      "$type": "SymOntoClay.Monitor.LogFileBuilder.FileNameTemplateOptionItems.ExtensionFileNameTemplateOptionItem, SymOntoClay.Monitor.LogFileBuilder",
       "Text": ".log",
       "IfNodeIdExists": false,
       "IfThreadIdExists": false

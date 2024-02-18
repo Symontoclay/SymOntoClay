@@ -160,6 +160,15 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 case KindOfMessage.AddFactToLogicalStorage:
                     return GetAddFactToLogicalStorage(message as AddFactToLogicalStorageMessage);
 
+                case KindOfMessage.RemoveFactFromLogicalStorage:
+                    return GetRemoveFactFromLogicalStorage(message as RemoveFactFromLogicalStorageMessage);
+
+                case KindOfMessage.RefreshLifeTimeInLogicalStorage:
+                    return GetRefreshLifeTimeInLogicalStorage(message as RefreshLifeTimeInLogicalStorageMessage);
+
+                case KindOfMessage.PutFactForRemovingFromLogicalStorage:
+                    return GetPutFactForRemovingFromLogicalStorage(message as PutFactForRemovingFromLogicalStorageMessage);
+
                 case KindOfMessage.Output:
                     return GetOutput(message as OutputMessage);
 
@@ -820,6 +829,33 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         }
 
         private string GetAddFactToLogicalStorage(AddFactToLogicalStorageMessage message)
+        {
+#if DEBUG
+            //_globalLogger.Info($"message = {message}");
+#endif
+
+            return $"{GetMonitoredHumanizedLabel(message.LogicalStorage)}: {GetMonitoredHumanizedLabel(message.Fact)}";
+        }
+
+        private string GetRemoveFactFromLogicalStorage(RemoveFactFromLogicalStorageMessage message)
+        {
+#if DEBUG
+            //_globalLogger.Info($"message = {message}");
+#endif
+
+            return $"{GetMonitoredHumanizedLabel(message.LogicalStorage)}: {GetMonitoredHumanizedLabel(message.Fact)}";
+        }
+
+        private string GetRefreshLifeTimeInLogicalStorage(RefreshLifeTimeInLogicalStorageMessage message)
+        {
+#if DEBUG
+            //_globalLogger.Info($"message = {message}");
+#endif
+
+            return $"{GetMonitoredHumanizedLabel(message.LogicalStorage)}: {GetMonitoredHumanizedLabel(message.Fact)} NewLifetime: {message.NewLifetime}";
+        }
+
+        private string GetPutFactForRemovingFromLogicalStorage(PutFactForRemovingFromLogicalStorageMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");

@@ -6,12 +6,10 @@ using System.Text;
 
 namespace SymOntoClay.Monitor.Common.Data
 {
-    public class AddFactOrRuleTriggerResultMessage : BaseFactLogicalStorageMessage
+    public abstract class BaseFactLogicalStorageMessage : BaseMessage
     {
-        /// <inheritdoc/>
-        public override KindOfMessage KindOfMessage => KindOfMessage.AddFactOrRuleTriggerResult;
-
-        public MonitoredHumanizedLabel Result { get; set; }
+        public MonitoredHumanizedLabel Fact { get; set; }
+        public MonitoredHumanizedLabel LogicalStorage { get; set; }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
@@ -19,7 +17,8 @@ namespace SymOntoClay.Monitor.Common.Data
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjProp(n, nameof(Result), Result);
+            sb.PrintObjProp(n, nameof(Fact), Fact);
+            sb.PrintObjProp(n, nameof(LogicalStorage), LogicalStorage);
 
             sb.Append(base.PropertiesToString(n));
 

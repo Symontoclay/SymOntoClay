@@ -447,7 +447,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             if(_enableAddingRemovingFactLoggingInStorages)
             {
-                logger.Info("62B03746-90F3-4BE7-9E69-71BBC71583E8", $"({GetHashCode()}) `{ruleInstanceId}` {ruleInstance?.ToHumanizedLabel()} has been removed.");
+                logger.RemoveFactFromLogicalStorage("62B03746-90F3-4BE7-9E69-71BBC71583E8", ruleInstance.ToLabel(logger), ToLabel(logger));
             }
 
             return ruleInstance.UsedKeysList;
@@ -798,7 +798,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             if (_enableAddingRemovingFactLoggingInStorages)
             {
-                logger.Info("5CCBE7D4-4436-4F63-9AF0-0DC060ED3468", $"({GetHashCode()}) Lifetime of `{ruleInstanceId}` {GetRuleInstancesByStringId(ruleInstanceId)?.ToHumanizedLabel()} has been refreshed to {DEFAULT_INITIAL_TIME}.");
+                logger.RefreshLifeTimeInLogicalStorage("5CCBE7D4-4436-4F63-9AF0-0DC060ED3468", GetRuleInstancesByStringId(ruleInstanceId).ToLabel(logger), ToLabel(logger), DEFAULT_INITIAL_TIME);
             }
         }
 
@@ -808,6 +808,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             lock (_lockObj)
             {
+                var logger = Logger;
+
                 var itemsList = _lifeTimeCycleById.ToList();
 
                 foreach(var item in itemsList)
@@ -818,8 +820,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     {
                         if(_enableAddingRemovingFactLoggingInStorages)
                         {
-                            
-                            Info("B824F12A-AD19-4F62-9849-1E1D85870B5B", $"({GetHashCode()}) Put for deleting by end of life cycle: `{item.Key}` {GetRuleInstancesByStringId(item.Key)?.ToHumanizedLabel()}");
+                            logger.PutFactForRemovingFromLogicalStorage("B824F12A-AD19-4F62-9849-1E1D85870B5B", GetRuleInstancesByStringId(item.Key).ToLabel(logger), ToLabel(logger));
                         }
 
                         NRemoveById(Logger, item.Key);

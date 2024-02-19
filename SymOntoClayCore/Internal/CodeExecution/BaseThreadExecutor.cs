@@ -56,14 +56,16 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     {
         protected static (IMonitorLogger Logger, string ThreadId) CreateInitParams(IEngineContext context)
         {
-            var threadId = Guid.NewGuid().ToString("D");
-            return (context.MonitorNode.CreateThreadLogger("71899838-D655-4B97-890D-0017F326F002", threadId), threadId);
+            var monitorNode = context.MonitorNode;
+            var threadId = monitorNode.CreateThreadId();
+            return (monitorNode.CreateThreadLogger("71899838-D655-4B97-890D-0017F326F002", threadId), threadId);
         }
 
         protected static (IMonitorLogger Logger, string ThreadId) CreateInitParams(IEngineContext context, string parentThreadId)
         {
-            var threadId = Guid.NewGuid().ToString("D");
-            return (context.MonitorNode.CreateThreadLogger(messagePointId: "BB6BCC54-A80C-4AE6-A2D5-338A35EF1AB3", threadId: threadId, parentThreadId: parentThreadId), threadId);
+            var monitorNode = context.MonitorNode;
+            var threadId = monitorNode.CreateThreadId();
+            return (monitorNode.CreateThreadLogger(messagePointId: "BB6BCC54-A80C-4AE6-A2D5-338A35EF1AB3", threadId: threadId, parentThreadId: parentThreadId), threadId);
         }
 
         protected BaseThreadExecutor(IEngineContext context, IActivePeriodicObject activeObject, (IMonitorLogger Logger, string ThreadId) initData)
@@ -538,8 +540,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 #if DEBUG
                         //Info("2F56F914-3967-4260-86A3-083281AD50AA", $"Logger.Id = {Logger.Id}");
 #endif
-
-                        return _context.MonitorNode.CreateThreadLogger("D855D49C-25C6-4A2B-8951-DEB4A2139E74", Guid.NewGuid().ToString("D"), parentThreadId: Logger.Id);
+                        var monitorNode = _context.MonitorNode;
+                        return monitorNode.CreateThreadLogger("D855D49C-25C6-4A2B-8951-DEB4A2139E74", threadId: monitorNode.CreateThreadId(), parentThreadId: Logger.Id);
                     }
 
                 default:

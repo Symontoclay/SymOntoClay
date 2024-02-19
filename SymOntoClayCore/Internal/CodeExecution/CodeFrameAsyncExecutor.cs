@@ -83,9 +83,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 targetCurrentCodeFrame.ProcessInfo.AddChild(logger, currentProcessInfo);
             }
 
-            var threadId = Guid.NewGuid().ToString("D");
+            var monitorNode = _context.MonitorNode;
 
-            var newLogger = _context.MonitorNode.CreateThreadLogger("0FBA9877-ACBB-48F1-8CAF-B73CAF435653", threadId, parentThreadId: parentThreadId);
+            var threadId = monitorNode.CreateThreadId();
+
+            var newLogger = monitorNode.CreateThreadLogger("0FBA9877-ACBB-48F1-8CAF-B73CAF435653", threadId :threadId, parentThreadId: parentThreadId);
 
             var threadExecutor = new AsyncThreadExecutor(_context, newLogger);
             threadExecutor.SetCodeFrame(codeFrame);

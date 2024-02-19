@@ -529,6 +529,12 @@ namespace SymOntoClay.Monitor.Internal
         }
 
         /// <inheritdoc/>
+        public string CreateThreadId()
+        {
+            return Guid.NewGuid().ToString("D");
+        }
+
+        /// <inheritdoc/>
         [MethodForLoggingSupport]
         public IThreadLogger CreateThreadLogger(string messagePointId, string threadId,
             [CallerMemberName] string memberName = "",

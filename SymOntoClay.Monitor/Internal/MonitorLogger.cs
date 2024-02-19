@@ -74,6 +74,12 @@ namespace SymOntoClay.Monitor.Internal
         };
 
         /// <inheritdoc/>
+        public string CreateThreadId()
+        {
+            return Guid.NewGuid().ToString("D");
+        }
+
+        /// <inheritdoc/>
         [MethodForLoggingSupport]
         public string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
             bool isSynk,

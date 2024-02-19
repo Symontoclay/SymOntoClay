@@ -38,6 +38,12 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         IMonitorFeatures IMonitorLogger.MonitorFeatures => throw new NotImplementedException();
 
         /// <inheritdoc/>
+        public string CreateThreadId()
+        {
+            return Guid.NewGuid().ToString("D");
+        }
+
+        /// <inheritdoc/>
         public string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
             bool isSynk,
             [CallerMemberName] string memberName = "",

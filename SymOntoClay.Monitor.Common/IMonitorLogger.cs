@@ -23,6 +23,8 @@ namespace SymOntoClay.Monitor.Common
 
         bool EnableAddingRemovingFactLoggingInStorages { get; }
 
+        string CreateThreadId();
+
         string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
             bool isSynk,
             [CallerMemberName] string memberName = "",

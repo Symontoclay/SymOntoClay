@@ -45,6 +45,12 @@ namespace SymOntoClay.Monitor.NLog
         IMonitorFeatures IMonitorLogger.MonitorFeatures => throw new NotImplementedException();
 
         /// <inheritdoc/>
+        public string CreateThreadId()
+        {
+            return Guid.NewGuid().ToString("D");
+        }
+
+        /// <inheritdoc/>
         [MethodForLoggingSupport]
         public string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
             bool isSynk,

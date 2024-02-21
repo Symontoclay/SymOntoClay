@@ -42,9 +42,6 @@
     <PackageReference Include="System.Speech" Version="7.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="default-LogFileCreatorOptions.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

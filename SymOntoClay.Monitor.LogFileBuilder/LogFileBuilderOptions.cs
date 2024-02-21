@@ -18,6 +18,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public bool? SplitByNodes { get; set; }
         public bool? SplitByThreads { get; set; }
         public string ConfigurationFileName { get; set; }
+        public bool? ToHtml { get; set; }
+        public string DotAppPath { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -45,6 +47,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             sb.AppendLine($"{spaces}{nameof(SplitByNodes)} = {SplitByNodes}");
             sb.AppendLine($"{spaces}{nameof(SplitByThreads)} = {SplitByThreads}");
             sb.AppendLine($"{spaces}{nameof(ConfigurationFileName)} = {ConfigurationFileName}");
+            sb.AppendLine($"{spaces}{nameof(ToHtml)} = {ToHtml}");
+            sb.AppendLine($"{spaces}{nameof(DotAppPath)} = {DotAppPath}");
             return sb.ToString();
         }
     }

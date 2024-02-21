@@ -71,6 +71,10 @@ namespace SymOntoClay.CLI.Helpers
                 throw new Exception($"The file '{fileName}' has been used previously. A cyclic dependence happened.");
             }
 
+#if DEBUG
+            //_logger.Info($"File.ReadAllText(fileName) = {File.ReadAllText(fileName)}");
+#endif
+
             var cfg = JsonConvert.DeserializeObject<T>(File.ReadAllText(fileName), _jsonSerializerSettings);
 
 #if DEBUG

@@ -21,8 +21,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public void Run(string[] args, string defaultConfigurationFileName)
         {
 #if DEBUG
-            _logger.Info($"args = {args.WritePODListToString()}");
-            _logger.Info($"defaultConfigurationFileName = {defaultConfigurationFileName}");
+            //_logger.Info($"args = {args.WritePODListToString()}");
+            //_logger.Info($"defaultConfigurationFileName = {defaultConfigurationFileName}");
 #endif
 
             var defaultConfiguration = string.IsNullOrWhiteSpace(defaultConfigurationFileName) ? null : InheritableConfigurationReader.Read<LogFileCreatorInheritableOptions>(EVPath.Normalize(defaultConfigurationFileName));
@@ -33,14 +33,14 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public void Run(string[] args, LogFileCreatorInheritableOptions defaultConfiguration)
         {
 #if DEBUG
-            _logger.Info($"args = {args.WritePODListToString()}");
-            _logger.Info($"defaultConfiguration = {defaultConfiguration}");
+            //_logger.Info($"args = {args.WritePODListToString()}");
+            //_logger.Info($"defaultConfiguration = {defaultConfiguration}");
 #endif
 
             var logFileBuilderOptions = ParseArgs(args);
 
 #if DEBUG
-            _logger.Info($"logFileBuilderOptions = {JsonConvert.SerializeObject(logFileBuilderOptions, Formatting.Indented)}");
+            //_logger.Info($"logFileBuilderOptions = {JsonConvert.SerializeObject(logFileBuilderOptions, Formatting.Indented)}");
 #endif
 
             if(logFileBuilderOptions.IsHelp)
@@ -64,31 +64,31 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             }
 
 #if DEBUG
-            _logger.Info($"logFileBuilderOptions (2) = {JsonConvert.SerializeObject(logFileBuilderOptions, Formatting.Indented)}");
+            //_logger.Info($"logFileBuilderOptions (2) = {JsonConvert.SerializeObject(logFileBuilderOptions, Formatting.Indented)}");
 #endif
 
             var options = LoadOptions(defaultConfiguration, logFileBuilderOptions.ConfigurationFileName);
 
 #if DEBUG
-            _logger.Info($"options = {options}");
+            //_logger.Info($"options = {options}");
 #endif
 
-            if (string.IsNullOrWhiteSpace(options.SourceDirectoryName))
+            if (logFileBuilderOptions.Input != null)
             {
                 options.SourceDirectoryName = logFileBuilderOptions.Input;
             }
 
-            if (string.IsNullOrWhiteSpace(options.OutputDirectory))
+            if (logFileBuilderOptions.Output != null)
             {
                 options.OutputDirectory = logFileBuilderOptions.Output;
             }
 
-            if(!string.IsNullOrWhiteSpace(logFileBuilderOptions.TargetNodeId))
+            if(logFileBuilderOptions.TargetNodeId != null)
             {
                 options.TargetNodes = new List<string>() { logFileBuilderOptions.TargetNodeId };
             }
 
-            if (!string.IsNullOrWhiteSpace(logFileBuilderOptions.TargetThreadId))
+            if (logFileBuilderOptions.TargetThreadId != null)
             {
                 options.TargetThreads = new List<string>() { logFileBuilderOptions.TargetThreadId };
             }
@@ -103,11 +103,18 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 options.SeparateOutputByThreads = logFileBuilderOptions.SplitByThreads;
             }
 
-            options.ToHtml = true;
-            options.DotAppPath = @"%USERPROFILE%\Downloads\Graphviz\bin\dot.exe";
+            if (logFileBuilderOptions.ToHtml.HasValue)
+            {
+                options.ToHtml = logFileBuilderOptions.ToHtml;
+            }
+
+            if (logFileBuilderOptions.DotAppPath != null)
+            {
+                options.DotAppPath = logFileBuilderOptions.DotAppPath;
+            }
 
 #if DEBUG
-            _logger.Info($"options (2) = {options}");
+            //_logger.Info($"options (2) = {options}");
 #endif
 
             LogFileCreator.Run(options, _logger);
@@ -120,7 +127,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             var parsedArgs = parser.Parse(args);
 
 #if DEBUG
-            _logger.Info($"parsedArgs = {JsonConvert.SerializeObject(parsedArgs, Formatting.Indented)}");
+            //_logger.Info($"parsedArgs = {JsonConvert.SerializeObject(parsedArgs, Formatting.Indented)}");
 #endif
 
             var logFileBuilderOptions = new LogFileBuilderOptions()
@@ -133,7 +140,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 TargetThreadId = (parsedArgs.TryGetValue("--target-threadid", out var targetThreadId) ? (string)targetThreadId : default(string)),
                 SplitByNodes = (parsedArgs.TryGetValue("--split-by-nodes", out var splitByNodes) ? (bool)splitByNodes : null),
                 SplitByThreads = (parsedArgs.TryGetValue("--split-by-threads", out var splitByThreads) ? (bool)splitByThreads : null),
-                ConfigurationFileName = (parsedArgs.TryGetValue("--configuration", out var configurationFileName) ? (string)configurationFileName : default(string))
+                ConfigurationFileName = (parsedArgs.TryGetValue("--configuration", out var configurationFileName) ? (string)configurationFileName : default(string)),
+                ToHtml = (parsedArgs.TryGetValue("--html", out var toHtml) ? (bool)toHtml : null)
             };
 
             return logFileBuilderOptions;
@@ -217,6 +225,12 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 Kind = KindOfCommandLineArgument.SingleValue
             });
 
+            parser.RegisterArgument(new CommandLineArgumentOptions
+            {
+                Name = "--html",
+                Kind = KindOfCommandLineArgument.Flag
+            });
+
             return parser;
         }
 
@@ -233,8 +247,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private LogFileCreatorOptions LoadOptions(LogFileCreatorInheritableOptions defaultConfiguration, string configurationFileName)
         {
 #if DEBUG
-            _logger.Info($"defaultConfiguration = {defaultConfiguration}");
-            _logger.Info($"configurationFileName = {configurationFileName}");
+            //_logger.Info($"defaultConfiguration = {defaultConfiguration}");
+            //_logger.Info($"configurationFileName = {configurationFileName}");
 #endif
             
             if(defaultConfiguration == null)

@@ -26,6 +26,7 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("Begin");
 
+            //Case14();
             Case13();
             //Case12();
             //Case11();
@@ -44,9 +45,21 @@ namespace TestSandbox.Handlers
             _logger.Info("End");
         }
 
+        private void Case14()
+        {
+            var defaultConfigFileName = Path.Combine(Directory.GetCurrentDirectory(), "default-LogFileCreatorOptions.json");
+
+            _logger.Info($"defaultConfigFileName = {defaultConfigFileName}");
+
+            var defaultCfg = InheritableConfigurationReader.Read<LogFileCreatorInheritableOptions>(defaultConfigFileName);
+
+            _logger.Info($"defaultCfg = {defaultCfg}");
+        }
+
         private void Case13()
         {
-            RunLogFileBuilderProgramMain(@"--i c:\Users\Acer\AppData\Roaming\SymOntoClayAsset\NpcLogMessages\2024_02_18_19_10_05_with_explainer\ --o c:\Users\Acer\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesLogsOutputDir\ --target-nodeid #BlueSoldier");
+            RunLogFileBuilderProgramMain(@"--i %USERPROFILE%\AppData\Roaming\SymOntoClay\TestSandbox\NpcMonitorMessages\2024_02_19_10_50_18\ --o %USERPROFILE%\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\logs\ --target-nodeid #020ED339-6313-459A-900D-92F809CEBDC5 --html");
+            //RunLogFileBuilderProgramMain(@"--i c:\Users\Acer\AppData\Roaming\SymOntoClayAsset\NpcLogMessages\2024_02_18_19_10_05_with_explainer\ --o c:\Users\Acer\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesLogsOutputDir\ --target-nodeid #BlueSoldier");
             //RunLogFileBuilderProgramMain(@"--i c:\Users\Acer\AppData\Roaming\SymOntoClay\TestSandbox\NpcMonitorMessages\2023_12_31_12_17_20\ --o c:\Users\Acer\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesLogsOutputDir\ --target-nodeid #020ED339-6313-459A-900D-92F809CEBDC5");
         }
 

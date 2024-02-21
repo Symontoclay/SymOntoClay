@@ -24,7 +24,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             var defaultConfig = ConfigurationManager.AppSettings["defaultConfiguration"];
 
 #if DEBUG
-            _logger.Info($"defaultConfig = {defaultConfig}");
+            //_logger.Info($"defaultConfig = {defaultConfig}");
 #endif
 
             var app = new LogFileBuilderApp();

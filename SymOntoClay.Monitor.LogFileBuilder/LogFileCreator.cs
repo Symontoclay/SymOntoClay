@@ -153,6 +153,16 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             //_logger.Info($"options = {options}");
 #endif
 
+            if (!string.IsNullOrWhiteSpace(options.SourceDirectoryName))
+            {
+                options.SourceDirectoryName = EVPath.Normalize(options.SourceDirectoryName);
+            }
+
+            if (!string.IsNullOrWhiteSpace(options.OutputDirectory))
+            {
+                options.OutputDirectory = EVPath.Normalize(options.OutputDirectory);
+            }
+
             if (!string.IsNullOrWhiteSpace(options.DotAppPath))
             {
                 options.DotAppPath = EVPath.Normalize(options.DotAppPath);

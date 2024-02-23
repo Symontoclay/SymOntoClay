@@ -20,6 +20,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public string ConfigurationFileName { get; set; }
         public bool? ToHtml { get; set; }
         public string DotAppPath { get; set; }
+        public bool? IsAbsUrl { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -49,6 +50,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             sb.AppendLine($"{spaces}{nameof(ConfigurationFileName)} = {ConfigurationFileName}");
             sb.AppendLine($"{spaces}{nameof(ToHtml)} = {ToHtml}");
             sb.AppendLine($"{spaces}{nameof(DotAppPath)} = {DotAppPath}");
+            sb.AppendLine($"{spaces}{nameof(IsAbsUrl)} = {IsAbsUrl}");
             return sb.ToString();
         }
     }

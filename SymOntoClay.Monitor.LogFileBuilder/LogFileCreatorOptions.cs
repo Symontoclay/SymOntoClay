@@ -25,6 +25,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         public bool? Silent { get; set; }
         public string DotAppPath { get; set; }
         public bool? ToHtml { get; set; }
+        public bool? IsAbsUrl { get; set; }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
         public LogFileCreatorOptions Clone()
@@ -54,6 +55,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             result.Silent = Silent;
             result.DotAppPath = DotAppPath;
             result.ToHtml = ToHtml;
+            result.IsAbsUrl = IsAbsUrl;
 
             return result;
         }
@@ -119,6 +121,11 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             {
                 ToHtml = source.ToHtml;
             }
+
+            if (source.IsAbsUrl.HasValue)
+            {
+                IsAbsUrl = source.IsAbsUrl;
+            }
         }
 
         /// <inheritdoc/>
@@ -155,6 +162,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             sb.AppendLine($"{spaces}{nameof(Silent)} = {Silent}");
             sb.AppendLine($"{spaces}{nameof(DotAppPath)} = {DotAppPath}");
             sb.AppendLine($"{spaces}{nameof(ToHtml)} = {ToHtml}");
+            sb.AppendLine($"{spaces}{nameof(IsAbsUrl)} = {IsAbsUrl}");
             //sb.AppendLine($"{spaces}{nameof()} = {}");
             return sb.ToString();
         }

@@ -16,9 +16,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         //private static ILogger _gbcLogger = LogManager.GetCurrentClassLogger();
 #endif
 
-        public LogFileCreatorContext(string dotAppPath, string outputDirectory, bool toHtml, IEnumerable<BaseFileNameTemplateOptionItem> fileNameTemplate) 
+        public LogFileCreatorContext(string dotAppPath, string outputDirectory, bool toHtml, bool isAbsUrl, IEnumerable<BaseFileNameTemplateOptionItem> fileNameTemplate) 
         {
             _toHtml = toHtml;
+            _isAbsUrl = isAbsUrl;
             _fileNameTemplate = fileNameTemplate;
 
 #if DEBUG
@@ -41,6 +42,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         private readonly string _dotAppPath;
         private readonly string _outputDirectory;
         private readonly bool _toHtml;
+        private readonly bool _isAbsUrl;
         private readonly IEnumerable<BaseFileNameTemplateOptionItem> _fileNameTemplate;
         private readonly string _fileExtension;
 
@@ -184,7 +186,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             if (_toHtml)
             {
-                return $"<a href=\"{relativeFileName}\">{imgFileName}</a>";
+                return $"<a href=\"{(_isAbsUrl ? imgFileName : relativeFileName)}\">{imgFileName}</a>";
             }
 
             return imgFileName;

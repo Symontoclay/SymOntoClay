@@ -113,6 +113,11 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 options.DotAppPath = logFileBuilderOptions.DotAppPath;
             }
 
+            if (logFileBuilderOptions.IsAbsUrl.HasValue)
+            {
+                options.IsAbsUrl = logFileBuilderOptions.IsAbsUrl;
+            }
+
 #if DEBUG
             //_logger.Info($"options (2) = {options}");
 #endif
@@ -141,7 +146,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 SplitByNodes = (parsedArgs.TryGetValue("--split-by-nodes", out var splitByNodes) ? (bool)splitByNodes : null),
                 SplitByThreads = (parsedArgs.TryGetValue("--split-by-threads", out var splitByThreads) ? (bool)splitByThreads : null),
                 ConfigurationFileName = (parsedArgs.TryGetValue("--configuration", out var configurationFileName) ? (string)configurationFileName : default(string)),
-                ToHtml = (parsedArgs.TryGetValue("--html", out var toHtml) ? (bool)toHtml : null)
+                ToHtml = (parsedArgs.TryGetValue("--html", out var toHtml) ? (bool)toHtml : null),
+                IsAbsUrl = (parsedArgs.TryGetValue("--abs-url", out var isAbsUrl) ? (bool)isAbsUrl : null)
             };
 
             return logFileBuilderOptions;
@@ -228,6 +234,12 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             parser.RegisterArgument(new CommandLineArgumentOptions
             {
                 Name = "--html",
+                Kind = KindOfCommandLineArgument.Flag
+            });
+
+            parser.RegisterArgument(new CommandLineArgumentOptions
+            {
+                Name = "--abs-url",
                 Kind = KindOfCommandLineArgument.Flag
             });
 

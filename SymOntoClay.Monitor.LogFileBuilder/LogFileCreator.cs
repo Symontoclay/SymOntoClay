@@ -37,6 +37,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 dotAppPath: options.DotAppPath, 
                 outputDirectory: options.OutputDirectory, 
                 toHtml: toHtml,
+                isAbsUrl: options.IsAbsUrl ?? false,
                 fileNameTemplate: options.FileNameTemplate);
 
             var showStages = (!(options.Silent ?? false)) && (logger != null);

@@ -153,13 +153,29 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         /// <inheritdoc/>
         public string InsertPublicFact(IMonitorLogger logger, string text)
         {
-            return _gameComponent.InsertPublicFact(logger, text);
+            lock (_initializeLockObj)
+            {
+                if (_gameComponent == null)
+                {
+                    throw new Exception("Hi! InsertFact DDD");
+                }
+
+                return _gameComponent.InsertPublicFact(logger, text);
+            }
         }
 
         /// <inheritdoc/>
         public string InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
-            return _gameComponent.InsertPublicFact(logger, fact);
+            lock (_initializeLockObj)
+            {
+                if (_gameComponent == null)
+                {
+                    throw new Exception("Hi! InsertFact DDD");
+                }
+
+                return _gameComponent.InsertPublicFact(logger, fact);
+            }
         }
 
         /// <inheritdoc/>

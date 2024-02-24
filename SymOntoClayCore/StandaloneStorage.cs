@@ -20,8 +20,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.CoreHelper;
@@ -30,6 +32,7 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core
@@ -55,6 +58,8 @@ namespace SymOntoClay.Core
         private IStorage _storage;
         private IStorage _publicFactsStorage;
         private ConsolidatedPublicFactsStorage _worldPublicFactsStorage;
+
+        private List<RuleInstance> _deferredPublicFacts = new List<RuleInstance>();
 
         /// <inheritdoc/>
         public IStorageComponent StorageComponent
@@ -146,6 +151,17 @@ namespace SymOntoClay.Core
                 _publicFactsStorage = _storageComponent.PublicFactsStorage;
                 _worldPublicFactsStorage = _storageComponent.WorldPublicFactsStorage;
 
+                if(_deferredPublicFacts.Any())
+                {
+                    foreach(var fact in _deferredPublicFacts)
+                    {
+                        _storageComponent.InsertPublicFact(Logger, fact);
+                    }
+                    _deferredPublicFacts.Clear();
+                    _deferredPublicFacts = null;
+                }
+
+                _state = ComponentState.Loaded;
             }
         }
 
@@ -186,13 +202,36 @@ namespace SymOntoClay.Core
         /// <inheritdoc/>
         public string InsertPublicFact(IMonitorLogger logger, string text)
         {
-            return _storageComponent.InsertPublicFact(logger, text);
+            lock (_stateLockObj)
+            {
+                if(_storageComponent == null)
+                {
+                    throw new Exception($"QWERTY InsertPublicFact _state = {_state}");
+                }
+
+                return _storageComponent.InsertPublicFact(logger, text);
+            }
         }
 
         /// <inheritdoc/>
         public string InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
-            return _storageComponent.InsertPublicFact(logger, fact);
+            lock (_stateLockObj)
+            {
+                if (_storageComponent == null)
+                {
+                    if(fact.Name == null)
+                    {
+                        fact.Name = NameHelper.CreateRuleOrFactName();
+                    }
+
+                    //throw new Exception($"QWERTY InsertPublicFact _state = {_state}; fact.Name?.NameValue = {fact.Name?.NameValue}");
+                    _deferredPublicFacts.Add(fact);
+                    return fact.Name.NameValue;
+                }
+
+                return _storageComponent.InsertPublicFact(logger, fact);
+            }                
         }
 
         /// <inheritdoc/>

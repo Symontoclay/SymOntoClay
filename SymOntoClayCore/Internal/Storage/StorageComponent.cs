@@ -67,6 +67,8 @@ namespace SymOntoClay.Core.Internal.Storage
 
         private CheckDirtyOptions _checkDirtyOptions;
 
+        private List<RuleInstance> _deferredPublicFacts = new List<RuleInstance>();
+
         /// <inheritdoc/>
         public IStorage GlobalStorage => _globalStorage;
 
@@ -84,149 +86,160 @@ namespace SymOntoClay.Core.Internal.Storage
 
         public void LoadFromSourceCode(IEngineContext engineContext = null)
         {
-            _logicQueryParseAndCache = _context.LogicQueryParseAndCache;
-            _parser = _context.Parser;
-
-            var globalStorageSettings = new RealStorageSettings();
-
-            var parentStoragesList = new List<IStorage>();
-
-            switch (_kindGlobalOfStorage)
+            lock (_stateLockObj)
             {
-                case KindOfStorage.World:
-                    {
-                        _worldPublicFactsStorage = new ConsolidatedPublicFactsStorage(_context.Logger, KindOfStorage.WorldPublicFacts);
+                _logicQueryParseAndCache = _context.LogicQueryParseAndCache;
+                _parser = _context.Parser;
 
-                        parentStoragesList.Add(_worldPublicFactsStorage);
-                    }
-                    break;
+                var globalStorageSettings = new RealStorageSettings();
 
-                case KindOfStorage.Global:
-                    {
-                        var publicFactsStorageSettings = new RealStorageSettings();
-                        publicFactsStorageSettings.MainStorageContext = _context;
+                var parentStoragesList = new List<IStorage>();
 
-                        _publicFactsStorage = new RealStorage(KindOfStorage.PublicFacts, publicFactsStorageSettings);
-
-                        _inheritancePublicFactsReplicator = new InheritancePublicFactsReplicator(_context, _publicFactsStorage);
-                        globalStorageSettings.InheritancePublicFactsReplicator = _inheritancePublicFactsReplicator;
-
-
-                        _selfFactsStorage = new RealStorage(KindOfStorage.PublicFacts, publicFactsStorageSettings);
-
-                        parentStoragesList.Add(_selfFactsStorage);
-
-                        var perceptedFactsStorageSettings = new RealStorageSettings();
-                        perceptedFactsStorageSettings.MainStorageContext = _context;
-
-                        _perceptedFactsStorage = new RealStorage(KindOfStorage.PerceptedFacts, perceptedFactsStorageSettings);
-
-
-                        parentStoragesList.Add(_perceptedFactsStorage);
-
-                        var listenedFactsStorageSettings = new RealStorageSettings();
-                        listenedFactsStorageSettings.MainStorageContext = _context;
-                        listenedFactsStorageSettings.KindOfGC = KindOfGC.ByTimeOut;
-                        listenedFactsStorageSettings.EnableOnAddingFactEvent = true;
-
-                        _listenedFactsStorage = new RealStorage(KindOfStorage.PerceptedFacts, listenedFactsStorageSettings);
-
-                        parentStoragesList.Add(_listenedFactsStorage);
-
-                        var visibleFactsStorageSettings = new ConsolidatedPublicFactsStorageSettings();
-                        visibleFactsStorageSettings.MainStorageContext = _context;
-                        visibleFactsStorageSettings.EnableOnAddingFactEvent = KindOfOnAddingFactEvent.Isolated;
-
-                        _visibleFactsStorage = new ConsolidatedPublicFactsStorage(_context.Logger, KindOfStorage.VisiblePublicFacts, visibleFactsStorageSettings);
-                        parentStoragesList.Add(_visibleFactsStorage);
-
-                        var categoriesStorageSettings = new CategoriesStorageSettings()
+                switch (_kindGlobalOfStorage)
+                {
+                    case KindOfStorage.World:
                         {
-                            Categories = _settings.Categories,
-                            EnableCategories = _settings.EnableCategories,
-                            InheritancePublicFactsReplicator = _inheritancePublicFactsReplicator
-                        };
+                            _worldPublicFactsStorage = new ConsolidatedPublicFactsStorage(_context.Logger, KindOfStorage.WorldPublicFacts);
 
-                        _categoriesStorage = new CategoriesStorage(_context, categoriesStorageSettings);
+                            parentStoragesList.Add(_worldPublicFactsStorage);
+                        }
+                        break;
 
-                        parentStoragesList.Add(_categoriesStorage.Storage);
-                    }
-                    break;
-
-                case KindOfStorage.Host:
-                    {
-                        var publicFactsStorageSettings = new RealStorageSettings();
-                        publicFactsStorageSettings.MainStorageContext = _context;
-
-                        _publicFactsStorage = new RealStorage(KindOfStorage.PublicFacts, publicFactsStorageSettings);
-
-                        _inheritancePublicFactsReplicator = new InheritancePublicFactsReplicator(_context, _publicFactsStorage);
-                        globalStorageSettings.InheritancePublicFactsReplicator = _inheritancePublicFactsReplicator;
-
-
-                        _selfFactsStorage = new RealStorage(KindOfStorage.PublicFacts, publicFactsStorageSettings);
-
-                        parentStoragesList.Add(_selfFactsStorage);
-
-                        var categoriesStorageSettings = new CategoriesStorageSettings()
+                    case KindOfStorage.Global:
                         {
-                            Categories = _settings.Categories,
-                            EnableCategories = _settings.EnableCategories,
-                            InheritancePublicFactsReplicator = _inheritancePublicFactsReplicator
-                        };
+                            var publicFactsStorageSettings = new RealStorageSettings();
+                            publicFactsStorageSettings.MainStorageContext = _context;
 
-                        _categoriesStorage = new CategoriesStorage(_context, categoriesStorageSettings);
+                            _publicFactsStorage = new RealStorage(KindOfStorage.PublicFacts, publicFactsStorageSettings);
 
-                        parentStoragesList.Add(_categoriesStorage.Storage);
+                            _inheritancePublicFactsReplicator = new InheritancePublicFactsReplicator(_context, _publicFactsStorage);
+                            globalStorageSettings.InheritancePublicFactsReplicator = _inheritancePublicFactsReplicator;
+
+
+                            _selfFactsStorage = new RealStorage(KindOfStorage.PublicFacts, publicFactsStorageSettings);
+
+                            parentStoragesList.Add(_selfFactsStorage);
+
+                            var perceptedFactsStorageSettings = new RealStorageSettings();
+                            perceptedFactsStorageSettings.MainStorageContext = _context;
+
+                            _perceptedFactsStorage = new RealStorage(KindOfStorage.PerceptedFacts, perceptedFactsStorageSettings);
+
+
+                            parentStoragesList.Add(_perceptedFactsStorage);
+
+                            var listenedFactsStorageSettings = new RealStorageSettings();
+                            listenedFactsStorageSettings.MainStorageContext = _context;
+                            listenedFactsStorageSettings.KindOfGC = KindOfGC.ByTimeOut;
+                            listenedFactsStorageSettings.EnableOnAddingFactEvent = true;
+
+                            _listenedFactsStorage = new RealStorage(KindOfStorage.PerceptedFacts, listenedFactsStorageSettings);
+
+                            parentStoragesList.Add(_listenedFactsStorage);
+
+                            var visibleFactsStorageSettings = new ConsolidatedPublicFactsStorageSettings();
+                            visibleFactsStorageSettings.MainStorageContext = _context;
+                            visibleFactsStorageSettings.EnableOnAddingFactEvent = KindOfOnAddingFactEvent.Isolated;
+
+                            _visibleFactsStorage = new ConsolidatedPublicFactsStorage(_context.Logger, KindOfStorage.VisiblePublicFacts, visibleFactsStorageSettings);
+                            parentStoragesList.Add(_visibleFactsStorage);
+
+                            var categoriesStorageSettings = new CategoriesStorageSettings()
+                            {
+                                Categories = _settings.Categories,
+                                EnableCategories = _settings.EnableCategories,
+                                InheritancePublicFactsReplicator = _inheritancePublicFactsReplicator
+                            };
+
+                            _categoriesStorage = new CategoriesStorage(_context, categoriesStorageSettings);
+
+                            parentStoragesList.Add(_categoriesStorage.Storage);
+                        }
+                        break;
+
+                    case KindOfStorage.Host:
+                        {
+                            var publicFactsStorageSettings = new RealStorageSettings();
+                            publicFactsStorageSettings.MainStorageContext = _context;
+
+                            _publicFactsStorage = new RealStorage(KindOfStorage.PublicFacts, publicFactsStorageSettings);
+
+                            _inheritancePublicFactsReplicator = new InheritancePublicFactsReplicator(_context, _publicFactsStorage);
+                            globalStorageSettings.InheritancePublicFactsReplicator = _inheritancePublicFactsReplicator;
+
+
+                            _selfFactsStorage = new RealStorage(KindOfStorage.PublicFacts, publicFactsStorageSettings);
+
+                            parentStoragesList.Add(_selfFactsStorage);
+
+                            var categoriesStorageSettings = new CategoriesStorageSettings()
+                            {
+                                Categories = _settings.Categories,
+                                EnableCategories = _settings.EnableCategories,
+                                InheritancePublicFactsReplicator = _inheritancePublicFactsReplicator
+                            };
+
+                            _categoriesStorage = new CategoriesStorage(_context, categoriesStorageSettings);
+
+                            parentStoragesList.Add(_categoriesStorage.Storage);
+                        }
+                        break;
+                }
+
+                globalStorageSettings.MainStorageContext = _context;
+
+                if (_parentStorage != null && _parentStorage.Storage != null)
+                {
+                    parentStoragesList.Add(_parentStorage.Storage);
+                }
+
+                if (parentStoragesList.Any())
+                {
+                    globalStorageSettings.ParentsStorages = parentStoragesList;
+                }
+
+                switch (_kindGlobalOfStorage)
+                {
+                    case KindOfStorage.Global:
+                        _globalStorage = new GlobalStorage(globalStorageSettings);
+                        break;
+
+                    case KindOfStorage.World:
+                        _globalStorage = new WorldStorage(globalStorageSettings);
+                        break;
+
+                    case KindOfStorage.Host:
+                        _globalStorage = new HostStorage(globalStorageSettings);
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(_kindGlobalOfStorage), _kindGlobalOfStorage, null);
+                }
+
+                _globalStorage.DefaultSettingsOfCodeEntity = CreateDefaultSettingsOfCodeEntity();
+
+                var localCodeExecutionContext = new LocalCodeExecutionContext();
+                localCodeExecutionContext.Storage = _globalStorage;
+
+                _checkDirtyOptions = new CheckDirtyOptions();
+                _checkDirtyOptions.LocalContext = localCodeExecutionContext;
+                _checkDirtyOptions.EngineContext = engineContext;
+                _checkDirtyOptions.ConvertWaypointValueFromSource = true;
+
+                _categoriesStorage?.Init();
+
+                if(_deferredPublicFacts.Any())
+                {
+                    foreach (var fact in _deferredPublicFacts)
+                    {
+                        NInsertPublicFact(Logger, fact);
                     }
-                    break;
+                    _deferredPublicFacts.Clear();
+                    _deferredPublicFacts = null;
+                }
+
+                _state = ComponentState.Loaded;
             }
-
-            globalStorageSettings.MainStorageContext = _context;
-
-            if (_parentStorage != null && _parentStorage.Storage != null)
-            {
-                parentStoragesList.Add(_parentStorage.Storage);
-            }
-
-            if(parentStoragesList.Any())
-            {
-                globalStorageSettings.ParentsStorages = parentStoragesList;
-            }
-
-            switch(_kindGlobalOfStorage)
-            {
-                case KindOfStorage.Global:
-                    _globalStorage = new GlobalStorage(globalStorageSettings);
-                    break;
-
-                case KindOfStorage.World:
-                    _globalStorage = new WorldStorage(globalStorageSettings);
-                    break;
-
-                case KindOfStorage.Host:
-                    _globalStorage = new HostStorage(globalStorageSettings);
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(_kindGlobalOfStorage), _kindGlobalOfStorage, null);
-            }
-            
-
-            _globalStorage.DefaultSettingsOfCodeEntity = CreateDefaultSettingsOfCodeEntity();
-
-            
-
-            var localCodeExecutionContext = new LocalCodeExecutionContext();
-            localCodeExecutionContext.Storage = _globalStorage;
-
-            _checkDirtyOptions = new CheckDirtyOptions();
-            _checkDirtyOptions.LocalContext = localCodeExecutionContext;
-            _checkDirtyOptions.EngineContext = engineContext;
-            _checkDirtyOptions.ConvertWaypointValueFromSource = true;
-
-            _categoriesStorage?.Init();
-
         }
 
         private DefaultSettingsOfCodeEntity CreateDefaultSettingsOfCodeEntity()
@@ -272,14 +285,34 @@ namespace SymOntoClay.Core.Internal.Storage
                 return string.Empty;
             }
 
+            lock (_stateLockObj)
+            {
+                if (_publicFactsStorage == null)
+                {
+                    if (fact.Name == null)
+                    {
+                        fact.Name = NameHelper.CreateRuleOrFactName();
+                    }
+
+                    //throw new Exception($"LLL _state = {_state}");
+                    _deferredPublicFacts.Add(fact);
+                    return fact.Name.NameValue;
+                }
+
+                return NInsertPublicFact(logger, fact);
+            }
+        }
+
+        private string NInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        {
             if (logger == null)
             {
                 logger = Logger;
             }
 
             var checkDirtyOptions = new CheckDirtyOptions()
-            { 
-                ReplaceConcepts = new Dictionary<StrongIdentifierValue, StrongIdentifierValue>() 
+            {
+                ReplaceConcepts = new Dictionary<StrongIdentifierValue, StrongIdentifierValue>()
             };
 
             checkDirtyOptions.ReplaceConcepts[NameHelper.CreateName("I")] = NameHelper.CreateName(_context.Id);

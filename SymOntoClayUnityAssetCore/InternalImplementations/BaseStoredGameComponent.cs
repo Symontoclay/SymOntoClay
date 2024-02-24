@@ -81,7 +81,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             HostStorage.LoadFromSourceCode();
 
             _worldContext.AddPublicFactsStorage(this);
-
         }
 
         public string InsertPublicFact(IMonitorLogger logger, string text)

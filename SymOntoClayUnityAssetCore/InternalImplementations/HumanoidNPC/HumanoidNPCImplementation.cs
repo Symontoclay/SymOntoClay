@@ -59,6 +59,29 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                     _gameComponent = new HumanoidNPCGameComponent(_settings, worldContext);
                 }
 
+                if(_deferredPublicFactsTexts.Any())
+                {
+
+                    f
+                    _deferredPublicFactsTexts.Clear();
+                    _deferredPublicFactsTexts = null;
+                }
+                else
+                {
+                    _deferredPublicFactsTexts = null;
+                }
+
+                /*
+                if()
+                {
+                     .Clear();
+                     = null;
+                }else
+                {
+                     = null;
+                }
+                 */
+
                 /*
                          private List<(StrongIdentifierValue, string)> _deferredPublicFactsTexts = new List<(StrongIdentifierValue, string)>();
         private List<RuleInstance> _deferredPublicFactsInstances = new List<RuleInstance>();
@@ -73,11 +96,19 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                     _deferredAddedCategories.Clear();
                     _deferredAddedCategories = null;
                 }
+                else
+                {
+                    _deferredAddedCategories = null;
+                }
 
                 if (_deferredRemovedCategories.Any())
                 {
                     _gameComponent.RemoveCategories(null, _deferredRemovedCategories);
                     _deferredRemovedCategories.Clear();
+                    _deferredRemovedCategories = null;
+                }
+                else
+                {
                     _deferredRemovedCategories = null;
                 }
 

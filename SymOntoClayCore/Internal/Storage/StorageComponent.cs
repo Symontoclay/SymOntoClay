@@ -67,7 +67,8 @@ namespace SymOntoClay.Core.Internal.Storage
 
         private CheckDirtyOptions _checkDirtyOptions;
 
-        private List<RuleInstance> _deferredPublicFacts = new List<RuleInstance>();
+        private List<(StrongIdentifierValue, string)> _deferredPublicFactsTexts = new List<(StrongIdentifierValue, string)>();
+        private List<RuleInstance> _deferredPublicFactsInstances = new List<RuleInstance>();
 
         /// <inheritdoc/>
         public IStorage GlobalStorage => _globalStorage;
@@ -228,14 +229,14 @@ namespace SymOntoClay.Core.Internal.Storage
 
                 _categoriesStorage?.Init();
 
-                if(_deferredPublicFacts.Any())
+                if(_deferredPublicFactsInstances.Any())
                 {
-                    foreach (var fact in _deferredPublicFacts)
+                    foreach (var fact in _deferredPublicFactsInstances)
                     {
                         NInsertPublicFact(Logger, fact);
                     }
-                    _deferredPublicFacts.Clear();
-                    _deferredPublicFacts = null;
+                    _deferredPublicFactsInstances.Clear();
+                    _deferredPublicFactsInstances = null;
                 }
 
                 _state = ComponentState.Loaded;
@@ -274,7 +275,7 @@ namespace SymOntoClay.Core.Internal.Storage
 
             var fact = ParseFact(logger, text);
 
-            return InsertPublicFact(logger, fact);
+            return NInsertPublicFact(logger, fact);
         }
 
         /// <inheritdoc/>
@@ -295,7 +296,7 @@ namespace SymOntoClay.Core.Internal.Storage
                     }
 
                     //throw new Exception($"LLL _state = {_state}");
-                    _deferredPublicFacts.Add(fact);
+                    _deferredPublicFactsInstances.Add(fact);
                     return fact.Name.NameValue;
                 }
 

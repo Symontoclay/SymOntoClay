@@ -59,7 +59,7 @@ namespace SymOntoClay.Core
         private IStorage _publicFactsStorage;
         private ConsolidatedPublicFactsStorage _worldPublicFactsStorage;
 
-        private List<RuleInstance> _deferredPublicFacts = new List<RuleInstance>();
+        private List<RuleInstance> _deferredPublicFactsInstances = new List<RuleInstance>();
 
         /// <inheritdoc/>
         public IStorageComponent StorageComponent
@@ -151,14 +151,14 @@ namespace SymOntoClay.Core
                 _publicFactsStorage = _storageComponent.PublicFactsStorage;
                 _worldPublicFactsStorage = _storageComponent.WorldPublicFactsStorage;
 
-                if(_deferredPublicFacts.Any())
+                if(_deferredPublicFactsInstances.Any())
                 {
-                    foreach(var fact in _deferredPublicFacts)
+                    foreach(var fact in _deferredPublicFactsInstances)
                     {
                         _storageComponent.InsertPublicFact(Logger, fact);
                     }
-                    _deferredPublicFacts.Clear();
-                    _deferredPublicFacts = null;
+                    _deferredPublicFactsInstances.Clear();
+                    _deferredPublicFactsInstances = null;
                 }
 
                 _state = ComponentState.Loaded;
@@ -226,7 +226,7 @@ namespace SymOntoClay.Core
                     }
 
                     //throw new Exception($"QWERTY InsertPublicFact _state = {_state}; fact.Name?.NameValue = {fact.Name?.NameValue}");
-                    _deferredPublicFacts.Add(fact);
+                    _deferredPublicFactsInstances.Add(fact);
                     return fact.Name.NameValue;
                 }
 

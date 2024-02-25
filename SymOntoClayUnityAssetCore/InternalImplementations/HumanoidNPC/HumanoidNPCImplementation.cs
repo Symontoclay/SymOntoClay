@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
@@ -58,16 +59,26 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                     _gameComponent = new HumanoidNPCGameComponent(_settings, worldContext);
                 }
 
-                if (_addedCategories.Any())
+                /*
+                         private List<(StrongIdentifierValue, string)> _deferredPublicFactsTexts = new List<(StrongIdentifierValue, string)>();
+        private List<RuleInstance> _deferredPublicFactsInstances = new List<RuleInstance>();
+        private List<string> _defferedRemovedPublicFacts = new List<string>();
+        private List<(StrongIdentifierValue, string)> _deferredFactsTexts = new List<(StrongIdentifierValue, string)>();
+        private List<string> _defferedRemovedFacts = new List<string>();
+                 */
+
+                if (_deferredAddedCategories.Any())
                 {
-                    _gameComponent.AddCategories(null, _addedCategories);
-                    _addedCategories = null;
+                    _gameComponent.AddCategories(null, _deferredAddedCategories);
+                    _deferredAddedCategories.Clear();
+                    _deferredAddedCategories = null;
                 }
 
-                if (_removedCategories.Any())
+                if (_deferredRemovedCategories.Any())
                 {
-                    _gameComponent.RemoveCategories(null, _removedCategories);
-                    _removedCategories = null;
+                    _gameComponent.RemoveCategories(null, _deferredRemovedCategories);
+                    _deferredRemovedCategories.Clear();
+                    _deferredRemovedCategories = null;
                 }
 
                 if (_enableCategories.HasValue)
@@ -90,8 +101,13 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
         private readonly HumanoidNPCSettings _settings;
 
-        private List<string> _addedCategories = new List<string>();
-        private List<string> _removedCategories = new List<string>();
+        private List<(StrongIdentifierValue, string)> _deferredPublicFactsTexts = new List<(StrongIdentifierValue, string)>();
+        private List<RuleInstance> _deferredPublicFactsInstances = new List<RuleInstance>();
+        private List<string> _defferedRemovedPublicFacts = new List<string>();
+        private List<(StrongIdentifierValue, string)> _deferredFactsTexts = new List<(StrongIdentifierValue, string)>();
+        private List<string> _defferedRemovedFacts = new List<string>();
+        private List<string> _deferredAddedCategories = new List<string>();
+        private List<string> _deferredRemovedCategories = new List<string>();
         private bool? _enableCategories;
 
         /// <inheritdoc/>
@@ -157,7 +173,9 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             {
                 if (_gameComponent == null)
                 {
-                    throw new Exception("Hi! InsertFact DDD");
+                    var factName = NameHelper.CreateRuleOrFactName();
+                    _deferredPublicFactsTexts.Add((factName, text));
+                    return factName.NameValue;
                 }
 
                 return _gameComponent.InsertPublicFact(logger, text);
@@ -171,7 +189,13 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             {
                 if (_gameComponent == null)
                 {
-                    throw new Exception("Hi! InsertFact DDD");
+                    if (fact.Name == null)
+                    {
+                        fact.Name = NameHelper.CreateRuleOrFactName();
+                    }
+
+                    _deferredPublicFactsInstances.Add(fact);
+                    return fact.Name.NameValue;
                 }
 
                 return _gameComponent.InsertPublicFact(logger, fact);
@@ -181,19 +205,47 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         /// <inheritdoc/>
         public void RemovePublicFact(IMonitorLogger logger, string id)
         {
-            _gameComponent.RemovePublicFact(logger, id);
+            lock (_initializeLockObj)
+            {
+                if (_gameComponent == null)
+                {
+                    _defferedRemovedPublicFacts.Add(id);
+                    return;
+                }
+
+                _gameComponent.RemovePublicFact(logger, id);
+            }
         }
 
         /// <inheritdoc/>
         public string InsertFact(IMonitorLogger logger, string text)
         {
-            return _gameComponent.InsertFact(logger, text);
+            lock (_initializeLockObj)
+            {
+                if (_gameComponent == null)
+                {
+                    var factName = NameHelper.CreateRuleOrFactName();
+                    _deferredFactsTexts.Add((factName, text));
+                    return factName.NameValue;
+                }
+
+                return _gameComponent.InsertFact(logger, text);
+            }
         }
 
         /// <inheritdoc/>
         public void RemoveFact(IMonitorLogger logger, string id)
         {
-            _gameComponent.RemoveFact(logger, id);
+            lock (_initializeLockObj)
+            {
+                if (_gameComponent == null)
+                {
+                    _defferedRemovedFacts.Add(id);
+                    return;
+                }
+
+                _gameComponent.RemoveFact(logger, id);
+            }
         }
 
         /// <inheritdoc/>
@@ -215,7 +267,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             {
                 if (_gameComponent == null)
                 {
-                    _addedCategories.Add(category);
+                    _deferredAddedCategories.Add(category);
                     return;
                 }
 
@@ -230,7 +282,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             {
                 if (_gameComponent == null)
                 {
-                    _addedCategories.AddRange(categories);
+                    _deferredAddedCategories.AddRange(categories);
                     return;
                 }
 
@@ -245,7 +297,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             {
                 if (_gameComponent == null)
                 {
-                    _removedCategories.Add(category);
+                    _deferredRemovedCategories.Add(category);
                     return;
                 }
 
@@ -260,7 +312,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             {
                 if (_gameComponent == null)
                 {
-                    _removedCategories.AddRange(categories);
+                    _deferredRemovedCategories.AddRange(categories);
                     return;
                 }
 

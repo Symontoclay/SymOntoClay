@@ -61,6 +61,16 @@ namespace SymOntoClay.Core
 
         private List<RuleInstance> _deferredPublicFactsInstances = new List<RuleInstance>();
 
+        /*
+private List<(StrongIdentifierValue, string)> _deferredPublicFactsTexts = new List<(StrongIdentifierValue, string)>();
+private List<RuleInstance> _deferredPublicFactsInstances = new List<RuleInstance>();
+private List<string> _defferedRemovedPublicFacts = new List<string>();
+private List<(StrongIdentifierValue, string)> _deferredFactsTexts = new List<(StrongIdentifierValue, string)>();
+private List<string> _defferedRemovedFacts = new List<string>();
+private List<string> _deferredAddedCategories = new List<string>();
+private List<string> _deferredRemovedCategories = new List<string>();         
+*/
+
         /// <inheritdoc/>
         public IStorageComponent StorageComponent
         {
@@ -160,6 +170,26 @@ namespace SymOntoClay.Core
                     _deferredPublicFactsInstances.Clear();
                     _deferredPublicFactsInstances = null;
                 }
+                else
+                {
+                    _deferredPublicFactsInstances = null;
+                }
+
+                /*
+                if(.Any())
+                {
+                    foreach(var item in )
+                    {
+
+                    }
+
+                     .Clear();
+                     = null;
+                }else
+                {
+                     = null;
+                }
+                 */
 
                 _state = ComponentState.Loaded;
             }

@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
@@ -32,6 +33,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 {
@@ -61,8 +63,11 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
                 if(_deferredPublicFactsTexts.Any())
                 {
+                    foreach(var item in _deferredPublicFactsTexts)
+                    {
+                        _gameComponent.InsertPublicFact(Logger, item.Item1, item.Item2);
+                    }
 
-                    f
                     _deferredPublicFactsTexts.Clear();
                     _deferredPublicFactsTexts = null;
                 }
@@ -71,24 +76,65 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                     _deferredPublicFactsTexts = null;
                 }
 
-                /*
-                if()
+                if (_deferredPublicFactsInstances.Any())
                 {
-                     .Clear();
-                     = null;
-                }else
-                {
-                     = null;
-                }
-                 */
+                    foreach (var item in _deferredPublicFactsInstances)
+                    {
+                        _gameComponent.InsertPublicFact(Logger, item);
+                    }
 
-                /*
-                         private List<(StrongIdentifierValue, string)> _deferredPublicFactsTexts = new List<(StrongIdentifierValue, string)>();
-        private List<RuleInstance> _deferredPublicFactsInstances = new List<RuleInstance>();
-        private List<string> _defferedRemovedPublicFacts = new List<string>();
-        private List<(StrongIdentifierValue, string)> _deferredFactsTexts = new List<(StrongIdentifierValue, string)>();
-        private List<string> _defferedRemovedFacts = new List<string>();
-                 */
+                    _deferredPublicFactsInstances.Clear();
+                    _deferredPublicFactsInstances = null;
+                }
+                else
+                {
+                    _deferredPublicFactsInstances = null;
+                }
+
+                if (_defferedRemovedPublicFacts.Any())
+                {
+                    foreach (var item in _defferedRemovedPublicFacts)
+                    {
+                        _gameComponent.RemovePublicFact(Logger, item);
+                    }
+
+                    _defferedRemovedPublicFacts.Clear();
+                    _defferedRemovedPublicFacts = null;
+                }
+                else
+                {
+                    _defferedRemovedPublicFacts = null;
+                }
+
+                if (_deferredFactsTexts.Any())
+                {
+                    foreach (var item in _deferredFactsTexts)
+                    {
+                        _gameComponent.InsertFact(Logger, item.Item1, item.Item2);
+                    }
+
+                    _deferredFactsTexts.Clear();
+                    _deferredFactsTexts = null;
+                }
+                else
+                {
+                    _deferredFactsTexts = null;
+                }
+
+                if (_defferedRemovedFacts.Any())
+                {
+                    foreach (var item in _defferedRemovedFacts)
+                    {
+                        _gameComponent.RemoveFact(Logger, item);
+                    }
+
+                    _defferedRemovedFacts.Clear();
+                    _defferedRemovedFacts = null;
+                }
+                else
+                {
+                    _defferedRemovedFacts = null;
+                }
 
                 if (_deferredAddedCategories.Any())
                 {

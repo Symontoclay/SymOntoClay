@@ -146,6 +146,11 @@ namespace SymOntoClay.Core
             return _context.Storage.InsertPublicFact(logger, text);
         }
 
+        public string InsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        {
+            return _context.Storage.InsertPublicFact(logger, factName, text);
+        }
+
         public string InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             return _context.Storage.InsertPublicFact(logger, fact);
@@ -159,6 +164,11 @@ namespace SymOntoClay.Core
         public string InsertFact(IMonitorLogger logger, string text)
         {
             return _context.Storage.InsertFact(logger, text);
+        }
+
+        public string InsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        {
+            return _context.Storage.InsertFact(logger, factName, text);
         }
 
         public void RemoveFact(IMonitorLogger logger, string id)

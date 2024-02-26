@@ -36,9 +36,11 @@ namespace SymOntoClay.Core.Internal.Storage
         IStorage ListenedFactsStorage { get; }
         ConsolidatedPublicFactsStorage WorldPublicFactsStorage { get; }
         string InsertPublicFact(IMonitorLogger logger, string text);
+        string InsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text);
         string InsertPublicFact(IMonitorLogger logger, RuleInstance fact);
         void RemovePublicFact(IMonitorLogger logger, string id);
         string InsertFact(IMonitorLogger logger, string text);
+        string InsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text);
         void RemoveFact(IMonitorLogger logger, string id);
         string InsertPerceptedFact(IMonitorLogger logger, string text);
         void RemovePerceptedFact(IMonitorLogger logger, string id);

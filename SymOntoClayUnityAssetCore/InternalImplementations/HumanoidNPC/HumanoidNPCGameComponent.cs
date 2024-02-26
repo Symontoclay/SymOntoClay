@@ -164,6 +164,11 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             return _coreEngine.InsertPublicFact(logger, text);
         }
 
+        public string InsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        {
+            return _coreEngine.InsertPublicFact(logger, factName, text);
+        }
+
         public string InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             return _coreEngine.InsertPublicFact(logger, fact);
@@ -177,6 +182,11 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         public string InsertFact(IMonitorLogger logger, string text)
         {
             return _coreEngine.InsertFact(logger, text);
+        }
+
+        public string InsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        {
+            return _coreEngine.InsertFact(logger, factName, text);
         }
 
         public void RemoveFact(IMonitorLogger logger, string id)

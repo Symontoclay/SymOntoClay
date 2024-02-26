@@ -69,6 +69,11 @@ namespace SymOntoClay.Core.Internal.Storage
 
         private List<(StrongIdentifierValue, string)> _deferredPublicFactsTexts = new List<(StrongIdentifierValue, string)>();
         private List<RuleInstance> _deferredPublicFactsInstances = new List<RuleInstance>();
+        private List<string> _defferedRemovedPublicFacts = new List<string>();
+        private List<(StrongIdentifierValue, string)> _deferredFactsTexts = new List<(StrongIdentifierValue, string)>();
+        private List<string> _defferedRemovedFacts = new List<string>();
+        private List<string> _deferredAddedCategories = new List<string>();
+        private List<string> _deferredRemovedCategories = new List<string>();
 
         /// <inheritdoc/>
         public IStorage GlobalStorage => _globalStorage;
@@ -238,6 +243,36 @@ namespace SymOntoClay.Core.Internal.Storage
                     _deferredPublicFactsInstances.Clear();
                     _deferredPublicFactsInstances = null;
                 }
+                else
+                {
+                    _deferredPublicFactsInstances = null;
+                }
+
+                /*
+                if(.Any())
+                {
+                    foreach(var item in )
+                    {
+
+                    }
+
+                     .Clear();
+                     = null;
+                }else
+                {
+                     = null;
+                }
+                 */
+
+                /*
+        private List<(StrongIdentifierValue, string)> _deferredPublicFactsTexts = new List<(StrongIdentifierValue, string)>();
+        private List<RuleInstance> _deferredPublicFactsInstances = new List<RuleInstance>();
+        private List<string> _defferedRemovedPublicFacts = new List<string>();
+        private List<(StrongIdentifierValue, string)> _deferredFactsTexts = new List<(StrongIdentifierValue, string)>();
+        private List<string> _defferedRemovedFacts = new List<string>();
+        private List<string> _deferredAddedCategories = new List<string>();
+        private List<string> _deferredRemovedCategories = new List<string>();
+                 */
 
                 _state = ComponentState.Loaded;
             }
@@ -268,14 +303,32 @@ namespace SymOntoClay.Core.Internal.Storage
         /// <inheritdoc/>
         public string InsertPublicFact(IMonitorLogger logger, string text)
         {
-            if(logger == null)
+            lock (_stateLockObj)
             {
-                logger = Logger;
+                if (_publicFactsStorage == null)
+                {
+                    var factName = NameHelper.CreateRuleOrFactName();
+                    _deferredPublicFactsTexts.Add((factName, text));
+                    return factName.NameValue;
+                }
+
+                return NInsertPublicFact(logger, null, text);
             }
+        }
 
-            var fact = ParseFact(logger, text);
+        /// <inheritdoc/>
+        public string InsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        {
+            lock (_stateLockObj)
+            {
+                if (_publicFactsStorage == null)
+                {
+                    _deferredPublicFactsTexts.Add((factName, text));
+                    return factName.NameValue;
+                }
 
-            return NInsertPublicFact(logger, fact);
+                return NInsertPublicFact(logger, factName, text);
+            }
         }
 
         /// <inheritdoc/>
@@ -295,13 +348,29 @@ namespace SymOntoClay.Core.Internal.Storage
                         fact.Name = NameHelper.CreateRuleOrFactName();
                     }
 
-                    //throw new Exception($"LLL _state = {_state}");
                     _deferredPublicFactsInstances.Add(fact);
                     return fact.Name.NameValue;
                 }
 
                 return NInsertPublicFact(logger, fact);
             }
+        }
+
+        private string NInsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        {
+            if (logger == null)
+            {
+                logger = Logger;
+            }
+
+            var fact = ParseFact(logger, text);
+
+            if(factName != null)
+            {
+                fact.Name = factName;
+            }
+
+            return NInsertPublicFact(logger, fact);
         }
 
         private string NInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
@@ -335,6 +404,20 @@ namespace SymOntoClay.Core.Internal.Storage
                 return;
             }
 
+            lock (_stateLockObj)
+            {
+                if (_publicFactsStorage == null)
+                {
+                    _defferedRemovedPublicFacts.Add(id);
+                    return;
+                }
+
+                NRemovePublicFact(logger, id);
+            }            
+        }
+
+        private void NRemovePublicFact(IMonitorLogger logger, string id)
+        {
             if (logger == null)
             {
                 logger = Logger;
@@ -348,6 +431,36 @@ namespace SymOntoClay.Core.Internal.Storage
         /// <inheritdoc/>
         public string InsertFact(IMonitorLogger logger, string text)
         {
+            lock (_stateLockObj)
+            {
+                if (_publicFactsStorage == null)
+                {
+                    var factName = NameHelper.CreateRuleOrFactName();
+                    _deferredFactsTexts.Add((factName, text));
+                    return factName.NameValue;
+                }
+
+                return NInsertFact(logger, null, text);
+            }
+        }
+
+        /// <inheritdoc/>
+        public string InsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        {
+            lock (_stateLockObj)
+            {
+                if (_publicFactsStorage == null)
+                {
+                    _deferredFactsTexts.Add((factName, text));
+                    return factName.NameValue;
+                }
+
+                return NInsertFact(logger, factName, text);
+            }            
+        }
+
+        private string NInsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        {
             if (logger == null)
             {
                 logger = Logger;
@@ -360,6 +473,11 @@ namespace SymOntoClay.Core.Internal.Storage
                 return string.Empty;
             }
 
+            if (factName != null)
+            {
+                fact.Name = factName;
+            }
+
             _globalStorage.LogicalStorage.Append(logger, fact);
 
             return fact.Name.NameValue;
@@ -368,12 +486,21 @@ namespace SymOntoClay.Core.Internal.Storage
         /// <inheritdoc/>
         public void RemoveFact(IMonitorLogger logger, string id)
         {
-            if (logger == null)
+            lock (_stateLockObj)
             {
-                logger = Logger;
-            }
+                if (_publicFactsStorage == null)
+                {
+                    _defferedRemovedFacts.Add(id);
+                    return;
+                }
 
-            _globalStorage.LogicalStorage.RemoveById(logger, id);
+                if (logger == null)
+                {
+                    logger = Logger;
+                }
+
+                _globalStorage.LogicalStorage.RemoveById(logger, id);
+            }
         }
 
         public void AddVisibleStorage(IMonitorLogger logger, IStorage storage)
@@ -461,45 +588,81 @@ namespace SymOntoClay.Core.Internal.Storage
         /// <inheritdoc/>
         public void AddCategory(IMonitorLogger logger, string category)
         {
-            if (logger == null)
+            lock (_stateLockObj)
             {
-                logger = Logger;
-            }
+                if (_publicFactsStorage == null)
+                {
+                    _deferredAddedCategories.Add(category);
+                    return;
+                }
 
-            _categoriesStorage.AddCategory(logger, category);
+                if (logger == null)
+                {
+                    logger = Logger;
+                }
+
+                _categoriesStorage.AddCategory(logger, category);
+            }
         }
 
         /// <inheritdoc/>
         public void AddCategories(IMonitorLogger logger, List<string> categories)
         {
-            if (logger == null)
+            lock (_stateLockObj)
             {
-                logger = Logger;
-            }
+                if (_publicFactsStorage == null)
+                {
+                    _deferredAddedCategories.AddRange(categories);
+                    return;
+                }
 
-            _categoriesStorage.AddCategories(logger, categories);
+                if (logger == null)
+                {
+                    logger = Logger;
+                }
+
+                _categoriesStorage.AddCategories(logger, categories);
+            }
         }
 
         /// <inheritdoc/>
         public void RemoveCategory(IMonitorLogger logger, string category)
         {
-            if (logger == null)
+            lock (_stateLockObj)
             {
-                logger = Logger;
-            }
+                if (_publicFactsStorage == null)
+                {
+                    _deferredRemovedCategories.Add(category);
+                    return;
+                }
 
-            _categoriesStorage.RemoveCategory(logger, category);
+                if (logger == null)
+                {
+                    logger = Logger;
+                }
+
+                _categoriesStorage.RemoveCategory(logger, category);
+            }
         }
 
         /// <inheritdoc/>
         public void RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
-            if (logger == null)
+            lock (_stateLockObj)
             {
-                logger = Logger;
-            }
+                if (_publicFactsStorage == null)
+                {
+                    _deferredRemovedCategories.AddRange(categories);
+                    return;
+                }
 
-            _categoriesStorage.RemoveCategories(logger, categories);
+                if (logger == null)
+                {
+                    logger = Logger;
+                }
+
+                _categoriesStorage.RemoveCategories(logger, categories);
+            }
         }
 
         /// <inheritdoc/>

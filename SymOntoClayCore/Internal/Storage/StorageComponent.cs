@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
@@ -31,6 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime;
 using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SymOntoClay.Core.Internal.Storage
 {
@@ -234,7 +236,22 @@ namespace SymOntoClay.Core.Internal.Storage
 
                 _categoriesStorage?.Init();
 
-                if(_deferredPublicFactsInstances.Any())
+                if (_deferredPublicFactsTexts.Any())
+                {
+                    foreach (var item in _deferredPublicFactsTexts)
+                    {
+                        NInsertPublicFact(Logger, item.Item1, item.Item2);
+                    }
+
+                    _deferredPublicFactsTexts.Clear();
+                    _deferredPublicFactsTexts = null;
+                }
+                else
+                {
+                    _deferredPublicFactsTexts = null;
+                }
+
+                if (_deferredPublicFactsInstances.Any())
                 {
                     foreach (var fact in _deferredPublicFactsInstances)
                     {
@@ -248,31 +265,74 @@ namespace SymOntoClay.Core.Internal.Storage
                     _deferredPublicFactsInstances = null;
                 }
 
-                /*
-                if(.Any())
+                if (_defferedRemovedPublicFacts.Any())
                 {
-                    foreach(var item in )
+                    foreach (var item in _defferedRemovedPublicFacts)
                     {
-
+                        NRemovePublicFact(Logger, item);
                     }
 
-                     .Clear();
-                     = null;
-                }else
-                {
-                     = null;
+                    _defferedRemovedPublicFacts.Clear();
+                    _defferedRemovedPublicFacts = null;
                 }
-                 */
+                else
+                {
+                    _defferedRemovedPublicFacts = null;
+                }
 
-                /*
-        private List<(StrongIdentifierValue, string)> _deferredPublicFactsTexts = new List<(StrongIdentifierValue, string)>();
-        private List<RuleInstance> _deferredPublicFactsInstances = new List<RuleInstance>();
-        private List<string> _defferedRemovedPublicFacts = new List<string>();
-        private List<(StrongIdentifierValue, string)> _deferredFactsTexts = new List<(StrongIdentifierValue, string)>();
-        private List<string> _defferedRemovedFacts = new List<string>();
-        private List<string> _deferredAddedCategories = new List<string>();
-        private List<string> _deferredRemovedCategories = new List<string>();
-                 */
+                if (_deferredFactsTexts.Any())
+                {
+                    foreach (var item in _deferredFactsTexts)
+                    {
+                        NInsertFact(Logger, item.Item1, item.Item2);
+                    }
+
+                    _deferredFactsTexts.Clear();
+                    _deferredFactsTexts = null;
+                }
+                else
+                {
+                    _deferredFactsTexts = null;
+                }
+
+                if (_defferedRemovedFacts.Any())
+                {
+                    foreach (var item in _defferedRemovedFacts)
+                    {
+                        _globalStorage.LogicalStorage.RemoveById(Logger, item);
+                    }
+
+                    _defferedRemovedFacts.Clear();
+                    _defferedRemovedFacts = null;
+                }
+                else
+                {
+                    _defferedRemovedFacts = null;
+                }
+
+                if (_deferredAddedCategories.Any())
+                {
+                    _categoriesStorage.AddCategories(Logger, _deferredAddedCategories);
+
+                    _deferredAddedCategories.Clear();
+                    _deferredAddedCategories = null;
+                }
+                else
+                {
+                    _deferredAddedCategories = null;
+                }
+
+                if (_deferredRemovedCategories.Any())
+                {
+                    _categoriesStorage.RemoveCategories(Logger, _deferredRemovedCategories);
+
+                    _deferredRemovedCategories.Clear();
+                    _deferredRemovedCategories = null;
+                }
+                else
+                {
+                    _deferredRemovedCategories = null;
+                }
 
                 _state = ComponentState.Loaded;
             }

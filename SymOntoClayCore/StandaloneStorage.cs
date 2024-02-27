@@ -59,17 +59,11 @@ namespace SymOntoClay.Core
         private IStorage _publicFactsStorage;
         private ConsolidatedPublicFactsStorage _worldPublicFactsStorage;
 
+        private List<(StrongIdentifierValue, string)> _deferredPublicFactsTexts = new List<(StrongIdentifierValue, string)>();
         private List<RuleInstance> _deferredPublicFactsInstances = new List<RuleInstance>();
-
-        /*
-private List<(StrongIdentifierValue, string)> _deferredPublicFactsTexts = new List<(StrongIdentifierValue, string)>();
-private List<RuleInstance> _deferredPublicFactsInstances = new List<RuleInstance>();
-private List<string> _defferedRemovedPublicFacts = new List<string>();
-private List<(StrongIdentifierValue, string)> _deferredFactsTexts = new List<(StrongIdentifierValue, string)>();
-private List<string> _defferedRemovedFacts = new List<string>();
-private List<string> _deferredAddedCategories = new List<string>();
-private List<string> _deferredRemovedCategories = new List<string>();         
-*/
+        private List<string> _defferedRemovedPublicFacts = new List<string>();
+        private List<string> _deferredAddedCategories = new List<string>();
+        private List<string> _deferredRemovedCategories = new List<string>();
 
         /// <inheritdoc/>
         public IStorageComponent StorageComponent
@@ -191,6 +185,14 @@ private List<string> _deferredRemovedCategories = new List<string>();
                 }
                  */
 
+                /*
+        private List<(StrongIdentifierValue, string)> _deferredPublicFactsTexts = new List<(StrongIdentifierValue, string)>();
+        private List<RuleInstance> _deferredPublicFactsInstances = new List<RuleInstance>();
+        private List<string> _defferedRemovedPublicFacts = new List<string>();
+        private List<string> _deferredAddedCategories = new List<string>();
+        private List<string> _deferredRemovedCategories = new List<string>();
+                 */
+
                 _state = ComponentState.Loaded;
             }
         }
@@ -236,7 +238,9 @@ private List<string> _deferredRemovedCategories = new List<string>();
             {
                 if(_storageComponent == null)
                 {
-                    throw new Exception($"QWERTY InsertPublicFact _state = {_state}");
+                    var factName = NameHelper.CreateRuleOrFactName();
+                    _deferredPublicFactsTexts.Add((factName, text));
+                    return factName.NameValue;
                 }
 
                 return _storageComponent.InsertPublicFact(logger, text);
@@ -255,7 +259,6 @@ private List<string> _deferredRemovedCategories = new List<string>();
                         fact.Name = NameHelper.CreateRuleOrFactName();
                     }
 
-                    //throw new Exception($"QWERTY InsertPublicFact _state = {_state}; fact.Name?.NameValue = {fact.Name?.NameValue}");
                     _deferredPublicFactsInstances.Add(fact);
                     return fact.Name.NameValue;
                 }
@@ -267,31 +270,76 @@ private List<string> _deferredRemovedCategories = new List<string>();
         /// <inheritdoc/>
         public void RemovePublicFact(IMonitorLogger logger, string id)
         {
-            _storageComponent.RemovePublicFact(logger, id);
+            lock (_stateLockObj)
+            {
+                if (_storageComponent == null)
+                {
+                    _defferedRemovedPublicFacts.Add(id);
+                    return;
+                }
+
+                _storageComponent.RemovePublicFact(logger, id);
+            }            
         }
 
         /// <inheritdoc/>
         public void AddCategory(IMonitorLogger logger, string category)
         {
-            _storageComponent.AddCategory(logger, category);
+            lock (_stateLockObj)
+            {
+                if (_storageComponent == null)
+                {
+                    _deferredAddedCategories.Add(category);
+                    return;
+                }
+
+                _storageComponent.AddCategory(logger, category);
+            }
         }
 
         /// <inheritdoc/>
         public void AddCategories(IMonitorLogger logger, List<string> categories)
         {
-            _storageComponent.AddCategories(logger, categories);
+            lock (_stateLockObj)
+            {
+                if (_storageComponent == null)
+                {
+                    _deferredAddedCategories.AddRange(categories);
+                    return;
+                }
+
+                _storageComponent.AddCategories(logger, categories);
+            }            
         }
 
         /// <inheritdoc/>
         public void RemoveCategory(IMonitorLogger logger, string category)
         {
-            _storageComponent.RemoveCategory(logger, category);
+            lock (_stateLockObj)
+            {
+                if (_storageComponent == null)
+                {
+                    _deferredRemovedCategories.Add(category);
+                    return;
+                }
+
+                _storageComponent.RemoveCategory(logger, category);
+            }            
         }
 
         /// <inheritdoc/>
         public void RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
-            _storageComponent.RemoveCategories(logger, categories);
+            lock (_stateLockObj)
+            {
+                if (_storageComponent == null)
+                {
+                    _deferredRemovedCategories.AddRange(categories);
+                    return;
+                }
+
+                _storageComponent.RemoveCategories(logger, categories);
+            }            
         }
 
         /// <inheritdoc/>

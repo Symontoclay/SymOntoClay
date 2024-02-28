@@ -34,6 +34,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SymOntoClay.Core
 {
@@ -155,7 +156,22 @@ namespace SymOntoClay.Core
                 _publicFactsStorage = _storageComponent.PublicFactsStorage;
                 _worldPublicFactsStorage = _storageComponent.WorldPublicFactsStorage;
 
-                if(_deferredPublicFactsInstances.Any())
+                if (_deferredPublicFactsTexts.Any())
+                {
+                    foreach (var item in _deferredPublicFactsTexts)
+                    {
+                        _storageComponent.InsertPublicFact(Logger, item.Item1, item.Item2);
+                    }
+
+                    _deferredPublicFactsTexts.Clear();
+                    _deferredPublicFactsTexts = null;
+                }
+                else
+                {
+                    _deferredPublicFactsTexts = null;
+                }
+
+                if (_deferredPublicFactsInstances.Any())
                 {
                     foreach(var fact in _deferredPublicFactsInstances)
                     {
@@ -169,29 +185,44 @@ namespace SymOntoClay.Core
                     _deferredPublicFactsInstances = null;
                 }
 
-                /*
-                if(.Any())
+                if (_defferedRemovedPublicFacts.Any())
                 {
-                    foreach(var item in )
+                    foreach (var item in _defferedRemovedPublicFacts)
                     {
-
+                        _storageComponent.RemovePublicFact(Logger, item);
                     }
 
-                     .Clear();
-                     = null;
-                }else
-                {
-                     = null;
+                    _defferedRemovedPublicFacts.Clear();
+                    _defferedRemovedPublicFacts = null;
                 }
-                 */
+                else
+                {
+                    _defferedRemovedPublicFacts = null;
+                }
 
-                /*
-        private List<(StrongIdentifierValue, string)> _deferredPublicFactsTexts = new List<(StrongIdentifierValue, string)>();
-        private List<RuleInstance> _deferredPublicFactsInstances = new List<RuleInstance>();
-        private List<string> _defferedRemovedPublicFacts = new List<string>();
-        private List<string> _deferredAddedCategories = new List<string>();
-        private List<string> _deferredRemovedCategories = new List<string>();
-                 */
+                if (_deferredAddedCategories.Any())
+                {
+                    _storageComponent.AddCategories(Logger, _deferredAddedCategories);
+
+                    _deferredAddedCategories.Clear();
+                    _deferredAddedCategories = null;
+                }
+                else
+                {
+                    _deferredAddedCategories = null;
+                }
+
+                if (_deferredRemovedCategories.Any())
+                {
+                    _storageComponent.RemoveCategories(Logger, _deferredRemovedCategories);
+
+                    _deferredRemovedCategories.Clear();
+                    _deferredRemovedCategories = null;
+                }
+                else
+                {
+                    _deferredRemovedCategories = null;
+                }
 
                 _state = ComponentState.Loaded;
             }

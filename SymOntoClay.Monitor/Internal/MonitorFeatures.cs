@@ -124,6 +124,9 @@ namespace SymOntoClay.Monitor.Internal
         public bool EnableActivateIdleAction { get; set; }
 
         /// <inheritdoc/>
+        public bool EnableTasks { get; set; }
+
+        /// <inheritdoc/>
         public bool EnableOutput { get; set; }
 
         /// <inheritdoc/>
@@ -184,6 +187,7 @@ namespace SymOntoClay.Monitor.Internal
             result.EnableRunResetExprOfConditionalTrigger = EnableRunResetExprOfConditionalTrigger;
             result.EnableEndRunResetExprOfConditionalTrigger = EnableEndRunResetExprOfConditionalTrigger;
             result.EnableActivateIdleAction = EnableActivateIdleAction;
+            result.EnableTasks = EnableTasks;
             result.EnableOutput = EnableOutput;
             result.EnableTrace = EnableTrace;
             result.EnableDebug = EnableDebug;
@@ -249,6 +253,7 @@ namespace SymOntoClay.Monitor.Internal
             sb.AppendLine($"{spaces}{nameof(EnableEndRunResetExprOfConditionalTrigger)} = {EnableEndRunResetExprOfConditionalTrigger}");
             sb.AppendLine($"{spaces}{nameof(IsEnabledAnyConditionalTriggerFeature)} = {IsEnabledAnyConditionalTriggerFeature}");
             sb.AppendLine($"{spaces}{nameof(EnableActivateIdleAction)} = {EnableActivateIdleAction}");
+            sb.AppendLine($"{spaces}{nameof(EnableTasks)} = {EnableTasks}");
             sb.AppendLine($"{spaces}{nameof(EnableOutput)} = {EnableOutput}");
             sb.AppendLine($"{spaces}{nameof(EnableTrace)} = {EnableTrace}");
             sb.AppendLine($"{spaces}{nameof(EnableDebug)} = {EnableDebug}");

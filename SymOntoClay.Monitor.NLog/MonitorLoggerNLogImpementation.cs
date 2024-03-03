@@ -540,6 +540,26 @@ namespace SymOntoClay.Monitor.NLog
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
+        public ulong StartTask(string messagePointId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void StopTask(string messagePointId, ulong taskId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public void Output(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

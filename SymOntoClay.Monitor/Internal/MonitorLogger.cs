@@ -3111,6 +3111,78 @@ namespace SymOntoClay.Monitor.Internal
             ProcessMessage(messageInfo);
         }
 
+        private readonly object _taskLockObj = new object();
+
+        private int _currentTaskId;
+        private int _currentTasksCount;
+
+        private (int taskId, int tasksCount) IncreaseTasksCount()
+        {
+            lock (_taskLockObj)
+            {
+                return (++_currentTaskId, ++_currentTasksCount);
+            }
+        }
+
+        private int DecreaseTasksCount()
+        {
+            lock (_taskLockObj)
+            {
+                return --_currentTasksCount;
+            }
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public ulong StartTask(string messagePointId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"memberName = {memberName}");
+            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+            var tasksCountResult = IncreaseTasksCount();
+
+#if DEBUG
+            _globalLogger.Info($"tasksCountResult = {tasksCountResult}");
+#endif
+
+            StartTaskMessage
+
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void StopTask(string messagePointId, ulong taskId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+#if DEBUG
+            _globalLogger.Info($"messagePointId = {messagePointId}");
+            _globalLogger.Info($"taskId = {taskId}");
+            _globalLogger.Info($"memberName = {memberName}");
+            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+#endif
+
+            var tmpCount = DecreaseTasksCount();
+
+#if DEBUG
+            _globalLogger.Info($"tmpCount = {tmpCount}");
+#endif
+
+            StopTaskMessage
+
+            throw new NotImplementedException();
+        }
+
         /// <inheritdoc/>
         [MethodForLoggingSupport]
         public void Output(string messagePointId, string message,

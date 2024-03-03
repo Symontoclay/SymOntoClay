@@ -13,6 +13,7 @@ using SymOntoClay.Monitor.Common;
 using TestSandbox.PlatformImplementations;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using SymOntoClay.Monitor.Internal;
+using SymOntoClay.Monitor.LogFileBuilder;
 
 namespace TestSandbox.Handlers
 {
@@ -36,9 +37,68 @@ namespace TestSandbox.Handlers
         {
             _globalLogger.Info("Begin");
 
-            Case1();
+            Case2();
+            //Case1();
 
             _globalLogger.Info("End");
+        }
+
+        private void Case2()
+        {
+            var appName = AppDomain.CurrentDomain.FriendlyName;
+
+
+            var supportBasePath = Path.Combine(Environment.GetEnvironmentVariable("APPDATA"), "SymOntoClay", appName);
+
+
+            var monitorMessagesDir = Path.Combine(supportBasePath, "NpcMonitorMessages");
+
+            var monitorSettings = new SymOntoClay.Monitor.MonitorSettings
+            {
+                Enable = true,
+                MessagesDir = monitorMessagesDir,
+                KindOfLogicalSearchExplain = KindOfLogicalSearchExplain.None,
+                //LogicalSearchExplainDumpDir = Directory.GetCurrentDirectory(),
+                EnableAddingRemovingFactLoggingInStorages = true,
+                EnableFullCallInfo = true
+            };
+
+            var monitor = new SymOntoClay.Monitor.Monitor(monitorSettings);
+
+            var npcId = "#020ED339-6313-459A-900D-92F809CEBDC5";
+            //---------------
+            var nonitorNode = monitor.CreateMotitorNode("133776E5-AAAA-4896-AB6E-02C2902A5911", npcId);
+
+            var threadLogger = nonitorNode.CreateThreadLogger("8507C879-EE50-4E83-B72B-FDE9662D92BC", "f5f7ed91-77e5-45f5-88f5-b7530d111bd5");
+
+            var taskId = threadLogger.StartTask("F1DEBD17-F691-4CBD-AD6F-6D845960E252");
+
+            _globalLogger.Info($"taskId = {taskId}");
+
+            threadLogger.StopTask("B5E884FD-D8AD-414C-A6EE-BA971B248240", taskId);
+
+            //---------------
+            var sessionDirectoryFullName = monitor.SessionDirectoryFullName;
+
+            var sourceDirectoryName = Path.Combine(sessionDirectoryFullName, npcId);
+
+            var logsOutputDirectory = Path.Combine(Directory.GetCurrentDirectory(), "logs");
+
+            _globalLogger.Info($"logsOutputDirectory = {logsOutputDirectory}");
+
+            var options = LogFileCreatorOptions.DefaultOptions;
+
+            options.Write(new LogFileCreatorOptions()
+            {
+                SourceDirectoryName = sourceDirectoryName,
+                OutputDirectory = logsOutputDirectory,
+                DotAppPath = @"%USERPROFILE%\Downloads\Graphviz\bin\dot.exe",
+                ToHtml = false
+            });
+
+            //_globalLogger.Info($"options = {options}");
+
+            LogFileCreator.Run(options, _globalLogger);
         }
 
         private void Case1()

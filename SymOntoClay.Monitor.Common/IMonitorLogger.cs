@@ -273,6 +273,16 @@ namespace SymOntoClay.Monitor.Common
            [CallerFilePath] string sourceFilePath = "",
            [CallerLineNumber] int sourceLineNumber = 0);
 
+        ulong StartTask(string messagePointId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0);
+
+        void StopTask(string messagePointId, ulong taskId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0);
+
         //from channel
         void Output(string messagePointId, string message,
             [CallerMemberName] string memberName = "",

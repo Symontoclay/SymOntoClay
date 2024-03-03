@@ -392,6 +392,14 @@ namespace SymOntoClay.Monitor.Internal
             }
         }
 
+        bool IMonitorFeatures.EnableTasks
+        {
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableTasks;
+            }
+        }
+
         bool IMonitorFeatures.EnableOutput
         {
             get
@@ -517,6 +525,7 @@ namespace SymOntoClay.Monitor.Internal
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableEndRunResetExprOfConditionalTrigger)} = {monitorFeatures.EnableEndRunResetExprOfConditionalTrigger}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.IsEnabledAnyConditionalTriggerFeature)} = {monitorFeatures.IsEnabledAnyConditionalTriggerFeature}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableActivateIdleAction)} = {monitorFeatures.EnableActivateIdleAction}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableTasks)} = {monitorFeatures.EnableTasks}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableOutput)} = {monitorFeatures.EnableOutput}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableTrace)} = {monitorFeatures.EnableTrace}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableDebug)} = {monitorFeatures.EnableDebug}");
@@ -1119,6 +1128,26 @@ namespace SymOntoClay.Monitor.Internal
            [CallerLineNumber] int sourceLineNumber = 0)
         {
             _monitorLoggerImpl.PutFactForRemovingFromLogicalStorage(messagePointId, fact, logicalStorage, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public ulong StartTask(string messagePointId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            return _monitorLoggerImpl.StartTask(messagePointId, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void StopTask(string messagePointId, ulong taskId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.StopTask(messagePointId, taskId, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>

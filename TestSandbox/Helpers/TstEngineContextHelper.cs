@@ -57,7 +57,7 @@ namespace TestSandbox.Helpers
         {
             var appName = AppDomain.CurrentDomain.FriendlyName;
 
-
+            
             var supportBasePath = Path.Combine(Environment.GetEnvironmentVariable("APPDATA"), "SymOntoClay", appName);
 
 

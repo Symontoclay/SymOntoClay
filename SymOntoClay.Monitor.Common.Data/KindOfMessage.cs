@@ -53,6 +53,8 @@ namespace SymOntoClay.Monitor.Common.Data
         RemoveFactFromLogicalStorage,
         RefreshLifeTimeInLogicalStorage,
         PutFactForRemovingFromLogicalStorage,
+        StartTask,
+        StopTask,
         Output,
         Trace,
         Debug,

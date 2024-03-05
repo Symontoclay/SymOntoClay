@@ -3113,10 +3113,10 @@ namespace SymOntoClay.Monitor.Internal
 
         private readonly object _taskLockObj = new object();
 
-        private int _currentTaskId;
-        private int _currentTasksCount;
+        private ulong _currentTaskId;
+        private ulong _currentTasksCount;
 
-        private (int taskId, int tasksCount) IncreaseTasksCount()
+        private (ulong TaskId, ulong TasksCount) IncreaseTasksCount()
         {
             lock (_taskLockObj)
             {
@@ -3124,7 +3124,7 @@ namespace SymOntoClay.Monitor.Internal
             }
         }
 
-        private int DecreaseTasksCount()
+        private ulong DecreaseTasksCount()
         {
             lock (_taskLockObj)
             {
@@ -3140,21 +3140,65 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
             var tasksCountResult = IncreaseTasksCount();
 
 #if DEBUG
-            _globalLogger.Info($"tasksCountResult = {tasksCountResult}");
+            //_globalLogger.Info($"tasksCountResult = {tasksCountResult}");
 #endif
 
-            StartTaskMessage
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
-            throw new NotImplementedException();
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            var messageInfo = new StartTaskMessage
+            {
+                TaskId = tasksCountResult.TaskId,
+                TasksCount = tasksCountResult.TasksCount,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
+
+#if DEBUG
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+            ProcessMessage(messageInfo);
+
+            return tasksCountResult.TaskId;
         }
 
         /// <inheritdoc/>
@@ -3165,22 +3209,64 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
 #if DEBUG
-            _globalLogger.Info($"messagePointId = {messagePointId}");
-            _globalLogger.Info($"taskId = {taskId}");
-            _globalLogger.Info($"memberName = {memberName}");
-            _globalLogger.Info($"sourceFilePath = {sourceFilePath}");
-            _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
+            //_globalLogger.Info($"messagePointId = {messagePointId}");
+            //_globalLogger.Info($"taskId = {taskId}");
+            //_globalLogger.Info($"memberName = {memberName}");
+            //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
+            //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
-            var tmpCount = DecreaseTasksCount();
+            var tasksCount = DecreaseTasksCount();
 
 #if DEBUG
-            _globalLogger.Info($"tmpCount = {tmpCount}");
+            //_globalLogger.Info($"tasksCount = {tasksCount}");
 #endif
 
-            StopTaskMessage
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
 
-            throw new NotImplementedException();
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            var messageInfo = new StopTaskMessage
+            {
+                TaskId = taskId,
+                TasksCount = tasksCount,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
+
+#if DEBUG
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>

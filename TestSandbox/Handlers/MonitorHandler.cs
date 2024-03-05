@@ -47,9 +47,7 @@ namespace TestSandbox.Handlers
         {
             var appName = AppDomain.CurrentDomain.FriendlyName;
 
-
             var supportBasePath = Path.Combine(Environment.GetEnvironmentVariable("APPDATA"), "SymOntoClay", appName);
-
 
             var monitorMessagesDir = Path.Combine(supportBasePath, "NpcMonitorMessages");
 
@@ -74,6 +72,8 @@ namespace TestSandbox.Handlers
             var taskId = threadLogger.StartTask("F1DEBD17-F691-4CBD-AD6F-6D845960E252");
 
             _globalLogger.Info($"taskId = {taskId}");
+
+            Thread.Sleep(1000);
 
             threadLogger.StopTask("B5E884FD-D8AD-414C-A6EE-BA971B248240", taskId);
 

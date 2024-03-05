@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SymOntoClay.Monitor.LogFileBuilder
 {
@@ -168,6 +169,12 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
                 case KindOfMessage.PutFactForRemovingFromLogicalStorage:
                     return GetPutFactForRemovingFromLogicalStorage(message as PutFactForRemovingFromLogicalStorageMessage);
+
+                case KindOfMessage.StartTask:
+                    return GetStartTask(message as StartTaskMessage);
+
+                case KindOfMessage.StopTask:
+                    return GetStopTask(message as StopTaskMessage);
 
                 case KindOfMessage.Output:
                     return GetOutput(message as OutputMessage);
@@ -862,6 +869,28 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 #endif
 
             return $"{GetMonitoredHumanizedLabel(message.LogicalStorage)}: {GetMonitoredHumanizedLabel(message.Fact)}";
+        }
+
+        private string GetStartTask(StartTaskMessage message)
+        {
+#if DEBUG
+            //_globalLogger.Info($"message = {message}");
+#endif
+
+            _tasksTime[message.TaskId] = message.DateTimeStamp;
+
+            return $"{message.TaskId} ({message.TasksCount} tasks)";
+        }
+
+        private Dictionary<ulong, DateTime> _tasksTime = new Dictionary<ulong, DateTime>();
+
+        private string GetStopTask(StopTaskMessage message)
+        {
+#if DEBUG
+            //_globalLogger.Info($"message = {message}");
+#endif
+
+            return $"{message.TaskId} {(_tasksTime.TryGetValue(message.TaskId, out var date) ? message.DateTimeStamp.Subtract(date).ToString() : string.Empty)} ({message.TasksCount} tasks)";
         }
 
         private string GetOutput(OutputMessage message)

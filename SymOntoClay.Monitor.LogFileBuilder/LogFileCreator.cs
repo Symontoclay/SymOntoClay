@@ -82,6 +82,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             var n = 0;
 
+            string text = null;
+            BaseMessage message = null;
+
             foreach (var fileName in fileNamesList)
             {
                 if(showStages)
@@ -94,52 +97,61 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 //_logger.Info($"fileName = {fileName}");
 #endif
 
-                var text = File.ReadAllText(fileName.Item2);
-
-#if DEBUG
-                //_logger.Info($"text = {text}");
-#endif
-
-                var message = MessagesFactory.ReadMessage(text, fileName.Item1.KindOfMessage);
-
-#if DEBUG
-                //_logger.Info($"message = {message}");
-#endif
-
-                if(!options.TargetNodes?.Any(p => p.Equals(message.NodeId, StringComparison.OrdinalIgnoreCase)) ?? false)
+                try
                 {
-                    continue;
-                }
+                    text = File.ReadAllText(fileName.Item2);
 
-                if(!options.TargetThreads?.Any(p => p.Equals(message.ThreadId, StringComparison.OrdinalIgnoreCase)) ?? false)
+#if DEBUG
+                    //_logger.Info($"text = {text}");
+#endif
+
+                    message = MessagesFactory.ReadMessage(text, fileName.Item1.KindOfMessage);
+
+#if DEBUG
+                    //_logger.Info($"message = {message}");
+#endif
+
+                    if (!options.TargetNodes?.Any(p => p.Equals(message.NodeId, StringComparison.OrdinalIgnoreCase)) ?? false)
+                    {
+                        continue;
+                    }
+
+                    if (!options.TargetThreads?.Any(p => p.Equals(message.ThreadId, StringComparison.OrdinalIgnoreCase)) ?? false)
+                    {
+                        continue;
+                    }
+
+                    var sw = fileStreamsStorage.GetStreamWriter(message.NodeId, message.ThreadId);
+
+#if DEBUG
+                    //_logger.Info($"message.GlobalMessageNumber = {message.GlobalMessageNumber}");
+#endif
+
+                    var targetFileName = fileStreamsStorage.GetFileName(message.NodeId, message.ThreadId).Replace("#", string.Empty);
+
+#if DEBUG
+                    //_logger.Info($"targetFileName = {targetFileName}");
+#endif
+
+                    var rowSb = new StringBuilder();
+
+                    foreach (var rowOption in rowOptionsList)
+                    {
+                        rowSb.Append(rowOption.GetText(message, logFileCreatorContext, targetFileName));
+                    }
+
+#if DEBUG
+                    //_logger.Info($"rowSb = {rowSb}");
+#endif
+
+                    sw.WriteLine(logFileCreatorContext.DecorateItem(message.GlobalMessageNumber, rowSb.ToString()));
+                }
+                catch (Exception e)
                 {
-                    continue;
+                    _logger.Info($"text = '{text}'");
+                    _logger.Info($"message = {message}");
+                    _logger.Info($"e = {e}");
                 }
-
-                var sw = fileStreamsStorage.GetStreamWriter(message.NodeId, message.ThreadId);
-
-#if DEBUG
-                //_logger.Info($"message.GlobalMessageNumber = {message.GlobalMessageNumber}");
-#endif
-
-                var targetFileName = fileStreamsStorage.GetFileName(message.NodeId, message.ThreadId).Replace("#", string.Empty);
-
-#if DEBUG
-                //_logger.Info($"targetFileName = {targetFileName}");
-#endif
-
-                var rowSb = new StringBuilder();
-
-                foreach (var rowOption in rowOptionsList)
-                {
-                    rowSb.Append(rowOption.GetText(message, logFileCreatorContext, targetFileName));
-                }
-
-#if DEBUG
-                //_logger.Info($"rowSb = {rowSb}");
-#endif
-
-                sw.WriteLine(logFileCreatorContext.DecorateItem(message.GlobalMessageNumber, rowSb.ToString()));
             }
 
             if (showStages)

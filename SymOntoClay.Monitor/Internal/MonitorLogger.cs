@@ -3146,6 +3146,11 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
+            if (!_features.EnableTasks)
+            {
+                return 0u;
+            }
+
             var tasksCountResult = IncreaseTasksCount();
 
 #if DEBUG
@@ -3215,6 +3220,11 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
             //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
+
+            if (!_features.EnableTasks)
+            {
+                return;
+            }
 
             var tasksCount = DecreaseTasksCount();
 

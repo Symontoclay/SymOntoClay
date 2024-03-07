@@ -3111,12 +3111,12 @@ namespace SymOntoClay.Monitor.Internal
             ProcessMessage(messageInfo);
         }
 
-        private readonly object _taskLockObj = new object();
+        private static readonly object _taskLockObj = new object();
 
-        private ulong _currentTaskId;
-        private ulong _currentTasksCount;
+        private static ulong _currentTaskId;
+        private static ulong _currentTasksCount;
 
-        private (ulong TaskId, ulong TasksCount) IncreaseTasksCount()
+        private static (ulong TaskId, ulong TasksCount) IncreaseTasksCount()
         {
             lock (_taskLockObj)
             {
@@ -3124,7 +3124,7 @@ namespace SymOntoClay.Monitor.Internal
             }
         }
 
-        private ulong DecreaseTasksCount()
+        private static ulong DecreaseTasksCount()
         {
             lock (_taskLockObj)
             {

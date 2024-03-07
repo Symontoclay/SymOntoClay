@@ -53,29 +53,37 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     return _value;
                 }
             }
+        }
 
-            set
+        public void SetValue(IMonitorLogger logger, Value value)
+        {
+            lock (_lockObj)
             {
-                lock (_lockObj)
+                if (_value == value)
                 {
-                    if(_value == value)
+                    return;
+                }
+
+                _value = value;
+
+                Task.Run(() => {//logged
+                    var taskId = (logger?.StartTask("519168ED-7F5C-4F8E-88F3-E8E1ECC63172")) ?? 0u;
+
+                    try
                     {
-                        return;
+#if DEBUG
+                        logger?.Info("8E131C5A-7E9F-43AB-9793-EEC1DA2D5747", $"OnChanged?.GetInvocationList().Length = {OnChanged?.GetInvocationList().Length}");
+#endif
+
+                        OnChanged?.Invoke(Name);
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.Error(e);
                     }
 
-                    _value = value;
-
-                    Task.Run(() => {
-                        try
-                        {
-                            OnChanged?.Invoke(Name);
-                        }
-                        catch (Exception e)
-                        {
-                            _logger.Error(e);
-                        }                        
-                    });
-                }
+                    logger?.StopTask("67523BC0-EE29-45BB-9650-AF99F9BC8A16", taskId);
+                });
             }
         }
 
@@ -118,7 +126,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         protected void AppendVar(Var source, Dictionary<object, object> context)
         {
-            Value = source.Value?.CloneValue(context);
+            SetValue(null, source.Value?.CloneValue(context));
             TypesList = source.TypesList?.Select(p => p.Clone(context)).ToList();
 
             AppendCodeItem(source, context);

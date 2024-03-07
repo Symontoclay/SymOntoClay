@@ -235,7 +235,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
             {
                 if (_localVariablesDict.ContainsKey(varName))
                 {
-                    _localVariablesDict[varName].Value = value;
+                    _localVariablesDict[varName].SetValue(logger, value);
                     return;
                 }
 
@@ -246,7 +246,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
                 NAppendVar(logger, varItem);
 
-                varItem.Value = value;
+                varItem.SetValue(logger, value);
             }
         }
 
@@ -257,26 +257,42 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
         protected void EmitOnChanged(IMonitorLogger logger, StrongIdentifierValue varName)
         {
-            Task.Run(() => {
+            Task.Run(() => {//logged
+                var taskId = logger.StartTask("0FA75090-C5D9-45B3-8537-AA5B27556DDC");
+
                 try
                 {
+#if DEBUG
+                    logger.Info("A5331625-B1FB-44B1-BD55-7CE13ACAAA31", $"OnChanged?.GetInvocationList().Length = {OnChanged?.GetInvocationList().Length}");
+#endif
+
                     OnChanged?.Invoke();
                 }
                 catch (Exception e)
                 {
                     logger.Error("7DF94442-83B7-401F-93B7-CFA75C98E6E6", e);
-                }                
+                }
+
+                logger.StopTask("96D6F4FC-4858-438C-86A4-176EBE262BDC", taskId);
             });
 
-            Task.Run(() => {
+            Task.Run(() => {//logged
+                var taskId = logger.StartTask("A7073A46-B880-4D70-8D46-BB3C37687D37");
+
                 try
                 {
+#if DEBUG
+                    logger.Info("AF7E0781-5577-4613-B1A3-86B715CBABFD", $"OnChangedWithKeys?.GetInvocationList().Length = {OnChangedWithKeys?.GetInvocationList().Length}");
+#endif
+
                     OnChangedWithKeys?.Invoke(varName);
                 }
                 catch (Exception e)
                 {
                     logger.Error("898152C4-535A-4BF1-8013-E6FDEF652622", e);
-                }                
+                }
+
+                logger.StopTask("A89BDCF8-4284-44F9-A01F-2E2B02EDCE86", taskId);
             });
         }
 

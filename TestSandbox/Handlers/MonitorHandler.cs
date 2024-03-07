@@ -43,8 +43,16 @@ namespace TestSandbox.Handlers
             _globalLogger.Info("End");
         }
 
+        public event Action SomeEvent;
+        public event Action OtherEvent;
+
         private void Case2()
         {
+            OtherEvent += () => { };
+
+            _globalLogger.Info($"SomeEvent?.GetInvocationList().Length = {SomeEvent?.GetInvocationList().Length}");
+            _globalLogger.Info($"OtherEvent?.GetInvocationList().Length = {OtherEvent?.GetInvocationList().Length}");
+
             var appName = AppDomain.CurrentDomain.FriendlyName;
 
             var supportBasePath = Path.Combine(Environment.GetEnvironmentVariable("APPDATA"), "SymOntoClay", appName);
@@ -76,6 +84,13 @@ namespace TestSandbox.Handlers
             Thread.Sleep(1000);
 
             threadLogger.StopTask("B5E884FD-D8AD-414C-A6EE-BA971B248240", taskId);
+
+            //logged
+            //var taskId = logger.StartTask();
+            //logger.StopTask(, taskId);
+            //#if DEBUG
+            //            logger.Info(, $" = {?.GetInvocationList().Length}");
+            //#endif
 
             //---------------
             var sessionDirectoryFullName = monitor.SessionDirectoryFullName;

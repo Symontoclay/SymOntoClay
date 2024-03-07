@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Storage;
@@ -63,15 +64,23 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         protected override void ExecutionCoordinator_OnFinished()
         {
-            Task.Run(() => {
+            Task.Run(() => {//logged
+                var taskId = Logger.StartTask("75C3D3E5-FEE9-45AF-9E88-ABF5079D4BAF");
+
                 try
                 {
+#if DEBUG
+                    Logger.Info("259E23D2-3F19-48F7-AE25-33C0021CE65E", $"OnStateInstanceFinished?.GetInvocationList().Length = {OnStateInstanceFinished?.GetInvocationList().Length}");
+#endif
+
                     OnStateInstanceFinished?.Invoke(this);
                 }
                 catch (Exception e)
                 {
                     Error("6FE6F5D5-288E-4DEE-8CAF-DD23B727AD95", e);
-                }                
+                }
+
+                Logger.StopTask("B35E7CC7-D16F-4341-9F84-FE9F6DF5ADE3", taskId);
             });
 
             base.ExecutionCoordinator_OnFinished();

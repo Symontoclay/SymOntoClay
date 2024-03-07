@@ -141,26 +141,42 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private void EmitOnChanged(IMonitorLogger logger, IList<StrongIdentifierValue> usedKeysList)
         {
-            Task.Run(() => {
+            Task.Run(() => {//logged
+                var taskId = logger.StartTask("B1D7819A-289D-4932-B1FC-5D0DFD358463");
+
                 try
                 {
+#if DEBUG
+                    logger.Info("7B5934E1-FBAD-43C0-8548-0663CFB85F41", $"OnChanged?.GetInvocationList().Length = {OnChanged?.GetInvocationList().Length}");
+#endif
+
                     OnChanged?.Invoke();
                 }
                 catch (Exception e)
                 {
                     logger.Error("6489EB1E-8E8B-4354-BC14-EA439E053431", e);
-                }                
+                }
+
+                logger.StopTask("64F347CE-134B-4732-8CC8-C55845423D33", taskId);
             });
 
-            Task.Run(() => {
+            Task.Run(() => {//logged
+                var taskId = logger.StartTask("238A2292-7015-46CE-A3B5-A3C0A2497DB1");
+
                 try
                 {
+#if DEBUG
+                    logger.Info("2603F573-8FC3-4AA0-A422-B9358979D470", $"OnChangedWithKeys?.GetInvocationList().Length = {OnChangedWithKeys?.GetInvocationList().Length}");
+#endif
+
                     OnChangedWithKeys?.Invoke(usedKeysList);
                 }
                 catch (Exception e)
                 {
                     logger.Error("EAEB1532-7C12-459C-85F6-F488CCC6F90C", e);
-                }                
+                }
+
+                logger.StopTask("E872CC5E-435A-45EB-BA2B-D10CEBA10152", taskId);
             });
         }
 
@@ -171,7 +187,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private void EmitOnAddingFactForNewStorage(IMonitorLogger logger, ILogicalStorage storage)
         {
-            Task.Run(() => {
+            Task.Run(() => {//logged
+                var taskId = logger.StartTask("6EA7602B-F2EA-4204-B747-886EB25161E7");
+
                 try
                 {
                     var allFactsList = storage.GetAllOriginFacts(logger);
@@ -185,6 +203,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 {
                     logger.Error("5505F9AC-F874-4843-91D6-9CF97045326D", e);
                 }
+
+                logger.StopTask("A1CE76A8-4CD5-49E2-90A8-D43FA04F8AD4", taskId);
             });
         }
 
@@ -192,7 +212,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         {
             if(OnAddingFact != null)
             {
-                Task.Run(() => {
+                Task.Run(() => {//logged
+                    var taskId = logger.StartTask("612DB280-7EF8-4035-B6A5-229440E96F55");
+
                     try
                     {
                         IsolatedProcessNewFact(logger, ruleInstance);
@@ -201,6 +223,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     {
                         logger.Error("932FA4A1-3216-4B1F-8B5E-DB7EB08A42D4", e);
                     }
+
+                    logger.StopTask("76D7022F-2677-43F7-A1EC-519E00C60B25", taskId);
                 });
             }
 

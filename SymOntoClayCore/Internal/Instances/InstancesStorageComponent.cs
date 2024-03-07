@@ -119,7 +119,9 @@ namespace SymOntoClay.Core.Internal.Instances
 
             instanceInfo.Init(logger);
 
-            Task.Run(() => {
+            Task.Run(() => {//logged
+                var taskId = logger.StartTask("B38CE583-4AE0-42ED-9043-59E038AF094E");
+
                 try
                 {
                     Thread.Sleep(100);
@@ -130,12 +132,16 @@ namespace SymOntoClay.Core.Internal.Instances
                 {
                     logger.Error("0E28EFF2-FA4B-46F2-A1B5-7CDF5C9B4862", e);
                 }
+
+                logger.StopTask("54E83ADE-6CC4-4655-A1D8-68FDA40DBB22", taskId);
             });
         }
 
         private void DispatchOnIdle()
         {
-            Task.Run(() => {
+            Task.Run(() => {//logged
+                var taskId = Logger.StartTask("F3A7C7F7-1D36-4321-9467-B5E075A04E6F");
+
                 try
                 {
                     DispatchIdleActions(Logger);
@@ -144,6 +150,8 @@ namespace SymOntoClay.Core.Internal.Instances
                 {
                     Error("1617E55E-58BC-4B63-9418-D5967AD99678", e);
                 }
+
+                Logger.StopTask("97C0FBD9-7D7B-4E6B-BEA5-1D6D37FE2005", taskId);
             });
         }
 
@@ -261,54 +269,24 @@ namespace SymOntoClay.Core.Internal.Instances
                 //}
 #endif
 
-                //if (concurentProcessesInfoList.All(p => p.ParentProcessInfo != null && p.ParentProcessInfo == processInfo.ParentProcessInfo))
-                //{
-                //    NAppendAndTryStartProcessInfoWithDevices(logger, processInfo);
-
-                //    Task.Run(() => {
-                //        foreach (var concurentProcessInfo in concurentProcessesInfoList)
-                //        {
-                //            concurentProcessInfo.Cancel(logger);
-                //        }
-                //    });
-
-                //    logger.EndHostMethodStarting("CE34E46B-9E41-419C-87B3-4CC0A172B8B4", callMethodId);
-
-                //    return;
-                //}
-
-                //var globalPriority = processInfo.GlobalPriority;
-
 #if DEBUG
                 //Log($"globalPriority = {globalPriority}");
 #endif
-
-                //if (concurentProcessesInfoList.All(p => p.GlobalPriority <= globalPriority))
-                //{
-                //    NAppendAndTryStartProcessInfoWithDevices(logger, processInfo);
-
-                //    Task.Run(() => { 
-                //        foreach(var concurentProcessInfo in concurentProcessesInfoList)
-                //        {
-                //            concurentProcessInfo.Cancel(logger);
-                //        }
-                //    });
-
-                //    logger.EndHostMethodStarting("743973AD-3272-42BB-B832-0F7EB63AE9E1", callMethodId);
-
-                //    return;
-                //}
 
                 if(concurentProcessesInfoList.All(y => ProcessInfoHelper.Compare(logger, processInfo, y) >=0))
                 {
                     NAppendAndTryStartProcessInfoWithDevices(logger, processInfo);
 
-                    Task.Run(() =>
+                    Task.Run(() => //logged
                     {
+                        var taskId = logger.StartTask("EDE8166B-FDC9-4DDB-8D5F-76CF87E61A4C");
+
                         foreach (var concurentProcessInfo in concurentProcessesInfoList)
                         {
                             concurentProcessInfo.Cancel(logger, "74AFBE25-AE89-4971-BC06-716048826194", ReasonOfChangeStatus.ByConcurrentProcess, new Changer(KindOfChanger.ProcessInfo, processInfo.Id), callMethodId);
                         }
+
+                        logger.StopTask("594DAE42-0F2E-42AC-8DA4-0F406DCC227A", taskId);
                     });
 
                     logger.EndHostMethodStarting("A919AF23-C7E3-4678-97AA-1E2E596B9EE1", callMethodId);
@@ -379,7 +357,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 CheckCountOfActiveProcesses(Logger);
             }
-
         }
 
         private void CheckCountOfActiveProcesses(IMonitorLogger logger)

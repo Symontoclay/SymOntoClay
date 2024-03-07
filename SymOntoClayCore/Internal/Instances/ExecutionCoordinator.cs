@@ -81,7 +81,13 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 var prevExecutionStatus = _executionStatus;
 
-                Task.Run(() => { logger.SetExecutionCoordinatorStatus(messagePointId, Id, actionExecutionStatus, prevExecutionStatus, null, string.Empty); });
+                Task.Run(() => {//logged
+                    var taskId = logger.StartTask("70B6356A-3E4B-457E-95E1-6605721E6E58");
+
+                    logger.SetExecutionCoordinatorStatus(messagePointId, Id, actionExecutionStatus, prevExecutionStatus, null, string.Empty);
+
+                    logger.StopTask("C88530AD-9F82-43E3-92B7-26A0171AA10C", taskId);
+                });
                 
                 _executionStatus = actionExecutionStatus;
 

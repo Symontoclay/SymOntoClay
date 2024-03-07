@@ -174,7 +174,9 @@ namespace SymOntoClay.Core.Internal.Instances
 
         public void ActivateState(IMonitorLogger logger, StateDef state, List<Var> varList)
         {
-            Task.Run(() => {
+            Task.Run(() => {//logged
+                var taskId = logger.StartTask("63ED542C-9E36-4AD9-97E7-58A613A604D3");
+
                 try
                 {
                     StateInstance stateInstance = null;
@@ -225,6 +227,8 @@ namespace SymOntoClay.Core.Internal.Instances
                 {
                     logger.Error("847C55BE-261F-401D-A398-B6C81C1E0143", e);
                 }
+
+                logger.StopTask("124C8157-0A91-4D4B-AE79-BAE473C36972", taskId);
             });
         }
 
@@ -271,7 +275,9 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 _stateActivators.Add(activatorInstance);
 
-                Task.Run(() => {
+                Task.Run(() => {//logged
+                    var taskId = logger.StartTask("E3FD063E-804D-488D-9382-1A1CD5324DD3");
+
                     try
                     {
                         activatorInstance.Init(logger);
@@ -279,7 +285,9 @@ namespace SymOntoClay.Core.Internal.Instances
                     catch (Exception e)
                     {
                         logger.Error("A1DA97E0-2863-409E-8CAD-9813CE8EEBBE", e);
-                    }                    
+                    }
+
+                    logger.StopTask("035D0452-E7F3-443F-922C-009B84713C04", taskId);
                 });
             }
         }

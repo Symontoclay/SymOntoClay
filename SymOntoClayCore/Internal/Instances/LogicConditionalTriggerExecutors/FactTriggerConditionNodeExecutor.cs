@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
@@ -122,7 +123,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 
                                 var varItem = new Var();
                                 varItem.Name = destVar;
-                                varItem.Value = processedRuleInstance;
+                                varItem.SetValue(Logger, processedRuleInstance);
                                 varItem.TypeOfAccess = TypeOfAccess.Local;
 
                                 resultVarList.Add(varItem);
@@ -142,7 +143,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 
                             var varItem = new Var();
                             varItem.Name = destVar;
-                            varItem.Value = value;
+                            varItem.SetValue(Logger, value);
                             varItem.TypeOfAccess = TypeOfAccess.Local;
 
                             resultVarList.Add(varItem);

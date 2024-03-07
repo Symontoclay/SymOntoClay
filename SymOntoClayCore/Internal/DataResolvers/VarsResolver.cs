@@ -66,7 +66,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             CheckFitVariableAndValue(logger, varPtr, value, localCodeExecutionContext, options);
 
-            varPtr.Value = value;
+            varPtr.SetValue(logger, value);
         }
 
         public void CheckFitVariableAndValue(IMonitorLogger logger, Var varItem, Value value, ILocalCodeExecutionContext localCodeExecutionContext)

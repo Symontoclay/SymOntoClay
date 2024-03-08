@@ -49,7 +49,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
             if (_varName == varName)
             {
                 EmitOnChanged();
-            }            
+            }
         }
 
         /// <inheritdoc/>

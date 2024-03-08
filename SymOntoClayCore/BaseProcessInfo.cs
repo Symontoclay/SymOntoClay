@@ -263,113 +263,115 @@ namespace SymOntoClay.Core
 
         private void EmitOnFinish(IMonitorLogger logger)
         {
-            Task.Run(() => {//logged
-                var taskId = logger.StartTask("F0A455C0-A6EB-4BAA-8D2A-0EE1DC112590");
+            List<IProcessInfoEventHandler> onFinishHandlersList = null;
 
-                try
-                {
-                    EmitOnFinishHandlers(logger);
-                }
-                catch (Exception e)
-                {
-                    logger?.Error("C264171B-3DC3-446D-A051-26475CFDDC8D", e);
-                }
+            lock (_parentAndChildrenLockObj)
+            {
+                onFinishHandlersList = _onFinishHandlersList.ToList();
+            }
 
-                logger.StopTask("AD80EB54-A648-4B05-9D4D-19933DA966C4", taskId);
-            });
-
-            Task.Run(() => {//logged
-                var taskId = logger.StartTask("EF2215CD-631A-4A6D-802A-890FEB87CF6C");
-
-                try
-                {
 #if DEBUG
-                    logger.Info("31DDAF4F-72D6-4A3B-B4E0-9AA555924313", $"InternalOnFinish?.GetInvocationList().Length = {InternalOnFinish?.GetInvocationList().Length}");
+            logger.Info("D85A951B-E74F-42CA-B7AF-1C8E15677C49", $"onFinishHandlersList.Count = {onFinishHandlersList.Count}");
 #endif
 
-                    InternalOnFinish?.Invoke(this);
-                }
-                catch (Exception e)
-                {
-                    logger?.Error("967167E4-5BE3-454B-8ECE-51E94E5FE2F5", e);
-                }
+            if(onFinishHandlersList.Any())
+            {
+                Task.Run(() => {//logged
+                    var taskId = logger.StartTask("F0A455C0-A6EB-4BAA-8D2A-0EE1DC112590");
 
-                logger.StopTask("9F74CDE5-4266-461D-B467-249DC32E2593", taskId);
-            });
+                    try
+                    {
+                        foreach (var item in onFinishHandlersList)
+                        {
+                            item.Run(logger);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        logger?.Error("C264171B-3DC3-446D-A051-26475CFDDC8D", e);
+                    }
+
+                    logger.StopTask("AD80EB54-A648-4B05-9D4D-19933DA966C4", taskId);
+                });
+            }
+
+
+            InternalOnFinish?.Invoke(this);
         }
 
         private void EmitOnComplete(IMonitorLogger logger)
         {
-            Task.Run(() => {//logged
-                var taskId = logger.StartTask("DD76FAB5-8781-4979-B885-6D3F73EA42BD");
+            List<IProcessInfoEventHandler> onCompleteHandlersList = null;
 
-                try
-                {
-                    EmitOnCompleteHandlers(logger);
-                }
-                catch (Exception e)
-                {
-                    logger?.Error("6D0C6064-16A3-4068-8CB2-9E9CBADF4A1F", e);
-                }
+            lock (_parentAndChildrenLockObj)
+            {
+                onCompleteHandlersList = _onCompleteHandlersList.ToList();
+            }
 
-                logger.StopTask("64D55DB6-79B8-4999-B0A8-C8C4C68CE349", taskId);
-            });
-
-            Task.Run(() => {//logged
-                var taskId = logger.StartTask("D00D973A-A600-49F3-902E-A8368D29E02E");
-
-                try
-                {
 #if DEBUG
-                    logger.Info("2F7D90C0-44B9-4765-9E1D-8DCE97809B2F", $"InternalOnComplete?.GetInvocationList().Length = {InternalOnComplete?.GetInvocationList().Length}");
+            logger.Info("3758404B-0C33-4D48-BE14-0D123BA961C4", $"onCompleteHandlersList.Count = {onCompleteHandlersList.Count}");
 #endif
 
-                    InternalOnComplete?.Invoke(this);
-                }
-                catch (Exception e)
-                {
-                    logger?.Error("5FBF7D65-AC62-4CDD-A795-D31288197D63", e);
-                }
+            if (onCompleteHandlersList.Any())
+            {
+                Task.Run(() => {//logged
+                    var taskId = logger.StartTask("DD76FAB5-8781-4979-B885-6D3F73EA42BD");
 
-                logger.StopTask("43F4AA5F-0550-4B58-898D-70E6CD4CC847", taskId);
-            });
+                    try
+                    {
+                        foreach (var item in onCompleteHandlersList)
+                        {
+                            item.Run(logger);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        logger?.Error("6D0C6064-16A3-4068-8CB2-9E9CBADF4A1F", e);
+                    }
+
+                    logger.StopTask("64D55DB6-79B8-4999-B0A8-C8C4C68CE349", taskId);
+                });
+            }
+
+
+            InternalOnComplete?.Invoke(this);
         }
 
         private void EmitOnWeakCanceled(IMonitorLogger logger)
         {
-            Task.Run(() => {//logged
-                var taskId = logger.StartTask("F571FF35-20B0-4D29-A5C4-9D33ACF0B280");
+            List<IProcessInfoEventHandler> onWeakCanceledHandlersList = null;
 
-                try
-                {
-                    EmitOnWeakCanceledHandlers(logger);
-                }
-                catch (Exception e)
-                {
-                    logger?.Error("84FFE90C-057B-4EFB-8DC5-34EB3B26C7B3", e);
-                }
+            lock (_parentAndChildrenLockObj)
+            {
+                onWeakCanceledHandlersList = _onWeakCanceledHandlersList.ToList();
+            }
 
-                logger.StopTask("DBDEEE39-6612-445A-AD63-F42C5613078E", taskId);
-            });
-            
-            Task.Run(() => {//logged
-                var taskId = logger.StartTask("7898AFF4-6536-4727-BFD7-11B02A36182B");
-
-                try
-                {
 #if DEBUG
-                    logger.Info("D6AA1938-8D23-4C3C-A707-7070C39C982D", $"InternalOnWeakCanceled?.GetInvocationList().Length = {InternalOnWeakCanceled?.GetInvocationList().Length}");
+            logger.Info("C77B12A1-0A22-41F5-BC6A-50A292DEB768", $"onWeakCanceledHandlersList.Count = {onWeakCanceledHandlersList.Count}");
 #endif
 
-                    InternalOnWeakCanceled?.Invoke(this);
-                }
-                catch (Exception e)
-                {
-                    logger?.Error("AC84A17A-32EC-4031-BE64-BD39E04ECFB9", e);
-                }
+            if (onWeakCanceledHandlersList.Any())
+            {
+                Task.Run(() => {//logged
+                    var taskId = logger.StartTask("F571FF35-20B0-4D29-A5C4-9D33ACF0B280");
 
-                logger.StopTask("1BC9568A-A807-4C2A-A289-B39546F97BFD", taskId);
-            });
+                    try
+                    {
+                        foreach (var item in onWeakCanceledHandlersList)
+                        {
+                            item.Run(logger);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        logger?.Error("84FFE90C-057B-4EFB-8DC5-34EB3B26C7B3", e);
+                    }
+
+                    logger.StopTask("DBDEEE39-6612-445A-AD63-F42C5613078E", taskId);
+                });
+            }
+
+            InternalOnWeakCanceled?.Invoke(this);
         }
 
         private void ProcessGeneralFinishStatuses(IMonitorLogger logger, ProcessStatus status, string callMethodId)
@@ -679,21 +681,6 @@ namespace SymOntoClay.Core
             }
         }
 
-        protected void EmitOnFinishHandlers(IMonitorLogger logger)
-        {
-            lock (_parentAndChildrenLockObj)
-            {
-#if DEBUG
-                logger.Info("D85A951B-E74F-42CA-B7AF-1C8E15677C49", $"_onFinishHandlersList.Count = {_onFinishHandlersList.Count}");
-#endif
-
-                foreach (var item in _onFinishHandlersList)
-                {
-                    item.Run(logger);
-                }
-            }
-        }
-
         /// <inheritdoc/>
         public void AddOnCompleteHandler(IMonitorLogger logger, IProcessInfoEventHandler handler)
         {
@@ -735,21 +722,6 @@ namespace SymOntoClay.Core
                 if (handler.ProcessInfo == this)
                 {
                     handler.ProcessInfo = null;
-                }
-            }
-        }
-
-        protected void EmitOnCompleteHandlers(IMonitorLogger logger)
-        {
-            lock (_parentAndChildrenLockObj)
-            {
-#if DEBUG
-                logger.Info("3758404B-0C33-4D48-BE14-0D123BA961C4", $"_onCompleteHandlersList.Count = {_onCompleteHandlersList.Count}");
-#endif
-
-                foreach (var item in _onCompleteHandlersList)
-                {
-                    item.Run(logger);
                 }
             }
         }
@@ -801,17 +773,7 @@ namespace SymOntoClay.Core
 
         protected void EmitOnWeakCanceledHandlers(IMonitorLogger logger)
         {
-            lock (_parentAndChildrenLockObj)
-            {
-#if DEBUG
-                logger.Info("C77B12A1-0A22-41F5-BC6A-50A292DEB768", $"_onWeakCanceledHandlersList.Count = {_onWeakCanceledHandlersList.Count}");
-#endif
 
-                foreach (var item in _onWeakCanceledHandlersList)
-                {
-                    item.Run(logger);
-                }
-            }
         }
 
         #region private fields

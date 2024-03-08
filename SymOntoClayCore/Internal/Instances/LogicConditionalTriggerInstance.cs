@@ -287,24 +287,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if(_hasNames && oldIsOn != _triggerConditionNodeObserverContext.IsOn)
             {
-                Task.Run(() => {//logged
-                    var taskId = logger.StartTask("28B44E3D-ECE7-4C72-BB91-29A3EB10799D");
-
-                    try
-                    {
-#if DEBUG
-                        logger.Info("306662B4-0B93-40E2-B15A-83D748E319FA", $"OnChanged?.GetInvocationList().Length = {OnChanged?.GetInvocationList().Length}");
-#endif
-
-                        OnChanged?.Invoke(_namesList);
-                    }
-                    catch (Exception e)
-                    {
-                        logger.Error("FA8C2B15-EC12-42B1-993F-71C2021DCF25", e);
-                    }
-
-                    logger.StopTask("50199F0A-6357-469C-A8D7-9373B3DCD2CE", taskId);
-                });
+                OnChanged?.Invoke(_namesList);
             }
 
             logger.EndDoTriggerSearch("4BB95054-441B-4372-9B33-7429D189BF5D", doTriggerSearchId);

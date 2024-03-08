@@ -466,46 +466,12 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         {
             EmitOnChanged(logger);
 
-            Task.Run(() => {//logged
-                var taskId = logger.StartTask("7EA8706C-253F-41AE-9000-0BF07F3F149A");
-
-                try
-                {
-#if DEBUG
-                    logger.Info("7C437893-2912-4422-9FE8-7F1F8D85DA1A", $"OnChangedWithKeys?.GetInvocationList().Length = {OnChangedWithKeys?.GetInvocationList().Length}");
-#endif
-
-                    OnChangedWithKeys?.Invoke(usedKeysList);
-                }
-                catch (Exception e)
-                {
-                    logger.Error("B845E1E0-802D-4F3C-A5E6-1140F1CF7D3B", e);
-                }
-
-                logger.StopTask("C9AD2AC3-E1FA-4717-9B89-50FDE95C5A22", taskId);
-            });
+            OnChangedWithKeys?.Invoke(usedKeysList);
         }
 
         protected void EmitOnChanged(IMonitorLogger logger)
         {
-            Task.Run(() => {//logged
-                var taskId = logger.StartTask("8F843309-71A0-4402-93CF-F247A3C2B938");
-
-                try
-                {
-#if DEBUG
-                    logger.Info("3C046469-B1C4-4902-93D1-61F4B3971CE6", $"OnChanged?.GetInvocationList().Length = {OnChanged?.GetInvocationList().Length}");
-#endif
-
-                    OnChanged?.Invoke();
-                }
-                catch (Exception e)
-                {
-                    logger.Error("DDC9388D-6FD6-44E6-8E24-CC13249A0914", e);
-                }
-
-                logger.StopTask("DA691CAF-6578-42E6-9DBC-146C31A143D0", taskId);
-            });
+            OnChanged?.Invoke();
         }
 
         private void LogicalStorage_OnChangedWithKeys(IList<StrongIdentifierValue> changedKeysList)

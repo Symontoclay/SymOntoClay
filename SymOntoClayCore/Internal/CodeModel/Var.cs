@@ -66,24 +66,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 _value = value;
 
-                Task.Run(() => {//logged
-                    var taskId = (logger?.StartTask("519168ED-7F5C-4F8E-88F3-E8E1ECC63172")) ?? 0u;
-
-                    try
-                    {
-#if DEBUG
-                        logger?.Info("8E131C5A-7E9F-43AB-9793-EEC1DA2D5747", $"OnChanged?.GetInvocationList().Length = {OnChanged?.GetInvocationList().Length}");
-#endif
-
-                        OnChanged?.Invoke(Name);
-                    }
-                    catch (Exception e)
-                    {
-                        _logger.Error(e);
-                    }
-
-                    logger?.StopTask("67523BC0-EE29-45BB-9650-AF99F9BC8A16", taskId);
-                });
+                OnChanged?.Invoke(Name);
             }
         }
 

@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
@@ -103,8 +104,10 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void LogicalStorage_OnChanged()
         {
-            Task.Run(() =>
+            Task.Run(() => //logged
             {
+                var taskId = Logger.StartTask("1A814CF1-ED6B-4696-B4E7-CB1005D20997");
+
                 try
                 {
                     if(!ShouldSearch())
@@ -146,6 +149,8 @@ namespace SymOntoClay.Core.Internal.Instances
                 {
                     Error("9A9F4635-7A86-4074-9FD1-44E20C6D37FC", e);
                 }
+
+                Logger.StopTask("40222224-12E4-4AE0-83CD-75E73B832996", taskId);
             });
         }
 

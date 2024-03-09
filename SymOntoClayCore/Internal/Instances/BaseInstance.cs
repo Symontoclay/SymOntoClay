@@ -213,20 +213,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
                     _globalTriggersStorage.Append(logger, triggerInstance);
 
-                    Task.Run(() => {//logged
-                        var taskId = logger.StartTask("8C2597E8-ADB7-4E36-9E23-22AA4C468B46");
-
-                        try
-                        {
-                            triggerInstance.Init(logger);
-                        }
-                        catch (Exception e)
-                        {
-                            logger.Error("051F726C-D269-462E-9979-B715299269B2", e);
-                        }
-
-                        logger.StopTask("4A43B7D8-480E-4B46-8A06-676E6329D757", taskId);
-                    });
+                    triggerInstance.Init(logger);
                 }
             }
 

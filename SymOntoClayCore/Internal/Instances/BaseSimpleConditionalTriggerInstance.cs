@@ -27,11 +27,14 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.Storage;
+using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Instances
@@ -66,10 +69,11 @@ namespace SymOntoClay.Core.Internal.Instances
             _searchOptions.QueryExpression = _condition;
             _searchOptions.LocalCodeExecutionContext = _localCodeExecutionContext;
 
+            _activeObject = new AsyncActivePeriodicObject(context.ActivePeriodicObjectContext);
+            _activeObject.PeriodicMethod = Handler;
         }
 
         private readonly LogicalSearchResolver _searcher;
-        private readonly object _lockObj = new object();
         protected readonly IEngineContext _context;
         private readonly IStorage _storage;
         private readonly ILocalCodeExecutionContext _localCodeExecutionContext;
@@ -79,15 +83,21 @@ namespace SymOntoClay.Core.Internal.Instances
         private bool _isOn;
         private List<string> _foundKeys = new List<string>();
 
+        private readonly object _lockObj = new object();
+        private volatile bool _needRun;
+
+        private int _runInterval = 100;
+
         private bool _isBusy;
         private bool _needRepeat;
 
+        private IActivePeriodicObject _activeObject;
+
         public void Init(IMonitorLogger logger)
         {
-            lock (_lockObj)
-            {
-                LogicalStorage_OnChanged();
-            }
+            _activeObject.Start();
+
+            _needRun = true;
         }
 
         protected abstract void RunHandler(ILocalCodeExecutionContext localCodeExecutionContext);
@@ -104,54 +114,38 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void LogicalStorage_OnChanged()
         {
-            Task.Run(() => //logged
+            lock (_lockObj)
             {
-                var taskId = Logger.StartTask("1A814CF1-ED6B-4696-B4E7-CB1005D20997");
+                _needRun = true;
+            }
+        }
 
-                try
+        private bool Handler(CancellationToken cancellationToken)
+        {
+            try
+            {
+                Thread.Sleep(_runInterval);
+
+                lock (_lockObj)
                 {
-                    if(!ShouldSearch())
+                    if (!_needRun)
                     {
-                        return;
+                        return true;
                     }
 
-                    lock (_lockObj)
-                    {
-                        if (_isBusy)
-                        {
-                            _needRepeat = true;
-                            return;
-                        }
-
-                        _isBusy = true;
-                        _needRepeat = false;
-                    }
-
-                    DoSearch();
-
-                    while (true)
-                    {
-                        lock (_lockObj)
-                        {
-                            if (!_needRepeat)
-                            {
-                                _isBusy = false;
-                                return;
-                            }
-
-                            _needRepeat = false;
-                        }
-
-                        DoSearch();
-                    }
-                }
-                catch (Exception e)
-                {
-                    Error("9A9F4635-7A86-4074-9FD1-44E20C6D37FC", e);
+                    _needRun = false;
                 }
 
-                Logger.StopTask("40222224-12E4-4AE0-83CD-75E73B832996", taskId);
-            });
+                DoSearch();
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Error("678B221F-128D-498A-B391-6904072098AC", e);
+
+                throw;
+            }
         }
 
         private void DoSearch()

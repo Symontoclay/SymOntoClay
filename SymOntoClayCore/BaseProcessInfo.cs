@@ -271,7 +271,7 @@ namespace SymOntoClay.Core
             }
 
 #if DEBUG
-            logger.Info("D85A951B-E74F-42CA-B7AF-1C8E15677C49", $"onFinishHandlersList.Count = {onFinishHandlersList.Count}");
+            //logger.Info("D85A951B-E74F-42CA-B7AF-1C8E15677C49", $"onFinishHandlersList.Count = {onFinishHandlersList.Count}");
 #endif
 
             if(onFinishHandlersList.Any())
@@ -309,7 +309,7 @@ namespace SymOntoClay.Core
             }
 
 #if DEBUG
-            logger.Info("3758404B-0C33-4D48-BE14-0D123BA961C4", $"onCompleteHandlersList.Count = {onCompleteHandlersList.Count}");
+            //logger.Info("3758404B-0C33-4D48-BE14-0D123BA961C4", $"onCompleteHandlersList.Count = {onCompleteHandlersList.Count}");
 #endif
 
             if (onCompleteHandlersList.Any())
@@ -347,7 +347,7 @@ namespace SymOntoClay.Core
             }
 
 #if DEBUG
-            logger.Info("C77B12A1-0A22-41F5-BC6A-50A292DEB768", $"onWeakCanceledHandlersList.Count = {onWeakCanceledHandlersList.Count}");
+            //logger.Info("C77B12A1-0A22-41F5-BC6A-50A292DEB768", $"onWeakCanceledHandlersList.Count = {onWeakCanceledHandlersList.Count}");
 #endif
 
             if (onWeakCanceledHandlersList.Any())

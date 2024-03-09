@@ -275,20 +275,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 _stateActivators.Add(activatorInstance);
 
-                Task.Run(() => {//logged
-                    var taskId = logger.StartTask("E3FD063E-804D-488D-9382-1A1CD5324DD3");
-
-                    try
-                    {
-                        activatorInstance.Init(logger);
-                    }
-                    catch (Exception e)
-                    {
-                        logger.Error("A1DA97E0-2863-409E-8CAD-9813CE8EEBBE", e);
-                    }
-
-                    logger.StopTask("035D0452-E7F3-443F-922C-009B84713C04", taskId);
-                });
+                activatorInstance.Init(logger);
             }
         }
 

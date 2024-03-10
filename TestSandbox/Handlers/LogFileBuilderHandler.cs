@@ -59,7 +59,8 @@ namespace TestSandbox.Handlers
         private void Case13()
         {
             //RunLogFileBuilderProgramMain(@"--i %USERPROFILE%\AppData\Roaming\SymOntoClay\TestSandbox\NpcMonitorMessages\2024_02_23_10_16_48\ --o %USERPROFILE%\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\logs\ --target-nodeid #020ED339-6313-459A-900D-92F809CEBDC5 --html --abs-url");
-            RunLogFileBuilderProgramMain(@"--i c:\Users\Acer\AppData\Roaming\SymOntoClayAsset\NpcLogMessages\2024_03_08_15_38_18_improved_tasks\ --o c:\Users\Acer\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesLogsOutputDir\ --target-nodeid #BlueSoldier");// --html --abs-url
+            //RunLogFileBuilderProgramMain(@"--i c:\Users\Acer\AppData\Roaming\SymOntoClayAsset\NpcLogMessages\2024_03_10_13_58_31\ --o c:\Users\Acer\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesLogsOutputDir\ --target-nodeid #BlueSoldier --html --abs-url");
+            RunLogFileBuilderProgramMain(@"--i c:\Users\Acer\AppData\Roaming\SymOntoClayAsset\NpcLogMessages\2024_03_10_13_58_31\ --o c:\Users\Acer\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesLogsOutputDir\ --target-nodeid #DummyNPC --html --abs-url");
             //RunLogFileBuilderProgramMain(@"--i c:\Users\Acer\AppData\Roaming\SymOntoClay\TestSandbox\NpcMonitorMessages\2023_12_31_12_17_20\ --o c:\Users\Acer\source\repos\SymOntoClay\TestSandbox\bin\Debug\net7.0\MessagesLogsOutputDir\ --target-nodeid #020ED339-6313-459A-900D-92F809CEBDC5");
         }
 

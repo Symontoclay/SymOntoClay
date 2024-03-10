@@ -141,43 +141,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private void EmitOnChanged(IMonitorLogger logger, IList<StrongIdentifierValue> usedKeysList)
         {
-            Task.Run(() => {//logged
-                var taskId = logger.StartTask("B1D7819A-289D-4932-B1FC-5D0DFD358463");
-
-                try
-                {
-#if DEBUG
-                    logger.Info("7B5934E1-FBAD-43C0-8548-0663CFB85F41", $"OnChanged?.GetInvocationList().Length = {OnChanged?.GetInvocationList().Length}");
-#endif
-
-                    OnChanged?.Invoke();
-                }
-                catch (Exception e)
-                {
-                    logger.Error("6489EB1E-8E8B-4354-BC14-EA439E053431", e);
-                }
-
-                logger.StopTask("64F347CE-134B-4732-8CC8-C55845423D33", taskId);
-            });
-
-            Task.Run(() => {//logged
-                var taskId = logger.StartTask("238A2292-7015-46CE-A3B5-A3C0A2497DB1");
-
-                try
-                {
-#if DEBUG
-                    logger.Info("2603F573-8FC3-4AA0-A422-B9358979D470", $"OnChangedWithKeys?.GetInvocationList().Length = {OnChangedWithKeys?.GetInvocationList().Length}");
-#endif
-
-                    OnChangedWithKeys?.Invoke(usedKeysList);
-                }
-                catch (Exception e)
-                {
-                    logger.Error("EAEB1532-7C12-459C-85F6-F488CCC6F90C", e);
-                }
-
-                logger.StopTask("E872CC5E-435A-45EB-BA2B-D10CEBA10152", taskId);
-            });
+            OnChanged?.Invoke();
+            OnChangedWithKeys?.Invoke(usedKeysList);
         }
 
         private void LogicalStorage_OnChangedWithKeys(IList<StrongIdentifierValue> changedKeysList)

@@ -101,7 +101,7 @@ namespace TestSandbox
             //TstThreadPoolCount();
             //TstCommandLineParserHandler();
             //TstLogFileBuilderParameterValueConverterToString();
-            TstLogFileBuilder();
+            //TstLogFileBuilder();
             //TstMonitor();
             //TstCreateListByVarsDict();
             //TstDetectDoninantItems();
@@ -136,6 +136,7 @@ namespace TestSandbox
             //TstManageTempProject();
             //TstAdvancedTestRunnerForMultipleInstances();//<=~
             //TstAdvancedTestRunner();//<=
+            TstTestRunnerBehaviorTestEngineInstance();//$$$
             //TstTestRunnerWithHostListener();//<=t
             //TstTestRunner();//<=
             //TstNameHelper();
@@ -1139,6 +1140,32 @@ action Go
             Thread.Sleep(1000);
 
             _logger.Info("4715C87B-8AC4-4C59-AF96-37705E93BE41", "End");
+        }
+
+        private static void TstTestRunnerBehaviorTestEngineInstance()
+        {
+            _logger.Info("21E465F3-B8DD-4787-AF48-50C3D0C15D07", "Begin");
+
+            var text = @"
+import 'stdlib';
+
+app PeaceKeeper
+{
+	{: male(#Tom) o: 0.5 :}
+	{: parent(#Piter, #Tom) o: 0.5 :}
+	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
+
+	on Enter => {
+	    select {: son($x, $y)  o: middle :} >> @>log;
+	}
+}";
+
+            BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    _logger.Info("2012B98A-BB15-41A1-A267-95D3719CF28E", $"n = {n}; message = {message}");
+                });
+
+            _logger.Info("EFF4EB51-E83C-4FA6-96A9-811A72B430E4", "End");
         }
 
         private static void TstTestRunnerWithHostListener()

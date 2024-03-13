@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DictionaryGenerator\DictionaryGenerator.csproj" />
     <ProjectReference Include="..\SymOntoClay.CLI.Helpers\SymOntoClay.CLI.Helpers.csproj" />
+    <ProjectReference Include="..\SymOntoClay.Libs\SymOntoClay.Libs.csproj" />
     <ProjectReference Include="..\SymOntoClay.Monitor.Common.Data\SymOntoClay.Monitor.Common.Data.csproj" />
     <ProjectReference Include="..\SymOntoClay.Monitor.Common\SymOntoClay.Monitor.Common.csproj" />
     <ProjectReference Include="..\SymOntoClay.Monitor.LogFileBuilder\SymOntoClay.Monitor.LogFileBuilder.csproj" />

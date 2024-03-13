@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SymOntoClay.CLI.Helpers\SymOntoClay.CLI.Helpers.csproj" />
+    <ProjectReference Include="..\SymOntoClay.Libs\SymOntoClay.Libs.csproj" />
     <ProjectReference Include="..\SymOntoClay.Monitor.Common.Data\SymOntoClay.Monitor.Common.Data.csproj" />
     <ProjectReference Include="..\SymOntoClay.Monitor.Common\SymOntoClay.Monitor.Common.csproj" />
     <ProjectReference Include="..\SymOntoClay.Monitor\SymOntoClay.Monitor.csproj" />
@@ -28,21 +29,6 @@
     <ProjectReference Include="..\SymOntoClayUnityAssetCore\SymOntoClayUnityAssetCore.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="LibsForInstall\stdlib\LinguisticVariables.soc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="LibsForInstall\stdlib\Relations.soc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="LibsForInstall\stdlib\Rules.soc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="LibsForInstall\stdlib\stdlib.slib">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="LibsForInstall\stdlib\stdlib.soc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

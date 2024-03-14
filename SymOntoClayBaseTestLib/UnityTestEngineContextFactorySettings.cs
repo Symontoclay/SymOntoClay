@@ -49,7 +49,7 @@ namespace SymOntoClay.BaseTestLib
         public IList<string> DictsPaths { get; set; }
         public IList<IWordsDict> DictsList { get; set; }
         public bool UseDefaultNLPSettings { get; set; } = true;
-        public bool UseStandardLibrary { get; set; }
+        public KindOfUsingStandardLibrary UseStandardLibrary { get; set; } = KindOfUsingStandardLibrary.None;
 
         public List<string> Categories { get; set; }
         public bool EnableCategories { get; set; }

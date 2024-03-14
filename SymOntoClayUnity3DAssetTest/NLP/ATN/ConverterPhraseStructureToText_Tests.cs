@@ -47,7 +47,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests.NLP.ATN
             _logger = new EmptyLogger();
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.UseDefaultNLPSettings = false;
-            factorySettings.UseStandardLibrary = true;
+            factorySettings.UseStandardLibrary = KindOfUsingStandardLibrary.BuiltIn;
             _testEngineContext = UnityTestEngineContextFactory.CreateAndInitTestEngineContext(factorySettings);
             _engineContext = _testEngineContext.EngineContext;
             _wordsDict = DictionaryInstance.Instance;

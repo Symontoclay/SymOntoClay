@@ -62,7 +62,7 @@ namespace TestSandbox.Handlers
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.UseDefaultAppFiles = false;
             factorySettings.UseDefaultNLPSettings = false;
-            factorySettings.UseStandardLibrary = true;
+            factorySettings.UseStandardLibrary = KindOfUsingStandardLibrary.BuiltIn;
 
             _engineContext = UnityTestEngineContextFactory.CreateAndInitTestEngineContext(factorySettings).EngineContext;
 

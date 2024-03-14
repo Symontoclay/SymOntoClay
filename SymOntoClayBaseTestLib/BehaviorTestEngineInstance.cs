@@ -41,7 +41,17 @@ namespace SymOntoClay.BaseTestLib
         {
         }
 
+        public BehaviorTestEngineInstance(KindOfUsingStandardLibrary useStandardLibrary)
+            : this(AdvancedBehaviorTestEngineInstance.RoorDir, useStandardLibrary)
+        {
+        }
+
         private AdvancedBehaviorTestEngineInstance _internalInstance;
+
+        public BehaviorTestEngineInstance(string rootDir, KindOfUsingStandardLibrary useStandardLibrary)
+        {
+            _internalInstance = new AdvancedBehaviorTestEngineInstance(rootDir, useStandardLibrary);
+        }
 
         public BehaviorTestEngineInstance(string rootDir)
         {
@@ -58,9 +68,25 @@ namespace SymOntoClay.BaseTestLib
             _internalInstance.WriteFile(relativeFileName, fileContent);
         }
 
+        public static bool Run(string fileContent, Action<int, string> logChannel, KindOfUsingStandardLibrary useStandardLibrary, int timeoutToEnd = DefaultTimeoutToEnd)
+        {
+            return Run(fileContent, logChannel, useStandardLibrary, new object(), timeoutToEnd);
+        }
+
         public static bool Run(string fileContent, Action<int, string> logChannel, int timeoutToEnd = DefaultTimeoutToEnd)
         {
             return Run(fileContent, logChannel, new object(), timeoutToEnd);
+        }
+
+        public static bool Run(string fileContent, Action<int, string> logChannel, KindOfUsingStandardLibrary useStandardLibrary, object platformListener, int timeoutToEnd = DefaultTimeoutToEnd)
+        {
+            var n = 0;
+
+            return Run(fileContent,
+                message => { n++; logChannel(n, message); },
+                error => { throw new Exception(error); },
+                useStandardLibrary,
+                platformListener, timeoutToEnd);
         }
 
         public static bool Run(string fileContent, Action<int, string> logChannel, object platformListener, int timeoutToEnd = DefaultTimeoutToEnd)
@@ -73,6 +99,15 @@ namespace SymOntoClay.BaseTestLib
                 platformListener, timeoutToEnd);
         }
 
+        public static bool Run(string fileContent, Action<string> logChannel, KindOfUsingStandardLibrary useStandardLibrary, int timeoutToEnd = DefaultTimeoutToEnd)
+        {
+            return Run(fileContent,
+                message => { logChannel(message); },
+                error => { throw new Exception(error); },
+                useStandardLibrary,
+                timeoutToEnd);
+        }
+
         public static bool Run(string fileContent, Action<string> logChannel, int timeoutToEnd = DefaultTimeoutToEnd)
         {
             return Run(fileContent,
@@ -81,9 +116,32 @@ namespace SymOntoClay.BaseTestLib
                 timeoutToEnd);
         }
 
+        public static bool Run(string fileContent, Action<string> logChannel, Action<string> error, KindOfUsingStandardLibrary useStandardLibrary, int timeoutToEnd = DefaultTimeoutToEnd)
+        {
+            return Run(fileContent, logChannel, error, useStandardLibrary, new object(), timeoutToEnd);
+        }
+
         public static bool Run(string fileContent, Action<string> logChannel, Action<string> error, int timeoutToEnd = DefaultTimeoutToEnd)
         {
             return Run(fileContent, logChannel, error, new object(), timeoutToEnd);
+        }
+
+        public static bool Run(string fileContent, Action<string> logChannel, Action<string> error, KindOfUsingStandardLibrary useStandardLibrary, object platformListener, int timeoutToEnd = DefaultTimeoutToEnd)
+        {
+            if (string.IsNullOrWhiteSpace(fileContent))
+            {
+                throw new Exception("Argument 'fileContent' can not be null or empty!");
+            }
+
+            using (var behaviorTestEngineInstance = new BehaviorTestEngineInstance(useStandardLibrary))
+            {
+                behaviorTestEngineInstance.WriteFile(fileContent);
+
+                return behaviorTestEngineInstance.Run(timeoutToEnd,
+                    message => { logChannel(message); },
+                    errorMsg => { error(errorMsg); }, platformListener
+                    );
+            }
         }
 
         public static bool Run(string fileContent, Action<string> logChannel, Action<string> error, object platformListener, int timeoutToEnd = DefaultTimeoutToEnd)

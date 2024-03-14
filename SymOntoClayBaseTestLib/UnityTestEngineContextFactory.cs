@@ -101,22 +101,42 @@ namespace SymOntoClay.BaseTestLib
 
             settings.TmpDir = Path.Combine(supportBasePath, "TMP");
 
+            var useStandardLibrary = factorySettings.UseStandardLibrary;
+
 #if DEBUG
             _globalLogger.Info($"factorySettings.WorldFile = {factorySettings.WorldFile}");
-            _globalLogger.Info($"factorySettings.UseStandardLibrary = {factorySettings.UseStandardLibrary}");
+            _globalLogger.Info($"useStandardLibrary = {useStandardLibrary}");
 #endif
 
             if (string.IsNullOrWhiteSpace(factorySettings.WorldFile))
             {
-                if (factorySettings.UseStandardLibrary)
+                switch(useStandardLibrary)
                 {
-                    var assembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(p => p.GetName().Name == "SymOntoClay.BaseTestLib").Location;
+                    case KindOfUsingStandardLibrary.None:
+                        break;
 
-                    var assemblyPath = new FileInfo(assembly).DirectoryName;
+                    case KindOfUsingStandardLibrary.BuiltIn:
+                        {
+                            var assemblyPath = GetAssemblyPath();
 
-                    var builtInStandardLibraryDir = Path.Combine(assemblyPath, "LibsForInstall", "stdlib");
+                            var builtInStandardLibraryDir = Path.Combine(assemblyPath, "LibsForInstall", "stdlib");
 
-                    settings.BuiltInStandardLibraryDir = builtInStandardLibraryDir;
+                            settings.BuiltInStandardLibraryDir = builtInStandardLibraryDir;
+                        }
+                        break;
+
+                    case KindOfUsingStandardLibrary.Import:
+                        {
+                            var assemblyPath = GetAssemblyPath();
+
+                            var libsForInstallDir = Path.Combine(assemblyPath, "LibsForInstall");
+
+                            settings.LibsDirs = new List<string>() { libsForInstallDir };
+                        }
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(useStandardLibrary), useStandardLibrary, null);
                 }
             }
             else
@@ -154,28 +174,6 @@ namespace SymOntoClay.BaseTestLib
                     libsDirs.Add(targetFiles.SharedLibsDir);
                 }
 
-#if DEBUG
-                {
-                    _globalLogger.Info($"AppDomain.CurrentDomain.GetAssemblies().Select(p => p.GetName().Name) = {JsonConvert.SerializeObject(AppDomain.CurrentDomain.GetAssemblies().Select(p => p.GetName().Name), Formatting.Indented)}");
-
-                    var assembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(p => p.GetName().Name == "SymOntoClay.BaseTestLib").Location;
-
-                    var assemblyPath = new FileInfo(assembly).DirectoryName;
-
-#if DEBUG
-                    _globalLogger.Info($"assemblyPath = {assemblyPath}");
-#endif
-
-                    var libsForInstallDir = Path.Combine(assemblyPath, "LibsForInstall");
-
-#if DEBUG
-                    _globalLogger.Info($"libsForInstallDir = {libsForInstallDir}");
-#endif
-
-                    libsDirs.Add(libsForInstallDir);
-                }
-#endif
-
                 if (!string.IsNullOrWhiteSpace(targetFiles.LibsDir))
                 {
                     libsDirs.Add(targetFiles.LibsDir);
@@ -183,22 +181,46 @@ namespace SymOntoClay.BaseTestLib
 
                 settings.LibsDirs = libsDirs;
 
-                if (factorySettings.UseStandardLibrary)
+                switch (useStandardLibrary)
                 {
-                    if (string.IsNullOrWhiteSpace(targetFiles.SharedLibsDir))
-                    {
-                        var assembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(p => p.GetName().Name == "SymOntoClay.BaseTestLib").Location;
+                    case KindOfUsingStandardLibrary.None:
+                        break;
 
-                        var assemblyPath = new FileInfo(assembly).DirectoryName;
+                    case KindOfUsingStandardLibrary.BuiltIn:
+                        if (string.IsNullOrWhiteSpace(targetFiles.SharedLibsDir))
+                        {
+                            var assemblyPath = GetAssemblyPath();
 
-                        var builtInStandardLibraryDir = Path.Combine(assemblyPath, "LibsForInstall", "stdlib");
+                            var builtInStandardLibraryDir = Path.Combine(assemblyPath, "LibsForInstall", "stdlib");
 
-                        settings.BuiltInStandardLibraryDir = builtInStandardLibraryDir;
-                    }
-                    else
-                    {
-                        throw new NotImplementedException();
-                    }
+                            settings.BuiltInStandardLibraryDir = builtInStandardLibraryDir;
+                        }
+                        else
+                        {
+                            throw new NotImplementedException();
+                        }
+                        break;
+
+                    case KindOfUsingStandardLibrary.Import:
+                        {
+                            var assemblyPath = GetAssemblyPath();
+
+#if DEBUG
+                            _globalLogger.Info($"assemblyPath = {assemblyPath}");
+#endif
+
+                            var libsForInstallDir = Path.Combine(assemblyPath, "LibsForInstall");
+
+#if DEBUG
+                            _globalLogger.Info($"libsForInstallDir = {libsForInstallDir}");
+#endif
+
+                            libsDirs.Add(libsForInstallDir);
+                        }
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(useStandardLibrary), useStandardLibrary, null);
                 }
             }
 
@@ -253,6 +275,15 @@ namespace SymOntoClay.BaseTestLib
             settings.Monitor = new TestMonitor(monitorSettings);
 
             return settings;
+        }
+
+        private static string GetAssemblyPath()
+        {
+            var assembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(p => p.GetName().Name == "SymOntoClay.BaseTestLib").Location;
+
+            var assemblyPath = new FileInfo(assembly).DirectoryName;
+
+            return assemblyPath;
         }
 
         public static IWorld CreateWorld(UnityTestEngineContextFactorySettings factorySettings)

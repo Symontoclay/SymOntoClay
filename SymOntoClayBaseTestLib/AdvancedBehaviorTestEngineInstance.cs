@@ -55,25 +55,31 @@ namespace SymOntoClay.BaseTestLib
         {
         }
 
+        public AdvancedBehaviorTestEngineInstance(string rootDir, KindOfUsingStandardLibrary useStandardLibrary)
+            : this(rootDir, false, useStandardLibrary, null)
+        {
+        }
+
         public AdvancedBehaviorTestEngineInstance(bool enableNLP)
             : this(RoorDir, enableNLP)
         {
         }
 
         public AdvancedBehaviorTestEngineInstance(string rootDir, bool enableNLP)
-            : this(rootDir, enableNLP, null)
+            : this(rootDir, enableNLP, KindOfUsingStandardLibrary.None, null)
         {
         }
 
         public AdvancedBehaviorTestEngineInstance(AdvancedBehaviorTestEngineInstanceSettings? advancedBehaviorTestEngineInstanceSettings)
-            : this(RoorDir, false, advancedBehaviorTestEngineInstanceSettings)
+            : this(RoorDir, false, KindOfUsingStandardLibrary.None, advancedBehaviorTestEngineInstanceSettings)
         {
         }
 
-        public AdvancedBehaviorTestEngineInstance(string rootDir, bool enableNLP, AdvancedBehaviorTestEngineInstanceSettings? advancedBehaviorTestEngineInstanceSettings)
+        public AdvancedBehaviorTestEngineInstance(string rootDir, bool enableNLP, KindOfUsingStandardLibrary useStandardLibrary, AdvancedBehaviorTestEngineInstanceSettings? advancedBehaviorTestEngineInstanceSettings)
         {
             _advancedBehaviorTestEngineInstanceSettings = advancedBehaviorTestEngineInstanceSettings;
             _enableNLP = enableNLP;
+            _useStandardLibrary = useStandardLibrary;
             _testDir = UnityTestEngineContextFactory.CreateTestDir(rootDir);
 
             var worldSpaceCreationSettings = new WorldSpaceCreationSettings() { CreateOnlyWorldspace = true, ProjectName = _projectName };
@@ -143,6 +149,7 @@ namespace SymOntoClay.BaseTestLib
 
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.UseDefaultNLPSettings = _enableNLP;
+            factorySettings.UseStandardLibrary = _useStandardLibrary;
             factorySettings.BaseDir = _testDir;
             factorySettings.WorldFile = hostFile;
             factorySettings.PlatformLogger = callBackLogger;
@@ -321,6 +328,7 @@ namespace SymOntoClay.BaseTestLib
         private readonly string _projectName = "Example";
         private readonly string _testDir;
         private readonly bool _enableNLP;
+        private readonly KindOfUsingStandardLibrary _useStandardLibrary = KindOfUsingStandardLibrary.None;
         private readonly string _wSpaceDir;
         private IWorld _world;
         private readonly AdvancedBehaviorTestEngineInstanceSettings? _advancedBehaviorTestEngineInstanceSettings;

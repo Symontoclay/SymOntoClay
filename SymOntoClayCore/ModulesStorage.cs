@@ -222,6 +222,10 @@ namespace SymOntoClay.Core
 
             foreach (var baseDirName in _libDirs)
             {
+#if DEBUG
+                logger.Info("B0131E49-D850-4F6B-AA35-8159CF70811C", $"baseDirName = {baseDirName}");
+#endif
+
                 var subDirectories = Directory.EnumerateDirectories(baseDirName);
 
                 foreach(var subDirectory in subDirectories)

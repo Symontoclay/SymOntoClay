@@ -45,11 +45,16 @@ using SymOntoClay.NLP.CommonDict;
 using SymOntoClay.ProjectFiles;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.BaseTestLib.Monitoring;
+using Newtonsoft.Json;
 
 namespace SymOntoClay.BaseTestLib
 {
     public static class UnityTestEngineContextFactory
     {
+#if DEBUG
+        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+#endif
+
         public static string CreateRootDir()
         {
             var rootDir = Path.Combine(Environment.GetEnvironmentVariable("TMP"), $"TstTempProjects_{Guid.NewGuid().ToString("D").Replace("-", string.Empty)}");
@@ -96,6 +101,11 @@ namespace SymOntoClay.BaseTestLib
 
             settings.TmpDir = Path.Combine(supportBasePath, "TMP");
 
+#if DEBUG
+            _globalLogger.Info($"factorySettings.WorldFile = {factorySettings.WorldFile}");
+            _globalLogger.Info($"factorySettings.UseStandardLibrary = {factorySettings.UseStandardLibrary}");
+#endif
+
             if (string.IsNullOrWhiteSpace(factorySettings.WorldFile))
             {
                 if (factorySettings.UseStandardLibrary)
@@ -130,10 +140,41 @@ namespace SymOntoClay.BaseTestLib
 
                 var libsDirs = new List<string>();
 
+#if DEBUG
+                _globalLogger.Info($"targetFiles.SharedLibsDir = {targetFiles.SharedLibsDir}");
+#endif
+
                 if (!string.IsNullOrWhiteSpace(targetFiles.SharedLibsDir))
                 {
+#if DEBUG
+                    _globalLogger.Info($"Directory.Exists(targetFiles.SharedLibsDir) = {Directory.Exists(targetFiles.SharedLibsDir)}");
+                    _globalLogger.Info($"Directory.GetDirectories(targetFiles.SharedLibsDir) = {JsonConvert.SerializeObject(Directory.GetDirectories(targetFiles.SharedLibsDir), Formatting.Indented)}");
+#endif
+
                     libsDirs.Add(targetFiles.SharedLibsDir);
                 }
+
+#if DEBUG
+                {
+                    _globalLogger.Info($"AppDomain.CurrentDomain.GetAssemblies().Select(p => p.GetName().Name) = {JsonConvert.SerializeObject(AppDomain.CurrentDomain.GetAssemblies().Select(p => p.GetName().Name), Formatting.Indented)}");
+
+                    var assembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(p => p.GetName().Name == "SymOntoClay.BaseTestLib").Location;
+
+                    var assemblyPath = new FileInfo(assembly).DirectoryName;
+
+#if DEBUG
+                    _globalLogger.Info($"assemblyPath = {assemblyPath}");
+#endif
+
+                    var libsForInstallDir = Path.Combine(assemblyPath, "LibsForInstall");
+
+#if DEBUG
+                    _globalLogger.Info($"libsForInstallDir = {libsForInstallDir}");
+#endif
+
+                    libsDirs.Add(libsForInstallDir);
+                }
+#endif
 
                 if (!string.IsNullOrWhiteSpace(targetFiles.LibsDir))
                 {

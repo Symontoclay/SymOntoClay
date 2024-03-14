@@ -1146,11 +1146,10 @@ action Go
         {
             _logger.Info("21E465F3-B8DD-4787-AF48-50C3D0C15D07", "Begin");
 
-            var text = @"
-import 'stdlib';
-
-app PeaceKeeper
+            var text = @"app PeaceKeeper
 {
+    import 'stdlib';
+
 	{: male(#Tom) o: 0.5 :}
 	{: parent(#Piter, #Tom) o: 0.5 :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}

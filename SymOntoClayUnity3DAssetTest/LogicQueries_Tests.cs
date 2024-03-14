@@ -152,7 +152,9 @@ app PeaceKeeper
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message.Contains("<no>"), true);
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$x = #tom"), true);
                             break;
 
                         default:

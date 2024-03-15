@@ -138,6 +138,8 @@ app PeaceKeeper
         {
             var text = @"app PeaceKeeper
 {
+    import 'stdlib';
+
 	{: male(#Tom) :}
 	{: parent(#Piter, #Tom) :}
 	
@@ -146,7 +148,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(true, BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -160,7 +162,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }, KindOfUsingStandardLibrary.Import));
         }
 
         [Test]
@@ -2671,6 +2673,8 @@ app PeaceKeeper
         {
             var text = @"app PeaceKeeper
 {
+    import 'stdlib';
+
 	{: male(#Tom) o: middle :}
 	{: parent(#Piter, #Tom) o: middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
@@ -2680,7 +2684,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(true, BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2694,7 +2698,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }, KindOfUsingStandardLibrary.Import));
         }
 
         [Test]
@@ -2703,6 +2707,8 @@ app PeaceKeeper
         {
             var text = @"app PeaceKeeper
 {
+    import 'stdlib';
+
 	{: male(#Tom) o: 0.5 :}
 	{: parent(#Piter, #Tom) o: 0.5 :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
@@ -2712,7 +2718,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(true, BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -2726,7 +2732,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }, KindOfUsingStandardLibrary.Import));
         }
 
         [Test]
@@ -2735,6 +2741,8 @@ app PeaceKeeper
         {
             var text = @"app PeaceKeeper
 {
+    import 'stdlib';
+
 	{: male(#Tom) o: 0.5 :}
 	{: parent(#Piter, #Tom) o: 0.5 :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
@@ -2758,7 +2766,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }, KindOfUsingStandardLibrary.Import), true);
         }
 
         [Test]
@@ -2767,7 +2775,9 @@ app PeaceKeeper
         {
             var text = @"app PeaceKeeper
 {
-	{: male(#Tom) o: very middle :}
+    import 'stdlib';
+
+ 	{: male(#Tom) o: very middle :}
 	{: parent(#Piter, #Tom) o: very middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
@@ -2790,7 +2800,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }, KindOfUsingStandardLibrary.Import), true);
         }
 
         [Test]
@@ -2799,6 +2809,8 @@ app PeaceKeeper
         {
             var text = @"app PeaceKeeper
 {
+    import 'stdlib';
+
 	{: male(#Tom) o: very middle :}
 	{: parent(#Piter, #Tom) o: very middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
@@ -2822,7 +2834,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }, KindOfUsingStandardLibrary.Import), true);
         }
 
         [Test]
@@ -2861,6 +2873,8 @@ app PeaceKeeper
         {
             var text = @"app PeaceKeeper
 {
+    import 'stdlib';
+
 	{: male(#Tom) o: very middle :}
 	{: parent(#Piter, #Tom) o: very middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
@@ -2884,7 +2898,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }, KindOfUsingStandardLibrary.Import), true);
         }
 
         [Test]
@@ -2893,6 +2907,8 @@ app PeaceKeeper
         {
             var text = @"app PeaceKeeper
 {
+    import 'stdlib';
+
 	{: male(#Tom) o: very middle :}
 	{: parent(#Piter, #Tom) o: very middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
@@ -2916,7 +2932,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }, KindOfUsingStandardLibrary.Import), true);
         }
 
         [Test]
@@ -2957,6 +2973,8 @@ app PeaceKeeper
         {
             var text = @"app PeaceKeeper
 {
+    import 'stdlib';
+
 	{: male(#Tom) o: very middle :}
 	{: parent(#Piter, #Tom) o: very middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
@@ -2978,7 +2996,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }, KindOfUsingStandardLibrary.Import), true);
         }
 
         [Test]
@@ -3019,6 +3037,8 @@ app PeaceKeeper
         {
             var text = @"app PeaceKeeper
 {
+    import 'stdlib';
+
 	{: male(#Tom) o: very middle :}
 	{: parent(#Piter, #Tom) o: very middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
@@ -3042,7 +3062,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }, KindOfUsingStandardLibrary.Import), true);
         }
 
         [Test]
@@ -3051,6 +3071,8 @@ app PeaceKeeper
         {
             var text = @"app PeaceKeeper
 {
+    import 'stdlib';
+
 	{: male(#Tom) o: very middle :}
 	{: parent(#Piter, #Tom) o: very middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
@@ -3074,7 +3096,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }, KindOfUsingStandardLibrary.Import), true);
         }
 
         [Test]
@@ -3083,6 +3105,8 @@ app PeaceKeeper
         {
             var text = @"app PeaceKeeper
 {
+    import 'stdlib';
+
 	{: male(#Tom) o: very middle :}
 	{: parent(#Piter, #Tom) o: very middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
@@ -3106,7 +3130,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }), true);
+                }, KindOfUsingStandardLibrary.Import), true);
         }
 
         [Test]

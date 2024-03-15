@@ -1150,8 +1150,8 @@ action Go
 {
     import 'stdlib';
 
-	{: male(#Tom) o: 0.5 :}
-	{: parent(#Piter, #Tom) o: 0.5 :}
+	{: male(#Tom) o: middle :}
+	{: parent(#Piter, #Tom) o: middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {

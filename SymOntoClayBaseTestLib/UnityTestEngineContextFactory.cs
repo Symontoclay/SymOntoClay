@@ -52,7 +52,7 @@ namespace SymOntoClay.BaseTestLib
     public static class UnityTestEngineContextFactory
     {
 #if DEBUG
-        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+        //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
         public static string CreateRootDir()
@@ -104,8 +104,8 @@ namespace SymOntoClay.BaseTestLib
             var useStandardLibrary = factorySettings.UseStandardLibrary;
 
 #if DEBUG
-            _globalLogger.Info($"factorySettings.WorldFile = {factorySettings.WorldFile}");
-            _globalLogger.Info($"useStandardLibrary = {useStandardLibrary}");
+            //_globalLogger.Info($"factorySettings.WorldFile = {factorySettings.WorldFile}");
+            //_globalLogger.Info($"useStandardLibrary = {useStandardLibrary}");
 #endif
 
             if (string.IsNullOrWhiteSpace(factorySettings.WorldFile))
@@ -161,14 +161,14 @@ namespace SymOntoClay.BaseTestLib
                 var libsDirs = new List<string>();
 
 #if DEBUG
-                _globalLogger.Info($"targetFiles.SharedLibsDir = {targetFiles.SharedLibsDir}");
+                //_globalLogger.Info($"targetFiles.SharedLibsDir = {targetFiles.SharedLibsDir}");
 #endif
 
                 if (!string.IsNullOrWhiteSpace(targetFiles.SharedLibsDir))
                 {
 #if DEBUG
-                    _globalLogger.Info($"Directory.Exists(targetFiles.SharedLibsDir) = {Directory.Exists(targetFiles.SharedLibsDir)}");
-                    _globalLogger.Info($"Directory.GetDirectories(targetFiles.SharedLibsDir) = {JsonConvert.SerializeObject(Directory.GetDirectories(targetFiles.SharedLibsDir), Formatting.Indented)}");
+                    //_globalLogger.Info($"Directory.Exists(targetFiles.SharedLibsDir) = {Directory.Exists(targetFiles.SharedLibsDir)}");
+                    //_globalLogger.Info($"Directory.GetDirectories(targetFiles.SharedLibsDir) = {JsonConvert.SerializeObject(Directory.GetDirectories(targetFiles.SharedLibsDir), Formatting.Indented)}");
 #endif
 
                     libsDirs.Add(targetFiles.SharedLibsDir);
@@ -187,7 +187,11 @@ namespace SymOntoClay.BaseTestLib
                         break;
 
                     case KindOfUsingStandardLibrary.BuiltIn:
-                        if (string.IsNullOrWhiteSpace(targetFiles.SharedLibsDir))
+                        if (AlreadyContainsStdLib(targetFiles.SharedLibsDir))
+                        {
+                            break;
+                        }
+
                         {
                             var assemblyPath = GetAssemblyPath();
 
@@ -195,27 +199,33 @@ namespace SymOntoClay.BaseTestLib
 
                             settings.BuiltInStandardLibraryDir = builtInStandardLibraryDir;
                         }
-                        else
-                        {
-                            throw new NotImplementedException();
-                        }
                         break;
 
                     case KindOfUsingStandardLibrary.Import:
+                        if(AlreadyContainsStdLib(targetFiles.SharedLibsDir))
+                        {
+                            break;
+                        }
+
                         {
                             var assemblyPath = GetAssemblyPath();
 
 #if DEBUG
-                            _globalLogger.Info($"assemblyPath = {assemblyPath}");
+                            //_globalLogger.Info($"assemblyPath = {assemblyPath}");
 #endif
 
                             var libsForInstallDir = Path.Combine(assemblyPath, "LibsForInstall");
 
 #if DEBUG
-                            _globalLogger.Info($"libsForInstallDir = {libsForInstallDir}");
+                            //_globalLogger.Info($"libsForInstallDir = {libsForInstallDir}");
 #endif
 
                             libsDirs.Add(libsForInstallDir);
+
+#if DEBUG
+                            //_globalLogger.Info($"Directory.Exists(libsForInstallDir) = {Directory.Exists(libsForInstallDir)}");
+                            //_globalLogger.Info($"Directory.GetDirectories(libsForInstallDir) = {JsonConvert.SerializeObject(Directory.GetDirectories(libsForInstallDir), Formatting.Indented)}");
+#endif
                         }
                         break;
 
@@ -275,6 +285,28 @@ namespace SymOntoClay.BaseTestLib
             settings.Monitor = new TestMonitor(monitorSettings);
 
             return settings;
+        }
+
+        private static bool AlreadyContainsStdLib(string sharedLibsDir)
+        {
+            if(string.IsNullOrWhiteSpace(sharedLibsDir))
+            {
+                return false;
+            }
+
+            if(!Directory.Exists(sharedLibsDir))
+            {
+                return false;
+            }
+
+            var subdirs = Directory.GetDirectories(sharedLibsDir);
+
+            if(subdirs.Length == 0)
+            {
+                return false;
+            }
+
+            return subdirs.Any(p => p.EndsWith(@"\stdlib") || p.EndsWith("/stdlib"));
         }
 
         private static string GetAssemblyPath()

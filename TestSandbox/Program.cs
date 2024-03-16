@@ -1148,15 +1148,44 @@ action Go
 
             var text = @"app PeaceKeeper
 {
-    import 'stdlib';
+    fun a(@param_1) =>
+    {
+        '`a` has been called!' >> @>log;
+        @param_1 >> @>log;
 
-	{: male(#Tom) o: middle :}
-	{: parent(#Piter, #Tom) o: middle :}
-	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
+        error {: see(I, #a) :};
 
-	on Enter => {
-	    select {: son($x, $y)  o: middle :} >> @>log;
-	}
+        'End of `a`' >> @>log;
+    }
+
+    on Enter =>
+    {
+        try
+        {
+            'Begin' >> @>log;
+            a(param_1: 1);
+            'End' >> @>log;        
+        }
+        catch
+        {
+            'catch' >> @>log;
+        }
+        catch(@e)
+        {
+            'catch(@e)' >> @>log;
+            @e >> @>log;
+        }
+        else
+        {
+            'else' >> @>log;
+        }
+        ensure
+        {
+            'ensure' >> @>log;
+        }
+
+        'End of `Enter`' >> @>log;
+    }
 }";
 
             BehaviorTestEngineInstance.Run(text,

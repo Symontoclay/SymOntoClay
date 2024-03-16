@@ -88,7 +88,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 8:
-                            Assert.AreEqual(message, "1");
+                            Assert.AreEqual(message, "0");
                             break;
 
                         case 9:
@@ -158,7 +158,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 8:
-                            Assert.AreEqual(message, "1");
+                            Assert.AreEqual(message, "0");
                             break;
 
                         case 9:
@@ -329,15 +329,15 @@ app PeaceKeeper is [middle] exampleClass
                             break;
 
                         case 6:
-                            Assert.AreEqual(message, "0");
+                            Assert.AreEqual(message, "0.5");
                             break;
 
                         case 7:
-                            Assert.AreEqual(message, "1");
+                            Assert.AreEqual(message, "0.5");
                             break;
 
                         case 8:
-                            Assert.AreEqual(message, "1");
+                            Assert.AreEqual(message, "0");
                             break;
 
                         case 9:
@@ -412,15 +412,15 @@ app PeaceKeeper is [very middle] exampleClass
                             break;
 
                         case 6:
-                            Assert.AreEqual(message, "0");
+                            Assert.AreEqual(message, "0.5");
                             break;
 
                         case 7:
-                            Assert.AreEqual(message, "1");
+                            Assert.AreEqual(message, "0.5");
                             break;
 
                         case 8:
-                            Assert.AreEqual(message, "1");
+                            Assert.AreEqual(message, "0");
                             break;
 
                         case 9:

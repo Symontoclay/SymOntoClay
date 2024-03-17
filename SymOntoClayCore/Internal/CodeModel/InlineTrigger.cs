@@ -36,6 +36,7 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.NLog;
+using NLog;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
@@ -325,6 +326,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 case KindOfInlineTrigger.LogicConditional:
                     return LogicConditionalToHumanizedLabel(options);
 
+                case KindOfInlineTrigger.AddFact:
+                    return AddFactToHumanizedLabel(options);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(KindOfInlineTrigger), KindOfInlineTrigger, null);
             }
@@ -427,6 +431,31 @@ namespace SymOntoClay.Core.Internal.CodeModel
             {
                 sb.Append($" with priority {Priority.ToHumanizedLabel(options)}");
             }
+
+            return sb.ToString();
+        }
+
+        private string AddFactToHumanizedLabel(DebugHelperOptions options)
+        {
+#if DEBUG
+            //_logger.Info("F8DFA6FF-7369-4BF7-9E1C-BA64F2CC6297", $"ToString() = {ToString()}");
+#endif
+
+            var sb = new StringBuilder("on add fact");
+
+            if (SetBindingVariables != null)
+            {
+                var str = SetBindingVariables.ToHumanizedLabel(options);
+
+                if (!string.IsNullOrWhiteSpace(str))
+                {
+                    sb.Append($" {str}");
+                }
+            }
+
+#if DEBUG
+            //_logger.Info("F8DFA6FF-7369-4BF7-9E1C-BA64F2CC6297", $"sb = {sb}");
+#endif
 
             return sb.ToString();
         }

@@ -136,8 +136,9 @@ namespace TestSandbox
             //TstManageTempProject();
             //TstAdvancedTestRunnerForMultipleInstances();//<=~
             //TstAdvancedTestRunner();//<=
+            //TstAdvancedTestRunnerWithListenedFact();
             //TstTestRunnerBehaviorTestEngineInstance();//$$$
-            TstTestRunnerWithHostListener();//<=t
+            //TstTestRunnerWithHostListener();//<=t
             //TstTestRunner();//<=
             //TstNameHelper();
             //TstDeffuzzification();
@@ -178,7 +179,7 @@ namespace TestSandbox
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            //TstGeneralStartHandler();//<=
+            TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -1140,6 +1141,46 @@ action Go
             Thread.Sleep(1000);
 
             _logger.Info("4715C87B-8AC4-4C59-AF96-37705E93BE41", "End");
+        }
+
+        private static void TstAdvancedTestRunnerWithListenedFact()
+        {
+            _logger.Info("D39975E6-C099-4D3D-AE51-2BA422E95729", "Begin");
+
+            var instance = new AdvancedBehaviorTestEngineInstance();
+
+            var text = @"app PeaceKeeper
+{
+    {: gun(M16) :}
+
+	on add fact ($_ >> @x)
+	{
+	    'on add fact ($_ >> @x)' >> @>log;
+	    @x >> @>log;
+	}
+
+	on {: hear(I, $x) & gun($x) & distance(I, $x, $y) :} ($x >> @x, $y >> @y)
+    {
+        @x >> @>log;
+        @y >> @>log;
+        '!!!M16!!!!' >> @>log;
+    }
+}";
+
+            instance.WriteFile(text);
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                _logger.Info("516DBCA1-4C49-4152-960A-3FDF98A27BC8", $"n = {n}; message = {message}");
+            });
+
+            Thread.Sleep(1000);
+
+            var factStr = "{: $x = {: act(M16, shoot) :} & hear(I, $x) & distance(I, $x, 15.588457107543945) & direction($x, 12) & point($x, #@[15.588457107543945, 12]) :}";
+            npc.EngineContext.Storage.InsertListenedFact(null, factStr);
+
+            Thread.Sleep(1000);
+
+            _logger.Info("C90E98B6-CFD1-4F25-91D3-C959BD472060", "End");
         }
 
         private static void TstTestRunnerBehaviorTestEngineInstance()

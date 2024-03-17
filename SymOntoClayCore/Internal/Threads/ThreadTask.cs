@@ -109,6 +109,9 @@ namespace SymOntoClay.Core.Internal.Threads
             }
         }
 
+        /// <summary>
+        /// Starts the <see cref="ThreadTask"/>.
+        /// </summary>
         public void Start()
         {
             lock(_lockObj)
@@ -131,9 +134,12 @@ namespace SymOntoClay.Core.Internal.Threads
             _thread.Start();
         }
 
+        /// <summary>
+        /// Waits for the <see cref="ThreadTask"/> to complete execution.
+        /// </summary>
         public void Wait()
         {
-            throw new NotImplementedException();
+            _thread?.Join();
         }
 
         public event Action OnStarted;

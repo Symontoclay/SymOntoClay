@@ -136,8 +136,8 @@ namespace TestSandbox
             //TstManageTempProject();
             //TstAdvancedTestRunnerForMultipleInstances();//<=~
             //TstAdvancedTestRunner();//<=
-            TstTestRunnerBehaviorTestEngineInstance();//$$$
-            //TstTestRunnerWithHostListener();//<=t
+            //TstTestRunnerBehaviorTestEngineInstance();//$$$
+            TstTestRunnerWithHostListener();//<=t
             //TstTestRunner();//<=
             //TstNameHelper();
             //TstDeffuzzification();
@@ -1202,15 +1202,16 @@ action Go
 
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
-        @@host.`rotate`(#@(gun));
+        @@host.`rotate`(30)[:on complete { 'on complete' >> @>log; } :];
         'End' >> @>log;
     }
 }";
 
-            var hostListener = new HostMethods_Tests_HostListener();
+            //var hostListener = new HostMethods_Tests_HostListener();
+            var hostListener = new FullGeneralized_Tests_HostListener();
 
             BehaviorTestEngineInstance.Run(text,
                 (n, message) => {

@@ -39,13 +39,13 @@ namespace SymOntoClay.BaseTestLib.HostListeners
             [EndpointParam("To", KindOfEndpointParam.Position)] INavTarget navTarget,
             float speed = 12)
         {
-            logger.Info("D0B89970-6652-453E-A51E-765EB7FF7762", $"GoToImpl Begin");
-            logger.Info("A41F05F0-2C5A-45B3-ACB2-146F4D4D35CB", navTarget.Kind.ToString());
+            logger.Output("D0B89970-6652-453E-A51E-765EB7FF7762", $"GoToImpl Begin");
+            logger.Output("A41F05F0-2C5A-45B3-ACB2-146F4D4D35CB", navTarget.Kind.ToString());
             var entity = navTarget.Entity;
-            logger.Info("8DB4669E-0D54-4536-A544-5E8E0BA28BA4", entity.InstanceId.ToString());
-            logger.Info("498ED940-F675-4AC3-99C4-BEE8134F4929", entity.Id);
-            logger.Info("785435A4-1581-4382-9A8F-5EC9DB9ED9FE", entity.Position.ToString());
-            logger.Info("2DA83A73-CC23-4D67-B489-478DA0EDEF34", $"GoToImpl End");
+            logger.Output("8DB4669E-0D54-4536-A544-5E8E0BA28BA4", entity.InstanceId.ToString());
+            logger.Output("498ED940-F675-4AC3-99C4-BEE8134F4929", entity.Id);
+            logger.Output("785435A4-1581-4382-9A8F-5EC9DB9ED9FE", entity.Position.ToString());
+            logger.Output("2DA83A73-CC23-4D67-B489-478DA0EDEF34", $"GoToImpl End");
         }
     }
 }

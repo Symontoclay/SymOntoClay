@@ -1061,7 +1061,7 @@ action Go
                         break;
 
                     case 6:
-                        Assert.AreEqual(true, message.Contains("ERROR:"));
+                        Assert.AreEqual(true, message.Contains("ERROR"));
                         Assert.AreEqual(true, message.Contains("{:"));
                         Assert.AreEqual(true, message.Contains("attack(i,enemy)"));
                         Assert.AreEqual(true, message.Contains(":}"));

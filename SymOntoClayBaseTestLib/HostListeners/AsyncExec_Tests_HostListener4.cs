@@ -50,16 +50,16 @@ namespace SymOntoClay.BaseTestLib.HostListeners
             [EndpointParam("To", KindOfEndpointParam.Position)] INavTarget navTarget,
             float speed = 12)
         {
-            logger.Info("B94C216F-4175-4EB1-9350-6B12E98A2E5E", $"GoToImpl Begin");
-            logger.Info("524B99F0-B4C8-4E58-AEB2-AE1BC0802C5C", navTarget.Kind.ToString());
+            logger.Output("B94C216F-4175-4EB1-9350-6B12E98A2E5E", $"GoToImpl Begin");
+            logger.Output("524B99F0-B4C8-4E58-AEB2-AE1BC0802C5C", navTarget.Kind.ToString());
             var entity = navTarget.Entity;
-            logger.Info("1F72AAAB-1C46-4C41-8CCA-E9321D269885", entity.InstanceId.ToString());
-            logger.Info("CB89278E-8427-4979-840F-ED8F1B676279", entity.Id);
-            logger.Info("34637740-A848-41E8-A445-DB51CAB2FDED", entity.Position.ToString());
+            logger.Output("1F72AAAB-1C46-4C41-8CCA-E9321D269885", entity.InstanceId.ToString());
+            logger.Output("CB89278E-8427-4979-840F-ED8F1B676279", entity.Id);
+            logger.Output("34637740-A848-41E8-A445-DB51CAB2FDED", entity.Position.ToString());
 
             await SomeMethod(cancellationToken);
 
-            logger.Info("2A2734D1-BB06-4B8E-B59F-BE37318A8751", $"GoToImpl End");
+            logger.Output("2A2734D1-BB06-4B8E-B59F-BE37318A8751", $"GoToImpl End");
         }
 
         private Task SomeMethod(CancellationToken cancellationToken)

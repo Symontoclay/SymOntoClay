@@ -135,7 +135,7 @@ namespace TestSandbox
             //TstLinguisticVariable_Tests();
             //TstManageTempProject();
             //TstAdvancedTestRunnerForMultipleInstances();//<=~
-            //TstAdvancedTestRunner();//<=
+            TstAdvancedTestRunner();//<=
             //TstAdvancedTestRunnerWithListenedFact();
             //TstTestRunnerBehaviorTestEngineInstance();//$$$
             //TstTestRunnerWithHostListener();//<=t
@@ -179,7 +179,7 @@ namespace TestSandbox
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -1104,7 +1104,7 @@ app PeaceKeeper is [very middle] exampleClass
 
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    on Enter =>
     {
         'Begin' >> @>log;
  
@@ -1114,17 +1114,44 @@ app PeaceKeeper is [very middle] exampleClass
     }
 }
 
-action Go 
+action Go
 {
-    on Init =>
-    {
-        'Init Go' >> @>log;
-    }
-
     op () => 
     {
         'Begin Go' >> @>log;
+		Run()[: on complete { 'on complete Run' >> @>log; complete action;} :];
+		'After Run' >> @>log;
+        await;
         'End Go' >> @>log;
+    }
+}
+
+action Run
+{
+    op () => 
+    {
+        'Begin Run' >> @>log;
+		Swim()[: on complete { 'on complete Swim' >> @>log; complete action;} :];
+		'After Swim' >> @>log;
+        await;
+        'End Run' >> @>log;
+    }
+}
+
+action Swim
+{
+    op () => 
+    {
+        'Begin Swim' >> @>log;
+        await;
+        'End Swim' >> @>log;
+    }
+
+	on {: see(I, $x) :} ($x >> @x) => 
+    {
+        'on Fired' >> @>log;
+        @x >> @>log;
+        complete action;
     }
 }";
 

@@ -1677,6 +1677,8 @@ action kill
         [Parallelizable]
         public void Case9()
         {
+            using var instance = new AdvancedBehaviorTestEngineInstance();
+
             var text = @"app PeaceKeeper
 {
     on Enter =>
@@ -1730,7 +1732,57 @@ action Swim
     }
 }";
 
-            throw new NotImplementedException();
+            instance.WriteFile(text);
+
+            var npc = instance.CreateAndStartNPC((n, message) => {
+                switch (n)
+                {
+                    case 1:
+                        Assert.AreEqual("Begin", message);
+                        break;
+
+                    case 2:
+                        Assert.AreEqual("Begin Go", message);
+                        break;
+
+                    case 3:
+                        Assert.AreEqual("Begin Run", message);
+                        break;
+
+                    case 4:
+                        Assert.AreEqual("Begin Swim", message);
+                        break;
+
+                    case 5:
+                        Assert.AreEqual("on Fired", message);
+                        break;
+
+                    case 6:
+                        Assert.AreEqual("#a", message);
+                        break;
+
+                    case 7:
+                        Assert.AreEqual("on complete Swim", message);
+                        break;
+
+                    case 8:
+                        Assert.AreEqual("on complete Run", message);
+                        break;
+
+                    case 9:
+                        Assert.AreEqual("End", message);
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                }
+            });
+
+            Thread.Sleep(1000);
+
+            npc.InsertFact(null, "{: see(I, #a) :}");
+
+            Thread.Sleep(1000);
         }
     }
 }

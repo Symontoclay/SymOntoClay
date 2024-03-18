@@ -1103,55 +1103,16 @@ app PeaceKeeper is [very middle] exampleClass
             var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"app PeaceKeeper
-{
-    on Enter =>
+{ 
+    on {: see(I, #a) :} =>
     {
-        'Begin' >> @>log;
- 
-        Go();
-
-        'End' >> @>log;
-    }
-}
-
-action Go
-{
-    op () => 
-    {
-        'Begin Go' >> @>log;
-		Run()[: on complete { 'on complete Run' >> @>log; complete action;} :];
-		'After Run' >> @>log;
-        await;
-        'End Go' >> @>log;
-    }
-}
-
-action Run
-{
-    op () => 
-    {
-        'Begin Run' >> @>log;
-		Swim()[: on complete { 'on complete Swim' >> @>log; complete action;} :];
-		'After Swim' >> @>log;
-        await;
-        'End Run' >> @>log;
-    }
-}
-
-action Swim
-{
-    op () => 
-    {
-        'Begin Swim' >> @>log;
-        await;
-        'End Swim' >> @>log;
+        'on Fired in App' >> @>log;
     }
 
-	on {: see(I, $x) :} ($x >> @x) => 
+    on {: see(I, $x) :} ($x >> @x) => 
     {
-        'on Fired' >> @>log;
+        'on Fired $x in App' >> @>log;
         @x >> @>log;
-        complete action;
     }
 }";
 

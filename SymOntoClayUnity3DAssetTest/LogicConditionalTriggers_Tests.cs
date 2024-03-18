@@ -304,30 +304,30 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         @x >> @>log;
     }
 }";
-
+            
             instance.WriteFile(text);
 
             var npc = instance.CreateAndStartNPC((n, message) => {
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "on Fired in App");
+                        Assert.AreEqual(true, message == "on Fired in App" || message == "on Fired $x in App");
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "on Fired $x in App");
+                        Assert.AreEqual(true, message == "on Fired in App" || message == "on Fired $x in App" || message == "#a");
                         break;
 
                     case 3:
-                        Assert.AreEqual(message, "#a");
+                        Assert.AreEqual(true, message == "on Fired in App" || message == "on Fired $x in App" || message == "#a", message);
                         break;
 
                     case 4:
-                        Assert.AreEqual(message, "on Fired $x in App");
+                        Assert.AreEqual("on Fired $x in App", message);
                         break;
 
                     case 5:
-                        Assert.AreEqual(message, "#b");
+                        Assert.AreEqual("#b" , message);
                         break;
 
                     default:

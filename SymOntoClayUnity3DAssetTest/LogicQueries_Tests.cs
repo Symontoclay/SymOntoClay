@@ -3658,8 +3658,6 @@ app PeaceKeeper
         {
             var text = @"app PeaceKeeper
 {
-    import 'stdlib';
-
 	{: female(#Mary) :}
 	{: male(#Tom) :}
 	{: male(#Mark) :}
@@ -3672,7 +3670,7 @@ app PeaceKeeper
 	}
 }";
 
-            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+            Assert.AreEqual(true, BehaviorTestEngineInstance.Run(text,
                 (n, message) =>
                 {
                     switch (n)
@@ -3685,7 +3683,7 @@ app PeaceKeeper
                         default:
                             throw new ArgumentOutOfRangeException(nameof(n), n, null);
                     }
-                }, KindOfUsingStandardLibrary.Import), true);
+                }));
         }
 
         [Test]

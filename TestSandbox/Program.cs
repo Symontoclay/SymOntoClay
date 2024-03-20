@@ -135,10 +135,10 @@ namespace TestSandbox
             //TstLinguisticVariable_Tests();
             //TstManageTempProject();
             //TstAdvancedTestRunnerForMultipleInstances();//<=~
-            TstAdvancedTestRunner();//<=
+            //TstAdvancedTestRunner();//<=
             //TstAdvancedTestRunnerWithListenedFact();
             //TstTestRunnerBehaviorTestEngineInstance();//$$$
-            //TstTestRunnerWithHostListener();//<=t
+            TstTestRunnerWithHostListener();//<=t
             //TstTestRunner();//<=
             //TstNameHelper();
             //TstDeffuzzification();
@@ -1244,7 +1244,7 @@ app PeaceKeeper is [very middle] exampleClass
 
             BehaviorTestEngineInstance.Run(text,
                 (n, message) => {
-                    _logger.Info("2012B98A-BB15-41A1-A267-95D3719CF28E", $"n = {n}; message = {message}");
+                    _logger.Info("2012B98A-BB15-41A1-A267-95D3719CF28E", $"n = {n}; message = '{message}'");
                 }, hostListener);
 
             _logger.Info("8E6AB0DB-9DAD-47AE-83BB-89421B778775", "End");

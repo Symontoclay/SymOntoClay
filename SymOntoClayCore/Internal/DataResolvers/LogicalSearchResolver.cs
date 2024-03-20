@@ -2533,7 +2533,24 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return;
             }
 
-            if((leftExpr.IsNull & !rightExpr.IsNull) || (!leftExpr.IsNull & rightExpr.IsNull))
+            if (leftExpr.Kind == KindOfLogicalQueryNode.LogicalVar || rightExpr.Kind == KindOfLogicalQueryNode.LogicalVar)
+            {
+                if (currentExplainNode != null)
+                {
+                    currentExplainNode.AdditionalInformation.Add("It will be processed in post filters: leftExpr.Kind == KindOfLogicalQueryNode.LogicalVar || rightExpr.Kind == KindOfLogicalQueryNode.LogicalVar");
+                }
+
+                var postFilter = new PostFilterOfQueryExecutingCardForPersistLogicalData();
+                postFilter.ProcessedExpr = processedExpr;
+
+                queryExecutingCard.IsSuccess = true;
+                queryExecutingCard.IsPostFiltersListOnly = true;
+                queryExecutingCard.PostFiltersList.Add(postFilter);
+
+                return;
+            }
+
+            if ((leftExpr.IsNull & !rightExpr.IsNull) || (!leftExpr.IsNull & rightExpr.IsNull))
             {
                 return;
             }
@@ -2558,22 +2575,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return;
             }
 
-            if(leftExpr.Kind == KindOfLogicalQueryNode.LogicalVar || rightExpr.Kind == KindOfLogicalQueryNode.LogicalVar)
-            {
-                if (currentExplainNode != null)
-                {
-                    currentExplainNode.AdditionalInformation.Add("It will be processed in post filters: leftExpr.Kind == KindOfLogicalQueryNode.LogicalVar || rightExpr.Kind == KindOfLogicalQueryNode.LogicalVar");
-                }
-
-                var postFilter = new PostFilterOfQueryExecutingCardForPersistLogicalData();
-                postFilter.ProcessedExpr = processedExpr;
-
-                queryExecutingCard.IsSuccess = true;
-                queryExecutingCard.IsPostFiltersListOnly = true;
-                queryExecutingCard.PostFiltersList.Add(postFilter);
-
-                return;
-            }
+            logger.Info("41D74D94-B8B4-42A8-BDB4-8CFB975017FE", $"leftExpr = {leftExpr?.ToHumanizedString()}");
+            logger.Info("77163C03-4B19-4F43-9DA9-07700D17C98B", $"rightExpr = {rightExpr?.ToHumanizedString()}");
+            logger.Info("05288B7D-2084-4AE2-9145-12A39B4AC8E3", $"leftExpr = {leftExpr}");
+            logger.Info("06EF83BE-ABE5-490B-9BFC-5784E78EF4F3", $"rightExpr = {rightExpr}");
 
             throw new NotImplementedException();
         }

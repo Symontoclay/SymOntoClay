@@ -192,6 +192,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return imgFileName;
         }
 
+        /// <inheritdoc/>
         public string ResolveMessagesRefs(string content)
         {
 #if DEBUG
@@ -253,6 +254,22 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             }
 
             return $"`{messageGlobalNumberStr}`";
+        }
+
+        /// <inheritdoc/>
+        public string NormalizeText(string content)
+        {
+            if(string.IsNullOrEmpty(content))
+            {
+                return content;
+            }
+
+            if (_toHtml)
+            {
+                return content.Replace("\n", "<br/>").Replace(" ", "&nbsp;");
+            }
+            
+            return content;
         }
     }
 }

@@ -38,7 +38,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder.TextRowOptionItems
         /// <inheritdoc/>
         protected override string GetContent(BaseMessage message, ILogFileCreatorContext logFileCreatorContext, string targetFileName)
         {
-            return _messageContentToTextConverter.GetText(message, logFileCreatorContext, targetFileName);
+            return logFileCreatorContext.NormalizeText(_messageContentToTextConverter.GetText(message, logFileCreatorContext, targetFileName));
         }
 
         /// <inheritdoc/>

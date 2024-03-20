@@ -15,5 +15,6 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         (string AbsoluteName, string RelativeName) ConvertDotStrToImg(string dotStr, string targetFileName);
         string CreateImgLink(string imgFileName, string relativeFileName);
         string ResolveMessagesRefs(string content);
+        string NormalizeText(string content);
     }
 }

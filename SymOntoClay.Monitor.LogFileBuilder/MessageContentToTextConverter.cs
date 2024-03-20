@@ -496,6 +496,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
         private string GetCodeFrame(CodeFrameMessage message)
         {
+#if DEBUG
+            _globalLogger.Info($"tmpResult = {message.HumanizedStr}");
+#endif
+
             return $"\n{message.HumanizedStr}\n";
         }
 

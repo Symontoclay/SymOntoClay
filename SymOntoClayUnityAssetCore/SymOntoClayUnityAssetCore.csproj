@@ -7,7 +7,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AssemblyVersion>0.5.3</AssemblyVersion>
     <FileVersion>0.5.3</FileVersion>
-    <Copyright>Copyright (c) 2020 - 2023 Sergiy Tolkachov aka metatypeman</Copyright>
+    <Copyright>Copyright (c) 2020 - 2024 Sergiy Tolkachov aka metatypeman</Copyright>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>SymOntoClay.UnityAsset.Core.xml</DocumentationFile>

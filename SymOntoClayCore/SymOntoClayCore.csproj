@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>SymOntoClay.Core</RootNamespace>
@@ -7,7 +7,7 @@
     <FileVersion>0.5.3</FileVersion>
     <Version>0.5.3</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Copyright>Copyright (c) 2020 - 2023 Sergiy Tolkachov aka metatypeman</Copyright>
+    <Copyright>Copyright (c) 2020 - 2024 Sergiy Tolkachov aka metatypeman</Copyright>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>SymOntoClay.Core.xml</DocumentationFile>

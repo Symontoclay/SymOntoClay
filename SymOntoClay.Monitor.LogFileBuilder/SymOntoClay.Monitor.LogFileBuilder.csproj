@@ -1,34 +1,31 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net7.0</TargetFramework>
+    <AssemblyVersion>0.5.3</AssemblyVersion>
+    <FileVersion>0.5.3</FileVersion>
+    <Version>0.5.3</Version>
+    <Copyright>Copyright (c) 2020 - 2024 Sergiy Tolkachov aka metatypeman</Copyright>
   </PropertyGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-		<PackageReference Include="NLog" Version="5.1.4" />
-		<PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.1" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\SymOntoClay.CLI.Helpers\SymOntoClay.CLI.Helpers.csproj" />
-	  <ProjectReference Include="..\SymOntoClay.Monitor.Common.Data\SymOntoClay.Monitor.Common.Data.csproj" />
-	  <ProjectReference Include="..\SymOntoClay.Monitor.Common\SymOntoClay.Monitor.Common.csproj" />
-	  <ProjectReference Include="..\SymOntoClay.Monitor\SymOntoClay.Monitor.csproj" />
-	  <ProjectReference Include="..\SymOntoClayCoreHelper\SymOntoClayCoreHelper.csproj" />
-	  <ProjectReference Include="..\SymOntoClayCore\SymOntoClayCore.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Update="default-LogFileCreatorOptions.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="NLog.config">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	</ItemGroup>
-	
-	
-	
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="NLog" Version="5.1.4" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SymOntoClay.CLI.Helpers\SymOntoClay.CLI.Helpers.csproj" />
+    <ProjectReference Include="..\SymOntoClay.Monitor.Common.Data\SymOntoClay.Monitor.Common.Data.csproj" />
+    <ProjectReference Include="..\SymOntoClay.Monitor.Common\SymOntoClay.Monitor.Common.csproj" />
+    <ProjectReference Include="..\SymOntoClay.Monitor\SymOntoClay.Monitor.csproj" />
+    <ProjectReference Include="..\SymOntoClayCoreHelper\SymOntoClayCoreHelper.csproj" />
+    <ProjectReference Include="..\SymOntoClayCore\SymOntoClayCore.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="default-LogFileCreatorOptions.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

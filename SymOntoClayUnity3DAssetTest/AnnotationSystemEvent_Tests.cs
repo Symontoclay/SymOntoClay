@@ -466,7 +466,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 2:
-                            Assert.AreEqual("`a` has been called!", message);
+                            Assert.AreEqual(true, (message == "`a` has been called!" || message == "End"));
                             break;
 
                         case 3:

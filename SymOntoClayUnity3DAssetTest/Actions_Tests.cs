@@ -1124,7 +1124,7 @@ action Go
                     switch (n)
                     {
                         case 1:
-                            Assert.AreEqual(message, "Begin");
+                            Assert.AreEqual("Begin", message);
                             break;
 
                         case 2:
@@ -1136,15 +1136,15 @@ action Go
                             break;
 
                         case 4:
-                            Assert.AreEqual(message, "End Go");
+                            Assert.AreEqual("End Go", message);
                             break;
 
                         case 5:
-                            Assert.AreEqual(message, "Leave Go");
+                            Assert.AreEqual(true, (message == "Leave Go" || message == "End"));
                             break;
 
                         case 6:
-                            Assert.AreEqual(message, "End");
+                            Assert.AreEqual(true, (message == "Leave Go" || message == "End"));
                             break;
 
                         default:

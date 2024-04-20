@@ -1041,23 +1041,23 @@ action Go
                 switch (n)
                 {
                     case 1:
-                        Assert.AreEqual(message, "Begin");
+                        Assert.AreEqual("Begin", message);
                         break;
 
                     case 2:
-                        Assert.AreEqual(message, "Begin Go");
+                        Assert.AreEqual("Begin Go", message);
                         break;
 
                     case 3:
-                        Assert.AreEqual(message, "on Fired");
+                        Assert.AreEqual("on Fired", message);
                         break;
 
                     case 4:
-                        Assert.AreEqual(message, "#a");
+                        Assert.AreEqual("#a", message);
                         break;
 
                     case 5:
-                        Assert.AreEqual(message, "catch(@e)");
+                        Assert.AreEqual("catch(@e)", message);
                         break;
 
                     case 6:
@@ -1068,7 +1068,7 @@ action Go
                         break;
 
                     case 7:
-                        Assert.AreEqual(message, "End");
+                        Assert.AreEqual("End", message);
                         break;
 
                     default:

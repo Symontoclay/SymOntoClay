@@ -135,7 +135,7 @@ namespace TestSandbox
             //TstLinguisticVariable_Tests();
             //TstManageTempProject();
             //TstAdvancedTestRunnerForMultipleInstances();//<=~
-            //TstAdvancedTestRunner();//<=
+            TstAdvancedTestRunner();//<=
             //TstAdvancedTestRunnerWithListenedFact();
             //TstTestRunnerBehaviorTestEngineInstance();//$$$
             //TstTestRunnerWithHostListener();//<=t
@@ -179,7 +179,7 @@ namespace TestSandbox
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            TstGeneralStartHandler();//<=
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -1103,16 +1103,39 @@ app PeaceKeeper is [very middle] exampleClass
             var instance = new AdvancedBehaviorTestEngineInstance();
 
             var text = @"app PeaceKeeper
-{ 
-    on {: see(I, #a) :} =>
+{
+    on Enter =>
     {
-        'on Fired in App' >> @>log;
+        'Begin' >> @>log;
+ 
+        try
+        {
+            Go();
+        }
+        catch(@e)
+        {
+            'catch(@e)' >> @>log;
+            @e >> @>log;
+        }
+
+        'End' >> @>log;
+    }
+}
+
+action Go 
+{
+    op () => 
+    {
+        'Begin Go' >> @>log;
+        await;
+        'End Go' >> @>log;
     }
 
     on {: see(I, $x) :} ($x >> @x) => 
     {
-        'on Fired $x in App' >> @>log;
+        'on Fired' >> @>log;
         @x >> @>log;
+        break action {: attack(I, enemy) :};
     }
 }";
 
@@ -1234,7 +1257,7 @@ app PeaceKeeper is [very middle] exampleClass
     on Enter =>
     {
         'Begin' >> @>log;
-        @@host.`rotate`(30)[:on complete { 'on complete' >> @>log; } :];
+        @@host.`rotate`~(30)[:on complete { 'on complete' >> @>log; } :];
         'End' >> @>log;
     }
 }";
@@ -1256,27 +1279,15 @@ app PeaceKeeper is [very middle] exampleClass
 
             var text = @"app PeaceKeeper
 {
-    on Init =>
+    fun a() => 
+    {
+        '`a` has been called!' >> @>log;
+    }
+
+    on Enter =>
     {
         'Begin' >> @>log;
-        
-        @a = 10;
-
-        repeat
-        {
-            @a >> @>log;
-            @a = @a - 1;
-
-            if(@a > 5)
-            {
-                continue;
-            }
-
-            'End of while iteration' >> @>log;
-
-            break;
-        }
-
+        a~()[:on complete => { 'on complete' >> @>log; } :];
         'End' >> @>log;
     }
 }";

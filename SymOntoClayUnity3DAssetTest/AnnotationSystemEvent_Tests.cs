@@ -245,11 +245,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 3:
-                            Assert.AreEqual((message == "on complete" || message == "End"), true); 
+                            Assert.AreEqual(true, (message == "on complete" || message == "End")); 
                             break;
 
                         case 4:
-                            Assert.AreEqual((message == "on complete" || message == "End"), true);
+                            Assert.AreEqual(true, (message == "on complete" || message == "End"));
                             break;
 
                         default:
@@ -290,11 +290,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 3:
-                            Assert.AreEqual((message == "on complete" || message == "End"), true);
+                            Assert.AreEqual(true, (message == "on complete" || message == "End"));
                             break;
 
                         case 4:
-                            Assert.AreEqual((message == "on complete" || message == "End"), true);
+                            Assert.AreEqual(true, (message == "on complete" || message == "End"));
                             break;
 
                         default:
@@ -335,11 +335,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 3:
-                            Assert.AreEqual((message == "on complete" || message == "End"), true);
+                            Assert.AreEqual(true, (message == "on complete" || message == "End"));
                             break;
 
                         case 4:
-                            Assert.AreEqual((message == "on complete" || message == "End"), true);
+                            Assert.AreEqual(true, (message == "on complete" || message == "End"));
                             break;
 
                         default:
@@ -380,11 +380,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 3:
-                            Assert.AreEqual((message == "on complete" || message == "End"), true);
+                            Assert.AreEqual(true, (message == "on complete" || message == "End"));
                             break;
 
                         case 4:
-                            Assert.AreEqual((message == "on complete" || message == "End"), true);
+                            Assert.AreEqual(true, (message == "on complete" || message == "End"));
                             break;
 
                         default:
@@ -421,15 +421,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 2:
-                            Assert.AreEqual("`a` has been called!", message);
+                            Assert.AreEqual(true, (message == "`a` has been called!" || message == "End"));
                             break;
 
                         case 3:
-                            Assert.AreEqual((message == "on complete" || message == "End"), true);
+                            Assert.AreEqual(true, (message == "on complete" || message == "End"));
                             break;
 
                         case 4:
-                            Assert.AreEqual((message == "on complete" || message == "End"), true);
+                            Assert.AreEqual(true, (message == "on complete" || message == "End"));
                             break;
 
                         default:
@@ -470,11 +470,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 3:
-                            Assert.AreEqual((message == "on complete" || message == "End"), true);
+                            Assert.AreEqual(true, (message == "on complete" || message == "End"));
                             break;
 
                         case 4:
-                            Assert.AreEqual((message == "on complete" || message == "End"), true);
+                            Assert.AreEqual(true, (message == "on complete" || message == "End"));
                             break;
 
                         default:
@@ -511,15 +511,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 2:
-                            Assert.AreEqual("`a` has been called!", message);
+                            Assert.AreEqual(true, (message == "`a` has been called!" || message == "End"));
                             break;
 
                         case 3:
-                            Assert.AreEqual((message == "on complete" || message == "End"), true);
+                            Assert.AreEqual(true, (message == "on complete" || message == "End"));
                             break;
 
                         case 4:
-                            Assert.AreEqual((message == "on complete" || message == "End"), true);
+                            Assert.AreEqual(true, (message == "on complete" || message == "End"));
                             break;
 
                         default:
@@ -742,11 +742,11 @@ action Go
                             break;
 
                         case 4:
-                            Assert.AreEqual((message == "on complete" || message == "End"), true);
+                            Assert.AreEqual(true, (message == "on complete" || message == "End"));
                             break;
 
                         case 5:
-                            Assert.AreEqual((message == "on complete" || message == "End"), true);
+                            Assert.AreEqual(true, (message == "on complete" || message == "End"));
                             break;
 
                         default:
@@ -780,19 +780,19 @@ action Go
                             break;
 
                         case 2:
-                            Assert.AreEqual((message == "methodName = 'rotate'" || message == "End"), true);
+                            Assert.AreEqual(true, (message == "methodName = 'rotate'" || message == "End"));
                             break;
 
                         case 3:
-                            Assert.AreEqual((message == "isNamedParameters = False" || message == "End"), true);
+                            Assert.AreEqual(true, (message == "isNamedParameters = False" || message == "End"));
                             break;
 
                         case 4:
-                            Assert.AreEqual((message == "on complete" || message == "End"), true);
+                            Assert.AreEqual(true, (message == "on complete" || message == "End"));
                             break;
 
                         case 5:
-                            Assert.AreEqual((message == "on complete" || message == "End"), true);
+                            Assert.AreEqual(true, (message == "on complete" || message == "End"));
                             break;
 
                         default:
@@ -826,19 +826,19 @@ action Go
                             break;
 
                         case 2:
-                            Assert.AreEqual((message == "methodName = 'rotate'" || message == "End"), true);
+                            Assert.AreEqual(true, (message == "methodName = 'rotate'" || message == "End"));
                             break;
 
                         case 3:
-                            Assert.AreEqual((message == "isNamedParameters = False" || message == "End"), true);
+                            Assert.AreEqual(true, (message == "isNamedParameters = False" || message == "End"));
                             break;
 
                         case 4:
-                            Assert.AreEqual((message == "on complete" || message == "End"), true);
+                            Assert.AreEqual(true, (message == "on complete" || message == "End"));
                             break;
 
                         case 5:
-                            Assert.AreEqual((message == "on complete" || message == "End"), true);
+                            Assert.AreEqual(true, (message == "on complete" || message == "End"));
                             break;
 
                         default:

@@ -98,7 +98,6 @@ namespace TestSandbox
 
             _globalLogger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 
-            TstServ();
             //TstThreadTask();
             //TstThreadPoolCount();
             //TstCommandLineParserHandler();
@@ -181,19 +180,10 @@ namespace TestSandbox
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            //TstGeneralStartHandler();//<=
+            TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
-        }
-
-        private static void TstServ()
-        {
-            _globalLogger.Info("Begin");
-
-            var serv = new SomeTestService();
-
-            _globalLogger.Info("End");
         }
 
         private static void TstThreadTask()

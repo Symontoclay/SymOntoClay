@@ -78,6 +78,7 @@ using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.Monitor.LogFileBuilder.TextRowOptionItems;
 using SymOntoClay.Monitor.LogFileBuilder;
 using SymOntoClay.Core.Internal.Threads;
+using SymOntoClay.Common;
 
 namespace TestSandbox
 {
@@ -97,6 +98,7 @@ namespace TestSandbox
 
             _globalLogger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 
+            TstServ();
             //TstThreadTask();
             //TstThreadPoolCount();
             //TstCommandLineParserHandler();
@@ -135,7 +137,7 @@ namespace TestSandbox
             //TstLinguisticVariable_Tests();
             //TstManageTempProject();
             //TstAdvancedTestRunnerForMultipleInstances();//<=~
-            TstAdvancedTestRunner();//<=
+            //TstAdvancedTestRunner();//<=
             //TstAdvancedTestRunnerWithListenedFact();
             //TstTestRunnerBehaviorTestEngineInstance();//$$$
             //TstTestRunnerWithHostListener();//<=t
@@ -183,6 +185,15 @@ namespace TestSandbox
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
+        }
+
+        private static void TstServ()
+        {
+            _globalLogger.Info("Begin");
+
+            var serv = new SomeTestService();
+
+            _globalLogger.Info("End");
         }
 
         private static void TstThreadTask()

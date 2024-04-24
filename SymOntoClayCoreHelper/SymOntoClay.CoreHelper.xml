@@ -10,7 +10,7 @@
         <member name="M:SymOntoClay.CoreHelper.DebugHelpers.DiagnosticsCallInfo.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.CoreHelper.DebugHelpers.DiagnosticsCallInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.CoreHelper.DebugHelpers.DiagnosticsCallInfo.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="T:SymOntoClay.CoreHelper.DebugHelpers.IObjectToBriefString">
@@ -82,25 +82,6 @@
             </summary>
             <param name="n">Count of spaces in the string for more comfortable representation.</param>
             <returns>A string that represents the current instance in short way without additional information, only pair name of property - value.</returns>
-        </member>
-        <member name="T:SymOntoClay.CoreHelper.DebugHelpers.IObjectToString">
-            <summary>
-            Provides methods for helping in generating debug string image.
-            </summary>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.DebugHelpers.IObjectToString.ToString(System.UInt32)">
-            <summary>
-            Returns a string that represents the current instance.
-            </summary>
-            <param name="n">Count of spaces in the string for more comfortable representation.</param>
-            <returns>A string that represents the current instance.</returns>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.DebugHelpers.IObjectToString.PropertiesToString(System.UInt32)">
-            <summary>
-            Internal method which returns a string that represents the current instance without additional information, only pair name of property - value.
-            </summary>
-            <param name="n">Count of spaces in the string for more comfortable representation.</param>
-            <returns>A string that represents the current instance without additional information, only pair name of property - value.</returns>
         </member>
         <member name="T:SymOntoClay.CoreHelper.ISymOntoClayDisposable">
             <summary>

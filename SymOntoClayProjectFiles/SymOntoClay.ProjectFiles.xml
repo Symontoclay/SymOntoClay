@@ -10,7 +10,7 @@
         <member name="M:SymOntoClay.ProjectFiles.WorldDirs.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.ProjectFiles.WorldDirs.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.ProjectFiles.WorldDirs.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ProjectFiles.WorldJsonFile.ToString">
@@ -19,7 +19,7 @@
         <member name="M:SymOntoClay.ProjectFiles.WorldJsonFile.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.ProjectFiles.WorldJsonFile.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.ProjectFiles.WorldJsonFile.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ProjectFiles.WorldSpaceCreationSettings.ToString">
@@ -28,7 +28,7 @@
         <member name="M:SymOntoClay.ProjectFiles.WorldSpaceCreationSettings.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.ProjectFiles.WorldSpaceCreationSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.ProjectFiles.WorldSpaceCreationSettings.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ProjectFiles.WorldSpaceFiles.ToString">
@@ -37,7 +37,7 @@
         <member name="M:SymOntoClay.ProjectFiles.WorldSpaceFiles.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.ProjectFiles.WorldSpaceFiles.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.ProjectFiles.WorldSpaceFiles.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ProjectFiles.WorldSpaceFiles.ToShortString">
@@ -64,7 +64,7 @@
         <member name="M:SymOntoClay.ProjectFiles.WorldSpaceFilesSearcherOptions.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.ProjectFiles.WorldSpaceFilesSearcherOptions.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.ProjectFiles.WorldSpaceFilesSearcherOptions.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
     </members>

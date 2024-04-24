@@ -16,7 +16,7 @@
         <member name="M:SymOntoClay.UnityAsset.Core.BaseGameComponentSettings.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.BaseGameComponentSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.UnityAsset.Core.BaseGameComponentSettings.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.BaseManualControllingGameComponentSettings.HostListener">
@@ -946,7 +946,7 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.BaseEndpointInfo.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.BaseEndpointInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.BaseEndpointInfo.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.BaseEndpointInfo.ToShortString">
@@ -997,7 +997,7 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointArgumentInfo.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointArgumentInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointArgumentInfo.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.EndpointArgumentInfo.ToShortString">
@@ -1093,7 +1093,7 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.ProcessCreatingResult.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.ProcessCreatingResult.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.ProcessCreatingResult.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.EndPoints.ProcessCreatingResult.ToShortString">
@@ -1198,7 +1198,7 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.BasePlatformTypesConverter.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.BasePlatformTypesConverter.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.BasePlatformTypesConverter.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters.BasePlatformTypesConverter.ToShortString">
@@ -1794,7 +1794,7 @@
         <member name="M:SymOntoClay.UnityAsset.Core.RunTimeImageSettings.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.RunTimeImageSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.UnityAsset.Core.RunTimeImageSettings.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.VisibleItem.InstanceId">
@@ -1814,7 +1814,7 @@
         <member name="M:SymOntoClay.UnityAsset.Core.VisibleItem.ToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.VisibleItem.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.UnityAsset.Core.VisibleItem.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.WorldFactory.WorldInstance">
@@ -1851,7 +1851,7 @@
         <member name="M:SymOntoClay.UnityAsset.Core.WorldSettings.ToString">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.WorldSettings.SymOntoClay#CoreHelper#DebugHelpers#IObjectToString#PropertiesToString(System.UInt32)">
+        <member name="M:SymOntoClay.UnityAsset.Core.WorldSettings.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.WorldSettings.ToString(System.UInt32)">

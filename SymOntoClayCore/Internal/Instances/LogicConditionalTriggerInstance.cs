@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using Newtonsoft.Json;
 using NLog;
+using SymOntoClay.Common;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;

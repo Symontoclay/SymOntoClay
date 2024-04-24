@@ -30,6 +30,7 @@ using System.Numerics;
 using System.Text;
 using SymOntoClay.Core;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Common;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters
 {

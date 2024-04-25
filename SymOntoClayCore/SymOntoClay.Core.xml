@@ -117,7 +117,7 @@
         <member name="M:SymOntoClay.Core.BaseProcessInfo.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.BaseProcessInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.BaseProcessInfo.ToBriefString">
@@ -406,7 +406,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrame.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrame.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrame.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrame.ToBriefString">
@@ -457,7 +457,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.Command.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.Command.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.Command.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.Command.ToBriefString">
@@ -595,7 +595,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.LocalCodeExecutionContext.ToBriefString">
@@ -628,7 +628,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.ProcessInitialInfo.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ProcessInitialInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ProcessInitialInfo.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.ProcessInitialInfo.ToBriefString">
@@ -665,7 +665,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.SEHGroup.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.SEHGroup.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.SEHGroup.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.SEHGroup.ToBriefString">
@@ -702,7 +702,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.SEHItem.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.SEHItem.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.SEHItem.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.SEHItem.ToBriefString">
@@ -996,7 +996,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActivationInfoOfStateDef.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActivationInfoOfStateDef.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.ActivationInfoOfStateDef.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ActivationInfoOfStateDef.ToBriefString">
@@ -1073,7 +1073,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotatedItem.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotatedItem.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotatedItem.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotatedItem.ToBriefString">
@@ -1134,7 +1134,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Annotation.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Annotation.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Annotation.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Annotation.ToBriefString">
@@ -1216,7 +1216,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent.ToBriefString">
@@ -2427,7 +2427,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.BindingVariableItem.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.BindingVariableItem.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BindingVariableItem.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.BindingVariableItem.ToBriefString">
@@ -2476,7 +2476,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.BindingVariables.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.BindingVariables.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BindingVariables.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.BindingVariables.ToBriefString">
@@ -2596,7 +2596,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeFile.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeFile.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeFile.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.CodeFile.ToBriefString">
@@ -3176,7 +3176,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionArgumentInfo.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionArgumentInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionArgumentInfo.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.FunctionArgumentInfo.ToBriefString">
@@ -3374,7 +3374,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.ToBriefString">
@@ -3766,7 +3766,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariableConstraint.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariableConstraint.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariableConstraint.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariableConstraint.ToBriefString">
@@ -3803,7 +3803,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariableConstraintItem.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariableConstraintItem.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariableConstraintItem.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariableConstraintItem.ToBriefString">
@@ -4153,7 +4153,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.MutablePartOfRuleInstance.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.MutablePartOfRuleInstance.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.MutablePartOfRuleInstance.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.MutablePartOfRuleInstance.ToBriefString">
@@ -4637,7 +4637,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RangeBoundary.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RangeBoundary.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RangeBoundary.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RangeBoundary.ToBriefString">
@@ -4775,7 +4775,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationParameterDescription.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationParameterDescription.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationParameterDescription.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationParameterDescription.ToBriefString">
@@ -5659,7 +5659,7 @@
         <member name="M:SymOntoClay.Core.Internal.Compiling.Internal.IntermediateScriptCommand.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Compiling.Internal.IntermediateScriptCommand.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Compiling.Internal.IntermediateScriptCommand.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Compiling.Internal.IntermediateScriptCommand.ToBriefString">
@@ -5686,7 +5686,7 @@
         <member name="M:SymOntoClay.Core.Internal.Compiling.Internal.IntermediateSEHGroup.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Compiling.Internal.IntermediateSEHGroup.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Compiling.Internal.IntermediateSEHGroup.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Compiling.Internal.IntermediateSEHGroup.ToBriefString">
@@ -5713,7 +5713,7 @@
         <member name="M:SymOntoClay.Core.Internal.Compiling.Internal.IntermediateSEHItem.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Compiling.Internal.IntermediateSEHItem.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Compiling.Internal.IntermediateSEHItem.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Compiling.Internal.IntermediateSEHItem.ToBriefString">
@@ -5740,7 +5740,7 @@
         <member name="M:SymOntoClay.Core.Internal.Compiling.Internal.LoopCompilingContext.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Compiling.Internal.LoopCompilingContext.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Compiling.Internal.LoopCompilingContext.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Compiling.Internal.LoopCompilingContext.ToBriefString">
@@ -5767,7 +5767,7 @@
         <member name="M:SymOntoClay.Core.Internal.Converters.ContextOfConvertingExpressionNode.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Converters.ContextOfConvertingExpressionNode.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Converters.ContextOfConvertingExpressionNode.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Converters.ContextOfConvertingExpressionNode.ToBriefString">
@@ -5797,7 +5797,7 @@
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.CollectChainOfStoragesOptions.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DataResolvers.CollectChainOfStoragesOptions.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.CollectChainOfStoragesOptions.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.CollectChainOfStoragesOptions.ToBriefString">
@@ -5977,7 +5977,7 @@
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode.ToBriefString">
@@ -6022,7 +6022,7 @@
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalSearchResult.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalSearchResult.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalSearchResult.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalSearchResult.ToBriefString">
@@ -6049,7 +6049,7 @@
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalSearchResultItem.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalSearchResultItem.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalSearchResultItem.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalSearchResultItem.ToBriefString">
@@ -6085,7 +6085,7 @@
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.MergingResultOfTwoQueryExecutingCardAboutKnownInfoLists.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DataResolvers.MergingResultOfTwoQueryExecutingCardAboutKnownInfoLists.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.MergingResultOfTwoQueryExecutingCardAboutKnownInfoLists.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.MergingResultOfTwoQueryExecutingCardAboutKnownInfoLists.ToBriefString">
@@ -6145,7 +6145,7 @@
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.ReasonOfFuzzyLogicResolving.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DataResolvers.ReasonOfFuzzyLogicResolving.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.ReasonOfFuzzyLogicResolving.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.ReasonOfFuzzyLogicResolving.ToBriefString">
@@ -6197,7 +6197,7 @@
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.ResolverOptions.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DataResolvers.ResolverOptions.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.ResolverOptions.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.ResolverOptions.ToBriefString">
@@ -6243,7 +6243,7 @@
         <member name="M:SymOntoClay.Core.Internal.DefaultSettingsOfCodeEntity.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DefaultSettingsOfCodeEntity.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.DefaultSettingsOfCodeEntity.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DefaultSettingsOfCodeEntity.ToBriefString">
@@ -6293,7 +6293,7 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalAnnotation.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalAnnotation.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalAnnotation.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.IndexedLogicalAnnotation.ToBriefString">
@@ -6320,7 +6320,7 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.OptionsOfFillExecutingCard.ToBriefString">
@@ -6347,7 +6347,7 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.OriginOfVarOfQueryToRelation.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.OriginOfVarOfQueryToRelation.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.OriginOfVarOfQueryToRelation.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.OriginOfVarOfQueryToRelation.ToBriefString">
@@ -6374,7 +6374,7 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.PostFilterOfQueryExecutingCardForPersistLogicalData.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.PostFilterOfQueryExecutingCardForPersistLogicalData.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.PostFilterOfQueryExecutingCardForPersistLogicalData.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.PostFilterOfQueryExecutingCardForPersistLogicalData.ToBriefString">
@@ -6401,7 +6401,7 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardAboutKnownInfo.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardAboutKnownInfo.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardAboutKnownInfo.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardAboutKnownInfo.ToBriefString">
@@ -6428,7 +6428,7 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardAboutVar.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardAboutVar.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardAboutVar.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardAboutVar.ToBriefString">
@@ -6455,7 +6455,7 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.QueryExecutingCardForIndexedPersistLogicalData.ToBriefString">
@@ -6485,7 +6485,7 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ResultOfQueryToRelation.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.ResultOfQueryToRelation.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ResultOfQueryToRelation.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ResultOfQueryToRelation.ToBriefString">
@@ -6521,7 +6521,7 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ResultOfVarOfQueryToRelation.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.ResultOfVarOfQueryToRelation.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ResultOfVarOfQueryToRelation.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ResultOfVarOfQueryToRelation.ToBriefString">
@@ -6570,7 +6570,7 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.CompiledFunctionBody.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.CompiledFunctionBody.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.CompiledFunctionBody.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.CompiledFunctionBody.ToBriefString">
@@ -6656,7 +6656,7 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.ScriptCommand.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.ScriptCommand.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.ScriptCommand.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.ScriptCommand.ToBriefString">
@@ -6692,7 +6692,7 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem.ToBriefString">
@@ -6812,7 +6812,7 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseAddingFactTriggerInstance.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseAddingFactTriggerInstance.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseAddingFactTriggerInstance.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseAddingFactTriggerInstance.ToBriefString">
@@ -6899,7 +6899,7 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstance.ToBriefString">
@@ -6986,7 +6986,7 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseSimpleConditionalTriggerInstance.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.BaseSimpleConditionalTriggerInstance.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseSimpleConditionalTriggerInstance.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseSimpleConditionalTriggerInstance.ToBriefString">
@@ -7040,7 +7040,7 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator.ToBriefString">
@@ -7163,7 +7163,7 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.ToBriefString">
@@ -7199,7 +7199,7 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers.TriggerConditionNodeObserverContext.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers.TriggerConditionNodeObserverContext.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers.TriggerConditionNodeObserverContext.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers.TriggerConditionNodeObserverContext.ToBriefString">
@@ -8178,7 +8178,7 @@
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicMemberFunctionHandler.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicMemberFunctionHandler.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicMemberFunctionHandler.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicMemberFunctionHandler.PropertiesToShortString(System.UInt32)">
@@ -8226,7 +8226,7 @@
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicOperatorHandler.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicOperatorHandler.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicOperatorHandler.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic.BaseFuzzyLogicOperatorHandler.PropertiesToShortString(System.UInt32)">
@@ -8669,7 +8669,7 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.AddFactOrRuleResult.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.AddFactOrRuleResult.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.AddFactOrRuleResult.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.AddFactOrRuleResult.ToBriefString">
@@ -8774,7 +8774,7 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.ToBriefString">
@@ -8876,7 +8876,7 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.ToBriefString">
@@ -9080,7 +9080,7 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.RealStorage.ToBriefString">
@@ -9676,7 +9676,7 @@
         <member name="M:SymOntoClay.Core.StorageUsingOptions.ToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.StorageUsingOptions.SymOntoClay#CoreHelper#DebugHelpers#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.StorageUsingOptions.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.StorageUsingOptions.ToBriefString">

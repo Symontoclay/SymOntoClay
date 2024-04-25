@@ -155,7 +155,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
                 return true;
             }
 
-            if (type == typeof(SymOntoClay.CoreHelper.DebugHelpers.IObjectToShortString))
+            if (type == typeof(SymOntoClay.Common.IObjectToShortString))
             {
                 return true;
             }

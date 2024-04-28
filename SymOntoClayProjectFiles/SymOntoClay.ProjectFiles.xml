@@ -55,7 +55,7 @@
         <member name="M:SymOntoClay.ProjectFiles.WorldSpaceFiles.ToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.ProjectFiles.WorldSpaceFiles.SymOntoClay#CoreHelper#DebugHelpers#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+        <member name="M:SymOntoClay.ProjectFiles.WorldSpaceFiles.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ProjectFiles.WorldSpaceFilesSearcherOptions.ToString">

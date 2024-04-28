@@ -160,7 +160,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
                 return true;
             }
 
-            if (type == typeof(SymOntoClay.CoreHelper.DebugHelpers.IObjectToBriefString))
+            if (type == typeof(SymOntoClay.Common.IObjectToBriefString))
             {
                 return true;
             }

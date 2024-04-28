@@ -26,28 +26,29 @@ using System.Text;
 
 namespace SymOntoClay.CoreHelper.DebugHelpers
 {
-    public interface IObjectToDbgString
-    {
-        /// <summary>
-        /// Returns a string that represents the current instance.
-        /// </summary>
-        /// <returns>A string that represents the current instance in short way.</returns>
-        string ToDbgString();
+    //[Obsolete]
+    //public interface IObjectToDbgString
+    //{
+    //    /// <summary>
+    //    /// Returns a string that represents the current instance.
+    //    /// </summary>
+    //    /// <returns>A string that represents the current instance in short way.</returns>
+    //    string ToDbgString();
 
-        /// <summary>
-        /// Returns a string that represents the current instance.
-        /// </summary>
-        /// <param name="n">Count of spaces in the string for more comfortable representation.</param>
-        /// <returns>A string that represents the current instance.</returns>
-        string ToDbgString(uint n);
+    //    /// <summary>
+    //    /// Returns a string that represents the current instance.
+    //    /// </summary>
+    //    /// <param name="n">Count of spaces in the string for more comfortable representation.</param>
+    //    /// <returns>A string that represents the current instance.</returns>
+    //    string ToDbgString(uint n);
 
-        /// <summary>
-        /// Internal method which returns a string that represents the current instance.
-        /// </summary>
-        /// <param name="n">Count of spaces in the string for more comfortable representation.</param>
-        /// <returns>A string that represents the current instance.</returns>
-        string PropertiesToDbgString(uint n);
-    }
+    //    /// <summary>
+    //    /// Internal method which returns a string that represents the current instance.
+    //    /// </summary>
+    //    /// <param name="n">Count of spaces in the string for more comfortable representation.</param>
+    //    /// <returns>A string that represents the current instance.</returns>
+    //    string PropertiesToDbgString(uint n);
+    //}
 }
 
 /*

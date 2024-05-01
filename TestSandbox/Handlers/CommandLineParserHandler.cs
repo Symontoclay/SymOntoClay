@@ -23,6 +23,7 @@ SOFTWARE.*/
 using Newtonsoft.Json;
 using NLog;
 using SymOntoClay.CLI.Helpers;
+using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;

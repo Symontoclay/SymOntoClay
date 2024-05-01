@@ -165,7 +165,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
                 return true;
             }
 
-            if (type == typeof(SymOntoClay.CoreHelper.DebugHelpers.IObjectToDbgString))
+            if (type == typeof(SymOntoClay.Common.IObjectToDbgString))
             {
                 return true;
             }

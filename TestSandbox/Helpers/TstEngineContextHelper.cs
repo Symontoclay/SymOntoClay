@@ -20,32 +20,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using NLog;
-using SymOntoClay.Core;
-using SymOntoClay.Core.Internal;
-using SymOntoClay.Core.Internal.Helpers;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using SymOntoClay.UnityAsset.Core;
-using SymOntoClay.UnityAsset.Core.Internal;
-using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
+using SymOntoClay.BaseTestLib;
+using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.DefaultCLIEnvironment;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
+using SymOntoClay.NLP;
+using SymOntoClay.ProjectFiles;
+using SymOntoClay.SoundBuses;
+using SymOntoClay.StandardFacts;
+using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using TestSandbox.CoreHostListener;
 using TestSandbox.PlatformImplementations;
-using SymOntoClay.SoundBuses;
-using SymOntoClay.NLP;
-using SymOntoClay.StandardFacts;
-using SymOntoClay.CoreHelper.CollectionsHelpers;
-using SymOntoClay.Core.Internal.CodeExecution;
-using SymOntoClay.ProjectFiles;
-using SymOntoClay.BaseTestLib;
-using SymOntoClay.Monitor.Common;
-using SymOntoClay.Monitor.NLog;
 
 namespace TestSandbox.Helpers
 {

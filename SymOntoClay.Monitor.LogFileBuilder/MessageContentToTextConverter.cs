@@ -20,20 +20,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Common.CollectionsHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Reflection.Emit;
-using System.Reflection.Metadata;
 using System.Text;
-using System.Threading.Tasks;
-using SymOntoClay.CoreHelper.CollectionsHelpers;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using SymOntoClay.Monitor.Common;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SymOntoClay.Monitor.LogFileBuilder
 {

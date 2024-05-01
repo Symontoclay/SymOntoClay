@@ -30,6 +30,7 @@ using TestSandbox.Helpers;
 using TestSandbox.PlatformImplementations;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
+using SymOntoClay.Common.DebugHelpers;
 
 namespace TestSandbox.Handlers
 {

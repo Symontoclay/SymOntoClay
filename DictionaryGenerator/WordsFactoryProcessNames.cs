@@ -20,12 +20,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.NLP.CommonDict;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using SymOntoClay.CoreHelper.CollectionsHelpers;
 using System.Text.RegularExpressions;
 
 namespace DictionaryGenerator

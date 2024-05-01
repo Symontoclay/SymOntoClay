@@ -20,20 +20,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.CoreHelper;
-using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Common.CollectionsHelpers;
+using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal;
-using SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC;
+using SymOntoClay.UnityAsset.Core.InternalImplementations;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject;
+using SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.Place;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.Player;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using SymOntoClay.UnityAsset.Core.InternalImplementations;
-using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.CoreHelper.CollectionsHelpers;
-using SymOntoClay.Monitor.Common;
 
 namespace SymOntoClay.UnityAsset.Core.World
 {

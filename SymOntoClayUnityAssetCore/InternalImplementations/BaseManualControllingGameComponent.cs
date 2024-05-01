@@ -34,6 +34,7 @@ using System.Linq;
 using System.Text;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Common.DebugHelpers;
 
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 {

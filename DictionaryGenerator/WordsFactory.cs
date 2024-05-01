@@ -21,18 +21,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
-using SymOntoClay.CoreHelper.CollectionsHelpers;
 using SymOntoClay.NLP.CommonDict;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization.Json;
-using System.Text;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using System.Text.RegularExpressions;
 using SymOntoClay.NLP.CommonDict.Implementations;
+using SymOntoClay.Common.CollectionsHelpers;
+using SymOntoClay.Common.DebugHelpers;
 
 namespace DictionaryGenerator
 {

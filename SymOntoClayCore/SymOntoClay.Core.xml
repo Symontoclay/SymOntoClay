@@ -424,7 +424,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrame.ToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrame.SymOntoClay#CoreHelper#DebugHelpers#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrame.SymOntoClay#Common#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeExecution.Command.Name">
@@ -1091,7 +1091,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotatedItem.ToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotatedItem.SymOntoClay#CoreHelper#DebugHelpers#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotatedItem.SymOntoClay#Common#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotatedItem.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
@@ -3821,7 +3821,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariableConstraintItem.ToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariableConstraintItem.SymOntoClay#CoreHelper#DebugHelpers#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.LinguisticVariableConstraintItem.SymOntoClay#Common#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.LogicalModalityExpressionNode.SymOntoClay#Core#Internal#Parsing#Internal#ExprLinking#IAstNode#Left">
@@ -5995,7 +5995,7 @@
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode.ToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode.SymOntoClay#CoreHelper#DebugHelpers#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode.SymOntoClay#Common#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.LogicalSearchOptions.PropertiesToString(System.UInt32)">
@@ -6588,7 +6588,7 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.CompiledFunctionBody.ToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.CompiledFunctionBody.SymOntoClay#CoreHelper#DebugHelpers#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.CompiledFunctionBody.SymOntoClay#Common#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="F:SymOntoClay.Core.Internal.IndexedData.ScriptingData.OperationCode.Nop">
@@ -6674,7 +6674,7 @@
         <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.ScriptCommand.ToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.ScriptCommand.SymOntoClay#CoreHelper#DebugHelpers#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.IndexedData.ScriptingData.ScriptCommand.SymOntoClay#Common#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem.ToString">
@@ -8687,7 +8687,7 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.AddFactOrRuleResult.ToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.AddFactOrRuleResult.SymOntoClay#CoreHelper#DebugHelpers#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.AddFactOrRuleResult.SymOntoClay#Common#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.AddFactOrRuleResult.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
@@ -8792,7 +8792,7 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.ToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.SymOntoClay#CoreHelper#DebugHelpers#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.SymOntoClay#Common#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.DbgPrintFactsAndRules(SymOntoClay.Monitor.Common.IMonitorLogger)">
@@ -8894,7 +8894,7 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.ToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.SymOntoClay#CoreHelper#DebugHelpers#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.SymOntoClay#Common#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.DbgPrintFactsAndRules(SymOntoClay.Monitor.Common.IMonitorLogger)">

@@ -20,21 +20,18 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using TestSandbox.PlatformImplementations;
-using SymOntoClay.CoreHelper.CollectionsHelpers;
-using TestSandbox.Helpers;
+using SymOntoClay.Common.CollectionsHelpers;
+using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Helpers;
-using System.Threading;
-using SymOntoClay.Monitor.NLog;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.NLog;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using TestSandbox.Helpers;
 
 namespace TestSandbox.CodeExecution
 {

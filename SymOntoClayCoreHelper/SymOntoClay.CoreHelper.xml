@@ -13,26 +13,6 @@
         <member name="M:SymOntoClay.CoreHelper.DebugHelpers.DiagnosticsCallInfo.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.CoreHelper.DebugHelpers.IObjectToDbgString.ToDbgString">
-            <summary>
-            Returns a string that represents the current instance.
-            </summary>
-            <returns>A string that represents the current instance in short way.</returns>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.DebugHelpers.IObjectToDbgString.ToDbgString(System.UInt32)">
-            <summary>
-            Returns a string that represents the current instance.
-            </summary>
-            <param name="n">Count of spaces in the string for more comfortable representation.</param>
-            <returns>A string that represents the current instance.</returns>
-        </member>
-        <member name="M:SymOntoClay.CoreHelper.DebugHelpers.IObjectToDbgString.PropertiesToDbgString(System.UInt32)">
-            <summary>
-            Internal method which returns a string that represents the current instance.
-            </summary>
-            <param name="n">Count of spaces in the string for more comfortable representation.</param>
-            <returns>A string that represents the current instance.</returns>
-        </member>
         <member name="T:SymOntoClay.CoreHelper.ISymOntoClayDisposable">
             <summary>
             Provides small improving of mechanism for releasing unmanaged resources by adding additional members.

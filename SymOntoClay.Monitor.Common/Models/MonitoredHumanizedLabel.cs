@@ -21,8 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Common;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using System;
+using SymOntoClay.Common.DebugHelpers;
 using System.Collections.Generic;
 using System.Text;
 

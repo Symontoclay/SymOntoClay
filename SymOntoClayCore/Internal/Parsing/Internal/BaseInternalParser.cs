@@ -26,12 +26,7 @@ using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.Parsing.Internal.Predictors;
-using SymOntoClay.CoreHelper.CollectionsHelpers;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {

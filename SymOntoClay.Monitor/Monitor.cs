@@ -34,6 +34,7 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using System.Reflection;
 using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Common;
+using SymOntoClay.Common.DebugHelpers;
 
 namespace SymOntoClay.Monitor
 {

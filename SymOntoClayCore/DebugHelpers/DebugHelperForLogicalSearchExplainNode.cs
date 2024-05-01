@@ -22,11 +22,10 @@ SOFTWARE.*/
 
 using NLog;
 using SymOntoClay.Common;
+using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.CoreHelper;
-using SymOntoClay.CoreHelper.CollectionsHelpers;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

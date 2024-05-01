@@ -22,9 +22,6 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.CoreHelper;
-using SymOntoClay.CoreHelper.CollectionsHelpers;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;

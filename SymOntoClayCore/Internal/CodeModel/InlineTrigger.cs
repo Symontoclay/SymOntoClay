@@ -20,23 +20,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
-using SymOntoClay.Core.Internal.Converters;
-using SymOntoClay.Core.Internal.IndexedData;
-using SymOntoClay.Core.Internal.Compiling;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
-using SymOntoClay.CoreHelper.CollectionsHelpers;
-using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
-using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
+using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
+using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
+using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
-using SymOntoClay.Monitor.NLog;
-using NLog;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {

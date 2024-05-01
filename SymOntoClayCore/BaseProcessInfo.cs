@@ -24,6 +24,7 @@ using Newtonsoft.Json.Linq;
 using NLog;
 using NLog.Fluent;
 using SymOntoClay.Common;
+using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;

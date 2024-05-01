@@ -29,6 +29,7 @@ using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using SymOntoClay.Common.DebugHelpers;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {

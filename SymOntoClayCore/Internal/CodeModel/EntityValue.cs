@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 using System.Xml.Linq;
+using SymOntoClay.Common.DebugHelpers;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {

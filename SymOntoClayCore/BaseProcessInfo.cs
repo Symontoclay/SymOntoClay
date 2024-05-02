@@ -948,7 +948,7 @@ namespace SymOntoClay.Core
             sb.AppendLine($"{spaces}{nameof(Priority)} = {Priority}");
 
             sb.PrintExisting(n, nameof(ParentProcessInfo), ParentProcessInfo);
-            sb.PrintExistingList(n, "Children", GetChildrenProcessInfoList);
+            sb.PrintExisting(n, "Children", GetChildrenProcessInfoList);
 
             return sb.ToString();
         }

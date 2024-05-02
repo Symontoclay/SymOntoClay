@@ -15,7 +15,7 @@
     <DocumentationFile>SymOntoClay.CoreHelper.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="NLog" Version="4.7.0" />
+    <PackageReference Include="NLog" Version="4.7.5" />
     <PackageReference Include="SymOntoClay.Common" Version="0.5.4.5" />
   </ItemGroup>
 </Project>

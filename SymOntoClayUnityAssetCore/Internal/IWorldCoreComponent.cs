@@ -20,10 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.CoreHelper;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using SymOntoClay.Common.Disposing;
 
 namespace SymOntoClay.UnityAsset.Core.Internal
 {

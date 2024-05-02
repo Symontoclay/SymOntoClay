@@ -23,9 +23,9 @@ SOFTWARE.*/
 using SymOntoClay.Common;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Common.Disposing;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.IndexedData;
-using SymOntoClay.CoreHelper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -418,9 +418,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(_longConditionalHashCode)} = {_longConditionalHashCode}");
             sb.AppendLine($"{spaces}{nameof(_longHashCode)} = {_longHashCode}");
 
-            sb.PrintExistingList(n, nameof(WhereSection), WhereSection);
+            sb.PrintExisting(n, nameof(WhereSection), WhereSection);
 
-            sb.PrintExistingList(n, nameof(Annotations), Annotations);
+            sb.PrintExisting(n, nameof(Annotations), Annotations);
 
             return sb.ToString();
         }

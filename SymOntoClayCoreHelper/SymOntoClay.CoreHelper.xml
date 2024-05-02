@@ -13,15 +13,5 @@
         <member name="M:SymOntoClay.CoreHelper.DebugHelpers.DiagnosticsCallInfo.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="T:SymOntoClay.CoreHelper.ISymOntoClayDisposable">
-            <summary>
-            Provides small improving of mechanism for releasing unmanaged resources by adding additional members.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.CoreHelper.ISymOntoClayDisposable.IsDisposed">
-            <summary>
-            Returns <c>true</c> if the instance was disposed, otherwise returns <c>false</c>.
-            </summary>
-        </member>
     </members>
 </doc>

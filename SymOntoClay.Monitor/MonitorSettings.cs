@@ -21,14 +21,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Common.DebugHelpers;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
-using SymOntoClay.Monitor.Internal;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor
 {
@@ -56,7 +52,7 @@ namespace SymOntoClay.Monitor
             sb.PrintExisting(n, nameof(RemoteMonitor), RemoteMonitor);
             sb.PrintExisting(n, nameof(OutputHandler), OutputHandler);
             sb.PrintExisting(n, nameof(ErrorHandler), ErrorHandler);
-            sb.PrintExistingList(n, nameof(PlatformLoggers), PlatformLoggers);
+            sb.PrintExisting(n, nameof(PlatformLoggers), PlatformLoggers);
             sb.PrintObjDict_3_Prop(n, nameof(NodesSettings), NodesSettings);
             sb.AppendLine($"{spaces}{nameof(EnableOnlyDirectlySetUpNodes)} = {EnableOnlyDirectlySetUpNodes}");            
             sb.Append(base.PropertiesToString(n));

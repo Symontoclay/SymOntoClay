@@ -386,7 +386,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(KindOfRuleInstance)} = {KindOfRuleInstance}");
 
             sb.PrintExisting(n, nameof(PrimaryPart), PrimaryPart);
-            sb.PrintExistingList(n, nameof(SecondaryParts), SecondaryParts);
+            sb.PrintExisting(n, nameof(SecondaryParts), SecondaryParts);
 
             sb.PrintExisting(n, nameof(ObligationModality), ObligationModality);
             sb.PrintExisting(n, nameof(SelfObligationModality), SelfObligationModality);

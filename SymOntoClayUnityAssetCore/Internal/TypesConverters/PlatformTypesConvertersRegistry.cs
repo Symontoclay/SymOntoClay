@@ -175,7 +175,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
                 return true;
             }
 
-            if (type == typeof(SymOntoClay.CoreHelper.ISymOntoClayDisposable))
+            if (type == typeof(SymOntoClay.Common.Disposing.ISymOntoClayDisposable))
             {
                 return true;
             }

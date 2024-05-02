@@ -213,7 +213,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr
 
             sb.AppendLine($"{spaces}{nameof(IsNamedParameters)} = {IsNamedParameters}");
 
-            sb.PrintExistingList(n, nameof(ParamsList), ParamsList);
+            sb.PrintExisting(n, nameof(ParamsList), ParamsList);
 
             sb.PrintBriefObjProp(n, nameof(RuleInstance), RuleInstance);
 

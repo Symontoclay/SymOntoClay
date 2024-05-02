@@ -22,9 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.NLP.CommonDict;
-using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -56,7 +54,7 @@ namespace SymOntoClay.NLP
 
             sb.AppendLine($"{spaces}{nameof(CreationStrategy)} = {CreationStrategy}");
             sb.PrintPODList(n, nameof(DictsPaths), DictsPaths);
-            sb.PrintExistingList(n, nameof(DictsList), DictsList);
+            sb.PrintExisting(n, nameof(DictsList), DictsList);
 
             return sb.ToString();
         }

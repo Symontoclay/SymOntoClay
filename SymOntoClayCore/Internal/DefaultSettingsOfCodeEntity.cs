@@ -132,7 +132,7 @@ namespace SymOntoClay.Core.Internal
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintExistingList(n, nameof(WhereSection), WhereSection);
+            sb.PrintExisting(n, nameof(WhereSection), WhereSection);
             sb.PrintBriefObjProp(n, nameof(Holder), Holder);
             sb.AppendLine($"{spaces}{nameof(TypeOfAccess)} = {TypeOfAccess}");
 

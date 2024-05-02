@@ -177,7 +177,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintExistingList(n, nameof(NamesList), NamesList);
+            sb.PrintExisting(n, nameof(NamesList), NamesList);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

@@ -249,7 +249,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.AppendLine($"{spaces}{nameof(KindOfInlineTrigger)} = {KindOfInlineTrigger}");
             sb.AppendLine($"{spaces}{nameof(KindOfSystemEvent)} = {KindOfSystemEvent}");
 
-            sb.PrintExistingList(n, nameof(NamesList), NamesList);
+            sb.PrintExisting(n, nameof(NamesList), NamesList);
 
             sb.PrintBriefObjProp(n, nameof(SetCondition), SetCondition);
             sb.PrintBriefObjProp(n, nameof(SetBindingVariables), SetBindingVariables);
@@ -262,7 +262,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintBriefObjListProp(n, nameof(ResetStatements), ResetStatements);
             sb.PrintBriefObjProp(n, nameof(ResetCompiledFunctionBody), ResetCompiledFunctionBody);
 
-            sb.PrintExistingList(n, nameof(RuleInstancesList), RuleInstancesList);
+            sb.PrintExisting(n, nameof(RuleInstancesList), RuleInstancesList);
 
             sb.AppendLine($"{spaces}{nameof(DoubleConditionsStrategy)} = {DoubleConditionsStrategy}");
 

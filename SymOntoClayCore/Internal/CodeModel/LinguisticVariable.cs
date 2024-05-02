@@ -249,7 +249,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintExisting(n, nameof(Range), Range);
             sb.PrintExisting(n, nameof(Constraint), Constraint);
-            sb.PrintExistingList(n, nameof(Values), Values);
+            sb.PrintExisting(n, nameof(Values), Values);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

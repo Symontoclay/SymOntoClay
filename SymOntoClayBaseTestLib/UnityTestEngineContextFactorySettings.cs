@@ -91,7 +91,7 @@ namespace SymOntoClay.BaseTestLib
             sb.AppendLine($"{spaces}{nameof(UseDefaultCurrentAbsolutePosition)} = {UseDefaultCurrentAbsolutePosition}");
 
             sb.PrintPODList(n, nameof(DictsPaths), DictsPaths);
-            sb.PrintExistingList(n, nameof(DictsList), DictsList);
+            sb.PrintExisting(n, nameof(DictsList), DictsList);
             sb.AppendLine($"{spaces}{nameof(UseDefaultNLPSettings)} = {UseDefaultNLPSettings}");
             sb.AppendLine($"{spaces}{nameof(UseStandardLibrary)} = {UseStandardLibrary}");
 

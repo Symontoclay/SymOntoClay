@@ -232,7 +232,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintExisting(n, nameof(Left), Left);
             sb.PrintExisting(n, nameof(Right), Right);
-            sb.PrintExistingList(n, nameof(ParamsList), ParamsList);
+            sb.PrintExisting(n, nameof(ParamsList), ParamsList);
 
             sb.PrintBriefObjProp(n, nameof(Value), Value);
             sb.PrintBriefObjProp(n, nameof(FuzzyLogicNonNumericSequenceValue), FuzzyLogicNonNumericSequenceValue);

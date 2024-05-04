@@ -21,15 +21,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
-using SymOntoClay.CoreHelper;
+using SymOntoClay.Common;
 using SymOntoClay.Monitor.Common.Data;
-using SymOntoClay.Monitor.LogFileBuilder.FileNameTemplateOptionItems;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.LogFileBuilder
 {

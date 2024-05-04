@@ -22,7 +22,7 @@ SOFTWARE.*/
 
 using NLog;
 using SymOntoClay.CLI.Helpers;
-using SymOntoClay.CoreHelper;
+using SymOntoClay.Common;
 using System;
 using System.Configuration;
 using System.IO;

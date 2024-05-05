@@ -9,7 +9,7 @@
     <Copyright>Copyright (c) 2020 - 2024 Sergiy Tolkachov aka metatypeman</Copyright>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="NLog" Version="4.7.9" />
+    <PackageReference Include="NLog" Version="5.1.4" />
     <PackageReference Include="OxyPlot.Wpf" Version="2.1.0-Preview1" />
   </ItemGroup>
   <ItemGroup>

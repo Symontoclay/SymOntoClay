@@ -4,6 +4,11 @@
       "commandName": "Project",
       "commandLineArgs": "run -nlp",
       "workingDirectory": "C:\\Users\\sergiy.tolkachov\\source\\repos\\SymOntoClay\\TestSandbox\\Source"
+    },
+    "SymOntoClayCLI HELP": {
+      "commandName": "Project",
+      "commandLineArgs": "help",
+      "workingDirectory": ""
     }
   }
 }

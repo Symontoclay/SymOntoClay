@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
@@ -11,7 +11,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NLog" Version="5.1.4" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.1" />
-	<PackageReference Include="SymOntoClay.CLI.Helpers" Version="0.5.4.7" />
+    <PackageReference Include="SymOntoClay.CLI.Helpers" Version="0.5.4.9" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SymOntoClay.Monitor.Common.Data\SymOntoClay.Monitor.Common.Data.csproj" />

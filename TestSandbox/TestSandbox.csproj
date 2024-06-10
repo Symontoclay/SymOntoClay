@@ -38,7 +38,7 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NLog" Version="5.1.4" />
-    <PackageReference Include="SymOntoClay.Common" Version="0.5.4.7" />
+    <PackageReference Include="SymOntoClay.Common" Version="0.5.4.9" />
     <PackageReference Include="System.CodeDom" Version="7.0.0" />
     <PackageReference Include="System.Speech" Version="7.0.0" />
   </ItemGroup>

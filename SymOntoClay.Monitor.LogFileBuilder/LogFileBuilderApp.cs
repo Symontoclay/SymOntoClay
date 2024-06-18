@@ -22,6 +22,8 @@ SOFTWARE.*/
 
 using NLog;
 using SymOntoClay.CLI.Helpers;
+using SymOntoClay.CLI.Helpers.CommandLineParsing;
+using SymOntoClay.CLI.Helpers.CommandLineParsing.Options;
 using SymOntoClay.Common;
 using System;
 using System.Collections.Generic;

@@ -38,6 +38,8 @@ using Newtonsoft.Json;
 using SymOntoClay.CLI.Helpers;
 using Microsoft.VisualStudio.TestPlatform.Utilities;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.CLI.Helpers.CommandLineParsing;
+using SymOntoClay.CLI.Helpers.CommandLineParsing.Options;
 
 namespace TestSandbox.Handlers
 {

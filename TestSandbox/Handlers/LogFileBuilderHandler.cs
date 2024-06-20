@@ -96,7 +96,7 @@ namespace TestSandbox.Handlers
 
         private void Case11()
         {
-            var parser = CreateAndInitParser();
+            var parser = new LogFileBuilderAppCommandLineParser(true);
 
             var cmdArg = @"--i c:\Users\sergiy.tolkachov\source\repos\ --nologo";
 
@@ -106,7 +106,11 @@ namespace TestSandbox.Handlers
 
             _logger.Info($"cmdStrList = '{cmdStrList.WritePODListToString()}'");
 
-            var parsedCmd = parser.Parse(cmdStrList);
+            var result = parser.Parse(cmdStrList);
+
+            _logger.Info($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
+
+            var parsedCmd = result.Params;
 
             _logger.Info($"parsedCmd = {JsonConvert.SerializeObject(parsedCmd, Formatting.Indented)}");
 
@@ -126,118 +130,39 @@ namespace TestSandbox.Handlers
             _logger.Info($"logFileBuilderOptions = {JsonConvert.SerializeObject(logFileBuilderOptions, Formatting.Indented)}");
         }
 
-        private CommandLineParser CreateAndInitParser()
-        {
-            var parser = new CommandLineParser();
-
-            parser.RegisterArgument(new CommandLineArgumentOptions
-            {
-                Name = "--help",
-                Aliases = new List<string>
-                {
-                    "--?",
-                    "--h"
-                },
-                Kind = KindOfCommandLineArgument.Flag
-            });
-
-            parser.RegisterArgument(new CommandLineArgumentOptions
-            {
-                Name = "--input",
-                Aliases = new List<string>
-                {
-                    "--i"
-                },
-                Kind = KindOfCommandLineArgument.SingleValue,
-                IsDefault = true
-            });
-
-            parser.RegisterArgument(new CommandLineArgumentOptions
-            {
-                Name = "--output",
-                Aliases = new List<string>
-                {
-                    "--o"
-                },
-                Kind = KindOfCommandLineArgument.SingleValue
-            });
-
-            parser.RegisterArgument(new CommandLineArgumentOptions
-            {
-                Name = "--nologo",
-                Kind = KindOfCommandLineArgument.Flag
-            });
-
-            parser.RegisterArgument(new CommandLineArgumentOptions
-            {
-                Name = "--target-nodeid",
-                Kind = KindOfCommandLineArgument.SingleValue
-            });
-
-            parser.RegisterArgument(new CommandLineArgumentOptions
-            {
-                Name = "--target-threadid",
-                Kind = KindOfCommandLineArgument.SingleValue
-            });
-
-            parser.RegisterArgument(new CommandLineArgumentOptions
-            {
-                Name = "--split-by-nodes",
-                Kind = KindOfCommandLineArgument.Flag
-            });
-
-            parser.RegisterArgument(new CommandLineArgumentOptions
-            {
-                Name = "--split-by-threads",
-                Kind = KindOfCommandLineArgument.Flag
-            });
-
-            parser.RegisterArgument(new CommandLineArgumentOptions
-            {
-                Name = "--configuration",
-                Aliases = new List<string>
-                {
-                    "--c",
-                    "--cfg",
-                    "--config"
-                },
-                Kind = KindOfCommandLineArgument.SingleValue
-            });
-
-            return parser;
-        }
-
         private void Case10()
         {
             var cmdArg = @"--i c:\Users\sergiy.tolkachov\source\repos\ --nologo";
 
             _logger.Info($"cmdArg = '{cmdArg}'");
 
-            var cmdStrList = cmdArg.Split(' ');
+            throw new NotImplementedException();
 
-            _logger.Info($"cmdStrList = '{cmdStrList.WritePODListToString()}'");
+            //var cmdStrList = cmdArg.Split(' ');
 
-            var parser = new CommandLineParser();
-            parser.RegisterArgument(new CommandLineArgumentOptions
-            {
-                Name = "--input",
-                Aliases = new List<string>
-                {
-                    "--i"
-                },
-                Kind = KindOfCommandLineArgument.SingleValue,
-                IsDefault = true
-            });
+            //_logger.Info($"cmdStrList = '{cmdStrList.WritePODListToString()}'");
 
-            parser.RegisterArgument(new CommandLineArgumentOptions
-            {
-                Name = "--nologo",
-                Kind = KindOfCommandLineArgument.Flag
-            });
+            //var parser = new CommandLineParser();
+            //parser.RegisterArgument(new CommandLineArgumentOptions
+            //{
+            //    Name = "--input",
+            //    Aliases = new List<string>
+            //    {
+            //        "--i"
+            //    },
+            //    Kind = KindOfCommandLineArgument.SingleValue,
+            //    IsDefault = true
+            //});
 
-            var result = parser.Parse(cmdStrList);
+            //parser.RegisterArgument(new CommandLineArgumentOptions
+            //{
+            //    Name = "--nologo",
+            //    Kind = KindOfCommandLineArgument.Flag
+            //});
 
-            _logger.Info($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
+            //var result = parser.Parse(cmdStrList);
+
+            //_logger.Info($"result = {JsonConvert.SerializeObject(result, Formatting.Indented)}");
         }
 
         private void Case9()

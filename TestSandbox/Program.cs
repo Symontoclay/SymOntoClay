@@ -88,7 +88,6 @@ namespace TestSandbox
 
             //TstThreadTask();
             //TstThreadPoolCount();
-            //TstCommandLineParserHandler();
             //TstLogFileBuilderParameterValueConverterToString();
             //TstLogFileBuilder();
             //TstMonitor();
@@ -210,16 +209,6 @@ namespace TestSandbox
             _globalLogger.Info($"completionPortThreadsMax = {completionPortThreadsMax}");
 
             ThreadPool.SetMinThreads(workerThreadsMax, completionPortThreadsMax);
-
-            _globalLogger.Info("End");
-        }
-
-        private static void TstCommandLineParserHandler()
-        {
-            _globalLogger.Info("Begin");
-
-            var handler = new CommandLineParserHandler();
-            handler.Run();
 
             _globalLogger.Info("End");
         }

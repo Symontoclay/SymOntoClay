@@ -56,20 +56,27 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             //_logger.Info($"defaultConfiguration = {defaultConfiguration}");
 #endif
 
-            var logFileBuilderOptions = ParseArgs(args);
+            var parseArgsResult = ParseArgs(args);
+
+            if(parseArgsResult.HasErrors)
+            {
+                return;
+            }
+
+            var logFileBuilderOptions = parseArgsResult.Options;
 
 #if DEBUG
             //_logger.Info($"logFileBuilderOptions = {JsonConvert.SerializeObject(logFileBuilderOptions, Formatting.Indented)}");
 #endif
 
-            if(logFileBuilderOptions.IsHelp)
+            if (logFileBuilderOptions.IsHelp)
             {
                 throw new NotImplementedException();
             }
 
             if(!logFileBuilderOptions.NoLogo)
             {
-                PrintHeader();
+                ConsoleWrapper.WriteCopyright();
             }
 
             if(string.IsNullOrWhiteSpace(logFileBuilderOptions.Output))
@@ -144,11 +151,23 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             LogFileCreator.Run(options, _logger);
         }
 
-        private LogFileBuilderOptions ParseArgs(string[] args)
+        private (LogFileBuilderOptions Options, bool HasErrors) ParseArgs(string[] args)
         {
-            var parser = CreateAndInitParser();
+            var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            var parsedArgs = parser.Parse(args);
+            var result = parser.Parse(args);
+
+            if (result.Errors.Count > 0)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ConsoleWrapper.WriteError(error);
+                }
+
+                return (null, true);
+            }
+
+            var parsedArgs = result.Params;
 
 #if DEBUG
             //_logger.Info($"parsedArgs = {JsonConvert.SerializeObject(parsedArgs, Formatting.Indented)}");
@@ -169,105 +188,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 IsAbsUrl = (parsedArgs.TryGetValue("--abs-url", out var isAbsUrl) ? (bool)isAbsUrl : null)
             };
 
-            return logFileBuilderOptions;
-        }
-
-        private CommandLineParser CreateAndInitParser()
-        {
-            var parser = new CommandLineParser();
-
-            parser.RegisterArgument(new CommandLineArgumentOptions
-            {
-                Name = "--help",
-                Aliases = new List<string>
-                {
-                    "--?",
-                    "--h"
-                },
-                Kind = KindOfCommandLineArgument.Flag
-            });
-
-            parser.RegisterArgument(new CommandLineArgumentOptions
-            {
-                Name = "--input",
-                Aliases = new List<string>
-                {
-                    "--i"
-                },
-                Kind = KindOfCommandLineArgument.SingleValue,
-                IsDefault = true
-            });
-
-            parser.RegisterArgument(new CommandLineArgumentOptions
-            {
-                Name = "--output",
-                Aliases = new List<string>
-                {
-                    "--o"
-                },
-                Kind = KindOfCommandLineArgument.SingleValue
-            });
-
-            parser.RegisterArgument(new CommandLineArgumentOptions
-            {
-                Name = "--nologo",
-                Kind = KindOfCommandLineArgument.Flag
-            });
-
-            parser.RegisterArgument(new CommandLineArgumentOptions
-            {
-                Name = "--target-nodeid",
-                Kind = KindOfCommandLineArgument.SingleValue
-            });
-
-            parser.RegisterArgument(new CommandLineArgumentOptions
-            {
-                Name = "--target-threadid",
-                Kind = KindOfCommandLineArgument.SingleValue
-            });
-
-            parser.RegisterArgument(new CommandLineArgumentOptions
-            {
-                Name = "--split-by-nodes",
-                Kind = KindOfCommandLineArgument.Flag
-            });
-
-            parser.RegisterArgument(new CommandLineArgumentOptions
-            {
-                Name = "--split-by-threads",
-                Kind = KindOfCommandLineArgument.Flag
-            });
-
-            parser.RegisterArgument(new CommandLineArgumentOptions
-            {
-                Name = "--configuration",
-                Aliases = new List<string>
-                {
-                    "--c",
-                    "--cfg",
-                    "--config"
-                },
-                Kind = KindOfCommandLineArgument.SingleValue
-            });
-
-            parser.RegisterArgument(new CommandLineArgumentOptions
-            {
-                Name = "--html",
-                Kind = KindOfCommandLineArgument.Flag
-            });
-
-            parser.RegisterArgument(new CommandLineArgumentOptions
-            {
-                Name = "--abs-url",
-                Kind = KindOfCommandLineArgument.Flag
-            });
-
-            return parser;
-        }
-
-        private void PrintHeader()
-        {
-            ConsoleWrapper.WriteText($"Copyright © 2020 - {DateTime.Today.Year:####} Sergiy Tolkachov aka metatypeman");
+            return (logFileBuilderOptions, false);
         }
 
         private void PrintHelp()

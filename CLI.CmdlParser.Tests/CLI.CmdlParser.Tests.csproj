@@ -18,6 +18,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SymOntoClay.Monitor.LogFileBuilder\SymOntoClay.Monitor.LogFileBuilder.csproj" />
+    <ProjectReference Include="..\SymOntoClayCoreHelper\SymOntoClayCoreHelper.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Using Include="NUnit.Framework" />
   </ItemGroup>
 

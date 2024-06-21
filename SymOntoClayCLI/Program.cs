@@ -24,6 +24,7 @@ using NLog;
 using SymOntoClay.CLI.Helpers;
 using SymOntoClay.Common;
 using System;
+using System.Configuration;
 using System.IO;
 
 namespace SymOntoClay.CLI
@@ -38,9 +39,24 @@ namespace SymOntoClay.CLI
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
+            var writeOutputToTextFileAsParallel = bool.Parse(ConfigurationManager.AppSettings["ConsoleWrapper.WriteOutputToTextFileAsParallel"] ?? "false");
+            var useNLogLogger = bool.Parse(ConfigurationManager.AppSettings["ConsoleWrapper.UseNLogLogger"] ?? "false");
+
 #if DEBUG
-            ConsoleWrapper.WriteOutputToTextFileAsParallel = true;
+            //_logger.Info($"writeOutputToTextFileAsParallel = {writeOutputToTextFileAsParallel}");
+            //_logger.Info($"useNLogLogger = {useNLogLogger}");
+            //_logger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 #endif
+
+            if (useNLogLogger)
+            {
+                ConsoleWrapper.SetNLogLogger(_logger);
+            }
+
+            if (writeOutputToTextFileAsParallel)
+            {
+                ConsoleWrapper.WriteOutputToTextFileAsParallel = true;
+            }
 
             using var app = new CLIApp();
             app.Run(args);

@@ -27,8 +27,7 @@ namespace TestSandbox.Handlers
             //EmptyCommandLine_Success();
             //FullValidNamedCommandLine_Success();
             //FullValidPositionedCommandLine_Success();
-            //ValidNamedCommandLine_Help_Success();
-            //ValidPositionedCommandLine_Help_Success();
+            ValidNamedCommandLine_Help_Success();
             //ValidNamedCommandLine_Html_AbsUrl_Success();
             //ValidPositionedCommandLine_Html_AbsUrl_Success();
             //ValidNamedCommandLine_Html_Success();
@@ -38,7 +37,7 @@ namespace TestSandbox.Handlers
             //ValidNamedCommandLine_Nologo_Success();
             //ValidPositionedCommandLine_Nologo_Success();
             //ValidNamedCommandLine_SplitByNodes_SplitByThreads_Success();
-            ValidPositionedCommandLine_SplitByNodes_SplitByThreads_Success();
+            //ValidPositionedCommandLine_SplitByNodes_SplitByThreads_Success();
             //ValidNamedCommandLine_TargetNodeId_TargetTreadId_Success();
             //ValidPositionedCommandLine_TargetNodeId_TargetTreadId_Success();
             //MinimalValidNamedCommandline_Success();
@@ -158,86 +157,192 @@ namespace TestSandbox.Handlers
 
         private void ValidNamedCommandLine_Help_Success()
         {
+            var args = new List<string>()
+            {
+                "--help"
+            };
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            throw new NotImplementedException();
-        }
+            var result = parser.Parse(args.ToArray());
 
-        private void ValidPositionedCommandLine_Help_Success()
-        {
-            var parser = new LogFileBuilderAppCommandLineParser(true);
-
-            throw new NotImplementedException();
+            _logger.Info($"result = {result}");
         }
 
         private void ValidNamedCommandLine_Html_AbsUrl_Success()
         {
+            var args = new List<string>()
+                {
+                    "--i",
+                    @"%USERPROFILE%\SomeInputDir\",
+                    "--o",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--html",
+                    "--abs-url"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            throw new NotImplementedException();
+            var result = parser.Parse(args.ToArray());
+
+            _logger.Info($"result = {result}");
         }
 
         private void ValidPositionedCommandLine_Html_AbsUrl_Success()
         {
+            var args = new List<string>()
+                {
+                    @"%USERPROFILE%\SomeInputDir\",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--html",
+                    "--abs-url"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            throw new NotImplementedException();
+            var result = parser.Parse(args.ToArray());
+
+            _logger.Info($"result = {result}");
         }
 
         private void ValidNamedCommandLine_Html_Success()
         {
+            var args = new List<string>()
+                {
+                    "--i",
+                    @"%USERPROFILE%\SomeInputDir\",
+                    "--o",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--html"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            throw new NotImplementedException();
+            var result = parser.Parse(args.ToArray());
+
+            _logger.Info($"result = {result}");
         }
 
         private void ValidPositionedCommandLine_Html_Success()
         {
+            var args = new List<string>()
+                {
+                    @"%USERPROFILE%\SomeInputDir\",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--html"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            throw new NotImplementedException();
+            var result = parser.Parse(args.ToArray());
+
+            _logger.Info($"result = {result}");
         }
 
         private void ValidNamedCommandLine_Configuration_Success()
         {
+            var args = new List<string>()
+                {
+                    "--i",
+                    @"%USERPROFILE%\SomeInputDir\",
+                    "--o",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--configuration",
+                    @"%USERPROFILE%\Some.config"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            throw new NotImplementedException();
+            var result = parser.Parse(args.ToArray());
+
+            _logger.Info($"result = {result}");
         }
 
         private void ValidPositionedCommandLine_Configuration_Success()
         {
+            var args = new List<string>()
+                {
+                    @"%USERPROFILE%\SomeInputDir\",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--configuration",
+                    @"%USERPROFILE%\Some.config"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            throw new NotImplementedException();
+            var result = parser.Parse(args.ToArray());
+
+            _logger.Info($"result = {result}");
         }
 
         private void ValidNamedCommandLine_Nologo_Success()
         {
+            var args = new List<string>()
+                {
+                    "--i",
+                    @"%USERPROFILE%\SomeInputDir\",
+                    "--o",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--nologo"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            throw new NotImplementedException();
+            var result = parser.Parse(args.ToArray());
+
+            _logger.Info($"result = {result}");
         }
 
         private void ValidPositionedCommandLine_Nologo_Success()
         {
+            var args = new List<string>()
+                {
+                    @"%USERPROFILE%\SomeInputDir\",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--nologo"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            throw new NotImplementedException();
+            var result = parser.Parse(args.ToArray());
+
+            _logger.Info($"result = {result}");
         }
 
         private void ValidNamedCommandLine_SplitByNodes_SplitByThreads_Success()
         {
+            var args = new List<string>()
+                {
+                    "--i",
+                    @"%USERPROFILE%\SomeInputDir\",
+                    "--o",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--split-by-nodes",
+                    "--split-by-threads"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            throw new NotImplementedException();
+            var result = parser.Parse(args.ToArray());
+
+            _logger.Info($"result = {result}");
         }
 
         private void ValidPositionedCommandLine_SplitByNodes_SplitByThreads_Success()
         {
+            var args = new List<string>()
+                {
+                    @"%USERPROFILE%\SomeInputDir\",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--split-by-nodes",
+                    "--split-by-threads"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            throw new NotImplementedException();
+            var result = parser.Parse(args.ToArray());
+
+            _logger.Info($"result = {result}");
         }
 
         private void ValidNamedCommandLine_TargetNodeId_TargetTreadId_Success()

@@ -20,9 +20,13 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                     {
                         new CommandLineArgument()
                         {
-                            Name = "h",
+                            Name = "--help",
                             Aliases = new List<string>
                             {
+                                "h",
+                                "-h",
+                                "--h",
+                                "-help",
                                 "help"
                             },
                             Kind = KindOfCommandLineArgument.Flag,
@@ -37,7 +41,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                                     Name = "--input",
                                     Aliases = new List<string>()
                                     {
-                                        "--i"
+                                        "--i",
+                                        "-input",
+                                        "-i"
                                     },
                                     Kind = KindOfCommandLineArgument.SingleValue,
                                     Index = 0
@@ -47,7 +53,9 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                                     Name = "--output",
                                     Aliases = new List<string>
                                     {
-                                        "--o"
+                                        "--o",
+                                        "-output",
+                                        "-o"
                                     },
                                     Kind = KindOfCommandLineArgument.SingleValue,
                                     Index = 1
@@ -55,26 +63,46 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                                 new CommandLineArgument
                                 {
                                     Name = "--nologo",
+                                    Aliases = new List<string>
+                                    {
+                                        "-nologo"
+                                    },
                                     Kind = KindOfCommandLineArgument.Flag
                                 },
                                 new CommandLineArgument
                                 {
                                     Name = "--target-nodeid",
+                                    Aliases = new List<string>
+                                    {
+                                        "-target-nodeid"
+                                    },
                                     Kind = KindOfCommandLineArgument.SingleValue
                                 },
                                 new CommandLineArgument
                                 {
                                     Name = "--target-threadid",
+                                    Aliases = new List<string>
+                                    {
+                                        "-target-threadid"
+                                    },
                                     Kind = KindOfCommandLineArgument.SingleValue
                                 },
                                 new CommandLineArgument
                                 {
                                     Name = "--split-by-nodes",
+                                    Aliases = new List<string>
+                                    {
+                                        "-split-by-nodes"
+                                    },
                                     Kind = KindOfCommandLineArgument.Flag
                                 },
                                 new CommandLineArgument
                                 {
                                     Name = "--split-by-threads",
+                                    Aliases = new List<string>
+                                    {
+                                        "-split-by-threads"
+                                    },
                                     Kind = KindOfCommandLineArgument.Flag
                                 },
                                 new CommandLineArgument
@@ -84,18 +112,30 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                                     {
                                         "--c",
                                         "--cfg",
-                                        "--config"
+                                        "--config",
+                                        "-configuration",
+                                        "-c",
+                                        "-cfg",
+                                        "-config"
                                     },
                                     Kind = KindOfCommandLineArgument.SingleValue
                                 },
                                 new CommandLineArgument
                                 {
                                     Name = "--html",
+                                    Aliases = new List<string>
+                                    {
+                                        "-html"
+                                    },
                                     Kind = KindOfCommandLineArgument.Flag
                                 },
                                 new CommandLineArgument
                                 {
                                     Name = "--abs-url",
+                                    Aliases = new List<string>
+                                    {
+                                        "-abs-url"
+                                    },
                                     Kind = KindOfCommandLineArgument.Flag,
                                     Requires = new List<string>
                                     {

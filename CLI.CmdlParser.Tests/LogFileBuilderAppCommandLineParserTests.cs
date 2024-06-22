@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Monitor.LogFileBuilder;
+﻿using SymOntoClay.CLI.Helpers.CommandLineParsing.Exceptions;
+using SymOntoClay.Monitor.LogFileBuilder;
 
 namespace CLI.CmdlParser.Tests
 {
@@ -678,65 +679,169 @@ namespace CLI.CmdlParser.Tests
         [Test]
         public void MinimalValidPositionedCommandline_Help_Fail()
         {
+            var args = new List<string>()
+                {
+                    @"%USERPROFILE%\SomeInputDir\",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--help"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(false);
 
-            throw new NotImplementedException();
+            var exception = Assert.Catch<DuplicatedMutuallyExclusiveOptionsSetException>(() => {
+                parser.Parse(args.ToArray());
+            });
+
+            Assert.That(exception.Message, Is.EqualTo(@"Options '--help', '%USERPROFILE%\SomeInputDir\' cannot be used at the same time."));
         }
 
         [Test]
         public void MinimalValidPositionedCommandline_Help_ErrorsList()
         {
+            var args = new List<string>()
+                {
+                    @"%USERPROFILE%\SomeInputDir\",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--help"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            throw new NotImplementedException();
+            var result = parser.Parse(args.ToArray());
+
+            Assert.That(result.Errors.Count, Is.EqualTo(1));
+
+            Assert.That(result.Errors[0], Is.EqualTo(@"Options '--help', '%USERPROFILE%\SomeInputDir\' cannot be used at the same time."));
+
+            Assert.That(result.Params.Count, Is.EqualTo(0));
         }
 
         [Test]
         public void MinimalValidNamedCommandline_Help_Fail()
         {
+            var args = new List<string>()
+                {
+                    "--i",
+                    @"%USERPROFILE%\SomeInputDir\",
+                    "--o",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--help"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(false);
 
-            throw new NotImplementedException();
+            var exception = Assert.Catch<DuplicatedMutuallyExclusiveOptionsSetException>(() => {
+                parser.Parse(args.ToArray());
+            });
+
+            Assert.That(exception.Message, Is.EqualTo("Options '--help', '--i' cannot be used at the same time."));
         }
 
         [Test]
         public void MinimalValidNamedCommandline_Help_ErrorsList()
         {
+            var args = new List<string>()
+                {
+                    "--i",
+                    @"%USERPROFILE%\SomeInputDir\",
+                    "--o",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--help"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            throw new NotImplementedException();
+            var result = parser.Parse(args.ToArray());
+
+            Assert.That(result.Errors.Count, Is.EqualTo(1));
+
+            Assert.That(result.Errors[0], Is.EqualTo("Options '--help', '--i' cannot be used at the same time."));
+
+            Assert.That(result.Params.Count, Is.EqualTo(0));
         }
 
         [Test]
         public void MinimalValidPositionedCommandline_AbsUrl_Fail()
         {
+            var args = new List<string>()
+                {
+                    @"%USERPROFILE%\SomeInputDir\",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--abs-url"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(false);
 
-            throw new NotImplementedException();
+            var exception = Assert.Catch<RequiredOptionException>(() => {
+                parser.Parse(args.ToArray());
+            });
+
+            Assert.That(exception.Message, Is.EqualTo("Option '--html' is required for '--abs-url'."));
         }
 
         [Test]
         public void MinimalValidPositionedCommandline_AbsUrl_ErrorsList()
         {
+            var args = new List<string>()
+                {
+                    @"%USERPROFILE%\SomeInputDir\",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--abs-url"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            throw new NotImplementedException();
+            var result = parser.Parse(args.ToArray());
+
+            Assert.That(result.Errors.Count, Is.EqualTo(1));
+
+            Assert.That(result.Errors[0], Is.EqualTo("Option '--html' is required for '--abs-url'."));
+
+            Assert.That(result.Params.Count, Is.EqualTo(0));
         }
 
         [Test]
         public void MinimalValidNamedCommandline_AbsUrl_Fail()
         {
+            var args = new List<string>()
+                {
+                    "--i",
+                    @"%USERPROFILE%\SomeInputDir\",
+                    "--o",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--abs-url"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(false);
 
-            throw new NotImplementedException();
+            var exception = Assert.Catch<RequiredOptionException>(() => {
+                parser.Parse(args.ToArray());
+            });
+
+            Assert.That(exception.Message, Is.EqualTo("Option '--html' is required for '--abs-url'."));
         }
 
         [Test]
         public void MinimalValidNamedCommandline_AbsUrl_ErrorsList()
         {
+            var args = new List<string>()
+                {
+                    "--i",
+                    @"%USERPROFILE%\SomeInputDir\",
+                    "--o",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--abs-url"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            throw new NotImplementedException();
+            var result = parser.Parse(args.ToArray());
+
+            Assert.That(result.Errors.Count, Is.EqualTo(1));
+
+            Assert.That(result.Errors[0], Is.EqualTo("Option '--html' is required for '--abs-url'."));
+
+            Assert.That(result.Params.Count, Is.EqualTo(0));
         }
     }
 }

@@ -19,11 +19,11 @@ namespace TestSandbox.Handlers
             //MinimalValidNamedCommandline_AbsUrl_ErrorsList();
             //MinimalValidNamedCommandline_AbsUrl_Fail();
             //MinimalValidPositionedCommandline_AbsUrl_ErrorsList();
-            //MinimalValidPositionedCommandline_AbsUrl_Fail();
+            MinimalValidPositionedCommandline_AbsUrl_Fail();
             //MinimalValidNamedCommandline_Help_ErrorsList();
             //MinimalValidNamedCommandline_Help_Fail();
             //MinimalValidPositionedCommandline_Help_ErrorsList();
-            MinimalValidPositionedCommandline_Help_Fail();
+            //MinimalValidPositionedCommandline_Help_Fail();
             //EmptyCommandLine_Success();
             //FullValidNamedCommandLine_Success();
             //FullValidPositionedCommandLine_Success();
@@ -48,18 +48,42 @@ namespace TestSandbox.Handlers
 
         private void MinimalValidNamedCommandline_AbsUrl_ErrorsList()
         {
+            var args = new List<string>()
+                {
+                    "--i",
+                    @"%USERPROFILE%\SomeInputDir\",
+                    "--o",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--abs-url"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            throw new NotImplementedException();
+            var result = parser.Parse(args.ToArray());
+
+            _logger.Info($"result = {result}");
+            _logger.Info($"result.Params.Count = {result.Params.Count}");
         }
 
         private void MinimalValidNamedCommandline_AbsUrl_Fail()
         {
             try
             {
+                var args = new List<string>()
+                {
+                    "--i",
+                    @"%USERPROFILE%\SomeInputDir\",
+                    "--o",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--abs-url"
+                };
+
                 var parser = new LogFileBuilderAppCommandLineParser(false);
 
-                throw new NotImplementedException();
+                var result = parser.Parse(args.ToArray());
+
+                _logger.Info($"result = {result}");
+                _logger.Info($"result.Params.Count = {result.Params.Count}");
             }
             catch (Exception e)
             {
@@ -70,18 +94,38 @@ namespace TestSandbox.Handlers
 
         private void MinimalValidPositionedCommandline_AbsUrl_ErrorsList()
         {
+            var args = new List<string>()
+                {
+                    @"%USERPROFILE%\SomeInputDir\",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--abs-url"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            throw new NotImplementedException();
+            var result = parser.Parse(args.ToArray());
+
+            _logger.Info($"result = {result}");
+            _logger.Info($"result.Params.Count = {result.Params.Count}");
         }
 
         private void MinimalValidPositionedCommandline_AbsUrl_Fail()
         {
             try
             {
+                var args = new List<string>()
+                {
+                    @"%USERPROFILE%\SomeInputDir\",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--abs-url"
+                };
+
                 var parser = new LogFileBuilderAppCommandLineParser(false);
 
-                throw new NotImplementedException();
+                var result = parser.Parse(args.ToArray());
+
+                _logger.Info($"result = {result}");
+                _logger.Info($"result.Params.Count = {result.Params.Count}");
             }
             catch (Exception e)
             {
@@ -92,18 +136,42 @@ namespace TestSandbox.Handlers
 
         private void MinimalValidNamedCommandline_Help_ErrorsList()
         {
+            var args = new List<string>()
+                {
+                    "--i",
+                    @"%USERPROFILE%\SomeInputDir\",
+                    "--o",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--help"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            throw new NotImplementedException();
+            var result = parser.Parse(args.ToArray());
+
+            _logger.Info($"result = {result}");
+            _logger.Info($"result.Params.Count = {result.Params.Count}");
         }
 
         private void MinimalValidNamedCommandline_Help_Fail()
         {
             try
             {
+                var args = new List<string>()
+                {
+                    "--i",
+                    @"%USERPROFILE%\SomeInputDir\",
+                    "--o",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--help"
+                };
+
                 var parser = new LogFileBuilderAppCommandLineParser(false);
 
-                throw new NotImplementedException();
+                var result = parser.Parse(args.ToArray());
+
+                _logger.Info($"result = {result}");
+                _logger.Info($"result.Params.Count = {result.Params.Count}");
             }
             catch (Exception e)
             {
@@ -114,9 +182,19 @@ namespace TestSandbox.Handlers
 
         private void MinimalValidPositionedCommandline_Help_ErrorsList()
         {
+            var args = new List<string>()
+                {
+                    @"%USERPROFILE%\SomeInputDir\",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--help"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            throw new NotImplementedException();
+            var result = parser.Parse(args.ToArray());
+
+            _logger.Info($"result = {result}");
+            _logger.Info($"result.Params.Count = {result.Params.Count}");
         }
 
         private void MinimalValidPositionedCommandline_Help_Fail()

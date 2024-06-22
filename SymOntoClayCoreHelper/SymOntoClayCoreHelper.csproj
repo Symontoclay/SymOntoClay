@@ -16,6 +16,6 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="NLog" Version="5.1.4" />
-    <PackageReference Include="SymOntoClay.Common" Version="0.5.4.14" />
+    <PackageReference Include="SymOntoClay.Common" Version="0.5.4.15" />
   </ItemGroup>
 </Project>

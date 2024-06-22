@@ -26,8 +26,8 @@ namespace TestSandbox.Handlers
             //MinimalValidPositionedCommandline_Help_Fail();
             //EmptyCommandLine_Success();
             //FullValidNamedCommandLine_Success();
-            //FullValidPositionedCommandLine_Success();
-            ValidNamedCommandLine_Help_Success();
+            FullValidPositionedCommandLine_Success();
+            //ValidNamedCommandLine_Help_Success();
             //ValidNamedCommandLine_Html_AbsUrl_Success();
             //ValidPositionedCommandLine_Html_AbsUrl_Success();
             //ValidNamedCommandLine_Html_Success();
@@ -143,16 +143,58 @@ namespace TestSandbox.Handlers
 
         private void FullValidNamedCommandLine_Success()
         {
+            var args = new List<string>()
+                {
+                    "--i",
+                    @"%USERPROFILE%\SomeInputDir\",
+                    "--o",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--target-nodeid",
+                    "#DummyNPC",
+                    "--target-threadid",
+                    "#020ED339-6313-459A-900D-92F809CEBDC5",
+                    "--split-by-nodes",
+                    "--split-by-threads",
+                    "--nologo",
+                    "--configuration",
+                    @"%USERPROFILE%\Some.config",
+                    "--html",
+                    "--abs-url"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            throw new NotImplementedException();
+            var result = parser.Parse(args.ToArray());
+
+            _logger.Info($"result = {result}");
+            _logger.Info($"result.Params.Count = {result.Params.Count}");
         }
 
         private void FullValidPositionedCommandLine_Success()
         {
+            var args = new List<string>()
+                {
+                    @"%USERPROFILE%\SomeInputDir\",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--target-nodeid",
+                    "#DummyNPC",
+                    "--target-threadid",
+                    "#020ED339-6313-459A-900D-92F809CEBDC5",
+                    "--split-by-nodes",
+                    "--split-by-threads",
+                    "--nologo",
+                    "--configuration",
+                    @"%USERPROFILE%\Some.config",
+                    "--html",
+                    "--abs-url"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            throw new NotImplementedException();
+            var result = parser.Parse(args.ToArray());
+
+            _logger.Info($"result = {result}");
+            _logger.Info($"result.Params.Count = {result.Params.Count}");
         }
 
         private void ValidNamedCommandLine_Help_Success()

@@ -517,17 +517,143 @@ namespace CLI.CmdlParser.Tests
         [Test]
         public void FullValidPositionedCommandLine_Success()
         {
+            var inputKey = "--input";
+            var outputKey = "--output";
+            var targetNodeIdKey = "--target-nodeid";
+            var targetTreadIdKey = "--target-threadid";
+            var splitByNodesKey = "--split-by-nodes";
+            var splitByThreadsKey = "--split-by-threads";
+            var nologoKey = "--nologo";
+            var configurationKey = "--configuration";
+            var htmlKey = "--html";
+            var absUrlKey = "--abs-url";
+
+            var args = new List<string>()
+                {
+                    @"%USERPROFILE%\SomeInputDir\",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--target-nodeid",
+                    "#DummyNPC",
+                    "--target-threadid",
+                    "#020ED339-6313-459A-900D-92F809CEBDC5",
+                    "--split-by-nodes",
+                    "--split-by-threads",
+                    "--nologo",
+                    "--configuration",
+                    @"%USERPROFILE%\Some.config",
+                    "--html",
+                    "--abs-url"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            throw new NotImplementedException();
+            var result = parser.Parse(args.ToArray());
+
+            Assert.That(result.Errors.Count, Is.EqualTo(0));
+
+            Assert.That(result.Params.Count, Is.EqualTo(10));
+
+            Assert.That(result.Params.ContainsKey(inputKey), Is.EqualTo(true));
+            Assert.That(result.Params[inputKey], Is.EqualTo(@"%USERPROFILE%\SomeInputDir\"));
+
+            Assert.That(result.Params.ContainsKey(outputKey), Is.EqualTo(true));
+            Assert.That(result.Params[outputKey], Is.EqualTo(@"%USERPROFILE%\SomeOutputDir\"));
+
+            Assert.That(result.Params.ContainsKey(targetNodeIdKey), Is.EqualTo(true));
+            Assert.That(result.Params[targetNodeIdKey], Is.EqualTo("#DummyNPC"));
+
+            Assert.That(result.Params.ContainsKey(targetTreadIdKey), Is.EqualTo(true));
+            Assert.That(result.Params[targetTreadIdKey], Is.EqualTo("#020ED339-6313-459A-900D-92F809CEBDC5"));
+
+            Assert.That(result.Params.ContainsKey(splitByNodesKey), Is.EqualTo(true));
+            Assert.That((result.Params[splitByNodesKey]), Is.EqualTo(true));
+
+            Assert.That(result.Params.ContainsKey(splitByThreadsKey), Is.EqualTo(true));
+            Assert.That(result.Params[splitByThreadsKey], Is.EqualTo(true));
+
+            Assert.That(result.Params.ContainsKey(nologoKey), Is.EqualTo(true));
+            Assert.That((result.Params[nologoKey]), Is.EqualTo(true));
+
+            Assert.That(result.Params.ContainsKey(configurationKey), Is.EqualTo(true));
+            Assert.That((result.Params[configurationKey]), Is.EqualTo(@"%USERPROFILE%\Some.config"));
+
+            Assert.That(result.Params.ContainsKey(htmlKey), Is.EqualTo(true));
+            Assert.That((result.Params[htmlKey]), Is.EqualTo(true));
+
+            Assert.That(result.Params.ContainsKey(absUrlKey), Is.EqualTo(true));
+            Assert.That(result.Params[absUrlKey], Is.EqualTo(true));
         }
 
         [Test]
         public void FullValidNamedCommandLine_Success()
         {
+            var inputKey = "--input";
+            var outputKey = "--output";
+            var targetNodeIdKey = "--target-nodeid";
+            var targetTreadIdKey = "--target-threadid";
+            var splitByNodesKey = "--split-by-nodes";
+            var splitByThreadsKey = "--split-by-threads";
+            var nologoKey = "--nologo";
+            var configurationKey = "--configuration";
+            var htmlKey = "--html";
+            var absUrlKey = "--abs-url";
+
+            var args = new List<string>()
+                {
+                    "--i",
+                    @"%USERPROFILE%\SomeInputDir\",
+                    "--o",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--target-nodeid",
+                    "#DummyNPC",
+                    "--target-threadid",
+                    "#020ED339-6313-459A-900D-92F809CEBDC5",
+                    "--split-by-nodes",
+                    "--split-by-threads",
+                    "--nologo",
+                    "--configuration",
+                    @"%USERPROFILE%\Some.config",
+                    "--html",
+                    "--abs-url"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            throw new NotImplementedException();
+            var result = parser.Parse(args.ToArray());
+
+            Assert.That(result.Errors.Count, Is.EqualTo(0));
+
+            Assert.That(result.Params.Count, Is.EqualTo(10));
+
+            Assert.That(result.Params.ContainsKey(inputKey), Is.EqualTo(true));
+            Assert.That(result.Params[inputKey], Is.EqualTo(@"%USERPROFILE%\SomeInputDir\"));
+
+            Assert.That(result.Params.ContainsKey(outputKey), Is.EqualTo(true));
+            Assert.That(result.Params[outputKey], Is.EqualTo(@"%USERPROFILE%\SomeOutputDir\"));
+
+            Assert.That(result.Params.ContainsKey(targetNodeIdKey), Is.EqualTo(true));
+            Assert.That(result.Params[targetNodeIdKey], Is.EqualTo("#DummyNPC"));
+
+            Assert.That(result.Params.ContainsKey(targetTreadIdKey), Is.EqualTo(true));
+            Assert.That(result.Params[targetTreadIdKey], Is.EqualTo("#020ED339-6313-459A-900D-92F809CEBDC5"));
+
+            Assert.That(result.Params.ContainsKey(splitByNodesKey), Is.EqualTo(true));
+            Assert.That((result.Params[splitByNodesKey]), Is.EqualTo(true));
+
+            Assert.That(result.Params.ContainsKey(splitByThreadsKey), Is.EqualTo(true));
+            Assert.That(result.Params[splitByThreadsKey], Is.EqualTo(true));
+
+            Assert.That(result.Params.ContainsKey(nologoKey), Is.EqualTo(true));
+            Assert.That((result.Params[nologoKey]), Is.EqualTo(true));
+
+            Assert.That(result.Params.ContainsKey(configurationKey), Is.EqualTo(true));
+            Assert.That((result.Params[configurationKey]), Is.EqualTo(@"%USERPROFILE%\Some.config"));
+
+            Assert.That(result.Params.ContainsKey(htmlKey), Is.EqualTo(true));
+            Assert.That((result.Params[htmlKey]), Is.EqualTo(true));
+
+            Assert.That(result.Params.ContainsKey(absUrlKey), Is.EqualTo(true));
+            Assert.That(result.Params[absUrlKey], Is.EqualTo(true));
         }
 
         [Test]

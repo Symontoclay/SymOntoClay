@@ -49,7 +49,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                                     {
                                         "--o"
                                     },
-                                    Kind = KindOfCommandLineArgument.SingleValue
+                                    Kind = KindOfCommandLineArgument.SingleValue,
+                                    Index = 1
                                 },
                                 new CommandLineArgument
                                 {

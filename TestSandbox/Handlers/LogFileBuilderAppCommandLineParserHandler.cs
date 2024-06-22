@@ -38,11 +38,11 @@ namespace TestSandbox.Handlers
             //ValidNamedCommandLine_Nologo_Success();
             //ValidPositionedCommandLine_Nologo_Success();
             //ValidNamedCommandLine_SplitByNodes_SplitByThreads_Success();
-            //ValidPositionedCommandLine_SplitByNodes_SplitByThreads_Success();
+            ValidPositionedCommandLine_SplitByNodes_SplitByThreads_Success();
             //ValidNamedCommandLine_TargetNodeId_TargetTreadId_Success();
             //ValidPositionedCommandLine_TargetNodeId_TargetTreadId_Success();
             //MinimalValidNamedCommandline_Success();
-            MinimalValidPositionedCommandline_Success();
+            //MinimalValidPositionedCommandline_Success();
 
             _logger.Info("End");
         }
@@ -242,30 +242,74 @@ namespace TestSandbox.Handlers
 
         private void ValidNamedCommandLine_TargetNodeId_TargetTreadId_Success()
         {
+            var args = new List<string>()
+                {
+                    "--i",
+                    @"%USERPROFILE%\SomeInputDir\",
+                    "--o",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--target-nodeid",
+                    "#DummyNPC",
+                    "--target-threadid",
+                    "#020ED339-6313-459A-900D-92F809CEBDC5"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            throw new NotImplementedException();
+            var result = parser.Parse(args.ToArray());
+
+            _logger.Info($"result = {result}");
         }
 
         private void ValidPositionedCommandLine_TargetNodeId_TargetTreadId_Success()
         {
+            var args = new List<string>()
+                {
+                    @"%USERPROFILE%\SomeInputDir\",
+                    @"%USERPROFILE%\SomeOutputDir\",
+                    "--target-nodeid",
+                    "#DummyNPC",
+                    "--target-threadid",
+                    "#020ED339-6313-459A-900D-92F809CEBDC5"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            throw new NotImplementedException();
+            var result = parser.Parse(args.ToArray());
+
+            _logger.Info($"result = {result}");
         }
 
         private void MinimalValidNamedCommandline_Success()
         {
+            var args = new List<string>()
+                {
+                    "--i",
+                    @"%USERPROFILE%\SomeInputDir\",
+                    "--o",
+                    @"%USERPROFILE%\SomeOutputDir\"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            throw new NotImplementedException();
+            var result = parser.Parse(args.ToArray());
+
+            _logger.Info($"result = {result}");
         }
 
         private void MinimalValidPositionedCommandline_Success()
         {
+            var args = new List<string>()
+                {
+                    @"%USERPROFILE%\SomeInputDir\",
+                    @"%USERPROFILE%\SomeOutputDir\"
+                };
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            throw new NotImplementedException();
+            var result = parser.Parse(args.ToArray());
+
+            _logger.Info($"result = {result}");
         }
     }
 }

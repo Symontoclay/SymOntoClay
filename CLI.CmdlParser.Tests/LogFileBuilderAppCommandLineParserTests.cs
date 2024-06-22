@@ -659,9 +659,20 @@ namespace CLI.CmdlParser.Tests
         [Test]
         public void EmptyCommandLine_Success()
         {
+            var helpKey = "--help";
+
+            var args = new List<string>();
+
             var parser = new LogFileBuilderAppCommandLineParser(true);
 
-            throw new NotImplementedException();
+            var result = parser.Parse(args.ToArray());
+
+            Assert.That(result.Errors.Count, Is.EqualTo(0));
+
+            Assert.That(result.Params.Count, Is.EqualTo(1));
+
+            Assert.That(result.Params.ContainsKey(helpKey), Is.EqualTo(true));
+            Assert.That((result.Params[helpKey]), Is.EqualTo(true));
         }
 
         [Test]

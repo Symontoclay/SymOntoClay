@@ -466,15 +466,15 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                             break;
 
                         case 2:
-                            Assert.AreEqual(true, (message == "`a` has been called!" || message == "End"));
+                            Assert.AreEqual(true, (message == "`a` has been called!" || message == "on complete" || message == "End"));
                             break;
 
                         case 3:
-                            Assert.AreEqual(true, (message == "on complete" || message == "End"));
+                            Assert.AreEqual(true, (message == "`a` has been called!" || message == "on complete" || message == "End"));
                             break;
 
                         case 4:
-                            Assert.AreEqual(true, (message == "on complete" || message == "End"));
+                            Assert.AreEqual(true, (message == "`a` has been called!" || message == "on complete" || message == "End"));
                             break;
 
                         default:
@@ -780,19 +780,19 @@ action Go
                             break;
 
                         case 2:
-                            Assert.AreEqual(true, (message == "methodName = 'rotate'" || message == "End"));
+                            Assert.AreEqual(true, (message == "methodName = 'rotate'" || message == "on complete" || message == "End"));
                             break;
 
                         case 3:
-                            Assert.AreEqual(true, (message == "isNamedParameters = False" || message == "End"));
+                            Assert.AreEqual(true, (message == "methodName = 'rotate'" || message == "isNamedParameters = False" || message == "on complete" || message == "End"));
                             break;
 
                         case 4:
-                            Assert.AreEqual(true, (message == "on complete" || message == "End"));
+                            Assert.AreEqual(true, (message == "methodName = 'rotate'" || message == "isNamedParameters = False" || message == "on complete" || message == "End"));
                             break;
 
                         case 5:
-                            Assert.AreEqual(true, (message == "on complete" || message == "End"));
+                            Assert.AreEqual(true, (message == "methodName = 'rotate'" || message == "isNamedParameters = False" || message == "on complete" || message == "End"));
                             break;
 
                         default:
@@ -826,19 +826,19 @@ action Go
                             break;
 
                         case 2:
-                            Assert.AreEqual(true, (message == "methodName = 'rotate'" || message == "End"));
+                            Assert.AreEqual(true, (message == "methodName = 'rotate'" || message == "on complete" || message == "End"));
                             break;
 
                         case 3:
-                            Assert.AreEqual(true, (message == "isNamedParameters = False" || message == "End"));
+                            Assert.AreEqual(true, (message == "methodName = 'rotate'" || message == "isNamedParameters = False" || message == "on complete" || message == "End"));
                             break;
 
                         case 4:
-                            Assert.AreEqual(true, (message == "on complete" || message == "End"));
+                            Assert.AreEqual(true, (message == "methodName = 'rotate'" || message == "isNamedParameters = False" || message == "on complete" || message == "End"));
                             break;
 
                         case 5:
-                            Assert.AreEqual(true, (message == "on complete" || message == "End"));
+                            Assert.AreEqual(true, (message == "methodName = 'rotate'" || message == "isNamedParameters = False" || message == "on complete" || message == "End"));
                             break;
 
                         default:

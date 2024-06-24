@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -7,9 +7,9 @@
     <IsTestProject>true</IsTestProject>
     <RootNamespace>SymOntoClay.Core.Tests</RootNamespace>
     <AssemblyName>SymOntoClay.ActionsHardTests</AssemblyName>
-    <AssemblyVersion>0.5.4</AssemblyVersion>
-    <FileVersion>0.5.4</FileVersion>
-    <Version>0.5.4</Version>
+    <AssemblyVersion>0.5.5</AssemblyVersion>
+    <FileVersion>0.5.5</FileVersion>
+    <Version>0.5.5</Version>
     <Copyright>Copyright (c) 2020 - 2024 Sergiy Tolkachov aka metatypeman</Copyright>
   </PropertyGroup>
   <ItemGroup>

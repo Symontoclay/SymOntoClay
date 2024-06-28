@@ -38,7 +38,7 @@ namespace SymOntoClay.UnityAsset.Core
         /// The file describes active logic which will be executed on the NPC.
         /// </summary>
         public string LogicFile { get; set; }
-
+        
         public IPlatformSupport PlatformSupport { get; set; }
         public IVisionProvider VisionProvider { get; set; }
 

@@ -95,6 +95,9 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 coreEngineSettings.Categories = settings.Categories;
                 coreEngineSettings.EnableCategories = settings.EnableCategories;
 
+                coreEngineSettings.CancellationToken = worldContext.GetCancellationToken();
+                coreEngineSettings.ThreadingSettings = settings?.ThreadingSettings ?? worldContext.ThreadingSettings;
+
                 _coreEngine = new Engine(coreEngineSettings);
                 internalContext.CoreEngine = _coreEngine;
             }

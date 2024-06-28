@@ -46,6 +46,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Storage
             standaloneStorageSettings.AppFile = settings.HostFile;
             standaloneStorageSettings.LogicQueryParseAndCache = coreContext.LogicQueryParseAndCache;
 
+            standaloneStorageSettings.ThreadingSettings = settings?.ThreadingSettings ?? coreContext.ThreadingSettings;
+            standaloneStorageSettings.CancellationToken = coreContext.GetCancellationToken();
+
             _standaloneStorage = new StandaloneStorage(standaloneStorageSettings);
         }
 

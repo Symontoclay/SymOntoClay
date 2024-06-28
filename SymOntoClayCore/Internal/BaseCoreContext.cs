@@ -60,5 +60,15 @@ namespace SymOntoClay.Core.Internal
         {
             return LinkedCancellationTokenSource.Token;
         }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            CancellationTokenSource.Dispose();
+
+            AsyncEventsThreadPool.Dispose();
+
+            base.OnDisposed();
+        }
     }
 }

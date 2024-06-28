@@ -98,6 +98,7 @@ namespace SymOntoClay.Core.Internal
         {
             CodeExecutor.Dispose();
             CodeExecutionThreadPool.Dispose();
+            TriggersThreadPool.Dispose();
 
             base.Die();
         }
@@ -107,6 +108,7 @@ namespace SymOntoClay.Core.Internal
         {
             CodeExecutor.Dispose();
             CodeExecutionThreadPool.Dispose();
+            TriggersThreadPool.Dispose();
 
             base.OnDisposed();
         }

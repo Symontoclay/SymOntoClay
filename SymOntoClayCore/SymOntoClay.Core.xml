@@ -358,6 +358,9 @@
         <member name="M:SymOntoClay.Core.Internal.BaseCoreContext.GetCancellationToken">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.BaseCoreContext.OnDisposed">
+            <inheritdoc/>
+        </member>
         <member name="F:SymOntoClay.Core.Internal.CodeExecution.ActionExecutionStatus.None">
             <summary>
             Special status for options of convertors.

@@ -104,7 +104,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             StandaloneStorage = new StandaloneStorageComponent(settings, this);
             ModulesStorage.Init(StandaloneStorage.StandaloneStorage.Context);
             PlatformTypesConvertorsRegistry = new PlatformTypesConvertersRegistry(Logger);
-            DateTimeProvider = new DateTimeProvider(Logger, ThreadsComponent);
+            DateTimeProvider = new DateTimeProvider(Logger, ThreadsComponent, AsyncEventsThreadPool);
             LogicQueryParseAndCache = new LogicQueryParseAndCache(settings, this);
         }
         

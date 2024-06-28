@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core;
+using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core.Internal.HostSupport;
 using SymOntoClay.UnityAsset.Core.Internal.Vision;
 using System;
@@ -35,6 +36,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         public int SelfInstanceId { get; set; }
         public VisionComponent VisionComponent { get; set; }
         public HostSupportComponent HostSupportComponent { get; set; }
+        public ICustomThreadPool AsyncEventsThreadPool { get; set; }
         public Engine CoreEngine { get; set; }
     }
 }

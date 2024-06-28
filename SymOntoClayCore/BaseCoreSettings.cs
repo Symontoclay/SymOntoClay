@@ -27,6 +27,7 @@ using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace SymOntoClay.Core
 {
@@ -38,6 +39,8 @@ namespace SymOntoClay.Core
         public IMonitorNode MonitorNode { get; set; }
 
         public IDateTimeProvider DateTimeProvider { get; set; }
+
+        public CancellationToken CancellationToken { get; set; }
 
         public ThreadingSettings ThreadingSettings { get; set; }
 
@@ -67,6 +70,7 @@ namespace SymOntoClay.Core
 
             sb.PrintExisting(n, nameof(MonitorNode), MonitorNode);
             sb.PrintExisting(n, nameof(DateTimeProvider), DateTimeProvider);
+            sb.PrintExisting(n, nameof(CancellationToken), CancellationToken);
             sb.PrintObjProp(n, nameof(ThreadingSettings), ThreadingSettings);
 
             return sb.ToString();

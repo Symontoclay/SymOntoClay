@@ -2426,7 +2426,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     {
                         PrepareCodeFrameToSyncExecution(codeFrame, coordinator);
 
-                        var threadExecutor = new AsyncThreadExecutor(_context);
+                        var threadExecutor = new AsyncThreadExecutor(_context, _context.CodeExecutionThreadPool);
                         threadExecutor.SetCodeFrame(codeFrame);
 
                         var task = threadExecutor.Start();

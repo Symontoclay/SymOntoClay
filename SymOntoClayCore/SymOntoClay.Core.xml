@@ -352,6 +352,12 @@
         <member name="P:SymOntoClay.Core.Internal.BaseCoreContext.DateTimeProvider">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.BaseCoreContext.AsyncEventsThreadPool">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.BaseCoreContext.GetCancellationToken">
+            <inheritdoc/>
+        </member>
         <member name="F:SymOntoClay.Core.Internal.CodeExecution.ActionExecutionStatus.None">
             <summary>
             Special status for options of convertors.
@@ -6253,6 +6259,27 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DefaultSettingsOfCodeEntity.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.EngineContext.HostSupport">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.EngineContext.HostListener">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.EngineContext.ConditionalEntityHostSupport">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.EngineContext.SoundPublisherProvider">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.EngineContext.NLPConverterFactory">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.EngineContext.CodeExecutionThreadPool">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.EngineContext.TriggersThreadPool">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.EngineContext.GetNLPConverterContext">

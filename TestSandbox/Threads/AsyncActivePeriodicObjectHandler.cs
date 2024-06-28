@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -41,16 +42,18 @@ namespace TestSandbox.Threads
         {
             _logger.Info("9E0B3523-0D26-4864-A12B-D953C36A6BA2", "Begin");
 
+            using var threadPool = new CustomThreadPool(0, 20);
+
             var commonActiveContext = new ActivePeriodicObjectCommonContext();
 
             var activeContext = new ActivePeriodicObjectContext(commonActiveContext);
 
-            var activeObject = new AsyncActivePeriodicObject(activeContext)
+            var activeObject = new AsyncActivePeriodicObject(activeContext, threadPool)
             {
                 PeriodicMethod = NRun
             };
 
-            var activeObject2 = new AsyncActivePeriodicObject(activeContext)
+            var activeObject2 = new AsyncActivePeriodicObject(activeContext, threadPool)
             {
                 PeriodicMethod = NRun_2
             };

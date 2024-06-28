@@ -48,7 +48,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
             _visionProvider = visionProvider;
 
             _activePeriodicObjectContext = new ActivePeriodicObjectContext(worldContext.SyncContext);
-            _activeObject = new AsyncActivePeriodicObject(_activePeriodicObjectContext);
+            _activeObject = new AsyncActivePeriodicObject(_activePeriodicObjectContext, internalContext.AsyncEventsThreadPool);
             _activeObject.PeriodicMethod = CommandLoop;
         }
 

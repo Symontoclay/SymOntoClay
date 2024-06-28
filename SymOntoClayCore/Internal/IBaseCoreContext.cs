@@ -23,9 +23,11 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.Compiling;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace SymOntoClay.Core.Internal
 {
@@ -35,5 +37,7 @@ namespace SymOntoClay.Core.Internal
         IMonitorNode MonitorNode { get; }
         ICompiler Compiler { get; }
         IDateTimeProvider DateTimeProvider { get; }
+        ICustomThreadPool AsyncEventsThreadPool { get; }
+        CancellationToken GetCancellationToken();
     }
 }

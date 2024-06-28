@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.Threads;
+using SymOntoClay.Threading;
 
 namespace SymOntoClay.Core.Internal
 {
@@ -36,5 +37,8 @@ namespace SymOntoClay.Core.Internal
 
         INLPConverterContext GetNLPConverterContext();
         INLPConverterContext GetNLPConverterContext(ILocalCodeExecutionContext localCodeExecutionContext);
+
+        ICustomThreadPool CodeExecutionThreadPool { get; }
+        ICustomThreadPool TriggersThreadPool { get; }
     }
 }

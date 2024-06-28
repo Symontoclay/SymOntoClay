@@ -86,7 +86,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             var codeFramesList = ConvertProcessInitialInfosToCodeFrames(logger, processInitialInfoList);
 
-            var threadExecutor = new AsyncThreadExecutor(_context, parentThreadLoggerId);
+            var threadExecutor = new AsyncThreadExecutor(_context, _context.CodeExecutionThreadPool, parentThreadLoggerId);
             threadExecutor.SetCodeFrames(codeFramesList);
 
             return threadExecutor.Start();
@@ -202,7 +202,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 }
                 else
                 {
-                    var threadExecutor = new AsyncThreadExecutor(_context);
+                    var threadExecutor = new AsyncThreadExecutor(_context, _context.CodeExecutionThreadPool);
                     threadExecutor.SetCodeFrame(newCodeFrame);
 
                     var task = threadExecutor.Start();

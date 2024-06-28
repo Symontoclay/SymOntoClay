@@ -34,6 +34,8 @@ using SymOntoClay.Core.Internal.Services;
 using SymOntoClay.Core.Internal.StandardLibrary;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.Threads;
+using SymOntoClay.Threading;
+using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Helpers
 {
@@ -57,6 +59,16 @@ namespace SymOntoClay.Core.Internal.Helpers
             
             context.LoaderFromSourceCode = new ActiveLoaderFromSourceCode(context);
             context.InstancesStorage = new InstancesStorageComponent(context);
+
+            var threadingSettings = settings.ThreadingSettings?.CodeExecution;
+
+            context.CodeExecutionThreadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
+                threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
+                context.LinkedCancellationTokenSource.Token);
+
+            context.TriggersThreadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
+                threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
+                context.LinkedCancellationTokenSource.Token);
 
             return context;
         }
@@ -136,6 +148,15 @@ namespace SymOntoClay.Core.Internal.Helpers
         private static void BaseInitBaseCoreContext(BaseCoreContext context, BaseCoreSettings settings)
         {
             context.DateTimeProvider = settings.DateTimeProvider;
+
+            context.CancellationTokenSource = new CancellationTokenSource();
+            context.LinkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(context.CancellationTokenSource.Token, settings.CancellationToken);
+
+            var threadingSettings = settings.ThreadingSettings?.AsyncEvents;
+
+            context.AsyncEventsThreadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
+                threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
+                context.LinkedCancellationTokenSource.Token);
         }
     }
 }

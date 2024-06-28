@@ -52,6 +52,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 internalContext.IdForFacts = settings.IdForFacts;
                 internalContext.SelfInstanceId = settings.InstanceId;
 
+                internalContext.AsyncEventsThreadPool = AsyncEventsThreadPool;
+
                 var tmpDir = Path.Combine(worldContext.TmpDir, settings.Id);
 
                 Directory.CreateDirectory(worldContext.TmpDir);

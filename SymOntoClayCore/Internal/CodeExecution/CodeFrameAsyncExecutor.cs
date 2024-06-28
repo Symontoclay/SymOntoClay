@@ -89,7 +89,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var newLogger = monitorNode.CreateThreadLogger("0FBA9877-ACBB-48F1-8CAF-B73CAF435653", threadId :threadId, parentThreadId: parentThreadId);
 
-            var threadExecutor = new AsyncThreadExecutor(_context, newLogger);
+            var threadExecutor = new AsyncThreadExecutor(_context, _context.CodeExecutionThreadPool, newLogger);
             threadExecutor.SetCodeFrame(codeFrame);
 
             var task = threadExecutor.Start();

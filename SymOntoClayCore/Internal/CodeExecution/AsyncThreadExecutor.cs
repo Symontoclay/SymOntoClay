@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,23 +31,23 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public class AsyncThreadExecutor: BaseThreadExecutor
     {
-        public AsyncThreadExecutor(IEngineContext context)
-            : base(context, new AsyncActivePeriodicObject(context.ActivePeriodicObjectContext), BaseThreadExecutor.CreateInitParams(context))
+        public AsyncThreadExecutor(IEngineContext context, ICustomThreadPool threadPool)
+            : base(context, new AsyncActivePeriodicObject(context.ActivePeriodicObjectContext, threadPool), BaseThreadExecutor.CreateInitParams(context))
         {
         }
 
-        public AsyncThreadExecutor(IEngineContext context, string parentThreadId)
-            : base(context, new AsyncActivePeriodicObject(context.ActivePeriodicObjectContext), BaseThreadExecutor.CreateInitParams(context, parentThreadId))
+        public AsyncThreadExecutor(IEngineContext context, ICustomThreadPool threadPool, string parentThreadId)
+            : base(context, new AsyncActivePeriodicObject(context.ActivePeriodicObjectContext, threadPool), BaseThreadExecutor.CreateInitParams(context, parentThreadId))
         {
         }
         
-        public AsyncThreadExecutor(IEngineContext context, IMonitorLogger logger)
-            : this(context, logger, logger.Id)
+        public AsyncThreadExecutor(IEngineContext context, ICustomThreadPool threadPool, IMonitorLogger logger)
+            : this(context, threadPool, logger, logger.Id)
         {
         }
 
-        public AsyncThreadExecutor(IEngineContext context, IMonitorLogger logger, string threadId)
-            : base(context, new AsyncActivePeriodicObject(context.ActivePeriodicObjectContext), logger, threadId)
+        public AsyncThreadExecutor(IEngineContext context, ICustomThreadPool threadPool, IMonitorLogger logger, string threadId)
+            : base(context, new AsyncActivePeriodicObject(context.ActivePeriodicObjectContext, threadPool), logger, threadId)
         {
         }
     }

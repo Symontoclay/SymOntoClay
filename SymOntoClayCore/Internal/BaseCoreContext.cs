@@ -23,9 +23,11 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.Compiling;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace SymOntoClay.Core.Internal
 {
@@ -47,5 +49,16 @@ namespace SymOntoClay.Core.Internal
 
         /// <inheritdoc/>
         public IDateTimeProvider DateTimeProvider { get; set; }
+
+        /// <inheritdoc/>
+        public ICustomThreadPool AsyncEventsThreadPool { get; set; }
+        public CancellationTokenSource CancellationTokenSource { get; set; }
+        public CancellationTokenSource LinkedCancellationTokenSource { get; set; }
+
+        /// <inheritdoc/>
+        public CancellationToken GetCancellationToken()
+        {
+            return LinkedCancellationTokenSource.Token;
+        }
     }
 }

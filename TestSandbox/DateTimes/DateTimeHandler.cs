@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
+using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core.Internal.DateAndTime;
 using System;
 using System.Collections.Generic;
@@ -41,9 +42,11 @@ namespace TestSandbox.DateTimes
         {
             _logger.Info("318FB3BC-0385-4398-B412-9F7912CD4FAA", "Begin");
 
+            using var threadPool = new CustomThreadPool(0, 20);
+
             var commonActiveContext = new ActivePeriodicObjectCommonContext();
 
-            var dateTimeProvider = new DateTimeProvider(_logger, commonActiveContext);
+            var dateTimeProvider = new DateTimeProvider(_logger, commonActiveContext, threadPool);
 
             dateTimeProvider.LoadFromSourceCode();
             dateTimeProvider.Start();

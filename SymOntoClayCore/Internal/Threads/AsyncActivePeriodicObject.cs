@@ -23,6 +23,7 @@ SOFTWARE.*/
 using NLog;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -33,14 +34,16 @@ namespace SymOntoClay.Core.Internal.Threads
 {
     public class AsyncActivePeriodicObject : IActivePeriodicObject, IDisposable
     {
-        public AsyncActivePeriodicObject(IActivePeriodicObjectContext context)
+        public AsyncActivePeriodicObject(IActivePeriodicObjectContext context, ICustomThreadPool threadPool)
         {
             _context = context;
+            _threadPool = threadPool;
 
             context.AddChildActiveObject(this);
         }
         
         private readonly IActivePeriodicObjectContext _context;
+        private readonly ICustomThreadPool _threadPool;
 
 #if DEBUG
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
@@ -118,7 +121,7 @@ namespace SymOntoClay.Core.Internal.Threads
                             return;
                         }
                     }
-                }, cancellationToken);
+                }, _threadPool, cancellationToken);
 
                 _taskValue = new TaskValue(task, cancellationTokenSource);
 

@@ -26,6 +26,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -35,12 +36,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal.DateAndTime
 {
     public class DateTimeProvider: BaseLoggedComponent, IDateTimeProvider, IDisposable
     {
-        public DateTimeProvider(IMonitorLogger logger, IActivePeriodicObjectCommonContext syncContext)
+        public DateTimeProvider(IMonitorLogger logger, IActivePeriodicObjectCommonContext syncContext, ICustomThreadPool threadPool)
             : base(logger)
         {
             var activeContext = new ActivePeriodicObjectContext(syncContext);
 
-            _activeObject = new AsyncActivePeriodicObject(activeContext)
+            _activeObject = new AsyncActivePeriodicObject(activeContext, threadPool)
             {
                 PeriodicMethod = NRun
             };

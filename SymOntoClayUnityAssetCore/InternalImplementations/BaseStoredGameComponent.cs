@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
@@ -54,6 +55,9 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 
                 standaloneStorageSettings.Categories = settings.Categories;
                 standaloneStorageSettings.EnableCategories = settings.EnableCategories;
+
+                standaloneStorageSettings.ThreadingSettings = settings?.ThreadingSettings ?? worldContext.ThreadingSettings;
+                standaloneStorageSettings.CancellationToken = worldContext.GetCancellationToken();
 
                 HostStorage = new StandaloneStorage(standaloneStorageSettings);              
             }

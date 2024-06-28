@@ -77,7 +77,7 @@ namespace TestSandbox.CoreHostListener
 
             var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
 
-            var endPointActivator = new EndPointActivator(context.Logger, platformTypesConvertorsRegistry, invokingInMainThread);
+            var endPointActivator = new EndPointActivator(context.Logger, platformTypesConvertorsRegistry, invokingInMainThread, complexContext.EngineContext.AsyncEventsThreadPool);
 
             var platformListener = new TstPlatformHostListener();
 

@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConverters;
 using System;
@@ -40,15 +41,17 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 {
     public class EndPointActivator : BaseLoggedComponent
     {
-        public EndPointActivator(IMonitorLogger logger, IPlatformTypesConvertersRegistry platformTypesConvertorsRegistry, IInvokerInMainThread invokingInMainThread)
+        public EndPointActivator(IMonitorLogger logger, IPlatformTypesConvertersRegistry platformTypesConvertorsRegistry, IInvokerInMainThread invokingInMainThread, ICustomThreadPool threadPool)
             : base(logger)
         {
             _platformTypesConvertorsRegistry = platformTypesConvertorsRegistry;
             _invokingInMainThread = invokingInMainThread;
+            _threadPool = threadPool;
         }
 
         private readonly IPlatformTypesConvertersRegistry _platformTypesConvertorsRegistry;
         private readonly IInvokerInMainThread _invokingInMainThread;
+        private readonly ICustomThreadPool _threadPool;
 
         public IProcessInfo Activate(IMonitorLogger logger, string callMethodId, IEndpointInfo endpointInfo, ICommand command, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
@@ -146,7 +149,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
                     processInfo.SetStatus(logger, "4EF49830-6C8B-499E-BC46-D71104191808", ProcessStatus.Faulted);
                 }
 
-            }, cancellationToken);
+            }, _threadPool, cancellationToken);
 
             return task;
         }
@@ -219,7 +222,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 #if DEBUG
                 //logger.Info("A046851F-4CB5-46D5-ADB0-2A3C61984000", $"Invoke End processInfo.Id = {processInfo.Id};{processInfo.ToHumanizedLabel()}");
 #endif
-            }, cancellationToken);
+            }, _threadPool, cancellationToken);
 
             return task;
         }

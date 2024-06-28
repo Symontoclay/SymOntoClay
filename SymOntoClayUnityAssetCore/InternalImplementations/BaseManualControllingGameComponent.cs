@@ -58,7 +58,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 
             _endPointsResolver = new EndPointsResolver(Logger, platformTypesConvertorsRegistry);
 
-            _endPointActivator = new EndPointActivator(Logger, platformTypesConvertorsRegistry, worldContext.InvokerInMainThread);
+            _endPointActivator = new EndPointActivator(Logger, platformTypesConvertorsRegistry, worldContext.InvokerInMainThread, AsyncEventsThreadPool);
 
             _internalManualControlledObjectsList = new List<IInternalManualControlledObject>();
             _internalManualControlledObjectsDict = new Dictionary<IGameObject, InternalManualControlledObject>();

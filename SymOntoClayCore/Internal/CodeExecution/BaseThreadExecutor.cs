@@ -152,7 +152,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private bool _isCanceled;
 
         private long? _endOfTargetDuration;
-        private List<ThreadTask> _waitedTasksList;
+        private List<SymOntoClay.Core.Internal.Threads.ThreadTask> _waitedTasksList;
         private List<IProcessInfo> _waitedProcessInfoList;
 
         private readonly StrongIdentifierValue _defaultCtorName;
@@ -2024,7 +2024,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             executionCoordinators = new List<IExecutionCoordinator>() { _executionCoordinator };
                         }
 
-                        ThreadTask.Run(() => {
+                        SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {
                             ProcessInfoHelper.Wait(Logger, callMethodId, currentProcessInfo, executionCoordinators, timeout, timeoutCancellationMode, _dateTimeProvider, processInfo);
                         });
                     }

@@ -60,7 +60,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public AnnotationSystemEvent CancelAnnotationSystemEvent { get; set; }
         public AnnotationSystemEvent WeakCancelAnnotationSystemEvent { get; set; }
         public AnnotationSystemEvent ErrorAnnotationSystemEvent { get; set; }
-        public ThreadTask PseudoSyncTask { get; set; }
+        public SymOntoClay.Core.Internal.Threads.ThreadTask PseudoSyncTask { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

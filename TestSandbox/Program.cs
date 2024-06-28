@@ -188,7 +188,7 @@ namespace TestSandbox
         {
             _globalLogger.Info("Begin");
 
-            var task = new ThreadTask(() => {
+            var task = new SymOntoClay.Core.Internal.Threads.ThreadTask(() => {
                 _globalLogger.Info("Run");
             });
 
@@ -402,7 +402,7 @@ namespace TestSandbox
             var source1 = new CancellationTokenSource();
             var token1 = source1.Token;
 
-            var task = ThreadTask.Run(() => {
+            var task = SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {
                 _logger.Info("EB024ABD-0889-4DEF-A6E9-1D36CA08F839", "Hi!");
 
                 Thread.Sleep(10000);

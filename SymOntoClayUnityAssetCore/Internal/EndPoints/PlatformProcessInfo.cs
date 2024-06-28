@@ -46,7 +46,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             _callMethodId = callMethodId;
         }
 
-        public void SetTask(ThreadTask task)
+        public void SetTask(SymOntoClay.Core.Internal.Threads.ThreadTask task)
         {
             _task = task;
         }
@@ -112,7 +112,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
         private readonly IReadOnlyList<int> _devices;
         private readonly IReadOnlyList<string> _friends;
         private readonly string _callMethodId;
-        private ThreadTask _task;
+        private SymOntoClay.Core.Internal.Threads.ThreadTask _task;
         private readonly CancellationTokenSource _cancellationTokenSource;
         #endregion
 

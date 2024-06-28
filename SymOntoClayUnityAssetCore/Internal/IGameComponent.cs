@@ -23,8 +23,10 @@ SOFTWARE.*/
 using SymOntoClay.Common.Disposing;
 using SymOntoClay.Core;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Threading;
 using System;
 using System.Numerics;
+using System.Threading;
 
 namespace SymOntoClay.UnityAsset.Core.Internal
 {
@@ -41,5 +43,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         IStorage PublicFactsStorage { get; }
         bool CanBeTakenBy(IMonitorLogger logger, IEntity subject);
         Vector3? GetPosition(IMonitorLogger logger);
+        ICustomThreadPool AsyncEventsThreadPool { get; }
+        CancellationToken GetCancellationToken();
     }
 }

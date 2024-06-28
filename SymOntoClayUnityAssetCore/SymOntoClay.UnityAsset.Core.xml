@@ -793,6 +793,12 @@
         <member name="P:SymOntoClay.UnityAsset.Core.World.WorldCore.IsDisposed">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.AsyncEventsThreadPool">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.GetCancellationToken">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.InstanceId">
             <inheritdoc/>
         </member>
@@ -1348,10 +1354,13 @@
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.WorldContext.InvokerInMainThread">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.WorldContext.ThreadingSettings">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.WorldContext.AsyncEventsThreadPool">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.Internal.WorldContext.CancellationTokenSource">
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.WorldContext.GetCancellationToken">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.WorldContext.SoundBus">

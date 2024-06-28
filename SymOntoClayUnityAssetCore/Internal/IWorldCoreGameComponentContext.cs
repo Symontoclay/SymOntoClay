@@ -60,6 +60,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         ISoundBus SoundBus { get; }
         INLPConverterFactory NLPConverterFactory { get; }
         IStandardFactsBuilder StandardFactsBuilder { get; }
+        ThreadingSettings ThreadingSettings { get; }
         ICustomThreadPool AsyncEventsThreadPool { get; }
         CancellationToken GetCancellationToken();
     }

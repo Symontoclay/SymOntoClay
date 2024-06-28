@@ -42,6 +42,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         IPlatformTypesConvertersRegistry PlatformTypesConvertors { get; }
         IDateTimeProvider DateTimeProvider { get; }
         ILogicQueryParseAndCache LogicQueryParseAndCache { get; }
+        ThreadingSettings ThreadingSettings { get; }
         ICustomThreadPool AsyncEventsThreadPool { get; }
         CancellationToken GetCancellationToken();
     }

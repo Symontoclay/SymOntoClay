@@ -73,6 +73,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
             _cancellationTokenSource = new CancellationTokenSource();
 
+            ThreadingSettings = settings.ThreadingSettings;
+
             var threadingSettings = settings.ThreadingSettings?.AsyncEvents;
 
             AsyncEventsThreadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
@@ -175,6 +177,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         /// <inheritdoc/>
         public IInvokerInMainThread InvokerInMainThread { get; private set; }
+
+        /// <inheritdoc/>
+        public ThreadingSettings ThreadingSettings { get; private set; }
 
         /// <inheritdoc/>
         public ICustomThreadPool AsyncEventsThreadPool { get; private set; }

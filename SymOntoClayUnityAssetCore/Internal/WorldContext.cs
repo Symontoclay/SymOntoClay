@@ -26,6 +26,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core.Internal.DateAndTime;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using SymOntoClay.UnityAsset.Core.Internal.Images;
@@ -69,6 +70,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _tmpDir = settings.TmpDir;
 
             Directory.CreateDirectory(_tmpDir);
+
+            //ThreadPool = new 
+
+            throw new NotImplementedException();
 
             InvokerInMainThread = settings.InvokerInMainThread;
             SoundBus = settings.SoundBus;
@@ -166,6 +171,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         /// <inheritdoc/>
         public IInvokerInMainThread InvokerInMainThread { get; private set; }
+
+        public ICustomThreadPool ThreadPool { get; private set; }
 
         /// <inheritdoc/>
         public ISoundBus SoundBus { get; private set; }

@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConverters;
 using System;
 using System.Collections.Generic;
@@ -40,5 +41,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         IPlatformTypesConvertersRegistry PlatformTypesConvertors { get; }
         IDateTimeProvider DateTimeProvider { get; }
         ILogicQueryParseAndCache LogicQueryParseAndCache { get; }
+        ICustomThreadPool ThreadPool { get; }
     }
 }

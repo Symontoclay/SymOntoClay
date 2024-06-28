@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,7 +31,8 @@ namespace SymOntoClay.Core
 {
     public class ThreadingSettings : IObjectToString
     {
-
+        public CustomThreadPoolSettings CodeExecution { get; set; }
+        public CustomThreadPoolSettings AsyncEvents { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -49,6 +51,8 @@ namespace SymOntoClay.Core
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+            sb.PrintObjProp(n, nameof(CodeExecution), CodeExecution);
+            sb.PrintObjProp(n, nameof(AsyncEvents), AsyncEvents);
             return sb.ToString();
         }
     }

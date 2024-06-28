@@ -39,6 +39,8 @@ namespace SymOntoClay.Core
 
         public IDateTimeProvider DateTimeProvider { get; set; }
 
+        public ThreadingSettings ThreadingSettings { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -65,6 +67,7 @@ namespace SymOntoClay.Core
 
             sb.PrintExisting(n, nameof(MonitorNode), MonitorNode);
             sb.PrintExisting(n, nameof(DateTimeProvider), DateTimeProvider);
+            sb.PrintObjProp(n, nameof(ThreadingSettings), ThreadingSettings);
 
             return sb.ToString();
         }

@@ -24,6 +24,7 @@ using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConverters;
 using System;
@@ -58,5 +59,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         ISoundBus SoundBus { get; }
         INLPConverterFactory NLPConverterFactory { get; }
         IStandardFactsBuilder StandardFactsBuilder { get; }
+        ICustomThreadPool ThreadPool { get; }
     }
 }

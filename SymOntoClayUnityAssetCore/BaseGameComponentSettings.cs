@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
@@ -62,6 +63,8 @@ namespace SymOntoClay.UnityAsset.Core
         public bool AllowPublicPosition { get; set; }
         public Vector3? UseStaticPosition { get; set; }
 
+        public ThreadingSettings ThreadingSettings { get; set; }
+
         #region private members
         private string _id;
         private string _idForFacts;
@@ -99,6 +102,7 @@ namespace SymOntoClay.UnityAsset.Core
             sb.AppendLine($"{spaces}{nameof(InstanceId)} = {InstanceId}");
             sb.AppendLine($"{spaces}{nameof(AllowPublicPosition)} = {AllowPublicPosition}");
             sb.AppendLine($"{spaces}{nameof(UseStaticPosition)} = {UseStaticPosition}");
+            sb.PrintObjProp(n, nameof(ThreadingSettings), ThreadingSettings);
 
             return sb.ToString();
         }

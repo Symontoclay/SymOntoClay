@@ -2026,7 +2026,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                         SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {
                             ProcessInfoHelper.Wait(Logger, callMethodId, currentProcessInfo, executionCoordinators, timeout, timeoutCancellationMode, _dateTimeProvider, processInfo);
-                        });
+                        }, _context.CodeExecutionThreadPool, _context.GetCancellationToken());
                     }
 
                     if (completeAnnotationSystemEvent != null)

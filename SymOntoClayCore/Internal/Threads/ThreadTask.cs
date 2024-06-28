@@ -38,12 +38,12 @@ namespace SymOntoClay.Core.Internal.Threads
         private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        public static ThreadTask Run(Action action, ICustomThreadPool threadPool)
-        {
-            var task = new ThreadTask(action, threadPool);
-            task.Start();
-            return task;
-        }
+        //public static ThreadTask Run(Action action, ICustomThreadPool threadPool)
+        //{
+        //    var task = new ThreadTask(action, threadPool);
+        //    task.Start();
+        //    return task;
+        //}
 
         public static ThreadTask Run(Action action, ICustomThreadPool threadPool, CancellationToken cancellationToken)
         {
@@ -52,19 +52,19 @@ namespace SymOntoClay.Core.Internal.Threads
             return task;
         }
 
-        public static ThreadTask Run(Action action)
-        {
-            var task = new ThreadTask(action);
-            task.Start();
-            return task;
-        }
+        //public static ThreadTask Run(Action action)
+        //{
+        //    var task = new ThreadTask(action);
+        //    task.Start();
+        //    return task;
+        //}
 
-        public static ThreadTask Run(Action action, CancellationToken cancellationToken)
-        {
-            var task = new ThreadTask(action, cancellationToken);
-            task.Start();
-            return task;
-        }
+        //public static ThreadTask Run(Action action, CancellationToken cancellationToken)
+        //{
+        //    var task = new ThreadTask(action, cancellationToken);
+        //    task.Start();
+        //    return task;
+        //}
 
         public ThreadTask(Action action, ICustomThreadPool threadPool, CancellationToken cancellationToken)
         {
@@ -72,21 +72,21 @@ namespace SymOntoClay.Core.Internal.Threads
             _threadPool = threadPool;
         }
 
-        public ThreadTask(Action action, ICustomThreadPool threadPool)
-        {
-            _action = action;
-            _threadPool = threadPool;
-        }
+        //public ThreadTask(Action action, ICustomThreadPool threadPool)
+        //{
+        //    _action = action;
+        //    _threadPool = threadPool;
+        //}
 
-        public ThreadTask(Action action, CancellationToken cancellationToken)
-        {
-            _action = action;
-        }
+        //public ThreadTask(Action action, CancellationToken cancellationToken)
+        //{
+        //    _action = action;
+        //}
 
-        public ThreadTask(Action action)
-        {
-            _action = action;
-        }
+        //public ThreadTask(Action action)
+        //{
+        //    _action = action;
+        //}
 
         /// <summary>
         /// Gets the <see cref="ThreadTaskStatus"/> of this task.

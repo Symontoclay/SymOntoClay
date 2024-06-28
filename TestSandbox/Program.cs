@@ -44,6 +44,7 @@ using SymOntoClay.Monitor.LogFileBuilder;
 using SymOntoClay.Monitor.NLog;
 using SymOntoClay.NLP;
 using SymOntoClay.ProjectFiles;
+using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Helpers;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
@@ -188,9 +189,13 @@ namespace TestSandbox
         {
             _globalLogger.Info("Begin");
 
+            using var source = new CancellationTokenSource();
+
+            using var threadPool = new CustomThreadPool(0, 20);
+
             var task = new SymOntoClay.Core.Internal.Threads.ThreadTask(() => {
                 _globalLogger.Info("Run");
-            });
+            }, threadPool, source.Token);
 
             task.OnStarted += () => { _globalLogger.Info("task.OnStarted"); };
             task.OnCanceled += () => { _globalLogger.Info("task.OnCanceled"); };
@@ -402,13 +407,15 @@ namespace TestSandbox
             var source1 = new CancellationTokenSource();
             var token1 = source1.Token;
 
+            using var threadPool = new CustomThreadPool(0, 20);
+
             var task = SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {
                 _logger.Info("EB024ABD-0889-4DEF-A6E9-1D36CA08F839", "Hi!");
 
                 Thread.Sleep(10000);
 
                 _logger.Info("F812B258-8F6B-4066-8698-55DA609BD01D", "End Hi!");
-            }, token1);
+            }, threadPool, token1);
 
             var taskValue = new TaskValue(task, source1);
 

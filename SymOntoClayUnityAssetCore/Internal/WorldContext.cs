@@ -71,9 +71,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
             Directory.CreateDirectory(_tmpDir);
 
-            //ThreadPool = new 
+            _cancellationTokenSource = new CancellationTokenSource();
 
-            throw new NotImplementedException();
+            var threadingSettings = settings.ThreadingSettings?.AsyncEvents;
+
+            AsyncEventsThreadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
+                threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
+                _cancellationTokenSource.Token);
 
             InvokerInMainThread = settings.InvokerInMainThread;
             SoundBus = settings.SoundBus;
@@ -172,7 +176,16 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         /// <inheritdoc/>
         public IInvokerInMainThread InvokerInMainThread { get; private set; }
 
-        public ICustomThreadPool ThreadPool { get; private set; }
+        /// <inheritdoc/>
+        public ICustomThreadPool AsyncEventsThreadPool { get; private set; }
+
+        private CancellationTokenSource _cancellationTokenSource;
+
+        /// <inheritdoc/>
+        public CancellationToken GetCancellationToken()
+        {
+            return _cancellationTokenSource.Token;
+        }
 
         /// <inheritdoc/>
         public ISoundBus SoundBus { get; private set; }
@@ -420,8 +433,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             }
         }
 
-        private CancellationTokenSource _cancellationTokenSource;
-
         private void NStart()
         {
             ThreadsComponent.Lock();
@@ -442,10 +453,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
             _state = ComponentState.Started;
 
-            _cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = _cancellationTokenSource.Token;
 
-            Task.Run(() => {
+            SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {
                 try
                 {
                     while (true)
@@ -476,7 +486,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                 {
                     Error("CDF6BAD4-76E3-4B1F-9379-C64BF752F9AE", e);
                 }
-            }, cancellationToken);
+            }, AsyncEventsThreadPool, cancellationToken);
         }
         
         private void WaitForAllGameComponentsWaiting()
@@ -498,8 +508,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                 {
                     throw new ObjectDisposedException(null);
                 }
-
-                _cancellationTokenSource.Cancel();
 
                 throw new NotImplementedException();
             }

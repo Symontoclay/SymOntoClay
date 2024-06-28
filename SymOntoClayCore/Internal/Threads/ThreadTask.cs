@@ -69,11 +69,13 @@ namespace SymOntoClay.Core.Internal.Threads
         public ThreadTask(Action action, ICustomThreadPool threadPool, CancellationToken cancellationToken)
         {
             _action = action;
+            _threadPool = threadPool;
         }
 
         public ThreadTask(Action action, ICustomThreadPool threadPool)
         {
             _action = action;
+            _threadPool = threadPool;
         }
 
         public ThreadTask(Action action, CancellationToken cancellationToken)
@@ -93,7 +95,7 @@ namespace SymOntoClay.Core.Internal.Threads
         {
             get
             {
-                lock(_lockObj)
+                lock (_lockObj)
                 {
                     return _status;
                 }
@@ -161,9 +163,9 @@ namespace SymOntoClay.Core.Internal.Threads
         /// </summary>
         public void Start()
         {
-            lock(_lockObj)
+            lock (_lockObj)
             {
-                if(_status == ThreadTaskStatus.Running)
+                if (_status == ThreadTaskStatus.Running)
                 {
                     return;
                 }
@@ -171,14 +173,21 @@ namespace SymOntoClay.Core.Internal.Threads
                 _status = ThreadTaskStatus.Running;
             }
 
-            if(_thread == null)
+            if (_threadPool == null)
             {
-                var threadDelegate = new ThreadStart(RunDelegate);
-                _thread = new Thread(threadDelegate);
-                _thread.IsBackground = true;
-            }
+                if (_thread == null)
+                {
+                    var threadDelegate = new ThreadStart(RunDelegate);
+                    _thread = new Thread(threadDelegate);
+                    _thread.IsBackground = true;
+                }
 
-            _thread.Start();
+                _thread.Start();
+            }
+            else
+            {
+                _threadPool.Run(RunDelegate);
+            }
         }
 
         /// <summary>
@@ -186,7 +195,16 @@ namespace SymOntoClay.Core.Internal.Threads
         /// </summary>
         public void Wait()
         {
-            _thread?.Join();
+            if (_threadPool == null)
+            {
+                _thread?.Join();
+            }
+            else
+            {
+                while (_status == ThreadTaskStatus.Running)
+                {
+                }
+            }
         }
 
         public event Action OnStarted;
@@ -196,9 +214,10 @@ namespace SymOntoClay.Core.Internal.Threads
         public event Action OnFaulted;
 
         private Action _action;
+        private readonly ICustomThreadPool _threadPool;
         private Thread _thread;
         private object _lockObj = new object();
-        private ThreadTaskStatus _status = ThreadTaskStatus.Created;
+        private volatile ThreadTaskStatus _status = ThreadTaskStatus.Created;
 
         private void RunDelegate()
         {
@@ -208,7 +227,7 @@ namespace SymOntoClay.Core.Internal.Threads
 
                 _action?.Invoke();
 
-                lock(_lockObj)
+                lock (_lockObj)
                 {
                     _status = ThreadTaskStatus.RanToCompletion;
                 }

@@ -28,6 +28,7 @@ using SymOntoClay.UnityAsset.Core.Internal.TypesConverters;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace SymOntoClay.UnityAsset.Core.Internal
 {
@@ -41,6 +42,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         IPlatformTypesConvertersRegistry PlatformTypesConvertors { get; }
         IDateTimeProvider DateTimeProvider { get; }
         ILogicQueryParseAndCache LogicQueryParseAndCache { get; }
-        ICustomThreadPool ThreadPool { get; }
+        ICustomThreadPool AsyncEventsThreadPool { get; }
+        CancellationToken GetCancellationToken();
     }
 }

@@ -1,13 +1,8 @@
 ﻿app PeaceKeeper
 {
-	{: female(#Mary) :}
-	{: male(#Tom) :}
-	{: male(#Mark) :}
-	{: male(null) :}
-	{: parent(#Piter, #Tom) :}
-	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
-
-	on Enter => {
-	    select {: male($x) & $x is null :} >> @>log;
+    on Enter =>
+	{
+	    'Begin' >> @>log;
+		'End' >> @>log;
 	}
 }

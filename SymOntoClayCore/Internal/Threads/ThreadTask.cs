@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using SymOntoClay.Threading;
 
 namespace SymOntoClay.Core.Internal.Threads
 {
@@ -37,6 +38,20 @@ namespace SymOntoClay.Core.Internal.Threads
         private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
+        public static ThreadTask Run(Action action, ICustomThreadPool threadPool)
+        {
+            var task = new ThreadTask(action, threadPool);
+            task.Start();
+            return task;
+        }
+
+        public static ThreadTask Run(Action action, ICustomThreadPool threadPool, CancellationToken cancellationToken)
+        {
+            var task = new ThreadTask(action, threadPool, cancellationToken);
+            task.Start();
+            return task;
+        }
+
         public static ThreadTask Run(Action action)
         {
             var task = new ThreadTask(action);
@@ -49,6 +64,16 @@ namespace SymOntoClay.Core.Internal.Threads
             var task = new ThreadTask(action, cancellationToken);
             task.Start();
             return task;
+        }
+
+        public ThreadTask(Action action, ICustomThreadPool threadPool, CancellationToken cancellationToken)
+        {
+            _action = action;
+        }
+
+        public ThreadTask(Action action, ICustomThreadPool threadPool)
+        {
+            _action = action;
         }
 
         public ThreadTask(Action action, CancellationToken cancellationToken)

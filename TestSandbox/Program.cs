@@ -86,7 +86,7 @@ namespace TestSandbox
 
             _globalLogger.Info($"args = {JsonConvert.SerializeObject(args, Formatting.Indented)}");
 
-            TstLogFileBuilderAppCommandLineParserHandler();
+            //TstLogFileBuilderAppCommandLineParserHandler();
             //TstThreadTask();
             //TstThreadPoolCount();
             //TstLogFileBuilderParameterValueConverterToString();
@@ -168,7 +168,7 @@ namespace TestSandbox
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            //TstGeneralStartHandler();//<=
+            TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);

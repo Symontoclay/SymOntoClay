@@ -31,6 +31,8 @@ using System.Numerics;
 using NLog;
 using SymOntoClay.SoundBuses;
 using SymOntoClay.UnityAsset.Core;
+using SymOntoClay.Core;
+using SymOntoClay.Threading;
 
 namespace SymOntoClay.BaseTestLib
 {
@@ -153,8 +155,26 @@ namespace SymOntoClay.BaseTestLib
             factorySettings.BaseDir = _testDir;
             factorySettings.WorldFile = hostFile;
             factorySettings.PlatformLogger = callBackLogger;
+            factorySettings.ThreadingSettings = ConfigureThreadingSettings();
 
             _world = UnityTestEngineContextFactory.CreateWorld(factorySettings);
+        }
+
+        private ThreadingSettings ConfigureThreadingSettings()
+        {
+            return new ThreadingSettings
+            {
+                AsyncEvents = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 100,
+                    MinThreadsCount = 50
+                },
+                CodeExecution = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 100,
+                    MinThreadsCount = 50
+                }
+            };
         }
 
         public void StartWorld()
@@ -224,6 +244,8 @@ namespace SymOntoClay.BaseTestLib
                 factorySettings.Categories = advancedBehaviorTestEngineInstanceSettings.Categories;
                 factorySettings.EnableCategories = advancedBehaviorTestEngineInstanceSettings.EnableCategories;
             }
+
+            factorySettings.ThreadingSettings = ConfigureThreadingSettings();
 
             return UnityTestEngineContextFactory.CreateHumanoidNPC(_world, factorySettings);
         }

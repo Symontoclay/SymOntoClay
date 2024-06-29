@@ -34,6 +34,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -63,7 +64,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 #endif
 
             var cancellationTokenSource = new CancellationTokenSource();
-            var cancellationToken = cancellationTokenSource.Token;
+
+            var linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationTokenSource.Token, context.GetCancellationToken());
+
+            var cancellationToken = linkedCancellationTokenSource.Token;
 
             var mapParamsResult = MapParams(cancellationToken, logger, endpointInfo, command, context, localContext);
 
@@ -77,7 +81,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 #endif
 
             SymOntoClay.Core.Internal.Threads.ThreadTask task = null;
-            var processInfo = new PlatformProcessInfo(cancellationTokenSource, endpointInfo.Name, mapParamsResult.Item2, endpointInfo.Devices, endpointInfo.Friends, callMethodId);
+            var processInfo = new PlatformProcessInfo(cancellationTokenSource, context.GetCancellationToken(), context.AsyncEventsThreadPool, endpointInfo.Name, mapParamsResult.Item2, endpointInfo.Devices, endpointInfo.Friends, callMethodId);
 
 #if DEBUG
             //Log($"processInfo != null = {processInfo != null}");

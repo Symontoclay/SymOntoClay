@@ -193,7 +193,7 @@ namespace TestSandbox
 
             using var threadPool = new CustomThreadPool(0, 20);
 
-            var task = new SymOntoClay.Core.Internal.Threads.ThreadTask(() => {
+            var task = new ThreadTask(() => {
                 _globalLogger.Info("Run");
             }, threadPool, source.Token);
 
@@ -409,7 +409,7 @@ namespace TestSandbox
 
             using var threadPool = new CustomThreadPool(0, 20);
 
-            var task = SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {
+            var task = ThreadTask.Run(() => {
                 _logger.Info("EB024ABD-0889-4DEF-A6E9-1D36CA08F839", "Hi!");
 
                 Thread.Sleep(10000);

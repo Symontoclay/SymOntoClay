@@ -31,6 +31,7 @@ using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -41,7 +42,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class TaskValue : Value
     {
-        public TaskValue(SymOntoClay.Core.Internal.Threads.ThreadTask systemTask, CancellationTokenSource cancellationTokenSource)
+        public TaskValue(ThreadTask systemTask, CancellationTokenSource cancellationTokenSource)
         {
             SystemTask = systemTask;
             _cancellationTokenSource = cancellationTokenSource;
@@ -59,7 +60,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override TaskValue AsTaskValue => this;
 
         public string TaskId { get; set; }
-        public SymOntoClay.Core.Internal.Threads.ThreadTask SystemTask 
+        public ThreadTask SystemTask 
         { 
             get
             {
@@ -89,7 +90,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private readonly CancellationTokenSource _cancellationTokenSource;
 
-        private SymOntoClay.Core.Internal.Threads.ThreadTask _systemTask;
+        private ThreadTask _systemTask;
 
         public event Action OnComplete
         {

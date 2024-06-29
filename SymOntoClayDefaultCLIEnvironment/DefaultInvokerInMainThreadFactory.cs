@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
+using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using System;
 using System.Collections.Generic;
@@ -38,7 +39,7 @@ namespace SymOntoClay.DefaultCLIEnvironment
         {
             var invokingInMainThread = new InvokerInMainThread();
 
-            SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {
+            ThreadTask.Run(() => {
                 try
                 {
                     while (true)

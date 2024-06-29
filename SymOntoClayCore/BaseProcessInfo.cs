@@ -286,7 +286,7 @@ namespace SymOntoClay.Core
 
             if(onFinishHandlersList.Any())
             {
-                SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {
+                ThreadTask.Run(() => {
                     var taskId = logger.StartTask("F0A455C0-A6EB-4BAA-8D2A-0EE1DC112590");
 
                     try
@@ -324,7 +324,7 @@ namespace SymOntoClay.Core
 
             if (onCompleteHandlersList.Any())
             {
-                SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {
+                ThreadTask.Run(() => {
                     var taskId = logger.StartTask("DD76FAB5-8781-4979-B885-6D3F73EA42BD");
 
                     try
@@ -361,7 +361,7 @@ namespace SymOntoClay.Core
 
             if (onWeakCanceledHandlersList.Any())
             {
-                SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {
+                ThreadTask.Run(() => {
                     var taskId = logger.StartTask("F571FF35-20B0-4D29-A5C4-9D33ACF0B280");
 
                     try

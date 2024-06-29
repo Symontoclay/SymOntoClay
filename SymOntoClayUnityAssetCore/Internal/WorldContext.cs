@@ -462,7 +462,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
             var cancellationToken = _cancellationTokenSource.Token;
 
-            SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {
+            ThreadTask.Run(() => {
                 try
                 {
                     while (true)

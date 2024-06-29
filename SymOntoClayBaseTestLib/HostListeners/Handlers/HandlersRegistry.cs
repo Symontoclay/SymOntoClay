@@ -134,7 +134,7 @@ namespace SymOntoClay.BaseTestLib.HostListeners.Handlers
 
                     foreach (var handler in list)
                     {
-                        SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() =>
+                        ThreadTask.Run(() =>
                         {
                             try
                             {

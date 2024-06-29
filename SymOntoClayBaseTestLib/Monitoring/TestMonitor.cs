@@ -56,10 +56,5 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         {
             return new TestMonitorNode(_monitorSettings, nodeId);
         }
-
-        /// <inheritdoc/>
-        public void Dispose()
-        {
-        }
     }
 }

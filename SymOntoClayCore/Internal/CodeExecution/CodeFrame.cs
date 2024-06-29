@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Threads;
+using SymOntoClay.Threading;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -60,7 +61,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public AnnotationSystemEvent CancelAnnotationSystemEvent { get; set; }
         public AnnotationSystemEvent WeakCancelAnnotationSystemEvent { get; set; }
         public AnnotationSystemEvent ErrorAnnotationSystemEvent { get; set; }
-        public SymOntoClay.Core.Internal.Threads.ThreadTask PseudoSyncTask { get; set; }
+        public ThreadTask PseudoSyncTask { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

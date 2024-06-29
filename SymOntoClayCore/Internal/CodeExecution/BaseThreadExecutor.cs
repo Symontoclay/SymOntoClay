@@ -33,6 +33,7 @@ using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Serialization;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -152,7 +153,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private bool _isCanceled;
 
         private long? _endOfTargetDuration;
-        private List<SymOntoClay.Core.Internal.Threads.ThreadTask> _waitedTasksList;
+        private List<ThreadTask> _waitedTasksList;
         private List<IProcessInfo> _waitedProcessInfoList;
 
         private readonly StrongIdentifierValue _defaultCtorName;
@@ -2024,7 +2025,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             executionCoordinators = new List<IExecutionCoordinator>() { _executionCoordinator };
                         }
 
-                        SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {
+                        ThreadTask.Run(() => {
                             ProcessInfoHelper.Wait(Logger, callMethodId, currentProcessInfo, executionCoordinators, timeout, timeoutCancellationMode, _dateTimeProvider, processInfo);
                         }, _context.CodeExecutionThreadPool, _context.GetCancellationToken());
                     }

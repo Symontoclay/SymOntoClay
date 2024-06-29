@@ -6,6 +6,7 @@
     <FileVersion>0.5.5</FileVersion>
     <Version>0.5.5</Version>
     <Copyright>Copyright (c) 2020 - 2024 Sergiy Tolkachov aka metatypeman</Copyright>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

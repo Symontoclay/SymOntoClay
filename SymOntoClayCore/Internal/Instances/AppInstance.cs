@@ -28,6 +28,7 @@ using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -174,7 +175,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         public void ActivateState(IMonitorLogger logger, StateDef state, List<Var> varList)
         {
-            SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {
+            ThreadTask.Run(() => {
                 var taskId = logger.StartTask("63ED542C-9E36-4AD9-97E7-58A613A604D3");
 
                 try

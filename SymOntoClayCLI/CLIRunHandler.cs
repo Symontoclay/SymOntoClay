@@ -149,7 +149,7 @@ namespace SymOntoClay.CLI
             {
                 var timeoutValue = command.Timeout.Value;
 
-                SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {
+                ThreadTask.Run(() => {
                     try
                     {
                         if (timeoutValue > 0)

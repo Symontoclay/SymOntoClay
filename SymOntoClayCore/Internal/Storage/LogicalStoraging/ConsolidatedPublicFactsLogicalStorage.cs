@@ -30,6 +30,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -155,7 +156,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private void EmitOnAddingFactForNewStorage(IMonitorLogger logger, ILogicalStorage storage)
         {
-            SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {
+            ThreadTask.Run(() => {
                 var taskId = logger.StartTask("6EA7602B-F2EA-4204-B747-886EB25161E7");
 
                 try
@@ -180,7 +181,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         {
             if(OnAddingFact != null)
             {
-                SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {
+                ThreadTask.Run(() => {
                     var taskId = logger.StartTask("612DB280-7EF8-4035-B6A5-229440E96F55");
 
                     try

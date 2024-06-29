@@ -80,7 +80,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             //Log($"paramsList?.Length = {paramsList?.Length}");
 #endif
 
-            SymOntoClay.Core.Internal.Threads.ThreadTask task = null;
+            ThreadTask task = null;
             var processInfo = new PlatformProcessInfo(cancellationTokenSource, context.GetCancellationToken(), context.AsyncEventsThreadPool, endpointInfo.Name, mapParamsResult.Item2, endpointInfo.Devices, endpointInfo.Friends, callMethodId);
 
 #if DEBUG
@@ -108,11 +108,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             return processInfo;
         }
 
-        private SymOntoClay.Core.Internal.Threads.ThreadTask CreateTaskForMainThread(CancellationToken cancellationToken, IMonitorLogger logger, string callMethodId, IEndpointInfo endpointInfo, object[] paramsList, PlatformProcessInfo processInfo)
+        private ThreadTask CreateTaskForMainThread(CancellationToken cancellationToken, IMonitorLogger logger, string callMethodId, IEndpointInfo endpointInfo, object[] paramsList, PlatformProcessInfo processInfo)
         {
             var platformListener = endpointInfo.Object;
 
-            var task = new SymOntoClay.Core.Internal.Threads.ThreadTask(() =>
+            var task = new ThreadTask(() =>
             {
                 try
                 {
@@ -158,11 +158,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
             return task;
         }
 
-        private SymOntoClay.Core.Internal.Threads.ThreadTask CreateTaskForUsualThread(CancellationToken cancellationToken, IMonitorLogger logger, string callMethodId, IEndpointInfo endpointInfo, object[] paramsList, PlatformProcessInfo processInfo)
+        private ThreadTask CreateTaskForUsualThread(CancellationToken cancellationToken, IMonitorLogger logger, string callMethodId, IEndpointInfo endpointInfo, object[] paramsList, PlatformProcessInfo processInfo)
         {
             var platformListener = endpointInfo.Object;
 
-            var task = new SymOntoClay.Core.Internal.Threads.ThreadTask(() =>
+            var task = new ThreadTask(() =>
             {
 #if DEBUG
                 //logger.Info("9C2487EB-BCCF-4CF2-8F06-EBE4EF8FAC93", $"Begin Run processInfo.Id = {processInfo.Id};{processInfo.ToHumanizedLabel()}");

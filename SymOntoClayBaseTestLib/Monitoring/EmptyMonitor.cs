@@ -55,10 +55,5 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         {
             return new EmptyMonitorNode(nodeId);
         }
-
-        /// <inheritdoc/>
-        public void Dispose()
-        {
-        }
     }
 }

@@ -50,6 +50,8 @@ namespace TestSandbox.MonoBehaviourTesting
         {
             _logger.Info("A5E4C33A-962D-4EE5-92C4-A6D2D1BCA31B", "Begin");
 
+            _cancellationTokenSource = new CancellationTokenSource();
+
             var appName = AppDomain.CurrentDomain.FriendlyName;
 
             _logger.Info("C5000A3A-FC77-4395-A6BB-21E1582AC6FD", $"appName = {appName}");

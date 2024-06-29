@@ -99,7 +99,7 @@ namespace SymOntoClay.Core.Internal.Threads
                 var cancellationTokenSource = new CancellationTokenSource();
                 var cancellationToken = cancellationTokenSource.Token;
 
-                var task = new SymOntoClay.Core.Internal.Threads.ThreadTask(() => {
+                var task = new ThreadTask(() => {
                     var autoResetEvent = _context.WaitEvent;
 
                     while (true)

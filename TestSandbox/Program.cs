@@ -119,7 +119,7 @@ namespace TestSandbox
             //TstNLPConverterProvider();
             //TstNLPHandler();//<=NLP
             //TstTriggerConditionNodeHandler();
-            TstSoundBus();
+            //TstSoundBus();
             //TstNavigationHandler();
             //TstCreatorExamples();
             //TstLinguisticVariable_Tests();
@@ -169,7 +169,7 @@ namespace TestSandbox
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            //TstGeneralStartHandler();//<=
+            TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -995,11 +995,16 @@ app PeaceKeeper is [very middle] exampleClass
 
             _logger.Info("33072297-0819-4B8F-8551-B655F4FA22B0", $"monitorMessagesDir = {monitorMessagesDir}");
 
-            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
+            using var cancellationTokenSource = new CancellationTokenSource();
+
+            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(cancellationTokenSource.Token);
 
             var instance = WorldFactory.WorldInstance;
 
             var settings = new WorldSettings();
+
+            settings.CancellationToken = cancellationTokenSource.Token;
+
             settings.EnableAutoloadingConvertors = true;
 
             settings.LibsDirs = new List<string>() { Path.Combine(wSpaceDir, "Modules") };
@@ -1021,8 +1026,12 @@ app PeaceKeeper is [very middle] exampleClass
             {
                 MessagesDir = monitorMessagesDir,
                 PlatformLoggers = new List<IPlatformLogger>() { callBackLogger },
-                Enable = true
+                Enable = true,
+                CancellationToken = cancellationTokenSource.Token,
+                ThreadingSettings = ConfigureThreadingSettings()
             });
+
+            settings.ThreadingSettings = ConfigureThreadingSettings();
 
             _logger.Info("E17F812C-9900-4B6B-9210-A5CE8742C9DA", $"settings = {settings}");
 
@@ -1035,6 +1044,7 @@ app PeaceKeeper is [very middle] exampleClass
             npcSettings.LogicFile = Path.Combine(wSpaceDir, $"Npcs/{projectName}/{projectName}.sobj");
             npcSettings.HostListener = platformListener;
             npcSettings.PlatformSupport = new PlatformSupportCLIStub();
+            npcSettings.ThreadingSettings = ConfigureThreadingSettings();
 
             _logger.Info("A471A33B-0564-49CC-AD27-2BADFB527C09", $"npcSettings = {npcSettings}");
 
@@ -1044,9 +1054,28 @@ app PeaceKeeper is [very middle] exampleClass
 
             Thread.Sleep(5000);
 
+            cancellationTokenSource.Cancel();
+
             Directory.Delete(testDir, true);
 
             _logger.Info("47C7E720-4227-4738-8D52-E3270106EF66", "End");
+        }
+
+        private static ThreadingSettings ConfigureThreadingSettings()
+        {
+            return new ThreadingSettings
+            {
+                AsyncEvents = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 100,
+                    MinThreadsCount = 50
+                },
+                CodeExecution = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 100,
+                    MinThreadsCount = 50
+                }
+            };
         }
 
         private static void TstAdvancedTestRunnerForMultipleInstances()
@@ -1569,12 +1598,15 @@ action Go
 
             _logger.Info("BEDEEFAF-3DFE-4982-8441-206E5F863DA3", $"targetFiles = {targetFiles}");
 
+            using var cancellationTokenSource = new CancellationTokenSource();
 
-            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
+            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(cancellationTokenSource.Token);
 
             var instance = WorldFactory.WorldInstance;
 
             var settings = new WorldSettings();
+            settings.CancellationToken = cancellationTokenSource.Token;
+            settings.ThreadingSettings = ConfigureThreadingSettings();
 
             settings.LibsDirs = new List<string>() { targetFiles.SharedLibsDir };
 
@@ -1589,7 +1621,9 @@ action Go
             settings.Monitor = new SymOntoClay.Monitor.Monitor(new SymOntoClay.Monitor.MonitorSettings
             {
                 PlatformLoggers = new List<IPlatformLogger>() { new CLIPlatformLogger() },
-                Enable = true
+                Enable = true,
+                CancellationToken = cancellationTokenSource.Token,
+                ThreadingSettings = ConfigureThreadingSettings()
             });
 
             _logger.Info("ECB2A35D-05A6-48C4-9C9E-27D54D70C501", $"settings = {settings}");
@@ -1603,6 +1637,7 @@ action Go
             npcSettings.LogicFile = targetFiles.LogicFile;
             npcSettings.HostListener = platformListener;
             npcSettings.PlatformSupport = new PlatformSupportCLIStub();
+            npcSettings.ThreadingSettings = ConfigureThreadingSettings();
 
             _logger.Info("7B5072FD-FC34-4F73-98CD-08D9E8815AF0", $"npcSettings = {npcSettings}");
 
@@ -1611,6 +1646,8 @@ action Go
             instance.Start();
 
             Thread.Sleep(50000);
+
+            cancellationTokenSource.Cancel();
 
             _logger.Info("D1D4E5FE-B5AC-41E4-AA19-A1E8A6F989BF", "End");
         }

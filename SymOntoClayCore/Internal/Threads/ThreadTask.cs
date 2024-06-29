@@ -59,12 +59,12 @@ namespace SymOntoClay.Core.Internal.Threads
         //    return task;
         //}
 
-        //public static ThreadTask Run(Action action, CancellationToken cancellationToken)
-        //{
-        //    var task = new ThreadTask(action, cancellationToken);
-        //    task.Start();
-        //    return task;
-        //}
+        public static ThreadTask Run(Action action, CancellationToken cancellationToken)
+        {
+            var task = new ThreadTask(action, cancellationToken);
+            task.Start();
+            return task;
+        }
 
         public ThreadTask(Action action, ICustomThreadPool threadPool, CancellationToken cancellationToken)
         {
@@ -78,10 +78,10 @@ namespace SymOntoClay.Core.Internal.Threads
         //    _threadPool = threadPool;
         //}
 
-        //public ThreadTask(Action action, CancellationToken cancellationToken)
-        //{
-        //    _action = action;
-        //}
+        public ThreadTask(Action action, CancellationToken cancellationToken)
+        {
+            _action = action;
+        }
 
         //public ThreadTask(Action action)
         //{

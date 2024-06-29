@@ -25,6 +25,7 @@ using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace SymOntoClay.Monitor
 {
@@ -42,6 +43,9 @@ namespace SymOntoClay.Monitor
         public IDictionary<string, BaseMonitorSettings> NodesSettings { get; set; }
         public bool EnableOnlyDirectlySetUpNodes { get; set; }
 
+        public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
+        public /*ThreadingSettings*/ object ThreadingSettings { get; set; }
+
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
@@ -54,7 +58,9 @@ namespace SymOntoClay.Monitor
             sb.PrintExisting(n, nameof(ErrorHandler), ErrorHandler);
             sb.PrintExisting(n, nameof(PlatformLoggers), PlatformLoggers);
             sb.PrintObjDict_3_Prop(n, nameof(NodesSettings), NodesSettings);
-            sb.AppendLine($"{spaces}{nameof(EnableOnlyDirectlySetUpNodes)} = {EnableOnlyDirectlySetUpNodes}");            
+            sb.AppendLine($"{spaces}{nameof(EnableOnlyDirectlySetUpNodes)} = {EnableOnlyDirectlySetUpNodes}");
+            //sb.PrintExisting(n, nameof(CancellationToken), CancellationToken);
+            //sb.PrintObjProp(n, nameof(ThreadingSettings), ThreadingSettings);
             sb.Append(base.PropertiesToString(n));
 
             return sb.ToString();

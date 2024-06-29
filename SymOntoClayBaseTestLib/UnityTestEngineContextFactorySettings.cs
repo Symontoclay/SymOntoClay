@@ -57,6 +57,7 @@ namespace SymOntoClay.BaseTestLib
         public List<string> Categories { get; set; }
         public bool EnableCategories { get; set; }
 
+        public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
         public ThreadingSettings ThreadingSettings { get; set; }
 
         /// <inheritdoc/>
@@ -101,6 +102,7 @@ namespace SymOntoClay.BaseTestLib
             sb.PrintPODListProp(n, nameof(Categories), Categories);
             sb.AppendLine($"{spaces}{nameof(EnableCategories)} = {EnableCategories}");
 
+            sb.PrintExisting(n, nameof(CancellationToken), CancellationToken);
             sb.PrintObjProp(n, nameof(ThreadingSettings), ThreadingSettings);
 
             return sb.ToString();

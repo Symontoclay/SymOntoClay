@@ -37,6 +37,8 @@ using TestSandbox.PlatformImplementations;
 using SymOntoClay.BaseTestLib;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
+using SymOntoClay.Core;
+using SymOntoClay.Threading;
 
 namespace TestSandbox.CreatingExamples
 {
@@ -100,6 +102,8 @@ namespace TestSandbox.CreatingExamples
             {
                 throw new ArgumentNullException(nameof(fileContent));
             }
+
+            using var cancellationTokenSource = new CancellationTokenSource();
 
             _logger.Info("4D406E02-4CAD-48FB-823F-9A8EB99A6693", $"fileContent = {fileContent}");
             _logger.Info("47AFB0CF-AC13-4863-BFD0-1249DAE87B5D", $"fileName = {fileName}");
@@ -171,11 +175,12 @@ namespace TestSandbox.CreatingExamples
 
             var monitorMessagesDir = Path.Combine(supportBasePath, "NpcMonitorMessages");
 
-            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
+            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(cancellationTokenSource.Token);
 
             var instance = new WorldCore();
 
             var settings = new WorldSettings();
+            settings.CancellationToken = cancellationTokenSource.Token;
             settings.EnableAutoloadingConvertors = true;
 
             settings.LibsDirs = new List<string>() { Path.Combine(wSpaceDir, "Modules") };
@@ -203,8 +208,12 @@ namespace TestSandbox.CreatingExamples
             {
                 MessagesDir = monitorMessagesDir,
                 PlatformLoggers = new List<IPlatformLogger>() { callBackLogger },
-                Enable = true
+                Enable = true,
+                CancellationToken = cancellationTokenSource.Token,
+                ThreadingSettings = ConfigureThreadingSettings()
             });
+
+            settings.ThreadingSettings = ConfigureThreadingSettings();
 
             instance.SetSettings(settings);
 
@@ -215,6 +224,7 @@ namespace TestSandbox.CreatingExamples
             npcSettings.LogicFile = Path.Combine(wSpaceDir, $"Npcs/{_projectName}/{_projectName}.sobj");
             npcSettings.HostListener = platformListener;
             npcSettings.PlatformSupport = new PlatformSupportCLIStub();
+            npcSettings.ThreadingSettings = ConfigureThreadingSettings();
 
             var npc = instance.GetHumanoidNPC(npcSettings);
 
@@ -232,6 +242,25 @@ namespace TestSandbox.CreatingExamples
 
             Directory.Delete(testDir, true);
             Directory.Delete(fullDestDirName, true);
+
+            cancellationTokenSource.Cancel();
+        }
+
+        private ThreadingSettings ConfigureThreadingSettings()
+        {
+            return new ThreadingSettings
+            {
+                AsyncEvents = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 100,
+                    MinThreadsCount = 50
+                },
+                CodeExecution = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 100,
+                    MinThreadsCount = 50
+                }
+            };
         }
 
         protected string CreateName(string prefix, int n)

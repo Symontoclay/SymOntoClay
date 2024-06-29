@@ -118,7 +118,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             instanceInfo.Init(logger);
 
-            Task.Run(() => {
+            SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {
                 var taskId = logger.StartTask("B38CE583-4AE0-42ED-9043-59E038AF094E");
 
                 try
@@ -133,12 +133,12 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
 
                 logger.StopTask("54E83ADE-6CC4-4655-A1D8-68FDA40DBB22", taskId);
-            });
+            }, _context.AsyncEventsThreadPool, _context.GetCancellationToken());
         }
 
         private void DispatchOnIdle()
         {
-            Task.Run(() => {
+            SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {
                 var taskId = Logger.StartTask("F3A7C7F7-1D36-4321-9467-B5E075A04E6F");
 
                 try
@@ -151,7 +151,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
 
                 Logger.StopTask("97C0FBD9-7D7B-4E6B-BEA5-1D6D37FE2005", taskId);
-            });
+            }, _context.AsyncEventsThreadPool, _context.GetCancellationToken());
         }
 
         private void DispatchIdleActions(IMonitorLogger logger)
@@ -276,7 +276,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 {
                     NAppendAndTryStartProcessInfoWithDevices(logger, processInfo);
 
-                    Task.Run(() =>
+                    SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() =>
                     {
                         var taskId = logger.StartTask("EDE8166B-FDC9-4DDB-8D5F-76CF87E61A4C");
 
@@ -286,7 +286,7 @@ namespace SymOntoClay.Core.Internal.Instances
                         }
 
                         logger.StopTask("594DAE42-0F2E-42AC-8DA4-0F406DCC227A", taskId);
-                    });
+                    }, _context.AsyncEventsThreadPool, _context.GetCancellationToken());
 
                     logger.EndHostMethodStarting("A919AF23-C7E3-4678-97AA-1E2E596B9EE1", callMethodId);
 

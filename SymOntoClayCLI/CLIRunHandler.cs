@@ -68,12 +68,12 @@ namespace SymOntoClay.CLI
 
             var targetFiles = WorldSpaceFilesSearcher.Run(worldSpaceFilesSearcherOptions);
 
-            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
+            _cancellationTokenSource = new CancellationTokenSource();
+
+            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(_cancellationTokenSource.Token);
 
             var instance = WorldFactory.WorldInstance;
             world = instance;
-
-            _cancellationTokenSource = new CancellationTokenSource();
 
             var settings = new WorldSettings();
 
@@ -149,7 +149,7 @@ namespace SymOntoClay.CLI
             {
                 var timeoutValue = command.Timeout.Value;
 
-                Task.Run(() => {
+                SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {
                     try
                     {
                         if (timeoutValue > 0)
@@ -163,12 +163,12 @@ namespace SymOntoClay.CLI
                     {
                         _npcLogger.Error("36F19773-BB0C-4216-A713-31CD3502BED9", e);
                     }
-                });
+                }, _cancellationTokenSource.Token);
             }
             else
             {
                 ConsoleWrapper.WriteText("Press 'exit' and Enter for exit.");
-            }            
+            }
 
             while(true)
             {

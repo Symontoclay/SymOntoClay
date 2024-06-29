@@ -34,11 +34,11 @@ namespace SymOntoClay.DefaultCLIEnvironment
     {
         private static ILogger _logger = LogManager.GetCurrentClassLogger();
 
-        public static InvokerInMainThread Create()
+        public static InvokerInMainThread Create(CancellationToken cancellationToken)
         {
             var invokingInMainThread = new InvokerInMainThread();
 
-            Task.Run(() => {
+            SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {
                 try
                 {
                     while (true)
@@ -52,7 +52,7 @@ namespace SymOntoClay.DefaultCLIEnvironment
                 {
                     _logger.Error(e);
                 }
-            });
+            }, cancellationToken);
 
             return invokingInMainThread;
         }

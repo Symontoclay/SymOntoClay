@@ -54,6 +54,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 _processedOnAddingFacts = new HashSet<RuleInstance>();
 
                 var mainStorageContext = settings.MainStorageContext;
+                _mainStorageContext = mainStorageContext;
 
                 _fuzzyLogicResolver = mainStorageContext.DataResolversFactory.GetFuzzyLogicResolver();
 
@@ -66,6 +67,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         }
 
         private readonly object _lockObj = new object();
+        private readonly IMainStorageContext _mainStorageContext;
         private readonly ConsolidatedPublicFactsStorage _parent;
         private readonly List<ILogicalStorage> _logicalStorages = new List<ILogicalStorage>();
         private Dictionary<RuleInstance, IItemWithModalities> _mutablePartsDict;
@@ -153,7 +155,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private void EmitOnAddingFactForNewStorage(IMonitorLogger logger, ILogicalStorage storage)
         {
-            Task.Run(() => {
+            SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {
                 var taskId = logger.StartTask("6EA7602B-F2EA-4204-B747-886EB25161E7");
 
                 try
@@ -171,14 +173,14 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 }
 
                 logger.StopTask("A1CE76A8-4CD5-49E2-90A8-D43FA04F8AD4", taskId);
-            });
+            }, _mainStorageContext.AsyncEventsThreadPool, _mainStorageContext.GetCancellationToken());
         }
 
         private IAddFactOrRuleResult EmitIsolatedOnAddingFact(IMonitorLogger logger, RuleInstance ruleInstance)
         {
             if(OnAddingFact != null)
             {
-                Task.Run(() => {
+                SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {
                     var taskId = logger.StartTask("612DB280-7EF8-4035-B6A5-229440E96F55");
 
                     try
@@ -191,7 +193,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     }
 
                     logger.StopTask("76D7022F-2677-43F7-A1EC-519E00C60B25", taskId);
-                });
+                }, _mainStorageContext.AsyncEventsThreadPool, _mainStorageContext.GetCancellationToken());
             }
 
             return new AddFactOrRuleResult() { KindOfResult = KindOfAddFactOrRuleResult.Accept };

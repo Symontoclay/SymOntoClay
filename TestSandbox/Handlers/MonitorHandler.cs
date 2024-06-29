@@ -36,6 +36,7 @@ using TestSandbox.PlatformImplementations;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using SymOntoClay.Monitor.Internal;
 using SymOntoClay.Monitor.LogFileBuilder;
+using SymOntoClay.Threading;
 
 namespace TestSandbox.Handlers
 {
@@ -75,6 +76,8 @@ namespace TestSandbox.Handlers
             _globalLogger.Info($"SomeEvent?.GetInvocationList().Length = {SomeEvent?.GetInvocationList().Length}");
             _globalLogger.Info($"OtherEvent?.GetInvocationList().Length = {OtherEvent?.GetInvocationList().Length}");
 
+            using var cancellationTokenSource = new CancellationTokenSource();
+
             var appName = AppDomain.CurrentDomain.FriendlyName;
 
             var supportBasePath = Path.Combine(Environment.GetEnvironmentVariable("APPDATA"), "SymOntoClay", appName);
@@ -83,6 +86,8 @@ namespace TestSandbox.Handlers
 
             var monitorSettings = new SymOntoClay.Monitor.MonitorSettings
             {
+                CancellationToken = cancellationTokenSource.Token,
+                ThreadingSettings = ConfigureThreadingSettings(),
                 Enable = true,
                 MessagesDir = monitorMessagesDir,
                 KindOfLogicalSearchExplain = KindOfLogicalSearchExplain.None,
@@ -104,6 +109,8 @@ namespace TestSandbox.Handlers
             _globalLogger.Info($"taskId = {taskId}");
 
             Thread.Sleep(1000);
+
+            cancellationTokenSource.Cancel();
 
             threadLogger.StopTask("B5E884FD-D8AD-414C-A6EE-BA971B248240", taskId);
 
@@ -139,8 +146,12 @@ namespace TestSandbox.Handlers
 
         private void Case1()
         {
+            using var cancellationTokenSource = new CancellationTokenSource();
+
             var monitor = new SymOntoClay.Monitor.Monitor(new MonitorSettings
             {
+                CancellationToken = cancellationTokenSource.Token,
+                ThreadingSettings = ConfigureThreadingSettings(),
                 Enable = true,
                 MessagesDir = Path.Combine(Directory.GetCurrentDirectory(), "MessagesDir"),
                 OutputHandler = message => { _globalLogger.Info($"message = {message}"); },
@@ -220,6 +231,25 @@ namespace TestSandbox.Handlers
             threadLogger.Output("9053861C-4AD1-4C2D-ABAB-FC1CC5DB4834", "<Yes>");
 
             Thread.Sleep(10000);
+
+            cancellationTokenSource.Cancel();
+        }
+
+        private ThreadingSettings ConfigureThreadingSettings()
+        {
+            return new ThreadingSettings
+            {
+                AsyncEvents = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 100,
+                    MinThreadsCount = 50
+                },
+                CodeExecution = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 100,
+                    MinThreadsCount = 50
+                }
+            };
         }
     }
 }

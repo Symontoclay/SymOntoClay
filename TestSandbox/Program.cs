@@ -1635,12 +1635,12 @@ action Go
         {
             _logger.Info("290EA263-EB27-4AE1-B8C1-6AB49B2A3153", "Begin");
 
-            var parentProcessInfo = new ProcessInfo();
+            var parentProcessInfo = new ProcessInfo(CancellationToken.None, null);
 
-            var child_1 = new ProcessInfo();
+            var child_1 = new ProcessInfo(CancellationToken.None, null);
             child_1.ParentProcessInfo = parentProcessInfo;
 
-            var child_2 = new ProcessInfo();
+            var child_2 = new ProcessInfo(CancellationToken.None, null);
             parentProcessInfo.AddChild(_logger, child_2);
 
             _logger.Info("789033F5-F42A-46E0-9E02-26E9AFBECE22", $"parentProcessInfo = {parentProcessInfo}");
@@ -1652,7 +1652,7 @@ action Go
         {
             _logger.Info("F3B2D5BF-65E8-4B27-A445-805093C376A0", "Begin");
 
-            var processInfo = new ProcessInfo();
+            var processInfo = new ProcessInfo(CancellationToken.None, null);
 
             var task = new Task(() => {
                 processInfo.SetStatus(_logger, "7237984F-0628-432D-AE80-F01AE12D48B0", ProcessStatus.Running);

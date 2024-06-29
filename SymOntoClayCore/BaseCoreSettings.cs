@@ -40,7 +40,7 @@ namespace SymOntoClay.Core
 
         public IDateTimeProvider DateTimeProvider { get; set; }
 
-        public CancellationToken CancellationToken { get; set; }
+        public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
 
         public ThreadingSettings ThreadingSettings { get; set; }
 

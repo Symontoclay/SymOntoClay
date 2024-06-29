@@ -22,8 +22,10 @@ SOFTWARE.*/
 
 using NLog;
 using SymOntoClay.BaseTestLib;
+using SymOntoClay.Core;
 using SymOntoClay.SoundBuses;
 using SymOntoClay.StandardFacts;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,9 +45,52 @@ namespace TestSandbox.SoundBusHandler
         {
             _logger.Info("Begin");
 
-            Case3();
+            Case4();
+            //Case3();
+            //Case2();
+            //Case1();
 
             _logger.Info("End");
+        }
+
+        private void Case4()
+        {
+            var settings = new SimpleSoundBusSettings()
+            {
+                ThreadingSettings = new ThreadingSettings
+                {
+                    AsyncEvents = new CustomThreadPoolSettings
+                    {
+                        MaxThreadsCount = 100,
+                        MinThreadsCount = 50
+                    },
+                    CodeExecution = new CustomThreadPoolSettings
+                    {
+                        MaxThreadsCount = 100,
+                        MinThreadsCount = 50
+                    }
+                }
+            };
+
+            var bus = new SimpleSoundBus(settings);
+
+            foreach (var n in Enumerable.Range(1, 200))
+            {
+                Task.Run(() => { 
+                    Thread.Sleep(1000);
+                });
+            }
+
+            foreach (var n in Enumerable.Range(1, 200))
+            {
+                var receiver = new TstSoundReceiver(n, new Vector3(10, 10, n));
+
+                bus.AddReceiver(receiver);
+            }
+
+            bus.PushSound(12, 60, new Vector3(1, 1, 1), "act(M16, shoot)");
+
+            Thread.Sleep(10000);
         }
 
         private void Case3()

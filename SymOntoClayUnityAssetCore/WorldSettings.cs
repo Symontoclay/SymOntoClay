@@ -29,6 +29,7 @@ using System.Text;
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core;
+using System.Threading;
 
 namespace SymOntoClay.UnityAsset.Core
 {
@@ -74,6 +75,8 @@ namespace SymOntoClay.UnityAsset.Core
 
         public bool EnableAutoloadingConvertors { get; set; }
 
+        public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
+
         public ThreadingSettings ThreadingSettings { get; set; }
 
         /// <inheritdoc/>
@@ -103,6 +106,8 @@ namespace SymOntoClay.UnityAsset.Core
             sb.PrintExisting(n, nameof(StandardFactsBuilder), StandardFactsBuilder);
 
             sb.AppendLine($"{spaces}{nameof(EnableAutoloadingConvertors)} = {EnableAutoloadingConvertors}");
+
+            sb.PrintExisting(n, nameof(CancellationToken), CancellationToken);
 
             sb.PrintObjProp(n, nameof(ThreadingSettings), ThreadingSettings);
 

@@ -72,6 +72,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             Directory.CreateDirectory(_tmpDir);
 
             _cancellationTokenSource = new CancellationTokenSource();
+            _linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, settings?.CancellationToken ?? CancellationToken.None);
 
             ThreadingSettings = settings.ThreadingSettings;
 
@@ -79,7 +80,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
             AsyncEventsThreadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
                 threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
-                _cancellationTokenSource.Token);
+                _linkedCancellationTokenSource.Token);
 
             InvokerInMainThread = settings.InvokerInMainThread;
             SoundBus = settings.SoundBus;
@@ -185,11 +186,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         public ICustomThreadPool AsyncEventsThreadPool { get; private set; }
 
         private CancellationTokenSource _cancellationTokenSource;
+        private CancellationTokenSource _linkedCancellationTokenSource;
 
         /// <inheritdoc/>
         public CancellationToken GetCancellationToken()
         {
-            return _cancellationTokenSource.Token;
+            return _linkedCancellationTokenSource.Token;
         }
 
         /// <inheritdoc/>

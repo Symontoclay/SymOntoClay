@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core;
 using System;
@@ -43,42 +44,49 @@ namespace TestSandbox.PlatformImplementations
         }
 
         /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public void WriteLnRawOutput(string message)
         {
             _logger.Info(message);
         }
 
         /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public void WriteLnRawTrace(string message)
         {
             _logger.Trace(message);
         }
 
         /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public void WriteLnRawDebug(string message)
         {
             _logger.Debug(message);
         }
 
         /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public void WriteLnRawInfo(string message)
         {
             _logger.Info(message);
         }
 
         /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public void WriteLnRawWarn(string message)
         {
             _logger.Warn(message);
         }
 
         /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public void WriteLnRawError(string message)
         {
             _logger.Error(message);
         }
 
         /// <inheritdoc/>
+        [MethodForLoggingSupport]
         public void WriteLnRawFatal(string message)
         {
             _logger.Fatal(message);

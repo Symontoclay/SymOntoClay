@@ -123,7 +123,7 @@ namespace SymOntoClay.SoundBuses
                         }
 
                         logger.StopTask("C9EA86C3-305A-4B5C-8A44-645155B32619", taskId);
-                    }, _threadPool);
+                    }, _threadPool, _linkedCancellationTokenSource.Token);
                 }
             }
         }
@@ -163,7 +163,7 @@ namespace SymOntoClay.SoundBuses
                         }
 
                         logger.StopTask("FAB648D7-58F3-4986-A7A3-8C8BCC6D6DCB", taskId);
-                    }, _threadPool);
+                    }, _threadPool, _linkedCancellationTokenSource.Token);
                 }
             }
         }

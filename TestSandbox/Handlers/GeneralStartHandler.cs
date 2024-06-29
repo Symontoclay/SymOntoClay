@@ -38,6 +38,8 @@ using SymOntoClay.BaseTestLib;
 using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.Monitor.LogFileBuilder.TextRowOptionItems;
 using SymOntoClay.Monitor.LogFileBuilder;
+using SymOntoClay.Core;
+using SymOntoClay.Threading;
 
 namespace TestSandbox.Handlers
 {
@@ -50,7 +52,20 @@ namespace TestSandbox.Handlers
         public GeneralStartHandler()
             : base(new UnityTestEngineContextFactorySettings()
             {
-                UseDefaultNLPSettings = true
+                UseDefaultNLPSettings = true,
+                ThreadingSettings = new ThreadingSettings
+                {
+                    AsyncEvents = new CustomThreadPoolSettings
+                    {
+                        MaxThreadsCount = 100,
+                        MinThreadsCount = 50
+                    },
+                    CodeExecution = new CustomThreadPoolSettings
+                    {
+                        MaxThreadsCount = 100,
+                        MinThreadsCount = 50
+                    }
+                }
             })
         {
         }

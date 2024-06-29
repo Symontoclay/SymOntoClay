@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Core;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.NLP.CommonDict;
@@ -55,6 +56,8 @@ namespace SymOntoClay.BaseTestLib
 
         public List<string> Categories { get; set; }
         public bool EnableCategories { get; set; }
+
+        public ThreadingSettings ThreadingSettings { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -97,6 +100,8 @@ namespace SymOntoClay.BaseTestLib
 
             sb.PrintPODListProp(n, nameof(Categories), Categories);
             sb.AppendLine($"{spaces}{nameof(EnableCategories)} = {EnableCategories}");
+
+            sb.PrintObjProp(n, nameof(ThreadingSettings), ThreadingSettings);
 
             return sb.ToString();
         }

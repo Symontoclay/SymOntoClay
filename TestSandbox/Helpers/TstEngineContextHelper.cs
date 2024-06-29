@@ -153,6 +153,8 @@ namespace TestSandbox.Helpers
 
             settings.Monitor = new SymOntoClay.Monitor.Monitor(monitorSettings);
 
+            settings.ThreadingSettings = factorySettings.ThreadingSettings;
+
             return settings;
         }
 
@@ -190,6 +192,8 @@ namespace TestSandbox.Helpers
 
             npcSettings.Categories = factorySettings.Categories;
             npcSettings.EnableCategories = factorySettings.EnableCategories;
+
+            npcSettings.ThreadingSettings = factorySettings.ThreadingSettings;
 
             return npcSettings;
         }

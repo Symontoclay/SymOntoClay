@@ -66,7 +66,7 @@ namespace SymOntoClay.Core.Internal.Services
             codeFrame.CompiledFunctionBody = compiledFunctionBody;
             codeFrame.LocalContext = localCodeExecutionContext;
 
-            var processInfo = new ProcessInfo();
+            var processInfo = new ProcessInfo(_context.GetCancellationToken(), _context.AsyncEventsThreadPool);
 
             codeFrame.ProcessInfo = processInfo;
             processInfo.CodeFrame = codeFrame;
@@ -145,7 +145,7 @@ namespace SymOntoClay.Core.Internal.Services
                 codeFrame.LocalContext = localCodeExecutionContext;
             }
 
-            var processInfo = new ProcessInfo();
+            var processInfo = new ProcessInfo(_context.GetCancellationToken(), _context.AsyncEventsThreadPool);
 
             codeFrame.ProcessInfo = processInfo;
             processInfo.CodeFrame = codeFrame;

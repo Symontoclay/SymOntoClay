@@ -26,13 +26,20 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
+using SymOntoClay.Threading;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
     public class ProcessInfo: BaseProcessInfo
     {
+        public ProcessInfo(CancellationToken cancellationToken, ICustomThreadPool threadPool)
+            : base(cancellationToken, threadPool)
+        {
+        }
+
         /// <inheritdoc/>
         public override string EndPointName => string.Empty;
 

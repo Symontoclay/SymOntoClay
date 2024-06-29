@@ -21,17 +21,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using Newtonsoft.Json;
+using SymOntoClay.Common.Disposing;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.Internal.FileCache;
+using SymOntoClay.Threading;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
@@ -40,7 +43,7 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.Internal
 {
-    public class MonitorLogger : IMonitorLogger
+    public class MonitorLogger : Disposable, IMonitorLogger
     {
 #if DEBUG
         private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
@@ -60,9 +63,23 @@ namespace SymOntoClay.Monitor.Internal
             _messageNumberGenerator = context.MessageNumberGenerator;
             _nodeId = context.NodeId;
             _threadId = context.ThreadId;
+
+            _cancellationTokenSource = new CancellationTokenSource();
+            _linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, context.CancellationToken);
+
+            var threadingSettings = context.ThreadingSettings;
+
+            _threadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount, 
+                threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount, 
+                context.CancellationToken);
         }
 
         private readonly IMonitorLoggerContext _context;
+
+        private readonly CancellationTokenSource _cancellationTokenSource;
+        private readonly CancellationTokenSource _linkedCancellationTokenSource;
+
+        private readonly ICustomThreadPool _threadPool;
 
         private MessageProcessor _messageProcessor;
         private IMonitorFeatures _features;
@@ -3849,18 +3866,27 @@ namespace SymOntoClay.Monitor.Internal
         {
             if (_context.EnableAsyncMessageCreation)
             {
-                Task.Run(() => {
+                ThreadTask.Run(() => {
 #if DEBUG
                     //_globalLogger.Info($"NEXT");
 #endif
 
                     _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
-                });
+                }, _threadPool, _linkedCancellationTokenSource.Token);
             }
             else
             {
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _context.EnableRemoteConnection);
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposing()
+        {
+            _cancellationTokenSource.Dispose();
+            _threadPool.Dispose();
+
+            base.OnDisposing();
         }
     }
 }

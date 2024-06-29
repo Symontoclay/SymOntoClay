@@ -22,21 +22,24 @@ SOFTWARE.*/
 
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Common.Disposing;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.Internal.FileCache;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.Internal
 {
-    public class MonitorNode : IMonitorLoggerContext, IMonitorFeatures, IMonitorNode
+    public class MonitorNode : Disposable, IMonitorLoggerContext, IMonitorFeatures, IMonitorNode
     {
 #if DEBUG
         //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
@@ -57,6 +60,11 @@ namespace SymOntoClay.Monitor.Internal
 
         private readonly BaseMonitorSettings _baseMonitorSettings;
 
+        private readonly CancellationTokenSource _cancellationTokenSource;
+        private readonly CancellationTokenSource _linkedCancellationTokenSource;
+
+        private readonly ICustomThreadPool _threadPool;
+
         /// <inheritdoc/>
         public string Id => _nodeId;
 
@@ -68,8 +76,20 @@ namespace SymOntoClay.Monitor.Internal
 
             _nodeId = nodeId;
 
+            _cancellationTokenSource = new CancellationTokenSource();
+            _linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, monitorContext.CancellationToken);
+
+            var threadingSettings = monitorContext.ThreadingSettings;
+
+            _threadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
+                threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
+                monitorContext.CancellationToken);
+
             _monitorNodeContext = new MonitorNodeContext();
             _monitorNodeContext.MonitorContext = monitorContext;
+
+            _monitorNodeContext.CancellationToken = _linkedCancellationTokenSource.Token;
+            _monitorNodeContext.ThreadingSettings = monitorContext.ThreadingSettings;
 
             _baseMonitorSettings = nodeSettings;
 
@@ -103,6 +123,9 @@ namespace SymOntoClay.Monitor.Internal
         MessageNumberGenerator IMonitorLoggerContext.MessageNumberGenerator => _messageNumberGenerator;
         string IMonitorLoggerContext.NodeId => _nodeId;
         string IMonitorLoggerContext.ThreadId => string.Empty;
+
+        CancellationToken IMonitorLoggerContext.CancellationToken => _linkedCancellationTokenSource.Token;
+        CustomThreadPoolSettings IMonitorLoggerContext.ThreadingSettings => _monitorNodeContext.ThreadingSettings;
 
         /// <inheritdoc/>
         public KindOfLogicalSearchExplain KindOfLogicalSearchExplain => _baseMonitorSettings.KindOfLogicalSearchExplain;
@@ -650,13 +673,13 @@ namespace SymOntoClay.Monitor.Internal
 
             if(EnableAsyncMessageCreation)
             {
-                Task.Run(() => {
+                ThreadTask.Run(() => {
 #if DEBUG
                     //_globalLogger.Info($"NEXT");
 #endif
 
                     _messageProcessor.ProcessMessage(messageInfo, _fileCache, _baseMonitorSettings.EnableRemoteConnection && _monitorContext.Settings.EnableRemoteConnection);
-                });
+                }, _threadPool, _linkedCancellationTokenSource.Token);
             }
             else
             {
@@ -1262,6 +1285,15 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
             _monitorLoggerImpl.Fatal(messagePointId, exception, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposing()
+        {
+            _cancellationTokenSource.Dispose();
+            _threadPool.Dispose();
+
+            base.OnDisposing();
         }
     }
 }

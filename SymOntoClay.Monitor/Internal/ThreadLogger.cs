@@ -22,10 +22,12 @@ SOFTWARE.*/
 
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Common.Disposing;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.Internal.FileCache;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +38,7 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.Internal
 {
-    public class ThreadLogger : IMonitorLoggerContext, IMonitorFeatures, IThreadLogger
+    public class ThreadLogger : Disposable, IMonitorLoggerContext, IMonitorFeatures, IThreadLogger
     {
 #if DEBUG
         private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
@@ -61,11 +63,17 @@ namespace SymOntoClay.Monitor.Internal
         /// <inheritdoc/>
         public string Id => _threadId;
 
+        private readonly CancellationTokenSource _cancellationTokenSource;
+        private readonly CancellationTokenSource _linkedCancellationTokenSource;
+
         public ThreadLogger(string threadId, MonitorNodeContext monitorNodeContext)
         {
 #if DEBUG
             //_globalLogger.Info($"threadId = {threadId}");
 #endif
+
+            _cancellationTokenSource = new CancellationTokenSource();
+            _linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, monitorNodeContext.CancellationToken);
 
             _monitorNodeContext = monitorNodeContext;
             _baseMonitorSettings = monitorNodeContext.Settings;
@@ -94,6 +102,12 @@ namespace SymOntoClay.Monitor.Internal
         MessageNumberGenerator IMonitorLoggerContext.MessageNumberGenerator => _messageNumberGenerator;
         string IMonitorLoggerContext.NodeId => _nodeId;
         string IMonitorLoggerContext.ThreadId => _threadId;
+
+        /// <inheritdoc/>
+        public CancellationToken CancellationToken => _linkedCancellationTokenSource.Token;
+
+        /// <inheritdoc/>
+        public CustomThreadPoolSettings ThreadingSettings => _monitorNodeContext.ThreadingSettings;
 
         /// <inheritdoc/>
         public bool IsReal => true;
@@ -1148,6 +1162,14 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
             _monitorLoggerImpl.Fatal(messagePointId, exception, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDisposing()
+        {
+            _cancellationTokenSource.Dispose();
+
+            base.OnDisposing();
         }
     }
 }

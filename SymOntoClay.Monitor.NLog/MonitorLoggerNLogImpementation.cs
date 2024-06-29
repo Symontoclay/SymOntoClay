@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
+using SymOntoClay.Common.Disposing;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
@@ -33,7 +34,7 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.NLog
 {
-    public class MonitorLoggerNLogImpementation: IMonitorLogger
+    public class MonitorLoggerNLogImpementation: Disposable, IMonitorLogger
     {
         /// <summary>
         /// Gets default instance of the class.

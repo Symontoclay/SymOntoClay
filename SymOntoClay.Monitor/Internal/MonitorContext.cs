@@ -25,10 +25,12 @@ using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Internal.FileCache;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.Internal
@@ -49,6 +51,9 @@ namespace SymOntoClay.Monitor.Internal
         /// It alows us to add, for example, console logger for Unity3D.
         /// </summary>
         public IList<IPlatformLogger> PlatformLoggers { get; set; }
+
+        public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
+        public CustomThreadPoolSettings ThreadingSettings { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -75,6 +80,8 @@ namespace SymOntoClay.Monitor.Internal
             var platformLoggersMark = PlatformLoggers == null ? "No" : PlatformLoggers.Any() ? "Yes" : "No";
             sb.AppendLine($"{spaces}{nameof(PlatformLoggers)} = {platformLoggersMark}");
             sb.PrintExisting(n, nameof(Settings), Settings);
+            sb.PrintExisting(n, nameof(CancellationToken), CancellationToken);
+            sb.PrintObjProp(n, nameof(ThreadingSettings), ThreadingSettings);
             return sb.ToString();
         }
     }

@@ -21,10 +21,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Monitor.Internal.FileCache;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.Internal
@@ -42,5 +44,8 @@ namespace SymOntoClay.Monitor.Internal
         public Action<string> ErrorHandler { get; set; }
 
         public BaseMonitorSettings Settings { get; set; }
+
+        public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
+        public CustomThreadPoolSettings ThreadingSettings { get; set; }
     }
 }

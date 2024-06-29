@@ -35,10 +35,13 @@ using System.Reflection;
 using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using System.Threading;
+using SymOntoClay.Common.Disposing;
+using SymOntoClay.Threading;
 
 namespace SymOntoClay.Monitor
 {
-    public class Monitor : IMonitorLoggerContext, IMonitorFeatures, IMonitor
+    public class Monitor : Disposable, IMonitorLoggerContext, IMonitorFeatures, IMonitor
     {
 #if DEBUG
         //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
@@ -49,6 +52,11 @@ namespace SymOntoClay.Monitor
         private readonly MessageProcessor _messageProcessor;
         private readonly MonitorFeatures _features;
         private readonly MonitorFileCache _fileCache;
+
+        private readonly CancellationTokenSource _cancellationTokenSource;
+        private readonly CancellationTokenSource _linkedCancellationTokenSource;
+
+        private readonly ICustomThreadPool _threadPool;
 
         private readonly MessageNumberGenerator _globalMessageNumberGenerator;
         private readonly MessageNumberGenerator _messageNumberGenerator = new MessageNumberGenerator();
@@ -72,7 +80,16 @@ namespace SymOntoClay.Monitor
 #if DEBUG
             //_globalLogger.Info($"monitorSettings = {monitorSettings}");
 #endif
-            
+
+            _cancellationTokenSource = new CancellationTokenSource();
+            _linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, monitorSettings.CancellationToken);
+
+            var threadingSettings = monitorSettings.ThreadingSettings;
+
+            _threadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
+                threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
+                _linkedCancellationTokenSource.Token);
+
             _nodesSettings = monitorSettings.NodesSettings;
             _enableOnlyDirectlySetUpNodes = monitorSettings.EnableOnlyDirectlySetUpNodes;
 
@@ -158,7 +175,9 @@ namespace SymOntoClay.Monitor
                 ErrorHandler = monitorSettings.ErrorHandler,
                 PlatformLoggers = monitorSettings.PlatformLoggers ?? new List<IPlatformLogger>(),
                 Features = _features,
-                Settings = _baseMonitorSettings
+                Settings = _baseMonitorSettings,
+                CancellationToken = _linkedCancellationTokenSource.Token,
+                ThreadingSettings = monitorSettings.ThreadingSettings
             };
 
             _remoteMonitor = monitorSettings.RemoteMonitor;
@@ -194,6 +213,9 @@ namespace SymOntoClay.Monitor
         MessageNumberGenerator IMonitorLoggerContext.MessageNumberGenerator => _messageNumberGenerator;
         string IMonitorLoggerContext.NodeId => string.Empty;
         string IMonitorLoggerContext.ThreadId => string.Empty;
+
+        CancellationToken IMonitorLoggerContext.CancellationToken => _linkedCancellationTokenSource.Token;
+        CustomThreadPoolSettings IMonitorLoggerContext.ThreadingSettings => _monitorContext.ThreadingSettings;
 
         /// <inheritdoc/>
         public bool IsReal => true;
@@ -715,13 +737,13 @@ namespace SymOntoClay.Monitor
 
             if(EnableAsyncMessageCreation)
             {
-                Task.Run(() => {
+                ThreadTask.Run(() => {
 #if DEBUG
                     //_globalLogger.Info($"NEXT");
 #endif
 
                     _messageProcessor.ProcessMessage(messageInfo, _fileCache, _baseMonitorSettings.EnableRemoteConnection);
-                });
+                }, _threadPool, _linkedCancellationTokenSource.Token);
             }
             else
             {
@@ -1349,9 +1371,13 @@ namespace SymOntoClay.Monitor
         }
 
         /// <inheritdoc/>
-        public void Dispose()
+        protected override void OnDisposing()
         {
             _remoteMonitor?.Dispose();
+            _cancellationTokenSource.Dispose();
+            _threadPool.Dispose();
+
+            base.OnDisposing();
         }
     }
 }

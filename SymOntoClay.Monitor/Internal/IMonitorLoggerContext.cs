@@ -22,9 +22,11 @@ SOFTWARE.*/
 
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Internal.FileCache;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace SymOntoClay.Monitor.Internal
 {
@@ -45,5 +47,8 @@ namespace SymOntoClay.Monitor.Internal
         bool EnableAsyncMessageCreation { get; }
         KindOfLogicalSearchExplain KindOfLogicalSearchExplain { get; }
         bool EnableAddingRemovingFactLoggingInStorages { get; }
+
+        CancellationToken CancellationToken { get; }
+        CustomThreadPoolSettings ThreadingSettings { get; }
     }
 }

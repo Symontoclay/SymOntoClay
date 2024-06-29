@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Common.Disposing;
 using SymOntoClay.Monitor;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
@@ -32,7 +33,7 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.BaseTestLib.Monitoring
 {
-    public class TestLogger : IMonitorLogger
+    public class TestLogger : Disposable, IMonitorLogger
     {
         public TestLogger(MonitorSettings monitorSettings, string id) 
         {

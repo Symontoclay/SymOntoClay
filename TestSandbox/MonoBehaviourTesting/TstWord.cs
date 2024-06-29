@@ -60,7 +60,7 @@ namespace TestSandbox.MonoBehaviourTesting
 
             var monitorMessagesDir = Path.Combine(supportBasePath, "NpcMonitorMessages");
 
-            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create();
+            var invokingInMainThread = DefaultInvokerInMainThreadFactory.Create(_cancellationTokenSource.Token);
 
             _world = WorldFactory.WorldInstance;
 

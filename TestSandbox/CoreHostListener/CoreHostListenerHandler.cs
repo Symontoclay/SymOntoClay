@@ -55,13 +55,7 @@ namespace TestSandbox.CoreHostListener
             var context = complexContext.EngineContext;
             var worldContext = complexContext.WorldContext;
 
-
             var platformTypesConvertorsRegistry = worldContext.PlatformTypesConvertorsRegistry;
-
-
-
-
-
 
             var endpointsRegistries = new List<IEndpointsRegistry>();
 

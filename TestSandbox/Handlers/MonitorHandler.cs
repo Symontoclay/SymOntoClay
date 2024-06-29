@@ -87,7 +87,7 @@ namespace TestSandbox.Handlers
             var monitorSettings = new SymOntoClay.Monitor.MonitorSettings
             {
                 CancellationToken = cancellationTokenSource.Token,
-                ThreadingSettings = ConfigureThreadingSettings(),
+                ThreadingSettings = ConfigureThreadingSettings().AsyncEvents,
                 Enable = true,
                 MessagesDir = monitorMessagesDir,
                 KindOfLogicalSearchExplain = KindOfLogicalSearchExplain.None,
@@ -151,7 +151,7 @@ namespace TestSandbox.Handlers
             var monitor = new SymOntoClay.Monitor.Monitor(new MonitorSettings
             {
                 CancellationToken = cancellationTokenSource.Token,
-                ThreadingSettings = ConfigureThreadingSettings(),
+                ThreadingSettings = ConfigureThreadingSettings().AsyncEvents,
                 Enable = true,
                 MessagesDir = Path.Combine(Directory.GetCurrentDirectory(), "MessagesDir"),
                 OutputHandler = message => { _globalLogger.Info($"message = {message}"); },

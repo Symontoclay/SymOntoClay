@@ -44,7 +44,7 @@ namespace SymOntoClay.SoundBuses
             _cancellationTokenSource = new CancellationTokenSource();
             _linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, settings?.CancellationToken ?? CancellationToken.None);
 
-            var threadingSettings = settings?.ThreadingSettings?.AsyncEvents;
+            var threadingSettings = settings?.ThreadingSettings;
 
             _threadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
                 threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,

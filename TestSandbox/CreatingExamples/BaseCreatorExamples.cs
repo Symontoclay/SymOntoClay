@@ -210,7 +210,7 @@ namespace TestSandbox.CreatingExamples
                 PlatformLoggers = new List<IPlatformLogger>() { callBackLogger },
                 Enable = true,
                 CancellationToken = cancellationTokenSource.Token,
-                ThreadingSettings = ConfigureThreadingSettings()
+                ThreadingSettings = ConfigureThreadingSettings().AsyncEvents
             });
 
             settings.ThreadingSettings = ConfigureThreadingSettings();

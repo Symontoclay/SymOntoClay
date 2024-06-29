@@ -60,18 +60,10 @@ namespace TestSandbox.SoundBusHandler
             var settings = new SimpleSoundBusSettings()
             {
                 CancellationToken = cancellationTokenSource.Token,
-                ThreadingSettings = new ThreadingSettings
+                ThreadingSettings = new CustomThreadPoolSettings
                 {
-                    AsyncEvents = new CustomThreadPoolSettings
-                    {
-                        MaxThreadsCount = 100,
-                        MinThreadsCount = 50
-                    },
-                    CodeExecution = new CustomThreadPoolSettings
-                    {
-                        MaxThreadsCount = 100,
-                        MinThreadsCount = 50
-                    }
+                    MaxThreadsCount = 100,
+                    MinThreadsCount = 50
                 }
             };
 

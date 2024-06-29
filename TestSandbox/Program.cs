@@ -1028,7 +1028,7 @@ app PeaceKeeper is [very middle] exampleClass
                 PlatformLoggers = new List<IPlatformLogger>() { callBackLogger },
                 Enable = true,
                 CancellationToken = cancellationTokenSource.Token,
-                ThreadingSettings = ConfigureThreadingSettings()
+                ThreadingSettings = ConfigureThreadingSettings().AsyncEvents
             });
 
             settings.ThreadingSettings = ConfigureThreadingSettings();
@@ -1623,7 +1623,7 @@ action Go
                 PlatformLoggers = new List<IPlatformLogger>() { new CLIPlatformLogger() },
                 Enable = true,
                 CancellationToken = cancellationTokenSource.Token,
-                ThreadingSettings = ConfigureThreadingSettings()
+                ThreadingSettings = ConfigureThreadingSettings().AsyncEvents
             });
 
             _logger.Info("ECB2A35D-05A6-48C4-9C9E-27D54D70C501", $"settings = {settings}");

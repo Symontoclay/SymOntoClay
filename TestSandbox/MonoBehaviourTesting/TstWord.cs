@@ -81,7 +81,7 @@ namespace TestSandbox.MonoBehaviourTesting
             settings.SoundBus = new SimpleSoundBus(new SimpleSoundBusSettings
             {
                 CancellationToken = _cancellationTokenSource.Token,
-                ThreadingSettings = ConfigureThreadingSettings()
+                ThreadingSettings = ConfigureThreadingSettings().AsyncEvents
             });
 
             settings.Monitor = new SymOntoClay.Monitor.Monitor(new SymOntoClay.Monitor.MonitorSettings

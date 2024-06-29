@@ -105,7 +105,7 @@ namespace TestSandbox.Helpers
             settings.SoundBus = new SimpleSoundBus(new SimpleSoundBusSettings
             {
                 CancellationToken = factorySettings.CancellationToken,
-                ThreadingSettings = factorySettings.ThreadingSettings
+                ThreadingSettings = factorySettings.ThreadingSettings.AsyncEvents
             });
 
             if(!factorySettings.DictsPaths.IsNullOrEmpty() || !factorySettings.DictsList.IsNullOrEmpty() || factorySettings.UseDefaultNLPSettings)
@@ -145,7 +145,7 @@ namespace TestSandbox.Helpers
                 EnableAddingRemovingFactLoggingInStorages = true,
                 EnableFullCallInfo = true,
                 CancellationToken = factorySettings.CancellationToken,
-                ThreadingSettings = factorySettings.ThreadingSettings
+                ThreadingSettings = factorySettings.ThreadingSettings.AsyncEvents
             };
 
             if(factorySettings.PlatformLogger != null)

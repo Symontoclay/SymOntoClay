@@ -94,7 +94,7 @@ namespace SymOntoClay.CLI
             settings.SoundBus = new SimpleSoundBus(new SimpleSoundBusSettings
             {
                 CancellationToken = _cancellationTokenSource.Token,
-                ThreadingSettings = ConfigureThreadingSettings()
+                ThreadingSettings = ConfigureThreadingSettings().AsyncEvents
             });
 
             if(command.UseNLP)

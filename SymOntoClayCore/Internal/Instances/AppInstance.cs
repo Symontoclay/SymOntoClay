@@ -174,7 +174,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         public void ActivateState(IMonitorLogger logger, StateDef state, List<Var> varList)
         {
-            Task.Run(() => {//logged
+            Task.Run(() => {
                 var taskId = logger.StartTask("63ED542C-9E36-4AD9-97E7-58A613A604D3");
 
                 try

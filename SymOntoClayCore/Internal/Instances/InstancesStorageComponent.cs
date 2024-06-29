@@ -118,7 +118,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             instanceInfo.Init(logger);
 
-            Task.Run(() => {//logged
+            Task.Run(() => {
                 var taskId = logger.StartTask("B38CE583-4AE0-42ED-9043-59E038AF094E");
 
                 try
@@ -138,7 +138,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void DispatchOnIdle()
         {
-            Task.Run(() => {//logged
+            Task.Run(() => {
                 var taskId = Logger.StartTask("F3A7C7F7-1D36-4321-9467-B5E075A04E6F");
 
                 try
@@ -276,7 +276,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 {
                     NAppendAndTryStartProcessInfoWithDevices(logger, processInfo);
 
-                    Task.Run(() => //logged
+                    Task.Run(() =>
                     {
                         var taskId = logger.StartTask("EDE8166B-FDC9-4DDB-8D5F-76CF87E61A4C");
 

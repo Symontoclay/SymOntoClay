@@ -107,7 +107,6 @@ namespace TestSandbox.Handlers
 
             threadLogger.StopTask("B5E884FD-D8AD-414C-A6EE-BA971B248240", taskId);
 
-            //logged
             //var taskId = logger.StartTask();
             //logger.StopTask(, taskId);
             //#if DEBUG

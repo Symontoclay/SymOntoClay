@@ -153,7 +153,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private void EmitOnAddingFactForNewStorage(IMonitorLogger logger, ILogicalStorage storage)
         {
-            Task.Run(() => {//logged
+            Task.Run(() => {
                 var taskId = logger.StartTask("6EA7602B-F2EA-4204-B747-886EB25161E7");
 
                 try
@@ -178,7 +178,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         {
             if(OnAddingFact != null)
             {
-                Task.Run(() => {//logged
+                Task.Run(() => {
                     var taskId = logger.StartTask("612DB280-7EF8-4035-B6A5-229440E96F55");
 
                     try

@@ -34,12 +34,14 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.NLog;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SymOntoClay.Core
@@ -48,10 +50,16 @@ namespace SymOntoClay.Core
     {
         protected static IMonitorLogger _logger = MonitorLoggerNLogImpementation.Instance;
         
-        protected BaseProcessInfo()
+        protected BaseProcessInfo(CancellationToken cancellationToken, ICustomThreadPool threadPool)
         {
+            _cancellationToken = cancellationToken;
+            _threadPool = threadPool;
+
             Id = NameHelper.GetNewEntityNameString();
         }
+
+        protected readonly CancellationToken _cancellationToken;
+        protected readonly ICustomThreadPool _threadPool;
 
         /// <inheritdoc/>
         public string Id { get; private set; }
@@ -278,7 +286,7 @@ namespace SymOntoClay.Core
 
             if(onFinishHandlersList.Any())
             {
-                Task.Run(() => {//logged
+                SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {
                     var taskId = logger.StartTask("F0A455C0-A6EB-4BAA-8D2A-0EE1DC112590");
 
                     try
@@ -294,7 +302,7 @@ namespace SymOntoClay.Core
                     }
 
                     logger.StopTask("AD80EB54-A648-4B05-9D4D-19933DA966C4", taskId);
-                });
+                }, _threadPool, _cancellationToken);
             }
 
 
@@ -316,7 +324,7 @@ namespace SymOntoClay.Core
 
             if (onCompleteHandlersList.Any())
             {
-                Task.Run(() => {//logged
+                SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {
                     var taskId = logger.StartTask("DD76FAB5-8781-4979-B885-6D3F73EA42BD");
 
                     try
@@ -332,9 +340,8 @@ namespace SymOntoClay.Core
                     }
 
                     logger.StopTask("64D55DB6-79B8-4999-B0A8-C8C4C68CE349", taskId);
-                });
+                }, _threadPool, _cancellationToken);
             }
-
 
             InternalOnComplete?.Invoke(this);
         }
@@ -354,7 +361,7 @@ namespace SymOntoClay.Core
 
             if (onWeakCanceledHandlersList.Any())
             {
-                Task.Run(() => {//logged
+                SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {
                     var taskId = logger.StartTask("F571FF35-20B0-4D29-A5C4-9D33ACF0B280");
 
                     try
@@ -370,7 +377,7 @@ namespace SymOntoClay.Core
                     }
 
                     logger.StopTask("DBDEEE39-6612-445A-AD63-F42C5613078E", taskId);
-                });
+                }, _threadPool, _cancellationToken);
             }
 
             InternalOnWeakCanceled?.Invoke(this);

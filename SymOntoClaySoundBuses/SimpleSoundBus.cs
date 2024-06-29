@@ -53,8 +53,8 @@ namespace SymOntoClay.SoundBuses
 
         private readonly SimpleSoundBusSettings _settings;
         private readonly ICustomThreadPool _threadPool;
-        private CancellationTokenSource _cancellationTokenSource;
-        private CancellationTokenSource _linkedCancellationTokenSource;
+        private readonly CancellationTokenSource _cancellationTokenSource;
+        private readonly CancellationTokenSource _linkedCancellationTokenSource;
 
         /// <inheritdoc/>
         public void AddReceiver(ISoundReceiver receiver)
@@ -110,7 +110,7 @@ namespace SymOntoClay.SoundBuses
 
                     var logger = receiver.Logger;
 
-                    SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {//logged
+                    SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {
                         var taskId = logger.StartTask("A513EA05-6D7D-4EAD-A9CE-EDC57E09B067");
 
                         try
@@ -150,7 +150,7 @@ namespace SymOntoClay.SoundBuses
 
                     var logger = receiver.Logger;
 
-                    SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {//logged
+                    SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() => {
                         var taskId = logger.StartTask("3E6AB919-D75A-4A56-8C8A-D6F0C12C1B7E");
 
                         try

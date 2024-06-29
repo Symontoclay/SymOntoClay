@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,12 @@ namespace SymOntoClay.BaseTestLib.HostListeners.Handlers
 {
     public class HostListenerHandlersRegistry : IDisposable
     {
+        public HostListenerHandlersRegistry(CancellationToken cancellationToken, ICustomThreadPool threadPool) 
+        {
+            _endPointHandlersRegistry = new HandlersRegistry(cancellationToken, threadPool);
+            _methodImplHandlersRegistry = new HandlersRegistry(cancellationToken, threadPool);
+        }
+
         public void SetLogger(IMonitorLogger logger)
         {
             _logger = logger;
@@ -149,8 +156,8 @@ namespace SymOntoClay.BaseTestLib.HostListeners.Handlers
             }
         }
 
-        private readonly HandlersRegistry _endPointHandlersRegistry = new HandlersRegistry();
-        private readonly HandlersRegistry _methodImplHandlersRegistry = new HandlersRegistry();
+        private readonly HandlersRegistry _endPointHandlersRegistry;
+        private readonly HandlersRegistry _methodImplHandlersRegistry;
 
         private readonly object _lockObj = new object();
         private bool _disposed = false;

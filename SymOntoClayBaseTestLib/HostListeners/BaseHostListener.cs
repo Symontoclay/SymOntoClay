@@ -24,6 +24,7 @@ using SymOntoClay.BaseTestLib;
 using SymOntoClay.BaseTestLib.HostListeners.Handlers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints;
 using System;
@@ -39,6 +40,28 @@ namespace SymOntoClay.BaseTestLib.HostListeners
 {
     public abstract class BaseHostListener: ILoggedTestHostListener
     {
+        protected BaseHostListener()
+            : this(DefaultCustomThreadPoolSettings.MinThreadsCount, 
+                  DefaultCustomThreadPoolSettings.MaxThreadsCount)
+        {
+        }
+
+        protected BaseHostListener(int minThreadsCount, int maxThreadsCount)
+            : this(minThreadsCount, maxThreadsCount, CancellationToken.None)
+        {
+        }
+
+        protected BaseHostListener(int minThreadsCount, int maxThreadsCount, CancellationToken cancellationToken)
+            : this(cancellationToken, new CustomThreadPool(minThreadsCount, maxThreadsCount, cancellationToken))
+        {
+        }
+
+        protected BaseHostListener(CancellationToken cancellationToken, ICustomThreadPool threadPool)
+        {
+            _onEnterHandlersRegistry = new HostListenerHandlersRegistry(cancellationToken, threadPool);
+            _onLeaveHandlersRegistry = new HostListenerHandlersRegistry(cancellationToken, threadPool);
+        }
+
         public void AddEnterSyncHandler(string methodName, Action handler)
         {
             _onEnterHandlersRegistry.AddSyncHandler(methodName, handler);
@@ -105,8 +128,8 @@ namespace SymOntoClay.BaseTestLib.HostListeners
             _onLeaveHandlersRegistry.RemoveHandler(methodName, handler);
         }
 
-        private HostListenerHandlersRegistry _onEnterHandlersRegistry = new HostListenerHandlersRegistry();
-        private HostListenerHandlersRegistry _onLeaveHandlersRegistry = new HostListenerHandlersRegistry();
+        private readonly HostListenerHandlersRegistry _onEnterHandlersRegistry;
+        private readonly HostListenerHandlersRegistry _onLeaveHandlersRegistry;
 
         [SupportHostListenerMethod]
         protected void EmitOnEnter()

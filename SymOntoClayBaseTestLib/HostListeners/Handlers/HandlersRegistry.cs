@@ -22,16 +22,27 @@ SOFTWARE.*/
 
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SymOntoClay.BaseTestLib.HostListeners.Handlers
 {
     public class HandlersRegistry: IDisposable
     {
+        public HandlersRegistry(CancellationToken cancellationToken, ICustomThreadPool threadPool)
+        {
+            _cancellationToken = cancellationToken;
+            _threadPool = threadPool;
+        }
+
+        protected readonly CancellationToken _cancellationToken;
+        protected readonly ICustomThreadPool _threadPool;
+
         public void SetLogger(IMonitorLogger logger)
         {
             _logger = logger;
@@ -123,7 +134,7 @@ namespace SymOntoClay.BaseTestLib.HostListeners.Handlers
 
                     foreach (var handler in list)
                     {
-                        Task.Run(() =>
+                        SymOntoClay.Core.Internal.Threads.ThreadTask.Run(() =>
                         {
                             try
                             {
@@ -133,7 +144,7 @@ namespace SymOntoClay.BaseTestLib.HostListeners.Handlers
                             {
                                 _logger.Error("94BA1C64-FE5C-418B-AE5A-B1CAF10D06F1", e);
                             }
-                        });
+                        }, _threadPool, _cancellationToken);
                     }
                 }
 

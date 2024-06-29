@@ -99,7 +99,10 @@ namespace TestSandbox.Helpers
 
             settings.InvokerInMainThread = invokingInMainThread;
 
-            settings.SoundBus = new SimpleSoundBus();
+            settings.SoundBus = new SimpleSoundBus(new SimpleSoundBusSettings
+            {
+                ThreadingSettings = factorySettings.ThreadingSettings
+            });
 
             if(!factorySettings.DictsPaths.IsNullOrEmpty() || !factorySettings.DictsList.IsNullOrEmpty() || factorySettings.UseDefaultNLPSettings)
             {

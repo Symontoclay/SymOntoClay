@@ -37,7 +37,7 @@ namespace SymOntoClay.SoundBuses
 {
     public class SimpleSoundBus : Disposable, ISoundBus
     {
-        public SimpleSoundBus(SimpleSoundBusSettings settings = null)
+        public SimpleSoundBus(SimpleSoundBusSettings settings)
         {
             _settings = settings;
 

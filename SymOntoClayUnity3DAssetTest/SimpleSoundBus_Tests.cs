@@ -39,7 +39,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         [Parallelizable]
         public void Case1()
         {
-            var bus = new SimpleSoundBus();
+            var bus = new SimpleSoundBus(null);
 
             var receiver1 = new TestSoundReceiver(11, new Vector3(10, 10, 10), (double power, double distance, Vector3 position, string query, string convertedQuery) => {
                 Assert.AreEqual(59.37646171569824, power);

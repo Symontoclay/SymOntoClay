@@ -55,8 +55,11 @@ namespace TestSandbox.SoundBusHandler
 
         private void Case4()
         {
+            using var cancellationTokenSource = new CancellationTokenSource();
+
             var settings = new SimpleSoundBusSettings()
             {
+                CancellationToken = cancellationTokenSource.Token,
                 ThreadingSettings = new ThreadingSettings
                 {
                     AsyncEvents = new CustomThreadPoolSettings
@@ -91,6 +94,8 @@ namespace TestSandbox.SoundBusHandler
             bus.PushSound(12, 60, new Vector3(1, 1, 1), "act(M16, shoot)");
 
             Thread.Sleep(10000);
+
+            cancellationTokenSource.Cancel();
         }
 
         private void Case3()
@@ -101,7 +106,7 @@ namespace TestSandbox.SoundBusHandler
 
             var engineContext = TstEngineContextHelper.CreateAndInitContext(factorySettings).EngineContext;
 
-            var bus = new SimpleSoundBus();
+            var bus = new SimpleSoundBus(null);
 
             var receiver1 = new TstSoundReceiver(11, new Vector3(10, 10, 10));
             bus.AddReceiver(receiver1);
@@ -118,7 +123,7 @@ namespace TestSandbox.SoundBusHandler
 
         private void Case2()
         {
-            var bus = new SimpleSoundBus();
+            var bus = new SimpleSoundBus(null);
             
             var receiver1 = new TestSoundReceiver(11, new Vector3(10, 10, 10), (double power, double distance, Vector3 position, string query, string convertedQuery) => {
                 _logger.Info($"power = {power}");
@@ -137,7 +142,7 @@ namespace TestSandbox.SoundBusHandler
 
         private void Case1()
         {
-            var bus = new SimpleSoundBus();
+            var bus = new SimpleSoundBus(null);
 
             var receiver1 = new TstSoundReceiver(11, new Vector3(10, 10, 10));
 

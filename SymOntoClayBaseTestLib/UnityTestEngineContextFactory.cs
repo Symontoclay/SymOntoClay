@@ -191,7 +191,10 @@ namespace SymOntoClay.BaseTestLib
 
             settings.InvokerInMainThread = invokingInMainThread;
 
-            settings.SoundBus = new SimpleSoundBus();
+            settings.SoundBus = new SimpleSoundBus(new SimpleSoundBusSettings
+            {
+                ThreadingSettings = factorySettings.ThreadingSettings
+            });
 
             if (!factorySettings.DictsPaths.IsNullOrEmpty() || !factorySettings.DictsList.IsNullOrEmpty() || factorySettings.UseDefaultNLPSettings)
             {
@@ -238,6 +241,8 @@ namespace SymOntoClay.BaseTestLib
             }
 
             settings.Monitor = new TestMonitor(monitorSettings);
+
+            settings.ThreadingSettings = factorySettings.ThreadingSettings;
 
             return settings;
         }
@@ -340,6 +345,8 @@ namespace SymOntoClay.BaseTestLib
 
             npcSettings.Categories = factorySettings.Categories;
             npcSettings.EnableCategories = factorySettings.EnableCategories;
+
+            npcSettings.ThreadingSettings = factorySettings.ThreadingSettings;
 
             return npcSettings;
         }

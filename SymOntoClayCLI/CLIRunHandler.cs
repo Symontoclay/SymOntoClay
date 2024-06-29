@@ -41,12 +41,16 @@ using SymOntoClay.ProjectFiles;
 using SymOntoClay.NLP;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.CLI.Helpers;
+using SymOntoClay.Core;
+using SymOntoClay.Threading;
 
 namespace SymOntoClay.CLI
 {
     public class CLIRunHandler : IDisposable
     {
         private IWorld world;
+
+        private CancellationTokenSource _cancellationTokenSource;
 
         public void Run(CLICommand command)
         {
@@ -69,7 +73,12 @@ namespace SymOntoClay.CLI
             var instance = WorldFactory.WorldInstance;
             world = instance;
 
+            _cancellationTokenSource = new CancellationTokenSource();
+
             var settings = new WorldSettings();
+
+            settings.CancellationToken = _cancellationTokenSource.Token;
+
             settings.EnableAutoloadingConvertors = true;
 
             settings.LibsDirs = new List<string>() { targetFiles.SharedLibsDir, targetFiles.LibsDir };
@@ -82,7 +91,11 @@ namespace SymOntoClay.CLI
 
             settings.InvokerInMainThread = invokingInMainThread;
 
-            settings.SoundBus = new SimpleSoundBus();
+            settings.SoundBus = new SimpleSoundBus(new SimpleSoundBusSettings
+            {
+                CancellationToken = _cancellationTokenSource.Token,
+                ThreadingSettings = ConfigureThreadingSettings()
+            });
 
             if(command.UseNLP)
             {
@@ -112,6 +125,8 @@ namespace SymOntoClay.CLI
                 Enable = true
             });
 
+            settings.ThreadingSettings = ConfigureThreadingSettings();
+
             instance.SetSettings(settings);
 
             var platformListener = this;
@@ -121,6 +136,8 @@ namespace SymOntoClay.CLI
             npcSettings.LogicFile = targetFiles.LogicFile;
             npcSettings.HostListener = platformListener;
             npcSettings.PlatformSupport = new PlatformSupportCLIStub();
+
+            npcSettings.ThreadingSettings = ConfigureThreadingSettings();
 
             var npc = instance.GetHumanoidNPC(npcSettings);
 
@@ -179,9 +196,28 @@ namespace SymOntoClay.CLI
 
         private IMonitorLogger _npcLogger;
 
+        private ThreadingSettings ConfigureThreadingSettings()
+        {
+            return new ThreadingSettings
+            {
+                AsyncEvents = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 100,
+                    MinThreadsCount = 50
+                },
+                CodeExecution = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 100,
+                    MinThreadsCount = 50
+                }
+            };
+        }
+
         public void Dispose()
         {
+            _cancellationTokenSource.Cancel();
             world?.Dispose();
+            _cancellationTokenSource.Dispose();
         }
 
         [DebuggerHidden]

@@ -32,6 +32,9 @@ using TestSandbox.PlatformImplementations;
 using SymOntoClay.SoundBuses;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
+using SymOntoClay.Core;
+using SymOntoClay.Threading;
+using System.Threading;
 
 namespace TestSandbox.MonoBehaviourTesting
 {
@@ -40,6 +43,8 @@ namespace TestSandbox.MonoBehaviourTesting
         private readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
 
         private IWorld _world;
+
+        private CancellationTokenSource _cancellationTokenSource;
 
         public override void Awake()
         {
@@ -61,6 +66,8 @@ namespace TestSandbox.MonoBehaviourTesting
 
             var settings = new WorldSettings();
 
+            settings.CancellationToken = _cancellationTokenSource.Token;
+
             settings.LibsDirs = new List<string>() { Path.Combine(Directory.GetCurrentDirectory(), "Source", "Modules") };
 
             settings.ImagesRootDir = Path.Combine(supportBasePath, "Images");
@@ -71,7 +78,11 @@ namespace TestSandbox.MonoBehaviourTesting
 
             settings.InvokerInMainThread = invokingInMainThread;
 
-            settings.SoundBus = new SimpleSoundBus();
+            settings.SoundBus = new SimpleSoundBus(new SimpleSoundBusSettings
+            {
+                CancellationToken = _cancellationTokenSource.Token,
+                ThreadingSettings = ConfigureThreadingSettings()
+            });
 
             settings.Monitor = new SymOntoClay.Monitor.Monitor(new SymOntoClay.Monitor.MonitorSettings
             {
@@ -80,11 +91,30 @@ namespace TestSandbox.MonoBehaviourTesting
                 Enable = true
             });
 
+            settings.ThreadingSettings = ConfigureThreadingSettings();
+
             _logger.Info("B41FD963-D229-4BDF-A3A9-CBF339B120A5", $"settings = {settings}");
 
             _world.SetSettings(settings);
 
             _logger.Info("175D394F-43AD-4B26-BCED-E97F79D3D846", "End");
+        }
+
+        private ThreadingSettings ConfigureThreadingSettings()
+        {
+            return new ThreadingSettings
+            {
+                AsyncEvents = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 100,
+                    MinThreadsCount = 50
+                },
+                CodeExecution = new CustomThreadPoolSettings
+                {
+                    MaxThreadsCount = 100,
+                    MinThreadsCount = 50
+                }
+            };
         }
 
         public override void Start()
@@ -100,7 +130,9 @@ namespace TestSandbox.MonoBehaviourTesting
         {
             _logger.Info("89DF1C65-5299-4FB4-9AD6-3D323C456C7A", "Begin");
 
+            _cancellationTokenSource.Cancel();
             _world.Dispose();
+            _cancellationTokenSource.Dispose();
 
             _logger.Info("10DCCCD6-E965-4D20-93A8-F168F29AE5DB", "End");
         }

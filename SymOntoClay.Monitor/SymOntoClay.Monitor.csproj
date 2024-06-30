@@ -12,8 +12,8 @@
     <ProjectReference Include="..\SymOntoClay.Monitor.Common\SymOntoClay.Monitor.Common.csproj" />
     <ProjectReference Include="..\SymOntoClayCoreHelper\SymOntoClayCoreHelper.csproj" />
   </ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="SymOntoClay.Common" Version="0.5.5.2" />
-		<PackageReference Include="SymOntoClay.Threading" Version="0.5.5.2" />
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="SymOntoClay.Common" Version="0.5.5.3" />
+    <PackageReference Include="SymOntoClay.Threading" Version="0.5.5.3" />
+  </ItemGroup>
 </Project>

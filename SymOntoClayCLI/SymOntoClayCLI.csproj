@@ -14,7 +14,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NLog" Version="5.1.4" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.1" />
-    <PackageReference Include="SymOntoClay.CLI.Helpers" Version="0.5.5.3" />
+    <PackageReference Include="SymOntoClay.CLI.Helpers" Version="0.5.5.4" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SymOntoClay.Libs\SymOntoClay.Libs.csproj" />

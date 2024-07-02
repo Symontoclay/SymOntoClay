@@ -90,7 +90,7 @@ namespace SymOntoClay.Core.DebugHelpers
         {
             if (source.KindOfOperator == KindOfOperator.CallFunction)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("DF9274E2-725A-44F3-8B07-CE8BE709E460");
             }
 
             var mark = OperatorsHelper.GetSymbol(source.KindOfOperator);

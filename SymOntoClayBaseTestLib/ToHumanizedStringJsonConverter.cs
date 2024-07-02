@@ -39,7 +39,7 @@ namespace SymOntoClay.BaseTestLib
 
         public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("E0C064D9-4BCC-43AE-961A-782BBD4954A0");
         }
 
         public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)

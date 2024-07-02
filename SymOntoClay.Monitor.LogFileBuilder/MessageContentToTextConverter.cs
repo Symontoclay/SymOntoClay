@@ -324,7 +324,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                     _globalLogger.Info($"label = {label}");
 #endif
 
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("4EC39690-30B7-4D88-8CC8-B7A8328851D6");
                 }
             }
 

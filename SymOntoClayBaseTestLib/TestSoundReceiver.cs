@@ -71,7 +71,7 @@ namespace SymOntoClay.BaseTestLib
         /// <inheritdoc/>
         public override void CallBack(double power, double distance, Vector3 position, RuleInstance fact)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("B941B526-D9D3-4D76-A93A-4578CA5AE06D");
         }
 
         /// <inheritdoc/>

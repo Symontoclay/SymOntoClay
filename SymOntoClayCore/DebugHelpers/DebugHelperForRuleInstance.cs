@@ -112,7 +112,7 @@ namespace SymOntoClay.Core.DebugHelpers
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("45573465-7BE7-4F59-A9E0-674C0A968726");
                 }
             }
 

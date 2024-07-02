@@ -53,10 +53,10 @@ namespace SymOntoClay.Core
                 {
                     case ComponentState.Loaded:
                     case ComponentState.Stopped:
-                        throw new NotImplementedException();
+                        throw new NotImplementedException("DCC81752-0D31-41D3-AEA8-7BC59C178460");
 
                     case ComponentState.Started:
-                        throw new NotImplementedException();
+                        throw new NotImplementedException("6A15197F-4CDB-4FAC-B50D-FB0C650EFAE6");
 
                     case ComponentState.Disposed:
                         throw new ObjectDisposedException(null);
@@ -80,7 +80,7 @@ namespace SymOntoClay.Core
 
 #if IMAGINE_WORKING
 #else
-                throw new NotImplementedException();
+                throw new NotImplementedException("78748188-426E-437B-B569-B7991C41081E");
 #endif
             }
         }
@@ -97,7 +97,7 @@ namespace SymOntoClay.Core
 
 #if IMAGINE_WORKING
 #else
-                throw new NotImplementedException();
+                throw new NotImplementedException("CB081D88-0E42-4C37-BD2D-746CDD6317A8");
 #endif
             }
         }
@@ -114,7 +114,7 @@ namespace SymOntoClay.Core
 
 #if IMAGINE_WORKING
 #else
-                throw new NotImplementedException();
+                throw new NotImplementedException("F8B0FEF1-C39D-469C-A8CA-BA94CD1C3EF0");
 #endif
             }
         }
@@ -135,7 +135,7 @@ namespace SymOntoClay.Core
 
                     return true;
 #else
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("BF0906EC-518F-48E4-9000-5AFD17E65BCA");
 #endif
                 }
             }

@@ -1052,7 +1052,7 @@ namespace SymOntoClay.Core
         /// <inheritdoc/>
         public MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("6D1CBC4C-FA9A-43EB-A843-C5A5A4C1093E");
         }
         */
     }

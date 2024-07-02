@@ -449,7 +449,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             DebugLogger.Instance.Info(this);
 #endif
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("3D49C74C-488F-408F-AF25-46DF22D00E0F");
         }
 
         /// <inheritdoc/>

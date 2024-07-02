@@ -85,12 +85,12 @@ namespace SymOntoClay.Core.DebugHelpers
         
         private static string EntityRefToString(TriggerConditionNode source, DebugHelperOptions options)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("3CE393C1-C16A-4A8B-BF33-5D9CB54C0635");
         }
 
         private static string EntityConditionToString(TriggerConditionNode source, DebugHelperOptions options)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("688EB051-DBF4-4838-82CC-3ED15944458F");
         }
 
         private static string BinaryOperatorToString(TriggerConditionNode source, DebugHelperOptions options)
@@ -140,7 +140,7 @@ namespace SymOntoClay.Core.DebugHelpers
 
         private static string OnceToString(TriggerConditionNode source, DebugHelperOptions options)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("053F3F90-959D-4285-9C10-5C977AEF79A9");
         }
 
         private static string CallFunctionToString(TriggerConditionNode source, DebugHelperOptions options)
@@ -153,7 +153,7 @@ namespace SymOntoClay.Core.DebugHelpers
             {
                 if (source.IsNamedParameters)
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("5D5090F3-560E-482C-B3BF-06AD92AB6D03");
                 }
                 else
                 {

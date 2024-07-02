@@ -95,11 +95,11 @@ namespace SymOntoClay.Monitor.Internal
         private readonly Action<string> _outputHandler;
         private readonly Action<string> _errorHandler;
 
-        string IMonitorLogger.Id => throw new NotImplementedException();
+        string IMonitorLogger.Id => throw new NotImplementedException("DB6C455C-9ED3-41D1-BF0D-519E637F1CD8");
 
-        bool IMonitorLogger.IsReal => throw new NotImplementedException();
+        bool IMonitorLogger.IsReal => throw new NotImplementedException("F251EF2C-DA85-4227-9EC3-63359A7EFE26");
 
-        IMonitorFeatures IMonitorLogger.MonitorFeatures => throw new NotImplementedException();
+        IMonitorFeatures IMonitorLogger.MonitorFeatures => throw new NotImplementedException("A46DAD00-A6D9-47EB-85CA-CF9D0DDAE0AF");
 
         /// <inheritdoc/>
         public KindOfLogicalSearchExplain KindOfLogicalSearchExplain => _context.KindOfLogicalSearchExplain;

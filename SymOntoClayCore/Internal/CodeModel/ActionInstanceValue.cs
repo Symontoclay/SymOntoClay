@@ -55,13 +55,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public IExecutionCoordinator GetCoordinator(IMonitorLogger logger, IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("750532E9-432D-44E6-8C37-CCC35C40814E");
         }
 
         /// <inheritdoc/>
         public IExecutable Activate(IMonitorLogger logger, IEngineContext context, ILocalCodeExecutionContext localCodeExecutionContext, IExecutionCoordinator executionCoordinator)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("7C4E549E-3D08-425D-9C90-4286B6D40E68");
         }
 
         /// <inheritdoc/>
@@ -73,7 +73,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override string ToSystemString()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("9A6C00DE-2C0F-495B-8F35-0F10D30D5E70");
         }
 
         /// <inheritdoc/>
@@ -116,10 +116,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public bool IsActivated => true;
 
         /// <inheritdoc/>
-        public bool IsInstance => throw new NotImplementedException();
+        public bool IsInstance => throw new NotImplementedException("2D90DFF4-9B3B-40AC-8CC8-19AC9EB89286");
 
         /// <inheritdoc/>
-        public IInstance AsInstance => throw new NotImplementedException();
+        public IInstance AsInstance => throw new NotImplementedException("611F3569-3528-4247-B086-5B9893CAB084");
 
         /// <inheritdoc/>
         public UsingLocalCodeExecutionContextPreferences UsingLocalCodeExecutionContextPreferences => ActionInstance?.UsingLocalCodeExecutionContextPreferences ?? UsingLocalCodeExecutionContextPreferences.UseBothOwnAndCallerAsParent;

@@ -250,7 +250,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 return CallStrongIdentifierValue(logger, caller.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, isSync, parentLocalCodeExecutionContext);
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("9604AA7E-1B4E-4191-B2DE-CFCFE4F76355");
         }
 
         private Dictionary<StrongIdentifierValue, Value> TakeNamedParameters(IMonitorLogger logger, List<Value> rawParamsList)
@@ -279,10 +279,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             if (caller.LeftOperand.IsHostValue)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("5A03B278-5E13-4CA6-BF94-9CB35917A610");
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("5A03B278-5E13-4CA6-BF94-9CB35917A610");
         }
 
         private Value CallStrongIdentifierValue(IMonitorLogger logger, StrongIdentifierValue methodName,

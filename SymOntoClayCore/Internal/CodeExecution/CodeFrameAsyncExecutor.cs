@@ -106,12 +106,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (cancelAnnotationSystemEvent != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("22ACDC3F-AE3B-4981-B7DF-ACB3D3FDF20E");
             }
 
             if (errorAnnotationSystemEvent != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("5C8CBF29-4135-4FE4-AC12-A326C2A10FC2");
             }
 
             if (increaceCurrentFramePosition)

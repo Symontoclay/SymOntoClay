@@ -98,7 +98,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public void DiscoverAllAnnotations(IList<Annotation> result)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("1CEF918F-BD13-42AB-87F6-64328949D4BD");
         }
 
         /// <inheritdoc/>

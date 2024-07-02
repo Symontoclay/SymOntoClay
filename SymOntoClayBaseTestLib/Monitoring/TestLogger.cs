@@ -61,7 +61,7 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         /// <inheritdoc/>
         public bool EnableAddingRemovingFactLoggingInStorages => false;
 
-        IMonitorFeatures IMonitorLogger.MonitorFeatures => throw new NotImplementedException();
+        IMonitorFeatures IMonitorLogger.MonitorFeatures => throw new NotImplementedException("64412E6E-3A56-4B4B-B2E9-6C406ADAC065");
 
         /// <inheritdoc/>
         public string CreateThreadId()

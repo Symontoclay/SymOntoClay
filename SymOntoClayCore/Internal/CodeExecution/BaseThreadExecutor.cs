@@ -1188,7 +1188,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 return;
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("E11ABE78-F83D-49A4-B968-BE9D19F3AA7B");
         }
 
         private void JumpToIf(float targetValue, int targetPosition)
@@ -1826,7 +1826,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 return;
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("7FFA67FB-7766-4D73-9AAE-08E63138A383");
         }
 
         private void CallInstanceValue(string callMethodId, InstanceValue caller,

@@ -242,13 +242,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("59C53481-16C7-4D60-8AE6-E5C00D27AEEE");
         }
 
         /// <inheritdoc/>
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("92413338-031C-4653-B4FB-033E45E07FD3");
         }
     }
 }

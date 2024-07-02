@@ -450,25 +450,25 @@ namespace SymOntoClay.Core.Internal.CodeModel
         ILogicalStorage IStorage.LogicalStorage => this;
 
         /// <inheritdoc/>
-        IRelationsStorage IStorage.RelationsStorage => throw new NotImplementedException();
+        IRelationsStorage IStorage.RelationsStorage => throw new NotImplementedException("DAF6015D-84A6-42F3-B03D-01D56205EC64");
 
         /// <inheritdoc/>
-        IMethodsStorage IStorage.MethodsStorage => throw new NotImplementedException();
+        IMethodsStorage IStorage.MethodsStorage => throw new NotImplementedException("CC8E2AAF-5878-468E-8952-D946CE01B5B1");
 
         /// <inheritdoc/>
-        IConstructorsStorage IStorage.ConstructorsStorage => throw new NotImplementedException();
+        IConstructorsStorage IStorage.ConstructorsStorage => throw new NotImplementedException("C877D570-322F-4E63-B7CC-8104DBE64AF6");
 
         /// <inheritdoc/>
-        IActionsStorage IStorage.ActionsStorage => throw new NotImplementedException();
+        IActionsStorage IStorage.ActionsStorage => throw new NotImplementedException("AB4BD863-5202-420B-923F-C9F4700CFD8E");
 
         /// <inheritdoc/>
-        IStatesStorage IStorage.StatesStorage => throw new NotImplementedException();
+        IStatesStorage IStorage.StatesStorage => throw new NotImplementedException("8C5C9066-1B1D-4E3B-99C5-D1CBB4415C65");
         
         /// <inheritdoc/>
-        ITriggersStorage IStorage.TriggersStorage => throw new NotImplementedException();
+        ITriggersStorage IStorage.TriggersStorage => throw new NotImplementedException("038703A1-633F-4C0C-92D4-BB9D66A9BFEA");
 
         /// <inheritdoc/>
-        IInheritanceStorage IStorage.InheritanceStorage => throw new NotImplementedException();
+        IInheritanceStorage IStorage.InheritanceStorage => throw new NotImplementedException("E54F6DF2-DA44-445D-A22E-B69A6E84AB6E");
 
         private ISynonymsStorage _synonymsStorage;
         private readonly object _synonymsStorageLockObj = new object();
@@ -491,28 +491,28 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        IOperatorsStorage IStorage.OperatorsStorage => throw new NotImplementedException();
+        IOperatorsStorage IStorage.OperatorsStorage => throw new NotImplementedException("AC133155-99E8-477E-99D8-C2B7CDEF41E3");
 
         /// <inheritdoc/>
-        IChannelsStorage IStorage.ChannelsStorage => throw new NotImplementedException();
+        IChannelsStorage IStorage.ChannelsStorage => throw new NotImplementedException("833361AC-4C18-484F-8ED7-53EFF11CF81F");
 
         /// <inheritdoc/>
-        IMetadataStorage IStorage.MetadataStorage => throw new NotImplementedException();
+        IMetadataStorage IStorage.MetadataStorage => throw new NotImplementedException("5E237BFF-7DA3-4961-9A78-E86BA0C5A75D");
 
         /// <inheritdoc/>
-        IVarStorage IStorage.VarStorage => throw new NotImplementedException();
+        IVarStorage IStorage.VarStorage => throw new NotImplementedException("43F08F2B-94BE-49C5-BBB1-1F9998106040");
 
         /// <inheritdoc/>
-        IFuzzyLogicStorage IStorage.FuzzyLogicStorage => throw new NotImplementedException();
+        IFuzzyLogicStorage IStorage.FuzzyLogicStorage => throw new NotImplementedException("4EAEA764-9850-46D1-A717-08627C482CD5");
 
         /// <inheritdoc/>
-        IIdleActionItemsStorage IStorage.IdleActionItemsStorage => throw new NotImplementedException();
+        IIdleActionItemsStorage IStorage.IdleActionItemsStorage => throw new NotImplementedException("F52AE3AB-FFA5-4267-822E-CE5B4D81E8D5");
 
         /// <inheritdoc/>
-        void IStorage.AddParentStorage(IMonitorLogger logger, IStorage storage) => throw new NotImplementedException();
+        void IStorage.AddParentStorage(IMonitorLogger logger, IStorage storage) => throw new NotImplementedException("07C2DCC9-C3BD-49D9-A430-809B60BC5229");
 
         /// <inheritdoc/>
-        void IStorage.RemoveParentStorage(IMonitorLogger logger, IStorage storage) => throw new NotImplementedException();
+        void IStorage.RemoveParentStorage(IMonitorLogger logger, IStorage storage) => throw new NotImplementedException("F1816BBA-AE88-4E00-9FE2-12A2C3C61212");
 
         /// <inheritdoc/>
         void IStorage.CollectChainOfStorages(IMonitorLogger logger, IList<StorageUsingOptions> result, IList<IStorage> usedStorages, int level, CollectChainOfStoragesOptions options)
@@ -540,10 +540,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        void IStorage.CollectChainOfStorages(IMonitorLogger logger, IList<IStorage> result) => throw new NotImplementedException();
+        void IStorage.CollectChainOfStorages(IMonitorLogger logger, IList<IStorage> result) => throw new NotImplementedException("63D026BF-9E19-4686-8284-5B294873B8A2");
 
         /// <inheritdoc/>
-        IList<IStorage> IStorage.GetStorages(IMonitorLogger logger) => throw new NotImplementedException();
+        IList<IStorage> IStorage.GetStorages(IMonitorLogger logger) => throw new NotImplementedException("A5D70BA4-8768-4F00-AA1C-651554189120");
 
         /// <inheritdoc/>
         DefaultSettingsOfCodeEntity IStorage.DefaultSettingsOfCodeEntity { get; set; }
@@ -556,7 +556,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
 #if DEBUG
         /// <inheritdoc/>
-        void IStorage.DbgPrintFactsAndRules(IMonitorLogger logger) => throw new NotImplementedException();
+        void IStorage.DbgPrintFactsAndRules(IMonitorLogger logger) => throw new NotImplementedException("3E406EDD-78EE-430D-BFC3-98F53DF9AF05");
 #endif
         #endregion
 
@@ -568,22 +568,22 @@ namespace SymOntoClay.Core.Internal.CodeModel
         IStorage ISpecificStorage.Storage => this;
 
         /// <inheritdoc/>
-        void ILogicalStorage.Append(IMonitorLogger logger, RuleInstance ruleInstance) => throw new NotImplementedException();
+        void ILogicalStorage.Append(IMonitorLogger logger, RuleInstance ruleInstance) => throw new NotImplementedException("058DA169-BAC8-4CF9-A8BF-6321B8479218");
 
         /// <inheritdoc/>
-        void ILogicalStorage.Append(IMonitorLogger logger, RuleInstance ruleInstance, bool isPrimary) => throw new NotImplementedException();
+        void ILogicalStorage.Append(IMonitorLogger logger, RuleInstance ruleInstance, bool isPrimary) => throw new NotImplementedException("4778DF8E-35BC-40AF-825D-EE4D77925772");
 
         /// <inheritdoc/>
-        void ILogicalStorage.Append(IMonitorLogger logger, IList<RuleInstance> ruleInstancesList) => throw new NotImplementedException();
+        void ILogicalStorage.Append(IMonitorLogger logger, IList<RuleInstance> ruleInstancesList) => throw new NotImplementedException("0E90B71B-A95C-468A-B735-4A20B73B89CC");
 
         /// <inheritdoc/>
-        void ILogicalStorage.Remove(IMonitorLogger logger, RuleInstance ruleInstance) => throw new NotImplementedException();
+        void ILogicalStorage.Remove(IMonitorLogger logger, RuleInstance ruleInstance) => throw new NotImplementedException("4490F7BA-CE10-4CF6-B564-058261F74D53");
 
         /// <inheritdoc/>
-        void ILogicalStorage.Remove(IMonitorLogger logger, IList<RuleInstance> ruleInstancesList) => throw new NotImplementedException();
+        void ILogicalStorage.Remove(IMonitorLogger logger, IList<RuleInstance> ruleInstancesList) => throw new NotImplementedException("40842BD0-B005-4B01-9B27-F3F4F6687450");
 
         /// <inheritdoc/>
-        void ILogicalStorage.RemoveById(IMonitorLogger logger, string id) => throw new NotImplementedException();
+        void ILogicalStorage.RemoveById(IMonitorLogger logger, string id) => throw new NotImplementedException("918EDBB9-8D25-4A79-8205-BB88C484DC6B");
 
         /// <inheritdoc/>
         public event Action OnChanged;

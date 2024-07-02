@@ -128,13 +128,13 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("BA3CB4E5-523F-48DC-941A-CE000EFE30EE");
         }
 
         /// <inheritdoc/>
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("8A4AE483-2281-4829-B50D-2F0AFD4D1F47");
         }
     }
 }

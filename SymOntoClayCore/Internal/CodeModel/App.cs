@@ -71,19 +71,19 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("1A6D95FA-638E-487C-AE6C-A8CA1FE4FB95");
         }
 
         /// <inheritdoc/>
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("8CFE9E67-63ED-4F1D-BF7A-3EB3B8A6841E");
         }
 
         /// <inheritdoc/>
         public override MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("74FF1A16-4990-4624-BFFC-E194D6DBFCDC");
         }
     }
 }

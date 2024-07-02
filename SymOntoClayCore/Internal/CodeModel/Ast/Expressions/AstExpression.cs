@@ -48,8 +48,8 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         public virtual bool IsNewAstExpression => false;
         public virtual NewAstExpression AsNewAstExpression => null;
 
-        protected virtual IAstNode NLeft { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        protected virtual IAstNode NRight { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        protected virtual IAstNode NLeft { get => throw new NotImplementedException("EAC417B0-2819-47B6-AD93-E0525BA1A636"); set => throw new NotImplementedException("F04F9A69-7D3B-4A13-B063-355AD44FB229"); }
+        protected virtual IAstNode NRight { get => throw new NotImplementedException("3F5E531F-709B-434C-8CB5-70E19754899D"); set => throw new NotImplementedException("1154B6DA-7F79-4E03-832F-6BE6E6A8EBB5"); }
         IAstNode IAstNode.Left { get => NLeft; set => NLeft = value; }
         IAstNode IAstNode.Right { get => NRight; set => NRight = value; }
 

@@ -69,7 +69,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return filteredList.Single();
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("243B4D7F-BF65-49F3-9F38-27B72504C848");
         }
 
         private List<CodeItem> GetRawMetadataList(IMonitorLogger logger, StrongIdentifierValue name, List<StorageUsingOptions> storagesList)

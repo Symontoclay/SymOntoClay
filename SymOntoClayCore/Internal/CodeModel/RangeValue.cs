@@ -129,7 +129,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override string ToSystemString()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("300973C2-ACC7-4657-8666-8BE2F408D91E");
         }
 
         /// <inheritdoc/>

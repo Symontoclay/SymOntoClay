@@ -52,13 +52,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override object GetSystemValue()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("295BE5FD-8B11-4198-8A21-D499583A8583");
         }
 
         /// <inheritdoc/>
         public override string ToSystemString()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("EF96CBFE-6549-4064-993F-70B8F0A6CA41");
         }
 
         /// <inheritdoc/>
@@ -76,7 +76,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override void DiscoverAllAnnotations(IList<Annotation> result)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("A1519474-5140-4DC0-8561-04535EA17F42");
         }
 
         /// <inheritdoc/>

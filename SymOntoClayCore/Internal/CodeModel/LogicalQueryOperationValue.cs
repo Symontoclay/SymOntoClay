@@ -63,7 +63,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override string ToSystemString()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("0465525D-8AC6-4BCA-A1A3-0E48A0F473A1");
         }
 
         /// <inheritdoc/>

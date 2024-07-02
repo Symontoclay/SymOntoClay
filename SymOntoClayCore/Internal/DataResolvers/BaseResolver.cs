@@ -297,7 +297,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     {
                         if (hasHolderInItems)
                         {
-                            throw new NotImplementedException();
+                            throw new NotImplementedException("D78D12DD-FAB1-44D3-BDAC-3DC3BB92C2D9");
                         }
                         else
                         {
@@ -311,7 +311,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        throw new NotImplementedException("45425999-84F1-498A-9AD5-3EFC477E6456");
                     }
                     break;
 
@@ -367,7 +367,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     continue;
                 }
 
-                throw new NotImplementedException();
+                throw new NotImplementedException("E04C273B-6774-4FC2-8E42-DF45CC3FE7E4");
             }
 
             return result;
@@ -391,7 +391,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     continue;
                 }
 
-                throw new NotImplementedException();
+                throw new NotImplementedException("549B1237-8743-44CB-9251-BBED0027C851");
             }
 
             return result;
@@ -421,7 +421,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return source.Single().ResultItem;
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("ACD273A4-113C-40AD-9CA5-31F0AC779728");
         }
     }
 }

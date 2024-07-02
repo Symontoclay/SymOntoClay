@@ -113,7 +113,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("31CF361D-8FC2-482C-8C4C-B21E1595AFBA");
         }
 
         IAstNode IAstNode.Left { get => Left; set => Left = (EntityConditionExpressionNode)value; }

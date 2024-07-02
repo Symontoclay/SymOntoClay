@@ -92,7 +92,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr
                     throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("57A46B03-A1B7-4E2C-A62E-13F257370E71");
         }
 
         IAstNode IAstNode.Left { get => Left; set => Left = (TriggerConditionNode)value; }
@@ -143,7 +143,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr
         {
             base.DiscoverAllAnnotations(result);
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("6E0E33CA-B532-43A0-8C57-235F915B303F");
         }
 
         /// <inheritdoc/>

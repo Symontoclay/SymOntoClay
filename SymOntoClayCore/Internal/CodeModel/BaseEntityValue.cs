@@ -145,14 +145,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             if(string.IsNullOrWhiteSpace(id))
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("A04D6E43-DBEB-417E-8036-C476AC4345B3");
             }
 
             var identifier = NameHelper.CreateName(id);
 
             if (identifier.KindOfName != KindOfName.Entity)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("9EBE1F3C-B54E-4AB0-998E-CD69C0C91E20");
             }
 
             var entityValue = new EntityValue(identifier, _context, _localContext);

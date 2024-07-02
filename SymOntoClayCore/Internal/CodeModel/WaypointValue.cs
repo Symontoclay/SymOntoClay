@@ -100,7 +100,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override string ToSystemString()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("1E92DEF1-425E-4329-BCD9-84E3AB1EEF65");
         }
 
         /// <inheritdoc/>

@@ -51,7 +51,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Handlers
         public CompiledFunctionBody CompiledFunctionBody => null;
 
         /// <inheritdoc/>
-        public CodeItem CodeItem => throw new NotImplementedException();
+        public CodeItem CodeItem => throw new NotImplementedException("6332C898-23AD-469F-AEC7-B07D05B9E896");
 
         /// <inheritdoc/>
         public ISystemHandler SystemHandler => this;

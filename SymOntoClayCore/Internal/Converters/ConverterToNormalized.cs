@@ -566,7 +566,7 @@ namespace SymOntoClay.Core.Internal.Converters
                 return true;
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("2EC9FD20-D549-4D6D-AECB-8E405B6F1836");
         }
 
         private static bool PackUnaryOperatorNode(LogicalQueryNode node, Stack<ILogicalQueryNodeParent> parents)
@@ -595,7 +595,7 @@ namespace SymOntoClay.Core.Internal.Converters
                 return false;
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("EEDC9155-5A73-432F-8209-91CCB9E95E9B");
         }
     }
 }

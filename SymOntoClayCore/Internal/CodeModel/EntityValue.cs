@@ -70,13 +70,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override object GetSystemValue()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("1045EB61-BF50-41A6-A840-CDD82085E03F");
         }
 
         /// <inheritdoc/>
         public override string ToSystemString()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("B71D3D3C-DAE8-40BD-99F3-4EEB480E945C");
         }
 
         /// <inheritdoc/>

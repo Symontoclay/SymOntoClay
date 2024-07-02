@@ -1853,7 +1853,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if(callerLeftOperand.IsStrongIdentifierValue)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("1739B790-BBAE-40DB-88A5-93A64D965F59");
             }
 
             var methodName = callerRightOperand.AsStrongIdentifierValue;
@@ -1998,7 +1998,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                             if (errorAnnotationSystemEvent != null)
                             {
-                                throw new NotImplementedException();
+                                throw new NotImplementedException("A37B281E-CE1A-4B49-AC0A-7266360C43B7");
                             }
 
                             GoBackToPrevCodeFrame("05D7C078-24B4-4189-81F2-59BDA492A1D2", ActionExecutionStatus.Faulted);
@@ -2037,7 +2037,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     if (cancelAnnotationSystemEvent != null)
                     {
-                        throw new NotImplementedException();
+                        throw new NotImplementedException("59854144-10BA-444C-82E3-4BCC0677743E");
                     }
 
                     if (weakCancelAnnotationSystemEvent != null)
@@ -2047,7 +2047,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     if (errorAnnotationSystemEvent != null)
                     {
-                        throw new NotImplementedException();
+                        throw new NotImplementedException("ADB7D70D-29EF-4245-ABC5-3962823A9915");
                     }
 
                     _currentCodeFrame.ValuesStack.Push(processInfoValue);
@@ -2058,7 +2058,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 return;
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("312E1089-2560-45BC-A31C-53A25D915395");
         }
 
         private void CallStrongIdentifierValue(string callMethodId, StrongIdentifierValue methodName,

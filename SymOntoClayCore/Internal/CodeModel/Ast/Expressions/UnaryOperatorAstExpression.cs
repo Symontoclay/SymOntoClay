@@ -124,13 +124,13 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("9EB28A3E-2E3D-4167-B10A-E536B1FE4273");
         }
 
         /// <inheritdoc/>
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("074DCE6F-226A-40C9-A19D-CCEB627A2E72");
         }
     }
 }

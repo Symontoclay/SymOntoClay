@@ -99,13 +99,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("611B0961-7BBB-4F65-A73C-A6B2A07C9E66");
         }
 
         /// <inheritdoc/>
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("7DC97098-89E7-4BA5-9B5B-DC9917B57635");
         }
     }
 }

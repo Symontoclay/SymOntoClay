@@ -316,7 +316,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                             if (varNames.Any())
                             {
-                                throw new NotImplementedException();
+                                throw new NotImplementedException("96F5CC7A-791F-49A4-934D-FA41862E9C10");
                             }
 
                             var knownInfo = new QueryExecutingCardAboutKnownInfo();
@@ -337,7 +337,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                             if(varNames.Any())
                             {
-                                throw new NotImplementedException();
+                                throw new NotImplementedException("36197422-1FB2-4D0C-AD47-0757B7D8C22D");
                             }
 
                             var knownInfo = new QueryExecutingCardAboutKnownInfo();
@@ -750,7 +750,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     throw new ArgumentOutOfRangeException(nameof(Kind), Kind, null);
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("2ED830D5-4EF9-4EE4-AA93-C6846D3581A5");
         }
 
         /// <inheritdoc/>

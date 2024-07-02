@@ -67,7 +67,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 return CompiledFunctionBody;
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("37BC27AD-2749-46DE-B085-2470298315B5");
         }
 
         /// <inheritdoc/>

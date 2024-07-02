@@ -63,7 +63,7 @@ namespace SymOntoClay.Core.Internal.Converters
                     return new LogicalValue(0);
 
                 default:
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("3A4265C3-6A2A-467A-B207-58BA3E048258");
             }
         }
 

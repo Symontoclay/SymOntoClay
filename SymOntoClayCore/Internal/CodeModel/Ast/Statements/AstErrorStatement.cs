@@ -65,7 +65,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         {
             base.DiscoverAllAnnotations(result);
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("F82C79EA-C951-4431-A815-3B11975BE130");
         }
 
         /// <inheritdoc/>
@@ -118,13 +118,13 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Statements
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("F53B0A68-E1E2-45E0-8712-068BE321C2F1");
         }
 
         /// <inheritdoc/>
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("48E27AA4-8732-41A8-A618-055AF12A8776");
         }
     }
 }

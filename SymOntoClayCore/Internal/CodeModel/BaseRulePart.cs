@@ -150,7 +150,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 return;
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("9E585689-D7EA-45F6-A0F3-4F911E40BDB8");
         }
 
         /// <inheritdoc/>
@@ -162,7 +162,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 return;
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("CA64272F-4452-44F3-AD0C-28D157934ED5");
         }
 
         /// <inheritdoc/>

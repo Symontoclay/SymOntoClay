@@ -122,7 +122,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public virtual bool IsSystemNull => false;
 
-        public virtual IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => throw new NotImplementedException();
+        public virtual IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => throw new NotImplementedException("8D5DE0AD-6FDE-41EB-B60E-2630F229C4C0");
 
         public abstract object GetSystemValue();
 
@@ -154,7 +154,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             if ((KindOfValue == KindOfValue.NumberValue && other.KindOfValue == KindOfValue.LogicalValue) ||
                 (KindOfValue == KindOfValue.LogicalValue && other.KindOfValue == KindOfValue.NumberValue))
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("36D48D29-E00F-4D0B-AC8A-DA23FCFADBA4");
             }
 
             return false;
@@ -167,7 +167,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         protected virtual bool ConcreteValueEquals(Value other)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("A3C123A9-471D-4477-B5FC-D93A74A1B710");
         }
 
         public void SetMemberValue(IMonitorLogger logger, StrongIdentifierValue memberName, Value value)
@@ -191,17 +191,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         protected virtual void SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value)
         {
-             throw new NotImplementedException();
+             throw new NotImplementedException("0B65BA6A-37C0-4C99-B911-A9450744EA17");
         }
 
         protected virtual void SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("AA45CD1D-2E04-440F-88A2-37907994FB76");
         }
 
         public virtual void SetValue(IMonitorLogger logger, Value value)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("E4583867-F52A-443A-A926-7BBDD35F826D");
         }
 
         public Value GetMemberValue(IMonitorLogger logger, StrongIdentifierValue memberName)

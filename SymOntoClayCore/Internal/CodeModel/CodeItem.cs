@@ -180,13 +180,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override object GetSystemValue()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("85F04D55-E19D-4EEA-9AFD-3EE74792515B");
         }
 
         /// <inheritdoc/>
         public override string ToSystemString()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("AE189C64-304A-4894-B646-7D9D27F49DB4");
         }
 
         /// <inheritdoc/>

@@ -181,7 +181,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     {
                         if (expression.IsAsync)
                         {
-                            throw new NotImplementedException();
+                            throw new NotImplementedException("B83F53FC-42E9-40B9-94EC-FACA829BE3E0");
                         }
                         else
                         {
@@ -210,7 +210,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     {
                         if (expression.IsAsync)
                         {
-                            throw new NotImplementedException();
+                            throw new NotImplementedException("959E1175-E3F0-4726-B0BB-99F3C01838A0");
                         }
                         else
                         {

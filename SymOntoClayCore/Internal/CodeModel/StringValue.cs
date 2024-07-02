@@ -98,7 +98,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 if(factsList.Count > 1)
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("E670C1CB-8D18-4471-BB77-1988307386B7");
                 }
 
                 _ruleInstance = factsList.Single();

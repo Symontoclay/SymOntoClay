@@ -128,7 +128,7 @@ namespace SymOntoClay.Core.Internal.Converters
                                 break;
                             }
 
-                            throw new NotImplementedException();
+                            throw new NotImplementedException("9F78EC53-5786-4059-B4CC-417C04CE9E2D");
                         }
 
                     default:

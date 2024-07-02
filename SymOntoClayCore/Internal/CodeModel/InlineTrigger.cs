@@ -376,7 +376,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                     if (!string.IsNullOrWhiteSpace(str))
                     {
-                        throw new NotImplementedException();
+                        throw new NotImplementedException("A0B80601-09CB-46A8-9162-923793DADE09");
                     }
                 }
             }

@@ -223,7 +223,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         continue;
                     }
 
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("3A6D5F5E-E72A-4D8D-9733-12203259B3CE");
                 }
 
                 var parameterItem = positionedParametersEnumerator.Current;
@@ -477,7 +477,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        throw new NotImplementedException("5B93D0DE-4DD7-4D54-B3CC-E03CF6725EE6");
                     }
                 }
             }

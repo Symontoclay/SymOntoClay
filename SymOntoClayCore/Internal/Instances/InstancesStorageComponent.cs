@@ -100,14 +100,14 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 if (_rootInstanceInfo != null)
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("10F48022-FC1F-4D47-A5D8-6D553D3E656F");
                 }
 
                 var mainEntityName = mainEntity.Name;
 
                 if (_namesDict.ContainsKey(mainEntityName))
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("BB3F47F7-DF3A-4D50-AD62-76C0365669AF");
                 }
 
                 instanceInfo = new AppInstance(codeItem: mainEntity, context: _context, parentStorage: globalStorage);
@@ -172,7 +172,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 return;
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("B2C8723A-4CF2-4FF6-BC94-315A48F96B5C");
         }
 
         /// <inheritdoc/>
@@ -419,7 +419,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if(codeItem == null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("E3F227F0-C1A8-4322-A6A7-1E674BC55434");
             }
 
             return NCreateInstance(logger, codeItem, executionContext, false);
@@ -432,7 +432,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if (codeItem == null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("E705408E-22D3-4DDF-B464-EC7274230069");
             }
 
             return NCreateInstance(logger, codeItem, executionContext, false);

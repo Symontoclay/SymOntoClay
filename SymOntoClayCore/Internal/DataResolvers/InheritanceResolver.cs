@@ -86,7 +86,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return targetWeightedInheritanceItemsList.First().Rank;
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("22CC8B8D-9833-421D-A9EA-62F79D0EBD90");
         }
 
         public List<StrongIdentifierValue> GetSuperClassesKeysList(IMonitorLogger logger, StrongIdentifierValue subName, ILocalCodeExecutionContext localCodeExecutionContext)
@@ -372,10 +372,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return null;
                 }
 
-                throw new NotImplementedException();
+                throw new NotImplementedException("8C2EE250-62DE-478D-BE1F-82098D9676C0");
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("7379B454-D4D8-4F88-B1C3-5708CBF5338F");
         }
 
         public uint? GetDistance(IMonitorLogger logger, StrongIdentifierValue subName, StrongIdentifierValue superName, ILocalCodeExecutionContext localCodeExecutionContext)
@@ -404,7 +404,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return targetWeightedInheritanceItemsList.First().Distance;
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("8A0D58DA-A954-41AF-AAB6-A7FF9FB6830E");
         }
     }
 }

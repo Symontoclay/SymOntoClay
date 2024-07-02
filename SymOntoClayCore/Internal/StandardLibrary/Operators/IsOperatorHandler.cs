@@ -80,7 +80,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                     return CompareWithFuzzyLogic(logger, rightOperand, leftOperand, localCodeExecutionContext);
                 }
 
-                throw new NotImplementedException();
+                throw new NotImplementedException("D8C168A2-DB52-4869-BE01-C78E795611E3");
             }
 
             if ((leftOperand.IsStrongIdentifierValue || leftOperand.IsInstanceValue) && (leftOperand.IsStrongIdentifierValue || leftOperand.IsInstanceValue))
@@ -88,7 +88,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                 return GetInheritanceRank(logger, leftOperand, rightOperand, localCodeExecutionContext);
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("30F5F633-3254-454C-9CD9-1DD619001B9A");
         }
 
         private LogicalValue CompareWithFuzzyLogic(IMonitorLogger logger, Value numOperand, Value fuzzyOperand, ILocalCodeExecutionContext localCodeExecutionContext)
@@ -141,7 +141,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                     throw new ArgumentOutOfRangeException(nameof(fuzzyKindOfValue), fuzzyKindOfValue, null);
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("1A2F8243-F4DB-44BB-B34E-701A32D3BFF3");
         }
 
         private LogicalValue CompareSystemValues(IMonitorLogger logger, double leftValue, double rightValue)

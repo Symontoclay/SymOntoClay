@@ -51,7 +51,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic
                 return (d - x) / (d - c);
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("7486389D-72A0-4B0F-AC3E-6DC185C9F042");
         }
 
         public static double SFunction(double x, double a, double m, double b)

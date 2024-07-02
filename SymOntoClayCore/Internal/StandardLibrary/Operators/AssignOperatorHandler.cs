@@ -88,7 +88,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                     throw new ArgumentOutOfRangeException(nameof(kindOfLeftOperand), kindOfLeftOperand, null);
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("30221B5A-697B-4A3A-8E34-32D5416D75F6");
         }
     }
 }

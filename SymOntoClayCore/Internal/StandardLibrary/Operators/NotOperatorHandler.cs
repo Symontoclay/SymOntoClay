@@ -51,7 +51,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                 return operand.AsLogicalValue.Inverse();
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("8DB5FC19-8CA1-4642-9015-F32F6DF25CA4");
         }
     }
 }

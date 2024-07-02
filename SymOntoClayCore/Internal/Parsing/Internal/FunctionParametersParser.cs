@@ -161,14 +161,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     }
                     break;
 
-
-
-
-
-
-
-
-
                 case State.GotDefaultValue:
                     switch (_currToken.TokenKind)
                     {
@@ -182,7 +174,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         case TokenKind.Identifier:
                         case TokenKind.Word:
-                            throw new NotImplementedException();
+                            throw new NotImplementedException("332C9887-65E5-43EF-BC94-B3B820F0E8AA");
 
                         default:
                             throw new UnexpectedTokenException(_currToken);

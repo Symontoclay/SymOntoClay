@@ -191,7 +191,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return rawList.SingleOrDefault();
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("A57E2E2B-3019-4AD5-BBDB-4E4F817947A6");
         }
 
         private List<INamedTriggerInstance> GetNamedTriggerInstanceRawList(IMonitorLogger logger, StrongIdentifierValue name, List<StorageUsingOptions> storagesList, ILocalCodeExecutionContext localCodeExecutionContext)

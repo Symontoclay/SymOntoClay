@@ -78,7 +78,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return Resolve(logger, value.AsFuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext, options);
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("46E63A8F-1691-40C0-A7A5-F5B5A5CB27BB");
         }
 
         public NumberValue Resolve(IMonitorLogger logger, StrongIdentifierValue name, ILocalCodeExecutionContext localCodeExecutionContext)
@@ -231,7 +231,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return Equals(logger, fuzzyLogicNonNumericSequence, _numberValueLinearResolver.Resolve(logger, numberValue, localCodeExecutionContext), reason, localCodeExecutionContext);
                 }
 
-                throw new NotImplementedException();
+                throw new NotImplementedException("96D6F92E-9385-4DA4-A675-F88CFEA20ACD");
             }
 
             if((value1.IsStrongIdentifierValue || value1.IsFuzzyLogicNonNumericSequenceValue) && (value2.IsStrongIdentifierValue || value2.IsFuzzyLogicNonNumericSequenceValue))
@@ -255,7 +255,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return Equals(logger, fuzzyLogicNonNumericSequence, conceptNumberValue, reason, localCodeExecutionContext);
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("A73D7410-1995-4D7B-BE42-30FE251EA309");
         }
 
         public bool Equals(IMonitorLogger logger, StrongIdentifierValue name, NumberValue value, ILocalCodeExecutionContext localCodeExecutionContext)
@@ -428,7 +428,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return More(logger, leftNumberValue, value2FuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext);
                 }
 
-                throw new NotImplementedException();
+                throw new NotImplementedException("FB3EE582-7E18-4F50-A2C1-675856413179");
             }
 
             if(numberValueLinearResolver.CanBeResolved(logger, value2))
@@ -449,10 +449,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return More(logger, value2FuzzyLogicNonNumericSequenceValue, rightNumberValue, localCodeExecutionContext);
                 }
 
-                throw new NotImplementedException();
+                throw new NotImplementedException("A1EF47E3-3B4E-4478-947B-C3D2BB4ADC27");
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("7FE4D5C7-BC81-4897-A3D7-71870AEF513F");
         }
 
         public bool More(IMonitorLogger logger, StrongIdentifierValue name, NumberValue value, ILocalCodeExecutionContext localCodeExecutionContext)
@@ -694,7 +694,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return MoreOrEqual(logger, leftNumberValue, value2FuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext);
                 }
 
-                throw new NotImplementedException();
+                throw new NotImplementedException("78E66BDC-9803-4D02-9058-CADAED22367E");
             }
 
             if (numberValueLinearResolver.CanBeResolved(logger, value2))
@@ -715,10 +715,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return MoreOrEqual(logger, value2FuzzyLogicNonNumericSequenceValue, rightNumberValue, localCodeExecutionContext);
                 }
 
-                throw new NotImplementedException();
+                throw new NotImplementedException("2AEE0E0D-7C26-465E-8575-8A7CC32357B5");
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("78E6B769-D908-422A-8AAF-36A05EB364E4");
         }
 
         public bool MoreOrEqual(IMonitorLogger logger, StrongIdentifierValue name, NumberValue value, ILocalCodeExecutionContext localCodeExecutionContext)
@@ -960,7 +960,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return Less(logger, leftNumberValue, value2FuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext);
                 }
 
-                throw new NotImplementedException();
+                throw new NotImplementedException("9ED90E5F-CCAA-4F14-BB5B-975E9DC9F289");
             }
 
             if (numberValueLinearResolver.CanBeResolved(logger, value2))
@@ -981,10 +981,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return Less(logger, value2FuzzyLogicNonNumericSequenceValue, rightNumberValue, localCodeExecutionContext);
                 }
 
-                throw new NotImplementedException();
+                throw new NotImplementedException("DCEACD63-90C2-4B45-84E9-8FFE8B570975");
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("8DB87C33-595B-4E4C-BF7C-5957BAE59EA1");
         }
 
         public bool Less(IMonitorLogger logger, StrongIdentifierValue name, NumberValue value, ILocalCodeExecutionContext localCodeExecutionContext)
@@ -1226,7 +1226,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return LessOrEqual(logger, leftNumberValue, value2FuzzyLogicNonNumericSequenceValue, reason, localCodeExecutionContext);
                 }
 
-                throw new NotImplementedException();
+                throw new NotImplementedException("016D7024-6357-4A0F-9CE3-793AC7CFC43C");
             }
 
             if (numberValueLinearResolver.CanBeResolved(logger, value2))
@@ -1247,10 +1247,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return LessOrEqual(logger, value2FuzzyLogicNonNumericSequenceValue, rightNumberValue, localCodeExecutionContext);
                 }
 
-                throw new NotImplementedException();
+                throw new NotImplementedException("05B8F580-1F97-45CD-A4E2-B33CB37A5B15");
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("1A9694BD-B554-4CE1-94BB-7492C6EE98EE");
         }
 
         public bool LessOrEqual(IMonitorLogger logger, StrongIdentifierValue name, NumberValue value, ILocalCodeExecutionContext localCodeExecutionContext)

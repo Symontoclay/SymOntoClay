@@ -113,7 +113,7 @@ namespace SymOntoClay.Core.Internal.Services
                 return EntityConstraints.Nearest;
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("AA5984CD-A156-4E5E-9DE9-88AE2169080B");
         }
     }
 }

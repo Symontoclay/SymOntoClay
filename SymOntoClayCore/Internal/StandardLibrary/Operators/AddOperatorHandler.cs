@@ -65,7 +65,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                 return new StringValue(leftOperand.ToSystemString() + rightOperand.ToSystemString());
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("C47589B8-3736-4184-AE41-CF5D39E21899");
         }
     }
 }

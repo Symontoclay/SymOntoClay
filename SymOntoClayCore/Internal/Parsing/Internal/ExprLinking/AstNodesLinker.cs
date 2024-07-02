@@ -181,7 +181,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.ExprLinking
                         {
                             if(node.Left != null)
                             {
-                                throw new NotImplementedException();
+                                throw new NotImplementedException("51D777BD-16DE-4F6A-9808-1EF6A5A30ACA");
                             }
 
                             node.Left = oldchildNode;

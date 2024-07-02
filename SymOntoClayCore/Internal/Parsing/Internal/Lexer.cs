@@ -1193,7 +1193,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case TokenKind.Identifier:
                     if(content.StartsWith("##"))
                     {
-                        throw new NotImplementedException();
+                        throw new NotImplementedException("FBDEBA2D-C686-4AAD-9A11-B8B623280E8E");
                     }
                     else if (content.StartsWith("#@"))
                     {

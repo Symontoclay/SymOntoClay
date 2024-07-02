@@ -98,7 +98,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                 if(meaningRolesList.IsNullOrEmpty())
                                 {
-                                    throw new NotImplementedException();
+                                    throw new NotImplementedException("4900187D-B5AF-45FC-AA67-3ED6A9FCB4F6");
                                 }
 
                                 _curentArgumentInfo.MeaningRolesList.AddRange(meaningRolesList);

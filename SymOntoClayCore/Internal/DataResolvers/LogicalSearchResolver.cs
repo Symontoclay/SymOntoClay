@@ -182,12 +182,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 if (queryExecutingCard.IsPostFiltersListOnly)
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("1AD0F4EB-6810-4B45-8155-22B590F1105E");
                 }
 
                 if (queryExecutingCard.PostFiltersList.Any())
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("4E7BF5D7-B74F-489B-8906-718353F2E833");
                 }
 
                 var usedKeysList = queryExecutingCard.UsedKeysList.Distinct().ToList();
@@ -373,12 +373,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if(queryExecutingCardForPart_1.IsPostFiltersListOnly)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("AA869BD1-7145-4BAA-899B-6BA94C591136");
             }
 
             if (queryExecutingCardForPart_1.PostFiltersList.Any())
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("E210A484-5BBB-4C59-935E-7066B3BF5F61");
             }
 
             AppendResults(logger, queryExecutingCardForPart_1, queryExecutingCard);
@@ -444,7 +444,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 if (queryExecutingCardForExpression.IsNegative)
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("74C94E86-3FFE-49DC-AE11-9B990C05FB5B");
                 }
 
                 var queryExecutingCardForFillExecutingCardUsingPostFiltersList = new QueryExecutingCardForIndexedPersistLogicalData();
@@ -479,7 +479,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if(sourceQueryExecutingCard.IsPostFiltersListOnly)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("EDDE933C-7923-4DD5-8BE0-9650C157C914");
             }
 
             var targetSourceQueryExecutingCard = sourceQueryExecutingCard;
@@ -558,7 +558,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("7E0C22B4-F2C9-4C54-AF46-E4002A657409");
                 }
             }
         }
@@ -589,7 +589,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (sourceQueryExecutingCard.IsNegative)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("748600ED-F2B1-4CB5-BDE1-858FEFA6CB66");
             }
 
             if (leftExpr.Kind == KindOfLogicalQueryNode.LogicalVar && rightExpr.Kind == KindOfLogicalQueryNode.LogicalVar)

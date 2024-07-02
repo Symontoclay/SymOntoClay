@@ -85,24 +85,24 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         {
             if(operand.Target == null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("434D3277-5D90-4BF7-B282-8F3604E3E8F5");
             }
 
             if(operand.Source != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("CDCFB545-EAAB-4546-8824-18BBD1D28F2E");
             }
 
             if(operand.Dest != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("882D4E1E-C493-4F78-B205-BCFA4D14C6F2");
             }
 
             var target = operand.Target;
 
             if (!target.IsRuleInstance)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("2C323E77-66D3-4602-A6BE-E9A10CBE8B17");
             }
 
             var query = target.AsRuleInstance;
@@ -122,24 +122,24 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         {
             if (operand.Target == null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("14D66638-BE1D-4038-9E94-C5C606EABBCB");
             }
 
             if (operand.Source != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("9AD3EA97-ADD1-44A3-A951-D6CFBD858659");
             }
 
             if (operand.Dest != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("0509CA5F-6324-4BF3-A698-71D8C5AC9D82");
             }
 
             var target = operand.Target;
 
             if (!target.IsRuleInstance)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("C67D9167-BAEB-471D-861B-699E48FFAB60");
             }
 
             var ruleInstance = target.AsRuleInstance;

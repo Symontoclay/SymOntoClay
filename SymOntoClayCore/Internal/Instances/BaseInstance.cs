@@ -250,12 +250,12 @@ namespace SymOntoClay.Core.Internal.Instances
 
                     foreach(var key in keysForRemoving)
                     {
-                        throw new NotImplementedException();
+                        throw new NotImplementedException("F2C86013-C785-40B1-96B0-C93C48EE3FBE");
                     }
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("B2129DE0-A245-49CC-865A-A9DBEE77E2B2");
                 }
 
             }
@@ -264,13 +264,13 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public virtual IList<IInstance> GetTopIndependentInstances(IMonitorLogger logger)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("7B2BBE1F-CABE-4DF8-9497-ECF8BA9C2026");
         }
 
         /// <inheritdoc/>
         public virtual bool ActivateIdleAction(IMonitorLogger logger)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("57E4373C-1824-4034-824A-C2990B10E22B");
         }
 
         /// <inheritdoc/>
@@ -546,31 +546,31 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public virtual IExecutable GetExecutable(IMonitorLogger logger, KindOfFunctionParameters kindOfParameters, IDictionary<StrongIdentifierValue, Value> namedParameters, IList<Value> positionedParameters)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("51ED45A6-37FF-42A8-AEFE-6835C71D404F");
         }
 
         /// <inheritdoc/>
         public virtual void SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("BAC477C7-7E75-4636-9860-645189734004");
         }
 
         /// <inheritdoc/>
         public virtual void SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("D22BB4AA-41CE-4A77-B1DD-138E9C74229F");
         }
 
         /// <inheritdoc/>
         public virtual Value GetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("F7A9893C-4C76-4920-8EEF-744B43CFB7B6");
         }
 
         /// <inheritdoc/>
         public virtual Value GetVarValue(IMonitorLogger logger, StrongIdentifierValue varName)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("4BB83DBC-6514-4EDE-9B77-F023715DE7B8");
         }
 
         /// <inheritdoc/>

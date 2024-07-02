@@ -66,13 +66,13 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                         return result;
                     }
 
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("6E572A1D-F103-473A-B433-6ABBD6802375");
                 }
 
-                throw new NotImplementedException();
+                throw new NotImplementedException("C379A65F-6FB0-4AF7-976A-EF645FF56444");
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("2A2E0115-89CA-466B-B1A9-506E594EFB1A");
         }
     }
 }

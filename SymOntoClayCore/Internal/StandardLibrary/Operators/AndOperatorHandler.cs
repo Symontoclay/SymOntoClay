@@ -52,7 +52,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                 return LogicalValue.And(leftOperand.AsLogicalValue, rightOperand.AsLogicalValue);
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("029A59D2-4CD5-4156-9BB3-11EAF85FE18E");
         }
     }
 }

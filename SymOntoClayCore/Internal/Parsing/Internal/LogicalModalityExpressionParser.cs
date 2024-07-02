@@ -235,7 +235,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 return;
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("BF3E482D-EA9D-46BE-BCB8-A0CC135140E5");
         }
 
         private void ProcessRoundBrackets()
@@ -248,7 +248,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 return;
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("92F4AFAE-759F-4845-9294-7BCEF8E53FCF");
         }
 
         private void ProcessGroup()

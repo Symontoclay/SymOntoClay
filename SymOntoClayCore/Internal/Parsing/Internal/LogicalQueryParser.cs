@@ -144,7 +144,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             {
                                 if(_nameHasBeenParsed)
                                 {
-                                    throw new NotImplementedException();
+                                    throw new NotImplementedException("62ADCEB9-F3CE-4E0F-B35A-BBC34CABE250");
                                 }
 
                                 Result.Name = NameHelper.CreateName(_currToken.Content);

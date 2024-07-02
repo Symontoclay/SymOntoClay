@@ -124,7 +124,7 @@ namespace SymOntoClay.Core.Internal.Services
                     case KindOfFunctionParameters.NoParameters:
                         if (function.Arguments.Any())
                         {
-                            throw new NotImplementedException();
+                            throw new NotImplementedException("69A0AE35-46D8-4D88-B93F-05E7CA4F1766");
                         }
                         break;
 
@@ -205,7 +205,7 @@ namespace SymOntoClay.Core.Internal.Services
                         break;
                     }
 
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("27F6F650-1F3F-405D-9560-3A00F920CD91");
                 }
 
                 var parameterItem = positionedParametersEnumerator.Current;
@@ -246,7 +246,7 @@ namespace SymOntoClay.Core.Internal.Services
 
                 if (parameterName == null)
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("EB12A701-887B-44A7-BFF2-9FC64BBF0286");
                 }
                 else
                 {
@@ -276,7 +276,7 @@ namespace SymOntoClay.Core.Internal.Services
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        throw new NotImplementedException("4FF1D1A4-672E-46B0-9535-40741D41C9A9");
                     }
                 }
             }

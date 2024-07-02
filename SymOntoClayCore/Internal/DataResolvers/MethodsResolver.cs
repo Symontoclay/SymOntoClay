@@ -160,7 +160,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("B37C1FB3-5810-460A-85C3-66C57C89907E");
         }
         #endregion
 

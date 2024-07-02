@@ -158,7 +158,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public IIdleActionItemsStorage IdleActionItemsStorage => _idleActionItemsStorage;
 
         /// <inheritdoc/>
-        public DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get => throw new NotImplementedException("0E8E2F74-C8E8-4899-B8B3-899850DD5271"); set => throw new NotImplementedException("6A2EFACE-3070-44CE-99B2-7BD7A28278B2"); }
 
         /// <inheritdoc/>
         public List<StorageUsingOptions> CodeItemsStoragesList { get; set; }
@@ -198,13 +198,13 @@ namespace SymOntoClay.Core.Internal.Storage
         /// <inheritdoc/>
         public void AddParentStorage(IMonitorLogger logger, IStorage storage)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("862548E2-4572-4FF2-9852-A7570D35C5A7");
         }
 
         /// <inheritdoc/>
         public void RemoveParentStorage(IMonitorLogger logger, IStorage storage)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("D8A90FC7-AD01-4B17-B5D0-439144FCF16C");
         }
 
         /// <inheritdoc/>

@@ -141,13 +141,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.RawStatements
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("376B338D-B607-4DE9-8A58-41EF7A4C8F21");
         }
 
         /// <inheritdoc/>
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("5FF7953B-EC91-4737-89DA-85876B0A7282");
         }
     }
 }

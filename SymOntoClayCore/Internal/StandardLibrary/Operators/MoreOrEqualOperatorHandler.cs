@@ -155,7 +155,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                             throw new ArgumentOutOfRangeException(nameof(fuzzyKindOfValue), fuzzyKindOfValue, null);
                     }
 
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("8B0990D5-F91D-4345-ACA9-5A6FF4785AEF");
                 }
 
                 if ((leftOperand.IsStrongIdentifierValue || leftOperand.IsFuzzyLogicNonNumericSequenceValue) && (rightOperand.IsNumberValue || rightOperand.IsLogicalValue))
@@ -246,13 +246,13 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                             throw new ArgumentOutOfRangeException(nameof(fuzzyKindOfValue), fuzzyKindOfValue, null);
                     }
 
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("F3BECB23-A03A-40E9-ABA9-8EA6E544AA5E");
                 }
 
-                throw new NotImplementedException();
+                throw new NotImplementedException("16F88F3A-4C2E-449F-9C7C-6BD90645699E");
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("93A499CB-7532-453E-9041-476896C5A0EE");
         }
 
         private LogicalValue CompareSystemValues(IMonitorLogger logger, double leftValue, double rightValue)

@@ -120,13 +120,13 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public virtual void AppendProcessInfo(IMonitorLogger logger, IProcessInfo processInfo)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("B3C9AAAF-122E-4CEA-BCF3-6503DACF962B");
         }
 
         /// <inheritdoc/>
         public virtual void AppendAndTryStartProcessInfo(IMonitorLogger logger, string callMethodId, IProcessInfo processInfo)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("7D9D2B9B-80ED-414E-9750-FEC5153FDAE9");
         }
 
         /// <inheritdoc/>
@@ -135,19 +135,19 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public virtual int GetCountOfCurrentProcesses(IMonitorLogger logger)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("74323836-3AD0-444D-9036-ED6682D58E0A");
         }
 
         /// <inheritdoc/>
         public virtual void ActivateState(IMonitorLogger logger, StateDef state)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("D0276616-3AEE-43E0-A332-BB5C131D11B2");
         }
 
         /// <inheritdoc/>
         public virtual void TryActivateDefaultState(IMonitorLogger logger)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("B0A5AA69-E0D8-4044-9659-B58F289EADE6");
         }
 
         /// <inheritdoc/>
@@ -156,32 +156,32 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public virtual Value CreateInstance(IMonitorLogger logger, StrongIdentifierValue prototypeName, ILocalCodeExecutionContext executionContext)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("DD08A683-8D27-45F2-A836-73A55D8E83C6");
         }
 
         /// <inheritdoc/>
         public virtual Value CreateInstance(IMonitorLogger logger, InstanceValue instanceValue, ILocalCodeExecutionContext executionContext)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("7747129D-B05A-4CC3-9F96-3FB73B485239");
         }
 
         /// <inheritdoc/>
         public virtual Value CreateInstance(IMonitorLogger logger, CodeItem codeItem, ILocalCodeExecutionContext executionContextx)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("EB8DFE5E-0F92-468D-90D8-71A4CF792D55");
         }
 
         /// <inheritdoc/>
         public virtual Value CreateInstance(IMonitorLogger logger, ActionPtr actionPtr, ILocalCodeExecutionContext executionContext, IExecutionCoordinator executionCoordinator)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("73BBF03C-DFEE-440D-8BC4-7CF887A9BA9B");
         }
 
 #if DEBUG
         /// <inheritdoc/>
         public virtual void PrintProcessesList(IMonitorLogger logger)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("EF288776-8AA2-4706-BA80-A884824DA8B2");
         }
 #endif
     }

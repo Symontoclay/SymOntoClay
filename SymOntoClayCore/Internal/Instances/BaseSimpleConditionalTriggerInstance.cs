@@ -106,7 +106,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         protected virtual BindingVariables GetBindingVariables()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("DCB0CC68-DFBF-4DA1-A675-54BECF3E9AC4");
         }
 
         protected virtual bool ShouldSearch()
@@ -227,7 +227,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
                     if (bindingVariables.Count != resultVarsList.Count)
                     {
-                        throw new NotImplementedException();
+                        throw new NotImplementedException("BB306C01-DA2C-4267-A508-F68AAA5E237B");
                     }
 
                     foreach (var resultVar in resultVarsList)

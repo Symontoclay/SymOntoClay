@@ -133,7 +133,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("A597A52F-30D6-4901-8718-F76713A51211");
         }
 
         private Value GetUsualVarValue(IMonitorLogger logger, StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)

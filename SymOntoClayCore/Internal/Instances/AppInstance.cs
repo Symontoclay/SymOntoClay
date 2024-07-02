@@ -61,7 +61,7 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 if(_activeStatesDict.Any())
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("204ED027-5B42-4D5B-95AF-0181A256CE67");
                 }
             }
 

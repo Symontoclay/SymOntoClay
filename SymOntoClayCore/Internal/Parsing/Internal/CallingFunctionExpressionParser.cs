@@ -67,7 +67,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             {
                 if(_currentParameter.IsNamed && _currentParameter.Name != null && _currentParameter.Value == null)
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("46C8EB09-4AB7-4063-913F-E4CCD594DA33");
                 }
             }
         }

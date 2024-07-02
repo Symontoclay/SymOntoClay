@@ -168,7 +168,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             {
                 if (count > 1)
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("B2A082CC-352C-4C98-8269-C36A4E434BB8");
                 }
             }
         }
@@ -471,7 +471,7 @@ namespace SymOntoClay.Core.Internal.Serialization
                     {
                         break;
                     }
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("385ECFA7-F331-4554-9667-D9313EF3AE88");
 
                 case KindOfCodeEntity.Field:
                     break;

@@ -58,7 +58,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     throw new ArgumentOutOfRangeException(nameof(kindOfValue), kindOfValue, null);
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("6AAD28B0-C873-400F-95BC-A0E44EA45BDF");
         }
 
         public bool Resolve(IMonitorLogger logger, LogicalValue value)

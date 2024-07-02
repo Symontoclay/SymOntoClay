@@ -62,7 +62,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                 return new NumberValue((double)leftOperandValue / rightOperandNumSysValue);
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("E4EB23C0-6E54-4A76-BA58-3B33BAB51FD9");
         }
     }
 }

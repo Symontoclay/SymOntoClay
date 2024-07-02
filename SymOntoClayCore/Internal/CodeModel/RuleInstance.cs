@@ -671,7 +671,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        void ILogicalStorage.DbgPrintFactsAndRules(IMonitorLogger logger) => throw new NotImplementedException();
+        void ILogicalStorage.DbgPrintFactsAndRules(IMonitorLogger logger) => throw new NotImplementedException("A7DE412A-843F-4B88-A488-01DF60860F46");
 
         #endregion
     }

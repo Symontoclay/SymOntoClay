@@ -60,7 +60,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                 return operand;
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("CC437794-D08B-4D6D-BA7E-3E457819F5C2");
         }
     }
 }

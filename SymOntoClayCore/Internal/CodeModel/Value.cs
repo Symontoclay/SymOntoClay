@@ -223,12 +223,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         protected virtual Value GetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("A63D5CA7-1443-49C0-86CE-5CDF5D7C8F2A");
         }
 
         protected virtual Value GetVarValue(IMonitorLogger logger, StrongIdentifierValue varName)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("2A9BFB77-BC79-4742-BB4B-1C9FDADDF25D");
         }
 
         public virtual IExecutable GetMethod(IMonitorLogger logger, StrongIdentifierValue methodName,
@@ -239,7 +239,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public virtual IExecutable GetExecutable(IMonitorLogger logger, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("58DE8BF6-83CB-4965-9979-056EF82E48E8");
         }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
@@ -260,7 +260,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             logger.Info("19CE9FAD-574D-4261-AF9A-17B929ECE2F7", GetType().FullName);
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("CED1BBCD-46B2-46C6-BFA6-9E876D27845E");
         }
 
         /// <inheritdoc/>

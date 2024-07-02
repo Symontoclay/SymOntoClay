@@ -70,13 +70,13 @@ namespace SymOntoClay.Core.Internal.Instances
                 return null;
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("5B3EB4DF-A09D-4DB2-B28E-038F2F8E6CB9");
         }
 
         /// <inheritdoc/>
         public override void SetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName, Value value)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("E9A0088C-5940-455B-9FE3-9FC23431B078");
         }
 
         /// <inheritdoc/>
@@ -88,7 +88,7 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public override Value GetPropertyValue(IMonitorLogger logger, StrongIdentifierValue propertyName)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("E44BF62D-00E4-4E1C-9428-A42FF977093A");
         }
 
         /// <inheritdoc/>

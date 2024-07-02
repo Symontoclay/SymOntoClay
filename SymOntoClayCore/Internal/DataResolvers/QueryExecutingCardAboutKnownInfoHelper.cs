@@ -68,7 +68,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         }
                         else
                         {
-                            throw new NotImplementedException();
+                            throw new NotImplementedException("CCC4B530-6322-4166-9777-69817E7694F1");
                         }
                     }
                     else

@@ -528,7 +528,7 @@ to have (when it means "to possess")*
             if(rootWord.Contains("("))
             {
                 NLog.LogManager.GetCurrentClassLogger().Info($"ProcessRootWordName rootWord = '{rootWord}'");
-                throw new NotImplementedException();
+                throw new NotImplementedException("908463E3-C4EA-4277-85FF-7CA576F8F1EB");
             }
 
             if (mRootNounDict.ContainsKey(rootWord))

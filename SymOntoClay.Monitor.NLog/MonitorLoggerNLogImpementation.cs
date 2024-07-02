@@ -65,7 +65,7 @@ namespace SymOntoClay.Monitor.NLog
         /// <inheritdoc/>
         public bool EnableAddingRemovingFactLoggingInStorages => false;
 
-        IMonitorFeatures IMonitorLogger.MonitorFeatures => throw new NotImplementedException();
+        IMonitorFeatures IMonitorLogger.MonitorFeatures => throw new NotImplementedException("DFAE432F-F3FF-4A44-8D6D-0D8B103AC205");
 
         /// <inheritdoc/>
         public string CreateThreadId()
@@ -81,7 +81,7 @@ namespace SymOntoClay.Monitor.NLog
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("EED5CA24-1559-42F6-8D63-7FF8EB2BC66F");
         }
 
         /// <inheritdoc/>
@@ -93,7 +93,7 @@ namespace SymOntoClay.Monitor.NLog
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("6DC878D7-2769-4124-9418-B45109524F3F");
         }
 
         /// <inheritdoc/>
@@ -104,7 +104,7 @@ namespace SymOntoClay.Monitor.NLog
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("D8179245-AB2C-4AEE-9411-47C9BCC18852");
         }
 
         /// <inheritdoc/>
@@ -114,7 +114,7 @@ namespace SymOntoClay.Monitor.NLog
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("D065BDD8-694D-4193-A7D7-EB1BAE25BAAB");
         }
 
         /// <inheritdoc/>
@@ -124,7 +124,7 @@ namespace SymOntoClay.Monitor.NLog
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("415CDB2F-A401-4480-97BD-CC78BBBA0BBB");
         }
 
         /// <inheritdoc/>
@@ -134,7 +134,7 @@ namespace SymOntoClay.Monitor.NLog
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("32EB9017-46B8-4152-A325-0141A4C58659");
         }
 
         /// <inheritdoc/>
@@ -144,7 +144,7 @@ namespace SymOntoClay.Monitor.NLog
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("A9E8219E-60AB-4E40-8017-5C19A62CAB81");
         }
 
         /// <inheritdoc/>
@@ -154,7 +154,7 @@ namespace SymOntoClay.Monitor.NLog
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("770B3089-AE98-4368-AB16-2C00C454387C");
         }
 
         /// <inheritdoc/>
@@ -164,7 +164,7 @@ namespace SymOntoClay.Monitor.NLog
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("99046F2A-EDAF-4DB7-920B-478C29202E81");
         }
 
         /// <inheritdoc/>
@@ -174,7 +174,7 @@ namespace SymOntoClay.Monitor.NLog
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("AF1D54BD-F9C1-42FF-8C53-87B4EF18CE01");
         }
 
         /// <inheritdoc/>
@@ -184,7 +184,7 @@ namespace SymOntoClay.Monitor.NLog
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("31A13EFB-C347-4BA6-B62C-7F1933E2D230");
         }
 
         /// <inheritdoc/>
@@ -194,7 +194,7 @@ namespace SymOntoClay.Monitor.NLog
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("57A3F6BC-A75D-4B0E-AA46-08857AF08AD0");
         }
 
         /// <inheritdoc/>
@@ -204,7 +204,7 @@ namespace SymOntoClay.Monitor.NLog
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("A9419670-ECE8-4207-9FCC-E0C3BFA659B7");
         }
 
         /// <inheritdoc/>
@@ -214,7 +214,7 @@ namespace SymOntoClay.Monitor.NLog
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("33C37A8F-CC1A-4916-AB3C-2AAA879D66D0");
         }
 
         /// <inheritdoc/>
@@ -224,7 +224,7 @@ namespace SymOntoClay.Monitor.NLog
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("94730BA2-F5E9-46EA-95F7-3C4DEB6A2631");
         }
 
         /// <inheritdoc/>
@@ -234,7 +234,7 @@ namespace SymOntoClay.Monitor.NLog
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("01DF6C45-6FB0-4CD6-B505-412B6DC30965");
         }
 
         /// <inheritdoc/>
@@ -244,7 +244,7 @@ namespace SymOntoClay.Monitor.NLog
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("B5743C1E-7F23-48B7-99F3-7BF50D665FCD");
         }
 
         /// <inheritdoc/>
@@ -254,7 +254,7 @@ namespace SymOntoClay.Monitor.NLog
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("F43EBA1B-2DFB-4AAD-9F34-C4C37BD2A1DD");
         }
 
         /// <inheritdoc/>
@@ -264,7 +264,7 @@ namespace SymOntoClay.Monitor.NLog
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("B95973FE-A40C-4050-99EB-BBFC294B6513");
         }
 
         /// <inheritdoc/>
@@ -274,7 +274,7 @@ namespace SymOntoClay.Monitor.NLog
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("91DF9CCD-1597-45A9-95B6-EFB8AF19754A");
         }
 
         /// <inheritdoc/>
@@ -284,7 +284,7 @@ namespace SymOntoClay.Monitor.NLog
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("FB786AED-C469-40B6-A280-43E5E7E6B050");
         }
 
         /// <inheritdoc/>

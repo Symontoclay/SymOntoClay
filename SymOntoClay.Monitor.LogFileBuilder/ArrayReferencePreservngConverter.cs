@@ -110,7 +110,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("5D451F77-B557-4116-A251-6DD0F7932E39");
         }
     }
 }

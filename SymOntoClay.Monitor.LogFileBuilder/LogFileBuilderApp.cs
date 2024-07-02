@@ -71,7 +71,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             if (logFileBuilderOptions.IsHelp)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("36657A6B-8F3C-4728-A741-BEB4F4F8094B");
             }
 
             if(!logFileBuilderOptions.NoLogo)
@@ -193,7 +193,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
         private void PrintHelp()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("203F8462-B566-41B8-B6B5-728C9A2A4191");
         }
 
         private LogFileCreatorOptions LoadOptions(LogFileCreatorInheritableOptions defaultConfiguration, string configurationFileName)

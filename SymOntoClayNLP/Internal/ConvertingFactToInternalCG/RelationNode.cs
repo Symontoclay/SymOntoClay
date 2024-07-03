@@ -125,7 +125,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        throw new NotImplementedException("BFB8FC11-691C-4168-8478-D6867DBAFEA3");
                     }
                 }
             }
@@ -258,7 +258,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
                         }
                         else
                         {
-                            throw new NotImplementedException();
+                            throw new NotImplementedException("A7B6F1E1-566D-4E3E-87BE-1A98B37541C7");
                         }
                     }
                 }
@@ -269,7 +269,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 
         private ResultOfNode ProcessInheritanceRelation()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("CAFDDF98-C58C-45B8-B241-6FCBD1C809A9");
         }
 
         private string ValueToNormalizedNameValue(Value value)

@@ -33,7 +33,7 @@ namespace SymOntoClay.NLP.BinaryDict
 
         public IList<BaseGrammaticalWordFrame> GetWordFramesByRootWord(string word)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("9FB537A5-C34F-46B5-9F32-6C932C3F8841");
         }
     }
 }

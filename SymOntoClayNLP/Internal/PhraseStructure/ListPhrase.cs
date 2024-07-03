@@ -44,15 +44,15 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         public List<BaseSentenceItem> Items { get; set; } = new List<BaseSentenceItem>();
 
         /// <inheritdoc/>
-        public override BaseGrammaticalWordFrame RootWordFrame => throw new NotImplementedException();
+        public override BaseGrammaticalWordFrame RootWordFrame => throw new NotImplementedException("951D3FE3-9E10-4C5C-A99A-91CA91AF9A26");
 
         /// <inheritdoc/>
-        public override string RootWordAsString => throw new NotImplementedException();
+        public override string RootWordAsString => throw new NotImplementedException("1429AD2E-0F03-41E5-8D8D-062CF4684464");
 
         /// <inheritdoc/>
         public override IList<string> GetConditionalLogicalMeaning(string conditionalWord)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("229A4CE8-82C5-4DCB-B15E-C7C3826507E3");
         }
 
         /// <inheritdoc/>
@@ -101,7 +101,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// <inheritdoc/>
         protected override string PropertiesToDbgString(uint n)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("29167252-FAC0-4702-8DB2-0546D3885228");
 
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();

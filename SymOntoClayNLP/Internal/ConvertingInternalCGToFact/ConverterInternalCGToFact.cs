@@ -117,7 +117,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
             {
                 if(source.ObligationModality != ObligationModality.Undefined && source.ObligationModality != ObligationModality.None)
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("5D8A0ACF-C9B8-4F5F-AE16-21DA6DE2ECAF");
                 }
             }
 
@@ -577,14 +577,10 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToFact
 
                         if(!graphOrConcept.IsConceptualGraph)
                         {
-                            throw new NotImplementedException();
+                            throw new NotImplementedException("CCDE1C6B-DD46-4FF9-861D-FC5D3568918D");
                         }
 
                         var targetRuleInstance = context.RuleInstancesDict[graphOrConcept.AsConceptualGraph];
-
-#if DEBUG
-
-#endif
 
                         var entityCondition = new ConditionalEntitySourceValue(targetRuleInstance, NameHelper.CreateName("#@"));
 

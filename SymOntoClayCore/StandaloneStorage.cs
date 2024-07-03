@@ -235,7 +235,7 @@ namespace SymOntoClay.Core
 
 #if IMAGINE_WORKING
 #else
-                throw new NotImplementedException();
+                throw new NotImplementedException("A55EFC61-5254-4207-84F8-BD27EEEBFEED");
 #endif
             }
         }
@@ -252,7 +252,7 @@ namespace SymOntoClay.Core
 
 #if IMAGINE_WORKING
 #else
-                throw new NotImplementedException();
+                throw new NotImplementedException("F4A132AB-8E1A-4766-9104-305B9FE1DBAF");
 #endif
             }
         }

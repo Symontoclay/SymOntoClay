@@ -72,7 +72,7 @@ namespace SymOntoClay.NLP
             }
             else
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("6E22960D-AB4D-46A4-99F5-5E76CFD13DFD");
             }
         }
 

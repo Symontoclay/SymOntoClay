@@ -61,7 +61,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 
             if(_value.LogicalQuery == null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("14AF570A-DB94-43F8-AC0D-C3D191120EDB");
             }
             else
             {

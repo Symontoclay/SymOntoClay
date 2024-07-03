@@ -58,7 +58,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                 || (sentence.Subject != null && (sentence.Subject.IsConjunctionPhrase || sentence.Subject.IsListPhrase))
                 || (sentence.Predicate != null && (sentence.Predicate.IsConjunctionPhrase || sentence.Predicate.IsListPhrase)))
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("7F19A153-3C38-4B54-AAFA-35BB66A8D2BB");
             }
 
             return new List<BaseSentenceItem> { sentence };

@@ -73,7 +73,7 @@ namespace SymOntoClay.ProjectFiles
 
             if (appDir == null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("3E9DAFCF-30BC-4DED-AF92-E1B7296966DF");
             }
 
             switch (kindOfNewCommand)

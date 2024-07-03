@@ -54,7 +54,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
                 return ProcessTargetResultItem(resolvingContext.FoundItems[0]);
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("49A6E384-7733-4256-B748-60BDCFBCCD4D");
         }
 
         private string ProcessTargetResultItem(ResultItemOfConceptFromVarResolver resultItem)

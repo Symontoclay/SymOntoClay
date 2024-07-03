@@ -47,7 +47,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
             if (_nounPhrase.N == null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("82008E41-50FA-4025-A4A2-BF744FFC6A85");
             }
             else
             {
@@ -61,7 +61,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
             if (_nounPhrase.QP != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("CEE33650-D2F9-455F-ABAE-E6FA4B9BFF15");
             }
 
             if (_nounPhrase.AP != null)
@@ -71,61 +71,43 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
             if (_nounPhrase.NounAdjunct != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("1351077F-612E-4AF6-AD3E-E8E3186C2A33");
             }
 
             if (_nounPhrase.Negation != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("3CC6FEA6-D4DC-4ED6-9F23-F13137FAA7DC");
             }
 
             if (_nounPhrase.HasPossesiveMark)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("04B16417-0704-48C9-8390-A4226F499E70");
             }
 
             if (_nounPhrase.PP != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("E3CFBEE7-B5E5-4DA6-9334-F77004751FB2");
             }
 
             if (_nounPhrase.AdvP != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("107E7E1B-AE56-41A6-A9FC-07C14F7E16A8");
             }
 
             if (_nounPhrase.RelativeClauses != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("3AF68B85-6062-49EA-8CF4-968508850A28");
             }
 
             if (_nounPhrase.OtherClauses != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("84F50287-7291-4BA4-8312-807666686F67");
             }
 
             if (_nounPhrase.InfinitivePhrases != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("156C4F97-0EA8-43C5-90DC-1FAE5E6DB212");
             }
-
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             return result;
         }
@@ -319,7 +301,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
             if (string.IsNullOrWhiteSpace(role))
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("73B9668A-8B40-42B7-B44C-B41B40B377D8");
             }
 
             var ajectiveConceptName = word.RootWordAsString;

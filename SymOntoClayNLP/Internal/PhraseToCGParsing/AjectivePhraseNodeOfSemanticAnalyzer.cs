@@ -52,29 +52,20 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
             if (_adjectivePhrase.AdvP != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("F71E9FA2-37F3-4C17-B7E3-CDC64B2C27B4");
             }
 
             if (_adjectivePhrase.A != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("DD100DB3-93AD-4D81-B4AF-716FCB662BAC");
             }
 
             if (_adjectivePhrase.PP != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("4FF3F645-13F4-4F7A-A4BE-ECC88FB8FEC2");
             }
 
-
-
-
-
-
-
-
-
-
-            throw new NotImplementedException();
+            throw new NotImplementedException("9B4F853B-9A49-4D3F-B413-F0EC439CCE49");
         }
     }
 }

@@ -102,25 +102,25 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
         /// <inheritdoc/>
         public void RemoveInheritance(IMonitorLogger logger, InheritanceItem inheritanceItem)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("E72700C3-322E-438C-9C25-1093A551657B");
         }
 
         /// <inheritdoc/>
         public void SetInheritance(IMonitorLogger logger, InheritanceItem inheritanceItem)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("1C4EC832-917D-4318-9E8B-F27C2C820BE3");
         }
 
         /// <inheritdoc/>
         public void SetInheritance(IMonitorLogger logger, InheritanceItem inheritanceItem, bool isPrimary)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("6B2C32A3-0007-44F6-9740-CA24DF45DFEE");
         }
 
 #if DEBUG
         public void DbgPrintInheritances(IMonitorLogger logger)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("B3A97848-26FF-4051-960C-BAB291EE79E8");
         }
 #endif
 

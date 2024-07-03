@@ -305,7 +305,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
 
             if(Intrusion != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("45DE307C-42AD-4E19-9345-A9E784D5F2EA");
             }
 
             if (V != null)
@@ -316,12 +316,12 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
 
             if (VP != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("3B9BA1A8-DBFE-44F5-8ADC-DA61C5A7DBE4");
             }
 
             if (Negation != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("1BF01C56-5633-4A2C-8906-2CC5FE1FB058");
             }
 
             if (Object != null)
@@ -338,7 +338,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
 
             if (CP != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("C2F664E0-959C-42D3-AF23-6FDC73B2A809");
             }
 
             return sb.ToString();

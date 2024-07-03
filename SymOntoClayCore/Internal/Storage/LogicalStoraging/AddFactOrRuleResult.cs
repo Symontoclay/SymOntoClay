@@ -178,7 +178,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         {
             if(MutablePart != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("79331DD2-0F7B-43E6-96BD-19A449EDF369");
             }
 
             return $"{KindOfResult}";

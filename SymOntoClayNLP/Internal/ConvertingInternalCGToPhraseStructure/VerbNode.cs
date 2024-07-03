@@ -90,7 +90,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                                 }
                                 break;
 
-                                throw new NotImplementedException();
+                                throw new NotImplementedException("6920767A-7812-45D9-8E3F-A5C42774F957");
                             }
 
                         default:
@@ -144,7 +144,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                 case GrammaticalTenses.Present:
                     if (_context.IsNegation)
                     {
-                        throw new NotImplementedException();
+                        throw new NotImplementedException("1EC63D80-20D1-4231-8D04-1842C1269F89");
                     }
                     else
                     {
@@ -155,7 +155,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                     throw new ArgumentOutOfRangeException(nameof(tense), tense, null);
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("84F3BB62-9A2A-48BA-8057-218546FC1510");
         }
 
         private (VerbPhrase, VerbPhrase) GetTargetPresentSimpleVerbForm(string verb)
@@ -213,7 +213,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 
             if (objectRelationsList.Count > 1)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("F52BF110-3444-4411-910B-1495752E8D7E");
             }
 
             var objectRelation = objectRelationsList.First();
@@ -222,7 +222,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 
             if (objectRelation.Outputs.Count != 1)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("21836B93-2F51-488D-9DA7-625F1419E8C7");
             }
 
             var objectConcept = objectRelation.Outputs.First();

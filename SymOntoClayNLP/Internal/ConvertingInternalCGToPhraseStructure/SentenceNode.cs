@@ -75,7 +75,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             {
                 if (statesList.Count > 1)
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("76F70BDA-7556-4E69-A4C1-DB1AB961921F");
                 }
 
                 var stateRelation = statesList.First();
@@ -84,12 +84,12 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 
                 if (stateRelation.Inputs.Count != 1)
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("995E844D-D2E7-459B-B0B0-51038D31EFE0");
                 }
 
                 if (stateRelation.Outputs.Count != 1)
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("C3A282B0-3873-40D6-82BE-37F6C8AA1F0A");
                 }
 
                 var subjectConcept = stateRelation.Inputs.First();
@@ -113,7 +113,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
             {
                 if (actionsList.Count > 1)
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("0C8C56F5-88E8-4510-9A31-9B9F6FF00BAF");
                 }
 
                 var actionRelation = actionsList.First();
@@ -122,12 +122,12 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
 
                 if (actionRelation.Inputs.Count != 1)
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("7B69644C-A2CF-403B-B3F4-C0D2759B5AF6");
                 }
 
                 if (actionRelation.Outputs.Count != 1)
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("DDFAC523-AF79-4806-91BD-C367A495CC69");
                 }
 
                 var subjectConcept = actionRelation.Inputs.First();
@@ -145,7 +145,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                 };
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("C2BAD54A-2BFF-43BE-881C-DFAB9393A529");
         }
 
         private ResultOfNode ProcessIndicativeMood()

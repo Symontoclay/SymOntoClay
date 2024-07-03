@@ -95,7 +95,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                             return result;
                         }
 
-                        throw new NotImplementedException();
+                        throw new NotImplementedException("B17D6D8B-9487-466D-BF83-6CF0FCA4243D");
                     }
 
                 case RoleOfNoun.Object:
@@ -120,7 +120,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                             return result;
                         }
 
-                        throw new NotImplementedException();
+                        throw new NotImplementedException("600065E6-9721-41A7-97CE-6F77F23EF6AB");
                     }
 
                 case RoleOfNoun.PossessDeterminer:
@@ -142,7 +142,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                             return result;
                         }
 
-                        throw new NotImplementedException();
+                        throw new NotImplementedException("45249671-3DC9-4F4E-B669-01BDA6F21797");
                     }
 
                 case RoleOfNoun.AnotherRole:
@@ -162,7 +162,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                             return result;
                         }
 
-                        throw new NotImplementedException();
+                        throw new NotImplementedException("2FEA1D14-2777-49FF-B592-DED05F075786");
                     }
 
                 default:

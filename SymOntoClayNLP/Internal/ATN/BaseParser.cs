@@ -149,12 +149,12 @@ namespace SymOntoClay.NLP.Internal.ATN
 
         protected void ExitNode()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("69595EF6-2D67-4501-80E2-383C1FB5AAEF");
         }
 
         protected void ExitSentence()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("EB058C7B-2914-4CAE-AFAB-9F8DDB3A2028");
         }
 
         public virtual void OnEnter()
@@ -175,7 +175,7 @@ namespace SymOntoClay.NLP.Internal.ATN
 
         public virtual void OnEmptyLexer()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("D08780CC-470A-4D74-BEBF-6B043214899F");
         }
 
         protected ConcreteATNToken ConvertToConcreteATNToken(ATNToken token, BaseGrammaticalWordFrame wordFrame)

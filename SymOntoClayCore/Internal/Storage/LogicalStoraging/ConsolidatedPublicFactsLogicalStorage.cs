@@ -264,19 +264,19 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         /// <inheritdoc/>
         public void Append(IMonitorLogger logger, RuleInstance ruleInstance)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("6AFD7288-4850-47E9-8CC8-042A3F4CA655");
         }
 
         /// <inheritdoc/>
         public void Append(IMonitorLogger logger, RuleInstance ruleInstance, bool isPrimary)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("9E4B1544-1E75-40C7-A6C5-C71C8719C007");
         }
 
         /// <inheritdoc/>
         public void Append(IMonitorLogger logger, IList<RuleInstance> ruleInstancesList)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("6462CE04-0E22-448F-A2CC-8659B3BB3372");
         }
 
         /// <inheritdoc/>
@@ -727,19 +727,19 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         /// <inheritdoc/>
         public void Remove(IMonitorLogger logger, RuleInstance ruleInstance)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("35F8353D-6951-47E7-A864-494508F5379E");
         }
 
         /// <inheritdoc/>
         public void Remove(IMonitorLogger logger, IList<RuleInstance> ruleInstancesList)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("51381A82-96A0-435B-A7BE-36762EC694BC");
         }
 
         /// <inheritdoc/>
         public void RemoveById(IMonitorLogger logger, string id)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("30AF413F-403F-4529-BAC2-52A588507484");
         }
 
         /// <inheritdoc/>

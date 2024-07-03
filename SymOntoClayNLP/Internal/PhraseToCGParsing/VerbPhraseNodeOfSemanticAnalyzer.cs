@@ -52,7 +52,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
             if (_verbPhrase.Intrusion != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("DFBC54BD-DDD0-4E75-BFB3-438412511BB9");
             }
 
             if (_verbPhrase.V != null)
@@ -62,12 +62,12 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
             if (_verbPhrase.VP != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("0AF52951-A1C6-4582-A83D-6D354448A6A4");
             }
 
             if (_verbPhrase.Negation != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("4EE4AD47-95D3-4E56-A48B-468BB9DF6451");
             }
 
             if (_verbPhrase.Object != null)

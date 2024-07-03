@@ -328,7 +328,7 @@ namespace SymOntoClay.NLP.Internal.ATN
         /// <inheritdoc/>
         public override void OnReceiveReturn(BaseSentenceItem phrase)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("4B61BB11-AE3A-43DF-8707-304EA7686ABE");
         }
 
         /// <inheritdoc/>

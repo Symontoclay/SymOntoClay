@@ -71,7 +71,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                     {
                         return ProcessConditionalEntity();
                     }
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("23A37A85-49EC-4F76-8205-F3F9C7935578");
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kind), kind, null);

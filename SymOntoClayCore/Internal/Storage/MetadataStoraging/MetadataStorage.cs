@@ -108,7 +108,7 @@ namespace SymOntoClay.Core.Internal.Storage.MetadataStoraging
                         return targetList.Single();
                     }
 
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("6B8560F3-51D1-4086-B9F9-F8822E4CF832");
                 }
 
                 return null;

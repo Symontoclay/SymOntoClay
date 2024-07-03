@@ -61,7 +61,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingInternalCGToPhraseStructure
                 return result;
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("CC3153A8-41E8-4B3D-8157-DEF2DF39010C");
         }
     }
 }

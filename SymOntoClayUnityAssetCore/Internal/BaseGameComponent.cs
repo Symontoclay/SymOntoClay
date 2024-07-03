@@ -95,7 +95,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         public IMonitorNode MonitorNode => _monitorNode;
 
         /// <inheritdoc/>
-        public bool EnableLogging { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool EnableLogging { get => throw new NotImplementedException("35A98EF2-0336-45E0-B0EF-856BB6655BA3"); set => throw new NotImplementedException("44FC9E0D-FFDC-4681-909D-5C09DE5FB882"); }
 
         /// <inheritdoc/>
         public void RunInMainThread(Action function)

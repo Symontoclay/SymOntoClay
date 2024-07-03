@@ -129,7 +129,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         /// <inheritdoc/>
         protected override string PropertiesToDbgString(uint n)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("D4A50899-CF1F-436B-8F50-722E7F9B4D97");
 
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();

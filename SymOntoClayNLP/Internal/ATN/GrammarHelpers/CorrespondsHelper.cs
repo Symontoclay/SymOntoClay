@@ -60,12 +60,12 @@ namespace SymOntoClay.NLP.Internal.ATN.GrammarHelpers
                 }
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("5D36E04F-6927-4AF3-9D97-A43ADA738215");
         }
 
         private static bool NounSubjectAndVerb(NounGrammaticalWordFrame subject, VerbGrammaticalWordFrame verb)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("BE40BCA2-7368-4EE9-8E55-049841CEAA85");
         }
     }
 }

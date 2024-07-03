@@ -213,7 +213,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
 
             if (QP != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("9BEE124B-B72D-47CB-81A1-C72973263D19");
             }
 
             if (AP != null)
@@ -224,42 +224,42 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
 
             if (NounAdjunct != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("7FB48102-2068-4FDB-BEF8-5EC437B8AFC0");
             }
 
             if (Negation != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("6E46CCC5-6447-4538-9C42-F08B51F1FA83");
             }
 
             if (HasPossesiveMark)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("DC42EAE9-4C27-4F5D-B8DE-BD476A9049DD");
             }
 
             if (PP != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("40596CF5-B674-444F-91D2-85FA0B3DBC6D");
             }
 
             if (AdvP != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("7A5EECE3-8CAC-423D-8041-C6864ADC996B");
             }
 
             if (RelativeClauses != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("48E274D2-7F13-49E7-BF39-8F1A8CFE31F2");
             }
 
             if (OtherClauses != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("A254D3AD-CB7C-4A1B-A069-74B0A5C53C99");
             }
 
             if (InfinitivePhrases != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("B1BBBE8B-ED10-40A8-9482-A72CB6F153B1");
             }
 
             return sb.ToString();

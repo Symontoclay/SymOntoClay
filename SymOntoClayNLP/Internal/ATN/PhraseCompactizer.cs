@@ -69,14 +69,14 @@ namespace SymOntoClay.NLP.Internal.ATN
         {
             if (sentence.Condition != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("A214C50A-A3ED-4812-9EEB-EB2763433552");
             }
 
             var verbChain = new PhraseCompactizerVerbChain();
 
             if (sentence.Predicate == null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("BB244D33-BD61-4F78-A2DD-E23FD5675108");
             }
             else
             {
@@ -98,7 +98,7 @@ namespace SymOntoClay.NLP.Internal.ATN
 
                         if(verb.Number != GrammaticalNumberOfWord.Neuter)
                         {
-                            throw new NotImplementedException();
+                            throw new NotImplementedException("C286D22B-8EBD-481D-83D7-8B340531ED86");
                         }
 
                         verbPhrase.Aspect = GrammaticalAspect.Simple;
@@ -109,7 +109,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                         }
                         else
                         {
-                            throw new NotImplementedException();
+                            throw new NotImplementedException("3685F152-704B-4D6C-A5DA-E2177857D735");
                         }
 
                         verbPhrase.Voice = GrammaticalVoice.Active;
@@ -179,7 +179,7 @@ namespace SymOntoClay.NLP.Internal.ATN
 
             if(verbPhrase.CP != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("67188286-D623-4E25-870D-81D34151FE1B");
             }
         }
 
@@ -189,27 +189,27 @@ namespace SymOntoClay.NLP.Internal.ATN
 
             if (verb.IsModal)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("669B42B1-F08B-4B8D-B097-DB10A371CD6F");
             }
 
             if (verb.IsFormOfToBe)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("1AC16894-5A3E-44F3-B56E-976FCD28C74A");
             }
 
             if (verb.IsFormOfToHave)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("C2DB1BDA-6A70-4162-A4B2-292AC5808B34");
             }
 
             if (verb.IsFormOfToDo)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("B317955A-C6AF-46B2-AB3C-0DA9598A5636");
             }
 
             if (verb.RootWord == "need")
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("241F53BC-895C-43E9-B987-E1A0DA785AFA");
             }
 
             verbChain.V = verbPhrase;

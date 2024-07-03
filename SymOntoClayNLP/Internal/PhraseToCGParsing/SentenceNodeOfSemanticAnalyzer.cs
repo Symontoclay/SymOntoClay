@@ -71,7 +71,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
             if (_sentence.Condition != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("5F41FCFD-0CE6-45C9-AAD4-B3C83EC4A80B");
             }
 
             ResultOfNodeOfSemanticAnalyzer subjectResult = null;

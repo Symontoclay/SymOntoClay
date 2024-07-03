@@ -47,7 +47,7 @@ namespace SymOntoClay.NLP.Internal.Dot
         {
             get
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("EDADBFA2-3B42-4580-A530-A8C4DF2086B7");
             }
         }
 

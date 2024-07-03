@@ -65,15 +65,15 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         public ConditionalModality ConditionalModality { get; set; } = ConditionalModality.Undefined;
 
         /// <inheritdoc/>
-        public override BaseGrammaticalWordFrame RootWordFrame => throw new NotImplementedException();
+        public override BaseGrammaticalWordFrame RootWordFrame => throw new NotImplementedException("035C7270-79B1-4F48-9F02-153CBE2CC33C");
 
         /// <inheritdoc/>
-        public override string RootWordAsString => throw new NotImplementedException();
+        public override string RootWordAsString => throw new NotImplementedException("8E0E4384-05F0-420B-885E-60D5910B94F3");
 
         /// <inheritdoc/>
         public override IList<string> GetConditionalLogicalMeaning(string conditionalWord)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("29E6E2BF-7EC2-4646-8807-E4CFCEBA4821");
         }
 
         /// <inheritdoc/>
@@ -330,7 +330,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
 
             if (Condition != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("29BD60DE-F0A8-459B-9211-F83765249128");
             }
 
             if (Subject != null)

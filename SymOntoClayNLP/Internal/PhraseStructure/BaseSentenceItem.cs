@@ -79,7 +79,7 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
 
             if (list.Count > 1)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("C7853BC1-6CF3-426C-8678-2DCB0560C286");
             }
 
             return list.FirstOrDefault();

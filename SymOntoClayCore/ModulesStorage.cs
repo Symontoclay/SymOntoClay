@@ -75,7 +75,7 @@ namespace SymOntoClay.Core
 
 #if IMAGINE_WORKING
 #else
-                throw new NotImplementedException();
+                throw new NotImplementedException("E224FE7C-FD9E-420D-AC77-6BF06A24ACB7");
 #endif
             }
         }
@@ -92,7 +92,7 @@ namespace SymOntoClay.Core
 
 #if IMAGINE_WORKING
 #else
-                throw new NotImplementedException();
+                throw new NotImplementedException("419D44AA-6998-4B15-A4F0-23BDCD0EEEAA");
 #endif
             }
         }
@@ -109,7 +109,7 @@ namespace SymOntoClay.Core
 
 #if IMAGINE_WORKING
 #else
-                throw new NotImplementedException();
+                throw new NotImplementedException("6272057C-BCEC-4265-9E75-FB2899207D3E");
 #endif
             }
         }
@@ -245,7 +245,7 @@ namespace SymOntoClay.Core
                 return files.First();
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("E497EC5B-DDDA-4B5E-AFDD-0C5A5B559BE4");
         }
     }
 }

@@ -46,7 +46,7 @@ namespace SymOntoClay.NLP.Internal.ConvertingFactToInternalCG
 
             if (_context.VarConceptDict.ContainsKey(varName))
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("8301BF4B-4DB8-4CF2-9A62-9FF988F3D4ED");
             }
 
             var conceptName = ResolveConceptName();

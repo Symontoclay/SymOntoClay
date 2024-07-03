@@ -70,7 +70,7 @@ namespace SymOntoClay.Core.Internal.Storage
 
                 if (subName.NameValue == "app")
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("75EDA0A0-AB44-4B4C-9CAC-428FBFFCDEA0");
                 }
 #endif
 

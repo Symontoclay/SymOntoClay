@@ -344,7 +344,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
 
         public void Die()
         {
-            throw new NotImplementedException("BC6CC117-FDDA-4DB2-8E2E-3849B39C230F");
+            _activeObject.Dispose();
         }
 
         /// <inheritdoc/>

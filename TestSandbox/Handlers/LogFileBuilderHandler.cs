@@ -136,7 +136,7 @@ namespace TestSandbox.Handlers
 
             _logger.Info($"cmdArg = '{cmdArg}'");
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("8034B63D-4D8B-4110-A1C9-66E1BE5D14A2");
 
             //var cmdStrList = cmdArg.Split(' ');
 

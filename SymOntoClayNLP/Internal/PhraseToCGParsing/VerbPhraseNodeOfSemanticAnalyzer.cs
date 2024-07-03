@@ -82,7 +82,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
             if (_verbPhrase.CP != null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("9A331B7A-175E-45BD-8D7E-AB5CD3ECB661");
             }
 
             var verbAndObjectsMixRolesStorage = new RolesStorageOfSemanticAnalyzer();
@@ -238,12 +238,12 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
 
             if (string.IsNullOrWhiteSpace(conditionalLogicalMeaning))
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("431CC996-1047-4651-8DA2-FBB1FAE51208");
             }
 
             if(pp.NP == null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("945A1980-BF4B-40CE-9252-F484D07AF851");
             }
 
             var nounOfPrepositionalResult = ProcessNPOfPPAsBaseSentenceItem(pp.NP);

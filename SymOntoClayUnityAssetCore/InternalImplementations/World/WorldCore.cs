@@ -170,62 +170,62 @@ namespace SymOntoClay.UnityAsset.Core.World
         /// <inheritdoc/>
         public string InsertPublicFact(IMonitorLogger logger, string text)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("E33E5B22-DED1-48D1-858F-B5DAC5718854");
         }
 
         /// <inheritdoc/>
         public string InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("6DAA88AB-D6E7-49BF-826C-01483F650BAD");
         }
 
         /// <inheritdoc/>
         public void RemovePublicFact(IMonitorLogger logger, string id)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("5E04617D-9C71-4A38-BD82-47480F32C660");
         }
 
         /// <inheritdoc/>
         public void PushSoundFact(float power, string text)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("C3641CE4-73D6-459B-904D-AB9623E6D96A");
         }
 
         /// <inheritdoc/>
         public void PushSoundFact(float power, RuleInstance fact)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("169604B9-2661-43FF-9321-572EBADE7E6C");
         }
 
         /// <inheritdoc/>
-        public IStandardFactsBuilder StandardFactsBuilder => throw new NotImplementedException();
+        public IStandardFactsBuilder StandardFactsBuilder => throw new NotImplementedException("AA896824-F1FE-4012-9F25-A702C837D52B");
 
         /// <inheritdoc/>
         public void AddCategory(IMonitorLogger logger, string category)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("0A8D1B89-5E02-447C-8A95-9F805B871A6A");
         }
 
         /// <inheritdoc/>
         public void AddCategories(IMonitorLogger logger, List<string> categories)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("3388265A-2A24-4790-8BFD-DAD36A3A4C07");
         }
 
         /// <inheritdoc/>
         public void RemoveCategory(IMonitorLogger logger, string category)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("B43DD791-F8CE-4ECD-9D11-C256A0C7D3A0");
         }
 
         /// <inheritdoc/>
         public void RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("897967D3-58EE-4E27-9C19-1A0216083A8D");
         }
 
         /// <inheritdoc/>
-        public bool EnableCategories { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool EnableCategories { get => throw new NotImplementedException("5B0E49C5-919F-40AE-A951-BCB364258B17"); set => throw new NotImplementedException("339F2D6D-0225-4439-9C9D-462CC4A356B2"); }
 
         /// <inheritdoc/>
         public void Load(IRunTimeImageInfo imageInfo)

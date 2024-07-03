@@ -374,7 +374,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     throw new ObjectDisposedException(null);
                 }
 
-                throw new NotImplementedException();
+                throw new NotImplementedException("96F4200C-A269-44C9-B50D-5909CC6BAAA1");
             }
         }
 
@@ -387,7 +387,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     throw new ObjectDisposedException(null);
                 }
 
-                throw new NotImplementedException();
+                throw new NotImplementedException("5272665C-5702-49ED-86EA-F50B2E1719F4");
             }
         }
 
@@ -400,7 +400,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     throw new ObjectDisposedException(null);
                 }
 
-                throw new NotImplementedException();
+                throw new NotImplementedException("1F730A89-14DE-48C2-837C-9DC6D27AD3C9");
             }
         }
 
@@ -516,7 +516,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     throw new ObjectDisposedException(null);
                 }
 
-                throw new NotImplementedException();
+                throw new NotImplementedException("6136D992-B17A-4FB0-97D1-C647D733FCF3");
             }
         }
 
@@ -540,7 +540,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     throw new ObjectDisposedException(null);
                 }
 
-                throw new NotImplementedException();
+                throw new NotImplementedException("DB223DEF-740B-4215-8FE2-CCCBA2148386");
             }
         }
 
@@ -553,7 +553,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     throw new ObjectDisposedException(null);
                 }
 
-                throw new NotImplementedException();
+                throw new NotImplementedException("E83C57CA-F1DD-421A-BF5C-48849A4C26C3");
             }
         }
 
@@ -568,7 +568,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                         throw new ObjectDisposedException(null);
                     }
 
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("5235741D-F96F-4955-948D-D7F450649A81");
                 }
             } 
         }
@@ -582,7 +582,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     throw new ObjectDisposedException(null);
                 }
 
-                throw new NotImplementedException();
+                throw new NotImplementedException("6990FE0A-D566-4BB5-A581-BEB1250BCC05");
             }
         }
 
@@ -595,7 +595,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     throw new ObjectDisposedException(null);
                 }
 
-                throw new NotImplementedException();
+                throw new NotImplementedException("74F00A72-9BFA-4B54-970E-A2C1007A232A");
             }
         }
 
@@ -608,7 +608,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     throw new ObjectDisposedException(null);
                 }
 
-                throw new NotImplementedException();
+                throw new NotImplementedException("8CA4BE7E-639E-43FC-8B4C-1ADB0029438A");
             }             
         }
 

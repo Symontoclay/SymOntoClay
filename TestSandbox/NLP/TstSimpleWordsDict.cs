@@ -53,7 +53,7 @@ namespace TestSandbox.NLP
 
         public IList<BaseGrammaticalWordFrame> GetWordFramesByRootWord(string word)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("681FDC98-A15E-4E96-9CB5-418F4EC2E108");
         }
 
         private Dictionary<string, List<string>> mTmpMeaningsDict = new Dictionary<string, List<string>>();

@@ -39,7 +39,7 @@ namespace TestSandbox.CoreHostListener
         {
         }
 
-        public override IStorage PublicFactsStorage => throw new NotImplementedException();
+        public override IStorage PublicFactsStorage => throw new NotImplementedException("553385B6-3D08-4331-95F2-2AC69B79A97D");
 
         /// <inheritdoc/>
         public override bool CanBeTakenBy(IMonitorLogger logger, IEntity subject)

@@ -51,7 +51,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters.DefaultConverters
         /// <inheritdoc/>
         public override object ConvertToCoreType(IMonitorLogger logger, object platformObject, IEngineContext context, ILocalCodeExecutionContext localContext)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("5CDF4290-51E6-44A9-A929-D81627CD417A");
         }
 
         /// <inheritdoc/>

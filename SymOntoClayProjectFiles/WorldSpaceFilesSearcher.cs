@@ -44,7 +44,7 @@ namespace SymOntoClay.ProjectFiles
             {
                 if (string.IsNullOrWhiteSpace(options.InputDir))
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("39456CEE-6C74-4BE3-9F88-28B52A8C7713");
                 }
                 else
                 {
@@ -56,7 +56,7 @@ namespace SymOntoClay.ProjectFiles
 
                         if (wSpaceFile == null)
                         {
-                            throw new NotImplementedException();
+                            throw new NotImplementedException("4ADDF171-FE7D-4448-B2E7-82B776C39F32");
                         }
 
                         return GetRunCommandFilesByWorldFile(wSpaceFile, appName, options.BaseTempDir, options.SearchMainNpcFile);
@@ -85,7 +85,7 @@ namespace SymOntoClay.ProjectFiles
 
                 if (string.IsNullOrWhiteSpace(mainNpc))
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("FD505E5B-23B3-4B61-87C3-3FD7007C725E");
                 }
 
                 var mainNPCFileName = $"{mainNpc}.sobj";
@@ -94,7 +94,7 @@ namespace SymOntoClay.ProjectFiles
 
                 if (!File.Exists(inputFile))
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("73F35239-5FF0-43DF-95BE-979E5220566C");
                 }
             }
 
@@ -154,7 +154,7 @@ namespace SymOntoClay.ProjectFiles
                 return filesList.Single();
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("B9DB942D-6597-45E2-B55A-78DB3E7589E6");
         }
 
         private static WorldSpaceFiles GetWorldSpaceFilesByInputFile(string inputFile, string appName, string baseTempDir)
@@ -167,7 +167,7 @@ namespace SymOntoClay.ProjectFiles
 
             if (wSpaceFile == null)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("A6D284DB-FB40-4F1D-BAEB-2BAD162F275B");
             }
 
             return NGetWorldSpaceFiles(inputFile, wSpaceFile, wSpaceJsonFile.Dirs, appName, baseTempDir);

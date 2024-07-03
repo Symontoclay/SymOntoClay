@@ -2571,7 +2571,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             logger.Info("05288B7D-2084-4AE2-9145-12A39B4AC8E3", $"leftExpr = {leftExpr}");
             logger.Info("06EF83BE-ABE5-490B-9BFC-5784E78EF4F3", $"rightExpr = {rightExpr}");
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("F357C741-2785-40DC-B943-029D4F9F7A85");
         }
 
         private void FillExecutingCardForIsNotOperatorLogicalQueryNode(IMonitorLogger logger, LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
@@ -2652,7 +2652,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             logger.Info("B2036CA7-931B-4985-8CB8-06C90B645723", $"rightExpr = {rightExpr.ToHumanizedString()}");
 #endif
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("AEB11CDA-C5DB-41DE-B579-6AA93AB48D05");
         }
 
         private void FillExecutingCardForMoreOperatorLogicalQueryNode(IMonitorLogger logger, LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
@@ -2694,7 +2694,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return;
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("AB44DCBC-557E-4763-9C7C-7D1E763B525B");
         }
 
         private void FillExecutingCardForMoreOrEqualOperatorLogicalQueryNode(IMonitorLogger logger, LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
@@ -2778,7 +2778,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return;
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("4AEAC283-3403-481F-A942-12DF3A737111");
         }
 
         private void FillExecutingCardForLessOrEqualOperatorLogicalQueryNode(IMonitorLogger logger, LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
@@ -2820,7 +2820,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return;
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("9F4A2B32-AD95-4F98-9FE8-939824193B50");
         }
 
         private void BuildResultsOfQueryToRelationListForBinaryOperatorLogicalQueryNode(IMonitorLogger logger, IEnumerator<StrongIdentifierValue> varNamesListEnumerator, Dictionary<StrongIdentifierValue, List<(StrongIdentifierValue, LogicalQueryNode)>> varValuesDict, List<(StrongIdentifierValue, LogicalQueryNode)> resultVarValuesList, IList<ResultOfQueryToRelation> resultsOfQueryToRelationList, OptionsOfFillExecutingCard options)
@@ -3021,7 +3021,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                     if (useAccessPolicy)
                     {
-                        throw new NotImplementedException();
+                        throw new NotImplementedException("EBC9DE50-E25F-4F85-B772-F0CCB4C70722");
 
 
                     }
@@ -3034,7 +3034,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         {
                             if(paramOfTargetRelation.IsExpression)
                             {
-                                throw new NotImplementedException();
+                                throw new NotImplementedException("EC6C6A41-CA5C-47A0-9077-B7F981911869");
                             }
                             else
                             {
@@ -3107,7 +3107,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                                         if (queryExecutingCardForExprInParameter.IsNegative)
                                         {
-                                            throw new NotImplementedException();
+                                            throw new NotImplementedException("93E85ADD-5A26-43CE-A476-49192890E462");
                                         }
 
                                         queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForExprInParameter.UsedKeysList);
@@ -3167,7 +3167,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                                     if (paramOfTargetRelation.IsExpression)
                                     {
-                                        throw new NotImplementedException();
+                                        throw new NotImplementedException("12FFD862-060B-4B3A-8100-0D76FBDC0780");
                                     }
                                     else
                                     {
@@ -3318,7 +3318,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (leftQueryExecutingCard.IsNegative)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("64E8C1F6-82E9-4872-9107-BE3C73404C0A");
             }
 
             if (leftQueryExecutingCard.PostFiltersList.Any())
@@ -3366,7 +3366,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (varNames.Any())
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("40049ED8-6778-467D-ACC2-482913E7E10E");
             }
 
             if (additionalParamOfTargetRelationExpressions.Any() || additionalKnownInfoExpressions.Any())
@@ -3939,7 +3939,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 logger.Info("6D12CBA5-366C-469A-ACBC-1C7B74E0DA9B", $"expressionNode2 = {expressionNode2}");
 #endif
 
-                throw new NotImplementedException();
+                throw new NotImplementedException("4CFD4B4C-21BD-490C-B61C-C00A6B4838BC");
             }
 
 #if DEBUG
@@ -3947,7 +3947,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             logger.Info("AA528513-841D-40DC-933C-157E99771721", $"expressionNode2 = {expressionNode2}");
 #endif
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("F4B7E18F-1ED9-4952-AE7B-40757F00D671");
         }
     }
 }

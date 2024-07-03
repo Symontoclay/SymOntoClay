@@ -362,7 +362,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.TypesConverters
                 return CreateNumberValue(System.Convert.ToDouble(sourceValue));
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("264CFADA-80F3-46E2-B813-2B107CBF8508");
         }
 
         private NumberValue CreateNumberValue(double? systemValue)

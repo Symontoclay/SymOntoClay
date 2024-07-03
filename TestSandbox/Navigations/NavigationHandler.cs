@@ -343,7 +343,7 @@ namespace TestSandbox.Navigations
                         {
                             reverceTargetCacheDict[wayPoint].Add(chain);
 
-                            throw new NotImplementedException();
+                            throw new NotImplementedException("2CA849A3-A85C-4AE8-923E-C93692F5FC32");
                         }
                         else
                         {

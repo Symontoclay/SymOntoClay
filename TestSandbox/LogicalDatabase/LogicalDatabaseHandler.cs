@@ -115,7 +115,7 @@ namespace TestSandbox.LogicalDatabase
 
             if (a != b)
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("D5673AE8-BD52-4E39-AB7A-09386082BDAA");
             }
 
             queryStr = "{: { love($x, $y) } -> { help($x, $y) } :}";

@@ -2036,7 +2036,7 @@ action Go
                 return result;
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("0CB91054-9A8E-4CAC-BD64-D40882DE63C0");
         }
 
         private static void TstExprNodeHandler()

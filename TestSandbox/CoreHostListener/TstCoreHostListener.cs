@@ -40,7 +40,7 @@ namespace TestSandbox.CoreHostListener
             logger.Info("E20C6092-042B-4B6F-879D-BF25DAD262EA", $"callMethodId = {callMethodId}");
             logger.Info("49EE31D9-812D-4B9E-A81F-CF8185C1ECB0", $"command = {command}");
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("B69A3662-C1F5-40B7-8999-5DC51FB6C4F3");
         }
     }
 }

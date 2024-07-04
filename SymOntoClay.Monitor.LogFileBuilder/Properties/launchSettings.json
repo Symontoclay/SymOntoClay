@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "SymOntoClay.Monitor.LogFileBuilder": {
+      "commandName": "Project",
+      "commandLineArgs": "--i c:\\Users\\Acer\\AppData\\Roaming\\SymOntoClayAsset\\NpcLogMessages\\2024_07_04_20_42_25\\ --o d:\\Repos\\SymOntoClay\\TestSandbox\\bin\\Debug\\net8.0\\MessagesLogsOutputDir\\ --target-nodeid #DummyNPC --html --abs-url"
+    },
+    "--target-nodeid --html --abs-url": {
+      "commandName": "Project",
+      "commandLineArgs": "--i c:\\Users\\Acer\\AppData\\Roaming\\SymOntoClayAsset\\NpcLogMessages\\2024_07_04_20_42_25\\ --o d:\\Repos\\SymOntoClay\\TestSandbox\\bin\\Debug\\net8.0\\MessagesLogsOutputDir\\ --target-nodeid #DummyNPC --html --abs-url"
+    }
+  }
+}

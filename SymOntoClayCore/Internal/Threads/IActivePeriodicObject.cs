@@ -27,13 +27,9 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Threads
 {
-    public interface IActivePeriodicObject: IDisposable
+    public interface IActivePeriodicObject: IActiveObject
     {
         PeriodicDelegate PeriodicMethod { get; set; }
-        bool IsActive { get; }
-        bool IsWaited { get; }
-        Value TaskValue { get; }
-        Value Start();
         void Stop();
     }
 }

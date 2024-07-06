@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Threads
 {
-    public class AsyncActiveOnceObject: IDisposable
+    public class AsyncActiveOnceObject: IActiveOnceObject, IDisposable
     {
         public AsyncActiveOnceObject(IActiveObjectContext context, ICustomThreadPool threadPool, IMonitorLogger logger)
         {
@@ -16,6 +16,8 @@ namespace SymOntoClay.Core.Internal.Threads
             _threadPool = threadPool;
             _cancellationToken = context.Token;
             _logger = logger;
+
+            context.AddChildActiveObject(this);
         }
 
         private readonly IActiveObjectContext _context;
@@ -25,18 +27,22 @@ namespace SymOntoClay.Core.Internal.Threads
 
         private readonly object _lockObj = new object();
 
+        /// <inheritdoc/>
         public OnceDelegate OnceMethod { get; set; }
 
         private volatile bool _isWaited;
 
+        /// <inheritdoc/>
         public bool IsWaited => _isWaited;
 
         private volatile bool _isExited = true;
 
+        /// <inheritdoc/>
         public bool IsActive => !_isExited && !_isWaited;
 
         private Value _taskValue = new NullValue();
 
+        /// <inheritdoc/>
         public Value TaskValue
         {
             get
@@ -48,6 +54,7 @@ namespace SymOntoClay.Core.Internal.Threads
             }
         }
 
+        /// <inheritdoc/>
         public Value Start()
         {
             lock (_lockObj)
@@ -124,7 +131,7 @@ namespace SymOntoClay.Core.Internal.Threads
 
                 _isExited = true;
 
-                //_context.RemoveChildActiveObject(this);
+                _context.RemoveChildActiveObject(this);
 
                 _taskValue = new NullValue();
             }

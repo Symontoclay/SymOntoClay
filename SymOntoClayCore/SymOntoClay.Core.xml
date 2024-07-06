@@ -9431,6 +9431,12 @@
         <member name="M:SymOntoClay.Core.Internal.Threads.ActiveObjectContext.SymOntoClay#Core#Internal#Threads#IActiveObjectContext#RemoveChildActiveObject(SymOntoClay.Core.Internal.Threads.IActivePeriodicObject)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Threads.ActiveObjectContext.SymOntoClay#Core#Internal#Threads#IActiveObjectContext#AddChildActiveObject(SymOntoClay.Core.Internal.Threads.IActiveOnceObject)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Threads.ActiveObjectContext.SymOntoClay#Core#Internal#Threads#IActiveObjectContext#RemoveChildActiveObject(SymOntoClay.Core.Internal.Threads.IActiveOnceObject)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Threads.ActiveObjectContext.WaitWhenAllIsNotWaited">
             <inheritdoc/>
         </member>
@@ -9444,6 +9450,21 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Threads.ActiveObjectContext.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Threads.AsyncActiveOnceObject.OnceMethod">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Threads.AsyncActiveOnceObject.IsWaited">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Threads.AsyncActiveOnceObject.IsActive">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Threads.AsyncActiveOnceObject.TaskValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Threads.AsyncActiveOnceObject.Start">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Threads.AsyncActiveOnceObject.Dispose">

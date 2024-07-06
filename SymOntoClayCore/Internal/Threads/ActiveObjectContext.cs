@@ -47,19 +47,20 @@ namespace SymOntoClay.Core.Internal.Threads
 
         private object _lockObj = new object();
 
-        private List<IActivePeriodicObject> _children = new List<IActivePeriodicObject>();
+        private List<IActivePeriodicObject> _periodicChildren = new List<IActivePeriodicObject>();
+        private List<IActiveOnceObject> _onceChildren = new List<IActiveOnceObject>();
 
         /// <inheritdoc/>
         void IActiveObjectContext.AddChildActiveObject(IActivePeriodicObject activeObject)
         {
             lock (_lockObj)
             {
-                if (_children.Contains(activeObject))
+                if (_periodicChildren.Contains(activeObject))
                 {
                     return;
                 }
 
-                _children.Add(activeObject);
+                _periodicChildren.Add(activeObject);
             }
         }
 
@@ -68,9 +69,33 @@ namespace SymOntoClay.Core.Internal.Threads
         {
             lock (_lockObj)
             {
-                if (_children.Contains(activeObject))
+                if (_periodicChildren.Contains(activeObject))
                 {
-                    _children.Remove(activeObject);
+                    _periodicChildren.Remove(activeObject);
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        void IActiveObjectContext.AddChildActiveObject(IActiveOnceObject activeObject)
+        {
+            lock (_lockObj)
+            {
+                if (_onceChildren.Contains(activeObject))
+                {
+                    _onceChildren.Remove(activeObject);
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        void IActiveObjectContext.RemoveChildActiveObject(IActiveOnceObject activeObject)
+        {
+            lock (_lockObj)
+            {
+                if (_onceChildren.Contains(activeObject))
+                {
+                    _onceChildren.Remove(activeObject);
                 }
             }
         }
@@ -80,7 +105,7 @@ namespace SymOntoClay.Core.Internal.Threads
         {
             lock (_lockObj)
             {
-                while (!_children.All(p => p.IsWaited))
+                while ((!_periodicChildren.All(p => p.IsWaited)) && (!_onceChildren.All(p => p.IsWaited)))
                 {
                 }
             }
@@ -91,7 +116,12 @@ namespace SymOntoClay.Core.Internal.Threads
         {
             lock (_lockObj)
             {
-                foreach (var child in _children)
+                foreach (var child in _periodicChildren)
+                {
+                    child.Start();
+                }
+
+                foreach (var child in _onceChildren)
                 {
                     child.Start();
                 }
@@ -103,7 +133,7 @@ namespace SymOntoClay.Core.Internal.Threads
         {
             lock (_lockObj)
             {
-                foreach (var child in _children)
+                foreach (var child in _periodicChildren)
                 {
                     child.Stop();
                 }
@@ -128,9 +158,15 @@ namespace SymOntoClay.Core.Internal.Threads
                 _isDisposed = true;
             }
 
-            var tmpChildren = _children.ToList();
+            var tmpPeriodicChildren = _periodicChildren.ToList();
+            var tmpOnceChildren = _onceChildren.ToList();
 
-            foreach (var child in tmpChildren)
+            foreach (var child in tmpPeriodicChildren)
+            {
+                child.Dispose();
+            }
+
+            foreach (var child in tmpOnceChildren)
             {
                 child.Dispose();
             }

@@ -50,7 +50,7 @@ namespace SymOntoClay.Core.Internal
         /// </summary>
         string AppFile { get; }
 
-        IActivePeriodicObjectContext ActivePeriodicObjectContext { get; }
+        IActiveObjectContext ActivePeriodicObjectContext { get; }
 
         IStorageComponent Storage { get; }
         IParser Parser { get; }

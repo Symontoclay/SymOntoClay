@@ -10,7 +10,7 @@ namespace SymOntoClay.Core.Internal.Threads
 {
     public class AsyncActiveOnceObject: IDisposable
     {
-        public AsyncActiveOnceObject(IActivePeriodicObjectContext context, ICustomThreadPool threadPool, IMonitorLogger logger)
+        public AsyncActiveOnceObject(IActiveObjectContext context, ICustomThreadPool threadPool, IMonitorLogger logger)
         {
             _context = context;
             _threadPool = threadPool;
@@ -18,7 +18,7 @@ namespace SymOntoClay.Core.Internal.Threads
             _logger = logger;
         }
 
-        private readonly IActivePeriodicObjectContext _context;
+        private readonly IActiveObjectContext _context;
         private readonly ICustomThreadPool _threadPool;
         private readonly CancellationToken _cancellationToken;
         private readonly IMonitorLogger _logger;

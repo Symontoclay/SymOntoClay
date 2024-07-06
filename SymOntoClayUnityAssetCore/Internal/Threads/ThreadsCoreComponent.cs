@@ -29,7 +29,7 @@ using System.Threading;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.Threads
 {
-    public class ThreadsCoreComponent: BaseWorldCoreComponent, IActivePeriodicObjectCommonContext
+    public class ThreadsCoreComponent: BaseWorldCoreComponent, IActiveObjectCommonContext
     {
         public ThreadsCoreComponent(IWorldCoreContext coreContext)
             : base(coreContext)
@@ -39,13 +39,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Threads
         private readonly object _lockObj = new object();
         private bool _isLocked;
 
-        private readonly ActivePeriodicObjectCommonContext _commonActiveContext = new ActivePeriodicObjectCommonContext();
+        private readonly ActiveObjectCommonContext _commonActiveContext = new ActiveObjectCommonContext();
 
         /// <inheritdoc/>
-        bool IActivePeriodicObjectCommonContext.IsNeedWating => _commonActiveContext.IsNeedWating;
+        bool IActiveObjectCommonContext.IsNeedWating => _commonActiveContext.IsNeedWating;
 
         /// <inheritdoc/>
-        EventWaitHandle IActivePeriodicObjectCommonContext.WaitEvent => _commonActiveContext.WaitEvent;
+        EventWaitHandle IActiveObjectCommonContext.WaitEvent => _commonActiveContext.WaitEvent;
 
         public void Lock()
         {

@@ -28,7 +28,7 @@ using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Threads
 {
-    public class ActivePeriodicObjectCommonContext : IActivePeriodicObjectCommonContext
+    public class ActiveObjectCommonContext : IActiveObjectCommonContext
     {
         private readonly ManualResetEvent _autoResetEvent = new ManualResetEvent(true);
         private volatile bool _isNeedWating;

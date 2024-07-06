@@ -47,8 +47,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
             _worldContext = worldContext;
             _visionProvider = visionProvider;
 
-            _activePeriodicObjectContext = new ActivePeriodicObjectContext(worldContext.SyncContext, internalContext.CancellationToken);
-            _activeObject = new AsyncActivePeriodicObject(_activePeriodicObjectContext, internalContext.AsyncEventsThreadPool, logger);
+            _activeObjectContext = new ActiveObjectContext(worldContext.SyncContext, internalContext.CancellationToken);
+            _activeObject = new AsyncActivePeriodicObject(_activeObjectContext, internalContext.AsyncEventsThreadPool, logger);
             _activeObject.PeriodicMethod = CommandLoop;
         }
 
@@ -56,7 +56,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
         private readonly IWorldCoreGameComponentContext _worldContext;
         private readonly int _selfInstanceId;
         private readonly IVisionProvider _visionProvider;
-        private readonly IActivePeriodicObjectContext _activePeriodicObjectContext;
+        private readonly IActiveObjectContext _activeObjectContext;
         private readonly AsyncActivePeriodicObject _activeObject;
         private readonly object _lockObj = new object();
         private string _idForFacts;

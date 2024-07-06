@@ -155,7 +155,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         public ImagesRegistry ImagesRegistry { get; private set; }
         public ThreadsCoreComponent ThreadsComponent { get; private set; }
 
-        IActivePeriodicObjectCommonContext IWorldCoreGameComponentContext.SyncContext => ThreadsComponent;
+        IActiveObjectCommonContext IWorldCoreGameComponentContext.SyncContext => ThreadsComponent;
 
         public ModulesStorageComponent ModulesStorage { get; private set; }
 

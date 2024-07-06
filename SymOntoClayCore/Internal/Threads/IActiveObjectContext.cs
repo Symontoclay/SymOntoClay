@@ -27,9 +27,16 @@ using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Threads
 {
-    public interface IActivePeriodicObjectCommonContext
+    public interface IActiveObjectContext : IActiveObjectCommonContext
     {
-        bool IsNeedWating { get; }
-        EventWaitHandle WaitEvent { get; }
+        void AddChildActiveObject(IActivePeriodicObject activeObject);
+        void RemoveChildActiveObject(IActivePeriodicObject activeObject);
+
+        void WaitWhenAllIsNotWaited();
+
+        void StartAll();
+        void StopAll();
+
+        CancellationToken Token { get; }
     }
 }

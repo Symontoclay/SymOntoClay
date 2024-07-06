@@ -14,7 +14,7 @@ namespace TestSandbox.Threads
 {
     public class TextOnceFunctor
     {
-        public TextOnceFunctor(string text, IMonitorLogger logger, IActivePeriodicObjectContext context, ICustomThreadPool threadPool)
+        public TextOnceFunctor(string text, IMonitorLogger logger, IActiveObjectContext context, ICustomThreadPool threadPool)
         {
             _text = text;
             _logger = logger;

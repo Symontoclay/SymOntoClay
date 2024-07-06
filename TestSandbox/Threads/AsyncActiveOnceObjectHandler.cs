@@ -28,9 +28,9 @@ namespace TestSandbox.Threads
 
             using var threadPool = new CustomThreadPool(0, 20, cancellationTokenSource.Token);
 
-            var commonActiveContext = new ActivePeriodicObjectCommonContext();
+            var commonActiveContext = new ActiveObjectCommonContext();
 
-            var activeContext = new ActivePeriodicObjectContext(commonActiveContext, cancellationTokenSource.Token);
+            var activeContext = new ActiveObjectContext(commonActiveContext, cancellationTokenSource.Token);
 
             var textOnceFunctor = new TextOnceFunctor("Some query", _logger, activeContext, threadPool);
 
@@ -59,9 +59,9 @@ namespace TestSandbox.Threads
 
             using var threadPool = new CustomThreadPool(0, 20, cancellationTokenSource.Token);
 
-            var commonActiveContext = new ActivePeriodicObjectCommonContext();
+            var commonActiveContext = new ActiveObjectCommonContext();
 
-            var activeContext = new ActivePeriodicObjectContext(commonActiveContext, cancellationTokenSource.Token);
+            var activeContext = new ActiveObjectContext(commonActiveContext, cancellationTokenSource.Token);
 
             var asyncActiveOnceObject = new AsyncActiveOnceObject(activeContext, threadPool, _logger)
             {

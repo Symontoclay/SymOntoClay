@@ -28,15 +28,15 @@ using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Threads
 {
-    public class ActivePeriodicObjectContext : IActivePeriodicObjectContext, IDisposable
+    public class ActiveObjectContext : IActiveObjectContext, IDisposable
     {
-        public ActivePeriodicObjectContext(IActivePeriodicObjectCommonContext commonContext, CancellationToken cancellationToken)
+        public ActiveObjectContext(IActiveObjectCommonContext commonContext, CancellationToken cancellationToken)
         {
             _commonContext = commonContext;
             _cancellationToken = cancellationToken;
         }
 
-        private readonly IActivePeriodicObjectCommonContext _commonContext;
+        private readonly IActiveObjectCommonContext _commonContext;
         private readonly CancellationToken _cancellationToken;
 
         /// <inheritdoc/>
@@ -50,7 +50,7 @@ namespace SymOntoClay.Core.Internal.Threads
         private List<IActivePeriodicObject> _children = new List<IActivePeriodicObject>();
 
         /// <inheritdoc/>
-        void IActivePeriodicObjectContext.AddChildActiveObject(IActivePeriodicObject activeObject)
+        void IActiveObjectContext.AddChildActiveObject(IActivePeriodicObject activeObject)
         {
             lock (_lockObj)
             {
@@ -64,7 +64,7 @@ namespace SymOntoClay.Core.Internal.Threads
         }
 
         /// <inheritdoc/>
-        void IActivePeriodicObjectContext.RemoveChildActiveObject(IActivePeriodicObject activeObject)
+        void IActiveObjectContext.RemoveChildActiveObject(IActivePeriodicObject activeObject)
         {
             lock (_lockObj)
             {

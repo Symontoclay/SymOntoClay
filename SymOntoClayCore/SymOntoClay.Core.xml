@@ -8124,6 +8124,9 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Parser.ParseRuleInstance(System.String,System.Boolean)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Serialization.Functors.StringFunctorWithoutResult.OnRun(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Services.CodeFrameService.ConvertCompiledFunctionBodyToCodeFrame(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.IndexedData.ScriptingData.CompiledFunctionBody,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>

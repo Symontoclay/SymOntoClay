@@ -23,9 +23,13 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Helpers;
+using SymOntoClay.Core.Internal.Serialization.Functors;
+using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SymOntoClay.Core
 {
@@ -35,9 +39,13 @@ namespace SymOntoClay.Core
             : base(settings.MonitorNode)
         {
             _context = EngineContextHelper.CreateAndInitContext(settings);
+            _activeObjectContext = _context.ActiveObjectContext;
+            _threadPool = _context.AsyncEventsThreadPool;
         }
 
         private readonly EngineContext _context;
+        private readonly IActiveObjectContext _activeObjectContext;
+        private readonly ICustomThreadPool _threadPool;
 
         /// <summary>
         /// Gets engine context. Onkly for debugging and testing!
@@ -195,7 +203,10 @@ namespace SymOntoClay.Core
 
         public void RemovePerceptedFact(IMonitorLogger logger, string id)
         {
-            _context.Storage.RemovePerceptedFact(logger, id);
+            StringFunctorWithoutResult.Run(logger, id, (loggerValue, idValue) =>
+            {
+                _context.Storage.RemovePerceptedFact(loggerValue, idValue);
+            }, _activeObjectContext, _threadPool);
         }
 
         public void InsertListenedFact(IMonitorLogger logger, string text)

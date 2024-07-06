@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.Threads;
+﻿using SymOntoClay.Core.Internal.Serialization.Functors;
+using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
 using SymOntoClay.Threading;
@@ -16,13 +17,13 @@ namespace TestSandbox.Threads
         {
             _logger.Info("C8AFAFBA-F6BA-4D20-A913-D5B3E6E87BFF", "Begin");
 
-            //TextFunctorCase();
-            GeneralCase();
+            StringFunctorWithoutResultCase();
+            //GeneralCase();
 
             _logger.Info("86A4093A-C550-46B0-954C-337793C1AE51", "End");
         }
 
-        private void TextFunctorCase()
+        private void StringFunctorWithoutResultCase()
         {
             using var cancellationTokenSource = new CancellationTokenSource();
 
@@ -32,7 +33,9 @@ namespace TestSandbox.Threads
 
             var activeContext = new ActiveObjectContext(commonActiveContext, cancellationTokenSource.Token);
 
-            var textOnceFunctor = new TextOnceFunctor("Some query", _logger, activeContext, threadPool);
+            var textOnceFunctor = new StringFunctorWithoutResult(_logger, "Some query", (logger, text) => {
+                logger.Info("02A2BB60-A4D1-4F1D-9A94-31644F054D79", text);
+            }, activeContext, threadPool);
 
             commonActiveContext.Lock();
 
@@ -40,9 +43,7 @@ namespace TestSandbox.Threads
 
             Thread.Sleep(1000);
 
-            var taskValue = textOnceFunctor.Start();
-
-            _logger.Info("826CACAA-3735-4770-886B-DB28BE2D9BC3", $"taskValue = {taskValue}");
+            textOnceFunctor.Run();
 
             Thread.Sleep(1000);
 

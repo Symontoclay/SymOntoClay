@@ -166,6 +166,8 @@ namespace SymOntoClay.Core
 
         public void RemovePublicFact(IMonitorLogger logger, string id)
         {
+            StringFunctorWithoutResult.Run
+
             _context.Storage.RemovePublicFact(logger, id);
         }
 
@@ -181,6 +183,8 @@ namespace SymOntoClay.Core
 
         public void RemoveFact(IMonitorLogger logger, string id)
         {
+            StringFunctorWithoutResult.Run
+
             _context.Storage.RemoveFact(logger, id);
         }
 
@@ -211,6 +215,8 @@ namespace SymOntoClay.Core
 
         public void InsertListenedFact(IMonitorLogger logger, string text)
         {
+            StringFunctorWithoutResult.Run
+
             _context.Storage.InsertListenedFact(logger, text);
         }
 
@@ -221,6 +227,8 @@ namespace SymOntoClay.Core
         
         public void AddCategory(IMonitorLogger logger, string category)
         {
+            StringFunctorWithoutResult.Run
+
             _context.Storage.AddCategory(logger, category);
         }
 
@@ -231,6 +239,8 @@ namespace SymOntoClay.Core
 
         public void RemoveCategory(IMonitorLogger logger, string category)
         {
+            StringFunctorWithoutResult.Run
+
             _context.Storage.RemoveCategory(logger, category);
         }
 

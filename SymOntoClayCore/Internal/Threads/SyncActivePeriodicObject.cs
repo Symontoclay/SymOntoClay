@@ -20,21 +20,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using NLog;
 using SymOntoClay.Core.Internal.CodeModel;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Threads
 {
     public class SyncActivePeriodicObject : IActivePeriodicObject
     {
-#if DEBUG
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
-#endif
+        public SyncActivePeriodicObject(CancellationToken cancellationToken)
+        {
+            _cancellationToken = cancellationToken;
+        }
+
+        private readonly CancellationToken _cancellationToken;
 
         /// <inheritdoc/>
         public PeriodicDelegate PeriodicMethod { get; set; }
@@ -62,6 +60,11 @@ namespace SymOntoClay.Core.Internal.Threads
 
             while (true)
             {
+                if (_cancellationToken.IsCancellationRequested)
+                {
+                    return _taskValue;
+                }
+
                 if (!PeriodicMethod(cancellationToken))
                 {
                     _isActive = false;

@@ -32,7 +32,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     public class SyncThreadExecutor: BaseThreadExecutor
     {
         public SyncThreadExecutor(IEngineContext context)
-            : base(context, new SyncActivePeriodicObject(), BaseThreadExecutor.CreateInitParams(context))
+            : base(context, new SyncActivePeriodicObject(context.GetCancellationToken()), BaseThreadExecutor.CreateInitParams(context))
         {
         }
 
@@ -47,7 +47,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         public SyncThreadExecutor(IEngineContext context, IMonitorLogger logger, string threadId)
-            : base(context, new SyncActivePeriodicObject(), logger, threadId)
+            : base(context, new SyncActivePeriodicObject(context.GetCancellationToken()), logger, threadId)
         {
         }
     }

@@ -20,15 +20,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using NLog;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Threading;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Threads
 {
@@ -46,10 +41,6 @@ namespace SymOntoClay.Core.Internal.Threads
         private readonly IActivePeriodicObjectContext _context;
         private readonly ICustomThreadPool _threadPool;
         private readonly CancellationToken _cancellationToken;
-
-#if DEBUG
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
-#endif
 
         private readonly object _lockObj = new object();
 
@@ -146,10 +137,6 @@ namespace SymOntoClay.Core.Internal.Threads
         /// <inheritdoc/>
         public void Stop()
         {
-#if DEBUG
-            _logger.Info("Stop()");
-#endif
-
             lock (_lockObj)
             {
                 if (_isDisposed)

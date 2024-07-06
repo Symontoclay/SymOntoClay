@@ -41,7 +41,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.DateAndTime
         {
             var activeContext = new ActivePeriodicObjectContext(syncContext, cancellationToken);
 
-            _activeObject = new AsyncActivePeriodicObject(activeContext, threadPool)
+            _activeObject = new AsyncActivePeriodicObject(activeContext, threadPool, logger)
             {
                 PeriodicMethod = NRun
             };

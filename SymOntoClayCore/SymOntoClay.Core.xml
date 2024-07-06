@@ -9446,6 +9446,9 @@
         <member name="M:SymOntoClay.Core.Internal.Threads.ActivePeriodicObjectContext.Dispose">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Threads.AsyncActiveOnceObject.Dispose">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Threads.AsyncActivePeriodicObject.PeriodicMethod">
             <inheritdoc/>
         </member>

@@ -50,12 +50,12 @@ namespace TestSandbox.Threads
 
             var activeContext = new ActivePeriodicObjectContext(commonActiveContext, cancellationTokenSource.Token);
 
-            var activeObject = new AsyncActivePeriodicObject(activeContext, threadPool)
+            var activeObject = new AsyncActivePeriodicObject(activeContext, threadPool, _logger)
             {
                 PeriodicMethod = NRun
             };
 
-            var activeObject2 = new AsyncActivePeriodicObject(activeContext, threadPool)
+            var activeObject2 = new AsyncActivePeriodicObject(activeContext, threadPool, _logger)
             {
                 PeriodicMethod = NRun_2
             };

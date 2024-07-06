@@ -32,12 +32,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     public class AsyncThreadExecutor: BaseThreadExecutor
     {
         public AsyncThreadExecutor(IEngineContext context, ICustomThreadPool threadPool)
-            : base(context, new AsyncActivePeriodicObject(context.ActivePeriodicObjectContext, threadPool), BaseThreadExecutor.CreateInitParams(context))
+            : base(context, new AsyncActivePeriodicObject(context.ActivePeriodicObjectContext, threadPool, context.Logger), BaseThreadExecutor.CreateInitParams(context))
         {
         }
 
         public AsyncThreadExecutor(IEngineContext context, ICustomThreadPool threadPool, string parentThreadId)
-            : base(context, new AsyncActivePeriodicObject(context.ActivePeriodicObjectContext, threadPool), BaseThreadExecutor.CreateInitParams(context, parentThreadId))
+            : base(context, new AsyncActivePeriodicObject(context.ActivePeriodicObjectContext, threadPool, context.Logger), BaseThreadExecutor.CreateInitParams(context, parentThreadId))
         {
         }
         
@@ -47,7 +47,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         public AsyncThreadExecutor(IEngineContext context, ICustomThreadPool threadPool, IMonitorLogger logger, string threadId)
-            : base(context, new AsyncActivePeriodicObject(context.ActivePeriodicObjectContext, threadPool), logger, threadId)
+            : base(context, new AsyncActivePeriodicObject(context.ActivePeriodicObjectContext, threadPool, logger), logger, threadId)
         {
         }
     }

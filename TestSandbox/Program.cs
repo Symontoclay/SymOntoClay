@@ -158,7 +158,8 @@ namespace TestSandbox
             //TstCompileInlineTrigger();
             //TstRegOperatorsHandler();
             //TstCreateEngineContext();
-            TstAsyncActivePeriodicObjectHandler();
+            //TstAsyncActiveOnceObjectHandler();
+            //TstAsyncActivePeriodicObjectHandler();
             //TstSyncActivePeriodicObjectHandler();
             //TstCodeExecution();
             //TstCreateName();
@@ -169,7 +170,7 @@ namespace TestSandbox
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            //TstGeneralStartHandler();//<=
+            TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -1939,6 +1940,16 @@ action Go
             var context = TstEngineContextHelper.CreateAndInitContext();
 
             _logger.Info("446B3B68-75E1-4DDD-84EF-B51ABFEFBAAC", "End");
+        }
+
+        private static void TstAsyncActiveOnceObjectHandler()
+        {
+            _logger.Info("456AA753-C5C4-4509-9467-0B0CB87569CE", "Begin");
+
+            var handler = new AsyncActiveOnceObjectHandler();
+            handler.Run();
+
+            _logger.Info("B24E538A-EC3D-4E0E-AECF-96163A492005", "End");
         }
 
         private static void TstAsyncActivePeriodicObjectHandler()

@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using System;
 using System.Threading;
@@ -29,11 +30,12 @@ namespace SymOntoClay.Core.Internal.Threads
 {
     public class AsyncActivePeriodicObject : IActivePeriodicObject, IDisposable
     {
-        public AsyncActivePeriodicObject(IActivePeriodicObjectContext context, ICustomThreadPool threadPool)
+        public AsyncActivePeriodicObject(IActivePeriodicObjectContext context, ICustomThreadPool threadPool, IMonitorLogger logger)
         {
             _context = context;
             _threadPool = threadPool;
             _cancellationToken = context.Token;
+            _logger = logger;
 
             context.AddChildActiveObject(this);
         }
@@ -41,6 +43,7 @@ namespace SymOntoClay.Core.Internal.Threads
         private readonly IActivePeriodicObjectContext _context;
         private readonly ICustomThreadPool _threadPool;
         private readonly CancellationToken _cancellationToken;
+        private readonly IMonitorLogger _logger;
 
         private readonly object _lockObj = new object();
 
@@ -90,43 +93,51 @@ namespace SymOntoClay.Core.Internal.Threads
                 _isWaited = false;
 
                 var cancellationTokenSource = new CancellationTokenSource();
-                var cancellationToken = cancellationTokenSource.Token;
+                var linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationTokenSource.Token, _cancellationToken);
 
                 var task = new ThreadTask(() => {
-                    var autoResetEvent = _context.WaitEvent;
-
-                    while (true)
+                    try
                     {
-                        if (_cancellationToken.IsCancellationRequested)
-                        {
-                            return;
-                        }
+                        var autoResetEvent = _context.WaitEvent;
 
-                        if (_context.IsNeedWating)
+                        while (true)
                         {
-                            _isWaited = true;
-                            autoResetEvent.WaitOne();
-                            _isWaited = false;
-                        }
+                            if (_cancellationToken.IsCancellationRequested)
+                            {
+                                return;
+                            }
 
-                        if (_isExited)
-                        {
-                            return;
-                        }
+                            if (_context.IsNeedWating)
+                            {
+                                _isWaited = true;
+                                autoResetEvent.WaitOne();
+                                _isWaited = false;
+                            }
 
-                        if(_cancellationToken.IsCancellationRequested)
-                        {
-                            return;
-                        }
+                            if (_isExited)
+                            {
+                                return;
+                            }
 
-                        if (!PeriodicMethod(cancellationToken))
-                        {
-                            return;
+                            if (_cancellationToken.IsCancellationRequested)
+                            {
+                                return;
+                            }
+
+                            if (!PeriodicMethod(linkedCancellationTokenSource.Token))
+                            {
+                                return;
+                            }
                         }
                     }
-                }, _threadPool, cancellationToken);
+                    catch (Exception e)
+                    {
+                        _logger.Error("7CA31B61-20CF-40E5-B275-E68213D00242", e);
+                    }
 
-                _taskValue = new TaskValue(task, cancellationTokenSource);
+                }, _threadPool, linkedCancellationTokenSource.Token);
+
+                _taskValue = new TaskValue(task, linkedCancellationTokenSource);
 
                 task.Start();
 

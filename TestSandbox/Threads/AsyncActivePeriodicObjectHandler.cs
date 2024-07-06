@@ -42,11 +42,13 @@ namespace TestSandbox.Threads
         {
             _logger.Info("9E0B3523-0D26-4864-A12B-D953C36A6BA2", "Begin");
 
-            using var threadPool = new CustomThreadPool(0, 20);
+            using var cancellationTokenSource = new CancellationTokenSource();
+
+            using var threadPool = new CustomThreadPool(0, 20, cancellationTokenSource.Token);
 
             var commonActiveContext = new ActivePeriodicObjectCommonContext();
 
-            var activeContext = new ActivePeriodicObjectContext(commonActiveContext);
+            var activeContext = new ActivePeriodicObjectContext(commonActiveContext, cancellationTokenSource.Token);
 
             var activeObject = new AsyncActivePeriodicObject(activeContext, threadPool)
             {
@@ -90,20 +92,6 @@ namespace TestSandbox.Threads
             _logger.Info("CDAB2113-F5A2-4CD7-8321-579EAA6C57FC", $"activeObject.IsWaited (3) = {activeObject.IsWaited}");
             _logger.Info("9E05155F-3AC4-48A2-9C40-A4842C34A415", $"activeObject.IsActive (3) = {activeObject.IsActive}");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             Thread.Sleep(1000);
 
             _logger.Info("EA561877-4C5A-43A0-84DE-5E7AE2353275", "End");
@@ -118,7 +106,6 @@ namespace TestSandbox.Threads
 
             _logger.Info("B32B701D-6F24-43FA-872B-D45F07DE5EC8", $"_n = {_n}");
 
-
             return true;
         }
 
@@ -127,7 +114,6 @@ namespace TestSandbox.Threads
             _m++;
 
             _logger.Info("4D1A0A5A-3ADA-4001-96C2-472CF4ECE6C1", $"_m = {_m}");
-
 
             return true;
         }

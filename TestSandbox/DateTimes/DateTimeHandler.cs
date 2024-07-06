@@ -42,11 +42,13 @@ namespace TestSandbox.DateTimes
         {
             _logger.Info("318FB3BC-0385-4398-B412-9F7912CD4FAA", "Begin");
 
+            using var cancellationTokenSource = new CancellationTokenSource();
+
             using var threadPool = new CustomThreadPool(0, 20);
 
             var commonActiveContext = new ActivePeriodicObjectCommonContext();
 
-            var dateTimeProvider = new DateTimeProvider(_logger, commonActiveContext, threadPool);
+            var dateTimeProvider = new DateTimeProvider(_logger, commonActiveContext, threadPool, cancellationTokenSource.Token);
 
             dateTimeProvider.LoadFromSourceCode();
             dateTimeProvider.Start();

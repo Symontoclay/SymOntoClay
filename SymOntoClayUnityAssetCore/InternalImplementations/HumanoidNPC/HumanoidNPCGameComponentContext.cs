@@ -27,6 +27,7 @@ using SymOntoClay.UnityAsset.Core.Internal.Vision;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 {
@@ -34,6 +35,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
     {
         public string IdForFacts { get; set; }
         public int SelfInstanceId { get; set; }
+        public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
         public VisionComponent VisionComponent { get; set; }
         public HostSupportComponent HostSupportComponent { get; set; }
         public ICustomThreadPool AsyncEventsThreadPool { get; set; }

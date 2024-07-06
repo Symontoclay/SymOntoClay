@@ -76,8 +76,5 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Threads
                 _commonActiveContext.UnLock();
             }            
         }
-
-        ///// <inheritdoc/>
-
     }
 }

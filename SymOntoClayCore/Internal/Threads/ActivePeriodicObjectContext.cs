@@ -30,12 +30,14 @@ namespace SymOntoClay.Core.Internal.Threads
 {
     public class ActivePeriodicObjectContext : IActivePeriodicObjectContext, IDisposable
     {
-        public ActivePeriodicObjectContext(IActivePeriodicObjectCommonContext commonContext)
+        public ActivePeriodicObjectContext(IActivePeriodicObjectCommonContext commonContext, CancellationToken cancellationToken)
         {
             _commonContext = commonContext;
+            _cancellationToken = cancellationToken;
         }
 
         private readonly IActivePeriodicObjectCommonContext _commonContext;
+        private readonly CancellationToken _cancellationToken;
 
         /// <inheritdoc/>
         public bool IsNeedWating => _commonContext.IsNeedWating;
@@ -107,6 +109,9 @@ namespace SymOntoClay.Core.Internal.Threads
                 }
             }
         }
+
+        /// <inheritdoc/>
+        public CancellationToken Token => _cancellationToken;
 
         private bool _isDisposed;
 

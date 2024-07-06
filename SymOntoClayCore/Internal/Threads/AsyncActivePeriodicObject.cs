@@ -38,12 +38,14 @@ namespace SymOntoClay.Core.Internal.Threads
         {
             _context = context;
             _threadPool = threadPool;
+            _cancellationToken = context.Token;
 
             context.AddChildActiveObject(this);
         }
         
         private readonly IActivePeriodicObjectContext _context;
         private readonly ICustomThreadPool _threadPool;
+        private readonly CancellationToken _cancellationToken;
 
 #if DEBUG
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
@@ -104,6 +106,11 @@ namespace SymOntoClay.Core.Internal.Threads
 
                     while (true)
                     {
+                        if (_cancellationToken.IsCancellationRequested)
+                        {
+                            return;
+                        }
+
                         if (_context.IsNeedWating)
                         {
                             _isWaited = true;
@@ -112,6 +119,11 @@ namespace SymOntoClay.Core.Internal.Threads
                         }
 
                         if (_isExited)
+                        {
+                            return;
+                        }
+
+                        if(_cancellationToken.IsCancellationRequested)
                         {
                             return;
                         }

@@ -42,7 +42,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class TaskValue : Value
     {
-        public TaskValue(ThreadTask systemTask)
+        public TaskValue(IThreadTask systemTask)
         {
             SystemTask = systemTask;
             TaskId = Guid.NewGuid().ToString("D");
@@ -59,7 +59,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override TaskValue AsTaskValue => this;
 
         public string TaskId { get; set; }
-        public ThreadTask SystemTask 
+        public IThreadTask SystemTask 
         { 
             get
             {
@@ -87,7 +87,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
         }
 
-        private ThreadTask _systemTask;
+        private IThreadTask _systemTask;
 
         public event Action OnComplete
         {

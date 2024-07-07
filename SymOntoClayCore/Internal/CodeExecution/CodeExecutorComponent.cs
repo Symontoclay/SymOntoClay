@@ -65,25 +65,25 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly ILocalCodeExecutionContext _globalExecutionContext;
 
         /// <inheritdoc/>
-        public ThreadTask ExecuteAsync(IMonitorLogger logger, ProcessInitialInfo processInitialInfo)
+        public IThreadTask ExecuteAsync(IMonitorLogger logger, ProcessInitialInfo processInitialInfo)
         {
             return ExecuteBatchAsync(logger, new List<ProcessInitialInfo>() { processInitialInfo });
         }
 
         /// <inheritdoc/>
-        public ThreadTask ExecuteAsync(IMonitorLogger logger, ProcessInitialInfo processInitialInfo, string parentThreadLoggerId)
+        public IThreadTask ExecuteAsync(IMonitorLogger logger, ProcessInitialInfo processInitialInfo, string parentThreadLoggerId)
         {
             return ExecuteBatchAsync(logger, new List<ProcessInitialInfo>() { processInitialInfo }, parentThreadLoggerId);
         }
 
         /// <inheritdoc/>
-        public ThreadTask ExecuteBatchAsync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList)
+        public IThreadTask ExecuteBatchAsync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList)
         {
             return ExecuteBatchAsync(logger, processInitialInfoList, string.Empty);
         }
 
         /// <inheritdoc/>
-        public ThreadTask ExecuteBatchAsync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList, string parentThreadLoggerId)
+        public IThreadTask ExecuteBatchAsync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList, string parentThreadLoggerId)
         {
             var codeFramesList = ConvertProcessInitialInfosToCodeFrames(logger, processInitialInfoList);
 
@@ -94,7 +94,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         /// <inheritdoc/>
-        public ThreadTask ExecuteBatchSync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList)
+        public IThreadTask ExecuteBatchSync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList)
         {
             var codeFramesList = ConvertProcessInitialInfosToCodeFrames(logger, processInitialInfoList);
 

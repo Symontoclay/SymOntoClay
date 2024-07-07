@@ -153,7 +153,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private bool _isCanceled;
 
         private long? _endOfTargetDuration;
-        private List<ThreadTask> _waitedTasksList;
+        private List<IThreadTask> _waitedTasksList;
         private List<IProcessInfo> _waitedProcessInfoList;
 
         private readonly StrongIdentifierValue _defaultCtorName;
@@ -201,7 +201,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _currentCodeFrame.ProcessInfo.SetStatus(Logger, "756FCA0C-6645-4CCA-B865-6A7220476D27", ProcessStatus.Running);
         }
 
-        public ThreadTask Start()
+        public IThreadTask Start()
         {
             return _activeObject.Start();
         }

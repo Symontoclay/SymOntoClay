@@ -9482,6 +9482,24 @@
         <member name="M:SymOntoClay.Core.Internal.Threads.AsyncActiveOnceObject.Dispose">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Threads.AsyncActiveOnceObject`1.OnceMethod">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Threads.AsyncActiveOnceObject`1.IsWaited">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Threads.AsyncActiveOnceObject`1.IsActive">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Threads.AsyncActiveOnceObject`1.TaskValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Threads.AsyncActiveOnceObject`1.Start">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Threads.AsyncActiveOnceObject`1.Dispose">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Threads.AsyncActivePeriodicObject.PeriodicMethod">
             <inheritdoc/>
         </member>

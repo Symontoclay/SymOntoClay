@@ -60,10 +60,10 @@ namespace SymOntoClay.Core.Internal.Threads
         /// <inheritdoc/>
         public bool IsActive => !_isExited && !_isWaited;
 
-        private ThreadTask _task = null;
+        private IThreadTask _task = null;
 
         /// <inheritdoc/>
-        public ThreadTask TaskValue
+        public IThreadTask TaskValue
         {
             get
             {
@@ -75,7 +75,7 @@ namespace SymOntoClay.Core.Internal.Threads
         }
 
         /// <inheritdoc/>
-        public ThreadTask Start()
+        public IThreadTask Start()
         {
             lock(_lockObj)
             {

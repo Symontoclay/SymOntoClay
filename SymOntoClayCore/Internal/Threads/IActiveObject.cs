@@ -10,7 +10,7 @@ namespace SymOntoClay.Core.Internal.Threads
     {
         bool IsActive { get; }
         bool IsWaited { get; }
-        ThreadTask TaskValue { get; }
-        ThreadTask Start();
+        IThreadTask TaskValue { get; }
+        IThreadTask Start();
     }
 }

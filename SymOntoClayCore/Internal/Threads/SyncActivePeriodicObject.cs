@@ -46,13 +46,13 @@ namespace SymOntoClay.Core.Internal.Threads
         /// <inheritdoc/>
         public bool IsWaited => false;
 
-        private ThreadTask _taskValue = null;
+        private IThreadTask _taskValue = null;
 
         /// <inheritdoc/>
-        public ThreadTask TaskValue => _taskValue;
+        public IThreadTask TaskValue => _taskValue;
 
         /// <inheritdoc/>
-        public ThreadTask Start()
+        public IThreadTask Start()
         {
             _isActive = true;
 

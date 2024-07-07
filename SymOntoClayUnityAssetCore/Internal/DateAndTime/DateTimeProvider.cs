@@ -98,7 +98,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.DateAndTime
         }
 
         /// <inheritdoc/>
-        public ThreadTask Start()
+        public IThreadTask Start()
         {
             return _activeObject.Start();
         }

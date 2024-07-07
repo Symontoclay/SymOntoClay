@@ -209,7 +209,6 @@ namespace TestSandbox.Navigations
                 return newTargetWayPointsList;
             }
 
-
             visitedWayPointsList.Add(wayPoint);
 
             Dictionary<WayPoint, List<List<WayPoint>>> targetCacheDict = null;
@@ -224,7 +223,6 @@ namespace TestSandbox.Navigations
                 cache[wayPoint] = targetCacheDict;
             }
 
-
             foreach (var link in wayPoint.Links)
             {
                 WayPoint targetWayPoint = null;
@@ -238,13 +236,8 @@ namespace TestSandbox.Navigations
                     targetWayPoint = link.A;
                 }
 
-
                 if (visitedWayPointsList.Contains(targetWayPoint))
                 {
-
-
-
-
                     if (cache.ContainsKey(targetWayPoint))
                     {
                         var reverceTargetCacheDict = cache[targetWayPoint];
@@ -391,8 +384,6 @@ namespace TestSandbox.Navigations
             }
 
             _logger.Info($"n = {n}");
-
-
 
             return result;
         }

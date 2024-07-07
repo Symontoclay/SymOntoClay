@@ -8133,6 +8133,9 @@
         <member name="M:SymOntoClay.Core.Internal.Serialization.Functors.BaseFunctorWithoutResult`2.OnRun(System.Threading.CancellationToken)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Serialization.Functors.BaseFunctorWithResult`1.OnRun(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Serialization.Functors.BaseFunctorWithResult`3.OnRun(System.Threading.CancellationToken)">
             <inheritdoc/>
         </member>
@@ -9462,9 +9465,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Threads.ActiveObjectContext.Dispose">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.Threads.AsyncActiveOnceObject.OnceMethod">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Threads.AsyncActiveOnceObject.IsWaited">

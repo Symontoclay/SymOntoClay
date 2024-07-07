@@ -43,7 +43,7 @@ namespace SymOntoClay.Core.Internal.Serialization.Functors
 
         private readonly AsyncActiveOnceObject<TResult> _asyncActiveOnceObject;
 
-        protected abstract void OnRun(CancellationToken cancellationToken);
+        protected abstract TResult OnRun(CancellationToken cancellationToken);
 
         public void Run()
         {

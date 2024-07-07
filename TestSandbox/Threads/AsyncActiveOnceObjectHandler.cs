@@ -17,10 +17,27 @@ namespace TestSandbox.Threads
         {
             _logger.Info("C8AFAFBA-F6BA-4D20-A913-D5B3E6E87BFF", "Begin");
 
-            StringFunctorWithoutResultCase();
+            TstFunctorWithResultCase();
+            //StringFunctorWithoutResultCase();
             //GeneralCase();
 
             _logger.Info("86A4093A-C550-46B0-954C-337793C1AE51", "End");
+        }
+
+        private void TstFunctorWithResultCase()
+        {
+            using var cancellationTokenSource = new CancellationTokenSource();
+
+            using var threadPool = new CustomThreadPool(0, 20, cancellationTokenSource.Token);
+
+            var commonActiveContext = new ActiveObjectCommonContext();
+
+            var activeContext = new ActiveObjectContext(commonActiveContext, cancellationTokenSource.Token);
+
+            var functor = new TstFunctorWithResult(_logger, () => { return 16; }, activeContext, threadPool);
+            functor.Run();
+
+            Thread.Sleep(1000);
         }
 
         private void StringFunctorWithoutResultCase()

@@ -6,6 +6,5 @@ namespace SymOntoClay.Core.Internal.Threads
 {
     public interface IActiveOnceObject: IActiveObject
     {
-        OnceDelegate OnceMethod { get; }
     }
 }

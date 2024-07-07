@@ -27,7 +27,6 @@ namespace SymOntoClay.Core.Internal.Threads
 
         private readonly object _lockObj = new object();
 
-        /// <inheritdoc/>
         public OnceDelegate OnceMethod { get; set; }
 
         private volatile bool _isWaited;
@@ -158,7 +157,7 @@ namespace SymOntoClay.Core.Internal.Threads
         private readonly object _lockObj = new object();
 
         /// <inheritdoc/>
-        public OnceDelegate OnceMethod { get; set; }
+        public OnceDelegateWithResult<TResult> OnceMethod { get; set; }
 
         private volatile bool _isWaited;
 
@@ -229,9 +228,7 @@ namespace SymOntoClay.Core.Internal.Threads
 
                         _isExited = true;
 
-                        //return OnceMethod(linkedCancellationTokenSource.Token);
-
-                        return default;//tmp
+                        return OnceMethod(linkedCancellationTokenSource.Token);
                     }
                     catch (Exception e)
                     {

@@ -418,7 +418,7 @@ namespace TestSandbox
                 _logger.Info("F812B258-8F6B-4066-8698-55DA609BD01D", "End Hi!");
             }, threadPool, token1);
 
-            var taskValue = new TaskValue(task, source1);
+            var taskValue = new TaskValue(task);
 
             taskValue.OnComplete += () => 
             {

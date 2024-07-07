@@ -201,7 +201,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _currentCodeFrame.ProcessInfo.SetStatus(Logger, "756FCA0C-6645-4CCA-B865-6A7220476D27", ProcessStatus.Running);
         }
 
-        public Value Start()
+        public ThreadTask Start()
         {
             return _activeObject.Start();
         }
@@ -2432,7 +2432,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                         var task = threadExecutor.Start();
 
-                        targetCurrentCodeFrame.PseudoSyncTask = task.AsTaskValue.SystemTask;
+                        targetCurrentCodeFrame.PseudoSyncTask = task;
                     }
                     break;
 

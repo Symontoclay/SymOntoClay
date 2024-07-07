@@ -40,33 +40,33 @@ namespace SymOntoClay.Core.Internal.Threads
         /// <inheritdoc/>
         public bool IsActive => !_isExited && !_isWaited;
 
-        private Value _taskValue = new NullValue();
+        private ThreadTask _task = null;
 
         /// <inheritdoc/>
-        public Value TaskValue
+        public ThreadTask TaskValue
         {
             get
             {
                 lock (_lockObj)
                 {
-                    return _taskValue;
+                    return _task;
                 }
             }
         }
 
         /// <inheritdoc/>
-        public Value Start()
+        public ThreadTask Start()
         {
             lock (_lockObj)
             {
                 if (_isDisposed)
                 {
-                    return _taskValue;
+                    return _task;
                 }
 
                 if (!_isExited)
                 {
-                    return _taskValue;
+                    return _task;
                 }
 
                 _isExited = false;
@@ -107,11 +107,11 @@ namespace SymOntoClay.Core.Internal.Threads
                     _isExited = true;
                 }, _threadPool, _cancellationToken);
 
-                _taskValue = new TaskValue(task, linkedCancellationTokenSource);
+                _task = task;
 
                 task.Start();
 
-                return _taskValue;
+                return _task;
             }
         }
 
@@ -133,7 +133,7 @@ namespace SymOntoClay.Core.Internal.Threads
 
                 _context.RemoveChildActiveObject(this);
 
-                _taskValue = new NullValue();
+                _task = null;
             }
         }
     }

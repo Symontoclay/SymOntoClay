@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Threading;
 using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Threads
@@ -45,13 +46,13 @@ namespace SymOntoClay.Core.Internal.Threads
         /// <inheritdoc/>
         public bool IsWaited => false;
 
-        private Value _taskValue = new NullValue();
+        private ThreadTask _taskValue = null;
 
         /// <inheritdoc/>
-        public Value TaskValue => _taskValue;
+        public ThreadTask TaskValue => _taskValue;
 
         /// <inheritdoc/>
-        public Value Start()
+        public ThreadTask Start()
         {
             _isActive = true;
 

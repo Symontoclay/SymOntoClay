@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -31,11 +32,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public interface ICodeExecutorComponent
     {
-        Value ExecuteBatchAsync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList);
-        Value ExecuteBatchAsync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList, string parentThreadLoggerId);
-        Value ExecuteBatchSync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList);
-        Value ExecuteAsync(IMonitorLogger logger, ProcessInitialInfo processInitialInfo);
-        Value ExecuteAsync(IMonitorLogger logger, ProcessInitialInfo processInitialInfo, string parentThreadLoggerId);
+        ThreadTask ExecuteBatchAsync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList);
+        ThreadTask ExecuteBatchAsync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList, string parentThreadLoggerId);
+        ThreadTask ExecuteBatchSync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList);
+        ThreadTask ExecuteAsync(IMonitorLogger logger, ProcessInitialInfo processInitialInfo);
+        ThreadTask ExecuteAsync(IMonitorLogger logger, ProcessInitialInfo processInitialInfo, string parentThreadLoggerId);
         Value CallOperator(IMonitorLogger logger, KindOfOperator kindOfOperator, List<Value> paramsList, ILocalCodeExecutionContext parentLocalCodeExecutionContext);
         Value CallExecutableSync(IMonitorLogger logger, IExecutable executable, List<Value> positionedParameters, ILocalCodeExecutionContext parentLocalCodeExecutionContext);
         Value CallFunctionSync(IMonitorLogger logger, Value caller, KindOfFunctionParameters kindOfParameters, List<Value> parameters, ILocalCodeExecutionContext parentLocalCodeExecutionContext);

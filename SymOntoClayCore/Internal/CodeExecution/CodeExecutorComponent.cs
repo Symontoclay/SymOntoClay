@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -64,25 +65,25 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly ILocalCodeExecutionContext _globalExecutionContext;
 
         /// <inheritdoc/>
-        public Value ExecuteAsync(IMonitorLogger logger, ProcessInitialInfo processInitialInfo)
+        public ThreadTask ExecuteAsync(IMonitorLogger logger, ProcessInitialInfo processInitialInfo)
         {
             return ExecuteBatchAsync(logger, new List<ProcessInitialInfo>() { processInitialInfo });
         }
 
         /// <inheritdoc/>
-        public Value ExecuteAsync(IMonitorLogger logger, ProcessInitialInfo processInitialInfo, string parentThreadLoggerId)
+        public ThreadTask ExecuteAsync(IMonitorLogger logger, ProcessInitialInfo processInitialInfo, string parentThreadLoggerId)
         {
             return ExecuteBatchAsync(logger, new List<ProcessInitialInfo>() { processInitialInfo }, parentThreadLoggerId);
         }
 
         /// <inheritdoc/>
-        public Value ExecuteBatchAsync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList)
+        public ThreadTask ExecuteBatchAsync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList)
         {
             return ExecuteBatchAsync(logger, processInitialInfoList, string.Empty);
         }
 
         /// <inheritdoc/>
-        public Value ExecuteBatchAsync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList, string parentThreadLoggerId)
+        public ThreadTask ExecuteBatchAsync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList, string parentThreadLoggerId)
         {
             var codeFramesList = ConvertProcessInitialInfosToCodeFrames(logger, processInitialInfoList);
 
@@ -93,7 +94,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         /// <inheritdoc/>
-        public Value ExecuteBatchSync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList)
+        public ThreadTask ExecuteBatchSync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList)
         {
             var codeFramesList = ConvertProcessInitialInfosToCodeFrames(logger, processInitialInfoList);
 
@@ -207,7 +208,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     var task = threadExecutor.Start();
 
-                    return task;
+                    return new TaskValue(task);
                 }
             }
         }

@@ -24,5 +24,10 @@ namespace SymOntoClay.Core.Internal.Serialization.Functors
         {
             _asyncActiveOnceObject.Start();
         }
+
+        protected void DisposeActiveObject()
+        {
+            _asyncActiveOnceObject.Dispose();
+        }
     }
 }

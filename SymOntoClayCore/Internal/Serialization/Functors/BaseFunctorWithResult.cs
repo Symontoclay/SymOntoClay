@@ -19,11 +19,7 @@ namespace SymOntoClay.Core.Internal.Serialization.Functors
         /// <inheritdoc/>
         protected override TResult OnRun(CancellationToken cancellationToken)
         {
-            var result = _func();
-
-            DisposeActiveObject();
-
-            return result;
+            return _func();
         }
     }
 

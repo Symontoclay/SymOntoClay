@@ -14,9 +14,11 @@ namespace SymOntoClay.Core.Internal.Serialization.Functors
             {
                 OnceMethod = OnRun
             };
+
+            _asyncActiveOnceObject.OnCompleted += OnCompletedHandler;
         }
 
-        private readonly AsyncActiveOnceObject _asyncActiveOnceObject;
+        private AsyncActiveOnceObject _asyncActiveOnceObject;
 
         protected abstract void OnRun(CancellationToken cancellationToken);
 
@@ -25,9 +27,11 @@ namespace SymOntoClay.Core.Internal.Serialization.Functors
             _asyncActiveOnceObject.Start();
         }
 
-        protected void DisposeActiveObject()
+        private void OnCompletedHandler()
         {
+            _asyncActiveOnceObject.OnCompleted -= OnCompletedHandler;
             _asyncActiveOnceObject.Dispose();
+            _asyncActiveOnceObject = null;
         }
     }
 
@@ -39,9 +43,11 @@ namespace SymOntoClay.Core.Internal.Serialization.Functors
             {
                 OnceMethod = OnRun
             };
+
+            _asyncActiveOnceObject.OnCompleted += OnCompletedHandler;
         }
 
-        private readonly AsyncActiveOnceObject<TResult> _asyncActiveOnceObject;
+        private AsyncActiveOnceObject<TResult> _asyncActiveOnceObject;
 
         protected abstract TResult OnRun(CancellationToken cancellationToken);
 
@@ -50,9 +56,16 @@ namespace SymOntoClay.Core.Internal.Serialization.Functors
             _asyncActiveOnceObject.Start();
         }
 
-        protected void DisposeActiveObject()
+        private void OnCompletedHandler()
         {
+            _result = _asyncActiveOnceObject.Result;
+            _asyncActiveOnceObject.OnCompleted -= OnCompletedHandler;
             _asyncActiveOnceObject.Dispose();
+            _asyncActiveOnceObject = null;
         }
+
+        private TResult _result = default(TResult);
+
+        public TResult Result => _asyncActiveOnceObject == null ? _result : _asyncActiveOnceObject.Result;
     }
 }

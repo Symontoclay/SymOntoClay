@@ -20,7 +20,6 @@ namespace SymOntoClay.Core.Internal.Serialization.Functors
         protected override void OnRun(CancellationToken cancellationToken)
         {
             _action();
-            DisposeActiveObject();
         }
     }
 
@@ -40,7 +39,6 @@ namespace SymOntoClay.Core.Internal.Serialization.Functors
         protected override void OnRun(CancellationToken cancellationToken)
         {
             _action(_arg);
-            DisposeActiveObject();
         }
     }
 
@@ -62,7 +60,6 @@ namespace SymOntoClay.Core.Internal.Serialization.Functors
         protected override void OnRun(CancellationToken cancellationToken)
         {
             _action(_arg1, _arg2);
-            DisposeActiveObject();
         }
     }
 }

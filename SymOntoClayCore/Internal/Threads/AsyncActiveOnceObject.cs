@@ -53,6 +53,8 @@ namespace SymOntoClay.Core.Internal.Threads
             }
         }
 
+        public event Action OnCompleted;
+
         /// <inheritdoc/>
         public IThreadTask Start()
         {
@@ -106,12 +108,19 @@ namespace SymOntoClay.Core.Internal.Threads
                     _isExited = true;
                 }, _threadPool, _cancellationToken);
 
+                task.OnCompleted += OnCompletedHandler;
+
                 _task = task;
 
                 task.Start();
 
                 return _task;
             }
+        }
+
+        private void OnCompletedHandler()
+        {
+            OnCompleted?.Invoke();
         }
 
         private bool _isDisposed;
@@ -132,6 +141,7 @@ namespace SymOntoClay.Core.Internal.Threads
 
                 _context.RemoveChildActiveObject(this);
 
+                _task.OnCompleted -= OnCompletedHandler;
                 _task = null;
             }
         }
@@ -169,7 +179,7 @@ namespace SymOntoClay.Core.Internal.Threads
         /// <inheritdoc/>
         public bool IsActive => !_isExited && !_isWaited;
 
-        private IThreadTask _task = null;
+        private ThreadTask<TResult> _task = null;
 
         /// <inheritdoc/>
         public IThreadTask TaskValue
@@ -182,6 +192,19 @@ namespace SymOntoClay.Core.Internal.Threads
                 }
             }
         }
+
+        public TResult Result
+        {
+            get
+            {
+                lock (_lockObj)
+                {
+                    return _task.Result;
+                }
+            }
+        }
+
+        public event Action OnCompleted;
 
         /// <inheritdoc/>
         public IThreadTask Start()
@@ -238,12 +261,19 @@ namespace SymOntoClay.Core.Internal.Threads
                     }
                 }, _threadPool, _cancellationToken);
 
+                task.OnCompleted += OnCompletedHandler;
+
                 _task = task;
 
                 task.Start();
 
                 return _task;
             }
+        }
+
+        private void OnCompletedHandler()
+        {
+            OnCompleted?.Invoke();
         }
 
         private bool _isDisposed;
@@ -264,6 +294,7 @@ namespace SymOntoClay.Core.Internal.Threads
 
                 _context.RemoveChildActiveObject(this);
 
+                _task.OnCompleted -= OnCompletedHandler;
                 _task = null;
             }
         }

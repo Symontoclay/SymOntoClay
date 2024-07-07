@@ -35,9 +35,24 @@ namespace TestSandbox.Threads
             var activeContext = new ActiveObjectContext(commonActiveContext, cancellationTokenSource.Token);
 
             var functor = new TstFunctorWithResult(_logger, () => { return 16; }, activeContext, threadPool);
+            
+            commonActiveContext.Lock();
+
+            activeContext.WaitWhenAllIsNotWaited();
+
+            Thread.Sleep(1000);
+
             functor.Run();
 
             Thread.Sleep(1000);
+
+            _logger.Info("714FB9D2-4136-4484-8BB3-D75E3D2DE475", "UnLock");
+
+            commonActiveContext.UnLock();
+
+            Thread.Sleep(1000);
+
+            _logger.Info("A408BA10-917F-4A6F-88A6-561CD2969D7A", $"functor.Result = {functor.Result}");
         }
 
         private void StringFunctorWithoutResultCase()

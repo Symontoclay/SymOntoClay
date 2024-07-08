@@ -20,6 +20,8 @@ namespace SymOntoClay.Core.Internal.Serialization.Functors
 
         private AsyncActiveOnceObject _asyncActiveOnceObject;
 
+        public IThreadTask TaskValue => _asyncActiveOnceObject?.TaskValue; 
+
         protected abstract void OnRun(CancellationToken cancellationToken);
 
         public void Run()
@@ -48,6 +50,8 @@ namespace SymOntoClay.Core.Internal.Serialization.Functors
         }
 
         private AsyncActiveOnceObject<TResult> _asyncActiveOnceObject;
+
+        public IThreadTask<TResult> TaskValue => _asyncActiveOnceObject?.TaskValueWithResult;
 
         protected abstract TResult OnRun(CancellationToken cancellationToken);
 

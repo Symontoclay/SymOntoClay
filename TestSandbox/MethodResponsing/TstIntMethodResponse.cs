@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using SymOntoClay.Core.Internal.Serialization.Functors;
 using System.Threading.Tasks;
 
 namespace TestSandbox.MethodResponsing

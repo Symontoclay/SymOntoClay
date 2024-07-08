@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace TestSandbox.MethodResponsing
+namespace SymOntoClay.Core.Internal.Serialization.Functors
 {
     public interface IMethodResponse
     {

@@ -181,6 +181,17 @@ namespace SymOntoClay.Core.Internal.Threads
 
         private ThreadTask<TResult> _task = null;
 
+        public IThreadTask<TResult> TaskValueWithResult
+        {
+            get
+            {
+                lock (_lockObj)
+                {
+                    return _task;
+                }
+            }
+        }
+
         /// <inheritdoc/>
         public IThreadTask TaskValue
         {

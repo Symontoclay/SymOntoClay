@@ -167,7 +167,7 @@ namespace SymOntoClay.Core
 
         public void RemovePublicFact(IMonitorLogger logger, string id)
         {
-            StringFunctorWithoutResult.Run(logger, id, (loggerValue, idValue) => {
+            LoggedFunctorWithoutResult<string>.Run(logger, id, (loggerValue, idValue) => {
                 _context.Storage.RemovePublicFact(loggerValue, idValue);
             }, _activeObjectContext, _threadPool);
         }
@@ -184,7 +184,7 @@ namespace SymOntoClay.Core
 
         public void RemoveFact(IMonitorLogger logger, string id)
         {
-            StringFunctorWithoutResult.Run(logger, id, (loggerValue, idValue) => {
+            LoggedFunctorWithoutResult<string>.Run(logger, id, (loggerValue, idValue) => {
                 _context.Storage.RemoveFact(loggerValue, idValue);
             }, _activeObjectContext, _threadPool);
         }
@@ -208,7 +208,7 @@ namespace SymOntoClay.Core
 
         public void RemovePerceptedFact(IMonitorLogger logger, string id)
         {
-            StringFunctorWithoutResult.Run(logger, id, (loggerValue, idValue) =>
+            LoggedFunctorWithoutResult<string>.Run(logger, id, (loggerValue, idValue) =>
             {
                 _context.Storage.RemovePerceptedFact(loggerValue, idValue);
             }, _activeObjectContext, _threadPool);
@@ -216,7 +216,7 @@ namespace SymOntoClay.Core
 
         public void InsertListenedFact(IMonitorLogger logger, string text)
         {
-            StringFunctorWithoutResult.Run(logger, text, (loggerValue, textValue) => {
+            LoggedFunctorWithoutResult<string>.Run(logger, text, (loggerValue, textValue) => {
                 _context.Storage.InsertListenedFact(loggerValue, textValue);
             }, _activeObjectContext, _threadPool);
         }
@@ -228,7 +228,7 @@ namespace SymOntoClay.Core
 
         public void AddCategory(IMonitorLogger logger, string category)
         {
-            StringFunctorWithoutResult.Run(logger, category, (loggerValue, categoryValue) => {
+            LoggedFunctorWithoutResult<string>.Run(logger, category, (loggerValue, categoryValue) => {
                 _context.Storage.AddCategory(loggerValue, categoryValue);
             }, _activeObjectContext, _threadPool);
         }
@@ -240,7 +240,7 @@ namespace SymOntoClay.Core
 
         public void RemoveCategory(IMonitorLogger logger, string category)
         {
-            StringFunctorWithoutResult.Run(logger, category, (loggerValue, categoryValue) => {
+            LoggedFunctorWithoutResult<string>.Run(logger, category, (loggerValue, categoryValue) => {
                 _context.Storage.RemoveCategory(loggerValue, categoryValue);
             }, _activeObjectContext, _threadPool);
         }

@@ -17,8 +17,8 @@ namespace TestSandbox.Threads
         {
             _logger.Info("C8AFAFBA-F6BA-4D20-A913-D5B3E6E87BFF", "Begin");
 
-            TstFunctorWithResultCase();
-            //StringFunctorWithoutResultCase();
+            //TstFunctorWithResultCase();
+            StringFunctorWithoutResultCase();
             //GeneralCase();
 
             _logger.Info("86A4093A-C550-46B0-954C-337793C1AE51", "End");
@@ -68,7 +68,7 @@ namespace TestSandbox.Threads
 
             var activeContext = new ActiveObjectContext(commonActiveContext, cancellationTokenSource.Token);
 
-            var textOnceFunctor = new StringFunctorWithoutResult(_logger, "Some query", (logger, text) => {
+            var textOnceFunctor = new LoggedFunctorWithoutResult<string>(_logger, "Some query", (logger, text) => {
                 logger.Info("02A2BB60-A4D1-4F1D-9A94-31644F054D79", text);
             }, activeContext, threadPool);
 

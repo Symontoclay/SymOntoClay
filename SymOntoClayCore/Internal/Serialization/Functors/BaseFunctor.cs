@@ -1,5 +1,4 @@
-﻿using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.Threads;
+﻿using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using System.Threading;
@@ -34,6 +33,11 @@ namespace SymOntoClay.Core.Internal.Serialization.Functors
             _asyncActiveOnceObject.OnCompleted -= OnCompletedHandler;
             _asyncActiveOnceObject.Dispose();
             _asyncActiveOnceObject = null;
+        }
+
+        public IMethodResponse ToMethodResponse()
+        {
+            return new MethodResponseOfBaseFunctor(this);
         }
     }
 
@@ -71,5 +75,10 @@ namespace SymOntoClay.Core.Internal.Serialization.Functors
         private TResult _result = default(TResult);
 
         public TResult Result => _asyncActiveOnceObject == null ? _result : _asyncActiveOnceObject.Result;
+
+        public IMethodResponse<TResult> ToMethodResponse()
+        {
+            return new MethodResponseOfBaseFunctor<TResult>(this);
+        }
     }
 }

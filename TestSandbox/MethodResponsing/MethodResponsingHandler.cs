@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Monitor.Common;
+﻿using SymOntoClay.Core.Internal.Serialization.Functors;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
 using System;
 using System.Threading.Tasks;

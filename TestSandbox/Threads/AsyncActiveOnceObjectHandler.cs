@@ -36,6 +36,8 @@ namespace TestSandbox.Threads
 
             var functor = new TstFunctorWithResult(_logger, () => { return 16; }, activeContext, threadPool);
             
+            var methodResponse = functor.ToMethodResponse();
+
             commonActiveContext.Lock();
 
             activeContext.WaitWhenAllIsNotWaited();
@@ -53,6 +55,7 @@ namespace TestSandbox.Threads
             Thread.Sleep(1000);
 
             _logger.Info("A408BA10-917F-4A6F-88A6-561CD2969D7A", $"functor.Result = {functor.Result}");
+            _logger.Info("E3CF4817-CA2F-4824-85B6-AD4DFCB657C8", $"methodResponse.Result = {methodResponse.Result}");
         }
 
         private void StringFunctorWithoutResultCase()

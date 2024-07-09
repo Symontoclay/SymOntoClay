@@ -159,8 +159,8 @@ namespace TestSandbox
             //TstCompileInlineTrigger();
             //TstRegOperatorsHandler();
             //TstCreateEngineContext();
-            TstMethodResponsingHandler();
-            //TstAsyncActiveOnceObjectHandler();
+            //TstMethodResponsingHandler();
+            TstAsyncActiveOnceObjectHandler();
             //TstAsyncActivePeriodicObjectHandler();
             //TstSyncActivePeriodicObjectHandler();
             //TstCodeExecution();

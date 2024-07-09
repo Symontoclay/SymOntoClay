@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.Serialization.Functors;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.Monitor.Common;
 using System;
@@ -46,9 +47,10 @@ namespace SymOntoClay.UnityAsset.Core
         /// All active processes will have been stopped.
         /// Another NPCs will percept the NPC as died.
         /// </summary>
-        void Die();
-        string InsertFact(IMonitorLogger logger, string text);
-        void RemoveFact(IMonitorLogger logger, string id);
+        /// <returns>Method response.</returns>
+        IMethodResponse Die();
+        IMethodResponse<string> InsertFact(IMonitorLogger logger, string text);
+        IMethodResponse RemoveFact(IMonitorLogger logger, string id);
 
         /// <summary>
         /// Returns storage that represents a backpack.
@@ -60,14 +62,16 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         /// <param name="logger">Logger.</param>
         /// <param name="obj">Instance of the game object.</param>
-        void AddToBackpack(IMonitorLogger logger, IGameObject obj);
+        /// <returns>Method response.</returns>
+        IMethodResponse AddToBackpack(IMonitorLogger logger, IGameObject obj);
 
         /// <summary>
         /// Removes game object from backpack.
         /// </summary>
         /// <param name="logger">Logger.</param>
         /// <param name="obj">Instance of the game object.</param>
-        void RemoveFromBackpack(IMonitorLogger logger, IGameObject obj);
+        /// <returns>Method response.</returns>
+        IMethodResponse RemoveFromBackpack(IMonitorLogger logger, IGameObject obj);
 
         /// <summary>
         /// Gets engine context. Onkly for debugging and testing!

@@ -266,7 +266,7 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public string InsertPublicFact(IMonitorLogger logger, string text)
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
         {
             lock (_stateLockObj)
             {
@@ -282,7 +282,7 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public string InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             lock (_stateLockObj)
             {
@@ -320,14 +320,14 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public void AddCategory(IMonitorLogger logger, string category)
+        public IMethodResponse AddCategory(IMonitorLogger logger, string category)
         {
             lock (_stateLockObj)
             {
                 if (_storageComponent == null)
                 {
                     _deferredAddedCategories.Add(category);
-                    return;
+                    return CompletedMethodResponse.Instance;
                 }
 
                 _storageComponent.AddCategory(logger, category);
@@ -335,14 +335,14 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public void AddCategories(IMonitorLogger logger, List<string> categories)
+        public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
         {
             lock (_stateLockObj)
             {
                 if (_storageComponent == null)
                 {
                     _deferredAddedCategories.AddRange(categories);
-                    return;
+                    return CompletedMethodResponse.Instance;
                 }
 
                 _storageComponent.AddCategories(logger, categories);
@@ -350,14 +350,14 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public void RemoveCategory(IMonitorLogger logger, string category)
+        public IMethodResponse RemoveCategory(IMonitorLogger logger, string category)
         {
             lock (_stateLockObj)
             {
                 if (_storageComponent == null)
                 {
                     _deferredRemovedCategories.Add(category);
-                    return;
+                    return CompletedMethodResponse.Instance;
                 }
 
                 _storageComponent.RemoveCategory(logger, category);
@@ -365,14 +365,14 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public void RemoveCategories(IMonitorLogger logger, List<string> categories)
+        public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
             lock (_stateLockObj)
             {
                 if (_storageComponent == null)
                 {
                     _deferredRemovedCategories.AddRange(categories);
-                    return;
+                    return CompletedMethodResponse.Instance;
                 }
 
                 _storageComponent.RemoveCategories(logger, categories);

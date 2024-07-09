@@ -35,16 +35,16 @@ namespace SymOntoClay.Core
     {
         IStorageComponent StorageComponent { get; }
         IStorage Storage { get; }
-        string InsertPublicFact(IMonitorLogger logger, string text);
-        string InsertPublicFact(IMonitorLogger logger, RuleInstance fact);
+        IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text);
+        IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact);
         IMethodResponse RemovePublicFact(IMonitorLogger logger, string id);
         IStorage PublicFactsStorage { get; }
         ConsolidatedPublicFactsStorage WorldPublicFactsStorage { get; }
         IMainStorageContext Context { get; }
-        void AddCategory(IMonitorLogger logger, string category);
-        void AddCategories(IMonitorLogger logger, List<string> categories);
-        void RemoveCategory(IMonitorLogger logger, string category);
-        void RemoveCategories(IMonitorLogger logger, List<string> categories);
+        IMethodResponse AddCategory(IMonitorLogger logger, string category);
+        IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories);
+        IMethodResponse RemoveCategory(IMonitorLogger logger, string category);
+        IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories);
         bool EnableCategories { get; set; }
     }
 }

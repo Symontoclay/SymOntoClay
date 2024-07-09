@@ -167,17 +167,17 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             }
         }
 
-        public string InsertPublicFact(IMonitorLogger logger, string text)
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
         {
             return _coreEngine.InsertPublicFact(logger, text);
         }
 
-        public string InsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
         {
             return _coreEngine.InsertPublicFact(logger, factName, text);
         }
 
-        public string InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             return _coreEngine.InsertPublicFact(logger, fact);
         }
@@ -187,49 +187,49 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             return _coreEngine.RemovePublicFact(logger, id);
         }
 
-        public string InsertFact(IMonitorLogger logger, string text)
+        public IMethodResponse<string> InsertFact(IMonitorLogger logger, string text)
         {
             return _coreEngine.InsertFact(logger, text);
         }
 
-        public string InsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        public IMethodResponse<string> InsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
         {
             return _coreEngine.InsertFact(logger, factName, text);
         }
 
-        public void RemoveFact(IMonitorLogger logger, string id)
+        public IMethodResponse RemoveFact(IMonitorLogger logger, string id)
         {
-            _coreEngine.RemoveFact(logger, id);
+            return _coreEngine.RemoveFact(logger, id);
         }
 
-        public void PushSoundFact(float power, string text)
+        public IMethodResponse PushSoundFact(float power, string text)
         {
             _soundPublisher.PushSoundFact(power, text);
         }
 
-        public void PushSoundFact(float power, RuleInstance fact)
+        public IMethodResponse PushSoundFact(float power, RuleInstance fact)
         {
             _soundPublisher.PushSoundFact(power, fact);
         }
 
-        public void AddCategory(IMonitorLogger logger, string category)
+        public IMethodResponse AddCategory(IMonitorLogger logger, string category)
         {
-            _coreEngine.AddCategory(logger, category);
+            return _coreEngine.AddCategory(logger, category);
         }
 
-        public void AddCategories(IMonitorLogger logger, List<string> categories)
+        public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
         {
-            _coreEngine.AddCategories(logger, categories);
+            return CompletedMethodResponse.Instance_coreEngine.AddCategories(logger, categories);
         }
 
-        public void RemoveCategory(IMonitorLogger logger, string category)
+        public IMethodResponse RemoveCategory(IMonitorLogger logger, string category)
         {
-            _coreEngine.RemoveCategory(logger, category);
+            return _coreEngine.RemoveCategory(logger, category);
         }
 
-        public void RemoveCategories(IMonitorLogger logger, List<string> categories)
+        public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
-            _coreEngine.RemoveCategories(logger, categories);
+            return _coreEngine.RemoveCategories(logger, categories);
         }
 
         public bool EnableCategories { get => _coreEngine.EnableCategories; set => _coreEngine.EnableCategories = value; }
@@ -253,12 +253,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
         public IStorage BackpackStorage => _backpackStorage;
 
-        public void AddToBackpack(IMonitorLogger logger, IGameObject obj)
+        public IMethodResponse AddToBackpack(IMonitorLogger logger, IGameObject obj)
         {
             _backpackStorage.AddConsolidatedStorage(logger, obj.PublicFactsStorage);
         }
 
-        public void RemoveFromBackpack(IMonitorLogger logger, IGameObject obj)
+        public IMethodResponse RemoveFromBackpack(IMonitorLogger logger, IGameObject obj)
         {
             _backpackStorage.RemoveConsolidatedStorage(logger, obj.PublicFactsStorage);
         }
@@ -268,7 +268,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         /// </summary>
         public IEngineContext EngineContext => _coreEngine.EngineContext;
 
-        public void Die()
+        public IMethodResponse Die()
         {
             _coreEngine.Die();
             _visionComponent?.Die();

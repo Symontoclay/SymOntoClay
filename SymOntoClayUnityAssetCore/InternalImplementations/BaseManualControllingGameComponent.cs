@@ -35,6 +35,7 @@ using System.Text;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Core.Internal.Serialization.Functors;
 
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 {
@@ -76,12 +77,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 
         private readonly object _manualControlLockObj = new object();
 
-        public void AddToManualControl(IGameObject obj, int device)
+        public IMethodResponse AddToManualControl(IGameObject obj, int device)
         {
             AddToManualControl(obj, new List<int>() { device});
         }
 
-        public void AddToManualControl(IGameObject obj, IList<int> devices)
+        public IMethodResponse AddToManualControl(IGameObject obj, IList<int> devices)
         {
             lock (_manualControlLockObj)
             {
@@ -105,7 +106,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             }
         }
 
-        public void RemoveFromManualControl(IGameObject obj)
+        public IMethodResponse RemoveFromManualControl(IGameObject obj)
         {
             lock (_manualControlLockObj)
             {

@@ -23,6 +23,7 @@ SOFTWARE.*/
 using Newtonsoft.Json;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.Serialization.Functors;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
@@ -342,7 +343,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
             }
         }
 
-        public void Die()
+        public IMethodResponse Die()
         {
             _activeObject.Dispose();
         }

@@ -88,12 +88,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             _worldContext.AddPublicFactsStorage(this);
         }
 
-        public string InsertPublicFact(IMonitorLogger logger, string text)
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
         {
             return HostStorage.InsertPublicFact(logger, text);
         }
 
-        public string InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             return HostStorage.InsertPublicFact(logger, fact);
         }
@@ -103,32 +103,32 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             return HostStorage.RemovePublicFact(logger, id);
         }
 
-        public void PushSoundFact(float power, string text)
+        public IMethodResponse PushSoundFact(float power, string text)
         {
             _soundPublisher.PushSoundFact(power, text);
         }
 
-        public void PushSoundFact(float power, RuleInstance fact)
+        public IMethodResponse PushSoundFact(float power, RuleInstance fact)
         {
             _soundPublisher.PushSoundFact(power, fact);
         }
 
-        public void AddCategory(IMonitorLogger logger, string category)
+        public IMethodResponse AddCategory(IMonitorLogger logger, string category)
         {
             HostStorage.AddCategory(logger, category);
         }
 
-        public void AddCategories(IMonitorLogger logger, List<string> categories)
+        public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
         {
             HostStorage.AddCategories(logger, categories);
         }
 
-        public void RemoveCategory(IMonitorLogger logger, string category)
+        public IMethodResponse RemoveCategory(IMonitorLogger logger, string category)
         {
             HostStorage.RemoveCategory(logger, category);
         }
 
-        public void RemoveCategories(IMonitorLogger logger, List<string> categories)
+        public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
             HostStorage.RemoveCategories(logger, categories);
         }

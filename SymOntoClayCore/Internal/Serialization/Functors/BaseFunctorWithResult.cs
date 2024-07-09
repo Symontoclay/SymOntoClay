@@ -23,12 +23,23 @@ namespace SymOntoClay.Core.Internal.Serialization.Functors
         }
     }
 
-    //public class BaseFunctorWithResult<T, TResult> : BaseFunctor
-    //{
-    //    public BaseFunctorWithResult()
-    //    {
-    //    }
-    //}
+    public class BaseFunctorWithResult<T, TResult> : BaseFunctor
+    {
+        public BaseFunctorWithResult(IMonitorLogger logger, T arg, Func<T, TResult> func, IActiveObjectContext context, ICustomThreadPool threadPool)
+        {
+            _func = func;
+            _arg = arg;
+        }
+
+        private readonly Func<T, TResult> _func;
+        private readonly T _arg;
+
+        /// <inheritdoc/>
+        protected override TResult OnRun(CancellationToken cancellationToken)
+        {
+            return _func(_arg);
+        }
+    }
 
     public class BaseFunctorWithResult<T1, T2, TResult> : BaseFunctor<TResult>
     {
@@ -47,7 +58,7 @@ namespace SymOntoClay.Core.Internal.Serialization.Functors
         /// <inheritdoc/>
         protected override TResult OnRun(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException("1BF15EB4-184D-4D05-A1D7-CEBC2F54FD2A");
+            return _func(_arg1, _arg2);
         }
     }
 }

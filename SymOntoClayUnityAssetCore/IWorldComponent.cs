@@ -34,16 +34,16 @@ namespace SymOntoClay.UnityAsset.Core
         string IdForFacts { get; }
         int InstanceId { get; }
         IMonitorLogger Logger { get; }
-        string InsertPublicFact(IMonitorLogger logger, string text);
-        string InsertPublicFact(IMonitorLogger logger, RuleInstance fact);
+        IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text);
+        IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact);
         IMethodResponse RemovePublicFact(IMonitorLogger logger, string id);
-        void PushSoundFact(float power, string text);
-        void PushSoundFact(float power, RuleInstance fact);
+        IMethodResponse PushSoundFact(float power, string text);
+        IMethodResponse PushSoundFact(float power, RuleInstance fact);
         IStandardFactsBuilder StandardFactsBuilder { get; }
-        void AddCategory(IMonitorLogger logger, string category);
-        void AddCategories(IMonitorLogger logger, List<string> categories);
-        void RemoveCategory(IMonitorLogger logger, string category);
-        void RemoveCategories(IMonitorLogger logger, List<string> categories);
+        IMethodResponse AddCategory(IMonitorLogger logger, string category);
+        IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories);
+        IMethodResponse RemoveCategory(IMonitorLogger logger, string category);
+        IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories);
         bool EnableCategories { get; set; }
     }
 }

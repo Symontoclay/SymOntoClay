@@ -62,7 +62,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 {
                     foreach(var item in _deferredPublicFactsTexts)
                     {
-                        _gameComponent.InsertPublicFact(Logger, item.Item1, item.Item2);
+                        _gameComponent.InsertPublicFact(Logger, item.Item1, item.Item2).Wait();
                     }
 
                     _deferredPublicFactsTexts.Clear();
@@ -77,7 +77,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 {
                     foreach (var item in _deferredPublicFactsInstances)
                     {
-                        _gameComponent.InsertPublicFact(Logger, item);
+                        _gameComponent.InsertPublicFact(Logger, item).Wait();
                     }
 
                     _deferredPublicFactsInstances.Clear();
@@ -107,7 +107,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 {
                     foreach (var item in _deferredFactsTexts)
                     {
-                        _gameComponent.InsertFact(Logger, item.Item1, item.Item2);
+                        _gameComponent.InsertFact(Logger, item.Item1, item.Item2).Wait();
                     }
 
                     _deferredFactsTexts.Clear();
@@ -122,7 +122,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 {
                     foreach (var item in _defferedRemovedFacts)
                     {
-                        _gameComponent.RemoveFact(Logger, item);
+                        _gameComponent.RemoveFact(Logger, item).Wait();
                     }
 
                     _defferedRemovedFacts.Clear();
@@ -135,7 +135,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
                 if (_deferredAddedCategories.Any())
                 {
-                    _gameComponent.AddCategories(null, _deferredAddedCategories);
+                    _gameComponent.AddCategories(null, _deferredAddedCategories).Wait();
                     _deferredAddedCategories.Clear();
                     _deferredAddedCategories = null;
                 }
@@ -146,7 +146,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
                 if (_deferredRemovedCategories.Any())
                 {
-                    _gameComponent.RemoveCategories(null, _deferredRemovedCategories);
+                    _gameComponent.RemoveCategories(null, _deferredRemovedCategories).Wait();
                     _deferredRemovedCategories.Clear();
                     _deferredRemovedCategories = null;
                 }
@@ -203,21 +203,21 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        public void AddToManualControl(IGameObject obj, DeviceOfBiped device)
+        public IMethodResponse AddToManualControl(IGameObject obj, DeviceOfBiped device)
         {
-            _gameComponent.AddToManualControl(obj, (int)device);
+            return _gameComponent.AddToManualControl(obj, (int)device);
         }
 
         /// <inheritdoc/>
-        public void AddToManualControl(IGameObject obj, IList<DeviceOfBiped> devices)
+        public IMethodResponse AddToManualControl(IGameObject obj, IList<DeviceOfBiped> devices)
         {
-            _gameComponent.AddToManualControl(obj, devices?.Select(p => (int)p).ToList());
+            return _gameComponent.AddToManualControl(obj, devices?.Select(p => (int)p).ToList());
         }
 
         /// <inheritdoc/>
-        public void RemoveFromManualControl(IGameObject obj)
+        public IMethodResponse RemoveFromManualControl(IGameObject obj)
         {
-            _gameComponent.RemoveFromManualControl(obj);
+            return _gameComponent.RemoveFromManualControl(obj);
         }
 
         /// <inheritdoc/>
@@ -241,7 +241,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        public string InsertPublicFact(IMonitorLogger logger, string text)
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
         {
             lock (_initializeLockObj)
             {
@@ -257,7 +257,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        public string InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             lock (_initializeLockObj)
             {
@@ -292,7 +292,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        public string InsertFact(IMonitorLogger logger, string text)
+        public IMethodResponse<string> InsertFact(IMonitorLogger logger, string text)
         {
             lock (_initializeLockObj)
             {
@@ -308,89 +308,89 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        public void RemoveFact(IMonitorLogger logger, string id)
+        public IMethodResponse RemoveFact(IMonitorLogger logger, string id)
         {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
                 {
                     _defferedRemovedFacts.Add(id);
-                    return;
+                    return CompletedMethodResponse.Instance;
                 }
 
-                _gameComponent.RemoveFact(logger, id);
+                return _gameComponent.RemoveFact(logger, id);
             }
         }
 
         /// <inheritdoc/>
-        public void PushSoundFact(float power, string text)
+        public IMethodResponse PushSoundFact(float power, string text)
         {
-            _gameComponent.PushSoundFact(power, text);
+            return _gameComponent.PushSoundFact(power, text);
         }
 
         /// <inheritdoc/>
-        public void PushSoundFact(float power, RuleInstance fact)
+        public IMethodResponse PushSoundFact(float power, RuleInstance fact)
         {
-            _gameComponent.PushSoundFact(power, fact);
+            return _gameComponent.PushSoundFact(power, fact);
         }
 
         /// <inheritdoc/>
-        public void AddCategory(IMonitorLogger logger, string category)
+        public IMethodResponse AddCategory(IMonitorLogger logger, string category)
         {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
                 {
                     _deferredAddedCategories.Add(category);
-                    return;
+                    return CompletedMethodResponse.Instance;
                 }
 
-                _gameComponent.AddCategory(logger, category);
+                return _gameComponent.AddCategory(logger, category);
             }
         }
 
         /// <inheritdoc/>
-        public void AddCategories(IMonitorLogger logger, List<string> categories)
+        public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
         {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
                 {
                     _deferredAddedCategories.AddRange(categories);
-                    return;
+                    return CompletedMethodResponse.Instance;
                 }
 
-                _gameComponent.AddCategories(logger, categories);
+                return _gameComponent.AddCategories(logger, categories);
             }
         }
 
         /// <inheritdoc/>
-        public void RemoveCategory(IMonitorLogger logger, string category)
+        public IMethodResponse RemoveCategory(IMonitorLogger logger, string category)
         {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
                 {
                     _deferredRemovedCategories.Add(category);
-                    return;
+                    return CompletedMethodResponse.Instance;
                 }
 
-                _gameComponent.RemoveCategory(logger, category);
+                return _gameComponent.RemoveCategory(logger, category);
             }
         }
 
         /// <inheritdoc/>
-        public void RemoveCategories(IMonitorLogger logger, List<string> categories)
+        public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
                 {
                     _deferredRemovedCategories.AddRange(categories);
-                    return;
+                    return CompletedMethodResponse.Instance;
                 }
 
-                _gameComponent.RemoveCategories(logger, categories);
+                return _gameComponent.RemoveCategories(logger, categories);
             }
         }
 
@@ -429,15 +429,15 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         public IStorage BackpackStorage => _gameComponent.BackpackStorage;
 
         /// <inheritdoc/>
-        public void AddToBackpack(IMonitorLogger logger, IGameObject obj)
+        public IMethodResponse AddToBackpack(IMonitorLogger logger, IGameObject obj)
         {
-            _gameComponent.AddToBackpack(logger, obj);
+            return _gameComponent.AddToBackpack(logger, obj);
         }
 
         /// <inheritdoc/>
-        public void RemoveFromBackpack(IMonitorLogger logger, IGameObject obj)
+        public IMethodResponse RemoveFromBackpack(IMonitorLogger logger, IGameObject obj)
         {
-            _gameComponent.RemoveFromBackpack(logger, obj);
+            return _gameComponent.RemoveFromBackpack(logger, obj);
         }
 
         /// <inheritdoc/>
@@ -447,9 +447,9 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         public IStandardFactsBuilder StandardFactsBuilder => _gameComponent.StandardFactsBuilder;
 
         /// <inheritdoc/>
-        public void Die()
+        public IMethodResponse Die()
         {
-            _gameComponent.Die();
+            return _gameComponent.Die();
         }
 
         /// <inheritdoc/>

@@ -57,13 +57,13 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
 
                     if (_addedCategories.Any())
                     {
-                        _gameComponent.AddCategories(null, _addedCategories);
+                        _gameComponent.AddCategories(null, _addedCategories).Wait();
                         _addedCategories = null;
                     }
 
                     if (_removedCategories.Any())
                     {
-                        _gameComponent.RemoveCategories(null, _removedCategories);
+                        _gameComponent.RemoveCategories(null, _removedCategories).Wait();
                         _removedCategories = null;
                     }
 
@@ -107,13 +107,13 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         }
 
         /// <inheritdoc/>
-        public string InsertPublicFact(IMonitorLogger logger, string text)
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
         {
             return _gameComponent.InsertPublicFact(logger, text);
         }
 
         /// <inheritdoc/>
-        public string InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             return _gameComponent.InsertPublicFact(logger, fact);
         }
@@ -125,74 +125,74 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         }
 
         /// <inheritdoc/>
-        public void PushSoundFact(float power, string text)
+        public IMethodResponse PushSoundFact(float power, string text)
         {
             _gameComponent.PushSoundFact(power, text);
         }
 
         /// <inheritdoc/>
-        public void PushSoundFact(float power, RuleInstance fact)
+        public IMethodResponse PushSoundFact(float power, RuleInstance fact)
         {
             _gameComponent.PushSoundFact(power, fact);
         }
 
         /// <inheritdoc/>
-        public void AddCategory(IMonitorLogger logger, string category)
+        public IMethodResponse AddCategory(IMonitorLogger logger, string category)
         {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
                 {
                     _addedCategories.Add(category);
-                    return;
+                    return CompletedMethodResponse.Instance;
                 }
 
-                _gameComponent.AddCategory(logger, category);
+                return _gameComponent.AddCategory(logger, category);
             }
         }
 
         /// <inheritdoc/>
-        public void AddCategories(IMonitorLogger logger, List<string> categories)
+        public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
         {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
                 {
                     _addedCategories.AddRange(categories);
-                    return;
+                    return CompletedMethodResponse.Instance;
                 }
 
-                _gameComponent.AddCategories(logger, categories);
+                return _gameComponent.AddCategories(logger, categories);
             }
         }
 
         /// <inheritdoc/>
-        public void RemoveCategory(IMonitorLogger logger, string category)
+        public IMethodResponse RemoveCategory(IMonitorLogger logger, string category)
         {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
                 {
                     _removedCategories.Add(category);
-                    return;
+                    return CompletedMethodResponse.Instance;
                 }
 
-                _gameComponent.RemoveCategory(logger, category);
+                return _gameComponent.RemoveCategory(logger, category);
             }
         }
 
         /// <inheritdoc/>
-        public void RemoveCategories(IMonitorLogger logger, List<string> categories)
+        public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
                 {
                     _removedCategories.AddRange(categories);
-                    return;
+                    return CompletedMethodResponse.Instance;
                 }
 
-                _gameComponent.RemoveCategories(logger, categories);
+                return _gameComponent.RemoveCategories(logger, categories);
             }
         }
 

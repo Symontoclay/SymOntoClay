@@ -8,6 +8,13 @@ namespace SymOntoClay.Core.Internal.Serialization.Functors
 {
     public class BaseFunctorWithoutResult : BaseFunctor
     {
+        public static BaseFunctorWithoutResult Run(IMonitorLogger logger, Action action, IActiveObjectContext context, ICustomThreadPool threadPool)
+        {
+            var functor = new BaseFunctorWithoutResult(logger, action, context, threadPool);
+            functor.Run();
+            return functor;
+        }
+
         public BaseFunctorWithoutResult(IMonitorLogger logger, Action action, IActiveObjectContext context, ICustomThreadPool threadPool)
             : base(logger, context, threadPool)
         {

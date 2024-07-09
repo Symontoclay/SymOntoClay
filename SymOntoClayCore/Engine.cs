@@ -150,17 +150,17 @@ namespace SymOntoClay.Core
             }
         }
 
-        public string InsertPublicFact(IMonitorLogger logger, string text)
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
         {
             return _context.Storage.InsertPublicFact(logger, text);
         }
 
-        public string InsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
         {
             return _context.Storage.InsertPublicFact(logger, factName, text);
         }
 
-        public string InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             return _context.Storage.InsertPublicFact(logger, fact);
         }
@@ -172,89 +172,101 @@ namespace SymOntoClay.Core
             }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
-        public string InsertFact(IMonitorLogger logger, string text)
+        public IMethodResponse<string> InsertFact(IMonitorLogger logger, string text)
         {
             return _context.Storage.InsertFact(logger, text);
         }
 
-        public string InsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        public IMethodResponse<string> InsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
         {
             return _context.Storage.InsertFact(logger, factName, text);
         }
 
-        public void RemoveFact(IMonitorLogger logger, string id)
+        public IMethodResponse RemoveFact(IMonitorLogger logger, string id)
         {
-            LoggedFunctorWithoutResult<string>.Run(logger, id, (loggerValue, idValue) => {
+            return LoggedFunctorWithoutResult<string>.Run(logger, id, (loggerValue, idValue) => {
                 _context.Storage.RemoveFact(loggerValue, idValue);
-            }, _activeObjectContext, _threadPool);
+            }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
         public IStorage PublicFactsStorage => _context.Storage.PublicFactsStorage;
 
-        public void AddVisibleStorage(IMonitorLogger logger, IStorage storage)
+        public IMethodResponse AddVisibleStorage(IMonitorLogger logger, IStorage storage)
         {
-            _context.Storage.AddVisibleStorage(logger, storage);
+            return LoggedFunctorWithoutResult<IStorage>.Run(logger, storage, (loggerValue, storageValue) => {
+                _context.Storage.AddVisibleStorage(loggerValue, storageValue);
+            }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
-        public void RemoveVisibleStorage(IMonitorLogger logger, IStorage storage)
+        public IMethodResponse RemoveVisibleStorage(IMonitorLogger logger, IStorage storage)
         {
-            _context.Storage.RemoveVisibleStorage(logger, storage);
+            return LoggedFunctorWithoutResult<IStorage>.Run(logger, storage, (loggerValue, storageValue) => {
+                _context.Storage.RemoveVisibleStorage(loggerValue, storageValue);
+            }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
-        public string InsertPerceptedFact(IMonitorLogger logger, string text)
+        public IMethodResponse<string> InsertPerceptedFact(IMonitorLogger logger, string text)
         {
             return _context.Storage.InsertPerceptedFact(logger, text);
         }
 
-        public void RemovePerceptedFact(IMonitorLogger logger, string id)
+        public IMethodResponse RemovePerceptedFact(IMonitorLogger logger, string id)
         {
-            LoggedFunctorWithoutResult<string>.Run(logger, id, (loggerValue, idValue) =>
+            return LoggedFunctorWithoutResult<string>.Run(logger, id, (loggerValue, idValue) =>
             {
                 _context.Storage.RemovePerceptedFact(loggerValue, idValue);
-            }, _activeObjectContext, _threadPool);
+            }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
-        public void InsertListenedFact(IMonitorLogger logger, string text)
+        public IMethodResponse InsertListenedFact(IMonitorLogger logger, string text)
         {
-            LoggedFunctorWithoutResult<string>.Run(logger, text, (loggerValue, textValue) => {
+            return LoggedFunctorWithoutResult<string>.Run(logger, text, (loggerValue, textValue) => {
                 _context.Storage.InsertListenedFact(loggerValue, textValue);
-            }, _activeObjectContext, _threadPool);
+            }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
-        public void InsertListenedFact(IMonitorLogger logger, RuleInstance fact)
+        public IMethodResponse InsertListenedFact(IMonitorLogger logger, RuleInstance fact)
         {
-            _context.Storage.InsertListenedFact(logger, fact);
+            return LoggedFunctorWithoutResult<RuleInstance>.Run(logger, fact, (loggerValue, factValue) => {
+                _context.Storage.InsertListenedFact(loggerValue, factValue);
+            }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
-        public void AddCategory(IMonitorLogger logger, string category)
+        public IMethodResponse AddCategory(IMonitorLogger logger, string category)
         {
-            LoggedFunctorWithoutResult<string>.Run(logger, category, (loggerValue, categoryValue) => {
+            return LoggedFunctorWithoutResult<string>.Run(logger, category, (loggerValue, categoryValue) => {
                 _context.Storage.AddCategory(loggerValue, categoryValue);
-            }, _activeObjectContext, _threadPool);
+            }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
-        public void AddCategories(IMonitorLogger logger, List<string> categories)
+        public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
         {
-            _context.Storage.AddCategories(logger, categories);
+            return LoggedFunctorWithoutResult<List<string>>.Run(logger, categories, (loggerValue, categoriesValue) => {
+                _context.Storage.AddCategories(loggerValue, categoriesValue);
+            }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
-        public void RemoveCategory(IMonitorLogger logger, string category)
+        public IMethodResponse RemoveCategory(IMonitorLogger logger, string category)
         {
-            LoggedFunctorWithoutResult<string>.Run(logger, category, (loggerValue, categoryValue) => {
+            return LoggedFunctorWithoutResult<string>.Run(logger, category, (loggerValue, categoryValue) => {
                 _context.Storage.RemoveCategory(loggerValue, categoryValue);
-            }, _activeObjectContext, _threadPool);
+            }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
-        public void RemoveCategories(IMonitorLogger logger, List<string> categories)
+        public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
-            _context.Storage.RemoveCategories(logger, categories);
+            return LoggedFunctorWithoutResult<List<string>>.Run(logger, categories, (loggerValue, categoriesValue) => {
+                _context.Storage.RemoveCategories(loggerValue, categoriesValue);
+            }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
         public bool EnableCategories { get => _context.Storage.EnableCategories; set => _context.Storage.EnableCategories = value; }
 
-        public void Die()
+        public IMethodResponse Die()
         {
-            _context.Die();
+            return BaseFunctorWithoutResult.Run(Logger, () => {
+                _context.Die();
+            },_activeObjectContext, _threadPool).ToMethodResponse();
         }
 
         /// <inheritdoc/>

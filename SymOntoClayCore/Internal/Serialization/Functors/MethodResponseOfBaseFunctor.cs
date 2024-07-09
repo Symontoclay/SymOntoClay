@@ -16,6 +16,12 @@ namespace SymOntoClay.Core.Internal.Serialization.Functors
 
         /// <inheritdoc/>
         public Task Task => _source.TaskValue.StandardTask;
+
+        /// <inheritdoc/>
+        public void Wait()
+        {
+            _source.TaskValue.StandardTask.Wait();
+        }
     }
 
     public class MethodResponseOfBaseFunctor<TResult> : IMethodResponse<TResult>
@@ -32,5 +38,11 @@ namespace SymOntoClay.Core.Internal.Serialization.Functors
 
         /// <inheritdoc/>
         public TResult Result => _source.Result;
+
+        /// <inheritdoc/>
+        public void Wait()
+        {
+            _source.TaskValue.StandardTask.Wait();
+        }
     }
 }

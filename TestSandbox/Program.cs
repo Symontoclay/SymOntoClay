@@ -160,7 +160,7 @@ namespace TestSandbox
             //TstRegOperatorsHandler();
             //TstCreateEngineContext();
             //TstMethodResponsingHandler();
-            TstAsyncActiveOnceObjectHandler();
+            //TstAsyncActiveOnceObjectHandler();
             //TstAsyncActivePeriodicObjectHandler();
             //TstSyncActivePeriodicObjectHandler();
             //TstCodeExecution();
@@ -172,7 +172,7 @@ namespace TestSandbox
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            //TstGeneralStartHandler();//<=
+            TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);

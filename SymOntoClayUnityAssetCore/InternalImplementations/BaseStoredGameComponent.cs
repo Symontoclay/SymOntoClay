@@ -23,6 +23,7 @@ SOFTWARE.*/
 using NLog;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.Serialization.Functors;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.Internal.HostSupport;
@@ -97,9 +98,9 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             return HostStorage.InsertPublicFact(logger, fact);
         }
 
-        public void RemovePublicFact(IMonitorLogger logger, string id)
+        public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
         {
-            HostStorage.RemovePublicFact(logger, id);
+            return HostStorage.RemovePublicFact(logger, id);
         }
 
         public void PushSoundFact(float power, string text)

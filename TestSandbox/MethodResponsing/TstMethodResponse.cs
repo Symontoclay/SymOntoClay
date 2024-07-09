@@ -11,5 +11,10 @@ namespace TestSandbox.MethodResponsing
         }
 
         public Task Task { get; private set; }
+
+        public void Wait()
+        {
+            Task.Wait();
+        }
     }
 }

@@ -25,11 +25,15 @@ using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Helpers;
+using SymOntoClay.Core.Internal.Serialization.Functors;
 using SymOntoClay.Core.Internal.Storage;
+using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace SymOntoClay.Core
 {
@@ -42,9 +46,13 @@ namespace SymOntoClay.Core
             _additionalSourceCodePaths = settings.AdditionalSourceCodePaths;
 
             _context = EngineContextHelper.CreateAndInitMainStorageContext(settings);
+            _activeObjectContext = _context.ActiveObjectContext;
+            _threadPool = _context.AsyncEventsThreadPool;
         }
         
         private readonly MainStorageContext _context;
+        private readonly IActiveObjectContext _activeObjectContext;
+        private readonly ICustomThreadPool _threadPool;
 
         /// <inheritdoc/>
         public IMainStorageContext Context => _context;
@@ -294,18 +302,21 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public void RemovePublicFact(IMonitorLogger logger, string id)
+        public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
         {
             lock (_stateLockObj)
             {
                 if (_storageComponent == null)
                 {
                     _defferedRemovedPublicFacts.Add(id);
-                    return;
+                    return CompletedMethodResponse.Instance;
                 }
 
-                _storageComponent.RemovePublicFact(logger, id);
-            }            
+                return LoggedFunctorWithoutResult<string>.Run(logger, id, (loggerValue, idValue) =>
+                {
+                    _storageComponent.RemovePublicFact(logger, id);
+                }, _activeObjectContext, _threadPool).ToMethodResponse();
+            }
         }
 
         /// <inheritdoc/>

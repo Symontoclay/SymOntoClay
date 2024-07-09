@@ -165,11 +165,11 @@ namespace SymOntoClay.Core
             return _context.Storage.InsertPublicFact(logger, fact);
         }
 
-        public void RemovePublicFact(IMonitorLogger logger, string id)
+        public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
         {
-            LoggedFunctorWithoutResult<string>.Run(logger, id, (loggerValue, idValue) => {
+            return LoggedFunctorWithoutResult<string>.Run(logger, id, (loggerValue, idValue) => {
                 _context.Storage.RemovePublicFact(loggerValue, idValue);
-            }, _activeObjectContext, _threadPool);
+            }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
         public string InsertFact(IMonitorLogger logger, string text)

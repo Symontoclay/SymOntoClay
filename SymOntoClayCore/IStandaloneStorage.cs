@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.Serialization.Functors;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Monitor.Common;
 using System;
@@ -36,7 +37,7 @@ namespace SymOntoClay.Core
         IStorage Storage { get; }
         string InsertPublicFact(IMonitorLogger logger, string text);
         string InsertPublicFact(IMonitorLogger logger, RuleInstance fact);
-        void RemovePublicFact(IMonitorLogger logger, string id);
+        IMethodResponse RemovePublicFact(IMonitorLogger logger, string id);
         IStorage PublicFactsStorage { get; }
         ConsolidatedPublicFactsStorage WorldPublicFactsStorage { get; }
         IMainStorageContext Context { get; }

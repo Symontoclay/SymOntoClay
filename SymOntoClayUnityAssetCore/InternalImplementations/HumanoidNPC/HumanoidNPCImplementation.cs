@@ -25,6 +25,7 @@ using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.Serialization.Functors;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.Internal;
 using System;
@@ -91,7 +92,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 {
                     foreach (var item in _defferedRemovedPublicFacts)
                     {
-                        _gameComponent.RemovePublicFact(Logger, item);
+                        _gameComponent.RemovePublicFact(Logger, item).Wait();
                     }
 
                     _defferedRemovedPublicFacts.Clear();
@@ -276,17 +277,17 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        public void RemovePublicFact(IMonitorLogger logger, string id)
+        public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
         {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
                 {
                     _defferedRemovedPublicFacts.Add(id);
-                    return;
+                    return CompletedMethodResponse.Instance;
                 }
 
-                _gameComponent.RemovePublicFact(logger, id);
+                return _gameComponent.RemovePublicFact(logger, id);
             }
         }
 

@@ -115,22 +115,32 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 
         public IMethodResponse AddCategory(IMonitorLogger logger, string category)
         {
-            HostStorage.AddCategory(logger, category);
+            return HostStorage.AddCategory(logger, category);
         }
 
         public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
         {
-            HostStorage.AddCategories(logger, categories);
+            return HostStorage.AddCategories(logger, categories);
+        }
+
+        public void DirectAddCategories(IMonitorLogger logger, List<string> categories)
+        {
+            _directHostStorage.DirectAddCategories(logger, categories);
         }
 
         public IMethodResponse RemoveCategory(IMonitorLogger logger, string category)
         {
-            HostStorage.RemoveCategory(logger, category);
+            return HostStorage.RemoveCategory(logger, category);
         }
 
         public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
-            HostStorage.RemoveCategories(logger, categories);
+            return HostStorage.RemoveCategories(logger, categories);
+        }
+
+        public void DirectRemoveCategories(IMonitorLogger logger, List<string> categories)
+        {
+            _directHostStorage.DirectRemoveCategories(logger, categories);
         }
 
         public bool EnableCategories { get => HostStorage.EnableCategories; set => HostStorage.EnableCategories = value; }

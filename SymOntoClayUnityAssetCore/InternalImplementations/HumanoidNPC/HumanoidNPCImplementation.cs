@@ -62,7 +62,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 {
                     foreach(var item in _deferredPublicFactsTexts)
                     {
-                        _gameComponent.InsertPublicFact(Logger, item.Item1, item.Item2).Wait();
+                        _gameComponent.DirectInsertPublicFact(Logger, item.Item1, item.Item2);
                     }
 
                     _deferredPublicFactsTexts.Clear();
@@ -77,7 +77,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 {
                     foreach (var item in _deferredPublicFactsInstances)
                     {
-                        _gameComponent.InsertPublicFact(Logger, item).Wait();
+                        _gameComponent.DirectInsertPublicFact(Logger, item);
                     }
 
                     _deferredPublicFactsInstances.Clear();
@@ -92,7 +92,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 {
                     foreach (var item in _defferedRemovedPublicFacts)
                     {
-                        _gameComponent.RemovePublicFact(Logger, item).Wait();
+                        _gameComponent.DirectRemovePublicFact(Logger, item);
                     }
 
                     _defferedRemovedPublicFacts.Clear();
@@ -107,7 +107,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 {
                     foreach (var item in _deferredFactsTexts)
                     {
-                        _gameComponent.InsertFact(Logger, item.Item1, item.Item2).Wait();
+                        _gameComponent.DirectInsertFact(Logger, item.Item1, item.Item2);
                     }
 
                     _deferredFactsTexts.Clear();
@@ -122,7 +122,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 {
                     foreach (var item in _defferedRemovedFacts)
                     {
-                        _gameComponent.RemoveFact(Logger, item).Wait();
+                        _gameComponent.DirectRemoveFact(Logger, item);
                     }
 
                     _defferedRemovedFacts.Clear();
@@ -135,7 +135,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
                 if (_deferredAddedCategories.Any())
                 {
-                    _gameComponent.AddCategories(null, _deferredAddedCategories).Wait();
+                    _gameComponent.DirectAddCategories(null, _deferredAddedCategories);
                     _deferredAddedCategories.Clear();
                     _deferredAddedCategories = null;
                 }
@@ -146,7 +146,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
                 if (_deferredRemovedCategories.Any())
                 {
-                    _gameComponent.RemoveCategories(null, _deferredRemovedCategories).Wait();
+                    _gameComponent.DirectRemoveCategories(null, _deferredRemovedCategories);
                     _deferredRemovedCategories.Clear();
                     _deferredRemovedCategories = null;
                 }
@@ -249,7 +249,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 {
                     var factName = NameHelper.CreateRuleOrFactName();
                     _deferredPublicFactsTexts.Add((factName, text));
-                    return factName.NameValue;
+                    return new CompletedMethodResponse<string>(factName.NameValue);
                 }
 
                 return _gameComponent.InsertPublicFact(logger, text);
@@ -269,7 +269,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                     }
 
                     _deferredPublicFactsInstances.Add(fact);
-                    return fact.Name.NameValue;
+                    return new CompletedMethodResponse<string>(fact.Name.NameValue);
                 }
 
                 return _gameComponent.InsertPublicFact(logger, fact);
@@ -300,7 +300,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 {
                     var factName = NameHelper.CreateRuleOrFactName();
                     _deferredFactsTexts.Add((factName, text));
-                    return factName.NameValue;
+                    return new CompletedMethodResponse<string>(factName.NameValue);
                 }
 
                 return _gameComponent.InsertFact(logger, text);

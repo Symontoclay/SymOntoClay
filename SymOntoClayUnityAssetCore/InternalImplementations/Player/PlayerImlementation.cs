@@ -57,13 +57,13 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
 
                     if (_addedCategories.Any())
                     {
-                        _gameComponent.AddCategories(null, _addedCategories).Wait();
+                        _gameComponent.DirectAddCategories(null, _addedCategories);
                         _addedCategories = null;
                     }
 
                     if (_removedCategories.Any())
                     {
-                        _gameComponent.RemoveCategories(null, _removedCategories).Wait();
+                        _gameComponent.DirectRemoveCategories(null, _removedCategories);
                         _removedCategories = null;
                     }
 
@@ -127,13 +127,13 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         /// <inheritdoc/>
         public IMethodResponse PushSoundFact(float power, string text)
         {
-            _gameComponent.PushSoundFact(power, text);
+            return _gameComponent.PushSoundFact(power, text);
         }
 
         /// <inheritdoc/>
         public IMethodResponse PushSoundFact(float power, RuleInstance fact)
         {
-            _gameComponent.PushSoundFact(power, fact);
+            return _gameComponent.PushSoundFact(power, fact);
         }
 
         /// <inheritdoc/>

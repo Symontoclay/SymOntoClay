@@ -58,13 +58,13 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Place
 
                     if(_addedCategories.Any())
                     {
-                        _gameComponent.AddCategories(null, _addedCategories).Wait();
+                        _gameComponent.DirectAddCategories(null, _addedCategories);
                         _addedCategories = null;
                     }
 
                     if (_removedCategories.Any())
                     {
-                        _gameComponent.RemoveCategories(null, _removedCategories).Wait();
+                        _gameComponent.DirectRemoveCategories(null, _removedCategories);
                         _removedCategories = null;
                     }
 

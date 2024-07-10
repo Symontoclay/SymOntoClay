@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using NLog;
 using SymOntoClay.Core;
+using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
@@ -57,6 +58,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _cancellationTokenSource = new CancellationTokenSource();
             _linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, worldContext.GetCancellationToken());
 
+            ActiveObjectContext = new ActiveObjectContext(worldContext.SyncContext, _linkedCancellationTokenSource.Token);
+
             var threadingSettings = settings.ThreadingSettings?.AsyncEvents;
             var worldThreadingSettings = worldContext.ThreadingSettings;
 
@@ -78,6 +81,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         /// <inheritdoc/>
         public ICustomThreadPool AsyncEventsThreadPool { get; private set; }
+
+        public ActiveObjectContext ActiveObjectContext { get; private set; }
 
         /// <inheritdoc/>
         public CancellationToken GetCancellationToken()

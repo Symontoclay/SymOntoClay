@@ -25,7 +25,9 @@ using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Serialization.Functors;
 using SymOntoClay.Core.Internal.Storage;
+using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport;
 using SymOntoClay.UnityAsset.Core.Internal.HostSupport;
@@ -36,6 +38,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
 using System.Text;
+using System.Threading;
 
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 {
@@ -56,6 +59,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 internalContext.CancellationToken = GetCancellationToken();
 
                 internalContext.AsyncEventsThreadPool = AsyncEventsThreadPool;
+                _threadPool = AsyncEventsThreadPool;
+                _activeObjectContext = ActiveObjectContext;
 
                 var tmpDir = Path.Combine(worldContext.TmpDir, settings.Id);
 
@@ -103,6 +108,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
                 _coreEngine = new Engine(coreEngineSettings);
                 internalContext.CoreEngine = _coreEngine;
+
+                _directEngine = _coreEngine;
             }
             catch (Exception e)
             {
@@ -114,12 +121,15 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
         private readonly bool _allowPublicPosition;
         private readonly Engine _coreEngine;
+        private readonly IDirectEngine _directEngine;
         private readonly VisionComponent _visionComponent;
         private readonly HostSupportComponent _hostSupport;
         private readonly SoundPublisherComponent _soundPublisher;
         private readonly SoundReceiverComponent _soundReceiverComponent;
         private readonly ConditionalEntityHostSupportComponent _conditionalEntityHostSupportComponent;
         private readonly ConsolidatedPublicFactsStorage _backpackStorage;
+        private readonly IActiveObjectContext _activeObjectContext;
+        private readonly ICustomThreadPool _threadPool;
 
         /// <inheritdoc/>
         public override IStorage PublicFactsStorage => _coreEngine.PublicFactsStorage;
@@ -177,14 +187,29 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             return _coreEngine.InsertPublicFact(logger, factName, text);
         }
 
+        public string DirectInsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        {
+            return _directEngine.DirectInsertPublicFact(logger, factName, text);
+        }
+
         public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             return _coreEngine.InsertPublicFact(logger, fact);
         }
 
+        public string DirectInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        {
+            return _directEngine.DirectInsertPublicFact(logger, fact);
+        }
+
         public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
         {
             return _coreEngine.RemovePublicFact(logger, id);
+        }
+
+        public void DirectRemovePublicFact(IMonitorLogger logger, string id)
+        {
+            _directEngine.DirectRemovePublicFact(logger, id);
         }
 
         public IMethodResponse<string> InsertFact(IMonitorLogger logger, string text)
@@ -197,9 +222,19 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             return _coreEngine.InsertFact(logger, factName, text);
         }
 
+        public string DirectInsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        {
+            return _directEngine.DirectInsertFact(logger, factName, text);
+        }
+
         public IMethodResponse RemoveFact(IMonitorLogger logger, string id)
         {
             return _coreEngine.RemoveFact(logger, id);
+        }
+
+        public void DirectRemoveFact(IMonitorLogger logger, string id)
+        {
+            _directEngine.DirectRemoveFact(logger, id);
         }
 
         public IMethodResponse PushSoundFact(float power, string text)
@@ -219,7 +254,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
         public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
         {
-            return CompletedMethodResponse.Instance_coreEngine.AddCategories(logger, categories);
+            return _coreEngine.AddCategories(logger, categories);
+        }
+
+        public void DirectAddCategories(IMonitorLogger logger, List<string> categories)
+        {
+            _directEngine.DirectAddCategories(logger, categories);
         }
 
         public IMethodResponse RemoveCategory(IMonitorLogger logger, string category)
@@ -230,6 +270,11 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
             return _coreEngine.RemoveCategories(logger, categories);
+        }
+
+        public void DirectRemoveCategories(IMonitorLogger logger, List<string> categories)
+        {
+            _directEngine.DirectRemoveCategories(logger, categories);
         }
 
         public bool EnableCategories { get => _coreEngine.EnableCategories; set => _coreEngine.EnableCategories = value; }
@@ -270,8 +315,10 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
         public IMethodResponse Die()
         {
-            _coreEngine.Die();
-            _visionComponent?.Die();
+            return LoggedFunctorWithoutResult.Run(Logger, (loggerValue) => {
+                _directEngine.DirectDie();
+                _visionComponent?.DirectDie();
+            }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
         /// <inheritdoc/>

@@ -274,7 +274,7 @@ namespace SymOntoClay.Core
                 {
                     var factName = NameHelper.CreateRuleOrFactName();
                     _deferredPublicFactsTexts.Add((factName, text));
-                    return factName.NameValue;
+                    return new CompletedMethodResponse<string>(factName.NameValue);
                 }
 
                 return _storageComponent.InsertPublicFact(logger, text);
@@ -294,7 +294,7 @@ namespace SymOntoClay.Core
                     }
 
                     _deferredPublicFactsInstances.Add(fact);
-                    return fact.Name.NameValue;
+                    return new CompletedMethodResponse<string>(fact.Name.NameValue);
                 }
 
                 return _storageComponent.InsertPublicFact(logger, fact);

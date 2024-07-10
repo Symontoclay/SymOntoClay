@@ -22,11 +22,23 @@ namespace SymOntoClay.Core.Internal.Serialization.Functors
     {
         public static CompletedMethodResponse<TResult> Instance = new CompletedMethodResponse<TResult>();
 
-        /// <inheritdoc/>
-        public Task<TResult> Task => Task<TResult>.FromResult(default(TResult));
+        public CompletedMethodResponse()
+            : this(default(TResult))
+        {
+        }
+
+        public CompletedMethodResponse(TResult result)
+        {
+            _result = result;
+        }
+
+        private readonly TResult _result;
 
         /// <inheritdoc/>
-        public TResult Result => default;
+        public Task<TResult> Task => Task<TResult>.FromResult(_result);
+
+        /// <inheritdoc/>
+        public TResult Result => _result;
 
         /// <inheritdoc/>
         public void Wait()

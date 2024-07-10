@@ -177,22 +177,36 @@ namespace SymOntoClay.Core
         public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             return LoggedFunctorWithResult<RuleInstance, string>.Run(logger, fact, (loggerValue, factValue) => {
-                return _context.Storage.InsertPublicFact(loggerValue, factValue);
+                return NDirectInsertPublicFact(loggerValue, factValue);
             }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
         string IDirectEngine.DirectInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        {
+            return NDirectInsertPublicFact(logger, fact);
+        }
+
         private string NDirectInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        {
+            return _context.Storage.InsertPublicFact(logger, fact);
+        }
 
         public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
         {
             return LoggedFunctorWithoutResult<string>.Run(logger, id, (loggerValue, idValue) => {
-                _context.Storage.RemovePublicFact(loggerValue, idValue);
+                NDirectRemovePublicFact(loggerValue, idValue);
             }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
         void IDirectEngine.DirectRemovePublicFact(IMonitorLogger logger, string id)
+        {
+            NDirectRemovePublicFact(logger, id);
+        }
+
         private void NDirectRemovePublicFact(IMonitorLogger logger, string id)
+        {
+            _context.Storage.RemovePublicFact(logger, id);
+        }
 
         public IMethodResponse<string> InsertFact(IMonitorLogger logger, string text)
         {
@@ -204,22 +218,36 @@ namespace SymOntoClay.Core
         public IMethodResponse<string> InsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
         {
             return LoggedFunctorWithResult<StrongIdentifierValue, string, string>.Run(logger, factName, text, (loggerValue, factNameValue, textValue) => {
-                return _context.Storage.InsertFact(loggerValue, factNameValue, textValue);
+                return NDirectInsertFact(loggerValue, factNameValue, textValue);
             }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
         string IDirectEngine.DirectInsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        {
+            return NDirectInsertFact(logger, factName, text);
+        }
+
         private string NDirectInsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        {
+            return _context.Storage.InsertFact(logger, factName, text);
+        }
 
         public IMethodResponse RemoveFact(IMonitorLogger logger, string id)
         {
             return LoggedFunctorWithoutResult<string>.Run(logger, id, (loggerValue, idValue) => {
-                _context.Storage.RemoveFact(loggerValue, idValue);
+                NDirectRemoveFact(loggerValue, idValue);
             }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
         void IDirectEngine.DirectRemoveFact(IMonitorLogger logger, string id)
+        {
+            NDirectRemoveFact(logger, id);
+        }
+
         private void NDirectRemoveFact(IMonitorLogger logger, string id)
+        {
+            _context.Storage.RemoveFact(logger, id);
+        }
 
         public IStorage PublicFactsStorage => _context.Storage.PublicFactsStorage;
 
@@ -243,23 +271,53 @@ namespace SymOntoClay.Core
         public IMethodResponse RemoveVisibleStorage(IMonitorLogger logger, IStorage storage)
         {
             return LoggedFunctorWithoutResult<IStorage>.Run(logger, storage, (loggerValue, storageValue) => {
-                _context.Storage.RemoveVisibleStorage(loggerValue, storageValue);
+                NDirectRemoveVisibleStorage(loggerValue, storageValue);
             }, _activeObjectContext, _threadPool).ToMethodResponse();
+        }
+
+        void IDirectEngine.DirectRemoveVisibleStorage(IMonitorLogger logger, IStorage storage)
+        {
+            NDirectRemoveVisibleStorage(logger, storage);
+        }
+
+        private void NDirectRemoveVisibleStorage(IMonitorLogger logger, IStorage storage)
+        {
+            _context.Storage.RemoveVisibleStorage(logger, storage);
         }
 
         public IMethodResponse<string> InsertPerceptedFact(IMonitorLogger logger, string text)
         {
             return LoggedFunctorWithResult<string, string>.Run(logger, text, (loggerValue, textValue) => {
-                return _context.Storage.InsertPerceptedFact(loggerValue, textValue);
+                return NDirectInsertPerceptedFact(loggerValue, textValue);
             }, _activeObjectContext, _threadPool).ToMethodResponse();
+        }
+
+        string IDirectEngine.DirectInsertPerceptedFact(IMonitorLogger logger, string text)
+        {
+            return NDirectInsertPerceptedFact(logger, text);
+        }
+
+        private string NDirectInsertPerceptedFact(IMonitorLogger logger, string text)
+        {
+            return _context.Storage.InsertPerceptedFact(logger, text);
         }
 
         public IMethodResponse RemovePerceptedFact(IMonitorLogger logger, string id)
         {
             return LoggedFunctorWithoutResult<string>.Run(logger, id, (loggerValue, idValue) =>
             {
-                _context.Storage.RemovePerceptedFact(loggerValue, idValue);
+                NDirectRemovePerceptedFact(loggerValue, idValue);
             }, _activeObjectContext, _threadPool).ToMethodResponse();
+        }
+
+        void IDirectEngine.DirectRemovePerceptedFact(IMonitorLogger logger, string id)
+        {
+            NDirectRemovePerceptedFact(logger, id);
+        }
+
+        private void NDirectRemovePerceptedFact(IMonitorLogger logger, string id)
+        {
+            _context.Storage.RemovePerceptedFact(logger, id);
         }
 
         public IMethodResponse InsertListenedFact(IMonitorLogger logger, string text)
@@ -286,12 +344,19 @@ namespace SymOntoClay.Core
         public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
         {
             return LoggedFunctorWithoutResult<List<string>>.Run(logger, categories, (loggerValue, categoriesValue) => {
-                _context.Storage.AddCategories(loggerValue, categoriesValue);
+                NDirectAddCategories(loggerValue, categoriesValue);
             }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
         void IDirectEngine.DirectAddCategories(IMonitorLogger logger, List<string> categories)
+        {
+            NDirectAddCategories(logger, categories);
+        }
+
         private void NDirectAddCategories(IMonitorLogger logger, List<string> categories)
+        {
+            _context.Storage.AddCategories(logger, categories);
+        }
 
         public IMethodResponse RemoveCategory(IMonitorLogger logger, string category)
         {
@@ -303,12 +368,19 @@ namespace SymOntoClay.Core
         public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
             return LoggedFunctorWithoutResult<List<string>>.Run(logger, categories, (loggerValue, categoriesValue) => {
-                _context.Storage.RemoveCategories(loggerValue, categoriesValue);
+                NDirectRemoveCategories(loggerValue, categoriesValue);
             }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
         void IDirectEngine.DirectRemoveCategories(IMonitorLogger logger, List<string> categories)
+        {
+            NDirectRemoveCategories(logger, categories);
+        }
+
         private void NDirectRemoveCategories(IMonitorLogger logger, List<string> categories)
+        {
+            _context.Storage.RemoveCategories(logger, categories);
+        }
 
         public bool EnableCategories { get => _context.Storage.EnableCategories; set => _context.Storage.EnableCategories = value; }
 

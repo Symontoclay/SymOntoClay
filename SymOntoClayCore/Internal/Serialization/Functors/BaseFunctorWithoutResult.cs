@@ -69,4 +69,27 @@ namespace SymOntoClay.Core.Internal.Serialization.Functors
             _action(_arg1, _arg2);
         }
     }
+
+    public class BaseFunctorWithoutResult<T1, T2, T3> : BaseFunctor
+    {
+        public BaseFunctorWithoutResult(IMonitorLogger logger, T1 arg1, T2 arg2, T3 arg3, Action<T1, T2, T3> action, IActiveObjectContext context, ICustomThreadPool threadPool)
+            : base(logger, context, threadPool)
+        {
+            _action = action;
+            _arg1 = arg1;
+            _arg2 = arg2;
+            _arg3 = arg3;
+        }
+
+        private readonly Action<T1, T2, T3> _action;
+        private readonly T1 _arg1;
+        private readonly T2 _arg2;
+        private readonly T3 _arg3;
+
+        /// <inheritdoc/>
+        protected override void OnRun(CancellationToken cancellationToken)
+        {
+            _action(_arg1, _arg2, _arg3);
+        }
+    }
 }

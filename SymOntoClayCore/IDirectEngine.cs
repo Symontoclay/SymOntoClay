@@ -14,6 +14,10 @@ namespace SymOntoClay.Core
         void DirectRemoveFact(IMonitorLogger logger, string id);
 
         void DirectAddVisibleStorage(IMonitorLogger logger, IStorage storage);
+        void DirectRemoveVisibleStorage(IMonitorLogger logger, IStorage storage);
+
+        string DirectInsertPerceptedFact(IMonitorLogger logger, string text);
+        void DirectRemovePerceptedFact(IMonitorLogger logger, string id);
 
         void DirectAddCategories(IMonitorLogger logger, List<string> categories);
         void DirectRemoveCategories(IMonitorLogger logger, List<string> categories);

@@ -34,10 +34,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SymOntoClay.Core
 {
-    public class StandaloneStorage: BaseComponent, IStandaloneStorage, ISerializableEngine
+    public class StandaloneStorage: BaseComponent, IStandaloneStorage, IDirectStandaloneStorage, ISerializableEngine
     {
         public StandaloneStorage(StandaloneStorageSettings settings)
             : base(settings.MonitorNode)
@@ -277,7 +278,9 @@ namespace SymOntoClay.Core
                     return new CompletedMethodResponse<string>(factName.NameValue);
                 }
 
-                return _storageComponent.InsertPublicFact(logger, text);
+                return LoggedFunctorWithResult<string, string>.Run(logger, text, (loggerValue, textValue) => {
+                    return _storageComponent.InsertPublicFact(loggerValue, textValue);
+                }, _activeObjectContext, _threadPool).ToMethodResponse();
             }
         }
 
@@ -297,7 +300,9 @@ namespace SymOntoClay.Core
                     return new CompletedMethodResponse<string>(fact.Name.NameValue);
                 }
 
-                return _storageComponent.InsertPublicFact(logger, fact);
+                return LoggedFunctorWithResult<RuleInstance, string>.Run(logger, fact, (loggerValue, factValue) => {
+                    return _storageComponent.InsertPublicFact(loggerValue, factValue);
+                }, _activeObjectContext, _threadPool).ToMethodResponse();
             }                
         }
 
@@ -314,7 +319,7 @@ namespace SymOntoClay.Core
 
                 return LoggedFunctorWithoutResult<string>.Run(logger, id, (loggerValue, idValue) =>
                 {
-                    _storageComponent.RemovePublicFact(logger, id);
+                    _storageComponent.RemovePublicFact(loggerValue, idValue);
                 }, _activeObjectContext, _threadPool).ToMethodResponse();
             }
         }
@@ -330,23 +335,37 @@ namespace SymOntoClay.Core
                     return CompletedMethodResponse.Instance;
                 }
 
-                _storageComponent.AddCategory(logger, category);
+                return LoggedFunctorWithoutResult<string>.Run(logger, category, (loggerValue, categoryValue) => {
+                    _storageComponent.AddCategory(loggerValue, categoryValue);
+                }, _activeObjectContext, _threadPool).ToMethodResponse();
             }
         }
 
         /// <inheritdoc/>
         public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
         {
+            return LoggedFunctorWithoutResult<List<string>>.Run(logger, categories, (loggerValue, categoriesValue) => {
+                NDirectAddCategories(loggerValue, categoriesValue);
+            }, _activeObjectContext, _threadPool).ToMethodResponse();
+        }
+
+        void IDirectStandaloneStorage.DirectAddCategories(IMonitorLogger logger, List<string> categories)
+        {
+            NDirectAddCategories(logger, categories);
+        }
+
+        private void NDirectAddCategories(IMonitorLogger logger, List<string> categories)
+        {
             lock (_stateLockObj)
             {
                 if (_storageComponent == null)
                 {
                     _deferredAddedCategories.AddRange(categories);
-                    return CompletedMethodResponse.Instance;
+                    return;
                 }
 
                 _storageComponent.AddCategories(logger, categories);
-            }            
+            }
         }
 
         /// <inheritdoc/>
@@ -360,23 +379,38 @@ namespace SymOntoClay.Core
                     return CompletedMethodResponse.Instance;
                 }
 
-                _storageComponent.RemoveCategory(logger, category);
-            }            
+                return LoggedFunctorWithoutResult<string>.Run(logger, category, (loggerValue, categoryValue) => {
+                    _storageComponent.RemoveCategory(loggerValue, categoryValue);
+                }, _activeObjectContext, _threadPool).ToMethodResponse();
+            }
         }
 
         /// <inheritdoc/>
         public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
+        {
+            return LoggedFunctorWithoutResult<List<string>>.Run(logger, categories, (loggerValue, categoriesValue) =>
+            {
+                NDirectRemoveCategories(loggerValue, categoriesValue);
+            }, _activeObjectContext, _threadPool).ToMethodResponse();
+        }
+
+        void IDirectStandaloneStorage.DirectRemoveCategories(IMonitorLogger logger, List<string> categories)
+        {
+            NDirectRemoveCategories(logger, categories);
+        }
+
+        private void NDirectRemoveCategories(IMonitorLogger logger, List<string> categories)
         {
             lock (_stateLockObj)
             {
                 if (_storageComponent == null)
                 {
                     _deferredRemovedCategories.AddRange(categories);
-                    return CompletedMethodResponse.Instance;
+                    return;
                 }
 
                 _storageComponent.RemoveCategories(logger, categories);
-            }            
+            }
         }
 
         /// <inheritdoc/>

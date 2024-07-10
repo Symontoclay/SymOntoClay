@@ -239,12 +239,16 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
         public IMethodResponse PushSoundFact(float power, string text)
         {
-            _soundPublisher.PushSoundFact(power, text);
+            return LoggedFunctorWithoutResult<float, string>.Run(Logger, power, text, (loggerValue, powerValue, textValue) => {
+                _soundPublisher.PushSoundFact(powerValue, textValue);
+            }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
         public IMethodResponse PushSoundFact(float power, RuleInstance fact)
         {
-            _soundPublisher.PushSoundFact(power, fact);
+            return LoggedFunctorWithoutResult<float, RuleInstance>.Run(Logger, power, fact, (loggerValue, powerValue, factValue) => {
+                _soundPublisher.PushSoundFact(powerValue, factValue);
+            }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
         public IMethodResponse AddCategory(IMonitorLogger logger, string category)
@@ -300,11 +304,15 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
         public IMethodResponse AddToBackpack(IMonitorLogger logger, IGameObject obj)
         {
+            return LoggedFunctorWithoutResult
+
             _backpackStorage.AddConsolidatedStorage(logger, obj.PublicFactsStorage);
         }
 
         public IMethodResponse RemoveFromBackpack(IMonitorLogger logger, IGameObject obj)
         {
+            return LoggedFunctorWithoutResult
+
             _backpackStorage.RemoveConsolidatedStorage(logger, obj.PublicFactsStorage);
         }
 

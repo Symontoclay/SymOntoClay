@@ -24,7 +24,9 @@ using NLog;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Serialization.Functors;
+using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.Internal.HostSupport;
 using SymOntoClay.UnityAsset.Core.Internal.SoundPerception;
@@ -44,6 +46,9 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
                 _hostSupport = new HostSupportComponent(Logger, settings.PlatformSupport, worldContext);
                 _soundPublisher = new SoundPublisherComponent(Logger, settings.InstanceId, settings.IdForFacts, _hostSupport, worldContext);
 
+                _threadPool = AsyncEventsThreadPool;
+                _activeObjectContext = ActiveObjectContext;
+
                 var standaloneStorageSettings = new StandaloneStorageSettings();
                 standaloneStorageSettings.Id = settings.Id;
                 standaloneStorageSettings.IsWorld = false;
@@ -60,7 +65,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
                 standaloneStorageSettings.ThreadingSettings = settings?.ThreadingSettings ?? worldContext.ThreadingSettings;
                 standaloneStorageSettings.CancellationToken = worldContext.GetCancellationToken();
 
-                HostStorage = new StandaloneStorage(standaloneStorageSettings);              
+                HostStorage = new StandaloneStorage(standaloneStorageSettings);
+                _directHostStorage = HostStorage;
             }
             catch (Exception e)
             {
@@ -74,6 +80,10 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         private readonly SoundPublisherComponent _soundPublisher;
 
         protected StandaloneStorage HostStorage { get; private set; }
+        private IDirectStandaloneStorage _directHostStorage;
+
+        private readonly IActiveObjectContext _activeObjectContext;
+        private readonly ICustomThreadPool _threadPool;
 
         /// <inheritdoc/>
         public override IStorage PublicFactsStorage => HostStorage.PublicFactsStorage;
@@ -105,12 +115,16 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 
         public IMethodResponse PushSoundFact(float power, string text)
         {
-            _soundPublisher.PushSoundFact(power, text);
+            return LoggedFunctorWithoutResult<float, string>.Run(Logger, power, text, (loggerValue, powerValue, textValue) => {
+                _soundPublisher.PushSoundFact(powerValue, textValue);
+            }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
         public IMethodResponse PushSoundFact(float power, RuleInstance fact)
         {
-            _soundPublisher.PushSoundFact(power, fact);
+            return LoggedFunctorWithoutResult<float, RuleInstance>.Run(Logger, power, fact, (loggerValue, powerValue, factValue) => {
+                _soundPublisher.PushSoundFact(powerValue, factValue);
+            }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
         public IMethodResponse AddCategory(IMonitorLogger logger, string category)

@@ -8136,7 +8136,13 @@
         <member name="M:SymOntoClay.Core.Internal.Serialization.Functors.BaseFunctorWithResult`1.OnRun(System.Threading.CancellationToken)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Serialization.Functors.BaseFunctorWithResult`2.OnRun(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Serialization.Functors.BaseFunctorWithResult`3.OnRun(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Serialization.Functors.BaseFunctorWithResult`4.OnRun(System.Threading.CancellationToken)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Serialization.Functors.CompletedMethodResponse.Task">

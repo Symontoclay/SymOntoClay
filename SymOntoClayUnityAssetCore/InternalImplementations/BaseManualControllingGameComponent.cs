@@ -79,11 +79,13 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 
         public IMethodResponse AddToManualControl(IGameObject obj, int device)
         {
-            AddToManualControl(obj, new List<int>() { device});
+            return AddToManualControl(obj, new List<int>() { device});
         }
 
         public IMethodResponse AddToManualControl(IGameObject obj, IList<int> devices)
         {
+            return LoggedFunctorWithoutResult
+
             lock (_manualControlLockObj)
             {
                 if(_internalManualControlledObjectsDict.ContainsKey(obj))
@@ -108,6 +110,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 
         public IMethodResponse RemoveFromManualControl(IGameObject obj)
         {
+            return LoggedFunctorWithoutResult
+
             lock (_manualControlLockObj)
             {
                 if(!_internalManualControlledObjectsDict.ContainsKey(obj))

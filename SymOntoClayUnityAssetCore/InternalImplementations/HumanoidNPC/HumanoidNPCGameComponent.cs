@@ -317,7 +317,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <summary>
-        /// Gets engine context. Onkly for debugging and testing!
+        /// Gets engine context. Only for debugging and testing!
         /// </summary>
         public IEngineContext EngineContext => _coreEngine.EngineContext;
 

@@ -21,4 +21,34 @@ namespace SymOntoClay.Core.Internal.Serialization.Functors
         {
         }
     }
+
+    public class LoggedFunctorWithResult<T, TResult> : BaseFunctorWithResult<IMonitorLogger, T, TResult>
+    {
+        public static LoggedFunctorWithResult<T, TResult> Run(IMonitorLogger logger, T arg, Func<IMonitorLogger, T, TResult> func, IActiveObjectContext context, ICustomThreadPool threadPool)
+        {
+            var functor = new LoggedFunctorWithResult<T, TResult>(logger, arg, func, context, threadPool);
+            functor.Run();
+            return functor;
+        }
+
+        public LoggedFunctorWithResult(IMonitorLogger logger, T arg, Func<IMonitorLogger, T, TResult> func, IActiveObjectContext context, ICustomThreadPool threadPool)
+            : base(logger, logger, arg, func, context, threadPool)
+        {
+        }
+    }
+
+    public class LoggedFunctorWithResult<T1, T2, TResult> : BaseFunctorWithResult<IMonitorLogger, T1, T2, TResult>
+    {
+        public static LoggedFunctorWithResult<T1, T2, TResult> Run(IMonitorLogger logger, T1 arg1, T2 arg2, Func<IMonitorLogger, T1, T2, TResult> func, IActiveObjectContext context, ICustomThreadPool threadPool)
+        {
+            var functor = new LoggedFunctorWithResult<T1, T2, TResult>(logger, arg1, arg2, func, context, threadPool);
+            functor.Run();
+            return functor;
+        }
+
+        public LoggedFunctorWithResult(IMonitorLogger logger, T1 arg1, T2 arg2, Func<IMonitorLogger, T1, T2, TResult> func, IActiveObjectContext context, ICustomThreadPool threadPool)
+            : base(logger, logger, arg1, arg2, func, context, threadPool)
+        {
+        }
+    }
 }

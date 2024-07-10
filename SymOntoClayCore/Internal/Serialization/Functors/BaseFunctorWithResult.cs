@@ -23,9 +23,10 @@ namespace SymOntoClay.Core.Internal.Serialization.Functors
         }
     }
 
-    public class BaseFunctorWithResult<T, TResult> : BaseFunctor
+    public class BaseFunctorWithResult<T, TResult> : BaseFunctor<TResult>
     {
         public BaseFunctorWithResult(IMonitorLogger logger, T arg, Func<T, TResult> func, IActiveObjectContext context, ICustomThreadPool threadPool)
+            : base(logger, context, threadPool)
         {
             _func = func;
             _arg = arg;
@@ -59,6 +60,29 @@ namespace SymOntoClay.Core.Internal.Serialization.Functors
         protected override TResult OnRun(CancellationToken cancellationToken)
         {
             return _func(_arg1, _arg2);
+        }
+    }
+
+    public class BaseFunctorWithResult<T1, T2, T3, TResult> : BaseFunctor<TResult>
+    {
+        public BaseFunctorWithResult(IMonitorLogger logger, T1 arg1, T2 arg2, T3 arg3, Func<T1, T2, T3, TResult> func, IActiveObjectContext context, ICustomThreadPool threadPool)
+            : base(logger, context, threadPool)
+        {
+            _func = func;
+            _arg1 = arg1;
+            _arg2 = arg2;
+            _arg3 = arg3;
+        }
+
+        private readonly Func<T1, T2, T3, TResult> _func;
+        private readonly T1 _arg1;
+        private readonly T2 _arg2;
+        private readonly T3 _arg3;
+
+        /// <inheritdoc/>
+        protected override TResult OnRun(CancellationToken cancellationToken)
+        {
+            return _func(_arg1, _arg2, _arg3);
         }
     }
 }

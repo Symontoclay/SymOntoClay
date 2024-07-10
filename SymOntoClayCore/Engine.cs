@@ -152,17 +152,23 @@ namespace SymOntoClay.Core
 
         public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
         {
-            return _context.Storage.InsertPublicFact(logger, text);
+            return LoggedFunctorWithResult<string, string>.Run(logger, text, (loggerValue, textValue) => {
+                return _context.Storage.InsertPublicFact(loggerValue, textValue);
+            }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
         public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
         {
-            return _context.Storage.InsertPublicFact(logger, factName, text);
+            return LoggedFunctorWithResult<StrongIdentifierValue, string, string>.Run(logger, factName, text, (loggerValue, factNameValue, textValue) => {
+                return _context.Storage.InsertPublicFact(loggerValue, factNameValue, textValue);
+            }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
         public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
-            return _context.Storage.InsertPublicFact(logger, fact);
+            return LoggedFunctorWithResult<RuleInstance, string>.Run(logger, fact, (loggerValue, factValue) => {
+                return _context.Storage.InsertPublicFact(loggerValue, factValue);
+            }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
         public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
@@ -174,12 +180,16 @@ namespace SymOntoClay.Core
 
         public IMethodResponse<string> InsertFact(IMonitorLogger logger, string text)
         {
-            return _context.Storage.InsertFact(logger, text);
+            return LoggedFunctorWithResult<string, string>.Run(logger, text, (loggerValue, textValue) => {
+                return _context.Storage.InsertFact(loggerValue, textValue);
+            }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
         public IMethodResponse<string> InsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
         {
-            return _context.Storage.InsertFact(logger, factName, text);
+            return LoggedFunctorWithResult<StrongIdentifierValue, string, string>.Run(logger, factName, text, (loggerValue, factNameValue, textValue) => {
+                return _context.Storage.InsertFact(loggerValue, factNameValue, textValue);
+            }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
         public IMethodResponse RemoveFact(IMonitorLogger logger, string id)
@@ -207,7 +217,9 @@ namespace SymOntoClay.Core
 
         public IMethodResponse<string> InsertPerceptedFact(IMonitorLogger logger, string text)
         {
-            return _context.Storage.InsertPerceptedFact(logger, text);
+            return LoggedFunctorWithResult<string, string>.Run(logger, text, (loggerValue, textValue) => {
+                return _context.Storage.InsertPerceptedFact(loggerValue, textValue);
+            }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
         public IMethodResponse RemovePerceptedFact(IMonitorLogger logger, string id)

@@ -39,6 +39,8 @@ using SymOntoClay.Core.Internal.Serialization.Functors;
 using System.Threading;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.Threading;
+using Newtonsoft.Json.Linq;
+using SymOntoClay.Core.Internal.CodeModel;
 
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 {
@@ -93,28 +95,28 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 
         public IMethodResponse AddToManualControl(IGameObject obj, IList<int> devices)
         {
-            return LoggedFunctorWithoutResult<IGameObject, IList<int>>.Run().ToMethodResponse();
-
-            lock (_manualControlLockObj)
-            {
-                if(_internalManualControlledObjectsDict.ContainsKey(obj))
+            return LoggedFunctorWithoutResult<IGameObject, IList<int>>.Run(Logger, obj, devices, (loggerValue, objValue, devicesValue) => {
+                lock (_manualControlLockObj)
                 {
-                    _internalManualControlledObjectsDict[obj].Devices = devices;
-                    _endpointsRegistryForManualControlledObjectsDict[obj].Devices = devices;
-                    return;
+                    if (_internalManualControlledObjectsDict.ContainsKey(objValue))
+                    {
+                        _internalManualControlledObjectsDict[objValue].Devices = devicesValue;
+                        _endpointsRegistryForManualControlledObjectsDict[objValue].Devices = devicesValue;
+                        return;
+                    }
+
+                    var internalManualControlledObject = new InternalManualControlledObject(objValue);
+                    internalManualControlledObject.Devices = devicesValue;
+
+                    _internalManualControlledObjectsList.Add(internalManualControlledObject);
+
+                    _internalManualControlledObjectsDict[objValue] = internalManualControlledObject;
+
+                    var endpointsProxyRegistryForDevices = new EndpointsProxyRegistryForDevices(loggerValue, objValue.EndpointsRegistry, devicesValue);
+                    _endpointsRegistries.Add(endpointsProxyRegistryForDevices);
+                    _endpointsRegistryForManualControlledObjectsDict[obj] = endpointsProxyRegistryForDevices;
                 }
-
-                var internalManualControlledObject = new InternalManualControlledObject(obj);
-                internalManualControlledObject.Devices = devices;
-
-                _internalManualControlledObjectsList.Add(internalManualControlledObject);
-
-                _internalManualControlledObjectsDict[obj] = internalManualControlledObject;
-
-                var endpointsProxyRegistryForDevices = new EndpointsProxyRegistryForDevices(Logger, obj.EndpointsRegistry, devices);
-                _endpointsRegistries.Add(endpointsProxyRegistryForDevices);
-                _endpointsRegistryForManualControlledObjectsDict[obj] = endpointsProxyRegistryForDevices;
-            }
+            }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
         public IMethodResponse RemoveFromManualControl(IGameObject obj)
@@ -122,18 +124,18 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             return LoggedFunctorWithoutResult<IGameObject>.Run(Logger, obj, (loggerValue, objValue) => {
                 lock (_manualControlLockObj)
                 {
-                    if (!_internalManualControlledObjectsDict.ContainsKey(obj))
+                    if (!_internalManualControlledObjectsDict.ContainsKey(objValue))
                     {
                         return;
                     }
 
-                    var internalManualControlledObject = _internalManualControlledObjectsDict[obj];
-                    _internalManualControlledObjectsDict.Remove(obj);
+                    var internalManualControlledObject = _internalManualControlledObjectsDict[objValue];
+                    _internalManualControlledObjectsDict.Remove(objValue);
 
                     _internalManualControlledObjectsList.Remove(internalManualControlledObject);
 
-                    var endpointsProxyRegistryForDevices = _endpointsRegistryForManualControlledObjectsDict[obj];
-                    _endpointsRegistryForManualControlledObjectsDict.Remove(obj);
+                    var endpointsProxyRegistryForDevices = _endpointsRegistryForManualControlledObjectsDict[objValue];
+                    _endpointsRegistryForManualControlledObjectsDict.Remove(objValue);
 
                     _endpointsRegistries.Remove(endpointsProxyRegistryForDevices);
                 }

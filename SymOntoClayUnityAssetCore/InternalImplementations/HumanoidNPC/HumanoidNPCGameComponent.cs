@@ -304,16 +304,17 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
         public IMethodResponse AddToBackpack(IMonitorLogger logger, IGameObject obj)
         {
-            return LoggedFunctorWithoutResult
-
-            _backpackStorage.AddConsolidatedStorage(logger, obj.PublicFactsStorage);
+            return LoggedFunctorWithoutResult<IGameObject>.Run(logger, obj, (loggerValue, objValue) =>
+            {
+                _backpackStorage.AddConsolidatedStorage(loggerValue, objValue.PublicFactsStorage);
+            }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
         public IMethodResponse RemoveFromBackpack(IMonitorLogger logger, IGameObject obj)
         {
-            return LoggedFunctorWithoutResult
-
-            _backpackStorage.RemoveConsolidatedStorage(logger, obj.PublicFactsStorage);
+            return LoggedFunctorWithoutResult<IGameObject>.Run(logger, obj, (loggerValue, objValue) => {
+                _backpackStorage.RemoveConsolidatedStorage(loggerValue, objValue.PublicFactsStorage);
+            }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
         /// <summary>

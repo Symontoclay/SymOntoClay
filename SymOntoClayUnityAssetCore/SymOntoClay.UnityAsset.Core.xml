@@ -240,6 +240,7 @@
             All active processes will have been stopped.
             Another NPCs will percept the NPC as died.
             </summary>
+            <returns>Method response.</returns>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.IHumanoidNPC.BackpackStorage">
             <summary>
@@ -252,6 +253,7 @@
             </summary>
             <param name="logger">Logger.</param>
             <param name="obj">Instance of the game object.</param>
+            <returns>Method response.</returns>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.IHumanoidNPC.RemoveFromBackpack(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.UnityAsset.Core.IGameObject)">
             <summary>
@@ -259,6 +261,7 @@
             </summary>
             <param name="logger">Logger.</param>
             <param name="obj">Instance of the game object.</param>
+            <returns>Method response.</returns>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.IHumanoidNPC.EngineContext">
             <summary>
@@ -276,6 +279,7 @@
             </summary>
             <param name="obj">Instance of the game object.</param>
             <param name="device">Describes biped device which will be using the game object.</param>
+            <returns>Method response.</returns>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.IManualControlling.AddToManualControl(SymOntoClay.UnityAsset.Core.IGameObject,System.Collections.Generic.IList{SymOntoClay.UnityAsset.Core.DeviceOfBiped})">
             <summary>
@@ -283,12 +287,14 @@
             </summary>
             <param name="obj">Instance of the game object.</param>
             <param name="devices">Describes list of biped devices which will be using the game object.</param>
+            <returns>Method response.</returns>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.IManualControlling.RemoveFromManualControl(SymOntoClay.UnityAsset.Core.IGameObject)">
             <summary>
             Removes a game object from manual controlled area of an NPC.
             </summary>
             <param name="obj">Instance of the game object.</param>
+            <returns>Method response.</returns>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.IManualControlling.GetManualControlledObjects">
             <summary>
@@ -409,7 +415,7 @@
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.EngineContext">
             <summary>
-            Gets engine context. Onkly for debugging and testing!
+            Gets engine context. Only for debugging and testing!
             </summary>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.OnDisposed">

@@ -1175,7 +1175,7 @@ action Go
 
             Thread.Sleep(1000);
 
-            npc.InsertFact(_logger, "{: see(I, #a) :}");
+            npc.InsertFact(_logger, "{: see(I, #a) :}").Wait();
 
             Thread.Sleep(1000);
 

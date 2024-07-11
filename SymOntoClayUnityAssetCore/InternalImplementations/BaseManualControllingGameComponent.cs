@@ -36,6 +36,9 @@ using SymOntoClay.Monitor.Common;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.Serialization.Functors;
+using System.Threading;
+using SymOntoClay.Core.Internal.Threads;
+using SymOntoClay.Threading;
 
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 {
@@ -45,6 +48,9 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             : base(settings, worldContext)
         {
             BaseManualControllingGameComponentSettingsValidator.Validate(settings);
+
+            _threadPool = AsyncEventsThreadPool;
+            _activeObjectContext = ActiveObjectContext;
 
             var platformTypesConvertorsRegistry = worldContext.PlatformTypesConvertors;
 
@@ -77,6 +83,9 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 
         private readonly object _manualControlLockObj = new object();
 
+        private readonly IActiveObjectContext _activeObjectContext;
+        private readonly ICustomThreadPool _threadPool;
+
         public IMethodResponse AddToManualControl(IGameObject obj, int device)
         {
             return AddToManualControl(obj, new List<int>() { device});
@@ -84,7 +93,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 
         public IMethodResponse AddToManualControl(IGameObject obj, IList<int> devices)
         {
-            return LoggedFunctorWithoutResult
+            return LoggedFunctorWithoutResult<IGameObject, IList<int>>.Run().ToMethodResponse();
 
             lock (_manualControlLockObj)
             {
@@ -110,25 +119,25 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 
         public IMethodResponse RemoveFromManualControl(IGameObject obj)
         {
-            return LoggedFunctorWithoutResult
-
-            lock (_manualControlLockObj)
-            {
-                if(!_internalManualControlledObjectsDict.ContainsKey(obj))
+            return LoggedFunctorWithoutResult<IGameObject>.Run(Logger, obj, (loggerValue, objValue) => {
+                lock (_manualControlLockObj)
                 {
-                    return;
+                    if (!_internalManualControlledObjectsDict.ContainsKey(obj))
+                    {
+                        return;
+                    }
+
+                    var internalManualControlledObject = _internalManualControlledObjectsDict[obj];
+                    _internalManualControlledObjectsDict.Remove(obj);
+
+                    _internalManualControlledObjectsList.Remove(internalManualControlledObject);
+
+                    var endpointsProxyRegistryForDevices = _endpointsRegistryForManualControlledObjectsDict[obj];
+                    _endpointsRegistryForManualControlledObjectsDict.Remove(obj);
+
+                    _endpointsRegistries.Remove(endpointsProxyRegistryForDevices);
                 }
-
-                var internalManualControlledObject = _internalManualControlledObjectsDict[obj];
-                _internalManualControlledObjectsDict.Remove(obj);
-
-                _internalManualControlledObjectsList.Remove(internalManualControlledObject);
-
-                var endpointsProxyRegistryForDevices = _endpointsRegistryForManualControlledObjectsDict[obj];
-                _endpointsRegistryForManualControlledObjectsDict.Remove(obj);
-
-                _endpointsRegistries.Remove(endpointsProxyRegistryForDevices);
-            }
+            }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
         public IList<IInternalManualControlledObject> GetManualControlledObjects()

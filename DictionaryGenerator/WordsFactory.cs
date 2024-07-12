@@ -809,7 +809,7 @@ to have (when it means "to possess")*
                 });
             }
 
-            mTotalCount += particleFormsList.Count;
+            mTotalCount += particleFormsList.Count;//no need
 
             var ingForm = mVerbAntiStemmer.GetIngForm(rootWord);
 

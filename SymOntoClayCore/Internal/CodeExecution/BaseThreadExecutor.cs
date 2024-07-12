@@ -31,6 +31,7 @@ using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Serialization;
+using SymOntoClay.Core.Internal.Serialization.Functors;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
@@ -2025,6 +2026,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                             executionCoordinators = new List<IExecutionCoordinator>() { _executionCoordinator };
                         }
 
+                        LoggedFunctorWithoutResult
                         ThreadTask.Run(() => {
                             ProcessInfoHelper.Wait(Logger, callMethodId, currentProcessInfo, executionCoordinators, timeout, timeoutCancellationMode, _dateTimeProvider, processInfo);
                         }, _context.CodeExecutionThreadPool, _context.GetCancellationToken());

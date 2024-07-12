@@ -89,7 +89,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.DateAndTime
         {
             lock (_lockObj)
             {
-                _ticks += _millisecondsTimeout;
+                _ticks += _millisecondsTimeout;//no need
             }
 
             Thread.Sleep(_millisecondsTimeout);

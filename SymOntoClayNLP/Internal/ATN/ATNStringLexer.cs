@@ -131,7 +131,7 @@ namespace SymOntoClay.NLP.Internal.ATN
                                         {
                                             var targetPos = _currentPos;
 
-                                            _currentPos += 2;
+                                            _currentPos += 2;//no need
                                             _items.Dequeue();
                                             _items.Dequeue();
 

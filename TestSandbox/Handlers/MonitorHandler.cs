@@ -71,7 +71,7 @@ namespace TestSandbox.Handlers
 
         private void Case2()
         {
-            OtherEvent += () => { };
+            OtherEvent += () => { };//no need
 
             _globalLogger.Info($"SomeEvent?.GetInvocationList().Length = {SomeEvent?.GetInvocationList().Length}");
             _globalLogger.Info($"OtherEvent?.GetInvocationList().Length = {OtherEvent?.GetInvocationList().Length}");

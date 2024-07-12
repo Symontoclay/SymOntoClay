@@ -39,7 +39,7 @@ namespace SymOntoClay.CoreHelper
                 var x1 = a + step * width;
                 var x2 = a + (step + 1) * width;
 
-                result += 0.5 * (x2 - x1) * (fun(x1) + fun(x2));
+                result += 0.5 * (x2 - x1) * (fun(x1) + fun(x2));//no need
             }
 
             return result;

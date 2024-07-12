@@ -28,6 +28,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors;
 using SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers;
+using SymOntoClay.Core.Internal.Serialization.Functors;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.Monitor.Common;
@@ -80,7 +81,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _setConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext,  trigger.SetCondition, KindOfTriggerCondition.SetCondition, trigger.SetBindingVariables, _localCodeExecutionContext);
 
             _setConditionalTriggerObserver = new LogicConditionalTriggerObserver(_triggerConditionNodeObserverContext, trigger.SetCondition, KindOfTriggerCondition.SetCondition, _setConditionalTriggerExecutor.LocalCodeExecutionContext);
-            _setConditionalTriggerObserver.OnChanged += Observer_OnChanged;
+            _setConditionalTriggerObserver.OnChanged += Observer_OnChanged;//fixed
 
             _hasResetHandler = trigger.ResetCompiledFunctionBody != null;
 
@@ -103,7 +104,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 _resetConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext, trigger.ResetCondition, KindOfTriggerCondition.ResetCondition, resetBindingVariables, _localCodeExecutionContext);
 
                 _resetConditionalTriggerObserver = new LogicConditionalTriggerObserver(_triggerConditionNodeObserverContext, trigger.ResetCondition, KindOfTriggerCondition.ResetCondition, _setConditionalTriggerExecutor.LocalCodeExecutionContext);
-                _resetConditionalTriggerObserver.OnChanged += Observer_OnChanged;
+                _resetConditionalTriggerObserver.OnChanged += Observer_OnChanged;//fixed
             }
 
             _activeObject = new AsyncActivePeriodicObject(context.ActivePeriodicObjectContext, context.TriggersThreadPool, Logger);
@@ -171,6 +172,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void Observer_OnChanged()
         {
+            LoggedFunctorWithoutResult
 #if DEBUG
             //Info("5AF67C00-E174-436C-9BB0-95889FCE46F9", $"Observer_OnChanged();{_trigger.ToHumanizedLabel()}");
 #endif

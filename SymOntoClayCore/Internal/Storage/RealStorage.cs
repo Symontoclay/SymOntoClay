@@ -223,7 +223,7 @@ namespace SymOntoClay.Core.Internal.Storage
 
                 CodeItemsStoragesList = null;
 
-                storage.OnParentStorageChanged += OnParentStorageChangedHandler;
+                storage.OnParentStorageChanged += OnParentStorageChangedHandler;//no need
 
                 _realStorageContext.EmitOnAddParentStorage(logger, storage);         
 

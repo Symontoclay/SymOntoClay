@@ -108,7 +108,7 @@ namespace SymOntoClay.Core.Internal.Threads
                     _isExited = true;
                 }, _threadPool, _cancellationToken);
 
-                task.OnCompleted += OnCompletedHandler;
+                task.OnCompleted += OnCompletedHandler;//no need
 
                 _task = task;
 
@@ -272,7 +272,7 @@ namespace SymOntoClay.Core.Internal.Threads
                     }
                 }, _threadPool, _cancellationToken);
 
-                task.OnCompleted += OnCompletedHandler;
+                task.OnCompleted += OnCompletedHandler;//no need
 
                 _task = task;
 

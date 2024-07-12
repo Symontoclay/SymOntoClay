@@ -96,7 +96,7 @@ namespace LinguisticVariableViewer
         {
             var result = new List<double>();
 
-            for (var x = start; x <= stop; x += step)
+            for (var x = start; x <= stop; x += step)//no need
             {
                 result.Add(x);
             }

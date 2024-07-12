@@ -27,6 +27,7 @@ using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.Core.Internal.Serialization.Functors;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
@@ -58,7 +59,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _globalTriggersStorage = context.Storage.GlobalStorage.TriggersStorage;
 
             _executionCoordinator = new ExecutionCoordinator(this);
-            _executionCoordinator.OnFinished += ExecutionCoordinator_OnFinished;
+            _executionCoordinator.OnFinished += ExecutionCoordinator_OnFinished;//fixed
 
             _parentExecutionCoordinator = parentExecutionCoordinator;
 
@@ -159,7 +160,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     return;
                 }
 
-                _parentExecutionCoordinator.OnFinished += ParentExecutionCoordinator_OnFinished;
+                _parentExecutionCoordinator.OnFinished += ParentExecutionCoordinator_OnFinished;//fixed
             }
 
             _instanceState = InstanceState.Initializing;
@@ -516,11 +517,14 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void ParentExecutionCoordinator_OnFinished()
         {
+            LoggedFunctorWithoutResult
             _executionCoordinator.SetExecutionStatus(Logger, "898C6E87-54F5-41CA-8B3F-08B8BBF95135", ActionExecutionStatus.WeakCanceled);
         }
 
         protected virtual void ExecutionCoordinator_OnFinished()
         {
+            LoggedFunctorWithoutResult
+
             if (_parentInstance != null)
             {
                 _parentInstance.RemoveChildInstance(Logger, this);
@@ -540,7 +544,6 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
             Dispose();
-
         }
 
         /// <inheritdoc/>

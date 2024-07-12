@@ -103,7 +103,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         public void Init()
         {
-            _storage.LogicalStorage.OnAddingFact += LogicalStorage_OnAddingFact;
+            _storage.LogicalStorage.OnAddingFact += LogicalStorage_OnAddingFact;//no need
         }
 
         protected abstract IAddFactOrRuleResult LogicalStorage_OnAddingFact(RuleInstance ruleInstance);

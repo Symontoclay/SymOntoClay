@@ -82,7 +82,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 if (_systemTask != null)
                 {
-                    _systemTask.OnCompletedSuccessfully += OnCompleteHandler;
+                    _systemTask.OnCompletedSuccessfully += OnCompleteHandler;//no need
                 }
             }
         }
@@ -93,7 +93,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             add
             {
-                InternalOnComplete += value;
+                InternalOnComplete += value;//no need
 
                 if(_systemTask != null)
                 {

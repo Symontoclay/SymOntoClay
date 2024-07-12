@@ -36,7 +36,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
             foreach (var observer in _observersList)
             {
-                observer.OnChanged += Observer_OnChanged;
+                observer.OnChanged += Observer_OnChanged;//no need
             }
         }
 

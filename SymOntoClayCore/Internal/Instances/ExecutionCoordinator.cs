@@ -168,7 +168,7 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             add
             {
-                InternalOnFinish += value;
+                InternalOnFinish += value;//no need
 
                 if (_isFinished)
                 {

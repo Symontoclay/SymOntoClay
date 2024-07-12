@@ -28,6 +28,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.Core.Internal.Serialization.Functors;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
@@ -62,13 +63,13 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             foreach (var parentStorage in _parentLogicalStoragesList)
             {
-                parentStorage.OnChangedWithKeys += LogicalStorage_OnChangedWithKeys;
-                parentStorage.OnChanged += LogicalStorage_OnChanged;
-                parentStorage.OnAddingFact += LogicalStorage_OnAddingFact;
+                parentStorage.OnChangedWithKeys += LogicalStorage_OnChangedWithKeys;//no need
+                parentStorage.OnChanged += LogicalStorage_OnChanged;//no need
+                parentStorage.OnAddingFact += LogicalStorage_OnAddingFact;//fixed
             }
 
-            realStorageContext.OnAddParentStorage += RealStorageContext_OnAddParentStorage;
-            realStorageContext.OnRemoveParentStorage += RealStorageContext_OnRemoveParentStorage;
+            realStorageContext.OnAddParentStorage += RealStorageContext_OnAddParentStorage;//fixed
+            realStorageContext.OnRemoveParentStorage += RealStorageContext_OnRemoveParentStorage;//fixed
 
             _enableOnAddingFactEvent = realStorageContext.EnableOnAddingFactEvent;
 
@@ -486,7 +487,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private IAddFactOrRuleResult LogicalStorage_OnAddingFact(RuleInstance ruleInstance)
         {
-            if(OnAddingFact == null)
+            LoggedFunctorWithResult<RuleInstance, IAddFactOrRuleResult>.Run();
+
+            if (OnAddingFact == null)
             {
                 return null;
             }
@@ -496,16 +499,20 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private void RealStorageContext_OnAddParentStorage(IStorage storage)
         {
+            LoggedFunctorWithoutResult
+
             var logicalStorage = storage.LogicalStorage;
-            logicalStorage.OnChangedWithKeys += LogicalStorage_OnChangedWithKeys;
-            logicalStorage.OnChanged += LogicalStorage_OnChanged;
-            logicalStorage.OnAddingFact += LogicalStorage_OnAddingFact;
+            logicalStorage.OnChangedWithKeys += LogicalStorage_OnChangedWithKeys;//no need
+            logicalStorage.OnChanged += LogicalStorage_OnChanged;//no need
+            logicalStorage.OnAddingFact += LogicalStorage_OnAddingFact;//fixed
 
             _parentLogicalStoragesList.Add(logicalStorage);
         }
 
         private void RealStorageContext_OnRemoveParentStorage(IStorage storage)
         {
+            LoggedFunctorWithoutResult
+
             var logicalStorage = storage.LogicalStorage;
             logicalStorage.OnChangedWithKeys -= LogicalStorage_OnChangedWithKeys;
             logicalStorage.OnChanged -= LogicalStorage_OnChanged;

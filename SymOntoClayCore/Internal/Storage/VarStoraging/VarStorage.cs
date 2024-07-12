@@ -24,6 +24,7 @@ using Newtonsoft.Json;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.Serialization.Functors;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
@@ -42,11 +43,11 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
             foreach (var parentStorage in _parentVarStoragesList)
             {
-                parentStorage.OnChangedWithKeys += VarStorage_OnChangedWithKeys;
+                parentStorage.OnChangedWithKeys += VarStorage_OnChangedWithKeys;//no need
             }
 
-            realStorageContext.OnAddParentStorage += RealStorageContext_OnAddParentStorage;
-            realStorageContext.OnRemoveParentStorage += RealStorageContext_OnRemoveParentStorage;
+            realStorageContext.OnAddParentStorage += RealStorageContext_OnAddParentStorage;//fixed
+            realStorageContext.OnRemoveParentStorage += RealStorageContext_OnRemoveParentStorage;//fixed
         }
 
         private readonly object _lockObj = new object();
@@ -117,7 +118,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
                 AnnotatedItemHelper.CheckAndFillUpHolder(logger, varItem, _realStorageContext.MainStorageContext.CommonNamesStorage);
             }
 
-            varItem.OnChanged += VarItem_OnChanged;
+            varItem.OnChanged += VarItem_OnChanged;//no need
 
             varItem.CheckDirty();
 
@@ -269,6 +270,8 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
         private void RealStorageContext_OnRemoveParentStorage(IStorage storage)
         {
+            LoggedFunctorWithoutResult
+
             var varStorage = storage.VarStorage;
             varStorage.OnChangedWithKeys -= VarStorage_OnChangedWithKeys;
 
@@ -277,8 +280,10 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
         private void RealStorageContext_OnAddParentStorage(IStorage storage)
         {
+            LoggedFunctorWithoutResult
+
             var varStroage = storage.VarStorage;
-            varStroage.OnChangedWithKeys += VarStorage_OnChangedWithKeys;
+            varStroage.OnChangedWithKeys += VarStorage_OnChangedWithKeys;//no need
 
             _parentVarStoragesList.Add(varStroage);
         }

@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
         public FactTriggerConditionNodeObserver(IMonitorLogger logger, IStorage storage, KindOfTriggerCondition kindOfTriggerCondition)
             : base(logger)
         {
-            storage.LogicalStorage.OnChanged += LogicalStorage_OnChanged;
+            storage.LogicalStorage.OnChanged += LogicalStorage_OnChanged;//no need
             _storage = storage;
         }
 

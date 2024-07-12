@@ -28,6 +28,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Helpers;
+using SymOntoClay.Core.Internal.Serialization.Functors;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -65,7 +66,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _localCodeExecutionContext = localCodeExecutionContext;
 
-            _storage.LogicalStorage.OnChanged += LogicalStorage_OnChanged;
+            _storage.LogicalStorage.OnChanged += LogicalStorage_OnChanged;//fixed
 
             _searchOptions = new LogicalSearchOptions();
             _searchOptions.QueryExpression = _condition;
@@ -116,6 +117,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void LogicalStorage_OnChanged()
         {
+            LoggedFunctorWithoutResult
             lock (_lockObj)
             {
                 _needRun = true;

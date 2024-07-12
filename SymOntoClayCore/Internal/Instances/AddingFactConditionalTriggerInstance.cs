@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors;
 using SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers;
+using SymOntoClay.Core.Internal.Serialization.Functors;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.Storage.LogicalStoraging;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -53,6 +54,8 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         protected override IAddFactOrRuleResult LogicalStorage_OnAddingFact(RuleInstance ruleInstance)
         {
+            LoggedFunctorWithResult<RuleInstance, IAddFactOrRuleResult>.Run();
+
             lock (_checkProcessedItemsLockObj)
             {
                 if (_processedItems.Contains(ruleInstance))

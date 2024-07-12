@@ -28,6 +28,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.Core.Internal.Serialization.Functors;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Threading;
@@ -107,11 +108,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     return;
                 }
 
-                storage.OnChangedWithKeys += LogicalStorage_OnChangedWithKeys;
+                storage.OnChangedWithKeys += LogicalStorage_OnChangedWithKeys;//no need
 
                 if(_enableOnAddingFactEvent != KindOfOnAddingFactEvent.None)
                 {
-                    storage.OnAddingFact += LogicalStorage_OnAddingFact;
+                    storage.OnAddingFact += LogicalStorage_OnAddingFact;//fixed
 
                     if(_enableOnAddingFactEvent == KindOfOnAddingFactEvent.Isolated)
                     {
@@ -156,6 +157,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private void EmitOnAddingFactForNewStorage(IMonitorLogger logger, ILogicalStorage storage)
         {
+            LoggedFunctorWithoutResult
             ThreadTask.Run(() => {
                 var taskId = logger.StartTask("6EA7602B-F2EA-4204-B747-886EB25161E7");
 
@@ -181,6 +183,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         {
             if(OnAddingFact != null)
             {
+                LoggedFunctorWithoutResult
                 ThreadTask.Run(() => {
                     var taskId = logger.StartTask("612DB280-7EF8-4035-B6A5-229440E96F55");
 
@@ -244,7 +247,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private IAddFactOrRuleResult LogicalStorage_OnAddingFact(RuleInstance ruleInstance)
         {
-            switch(_enableOnAddingFactEvent)
+            LoggedFunctorWithResult<RuleInstance, IAddFactOrRuleResult>.Run();
+
+            switch (_enableOnAddingFactEvent)
             {
                 case KindOfOnAddingFactEvent.Transparent:
                     if(OnAddingFact == null)

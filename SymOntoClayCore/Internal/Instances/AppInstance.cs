@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.Serialization.Functors;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -175,6 +176,8 @@ namespace SymOntoClay.Core.Internal.Instances
 
         public void ActivateState(IMonitorLogger logger, StateDef state, List<Var> varList)
         {
+            LoggedFunctorWithoutResult
+
             ThreadTask.Run(() => {
                 var taskId = logger.StartTask("63ED542C-9E36-4AD9-97E7-58A613A604D3");
 
@@ -211,7 +214,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
                         _activeStatesDict[stateName] = stateInstance;
 
-                        stateInstance.OnStateInstanceFinished += ChildStateInstance_OnFinished;
+                        stateInstance.OnStateInstanceFinished += ChildStateInstance_OnFinished;//no need
                     }
 
                     if (statesForDeactivating.Any())

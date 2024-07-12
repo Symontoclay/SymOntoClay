@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
             if (_kindOfOperator == KindOfOperator.CallFunction)
             {
-                storage.VarStorage.OnChangedWithKeys += VarStorage_OnChangedWithKeys;
+                storage.VarStorage.OnChangedWithKeys += VarStorage_OnChangedWithKeys;//no need
             }
 
             _storage = storage;

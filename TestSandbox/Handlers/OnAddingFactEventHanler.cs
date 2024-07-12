@@ -67,9 +67,9 @@ namespace TestSandbox.Handlers
 
         private void Case1()
         {
-            OnAddingFact += Handler1;
-            OnAddingFact += Handler2;
-            OnAddingFact += Handler3;
+            OnAddingFact += Handler1;//no need
+            OnAddingFact += Handler2;//no need
+            OnAddingFact += Handler3;//no need
 
             var factStr = "{: >: { like(i,#@{: >: { possess(i,$_) & cat($_) } :}) } :}";
             var ruleInstance = Parse(factStr);

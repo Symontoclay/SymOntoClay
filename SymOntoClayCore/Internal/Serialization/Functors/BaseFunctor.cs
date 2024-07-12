@@ -14,7 +14,7 @@ namespace SymOntoClay.Core.Internal.Serialization.Functors
                 OnceMethod = OnRun
             };
 
-            _asyncActiveOnceObject.OnCompleted += OnCompletedHandler;
+            _asyncActiveOnceObject.OnCompleted += OnCompletedHandler;//no need
         }
 
         private AsyncActiveOnceObject _asyncActiveOnceObject;
@@ -50,7 +50,7 @@ namespace SymOntoClay.Core.Internal.Serialization.Functors
                 OnceMethod = OnRun
             };
 
-            _asyncActiveOnceObject.OnCompleted += OnCompletedHandler;
+            _asyncActiveOnceObject.OnCompleted += OnCompletedHandler;//no need
         }
 
         private AsyncActiveOnceObject<TResult> _asyncActiveOnceObject;

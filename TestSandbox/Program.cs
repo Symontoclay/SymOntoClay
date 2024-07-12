@@ -82,7 +82,7 @@ namespace TestSandbox
 
         static void Main(string[] args)
         {
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;//no need
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 
@@ -200,11 +200,11 @@ namespace TestSandbox
                 _globalLogger.Info("Run");
             }, threadPool, source.Token);
 
-            task.OnStarted += () => { _globalLogger.Info("task.OnStarted"); };
-            task.OnCanceled += () => { _globalLogger.Info("task.OnCanceled"); };
-            task.OnCompleted += () => { _globalLogger.Info("task.OnCompleted"); };
-            task.OnCompletedSuccessfully += () => { _globalLogger.Info("task.OnCompletedSuccessfully"); };
-            task.OnFaulted += () => { _globalLogger.Info("task.OnFaulted"); };
+            task.OnStarted += () => { _globalLogger.Info("task.OnStarted"); };//no need
+            task.OnCanceled += () => { _globalLogger.Info("task.OnCanceled"); };//no need
+            task.OnCompleted += () => { _globalLogger.Info("task.OnCompleted"); };//no need
+            task.OnCompletedSuccessfully += () => { _globalLogger.Info("task.OnCompletedSuccessfully"); };//no need
+            task.OnFaulted += () => { _globalLogger.Info("task.OnFaulted"); };//no need
 
             task.Start();
 
@@ -422,12 +422,12 @@ namespace TestSandbox
 
             var taskValue = new TaskValue(task);
 
-            taskValue.OnComplete += () => 
+            taskValue.OnComplete += () => //no need
             {
                 _logger.Info("2CD55AB4-7F0D-49BE-B17F-455D69263E48", "taskValue.OnComplete!!!!!");
             };
 
-            taskValue.OnComplete += () =>
+            taskValue.OnComplete += () => //no need
             {
                 _logger.Info("674D6CA3-085C-4174-9B21-6AA992F99157", "(2) taskValue.OnComplete!!!!!");
             };
@@ -1468,7 +1468,7 @@ action Go
                 if(currAngle != 0)
                 {
                     anglesList.Add((-1 * radAngle, inFocus));
-                }                
+                }
 
                 if (currAngle >= halfOfTotalRaysAngle)
                 {
@@ -1477,16 +1477,16 @@ action Go
 
                 if (currAngle < halfOfFocusRaysAngle)
                 {
-                    currAngle += FocusRaysInterval;
-                    
-                    if(currAngle > halfOfFocusRaysAngle)
+                    currAngle += FocusRaysInterval;//no need
+
+                    if (currAngle > halfOfFocusRaysAngle)
                     {
                         currAngle = halfOfFocusRaysAngle;
                     }
                 }
                 else
                 {
-                    currAngle += TotalRaysInterval;
+                    currAngle += TotalRaysInterval;//no need
                     inFocus = false;
                 }
 

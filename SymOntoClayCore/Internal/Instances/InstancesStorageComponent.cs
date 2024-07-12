@@ -29,6 +29,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.Serialization;
+using SymOntoClay.Core.Internal.Serialization.Functors;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using System;
@@ -51,7 +52,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _projectLoader = new ProjectLoader(context);
 
-            OnIdle += DispatchOnIdle;
+            OnIdle += DispatchOnIdle;//fixed
         }
 
         private readonly IEngineContext _context;
@@ -119,6 +120,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             instanceInfo.Init(logger);
 
+            LoggedFunctorWithoutResult
             ThreadTask.Run(() => {
                 var taskId = logger.StartTask("B38CE583-4AE0-42ED-9043-59E038AF094E");
 
@@ -139,6 +141,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void DispatchOnIdle()
         {
+            LoggedFunctorWithoutResult
             ThreadTask.Run(() => {
                 var taskId = Logger.StartTask("F3A7C7F7-1D36-4321-9467-B5E075A04E6F");
 
@@ -277,6 +280,8 @@ namespace SymOntoClay.Core.Internal.Instances
                 {
                     NAppendAndTryStartProcessInfoWithDevices(logger, processInfo);
 
+                    LoggedFunctorWithoutResult
+
                     ThreadTask.Run(() =>
                     {
                         var taskId = logger.StartTask("EDE8166B-FDC9-4DDB-8D5F-76CF87E61A4C");
@@ -309,13 +314,14 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _processesInfoList.Add(processInfo);
 
-            processInfo.OnFinish += OnFinishProcessWithoutDevicesHandler;
+            processInfo.OnFinish += OnFinishProcessWithoutDevicesHandler;//fixed
 
             return true;
         }
 
         private void OnFinishProcessWithoutDevicesHandler(IProcessInfo sender)
         {
+            LoggedFunctorWithoutResult
             lock (_processLockObj)
             {
                 _processesInfoList.Remove(sender);
@@ -337,14 +343,14 @@ namespace SymOntoClay.Core.Internal.Instances
                 _processesInfoByDevicesDict[device] = processInfo;
             }
 
-            processInfo.OnFinish += OnFinishProcessWithDevicesHandler;
+            processInfo.OnFinish += OnFinishProcessWithDevicesHandler;//fixed
 
             processInfo.Start(logger, "5E6C3B30-3111-49AC-BE18-2CCC6C523277");
-
         }
 
         private void OnFinishProcessWithDevicesHandler(IProcessInfo sender)
         {
+            LoggedFunctorWithoutResult
             lock (_processLockObj)
             {
                 foreach (var device in sender.Devices)

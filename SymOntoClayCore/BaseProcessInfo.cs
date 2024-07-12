@@ -30,6 +30,8 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Instances;
+using SymOntoClay.Core.Internal.Serialization.Functors;
+using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
@@ -47,19 +49,20 @@ using System.Threading.Tasks;
 namespace SymOntoClay.Core
 {
     public abstract class BaseProcessInfo : IProcessInfo
-    {
-        protected static IMonitorLogger _logger = MonitorLoggerNLogImpementation.Instance;
-        
-        protected BaseProcessInfo(CancellationToken cancellationToken, ICustomThreadPool threadPool)
+    {        
+        protected BaseProcessInfo(IMonitorLogger logger, CancellationToken cancellationToken, IActiveObjectContext activeObjectContext, ICustomThreadPool threadPool)
         {
             _cancellationToken = cancellationToken;
+            _activeObjectContext = activeObjectContext;
             _threadPool = threadPool;
 
             Id = NameHelper.GetNewEntityNameString();
         }
 
         protected readonly CancellationToken _cancellationToken;
+        private readonly IActiveObjectContext _activeObjectContext;
         protected readonly ICustomThreadPool _threadPool;
+        protected readonly IMonitorLogger _logger;
 
         /// <inheritdoc/>
         public string Id { get; private set; }
@@ -286,25 +289,24 @@ namespace SymOntoClay.Core
 
             if(onFinishHandlersList.Any())
             {
-                ThreadTask.Run(() => {
-                    var taskId = logger.StartTask("F0A455C0-A6EB-4BAA-8D2A-0EE1DC112590");
+                LoggedFunctorWithoutResult.Run(logger, (loggerValue) => {
+                    var taskId = loggerValue.StartTask("F0A455C0-A6EB-4BAA-8D2A-0EE1DC112590");
 
                     try
                     {
                         foreach (var item in onFinishHandlersList)
                         {
-                            item.Run(logger);
+                            item.Run(loggerValue);
                         }
                     }
                     catch (Exception e)
                     {
-                        logger?.Error("C264171B-3DC3-446D-A051-26475CFDDC8D", e);
+                        loggerValue?.Error("C264171B-3DC3-446D-A051-26475CFDDC8D", e);
                     }
 
-                    logger.StopTask("AD80EB54-A648-4B05-9D4D-19933DA966C4", taskId);
-                }, _threadPool, _cancellationToken);
+                    loggerValue.StopTask("AD80EB54-A648-4B05-9D4D-19933DA966C4", taskId);
+                }, _activeObjectContext, _threadPool);
             }
-
 
             InternalOnFinish?.Invoke(this);
         }
@@ -324,23 +326,23 @@ namespace SymOntoClay.Core
 
             if (onCompleteHandlersList.Any())
             {
-                ThreadTask.Run(() => {
-                    var taskId = logger.StartTask("DD76FAB5-8781-4979-B885-6D3F73EA42BD");
+                LoggedFunctorWithoutResult.Run(logger, (loggerValue) => {
+                    var taskId = loggerValue.StartTask("DD76FAB5-8781-4979-B885-6D3F73EA42BD");
 
                     try
                     {
                         foreach (var item in onCompleteHandlersList)
                         {
-                            item.Run(logger);
+                            item.Run(loggerValue);
                         }
                     }
                     catch (Exception e)
                     {
-                        logger?.Error("6D0C6064-16A3-4068-8CB2-9E9CBADF4A1F", e);
+                        loggerValue?.Error("6D0C6064-16A3-4068-8CB2-9E9CBADF4A1F", e);
                     }
 
-                    logger.StopTask("64D55DB6-79B8-4999-B0A8-C8C4C68CE349", taskId);
-                }, _threadPool, _cancellationToken);
+                    loggerValue.StopTask("64D55DB6-79B8-4999-B0A8-C8C4C68CE349", taskId);
+                }, _activeObjectContext, _threadPool);
             }
 
             InternalOnComplete?.Invoke(this);
@@ -361,23 +363,23 @@ namespace SymOntoClay.Core
 
             if (onWeakCanceledHandlersList.Any())
             {
-                ThreadTask.Run(() => {
-                    var taskId = logger.StartTask("F571FF35-20B0-4D29-A5C4-9D33ACF0B280");
+                LoggedFunctorWithoutResult.Run(logger, (loggerValue) => {
+                    var taskId = loggerValue.StartTask("F571FF35-20B0-4D29-A5C4-9D33ACF0B280");
 
                     try
                     {
                         foreach (var item in onWeakCanceledHandlersList)
                         {
-                            item.Run(logger);
+                            item.Run(loggerValue);
                         }
                     }
                     catch (Exception e)
                     {
-                        logger?.Error("84FFE90C-057B-4EFB-8DC5-34EB3B26C7B3", e);
+                        loggerValue?.Error("84FFE90C-057B-4EFB-8DC5-34EB3B26C7B3", e);
                     }
 
-                    logger.StopTask("DBDEEE39-6612-445A-AD63-F42C5613078E", taskId);
-                }, _threadPool, _cancellationToken);
+                    loggerValue.StopTask("DBDEEE39-6612-445A-AD63-F42C5613078E", taskId);
+                }, _activeObjectContext, _threadPool);
             }
 
             InternalOnWeakCanceled?.Invoke(this);
@@ -421,7 +423,7 @@ namespace SymOntoClay.Core
             {
                 lock (_statusLockObj)
                 {
-                    InternalOnFinish += value;
+                    InternalOnFinish += value;//no need
 
                     CheckOnFinishStatus(_logger);
                 }
@@ -445,7 +447,7 @@ namespace SymOntoClay.Core
             {
                 lock (_statusLockObj)
                 {
-                    InternalOnComplete += value;
+                    InternalOnComplete += value;//no need
 
                     CheckOnCompleteStatus(_logger);
                 }
@@ -469,7 +471,7 @@ namespace SymOntoClay.Core
             {
                 lock (_statusLockObj)
                 {
-                    InternalOnWeakCanceled += value;
+                    InternalOnWeakCanceled += value;//no need
 
                     CheckOnWeakCanceledStatus(_logger);
                 }
@@ -601,7 +603,7 @@ namespace SymOntoClay.Core
 
                 _childrenProcessInfoList.Add(processInfo);
 
-                processInfo.OnFinish += ProcessInfo_OnFinish;
+                processInfo.OnFinish += ProcessInfo_OnFinish;//fixed
 
                 if (processInfo.ParentProcessInfo != this)
                 {
@@ -612,10 +614,12 @@ namespace SymOntoClay.Core
 
         private void ProcessInfo_OnFinish(IProcessInfo processInfo)
         {
-            lock (_parentAndChildrenLockObj)
-            {
-                NRemoveChild(_logger, processInfo);
-            }
+            LoggedFunctorWithoutResult<IProcessInfo>.Run(_logger, processInfo, (loggerValue, processInfoValue) => {
+                lock (_parentAndChildrenLockObj)
+                {
+                    NRemoveChild(loggerValue, processInfoValue);
+                }
+            }, _activeObjectContext, _threadPool);
         }
 
         /// <inheritdoc/>
@@ -782,7 +786,6 @@ namespace SymOntoClay.Core
 
         protected void EmitOnWeakCanceledHandlers(IMonitorLogger logger)
         {
-
         }
 
         #region private fields

@@ -37,7 +37,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
         {
             _varName = condition.Name;
             
-            storage.VarStorage.OnChangedWithKeys += VarStorage_OnChangedWithKeys;
+            storage.VarStorage.OnChangedWithKeys += VarStorage_OnChangedWithKeys;//no need
             _storage = storage;
         }
 

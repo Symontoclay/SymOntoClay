@@ -35,7 +35,7 @@ namespace SymOntoClay.CLI
 
         static void Main(string[] args)
         {
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;//no need
 
             EVPath.RegVar("APPDIR", Directory.GetCurrentDirectory());
 

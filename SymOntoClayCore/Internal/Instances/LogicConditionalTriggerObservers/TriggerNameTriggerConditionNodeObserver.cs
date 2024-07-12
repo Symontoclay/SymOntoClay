@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
             _synonymsList = _synonymsResolver.GetSynonyms(Logger, _triggerName, storage);
 
-            storage.TriggersStorage.OnNamedTriggerInstanceChangedWithKeys += TriggersStorage_OnNamedTriggerInstanceChangedWithKeys;
+            storage.TriggersStorage.OnNamedTriggerInstanceChangedWithKeys += TriggersStorage_OnNamedTriggerInstanceChangedWithKeys;//no need
         }
 
         private readonly StrongIdentifierValue _triggerName;
@@ -59,7 +59,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
                 if(_synonymsList?.Intersect(namesList).Any() ?? false)
                 {
                     EmitOnChanged();
-                }                
+                }
             }
         }
 

@@ -72,7 +72,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             _currCodeItem = codeEntity;
 
-            _currCodeItem.OnNameChanged += OnNameOfCurrentCodeItemChanged;
+            _currCodeItem.OnNameChanged += OnNameOfCurrentCodeItemChanged;//no need
         }
 
         public void RemoveCurrentCodeItem()
@@ -96,7 +96,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             else
             {
                 _currCodeItem = _codeItems.Peek();
-                _currCodeItem.OnNameChanged += OnNameOfCurrentCodeItemChanged;
+                _currCodeItem.OnNameChanged += OnNameOfCurrentCodeItemChanged;//no need
             }
         }
 

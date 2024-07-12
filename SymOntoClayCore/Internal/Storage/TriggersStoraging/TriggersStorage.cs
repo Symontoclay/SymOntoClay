@@ -24,6 +24,7 @@ using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.Serialization.Functors;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
@@ -40,11 +41,11 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
             foreach (var parentStorage in _parentTriggersStoragesList)
             {
-                parentStorage.OnNamedTriggerInstanceChangedWithKeys += TriggersStorage_OnNamedTriggerInstanceChangedWithKeys;
+                parentStorage.OnNamedTriggerInstanceChangedWithKeys += TriggersStorage_OnNamedTriggerInstanceChangedWithKeys;//no need
             }
 
-            realStorageContext.OnAddParentStorage += RealStorageContext_OnAddParentStorage;
-            realStorageContext.OnRemoveParentStorage += RealStorageContext_OnRemoveParentStorage;
+            realStorageContext.OnAddParentStorage += RealStorageContext_OnAddParentStorage;//fixed
+            realStorageContext.OnRemoveParentStorage += RealStorageContext_OnRemoveParentStorage;//fixed
         }
 
         private readonly object _lockObj = new object();
@@ -264,7 +265,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
                 _namedTriggerInstancesList.Add(namedTriggerInstance);
 
-                namedTriggerInstance.OnChanged += NamedTriggerInstance_OnChanged;
+                namedTriggerInstance.OnChanged += NamedTriggerInstance_OnChanged;//no need
 
                 foreach(var name in namesList)
                 {
@@ -371,6 +372,8 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
         private void RealStorageContext_OnRemoveParentStorage(IStorage storage)
         {
+            LoggedFunctorWithoutResult
+
             var triggersStorage = storage.TriggersStorage;
             triggersStorage.OnNamedTriggerInstanceChangedWithKeys -= TriggersStorage_OnNamedTriggerInstanceChangedWithKeys;
 
@@ -379,8 +382,10 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
         private void RealStorageContext_OnAddParentStorage(IStorage storage)
         {
+            LoggedFunctorWithoutResult
+
             var triggersStorage = storage.TriggersStorage;
-            triggersStorage.OnNamedTriggerInstanceChangedWithKeys += TriggersStorage_OnNamedTriggerInstanceChangedWithKeys;
+            triggersStorage.OnNamedTriggerInstanceChangedWithKeys += TriggersStorage_OnNamedTriggerInstanceChangedWithKeys;//no need
 
             _parentTriggersStoragesList.Add(triggersStorage);
         }

@@ -42,9 +42,9 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("2DB9BB89-78E8-418C-8C6C-709687A9E410", "Begin");
 
-            OnEv += Handler1;
-            OnEv += Handler2;
-            OnEv += Handler3;
+            OnEv += Handler1;//no need
+            OnEv += Handler2;//no need
+            OnEv += Handler3;//no need
 
             var rez = OnEv(12);
 

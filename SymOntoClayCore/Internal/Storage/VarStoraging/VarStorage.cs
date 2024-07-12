@@ -30,6 +30,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Storage.VarStoraging
@@ -270,22 +271,22 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
         private void RealStorageContext_OnRemoveParentStorage(IStorage storage)
         {
-            LoggedFunctorWithoutResult
+            LoggedFunctorWithoutResult<IStorage>.Run(Logger, storage, (loggerValue, storageValue) => {
+                var varStorage = storageValue.VarStorage;
+                varStorage.OnChangedWithKeys -= VarStorage_OnChangedWithKeys;
 
-            var varStorage = storage.VarStorage;
-            varStorage.OnChangedWithKeys -= VarStorage_OnChangedWithKeys;
-
-            _parentVarStoragesList.Remove(varStorage);
+                _parentVarStoragesList.Remove(varStorage);
+            }, _activeObjectContext, _threadPool);
         }
 
         private void RealStorageContext_OnAddParentStorage(IStorage storage)
         {
-            LoggedFunctorWithoutResult
+            LoggedFunctorWithoutResult<IStorage>.Run(Logger, storage, (loggerValue, storageValue) => {
+                var varStorage = storageValue.VarStorage;
+                varStorage.OnChangedWithKeys += VarStorage_OnChangedWithKeys;//no need
 
-            var varStroage = storage.VarStorage;
-            varStroage.OnChangedWithKeys += VarStorage_OnChangedWithKeys;//no need
-
-            _parentVarStoragesList.Add(varStroage);
+                _parentVarStoragesList.Add(varStorage);
+            }, _activeObjectContext, _threadPool);
         }
 
         /// <inheritdoc/>

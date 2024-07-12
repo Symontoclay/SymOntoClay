@@ -461,6 +461,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         public event Action<IList<StrongIdentifierValue>> OnChangedWithKeys;
 
         /// <inheritdoc/>
+        [Obsolete("This have to be serialized list of serialized triggers", true)]
         public event Func<RuleInstance, IAddFactOrRuleResult> OnAddingFact;
 
         protected void EmitOnChanged(IMonitorLogger logger, IList<StrongIdentifierValue> usedKeysList)
@@ -487,7 +488,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private IAddFactOrRuleResult LogicalStorage_OnAddingFact(RuleInstance ruleInstance)
         {
-            LoggedFunctorWithResult<RuleInstance, IAddFactOrRuleResult>.Run();
+            LoggedFunctorWithResult<RuleInstance, IAddFactOrRuleResult>.Run(Logger, ruleInstance, (loggerValue, ruleInstanceValue) => { 
+            
+            });
 
             if (OnAddingFact == null)
             {

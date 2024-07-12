@@ -20,6 +20,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.Threads;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -33,7 +35,12 @@ namespace SymOntoClay.Core.Internal.Storage
         {
             _kind = kind;
             _realStorageContext = realStorageContext;
-            _mainStorageContext = realStorageContext.MainStorageContext;
+
+            var mainStorageContext = realStorageContext.MainStorageContext;
+
+            _mainStorageContext = mainStorageContext;
+            _activeObjectContext = mainStorageContext.ActivePeriodicObjectContext;
+            _threadPool = mainStorageContext.AsyncEventsThreadPool;
         }
 
         protected readonly KindOfStorage _kind;
@@ -46,5 +53,8 @@ namespace SymOntoClay.Core.Internal.Storage
 
         /// <inheritdoc/>
         public IStorage Storage => _realStorageContext.Storage;
+
+        protected readonly IActiveObjectContext _activeObjectContext;
+        protected readonly ICustomThreadPool _threadPool;
     }
 }

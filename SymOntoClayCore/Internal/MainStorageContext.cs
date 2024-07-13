@@ -82,7 +82,7 @@ namespace SymOntoClay.Core.Internal
         ILoaderFromSourceCode IMainStorageContext.LoaderFromSourceCode => LoaderFromSourceCode;
         IInstancesStorageComponent IMainStorageContext.InstancesStorage => InstancesStorage;
 
-        IActiveObjectContext IMainStorageContext.ActivePeriodicObjectContext => ActiveObjectContext;
+        IActiveObjectContext IMainStorageContext.ActiveObjectContext => ActiveObjectContext;
 
         IServicesFactory IMainStorageContext.ServicesFactory => ServicesFactory;
 

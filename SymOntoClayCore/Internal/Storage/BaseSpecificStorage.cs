@@ -39,7 +39,7 @@ namespace SymOntoClay.Core.Internal.Storage
             var mainStorageContext = realStorageContext.MainStorageContext;
 
             _mainStorageContext = mainStorageContext;
-            _activeObjectContext = mainStorageContext.ActivePeriodicObjectContext;
+            _activeObjectContext = mainStorageContext.ActiveObjectContext;
             _threadPool = mainStorageContext.AsyncEventsThreadPool;
         }
 

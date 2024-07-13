@@ -35,6 +35,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
@@ -128,6 +129,9 @@ namespace SymOntoClay.Core.Internal.Instances
       
         private readonly Dictionary<StrongIdentifierValue, IStorage> _superClassesStorages = new Dictionary<StrongIdentifierValue, IStorage>();
         private readonly object _superClassesStoragesLockObj = new object();
+
+                private readonly IActiveObjectContext _activeObjectContext;
+        private readonly ICustomThreadPool _threadPool;
 
         /// <inheritdoc/>
         public IExecutionCoordinator ExecutionCoordinator => _executionCoordinator;
@@ -518,6 +522,9 @@ namespace SymOntoClay.Core.Internal.Instances
         private void ParentExecutionCoordinator_OnFinished()
         {
             LoggedFunctorWithoutResult
+            //<IExecutionCoordinator>.Run(Logger, _executionCoordinator, (loggerValue, executionCoordinatorValue) => {
+
+            //}, _activeObjectContext, _threadPool);
             _executionCoordinator.SetExecutionStatus(Logger, "898C6E87-54F5-41CA-8B3F-08B8BBF95135", ActionExecutionStatus.WeakCanceled);
         }
 

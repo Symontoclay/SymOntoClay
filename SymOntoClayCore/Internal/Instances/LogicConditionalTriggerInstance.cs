@@ -107,7 +107,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 _resetConditionalTriggerObserver.OnChanged += Observer_OnChanged;//fixed
             }
 
-            _activeObject = new AsyncActivePeriodicObject(context.ActivePeriodicObjectContext, context.TriggersThreadPool, Logger);
+            _activeObject = new AsyncActivePeriodicObject(context.ActiveObjectContext, context.TriggersThreadPool, Logger);
             _activeObject.PeriodicMethod = Handler;
         }
         

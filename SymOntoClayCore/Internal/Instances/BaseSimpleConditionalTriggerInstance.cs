@@ -72,7 +72,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _searchOptions.QueryExpression = _condition;
             _searchOptions.LocalCodeExecutionContext = _localCodeExecutionContext;
 
-            _activeObject = new AsyncActivePeriodicObject(context.ActivePeriodicObjectContext, context.TriggersThreadPool, Logger);
+            _activeObject = new AsyncActivePeriodicObject(context.ActiveObjectContext, context.TriggersThreadPool, Logger);
             _activeObject.PeriodicMethod = Handler;
         }
 

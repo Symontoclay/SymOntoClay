@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DictionaryGenerator\DictionaryGenerator.csproj" />
+    <ProjectReference Include="..\SymOntoClay.ActiveObject\SymOntoClay.ActiveObject.csproj" />
     <ProjectReference Include="..\SymOntoClay.Libs\SymOntoClay.Libs.csproj" />
     <ProjectReference Include="..\SymOntoClay.Monitor.Common.Data\SymOntoClay.Monitor.Common.Data.csproj" />
     <ProjectReference Include="..\SymOntoClay.Monitor.Common\SymOntoClay.Monitor.Common.csproj" />
@@ -38,7 +39,7 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NLog" Version="5.1.4" />
-    <PackageReference Include="SymOntoClay.Common" Version="0.5.5.5" />
+    <PackageReference Include="SymOntoClay.Common" Version="0.5.5.10" />
     <PackageReference Include="System.CodeDom" Version="7.0.0" />
     <PackageReference Include="System.Speech" Version="7.0.0" />
   </ItemGroup>

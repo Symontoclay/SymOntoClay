@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.Disposing;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
@@ -105,7 +106,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             StandaloneStorage = new StandaloneStorageComponent(settings, this);
             ModulesStorage.Init(StandaloneStorage.StandaloneStorage.Context);
             PlatformTypesConvertorsRegistry = new PlatformTypesConvertersRegistry(Logger);
-            DateTimeProvider = new DateTimeProvider(Logger, ThreadsComponent, AsyncEventsThreadPool);
+            DateTimeProvider = new DateTimeProvider(Logger, ThreadsComponent, AsyncEventsThreadPool, _linkedCancellationTokenSource.Token);
             LogicQueryParseAndCache = new LogicQueryParseAndCache(settings, this);
         }
         

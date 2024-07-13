@@ -63,7 +63,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SymOntoClay.Monitor.LogFile
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SymOntoClay.Libs", "SymOntoClay.Libs\SymOntoClay.Libs.csproj", "{CDCEB1D0-39D6-44B8-AADF-1FDD4AF44E0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLI.CmdlParser.Tests", "CLI.CmdlParser.Tests\CLI.CmdlParser.Tests.csproj", "{8EF40C46-C7A4-4617-9A7E-E0D30413F9A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CLI.CmdlParser.Tests", "CLI.CmdlParser.Tests\CLI.CmdlParser.Tests.csproj", "{8EF40C46-C7A4-4617-9A7E-E0D30413F9A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SymOntoClay.ActiveObject", "SymOntoClay.ActiveObject\SymOntoClay.ActiveObject.csproj", "{CA714B79-FC45-462B-9A47-9E859D9C7709}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -175,6 +177,10 @@ Global
 		{8EF40C46-C7A4-4617-9A7E-E0D30413F9A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EF40C46-C7A4-4617-9A7E-E0D30413F9A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EF40C46-C7A4-4617-9A7E-E0D30413F9A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA714B79-FC45-462B-9A47-9E859D9C7709}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA714B79-FC45-462B-9A47-9E859D9C7709}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA714B79-FC45-462B-9A47-9E859D9C7709}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA714B79-FC45-462B-9A47-9E859D9C7709}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

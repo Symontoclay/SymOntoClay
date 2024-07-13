@@ -9440,6 +9440,9 @@
         <member name="M:SymOntoClay.Core.Internal.Threads.ActiveObjectContext.StopAll">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Threads.ActiveObjectContext.Token">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Threads.ActiveObjectContext.Dispose">
             <inheritdoc/>
         </member>

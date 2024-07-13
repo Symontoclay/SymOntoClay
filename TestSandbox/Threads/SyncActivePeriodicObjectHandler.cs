@@ -37,7 +37,9 @@ namespace TestSandbox.Threads
         {
             _logger.Info("Begin");
 
-            var activeObject = new SyncActivePeriodicObject();
+            using var cancellationTokenSource = new CancellationTokenSource();
+
+            var activeObject = new SyncActivePeriodicObject(cancellationTokenSource.Token);
             activeObject.PeriodicMethod = NRun;
             activeObject.Start();
 

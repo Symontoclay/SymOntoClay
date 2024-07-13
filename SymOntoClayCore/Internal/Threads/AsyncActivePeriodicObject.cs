@@ -21,39 +21,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
+using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Threads
 {
     public class AsyncActivePeriodicObject : IActivePeriodicObject, IDisposable
     {
-        public AsyncActivePeriodicObject(IActiveObjectContext context, ICustomThreadPool threadPool)
+        public AsyncActivePeriodicObject(IActiveObjectContext context, ICustomThreadPool threadPool, IMonitorLogger logger)
         {
             _context = context;
             _threadPool = threadPool;
+            _cancellationToken = context.Token;
+            _logger = logger;
 
             context.AddChildActiveObject(this);
         }
-        
+
         private readonly IActiveObjectContext _context;
         private readonly ICustomThreadPool _threadPool;
-
-#if DEBUG
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
-#endif
+        private readonly CancellationToken _cancellationToken;
+        private readonly IMonitorLogger _logger;
 
         private readonly object _lockObj = new object();
 
         /// <inheritdoc/>
         public PeriodicDelegate PeriodicMethod { get; set; }
-        
+
         private volatile bool _isWaited;
 
         /// <inheritdoc/>
@@ -64,80 +62,94 @@ namespace SymOntoClay.Core.Internal.Threads
         /// <inheritdoc/>
         public bool IsActive => !_isExited && !_isWaited;
 
-        private Value _taskValue = new NullValue();
+        private IThreadTask _task = null;
 
         /// <inheritdoc/>
-        public Value TaskValue
+        public IThreadTask TaskValue
         {
             get
             {
-                lock(_lockObj)
+                lock (_lockObj)
                 {
-                    return _taskValue;
+                    return _task;
                 }
             }
         }
 
         /// <inheritdoc/>
-        public Value Start()
+        public IThreadTask Start()
         {
-            lock(_lockObj)
+            lock (_lockObj)
             {
                 if (_isDisposed)
                 {
-                    return _taskValue;
+                    return _task;
                 }
 
                 if (!_isExited)
                 {
-                    return _taskValue;
+                    return _task;
                 }
 
                 _isExited = false;
                 _isWaited = false;
 
                 var cancellationTokenSource = new CancellationTokenSource();
-                var cancellationToken = cancellationTokenSource.Token;
+                var linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationTokenSource.Token, _cancellationToken);
 
                 var task = new ThreadTask(() => {
-                    var autoResetEvent = _context.WaitEvent;
-
-                    while (true)
+                    try
                     {
-                        if (_context.IsNeedWating)
-                        {
-                            _isWaited = true;
-                            autoResetEvent.WaitOne();
-                            _isWaited = false;
-                        }
+                        var autoResetEvent = _context.WaitEvent;
 
-                        if (_isExited)
+                        while (true)
                         {
-                            return;
-                        }
+                            if (_cancellationToken.IsCancellationRequested)
+                            {
+                                return;
+                            }
 
-                        if (!PeriodicMethod(cancellationToken))
-                        {
-                            return;
+                            if (_context.IsNeedWating)
+                            {
+                                _isWaited = true;
+                                autoResetEvent.WaitOne();
+                                _isWaited = false;
+                            }
+
+                            if (_isExited)
+                            {
+                                return;
+                            }
+
+                            if (_cancellationToken.IsCancellationRequested)
+                            {
+                                return;
+                            }
+
+                            if (!PeriodicMethod(linkedCancellationTokenSource.Token))
+                            {
+                                return;
+                            }
                         }
                     }
-                }, _threadPool, cancellationToken);
+                    catch (Exception e)
+                    {
+                        _logger.Error("7CA31B61-20CF-40E5-B275-E68213D00242", e);
+                    }
 
-                _taskValue = new TaskValue(task, cancellationTokenSource);
+                }, _threadPool, linkedCancellationTokenSource.Token);
+
+                _task = task;
 
                 task.Start();
 
-                return _taskValue;
+                return _task;
             }
         }
 
         /// <inheritdoc/>
         public void Stop()
         {
-#if DEBUG
-            _logger.Info("Stop()");
-#endif
-
             lock (_lockObj)
             {
                 if (_isDisposed)
@@ -153,7 +165,7 @@ namespace SymOntoClay.Core.Internal.Threads
                 _isExited = true;
                 _isWaited = false;
 
-                _taskValue = new NullValue();
+                _task = null;
             }
         }
 
@@ -175,7 +187,7 @@ namespace SymOntoClay.Core.Internal.Threads
 
                 _context.RemoveChildActiveObject(this);
 
-                _taskValue = new NullValue();
+                _task = null;
             }
         }
     }

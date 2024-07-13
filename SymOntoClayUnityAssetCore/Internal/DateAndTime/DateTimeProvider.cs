@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
@@ -36,12 +37,12 @@ namespace SymOntoClay.UnityAsset.Core.Internal.DateAndTime
 {
     public class DateTimeProvider: BaseLoggedComponent, IDateTimeProvider, IDisposable
     {
-        public DateTimeProvider(IMonitorLogger logger, IActiveObjectCommonContext syncContext, ICustomThreadPool threadPool)
+        public DateTimeProvider(IMonitorLogger logger, IActiveObjectCommonContext syncContext, ICustomThreadPool threadPool, CancellationToken cancellationToken)
             : base(logger)
         {
-            var activeContext = new ActiveObjectContext(syncContext);
+            var activeContext = new ActiveObjectContext(syncContext, cancellationToken);
 
-            _activeObject = new AsyncActivePeriodicObject(activeContext, threadPool)
+            _activeObject = new AsyncActivePeriodicObject(activeContext, threadPool, logger)
             {
                 PeriodicMethod = NRun
             };
@@ -98,7 +99,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.DateAndTime
         }
 
         /// <inheritdoc/>
-        public Value Start()
+        public IThreadTask Start()
         {
             return _activeObject.Start();
         }

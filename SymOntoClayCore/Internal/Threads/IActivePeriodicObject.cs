@@ -20,7 +20,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -32,8 +34,8 @@ namespace SymOntoClay.Core.Internal.Threads
         PeriodicDelegate PeriodicMethod { get; set; }
         bool IsActive { get; }
         bool IsWaited { get; }
-        Value TaskValue { get; }
-        Value Start();
+        IThreadTask TaskValue { get; }
+        IThreadTask Start();
         void Stop();
     }
 }

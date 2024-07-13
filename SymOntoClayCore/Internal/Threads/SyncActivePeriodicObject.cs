@@ -20,21 +20,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using NLog;
-using SymOntoClay.Core.Internal.CodeModel;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using SymOntoClay.ActiveObject.Threads;
+using SymOntoClay.Threading;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Threads
 {
     public class SyncActivePeriodicObject : IActivePeriodicObject
     {
-#if DEBUG
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
-#endif
+        public SyncActivePeriodicObject(CancellationToken cancellationToken)
+        {
+            _cancellationToken = cancellationToken;
+        }
+
+        private readonly CancellationToken _cancellationToken;
 
         /// <inheritdoc/>
         public PeriodicDelegate PeriodicMethod { get; set; }
@@ -47,22 +46,24 @@ namespace SymOntoClay.Core.Internal.Threads
         /// <inheritdoc/>
         public bool IsWaited => false;
 
-        private Value _taskValue = new NullValue();
+        private IThreadTask _taskValue = null;
 
         /// <inheritdoc/>
-        public Value TaskValue => _taskValue;
+        public IThreadTask TaskValue => _taskValue;
 
         /// <inheritdoc/>
-        public Value Start()
+        public IThreadTask Start()
         {
             _isActive = true;
 
-            var cancellationTokenSource = new CancellationTokenSource();
-            var cancellationToken = cancellationTokenSource.Token;
-
             while (true)
             {
-                if (!PeriodicMethod(cancellationToken))
+                if (_cancellationToken.IsCancellationRequested)
+                {
+                    return _taskValue;
+                }
+
+                if (!PeriodicMethod(_cancellationToken))
                 {
                     _isActive = false;
                     return _taskValue;

@@ -20,6 +20,7 @@
     <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SymOntoClay.ActiveObject\SymOntoClay.ActiveObject.csproj" />
     <ProjectReference Include="..\SymOntoClay.Monitor.Common\SymOntoClay.Monitor.Common.csproj" />
     <ProjectReference Include="..\SymOntoClay.Monitor.NLog\SymOntoClay.Monitor.NLog.csproj" />
     <ProjectReference Include="..\SymOntoClayCoreHelper\SymOntoClayCoreHelper.csproj" />
@@ -28,6 +29,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NLog" Version="5.1.4" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
-    <PackageReference Include="SymOntoClay.Threading" Version="0.5.5.5" />
+    <PackageReference Include="SymOntoClay.Threading" Version="0.5.5.10" />
   </ItemGroup>
 </Project>

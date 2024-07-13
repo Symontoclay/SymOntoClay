@@ -20,22 +20,24 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.Threads;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Threads
 {
     public class ActiveObjectContext : IActiveObjectContext, IDisposable
     {
-        public ActiveObjectContext(IActiveObjectCommonContext commonContext)
+        public ActiveObjectContext(IActiveObjectCommonContext commonContext, CancellationToken cancellationToken)
         {
             _commonContext = commonContext;
+            _cancellationToken = cancellationToken;
         }
 
         private readonly IActiveObjectCommonContext _commonContext;
+        private readonly CancellationToken _cancellationToken;
 
         /// <inheritdoc/>
         public bool IsNeedWating => _commonContext.IsNeedWating;
@@ -107,6 +109,9 @@ namespace SymOntoClay.Core.Internal.Threads
                 }
             }
         }
+
+        /// <inheritdoc/>
+        public CancellationToken Token => _cancellationToken;
 
         private bool _isDisposed;
 

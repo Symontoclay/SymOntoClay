@@ -42,12 +42,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class TaskValue : Value
     {
-        public TaskValue(ThreadTask systemTask, CancellationTokenSource cancellationTokenSource)
+        public TaskValue(IThreadTask systemTask)
         {
             SystemTask = systemTask;
-            _cancellationTokenSource = cancellationTokenSource;
             TaskId = Guid.NewGuid().ToString("D");
-            _cancellationTokenSourceCancelHandler = new CancellationTokenSourceCancelHandler(cancellationTokenSource);
+            _cancellationTokenSourceCancelHandler = new CancellationTokenSourceCancelHandler(systemTask.CancellationTokenSource);
         }
 
         /// <inheritdoc/>
@@ -60,7 +59,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override TaskValue AsTaskValue => this;
 
         public string TaskId { get; set; }
-        public ThreadTask SystemTask 
+        public IThreadTask SystemTask 
         { 
             get
             {
@@ -88,9 +87,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
         }
 
-        private readonly CancellationTokenSource _cancellationTokenSource;
-
-        private ThreadTask _systemTask;
+        private IThreadTask _systemTask;
 
         public event Action OnComplete
         {
@@ -129,7 +126,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public void Cancel()
         {
-            _cancellationTokenSource.Cancel();
+            _systemTask?.Cancel();
         }
 
         /// <inheritdoc/>
@@ -199,7 +196,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 return (Value)context[this];
             }
 
-            var result = new TaskValue(_systemTask, _cancellationTokenSource);
+            var result = new TaskValue(_systemTask);
             context[this] = result;
 
             result.TaskId = TaskId;

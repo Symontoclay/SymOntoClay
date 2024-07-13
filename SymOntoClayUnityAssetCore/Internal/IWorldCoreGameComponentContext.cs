@@ -48,7 +48,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         string GetIdForFactsByInstanceId(int instanceId);
         int GetInstanceIdByIdForFacts(string id);
         IMonitor Motitor { get; }
-        IActivePeriodicObjectCommonContext SyncContext { get; }
+        IActiveObjectCommonContext SyncContext { get; }
         
         IModulesStorage ModulesStorage { get; }
         IStandaloneStorage StandaloneStorage { get; }

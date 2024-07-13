@@ -43,7 +43,7 @@ namespace SymOntoClay.Core
         /// </summary>
         public string AppFile { get; set; }
 
-        public IActivePeriodicObjectCommonContext SyncContext { get; set; }
+        public IActiveObjectCommonContext SyncContext { get; set; }
 
         /// <summary>
         /// Gets or ses reference to shared modules storage.

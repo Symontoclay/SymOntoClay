@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.Threads
 {
     public class AsyncActivePeriodicObject : IActivePeriodicObject, IDisposable
     {
-        public AsyncActivePeriodicObject(IActivePeriodicObjectContext context, ICustomThreadPool threadPool)
+        public AsyncActivePeriodicObject(IActiveObjectContext context, ICustomThreadPool threadPool)
         {
             _context = context;
             _threadPool = threadPool;
@@ -42,7 +42,7 @@ namespace SymOntoClay.Core.Internal.Threads
             context.AddChildActiveObject(this);
         }
         
-        private readonly IActivePeriodicObjectContext _context;
+        private readonly IActiveObjectContext _context;
         private readonly ICustomThreadPool _threadPool;
 
 #if DEBUG

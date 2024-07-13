@@ -36,10 +36,10 @@ namespace SymOntoClay.UnityAsset.Core.Internal.DateAndTime
 {
     public class DateTimeProvider: BaseLoggedComponent, IDateTimeProvider, IDisposable
     {
-        public DateTimeProvider(IMonitorLogger logger, IActivePeriodicObjectCommonContext syncContext, ICustomThreadPool threadPool)
+        public DateTimeProvider(IMonitorLogger logger, IActiveObjectCommonContext syncContext, ICustomThreadPool threadPool)
             : base(logger)
         {
-            var activeContext = new ActivePeriodicObjectContext(syncContext);
+            var activeContext = new ActiveObjectContext(syncContext);
 
             _activeObject = new AsyncActivePeriodicObject(activeContext, threadPool)
             {

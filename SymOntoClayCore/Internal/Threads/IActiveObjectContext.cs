@@ -26,7 +26,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Threads
 {
-    public interface IActivePeriodicObjectContext : IActivePeriodicObjectCommonContext
+    public interface IActiveObjectContext : IActiveObjectCommonContext
     {
         void AddChildActiveObject(IActivePeriodicObject activeObject);
         void RemoveChildActiveObject(IActivePeriodicObject activeObject);

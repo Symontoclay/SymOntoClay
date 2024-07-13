@@ -44,7 +44,7 @@ namespace TestSandbox.DateTimes
 
             using var threadPool = new CustomThreadPool(0, 20);
 
-            var commonActiveContext = new ActivePeriodicObjectCommonContext();
+            var commonActiveContext = new ActiveObjectCommonContext();
 
             var dateTimeProvider = new DateTimeProvider(_logger, commonActiveContext, threadPool);
 

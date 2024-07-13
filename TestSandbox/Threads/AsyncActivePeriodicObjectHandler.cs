@@ -44,9 +44,9 @@ namespace TestSandbox.Threads
 
             using var threadPool = new CustomThreadPool(0, 20);
 
-            var commonActiveContext = new ActivePeriodicObjectCommonContext();
+            var commonActiveContext = new ActiveObjectCommonContext();
 
-            var activeContext = new ActivePeriodicObjectContext(commonActiveContext);
+            var activeContext = new ActiveObjectContext(commonActiveContext);
 
             var activeObject = new AsyncActivePeriodicObject(activeContext, threadPool)
             {

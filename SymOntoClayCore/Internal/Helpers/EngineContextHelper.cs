@@ -139,7 +139,7 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.DataResolversFactory = new DataResolversFactory(context);
             context.ConvertersFactory = new ConvertersFactory(context);
 
-            context.ActivePeriodicObjectContext = new ActivePeriodicObjectContext(settings.SyncContext);
+            context.ActiveObjectContext = new ActiveObjectContext(settings.SyncContext);
             context.ModulesStorage = settings.ModulesStorage;
 
             context.ServicesFactory = new ServicesFactory(context);

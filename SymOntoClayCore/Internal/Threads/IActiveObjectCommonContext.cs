@@ -20,7 +20,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -28,27 +27,9 @@ using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Threads
 {
-    public class ActivePeriodicObjectCommonContext : IActivePeriodicObjectCommonContext
+    public interface IActiveObjectCommonContext
     {
-        private readonly ManualResetEvent _autoResetEvent = new ManualResetEvent(true);
-        private volatile bool _isNeedWating;
-
-        /// <inheritdoc/>
-        public bool IsNeedWating => _isNeedWating;
-
-        /// <inheritdoc/>
-        public EventWaitHandle WaitEvent => _autoResetEvent;
-
-        public void Lock()
-        {
-            _autoResetEvent.Reset();
-            _isNeedWating = true;
-        }
-
-        public void UnLock()
-        {
-            _isNeedWating = false;
-            _autoResetEvent.Set();
-        }
+        bool IsNeedWating { get; }
+        EventWaitHandle WaitEvent { get; }
     }
 }

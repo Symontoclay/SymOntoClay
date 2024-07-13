@@ -55,7 +55,7 @@ namespace SymOntoClay.Core.Internal
         /// <inheritdoc/>
         public string AppFile { get; set; }
 
-        public ActivePeriodicObjectContext ActivePeriodicObjectContext { get; set; }
+        public ActiveObjectContext ActiveObjectContext { get; set; }
 
         public StorageComponent Storage { get; set; }
         public Parser Parser { get; set; }
@@ -82,13 +82,13 @@ namespace SymOntoClay.Core.Internal
         ILoaderFromSourceCode IMainStorageContext.LoaderFromSourceCode => LoaderFromSourceCode;
         IInstancesStorageComponent IMainStorageContext.InstancesStorage => InstancesStorage;
 
-        IActivePeriodicObjectContext IMainStorageContext.ActivePeriodicObjectContext => ActivePeriodicObjectContext;
+        IActiveObjectContext IMainStorageContext.ActiveObjectContext => ActiveObjectContext;
 
         IServicesFactory IMainStorageContext.ServicesFactory => ServicesFactory;
 
         public virtual void Die()
         {
-            ActivePeriodicObjectContext.Dispose();
+            ActiveObjectContext.Dispose();
             Storage.Die();
             Parser.Dispose();
             CommonNamesStorage.Dispose();
@@ -100,7 +100,7 @@ namespace SymOntoClay.Core.Internal
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
-            ActivePeriodicObjectContext.Dispose();
+            ActiveObjectContext.Dispose();
             Storage.Dispose();
             Parser.Dispose();
             CommonNamesStorage.Dispose();

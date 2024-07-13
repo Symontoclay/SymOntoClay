@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution.Helpers;
@@ -31,7 +32,6 @@ using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Serialization;
-using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using System;

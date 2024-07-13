@@ -25,7 +25,6 @@ using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
-using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
@@ -34,7 +33,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime;
 using System.Threading;
 using System.Threading.Tasks;
 

@@ -26,7 +26,6 @@ using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Core.Internal.Instances;
-using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.Threading;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,4 @@
-/*MIT License
+﻿/*MIT License
 
 Copyright (c) 2020 - 2024 Sergiy Tolkachov
 
@@ -20,36 +20,21 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.ActiveObject.Threads;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using System;
-using System.Collections.Generic;
-using System.Text;
+
 using System.Threading;
 
-namespace SymOntoClay.Core.Internal.Threads
+namespace SymOntoClay.ActiveObject.Threads
 {
-    public class ActiveObjectCommonContext : IActiveObjectCommonContext
+    public interface IActiveObjectContext : IActiveObjectCommonContext
     {
-        private readonly ManualResetEvent _autoResetEvent = new ManualResetEvent(true);
-        private volatile bool _isNeedWating;
+        void AddChildActiveObject(IActivePeriodicObject activeObject);
+        void RemoveChildActiveObject(IActivePeriodicObject activeObject);
 
-        /// <inheritdoc/>
-        public bool IsNeedWating => _isNeedWating;
+        void WaitWhenAllIsNotWaited();
 
-        /// <inheritdoc/>
-        public EventWaitHandle WaitEvent => _autoResetEvent;
+        void StartAll();
+        void StopAll();
 
-        public void Lock()
-        {
-            _autoResetEvent.Reset();
-            _isNeedWating = true;
-        }
-
-        public void UnLock()
-        {
-            _isNeedWating = false;
-            _autoResetEvent.Set();
-        }
+        CancellationToken Token { get; }
     }
 }

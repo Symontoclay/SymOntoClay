@@ -36,7 +36,6 @@ using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Core.Internal.Parsing.Internal;
 using SymOntoClay.Core.Internal.StandardLibrary.FuzzyLogic;
-using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.DefaultCLIEnvironment;
 using SymOntoClay.Monitor.Common;

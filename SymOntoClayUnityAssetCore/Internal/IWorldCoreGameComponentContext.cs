@@ -22,13 +22,10 @@ SOFTWARE.*/
 
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Core;
-using SymOntoClay.Core.Internal.Threads;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
 using SymOntoClay.UnityAsset.Core.Internal.TypesConverters;
-using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Threading;

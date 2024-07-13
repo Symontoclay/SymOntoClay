@@ -21,10 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
-using SymOntoClay.Core.Internal.Threads;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using SymOntoClay.ActiveObject.Threads;
 using System.Threading;
 
 namespace TestSandbox.Threads

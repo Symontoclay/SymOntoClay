@@ -22,10 +22,6 @@ SOFTWARE.*/
 
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.DebugHelpers;
-using SymOntoClay.Core.Internal.Threads;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using SymOntoClay.Monitor.Common;
-using System;
 using System.Collections.Generic;
 using System.Text;
 

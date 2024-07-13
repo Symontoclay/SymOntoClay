@@ -21,7 +21,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution;
-using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.Threading;
 
 namespace SymOntoClay.Core.Internal

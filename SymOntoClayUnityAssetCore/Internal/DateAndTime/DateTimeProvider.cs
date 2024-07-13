@@ -23,14 +23,9 @@ SOFTWARE.*/
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
-using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.Threads;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.DateAndTime

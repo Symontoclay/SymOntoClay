@@ -24,7 +24,6 @@ using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.Disposing;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
-using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
@@ -44,7 +43,6 @@ using System.Linq;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.UnityAsset.Core.Internal
 {

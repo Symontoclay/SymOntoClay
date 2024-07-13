@@ -24,7 +24,6 @@ using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Core;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.Threads;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Threading;

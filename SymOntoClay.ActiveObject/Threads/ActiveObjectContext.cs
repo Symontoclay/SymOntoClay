@@ -1,4 +1,4 @@
-/*MIT License
+﻿/*MIT License
 
 Copyright (c) 2020 - 2024 Sergiy Tolkachov
 
@@ -20,13 +20,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.ActiveObject.Threads;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace SymOntoClay.Core.Internal.Threads
+namespace SymOntoClay.ActiveObject.Threads
 {
     public class ActiveObjectContext : IActiveObjectContext, IDisposable
     {
@@ -120,7 +119,7 @@ namespace SymOntoClay.Core.Internal.Threads
         {
             lock (_lockObj)
             {
-                if(_isDisposed)
+                if (_isDisposed)
                 {
                     return;
                 }

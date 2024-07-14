@@ -18,7 +18,7 @@ namespace TestSandbox.MethodResponsing
 
             _logger.Info("07159A1E-0F63-4EAA-B40A-1E2075310C0A", "End");
         }
-
+        
         private void CaseWithIntResult()
         {
             var methodResponse = SomeIntMethod();

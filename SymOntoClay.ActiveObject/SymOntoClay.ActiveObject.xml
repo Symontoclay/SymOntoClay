@@ -4,6 +4,60 @@
         <name>SymOntoClay.ActiveObject</name>
     </assembly>
     <members>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult.OnRun(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`1.OnRun(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`2.OnRun(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`3.OnRun(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithResult`1.OnRun(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithResult`2.OnRun(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithResult`3.OnRun(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithResult`4.OnRun(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.MethodResponses.CompletedMethodResponse.Task">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.MethodResponses.CompletedMethodResponse.Wait">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.MethodResponses.CompletedMethodResponse`1.Task">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.MethodResponses.CompletedMethodResponse`1.Result">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.MethodResponses.CompletedMethodResponse`1.Wait">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.MethodResponses.MethodResponseOfBaseFunctor.Task">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.MethodResponses.MethodResponseOfBaseFunctor.Wait">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.MethodResponses.MethodResponseOfBaseFunctor`1.Task">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.MethodResponses.MethodResponseOfBaseFunctor`1.Result">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.MethodResponses.MethodResponseOfBaseFunctor`1.Wait">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.ActiveObject.Threads.ActiveObjectCommonContext.IsNeedWating">
             <inheritdoc/>
         </member>
@@ -22,6 +76,12 @@
         <member name="M:SymOntoClay.ActiveObject.Threads.ActiveObjectContext.SymOntoClay#ActiveObject#Threads#IActiveObjectContext#RemoveChildActiveObject(SymOntoClay.ActiveObject.Threads.IActivePeriodicObject)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.ActiveObject.Threads.ActiveObjectContext.SymOntoClay#ActiveObject#Threads#IActiveObjectContext#AddChildActiveObject(SymOntoClay.ActiveObject.Threads.IActiveOnceObject)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Threads.ActiveObjectContext.SymOntoClay#ActiveObject#Threads#IActiveObjectContext#RemoveChildActiveObject(SymOntoClay.ActiveObject.Threads.IActiveOnceObject)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.ActiveObject.Threads.ActiveObjectContext.WaitWhenAllIsNotWaited">
             <inheritdoc/>
         </member>
@@ -35,6 +95,39 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.Threads.ActiveObjectContext.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject.IsWaited">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject.IsActive">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject.TaskValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject.Start">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject`1.OnceMethod">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject`1.IsWaited">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject`1.IsActive">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject`1.TaskValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject`1.Start">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Threads.AsyncActiveOnceObject`1.Dispose">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject.PeriodicMethod">

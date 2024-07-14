@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SymOntoClay.ActiveObject</name>
+    </assembly>
+    <members>
+        <member name="P:SymOntoClay.ActiveObject.Threads.ActiveObjectCommonContext.IsNeedWating">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.Threads.ActiveObjectCommonContext.WaitEvent">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.Threads.ActiveObjectContext.IsNeedWating">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.Threads.ActiveObjectContext.WaitEvent">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Threads.ActiveObjectContext.SymOntoClay#ActiveObject#Threads#IActiveObjectContext#AddChildActiveObject(SymOntoClay.ActiveObject.Threads.IActivePeriodicObject)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Threads.ActiveObjectContext.SymOntoClay#ActiveObject#Threads#IActiveObjectContext#RemoveChildActiveObject(SymOntoClay.ActiveObject.Threads.IActivePeriodicObject)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Threads.ActiveObjectContext.WaitWhenAllIsNotWaited">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Threads.ActiveObjectContext.StartAll">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Threads.ActiveObjectContext.StopAll">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.Threads.ActiveObjectContext.Token">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Threads.ActiveObjectContext.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject.PeriodicMethod">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject.IsWaited">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject.IsActive">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject.TaskValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject.Start">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject.Stop">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.Threads.SyncActivePeriodicObject.PeriodicMethod">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.Threads.SyncActivePeriodicObject.IsActive">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.Threads.SyncActivePeriodicObject.IsWaited">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.Threads.SyncActivePeriodicObject.TaskValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Threads.SyncActivePeriodicObject.Start">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Threads.SyncActivePeriodicObject.Stop">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Threads.SyncActivePeriodicObject.Dispose">
+            <inheritdoc/>
+        </member>
+    </members>
+</doc>

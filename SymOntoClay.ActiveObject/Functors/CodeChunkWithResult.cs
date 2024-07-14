@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using static System.Collections.Specialized.BitVector32;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
-    public class CodeChunk : ICodeChunk
+    public class CodeChunkWithResult<TResult> : ICodeChunk
     {
-        public CodeChunk(CodeChunksContext codeChunksFactory, string id, Action action)
+        public CodeChunkWithResult(CodeChunksContext codeChunksFactory, string id, Func<TResult> func)
         {
             _codeChunksFactory = codeChunksFactory;
-            _action = action;
+            _func = func;
         }
 
         private bool _wasExecuted;
         private readonly CodeChunksContext _codeChunksFactory;
-        private readonly Action _action;
+        private readonly Func<TResult> _func;
 
         /// <inheritdoc/>
         public void Run()
@@ -26,7 +27,7 @@ namespace SymOntoClay.ActiveObject.Functors
 
             _wasExecuted = true;
 
-            _action();
+            _func();
         }
     }
 }

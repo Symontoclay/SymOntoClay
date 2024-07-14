@@ -6,11 +6,22 @@ namespace SymOntoClay.ActiveObject.Functors
 {
     public class CodeChunksContext
     {
-        private readonly List<CodeChunk> _chunks = new List<CodeChunk>();
-
-        public void CreateCodeChunk(Action<CodeChunk> action)
+        public CodeChunksContext(string id)
         {
-            var chunk = new CodeChunk(this, action);
+
+        }
+
+        private readonly List<ICodeChunk> _chunks = new List<ICodeChunk>();
+
+        public void CreateCodeChunk(string chunkId, Action action)
+        {
+            var chunk = new CodeChunk(this, chunkId, action);
+            _chunks.Add(chunk);
+        }
+
+        public void CreateCodeChunk(string chunkId, Action<ICodeChunk> action)
+        {
+            var chunk = new CodeChunkWithSelfReference(this, chunkId, action);
             _chunks.Add(chunk);
         }
 

@@ -28,6 +28,12 @@
         <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithResult`4.OnRun(System.Threading.CancellationToken)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.CodeChunk.Run">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.CodeChunkWithSelfReference.Run">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.ActiveObject.MethodResponses.CompletedMethodResponse.Task">
             <inheritdoc/>
         </member>

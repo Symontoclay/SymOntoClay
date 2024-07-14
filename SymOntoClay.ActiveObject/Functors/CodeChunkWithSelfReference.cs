@@ -4,9 +4,9 @@ using System.Text;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
-    public class CodeChunk : ICodeChunk
+    public class CodeChunkWithSelfReference: ICodeChunk
     {
-        public CodeChunk(CodeChunksContext codeChunksFactory, string id, Action action)
+        public CodeChunkWithSelfReference(CodeChunksContext codeChunksFactory, string id, Action<ICodeChunk> action)
         {
             _codeChunksFactory = codeChunksFactory;
             _action = action;
@@ -14,7 +14,7 @@ namespace SymOntoClay.ActiveObject.Functors
 
         private bool _wasExecuted;
         private readonly CodeChunksContext _codeChunksFactory;
-        private readonly Action _action;
+        private readonly Action<ICodeChunk> _action;
 
         /// <inheritdoc/>
         public void Run()
@@ -26,7 +26,7 @@ namespace SymOntoClay.ActiveObject.Functors
 
             _wasExecuted = true;
 
-            _action();
+            _action(this);
         }
     }
 }

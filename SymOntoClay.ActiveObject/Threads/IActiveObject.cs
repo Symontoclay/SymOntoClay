@@ -1,0 +1,13 @@
+﻿using SymOntoClay.Threading;
+using System;
+
+namespace SymOntoClay.ActiveObject.Threads
+{
+    public interface IActiveObject : IDisposable
+    {
+        bool IsActive { get; }
+        bool IsWaited { get; }
+        IThreadTask TaskValue { get; }
+        IThreadTask Start();
+    }
+}

@@ -86,20 +86,6 @@ namespace TestSandbox.Threads
             _logger.Info("CDAB2113-F5A2-4CD7-8321-579EAA6C57FC", $"activeObject.IsWaited (3) = {activeObject.IsWaited}");
             _logger.Info("9E05155F-3AC4-48A2-9C40-A4842C34A415", $"activeObject.IsActive (3) = {activeObject.IsActive}");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             Thread.Sleep(1000);
 
             _logger.Info("EA561877-4C5A-43A0-84DE-5E7AE2353275", "End");

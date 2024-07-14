@@ -62,6 +62,7 @@ using TestSandbox.DateTimes;
 using TestSandbox.Handlers;
 using TestSandbox.Helpers;
 using TestSandbox.LogicalDatabase;
+using TestSandbox.MethodResponsing;
 using TestSandbox.MonoBehaviourTesting;
 using TestSandbox.Navigations;
 using TestSandbox.Parsing;
@@ -157,6 +158,8 @@ namespace TestSandbox
             //TstCompileInlineTrigger();
             //TstRegOperatorsHandler();
             //TstCreateEngineContext();
+            //TstMethodResponsingHandler();
+            //TstAsyncActiveOnceObjectHandler();
             //TstAsyncActivePeriodicObjectHandler();
             //TstSyncActivePeriodicObjectHandler();
             //TstCodeExecution();
@@ -1938,6 +1941,26 @@ action Go
             var context = TstEngineContextHelper.CreateAndInitContext();
 
             _logger.Info("446B3B68-75E1-4DDD-84EF-B51ABFEFBAAC", "End");
+        }
+
+        private static void TstMethodResponsingHandler()
+        {
+            _logger.Info("C497C3C5-3BAB-4002-B747-F57BEB2B5FA3", "Begin");
+
+            var handler = new MethodResponsingHandler();
+            handler.Run();
+
+            _logger.Info("EFD4D7E4-CA17-47A8-BFF3-77499D73B458", "End");
+        }
+
+        private static void TstAsyncActiveOnceObjectHandler()
+        {
+            _logger.Info("456AA753-C5C4-4509-9467-0B0CB87569CE", "Begin");
+
+            var handler = new AsyncActiveOnceObjectHandler();
+            handler.Run();
+
+            _logger.Info("B24E538A-EC3D-4E0E-AECF-96163A492005", "End");
         }
 
         private static void TstAsyncActivePeriodicObjectHandler()

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
@@ -13,6 +14,18 @@ namespace SymOntoClay.ActiveObject.Functors
         private bool _wasExecuted;
         private readonly ICodeChunksContext _codeChunksFactory;
         private readonly Action _action;
+        private readonly List<ICodeChunk> _children = new List<ICodeChunk>();
+
+        /// <inheritdoc/>
+        public void AddChild(ICodeChunk child)
+        {
+            if(_children.Contains(child))
+            {
+                return;
+            }
+
+            _children.Add(child);
+        }
 
         /// <inheritdoc/>
         public void Run()
@@ -22,9 +35,14 @@ namespace SymOntoClay.ActiveObject.Functors
                 return;
             }
 
-            _wasExecuted = true;
-
             _action();
+
+            foreach (var child in _children)
+            {
+                child.Run();
+            }
+
+            _wasExecuted = true;
         }
     }
 }

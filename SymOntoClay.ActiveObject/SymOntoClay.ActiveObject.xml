@@ -28,7 +28,13 @@
         <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithResult`4.OnRun(System.Threading.CancellationToken)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.CodeChunk.AddChild(SymOntoClay.ActiveObject.Functors.ICodeChunk)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.CodeChunk.Run">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.CodeChunkWithSelfReference.AddChild(SymOntoClay.ActiveObject.Functors.ICodeChunk)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.CodeChunkWithSelfReference.Run">

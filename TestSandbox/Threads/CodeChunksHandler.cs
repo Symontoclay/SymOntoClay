@@ -4,6 +4,7 @@ using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
 using SymOntoClay.Threading;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace TestSandbox.Threads
@@ -16,7 +17,8 @@ namespace TestSandbox.Threads
         {
             _logger.Info("E7E3E621-38BD-4B54-B041-FD0C74FE5BBF", "Begin");
 
-            Case6();
+            Case7();
+            //Case6();
             //Case5();
             //Case4();
             //Case3();
@@ -24,6 +26,32 @@ namespace TestSandbox.Threads
             //Case1();
 
             _logger.Info("B7E2F374-D3BC-48B5-B0F2-357590821EAE", "End");
+        }
+
+        private void Case7()
+        {
+            var codeChunksContext = new CodeChunksContext("6A148928-3945-42D9-8DB7-60531401BA37");
+
+            codeChunksContext.CreateCodeChunk("611FD4E5-7BEB-400A-9F61-7107B1833CAA", (currentCodeChunk) =>
+            {
+                _logger.Info("3B65BA4D-4EAD-4929-98A0-9D17D8D58DE6", "Chunk1");
+
+                foreach(var n in Enumerable.Range(1, 3))
+                {
+                    _logger.Info("B12A2B5A-961A-4D57-BEFD-0968DCA5CC59", $"Chunk1 n = {n}");
+
+                    codeChunksContext.CreateCodeChunk("60A5B35A-A374-4DB6-B027-36D2787D17DF" + n.ToString(), currentCodeChunk, () => {
+                        _logger.Info("86E4062C-1A28-42A8-A7DB-FFC552FAE01B", "Chunk1 " + n);
+                    });
+                }
+            });
+
+            codeChunksContext.CreateCodeChunk("14F48D04-4A50-465C-9B07-703BF5EC3FF0", () =>
+            {
+                _logger.Info("D0EEDE37-2168-4468-8CFC-DE79917B3539", "Chunk2");
+            });
+
+            codeChunksContext.Run();
         }
 
         private void Case6()

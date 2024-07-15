@@ -16,13 +16,36 @@ namespace TestSandbox.Threads
         {
             _logger.Info("E7E3E621-38BD-4B54-B041-FD0C74FE5BBF", "Begin");
 
-            Case5();
+            Case6();
+            //Case5();
             //Case4();
             //Case3();
             //Case2();
             //Case1();
 
             _logger.Info("B7E2F374-D3BC-48B5-B0F2-357590821EAE", "End");
+        }
+
+        private void Case6()
+        {
+            var codeChunksContext = new CodeChunksContext<int>("402F4094-6F7D-431F-8DFD-D7D67D303CC0");
+
+            codeChunksContext.CreateCodeChunk("AA297A78-BEBE-4903-B464-FED2C2B23654", (currentCodeChunk) =>
+            {
+                _logger.Info("6CC69DCB-4354-49B7-82FC-4714CAC5231F", "Chunk1");
+                codeChunksContext.Finish(16);
+            });
+
+            codeChunksContext.CreateCodeChunk("E66722E5-722E-4700-9546-227B1227D640", (currentCodeChunk) =>
+            {
+                _logger.Info("EE9CFE13-6380-4D25-B23B-F10A5311D3E8", "Chunk2");
+            });
+
+            codeChunksContext.Run();
+
+            var result = codeChunksContext.Result;
+
+            _logger.Info("EB65EFE2-5B6F-46A5-96EA-C018BDD1DA63", $"result = {result}");
         }
 
         private void Case5()

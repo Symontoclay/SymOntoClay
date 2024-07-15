@@ -17,7 +17,8 @@ namespace TestSandbox.Threads
         {
             _logger.Info("E7E3E621-38BD-4B54-B041-FD0C74FE5BBF", "Begin");
 
-            Case8();
+            Case9();
+            //Case8();
             //Case7();
             //Case6();
             //Case5();
@@ -27,6 +28,24 @@ namespace TestSandbox.Threads
             //Case1();
 
             _logger.Info("B7E2F374-D3BC-48B5-B0F2-357590821EAE", "End");
+        }
+
+        private void Case9()
+        {
+            using var cancellationTokenSource = new CancellationTokenSource();
+
+            using var threadPool = new CustomThreadPool(0, 20, cancellationTokenSource.Token);
+
+            var commonActiveContext = new ActiveObjectCommonContext();
+
+            var activeContext = new ActiveObjectContext(commonActiveContext, cancellationTokenSource.Token);
+
+            var instance = new TstInstance(_logger, activeContext, threadPool);
+
+            var result = instance.Method1();
+            result.Wait();
+
+            Thread.Sleep(10000);
         }
 
         private class GlobalContext

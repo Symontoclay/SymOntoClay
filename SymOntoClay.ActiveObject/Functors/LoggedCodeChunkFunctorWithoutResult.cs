@@ -11,6 +11,16 @@ namespace SymOntoClay.ActiveObject.Functors
     public class LoggedCodeChunkFunctorWithoutResult<TGlobalContext, TLocalContext> : BaseFunctor
         where TLocalContext : class, new()
     {
+        public static LoggedCodeChunkFunctorWithoutResult<TGlobalContext, TLocalContext> Run(IMonitorLogger logger, string codeChunksContextId, TGlobalContext globalContext,
+            Action<IMonitorLogger, CodeChunksContext, TGlobalContext, TLocalContext> action,
+            IActiveObjectContext context, ICustomThreadPool threadPool)
+        {
+            var functor = new LoggedCodeChunkFunctorWithoutResult<TGlobalContext, TLocalContext>(logger, codeChunksContextId, globalContext,
+            action, context, threadPool);
+            functor.Run();
+            return functor;
+        }
+
         public LoggedCodeChunkFunctorWithoutResult(IMonitorLogger logger, string codeChunksContextId, TGlobalContext globalContext, 
             Action<IMonitorLogger, CodeChunksContext, TGlobalContext, TLocalContext> action, 
             IActiveObjectContext context, ICustomThreadPool threadPool)

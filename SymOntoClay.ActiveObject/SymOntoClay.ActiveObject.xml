@@ -73,6 +73,12 @@
         <member name="M:SymOntoClay.ActiveObject.MethodResponses.MethodResponseOfBaseFunctor`1.Wait">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.ActiveObject.MethodResponses.MethodResponseOfBaseLoggedSincCodeChunkFunctor.Task">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.MethodResponses.MethodResponseOfBaseLoggedSincCodeChunkFunctor.Wait">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.ActiveObject.Threads.ActiveObjectCommonContext.IsNeedWating">
             <inheritdoc/>
         </member>

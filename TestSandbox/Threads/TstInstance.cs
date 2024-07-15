@@ -46,16 +46,31 @@ namespace TestSandbox.Threads
                         _logger.Info("819B488D-8752-4337-A4F1-621D8471EF6B", "Chunk2");
 
                         SyncMethodReponseResolver.Run(loggerValue, "413EB4F7-56FD-44C2-813B-8A35F1C65DCA", currentCodeChunk, () => {
-                            return PrivateMethod1(globalContextValue, currentCodeChunk);
+                            return PrivateMethod1(globalContextValue, loggerValue, currentCodeChunk);
                         });
                     });
                 }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 
-        private static IMethodResponse PrivateMethod1(InternalData data, ICodeChunk currentCodeChunk)
+        private class PrivateMethod1LocalContext
         {
-            return LoggedSincCodeChunkFunctorWithoutResult.Run(() => {
-                throw new NotImplementedException("F1E9F6E2-BED9-451E-9CCC-B87B2E706F92");
+
+        }
+
+        private static IMethodResponse PrivateMethod1(InternalData data, IMonitorLogger logger, ICodeChunk currentCodeChunk)
+        {
+            logger.Info("9E315FF4-69F0-463B-8C4D-B14A80F23E29", "Begin");
+
+            return LoggedSincCodeChunkFunctorWithoutResult<PrivateMethod1LocalContext>.Run(logger, "03AE2121-F27A-4E8C-B10A-9B6A62E676CE", currentCodeChunk, (codeChunksContext, localContextValue) => {
+                codeChunksContext.CreateCodeChunk("98547968-0A9C-432F-AD3E-297915746616", () =>
+                {
+                    logger.Info("512957CB-8402-47DC-81B4-76DDAF523292", "private Chunk1");
+                });
+
+                codeChunksContext.CreateCodeChunk("2BB05A1E-6216-4446-BBF4-F1A7A3AA1985", () =>
+                {
+                    logger.Info("96BBE8F3-BE06-466B-9D92-9DB721F064DA", "private Chunk2");
+                });
             }).ToMethodResponse();
         }
     }

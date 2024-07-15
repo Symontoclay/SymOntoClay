@@ -11,7 +11,9 @@ namespace SymOntoClay.ActiveObject.Functors
     public class LoggedCodeChunkFunctorWithoutResult<TGlobalContext, TLocalContext> : BaseFunctor
         where TLocalContext : class, new()
     {
-        public LoggedCodeChunkFunctorWithoutResult(IMonitorLogger logger, string codeChunksContextId, TGlobalContext globalContext, Action<IMonitorLogger, CodeChunksContext, TGlobalContext, TLocalContext> action, IActiveObjectContext context, ICustomThreadPool threadPool)
+        public LoggedCodeChunkFunctorWithoutResult(IMonitorLogger logger, string codeChunksContextId, TGlobalContext globalContext, 
+            Action<IMonitorLogger, CodeChunksContext, TGlobalContext, TLocalContext> action, 
+            IActiveObjectContext context, ICustomThreadPool threadPool)
             : base(logger, context, threadPool)
         {
             _codeChunksContext = new CodeChunksContext(codeChunksContextId);
@@ -31,6 +33,8 @@ namespace SymOntoClay.ActiveObject.Functors
         protected override void OnRun(CancellationToken cancellationToken)
         {
             _action(_logger, _codeChunksContext, _globalContext, _localContext);
+
+            _codeChunksContext.Run();
         }
     }
 }

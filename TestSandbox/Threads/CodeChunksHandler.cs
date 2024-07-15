@@ -62,7 +62,20 @@ namespace TestSandbox.Threads
                     loggerValue.Info("493E54F2-963D-4030-9018-783688F0F003", "Chunk2");
                 });
             }, activeContext, threadPool);
+
+            //commonActiveContext.Lock();
+
+            //activeContext.WaitWhenAllIsNotWaited();
+
+            //Thread.Sleep(1000);
+
             functor.Run();
+
+            //Thread.Sleep(1000);
+
+            //_logger.Info("714FB9D2-4136-4484-8BB3-D75E3D2DE475", "UnLock");
+
+            //commonActiveContext.UnLock();
 
             Thread.Sleep(10000);
         }

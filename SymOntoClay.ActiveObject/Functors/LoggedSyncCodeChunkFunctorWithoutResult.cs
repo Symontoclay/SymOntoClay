@@ -7,17 +7,17 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
-    public class LoggedSincCodeChunkFunctorWithoutResult<TLocalContext>: BaseLoggedSincCodeChunkFunctor
+    public class LoggedSyncCodeChunkFunctorWithoutResult<TLocalContext>: BaseLoggedSyncCodeChunkFunctor
         where TLocalContext : class, new()
     {
-        public static LoggedSincCodeChunkFunctorWithoutResult<TLocalContext> Run(IMonitorLogger logger, string codeChunksContextId, ICodeChunk codeChunk, Action<CodeChunksContext, TLocalContext> action)
+        public static LoggedSyncCodeChunkFunctorWithoutResult<TLocalContext> Run(IMonitorLogger logger, string codeChunksContextId, ICodeChunk codeChunk, Action<CodeChunksContext, TLocalContext> action)
         {
-            var functor = new LoggedSincCodeChunkFunctorWithoutResult<TLocalContext>(logger, codeChunksContextId, codeChunk, action);
+            var functor = new LoggedSyncCodeChunkFunctorWithoutResult<TLocalContext>(logger, codeChunksContextId, codeChunk, action);
             functor.Run();
             return functor;
         }
 
-        public LoggedSincCodeChunkFunctorWithoutResult(IMonitorLogger logger, string codeChunksContextId, ICodeChunk codeChunk, Action<CodeChunksContext, TLocalContext> action)
+        public LoggedSyncCodeChunkFunctorWithoutResult(IMonitorLogger logger, string codeChunksContextId, ICodeChunk codeChunk, Action<CodeChunksContext, TLocalContext> action)
         {
             _codeChunksContext = new CodeChunksContext(codeChunksContextId, codeChunk);
             _action = action;

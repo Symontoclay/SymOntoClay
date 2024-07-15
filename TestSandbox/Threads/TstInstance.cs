@@ -61,7 +61,7 @@ namespace TestSandbox.Threads
         {
             logger.Info("9E315FF4-69F0-463B-8C4D-B14A80F23E29", "Begin");
 
-            return LoggedSincCodeChunkFunctorWithoutResult<PrivateMethod1LocalContext>.Run(logger, "03AE2121-F27A-4E8C-B10A-9B6A62E676CE", currentCodeChunk, (codeChunksContext, localContextValue) => {
+            return LoggedSyncCodeChunkFunctorWithoutResult<PrivateMethod1LocalContext>.Run(logger, "03AE2121-F27A-4E8C-B10A-9B6A62E676CE", currentCodeChunk, (codeChunksContext, localContextValue) => {
                 codeChunksContext.CreateCodeChunk("98547968-0A9C-432F-AD3E-297915746616", () =>
                 {
                     logger.Info("512957CB-8402-47DC-81B4-76DDAF523292", "private Chunk1");

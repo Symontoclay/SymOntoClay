@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.ActiveObject.MethodResponses
 {
-    public class MethodResponseOfBaseLoggedSincCodeChunkFunctor : IMethodResponse
+    public class MethodResponseOfBaseLoggedSyncCodeChunkFunctor : IMethodResponse
     {
-        public MethodResponseOfBaseLoggedSincCodeChunkFunctor(BaseLoggedSincCodeChunkFunctor source)
+        public MethodResponseOfBaseLoggedSyncCodeChunkFunctor(BaseLoggedSyncCodeChunkFunctor source)
         {
             _source = source;
         }
 
-        private readonly BaseLoggedSincCodeChunkFunctor _source;
+        private readonly BaseLoggedSyncCodeChunkFunctor _source;
 
         /// <inheritdoc/>
         public Task Task => Task.CompletedTask;

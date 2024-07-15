@@ -40,6 +40,9 @@
         <member name="M:SymOntoClay.ActiveObject.Functors.CodeChunkWithSelfReference.Run">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.LoggedCodeChunkFunctorWithoutResult`2.OnRun(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.ActiveObject.MethodResponses.CompletedMethodResponse.Task">
             <inheritdoc/>
         </member>

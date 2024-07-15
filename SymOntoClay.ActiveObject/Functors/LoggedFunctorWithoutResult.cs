@@ -19,7 +19,7 @@ namespace SymOntoClay.ActiveObject.Functors
         {
         }
     }
-
+    
     public class LoggedFunctorWithoutResult<T> : BaseFunctorWithoutResult<IMonitorLogger, T>
     {
         public static LoggedFunctorWithoutResult<T> Run(IMonitorLogger logger, T arg, Action<IMonitorLogger, T> action, IActiveObjectContext context, ICustomThreadPool threadPool)

@@ -17,7 +17,8 @@ namespace TestSandbox.Threads
         {
             _logger.Info("E7E3E621-38BD-4B54-B041-FD0C74FE5BBF", "Begin");
 
-            Case7();
+            Case8();
+            //Case7();
             //Case6();
             //Case5();
             //Case4();
@@ -26,6 +27,44 @@ namespace TestSandbox.Threads
             //Case1();
 
             _logger.Info("B7E2F374-D3BC-48B5-B0F2-357590821EAE", "End");
+        }
+
+        private class GlobalContext
+        {
+            public string GlobalStr { get; set; }
+        }
+
+        private class LocalContext
+        {
+            public int Property1 { get; set; }
+        }
+
+        private void Case8()
+        {
+            using var cancellationTokenSource = new CancellationTokenSource();
+
+            using var threadPool = new CustomThreadPool(0, 20, cancellationTokenSource.Token);
+
+            var commonActiveContext = new ActiveObjectCommonContext();
+
+            var activeContext = new ActiveObjectContext(commonActiveContext, cancellationTokenSource.Token);
+
+            var globalContext = new GlobalContext();
+
+            var functor = new LoggedCodeChunkFunctorWithoutResult<GlobalContext, LocalContext>(_logger, "131A6E93-FB84-4622-AB7F-94E32282A971", globalContext, (loggerValue, codeChunksContext, globalContextValue, localContextValue) => {
+                codeChunksContext.CreateCodeChunk("BCD0FE20-836A-4BB3-B6ED-E99CCA7CD058", () =>
+                {
+                    loggerValue.Info("5E3BD1EA-C110-4B5D-A70E-607CB02700B3", "Chunk1");
+                });
+
+                codeChunksContext.CreateCodeChunk("22AEFD1C-5805-4713-B4AC-00C0CAA2A704", () =>
+                {
+                    loggerValue.Info("493E54F2-963D-4030-9018-783688F0F003", "Chunk2");
+                });
+            }, activeContext, threadPool);
+            functor.Run();
+
+            Thread.Sleep(10000);
         }
 
         private void Case7()

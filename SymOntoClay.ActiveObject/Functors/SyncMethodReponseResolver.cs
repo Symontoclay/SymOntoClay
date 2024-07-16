@@ -27,10 +27,16 @@ namespace SymOntoClay.ActiveObject.Functors
         private readonly string _id;
         private readonly ICodeChunk _codeChunk;
         private readonly Func<IMethodResponse> _func;
+        private IMethodResponse _methodResponse;
 
         public void Run()
         {
-            _func();
+            if(_methodResponse == null)
+            {
+                _methodResponse = _func();
+            }
+
+            _methodResponse.Wait();
         }
     }
 }

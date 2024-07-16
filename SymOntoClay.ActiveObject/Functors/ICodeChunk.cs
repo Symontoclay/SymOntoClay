@@ -5,5 +5,7 @@
         void AddChild(ICodeChunk child);
 
         void Run();
+
+        bool IsFinished { get; }
     }
 }

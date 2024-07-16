@@ -11,7 +11,8 @@ namespace SymOntoClay.ActiveObject.Functors
             _action = action;
         }
 
-        private bool _wasExecuted;
+        private bool _isFinished;
+        private bool _actionIsFinished;
         private readonly ICodeChunksContext _codeChunksFactory;
         private readonly Action _action;
         private readonly List<ICodeChunk> _children = new List<ICodeChunk>();
@@ -30,19 +31,32 @@ namespace SymOntoClay.ActiveObject.Functors
         /// <inheritdoc/>
         public void Run()
         {
-            if (_wasExecuted)
+            if (_isFinished)
             {
                 return;
             }
 
-            _action();
+            if(!_actionIsFinished)
+            {
+                _action();
 
+                _actionIsFinished = true;
+            }
+            
             foreach (var child in _children)
             {
+                if(child.IsFinished)
+                {
+                    continue;
+                }
+
                 child.Run();
             }
 
-            _wasExecuted = true;
+            _isFinished = true;
         }
+
+        /// <inheritdoc/>
+        public bool IsFinished => _isFinished;
     }
 }

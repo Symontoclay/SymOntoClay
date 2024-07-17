@@ -9,4 +9,12 @@ namespace SymOntoClay.ActiveObject.Functors
             return new MethodResponseOfBaseLoggedSyncCodeChunkFunctor(this);
         }
     }
+
+    public abstract class BaseLoggedSyncCodeChunkFunctor<TResult>
+    {
+        public IMethodResponse<TResult> ToMethodResponse()
+        {
+            return new MethodResponseOfBaseLoggedSyncCodeChunkFunctor<TResult>(this);
+        }
+    }
 }

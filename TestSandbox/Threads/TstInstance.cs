@@ -161,6 +161,8 @@ namespace TestSandbox.Threads
 
         private class Method2LocalContext : IObjectToString
         {
+            public float Field1;
+
             /// <inheritdoc/>
             public override string ToString()
             {
@@ -178,7 +180,7 @@ namespace TestSandbox.Threads
             {
                 var spaces = DisplayHelper.Spaces(n);
                 var sb = new StringBuilder();
-                //sb.AppendLine($"{spaces}{nameof()} = {}");
+                sb.AppendLine($"{spaces}{nameof(Field1)} = {Field1}");
                 return sb.ToString();
             }
         }
@@ -206,9 +208,12 @@ namespace TestSandbox.Threads
                         loggerValue.Info("0A4A03A9-28E5-4031-95D8-CA601D9788C7", $"globalContextValue = {globalContextValue}");
                         loggerValue.Info("027374B6-5109-4EC6-A7F4-327757144FEA", $"localContextValue = {localContextValue}");
 
-                        //SyncMethodReponseResolver.Run(loggerValue, , currentCodeChunk, () => {
-                        //    return PrivateMethod1(globalContextValue, loggerValue, currentCodeChunk);
-                        //});
+                        localContextValue.Field1 = SyncMethodReponseResolver<float>.Run(loggerValue, "E6ED7085-BAD7-4815-9297-C151291F08D2", currentCodeChunk, () =>
+                        {
+                            return PrivateMethod2(globalContextValue, loggerValue, currentCodeChunk, someParamValue);
+                        });
+
+                        loggerValue.Info("3CC1D3AD-9C02-4385-B7C8-C23FE5E2537A", $"localContextValue = {localContextValue}");
 
                         codeChunksContext.Finish("Hi!");
                     });
@@ -243,7 +248,10 @@ namespace TestSandbox.Threads
         {
             logger.Info("1FF1EB5B-D495-424E-8A6A-AE723D260695", $"otherParam = {otherParam}");
 
-            throw new NotImplementedException("8ED0C459-5AF0-4F84-ADD0-2BEF9CF756C0");
+            return LoggedSyncCodeChunkFunctorWithResult<PrivateMethod2LocalContext, int, float>.Run(logger, "03AE2121-F27A-4E8C-B10A-9B6A62E676CE", currentCodeChunk, otherParam,
+            (codeChunksContext, localContextValue, otherParamValue) => { 
+                throw new NotImplementedException("7CFA8E27-EBF4-4820-AA13-432EA28563D6");
+            }).ToMethodResponse();
         }
     }
 }

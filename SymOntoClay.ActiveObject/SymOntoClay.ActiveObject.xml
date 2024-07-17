@@ -88,6 +88,15 @@
         <member name="M:SymOntoClay.ActiveObject.MethodResponses.MethodResponseOfBaseLoggedSyncCodeChunkFunctor.Wait">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.ActiveObject.MethodResponses.MethodResponseOfBaseLoggedSyncCodeChunkFunctor`1.Task">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.MethodResponses.MethodResponseOfBaseLoggedSyncCodeChunkFunctor`1.Result">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.MethodResponses.MethodResponseOfBaseLoggedSyncCodeChunkFunctor`1.Wait">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.ActiveObject.Threads.ActiveObjectCommonContext.IsNeedWating">
             <inheritdoc/>
         </member>

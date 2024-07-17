@@ -189,7 +189,29 @@ namespace TestSandbox.Threads
 
             return LoggedCodeChunkFunctorWithResult<InternalData, Method2LocalContext, int, string>.Run(_logger, "0C61B33E-E20A-44EE-8F71-F4D2C8508BCB", _data, someParam,
                 (loggerValue, codeChunksContext, globalContextValue, localContextValue, someParamValue) => {
-                    throw new NotImplementedException("EF097722-C459-4533-BF47-597ED286AB9F");
+                    codeChunksContext.CreateCodeChunk("7869834A-F3F3-4A59-9BA5-BA3832451018", () =>
+                    {
+                        loggerValue.Info("B3256A59-5CA2-463F-B153-9B19F9E67869", $"globalContextValue = {globalContextValue}");
+                        loggerValue.Info("ED753CEC-4E19-40BD-88C0-B0AC81EC19A6", $"localContextValue = {localContextValue}");
+
+                        loggerValue.Info("37F3A8F8-234F-4873-AA70-A764ADB01462", "Chunk1");
+
+                        globalContextValue.Property1 = 16;
+                        //localContextValue.Field1 = 42;
+                    });
+                    codeChunksContext.CreateCodeChunk("B4747F71-6675-469E-ADF4-4A4DF38B1F31", (currentCodeChunk) =>
+                    {
+                        _logger.Info("8BA94558-A3CD-4929-82D7-D245EBD75F7F", "Chunk2");
+
+                        loggerValue.Info("0A4A03A9-28E5-4031-95D8-CA601D9788C7", $"globalContextValue = {globalContextValue}");
+                        loggerValue.Info("027374B6-5109-4EC6-A7F4-327757144FEA", $"localContextValue = {localContextValue}");
+
+                        //SyncMethodReponseResolver.Run(loggerValue, , currentCodeChunk, () => {
+                        //    return PrivateMethod1(globalContextValue, loggerValue, currentCodeChunk);
+                        //});
+
+                        codeChunksContext.Finish("Hi!");
+                    });
                 }, _activeObjectContext, _threadPool).ToMethodResponse();
         }
 

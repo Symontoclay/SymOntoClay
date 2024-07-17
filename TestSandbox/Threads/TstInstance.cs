@@ -158,5 +158,70 @@ namespace TestSandbox.Threads
                 });
             }).ToMethodResponse();
         }
+
+        private class Method2LocalContext : IObjectToString
+        {
+            /// <inheritdoc/>
+            public override string ToString()
+            {
+                return ToString(0u);
+            }
+
+            /// <inheritdoc/>
+            public string ToString(uint n)
+            {
+                return this.GetDefaultToStringInformation(n);
+            }
+
+            /// <inheritdoc/>
+            string IObjectToString.PropertiesToString(uint n)
+            {
+                var spaces = DisplayHelper.Spaces(n);
+                var sb = new StringBuilder();
+                //sb.AppendLine($"{spaces}{nameof()} = {}");
+                return sb.ToString();
+            }
+        }
+
+        public IMethodResponse<string> Method2(int someParam)
+        {
+            _logger.Info("85784889-695B-420B-8B25-AD7ACCADFD10", $"someParam = {someParam}");
+
+            return LoggedCodeChunkFunctorWithResult<InternalData, Method2LocalContext, int, string>.Run(_logger, "0C61B33E-E20A-44EE-8F71-F4D2C8508BCB", _data, someParam,
+                (loggerValue, codeChunksContext, globalContextValue, localContextValue, someParamValue) => {
+                    throw new NotImplementedException("EF097722-C459-4533-BF47-597ED286AB9F");
+                }, _activeObjectContext, _threadPool).ToMethodResponse();
+        }
+
+        private class PrivateMethod2LocalContext : IObjectToString
+        {
+            /// <inheritdoc/>
+            public override string ToString()
+            {
+                return ToString(0u);
+            }
+
+            /// <inheritdoc/>
+            public string ToString(uint n)
+            {
+                return this.GetDefaultToStringInformation(n);
+            }
+
+            /// <inheritdoc/>
+            string IObjectToString.PropertiesToString(uint n)
+            {
+                var spaces = DisplayHelper.Spaces(n);
+                var sb = new StringBuilder();
+                //sb.AppendLine($"{spaces}{nameof()} = {}");
+                return sb.ToString();
+            }
+        }
+
+        private static IMethodResponse<float> PrivateMethod2(InternalData data, IMonitorLogger logger, ICodeChunk currentCodeChunk, int otherParam)
+        {
+            logger.Info("1FF1EB5B-D495-424E-8A6A-AE723D260695", $"otherParam = {otherParam}");
+
+            throw new NotImplementedException("8ED0C459-5AF0-4F84-ADD0-2BEF9CF756C0");
+        }
     }
 }

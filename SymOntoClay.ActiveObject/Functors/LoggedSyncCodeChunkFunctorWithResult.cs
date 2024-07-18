@@ -17,12 +17,33 @@ namespace SymOntoClay.ActiveObject.Functors
 
         public LoggedSyncCodeChunkFunctorWithResult(IMonitorLogger logger, string codeChunksContextId, ICodeChunk codeChunk, T arg, Action<CodeChunksContext<TResult>, TLocalContext, T> action)
         {
-            throw new NotImplementedException("8D0E6990-60C9-4353-9324-13E446E7B0AC");
+            _codeChunksContext = new CodeChunksContext<TResult>(codeChunksContextId, codeChunk);
+            _action = action;
+            _logger = logger;
+            _localContext = new TLocalContext();
+            _arg = arg;
+        }
+
+        private readonly CodeChunksContext<TResult> _codeChunksContext;
+        private readonly IMonitorLogger _logger;
+        private readonly Action<CodeChunksContext<TResult>, TLocalContext, T> _action;
+        private readonly TLocalContext _localContext;
+        private readonly T _arg;
+        private TResult _result = default;
+
+        /// <inheritdoc/>
+        public override TResult GetResult()
+        {
+            return _result;
         }
 
         public void Run()
         {
-            throw new NotImplementedException("4B6573DF-B785-40C1-A779-999AD1E9C515");
+            _action(_codeChunksContext, _localContext, _arg);
+
+            _codeChunksContext.Run();
+
+            _result = _codeChunksContext.Result;
         }
     }
 }

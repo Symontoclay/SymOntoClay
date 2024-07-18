@@ -16,5 +16,7 @@ namespace SymOntoClay.ActiveObject.Functors
         {
             return new MethodResponseOfBaseLoggedSyncCodeChunkFunctor<TResult>(this);
         }
+
+        public abstract TResult GetResult();
     }
 }

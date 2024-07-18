@@ -63,6 +63,11 @@ namespace SymOntoClay.ActiveObject.Functors
 
         }
 
+        public CodeChunksContext(string id, ICodeChunk parentCodeChunk)
+        {
+
+        }
+
         private readonly List<ICodeChunk> _chunks = new List<ICodeChunk>();
 
         public void CreateCodeChunk(string chunkId, Action action)

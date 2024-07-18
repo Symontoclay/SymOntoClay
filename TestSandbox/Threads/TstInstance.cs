@@ -249,8 +249,27 @@ namespace TestSandbox.Threads
             logger.Info("1FF1EB5B-D495-424E-8A6A-AE723D260695", $"otherParam = {otherParam}");
 
             return LoggedSyncCodeChunkFunctorWithResult<PrivateMethod2LocalContext, int, float>.Run(logger, "03AE2121-F27A-4E8C-B10A-9B6A62E676CE", currentCodeChunk, otherParam,
-            (codeChunksContext, localContextValue, otherParamValue) => { 
-                throw new NotImplementedException("7CFA8E27-EBF4-4820-AA13-432EA28563D6");
+            (codeChunksContext, localContextValue, otherParamValue) => {
+                codeChunksContext.CreateCodeChunk("DE6B1FB4-0588-4C8B-9728-AB188D545A4F", () =>
+                {
+                    logger.Info("A6FEBED7-A316-4F7D-957B-E272327500FF", $"data = {data}");
+                    logger.Info("921F5B0F-8FC0-4087-A358-1598C19F5F8C", $"localContextValue = {localContextValue}");
+
+                    logger.Info("7BB8C204-38CD-4F2D-A939-455DC03CFFB4", "private Chunk1");
+
+                    data.Property1 = 88;
+                    //localContextValue.Filed2 = 77;
+                });
+
+                codeChunksContext.CreateCodeChunk("FCAB8D7E-6BD5-419D-ABF1-1E6DD6F48490", () =>
+                {
+                    logger.Info("6070466B-ABC5-4338-AC6C-8064A3118EF8", $"data = {data}");
+                    logger.Info("33AA15E4-10E1-4DDA-8EE5-93CE3016ABCE", $"localContextValue = {localContextValue}");
+
+                    logger.Info("2B86D839-E7B9-46F3-9BDC-BE1432E1770E", "private Chunk2");
+
+                    codeChunksContext.Finish(3.18f);
+                });
             }).ToMethodResponse();
         }
     }

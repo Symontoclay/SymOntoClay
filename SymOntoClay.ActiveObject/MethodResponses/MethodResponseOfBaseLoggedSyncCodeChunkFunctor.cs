@@ -34,10 +34,10 @@ namespace SymOntoClay.ActiveObject.MethodResponses
         private readonly BaseLoggedSyncCodeChunkFunctor<TResult> _source;
 
         /// <inheritdoc/>
-        public Task<TResult> Task => throw new NotImplementedException("37A806A9-FB63-48DA-B164-F9E1458665E7");
+        public Task<TResult> Task => Task<TResult>.FromResult(_source.GetResult());
 
         /// <inheritdoc/>
-        public TResult Result => throw new NotImplementedException("15835EAD-2EBB-4862-B224-2F45453EF624");
+        public TResult Result => _source.GetResult();
 
         /// <inheritdoc/>
         public void Wait()

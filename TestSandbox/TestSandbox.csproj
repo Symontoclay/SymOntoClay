@@ -19,6 +19,7 @@
     <ProjectReference Include="..\SymOntoClay.Monitor.LogFileBuilder\SymOntoClay.Monitor.LogFileBuilder.csproj" />
     <ProjectReference Include="..\SymOntoClay.Monitor.NLog\SymOntoClay.Monitor.NLog.csproj" />
     <ProjectReference Include="..\SymOntoClay.Monitor\SymOntoClay.Monitor.csproj" />
+    <ProjectReference Include="..\SymOntoClay.Serialization\SymOntoClay.Serialization.csproj" />
     <ProjectReference Include="..\SymOntoClayActionsHardTests\SymOntoClayActionsHardTests.csproj" />
     <ProjectReference Include="..\SymOntoClayBaseTestLib\SymOntoClayBaseTestLib.csproj" />
     <ProjectReference Include="..\SymOntoClayCLI\SymOntoClayCLI.csproj" />

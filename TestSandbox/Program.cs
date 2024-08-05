@@ -66,6 +66,7 @@ using TestSandbox.MethodResponsing;
 using TestSandbox.MonoBehaviourTesting;
 using TestSandbox.Navigations;
 using TestSandbox.Parsing;
+using TestSandbox.Serialization;
 using TestSandbox.SoundBusHandler;
 using TestSandbox.Threads;
 
@@ -158,7 +159,8 @@ namespace TestSandbox
             //TstCompileInlineTrigger();
             //TstRegOperatorsHandler();
             //TstCreateEngineContext();
-            TstCodeChunksHandler();
+            TstSimpleSerializationHandler();
+            //TstCodeChunksHandler();
             //TstMethodResponsingHandler();
             //TstAsyncActiveOnceObjectHandler();
             //TstAsyncActivePeriodicObjectHandler();
@@ -1942,6 +1944,16 @@ action Go
             var context = TstEngineContextHelper.CreateAndInitContext();
 
             _logger.Info("446B3B68-75E1-4DDD-84EF-B51ABFEFBAAC", "End");
+        }
+
+        private static void TstSimpleSerializationHandler()
+        {
+            _logger.Info("9B0DA5C4-1C15-4F3D-9E13-2E98D5E4D25C", "Begin");
+
+            var handler = new SimpleSerializationHandler();
+            handler.Run();
+
+            _logger.Info("A4DBC866-C869-43D6-9223-B56AB9E0C76F", "End");
         }
 
         private static void TstCodeChunksHandler()

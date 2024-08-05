@@ -7,6 +7,11 @@
     <FileVersion>0.5.5</FileVersion>
     <Copyright>Copyright (c) 2020 - 2024 Sergiy Tolkachov aka metatypeman</Copyright>
   </PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\SymOntoClay.SourceGenerator\SymOntoClay.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+	</ItemGroup>
+	
   <ItemGroup>
     <None Remove="Handlers\GeneralStartHandler.cs~RF41e95b2a.TMP" />
   </ItemGroup>

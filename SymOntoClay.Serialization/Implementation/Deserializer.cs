@@ -27,7 +27,13 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"rootFileFullName = {rootFileFullName}");
 #endif
 
-            var rootObject = JsonConvert.DeserializeObject<RootObject>(File.ReadAllText(rootFileFullName), SerializationHelper.JsonSerializerSettings);
+            var fileContent = File.ReadAllText(rootFileFullName);
+
+#if DEBUG
+            _logger.Info($"fileContent = {fileContent}");
+#endif
+
+            var rootObject = JsonConvert.DeserializeObject<RootObject>(fileContent);
 
 #if DEBUG
             _logger.Info($"rootObject = {rootObject}");
@@ -79,9 +85,12 @@ namespace SymOntoClay.Serialization.Implementation
 
 #if DEBUG
             _logger.Info($"fullFileName = {fullFileName}");
+            _logger.Info($"objectPtr.TypeName = {objectPtr.TypeName}");
 #endif
 
-            var type = Type.GetType(objectPtr.TypeName);
+            //var type = Type.GetType(objectPtr.TypeName, false, true);
+
+            var type = GetType(objectPtr.TypeName);
 
 #if DEBUG
             _logger.Info($"type.FullName = {type.FullName}");
@@ -101,6 +110,35 @@ namespace SymOntoClay.Serialization.Implementation
                     }
                     throw new NotImplementedException();
             }
+        }
+
+        private Type GetType(string typeName)
+        {
+#if DEBUG
+            _logger.Info($"typeName = {typeName}");
+#endif
+
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+
+            foreach (var assembly in assemblies)
+            {
+                _logger.Info($"assembly.FullName = {assembly.FullName}");
+
+                var type = assembly.GetType(typeName);
+
+#if DEBUG
+                _logger.Info($"type?.FullName = {type?.FullName}");
+#endif
+
+                if(type == null)
+                {
+                    continue;
+                }
+
+                return type;
+            }
+
+            return null;
         }
 
         private bool IsSerializable(Type type)

@@ -3,7 +3,7 @@ using System;
 
 namespace SymOntoClay.Serialization
 {
-    public interface ISerializable : IObjectToString
+    public interface ISerializable
     {
         Type GetPlainObjectType();
         void OnWritePlainObject(object plainObject, ISerializer serializer);

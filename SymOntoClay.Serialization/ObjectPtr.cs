@@ -19,9 +19,9 @@
             IsNull = isNull;
         }
 
-        public string Id { get; private set; }
-        public string TypeName { get; private set; }
-        public bool IsNull { get; private set; }
+        public string Id { get; set; }
+        public string TypeName { get; set; }
+        public bool IsNull { get; set; }
 
         public override string ToString() => $"({nameof(Id)}: '{Id}', {nameof(TypeName)}: '{TypeName}', {nameof(IsNull)}: {IsNull})";
     }

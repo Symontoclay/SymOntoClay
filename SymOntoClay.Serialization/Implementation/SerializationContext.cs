@@ -6,9 +6,16 @@ namespace SymOntoClay.Serialization.Implementation
 {
     public class SerializationContext : ISerializationContext
     {
-        public SerializationContext()
+        public SerializationContext(string dirName)
         {
-            _dirName = Path.Combine(Directory.GetCurrentDirectory(), Guid.NewGuid().ToString("D"));
+            //_dirName = Path.Combine(Directory.GetCurrentDirectory(), Guid.NewGuid().ToString("D"));
+
+            _dirName = dirName;
+
+            if(Directory.Exists(_dirName))
+            {
+                Directory.Delete(_dirName, true);
+            }
 
             Directory.CreateDirectory(_dirName);
         }

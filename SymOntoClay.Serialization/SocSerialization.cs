@@ -3,7 +3,7 @@
 namespace SymOntoClay.Serialization
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = true)]
-    public class SerializableAttribute : Attribute
+    public class SocSerialization : Attribute
     {
     }
 }

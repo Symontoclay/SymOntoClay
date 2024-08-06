@@ -159,7 +159,8 @@ namespace TestSandbox
             //TstCompileInlineTrigger();
             //TstRegOperatorsHandler();
             //TstCreateEngineContext();
-            TstSimpleSerializationHandler();
+            TstSerializedCodeChunksHandler();
+            //TstSimpleSerializationHandler();
             //TstCodeChunksHandler();
             //TstMethodResponsingHandler();
             //TstAsyncActiveOnceObjectHandler();
@@ -1944,6 +1945,16 @@ action Go
             var context = TstEngineContextHelper.CreateAndInitContext();
 
             _logger.Info("446B3B68-75E1-4DDD-84EF-B51ABFEFBAAC", "End");
+        }
+
+        private static void TstSerializedCodeChunksHandler()
+        {
+            _logger.Info("7ACE782B-9122-4BF5-A1CF-F22428DD99D1", "Begin");
+
+            var handler = new SerializedCodeChunksHandler();
+            handler.Run();
+
+            _logger.Info("DB2E98CA-F1F8-4579-83B7-76B8FC5B7703", "End");
         }
 
         private static void TstSimpleSerializationHandler()

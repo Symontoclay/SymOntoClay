@@ -1,21 +1,26 @@
-﻿using System;
+﻿using SymOntoClay.Serialization;
+using System;
 using System.Collections.Generic;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
-    public class CodeChunksContext: ICodeChunksContext
+    [SocSerialization]
+    public partial class CodeChunksContext: ICodeChunksContext
     {
         public CodeChunksContext(string id)
         {
-
+            _id = id;
+            _chunks = new List<ICodeChunk>();
         }
 
         public CodeChunksContext(string id, ICodeChunk parentCodeChunk)
         {
-
+            _id = id;
+            _chunks = new List<ICodeChunk>();
         }
 
-        private readonly List<ICodeChunk> _chunks = new List<ICodeChunk>();
+        private string _id;
+        private List<ICodeChunk> _chunks;
 
         public void CreateCodeChunk(string chunkId, Action action)
         {

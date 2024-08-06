@@ -27,6 +27,7 @@ namespace SymOntoClay.SourceGenerator
             sourceCodeBuilder.AppendLine("using SymOntoClay.Common;");
             sourceCodeBuilder.AppendLine("using SymOntoClay.Common.DebugHelpers;");
             sourceCodeBuilder.AppendLine("using SymOntoClay.Serialization;");
+            sourceCodeBuilder.AppendLine("using System.Collections.Generic;");
 
             foreach (var targetClassItem in targetCompilationUnit.ClassItems)
             {

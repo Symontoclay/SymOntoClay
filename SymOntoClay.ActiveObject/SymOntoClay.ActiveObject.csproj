@@ -7,6 +7,11 @@
     <DocumentationFile>SymOntoClay.ActiveObject.xml</DocumentationFile>
   </PropertyGroup>
 
+	<ItemGroup>
+		<ProjectReference Include="..\SymOntoClay.Serialization\SymOntoClay.Serialization.csproj" />
+		<ProjectReference Include="..\SymOntoClay.SourceGenerator\SymOntoClay.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+	</ItemGroup>
+	
   <ItemGroup>
     <ProjectReference Include="..\SymOntoClay.Monitor.Common\SymOntoClay.Monitor.Common.csproj" />
     <ProjectReference Include="..\SymOntoClayCoreHelper\SymOntoClayCoreHelper.csproj" />

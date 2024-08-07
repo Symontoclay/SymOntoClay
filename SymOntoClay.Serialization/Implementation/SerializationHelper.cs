@@ -14,7 +14,8 @@ namespace SymOntoClay.Serialization.Implementation
         {
             PreserveReferencesHandling = PreserveReferencesHandling.All,
             StringEscapeHandling = StringEscapeHandling.EscapeHtml,
-            TypeNameHandling = TypeNameHandling.All
+            TypeNameHandling = TypeNameHandling.All//,
+            //ReferenceLoopHandling = ReferenceLoopHandling.Serialize
         };
 
         public static bool IsObject(Type type)

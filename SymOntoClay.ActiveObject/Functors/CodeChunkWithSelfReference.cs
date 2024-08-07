@@ -1,9 +1,11 @@
-﻿using System;
+﻿using SymOntoClay.Serialization;
+using System;
 using System.Collections.Generic;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
-    public class CodeChunkWithSelfReference : ICodeChunk
+    [SocSerialization]
+    public partial class CodeChunkWithSelfReference : ICodeChunk
     {
         public CodeChunkWithSelfReference(ICodeChunksContext codeChunksFactory, string id, Action<ICodeChunk> action)
         {
@@ -13,9 +15,9 @@ namespace SymOntoClay.ActiveObject.Functors
 
         private bool _isFinished;
         private bool _actionIsFinished;
-        private readonly ICodeChunksContext _codeChunksFactory;
-        private readonly Action<ICodeChunk> _action;
-        private readonly List<ICodeChunk> _children = new List<ICodeChunk>();
+        private ICodeChunksContext _codeChunksFactory;
+        private Action<ICodeChunk> _action;
+        private List<ICodeChunk> _children = new List<ICodeChunk>();
 
         /// <inheritdoc/>
         public void AddChild(ICodeChunk child)

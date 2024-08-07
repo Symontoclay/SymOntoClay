@@ -1,4 +1,5 @@
-﻿using SymOntoClay.ActiveObject.Functors;
+﻿using Newtonsoft.Json;
+using SymOntoClay.ActiveObject.Functors;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
 using SymOntoClay.Serialization.Implementation;
@@ -19,9 +20,19 @@ namespace TestSandbox.Serialization
         {
             _logger.Info("2083E440-34CD-4B08-936C-E39EECF01AA9", "Begin");
 
-            SerializeSimplestUsingCodeChunksContext();
+            SerializeAction();
+            //SerializeSimplestUsingCodeChunksContext();
 
             _logger.Info("15E55FD5-04A4-4860-9779-2FA7B3989938", "End");
+        }
+
+        private void SerializeAction()
+        {
+            var act = () => { };
+
+#if DEBUG
+            _logger.Info("0D425BA0-082D-4526-9A66-EDA8FE22840F", $"act = {JsonConvert.SerializeObject(act, SerializationHelper.JsonSerializerSettings)}");
+#endif
         }
 
         private void SerializeSimplestUsingCodeChunksContext()

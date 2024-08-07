@@ -117,7 +117,71 @@ namespace SymOntoClay.Serialization.Implementation
                 return NSerializeListWithObjectParameter(enumerable);
             }
 
-            throw new NotImplementedException();
+            if(SerializationHelper.IsPrimitiveType(genericParameterType))
+            {
+                throw new NotImplementedException();
+            }
+
+            if(genericParameterType == typeof(ISerializable))
+            {
+                throw new NotImplementedException();
+            }
+
+            return NSerializeListWithPossibleSerializebleParameter(enumerable);
+        }
+
+        private ObjectPtr NSerializeListWithPossibleSerializebleParameter(IEnumerable enumerable)
+        {
+#if DEBUG
+            var type = enumerable.GetType();
+            _logger.Info($"type.FullName = {type.FullName}");
+            _logger.Info($"type.Name = {type.Name}");
+            _logger.Info($"type.IsGenericType = {type.IsGenericType}");
+#endif
+
+            var listWithPlainObjects = new List<ObjectPtr>();
+
+            foreach (var item in enumerable)
+            {
+                var serializable = item as ISerializable;
+
+                if (serializable == null)
+                {
+                    var itemType = item.GetType();
+
+#if DEBUG
+                    _logger.Info($"itemType.FullName = {itemType.FullName}");
+                    _logger.Info($"itemType.Name = {itemType.Name}");
+                    _logger.Info($"itemType.IsGenericType = {itemType.IsGenericType}");
+#endif
+
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    listWithPlainObjects.Add(NSerialize(serializable));
+                }
+            }
+
+#if DEBUG
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, SerializationHelper.JsonSerializerSettings)}");
+#endif
+
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, enumerable.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            WriteToFile(listWithPlainObjects, instanceId);
+
+            return objectPtr;
         }
 
         private ObjectPtr NSerializeListWithObjectParameter(IEnumerable enumerable)

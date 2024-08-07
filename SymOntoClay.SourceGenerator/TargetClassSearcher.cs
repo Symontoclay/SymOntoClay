@@ -34,15 +34,17 @@ namespace SymOntoClay.SourceGenerator
                 }
 
                 var classItemsResult = new List<TargetClassItem>();
+                var usings = new List<string>();
 
-                ProcessSyntaxTree(syntaxTree, attributeNames, context, ref classItemsResult);
+                ProcessSyntaxTree(syntaxTree, attributeNames, context, ref classItemsResult, ref usings);
 
                 if (classItemsResult.Count > 0)
                 {
                     var item = new TargetCompilationUnit()
                     {
                         FilePath = syntaxTree.FilePath,
-                        ClassItems = classItemsResult
+                        ClassItems = classItemsResult,
+                        Usings = usings
                     };
 
                     result.Add(item);
@@ -52,7 +54,7 @@ namespace SymOntoClay.SourceGenerator
             return result;
         }
 
-        private void ProcessSyntaxTree(SyntaxTree syntaxTree, List<string> attributeNames, TargetClassSearcherContext context, ref List<TargetClassItem> result)
+        private void ProcessSyntaxTree(SyntaxTree syntaxTree, List<string> attributeNames, TargetClassSearcherContext context, ref List<TargetClassItem> result, ref List<string> usings)
         {
             var root = syntaxTree.GetRoot();
 
@@ -68,6 +70,13 @@ namespace SymOntoClay.SourceGenerator
             if (namespaceDeclarations.Count() == 0)
             {
                 return;
+            }
+
+            var localUsings = childNodes.Where(p => p.IsKind(SyntaxKind.UsingDirective)).Select(p => GeneratorsHelper.ToString(p.GetText()));
+
+            if (localUsings.Any())
+            {
+                usings.AddRange(localUsings);
             }
 
             context.FilePath = syntaxTree.FilePath;

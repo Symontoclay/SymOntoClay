@@ -26,9 +26,9 @@ namespace SymOntoClay.SourceGenerator
 
         public static string GetFieldIdentifier(FieldDeclarationSyntax syntaxNode)
         {
-            var variableDeclarator = syntaxNode.ChildNodes()?.FirstOrDefault(p => p.IsKind(SyntaxKind.VariableDeclaration))?.ChildNodes()?.FirstOrDefault(p => p.IsKind(SyntaxKind.VariableDeclarator));
+            var variableDeclarator = syntaxNode.ChildNodes()?.FirstOrDefault(p => p.IsKind(SyntaxKind.VariableDeclaration))?.ChildNodes()?.FirstOrDefault(p => p.IsKind(SyntaxKind.VariableDeclarator)) as VariableDeclaratorSyntax;
 
-            return ToString(variableDeclarator.GetText());
+            return variableDeclarator.Identifier.Text;
         }
 
         public static string ToString(SourceText sourceText)

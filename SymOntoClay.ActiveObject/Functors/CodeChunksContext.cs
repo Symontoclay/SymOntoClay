@@ -10,17 +10,15 @@ namespace SymOntoClay.ActiveObject.Functors
         public CodeChunksContext(string id)
         {
             _id = id;
-            _chunks = new List<ICodeChunk>();
         }
 
         public CodeChunksContext(string id, ICodeChunk parentCodeChunk)
         {
             _id = id;
-            _chunks = new List<ICodeChunk>();
         }
 
         private string _id;
-        private List<ICodeChunk> _chunks;
+        private List<ICodeChunk> _chunks = new List<ICodeChunk>();
 
         public void CreateCodeChunk(string chunkId, Action action)
         {

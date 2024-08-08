@@ -64,15 +64,6 @@
         <member name="M:SymOntoClay.ActiveObject.Functors.PlainObjects.CodeChunkPo.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.PlainObjects.CodeChunksContextPo.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.PlainObjects.CodeChunksContextPo.ToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.PlainObjects.CodeChunksContextPo.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.PlainObjects.CodeChunkWithSelfReferencePo.ToString">
             <inheritdoc/>
         </member>
@@ -80,6 +71,15 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.PlainObjects.CodeChunkWithSelfReferencePo.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.PlainObjects.CodeChunksContextPo.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.PlainObjects.CodeChunksContextPo.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.PlainObjects.CodeChunksContextPo.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.ActiveObject.MethodResponses.CompletedMethodResponse.Task">

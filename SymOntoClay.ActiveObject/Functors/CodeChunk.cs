@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
-    [SocSerialization]
+    //[SocSerialization]
     public partial class CodeChunk : ICodeChunk
     {
         public CodeChunk(ICodeChunksContext codeChunksFactory, string id, Action action)

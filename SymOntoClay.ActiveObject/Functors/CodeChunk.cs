@@ -9,10 +9,12 @@ namespace SymOntoClay.ActiveObject.Functors
     {
         public CodeChunk(ICodeChunksContext codeChunksFactory, string id, Action action)
         {
+            _id = id;
             _codeChunksFactory = codeChunksFactory;
             _action = action;
         }
 
+        private string _id;
         private bool _isFinished;
         private bool _actionIsFinished;
         private ICodeChunksContext _codeChunksFactory;

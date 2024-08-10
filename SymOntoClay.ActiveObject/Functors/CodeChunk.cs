@@ -7,6 +7,10 @@ namespace SymOntoClay.ActiveObject.Functors
     //[SocSerialization]
     public partial class CodeChunk : ICodeChunk
     {
+        public CodeChunk()
+        {
+        }
+
         public CodeChunk(ICodeChunksContext codeChunksFactory, string id, Action action)
         {
             _id = id;

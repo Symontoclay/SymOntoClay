@@ -1,9 +1,11 @@
 ﻿using Newtonsoft.Json;
 using NLog;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace SymOntoClay.Serialization.Implementation
 {
@@ -122,12 +124,12 @@ namespace SymOntoClay.Serialization.Implementation
 
             foreach (var assembly in assemblies)
             {
-                _logger.Info($"assembly.FullName = {assembly.FullName}");
+                //_logger.Info($"assembly.FullName = {assembly.FullName}");
 
                 var type = assembly.GetType(typeName);
 
 #if DEBUG
-                _logger.Info($"type?.FullName = {type?.FullName}");
+                //_logger.Info($"type?.FullName = {type?.FullName}");
 #endif
 
                 if(type == null)
@@ -166,6 +168,61 @@ namespace SymOntoClay.Serialization.Implementation
                 return NDeserializeListWithObjectParameter(type, objectPtr, fullFileName);
             }
 
+            if (SerializationHelper.IsPrimitiveType(genericParameterType))
+            {
+                throw new NotImplementedException();
+            }
+
+            if (genericParameterType == typeof(ISerializable))
+            {
+                throw new NotImplementedException();
+            }
+
+            return NDeserializeListWithPossibleSerializebleParameter(type, objectPtr, fullFileName);
+        }
+
+        private object NDeserializeListWithPossibleSerializebleParameter(Type type, ObjectPtr objectPtr, string fullFileName)
+        {
+            var instance = Activator.CreateInstance(type);
+
+#if DEBUG
+            _logger.Info($"instance = {instance}");
+#endif
+
+            _deserializationContext.RegDeserializedObject(objectPtr.Id, instance);
+
+            var list = (IList)instance;
+
+            var listWithPlainObjects = JsonConvert.DeserializeObject<List<ObjectPtr>>(File.ReadAllText(fullFileName), SerializationHelper.JsonSerializerSettings);
+
+            foreach (var plainObjectItem in listWithPlainObjects)
+            {
+#if DEBUG
+                _logger.Info($"plainObjectItem = {JsonConvert.SerializeObject(plainObjectItem, Formatting.Indented)}");
+#endif
+
+                var itemType = plainObjectItem.GetType();
+
+#if DEBUG
+                _logger.Info($"itemType.FullName = {itemType.FullName}");
+                _logger.Info($"itemType.Name = {itemType.Name}");
+                _logger.Info($"itemType.IsGenericType = {itemType.IsGenericType}");
+#endif
+
+                if (SerializationHelper.IsObjectPtr(itemType))
+                {
+                    list.Add(GetDeserializedObject((ObjectPtr)plainObjectItem));
+
+                    continue;
+                }
+
+                throw new NotImplementedException();
+            }
+
+#if DEBUG
+            _logger.Info($"list = {JsonConvert.SerializeObject(list, Formatting.Indented)}");
+#endif
+
             throw new NotImplementedException();
         }
 
@@ -176,6 +233,8 @@ namespace SymOntoClay.Serialization.Implementation
 #if DEBUG
             _logger.Info($"instance = {instance}");
 #endif
+
+            _deserializationContext.RegDeserializedObject(objectPtr.Id, instance);
 
             var list = (List<object>)instance;
 
@@ -244,6 +303,8 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"instance = {instance}");
 #endif
 
+            _deserializationContext.RegDeserializedObject(objectPtr.Id, instance);
+
             var serializable = (ISerializable)instance;
 
             var plainObject = JsonConvert.DeserializeObject(File.ReadAllText(fullFileName), serializable.GetPlainObjectType(), SerializationHelper.JsonSerializerSettings);
@@ -258,7 +319,7 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"serializable = {serializable}");
 #endif
 
-            _deserializationContext.RegDeserializedObject(objectPtr.Id, serializable);
+            
 
             return serializable;
         }

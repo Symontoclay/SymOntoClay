@@ -20,9 +20,25 @@ namespace TestSandbox.Serialization
         {
             _logger.Info("2083E440-34CD-4B08-936C-E39EECF01AA9", "Begin");
 
-            SerializeSimplestUsingCodeChunksContext();
+            DeserializeSimplestUsingCodeChunksContext();
+            //SerializeSimplestUsingCodeChunksContext();
 
             _logger.Info("15E55FD5-04A4-4860-9779-2FA7B3989938", "End");
+        }
+
+        private void DeserializeSimplestUsingCodeChunksContext()
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "SomeSerializedObject");
+
+            _logger.Info("609190D6-DAAF-433F-8E17-15AF68B6A78F", $"path = {path}");
+
+            var deserializationContext = new DeserializationContext(path);
+
+            var deserializer = new Deserializer(deserializationContext);
+
+            var codeChunksContext = deserializer.Deserialize<CodeChunksContext>();
+
+            codeChunksContext.Run();
         }
 
         private void SerializeSimplestUsingCodeChunksContext()

@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Serialization;
 
 namespace SymOntoClay.Serialization.Implementation
 {
@@ -139,6 +140,20 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"type.IsGenericType = {type.IsGenericType}");
 #endif
 
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, enumerable.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(enumerable, objectPtr);
+
             var listWithPlainObjects = new List<ObjectPtr>();
 
             foreach (var item in enumerable)
@@ -167,18 +182,6 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, SerializationHelper.JsonSerializerSettings)}");
 #endif
 
-            var instanceId = CreateInstanceId();
-
-#if DEBUG
-            _logger.Info($"instanceId = {instanceId}");
-#endif
-
-            var objectPtr = new ObjectPtr(instanceId, enumerable.GetType().FullName);
-
-#if DEBUG
-            _logger.Info($"objectPtr = {objectPtr}");
-#endif
-
             WriteToFile(listWithPlainObjects, instanceId);
 
             return objectPtr;
@@ -192,6 +195,20 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"type.Name = {type.Name}");
             _logger.Info($"type.IsGenericType = {type.IsGenericType}");
 #endif
+
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, enumerable.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(enumerable, objectPtr);
 
             var listWithPlainObjects = new List<object>();
 
@@ -226,18 +243,6 @@ namespace SymOntoClay.Serialization.Implementation
 
 #if DEBUG
             _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, SerializationHelper.JsonSerializerSettings)}");
-#endif
-
-            var instanceId = CreateInstanceId();
-
-#if DEBUG
-            _logger.Info($"instanceId = {instanceId}");
-#endif
-
-            var objectPtr = new ObjectPtr(instanceId, enumerable.GetType().FullName);
-
-#if DEBUG
-            _logger.Info($"objectPtr = {objectPtr}");
 #endif
 
             WriteToFile(listWithPlainObjects, instanceId);

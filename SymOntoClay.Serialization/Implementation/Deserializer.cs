@@ -143,6 +143,71 @@ namespace SymOntoClay.Serialization.Implementation
             return null;
         }
 
+        private Type GetActionFactoryType(string id)
+        {
+#if DEBUG
+            _logger.Info($"id = {id}");
+#endif
+
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+
+            foreach (var assembly in assemblies)
+            {
+                //_logger.Info($"assembly.FullName = {assembly.FullName}");
+
+                //var types = assembly.GetTypes().Where(p => p.GetInterfaces().Any(x => x == typeof(ISocSerializableActionFactory)));
+
+                //_logger.Info($"types.Count() = {types.Count()}");
+
+                //if(types.Count() == 0)
+                //{
+                //    continue;
+                //}
+
+                //foreach (var type in types)
+                //{
+                //    _logger.Info($"type.FullName = {type.FullName}");
+
+                //    var atributes = type.CustomAttributes;
+
+                //    _logger.Info($"atributes.Count() = {atributes.Count()}");
+
+                //    foreach(var attribute in atributes)
+                //    {
+                //        _logger.Info($"attribute.AttributeType.FullName = {attribute.AttributeType.FullName}");
+
+                //        _logger.Info($"attribute.ConstructorArguments.Count() = {attribute.ConstructorArguments.Count()}");
+
+                //        foreach (var argument in attribute.ConstructorArguments)
+                //        {
+                //            _logger.Info($"argument.Value = {argument.Value}");
+                //            _logger.Info($"argument.ArgumentType.FullName = {argument.ArgumentType.FullName}");
+                //        }
+
+                //        _logger.Info($"attribute.NamedArguments.Count() = {attribute.NamedArguments.Count()}");
+
+                //        foreach(var argument in attribute.NamedArguments)
+                //        {
+                //            _logger.Info($"argument.MemberName = {argument.MemberName}");
+                //            _logger.Info($"argument.TypedValue = {argument.TypedValue}");
+                //        }
+                //    }
+                //}
+
+                var targetType = assembly.GetTypes().Where(p => p.GetInterfaces().Any(x => x == typeof(ISocSerializableActionFactory)))
+                    .FirstOrDefault(p => p.CustomAttributes.Any(x => x.ConstructorArguments.Any(y => y.ArgumentType == typeof(string) && (string)y.Value == id)));
+
+                _logger.Info($"targetType?.FullName = {targetType?.FullName}");
+
+                if(targetType != null)
+                {
+                    return targetType;
+                }
+            }
+
+            return null;
+        }
+
         private bool IsSerializable(Type type)
         {
 #if DEBUG
@@ -223,7 +288,7 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"list = {JsonConvert.SerializeObject(list, Formatting.Indented)}");
 #endif
 
-            throw new NotImplementedException();
+            return instance;
         }
 
         private object NDeserializeListWithObjectParameter(Type type, ObjectPtr objectPtr, string fullFileName)
@@ -319,8 +384,6 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"serializable = {serializable}");
 #endif
 
-            
-
             return serializable;
         }
 
@@ -331,7 +394,15 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"id = {id}");
 #endif
 
-            throw new NotImplementedException();
+            var actionFactoryType = GetActionFactoryType(id);
+
+#if DEBUG
+            _logger.Info($"actionFactoryType.FullName = {actionFactoryType.FullName}");
+#endif
+
+            var factoryInstance = (ISocSerializableActionFactory)Activator.CreateInstance(actionFactoryType);
+
+            return (T)factoryInstance.GetAction();
         }
     }
 }

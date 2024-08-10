@@ -262,5 +262,15 @@ namespace SymOntoClay.Serialization.Implementation
 
             return serializable;
         }
+
+        /// <inheritdoc/>
+        public T GetAction<T>(string id)
+        {
+#if DEBUG
+            _logger.Info($"id = {id}");
+#endif
+
+            throw new NotImplementedException();
+        }
     }
 }

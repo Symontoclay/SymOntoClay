@@ -4,7 +4,6 @@ using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Serialization;
 using System.Collections.Generic;
-using SymOntoClay.ActiveObject.Tmp;
 
 namespace SymOntoClay.ActiveObject.Functors.PlainObjects
 {
@@ -74,7 +73,7 @@ namespace SymOntoClay.ActiveObject.Functors
             _isFinished = plainObject._isFinished;
             _actionIsFinished = plainObject._actionIsFinished;
             _codeChunksFactory = deserializer.GetDeserializedObject<ICodeChunksContext>(plainObject._codeChunksFactory);
-            _action = ActionsSource.GetActions_ICodeChunk(_id);
+            _action = deserializer.GetAction<Action<ICodeChunk>>(_id);
             _children = deserializer.GetDeserializedObject<List<ICodeChunk>>(plainObject._children);
         }
 

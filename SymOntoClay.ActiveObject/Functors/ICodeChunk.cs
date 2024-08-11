@@ -1,11 +1,11 @@
-﻿namespace SymOntoClay.ActiveObject.Functors
-{
-    public interface ICodeChunk
-    {
-        void AddChild(ICodeChunk child);
+﻿//namespace SymOntoClay.ActiveObject.Functors
+//{
+//    public interface ICodeChunk
+//    {
+//        void AddChild(ICodeChunk child);
 
-        void Run();
+//        void Run();
 
-        bool IsFinished { get; }
-    }
-}
+//        bool IsFinished { get; }
+//    }
+//}

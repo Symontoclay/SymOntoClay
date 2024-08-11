@@ -4,102 +4,6 @@
         <name>SymOntoClay.ActiveObject</name>
     </assembly>
     <members>
-        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult.OnRun(System.Threading.CancellationToken)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`1.OnRun(System.Threading.CancellationToken)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`2.OnRun(System.Threading.CancellationToken)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`3.OnRun(System.Threading.CancellationToken)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithResult`1.OnRun(System.Threading.CancellationToken)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithResult`2.OnRun(System.Threading.CancellationToken)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithResult`3.OnRun(System.Threading.CancellationToken)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithResult`4.OnRun(System.Threading.CancellationToken)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.CodeChunk.AddChild(SymOntoClay.ActiveObject.Functors.ICodeChunk)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.CodeChunk.Run">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.ActiveObject.Functors.CodeChunk.IsFinished">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.CodeChunk`3.AddChild(SymOntoClay.ActiveObject.Functors.ICodeChunk)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.CodeChunk`3.Run">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.ActiveObject.Functors.CodeChunk`3.IsFinished">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.CodeChunkWithSelfReference.AddChild(SymOntoClay.ActiveObject.Functors.ICodeChunk)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.CodeChunkWithSelfReference.Run">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.ActiveObject.Functors.CodeChunkWithSelfReference.IsFinished">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.CodeChunkWithSelfReference`3.AddChild(SymOntoClay.ActiveObject.Functors.ICodeChunk)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.CodeChunkWithSelfReference`3.Run">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.ActiveObject.Functors.CodeChunkWithSelfReference`3.IsFinished">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.LoggedCodeChunkFunctorWithoutResult`2.OnRun(System.Threading.CancellationToken)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.LoggedCodeChunkFunctorWithResult`4.OnRun(System.Threading.CancellationToken)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.LoggedSyncCodeChunkFunctorWithResult`3.GetResult">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.PlainObjects.CodeChunkPo.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.PlainObjects.CodeChunkPo.ToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.PlainObjects.CodeChunkPo.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.PlainObjects.CodeChunkWithSelfReferencePo.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.PlainObjects.CodeChunkWithSelfReferencePo.ToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.PlainObjects.CodeChunkWithSelfReferencePo.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.PlainObjects.CodeChunksContextPo.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.PlainObjects.CodeChunksContextPo.ToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.PlainObjects.CodeChunksContextPo.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
         <member name="P:SymOntoClay.ActiveObject.MethodResponses.CompletedMethodResponse.Task">
             <inheritdoc/>
         </member>
@@ -113,36 +17,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.MethodResponses.CompletedMethodResponse`1.Wait">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.ActiveObject.MethodResponses.MethodResponseOfBaseFunctor.Task">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.MethodResponses.MethodResponseOfBaseFunctor.Wait">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.ActiveObject.MethodResponses.MethodResponseOfBaseFunctor`1.Task">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.ActiveObject.MethodResponses.MethodResponseOfBaseFunctor`1.Result">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.MethodResponses.MethodResponseOfBaseFunctor`1.Wait">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.ActiveObject.MethodResponses.MethodResponseOfBaseLoggedSyncCodeChunkFunctor.Task">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.MethodResponses.MethodResponseOfBaseLoggedSyncCodeChunkFunctor.Wait">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.ActiveObject.MethodResponses.MethodResponseOfBaseLoggedSyncCodeChunkFunctor`1.Task">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.ActiveObject.MethodResponses.MethodResponseOfBaseLoggedSyncCodeChunkFunctor`1.Result">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.MethodResponses.MethodResponseOfBaseLoggedSyncCodeChunkFunctor`1.Wait">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.ActiveObject.Threads.ActiveObjectCommonContext.IsNeedWating">

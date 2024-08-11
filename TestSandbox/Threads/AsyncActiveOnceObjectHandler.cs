@@ -1,4 +1,4 @@
-﻿using SymOntoClay.ActiveObject.Functors;
+﻿//using SymOntoClay.ActiveObject.Functors;
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
@@ -25,67 +25,67 @@ namespace TestSandbox.Threads
 
         private void TstFunctorWithResultCase()
         {
-            using var cancellationTokenSource = new CancellationTokenSource();
+            //using var cancellationTokenSource = new CancellationTokenSource();
 
-            using var threadPool = new CustomThreadPool(0, 20, cancellationTokenSource.Token);
+            //using var threadPool = new CustomThreadPool(0, 20, cancellationTokenSource.Token);
 
-            var commonActiveContext = new ActiveObjectCommonContext();
+            //var commonActiveContext = new ActiveObjectCommonContext();
 
-            var activeContext = new ActiveObjectContext(commonActiveContext, cancellationTokenSource.Token);
+            //var activeContext = new ActiveObjectContext(commonActiveContext, cancellationTokenSource.Token);
 
-            var functor = new TstFunctorWithResult(_logger, () => { return 16; }, activeContext, threadPool);
+            //var functor = new TstFunctorWithResult(_logger, () => { return 16; }, activeContext, threadPool);
 
-            var methodResponse = functor.ToMethodResponse();
+            //var methodResponse = functor.ToMethodResponse();
 
-            commonActiveContext.Lock();
+            //commonActiveContext.Lock();
 
-            activeContext.WaitWhenAllIsNotWaited();
+            //activeContext.WaitWhenAllIsNotWaited();
 
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
 
-            functor.Run();
+            //functor.Run();
 
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
 
-            _logger.Info("714FB9D2-4136-4484-8BB3-D75E3D2DE475", "UnLock");
+            //_logger.Info("714FB9D2-4136-4484-8BB3-D75E3D2DE475", "UnLock");
 
-            commonActiveContext.UnLock();
+            //commonActiveContext.UnLock();
 
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
 
-            _logger.Info("A408BA10-917F-4A6F-88A6-561CD2969D7A", $"functor.Result = {functor.Result}");
-            _logger.Info("E3CF4817-CA2F-4824-85B6-AD4DFCB657C8", $"methodResponse.Result = {methodResponse.Result}");
+            //_logger.Info("A408BA10-917F-4A6F-88A6-561CD2969D7A", $"functor.Result = {functor.Result}");
+            //_logger.Info("E3CF4817-CA2F-4824-85B6-AD4DFCB657C8", $"methodResponse.Result = {methodResponse.Result}");
         }
 
         private void StringFunctorWithoutResultCase()
         {
-            using var cancellationTokenSource = new CancellationTokenSource();
+            //using var cancellationTokenSource = new CancellationTokenSource();
 
-            using var threadPool = new CustomThreadPool(0, 20, cancellationTokenSource.Token);
+            //using var threadPool = new CustomThreadPool(0, 20, cancellationTokenSource.Token);
 
-            var commonActiveContext = new ActiveObjectCommonContext();
+            //var commonActiveContext = new ActiveObjectCommonContext();
 
-            var activeContext = new ActiveObjectContext(commonActiveContext, cancellationTokenSource.Token);
+            //var activeContext = new ActiveObjectContext(commonActiveContext, cancellationTokenSource.Token);
 
-            var textOnceFunctor = new LoggedFunctorWithoutResult<string>(_logger, "Some query", (logger, text) => {
-                logger.Info("02A2BB60-A4D1-4F1D-9A94-31644F054D79", text);
-            }, activeContext, threadPool);
+            //var textOnceFunctor = new LoggedFunctorWithoutResult<string>(_logger, "Some query", (logger, text) => {
+            //    logger.Info("02A2BB60-A4D1-4F1D-9A94-31644F054D79", text);
+            //}, activeContext, threadPool);
 
-            commonActiveContext.Lock();
+            //commonActiveContext.Lock();
 
-            activeContext.WaitWhenAllIsNotWaited();
+            //activeContext.WaitWhenAllIsNotWaited();
 
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
 
-            textOnceFunctor.Run();
+            //textOnceFunctor.Run();
 
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
 
-            _logger.Info("35AE2744-A26B-4723-9733-5E01CF891391", "UnLock");
+            //_logger.Info("35AE2744-A26B-4723-9733-5E01CF891391", "UnLock");
 
-            commonActiveContext.UnLock();
+            //commonActiveContext.UnLock();
 
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
         }
 
         private void GeneralCase()

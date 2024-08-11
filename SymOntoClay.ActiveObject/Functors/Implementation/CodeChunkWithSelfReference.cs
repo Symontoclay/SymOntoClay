@@ -5,7 +5,7 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace SymOntoClay.ActiveObject.Functors.Implementation
 {
-    public partial class CodeChunkWithSelfReference: ICodeChunkWithSelfReference
+    public partial class CodeChunkWithSelfReference: BaseCodeChunkWithSelfReference, ICodeChunkWithSelfReference
     {
         public CodeChunkWithSelfReference(string id, ICodeChunksContext codeChunksContext, Action<ICodeChunkWithSelfReference> action)
         {
@@ -20,53 +20,22 @@ namespace SymOntoClay.ActiveObject.Functors.Implementation
         private ICodeChunksContext _codeChunksContext;
         private Action<ICodeChunkWithSelfReference> _action;
 
-        private bool _isFinished;
-        private bool _actionIsFinished;
-        private List<IBaseCodeChunk> _children = new List<IBaseCodeChunk>();
-
         /// <inheritdoc/>
         public void CreateCodeChunk(string chunkId, Action action)
         {
-            var chunk = new CodeChunk(chunkId, _codeChunksContext, action);
-            _children.Add(chunk);
+            AddChildCodeChunk(new CodeChunk(chunkId, _codeChunksContext, action));
         }
 
         /// <inheritdoc/>
         public void CreateCodeChunk(string chunkId, Action<ICodeChunkWithSelfReference> action)
         {
-            var chunk = new CodeChunkWithSelfReference(chunkId, _codeChunksContext, action);
-            _children.Add(chunk);
+            AddChildCodeChunk(new CodeChunkWithSelfReference(chunkId, _codeChunksContext, action));
         }
 
         /// <inheritdoc/>
-        public void Run()
+        protected override void OnRunAction()
         {
-            if (_isFinished)
-            {
-                return;
-            }
-
-            if (!_actionIsFinished)
-            {
-                _action(this);
-
-                _actionIsFinished = true;
-            }
-
-            foreach (var child in _children)
-            {
-                if (child.IsFinished)
-                {
-                    continue;
-                }
-
-                child.Run();
-            }
-
-            _isFinished = true;
+            _action(this);
         }
-
-        /// <inheritdoc/>
-        public bool IsFinished => _isFinished;
     }
 }

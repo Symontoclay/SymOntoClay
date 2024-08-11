@@ -5,9 +5,10 @@ using SymOntoClay.Serialization;
 
 namespace SymOntoClay.ActiveObject.Functors.Implementation
 {
-    public class CodeChunkWithResult<TResult> : ICodeChunkWithResult<TResult>
+    public class CodeChunkWithResult<TResult> : BaseCodeChunkWithResult<TResult>, ICodeChunkWithResult<TResult>
     {
         public CodeChunkWithResult(string id, ICodeChunksContextWithResult<TResult> codeChunksContext, Action action)
+            : base(codeChunksContext)
         {
             _id = id;
             _codeChunksContext = codeChunksContext;

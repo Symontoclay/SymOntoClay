@@ -5,7 +5,7 @@ using SymOntoClay.Serialization;
 
 namespace SymOntoClay.ActiveObject.Functors.Implementation
 {
-    public partial class CodeChunk: ICodeChunk
+    public partial class CodeChunk: BaseCodeChunk, ICodeChunk
     {
         public CodeChunk(string id, ICodeChunksContext codeChunksContext, Action action)
         {
@@ -17,24 +17,13 @@ namespace SymOntoClay.ActiveObject.Functors.Implementation
         [SocSerializableActionKey]
         private string _id;
 
-        private bool _isFinished;
         private ICodeChunksContext _codeChunksContext;
         private Action _action;
 
         /// <inheritdoc/>
-        public void Run()
+        protected override void OnRunAction()
         {
-            if (_isFinished)
-            {
-                return;
-            }
-
             _action();
-
-            _isFinished = true;
         }
-
-        /// <inheritdoc/>
-        public bool IsFinished => _isFinished;
     }
 }

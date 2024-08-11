@@ -6,13 +6,6 @@ namespace SymOntoClay.ActiveObject.Functors.Implementation
 {
     public partial class CodeChunksContext: ICodeChunksContext
     {
-        /// <summary>
-        /// Empty contructor for deserialization.
-        /// </summary>
-        public CodeChunksContext()
-        {
-        }
-
         public CodeChunksContext(string id)
         {
             _id = id;

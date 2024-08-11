@@ -20,4 +20,8 @@
 	<ItemGroup>
 		<PackageReference Include="SymOntoClay.Threading" Version="0.5.5.10" />
     </ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Functors\" />
+	</ItemGroup>
 </Project>

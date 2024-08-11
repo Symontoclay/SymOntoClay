@@ -155,54 +155,56 @@ namespace SymOntoClay.Serialization.Implementation
             {
                 //_logger.Info($"assembly.FullName = {assembly.FullName}");
 
-                //var types = assembly.GetTypes().Where(p => p.GetInterfaces().Any(x => x == typeof(ISocSerializableActionFactory)));
+                var types = assembly.GetTypes().Where(p => p.GetInterfaces().Any(x => x == typeof(ISocSerializableActionFactory)));
 
-                //_logger.Info($"types.Count() = {types.Count()}");
+                _logger.Info($"types.Count() = {types.Count()}");
 
-                //if(types.Count() == 0)
-                //{
-                //    continue;
-                //}
-
-                //foreach (var type in types)
-                //{
-                //    _logger.Info($"type.FullName = {type.FullName}");
-
-                //    var atributes = type.CustomAttributes;
-
-                //    _logger.Info($"atributes.Count() = {atributes.Count()}");
-
-                //    foreach(var attribute in atributes)
-                //    {
-                //        _logger.Info($"attribute.AttributeType.FullName = {attribute.AttributeType.FullName}");
-
-                //        _logger.Info($"attribute.ConstructorArguments.Count() = {attribute.ConstructorArguments.Count()}");
-
-                //        foreach (var argument in attribute.ConstructorArguments)
-                //        {
-                //            _logger.Info($"argument.Value = {argument.Value}");
-                //            _logger.Info($"argument.ArgumentType.FullName = {argument.ArgumentType.FullName}");
-                //        }
-
-                //        _logger.Info($"attribute.NamedArguments.Count() = {attribute.NamedArguments.Count()}");
-
-                //        foreach(var argument in attribute.NamedArguments)
-                //        {
-                //            _logger.Info($"argument.MemberName = {argument.MemberName}");
-                //            _logger.Info($"argument.TypedValue = {argument.TypedValue}");
-                //        }
-                //    }
-                //}
-
-                var targetType = assembly.GetTypes().Where(p => p.GetInterfaces().Any(x => x == typeof(ISocSerializableActionFactory)))
-                    .FirstOrDefault(p => p.CustomAttributes.Any(x => x.ConstructorArguments.Any(y => y.ArgumentType == typeof(string) && (string)y.Value == id)));
-
-                _logger.Info($"targetType?.FullName = {targetType?.FullName}");
-
-                if(targetType != null)
+                if (types.Count() == 0)
                 {
-                    return targetType;
+                    continue;
                 }
+
+                foreach (var type in types)
+                {
+                    _logger.Info($"type.FullName = {type.FullName}");
+
+                    var atributes = type.CustomAttributes;
+
+                    _logger.Info($"atributes.Count() = {atributes.Count()}");
+
+                    foreach (var attribute in atributes)
+                    {
+                        _logger.Info($"attribute.AttributeType.FullName = {attribute.AttributeType.FullName}");
+
+                        _logger.Info($"attribute.ConstructorArguments.Count() = {attribute.ConstructorArguments.Count()}");
+
+                        foreach (var argument in attribute.ConstructorArguments)
+                        {
+                            _logger.Info($"argument.Value = {argument.Value}");
+                            _logger.Info($"argument.ArgumentType.FullName = {argument.ArgumentType.FullName}");
+                        }
+
+                        _logger.Info($"attribute.NamedArguments.Count() = {attribute.NamedArguments.Count()}");
+
+                        foreach (var argument in attribute.NamedArguments)
+                        {
+                            _logger.Info($"argument.MemberName = {argument.MemberName}");
+                            _logger.Info($"argument.TypedValue = {argument.TypedValue}");
+                        }
+                    }
+                }
+
+                //var targetType = assembly.GetTypes().Where(p => p.GetInterfaces().Any(x => x == typeof(ISocSerializableActionFactory)))
+                //    .FirstOrDefault(p => p.CustomAttributes.Any(x => x.ConstructorArguments.Any(y => y.ArgumentType == typeof(string) && (string)y.Value == id)));
+
+                //_logger.Info($"targetType?.FullName = {targetType?.FullName}");
+
+                //if(targetType != null)
+                //{
+                //    return targetType;
+                //}
+
+                throw new NotImplementedException();
             }
 
             return null;

@@ -7,11 +7,6 @@ namespace SymOntoClay.Serialization
     [AttributeUsage(AttributeTargets.Class, Inherited = true)]
     public class SocSerializableAction : Attribute
     {
-        public SocSerializableAction(string id) 
-        {
-            Id = id;
-        }
-
-        public string Id { get; private set; }
+        public string Id { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-//using SymOntoClay.ActiveObject.Functors;
+using SymOntoClay.ActiveObject.Functors.Implementation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
 using SymOntoClay.Serialization.Implementation;
@@ -43,19 +43,19 @@ namespace TestSandbox.Serialization
 
         private void SerializeSimplestUsingCodeChunksContext()
         {
-            //var codeChunksContext = new CodeChunksContext("BEE29B0A-6806-4981-85DE-4711001A7802");
+            var codeChunksContext = new CodeChunksContext("BEE29B0A-6806-4981-85DE-4711001A7802");
 
-            //codeChunksContext.CreateCodeChunk("852D8948-7DA6-41C9-B6EE-E038D58F0248", (currentCodeChunk) =>
-            //{
-            //    //_logger.Info("64C869BD-91D0-4CC5-B675-1BF13A9062F3", "Chunk1");
-            //});
+            codeChunksContext.CreateCodeChunk("852D8948-7DA6-41C9-B6EE-E038D58F0248", (currentCodeChunk) =>
+            {
+                //_logger.Info("64C869BD-91D0-4CC5-B675-1BF13A9062F3", "Chunk1");
+            });
 
-            //codeChunksContext.CreateCodeChunk("5A33E959-BC01-40B0-82DE-3874E0E31AD7", (currentCodeChunk) =>
-            //{
-            //    //_logger.Info("3E5FE705-0F2E-45EE-A579-B080F2FBF566", "Chunk2");
-            //});
+            codeChunksContext.CreateCodeChunk("5A33E959-BC01-40B0-82DE-3874E0E31AD7", (currentCodeChunk) =>
+            {
+                //_logger.Info("3E5FE705-0F2E-45EE-A579-B080F2FBF566", "Chunk2");
+            });
 
-            //codeChunksContext.Run();
+            codeChunksContext.Run();
 
             //var path = Path.Combine(Directory.GetCurrentDirectory(), "SomeSerializedObject");
 

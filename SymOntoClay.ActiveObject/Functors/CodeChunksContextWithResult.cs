@@ -25,13 +25,13 @@ namespace SymOntoClay.ActiveObject.Functors
 
         public void CreateCodeChunk(string chunkId, Action action)
         {
-            var chunk = new CodeChunk(this, chunkId, action);
+            var chunk = new CodeChunk(chunkId, this, action);
             _chunks.Add(chunk);
         }
 
         public void CreateCodeChunk(string chunkId, Action<ICodeChunk> action)
         {
-            var chunk = new CodeChunkWithSelfReference(this, chunkId, action);
+            var chunk = new CodeChunkWithSelfReference(chunkId, this, action);
             _chunks.Add(chunk);
         }
 

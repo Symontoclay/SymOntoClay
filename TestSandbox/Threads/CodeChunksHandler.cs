@@ -92,13 +92,13 @@ namespace TestSandbox.Threads
 
             var globalContext = new GlobalContext();
 
-            var functor = new LoggedCodeChunkFunctorWithoutResult<GlobalContext, LocalContext>(_logger, "131A6E93-FB84-4622-AB7F-94E32282A971", globalContext, (loggerValue, codeChunksContext, globalContextValue, localContextValue) => {
-                codeChunksContext.CreateCodeChunk("BCD0FE20-836A-4BB3-B6ED-E99CCA7CD058", () =>
+            var functor = new LoggedCodeChunkFunctorWithoutResult<GlobalContext, LocalContext>(_logger, "131A6E93-FB84-4622-AB7F-94E32282A971", globalContext, (codeChunksContext) => {
+                codeChunksContext.CreateCodeChunk("BCD0FE20-836A-4BB3-B6ED-E99CCA7CD058", (loggerValue, globalContextValue, localContextValue) =>
                 {
                     loggerValue.Info("5E3BD1EA-C110-4B5D-A70E-607CB02700B3", "Chunk1");
                 });
 
-                codeChunksContext.CreateCodeChunk("22AEFD1C-5805-4713-B4AC-00C0CAA2A704", () =>
+                codeChunksContext.CreateCodeChunk("22AEFD1C-5805-4713-B4AC-00C0CAA2A704", (loggerValue, globalContextValue, localContextValue) =>
                 {
                     loggerValue.Info("493E54F2-963D-4030-9018-783688F0F003", "Chunk2");
                 });
@@ -277,10 +277,10 @@ namespace TestSandbox.Threads
 
             var codeChanksList = new List<CodeChunkWithSelfReference>()
             {
-                new CodeChunkWithSelfReference(codeChunksFactory, "7D212BD2-40F4-4890-B990-BF917F17E91B", (currentCodeChunk) => {
+                new CodeChunkWithSelfReference("7D212BD2-40F4-4890-B990-BF917F17E91B", codeChunksFactory, (currentCodeChunk) => {
                     _logger.Info("31A6BA75-4BE2-4DE9-82AB-C4446EAD9F69", "Chunk1");
                 }),
-                new CodeChunkWithSelfReference(codeChunksFactory, "843943DB-A201-45C4-AFD7-149A32975B26", (currentCodeChunk) => {
+                new CodeChunkWithSelfReference("843943DB-A201-45C4-AFD7-149A32975B26", codeChunksFactory, (currentCodeChunk) => {
                     _logger.Info("28A8BD3A-C108-4AF3-81E9-2443A778F200", "Chunk2");
                 })
             };

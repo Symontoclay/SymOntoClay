@@ -81,8 +81,8 @@ namespace TestSandbox.Threads
         public IMethodResponse Method1()
         {
             return LoggedCodeChunkFunctorWithoutResult<InternalData, Method1LocalContext>.Run(_logger, "9090DD1A-81C0-4789-889A-9D7A24D8DDD0", _data,
-                (loggerValue, codeChunksContext, globalContextValue, localContextValue) => {
-                    codeChunksContext.CreateCodeChunk("240D8A34-918B-4949-AFAF-7A72F5F8AF93", () =>
+                (codeChunksContext) => {
+                    codeChunksContext.CreateCodeChunk("240D8A34-918B-4949-AFAF-7A72F5F8AF93", (IMonitorLogger loggerValue, InternalData globalContextValue, Method1LocalContext localContextValue) =>
                     {
                         loggerValue.Info("4CFFAD56-D6DE-4913-BF5E-D65E4D56131E", $"globalContextValue = {globalContextValue}");
                         loggerValue.Info("1E9F8BE0-A13A-4F9B-91E6-BC481F761C0A", $"localContextValue = {localContextValue}");
@@ -93,7 +93,7 @@ namespace TestSandbox.Threads
                         localContextValue.Field1 = 42;
                     });
 
-                    codeChunksContext.CreateCodeChunk("F1B20977-05AB-400A-94FD-CFBE5B84B5DF", (currentCodeChunk) =>
+                    codeChunksContext.CreateCodeChunk("F1B20977-05AB-400A-94FD-CFBE5B84B5DF", (ICodeChunk currentCodeChunk, IMonitorLogger loggerValue, InternalData globalContextValue, Method1LocalContext localContextValue) =>
                     {
                         _logger.Info("819B488D-8752-4337-A4F1-621D8471EF6B", "Chunk2");
 

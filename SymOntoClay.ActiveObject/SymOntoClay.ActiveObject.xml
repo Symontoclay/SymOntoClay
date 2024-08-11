@@ -37,6 +37,15 @@
         <member name="P:SymOntoClay.ActiveObject.Functors.CodeChunk.IsFinished">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.CodeChunk`3.AddChild(SymOntoClay.ActiveObject.Functors.ICodeChunk)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.CodeChunk`3.Run">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.Functors.CodeChunk`3.IsFinished">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.CodeChunkWithSelfReference.AddChild(SymOntoClay.ActiveObject.Functors.ICodeChunk)">
             <inheritdoc/>
         </member>
@@ -44,6 +53,15 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.ActiveObject.Functors.CodeChunkWithSelfReference.IsFinished">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.CodeChunkWithSelfReference`3.AddChild(SymOntoClay.ActiveObject.Functors.ICodeChunk)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.CodeChunkWithSelfReference`3.Run">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.Functors.CodeChunkWithSelfReference`3.IsFinished">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.LoggedCodeChunkFunctorWithoutResult`2.OnRun(System.Threading.CancellationToken)">

@@ -12,7 +12,7 @@ namespace SymOntoClay.ActiveObject.Functors
         where TLocalContext : class, new()
     {
         public static LoggedCodeChunkFunctorWithoutResult<TGlobalContext, TLocalContext> Run(IMonitorLogger logger, string codeChunksContextId, TGlobalContext globalContext,
-            Action<IMonitorLogger, CodeChunksContext, TGlobalContext, TLocalContext> action,
+            Action<CodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext>> action,
             IActiveObjectContext context, ICustomThreadPool threadPool)
         {
             var functor = new LoggedCodeChunkFunctorWithoutResult<TGlobalContext, TLocalContext>(logger, codeChunksContextId, globalContext,
@@ -22,19 +22,21 @@ namespace SymOntoClay.ActiveObject.Functors
         }
 
         public LoggedCodeChunkFunctorWithoutResult(IMonitorLogger logger, string codeChunksContextId, TGlobalContext globalContext, 
-            Action<IMonitorLogger, CodeChunksContext, TGlobalContext, TLocalContext> action, 
+            Action<CodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext>> action, 
             IActiveObjectContext context, ICustomThreadPool threadPool)
             : base(logger, context, threadPool)
         {
-            _codeChunksContext = new CodeChunksContext(codeChunksContextId);
+            _localContext = new TLocalContext();
+
+            _codeChunksContext = new CodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext>(codeChunksContextId, logger, globalContext, _localContext);
             _action = action;
             _logger = logger;
             _globalContext = globalContext;
-            _localContext = new TLocalContext();
         }
 
-        private readonly Action<IMonitorLogger, CodeChunksContext, TGlobalContext, TLocalContext> _action;
-        private readonly CodeChunksContext _codeChunksContext;
+        //<, CodeChunksContext, >
+        private readonly Action<CodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext>> _action;
+        private readonly CodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext> _codeChunksContext;
         private readonly IMonitorLogger _logger;
         private readonly TGlobalContext _globalContext;
         private readonly TLocalContext _localContext;
@@ -42,7 +44,8 @@ namespace SymOntoClay.ActiveObject.Functors
         /// <inheritdoc/>
         protected override void OnRun(CancellationToken cancellationToken)
         {
-            _action(_logger, _codeChunksContext, _globalContext, _localContext);
+            //_action(_logger, _codeChunksContext, _globalContext, _localContext);
+            _action(_codeChunksContext);
 
             _codeChunksContext.Run();
         }

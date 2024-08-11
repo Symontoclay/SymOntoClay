@@ -6,5 +6,7 @@ namespace SymOntoClay.ActiveObject.Functors
 {
     public interface ICodeChunksContext
     {
+        void Finish();
+        void Finish(object result);
     }
 }

@@ -21,7 +21,7 @@ namespace SymOntoClay.ActiveObject.Functors
         where TLocalContext : class, new()
     {
         public static LoggedCodeChunkFunctorWithResult<TGlobalContext, TLocalContext, T, TResult> Run(IMonitorLogger logger, string codeChunksContextId, TGlobalContext globalContext, T arg,
-            Action<IMonitorLogger, CodeChunksContext<TResult>, TGlobalContext, TLocalContext, T> action,
+            Action<IMonitorLogger, CodeChunksContextWithResult<TResult>, TGlobalContext, TLocalContext, T> action,
             IActiveObjectContext context, ICustomThreadPool threadPool)
         {
             var functor = new LoggedCodeChunkFunctorWithResult<TGlobalContext, TLocalContext, T, TResult>(logger, codeChunksContextId, globalContext, arg,
@@ -31,11 +31,11 @@ namespace SymOntoClay.ActiveObject.Functors
         }
 
         public LoggedCodeChunkFunctorWithResult(IMonitorLogger logger, string codeChunksContextId, TGlobalContext globalContext, T arg,
-            Action<IMonitorLogger, CodeChunksContext<TResult>, TGlobalContext, TLocalContext, T> action,
+            Action<IMonitorLogger, CodeChunksContextWithResult<TResult>, TGlobalContext, TLocalContext, T> action,
             IActiveObjectContext context, ICustomThreadPool threadPool)
             : base(logger, context, threadPool)
         {
-            _codeChunksContext = new CodeChunksContext<TResult>(codeChunksContextId);
+            _codeChunksContext = new CodeChunksContextWithResult<TResult>(codeChunksContextId);
             _action = action;
             _logger = logger;
             _globalContext = globalContext;
@@ -43,8 +43,8 @@ namespace SymOntoClay.ActiveObject.Functors
             _arg = arg;
         }
 
-        private readonly Action<IMonitorLogger, CodeChunksContext<TResult>, TGlobalContext, TLocalContext, T> _action;
-        private readonly CodeChunksContext<TResult> _codeChunksContext;
+        private readonly Action<IMonitorLogger, CodeChunksContextWithResult<TResult>, TGlobalContext, TLocalContext, T> _action;
+        private readonly CodeChunksContextWithResult<TResult> _codeChunksContext;
         private readonly IMonitorLogger _logger;
         private readonly TGlobalContext _globalContext;
         private readonly TLocalContext _localContext;

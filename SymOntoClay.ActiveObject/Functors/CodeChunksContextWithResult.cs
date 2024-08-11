@@ -1,39 +1,32 @@
-﻿using SymOntoClay.Serialization;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
-    [SocSerialization]
-    public partial class CodeChunksContext: ICodeChunksContext
+    public class CodeChunksContextWithResult<TResult> : ICodeChunksContext
     {
-        public CodeChunksContext()
+        public CodeChunksContextWithResult()
         {
         }
 
-        public CodeChunksContext(string id)
+        public CodeChunksContextWithResult(string id)
         {
             _id = id;
         }
 
-        public CodeChunksContext(string id, ICodeChunk parentCodeChunk)
+        public CodeChunksContextWithResult(string id, ICodeChunk parentCodeChunk)
         {
             _id = id;
         }
 
         private string _id;
-        private List<ICodeChunk> _chunks = new List<ICodeChunk>();
+        private readonly List<ICodeChunk> _chunks = new List<ICodeChunk>();
 
         public void CreateCodeChunk(string chunkId, Action action)
         {
             var chunk = new CodeChunk(this, chunkId, action);
             _chunks.Add(chunk);
-        }
-
-        public void CreateCodeChunk(string chunkId, ICodeChunk parent, Action action)
-        {
-            var chunk = new CodeChunk(this, chunkId, action);
-            parent.AddChild(chunk);
         }
 
         public void CreateCodeChunk(string chunkId, Action<ICodeChunk> action)
@@ -42,17 +35,21 @@ namespace SymOntoClay.ActiveObject.Functors
             _chunks.Add(chunk);
         }
 
-        public void Finish(object result)
-        {
-            throw new NotImplementedException(_id);
-        }
-
         public void Finish()
         {
             _isFinished = true;
         }
 
+        public void Finish(object result)
+        {
+            _result = (TResult)result;
+            _isFinished = true;
+        }
+
         private bool _isFinished;
+        private TResult _result = default(TResult);
+
+        public TResult Result => _result;
 
         public void Run()
         {
@@ -60,7 +57,7 @@ namespace SymOntoClay.ActiveObject.Functors
             {
                 chunk.Run();
 
-                if(_isFinished)
+                if (_isFinished)
                 {
                     return;
                 }

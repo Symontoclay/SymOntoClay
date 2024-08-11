@@ -149,7 +149,7 @@ namespace TestSandbox.Threads
 
         private void Case6()
         {
-            var codeChunksContext = new CodeChunksContext<int>("402F4094-6F7D-431F-8DFD-D7D67D303CC0");
+            var codeChunksContext = new CodeChunksContextWithResult<int>("402F4094-6F7D-431F-8DFD-D7D67D303CC0");
 
             codeChunksContext.CreateCodeChunk("AA297A78-BEBE-4903-B464-FED2C2B23654", (currentCodeChunk) =>
             {

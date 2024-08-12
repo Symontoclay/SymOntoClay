@@ -3,21 +3,36 @@ using System.Collections.Generic;
 
 namespace SymOntoClay.ActiveObject.Functors.Implementation
 {
-    public abstract partial class BaseCodeChunkWithSelfReference: ICodeChunkWithSelfReference
+    public abstract partial class BaseCodeChunkWithResultAndSelfReference<TResult>: ICodeChunkWithResultAndSelfReference<TResult>
     {
+        protected BaseCodeChunkWithResultAndSelfReference(ICodeChunksContextWithResult<TResult> codeChunksContext)
+        {
+            _codeChunksContext = codeChunksContext;
+        }
+
         private bool _isFinished;
         private bool _actionIsFinished;
+        
+        private ICodeChunksContextWithResult<TResult> _codeChunksContext;
+
         private List<IBaseCodeChunk> _children = new List<IBaseCodeChunk>();
 
         /// <inheritdoc/>
         public abstract void CreateCodeChunk(string chunkId, Action action);
 
         /// <inheritdoc/>
-        public abstract void CreateCodeChunk(string chunkId, Action<ICodeChunkWithSelfReference> action);
+        public abstract void CreateCodeChunk(string chunkId, Action<ICodeChunkWithResultAndSelfReference<TResult>> action);
 
         protected void AddChildCodeChunk(IBaseCodeChunk chunk)
         {
             _children.Add(chunk);
+        }
+
+        /// <inheritdoc/>
+        public void Finish(TResult result)
+        {
+            _isFinished = true;
+            _codeChunksContext.Finish(result);
         }
 
         protected abstract void OnRunAction();

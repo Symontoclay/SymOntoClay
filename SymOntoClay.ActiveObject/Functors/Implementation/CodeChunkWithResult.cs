@@ -11,38 +11,18 @@ namespace SymOntoClay.ActiveObject.Functors.Implementation
             : base(codeChunksContext)
         {
             _id = id;
-            _codeChunksContext = codeChunksContext;
             _action = action;
         }
 
         [SocSerializableActionKey]
         private string _id;
 
-        private bool _isFinished;
-        private ICodeChunksContextWithResult<TResult> _codeChunksContext;
         private Action _action;
 
         /// <inheritdoc/>
-        public void Finish(TResult result)
+        protected override void OnRunAction()
         {
-            _isFinished = true;
-            _codeChunksContext.Finish(result);
-        }
-
-        /// <inheritdoc/>
-        public void Run()
-        {
-            if (_isFinished)
-            {
-                return;
-            }
-
             _action();
-
-            _isFinished = true;
         }
-
-        /// <inheritdoc/>
-        public bool IsFinished => _isFinished;
     }
 }

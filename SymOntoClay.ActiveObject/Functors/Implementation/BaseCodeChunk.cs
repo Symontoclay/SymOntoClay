@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SymOntoClay.ActiveObject.Functors.Implementation
+﻿namespace SymOntoClay.ActiveObject.Functors.Implementation
 {
-    public abstract partial class BaseCodeChunk
+    public abstract partial class BaseCodeChunk: ICodeChunk
     {
         protected abstract void OnRunAction();
 

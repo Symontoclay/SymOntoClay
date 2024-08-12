@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SymOntoClay.ActiveObject.Functors.Implementation
 {
-    public partial class CodeChunksContext: ICodeChunksContext
+    public partial class CodeChunksContext: BaseCodeChunksContext, ICodeChunksContext
     {
         public CodeChunksContext(string id)
         {
@@ -14,42 +14,16 @@ namespace SymOntoClay.ActiveObject.Functors.Implementation
         [SocSerializableActionKey]
         private string _id;
 
-        private List<IBaseCodeChunk> _chunks = new List<IBaseCodeChunk>();
-
         /// <inheritdoc/>
-        public void CreateCodeChunk(string chunkId, Action action)
+        public override void CreateCodeChunk(string chunkId, Action action)
         {
-            var chunk = new CodeChunk(chunkId, this, action);
-            _chunks.Add(chunk);
+            AddCodeChunk(new CodeChunk(chunkId, this, action));
         }
 
         /// <inheritdoc/>
-        public void CreateCodeChunk(string chunkId, Action<ICodeChunkWithSelfReference> action)
+        public override void CreateCodeChunk(string chunkId, Action<ICodeChunkWithSelfReference> action)
         {
-            var chunk = new CodeChunkWithSelfReference(chunkId, this, action);
-            _chunks.Add(chunk);
-        }
-
-        /// <inheritdoc/>
-        public void Finish()
-        {
-            _isFinished = true;
-        }
-
-        private bool _isFinished;
-
-        /// <inheritdoc/>
-        public void Run()
-        {
-            foreach (var chunk in _chunks)
-            {
-                chunk.Run();
-
-                if (_isFinished)
-                {
-                    return;
-                }
-            }
+            AddCodeChunk(new CodeChunkWithSelfReference(chunkId, this, action));
         }
     }
 }

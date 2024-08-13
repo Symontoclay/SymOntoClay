@@ -1,10 +1,11 @@
-﻿using SymOntoClay.Serialization;
+﻿using SymOntoClay.ActiveObject.Functors.Implementation;
+using SymOntoClay.Serialization;
 using System;
 using System.Collections.Generic;
 
-namespace SymOntoClay.ActiveObject.Functors.Implementation
+namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public partial class CodeChunksContext: BaseCodeChunksContext, ICodeChunksContext
+    public partial class CodeChunksContext : BaseCodeChunksContext, ICodeChunksContext
     {
         public CodeChunksContext(string id)
         {

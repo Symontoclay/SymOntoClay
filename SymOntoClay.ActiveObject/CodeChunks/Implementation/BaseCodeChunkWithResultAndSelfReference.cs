@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SymOntoClay.ActiveObject.Functors.Implementation
+namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public abstract partial class BaseCodeChunkWithResultAndSelfReference<TResult>: ICodeChunkWithResultAndSelfReference<TResult>
+    public abstract partial class BaseCodeChunkWithResultAndSelfReference<TResult> : ICodeChunkWithResultAndSelfReference<TResult>
     {
         protected BaseCodeChunkWithResultAndSelfReference(ICodeChunksContextWithResult<TResult> codeChunksContext)
         {
@@ -12,7 +12,7 @@ namespace SymOntoClay.ActiveObject.Functors.Implementation
 
         private bool _isFinished;
         private bool _actionIsFinished;
-        
+
         private ICodeChunksContextWithResult<TResult> _codeChunksContext;
 
         private List<IBaseCodeChunk> _children = new List<IBaseCodeChunk>();

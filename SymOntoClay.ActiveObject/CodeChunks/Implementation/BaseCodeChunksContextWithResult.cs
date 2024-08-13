@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SymOntoClay.ActiveObject.Functors.Implementation
+namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public abstract partial class BaseCodeChunksContextWithResult<TResult>: ICodeChunksContextWithResult<TResult>
+    public abstract partial class BaseCodeChunksContextWithResult<TResult> : ICodeChunksContextWithResult<TResult>
     {
         private readonly List<IBaseCodeChunk> _chunks = new List<IBaseCodeChunk>();
 
@@ -26,7 +26,7 @@ namespace SymOntoClay.ActiveObject.Functors.Implementation
         }
 
         private bool _isFinished;
-        private TResult _result = default(TResult);
+        private TResult _result = default;
 
         /// <inheritdoc/>
         public TResult Result => _result;

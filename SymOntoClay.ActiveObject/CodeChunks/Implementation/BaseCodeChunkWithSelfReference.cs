@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SymOntoClay.ActiveObject.Functors.Implementation
+namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public abstract partial class BaseCodeChunkWithSelfReference: ICodeChunkWithSelfReference
+    public abstract partial class BaseCodeChunkWithSelfReference : ICodeChunkWithSelfReference
     {
         private bool _isFinished;
         private bool _actionIsFinished;

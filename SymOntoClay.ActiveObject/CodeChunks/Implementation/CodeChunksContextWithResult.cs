@@ -1,8 +1,9 @@
-﻿using SymOntoClay.Serialization;
+﻿using SymOntoClay.ActiveObject.Functors.Implementation;
+using SymOntoClay.Serialization;
 using System;
 using System.Collections.Generic;
 
-namespace SymOntoClay.ActiveObject.Functors.Implementation
+namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
     public class CodeChunksContextWithResult<TResult> : BaseCodeChunksContextWithResult<TResult>, ICodeChunksContextWithResult<TResult>
     {

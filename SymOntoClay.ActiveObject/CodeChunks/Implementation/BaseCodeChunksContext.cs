@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SymOntoClay.ActiveObject.Functors.Implementation
+namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public abstract partial class BaseCodeChunksContext: ICodeChunksContext
+    public abstract partial class BaseCodeChunksContext : ICodeChunksContext
     {
         private List<IBaseCodeChunk> _chunks = new List<IBaseCodeChunk>();
 

@@ -1,4 +1,4 @@
-﻿namespace SymOntoClay.ActiveObject.Functors
+﻿namespace SymOntoClay.ActiveObject.CodeChunks
 {
     public interface IBaseCodeChunk
     {

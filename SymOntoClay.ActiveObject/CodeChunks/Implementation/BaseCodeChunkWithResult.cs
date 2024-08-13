@@ -1,6 +1,6 @@
-﻿namespace SymOntoClay.ActiveObject.Functors.Implementation
+﻿namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public abstract partial class BaseCodeChunkWithResult<TResult>: ICodeChunkWithResult<TResult>
+    public abstract partial class BaseCodeChunkWithResult<TResult> : ICodeChunkWithResult<TResult>
     {
         protected BaseCodeChunkWithResult(ICodeChunksContextWithResult<TResult> codeChunksContext)
         {

@@ -1,6 +1,6 @@
-﻿namespace SymOntoClay.ActiveObject.Functors.Implementation
+﻿namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public abstract partial class BaseCodeChunk: ICodeChunk
+    public abstract partial class BaseCodeChunk : ICodeChunk
     {
         protected abstract void OnRunAction();
 

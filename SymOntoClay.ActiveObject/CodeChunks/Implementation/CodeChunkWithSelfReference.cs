@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using static System.Collections.Specialized.BitVector32;
 
-namespace SymOntoClay.ActiveObject.Functors.Implementation
+namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public partial class CodeChunkWithSelfReference: BaseCodeChunkWithSelfReference, ICodeChunkWithSelfReference
+    public partial class CodeChunkWithSelfReference : BaseCodeChunkWithSelfReference, ICodeChunkWithSelfReference
     {
         public CodeChunkWithSelfReference(string id, ICodeChunksContext codeChunksContext, Action<ICodeChunkWithSelfReference> action)
         {

@@ -4,9 +4,9 @@ using System.Security.Cryptography;
 using SymOntoClay.Serialization;
 using System.Collections.Generic;
 
-namespace SymOntoClay.ActiveObject.Functors.Implementation
+namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public class CodeChunkWithResultAndSelfReference<TResult>: BaseCodeChunkWithResultAndSelfReference<TResult>, ICodeChunkWithResultAndSelfReference<TResult>
+    public class CodeChunkWithResultAndSelfReference<TResult> : BaseCodeChunkWithResultAndSelfReference<TResult>, ICodeChunkWithResultAndSelfReference<TResult>
     {
         public CodeChunkWithResultAndSelfReference(string id, ICodeChunksContextWithResult<TResult> codeChunksContext, Action<ICodeChunkWithResultAndSelfReference<TResult>> action)
             : base(codeChunksContext)

@@ -3,20 +3,21 @@ using static System.Collections.Specialized.BitVector32;
 using System.Security.Cryptography;
 using SymOntoClay.Serialization;
 
-namespace SymOntoClay.ActiveObject.Functors.Implementation
+namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public class CodeChunkWithResult<TResult> : BaseCodeChunkWithResult<TResult>, ICodeChunkWithResult<TResult>
+    public partial class CodeChunk : BaseCodeChunk, ICodeChunk
     {
-        public CodeChunkWithResult(string id, ICodeChunksContextWithResult<TResult> codeChunksContext, Action action)
-            : base(codeChunksContext)
+        public CodeChunk(string id, ICodeChunksContext codeChunksContext, Action action)
         {
             _id = id;
+            _codeChunksContext = codeChunksContext;
             _action = action;
         }
 
         [SocSerializableActionKey]
         private string _id;
 
+        private ICodeChunksContext _codeChunksContext;
         private Action _action;
 
         /// <inheritdoc/>

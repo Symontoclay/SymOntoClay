@@ -23,13 +23,13 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         private Action<ICodeChunkWithResultAndSelfReference<TResult>> _action;
 
         /// <inheritdoc/>
-        public override void CreateCodeChunk(string chunkId, Action action)
+        public void CreateCodeChunk(string chunkId, Action action)
         {
             AddChildCodeChunk(new CodeChunkWithResult<TResult>(chunkId, _codeChunksContext, action));
         }
 
         /// <inheritdoc/>
-        public override void CreateCodeChunk(string chunkId, Action<ICodeChunkWithResultAndSelfReference<TResult>> action)
+        public void CreateCodeChunk(string chunkId, Action<ICodeChunkWithResultAndSelfReference<TResult>> action)
         {
             AddChildCodeChunk(new CodeChunkWithResultAndSelfReference<TResult>(chunkId, _codeChunksContext, action));
         }

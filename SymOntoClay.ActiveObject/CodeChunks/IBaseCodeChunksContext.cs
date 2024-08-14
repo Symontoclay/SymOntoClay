@@ -3,5 +3,7 @@
     public interface IBaseCodeChunksContext
     {
         void Finish();
+
+        bool IsFinished { get; }
     }
 }

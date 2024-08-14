@@ -1,6 +1,6 @@
 ﻿namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public abstract partial class BaseCodeChunkWithResult<TResult> : ICodeChunkWithResult<TResult>
+    public abstract partial class BaseCodeChunkWithResult<TResult>
     {
         protected BaseCodeChunkWithResult(ICodeChunksContextWithResult<TResult> codeChunksContext)
         {
@@ -12,14 +12,12 @@
         private bool _isFinished;
         private ICodeChunksContextWithResult<TResult> _codeChunksContext;
 
-        /// <inheritdoc/>
         public void Finish(TResult result)
         {
             _isFinished = true;
             _codeChunksContext.Finish(result);
         }
 
-        /// <inheritdoc/>
         public void Run()
         {
             if (_isFinished)
@@ -32,7 +30,6 @@
             _isFinished = true;
         }
 
-        /// <inheritdoc/>
         public bool IsFinished => _isFinished;
     }
 }

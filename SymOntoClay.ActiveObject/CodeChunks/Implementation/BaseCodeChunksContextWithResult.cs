@@ -3,22 +3,15 @@ using System.Collections.Generic;
 
 namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public abstract partial class BaseCodeChunksContextWithResult<TResult> : ICodeChunksContextWithResult<TResult>
+    public abstract partial class BaseCodeChunksContextWithResult<TResult>
     {
         private readonly List<IBaseCodeChunk> _chunks = new List<IBaseCodeChunk>();
-
-        /// <inheritdoc/>
-        public abstract void CreateCodeChunk(string chunkId, Action action);
-
-        /// <inheritdoc/>
-        public abstract void CreateCodeChunk(string chunkId, Action<ICodeChunkWithResultAndSelfReference<TResult>> action);
 
         protected void AddCodeChunk(IBaseCodeChunk chunk)
         {
             _chunks.Add(chunk);
         }
 
-        /// <inheritdoc/>
         public void Finish(TResult result)
         {
             _result = result;
@@ -28,10 +21,8 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         private bool _isFinished;
         private TResult _result = default;
 
-        /// <inheritdoc/>
         public TResult Result => _result;
 
-        /// <inheritdoc/>
         public void Run()
         {
             foreach (var chunk in _chunks)
@@ -45,7 +36,6 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             }
         }
 
-        /// <inheritdoc/>
         public bool IsFinished => _isFinished;
     }
 }

@@ -4,112 +4,40 @@
         <name>SymOntoClay.ActiveObject</name>
     </assembly>
     <members>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.BaseCodeChunk.Run">
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunk.OnRunAction">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.ActiveObject.Functors.Implementation.BaseCodeChunk.IsFinished">
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext.CreateCodeChunk(System.String,System.Action)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.BaseCodeChunksContext.CreateCodeChunk(System.String,System.Action)">
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext.CreateCodeChunk(System.String,System.Action{SymOntoClay.ActiveObject.CodeChunks.ICodeChunkWithSelfReference})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.BaseCodeChunksContext.CreateCodeChunk(System.String,System.Action{SymOntoClay.ActiveObject.Functors.ICodeChunkWithSelfReference})">
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContextWithResult`1.CreateCodeChunk(System.String,System.Action)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.BaseCodeChunksContext.Finish">
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContextWithResult`1.CreateCodeChunk(System.String,System.Action{SymOntoClay.ActiveObject.CodeChunks.ICodeChunkWithResultAndSelfReference{`0}})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.BaseCodeChunksContext.Run">
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunkWithResult`1.OnRunAction">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.BaseCodeChunksContextWithResult`1.CreateCodeChunk(System.String,System.Action)">
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunkWithResultAndSelfReference`1.CreateCodeChunk(System.String,System.Action)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.BaseCodeChunksContextWithResult`1.CreateCodeChunk(System.String,System.Action{SymOntoClay.ActiveObject.Functors.ICodeChunkWithResultAndSelfReference{`0}})">
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunkWithResultAndSelfReference`1.CreateCodeChunk(System.String,System.Action{SymOntoClay.ActiveObject.CodeChunks.ICodeChunkWithResultAndSelfReference{`0}})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.BaseCodeChunksContextWithResult`1.Finish(`0)">
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunkWithResultAndSelfReference`1.OnRunAction">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.ActiveObject.Functors.Implementation.BaseCodeChunksContextWithResult`1.Result">
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunkWithSelfReference.CreateCodeChunk(System.String,System.Action)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.BaseCodeChunksContextWithResult`1.Run">
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunkWithSelfReference.CreateCodeChunk(System.String,System.Action{SymOntoClay.ActiveObject.CodeChunks.ICodeChunkWithSelfReference})">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.ActiveObject.Functors.Implementation.BaseCodeChunksContextWithResult`1.IsFinished">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.BaseCodeChunkWithResult`1.Finish(`0)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.BaseCodeChunkWithResult`1.Run">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.ActiveObject.Functors.Implementation.BaseCodeChunkWithResult`1.IsFinished">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.BaseCodeChunkWithResultAndSelfReference`1.CreateCodeChunk(System.String,System.Action)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.BaseCodeChunkWithResultAndSelfReference`1.CreateCodeChunk(System.String,System.Action{SymOntoClay.ActiveObject.Functors.ICodeChunkWithResultAndSelfReference{`0}})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.BaseCodeChunkWithResultAndSelfReference`1.Finish(`0)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.BaseCodeChunkWithResultAndSelfReference`1.Run">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.ActiveObject.Functors.Implementation.BaseCodeChunkWithResultAndSelfReference`1.IsFinished">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.BaseCodeChunkWithSelfReference.CreateCodeChunk(System.String,System.Action)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.BaseCodeChunkWithSelfReference.CreateCodeChunk(System.String,System.Action{SymOntoClay.ActiveObject.Functors.ICodeChunkWithSelfReference})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.BaseCodeChunkWithSelfReference.Run">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.ActiveObject.Functors.Implementation.BaseCodeChunkWithSelfReference.IsFinished">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.CodeChunk.OnRunAction">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.CodeChunksContext.CreateCodeChunk(System.String,System.Action)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.CodeChunksContext.CreateCodeChunk(System.String,System.Action{SymOntoClay.ActiveObject.Functors.ICodeChunkWithSelfReference})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.CodeChunksContextWithResult`1.CreateCodeChunk(System.String,System.Action)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.CodeChunksContextWithResult`1.CreateCodeChunk(System.String,System.Action{SymOntoClay.ActiveObject.Functors.ICodeChunkWithResultAndSelfReference{`0}})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.CodeChunkWithResult`1.OnRunAction">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.CodeChunkWithResultAndSelfReference`1.CreateCodeChunk(System.String,System.Action)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.CodeChunkWithResultAndSelfReference`1.CreateCodeChunk(System.String,System.Action{SymOntoClay.ActiveObject.Functors.ICodeChunkWithResultAndSelfReference{`0}})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.CodeChunkWithResultAndSelfReference`1.OnRunAction">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.CodeChunkWithSelfReference.CreateCodeChunk(System.String,System.Action)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.CodeChunkWithSelfReference.CreateCodeChunk(System.String,System.Action{SymOntoClay.ActiveObject.Functors.ICodeChunkWithSelfReference})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.ActiveObject.Functors.Implementation.CodeChunkWithSelfReference.OnRunAction">
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunkWithSelfReference.OnRunAction">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.ActiveObject.MethodResponses.CompletedMethodResponse.Task">
@@ -125,6 +53,21 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.MethodResponses.CompletedMethodResponse`1.Wait">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.MethodResponses.MethodResponseOfBaseFunctor.Task">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.MethodResponses.MethodResponseOfBaseFunctor.Wait">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.MethodResponses.MethodResponseOfBaseFunctor`1.Task">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.MethodResponses.MethodResponseOfBaseFunctor`1.Result">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.MethodResponses.MethodResponseOfBaseFunctor`1.Wait">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.ActiveObject.Threads.ActiveObjectCommonContext.IsNeedWating">

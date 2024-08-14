@@ -1,12 +1,11 @@
 ﻿namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public abstract partial class BaseCodeChunk : ICodeChunk
+    public abstract partial class BaseCodeChunk
     {
         protected abstract void OnRunAction();
 
         private bool _isFinished;
 
-        /// <inheritdoc/>
         public void Run()
         {
             if (_isFinished)
@@ -19,7 +18,6 @@
             _isFinished = true;
         }
 
-        /// <inheritdoc/>
         public bool IsFinished => _isFinished;
     }
 }

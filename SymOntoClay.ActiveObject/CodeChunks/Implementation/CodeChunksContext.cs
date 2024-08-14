@@ -1,5 +1,4 @@
-﻿using SymOntoClay.ActiveObject.Functors.Implementation;
-using SymOntoClay.Serialization;
+﻿using SymOntoClay.Serialization;
 using System;
 using System.Collections.Generic;
 
@@ -16,15 +15,20 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         private string _id;
 
         /// <inheritdoc/>
-        public override void CreateCodeChunk(string chunkId, Action action)
+        public void CreateCodeChunk(string chunkId, Action action)
         {
             AddCodeChunk(new CodeChunk(chunkId, this, action));
         }
 
         /// <inheritdoc/>
-        public override void CreateCodeChunk(string chunkId, Action<ICodeChunkWithSelfReference> action)
+        public void CreateCodeChunk(string chunkId, Action<ICodeChunkWithSelfReference> action)
         {
             AddCodeChunk(new CodeChunkWithSelfReference(chunkId, this, action));
         }
     }
+
+    //public partial class CodeChunksContext<T1, T2, T3> : BaseCodeChunksContext, ICodeChunksContext
+    //{
+
+    //}
 }

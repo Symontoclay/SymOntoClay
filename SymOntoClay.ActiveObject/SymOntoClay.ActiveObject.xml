@@ -7,10 +7,19 @@
         <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunk.OnRunAction">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunk`3.OnRunAction">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext.CreateCodeChunk(System.String,System.Action)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext.CreateCodeChunk(System.String,System.Action{SymOntoClay.ActiveObject.CodeChunks.ICodeChunkWithSelfReference})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext`3.CreateCodeChunk(System.String,System.Action{`0,`1,`2})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext`3.CreateCodeChunk(System.String,System.Action{SymOntoClay.ActiveObject.CodeChunks.ICodeChunkWithSelfReference{`0,`1,`2},`0,`1,`2})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContextWithResult`1.CreateCodeChunk(System.String,System.Action)">
@@ -38,6 +47,18 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunkWithSelfReference.OnRunAction">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunkWithSelfReference`3.CreateCodeChunk(System.String,System.Action{`0,`1,`2})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunkWithSelfReference`3.CreateCodeChunk(System.String,System.Action{SymOntoClay.ActiveObject.CodeChunks.ICodeChunkWithSelfReference{`0,`1,`2},`0,`1,`2})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunkWithSelfReference`3.OnRunAction">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.LoggedCodeChunkFunctorWithoutResult`2.OnRun(System.Threading.CancellationToken)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.ActiveObject.MethodResponses.CompletedMethodResponse.Task">

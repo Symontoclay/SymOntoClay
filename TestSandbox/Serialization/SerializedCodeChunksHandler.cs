@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using SymOntoClay.ActiveObject.Functors.Implementation;
+using SymOntoClay.ActiveObject.CodeChunks.Implementation;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
 using SymOntoClay.Serialization.Implementation;

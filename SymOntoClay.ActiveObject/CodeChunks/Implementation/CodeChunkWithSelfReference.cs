@@ -38,4 +38,45 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _action(this);
         }
     }
+
+    public partial class CodeChunkWithSelfReference<T1, T2, T3> : BaseCodeChunkWithSelfReference, ICodeChunkWithSelfReference<T1, T2, T3>
+    {
+        public CodeChunkWithSelfReference(string id, ICodeChunksContext<T1, T2, T3> codeChunksContext, T1 arg1, T2 arg2, T3 arg3, Action<ICodeChunkWithSelfReference<T1, T2, T3>, T1, T2, T3> action)
+        {
+            _id = id;
+            _codeChunksContext = codeChunksContext;
+            _arg1 = arg1;
+            _arg2 = arg2;
+            _arg3 = arg3;
+            _action = action;
+        }
+
+        [SocSerializableActionKey]
+        private string _id;
+
+        private T1 _arg1;
+        private T2 _arg2;
+        private T3 _arg3;
+
+        private ICodeChunksContext<T1, T2, T3> _codeChunksContext;
+        private Action<ICodeChunkWithSelfReference<T1, T2, T3>, T1, T2, T3> _action;
+
+        /// <inheritdoc/>
+        public void CreateCodeChunk(string chunkId, Action<T1, T2, T3> action)
+        {
+            AddChildCodeChunk(new CodeChunk<T1, T2, T3>(chunkId, _codeChunksContext, _arg1, _arg2, _arg3, action));
+        }
+
+        /// <inheritdoc/>
+        public void CreateCodeChunk(string chunkId, Action<ICodeChunkWithSelfReference<T1, T2, T3>, T1, T2, T3> action)
+        {
+            AddChildCodeChunk(new CodeChunkWithSelfReference<T1, T2, T3>(chunkId, _codeChunksContext, _arg1, _arg2, _arg3, action));
+        }
+
+        /// <inheritdoc/>
+        protected override void OnRunAction()
+        {
+            _action(this, _arg1, _arg2, _arg3);
+        }
+    }
 }

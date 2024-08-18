@@ -11,7 +11,7 @@ namespace SymOntoClay.SourceGenerator
 
             var searcher = new TargetClassSearcher(syntaxTrees);
 
-            var items = searcher.Run("SocSerialization");
+            var items = searcher.Run(Constants.SerializationAttributeName);
 
             var socSerializationGeneration = new SocSerializationGeneration(context);
 

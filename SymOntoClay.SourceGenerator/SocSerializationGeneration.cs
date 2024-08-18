@@ -107,12 +107,23 @@ namespace SymOntoClay.SourceGenerator
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}}}");
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classDeclIdentation)}}}");
             sourceCodeBuilder.AppendLine("}");
-
             sourceCodeBuilder.AppendLine();
+
+            var hasConstructorWithoutParameters = HasConstructorWithoutParameters(targetClassItem.SyntaxNode);
+
+            var classIdentifier = GetClassIdentifier(targetClassItem.SyntaxNode);
+
             sourceCodeBuilder.AppendLine($"namespace {targetClassItem.Namespace}");
             sourceCodeBuilder.AppendLine("{");
-            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classDeclIdentation)}public partial class {GetClassIdentifier(targetClassItem.SyntaxNode)}: ISerializable");
+            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classDeclIdentation)}public partial class {classIdentifier}: ISerializable");
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classDeclIdentation)}{{");
+
+            if (!hasConstructorWithoutParameters)
+            {
+                sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}public {classIdentifier}(){{}}");
+                sourceCodeBuilder.AppendLine();
+            }
+
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}Type ISerializable.GetPlainObjectType() => typeof(PlainObjects.{plainObjectClassName});");
             sourceCodeBuilder.AppendLine();
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}void ISerializable.OnWritePlainObject(object plainObject, ISerializer serializer)");
@@ -151,6 +162,18 @@ namespace SymOntoClay.SourceGenerator
             sourceCodeBuilder.AppendLine();
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classDeclIdentation)}}}");
             sourceCodeBuilder.AppendLine("}");
+        }
+
+        private bool HasConstructorWithoutParameters(ClassDeclarationSyntax syntaxNode)
+        {
+            var constructorDeclarations = syntaxNode.ChildNodes().OfType<ConstructorDeclarationSyntax>();
+
+            if (constructorDeclarations.Count() == 0)
+            {
+                return true;
+            }
+
+            return constructorDeclarations.Any(p => p.ParameterList.Parameters.Count == 0);
         }
 
         private string GetBaseFieldMemberType(BaseFieldItem baseFieldItem)

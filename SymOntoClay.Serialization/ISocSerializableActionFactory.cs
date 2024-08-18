@@ -3,6 +3,6 @@
     public interface ISocSerializableActionFactory
     {
         string Id { get; }
-        object GetAction();
+        object GetAction(int index);
     }
 }

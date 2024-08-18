@@ -8,5 +8,10 @@ namespace SymOntoClay.SourceGenerator
         public ClassDeclarationSyntax ClassDeclarationSyntaxNode { get; set; }
         public KindFieldType KindFieldType { get; set; } = KindFieldType.Unknown;
         public SyntaxNode FieldTypeSyntaxNode { get; set; }
+
+        public bool IsActionKey { get; set; }
+        public bool IsActionOrFunc { get; set; }
+
+        public abstract string Identifier { get; }
     }
 }

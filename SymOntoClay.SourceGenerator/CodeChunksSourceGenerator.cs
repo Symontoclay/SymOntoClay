@@ -3,24 +3,22 @@
 namespace SymOntoClay.SourceGenerator
 {
     [Generator]
-    public class SerializationSourceGenerator : ISourceGenerator
+    public class CodeChunksSourceGenerator : ISourceGenerator
     {
         public void Execute(GeneratorExecutionContext context)
         {
-            var syntaxTrees = context.Compilation.SyntaxTrees;
+            var codeChunksSearcher = new CodeChunksSearcher(context);
 
-            var searcher = new TargetClassSearcher(syntaxTrees);
+            var codeChunkCodeGenerator = new CodeChunkCodeGenerator(context);
 
-            var items = searcher.Run("SocSerialization");
-
-            var socSerializationGeneration = new SocSerializationGeneration(context);
+            var items = codeChunksSearcher.Run();
 
             foreach (var item in items)
             {
-                socSerializationGeneration.Run(item);
+                codeChunkCodeGenerator.Run(item);
             }
         }
-        
+
         public void Initialize(GeneratorInitializationContext context)
         {
             // No initialization required for this one

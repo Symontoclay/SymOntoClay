@@ -390,7 +390,7 @@ namespace SymOntoClay.Serialization.Implementation
         }
 
         /// <inheritdoc/>
-        public T GetAction<T>(string id)
+        public T GetAction<T>(string id, int index)
         {
 #if DEBUG
             _logger.Info($"id = {id}");
@@ -404,7 +404,7 @@ namespace SymOntoClay.Serialization.Implementation
 
             var factoryInstance = (ISocSerializableActionFactory)Activator.CreateInstance(actionFactoryType);
 
-            return (T)factoryInstance.GetAction();
+            return (T)factoryInstance.GetAction(index);
         }
     }
 }

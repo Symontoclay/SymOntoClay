@@ -13,11 +13,20 @@ namespace SymOntoClay.SourceGenerator
 
             var items = searcher.Run(Constants.SerializationAttributeName);
 
+            var plainObjectsRegistry = new PlainObjectsRegistry();
+
+            var plainObjectsSearcher = new PlainObjectsSearcher(context);
+
+            foreach (var item in items)
+            {
+                plainObjectsSearcher.Run(item, plainObjectsRegistry);
+            }
+
             var socSerializationGeneration = new SocSerializationGeneration(context);
 
             foreach (var item in items)
             {
-                socSerializationGeneration.Run(item);
+                socSerializationGeneration.Run(item, plainObjectsRegistry);
             }
         }
         

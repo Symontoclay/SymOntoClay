@@ -112,12 +112,7 @@ namespace SymOntoClay.SourceGenerator
 
         private void ProcessClassDeclaration(SyntaxNode classDeclaration, List<string> attributeNames, TargetClassSearcherContext context, ref List<TargetClassItem> result)
         {
-            var childNodes = classDeclaration?.ChildNodes();
-
-            var attributesList = childNodes
-                .Where(p => p.IsKind(SyntaxKind.AttributeList))
-                .SelectMany(p => p.ChildNodes().Where(x => x.IsKind(SyntaxKind.Attribute)).SelectMany(y => y.ChildNodes().Where(u => u.IsKind(SyntaxKind.IdentifierName))))
-                .Select(p => GeneratorsHelper.ToString(p.GetText()));
+            var attributesList = GeneratorsHelper.GetAtributeNamesOfClass(classDeclaration);
 
             if (!attributesList.Any(p => attributeNames.Contains(p)))
             {

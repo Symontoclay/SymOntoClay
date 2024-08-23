@@ -18,8 +18,10 @@ namespace SymOntoClay.SourceGenerator
 
         private readonly GeneratorExecutionContext _context;
         
-        public void Run(TargetCompilationUnit targetCompilationUnit)
+        public void Run(TargetCompilationUnit targetCompilationUnit, PlainObjectsRegistry plainObjectsRegistry)
         {
+            var availableNamespaces = targetCompilationUnit.Usings.Select(p => GeneratorsHelper.ExtractNamespaceNameFromUsing(p)).Where(p => !string.IsNullOrWhiteSpace(p)).Distinct().ToList();
+
             var requredNamespaces = new List<string>()
             {
                 "using System.Text;",
@@ -43,7 +45,7 @@ namespace SymOntoClay.SourceGenerator
             
             foreach (var targetClassItem in targetCompilationUnit.ClassItems)
             {
-                ProcessTargetClassItem(targetClassItem, sourceCodeBuilder);
+                ProcessTargetClassItem(targetClassItem, sourceCodeBuilder, plainObjectsRegistry, availableNamespaces);
             }
 
             var firstClassItem = targetCompilationUnit.ClassItems.First();
@@ -53,15 +55,26 @@ namespace SymOntoClay.SourceGenerator
             SaveFile(sourceCodeBuilder.ToString(), fileName);
         }
 
-        private void ProcessTargetClassItem(TargetClassItem targetClassItem, StringBuilder sourceCodeBuilder)
+        private void ProcessTargetClassItem(TargetClassItem targetClassItem, StringBuilder sourceCodeBuilder, PlainObjectsRegistry plainObjectsRegistry, List<string> availableNamespaces)
         {
+            var availableNamespacesForClass = availableNamespaces
+                .Concat(new List<string> { targetClassItem.Namespace })
+                .Distinct()
+                .ToList();
+
             var identationStep = 4;
             var baseIdentation = 0;
             var classDeclIdentation = baseIdentation + identationStep;
             var classContentDeclIdentation = classDeclIdentation + identationStep;
             var classContentIdentation = classContentDeclIdentation + identationStep;
 
-            var plainObjectClassName = GetPlainObjectClassIdentifier(targetClassItem.SyntaxNode);
+            var baseTypeInfo = GetBaseTypeInfo(targetClassItem.SyntaxNode);
+
+            var baseTypeName = baseTypeInfo.TypeName;
+
+            var hasBaseType = !string.IsNullOrWhiteSpace(baseTypeName);
+
+            var plainObjectClassName = GeneratorsHelper.GetPlainObjectClassIdentifier(targetClassItem.SyntaxNode);
 
             var propertyItems = GetPropertyItems(targetClassItem.SyntaxNode);
 
@@ -85,10 +98,31 @@ namespace SymOntoClay.SourceGenerator
                 actionKeyName = propertyActionKey.Identifier;
             }
 
+            var memberModifierMark = hasBaseType ? "override" : "virtual";
+
+            var plainObjectBaseType = string.Empty;
+
+            if (hasBaseType)
+            {
+                plainObjectBaseType = GetPlainObjectClassIdentifierFromAttribute(targetClassItem.SyntaxNode);
+
+                if (string.IsNullOrWhiteSpace(plainObjectBaseType))
+                {
+                    var peparedBaseType = baseTypeName.Contains('<') ? baseTypeName.Substring(0, baseTypeName.IndexOf('<')).Trim() : baseTypeName;
+
+                    plainObjectBaseType = plainObjectsRegistry.Get(availableNamespacesForClass, peparedBaseType, baseTypeInfo.GenericPrametersCount);
+
+                    if(string.IsNullOrWhiteSpace(plainObjectBaseType))
+                    {
+                        plainObjectBaseType = GetPlainObjectClassIdentifier(baseTypeName);
+                    }                    
+                }
+            }
+
             sourceCodeBuilder.AppendLine();
             sourceCodeBuilder.AppendLine($"namespace {targetClassItem.Namespace}.PlainObjects");
             sourceCodeBuilder.AppendLine("{");
-            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classDeclIdentation)}public partial class {plainObjectClassName}: IObjectToString");
+            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classDeclIdentation)}public partial class {plainObjectClassName}: {(hasBaseType ? $": {plainObjectBaseType}, " : string.Empty)}IObjectToString");
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classDeclIdentation)}{{");
             foreach (var propertyItem in propertyItems)
             {
@@ -141,6 +175,12 @@ namespace SymOntoClay.SourceGenerator
 
                 sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentIdentation)}sb.AppendLine($\"{{spaces}}{{nameof({fieldItem.Identifier})}} = {{{fieldItem.Identifier}}}\");");
             }
+
+            if(hasBaseType)
+            {
+                sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentIdentation)}sb.Append(base.PropertiesToString(n));");
+            }
+
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentIdentation)}return sb.ToString();");
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}}}");
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classDeclIdentation)}}}");
@@ -151,6 +191,7 @@ namespace SymOntoClay.SourceGenerator
 
             var classIdentifier = GetClassIdentifier(targetClassItem.SyntaxNode);
 
+            sourceCodeBuilder.AppendLine();
             sourceCodeBuilder.AppendLine($"namespace {targetClassItem.Namespace}");
             sourceCodeBuilder.AppendLine("{");
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classDeclIdentation)}public partial class {classIdentifier}: ISerializable");
@@ -162,13 +203,26 @@ namespace SymOntoClay.SourceGenerator
                 sourceCodeBuilder.AppendLine();
             }
 
-            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}Type ISerializable.GetPlainObjectType() => typeof(PlainObjects.{plainObjectClassName});");
+            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}Type ISerializable.GetPlainObjectType() => GetPlainObjectType();");
+            sourceCodeBuilder.AppendLine();
+            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}protected {memberModifierMark} Type GetPlainObjectType() => typeof(PlainObjects.{plainObjectClassName});");
             sourceCodeBuilder.AppendLine();
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}void ISerializable.OnWritePlainObject(object plainObject, ISerializer serializer)");
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}{{");
+            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentIdentation)}OnWritePlainObject(plainObject, serializer);");
+            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}}}");
+            sourceCodeBuilder.AppendLine();
+
+            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}protected {memberModifierMark} void OnWritePlainObject(object plainObject, ISerializer serializer)");
+            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}{{");
+            if (hasBaseType)
+            {
+                sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentIdentation)}base.OnWritePlainObject(plainObject, serializer);");
+            }
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentIdentation)}OnWritePlainObject((PlainObjects.{plainObjectClassName})plainObject, serializer);");
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}}}");
             sourceCodeBuilder.AppendLine();
+
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}private void OnWritePlainObject(PlainObjects.{plainObjectClassName} plainObject, ISerializer serializer)");
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}{{");
             foreach (var propertyItem in propertyItems)
@@ -193,6 +247,15 @@ namespace SymOntoClay.SourceGenerator
             sourceCodeBuilder.AppendLine();
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}void ISerializable.OnReadPlainObject(object plainObject, IDeserializer deserializer)");
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}{{");
+            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentIdentation)}OnReadPlainObject(plainObject, deserializer);");
+            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}}}");
+            sourceCodeBuilder.AppendLine();
+            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}protected {memberModifierMark} void OnReadPlainObject(object plainObject, IDeserializer deserializer)");
+            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}{{");
+            if (hasBaseType)
+            {
+                sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentIdentation)}base.OnReadPlainObject(plainObject, deserializer);");
+            }
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentIdentation)}OnReadPlainObject((PlainObjects.{plainObjectClassName})plainObject, deserializer);");
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}}}");
             sourceCodeBuilder.AppendLine();
@@ -253,19 +316,118 @@ namespace SymOntoClay.SourceGenerator
             return sb.ToString();
         }
 
-        private string GetPlainObjectClassIdentifier(ClassDeclarationSyntax syntaxNode)
+        private string GetPlainObjectClassIdentifierFromAttribute(ClassDeclarationSyntax syntaxNode)
         {
-            var sb = new StringBuilder(syntaxNode.Identifier.Text);
-            sb.Append("Po");
+            var socBasePlainObjectAttribute = syntaxNode
+                ?.ChildNodes()
+                ?.OfType<AttributeListSyntax>()
+                ?.SelectMany(p => p.ChildNodes()?.OfType<AttributeSyntax>().Where(x => x.ChildNodes()?.OfType<IdentifierNameSyntax>()?.Any(y => GeneratorsHelper.ToString(y.GetText()) == Constants.SocBasePlainObjectAttributeName) ?? false))
+                ?.FirstOrDefault();
 
-            var typeParameterList = syntaxNode?.ChildNodes().FirstOrDefault(p => p.IsKind(SyntaxKind.TypeParameterList));
-
-            if (typeParameterList != null)
+            if (socBasePlainObjectAttribute == null)
             {
-                sb.Append(GeneratorsHelper.ToString(typeParameterList.GetText()).Replace("<", "_").Replace(",", "_").Replace(" ", string.Empty).Replace(">", string.Empty));
+                return string.Empty;
             }
 
-            return sb.ToString();
+            var socBasePlainObjectArgument = socBasePlainObjectAttribute.ChildNodes()?.OfType<AttributeArgumentListSyntax>()?.SelectMany(p => p.ChildNodes()?.OfType<AttributeArgumentSyntax>())?.FirstOrDefault();
+
+            if (socBasePlainObjectArgument == null)
+            {
+                return string.Empty;
+            }
+
+            var socBasePlainObjectNameNode = socBasePlainObjectArgument.ChildNodes()?.OfType<LiteralExpressionSyntax>().FirstOrDefault();
+
+            if (socBasePlainObjectNameNode != null)
+            {
+                return GeneratorsHelper.ToString(socBasePlainObjectNameNode.GetText()).Replace("\"", string.Empty).Trim();
+            }
+
+            var socBasePlainObjectNameOfNode = socBasePlainObjectArgument
+                .ChildNodes()
+                ?.OfType<InvocationExpressionSyntax>()
+                ?.SelectMany(x => x.ChildNodes()?.OfType<ArgumentListSyntax>().SelectMany(y => y.ChildNodes()?.OfType<ArgumentSyntax>()?.SelectMany(n => n.ChildNodes()?.OfType<IdentifierNameSyntax>())))
+                .FirstOrDefault();
+
+            if (socBasePlainObjectNameOfNode == null)
+            {
+                return string.Empty;
+            }
+
+            return GeneratorsHelper.ToString(socBasePlainObjectNameOfNode.GetText()).Trim();
+        }
+
+        private string GetPlainObjectClassIdentifier(string typeName)
+        {
+            if (string.IsNullOrWhiteSpace(typeName))
+            {
+                return string.Empty;
+            }
+
+            var typeNameWithoutSpaces = typeName.Replace(" ", string.Empty);
+
+            var typeNameWithPo = string.Empty;
+
+            if (typeNameWithoutSpaces.Contains("<"))
+            {
+                typeNameWithPo = typeNameWithoutSpaces.Insert(typeNameWithoutSpaces.IndexOf("<"), "Po");
+            }
+            else
+            {
+                typeNameWithPo = $"{typeNameWithoutSpaces}Po";
+            }
+
+            return typeNameWithPo.Replace("<", "_").Replace(",", "_").Replace(">", string.Empty);
+        }
+
+        private (string TypeName, int GenericPrametersCount) GetBaseTypeInfo(SyntaxNode syntaxNode)
+        {
+            var attributesList = GeneratorsHelper.GetAtributeNamesOfClass(syntaxNode);
+
+            if (attributesList.Contains(Constants.BasedOnSocNoSerializableAttributeName))
+            {
+                return (string.Empty, 0);
+            }
+
+            var baseListNode = syntaxNode?.ChildNodes()?.OfType<BaseListSyntax>()?.FirstOrDefault();
+
+            if (baseListNode == null)
+            {
+                return (string.Empty, 0);
+            }
+
+            var baseTypeList = baseListNode.ChildNodes().OfType<SimpleBaseTypeSyntax>();
+
+            foreach (var baseType in baseTypeList)
+            {
+                var typeName = GeneratorsHelper.ToString(baseType.GetText());
+
+                if (!IsSerializedBaseTypeName(typeName))
+                {
+                    continue;
+                }
+
+                var typeParameterList = baseType?.ChildNodes()?.OfType<GenericNameSyntax>()?.SelectMany(p => p?.ChildNodes().OfType<TypeArgumentListSyntax>()).FirstOrDefault();
+
+                return (typeName, typeParameterList?.ChildNodes()?.Count() ?? 0);
+            }
+
+            return (string.Empty, 0);
+        }
+
+        private bool IsSerializedBaseTypeName(string name)
+        {
+            if (name.ToLower() == "object")
+            {
+                return false;
+            }
+
+            if (name[0] == 'I' && name.Length > 1 && char.IsUpper(name[1]))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private string GetTypeName(BaseFieldItem baseFieldItem)

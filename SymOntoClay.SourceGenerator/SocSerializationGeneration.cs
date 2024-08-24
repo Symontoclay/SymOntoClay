@@ -191,6 +191,8 @@ namespace SymOntoClay.SourceGenerator
 
             var classIdentifier = GetClassIdentifier(targetClassItem.SyntaxNode);
 
+            var postDeserializationMethodName = GetPostDeserializationMethod(targetClassItem.SyntaxNode);
+
             sourceCodeBuilder.AppendLine();
             sourceCodeBuilder.AppendLine($"namespace {targetClassItem.Namespace}");
             sourceCodeBuilder.AppendLine("{");
@@ -272,6 +274,12 @@ namespace SymOntoClay.SourceGenerator
             {
                 sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentIdentation)}{CreateReadField(fieldItem, actionKeyName, ref actionIndex)}");
             }
+
+            if (!string.IsNullOrWhiteSpace(postDeserializationMethodName))
+            {
+                sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentIdentation)}{postDeserializationMethodName}();");
+            }
+
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}}}");
             sourceCodeBuilder.AppendLine();
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classDeclIdentation)}}}");
@@ -288,6 +296,22 @@ namespace SymOntoClay.SourceGenerator
             }
 
             return constructorDeclarations.Any(p => p.ParameterList.Parameters.Count == 0);
+        }
+
+        private string GetPostDeserializationMethod(ClassDeclarationSyntax syntaxNode)
+        {
+            var postDeserializationMethodNode = syntaxNode.
+                ChildNodes()
+                ?.OfType<MethodDeclarationSyntax>()
+                ?.Where(p => p.ChildNodes()?.OfType<AttributeListSyntax>()?.Any(x => x.Attributes.Any(y => GeneratorsHelper.ToString(y.Name.GetText()) == Constants.SocPostDeserializationMethodAttributeName)) ?? false)
+                ?.FirstOrDefault();
+
+            if (postDeserializationMethodNode == null)
+            {
+                return string.Empty;
+            }
+
+            return postDeserializationMethodNode.Identifier.Text;
         }
 
         private string GetBaseFieldMemberType(BaseFieldItem baseFieldItem)

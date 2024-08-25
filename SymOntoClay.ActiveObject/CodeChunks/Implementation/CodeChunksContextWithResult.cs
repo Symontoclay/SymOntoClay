@@ -6,14 +6,6 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
     public class CodeChunksContextWithResult<TResult> : BaseCodeChunksContextWithResult<TResult>, ICodeChunksContextWithResult<TResult>
     {
-        public CodeChunksContextWithResult(string id)
-        {
-            _id = id;
-        }
-
-        [SocSerializableActionKey]
-        private string _id;
-
         /// <inheritdoc/>
         public void CreateCodeChunk(string chunkId, Action action)
         {

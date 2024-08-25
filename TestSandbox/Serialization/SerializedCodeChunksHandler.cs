@@ -44,7 +44,7 @@ namespace TestSandbox.Serialization
 
         private void SerializeSimplestUsingCodeChunksContext()
         {
-            var codeChunksContext = new CodeChunksContext("BEE29B0A-6806-4981-85DE-4711001A7802");
+            var codeChunksContext = new CodeChunksContext();
 
             codeChunksContext.CreateCodeChunk("852D8948-7DA6-41C9-B6EE-E038D58F0248", (ICodeChunkWithSelfReference currentCodeChunk) =>
             {

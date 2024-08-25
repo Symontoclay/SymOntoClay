@@ -4,40 +4,45 @@ using SymOntoClay.Threading;
 using System.Threading;
 using System;
 using SymOntoClay.ActiveObject.CodeChunks.Implementation;
+using SymOntoClay.Serialization;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
     public class LoggedCodeChunkFunctorWithoutResult<TGlobalContext, TLocalContext> : BaseFunctor
         where TLocalContext : class, new()
     {
-        public static LoggedCodeChunkFunctorWithoutResult<TGlobalContext, TLocalContext> Run(IMonitorLogger logger, string codeChunksContextId, TGlobalContext globalContext,
+        public static LoggedCodeChunkFunctorWithoutResult<TGlobalContext, TLocalContext> Run(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
             Action<CodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext>> action,
             IActiveObjectContext context, ICustomThreadPool threadPool)
         {
-            var functor = new LoggedCodeChunkFunctorWithoutResult<TGlobalContext, TLocalContext>(logger, codeChunksContextId, globalContext,
+            var functor = new LoggedCodeChunkFunctorWithoutResult<TGlobalContext, TLocalContext>(logger, functorId, globalContext,
             action, context, threadPool);
             functor.Run();
             return functor;
         }
 
-        public LoggedCodeChunkFunctorWithoutResult(IMonitorLogger logger, string codeChunksContextId, TGlobalContext globalContext,
+        public LoggedCodeChunkFunctorWithoutResult(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
             Action<CodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext>> action,
             IActiveObjectContext context, ICustomThreadPool threadPool)
             : base(logger, context, threadPool)
         {
             _localContext = new TLocalContext();
 
-            _codeChunksContext = new CodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext>(codeChunksContextId, logger, globalContext, _localContext);
+            _functorId = functorId;
+            _codeChunksContext = new CodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext>(logger, globalContext, _localContext);
             _action = action;
             _logger = logger;
             _globalContext = globalContext;
         }
 
-        private readonly Action<CodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext>> _action;
-        private readonly CodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext> _codeChunksContext;
-        private readonly IMonitorLogger _logger;
-        private readonly TGlobalContext _globalContext;
-        private readonly TLocalContext _localContext;
+        [SocSerializableActionKey]
+        private string _functorId;
+
+        private Action<CodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext>> _action;
+        private CodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext> _codeChunksContext;
+        private IMonitorLogger _logger;
+        private TGlobalContext _globalContext;
+        private TLocalContext _localContext;
 
         /// <inheritdoc/>
         protected override void OnRun(CancellationToken cancellationToken)

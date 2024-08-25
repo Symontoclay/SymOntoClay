@@ -21,7 +21,8 @@ namespace SymOntoClay.SourceGenerator
         {
             var requredNamespaces = new List<string>()
             {
-                "using SymOntoClay.Serialization;"
+                "using SymOntoClay.Serialization;",
+                "using System;"
             };
 
             if (targetCompilationUnit.Usings?.Any() ?? false)

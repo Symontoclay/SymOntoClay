@@ -5,7 +5,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
     public abstract partial class BaseCodeChunkWithResultAndSelfReference<TResult>
     {
-        protected BaseCodeChunkWithResultAndSelfReference(ICodeChunksContextWithResult<TResult> codeChunksContext)
+        protected BaseCodeChunkWithResultAndSelfReference(IBaseCodeChunksContextWithResult<TResult> codeChunksContext)
         {
             _codeChunksContext = codeChunksContext;
         }
@@ -13,7 +13,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         private bool _isFinished;
         private bool _actionIsFinished;
 
-        private ICodeChunksContextWithResult<TResult> _codeChunksContext;
+        private IBaseCodeChunksContextWithResult<TResult> _codeChunksContext;
 
         private List<IBaseCodeChunk> _children = new List<IBaseCodeChunk>();
 

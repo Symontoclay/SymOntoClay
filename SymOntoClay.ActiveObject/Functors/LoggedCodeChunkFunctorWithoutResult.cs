@@ -5,6 +5,7 @@ using System.Threading;
 using System;
 using SymOntoClay.ActiveObject.CodeChunks.Implementation;
 using SymOntoClay.Serialization;
+using SymOntoClay.ActiveObject.CodeChunks;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
@@ -12,7 +13,7 @@ namespace SymOntoClay.ActiveObject.Functors
         where TLocalContext : class, new()
     {
         public static LoggedCodeChunkFunctorWithoutResult<TGlobalContext, TLocalContext> Run(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
-            Action<CodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext>> action,
+            Action<ICodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext>> action,
             IActiveObjectContext context, ICustomThreadPool threadPool)
         {
             var functor = new LoggedCodeChunkFunctorWithoutResult<TGlobalContext, TLocalContext>(logger, functorId, globalContext,
@@ -22,7 +23,7 @@ namespace SymOntoClay.ActiveObject.Functors
         }
 
         public LoggedCodeChunkFunctorWithoutResult(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
-            Action<CodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext>> action,
+            Action<ICodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext>> action,
             IActiveObjectContext context, ICustomThreadPool threadPool)
             : base(logger, context, threadPool)
         {
@@ -38,7 +39,7 @@ namespace SymOntoClay.ActiveObject.Functors
         [SocSerializableActionKey]
         private string _functorId;
 
-        private Action<CodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext>> _action;
+        private Action<ICodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext>> _action;
         private CodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext> _codeChunksContext;
         private IMonitorLogger _logger;
         private TGlobalContext _globalContext;

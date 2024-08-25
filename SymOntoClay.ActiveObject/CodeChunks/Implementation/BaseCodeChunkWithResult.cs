@@ -2,15 +2,15 @@
 {
     public abstract partial class BaseCodeChunkWithResult<TResult>
     {
-        protected BaseCodeChunkWithResult(ICodeChunksContextWithResult<TResult> codeChunksContext)
+        protected BaseCodeChunkWithResult(IBaseCodeChunksContextWithResult<TResult> codeChunksContext)
         {
             _codeChunksContext = codeChunksContext;
         }
-
+        
         protected abstract void OnRunAction();
 
         private bool _isFinished;
-        private ICodeChunksContextWithResult<TResult> _codeChunksContext;
+        private IBaseCodeChunksContextWithResult<TResult> _codeChunksContext;
 
         public void Finish(TResult result)
         {

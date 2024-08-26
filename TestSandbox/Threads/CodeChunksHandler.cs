@@ -36,9 +36,9 @@ namespace TestSandbox.Threads
         {
             _logger.Info("E7E3E621-38BD-4B54-B041-FD0C74FE5BBF", "Begin");
 
-            Case10();
+            //Case10();
             //Case9();
-            //Case8();
+            Case8();
             //Case7();
             //Case6();
             //Case5();

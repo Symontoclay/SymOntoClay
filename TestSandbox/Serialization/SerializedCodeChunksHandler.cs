@@ -21,8 +21,8 @@ namespace TestSandbox.Serialization
         {
             _logger.Info("2083E440-34CD-4B08-936C-E39EECF01AA9", "Begin");
 
-            DeserializeSimplestUsingCodeChunksContext();
-            //SerializeSimplestUsingCodeChunksContext();
+            //DeserializeSimplestUsingCodeChunksContext();
+            SerializeSimplestUsingCodeChunksContext();
 
             _logger.Info("15E55FD5-04A4-4860-9779-2FA7B3989938", "End");
         }
@@ -44,16 +44,16 @@ namespace TestSandbox.Serialization
 
         private void SerializeSimplestUsingCodeChunksContext()
         {
-            var codeChunksContext = new CodeChunksContext();
+            var codeChunksContext = new CodeChunksContext<IMonitorLogger>(_logger);
 
-            codeChunksContext.CreateCodeChunk("852D8948-7DA6-41C9-B6EE-E038D58F0248", (ICodeChunkWithSelfReference currentCodeChunk) =>
+            codeChunksContext.CreateCodeChunk("852D8948-7DA6-41C9-B6EE-E038D58F0248", (ICodeChunkWithSelfReference<IMonitorLogger> currentCodeChunk, IMonitorLogger loggerValue) =>
             {
-                //_logger.Info("64C869BD-91D0-4CC5-B675-1BF13A9062F3", "Chunk1");
+                loggerValue.Info("64C869BD-91D0-4CC5-B675-1BF13A9062F3", "Chunk1");
             });
 
-            codeChunksContext.CreateCodeChunk("5A33E959-BC01-40B0-82DE-3874E0E31AD7", (ICodeChunkWithSelfReference currentCodeChunk) =>
+            codeChunksContext.CreateCodeChunk("5A33E959-BC01-40B0-82DE-3874E0E31AD7", (ICodeChunkWithSelfReference<IMonitorLogger> currentCodeChunk, IMonitorLogger loggerValue) =>
             {
-                //_logger.Info("3E5FE705-0F2E-45EE-A579-B080F2FBF566", "Chunk2");
+                loggerValue.Info("3E5FE705-0F2E-45EE-A579-B080F2FBF566", "Chunk2");
             });
 
             codeChunksContext.Run();

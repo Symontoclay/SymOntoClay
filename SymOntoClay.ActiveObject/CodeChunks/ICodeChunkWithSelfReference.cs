@@ -2,13 +2,13 @@
 
 namespace SymOntoClay.ActiveObject.CodeChunks
 {
-    public interface ICodeChunkWithSelfReference : IBaseCodeChunk
+    public interface ICodeChunkWithSelfReference : IBaseCodeChunkWithoutResult
     {
         void CreateCodeChunk(string chunkId, Action action);
         void CreateCodeChunk(string chunkId, Action<ICodeChunkWithSelfReference> action);
     }
 
-    public interface ICodeChunkWithSelfReference<T1, T2, T3> : IBaseCodeChunk
+    public interface ICodeChunkWithSelfReference<T1, T2, T3> : IBaseCodeChunkWithoutResult
     {
         void CreateCodeChunk(string chunkId, Action<T1, T2, T3> action);
         void CreateCodeChunk(string chunkId, Action<ICodeChunkWithSelfReference<T1, T2, T3>, T1, T2, T3> action);

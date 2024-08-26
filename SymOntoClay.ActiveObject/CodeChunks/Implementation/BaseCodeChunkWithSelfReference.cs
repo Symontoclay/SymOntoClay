@@ -14,6 +14,11 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _children.Add(chunk);
         }
 
+        public void Finish()
+        {
+            _isFinished = true;
+        }
+
         protected abstract void OnRunAction();
 
         public void Run()

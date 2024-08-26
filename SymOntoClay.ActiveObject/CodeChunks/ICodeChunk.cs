@@ -1,10 +1,10 @@
 ﻿namespace SymOntoClay.ActiveObject.CodeChunks
 {
-    public interface ICodeChunk : IBaseCodeChunk
+    public interface ICodeChunk : IBaseCodeChunkWithoutResult
     {
     }
 
-    public interface ICodeChunk<T1, T2, T3> : IBaseCodeChunk
+    public interface ICodeChunk<T1, T2, T3> : IBaseCodeChunkWithoutResult
     {
     }
 }

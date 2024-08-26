@@ -2,6 +2,11 @@
 {
     public abstract partial class BaseCodeChunk
     {
+        public void Finish()
+        {
+            _isFinished = true;
+        }
+
         protected abstract void OnRunAction();
 
         private bool _isFinished;

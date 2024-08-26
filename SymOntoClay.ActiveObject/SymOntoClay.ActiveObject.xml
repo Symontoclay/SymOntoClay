@@ -7,6 +7,12 @@
         <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunk.OnRunAction">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunk`1.OnRunAction">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunk`2.OnRunAction">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunk`3.OnRunAction">
             <inheritdoc/>
         </member>
@@ -14,6 +20,18 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext.CreateCodeChunk(System.String,System.Action{SymOntoClay.ActiveObject.CodeChunks.ICodeChunkWithSelfReference})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext`1.CreateCodeChunk(System.String,System.Action{`0})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext`1.CreateCodeChunk(System.String,System.Action{SymOntoClay.ActiveObject.CodeChunks.ICodeChunkWithSelfReference{`0},`0})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext`2.CreateCodeChunk(System.String,System.Action{`0,`1})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext`2.CreateCodeChunk(System.String,System.Action{SymOntoClay.ActiveObject.CodeChunks.ICodeChunkWithSelfReference{`0,`1},`0,`1})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext`3.CreateCodeChunk(System.String,System.Action{`0,`1,`2})">
@@ -65,6 +83,24 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunkWithSelfReference.OnRunAction">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunkWithSelfReference`1.CreateCodeChunk(System.String,System.Action{`0})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunkWithSelfReference`1.CreateCodeChunk(System.String,System.Action{SymOntoClay.ActiveObject.CodeChunks.ICodeChunkWithSelfReference{`0},`0})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunkWithSelfReference`1.OnRunAction">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunkWithSelfReference`2.CreateCodeChunk(System.String,System.Action{`0,`1})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunkWithSelfReference`2.CreateCodeChunk(System.String,System.Action{SymOntoClay.ActiveObject.CodeChunks.ICodeChunkWithSelfReference{`0,`1},`0,`1})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunkWithSelfReference`2.OnRunAction">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunkWithSelfReference`3.CreateCodeChunk(System.String,System.Action{`0,`1,`2})">

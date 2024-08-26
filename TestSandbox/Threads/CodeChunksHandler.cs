@@ -13,6 +13,11 @@ using System.Threading;
 
 namespace TestSandbox.Threads
 {
+    public class CodeChunksHandlerCase3LocalContext
+    {
+        public int Property1 { get; set; }
+    }
+
     public class CodeChunksHandlerGlobalContext
     {
         public string GlobalStr { get; set; }
@@ -128,26 +133,26 @@ namespace TestSandbox.Threads
 
         private void Case7()
         {
-            var codeChunksContext = new CodeChunksContext();
+            var codeChunksContext = new CodeChunksContext<IMonitorLogger>(_logger);
 
-            codeChunksContext.CreateCodeChunk("611FD4E5-7BEB-400A-9F61-7107B1833CAA", (ICodeChunkWithSelfReference currentCodeChunk) =>
+            codeChunksContext.CreateCodeChunk("611FD4E5-7BEB-400A-9F61-7107B1833CAA", (ICodeChunkWithSelfReference<IMonitorLogger> currentCodeChunk, IMonitorLogger loggerValue) =>
             {
-                //_logger.Info("3B65BA4D-4EAD-4929-98A0-9D17D8D58DE6", "Chunk1");
+                loggerValue.Info("3B65BA4D-4EAD-4929-98A0-9D17D8D58DE6", "Chunk1");
 
                 foreach (var n in Enumerable.Range(1, 3))
                 {
-                    //_logger.Info("B12A2B5A-961A-4D57-BEFD-0968DCA5CC59", $"Chunk1 n = {n}");
+                    loggerValue.Info("B12A2B5A-961A-4D57-BEFD-0968DCA5CC59", $"Chunk1 n = {n}");
 
-                    currentCodeChunk.CreateCodeChunk("60A5B35A-A374-4DB6-B027-36D2787D17DF", () =>
+                    currentCodeChunk.CreateCodeChunk("60A5B35A-A374-4DB6-B027-36D2787D17DF", (IMonitorLogger loggerValue) =>
                     {
-                        //_logger.Info("86E4062C-1A28-42A8-A7DB-FFC552FAE01B", "Chunk1 " + n);
+                        loggerValue.Info("86E4062C-1A28-42A8-A7DB-FFC552FAE01B", "Chunk1");
                     });
                 }
             });
 
-            codeChunksContext.CreateCodeChunk("14F48D04-4A50-465C-9B07-703BF5EC3FF0", () =>
+            codeChunksContext.CreateCodeChunk("14F48D04-4A50-465C-9B07-703BF5EC3FF0", (IMonitorLogger loggerValue) =>
             {
-                //_logger.Info("D0EEDE37-2168-4468-8CFC-DE79917B3539", "Chunk2");
+                loggerValue.Info("D0EEDE37-2168-4468-8CFC-DE79917B3539", "Chunk2");
             });
 
             codeChunksContext.Run();
@@ -155,17 +160,17 @@ namespace TestSandbox.Threads
 
         private void Case6()
         {
-            var codeChunksContext = new CodeChunksContextWithResult<int>();
+            var codeChunksContext = new CodeChunksContextWithResult<IMonitorLogger, int>(_logger);
 
-            codeChunksContext.CreateCodeChunk("AA297A78-BEBE-4903-B464-FED2C2B23654", (ICodeChunkWithResultAndSelfReference<int> currentCodeChunk) =>
+            codeChunksContext.CreateCodeChunk("AA297A78-BEBE-4903-B464-FED2C2B23654", (ICodeChunkWithResultAndSelfReference<IMonitorLogger, int> currentCodeChunk, IMonitorLogger loggerValue) =>
             {
-                //_logger.Info("6CC69DCB-4354-49B7-82FC-4714CAC5231F", "Chunk1");
+                loggerValue.Info("6CC69DCB-4354-49B7-82FC-4714CAC5231F", "Chunk1");
                 currentCodeChunk.Finish(16);
             });
 
-            codeChunksContext.CreateCodeChunk("E66722E5-722E-4700-9546-227B1227D640", (ICodeChunkWithResultAndSelfReference<int> currentCodeChunk) =>
+            codeChunksContext.CreateCodeChunk("E66722E5-722E-4700-9546-227B1227D640", (ICodeChunkWithResultAndSelfReference<IMonitorLogger, int> currentCodeChunk, IMonitorLogger loggerValue) =>
             {
-                //_logger.Info("EE9CFE13-6380-4D25-B23B-F10A5311D3E8", "Chunk2");
+                loggerValue.Info("EE9CFE13-6380-4D25-B23B-F10A5311D3E8", "Chunk2");
             });
 
             codeChunksContext.Run();
@@ -177,17 +182,17 @@ namespace TestSandbox.Threads
 
         private void Case5()
         {
-            var codeChunksContext = new CodeChunksContext();
+            var codeChunksContext = new CodeChunksContext<IMonitorLogger>(_logger);
 
-            codeChunksContext.CreateCodeChunk("80972024-5F7C-4BDA-841A-7D7B06EBCA1B", (ICodeChunkWithSelfReference currentCodeChunk) =>
+            codeChunksContext.CreateCodeChunk("80972024-5F7C-4BDA-841A-7D7B06EBCA1B", (ICodeChunkWithSelfReference<IMonitorLogger> currentCodeChunk, IMonitorLogger loggerValue) =>
             {
-                //_logger.Info("C9093211-E482-4261-BB94-60386BB20411", "Chunk1");
+                loggerValue.Info("C9093211-E482-4261-BB94-60386BB20411", "Chunk1");
                 currentCodeChunk.Finish();
             });
 
-            codeChunksContext.CreateCodeChunk("33EEDEDE-B350-4514-AC5E-EF0AB0C47D40", (ICodeChunkWithSelfReference currentCodeChunk) =>
+            codeChunksContext.CreateCodeChunk("33EEDEDE-B350-4514-AC5E-EF0AB0C47D40", (ICodeChunkWithSelfReference<IMonitorLogger> currentCodeChunk, IMonitorLogger loggerValue) =>
             {
-                //_logger.Info("D332AE06-A16F-45D9-B56F-7C48FB18FA53", "Chunk2");
+                loggerValue.Info("D332AE06-A16F-45D9-B56F-7C48FB18FA53", "Chunk2");
             });
 
             codeChunksContext.Run();
@@ -231,31 +236,26 @@ namespace TestSandbox.Threads
             //Thread.Sleep(10000);
         }
 
-        private class Case3LocalContext()
-        {
-            public int Property1 { get; set; }
-        }
-
         private void Case3()
         {
-            var localContext = new Case3LocalContext();
+            var localContext = new CodeChunksHandlerCase3LocalContext();
 
-            var codeChunksContext = new CodeChunksContext<IMonitorLogger, Case3LocalContext>(_logger, localContext);
+            var codeChunksContext = new CodeChunksContext<IMonitorLogger, CodeChunksHandlerCase3LocalContext>(_logger, localContext);
 
-            codeChunksContext.CreateCodeChunk("FEF1781D-D63A-4374-9977-F82B83EF90CC", (ICodeChunkWithSelfReference<IMonitorLogger, Case3LocalContext> currentCodeChunk, IMonitorLogger loggerValue, Case3LocalContext localContextValue) =>
+            codeChunksContext.CreateCodeChunk("FEF1781D-D63A-4374-9977-F82B83EF90CC", (ICodeChunkWithSelfReference<IMonitorLogger, CodeChunksHandlerCase3LocalContext> currentCodeChunk, IMonitorLogger loggerValue, CodeChunksHandlerCase3LocalContext localContextValue) =>
             {
                 loggerValue.Info("3ACE2DAA-4D07-4F5C-A0E9-F010E8DDF5BA", "Chunk1");
 
-                loggerValue.Info("F08358E1-B020-437C-92FE-20D11321A1F8", $"localContext.Property1 = {localContext.Property1}");
+                loggerValue.Info("F08358E1-B020-437C-92FE-20D11321A1F8", $"localContextValue.Property1 = {localContextValue.Property1}");
 
                 localContextValue.Property1 = 16;
             });
 
-            codeChunksContext.CreateCodeChunk("9233793C-5BEE-4B1F-A4BD-37A5FC077638", (ICodeChunkWithSelfReference<IMonitorLogger, Case3LocalContext> currentCodeChunk, IMonitorLogger loggerValue, Case3LocalContext localContextValue) =>
+            codeChunksContext.CreateCodeChunk("9233793C-5BEE-4B1F-A4BD-37A5FC077638", (ICodeChunkWithSelfReference<IMonitorLogger, CodeChunksHandlerCase3LocalContext> currentCodeChunk, IMonitorLogger loggerValue, CodeChunksHandlerCase3LocalContext localContextValue) =>
             {
                 loggerValue.Info("CC61FCC7-F8F5-48CB-898F-3F4697E984E3", "Chunk2");
 
-                loggerValue.Info("307973EF-F423-4E3C-821B-27C7119FD04D", $"localContext.Property1 = {localContext.Property1}");
+                loggerValue.Info("307973EF-F423-4E3C-821B-27C7119FD04D", $"localContextValue.Property1 = {localContextValue.Property1}");
             });
 
             codeChunksContext.Run();

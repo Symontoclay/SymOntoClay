@@ -19,6 +19,52 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
+    public class CodeChunksContextWithResult<T, TResult> : BaseCodeChunksContextWithResult<TResult>, ICodeChunksContextWithResult<T, TResult>
+    {
+        public CodeChunksContextWithResult(T arg1)
+        {
+            _arg1 = arg1;
+        }
+
+        private T _arg1;
+
+        /// <inheritdoc/>
+        public void CreateCodeChunk(string chunkId, Action<T> action)
+        {
+            AddCodeChunk(new CodeChunkWithResult<T, TResult>(chunkId, this, _arg1, action));
+        }
+
+        /// <inheritdoc/>
+        public void CreateCodeChunk(string chunkId, Action<ICodeChunkWithResultAndSelfReference<T, TResult>, T> action)
+        {
+            AddCodeChunk(new CodeChunkWithResultAndSelfReference<T, TResult>(chunkId, this, _arg1, action));
+        }
+    }
+
+    public class CodeChunksContextWithResult<T1, T2, TResult> : BaseCodeChunksContextWithResult<TResult>, ICodeChunksContextWithResult<T1, T2, TResult>
+    {
+        public CodeChunksContextWithResult(T1 arg1, T2 arg2)
+        {
+            _arg1 = arg1;
+            _arg2 = arg2;
+        }
+
+        private T1 _arg1;
+        private T2 _arg2;
+
+        /// <inheritdoc/>
+        public void CreateCodeChunk(string chunkId, Action<T1, T2> action)
+        {
+            AddCodeChunk(new CodeChunkWithResult<T1, T2, TResult>(chunkId, this, _arg1, _arg2, action));
+        }
+
+        /// <inheritdoc/>
+        public void CreateCodeChunk(string chunkId, Action<ICodeChunkWithResultAndSelfReference<T1, T2, TResult>, T1, T2> action)
+        {
+            AddCodeChunk(new CodeChunkWithResultAndSelfReference<T1, T2, TResult>(chunkId, this, _arg1, _arg2, action));
+        }
+    }
+
     public class CodeChunksContextWithResult<T1, T2, T3, TResult> : BaseCodeChunksContextWithResult<TResult>, ICodeChunksContextWithResult<T1, T2, T3, TResult>
     {
         public CodeChunksContextWithResult(T1 arg1, T2 arg2, T3 arg3)

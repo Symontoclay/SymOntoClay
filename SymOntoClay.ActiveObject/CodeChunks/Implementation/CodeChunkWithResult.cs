@@ -26,6 +26,56 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
+    public class CodeChunkWithResult<T, TResult> : BaseCodeChunkWithResult<TResult>, ICodeChunkWithResult<T, TResult>
+    {
+        public CodeChunkWithResult(string id, ICodeChunksContextWithResult<T, TResult> codeChunksContext, T arg1, Action<T> action)
+            : base(codeChunksContext)
+        {
+            _id = id;
+            _arg1 = arg1;
+            _action = action;
+        }
+
+        [SocSerializableActionKey]
+        private string _id;
+
+        private T _arg1;
+
+        private Action<T> _action;
+
+        /// <inheritdoc/>
+        protected override void OnRunAction()
+        {
+            _action(_arg1);
+        }
+    }
+
+    public class CodeChunkWithResult<T1, T2, TResult> : BaseCodeChunkWithResult<TResult>, ICodeChunkWithResult<T1, T2, TResult>
+    {
+        public CodeChunkWithResult(string id, ICodeChunksContextWithResult<T1, T2, TResult> codeChunksContext, T1 arg1, T2 arg2, Action<T1, T2> action)
+            : base(codeChunksContext)
+        {
+            _id = id;
+            _arg1 = arg1;
+            _arg2 = arg2;
+            _action = action;
+        }
+
+        [SocSerializableActionKey]
+        private string _id;
+
+        private T1 _arg1;
+        private T2 _arg2;
+
+        private Action<T1, T2> _action;
+
+        /// <inheritdoc/>
+        protected override void OnRunAction()
+        {
+            _action(_arg1, _arg2);
+        }
+    }
+
     public class CodeChunkWithResult<T1, T2, T3, TResult> : BaseCodeChunkWithResult<TResult>, ICodeChunkWithResult<T1, T2, T3, TResult>
     {
         public CodeChunkWithResult(string id, ICodeChunksContextWithResult<T1, T2, T3, TResult> codeChunksContext, T1 arg1, T2 arg2, T3 arg3, Action<T1, T2, T3> action)

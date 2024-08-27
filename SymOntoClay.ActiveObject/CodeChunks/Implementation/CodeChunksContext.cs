@@ -2,6 +2,7 @@
 using SymOntoClay.Serialization;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
@@ -81,6 +82,12 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         public void CreateSyncCall(string chunkId, Func<T1, T2, ISyncMethodResponse> handler)
         {
             AddCodeChunk(new SyncCallCodeChunkWithoutResultForMethodWithoutResult<T1, T2>(chunkId, this, _arg1, _arg2, handler));
+        }
+
+        /// <inheritdoc/>
+        public void CreateSyncCall<MethodResult>(string chunkId, Func<T1, T2, ISyncMethodResponse<MethodResult>> preHandler, Action<T1, T2, MethodResult> postHandler)
+        {
+            AddCodeChunk(new SyncCallCodeChunkWithoutResultForMethodWithResult<T1, T2, MethodResult>(chunkId, this, _arg1, _arg2, preHandler, postHandler));
         }
     }
 

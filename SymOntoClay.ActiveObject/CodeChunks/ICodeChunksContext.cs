@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.ActiveObject.MethodResponses;
 using System;
+using System.Security.Cryptography;
 
 namespace SymOntoClay.ActiveObject.CodeChunks
 {
@@ -22,6 +23,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks
         void CreateCodeChunk(string chunkId, Action<T1, T2> action);
         void CreateCodeChunk(string chunkId, Action<ICodeChunkWithSelfReference<T1, T2>, T1, T2> action);
         void CreateSyncCall(string chunkId, Func<T1, T2, ISyncMethodResponse> handler);
+        void CreateSyncCall<MethodResult>(string chunkId, Func<T1, T2, ISyncMethodResponse<MethodResult>> preHandler, Action<T1, T2, MethodResult> postHandler);
     }
 
     public interface ICodeChunksContext<T1, T2, T3> : IBaseCodeChunksContext

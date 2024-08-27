@@ -43,6 +43,9 @@
         <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext`2.CreateSyncCall(System.String,System.Func{`0,`1,SymOntoClay.ActiveObject.MethodResponses.ISyncMethodResponse})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext`2.CreateSyncCall``1(System.String,System.Func{`0,`1,SymOntoClay.ActiveObject.MethodResponses.ISyncMethodResponse{``0}},System.Action{`0,`1,``0})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext`3.CreateCodeChunk(System.String,System.Action{`0,`1,`2})">
             <inheritdoc/>
         </member>

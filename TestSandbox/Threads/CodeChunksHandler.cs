@@ -109,6 +109,15 @@ namespace TestSandbox.Threads
                 return SyncMethodForCase9(loggerValue, this);
             });
 
+            codeChunksContext.CreateSyncCall<int>("7CADB8B3-A559-4B4F-A8F7-9B90A24C1DDA", ISyncMethodResponse<int> (IMonitorLogger loggerValue, CodeChunksHandler instance) => {
+                loggerValue.Info("389A53AE-EBA5-406A-B762-58E2A14DDDE4", "Pre Chunk3");
+
+                return null;
+            }, (IMonitorLogger loggerValue, CodeChunksHandler instance, int methodResult) => {
+                loggerValue.Info("457BEA9F-A4D6-487A-B07F-008BD4C1DB08", "Post Chunk3");
+                loggerValue.Info("0DC492E4-121B-4976-A319-3469EB3FC0F9", $"methodResult = {methodResult}");
+            });
+
             codeChunksContext.Run();
         }
 

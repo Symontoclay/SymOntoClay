@@ -112,7 +112,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         /// <inheritdoc/>
         public void CreateSyncCall(string chunkId, Func<T1, T2, T3, ISyncMethodResponse> handler)
         {
-            throw new NotImplementedException("----CreateSyncCall|||||");
+            AddCodeChunk(new SyncCallCodeChunkWithoutResultForMethodWithoutResult<T1, T2, T3>(chunkId, this, _arg1, _arg2, _arg3, handler));
         }
     }
 }

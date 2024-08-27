@@ -11,4 +11,8 @@
     public interface ISyncCallCodeChunkWithoutResultForMethodWithoutResult<T1, T2> : IBaseSyncCallCodeChunkWithoutResultForMethodWithoutResult
     {
     }
+
+    public interface ISyncCallCodeChunkWithoutResultForMethodWithoutResult<T1, T2, T3> : IBaseSyncCallCodeChunkWithoutResultForMethodWithoutResult
+    {
+    }
 }

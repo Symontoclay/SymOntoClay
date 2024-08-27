@@ -50,7 +50,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         /// <inheritdoc/>
         public void CreateSyncCall(string chunkId, Func<T, ISyncMethodResponse> handler)
         {
-            AddCodeChunk(new SyncCallCodeChunkWithoutResulttForMethodWithoutResult<T>(chunkId, this, _arg1, handler));
+            AddCodeChunk(new SyncCallCodeChunkWithoutResultForMethodWithoutResult<T>(chunkId, this, _arg1, handler));
         }
     }
 
@@ -80,7 +80,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         /// <inheritdoc/>
         public void CreateSyncCall(string chunkId, Func<T1, T2, ISyncMethodResponse> handler)
         {
-            AddCodeChunk(new SyncCallCodeChunkWithoutResulttForMethodWithoutResult<T1, T2>(chunkId, this, _arg1, _arg2, handler));
+            AddCodeChunk(new SyncCallCodeChunkWithoutResultForMethodWithoutResult<T1, T2>(chunkId, this, _arg1, _arg2, handler));
         }
     }
 

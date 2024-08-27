@@ -160,6 +160,15 @@
         <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunkWithSelfReference`3.OnRunAction">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.SyncCallCodeChunkWithoutResultForMethodWithoutResult.OnRunHandler">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.SyncCallCodeChunkWithoutResultForMethodWithoutResult`1.OnRunHandler">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.SyncCallCodeChunkWithoutResultForMethodWithoutResult`2.OnRunHandler">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.LoggedCodeChunkFunctorWithoutResult`2.OnRun(System.Threading.CancellationToken)">
             <inheritdoc/>
         </member>

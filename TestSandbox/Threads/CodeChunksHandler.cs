@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.ActiveObject.CodeChunks;
 using SymOntoClay.ActiveObject.CodeChunks.Implementation;
 using SymOntoClay.ActiveObject.Functors;
+using SymOntoClay.ActiveObject.MethodResponses;
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
@@ -13,6 +14,10 @@ using System.Threading;
 
 namespace TestSandbox.Threads
 {
+    public class SyncMethodForCase9LocalContext
+    {
+    }
+
     public class CodeChunksHandlerCase3LocalContext
     {
         public int Property1 { get; set; }
@@ -37,8 +42,8 @@ namespace TestSandbox.Threads
             _logger.Info("E7E3E621-38BD-4B54-B041-FD0C74FE5BBF", "Begin");
 
             //Case10();
-            //Case9();
-            Case8();
+            Case9();
+            //Case8();
             //Case7();
             //Case6();
             //Case5();
@@ -50,43 +55,74 @@ namespace TestSandbox.Threads
             _logger.Info("B7E2F374-D3BC-48B5-B0F2-357590821EAE", "End");
         }
 
-        private void Case10()
-        {
-            //using var cancellationTokenSource = new CancellationTokenSource();
+        //private void Case10()
+        //{
+        //    //using var cancellationTokenSource = new CancellationTokenSource();
 
-            //using var threadPool = new CustomThreadPool(0, 20, cancellationTokenSource.Token);
+        //    //using var threadPool = new CustomThreadPool(0, 20, cancellationTokenSource.Token);
 
-            //var commonActiveContext = new ActiveObjectCommonContext();
+        //    //var commonActiveContext = new ActiveObjectCommonContext();
 
-            //var activeContext = new ActiveObjectContext(commonActiveContext, cancellationTokenSource.Token);
+        //    //var activeContext = new ActiveObjectContext(commonActiveContext, cancellationTokenSource.Token);
 
-            //var instance = new TstInstance(_logger, activeContext, threadPool);
+        //    //var instance = new TstInstance(_logger, activeContext, threadPool);
 
-            //var methodResult = instance.Method2(11);
+        //    //var methodResult = instance.Method2(11);
 
-            //var result = methodResult.Result;
+        //    //var result = methodResult.Result;
 
-            //_logger.Info("A560B79C-93FD-42C3-9B75-1AFBE2679486", $"result = {result}");
+        //    //_logger.Info("A560B79C-93FD-42C3-9B75-1AFBE2679486", $"result = {result}");
 
-            //Thread.Sleep(10000);
-        }
+        //    //Thread.Sleep(10000);
+        //}
+
+        //private void Case9()
+        //{
+        //    //using var cancellationTokenSource = new CancellationTokenSource();
+
+        //    //using var threadPool = new CustomThreadPool(0, 20, cancellationTokenSource.Token);
+
+        //    //var commonActiveContext = new ActiveObjectCommonContext();
+
+        //    //var activeContext = new ActiveObjectContext(commonActiveContext, cancellationTokenSource.Token);
+
+        //    //var instance = new TstInstance(_logger, activeContext, threadPool);
+
+        //    //var result = instance.Method1();
+        //    //result.Wait();
+
+        //    //Thread.Sleep(10000);
+        //}
 
         private void Case9()
         {
-            //using var cancellationTokenSource = new CancellationTokenSource();
+            var codeChunksContext = new CodeChunksContext<IMonitorLogger, CodeChunksHandler>(_logger, this);
 
-            //using var threadPool = new CustomThreadPool(0, 20, cancellationTokenSource.Token);
+            codeChunksContext.CreateCodeChunk("AE6FB64B-40B3-4BF5-92E3-99B6F624C84C", (IMonitorLogger loggerValue, CodeChunksHandler instance) =>
+            {
+                loggerValue.Info("29B0879D-CAD1-4B61-8D65-B235FCC10D5E", "Chunk1");
+            });
 
-            //var commonActiveContext = new ActiveObjectCommonContext();
+            codeChunksContext.CreateSyncCall("B7F7C4B0-EF14-46D9-9CC1-9B307A6F3F07", ISyncMethodResponse (IMonitorLogger loggerValue, CodeChunksHandler instance) => {
+                loggerValue.Info("E47E339B-BDFD-4C2E-88D2-8C1DD60ED4A1", "Chunk2");
 
-            //var activeContext = new ActiveObjectContext(commonActiveContext, cancellationTokenSource.Token);
+                return SyncMethodForCase9(loggerValue, this);
+            });
 
-            //var instance = new TstInstance(_logger, activeContext, threadPool);
+            codeChunksContext.Run();
+        }
 
-            //var result = instance.Method1();
-            //result.Wait();
+        private ISyncMethodResponse SyncMethodForCase9(IMonitorLogger loggerValue, CodeChunksHandler instance)
+        {
+            loggerValue.Info("44EABFD7-4866-4C97-BC8C-8A6FE4477ACF", "Hi!");
 
-            //Thread.Sleep(10000);
+            return LoggedCodeChunkSyncFunctorWithoutResult<CodeChunksHandler, SyncMethodForCase9LocalContext>.Run(loggerValue, "3545CBB0-F938-4629-BE03-FCA366FD06B7", instance, (ICodeChunksContext<IMonitorLogger, CodeChunksHandler, SyncMethodForCase9LocalContext> codeChunksContext) =>
+            {
+                codeChunksContext.CreateCodeChunk("9F930DEE-289C-4596-A9BF-75D93FA236F3", (IMonitorLogger loggerValue, CodeChunksHandler instance, SyncMethodForCase9LocalContext localContextValue) =>
+                {
+                    loggerValue.Info("014B1DDD-8AD0-4381-B816-B17ED93478B5", "Chunk1 of Hi!");
+                });
+            }).ToMethodResponse();
         }
 
         private void Case8()

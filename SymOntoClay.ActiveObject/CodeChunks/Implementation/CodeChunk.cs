@@ -1,7 +1,5 @@
-﻿using System;
-using static System.Collections.Specialized.BitVector32;
-using System.Security.Cryptography;
-using SymOntoClay.Serialization;
+﻿using SymOntoClay.Serialization;
+using System;
 
 namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {

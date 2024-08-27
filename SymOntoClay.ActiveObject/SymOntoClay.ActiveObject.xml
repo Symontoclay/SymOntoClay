@@ -22,10 +22,16 @@
         <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext.CreateCodeChunk(System.String,System.Action{SymOntoClay.ActiveObject.CodeChunks.ICodeChunkWithSelfReference})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext.CreateSyncCall(System.String,System.Func{SymOntoClay.ActiveObject.MethodResponses.ISyncMethodResponse})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext`1.CreateCodeChunk(System.String,System.Action{`0})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext`1.CreateCodeChunk(System.String,System.Action{SymOntoClay.ActiveObject.CodeChunks.ICodeChunkWithSelfReference{`0},`0})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext`1.CreateSyncCall(System.String,System.Func{`0,SymOntoClay.ActiveObject.MethodResponses.ISyncMethodResponse})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext`2.CreateCodeChunk(System.String,System.Action{`0,`1})">
@@ -34,10 +40,16 @@
         <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext`2.CreateCodeChunk(System.String,System.Action{SymOntoClay.ActiveObject.CodeChunks.ICodeChunkWithSelfReference{`0,`1},`0,`1})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext`2.CreateSyncCall(System.String,System.Func{`0,`1,SymOntoClay.ActiveObject.MethodResponses.ISyncMethodResponse})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext`3.CreateCodeChunk(System.String,System.Action{`0,`1,`2})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext`3.CreateCodeChunk(System.String,System.Action{SymOntoClay.ActiveObject.CodeChunks.ICodeChunkWithSelfReference{`0,`1,`2},`0,`1,`2})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext`3.CreateSyncCall(System.String,System.Func{`0,`1,`2,SymOntoClay.ActiveObject.MethodResponses.ISyncMethodResponse})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContextWithResult`1.CreateCodeChunk(System.String,System.Action)">
@@ -182,6 +194,12 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.MethodResponses.MethodResponseOfBaseFunctor`1.Wait">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.MethodResponses.SyncMethodResponse.Run">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.MethodResponses.SyncMethodResponse.IsFinished">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.ActiveObject.Threads.ActiveObjectCommonContext.IsNeedWating">

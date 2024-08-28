@@ -27,7 +27,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class SyncCallCodeChunkWithoutResultForMethodWithoutResult<T> 
+    public partial class SyncCallCodeChunkWithoutResultForMethodWithoutResult<T>
         : BaseSyncCallCodeChunkWithoutResultForMethodWithoutResult, 
         ISyncCallCodeChunkWithoutResultForMethodWithoutResult<T>
     {

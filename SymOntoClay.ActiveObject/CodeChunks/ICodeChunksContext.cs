@@ -9,6 +9,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks
         void CreateCodeChunk(string chunkId, Action action);
         void CreateCodeChunk(string chunkId, Action<ICodeChunkWithSelfReference> action);
         void CreateSyncCall(string chunkId, Func<ISyncMethodResponse> handler);
+        void CreateSyncCall<MethodResult>(string chunkId, Func<ISyncMethodResponse<MethodResult>> preHandler, Action<MethodResult> postHandler);
     }
 
     public interface ICodeChunksContext<T> : IBaseCodeChunksContext
@@ -16,6 +17,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks
         void CreateCodeChunk(string chunkId, Action<T> action);
         void CreateCodeChunk(string chunkId, Action<ICodeChunkWithSelfReference<T>, T> action);
         void CreateSyncCall(string chunkId, Func<T, ISyncMethodResponse> handler);
+        void CreateSyncCall<MethodResult>(string chunkId, Func<T, ISyncMethodResponse<MethodResult>> preHandler, Action<T, MethodResult> postHandler);
     }
 
     public interface ICodeChunksContext<T1, T2> : IBaseCodeChunksContext
@@ -31,5 +33,6 @@ namespace SymOntoClay.ActiveObject.CodeChunks
         void CreateCodeChunk(string chunkId, Action<T1, T2, T3> action);
         void CreateCodeChunk(string chunkId, Action<ICodeChunkWithSelfReference<T1, T2, T3>, T1, T2, T3> action);
         void CreateSyncCall(string chunkId, Func<T1, T2, T3, ISyncMethodResponse> handler);
+        void CreateSyncCall<MethodResult>(string chunkId, Func<T1, T2, T3, ISyncMethodResponse<MethodResult>> preHandler, Action<T1, T2, T3, MethodResult> postHandler);
     }
 }

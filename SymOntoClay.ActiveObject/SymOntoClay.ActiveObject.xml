@@ -25,6 +25,9 @@
         <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext.CreateSyncCall(System.String,System.Func{SymOntoClay.ActiveObject.MethodResponses.ISyncMethodResponse})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext.CreateSyncCall``1(System.String,System.Func{SymOntoClay.ActiveObject.MethodResponses.ISyncMethodResponse{``0}},System.Action{``0})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext`1.CreateCodeChunk(System.String,System.Action{`0})">
             <inheritdoc/>
         </member>
@@ -32,6 +35,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext`1.CreateSyncCall(System.String,System.Func{`0,SymOntoClay.ActiveObject.MethodResponses.ISyncMethodResponse})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext`1.CreateSyncCall``1(System.String,System.Func{`0,SymOntoClay.ActiveObject.MethodResponses.ISyncMethodResponse{``0}},System.Action{`0,``0})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext`2.CreateCodeChunk(System.String,System.Action{`0,`1})">
@@ -53,6 +59,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext`3.CreateSyncCall(System.String,System.Func{`0,`1,`2,SymOntoClay.ActiveObject.MethodResponses.ISyncMethodResponse})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContext`3.CreateSyncCall``1(System.String,System.Func{`0,`1,`2,SymOntoClay.ActiveObject.MethodResponses.ISyncMethodResponse{``0}},System.Action{`0,`1,`2,``0})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.ActiveObject.CodeChunks.Implementation.CodeChunksContextWithResult`1.CreateCodeChunk(System.String,System.Action)">

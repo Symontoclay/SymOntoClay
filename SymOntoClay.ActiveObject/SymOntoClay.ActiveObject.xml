@@ -217,6 +217,15 @@
         <member name="P:SymOntoClay.ActiveObject.MethodResponses.SyncMethodResponse.IsFinished">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.ActiveObject.MethodResponses.SyncMethodResponse`1.Run">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.MethodResponses.SyncMethodResponse`1.IsFinished">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.ActiveObject.MethodResponses.SyncMethodResponse`1.Result">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.ActiveObject.Threads.ActiveObjectCommonContext.IsNeedWating">
             <inheritdoc/>
         </member>

@@ -12,7 +12,7 @@ namespace SymOntoClay.ActiveObject.Functors
     public partial class LoggedCodeChunkFunctorWithResult<TGlobalContext, TLocalContext, TResult> : BaseFunctor<TResult>
         where TLocalContext : class, new()
     {
-        public LoggedCodeChunkFunctorWithResult<TGlobalContext, TLocalContext, TResult> Run(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
+        public static LoggedCodeChunkFunctorWithResult<TGlobalContext, TLocalContext, TResult> Run(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
             Action<ICodeChunksContextWithResult<IMonitorLogger, TGlobalContext, TLocalContext, TResult>> action,
             IActiveObjectContext context, ICustomThreadPool threadPool)
         {

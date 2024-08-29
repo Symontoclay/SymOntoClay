@@ -4,7 +4,6 @@ using SymOntoClay.ActiveObject.MethodResponses;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Serialization;
 using System;
-using static System.Collections.Specialized.BitVector32;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
@@ -14,9 +13,7 @@ namespace SymOntoClay.ActiveObject.Functors
         public static LoggedCodeChunkSyncFunctorWithoutResult<TGlobalContext, TLocalContext> Run(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
             Action<ICodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext>> action)
         {
-            var functor = new LoggedCodeChunkSyncFunctorWithoutResult<TGlobalContext, TLocalContext>(logger, functorId, globalContext,
-            action);
-
+            var functor = new LoggedCodeChunkSyncFunctorWithoutResult<TGlobalContext, TLocalContext>(logger, functorId, globalContext, action);
             functor.Run();
             return functor;
         }

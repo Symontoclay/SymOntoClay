@@ -17,13 +17,20 @@ namespace SymOntoClay.SourceGenerator
 
         private List<string> _targetConstructors = new List<string>()
         {
-            "LoggedCodeChunkFunctorWithoutResult"
+            "LoggedCodeChunkFunctorWithoutResult",
+            "LoggedCodeChunkFunctorWithResult",
+            "LoggedCodeChunkSyncFunctorWithoutResult",
+            "LoggedCodeChunkSyncFunctorWithResult"
         };
 
         private List<(string FirstIdenfifier, string SecondIdenfifier)> _targetInvocations = new List<(string FirstIdenfifier, string SecondIdenfifier)>()
         {
             ("LoggedCodeChunkFunctorWithoutResult", "Run"),
-            (null, "CreateCodeChunk")
+            ("LoggedCodeChunkFunctorWithResult", "Run"),
+            ("LoggedCodeChunkSyncFunctorWithoutResult", "Run"),
+            ("LoggedCodeChunkSyncFunctorWithResult", "Run"),
+            (null, "CreateCodeChunk"),
+            (null, "CreateSyncCall")
         };
 
         public List<TargetCodeChunksCompilationUnit> Run()

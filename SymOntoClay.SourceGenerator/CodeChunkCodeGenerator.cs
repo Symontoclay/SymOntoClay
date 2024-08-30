@@ -79,9 +79,9 @@ namespace SymOntoClay.SourceGenerator
 
                 sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}private {actionTypeName} {actionName} = {lambda.GetText()};");
 
-                n++;
+                actionFieldsDict[n] = actionName;
 
-                actionFieldsDict[n] = actionTypeName;
+                n++;
             }
 
             if (useIndexInActionFieldName)

@@ -30,7 +30,8 @@ namespace SymOntoClay.SourceGenerator
             ("LoggedCodeChunkSyncFunctorWithoutResult", "Run"),
             ("LoggedCodeChunkSyncFunctorWithResult", "Run"),
             (null, "CreateCodeChunk"),
-            (null, "CreateSyncCall")
+            (null, "CreateSyncCall"),
+            (null, "CreateAsyncCall")
         };
 
         public List<TargetCodeChunksCompilationUnit> Run()

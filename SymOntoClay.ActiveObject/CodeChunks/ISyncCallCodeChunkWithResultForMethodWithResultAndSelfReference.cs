@@ -7,7 +7,7 @@
     public interface ISyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T, TResult, MethodResult> : IBaseCodeChunkWithResult<TResult>
     {
     }
-
+    
     public interface ISyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T1, T2, TResult, MethodResult> : IBaseCodeChunkWithResult<TResult>
     {
     }

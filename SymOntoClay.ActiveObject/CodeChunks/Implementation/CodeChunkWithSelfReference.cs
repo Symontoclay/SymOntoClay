@@ -8,6 +8,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
     public partial class CodeChunkWithSelfReference : BaseCodeChunkWithSelfReference, ICodeChunkWithSelfReference
     {
         public CodeChunkWithSelfReference(string id, ICodeChunksContext codeChunksContext, Action<ICodeChunkWithSelfReference> action)
+            : base(codeChunksContext)
         {
             _id = id;
             _codeChunksContext = codeChunksContext;
@@ -42,6 +43,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
     public partial class CodeChunkWithSelfReference<T> : BaseCodeChunkWithSelfReference, ICodeChunkWithSelfReference<T>
     {
         public CodeChunkWithSelfReference(string id, ICodeChunksContext<T> codeChunksContext, T arg1, Action<ICodeChunkWithSelfReference<T>, T> action)
+            : base(codeChunksContext)
         {
             _id = id;
             _codeChunksContext = codeChunksContext;
@@ -79,6 +81,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
     public partial class CodeChunkWithSelfReference<T1, T2> : BaseCodeChunkWithSelfReference, ICodeChunkWithSelfReference<T1, T2>
     {
         public CodeChunkWithSelfReference(string id, ICodeChunksContext<T1, T2> codeChunksContext, T1 arg1, T2 arg2, Action<ICodeChunkWithSelfReference<T1, T2>, T1, T2> action)
+            : base(codeChunksContext)
         {
             _id = id;
             _codeChunksContext = codeChunksContext;
@@ -118,6 +121,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
     public partial class CodeChunkWithSelfReference<T1, T2, T3> : BaseCodeChunkWithSelfReference, ICodeChunkWithSelfReference<T1, T2, T3>
     {
         public CodeChunkWithSelfReference(string id, ICodeChunksContext<T1, T2, T3> codeChunksContext, T1 arg1, T2 arg2, T3 arg3, Action<ICodeChunkWithSelfReference<T1, T2, T3>, T1, T2, T3> action)
+            : base(codeChunksContext)
         {
             _id = id;
             _codeChunksContext = codeChunksContext;

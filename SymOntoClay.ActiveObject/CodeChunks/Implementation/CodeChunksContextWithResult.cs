@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Serialization;
+﻿using SymOntoClay.ActiveObject.MethodResponses;
+using SymOntoClay.Serialization;
 using System;
 using System.Collections.Generic;
 
@@ -16,6 +17,24 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         public void CreateCodeChunk(string chunkId, Action<ICodeChunkWithResultAndSelfReference<TResult>> action)
         {
             AddCodeChunk(new CodeChunkWithResultAndSelfReference<TResult>(chunkId, this, action));
+        }
+
+        /// <inheritdoc/>
+        public void CreateSyncCall(string chunkId, Func<ISyncMethodResponse> handler)
+        {
+            AddCodeChunk(new SyncCallCodeChunkWithResultForMethodWithoutResult<TResult>(chunkId, this, handler));
+        }
+
+        /// <inheritdoc/>
+        public void CreateSyncCall<MethodResult>(string chunkId, Func<ISyncMethodResponse<MethodResult>> preHandler, Action<MethodResult> postHandler)
+        {
+            AddCodeChunk(new SyncCallCodeChunkWithResultForMethodWithResult<TResult, MethodResult>(chunkId, this, preHandler, postHandler));
+        }
+
+        /// <inheritdoc/>
+        public void CreateSyncCall<MethodResult>(string chunkId, Func<ISyncMethodResponse<MethodResult>> preHandler, Action<ISyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<TResult, MethodResult>, MethodResult> postHandler)
+        {
+            AddCodeChunk(new SyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<TResult, MethodResult>(chunkId, this, preHandler, postHandler));
         }
     }
 
@@ -38,6 +57,24 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         public void CreateCodeChunk(string chunkId, Action<ICodeChunkWithResultAndSelfReference<T, TResult>, T> action)
         {
             AddCodeChunk(new CodeChunkWithResultAndSelfReference<T, TResult>(chunkId, this, _arg1, action));
+        }
+
+        /// <inheritdoc/>
+        public void CreateSyncCall(string chunkId, Func<T, ISyncMethodResponse> handler)
+        {
+            AddCodeChunk(new SyncCallCodeChunkWithResultForMethodWithoutResult<T, TResult>(chunkId, this, _arg1, handler));
+        }
+
+        /// <inheritdoc/>
+        public void CreateSyncCall<MethodResult>(string chunkId, Func<T, ISyncMethodResponse<MethodResult>> preHandler, Action<T, MethodResult> postHandler)
+        {
+            AddCodeChunk(new SyncCallCodeChunkWithResultForMethodWithResult<T, TResult, MethodResult>(chunkId, this, _arg1, preHandler, postHandler));
+        }
+
+        /// <inheritdoc/>
+        public void CreateSyncCall<MethodResult>(string chunkId, Func<T, ISyncMethodResponse<MethodResult>> preHandler, Action<ISyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T, TResult, MethodResult>, T, MethodResult> postHandler)
+        {
+            AddCodeChunk(new SyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T, TResult, MethodResult>(chunkId, this, _arg1, preHandler, postHandler));
         }
     }
 
@@ -62,6 +99,24 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         public void CreateCodeChunk(string chunkId, Action<ICodeChunkWithResultAndSelfReference<T1, T2, TResult>, T1, T2> action)
         {
             AddCodeChunk(new CodeChunkWithResultAndSelfReference<T1, T2, TResult>(chunkId, this, _arg1, _arg2, action));
+        }
+
+        /// <inheritdoc/>
+        public void CreateSyncCall(string chunkId, Func<T1, T2, ISyncMethodResponse> handler)
+        {
+            AddCodeChunk(new SyncCallCodeChunkWithResultForMethodWithoutResult<T1, T2, TResult>(chunkId, this, _arg1, _arg2, handler));
+        }
+
+        /// <inheritdoc/>
+        public void CreateSyncCall<MethodResult>(string chunkId, Func<T1, T2, ISyncMethodResponse<MethodResult>> preHandler, Action<T1, T2, MethodResult> postHandler)
+        {
+            AddCodeChunk(new SyncCallCodeChunkWithResultForMethodWithResult<T1, T2, TResult, MethodResult>(chunkId, this, _arg1, _arg2, preHandler, postHandler));
+        }
+
+        /// <inheritdoc/>
+        public void CreateSyncCall<MethodResult>(string chunkId, Func<T1, T2, ISyncMethodResponse<MethodResult>> preHandler, Action<ISyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T1, T2, TResult, MethodResult>, T1, T2, MethodResult> postHandler)
+        {
+            AddCodeChunk(new SyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T1, T2, TResult, MethodResult>(chunkId, this, _arg1, _arg2, preHandler, postHandler));
         }
     }
 
@@ -88,6 +143,24 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         public void CreateCodeChunk(string chunkId, Action<ICodeChunkWithResultAndSelfReference<T1, T2, T3, TResult>, T1, T2, T3> action)
         {
             AddCodeChunk(new CodeChunkWithResultAndSelfReference<T1, T2, T3, TResult>(chunkId, this, _arg1, _arg2, _arg3, action));
+        }
+
+        /// <inheritdoc/>
+        public void CreateSyncCall(string chunkId, Func<T1, T2, T3, ISyncMethodResponse> handler)
+        {
+            AddCodeChunk(new SyncCallCodeChunkWithResultForMethodWithoutResult<T1, T2, T3, TResult>(chunkId, this, _arg1, _arg2, _arg3, handler));
+        }
+
+        /// <inheritdoc/>
+        public void CreateSyncCall<MethodResult>(string chunkId, Func<T1, T2, T3, ISyncMethodResponse<MethodResult>> preHandler, Action<T1, T2, T3, MethodResult> postHandler)
+        {
+            AddCodeChunk(new SyncCallCodeChunkWithResultForMethodWithResult<T1, T2, T3, TResult, MethodResult>(chunkId, this, _arg1, _arg2, _arg3, preHandler, postHandler));
+        }
+
+        /// <inheritdoc/>
+        public void CreateSyncCall<MethodResult>(string chunkId, Func<T1, T2, T3, ISyncMethodResponse<MethodResult>> preHandler, Action<ISyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T1, T2, T3, TResult, MethodResult>, T1, T2, T3, MethodResult> postHandler)
+        {
+            AddCodeChunk(new SyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T1, T2, T3, TResult, MethodResult>(chunkId, this, _arg1, _arg2, _arg3, preHandler, postHandler));
         }
     }
 }

@@ -13,7 +13,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _id = id;
             _action = action;
         }
-
+        
         [SocSerializableActionKey]
         private string _id;
 

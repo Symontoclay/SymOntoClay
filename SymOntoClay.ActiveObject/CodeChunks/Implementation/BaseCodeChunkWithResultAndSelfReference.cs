@@ -15,11 +15,11 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 
         private IBaseCodeChunksContextWithResult<TResult> _codeChunksContext;
 
-        private List<IBaseCodeChunk> _children = new List<IBaseCodeChunk>();
+        private List<IBaseCodeChunk> _chunks = new List<IBaseCodeChunk>();
 
         protected void AddChildCodeChunk(IBaseCodeChunk chunk)
         {
-            _children.Add(chunk);
+            _chunks.Add(chunk);
         }
 
         public void Finish(TResult result)
@@ -44,14 +44,24 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
                 _actionIsFinished = true;
             }
 
-            foreach (var child in _children)
+            if (_isFinished)
             {
-                if (child.IsFinished)
+                return;
+            }
+
+            foreach (var chunk in _chunks)
+            {
+                if (_isFinished)
+                {
+                    return;
+                }
+
+                if (chunk.IsFinished)
                 {
                     continue;
                 }
 
-                child.Run();
+                chunk.Run();
             }
 
             _isFinished = true;

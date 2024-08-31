@@ -98,6 +98,15 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"type.FullName = {type.FullName}");
 #endif
 
+            switch(type.FullName)
+            {
+                case "System.Threading.CancellationTokenSource":
+                    throw new NotImplementedException("22670DE5-19C5-44C8-896E-EC945E977DCA");
+
+                case "System.Threading.CancellationToken":
+                    throw new NotImplementedException("2F82C7B6-68B0-4CCF-9358-AF662C2EA47E");
+            }
+
             switch (type.Name)
             {
                 case "List`1":

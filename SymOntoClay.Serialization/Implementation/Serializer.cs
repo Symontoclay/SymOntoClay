@@ -79,6 +79,15 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"type.IsGenericType = {type.IsGenericType}");
 #endif
 
+                switch (type.FullName)
+                {
+                    case "System.Threading.CancellationTokenSource":
+                        throw new NotImplementedException("C8501866-C633-49CC-B3B0-237E116B7B3F");
+
+                    case "System.Threading.CancellationToken":
+                        throw new NotImplementedException("5F935FAA-E834-405A-83F6-DDDC80980B29");
+                }
+
                 switch (type.Name)
                 {
                     case "List`1":

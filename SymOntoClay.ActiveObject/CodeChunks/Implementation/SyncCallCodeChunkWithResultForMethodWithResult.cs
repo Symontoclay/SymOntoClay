@@ -5,11 +5,12 @@ using System.Security.Cryptography;
 
 namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public partial class SyncCallCodeChunkWithoutResultForMethodWithResult<MethodResult>
-        : BaseSyncCallCodeChunkWithoutResultForMethodWithResult<MethodResult>,
-        ISyncCallCodeChunkWithoutResultForMethodWithResult
+    public partial class SyncCallCodeChunkWithResultForMethodWithResult<TResult, MethodResult>
+        : BaseSyncCallCodeChunkWithResultForMethodWithResult<TResult, MethodResult>,
+        ISyncCallCodeChunkWithResultForMethodWithResult<TResult>
     {
-        public SyncCallCodeChunkWithoutResultForMethodWithResult(string id, ICodeChunksContext codeChunksContext, Func<ISyncMethodResponse<MethodResult>> preHandler, Action<MethodResult> postHandler)
+        public SyncCallCodeChunkWithResultForMethodWithResult(string id, ICodeChunksContextWithResult<TResult> codeChunksContext, Func<ISyncMethodResponse<MethodResult>> preHandler, Action<MethodResult> postHandler)
+            : base(codeChunksContext)
         {
             _id = id;
             _preHandler = preHandler;
@@ -33,11 +34,12 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class SyncCallCodeChunkWithoutResultForMethodWithResult<T, MethodResult>
-        : BaseSyncCallCodeChunkWithoutResultForMethodWithResult<MethodResult>,
-        ISyncCallCodeChunkWithoutResultForMethodWithResult<T>
+    public partial class SyncCallCodeChunkWithResultForMethodWithResult<T, TResult, MethodResult>
+        : BaseSyncCallCodeChunkWithResultForMethodWithResult<TResult, MethodResult>,
+        ISyncCallCodeChunkWithResultForMethodWithResult<T, TResult>
     {
-        public SyncCallCodeChunkWithoutResultForMethodWithResult(string id, ICodeChunksContext<T> codeChunksContext, T arg1, Func<T, ISyncMethodResponse<MethodResult>> preHandler, Action<T, MethodResult> postHandler)
+        public SyncCallCodeChunkWithResultForMethodWithResult(string id, ICodeChunksContextWithResult<T, TResult> codeChunksContext, T arg1, Func<T, ISyncMethodResponse<MethodResult>> preHandler, Action<T, MethodResult> postHandler)
+            : base(codeChunksContext)
         {
             _id = id;
             _arg1 = arg1;
@@ -64,11 +66,12 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class SyncCallCodeChunkWithoutResultForMethodWithResult<T1, T2, MethodResult>
-        : BaseSyncCallCodeChunkWithoutResultForMethodWithResult<MethodResult>,
-        ISyncCallCodeChunkWithoutResultForMethodWithResult<T1, T2>
+    public partial class SyncCallCodeChunkWithResultForMethodWithResult<T1, T2, TResult, MethodResult>
+        : BaseSyncCallCodeChunkWithResultForMethodWithResult<TResult, MethodResult>,
+        ISyncCallCodeChunkWithResultForMethodWithResult<T1, T2, TResult>
     {
-        public SyncCallCodeChunkWithoutResultForMethodWithResult(string id, ICodeChunksContext<T1, T2> codeChunksContext, T1 arg1, T2 arg2, Func<T1, T2, ISyncMethodResponse<MethodResult>> preHandler, Action<T1, T2, MethodResult> postHandler)
+        public SyncCallCodeChunkWithResultForMethodWithResult(string id, ICodeChunksContextWithResult<T1, T2, TResult> codeChunksContext, T1 arg1, T2 arg2, Func<T1, T2, ISyncMethodResponse<MethodResult>> preHandler, Action<T1, T2, MethodResult> postHandler)
+            : base(codeChunksContext)
         {
             _id = id;
             _arg1 = arg1;
@@ -97,11 +100,12 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class SyncCallCodeChunkWithoutResultForMethodWithResult<T1, T2, T3, MethodResult>
-        : BaseSyncCallCodeChunkWithoutResultForMethodWithResult<MethodResult>,
-        ISyncCallCodeChunkWithoutResultForMethodWithResult<T1, T2, T3>
+    public partial class SyncCallCodeChunkWithResultForMethodWithResult<T1, T2, T3, TResult, MethodResult>
+        : BaseSyncCallCodeChunkWithResultForMethodWithResult<TResult, MethodResult>,
+        ISyncCallCodeChunkWithResultForMethodWithResult<T1, T2, T3, TResult>
     {
-        public SyncCallCodeChunkWithoutResultForMethodWithResult(string id, ICodeChunksContext<T1, T2, T3> codeChunksContext, T1 arg1, T2 arg2, T3 arg3, Func<T1, T2, T3, ISyncMethodResponse<MethodResult>> preHandler, Action<T1, T2, T3, MethodResult> postHandler)
+        public SyncCallCodeChunkWithResultForMethodWithResult(string id, ICodeChunksContextWithResult<T1, T2, T3, TResult> codeChunksContext, T1 arg1, T2 arg2, T3 arg3, Func<T1, T2, T3, ISyncMethodResponse<MethodResult>> preHandler, Action<T1, T2, T3, MethodResult> postHandler)
+            : base(codeChunksContext)
         {
             _id = id;
             _arg1 = arg1;

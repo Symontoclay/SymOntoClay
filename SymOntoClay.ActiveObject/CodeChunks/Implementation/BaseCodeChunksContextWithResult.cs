@@ -27,12 +27,17 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         {
             foreach (var chunk in _chunks)
             {
-                chunk.Run();
-
                 if (_isFinished)
                 {
                     return;
                 }
+
+                if (chunk.IsFinished)
+                {
+                    continue;
+                }
+
+                chunk.Run();
             }
         }
 

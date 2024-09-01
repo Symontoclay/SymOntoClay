@@ -228,24 +228,6 @@ namespace SymOntoClay.UnityAsset.Core.World
         public bool EnableCategories { get => throw new NotImplementedException("5B0E49C5-919F-40AE-A951-BCB364258B17"); set => throw new NotImplementedException("339F2D6D-0225-4439-9C9D-462CC4A356B2"); }
 
         /// <inheritdoc/>
-        public void Load(IRunTimeImageInfo imageInfo)
-        {
-            _context.Load(imageInfo);
-        }
-
-        /// <inheritdoc/>
-        public void Load(string id)
-        {
-            _context.Load(id);
-        }
-
-        /// <inheritdoc/>
-        public void Load()
-        {
-            _context.Load();
-        }
-
-        /// <inheritdoc/>
         public void Start()
         {
             _context.Start();
@@ -259,39 +241,6 @@ namespace SymOntoClay.UnityAsset.Core.World
 
         /// <inheritdoc/>
         public bool IsActive { get => _context.IsActive; }
-
-        /// <inheritdoc/>
-        public IRunTimeImageInfo CreateImage(RunTimeImageSettings settings)
-        {
-            return _context.CreateImage(settings);
-        }
-
-        /// <inheritdoc/>
-        public IRunTimeImageInfo CreateImage()
-        {
-            return _context.CreateImage();
-        }
-
-        /// <inheritdoc/>
-        public IRunTimeImageInfo CurrentImage { get => _context.CurrentImage; }
-
-        /// <inheritdoc/>
-        public IList<IRunTimeImageInfo> GetImages()
-        {
-            return _context.GetImages();
-        }
-
-        /// <inheritdoc/>
-        public void DeleteImage(IRunTimeImageInfo imageInfo)
-        {
-            _context.DeleteImage(imageInfo);
-        }
-
-        /// <inheritdoc/>
-        public void DeleteImage(string id)
-        {
-            _context.DeleteImage(id);
-        }
 
         /// <inheritdoc/>
         public void Dispose()

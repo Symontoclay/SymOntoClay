@@ -29,7 +29,6 @@ using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core.Internal.DateAndTime;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
-using SymOntoClay.UnityAsset.Core.Internal.Images;
 using SymOntoClay.UnityAsset.Core.Internal.LogicQueryParsingAndCache;
 using SymOntoClay.UnityAsset.Core.Internal.ModulesStorage;
 using SymOntoClay.UnityAsset.Core.Internal.Storage;
@@ -97,7 +96,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         {
             NLPConverterFactory = settings.NLPConverterProvider?.GetFactory(Logger);
 
-            ImagesRegistry = new ImagesRegistry(this);
             ThreadsComponent = new ThreadsCoreComponent(this);
 
             ModulesStorage = new ModulesStorageComponent(settings, this);
@@ -151,7 +149,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         /// <inheritdoc/>
         IMonitor IWorldCoreGameComponentContext.Motitor => Monitor;
 
-        public ImagesRegistry ImagesRegistry { get; private set; }
         public ThreadsCoreComponent ThreadsComponent { get; private set; }
 
         IActiveObjectCommonContext IWorldCoreGameComponentContext.SyncContext => ThreadsComponent;
@@ -364,45 +361,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         public bool EnableRemoteConnection { get => Monitor.EnableRemoteConnection; set => Monitor.EnableRemoteConnection = value; }
 
-        public void Load(IRunTimeImageInfo imageInfo)
-        {
-            lock (_stateLockObj)
-            {
-                if(_state == ComponentState.Disposed)
-                {
-                    throw new ObjectDisposedException(null);
-                }
-
-                throw new NotImplementedException("96F4200C-A269-44C9-B50D-5909CC6BAAA1");
-            }
-        }
-
-        public void Load(string id)
-        {
-            lock (_stateLockObj)
-            {
-                if (_state == ComponentState.Disposed)
-                {
-                    throw new ObjectDisposedException(null);
-                }
-
-                throw new NotImplementedException("5272665C-5702-49ED-86EA-F50B2E1719F4");
-            }
-        }
-
-        public void Load()
-        {
-            lock (_stateLockObj)
-            {
-                if (_state == ComponentState.Disposed)
-                {
-                    throw new ObjectDisposedException(null);
-                }
-
-                throw new NotImplementedException("1F730A89-14DE-48C2-837C-9DC6D27AD3C9");
-            }
-        }
-
         private void NLoadFromSourceCode()
         {
             ModulesStorage.LoadFromSourceCode();
@@ -528,87 +486,6 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     return _state == ComponentState.Started; 
                 }
             }
-        }
-
-        public IRunTimeImageInfo CreateImage(RunTimeImageSettings settings)
-        {
-            lock (_stateLockObj)
-            {
-                if (_state == ComponentState.Disposed)
-                {
-                    throw new ObjectDisposedException(null);
-                }
-
-                throw new NotImplementedException("DB223DEF-740B-4215-8FE2-CCCBA2148386");
-            }
-        }
-
-        public IRunTimeImageInfo CreateImage()
-        {
-            lock (_stateLockObj)
-            {
-                if (_state == ComponentState.Disposed)
-                {
-                    throw new ObjectDisposedException(null);
-                }
-
-                throw new NotImplementedException("E83C57CA-F1DD-421A-BF5C-48849A4C26C3");
-            }
-        }
-
-        public IRunTimeImageInfo CurrentImage 
-        {   
-            get
-            {
-                lock (_stateLockObj)
-                {
-                    if (_state == ComponentState.Disposed)
-                    {
-                        throw new ObjectDisposedException(null);
-                    }
-
-                    throw new NotImplementedException("5235741D-F96F-4955-948D-D7F450649A81");
-                }
-            } 
-        }
-
-        public IList<IRunTimeImageInfo> GetImages()
-        {
-            lock (_stateLockObj)
-            {
-                if (_state == ComponentState.Disposed)
-                {
-                    throw new ObjectDisposedException(null);
-                }
-
-                throw new NotImplementedException("6990FE0A-D566-4BB5-A581-BEB1250BCC05");
-            }
-        }
-
-        public void DeleteImage(IRunTimeImageInfo imageInfo)
-        {
-            lock (_stateLockObj)
-            {
-                if (_state == ComponentState.Disposed)
-                {
-                    throw new ObjectDisposedException(null);
-                }
-
-                throw new NotImplementedException("74F00A72-9BFA-4B54-970E-A2C1007A232A");
-            }
-        }
-
-        public void DeleteImage(string id)
-        {
-            lock (_stateLockObj)
-            {
-                if (_state == ComponentState.Disposed)
-                {
-                    throw new ObjectDisposedException(null);
-                }
-
-                throw new NotImplementedException("8CA4BE7E-639E-43FC-8B4C-1ADB0029438A");
-            }             
         }
 
         private ComponentState _state = ComponentState.Created;

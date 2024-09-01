@@ -2,29 +2,34 @@
 
 namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public abstract partial class BaseSyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<MethodResult>
+    public abstract partial class BaseAsyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<TResult, MethodResult>
     {
-        protected BaseSyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference(IBaseCodeChunksContext codeChunksContext)
+        public BaseAsyncCallCodeChunkWithResultForMethodWithResultAndSelfReference(IBaseCodeChunksContextWithResult<TResult> codeChunksContext)
         {
             _codeChunksContext = codeChunksContext;
         }
 
-        private IBaseCodeChunksContext _codeChunksContext;
-
-        public void Finish()
-        {
-            _isFinished = true;
-            _codeChunksContext.Finish();
-        }
-
-        protected abstract ISyncMethodResponse<MethodResult> OnRunPreHandler();
+        protected abstract IMethodResponse<MethodResult> OnRunPreHandler();
         protected abstract void OnRunPostHandler(MethodResult methodResult);
 
         private bool _isPreHandlerFinished;
-        private ISyncMethodResponse<MethodResult> _syncMethodResponse;
+        private IMethodResponse<MethodResult> _syncMethodResponse;
         private bool _isSyncMethodFinished;
         private bool _isPostHandlerFinished;
         private bool _isFinished;
+
+        private IBaseCodeChunksContextWithResult<TResult> _codeChunksContext;
+
+        private TResult _result = default;
+
+        public TResult Result => _result;
+
+        public void Finish(TResult result)
+        {
+            _result = result;
+            _isFinished = true;
+            _codeChunksContext.Finish(result);
+        }
 
         public void Run()
         {
@@ -42,7 +47,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 
             if (!_isSyncMethodFinished)
             {
-                _syncMethodResponse.Run();
+                _syncMethodResponse.Wait();
 
                 _isSyncMethodFinished = true;
             }

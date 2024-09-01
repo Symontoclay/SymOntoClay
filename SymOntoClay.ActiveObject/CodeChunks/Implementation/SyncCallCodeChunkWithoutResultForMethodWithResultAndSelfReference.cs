@@ -1,9 +1,6 @@
 ﻿using SymOntoClay.ActiveObject.MethodResponses;
 using SymOntoClay.Serialization;
 using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {

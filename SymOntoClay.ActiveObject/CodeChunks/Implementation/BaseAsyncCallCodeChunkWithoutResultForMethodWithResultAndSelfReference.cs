@@ -2,9 +2,9 @@
 
 namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public abstract partial class BaseSyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<MethodResult>
+    public abstract partial class BaseAsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<MethodResult>
     {
-        protected BaseSyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference(IBaseCodeChunksContext codeChunksContext)
+        protected BaseAsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference(IBaseCodeChunksContext codeChunksContext)
         {
             _codeChunksContext = codeChunksContext;
         }
@@ -17,11 +17,11 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _codeChunksContext.Finish();
         }
 
-        protected abstract ISyncMethodResponse<MethodResult> OnRunPreHandler();
+        protected abstract IMethodResponse<MethodResult> OnRunPreHandler();
         protected abstract void OnRunPostHandler(MethodResult methodResult);
 
         private bool _isPreHandlerFinished;
-        private ISyncMethodResponse<MethodResult> _syncMethodResponse;
+        private IMethodResponse<MethodResult> _syncMethodResponse;
         private bool _isSyncMethodFinished;
         private bool _isPostHandlerFinished;
         private bool _isFinished;
@@ -42,7 +42,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 
             if (!_isSyncMethodFinished)
             {
-                _syncMethodResponse.Run();
+                _syncMethodResponse.Wait();
 
                 _isSyncMethodFinished = true;
             }

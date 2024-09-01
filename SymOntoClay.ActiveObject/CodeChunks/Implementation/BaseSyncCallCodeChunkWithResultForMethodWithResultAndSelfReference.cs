@@ -1,7 +1,4 @@
 ﻿using SymOntoClay.ActiveObject.MethodResponses;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {

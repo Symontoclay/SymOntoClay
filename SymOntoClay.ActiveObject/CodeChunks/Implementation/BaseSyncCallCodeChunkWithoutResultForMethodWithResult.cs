@@ -12,7 +12,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         private bool _isSyncMethodFinished;
         private bool _isPostHandlerFinished;
         private bool _isFinished;
-
+        
         public void Run()
         {
             if (_isFinished)

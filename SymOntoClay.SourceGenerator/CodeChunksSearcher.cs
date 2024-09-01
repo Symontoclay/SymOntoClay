@@ -107,6 +107,11 @@ namespace SymOntoClay.SourceGenerator
         {
             var childNodes = namespaceDeclaration?.ChildNodes();
 
+            if (childNodes == null)
+            {
+                return;
+            }
+
             var classDeclarations = childNodes.Where(p => p.IsKind(SyntaxKind.ClassDeclaration));
 
             if (classDeclarations.Count() == 0)
@@ -130,6 +135,11 @@ namespace SymOntoClay.SourceGenerator
         {
             var childNodes = classDeclaration?.ChildNodes();
 
+            if (childNodes == null)
+            {
+                return;
+            }
+
             var methodDeclarations = childNodes.Where(p => p.IsKind(SyntaxKind.MethodDeclaration));
 
             if (methodDeclarations.Count() == 0)
@@ -147,7 +157,17 @@ namespace SymOntoClay.SourceGenerator
         {
             var childNodes = methodDeclaration?.ChildNodes();
 
+            if (childNodes == null)
+            {
+                return;
+            }
+
             var block = childNodes.FirstOrDefault(p => p.IsKind(SyntaxKind.Block));
+
+            if(block == null)
+            {
+                return;
+            }
 
             ProcessMethodBlock(block, context, ref result);
         }
@@ -155,6 +175,11 @@ namespace SymOntoClay.SourceGenerator
         private void ProcessMethodBlock(SyntaxNode block, CodeChunkSearchingContext context, ref List<CodeChunkItem> result)
         {
             var childNodes = block?.ChildNodes();
+
+            if (childNodes == null)
+            {
+                return;
+            }
 
             if (childNodes.Count() == 0)
             {
@@ -185,6 +210,11 @@ namespace SymOntoClay.SourceGenerator
             }
 
             var childNodes = node?.ChildNodes();
+
+            if (childNodes == null)
+            {
+                return;
+            }
 
             foreach (var childNode in childNodes)
             {

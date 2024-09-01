@@ -65,7 +65,6 @@ namespace SymOntoClay.Core
         protected virtual string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
-            var nextN = n + DisplayHelper.IndentationStep;
             var sb = new StringBuilder();
 
             sb.PrintExisting(n, nameof(MonitorNode), MonitorNode);

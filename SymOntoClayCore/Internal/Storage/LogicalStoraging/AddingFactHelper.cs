@@ -36,25 +36,23 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 {
     public static class AddingFactHelper
     {
-        public static IAddFactOrRuleResult CallEvent(IMonitorLogger logger, MulticastDelegate onAddingFactEvent, RuleInstance ruleInstance, FuzzyLogicResolver fuzzyLogicResolver, ILocalCodeExecutionContext localCodeExecutionContext)
+        public static IAddFactOrRuleResult CallEvent(IMonitorLogger logger, IList<IOnAddingFactHandler> onAddingFactHandlers, RuleInstance ruleInstance, FuzzyLogicResolver fuzzyLogicResolver, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var resultsOfCallList = new List<IAddFactOrRuleResult>();
 
             var rawObligationsModalitiesList = new List<Value>();
             var rawSelfObligationsModalitiesList = new List<Value>();
 
-            foreach (var item in onAddingFactEvent.GetInvocationList())
+            foreach (var item in onAddingFactHandlers)
             {
                 try
                 {
-                    var rawResultOfCall = item.DynamicInvoke(ruleInstance);
+                    var resultOfCall = item.OnAddingFact(logger, ruleInstance);
 
-                    if (rawResultOfCall == null)
+                    if (resultOfCall == null)
                     {
                         continue;
                     }
-
-                    var resultOfCall = (IAddFactOrRuleResult)rawResultOfCall;
 
                     if (resultOfCall.KindOfResult == KindOfAddFactOrRuleResult.Reject)
                     {

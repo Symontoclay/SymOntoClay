@@ -67,22 +67,22 @@ namespace TestSandbox.Handlers
 
         private void Case1()
         {
-            OnAddingFact += Handler1;
-            OnAddingFact += Handler2;
-            OnAddingFact += Handler3;
+            //OnAddingFact += Handler1;
+            //OnAddingFact += Handler2;
+            //OnAddingFact += Handler3;
 
-            var factStr = "{: >: { like(i,#@{: >: { possess(i,$_) & cat($_) } :}) } :}";
-            var ruleInstance = Parse(factStr);
+            //var factStr = "{: >: { like(i,#@{: >: { possess(i,$_) & cat($_) } :}) } :}";
+            //var ruleInstance = Parse(factStr);
 
-            var fuzzyLogicResolver = _engineContext.DataResolversFactory.GetFuzzyLogicResolver();
+            //var fuzzyLogicResolver = _engineContext.DataResolversFactory.GetFuzzyLogicResolver();
 
-            var localCodeExecutionContext = new LocalCodeExecutionContext();
-            localCodeExecutionContext.Storage = _engineContext.Storage.GlobalStorage;
-            localCodeExecutionContext.Holder = NameHelper.CreateName(_engineContext.Id);
+            //var localCodeExecutionContext = new LocalCodeExecutionContext();
+            //localCodeExecutionContext.Storage = _engineContext.Storage.GlobalStorage;
+            //localCodeExecutionContext.Holder = NameHelper.CreateName(_engineContext.Id);
 
-            var result = AddingFactHelper.CallEvent(_logger, OnAddingFact, ruleInstance, fuzzyLogicResolver, localCodeExecutionContext);
+            //var result = AddingFactHelper.CallEvent(_logger, OnAddingFact, ruleInstance, fuzzyLogicResolver, localCodeExecutionContext);
 
-            _logger.Info("2DA20890-14D0-4755-BB63-C23648366632", $"result = {result}");
+            //_logger.Info("2DA20890-14D0-4755-BB63-C23648366632", $"result = {result}");
         }
 
         private IAddFactOrRuleResult Handler1(RuleInstance ruleInstance)

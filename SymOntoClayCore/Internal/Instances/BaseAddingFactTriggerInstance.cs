@@ -28,6 +28,7 @@ using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.Storage.LogicalStoraging;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +36,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public abstract class BaseAddingFactTriggerInstance : BaseComponent, IObjectToString, IObjectToShortString, IObjectToBriefString
+    public abstract class BaseAddingFactTriggerInstance : BaseComponent, IOnAddingFactHandler, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         protected BaseAddingFactTriggerInstance(InlineTrigger trigger, BaseInstance parent, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext, bool allowAddionalVariablesInBinding)
             : base(context.Logger)
@@ -103,7 +104,12 @@ namespace SymOntoClay.Core.Internal.Instances
 
         public void Init()
         {
-            _storage.LogicalStorage.OnAddingFact += LogicalStorage_OnAddingFact;
+            _storage.LogicalStorage.AddOnAddingFactHandler(this);
+        }
+
+        IAddFactOrRuleResult IOnAddingFactHandler.OnAddingFact(IMonitorLogger logger, RuleInstance fact)
+        {
+            return LogicalStorage_OnAddingFact(fact);
         }
 
         protected abstract IAddFactOrRuleResult LogicalStorage_OnAddingFact(RuleInstance ruleInstance);
@@ -172,7 +178,7 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
-            _storage.LogicalStorage.OnAddingFact -= LogicalStorage_OnAddingFact;
+            _storage.LogicalStorage.RemoveOnAddingFactHandler(this);
 
             base.OnDisposed();
         }

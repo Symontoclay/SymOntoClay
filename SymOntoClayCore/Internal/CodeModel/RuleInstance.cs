@@ -591,8 +591,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public event Action<IList<StrongIdentifierValue>> OnChangedWithKeys;
 
-        /// <inheritdoc/>
-        public event Func<RuleInstance, IAddFactOrRuleResult> OnAddingFact;
+        void ILogicalStorage.AddOnAddingFactHandler(IOnAddingFactHandler handler)
+        {
+        }
+
+        void ILogicalStorage.RemoveOnAddingFactHandler(IOnAddingFactHandler handler)
+        {
+        }
 
         /// <inheritdoc/>
         IList<LogicalQueryNode> ILogicalStorage.GetAllRelations(IMonitorLogger logger, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)

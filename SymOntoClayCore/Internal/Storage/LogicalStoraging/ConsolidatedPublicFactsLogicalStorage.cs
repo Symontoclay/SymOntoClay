@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.Common;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
@@ -39,7 +40,7 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 {
-    public class ConsolidatedPublicFactsLogicalStorage : BaseComponent, ILogicalStorage
+    public class ConsolidatedPublicFactsLogicalStorage : BaseComponent, ILogicalStorage, IOnAddingFactHandler
     {
         public ConsolidatedPublicFactsLogicalStorage(ConsolidatedPublicFactsStorage parent, IMonitorLogger logger, KindOfStorage kind, ConsolidatedPublicFactsStorageSettings settings)
             : base(logger)
@@ -95,9 +96,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         /// <inheritdoc/>
         public event Action<IList<StrongIdentifierValue>> OnChangedWithKeys;
 
-        /// <inheritdoc/>
-        public event Func<RuleInstance, IAddFactOrRuleResult> OnAddingFact;
-
         public void AddConsolidatedStorage(IMonitorLogger logger, ILogicalStorage storage)
         {
             lock(_lockObj)
@@ -111,9 +109,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                 if(_enableOnAddingFactEvent != KindOfOnAddingFactEvent.None)
                 {
-                    storage.OnAddingFact += LogicalStorage_OnAddingFact;
+                    storage.AddOnAddingFactHandler(this);
 
-                    if(_enableOnAddingFactEvent == KindOfOnAddingFactEvent.Isolated)
+                    if (_enableOnAddingFactEvent == KindOfOnAddingFactEvent.Isolated)
                     {
                         EmitOnAddingFactForNewStorage(logger, storage);
                     }                   
@@ -136,7 +134,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                 if (_enableOnAddingFactEvent != KindOfOnAddingFactEvent.None)
                 {
-                    storage.OnAddingFact -= LogicalStorage_OnAddingFact;
+                    storage.RemoveOnAddingFactHandler(this);
                 }
 
                 _logicalStorages.Remove(storage);
@@ -179,7 +177,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private IAddFactOrRuleResult EmitIsolatedOnAddingFact(IMonitorLogger logger, RuleInstance ruleInstance)
         {
-            if(OnAddingFact != null)
+            if(_onAddingFactHandlers.Count > 0)
             {
                 ThreadTask.Run(() => {
                     var taskId = logger.StartTask("612DB280-7EF8-4035-B6A5-229440E96F55");
@@ -211,7 +209,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
                 _processedOnAddingFacts.Add(ruleInstance);
 
-                var approvingRez = AddingFactHelper.CallEvent(logger, OnAddingFact, ruleInstance, _fuzzyLogicResolver, _localCodeExecutionContext);
+                var approvingRez = AddingFactHelper.CallEvent(logger, _onAddingFactHandlers, ruleInstance, _fuzzyLogicResolver, _localCodeExecutionContext);
 
                 if (approvingRez == null)
                 {
@@ -240,25 +238,59 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             }            
         }
 
+        private object _onAddingFactHandlerLockObj = new object();
+        private List<IOnAddingFactHandler> _onAddingFactHandlers = new List<IOnAddingFactHandler>();
+
+        /// <inheritdoc/>
+        public void AddOnAddingFactHandler(IOnAddingFactHandler handler)
+        {
+            lock (_onAddingFactHandlerLockObj)
+            {
+                if (_onAddingFactHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onAddingFactHandlers.Add(handler);
+            }
+        }
+
+        /// <inheritdoc/>
+        public void RemoveOnAddingFactHandler(IOnAddingFactHandler handler)
+        {
+            lock (_onAddingFactHandlerLockObj)
+            {
+                if (_onAddingFactHandlers.Contains(handler))
+                {
+                    _onAddingFactHandlers.Remove(handler);
+                }
+            }
+        }
+
         private static IAddFactOrRuleResult DefaultAddFactOrRuleResult = new AddFactOrRuleResult() { KindOfResult = KindOfAddFactOrRuleResult.Accept };
 
-        private IAddFactOrRuleResult LogicalStorage_OnAddingFact(RuleInstance ruleInstance)
+        IAddFactOrRuleResult IOnAddingFactHandler.OnAddingFact(IMonitorLogger logger, RuleInstance fact)
+        {
+            return LogicalStorage_OnAddingFact(logger, fact);
+        }
+
+        private IAddFactOrRuleResult LogicalStorage_OnAddingFact(IMonitorLogger logger, RuleInstance ruleInstance)
         {
             switch(_enableOnAddingFactEvent)
             {
                 case KindOfOnAddingFactEvent.Transparent:
-                    if(OnAddingFact == null)
+                    if(_onAddingFactHandlers.Count == 0)
                     {
                         return DefaultAddFactOrRuleResult;
                     }
-                    return OnAddingFact(ruleInstance);
+                    return AddingFactHelper.CallEvent(logger, _onAddingFactHandlers, ruleInstance, _fuzzyLogicResolver, _localCodeExecutionContext);
 
                 case KindOfOnAddingFactEvent.Isolated:
                     return EmitIsolatedOnAddingFact(Logger, ruleInstance);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_enableOnAddingFactEvent), _enableOnAddingFactEvent, null);
-            }            
+            }
         }
 
         /// <inheritdoc/>
@@ -756,7 +788,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 {
                     foreach (var storage in _logicalStorages)
                     {
-                        storage.OnAddingFact -= LogicalStorage_OnAddingFact;
+                        storage.RemoveOnAddingFactHandler(this);
                     }
 
                     if(_enableOnAddingFactEvent == KindOfOnAddingFactEvent.Isolated)

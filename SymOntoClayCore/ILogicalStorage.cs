@@ -48,7 +48,8 @@ namespace SymOntoClay.Core
         event Action OnChanged;
         event Action<IList<StrongIdentifierValue>> OnChangedWithKeys;
 
-        event Func<RuleInstance, IAddFactOrRuleResult> OnAddingFact;
+        void AddOnAddingFactHandler(IOnAddingFactHandler handler);
+        void RemoveOnAddingFactHandler(IOnAddingFactHandler handler);
 
         IList<LogicalQueryNode> GetAllRelations(IMonitorLogger logger, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode);
         IList<RuleInstance> GetAllOriginFacts(IMonitorLogger logger);

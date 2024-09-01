@@ -161,7 +161,7 @@ namespace TestSandbox
             //TstCreateEngineContext();
             //TstSerializedCodeChunksHandler();
             //TstSimpleSerializationHandler();
-            TstCodeChunksHandler();
+            //TstCodeChunksHandler();
             //TstMethodResponsingHandler();
             //TstAsyncActiveOnceObjectHandler();
             //TstAsyncActivePeriodicObjectHandler();
@@ -175,7 +175,7 @@ namespace TestSandbox
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            //TstGeneralStartHandler();//<=
+            TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);

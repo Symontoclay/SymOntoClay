@@ -50,7 +50,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             return fileNamesList;
         }
 
-        private static void FillUpFileNames(ref List<((string NodeId, string ThreadId, ulong MessageNumber, ulong GlobalMessageNumber, KindOfMessage KindOfMessage), string)> result, string targetDirectoryName, IEnumerable<KindOfMessage>? targetKindOfMessages)
+        private static void FillUpFileNames(ref List<((string NodeId, string ThreadId, ulong MessageNumber, ulong GlobalMessageNumber, KindOfMessage KindOfMessage), string)> result, string targetDirectoryName, IEnumerable<KindOfMessage> targetKindOfMessages)
         {
 #if DEBUG
             //_globalLogger.Info($"targetDirectoryName = {targetDirectoryName}");

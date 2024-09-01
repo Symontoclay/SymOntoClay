@@ -85,8 +85,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private int _runInterval = 100;
 
-        private bool _isBusy;
-        private bool _needRepeat;
+        //private bool _needRepeat;
 
         private IActivePeriodicObject _activeObject;
 

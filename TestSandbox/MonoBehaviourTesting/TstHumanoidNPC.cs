@@ -80,7 +80,7 @@ namespace TestSandbox.MonoBehaviourTesting
             _logger.Info("28EE84EC-9F1B-42F7-9C23-694261067170", "End");
         }
 
-        private bool _isFactUpated;
+        //private bool _isFactUpated;
 
         public override void Update()
         {

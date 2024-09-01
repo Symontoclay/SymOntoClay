@@ -64,7 +64,6 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         #region private fields
-        private ProcessStatus _status = ProcessStatus.Created;
         private readonly List<int> _devices = new List<int>();
         private readonly List<string> _friends = new List<string>();
         #endregion

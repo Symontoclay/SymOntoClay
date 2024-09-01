@@ -37,7 +37,7 @@ namespace SymOntoClay.NLP.Internal.PhraseToCGParsing
         }
 
         private AdjectivePhrase _adjectivePhrase;
-        private ConceptCGNode _concept;
+        //private ConceptCGNode _concept;
 
         public ResultOfNodeOfSemanticAnalyzer Run()
         {

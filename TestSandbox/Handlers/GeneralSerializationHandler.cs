@@ -1,26 +1,4 @@
-/*MIT License
-
-Copyright (c) 2020 - 2024 Sergiy Tolkachov
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.*/
-
-using SymOntoClay.BaseTestLib;
+﻿using SymOntoClay.BaseTestLib;
 using SymOntoClay.Core;
 using SymOntoClay.Monitor.LogFileBuilder;
 using SymOntoClay.Threading;
@@ -31,13 +9,13 @@ using TestSandbox.CoreHostListener;
 
 namespace TestSandbox.Handlers
 {
-    public class GeneralStartHandler: BaseGeneralStartHandler
+    public class GeneralSerializationHandler : BaseGeneralStartHandler
     {
 #if DEBUG
         private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        public GeneralStartHandler()
+        public GeneralSerializationHandler()
             : base(new UnityTestEngineContextFactorySettings()
             {
                 UseDefaultNLPSettings = true,
@@ -60,7 +38,7 @@ namespace TestSandbox.Handlers
 
         public void Run()
         {
-            _logger.Info("FF819764-4617-46ED-9326-EADFE6B1A62D", "Begin");
+            _logger.Info("208500C0-DC47-42FF-9CCF-5E177DC33E6A", "Begin");
 
             //var platformListener = new TstPlatformHostListener();
             //var platformListener = new HostMethods_Tests_HostListener();
@@ -92,9 +70,9 @@ namespace TestSandbox.Handlers
 
             Thread.Sleep(100);
 
-            _logger.Info("E90B79FF-F642-4FC1-94A6-EE3F9BBD6DD0", "|||||||||||||");
+            _logger.Info("7110252E-35E1-474E-86A6-8AF242E3053A", "|||||||||||||");
 
-            _npc.Logger.Output("264C27BF-FC6F-4002-A957-6B59C2B41EE7", "|||||||||||||");
+            _npc.Logger.Output("4A66829D-A6BF-4F1C-8A7E-83C8A5D1C81C", "|||||||||||||");
 
             Thread.Sleep(500);
 
@@ -103,12 +81,12 @@ namespace TestSandbox.Handlers
 
             var factId = _npc.InsertFact(_npc.Logger, "{: see(I, #a) :}");
 
-            _npc.Logger.Output("DEEBC565-B66B-48F5-9DF6-4716C2E1623E", "|-|-|-|-|-|-|-|-|-|-|-|-|");
-            _logger.Info("ED0C4551-A685-4CC0-ADB8-ACAA419FA244", "|-|-|-|-|-|-|-|-|-|-|-|-|");
+            _npc.Logger.Output("E4DBB6B2-5D5F-4C26-B5C7-2533E2EEA343", "|-|-|-|-|-|-|-|-|-|-|-|-|");
+            _logger.Info("7B14ED65-D239-4C3D-B31E-571E1FA8E105", "|-|-|-|-|-|-|-|-|-|-|-|-|");
 
             Thread.Sleep(5000);
 
-            _logger.Info("40669EA9-0F77-4447-B128-5E940A3DCE2D", "End");
+            _logger.Info("5FEAB1E4-3A21-48AE-80DF-F7BB827B25FC", "End");
 
             Thread.Sleep(500);
 

@@ -175,7 +175,8 @@ namespace TestSandbox
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            TstGeneralStartHandler();//<=
+            TstGeneralSerializationHandler();
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -2165,10 +2166,19 @@ action Go
             _logger.Info("EABCDF37-04C2-467E-9865-0527479C5CCB", "End");
         }
 
+        private static void TstGeneralSerializationHandler()
+        {
+            _logger.Info("4750A2A3-3CAE-496B-BBA2-8A7E3B7D077A", "Begin");
+
+            using var handler = new GeneralSerializationHandler();
+            handler.Run();
+
+            _logger.Info("23BCDB49-0705-48D6-9DE4-10003DDCCBE7", "End");
+        }
+
         private static void TstGeneralStartHandler()
         {
             _logger.Info("BABAC27C-220E-4152-B16F-4D93C62631C3", "Begin");
-
 
             using var handler = new GeneralStartHandler();
             handler.Run();

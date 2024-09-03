@@ -34,7 +34,7 @@ using System.Collections.Generic;
 
 namespace SymOntoClay.UnityAsset.Core.World
 {
-    public class WorldCore: IWorld
+    public class WorldCore
     {
         #region constructors
         public WorldCore()
@@ -45,22 +45,16 @@ namespace SymOntoClay.UnityAsset.Core.World
 
         #region public members
 
-        /// <inheritdoc/>
         public string Id => string.Empty;
 
-        /// <inheritdoc/>
         public string IdForFacts => string.Empty;
 
-        /// <inheritdoc/>
         public int InstanceId => 0;
 
-        /// <inheritdoc/>
         public WorldContext WorldContext => _context;
 
-        /// <inheritdoc/>
         public IMonitor Monitor => _context.Monitor;
 
-        /// <inheritdoc/>
         public void SetSettings(WorldSettings settings)
         {
             lock(_lockObj)
@@ -71,7 +65,6 @@ namespace SymOntoClay.UnityAsset.Core.World
             }
         }
 
-        /// <inheritdoc/>
         public void AddConvertor(IPlatformTypesConverter convertor)
         {
             lock (_lockObj)
@@ -87,28 +80,22 @@ namespace SymOntoClay.UnityAsset.Core.World
             }                
         }
 
-        /// <inheritdoc/>
         public bool EnableLogging { get => _context.EnableLogging; set => _context.EnableLogging = value; }
 
-        /// <inheritdoc/>
         public bool EnableRemoteConnection { get => _context.EnableRemoteConnection; set => _context.EnableRemoteConnection = value; }
 
-        /// <inheritdoc/>
         public IMonitorLogger Logger => _context.Logger;
 
-        /// <inheritdoc/>
         public void RunInMainThread(Action function)
         {
             _context.RunInMainThread(function);
         }
 
-        /// <inheritdoc/>
         public TResult RunInMainThread<TResult>(Func<TResult> function)
         {
             return _context.RunInMainThread(function);
         }
 
-        /// <inheritdoc/>
         public IHumanoidNPC GetHumanoidNPC(HumanoidNPCSettings settings)
         {
             lock (_lockObj)
@@ -125,7 +112,6 @@ namespace SymOntoClay.UnityAsset.Core.World
             }
         }
 
-        /// <inheritdoc/>
         public IPlayer GetPlayer(PlayerSettings settings)
         {
             if (_context.IsInitialized)
@@ -139,7 +125,6 @@ namespace SymOntoClay.UnityAsset.Core.World
             return result;
         }
 
-        /// <inheritdoc/>
         public IGameObject GetGameObject(GameObjectSettings settings)
         {
             if (_context.IsInitialized)
@@ -153,7 +138,6 @@ namespace SymOntoClay.UnityAsset.Core.World
             return result;
         }
 
-        /// <inheritdoc/>
         public IPlace GetPlace(PlaceSettings settings)
         {
             if (_context.IsInitialized)
@@ -167,64 +151,53 @@ namespace SymOntoClay.UnityAsset.Core.World
             return result;
         }
 
-        /// <inheritdoc/>
         public string InsertPublicFact(IMonitorLogger logger, string text)
         {
             throw new NotImplementedException("E33E5B22-DED1-48D1-858F-B5DAC5718854");
         }
 
-        /// <inheritdoc/>
         public string InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             throw new NotImplementedException("6DAA88AB-D6E7-49BF-826C-01483F650BAD");
         }
 
-        /// <inheritdoc/>
         public void RemovePublicFact(IMonitorLogger logger, string id)
         {
             throw new NotImplementedException("5E04617D-9C71-4A38-BD82-47480F32C660");
         }
 
-        /// <inheritdoc/>
         public void PushSoundFact(float power, string text)
         {
             throw new NotImplementedException("C3641CE4-73D6-459B-904D-AB9623E6D96A");
         }
 
-        /// <inheritdoc/>
         public void PushSoundFact(float power, RuleInstance fact)
         {
             throw new NotImplementedException("169604B9-2661-43FF-9321-572EBADE7E6C");
         }
 
-        /// <inheritdoc/>
         public IStandardFactsBuilder StandardFactsBuilder => throw new NotImplementedException("AA896824-F1FE-4012-9F25-A702C837D52B");
 
-        /// <inheritdoc/>
         public void AddCategory(IMonitorLogger logger, string category)
         {
             throw new NotImplementedException("0A8D1B89-5E02-447C-8A95-9F805B871A6A");
         }
 
-        /// <inheritdoc/>
         public void AddCategories(IMonitorLogger logger, List<string> categories)
         {
             throw new NotImplementedException("3388265A-2A24-4790-8BFD-DAD36A3A4C07");
         }
 
-        /// <inheritdoc/>
         public void RemoveCategory(IMonitorLogger logger, string category)
         {
             throw new NotImplementedException("B43DD791-F8CE-4ECD-9D11-C256A0C7D3A0");
         }
 
-        /// <inheritdoc/>
         public void RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
             throw new NotImplementedException("897967D3-58EE-4E27-9C19-1A0216083A8D");
         }
 
-        /// <inheritdoc/>
         public bool EnableCategories { get => throw new NotImplementedException("5B0E49C5-919F-40AE-A951-BCB364258B17"); set => throw new NotImplementedException("339F2D6D-0225-4439-9C9D-462CC4A356B2"); }
 
         /// <inheritdoc/>
@@ -242,13 +215,11 @@ namespace SymOntoClay.UnityAsset.Core.World
         /// <inheritdoc/>
         public bool IsActive { get => _context.IsActive; }
 
-        /// <inheritdoc/>
         public void Dispose()
         {
             _context.Dispose();
         }
 
-        /// <inheritdoc/>
         public bool IsDisposed { get => _context.IsDisposed; }
         #endregion
 

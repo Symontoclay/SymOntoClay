@@ -30,6 +30,7 @@ using SymOntoClay.ProjectFiles;
 using SymOntoClay.SoundBuses;
 using SymOntoClay.StandardFacts;
 using SymOntoClay.UnityAsset.Core;
+using SymOntoClay.UnityAsset.Core.InternalImplementations.World;
 using SymOntoClay.UnityAsset.Core.World;
 using System.Numerics;
 
@@ -287,7 +288,7 @@ namespace SymOntoClay.BaseTestLib
 
         public static IWorld CreateWorld(WorldSettings settings)
         {
-            var world = new WorldCore();
+            var world = new WorldImlementation();
             world.SetSettings(settings);
 
             return world;

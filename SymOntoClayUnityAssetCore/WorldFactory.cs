@@ -20,16 +20,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.UnityAsset.Core.World;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using SymOntoClay.UnityAsset.Core.InternalImplementations.World;
 
 namespace SymOntoClay.UnityAsset.Core
 {
     public static class WorldFactory
     {
-        private static readonly IWorld __instance = new WorldCore();
+        private static readonly IWorld __instance = new WorldImlementation();
 
         /// <summary>
         /// Gets instance of game world.

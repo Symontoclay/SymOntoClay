@@ -155,7 +155,7 @@ namespace SymOntoClay.Core
                 {
                     foreach (var item in _deferredPublicFactsTexts)
                     {
-                        _storageComponent.InsertPublicFact(Logger, item.Item1, item.Item2);
+                        _storageComponent.OldInsertPublicFact(Logger, item.Item1, item.Item2);
                     }
 
                     _deferredPublicFactsTexts.Clear();
@@ -258,7 +258,8 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public string InsertPublicFact(IMonitorLogger logger, string text)
+        [Obsolete("Serialization Refactoring", true)]
+        public string OldInsertPublicFact(IMonitorLogger logger, string text)
         {
             lock (_stateLockObj)
             {
@@ -269,7 +270,7 @@ namespace SymOntoClay.Core
                     return factName.NameValue;
                 }
 
-                return _storageComponent.InsertPublicFact(logger, text);
+                return _storageComponent.OldInsertPublicFact(logger, text);
             }
         }
 

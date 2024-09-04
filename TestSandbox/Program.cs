@@ -1179,7 +1179,7 @@ action Go
 
             Thread.Sleep(1000);
 
-            npc.InsertFact(_logger, "{: see(I, #a) :}");
+            npc.OldInsertFact(_logger, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
 
@@ -2037,34 +2037,6 @@ action Go
             var nameVal1 = "dog";
 
             _logger.Info("3E73FFE5-96A2-4288-B965-D265FC6623F1", $"{nameof(nameVal1)} = {nameVal1}");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             var name = NameHelper.CreateName(nameVal1);
 

@@ -143,12 +143,12 @@ namespace SymOntoClay.Core
 
         public string InsertPublicFact(IMonitorLogger logger, string text)
         {
-            return _context.Storage.InsertPublicFact(logger, text);
+            return _context.Storage.OldInsertPublicFact(logger, text);
         }
 
         public string InsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
         {
-            return _context.Storage.InsertPublicFact(logger, factName, text);
+            return _context.Storage.OldInsertPublicFact(logger, factName, text);
         }
 
         public string InsertPublicFact(IMonitorLogger logger, RuleInstance fact)

@@ -34,7 +34,7 @@ namespace SymOntoClay.Core
     {
         IStorageComponent StorageComponent { get; }
         IStorage Storage { get; }
-        string InsertPublicFact(IMonitorLogger logger, string text);
+        string OldInsertPublicFact(IMonitorLogger logger, string text);
         string InsertPublicFact(IMonitorLogger logger, RuleInstance fact);
         void RemovePublicFact(IMonitorLogger logger, string id);
         IStorage PublicFactsStorage { get; }

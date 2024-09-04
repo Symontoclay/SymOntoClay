@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.MethodResponses;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -36,20 +37,29 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         /// <param name="obj">Instance of the game object.</param>
         /// <param name="device">Describes biped device which will be using the game object.</param>
-        void AddToManualControl(IGameObject obj, DeviceOfBiped device);
+        [Obsolete("Serialization Refactoring", true)]
+        void OldAddToManualControl(IGameObject obj, DeviceOfBiped device);
+
+        IMethodResponse AddToManualControl(IGameObject obj, DeviceOfBiped device);
 
         /// <summary>
         /// Adds a game object into manual controlled area of the NPC.
         /// </summary>
         /// <param name="obj">Instance of the game object.</param>
         /// <param name="devices">Describes list of biped devices which will be using the game object.</param>
-        void AddToManualControl(IGameObject obj, IList<DeviceOfBiped> devices);
+        [Obsolete("Serialization Refactoring", true)]
+        void OldAddToManualControl(IGameObject obj, IList<DeviceOfBiped> devices);
+
+        IMethodResponse AddToManualControl(IGameObject obj, IList<DeviceOfBiped> devices);
 
         /// <summary>
         /// Removes a game object from manual controlled area of an NPC.
         /// </summary>
         /// <param name="obj">Instance of the game object.</param>
-        void RemoveFromManualControl(IGameObject obj);
+        [Obsolete("Serialization Refactoring", true)]
+        void OldRemoveFromManualControl(IGameObject obj);
+
+        IMethodResponse RemoveFromManualControl(IGameObject obj);
 
         /// <summary>
         /// Gets list of manual controlled game objects by the NPC.

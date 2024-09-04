@@ -104,37 +104,43 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         }
 
         /// <inheritdoc/>
-        public string InsertPublicFact(IMonitorLogger logger, string text)
+        [Obsolete("Serialization Refactoring", true)]
+        public string OldInsertPublicFact(IMonitorLogger logger, string text)
         {
-            return _gameComponent.InsertPublicFact(logger, text);
+            return _gameComponent.OldInsertPublicFact(logger, text);
         }
 
         /// <inheritdoc/>
-        public string InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        [Obsolete("Serialization Refactoring", true)]
+        public string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             return _gameComponent.InsertPublicFact(logger, fact);
         }
 
         /// <inheritdoc/>
-        public void RemovePublicFact(IMonitorLogger logger, string id)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldRemovePublicFact(IMonitorLogger logger, string id)
         {
             _gameComponent.RemovePublicFact(logger, id);
         }
 
         /// <inheritdoc/>
-        public void PushSoundFact(float power, string text)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldPushSoundFact(float power, string text)
         {
             _gameComponent.PushSoundFact(power, text);
         }
 
         /// <inheritdoc/>
-        public void PushSoundFact(float power, RuleInstance fact)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldPushSoundFact(float power, RuleInstance fact)
         {
             _gameComponent.PushSoundFact(power, fact);
         }
 
         /// <inheritdoc/>
-        public void AddCategory(IMonitorLogger logger, string category)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldAddCategory(IMonitorLogger logger, string category)
         {
             lock (_initializeLockObj)
             {
@@ -149,7 +155,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         }
 
         /// <inheritdoc/>
-        public void AddCategories(IMonitorLogger logger, List<string> categories)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldAddCategories(IMonitorLogger logger, List<string> categories)
         {
             lock (_initializeLockObj)
             {
@@ -164,7 +171,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         }
 
         /// <inheritdoc/>
-        public void RemoveCategory(IMonitorLogger logger, string category)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldRemoveCategory(IMonitorLogger logger, string category)
         {
             lock (_initializeLockObj)
             {
@@ -179,7 +187,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         }
 
         /// <inheritdoc/>
-        public void RemoveCategories(IMonitorLogger logger, List<string> categories)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldRemoveCategories(IMonitorLogger logger, List<string> categories)
         {
             lock (_initializeLockObj)
             {

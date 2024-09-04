@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.MethodResponses;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.CoreHelper;
@@ -46,9 +47,20 @@ namespace SymOntoClay.UnityAsset.Core
         /// All active processes will have been stopped.
         /// Another NPCs will percept the NPC as died.
         /// </summary>
-        void Die();
-        string InsertFact(IMonitorLogger logger, string text);
-        void RemoveFact(IMonitorLogger logger, string id);
+        [Obsolete("Serialization Refactoring", true)]
+        void OldDie();
+
+        IMethodResponse Die();
+
+        [Obsolete("Serialization Refactoring", true)]
+        string OldInsertFact(IMonitorLogger logger, string text);
+
+        IMethodResponse<string> InsertFact(IMonitorLogger logger, string text);
+
+        [Obsolete("Serialization Refactoring", true)]
+        void OldRemoveFact(IMonitorLogger logger, string id);
+
+        IMethodResponse RemoveFact(IMonitorLogger logger, string id);
 
         /// <summary>
         /// Returns storage that represents a backpack.
@@ -60,14 +72,20 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         /// <param name="logger">Logger.</param>
         /// <param name="obj">Instance of the game object.</param>
-        void AddToBackpack(IMonitorLogger logger, IGameObject obj);
+        [Obsolete("Serialization Refactoring", true)]
+        void OldAddToBackpack(IMonitorLogger logger, IGameObject obj);
+
+        IMethodResponse AddToBackpack(IMonitorLogger logger, IGameObject obj);
 
         /// <summary>
         /// Removes game object from backpack.
         /// </summary>
         /// <param name="logger">Logger.</param>
         /// <param name="obj">Instance of the game object.</param>
-        void RemoveFromBackpack(IMonitorLogger logger, IGameObject obj);
+        [Obsolete("Serialization Refactoring", true)]
+        void OldRemoveFromBackpack(IMonitorLogger logger, IGameObject obj);
+
+        IMethodResponse RemoveFromBackpack(IMonitorLogger logger, IGameObject obj);
 
         /// <summary>
         /// Gets engine context. Onkly for debugging and testing!

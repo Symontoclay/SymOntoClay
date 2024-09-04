@@ -20,9 +20,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.MethodResponses;
 using SymOntoClay.Common.Disposing;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
+using System;
 using System.Collections.Generic;
 
 namespace SymOntoClay.UnityAsset.Core
@@ -33,16 +35,54 @@ namespace SymOntoClay.UnityAsset.Core
         string IdForFacts { get; }
         int InstanceId { get; }
         IMonitorLogger Logger { get; }
-        string InsertPublicFact(IMonitorLogger logger, string text);
-        string InsertPublicFact(IMonitorLogger logger, RuleInstance fact);
-        void RemovePublicFact(IMonitorLogger logger, string id);
-        void PushSoundFact(float power, string text);
-        void PushSoundFact(float power, RuleInstance fact);
+
+        [Obsolete("Serialization Refactoring", true)]
+        string OldInsertPublicFact(IMonitorLogger logger, string text);
+
+        IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text);
+
+        [Obsolete("Serialization Refactoring", true)]
+        string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact);
+
+        IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact);
+
+        [Obsolete("Serialization Refactoring", true)]
+        void OldRemovePublicFact(IMonitorLogger logger, string id);
+
+        IMethodResponse RemovePublicFact(IMonitorLogger logger, string id);
+
+        [Obsolete("Serialization Refactoring", true)]
+        void OldPushSoundFact(float power, string text);
+
+        IMethodResponse PushSoundFact(float power, string text);
+
+        [Obsolete("Serialization Refactoring", true)]
+        void OldPushSoundFact(float power, RuleInstance fact);
+
+        IMethodResponse PushSoundFact(float power, RuleInstance fact);
+
         IStandardFactsBuilder StandardFactsBuilder { get; }
-        void AddCategory(IMonitorLogger logger, string category);
-        void AddCategories(IMonitorLogger logger, List<string> categories);
-        void RemoveCategory(IMonitorLogger logger, string category);
-        void RemoveCategories(IMonitorLogger logger, List<string> categories);
+
+        [Obsolete("Serialization Refactoring", true)]
+        void OldAddCategory(IMonitorLogger logger, string category);
+
+        IMethodResponse AddCategory(IMonitorLogger logger, string category);
+
+        [Obsolete("Serialization Refactoring", true)]
+        void OldAddCategories(IMonitorLogger logger, List<string> categories);
+
+        IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories);
+
+        [Obsolete("Serialization Refactoring", true)]
+        void OldRemoveCategory(IMonitorLogger logger, string category);
+
+        IMethodResponse RemoveCategory(IMonitorLogger logger, string category);
+
+        [Obsolete("Serialization Refactoring", true)]
+        void OldRemoveCategories(IMonitorLogger logger, List<string> categories);
+
+        IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories);
+
         bool EnableCategories { get; set; }
     }
 }

@@ -24,6 +24,7 @@ using NLog;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Serialization;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.Internal.HostSupport;
 using SymOntoClay.UnityAsset.Core.Internal.SoundPerception;
@@ -33,7 +34,7 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 {
-    public abstract class BaseStoredGameComponent: BaseGameComponent
+    public abstract partial class BaseStoredGameComponent : BaseGameComponent
     {
         protected BaseStoredGameComponent(BaseStoredGameComponentSettings settings, IWorldCoreGameComponentContext worldContext)
             : base(settings, worldContext)
@@ -71,7 +72,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         
         private readonly HostSupportComponent _hostSupport;
         private readonly SoundPublisherComponent _soundPublisher;
-
+        
         protected StandaloneStorage HostStorage { get; private set; }
 
         /// <inheritdoc/>
@@ -87,9 +88,10 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             _worldContext.AddPublicFactsStorage(this);
         }
 
-        public string InsertPublicFact(IMonitorLogger logger, string text)
+        [Obsolete("Serialization Refactoring", true)]
+        public string OldInsertPublicFact(IMonitorLogger logger, string text)
         {
-            return HostStorage.InsertPublicFact(logger, text);
+            return HostStorage.OldInsertPublicFact(logger, text);
         }
 
         public string InsertPublicFact(IMonitorLogger logger, RuleInstance fact)

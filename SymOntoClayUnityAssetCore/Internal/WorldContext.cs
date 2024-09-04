@@ -387,6 +387,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     throw new ObjectDisposedException(null);
                 }
 
+                if(_state == ComponentState.Started)
+                {
+                    return;
+                }
+
                 ThreadsComponent.Lock();
 
                 if (!ComponentStateHelper.IsLoaded(_state))
@@ -475,7 +480,14 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                     throw new ObjectDisposedException(null);
                 }
 
-                throw new NotImplementedException("6136D992-B17A-4FB0-97D1-C647D733FCF3");
+                if(ComponentStateHelper.IsStopped(_state))
+                {
+                    return;
+                }
+
+                ThreadsComponent.Lock();
+
+                WaitForAllGameComponentsWaiting();
             }
         }
 

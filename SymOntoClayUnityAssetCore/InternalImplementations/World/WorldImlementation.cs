@@ -116,6 +116,11 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.World
             _globalLogger.Info($"settings = {settings}");
 #endif
 
+            if(_worldCore.IsActive)
+            {
+                _worldCore.Stop();
+            }
+
             throw new NotImplementedException("F99E1765-298B-42A8-B0E9-E38D41D5767C");
         }
 

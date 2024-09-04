@@ -22,5 +22,25 @@ namespace SymOntoClay.Core.Internal.Helpers
                     throw new ArgumentOutOfRangeException(nameof(state), state, null);
             }
         }
+
+        public static bool IsStopped(ComponentState state)
+        {
+            switch (state)
+            {
+                case ComponentState.Created:
+                case ComponentState.Loaded:
+                case ComponentState.Started:
+                    return false;
+
+
+                case ComponentState.Stopped:
+                case ComponentState.Died:
+                case ComponentState.Disposed:
+                    return true;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
+            }
+        }
     }
 }

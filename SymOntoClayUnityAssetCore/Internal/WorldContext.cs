@@ -488,6 +488,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                 ThreadsComponent.Lock();
 
                 WaitForAllGameComponentsWaiting();
+
+                _state = ComponentState.Stopped;
             }
         }
 

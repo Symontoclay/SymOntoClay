@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Serialization;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.World;
 using System;
@@ -9,6 +10,10 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.World
 {
     public class WorldImlementation: IWorld
     {
+#if DEBUG
+        private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
+#endif
+
         #region constructors
         public WorldImlementation()
         {
@@ -103,6 +108,16 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.World
 
         /// <inheritdoc/>
         public bool EnableCategories { get => _worldCore.EnableCategories; set => _worldCore.EnableCategories = value; }
+
+        /// <inheritdoc/>
+        public void Save(SerializationSettings settings)
+        {
+#if DEBUG
+            _globalLogger.Info($"settings = {settings}");
+#endif
+
+            throw new NotImplementedException("F99E1765-298B-42A8-B0E9-E38D41D5767C");
+        }
 
         /// <inheritdoc/>
         public void Start() => _worldCore.Start();

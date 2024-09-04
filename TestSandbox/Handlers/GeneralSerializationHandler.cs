@@ -88,6 +88,19 @@ namespace TestSandbox.Handlers
 
             _logger.Info("5FEAB1E4-3A21-48AE-80DF-F7BB827B25FC", "End");
 
+            var serializationDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Images");
+
+            if(!Directory.Exists(serializationDirectory))
+            {
+                Directory.CreateDirectory(serializationDirectory);
+            }
+
+            _world.Save(new SymOntoClay.Serialization.SerializationSettings()
+            {
+                Path = serializationDirectory,
+                ImageName = "PointNearSpawn"
+            });
+
             Thread.Sleep(500);
 
             var logsOutputDirectory = Path.Combine(Directory.GetCurrentDirectory(), "logs");

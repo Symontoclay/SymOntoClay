@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.CoreHelper;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Serialization;
 using SymOntoClay.UnityAsset.Core.Internal;
 using System;
 using System.Collections.Generic;
@@ -95,6 +96,8 @@ namespace SymOntoClay.UnityAsset.Core
         /// <param name="settings">Instance of settings.</param>
         /// <returns>Instance of agent.</returns>
         IPlace GetPlace(PlaceSettings settings);
+
+        void Save(SerializationSettings settings);
 
         /// <summary>
         /// Starts execution loaded image.

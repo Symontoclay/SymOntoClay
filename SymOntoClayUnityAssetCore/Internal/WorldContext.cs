@@ -23,7 +23,9 @@ SOFTWARE.*/
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.Disposing;
 using SymOntoClay.Core;
+using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
@@ -387,7 +389,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
                 ThreadsComponent.Lock();
 
-                if (_state != ComponentState.Loaded)
+                if (!ComponentStateHelper.IsLoaded(_state))
                 {
                     NLoadFromSourceCode();
                     Thread.Sleep(100);

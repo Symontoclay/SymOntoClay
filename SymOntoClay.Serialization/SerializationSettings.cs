@@ -7,6 +7,7 @@ namespace SymOntoClay.Serialization
     public class SerializationSettings : IObjectToString
     {
         public string Path { get; set; }
+        public string ImageName { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -33,6 +34,7 @@ namespace SymOntoClay.Serialization
             var sb = new StringBuilder();
 
             sb.AppendLine($"{spaces}{nameof(Path)} = {Path}");
+            sb.AppendLine($"{spaces}{nameof(ImageName)} = {ImageName}");
 
             return sb.ToString();
         }

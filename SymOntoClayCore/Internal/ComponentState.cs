@@ -32,6 +32,7 @@ namespace SymOntoClay.Core.Internal
         Loaded,
         Started,
         Stopped,
+        Died,
         Disposed
     }
 }

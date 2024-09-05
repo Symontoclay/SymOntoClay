@@ -155,7 +155,7 @@ namespace SymOntoClay.Core
                 {
                     foreach (var item in _deferredPublicFactsTexts)
                     {
-                        _storageComponent.OldInsertPublicFact(Logger, item.Item1, item.Item2);
+                        _storageComponent.InsertPublicFact(Logger, item.Item1, item.Item2);
                     }
 
                     _deferredPublicFactsTexts.Clear();

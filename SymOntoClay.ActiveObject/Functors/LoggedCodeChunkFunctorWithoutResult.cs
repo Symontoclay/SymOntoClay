@@ -14,18 +14,18 @@ namespace SymOntoClay.ActiveObject.Functors
     {
         public static LoggedCodeChunkFunctorWithoutResult<TGlobalContext, TLocalContext> Run(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
             Action<ICodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext>> action,
-            IActiveObjectContext context, ICustomThreadPool threadPool)
+            IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
         {
             var functor = new LoggedCodeChunkFunctorWithoutResult<TGlobalContext, TLocalContext>(logger, functorId, globalContext,
-            action, context, threadPool);
+            action, context, threadPool, serializationAnchor);
             functor.Run();
             return functor;
         }
 
         public LoggedCodeChunkFunctorWithoutResult(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
             Action<ICodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext>> action,
-            IActiveObjectContext context, ICustomThreadPool threadPool)
-            : base(logger, context, threadPool)
+            IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
+            : base(logger, context, threadPool, serializationAnchor)
         {
             _localContext = new TLocalContext();
 

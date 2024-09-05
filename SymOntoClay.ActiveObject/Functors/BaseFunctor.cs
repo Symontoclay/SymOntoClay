@@ -6,19 +6,23 @@ using System.Threading;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
-    public abstract class BaseFunctor
+    public abstract class BaseFunctor: IBaseFunctor
     {
-        protected BaseFunctor(IMonitorLogger logger, IActiveObjectContext context, ICustomThreadPool threadPool)
+        protected BaseFunctor(IMonitorLogger logger, IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
         {
+            _serializationAnchor = serializationAnchor;
+            serializationAnchor.AddFunctor(this);
+
             _asyncActiveOnceObject = new AsyncActiveOnceObject(context, threadPool, logger)
             {
                 OnceMethod = OnRun
             };
 
-            _asyncActiveOnceObject.OnCompleted += OnCompletedHandler;//no need
+            _asyncActiveOnceObject.OnCompleted += OnCompletedHandler;
         }
 
         private AsyncActiveOnceObject _asyncActiveOnceObject;
+        private ISerializationAnchor _serializationAnchor;
 
         public IThreadTask TaskValue => _asyncActiveOnceObject?.TaskValue;
 
@@ -31,6 +35,7 @@ namespace SymOntoClay.ActiveObject.Functors
 
         private void OnCompletedHandler()
         {
+            _serializationAnchor.RemoveFunctor(this);
             _asyncActiveOnceObject.OnCompleted -= OnCompletedHandler;
             _asyncActiveOnceObject.Dispose();
             _asyncActiveOnceObject = null;
@@ -42,19 +47,24 @@ namespace SymOntoClay.ActiveObject.Functors
         }
     }
 
-    public abstract class BaseFunctor<TResult>
+    public abstract class BaseFunctor<TResult> : IBaseFunctor
     {
-        protected BaseFunctor(IMonitorLogger logger, IActiveObjectContext context, ICustomThreadPool threadPool)
+        protected BaseFunctor(IMonitorLogger logger, IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
         {
+            _serializationAnchor = serializationAnchor;
+            serializationAnchor.AddFunctor(this);
+
             _asyncActiveOnceObject = new AsyncActiveOnceObject<TResult>(context, threadPool, logger)
             {
                 OnceMethod = OnRun
             };
 
-            _asyncActiveOnceObject.OnCompleted += OnCompletedHandler;//no need
+            _asyncActiveOnceObject.OnCompleted += OnCompletedHandler;
         }
 
         private AsyncActiveOnceObject<TResult> _asyncActiveOnceObject;
+
+        private ISerializationAnchor _serializationAnchor;
 
         public IThreadTask<TResult> TaskValue => _asyncActiveOnceObject?.TaskValueWithResult;
 
@@ -67,6 +77,7 @@ namespace SymOntoClay.ActiveObject.Functors
 
         private void OnCompletedHandler()
         {
+            _serializationAnchor.RemoveFunctor(this);
             _result = _asyncActiveOnceObject.Result;
             _asyncActiveOnceObject.OnCompleted -= OnCompletedHandler;
             _asyncActiveOnceObject.Dispose();

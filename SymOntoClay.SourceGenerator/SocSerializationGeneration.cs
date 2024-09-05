@@ -201,7 +201,7 @@ namespace SymOntoClay.SourceGenerator
 
             if (!hasConstructorWithoutParameters)
             {
-                sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}public {classIdentifier}(){{}}");
+                sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}public {GetClassIdentifierWithoutGenericParams(targetClassItem.SyntaxNode)}(){{}}");
                 sourceCodeBuilder.AppendLine();
             }
 
@@ -338,6 +338,11 @@ namespace SymOntoClay.SourceGenerator
             }
 
             return sb.ToString();
+        }
+
+        private string GetClassIdentifierWithoutGenericParams(ClassDeclarationSyntax syntaxNode)
+        {
+            return syntaxNode.Identifier.Text;
         }
 
         private string GetPlainObjectClassIdentifierFromAttribute(ClassDeclarationSyntax syntaxNode)

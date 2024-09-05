@@ -165,69 +165,82 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             }
         }
 
-        public string InsertPublicFact(IMonitorLogger logger, string text)
+        [Obsolete("Serialization Refactoring", true)]
+        public string OldInsertPublicFact(IMonitorLogger logger, string text)
         {
-            return _coreEngine.InsertPublicFact(logger, text);
+            return _coreEngine.OldInsertPublicFact(logger, text);
         }
 
-        public string InsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        [Obsolete("Serialization Refactoring", true)]
+        public string OldInsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
         {
-            return _coreEngine.InsertPublicFact(logger, factName, text);
+            return _coreEngine.OldInsertPublicFact(logger, factName, text);
         }
 
-        public string InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        [Obsolete("Serialization Refactoring", true)]
+        public string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
-            return _coreEngine.InsertPublicFact(logger, fact);
+            return _coreEngine.OldInsertPublicFact(logger, fact);
         }
 
-        public void RemovePublicFact(IMonitorLogger logger, string id)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldRemovePublicFact(IMonitorLogger logger, string id)
         {
-            _coreEngine.RemovePublicFact(logger, id);
+            _coreEngine.OldRemovePublicFact(logger, id);
         }
 
-        public string InsertFact(IMonitorLogger logger, string text)
+        [Obsolete("Serialization Refactoring", true)]
+        public string OldInsertFact(IMonitorLogger logger, string text)
         {
-            return _coreEngine.InsertFact(logger, text);
+            return _coreEngine.OldInsertFact(logger, text);
         }
 
-        public string InsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        [Obsolete("Serialization Refactoring", true)]
+        public string OldInsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
         {
-            return _coreEngine.InsertFact(logger, factName, text);
+            return _coreEngine.OldInsertFact(logger, factName, text);
         }
 
-        public void RemoveFact(IMonitorLogger logger, string id)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldRemoveFact(IMonitorLogger logger, string id)
         {
-            _coreEngine.RemoveFact(logger, id);
+            _coreEngine.OldRemoveFact(logger, id);
         }
 
-        public void PushSoundFact(float power, string text)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldPushSoundFact(float power, string text)
         {
-            _soundPublisher.PushSoundFact(power, text);
+            _soundPublisher.OldPushSoundFact(power, text);
         }
 
-        public void PushSoundFact(float power, RuleInstance fact)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldPushSoundFact(float power, RuleInstance fact)
         {
-            _soundPublisher.PushSoundFact(power, fact);
+            _soundPublisher.OldPushSoundFact(power, fact);
         }
 
-        public void AddCategory(IMonitorLogger logger, string category)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldAddCategory(IMonitorLogger logger, string category)
         {
-            _coreEngine.AddCategory(logger, category);
+            _coreEngine.OldAddCategory(logger, category);
         }
 
-        public void AddCategories(IMonitorLogger logger, List<string> categories)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldAddCategories(IMonitorLogger logger, List<string> categories)
         {
-            _coreEngine.AddCategories(logger, categories);
+            _coreEngine.OldAddCategories(logger, categories);
         }
 
-        public void RemoveCategory(IMonitorLogger logger, string category)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldRemoveCategory(IMonitorLogger logger, string category)
         {
-            _coreEngine.RemoveCategory(logger, category);
+            _coreEngine.OldRemoveCategory(logger, category);
         }
 
-        public void RemoveCategories(IMonitorLogger logger, List<string> categories)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldRemoveCategories(IMonitorLogger logger, List<string> categories)
         {
-            _coreEngine.RemoveCategories(logger, categories);
+            _coreEngine.OldRemoveCategories(logger, categories);
         }
 
         public bool EnableCategories { get => _coreEngine.EnableCategories; set => _coreEngine.EnableCategories = value; }
@@ -251,12 +264,14 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
         public IStorage BackpackStorage => _backpackStorage;
 
-        public void AddToBackpack(IMonitorLogger logger, IGameObject obj)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldAddToBackpack(IMonitorLogger logger, IGameObject obj)
         {
             _backpackStorage.AddConsolidatedStorage(logger, obj.PublicFactsStorage);
         }
 
-        public void RemoveFromBackpack(IMonitorLogger logger, IGameObject obj)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldRemoveFromBackpack(IMonitorLogger logger, IGameObject obj)
         {
             _backpackStorage.RemoveConsolidatedStorage(logger, obj.PublicFactsStorage);
         }
@@ -266,10 +281,11 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         /// </summary>
         public IEngineContext EngineContext => _coreEngine.EngineContext;
 
-        public void Die()
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldDie()
         {
-            _coreEngine.Die();
-            _visionComponent?.Die();
+            _coreEngine.OldDie();
+            _visionComponent?.OldDie();
         }
 
         /// <inheritdoc/>

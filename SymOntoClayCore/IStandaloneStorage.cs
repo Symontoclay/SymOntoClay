@@ -34,16 +34,31 @@ namespace SymOntoClay.Core
     {
         IStorageComponent StorageComponent { get; }
         IStorage Storage { get; }
+
+        [Obsolete("Serialization Refactoring", true)]
         string OldInsertPublicFact(IMonitorLogger logger, string text);
-        string InsertPublicFact(IMonitorLogger logger, RuleInstance fact);
-        void RemovePublicFact(IMonitorLogger logger, string id);
+
+        [Obsolete("Serialization Refactoring", true)]
+        string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact);
+
+        [Obsolete("Serialization Refactoring", true)]
+        void OldRemovePublicFact(IMonitorLogger logger, string id);
+
         IStorage PublicFactsStorage { get; }
         ConsolidatedPublicFactsStorage WorldPublicFactsStorage { get; }
         IMainStorageContext Context { get; }
-        void AddCategory(IMonitorLogger logger, string category);
-        void AddCategories(IMonitorLogger logger, List<string> categories);
-        void RemoveCategory(IMonitorLogger logger, string category);
-        void RemoveCategories(IMonitorLogger logger, List<string> categories);
+
+        [Obsolete("Serialization Refactoring", true)]
+        void OldAddCategory(IMonitorLogger logger, string category);
+
+        [Obsolete("Serialization Refactoring", true)]
+        void OldAddCategories(IMonitorLogger logger, List<string> categories);
+
+        [Obsolete("Serialization Refactoring", true)]
+        void OldRemoveCategory(IMonitorLogger logger, string category);
+
+        [Obsolete("Serialization Refactoring", true)]
+        void OldRemoveCategories(IMonitorLogger logger, List<string> categories);
         bool EnableCategories { get; set; }
     }
 }

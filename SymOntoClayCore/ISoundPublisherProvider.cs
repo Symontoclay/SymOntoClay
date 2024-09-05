@@ -29,9 +29,22 @@ namespace SymOntoClay.Core
 {
     public interface ISoundPublisherProvider
     {
+        [Obsolete("Serialization Refactoring", true)]
+        void OldPushSoundFact(float power, string factStr);
+
+        [Obsolete("Serialization Refactoring", true)]
+        void OldPushSoundFact(float power, RuleInstance fact);
+
+        [Obsolete("Serialization Refactoring", true)]
+        void OldPushSpeechFact(float power, string factStr);
+
+        [Obsolete("Serialization Refactoring", true)]
+        void OldPushSpeechFact(float power, RuleInstance fact);
+    }
+}
+/*
         void PushSoundFact(float power, string factStr);
         void PushSoundFact(float power, RuleInstance fact);
         void PushSpeechFact(float power, string factStr);
-        void PushSpeechFact(float power, RuleInstance fact);
-    }
-}
+        void PushSpeechFact(float power, RuleInstance fact); 
+*/

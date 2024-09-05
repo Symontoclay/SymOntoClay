@@ -94,44 +94,52 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             return HostStorage.OldInsertPublicFact(logger, text);
         }
 
-        public string InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        [Obsolete("Serialization Refactoring", true)]
+        public string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
-            return HostStorage.InsertPublicFact(logger, fact);
+            return HostStorage.OldInsertPublicFact(logger, fact);
         }
 
-        public void RemovePublicFact(IMonitorLogger logger, string id)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldRemovePublicFact(IMonitorLogger logger, string id)
         {
-            HostStorage.RemovePublicFact(logger, id);
+            HostStorage.OldRemovePublicFact(logger, id);
         }
 
-        public void PushSoundFact(float power, string text)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldPushSoundFact(float power, string text)
         {
-            _soundPublisher.PushSoundFact(power, text);
+            _soundPublisher.OldPushSoundFact(power, text);
         }
 
-        public void PushSoundFact(float power, RuleInstance fact)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldPushSoundFact(float power, RuleInstance fact)
         {
-            _soundPublisher.PushSoundFact(power, fact);
+            _soundPublisher.OldPushSoundFact(power, fact);
         }
 
-        public void AddCategory(IMonitorLogger logger, string category)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldAddCategory(IMonitorLogger logger, string category)
         {
-            HostStorage.AddCategory(logger, category);
+            HostStorage.OldAddCategory(logger, category);
         }
 
-        public void AddCategories(IMonitorLogger logger, List<string> categories)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldAddCategories(IMonitorLogger logger, List<string> categories)
         {
-            HostStorage.AddCategories(logger, categories);
+            HostStorage.OldAddCategories(logger, categories);
         }
 
-        public void RemoveCategory(IMonitorLogger logger, string category)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldRemoveCategory(IMonitorLogger logger, string category)
         {
-            HostStorage.RemoveCategory(logger, category);
+            HostStorage.OldRemoveCategory(logger, category);
         }
 
-        public void RemoveCategories(IMonitorLogger logger, List<string> categories)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldRemoveCategories(IMonitorLogger logger, List<string> categories)
         {
-            HostStorage.RemoveCategories(logger, categories);
+            HostStorage.OldRemoveCategories(logger, categories);
         }
 
         public bool EnableCategories { get => HostStorage.EnableCategories; set => HostStorage.EnableCategories = value; }

@@ -51,7 +51,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         private readonly IStandardFactsBuilder _standardFactsBuilder;
 
         /// <inheritdoc/>
-        public void PushSoundFact(float power, string factStr)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldPushSoundFact(float power, string factStr)
         {
             if(_soundBus == null)
             {
@@ -62,27 +63,30 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         }
 
         /// <inheritdoc/>
-        public void PushSoundFact(float power, RuleInstance fact)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldPushSoundFact(float power, RuleInstance fact)
         {
             var factStr = fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent);
 
-            PushSoundFact(power, factStr);
+            OldPushSoundFact(power, factStr);
         }
 
         /// <inheritdoc/>
-        public void PushSpeechFact(float power, string factStr)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldPushSpeechFact(float power, string factStr)
         {
             factStr = _standardFactsBuilder.BuildSayFactString(_idForFacts, factStr);
 
-            PushSoundFact(power, factStr);
+            OldPushSoundFact(power, factStr);
         }
 
         /// <inheritdoc/>
-        public void PushSpeechFact(float power, RuleInstance fact)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldPushSpeechFact(float power, RuleInstance fact)
         {
             var factStr = fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent);
 
-            PushSpeechFact(power, factStr);
+            OldPushSpeechFact(power, factStr);
         }
     }
 }

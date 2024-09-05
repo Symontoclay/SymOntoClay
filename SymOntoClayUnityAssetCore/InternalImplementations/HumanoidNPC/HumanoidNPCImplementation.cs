@@ -61,7 +61,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 {
                     foreach(var item in _deferredPublicFactsTexts)
                     {
-                        _gameComponent.InsertPublicFact(Logger, item.Item1, item.Item2);
+                        _gameComponent.OldInsertPublicFact(Logger, item.Item1, item.Item2);
                     }
 
                     _deferredPublicFactsTexts.Clear();
@@ -76,7 +76,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 {
                     foreach (var item in _deferredPublicFactsInstances)
                     {
-                        _gameComponent.InsertPublicFact(Logger, item);
+                        _gameComponent.OldInsertPublicFact(Logger, item);
                     }
 
                     _deferredPublicFactsInstances.Clear();
@@ -91,7 +91,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 {
                     foreach (var item in _defferedRemovedPublicFacts)
                     {
-                        _gameComponent.RemovePublicFact(Logger, item);
+                        _gameComponent.OldRemovePublicFact(Logger, item);
                     }
 
                     _defferedRemovedPublicFacts.Clear();
@@ -106,7 +106,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 {
                     foreach (var item in _deferredFactsTexts)
                     {
-                        _gameComponent.InsertFact(Logger, item.Item1, item.Item2);
+                        _gameComponent.OldInsertFact(Logger, item.Item1, item.Item2);
                     }
 
                     _deferredFactsTexts.Clear();
@@ -121,7 +121,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 {
                     foreach (var item in _defferedRemovedFacts)
                     {
-                        _gameComponent.RemoveFact(Logger, item);
+                        _gameComponent.OldRemoveFact(Logger, item);
                     }
 
                     _defferedRemovedFacts.Clear();
@@ -134,7 +134,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
                 if (_deferredAddedCategories.Any())
                 {
-                    _gameComponent.AddCategories(null, _deferredAddedCategories);
+                    _gameComponent.OldAddCategories(null, _deferredAddedCategories);
                     _deferredAddedCategories.Clear();
                     _deferredAddedCategories = null;
                 }
@@ -145,7 +145,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
                 if (_deferredRemovedCategories.Any())
                 {
-                    _gameComponent.RemoveCategories(null, _deferredRemovedCategories);
+                    _gameComponent.OldRemoveCategories(null, _deferredRemovedCategories);
                     _deferredRemovedCategories.Clear();
                     _deferredRemovedCategories = null;
                 }
@@ -205,21 +205,21 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         [Obsolete("Serialization Refactoring", true)]
         public void OldAddToManualControl(IGameObject obj, DeviceOfBiped device)
         {
-            _gameComponent.AddToManualControl(obj, (int)device);
+            _gameComponent.OldAddToManualControl(obj, (int)device);
         }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldAddToManualControl(IGameObject obj, IList<DeviceOfBiped> devices)
         {
-            _gameComponent.AddToManualControl(obj, devices?.Select(p => (int)p).ToList());
+            _gameComponent.OldAddToManualControl(obj, devices?.Select(p => (int)p).ToList());
         }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemoveFromManualControl(IGameObject obj)
         {
-            _gameComponent.RemoveFromManualControl(obj);
+            _gameComponent.OldRemoveFromManualControl(obj);
         }
 
         /// <inheritdoc/>
@@ -255,7 +255,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                     return factName.NameValue;
                 }
 
-                return _gameComponent.InsertPublicFact(logger, text);
+                return _gameComponent.OldInsertPublicFact(logger, text);
             }
         }
 
@@ -276,7 +276,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                     return fact.Name.NameValue;
                 }
 
-                return _gameComponent.InsertPublicFact(logger, fact);
+                return _gameComponent.OldInsertPublicFact(logger, fact);
             }
         }
 
@@ -292,7 +292,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                     return;
                 }
 
-                _gameComponent.RemovePublicFact(logger, id);
+                _gameComponent.OldRemovePublicFact(logger, id);
             }
         }
 
@@ -309,7 +309,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                     return factName.NameValue;
                 }
 
-                return _gameComponent.InsertFact(logger, text);
+                return _gameComponent.OldInsertFact(logger, text);
             }
         }
 
@@ -325,7 +325,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                     return;
                 }
 
-                _gameComponent.RemoveFact(logger, id);
+                _gameComponent.OldRemoveFact(logger, id);
             }
         }
 
@@ -333,14 +333,14 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         [Obsolete("Serialization Refactoring", true)]
         public void OldPushSoundFact(float power, string text)
         {
-            _gameComponent.PushSoundFact(power, text);
+            _gameComponent.OldPushSoundFact(power, text);
         }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldPushSoundFact(float power, RuleInstance fact)
         {
-            _gameComponent.PushSoundFact(power, fact);
+            _gameComponent.OldPushSoundFact(power, fact);
         }
 
         /// <inheritdoc/>
@@ -355,7 +355,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                     return;
                 }
 
-                _gameComponent.AddCategory(logger, category);
+                _gameComponent.OldAddCategory(logger, category);
             }
         }
 
@@ -371,7 +371,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                     return;
                 }
 
-                _gameComponent.AddCategories(logger, categories);
+                _gameComponent.OldAddCategories(logger, categories);
             }
         }
 
@@ -387,7 +387,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                     return;
                 }
 
-                _gameComponent.RemoveCategory(logger, category);
+                _gameComponent.OldRemoveCategory(logger, category);
             }
         }
 
@@ -403,7 +403,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                     return;
                 }
 
-                _gameComponent.RemoveCategories(logger, categories);
+                _gameComponent.OldRemoveCategories(logger, categories);
             }
         }
 
@@ -445,14 +445,14 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         [Obsolete("Serialization Refactoring", true)]
         public void OldAddToBackpack(IMonitorLogger logger, IGameObject obj)
         {
-            _gameComponent.AddToBackpack(logger, obj);
+            _gameComponent.OldAddToBackpack(logger, obj);
         }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemoveFromBackpack(IMonitorLogger logger, IGameObject obj)
         {
-            _gameComponent.RemoveFromBackpack(logger, obj);
+            _gameComponent.OldRemoveFromBackpack(logger, obj);
         }
 
         /// <inheritdoc/>
@@ -465,7 +465,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         [Obsolete("Serialization Refactoring", true)]
         public void OldDie()
         {
-            _gameComponent.Die();
+            _gameComponent.OldDie();
         }
 
         /// <inheritdoc/>

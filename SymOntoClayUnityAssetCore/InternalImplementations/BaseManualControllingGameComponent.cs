@@ -76,12 +76,14 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 
         private readonly object _manualControlLockObj = new object();
 
-        public void AddToManualControl(IGameObject obj, int device)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldAddToManualControl(IGameObject obj, int device)
         {
-            AddToManualControl(obj, new List<int>() { device});
+            OldAddToManualControl(obj, new List<int>() { device});
         }
 
-        public void AddToManualControl(IGameObject obj, IList<int> devices)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldAddToManualControl(IGameObject obj, IList<int> devices)
         {
             lock (_manualControlLockObj)
             {
@@ -105,7 +107,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             }
         }
 
-        public void RemoveFromManualControl(IGameObject obj)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldRemoveFromManualControl(IGameObject obj)
         {
             lock (_manualControlLockObj)
             {

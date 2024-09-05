@@ -141,96 +141,114 @@ namespace SymOntoClay.Core
             }
         }
 
-        public string InsertPublicFact(IMonitorLogger logger, string text)
+        [Obsolete("Serialization Refactoring", true)]
+        public string OldInsertPublicFact(IMonitorLogger logger, string text)
         {
-            return _context.Storage.OldInsertPublicFact(logger, text);
+            return _context.Storage.InsertPublicFact(logger, text);
         }
 
-        public string InsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        [Obsolete("Serialization Refactoring", true)]
+        public string OldInsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
         {
-            return _context.Storage.OldInsertPublicFact(logger, factName, text);
+            return _context.Storage.InsertPublicFact(logger, factName, text);
         }
 
-        public string InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        [Obsolete("Serialization Refactoring", true)]
+        public string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             return _context.Storage.InsertPublicFact(logger, fact);
         }
 
-        public void RemovePublicFact(IMonitorLogger logger, string id)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldRemovePublicFact(IMonitorLogger logger, string id)
         {
             _context.Storage.RemovePublicFact(logger, id);
         }
 
-        public string InsertFact(IMonitorLogger logger, string text)
+        [Obsolete("Serialization Refactoring", true)]
+        public string OldInsertFact(IMonitorLogger logger, string text)
         {
             return _context.Storage.InsertFact(logger, text);
         }
 
-        public string InsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        [Obsolete("Serialization Refactoring", true)]
+        public string OldInsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
         {
             return _context.Storage.InsertFact(logger, factName, text);
         }
 
-        public void RemoveFact(IMonitorLogger logger, string id)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldRemoveFact(IMonitorLogger logger, string id)
         {
             _context.Storage.RemoveFact(logger, id);
         }
 
         public IStorage PublicFactsStorage => _context.Storage.PublicFactsStorage;
 
-        public void AddVisibleStorage(IMonitorLogger logger, IStorage storage)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldAddVisibleStorage(IMonitorLogger logger, IStorage storage)
         {
             _context.Storage.AddVisibleStorage(logger, storage);
         }
 
-        public void RemoveVisibleStorage(IMonitorLogger logger, IStorage storage)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldRemoveVisibleStorage(IMonitorLogger logger, IStorage storage)
         {
             _context.Storage.RemoveVisibleStorage(logger, storage);
         }
 
-        public string InsertPerceptedFact(IMonitorLogger logger, string text)
+        [Obsolete("Serialization Refactoring", true)]
+        public string OldInsertPerceptedFact(IMonitorLogger logger, string text)
         {
             return _context.Storage.InsertPerceptedFact(logger, text);
         }
 
-        public void RemovePerceptedFact(IMonitorLogger logger, string id)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldRemovePerceptedFact(IMonitorLogger logger, string id)
         {
             _context.Storage.RemovePerceptedFact(logger, id);
         }
 
-        public void InsertListenedFact(IMonitorLogger logger, string text)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldInsertListenedFact(IMonitorLogger logger, string text)
         {
             _context.Storage.InsertListenedFact(logger, text);
         }
 
-        public void InsertListenedFact(IMonitorLogger logger, RuleInstance fact)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldInsertListenedFact(IMonitorLogger logger, RuleInstance fact)
         {
             _context.Storage.InsertListenedFact(logger, fact);
         }
-        
-        public void AddCategory(IMonitorLogger logger, string category)
+
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldAddCategory(IMonitorLogger logger, string category)
         {
             _context.Storage.AddCategory(logger, category);
         }
 
-        public void AddCategories(IMonitorLogger logger, List<string> categories)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldAddCategories(IMonitorLogger logger, List<string> categories)
         {
             _context.Storage.AddCategories(logger, categories);
         }
 
-        public void RemoveCategory(IMonitorLogger logger, string category)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldRemoveCategory(IMonitorLogger logger, string category)
         {
             _context.Storage.RemoveCategory(logger, category);
         }
 
-        public void RemoveCategories(IMonitorLogger logger, List<string> categories)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldRemoveCategories(IMonitorLogger logger, List<string> categories)
         {
             _context.Storage.RemoveCategories(logger, categories);
         }
 
         public bool EnableCategories { get => _context.Storage.EnableCategories; set => _context.Storage.EnableCategories = value; }
 
-        public void Die()
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldDie()
         {
             _context.Die();
         }

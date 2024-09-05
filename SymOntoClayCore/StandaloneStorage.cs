@@ -270,12 +270,13 @@ namespace SymOntoClay.Core
                     return factName.NameValue;
                 }
 
-                return _storageComponent.OldInsertPublicFact(logger, text);
+                return _storageComponent.InsertPublicFact(logger, text);
             }
         }
 
         /// <inheritdoc/>
-        public string InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        [Obsolete("Serialization Refactoring", true)]
+        public string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             lock (_stateLockObj)
             {
@@ -295,7 +296,8 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public void RemovePublicFact(IMonitorLogger logger, string id)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldRemovePublicFact(IMonitorLogger logger, string id)
         {
             lock (_stateLockObj)
             {
@@ -310,7 +312,8 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public void AddCategory(IMonitorLogger logger, string category)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldAddCategory(IMonitorLogger logger, string category)
         {
             lock (_stateLockObj)
             {
@@ -325,7 +328,8 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public void AddCategories(IMonitorLogger logger, List<string> categories)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldAddCategories(IMonitorLogger logger, List<string> categories)
         {
             lock (_stateLockObj)
             {
@@ -340,7 +344,8 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public void RemoveCategory(IMonitorLogger logger, string category)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldRemoveCategory(IMonitorLogger logger, string category)
         {
             lock (_stateLockObj)
             {
@@ -355,7 +360,8 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public void RemoveCategories(IMonitorLogger logger, List<string> categories)
+        [Obsolete("Serialization Refactoring", true)]
+        public void OldRemoveCategories(IMonitorLogger logger, List<string> categories)
         {
             lock (_stateLockObj)
             {

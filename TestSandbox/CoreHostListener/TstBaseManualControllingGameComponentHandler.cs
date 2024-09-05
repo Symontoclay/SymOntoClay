@@ -104,7 +104,7 @@ namespace TestSandbox.CoreHostListener
 
             var gameObject = new GameObjectImplementation(gameObjectSettings, worldContext);
 
-            tstBaseManualControllingGameComponent.AddToManualControl(gameObject, 12);
+            tstBaseManualControllingGameComponent.OldAddToManualControl(gameObject, 12);
 
             methodName = NameHelper.CreateName("shoot");
 
@@ -117,7 +117,7 @@ namespace TestSandbox.CoreHostListener
 
             _logger.Info("4C649695-DFA2-4D1C-9419-9FE5A9B7A9E0", $"manualControlledObjectsList.Count = {manualControlledObjectsList.Count}");
 
-            tstBaseManualControllingGameComponent.RemoveFromManualControl(gameObject);
+            tstBaseManualControllingGameComponent.OldRemoveFromManualControl(gameObject);
 
             manualControlledObjectsList = tstBaseManualControllingGameComponent.GetManualControlledObjects();
 

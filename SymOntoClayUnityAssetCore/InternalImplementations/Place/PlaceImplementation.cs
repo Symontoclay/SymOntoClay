@@ -57,13 +57,13 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Place
 
                     if(_addedCategories.Any())
                     {
-                        _gameComponent.AddCategories(null, _addedCategories);
+                        _gameComponent.OldAddCategories(null, _addedCategories);
                         _addedCategories = null;
                     }
 
                     if (_removedCategories.Any())
                     {
-                        _gameComponent.RemoveCategories(null, _removedCategories);
+                        _gameComponent.OldRemoveCategories(null, _removedCategories);
                         _removedCategories = null;
                     }
 
@@ -119,14 +119,14 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Place
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
-            return _gameComponent.InsertPublicFact(logger, fact);
+            return _gameComponent.OldInsertPublicFact(logger, fact);
         }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemovePublicFact(IMonitorLogger logger, string id)
         {
-            _gameComponent.RemovePublicFact(logger, id);
+            _gameComponent.OldRemovePublicFact(logger, id);
         }
 
         /// <inheritdoc/>
@@ -153,7 +153,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Place
                     return;
                 }
 
-                _gameComponent.AddCategory(logger, category);
+                _gameComponent.OldAddCategory(logger, category);
             }
         }
 
@@ -169,7 +169,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Place
                     return;
                 }
 
-                _gameComponent.AddCategories(logger, categories);
+                _gameComponent.OldAddCategories(logger, categories);
             }
         }
 
@@ -185,7 +185,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Place
                     return;
                 }
 
-                _gameComponent.RemoveCategory(logger, category);
+                _gameComponent.OldRemoveCategory(logger, category);
             }
         }
 
@@ -201,7 +201,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Place
                     return;
                 }
 
-                _gameComponent.RemoveCategories(logger, categories);
+                _gameComponent.OldRemoveCategories(logger, categories);
             }
         }
 

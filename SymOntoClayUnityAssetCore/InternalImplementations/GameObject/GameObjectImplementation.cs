@@ -56,13 +56,13 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
 
                     if (_addedCategories.Any())
                     {
-                        _gameComponent.AddCategories(null, _addedCategories);
+                        _gameComponent.OldAddCategories(null, _addedCategories);
                         _addedCategories = null;
                     }
 
                     if (_removedCategories.Any())
                     {
-                        _gameComponent.RemoveCategories(null, _removedCategories);
+                        _gameComponent.OldRemoveCategories(null, _removedCategories);
                         _removedCategories = null;
                     }
 
@@ -111,28 +111,28 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
-            return _gameComponent.InsertPublicFact(logger, fact);
+            return _gameComponent.OldInsertPublicFact(logger, fact);
         }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemovePublicFact(IMonitorLogger logger, string id)
         {
-            _gameComponent.RemovePublicFact(logger, id);
+            _gameComponent.OldRemovePublicFact(logger, id);
         }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldPushSoundFact(float power, string text)
         {
-            _gameComponent.PushSoundFact(power, text);
+            _gameComponent.OldPushSoundFact(power, text);
         }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldPushSoundFact(float power, RuleInstance fact)
         {
-            _gameComponent.PushSoundFact(power, fact);
+            _gameComponent.OldPushSoundFact(power, fact);
         }
 
         /// <inheritdoc/>
@@ -147,7 +147,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
                     return;
                 }
 
-                _gameComponent.AddCategory(logger, category);
+                _gameComponent.OldAddCategory(logger, category);
             }
         }
 
@@ -163,7 +163,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
                     return;
                 }
 
-                _gameComponent.AddCategories(logger, categories);
+                _gameComponent.OldAddCategories(logger, categories);
             }
         }
 
@@ -179,7 +179,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
                     return;
                 }
 
-                _gameComponent.RemoveCategory(logger, category);
+                _gameComponent.OldRemoveCategory(logger, category);
             }
         }
 
@@ -195,7 +195,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
                     return;
                 }
 
-                _gameComponent.RemoveCategories(logger, categories);
+                _gameComponent.OldRemoveCategories(logger, categories);
             }
         }
 

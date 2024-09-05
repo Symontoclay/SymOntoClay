@@ -70,7 +70,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         {
             var convertedQuery = ConvertQuery(power, distance, position, query);
 
-            _coreEngine.InsertListenedFact(Logger, convertedQuery);
+            _coreEngine.OldInsertListenedFact(Logger, convertedQuery);
         }
 
         /// <inheritdoc/>
@@ -78,7 +78,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         {
             var convertedQuery = ConvertQuery(power, distance, position, fact);
 
-            _coreEngine.InsertListenedFact(Logger, convertedQuery);
+            _coreEngine.OldInsertListenedFact(Logger, convertedQuery);
         }
 
         /// <inheritdoc/>

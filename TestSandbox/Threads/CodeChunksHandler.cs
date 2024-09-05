@@ -163,6 +163,8 @@ namespace TestSandbox.Threads
 
             var globalContext = new CodeChunksHandlerGlobalContext();
 
+            var serializationAnchor = new SerializationAnchor();
+
             var functor = new LoggedCodeChunkFunctorWithoutResult<CodeChunksHandlerGlobalContext, CodeChunksHandlerLocalContext>(_logger, "131A6E93-FB84-4622-AB7F-94E32282A971", globalContext, (ICodeChunksContext<IMonitorLogger, CodeChunksHandlerGlobalContext, CodeChunksHandlerLocalContext> codeChunksContext) =>
             {
                 codeChunksContext.CreateCodeChunk("BCD0FE20-836A-4BB3-B6ED-E99CCA7CD058", (IMonitorLogger loggerValue, CodeChunksHandlerGlobalContext globalContextValue, CodeChunksHandlerLocalContext localContextValue) =>
@@ -174,7 +176,7 @@ namespace TestSandbox.Threads
                 {
                     loggerValue.Info("493E54F2-963D-4030-9018-783688F0F003", "Chunk2");
                 });
-            }, activeContext, threadPool);
+            }, activeContext, threadPool, serializationAnchor);
 
             //commonActiveContext.Lock();
 

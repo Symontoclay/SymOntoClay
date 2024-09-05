@@ -84,7 +84,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Channels
 
         private void ProcessRuleInstanceValue(IMonitorLogger logger, RuleInstance value)
         {
-            _soundPublisherProvider?.OldPushSpeechFact(DefaultSoundPower, value);
+            _soundPublisherProvider?.PushSpeechFact(DefaultSoundPower, value);
         }
 
         private void ProcessStringValue(IMonitorLogger logger, StringValue value)

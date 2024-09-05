@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.MethodResponses;
 using SymOntoClay.Core.Internal.CodeModel;
 using System;
 using System.Collections.Generic;
@@ -32,19 +33,21 @@ namespace SymOntoClay.Core
         [Obsolete("Serialization Refactoring", true)]
         void OldPushSoundFact(float power, string factStr);
 
+        IMethodResponse PushSoundFact(float power, string factStr);
+
         [Obsolete("Serialization Refactoring", true)]
         void OldPushSoundFact(float power, RuleInstance fact);
+
+        IMethodResponse PushSoundFact(float power, RuleInstance fact);
 
         [Obsolete("Serialization Refactoring", true)]
         void OldPushSpeechFact(float power, string factStr);
 
+        IMethodResponse PushSpeechFact(float power, string factStr);
+
         [Obsolete("Serialization Refactoring", true)]
         void OldPushSpeechFact(float power, RuleInstance fact);
+
+        IMethodResponse PushSpeechFact(float power, RuleInstance fact);
     }
 }
-/*
-        void PushSoundFact(float power, string factStr);
-        void PushSoundFact(float power, RuleInstance fact);
-        void PushSpeechFact(float power, string factStr);
-        void PushSpeechFact(float power, RuleInstance fact); 
-*/

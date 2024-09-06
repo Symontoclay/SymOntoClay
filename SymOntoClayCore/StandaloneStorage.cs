@@ -274,6 +274,8 @@ namespace SymOntoClay.Core
             }
         }
 
+
+
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact)

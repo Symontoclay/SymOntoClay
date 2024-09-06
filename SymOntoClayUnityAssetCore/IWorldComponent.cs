@@ -38,7 +38,7 @@ namespace SymOntoClay.UnityAsset.Core
 
         [Obsolete("Serialization Refactoring", true)]
         string OldInsertPublicFact(IMonitorLogger logger, string text);
-
+        
         IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text);
 
         [Obsolete("Serialization Refactoring", true)]

@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.MethodResponses;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -56,13 +57,13 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
 
                     if (_addedCategories.Any())
                     {
-                        _gameComponent.OldAddCategories(null, _addedCategories);
+                        _gameComponent.DirectAddCategories(null, _addedCategories);
                         _addedCategories = null;
                     }
 
                     if (_removedCategories.Any())
                     {
-                        _gameComponent.OldRemoveCategories(null, _removedCategories);
+                        _gameComponent.DirectRemoveCategories(null, _removedCategories);
                         _removedCategories = null;
                     }
 
@@ -104,21 +105,39 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertPublicFact(IMonitorLogger logger, string text)
         {
-            return _gameComponent.OldInsertPublicFact(logger, text);
+            throw new NotSupportedException("7B3582FC-981E-49F7-89CB-47F4BE45CA25");
+        }
+
+        /// <inheritdoc/>
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
+        {
+            return _gameComponent.InsertPublicFact(logger, text);
         }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
-            return _gameComponent.OldInsertPublicFact(logger, fact);
+            throw new NotSupportedException("349F8570-1959-4C24-8F08-2A4C5DCD2DBF");
+        }
+
+        /// <inheritdoc/>
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        {
+            return _gameComponent.InsertPublicFact(logger, fact);
         }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemovePublicFact(IMonitorLogger logger, string id)
         {
-            _gameComponent.OldRemovePublicFact(logger, id);
+            throw new NotSupportedException("CDA6C507-5329-4785-8959-808F347F38FB");
+        }
+
+        /// <inheritdoc/>
+        public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
+        {
+            return _gameComponent.RemovePublicFact(logger, id);
         }
 
         /// <inheritdoc/>
@@ -129,10 +148,22 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
         }
 
         /// <inheritdoc/>
+        public IMethodResponse PushSoundFact(float power, string text)
+        {
+            return _gameComponent.PushSoundFact(power, text);
+        }
+
+        /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldPushSoundFact(float power, RuleInstance fact)
         {
             _gameComponent.OldPushSoundFact(power, fact);
+        }
+
+        /// <inheritdoc/>
+        public IMethodResponse PushSoundFact(float power, RuleInstance fact)
+        {
+            return _gameComponent.PushSoundFact(power, fact);
         }
 
         /// <inheritdoc/>

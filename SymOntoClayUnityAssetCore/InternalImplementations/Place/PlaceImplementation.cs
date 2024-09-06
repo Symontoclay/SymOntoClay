@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.MethodResponses;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
@@ -115,12 +116,16 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Place
             return _gameComponent.OldInsertPublicFact(logger, text);
         }
 
+        IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
+
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             return _gameComponent.OldInsertPublicFact(logger, fact);
         }
+
+        IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
@@ -129,17 +134,23 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Place
             _gameComponent.OldRemovePublicFact(logger, id);
         }
 
+        IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
+
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldPushSoundFact(float power, string text)
         {
         }
 
+        IMethodResponse PushSoundFact(float power, string text)
+
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldPushSoundFact(float power, RuleInstance fact)
         {
         }
+
+        IMethodResponse PushSoundFact(float power, RuleInstance fact)
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]

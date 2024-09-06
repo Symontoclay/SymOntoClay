@@ -33,7 +33,7 @@ using System.Linq;
 
 namespace SymOntoClay.Core
 {
-    public class StandaloneStorage: BaseComponent, IStandaloneStorage, ISerializableEngine
+    public class StandaloneStorage: BaseComponent, IStandaloneStorage, IDirectStandaloneStorage, ISerializableEngine
     {
         public StandaloneStorage(StandaloneStorageSettings settings)
             : base(settings.MonitorNode)

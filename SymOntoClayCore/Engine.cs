@@ -29,7 +29,7 @@ using System.Collections.Generic;
 
 namespace SymOntoClay.Core
 {
-    public class Engine : BaseComponent, ISerializableEngine
+    public class Engine : BaseComponent, ISerializableEngine, IDirectEngine
     {
         public Engine(EngineSettings settings)
             : base(settings.MonitorNode)

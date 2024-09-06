@@ -101,6 +101,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
                 _coreEngine = new Engine(coreEngineSettings);
                 internalContext.CoreEngine = _coreEngine;
+
+                _directEngine = _coreEngine;
             }
             catch (Exception e)
             {
@@ -112,6 +114,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
         private readonly bool _allowPublicPosition;
         private readonly Engine _coreEngine;
+        private readonly IDirectEngine _directEngine;
         private readonly VisionComponent _visionComponent;
         private readonly HostSupportComponent _hostSupport;
         private readonly SoundPublisherComponent _soundPublisher;
@@ -177,16 +180,31 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             return _coreEngine.OldInsertPublicFact(logger, factName, text);
         }
 
+        public string DirectInsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        {
+            return _directEngine.DirectInsertPublicFact(logger, factName, text);
+        }
+
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             return _coreEngine.OldInsertPublicFact(logger, fact);
         }
 
+        public string DirectInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        {
+            return _directEngine.DirectInsertPublicFact(logger, fact);
+        }
+
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemovePublicFact(IMonitorLogger logger, string id)
         {
             _coreEngine.OldRemovePublicFact(logger, id);
+        }
+
+        public void DirectRemovePublicFact(IMonitorLogger logger, string id)
+        {
+            _directEngine.DirectRemovePublicFact(logger, id);
         }
 
         [Obsolete("Serialization Refactoring", true)]
@@ -205,6 +223,11 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         public void OldRemoveFact(IMonitorLogger logger, string id)
         {
             _coreEngine.OldRemoveFact(logger, id);
+        }
+
+        public void DirectRemoveFact(IMonitorLogger logger, string id)
+        {
+            _directEngine.DirectRemoveFact(logger, id);
         }
 
         [Obsolete("Serialization Refactoring", true)]
@@ -231,6 +254,11 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             _coreEngine.OldAddCategories(logger, categories);
         }
 
+        public void DirectAddCategories(IMonitorLogger logger, List<string> categories)
+        {
+            _directEngine.DirectAddCategories(logger, categories);
+        }
+
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemoveCategory(IMonitorLogger logger, string category)
         {
@@ -241,6 +269,11 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         public void OldRemoveCategories(IMonitorLogger logger, List<string> categories)
         {
             _coreEngine.OldRemoveCategories(logger, categories);
+        }
+
+        public void DirectRemoveCategories(IMonitorLogger logger, List<string> categories)
+        {
+            _directEngine.DirectRemoveCategories(logger, categories);
         }
 
         public bool EnableCategories { get => _coreEngine.EnableCategories; set => _coreEngine.EnableCategories = value; }

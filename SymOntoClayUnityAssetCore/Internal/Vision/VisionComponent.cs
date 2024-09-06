@@ -57,6 +57,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
         private readonly object _lockObj = new object();
         private string _idForFacts;
         private Engine _coreEngine;
+        private IDirectEngine _directEngine;
 
         private Dictionary<int, VisibleItem> _visibleObjectsRegistry;
         private Dictionary<int, Vector3> _visibleObjectsPositionRegistry;
@@ -88,6 +89,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
 
             _idForFacts = _internalContext.IdForFacts;
             _coreEngine = _internalContext.CoreEngine;
+            _directEngine = _coreEngine;
         }
 
         public Vector3? GetPosition(int instanceId)

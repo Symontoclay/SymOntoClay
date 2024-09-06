@@ -60,7 +60,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
                 standaloneStorageSettings.ThreadingSettings = settings?.ThreadingSettings ?? worldContext.ThreadingSettings;
                 standaloneStorageSettings.CancellationToken = worldContext.GetCancellationToken();
 
-                HostStorage = new StandaloneStorage(standaloneStorageSettings);              
+                HostStorage = new StandaloneStorage(standaloneStorageSettings);
+                _directHostStorage = HostStorage;
             }
             catch (Exception e)
             {
@@ -74,6 +75,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         private readonly SoundPublisherComponent _soundPublisher;
         
         protected StandaloneStorage HostStorage { get; private set; }
+
+        private IDirectStandaloneStorage _directHostStorage;
 
         /// <inheritdoc/>
         public override IStorage PublicFactsStorage => HostStorage.PublicFactsStorage;
@@ -130,6 +133,11 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             HostStorage.OldAddCategories(logger, categories);
         }
 
+        public void DirectAddCategories(IMonitorLogger logger, List<string> categories)
+        {
+            _directHostStorage.DirectAddCategories(logger, categories);
+        }
+
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemoveCategory(IMonitorLogger logger, string category)
         {
@@ -140,6 +148,11 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         public void OldRemoveCategories(IMonitorLogger logger, List<string> categories)
         {
             HostStorage.OldRemoveCategories(logger, categories);
+        }
+
+        public void DirectRemoveCategories(IMonitorLogger logger, List<string> categories)
+        {
+            _directHostStorage.DirectRemoveCategories(logger, categories);
         }
 
         public bool EnableCategories { get => HostStorage.EnableCategories; set => HostStorage.EnableCategories = value; }

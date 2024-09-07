@@ -92,22 +92,10 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             _worldContext.AddPublicFactsStorage(this);
         }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public string OldInsertPublicFact(IMonitorLogger logger, string text)
-        {
-            throw new NotSupportedException("1D4368C5-491C-4CA9-BAEA-DDF09127F444");
-        }
-
         /// <inheritdoc/>
         public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
         {
             return HostStorage.InsertPublicFact(logger, text);
-        }
-
-        [Obsolete("Serialization Refactoring", true)]
-        public string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
-        {
-            throw new NotSupportedException("CC1F1DE6-AA4D-4DB1-9410-7A57F3C61A0D");
         }
 
         /// <inheritdoc/>
@@ -116,34 +104,16 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             return HostStorage.InsertPublicFact(logger, fact);
         }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemovePublicFact(IMonitorLogger logger, string id)
-        {
-            throw new NotSupportedException("532D67F0-6213-4D23-97AF-0D819573576E");
-        }
-
         /// <inheritdoc/>
         public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
         {
             return HostStorage.RemovePublicFact(logger, id);
         }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldPushSoundFact(float power, string text)
-        {
-            throw new NotSupportedException("0590467C-6827-42CD-8DEF-0373A0FA53ED");
-        }
-
         /// <inheritdoc/>
         public IMethodResponse PushSoundFact(float power, string text)
         {
             return _soundPublisher.PushSoundFact(power, text);
-        }
-
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldPushSoundFact(float power, RuleInstance fact)
-        {
-            throw new NotSupportedException("DD329FFB-3954-4652-B4CF-F4DE6BBF24B5");
         }
 
         /// <inheritdoc/>

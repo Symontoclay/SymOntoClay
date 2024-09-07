@@ -144,7 +144,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
         [Obsolete("Serialization Refactoring", true)]
         public void OldPushSoundFact(float power, string text)
         {
-            _gameComponent.OldPushSoundFact(power, text);
+            throw new NotSupportedException("D2DE6F75-4E58-463B-B2C7-755FDDFD071F");
         }
 
         /// <inheritdoc/>
@@ -157,7 +157,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject
         [Obsolete("Serialization Refactoring", true)]
         public void OldPushSoundFact(float power, RuleInstance fact)
         {
-            _gameComponent.OldPushSoundFact(power, fact);
+            throw new NotSupportedException("BB03135A-07D2-4155-8BD5-C8FC4BD9B285");
         }
 
         /// <inheritdoc/>

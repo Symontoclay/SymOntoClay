@@ -108,46 +108,66 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertPublicFact(IMonitorLogger logger, string text)
         {
-            return _gameComponent.OldInsertPublicFact(logger, text);
+            throw new NotSupportedException("8F1D372F-DB41-4ED6-9970-F6469D50C152");
         }
 
-        IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
+        /// <inheritdoc/>
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
+        {
+            return _gameComponent.InsertPublicFact(logger, text);
+        }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
-            return _gameComponent.OldInsertPublicFact(logger, fact);
+            throw new NotSupportedException("6EA70B49-5C19-45F2-8DA7-DB8B6F47398B");
         }
 
-        IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        /// <inheritdoc/>
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        {
+            return _gameComponent.InsertPublicFact(logger, fact);
+        }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemovePublicFact(IMonitorLogger logger, string id)
         {
-            _gameComponent.OldRemovePublicFact(logger, id);
+            throw new NotSupportedException("379CB4BA-9B74-495E-B315-9E1FC5C4FCFB");
         }
 
-        IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
+        /// <inheritdoc/>
+        public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
+        {
+            return _gameComponent.RemovePublicFact(logger, id);
+        }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldPushSoundFact(float power, string text)
         {
-            _gameComponent.OldPushSoundFact(power, text);
+            throw new NotSupportedException("0A786464-7CA8-491A-889C-70C3F8A0790E");
         }
 
-        IMethodResponse PushSoundFact(float power, string text)
+        /// <inheritdoc/>
+        public IMethodResponse PushSoundFact(float power, string text)
+        {
+            return _gameComponent.PushSoundFact(power, text);
+        }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldPushSoundFact(float power, RuleInstance fact)
         {
-            _gameComponent.OldPushSoundFact(power, fact);
+            throw new NotSupportedException("97D67CAC-73CD-44C9-B5A6-9F2DDA413B05");
         }
 
-        IMethodResponse PushSoundFact(float power, RuleInstance fact)
+        /// <inheritdoc/>
+        public IMethodResponse PushSoundFact(float power, RuleInstance fact)
+        {
+            return _gameComponent.PushSoundFact(power, fact);
+        }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]

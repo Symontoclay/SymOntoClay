@@ -69,40 +69,6 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public void LoadFromImage(string path)
-        {
-            lock (_stateLockObj)
-            {
-                if (_state == ComponentState.Disposed)
-                {
-                    throw new ObjectDisposedException(null);
-                }
-
-#if IMAGINE_WORKING
-#else
-                throw new NotImplementedException("78748188-426E-437B-B569-B7991C41081E");
-#endif
-            }
-        }
-
-        /// <inheritdoc/>
-        public void SaveToImage(string path)
-        {
-            lock (_stateLockObj)
-            {
-                if (_state == ComponentState.Disposed)
-                {
-                    throw new ObjectDisposedException(null);
-                }
-
-#if IMAGINE_WORKING
-#else
-                throw new NotImplementedException("CB081D88-0E42-4C37-BD2D-746CDD6317A8");
-#endif
-            }
-        }
-
-        /// <inheritdoc/>
         public void BeginStarting()
         {
             lock (_stateLockObj)

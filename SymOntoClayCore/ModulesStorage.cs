@@ -81,40 +81,6 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public void LoadFromImage(string path)
-        {
-            lock (_stateLockObj)
-            {
-                if (_state == ComponentState.Disposed)
-                {
-                    throw new ObjectDisposedException(null);
-                }
-
-#if IMAGINE_WORKING
-#else
-                throw new NotImplementedException("419D44AA-6998-4B15-A4F0-23BDCD0EEEAA");
-#endif
-            }
-        }
-
-        /// <inheritdoc/>
-        public void SaveToImage(string path)
-        {
-            lock (_stateLockObj)
-            {
-                if (_state == ComponentState.Disposed)
-                {
-                    throw new ObjectDisposedException(null);
-                }
-
-#if IMAGINE_WORKING
-#else
-                throw new NotImplementedException("6272057C-BCEC-4265-9E75-FB2899207D3E");
-#endif
-            }
-        }
-
-        /// <inheritdoc/>
         public IList<IStorage> Import(IMonitorLogger logger, IList<StrongIdentifierValue> namesList)
         {
             lock (_stateLockObj)

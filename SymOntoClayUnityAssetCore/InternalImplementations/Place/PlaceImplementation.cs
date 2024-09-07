@@ -113,28 +113,40 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Place
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertPublicFact(IMonitorLogger logger, string text)
         {
-            return _gameComponent.OldInsertPublicFact(logger, text);
+            throw new NotSupportedException("8155D6EA-A162-46E3-AEBF-425B14EE013C");
         }
 
-        IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
+        /// <inheritdoc/>
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
+        {
+            return _gameComponent.InsertPublicFact(logger, text);
+        }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
-            return _gameComponent.OldInsertPublicFact(logger, fact);
+            throw new NotSupportedException("39A6AAE8-028F-4E44-89A4-EF7C2FF09A0A");
         }
 
-        IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        /// <inheritdoc/>
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        {
+            return _gameComponent.InsertPublicFact(logger, fact);
+        }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemovePublicFact(IMonitorLogger logger, string id)
         {
-            _gameComponent.OldRemovePublicFact(logger, id);
+            throw new NotSupportedException("16CFC17E-81AB-4255-90A9-552854408FAE");
         }
 
-        IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
+        /// <inheritdoc/>
+        public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
+        {
+            return _gameComponent.RemovePublicFact(logger, id);
+        }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
@@ -142,7 +154,11 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Place
         {
         }
 
-        IMethodResponse PushSoundFact(float power, string text)
+        /// <inheritdoc/>
+        public IMethodResponse PushSoundFact(float power, string text)
+        {
+            return CompletedMethodResponse.Instance;
+        }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
@@ -150,7 +166,11 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Place
         {
         }
 
-        IMethodResponse PushSoundFact(float power, RuleInstance fact)
+        /// <inheritdoc/>
+        public IMethodResponse PushSoundFact(float power, RuleInstance fact)
+        {
+            return CompletedMethodResponse.Instance;
+        }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]

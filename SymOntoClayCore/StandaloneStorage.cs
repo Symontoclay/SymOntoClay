@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.MethodResponses;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
@@ -240,7 +241,11 @@ namespace SymOntoClay.Core
             }
         }
 
+        /// <inheritdoc/>
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
+        {
 
+        }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
@@ -264,6 +269,12 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        {
+
+        }
+
+        /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemovePublicFact(IMonitorLogger logger, string id)
         {
@@ -277,6 +288,12 @@ namespace SymOntoClay.Core
 
                 _storageComponent.RemovePublicFact(logger, id);
             }            
+        }
+
+        /// <inheritdoc/>
+        public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
+        {
+
         }
 
         /// <inheritdoc/>
@@ -296,6 +313,12 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
+        public IMethodResponse AddCategory(IMonitorLogger logger, string category)
+        {
+
+        }
+
+        /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldAddCategories(IMonitorLogger logger, List<string> categories)
         {
@@ -310,6 +333,14 @@ namespace SymOntoClay.Core
                 _storageComponent.AddCategories(logger, categories);
             }            
         }
+
+        /// <inheritdoc/>
+        public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
+        {
+
+        }
+
+        void IDirectStandaloneStorage.DirectAddCategories(IMonitorLogger logger, List<string> categories);
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
@@ -328,6 +359,12 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
+        public IMethodResponse RemoveCategory(IMonitorLogger logger, string category)
+        {
+
+        }
+
+        /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemoveCategories(IMonitorLogger logger, List<string> categories)
         {
@@ -342,6 +379,14 @@ namespace SymOntoClay.Core
                 _storageComponent.RemoveCategories(logger, categories);
             }            
         }
+
+        /// <inheritdoc/>
+        public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
+        {
+
+        }
+
+        void IDirectStandaloneStorage.DirectRemoveCategories(IMonitorLogger logger, List<string> categories);
 
         /// <inheritdoc/>
         public bool EnableCategories { get => _storageComponent.EnableCategories; set => _storageComponent.EnableCategories = value; }

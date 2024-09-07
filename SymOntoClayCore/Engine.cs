@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.MethodResponses;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Helpers;
@@ -113,11 +114,17 @@ namespace SymOntoClay.Core
             return _context.Storage.InsertPublicFact(logger, text);
         }
 
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text);
+
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
         {
             return _context.Storage.InsertPublicFact(logger, factName, text);
         }
+
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text);
+        string IDirectEngine.DirectInsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text);
+
 
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
@@ -125,11 +132,17 @@ namespace SymOntoClay.Core
             return _context.Storage.InsertPublicFact(logger, fact);
         }
 
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact);
+        string IDirectEngine.DirectInsertPublicFact(IMonitorLogger logger, RuleInstance fact);
+
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemovePublicFact(IMonitorLogger logger, string id)
         {
             _context.Storage.RemovePublicFact(logger, id);
         }
+
+        public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id);
+        void IDirectEngine.DirectRemovePublicFact(IMonitorLogger logger, string id);
 
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertFact(IMonitorLogger logger, string text)
@@ -137,17 +150,25 @@ namespace SymOntoClay.Core
             return _context.Storage.InsertFact(logger, text);
         }
 
+        public IMethodResponse<string> InsertFact(IMonitorLogger logger, string text);
+
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
         {
             return _context.Storage.InsertFact(logger, factName, text);
         }
 
+        public IMethodResponse<string> InsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text);
+        string IDirectEngine.DirectInsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text);
+
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemoveFact(IMonitorLogger logger, string id)
         {
             _context.Storage.RemoveFact(logger, id);
         }
+
+        public IMethodResponse RemoveFact(IMonitorLogger logger, string id);
+        void IDirectEngine.DirectRemoveFact(IMonitorLogger logger, string id);
 
         public IStorage PublicFactsStorage => _context.Storage.PublicFactsStorage;
 
@@ -157,11 +178,17 @@ namespace SymOntoClay.Core
             _context.Storage.AddVisibleStorage(logger, storage);
         }
 
+        public IMethodResponse AddVisibleStorage(IMonitorLogger logger, IStorage storage);
+        void IDirectEngine.DirectAddVisibleStorage(IMonitorLogger logger, IStorage storage);
+
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemoveVisibleStorage(IMonitorLogger logger, IStorage storage)
         {
             _context.Storage.RemoveVisibleStorage(logger, storage);
         }
+
+        public IMethodResponse RemoveVisibleStorage(IMonitorLogger logger, IStorage storage);
+        void IDirectEngine.DirectRemoveVisibleStorage(IMonitorLogger logger, IStorage storage);
 
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertPerceptedFact(IMonitorLogger logger, string text)
@@ -169,11 +196,17 @@ namespace SymOntoClay.Core
             return _context.Storage.InsertPerceptedFact(logger, text);
         }
 
+        public IMethodResponse<string> InsertPerceptedFact(IMonitorLogger logger, string text);
+        string IDirectEngine.DirectInsertPerceptedFact(IMonitorLogger logger, string text);
+
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemovePerceptedFact(IMonitorLogger logger, string id)
         {
             _context.Storage.RemovePerceptedFact(logger, id);
         }
+
+        public IMethodResponse RemovePerceptedFact(IMonitorLogger logger, string id);
+        void IDirectEngine.DirectRemovePerceptedFact(IMonitorLogger logger, string id);
 
         [Obsolete("Serialization Refactoring", true)]
         public void OldInsertListenedFact(IMonitorLogger logger, string text)
@@ -181,11 +214,15 @@ namespace SymOntoClay.Core
             _context.Storage.InsertListenedFact(logger, text);
         }
 
+        public IMethodResponse InsertListenedFact(IMonitorLogger logger, string text);
+
         [Obsolete("Serialization Refactoring", true)]
         public void OldInsertListenedFact(IMonitorLogger logger, RuleInstance fact)
         {
             _context.Storage.InsertListenedFact(logger, fact);
         }
+
+        public IMethodResponse InsertListenedFact(IMonitorLogger logger, RuleInstance fact);
 
         [Obsolete("Serialization Refactoring", true)]
         public void OldAddCategory(IMonitorLogger logger, string category)
@@ -193,11 +230,16 @@ namespace SymOntoClay.Core
             _context.Storage.AddCategory(logger, category);
         }
 
+        public IMethodResponse AddCategory(IMonitorLogger logger, string category);
+
         [Obsolete("Serialization Refactoring", true)]
         public void OldAddCategories(IMonitorLogger logger, List<string> categories)
         {
             _context.Storage.AddCategories(logger, categories);
         }
+
+        public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories);
+        void IDirectEngine.DirectAddCategories(IMonitorLogger logger, List<string> categories);
 
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemoveCategory(IMonitorLogger logger, string category)
@@ -205,11 +247,16 @@ namespace SymOntoClay.Core
             _context.Storage.RemoveCategory(logger, category);
         }
 
+        public IMethodResponse RemoveCategory(IMonitorLogger logger, string category);
+
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemoveCategories(IMonitorLogger logger, List<string> categories)
         {
             _context.Storage.RemoveCategories(logger, categories);
         }
+
+        public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories);
+        void IDirectEngine.DirectRemoveCategories(IMonitorLogger logger, List<string> categories);
 
         public bool EnableCategories { get => _context.Storage.EnableCategories; set => _context.Storage.EnableCategories = value; }
 
@@ -218,6 +265,9 @@ namespace SymOntoClay.Core
         {
             _context.Die();
         }
+
+        public IMethodResponse Die();
+        void IDirectEngine.DirectDie();
 
         /// <inheritdoc/>
         protected override void OnDisposed()

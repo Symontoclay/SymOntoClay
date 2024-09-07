@@ -122,22 +122,10 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             return _soundPublisher.PushSoundFact(power, fact);
         }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldAddCategory(IMonitorLogger logger, string category)
-        {
-            throw new NotSupportedException("40EFC9DE-246D-47E6-A0AE-BF69A99967A9");
-        }
-
         /// <inheritdoc/>
         public IMethodResponse AddCategory(IMonitorLogger logger, string category)
         {
             return HostStorage.AddCategory(logger, category);
-        }
-
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldAddCategories(IMonitorLogger logger, List<string> categories)
-        {
-            throw new NotSupportedException("A98D1117-9DA9-4AFF-926D-64A7C346EF9D");
         }
 
         /// <inheritdoc/>
@@ -151,22 +139,10 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             _directHostStorage.DirectAddCategories(logger, categories);
         }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemoveCategory(IMonitorLogger logger, string category)
-        {
-            throw new NotSupportedException("C05CFA63-21D9-4FBC-8741-75FBE8C2D09E");
-        }
-
         /// <inheritdoc/>
         public IMethodResponse RemoveCategory(IMonitorLogger logger, string category)
         {
             return HostStorage.RemoveCategory(logger, category);
-        }
-
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemoveCategories(IMonitorLogger logger, List<string> categories)
-        {
-            throw new NotSupportedException("D0FD4FCD-C0E1-470E-9C96-6B42F7B453BD");
         }
 
         /// <inheritdoc/>

@@ -208,7 +208,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
 
                     _visibleObjectsStoragesRegistry.Remove(removedInstancesId);
 
-                    _coreEngine.OldRemoveVisibleStorage(Logger, storage);
+                    _directEngine.DirectRemoveVisibleStorage(Logger, storage);
 
                     _visibleObjectsIdForFactsRegistry.Remove(removedInstancesId);
 
@@ -217,7 +217,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
                         var factId = _visibleObjectsSeeFactsIdRegistry[removedInstancesId];
                         _visibleObjectsSeeFactsIdRegistry.Remove(removedInstancesId);
 
-                        _coreEngine.OldRemovePerceptedFact(Logger, factId);
+                        _directEngine.DirectRemovePerceptedFact(Logger, factId);
                     }
 
                     if(_visibleObjectsFocusFactsIdRegistry.ContainsKey(removedInstancesId))
@@ -225,7 +225,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
                         var factId = _visibleObjectsFocusFactsIdRegistry[removedInstancesId];
                         _visibleObjectsFocusFactsIdRegistry.Remove(removedInstancesId);
 
-                        _coreEngine.OldRemovePerceptedFact(Logger, factId);
+                        _directEngine.DirectRemovePerceptedFact(Logger, factId);
                     }
 
                     if(_visibleObjectsDistanceFactsIdRegistry.ContainsKey(removedInstancesId))
@@ -233,7 +233,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
                         var factId = _visibleObjectsDistanceFactsIdRegistry[removedInstancesId];
                         _visibleObjectsDistanceFactsIdRegistry.Remove(removedInstancesId);
 
-                        _coreEngine.OldRemovePerceptedFact(Logger, factId);
+                        _directEngine.DirectRemovePerceptedFact(Logger, factId);
                     }
                 }
             }
@@ -248,7 +248,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
 
                     _visibleObjectsStoragesRegistry[instanceId] = storage;
 
-                    _coreEngine.OldAddVisibleStorage(Logger, storage);
+                    _directEngine.DirectAddVisibleStorage(Logger, storage);
 
                     var idForFacts = _worldContext.GetIdForFactsByInstanceId(instanceId);
 
@@ -256,18 +256,18 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
 
                     var seeFactStr = $"see(I, {idForFacts})";
 
-                    _visibleObjectsSeeFactsIdRegistry[instanceId] = _coreEngine.OldInsertPerceptedFact(Logger, seeFactStr);
+                    _visibleObjectsSeeFactsIdRegistry[instanceId] = _directEngine.DirectInsertPerceptedFact(Logger, seeFactStr);
 
                     if (newVisibleItem.IsInFocus)
                     {
                         var focusFactStr = $"focus(I, {idForFacts})";
 
-                        _visibleObjectsFocusFactsIdRegistry[instanceId] = _coreEngine.OldInsertPerceptedFact(Logger, focusFactStr);
+                        _visibleObjectsFocusFactsIdRegistry[instanceId] = _directEngine.DirectInsertPerceptedFact(Logger, focusFactStr);
                     }
 
                     var distanceFactStr = $"distance(I, {idForFacts}, {newVisibleItem.MinDistance.ToString("G", CultureInfo.InvariantCulture)})";
 
-                    _visibleObjectsDistanceFactsIdRegistry[instanceId] = _coreEngine.OldInsertPerceptedFact(Logger, distanceFactStr);
+                    _visibleObjectsDistanceFactsIdRegistry[instanceId] = _directEngine.DirectInsertPerceptedFact(Logger, distanceFactStr);
                 }
             }
 
@@ -281,7 +281,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
 
                     var focusFactStr = $"focus(I, {idForFacts})";
 
-                    _visibleObjectsFocusFactsIdRegistry[instanceId] = _coreEngine.OldInsertPerceptedFact(Logger, focusFactStr);
+                    _visibleObjectsFocusFactsIdRegistry[instanceId] = _directEngine.DirectInsertPerceptedFact(Logger, focusFactStr);
                 }
             }
 
@@ -294,7 +294,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
                     var factId = _visibleObjectsFocusFactsIdRegistry[instanceId];
                     _visibleObjectsFocusFactsIdRegistry.Remove(instanceId);
 
-                    _coreEngine.OldRemovePerceptedFact(Logger, factId);
+                    _directEngine.DirectRemovePerceptedFact(Logger, factId);
                 }
             }
 
@@ -304,13 +304,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
                 {
                     var instanceId = item.InstanceId;
 
-                    _coreEngine.OldRemovePerceptedFact(Logger, _visibleObjectsDistanceFactsIdRegistry[instanceId]);
+                    _directEngine.DirectRemovePerceptedFact(Logger, _visibleObjectsDistanceFactsIdRegistry[instanceId]);
 
                     var idForFacts = _worldContext.GetIdForFactsByInstanceId(instanceId);
 
                     var distanceFactStr = $"distance(I, {idForFacts}, {item.MinDistance.ToString("G", CultureInfo.InvariantCulture)})";
 
-                    _visibleObjectsDistanceFactsIdRegistry[instanceId] = _coreEngine.OldInsertPerceptedFact(Logger, distanceFactStr);
+                    _visibleObjectsDistanceFactsIdRegistry[instanceId] = _directEngine.DirectInsertPerceptedFact(Logger, distanceFactStr);
                 }
             }
 

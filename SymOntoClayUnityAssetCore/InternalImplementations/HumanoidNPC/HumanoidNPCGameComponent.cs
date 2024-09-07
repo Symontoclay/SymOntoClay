@@ -219,6 +219,11 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             return _coreEngine.OldInsertFact(logger, factName, text);
         }
 
+        public string DirectInsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        {
+            return _directEngine.DirectInsertFact(logger, factName, text);
+        }
+
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemoveFact(IMonitorLogger logger, string id)
         {

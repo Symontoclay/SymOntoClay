@@ -173,15 +173,21 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         [Obsolete("Serialization Refactoring", true)]
         public void OldAddCategory(IMonitorLogger logger, string category)
         {
+            throw new NotSupportedException("B05C9B82-635C-4ED3-A27F-D866B6243507");
+        }
+
+        /// <inheritdoc/>
+        public IMethodResponse AddCategory(IMonitorLogger logger, string category)
+        {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
                 {
                     _addedCategories.Add(category);
-                    return;
+                    return CompletedMethodResponse.Instance;
                 }
 
-                _gameComponent.OldAddCategory(logger, category);
+                return _gameComponent.AddCategory(logger, category);
             }
         }
 
@@ -189,15 +195,21 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         [Obsolete("Serialization Refactoring", true)]
         public void OldAddCategories(IMonitorLogger logger, List<string> categories)
         {
+            throw new NotSupportedException("D2EBB424-7E47-47BF-84A8-2383C1D660EC");
+        }
+
+        /// <inheritdoc/>
+        public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
+        {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
                 {
                     _addedCategories.AddRange(categories);
-                    return;
+                    return CompletedMethodResponse.Instance;
                 }
 
-                _gameComponent.OldAddCategories(logger, categories);
+                return _gameComponent.AddCategories(logger, categories);
             }
         }
 
@@ -205,15 +217,21 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemoveCategory(IMonitorLogger logger, string category)
         {
+            throw new NotSupportedException("A9DB4087-2A18-448B-B42A-FE9E49DB34F1");
+        }
+
+        /// <inheritdoc/>
+        public IMethodResponse RemoveCategory(IMonitorLogger logger, string category)
+        {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
                 {
                     _removedCategories.Add(category);
-                    return;
+                    return CompletedMethodResponse.Instance;
                 }
 
-                _gameComponent.OldRemoveCategory(logger, category);
+                return _gameComponent.RemoveCategory(logger, category);
             }
         }
 
@@ -221,15 +239,21 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemoveCategories(IMonitorLogger logger, List<string> categories)
         {
+            throw new NotSupportedException("8C8F0967-522F-40A6-9CF4-BD9AA9A3E3ED");
+        }
+
+        /// <inheritdoc/>
+        public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
+        {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
                 {
                     _removedCategories.AddRange(categories);
-                    return;
+                    return CompletedMethodResponse.Instance;
                 }
 
-                _gameComponent.OldRemoveCategories(logger, categories);
+                return _gameComponent.RemoveCategories(logger, categories);
             }
         }
 

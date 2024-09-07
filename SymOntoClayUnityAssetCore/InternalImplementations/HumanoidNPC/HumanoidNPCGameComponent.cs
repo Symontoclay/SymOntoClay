@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.MethodResponses;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
@@ -325,6 +326,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             _coreEngine.OldDie();
             _visionComponent?.OldDie();
         }
+
+        public IMethodResponse Die();
 
         /// <inheritdoc/>
         protected override void OnDisposed()

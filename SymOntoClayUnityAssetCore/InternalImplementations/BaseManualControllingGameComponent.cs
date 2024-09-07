@@ -35,6 +35,7 @@ using System.Text;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.ActiveObject.MethodResponses;
 
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 {
@@ -82,6 +83,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             OldAddToManualControl(obj, new List<int>() { device});
         }
 
+        public IMethodResponse AddToManualControl(IGameObject obj, int device);
+
         [Obsolete("Serialization Refactoring", true)]
         public void OldAddToManualControl(IGameObject obj, IList<int> devices)
         {
@@ -107,6 +110,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             }
         }
 
+        public IMethodResponse AddToManualControl(IGameObject obj, IList<int> devices);
+
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemoveFromManualControl(IGameObject obj)
         {
@@ -128,6 +133,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
                 _endpointsRegistries.Remove(endpointsProxyRegistryForDevices);
             }
         }
+
+        public IMethodResponse RemoveFromManualControl(IGameObject obj);
 
         public IList<IInternalManualControlledObject> GetManualControlledObjects()
         {

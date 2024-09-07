@@ -206,21 +206,39 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         [Obsolete("Serialization Refactoring", true)]
         public void OldAddToManualControl(IGameObject obj, DeviceOfBiped device)
         {
-            _gameComponent.OldAddToManualControl(obj, (int)device);
+            throw new NotSupportedException("FF96775B-31A1-4BA5-8444-5FB17298523F");
+        }
+
+        /// <inheritdoc/>
+        public IMethodResponse AddToManualControl(IGameObject obj, DeviceOfBiped device)
+        {
+            return _gameComponent.AddToManualControl(obj, (int)device);
         }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldAddToManualControl(IGameObject obj, IList<DeviceOfBiped> devices)
         {
-            _gameComponent.OldAddToManualControl(obj, devices?.Select(p => (int)p).ToList());
+            throw new NotSupportedException("4FF8E4AC-C6E9-4CEF-8BC7-7BC7B38A22DA");
+        }
+
+        /// <inheritdoc/>
+        public IMethodResponse AddToManualControl(IGameObject obj, IList<DeviceOfBiped> devices)
+        {
+            return _gameComponent.AddToManualControl(obj, devices?.Select(p => (int)p).ToList());
         }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemoveFromManualControl(IGameObject obj)
         {
-            _gameComponent.OldRemoveFromManualControl(obj);
+            throw new NotSupportedException("CF47174D-60F6-4FC6-89D3-86C090B4567A");
+        }
+
+        /// <inheritdoc/>
+        public IMethodResponse RemoveFromManualControl(IGameObject obj)
+        {
+            return _gameComponent.RemoveFromManualControl(obj);
         }
 
         /// <inheritdoc/>
@@ -466,11 +484,14 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         [Obsolete("Serialization Refactoring", true)]
         public void OldDie()
         {
-            _gameComponent.OldDie();
+            throw new NotSupportedException("387F6511-2201-4249-B713-9B546BB83E11");
         }
 
         /// <inheritdoc/>
-        public IMethodResponse Die();
+        public IMethodResponse Die()
+        {
+            return _gameComponent.Die();
+        }
 
         /// <inheritdoc/>
         public bool IsDisposed => _gameComponent.IsDisposed;

@@ -4,10 +4,6 @@ using SymOntoClay.ActiveObject.MethodResponses;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Serialization;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using static System.Collections.Specialized.BitVector32;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace SymOntoClay.ActiveObject.Functors
 {

@@ -265,22 +265,34 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertPublicFact(IMonitorLogger logger, string text)
         {
+            throw new NotSupportedException("091EE105-F536-4C8B-8F6E-2FB54EFC5785");
+        }
+
+        /// <inheritdoc/>
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
+        {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
                 {
                     var factName = NameHelper.CreateRuleOrFactName();
                     _deferredPublicFactsTexts.Add((factName, text));
-                    return factName.NameValue;
+                    return new CompletedMethodResponse<string>(factName.NameValue);
                 }
 
-                return _gameComponent.OldInsertPublicFact(logger, text);
+                return _gameComponent.InsertPublicFact(logger, text);
             }
         }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        {
+            throw new NotSupportedException();
+        }
+
+        /// <inheritdoc/>
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             lock (_initializeLockObj)
             {
@@ -303,6 +315,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemovePublicFact(IMonitorLogger logger, string id)
         {
+            throw new NotSupportedException();
+        }
+
+        /// <inheritdoc/>
+        public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
+        {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
@@ -318,6 +336,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertFact(IMonitorLogger logger, string text)
+        {
+            throw new NotSupportedException();
+        }
+
+        /// <inheritdoc/>
+        public IMethodResponse<string> InsertFact(IMonitorLogger logger, string text)
         {
             lock (_initializeLockObj)
             {
@@ -336,6 +360,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemoveFact(IMonitorLogger logger, string id)
         {
+            throw new NotSupportedException();
+        }
+
+        /// <inheritdoc/>
+        public IMethodResponse RemoveFact(IMonitorLogger logger, string id)
+        {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
@@ -352,19 +382,37 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         [Obsolete("Serialization Refactoring", true)]
         public void OldPushSoundFact(float power, string text)
         {
-            _gameComponent.OldPushSoundFact(power, text);
+            throw new NotSupportedException();
+        }
+
+        /// <inheritdoc/>
+        public IMethodResponse PushSoundFact(float power, string text)
+        {
+            return _gameComponent.PushSoundFact(power, text);
         }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldPushSoundFact(float power, RuleInstance fact)
         {
-            _gameComponent.OldPushSoundFact(power, fact);
+            throw new NotSupportedException();
+        }
+
+        /// <inheritdoc/>
+        public IMethodResponse PushSoundFact(float power, RuleInstance fact)
+        {
+            return _gameComponent.PushSoundFact(power, fact);
         }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldAddCategory(IMonitorLogger logger, string category)
+        {
+            throw new NotSupportedException("E2661503-558D-40CA-920D-E1A420205CCA");
+        }
+
+        /// <inheritdoc/>
+        public IMethodResponse AddCategory(IMonitorLogger logger, string category)
         {
             lock (_initializeLockObj)
             {
@@ -382,6 +430,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         [Obsolete("Serialization Refactoring", true)]
         public void OldAddCategories(IMonitorLogger logger, List<string> categories)
         {
+            throw new NotSupportedException("1DDAA528-869A-41C7-BC6C-4A2DA79138D5");
+        }
+
+        /// <inheritdoc/>
+        public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
+        {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
@@ -398,6 +452,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemoveCategory(IMonitorLogger logger, string category)
         {
+            throw new NotSupportedException("0A85FA33-D166-45B1-9643-8349D1C3ED25");
+        }
+
+        /// <inheritdoc/>
+        public IMethodResponse RemoveCategory(IMonitorLogger logger, string category)
+        {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
@@ -413,6 +473,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemoveCategories(IMonitorLogger logger, List<string> categories)
+        {
+            throw new NotSupportedException("DFA1FE6C-C757-486A-94E2-3E93554B4F9A");
+        }
+
+        /// <inheritdoc/>
+        public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
             lock (_initializeLockObj)
             {
@@ -464,14 +530,26 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         [Obsolete("Serialization Refactoring", true)]
         public void OldAddToBackpack(IMonitorLogger logger, IGameObject obj)
         {
-            _gameComponent.OldAddToBackpack(logger, obj);
+            throw new NotSupportedException("85468F3C-658C-4942-9B26-411B897E27F5");
+        }
+
+        /// <inheritdoc/>
+        public IMethodResponse AddToBackpack(IMonitorLogger logger, IGameObject obj)
+        {
+            return _gameComponent.AddToBackpack(logger, obj);
         }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemoveFromBackpack(IMonitorLogger logger, IGameObject obj)
         {
-            _gameComponent.OldRemoveFromBackpack(logger, obj);
+            throw new NotSupportedException("D2243034-4A17-463B-AB1A-3DBF0F4E4ABC");
+        }
+
+        /// <inheritdoc/>
+        public IMethodResponse RemoveFromBackpack(IMonitorLogger logger, IGameObject obj)
+        {
+            return _gameComponent.RemoveFromBackpack(logger, obj);
         }
 
         /// <inheritdoc/>

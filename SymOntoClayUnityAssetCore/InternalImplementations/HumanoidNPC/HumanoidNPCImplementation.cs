@@ -288,7 +288,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
-            throw new NotSupportedException();
+            throw new NotSupportedException("9515CD90-8748-4DB0-9045-B9FBE06B2FB4");
         }
 
         /// <inheritdoc/>
@@ -304,10 +304,10 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                     }
 
                     _deferredPublicFactsInstances.Add(fact);
-                    return fact.Name.NameValue;
+                    return new CompletedMethodResponse<string>(fact.Name.NameValue);
                 }
 
-                return _gameComponent.OldInsertPublicFact(logger, fact);
+                return _gameComponent.InsertPublicFact(logger, fact);
             }
         }
 
@@ -315,7 +315,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemovePublicFact(IMonitorLogger logger, string id)
         {
-            throw new NotSupportedException();
+            throw new NotSupportedException("1BB050AC-9062-4246-AB13-329D91A5BA39");
         }
 
         /// <inheritdoc/>
@@ -326,10 +326,10 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 if (_gameComponent == null)
                 {
                     _defferedRemovedPublicFacts.Add(id);
-                    return;
+                    return CompletedMethodResponse.Instance;
                 }
 
-                _gameComponent.OldRemovePublicFact(logger, id);
+                return _gameComponent.RemovePublicFact(logger, id);
             }
         }
 
@@ -337,7 +337,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertFact(IMonitorLogger logger, string text)
         {
-            throw new NotSupportedException();
+            throw new NotSupportedException("8458C937-A928-4467-A79E-523D347B10C4");
         }
 
         /// <inheritdoc/>
@@ -349,10 +349,10 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 {
                     var factName = NameHelper.CreateRuleOrFactName();
                     _deferredFactsTexts.Add((factName, text));
-                    return factName.NameValue;
+                    return new CompletedMethodResponse<string>(factName.NameValue);
                 }
 
-                return _gameComponent.OldInsertFact(logger, text);
+                return _gameComponent.InsertFact(logger, text);
             }
         }
 
@@ -360,7 +360,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemoveFact(IMonitorLogger logger, string id)
         {
-            throw new NotSupportedException();
+            throw new NotSupportedException("1379352D-5020-42DE-BB9F-E9263C83396C");
         }
 
         /// <inheritdoc/>
@@ -371,10 +371,10 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 if (_gameComponent == null)
                 {
                     _defferedRemovedFacts.Add(id);
-                    return;
+                    return CompletedMethodResponse.Instance;
                 }
 
-                _gameComponent.OldRemoveFact(logger, id);
+                return _gameComponent.RemoveFact(logger, id);
             }
         }
 
@@ -382,7 +382,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         [Obsolete("Serialization Refactoring", true)]
         public void OldPushSoundFact(float power, string text)
         {
-            throw new NotSupportedException();
+            throw new NotSupportedException("BDE4A752-D659-4C39-B668-F87BF438EB77");
         }
 
         /// <inheritdoc/>
@@ -395,7 +395,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         [Obsolete("Serialization Refactoring", true)]
         public void OldPushSoundFact(float power, RuleInstance fact)
         {
-            throw new NotSupportedException();
+            throw new NotSupportedException("969032FD-9238-4403-A917-8375D1D172D3");
         }
 
         /// <inheritdoc/>
@@ -419,10 +419,10 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 if (_gameComponent == null)
                 {
                     _deferredAddedCategories.Add(category);
-                    return;
+                    return CompletedMethodResponse.Instance;
                 }
 
-                _gameComponent.OldAddCategory(logger, category);
+                return _gameComponent.AddCategory(logger, category);
             }
         }
 
@@ -441,10 +441,10 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 if (_gameComponent == null)
                 {
                     _deferredAddedCategories.AddRange(categories);
-                    return;
+                    return CompletedMethodResponse.Instance;
                 }
 
-                _gameComponent.OldAddCategories(logger, categories);
+                return _gameComponent.AddCategories(logger, categories);
             }
         }
 
@@ -463,10 +463,10 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 if (_gameComponent == null)
                 {
                     _deferredRemovedCategories.Add(category);
-                    return;
+                    return CompletedMethodResponse.Instance;
                 }
 
-                _gameComponent.OldRemoveCategory(logger, category);
+                return _gameComponent.RemoveCategory(logger, category);
             }
         }
 
@@ -485,10 +485,10 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 if (_gameComponent == null)
                 {
                     _deferredRemovedCategories.AddRange(categories);
-                    return;
+                    return CompletedMethodResponse.Instance;
                 }
 
-                _gameComponent.OldRemoveCategories(logger, categories);
+                return _gameComponent.RemoveCategories(logger, categories);
             }
         }
 

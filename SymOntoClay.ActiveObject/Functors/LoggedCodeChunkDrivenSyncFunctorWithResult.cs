@@ -40,14 +40,31 @@ namespace SymOntoClay.ActiveObject.Functors
         private TGlobalContext _globalContext;
         private TLocalContext _localContext;
 
+        private bool _isFinishedRun;
+        private bool _isFinishedCodeChunksContext;
+
         public void Run()
         {
+            if (_isFinishedRun)
+            {
+                return;
+            }
+
             _action(_codeChunksContext);
+
+            _isFinishedRun = true;
         }
 
         void IBaseLoggedCodeChunkDrivenSyncFunctorWithResult<TResult>.ExecuteCodeChunksContext()
         {
+            if (_isFinishedCodeChunksContext)
+            {
+                return;
+            }
+
             _codeChunksContext.Run();
+
+            _isFinishedCodeChunksContext = true;
         }
 
         bool IBaseLoggedCodeChunkDrivenSyncFunctorWithResult<TResult>.IsFinished => _codeChunksContext.IsFinished;

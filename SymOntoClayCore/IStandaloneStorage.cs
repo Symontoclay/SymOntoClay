@@ -27,7 +27,6 @@ using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core
 {

@@ -169,139 +169,100 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             }
         }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public string OldInsertPublicFact(IMonitorLogger logger, string text)
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
         {
-            return _coreEngine.OldInsertPublicFact(logger, text);
+            return _coreEngine.InsertPublicFact(logger, text);
         }
 
-        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text);
-
-        [Obsolete("Serialization Refactoring", true)]
-        public string OldInsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
         {
-            return _coreEngine.OldInsertPublicFact(logger, factName, text);
+            return _coreEngine.InsertPublicFact(logger, factName, text);
         }
-
-        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text);
 
         public string DirectInsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
         {
             return _directEngine.DirectInsertPublicFact(logger, factName, text);
         }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
-            return _coreEngine.OldInsertPublicFact(logger, fact);
+            return _coreEngine.InsertPublicFact(logger, fact);
         }
-
-        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact);
 
         public string DirectInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             return _directEngine.DirectInsertPublicFact(logger, fact);
         }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemovePublicFact(IMonitorLogger logger, string id)
+        public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
         {
-            _coreEngine.OldRemovePublicFact(logger, id);
+            return _coreEngine.RemovePublicFact(logger, id);
         }
-
-        public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id);
 
         public void DirectRemovePublicFact(IMonitorLogger logger, string id)
         {
             _directEngine.DirectRemovePublicFact(logger, id);
         }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public string OldInsertFact(IMonitorLogger logger, string text)
+        public IMethodResponse<string> InsertFact(IMonitorLogger logger, string text)
         {
-            return _coreEngine.OldInsertFact(logger, text);
+            return _coreEngine.InsertFact(logger, text);
         }
 
-        public IMethodResponse<string> InsertFact(IMonitorLogger logger, string text);
-
-        [Obsolete("Serialization Refactoring", true)]
-        public string OldInsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        public IMethodResponse<string> InsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
         {
-            return _coreEngine.OldInsertFact(logger, factName, text);
+            return _coreEngine.InsertFact(logger, factName, text);
         }
-
-        public IMethodResponse<string> InsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text);
 
         public string DirectInsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
         {
             return _directEngine.DirectInsertFact(logger, factName, text);
         }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemoveFact(IMonitorLogger logger, string id)
+        public IMethodResponse RemoveFact(IMonitorLogger logger, string id)
         {
-            _coreEngine.OldRemoveFact(logger, id);
+            return _coreEngine.RemoveFact(logger, id);
         }
-
-        public IMethodResponse RemoveFact(IMonitorLogger logger, string id);
 
         public void DirectRemoveFact(IMonitorLogger logger, string id)
         {
             _directEngine.DirectRemoveFact(logger, id);
         }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldPushSoundFact(float power, string text)
+        public IMethodResponse PushSoundFact(float power, string text)
         {
-            _soundPublisher.OldPushSoundFact(power, text);
+            return _soundPublisher.PushSoundFact(power, text);
         }
 
-        public IMethodResponse PushSoundFact(float power, string text);
-
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldPushSoundFact(float power, RuleInstance fact)
+        public IMethodResponse PushSoundFact(float power, RuleInstance fact)
         {
-            _soundPublisher.OldPushSoundFact(power, fact);
+            return _soundPublisher.PushSoundFact(power, fact);
         }
 
-        public IMethodResponse PushSoundFact(float power, RuleInstance fact);
-
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldAddCategory(IMonitorLogger logger, string category)
+        public IMethodResponse AddCategory(IMonitorLogger logger, string category)
         {
-            _coreEngine.OldAddCategory(logger, category);
+            return _coreEngine.AddCategory(logger, category);
         }
 
-        public IMethodResponse AddCategory(IMonitorLogger logger, string category);
-
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldAddCategories(IMonitorLogger logger, List<string> categories)
+        public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
         {
-            _coreEngine.OldAddCategories(logger, categories);
+            return _coreEngine.AddCategories(logger, categories);
         }
-
-        public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories);
 
         public void DirectAddCategories(IMonitorLogger logger, List<string> categories)
         {
             _directEngine.DirectAddCategories(logger, categories);
         }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemoveCategory(IMonitorLogger logger, string category)
+        public IMethodResponse RemoveCategory(IMonitorLogger logger, string category)
         {
-            _coreEngine.OldRemoveCategory(logger, category);
+            return _coreEngine.RemoveCategory(logger, category);
         }
 
-        public IMethodResponse RemoveCategory(IMonitorLogger logger, string category);
-
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemoveCategories(IMonitorLogger logger, List<string> categories)
+        public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
-            _coreEngine.OldRemoveCategories(logger, categories);
+            return _coreEngine.RemoveCategories(logger, categories);
         }
-
-        public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories);
 
         public void DirectRemoveCategories(IMonitorLogger logger, List<string> categories)
         {

@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.MethodResponses;
 using SymOntoClay.Core;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal;
@@ -63,6 +64,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         }
 
         /// <inheritdoc/>
+        public IMethodResponse PushSoundFact(float power, string factStr);
+
+        /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldPushSoundFact(float power, RuleInstance fact)
         {
@@ -70,6 +74,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
 
             OldPushSoundFact(power, factStr);
         }
+
+        /// <inheritdoc/>
+        public IMethodResponse PushSoundFact(float power, RuleInstance fact);
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
@@ -81,6 +88,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         }
 
         /// <inheritdoc/>
+        public IMethodResponse PushSpeechFact(float power, string factStr);
+
+        /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldPushSpeechFact(float power, RuleInstance fact)
         {
@@ -88,5 +98,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
 
             OldPushSpeechFact(power, factStr);
         }
+
+        /// <inheritdoc/>
+        public IMethodResponse PushSpeechFact(float power, RuleInstance fact);
     }
 }

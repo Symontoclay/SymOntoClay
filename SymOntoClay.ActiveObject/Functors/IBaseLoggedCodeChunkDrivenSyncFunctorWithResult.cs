@@ -1,6 +1,6 @@
 ﻿namespace SymOntoClay.ActiveObject.Functors
 {
-    public interface IBaseLoggedCodeChunkSyncFunctorWithResult<TResult>
+    public interface IBaseLoggedCodeChunkDrivenSyncFunctorWithResult<TResult>
     {
         void ExecuteCodeChunksContext();
 

@@ -4,27 +4,29 @@ using SymOntoClay.ActiveObject.MethodResponses;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Serialization;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using static System.Collections.Specialized.BitVector32;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
-    public class LoggedCodeChunkSyncFunctorWithResult<TGlobalContext, TLocalContext, TResult>: IBaseLoggedCodeChunkSyncFunctorWithResult<TResult>
+    public partial class LoggedCodeChunkSyncFunctorWithResult<TGlobalContext, TLocalContext, TResult> : IBaseFunctor
         where TLocalContext : class, new()
     {
         public static LoggedCodeChunkSyncFunctorWithResult<TGlobalContext, TLocalContext, TResult> Run(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
-            Action<ICodeChunksContextWithResult<IMonitorLogger, TGlobalContext, TLocalContext, TResult>> action)
+            Action<ICodeChunksContextWithResult<IMonitorLogger, TGlobalContext, TLocalContext, TResult>> action,
+            ISerializationAnchor serializationAnchor)
         {
-            var functor = new LoggedCodeChunkSyncFunctorWithResult<TGlobalContext, TLocalContext, TResult>(logger, functorId, globalContext, action);
+            var functor = new LoggedCodeChunkSyncFunctorWithResult<TGlobalContext, TLocalContext, TResult>(logger, functorId, globalContext,
+            action, serializationAnchor);
             functor.Run();
             return functor;
         }
 
         public LoggedCodeChunkSyncFunctorWithResult(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
-            Action<ICodeChunksContextWithResult<IMonitorLogger, TGlobalContext, TLocalContext, TResult>> action)
+            Action<ICodeChunksContextWithResult<IMonitorLogger, TGlobalContext, TLocalContext, TResult>> action,
+            ISerializationAnchor serializationAnchor)
         {
+            _serializationAnchor = serializationAnchor;
+            serializationAnchor.AddFunctor(this);
+
             _localContext = new TLocalContext();
 
             _functorId = functorId;
@@ -37,6 +39,8 @@ namespace SymOntoClay.ActiveObject.Functors
         [SocSerializableActionKey]
         private string _functorId;
 
+        private ISerializationAnchor _serializationAnchor;
+
         private Action<ICodeChunksContextWithResult<IMonitorLogger, TGlobalContext, TLocalContext, TResult>> _action;
         private CodeChunksContextWithResult<IMonitorLogger, TGlobalContext, TLocalContext, TResult> _codeChunksContext;
 
@@ -44,23 +48,39 @@ namespace SymOntoClay.ActiveObject.Functors
         private TGlobalContext _globalContext;
         private TLocalContext _localContext;
 
+        private bool _isFinished;
+        private bool _isFinishedRun;
+        private bool _isFinishedCodeChunksContext;
+
         public void Run()
         {
-            _action(_codeChunksContext);
+            if (_isFinished)
+            {
+                return;
+            }
+
+            if(!_isFinishedRun)
+            {
+                _action(_codeChunksContext);
+
+                _isFinishedRun = true;
+            }
+
+            if(!_isFinishedCodeChunksContext)
+            {
+                _codeChunksContext.Run();
+
+                _isFinishedCodeChunksContext = true;
+            }
+
+            _isFinished = true;
+
+            _serializationAnchor.RemoveFunctor(this);
         }
 
-        void IBaseLoggedCodeChunkSyncFunctorWithResult<TResult>.ExecuteCodeChunksContext()
+        public IMethodResponse<TResult> ToMethodResponse()
         {
-            _codeChunksContext.Run();
-        }
-
-        bool IBaseLoggedCodeChunkSyncFunctorWithResult<TResult>.IsFinished => _codeChunksContext.IsFinished;
-
-        TResult IBaseLoggedCodeChunkSyncFunctorWithResult<TResult>.Result => _codeChunksContext.Result;
-
-        public ISyncMethodResponse<TResult> ToMethodResponse()
-        {
-            return new SyncMethodResponse<TResult>(this);
+            return new CompletedMethodResponse<TResult>(_codeChunksContext.Result);
         }
     }
 }

@@ -129,7 +129,7 @@ namespace TestSandbox.Threads
         {
             logger.Info("44EABFD7-4866-4C97-BC8C-8A6FE4477ACF", "Hi!");
 
-            return LoggedCodeChunkSyncFunctorWithoutResult<CodeChunksHandler, CodeChunksHandlerSyncMethodForCase9LocalContext>.Run(logger, "3545CBB0-F938-4629-BE03-FCA366FD06B7", instance, (ICodeChunksContext<IMonitorLogger, CodeChunksHandler, CodeChunksHandlerSyncMethodForCase9LocalContext> codeChunksContext) =>
+            return LoggedCodeChunkDrivenSyncFunctorWithoutResult<CodeChunksHandler, CodeChunksHandlerSyncMethodForCase9LocalContext>.Run(logger, "3545CBB0-F938-4629-BE03-FCA366FD06B7", instance, (ICodeChunksContext<IMonitorLogger, CodeChunksHandler, CodeChunksHandlerSyncMethodForCase9LocalContext> codeChunksContext) =>
             {
                 codeChunksContext.CreateCodeChunk("9F930DEE-289C-4596-A9BF-75D93FA236F3", (IMonitorLogger loggerValue, CodeChunksHandler instance, CodeChunksHandlerSyncMethodForCase9LocalContext localContextValue) =>
                 {
@@ -142,7 +142,7 @@ namespace TestSandbox.Threads
         {
             logger.Info("44EABFD7-4866-4C97-BC8C-8A6FE4477ACF", "Hello!");
 
-            return LoggedCodeChunkSyncFunctorWithResult<CodeChunksHandler, CodeChunksHandlerSyncMethodWithResultForCase9LocalContext, int>.Run(logger, "3A7D152A-6291-4CA3-9F2C-D36675210D57", instance, (ICodeChunksContextWithResult<IMonitorLogger, CodeChunksHandler, CodeChunksHandlerSyncMethodWithResultForCase9LocalContext, int> codeChunksContext) => {
+            return LoggedCodeChunkDrivenSyncFunctorWithResult<CodeChunksHandler, CodeChunksHandlerSyncMethodWithResultForCase9LocalContext, int>.Run(logger, "3A7D152A-6291-4CA3-9F2C-D36675210D57", instance, (ICodeChunksContextWithResult<IMonitorLogger, CodeChunksHandler, CodeChunksHandlerSyncMethodWithResultForCase9LocalContext, int> codeChunksContext) => {
                 codeChunksContext.CreateCodeChunk("8A4FACE3-0F2C-40B6-8B06-7A5E4C218D4C", (ICodeChunkWithResultAndSelfReference<IMonitorLogger, CodeChunksHandler, CodeChunksHandlerSyncMethodWithResultForCase9LocalContext, int> currentCodeChunk, IMonitorLogger loggerValue, CodeChunksHandler instanceValue, CodeChunksHandlerSyncMethodWithResultForCase9LocalContext localContextValue) => {
                     loggerValue.Info("014B1DDD-8AD0-4381-B816-B17ED93478B5", "Chunk1 of Hello!");
 

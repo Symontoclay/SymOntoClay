@@ -1,4 +1,5 @@
-﻿using SymOntoClay.ActiveObject.MethodResponses;
+﻿using SymOntoClay.ActiveObject.Functors;
+using SymOntoClay.ActiveObject.MethodResponses;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Monitor.Common;
@@ -13,9 +14,11 @@ namespace SymOntoClay.Core.Internal
             : base(settings.MonitorNode)
         {
             _context = EngineContextHelper.CreateAndInitContext(settings);
+            _serializationAnchor = new SerializationAnchor();
         }
 
         private EngineContext _context;
+        private SerializationAnchor _serializationAnchor;
 
         public IEngineContext EngineContext => _context;
 
@@ -82,10 +85,15 @@ namespace SymOntoClay.Core.Internal
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertPublicFact(IMonitorLogger logger, string text)
         {
-            return _context.Storage.InsertPublicFact(logger, text);
+            return NInsertPublicFact(logger, text);
         }
 
         public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text);
+
+        public string NInsertPublicFact(IMonitorLogger logger, string text)
+        {
+            return _context.Storage.InsertPublicFact(logger, text);
+        }
 
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)

@@ -7,18 +7,18 @@ using System;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
-    public class LoggedCodeChunkSyncFunctorWithResult<TGlobalContext, TLocalContext, TResult>: IBaseLoggedCodeChunkSyncFunctorWithResult<TResult>
+    public class LoggedCodeChunkDrivenSyncFunctorWithResult<TGlobalContext, TLocalContext, TResult>: IBaseLoggedCodeChunkDrivenSyncFunctorWithResult<TResult>
         where TLocalContext : class, new()
     {
-        public static LoggedCodeChunkSyncFunctorWithResult<TGlobalContext, TLocalContext, TResult> Run(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
+        public static LoggedCodeChunkDrivenSyncFunctorWithResult<TGlobalContext, TLocalContext, TResult> Run(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
             Action<ICodeChunksContextWithResult<IMonitorLogger, TGlobalContext, TLocalContext, TResult>> action)
         {
-            var functor = new LoggedCodeChunkSyncFunctorWithResult<TGlobalContext, TLocalContext, TResult>(logger, functorId, globalContext, action);
+            var functor = new LoggedCodeChunkDrivenSyncFunctorWithResult<TGlobalContext, TLocalContext, TResult>(logger, functorId, globalContext, action);
             functor.Run();
             return functor;
         }
 
-        public LoggedCodeChunkSyncFunctorWithResult(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
+        public LoggedCodeChunkDrivenSyncFunctorWithResult(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
             Action<ICodeChunksContextWithResult<IMonitorLogger, TGlobalContext, TLocalContext, TResult>> action)
         {
             _localContext = new TLocalContext();
@@ -45,14 +45,14 @@ namespace SymOntoClay.ActiveObject.Functors
             _action(_codeChunksContext);
         }
 
-        void IBaseLoggedCodeChunkSyncFunctorWithResult<TResult>.ExecuteCodeChunksContext()
+        void IBaseLoggedCodeChunkDrivenSyncFunctorWithResult<TResult>.ExecuteCodeChunksContext()
         {
             _codeChunksContext.Run();
         }
 
-        bool IBaseLoggedCodeChunkSyncFunctorWithResult<TResult>.IsFinished => _codeChunksContext.IsFinished;
+        bool IBaseLoggedCodeChunkDrivenSyncFunctorWithResult<TResult>.IsFinished => _codeChunksContext.IsFinished;
 
-        TResult IBaseLoggedCodeChunkSyncFunctorWithResult<TResult>.Result => _codeChunksContext.Result;
+        TResult IBaseLoggedCodeChunkDrivenSyncFunctorWithResult<TResult>.Result => _codeChunksContext.Result;
 
         public ISyncMethodResponse<TResult> ToMethodResponse()
         {

@@ -4,12 +4,12 @@ namespace SymOntoClay.ActiveObject.MethodResponses
 {
     public class SyncMethodResponse: ISyncMethodResponse
     {
-        public SyncMethodResponse(IBaseLoggedCodeChunkSyncFunctorWithoutResult functor)
+        public SyncMethodResponse(IBaseLoggedCodeChunkDrivenSyncFunctorWithoutResult functor)
         {
             _functor = functor;
         }
 
-        private IBaseLoggedCodeChunkSyncFunctorWithoutResult _functor;
+        private IBaseLoggedCodeChunkDrivenSyncFunctorWithoutResult _functor;
 
         /// <inheritdoc/>
         public void Run()
@@ -23,12 +23,12 @@ namespace SymOntoClay.ActiveObject.MethodResponses
 
     public class SyncMethodResponse<TResult> : ISyncMethodResponse<TResult>
     {
-        public SyncMethodResponse(IBaseLoggedCodeChunkSyncFunctorWithResult<TResult> functor)
+        public SyncMethodResponse(IBaseLoggedCodeChunkDrivenSyncFunctorWithResult<TResult> functor)
         {
             _functor = functor;
         }
 
-        private IBaseLoggedCodeChunkSyncFunctorWithResult<TResult> _functor;
+        private IBaseLoggedCodeChunkDrivenSyncFunctorWithResult<TResult> _functor;
 
         /// <inheritdoc/>
         public void Run()

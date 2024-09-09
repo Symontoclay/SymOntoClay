@@ -7,21 +7,21 @@ using System;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
-    public partial class LoggedCodeChunkSyncFunctorWithoutResult<TGlobalContext, TLocalContext> : IBaseFunctor
+    public partial class LoggedAndContextedCodeChunkSyncFunctorWithResult<TGlobalContext, TLocalContext, TResult> : IBaseFunctor
         where TLocalContext : class, new()
     {
-        public static LoggedCodeChunkSyncFunctorWithoutResult<TGlobalContext, TLocalContext> Run(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
-            Action<ICodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext>> action,
+        public static LoggedAndContextedCodeChunkSyncFunctorWithResult<TGlobalContext, TLocalContext, TResult> Run(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
+            Action<ICodeChunksContextWithResult<IMonitorLogger, TGlobalContext, TLocalContext, TResult>> action,
             ISerializationAnchor serializationAnchor)
         {
-            var functor = new LoggedCodeChunkSyncFunctorWithoutResult<TGlobalContext, TLocalContext>(logger, functorId, globalContext,
+            var functor = new LoggedAndContextedCodeChunkSyncFunctorWithResult<TGlobalContext, TLocalContext, TResult>(logger, functorId, globalContext,
             action, serializationAnchor);
             functor.Run();
             return functor;
         }
 
-        public LoggedCodeChunkSyncFunctorWithoutResult(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
-            Action<ICodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext>> action,
+        public LoggedAndContextedCodeChunkSyncFunctorWithResult(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
+            Action<ICodeChunksContextWithResult<IMonitorLogger, TGlobalContext, TLocalContext, TResult>> action,
             ISerializationAnchor serializationAnchor)
         {
             _serializationAnchor = serializationAnchor;
@@ -30,7 +30,7 @@ namespace SymOntoClay.ActiveObject.Functors
             _localContext = new TLocalContext();
 
             _functorId = functorId;
-            _codeChunksContext = new CodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext>(logger, globalContext, _localContext);
+            _codeChunksContext = new CodeChunksContextWithResult<IMonitorLogger, TGlobalContext, TLocalContext, TResult>(logger, globalContext, _localContext);
             _action = action;
             _logger = logger;
             _globalContext = globalContext;
@@ -41,8 +41,9 @@ namespace SymOntoClay.ActiveObject.Functors
 
         private ISerializationAnchor _serializationAnchor;
 
-        private Action<ICodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext>> _action;
-        private CodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext> _codeChunksContext;
+        private Action<ICodeChunksContextWithResult<IMonitorLogger, TGlobalContext, TLocalContext, TResult>> _action;
+        private CodeChunksContextWithResult<IMonitorLogger, TGlobalContext, TLocalContext, TResult> _codeChunksContext;
+
         private IMonitorLogger _logger;
         private TGlobalContext _globalContext;
         private TLocalContext _localContext;
@@ -58,14 +59,14 @@ namespace SymOntoClay.ActiveObject.Functors
                 return;
             }
 
-            if (!_isFinishedRun)
+            if(!_isFinishedRun)
             {
                 _action(_codeChunksContext);
 
                 _isFinishedRun = true;
             }
 
-            if (!_isFinishedCodeChunksContext)
+            if(!_isFinishedCodeChunksContext)
             {
                 _codeChunksContext.Run();
 
@@ -77,9 +78,9 @@ namespace SymOntoClay.ActiveObject.Functors
             _serializationAnchor.RemoveFunctor(this);
         }
 
-        public IMethodResponse ToMethodResponse()
+        public IMethodResponse<TResult> ToMethodResponse()
         {
-            return CompletedMethodResponse.Instance;
+            return new CompletedMethodResponse<TResult>(_codeChunksContext.Result);
         }
     }
 }

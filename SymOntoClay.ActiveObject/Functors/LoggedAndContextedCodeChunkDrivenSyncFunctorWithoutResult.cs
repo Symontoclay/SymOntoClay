@@ -7,18 +7,18 @@ using System;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
-    public class LoggedCodeChunkDrivenSyncFunctorWithoutResult<TGlobalContext, TLocalContext>: IBaseLoggedCodeChunkDrivenSyncFunctorWithoutResult
+    public class LoggedAndContextedCodeChunkDrivenSyncFunctorWithoutResult<TGlobalContext, TLocalContext>: IBaseLoggedCodeChunkDrivenSyncFunctorWithoutResult
         where TLocalContext : class, new()
     {
-        public static LoggedCodeChunkDrivenSyncFunctorWithoutResult<TGlobalContext, TLocalContext> Run(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
+        public static LoggedAndContextedCodeChunkDrivenSyncFunctorWithoutResult<TGlobalContext, TLocalContext> Run(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
             Action<ICodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext>> action)
         {
-            var functor = new LoggedCodeChunkDrivenSyncFunctorWithoutResult<TGlobalContext, TLocalContext>(logger, functorId, globalContext, action);
+            var functor = new LoggedAndContextedCodeChunkDrivenSyncFunctorWithoutResult<TGlobalContext, TLocalContext>(logger, functorId, globalContext, action);
             functor.Run();
             return functor;
         }
 
-        public LoggedCodeChunkDrivenSyncFunctorWithoutResult(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
+        public LoggedAndContextedCodeChunkDrivenSyncFunctorWithoutResult(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
             Action<ICodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext>> action)
         {
             _localContext = new TLocalContext();

@@ -7,18 +7,18 @@ using System;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
-    public class LoggedCodeChunkDrivenSyncFunctorWithResult<TGlobalContext, TLocalContext, TResult>: IBaseLoggedCodeChunkDrivenSyncFunctorWithResult<TResult>
+    public class LoggedAndContextedCodeChunkDrivenSyncFunctorWithResult<TGlobalContext, TLocalContext, TResult>: IBaseLoggedCodeChunkDrivenSyncFunctorWithResult<TResult>
         where TLocalContext : class, new()
     {
-        public static LoggedCodeChunkDrivenSyncFunctorWithResult<TGlobalContext, TLocalContext, TResult> Run(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
+        public static LoggedAndContextedCodeChunkDrivenSyncFunctorWithResult<TGlobalContext, TLocalContext, TResult> Run(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
             Action<ICodeChunksContextWithResult<IMonitorLogger, TGlobalContext, TLocalContext, TResult>> action)
         {
-            var functor = new LoggedCodeChunkDrivenSyncFunctorWithResult<TGlobalContext, TLocalContext, TResult>(logger, functorId, globalContext, action);
+            var functor = new LoggedAndContextedCodeChunkDrivenSyncFunctorWithResult<TGlobalContext, TLocalContext, TResult>(logger, functorId, globalContext, action);
             functor.Run();
             return functor;
         }
 
-        public LoggedCodeChunkDrivenSyncFunctorWithResult(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
+        public LoggedAndContextedCodeChunkDrivenSyncFunctorWithResult(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
             Action<ICodeChunksContextWithResult<IMonitorLogger, TGlobalContext, TLocalContext, TResult>> action)
         {
             _localContext = new TLocalContext();

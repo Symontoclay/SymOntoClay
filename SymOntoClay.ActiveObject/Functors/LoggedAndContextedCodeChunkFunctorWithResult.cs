@@ -9,20 +9,20 @@ using System.Threading;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
-    public partial class LoggedCodeChunkFunctorWithResult<TGlobalContext, TLocalContext, TResult> : BaseFunctor<TResult>
+    public partial class LoggedAndContextedCodeChunkFunctorWithResult<TGlobalContext, TLocalContext, TResult> : BaseFunctor<TResult>
         where TLocalContext : class, new()
     {
-        public static LoggedCodeChunkFunctorWithResult<TGlobalContext, TLocalContext, TResult> Run(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
+        public static LoggedAndContextedCodeChunkFunctorWithResult<TGlobalContext, TLocalContext, TResult> Run(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
             Action<ICodeChunksContextWithResult<IMonitorLogger, TGlobalContext, TLocalContext, TResult>> action,
             IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
         {
-            var functor = new LoggedCodeChunkFunctorWithResult<TGlobalContext, TLocalContext, TResult>(logger, functorId, globalContext,
+            var functor = new LoggedAndContextedCodeChunkFunctorWithResult<TGlobalContext, TLocalContext, TResult>(logger, functorId, globalContext,
             action, context, threadPool, serializationAnchor);
             functor.Run();
             return functor;
         }
 
-        public LoggedCodeChunkFunctorWithResult(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
+        public LoggedAndContextedCodeChunkFunctorWithResult(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
             Action<ICodeChunksContextWithResult<IMonitorLogger, TGlobalContext, TLocalContext, TResult>> action,
             IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
             : base(logger, context, threadPool, serializationAnchor)

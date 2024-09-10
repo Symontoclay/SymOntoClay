@@ -129,7 +129,7 @@ namespace TestSandbox.Threads
         {
             logger.Info("44EABFD7-4866-4C97-BC8C-8A6FE4477ACF", "Hi!");
 
-            return LoggedCodeChunkDrivenSyncFunctorWithoutResult<CodeChunksHandler, CodeChunksHandlerSyncMethodForCase9LocalContext>.Run(logger, "3545CBB0-F938-4629-BE03-FCA366FD06B7", instance, (ICodeChunksContext<IMonitorLogger, CodeChunksHandler, CodeChunksHandlerSyncMethodForCase9LocalContext> codeChunksContext) =>
+            return LoggedAndContextedCodeChunkDrivenSyncFunctorWithoutResult<CodeChunksHandler, CodeChunksHandlerSyncMethodForCase9LocalContext>.Run(logger, "3545CBB0-F938-4629-BE03-FCA366FD06B7", instance, (ICodeChunksContext<IMonitorLogger, CodeChunksHandler, CodeChunksHandlerSyncMethodForCase9LocalContext> codeChunksContext) =>
             {
                 codeChunksContext.CreateCodeChunk("9F930DEE-289C-4596-A9BF-75D93FA236F3", (IMonitorLogger loggerValue, CodeChunksHandler instance, CodeChunksHandlerSyncMethodForCase9LocalContext localContextValue) =>
                 {
@@ -142,7 +142,7 @@ namespace TestSandbox.Threads
         {
             logger.Info("44EABFD7-4866-4C97-BC8C-8A6FE4477ACF", "Hello!");
 
-            return LoggedCodeChunkDrivenSyncFunctorWithResult<CodeChunksHandler, CodeChunksHandlerSyncMethodWithResultForCase9LocalContext, int>.Run(logger, "3A7D152A-6291-4CA3-9F2C-D36675210D57", instance, (ICodeChunksContextWithResult<IMonitorLogger, CodeChunksHandler, CodeChunksHandlerSyncMethodWithResultForCase9LocalContext, int> codeChunksContext) => {
+            return LoggedAndContextedCodeChunkDrivenSyncFunctorWithResult<CodeChunksHandler, CodeChunksHandlerSyncMethodWithResultForCase9LocalContext, int>.Run(logger, "3A7D152A-6291-4CA3-9F2C-D36675210D57", instance, (ICodeChunksContextWithResult<IMonitorLogger, CodeChunksHandler, CodeChunksHandlerSyncMethodWithResultForCase9LocalContext, int> codeChunksContext) => {
                 codeChunksContext.CreateCodeChunk("8A4FACE3-0F2C-40B6-8B06-7A5E4C218D4C", (ICodeChunkWithResultAndSelfReference<IMonitorLogger, CodeChunksHandler, CodeChunksHandlerSyncMethodWithResultForCase9LocalContext, int> currentCodeChunk, IMonitorLogger loggerValue, CodeChunksHandler instanceValue, CodeChunksHandlerSyncMethodWithResultForCase9LocalContext localContextValue) => {
                     loggerValue.Info("014B1DDD-8AD0-4381-B816-B17ED93478B5", "Chunk1 of Hello!");
 
@@ -165,7 +165,7 @@ namespace TestSandbox.Threads
 
             var serializationAnchor = new SerializationAnchor();
 
-            var functor = new LoggedCodeChunkFunctorWithoutResult<CodeChunksHandlerGlobalContext, CodeChunksHandlerLocalContext>(_logger, "131A6E93-FB84-4622-AB7F-94E32282A971", globalContext, (ICodeChunksContext<IMonitorLogger, CodeChunksHandlerGlobalContext, CodeChunksHandlerLocalContext> codeChunksContext) =>
+            var functor = new LoggedAndContextedCodeChunkFunctorWithoutResult<CodeChunksHandlerGlobalContext, CodeChunksHandlerLocalContext>(_logger, "131A6E93-FB84-4622-AB7F-94E32282A971", globalContext, (ICodeChunksContext<IMonitorLogger, CodeChunksHandlerGlobalContext, CodeChunksHandlerLocalContext> codeChunksContext) =>
             {
                 codeChunksContext.CreateCodeChunk("BCD0FE20-836A-4BB3-B6ED-E99CCA7CD058", (IMonitorLogger loggerValue, CodeChunksHandlerGlobalContext globalContextValue, CodeChunksHandlerLocalContext localContextValue) =>
                 {

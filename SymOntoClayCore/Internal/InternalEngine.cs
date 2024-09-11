@@ -88,7 +88,14 @@ namespace SymOntoClay.Core.Internal
             return NInsertPublicFact(logger, text);
         }
 
-        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text);
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
+        {
+            return LoggedSyncFunctorWithResult<InternalEngine, string, string>.Run(logger, "5B25A0FF-9EB3-490B-895D-3617CFD9DD1B", this, text,
+                string (IMonitorLogger loggerValue, InternalEngine instanceValue, string textValue) => { 
+                    return instanceValue.NInsertPublicFact(loggerValue, textValue);
+                },
+                _serializationAnchor).ToMethodResponse();
+        }
 
         public string NInsertPublicFact(IMonitorLogger logger, string text)
         {

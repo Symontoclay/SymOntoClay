@@ -3,7 +3,7 @@ using System;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
-    public partial class LoggedSyncFunctorWithResult<TResult> : BaseSyncFunctorWithResult<IMonitorLogger, TResult>
+    public partial class LoggedSyncFunctorWithResult<TResult> : SyncFunctorWithResult<IMonitorLogger, TResult>
     {
         public static LoggedSyncFunctorWithResult<TResult> Run(IMonitorLogger logger, string functorId, Func<IMonitorLogger, TResult> func, ISerializationAnchor serializationAnchor)
         {
@@ -18,7 +18,7 @@ namespace SymOntoClay.ActiveObject.Functors
         }
     }
 
-    public partial class LoggedSyncFunctorWithResult<T, TResult> : BaseSyncFunctorWithResult<IMonitorLogger, T, TResult>
+    public partial class LoggedSyncFunctorWithResult<T, TResult> : SyncFunctorWithResult<IMonitorLogger, T, TResult>
     {
         public static LoggedSyncFunctorWithResult<T, TResult> Run(IMonitorLogger logger, string functorId, T arg, Func<IMonitorLogger, T, TResult> func, ISerializationAnchor serializationAnchor)
         {
@@ -33,7 +33,7 @@ namespace SymOntoClay.ActiveObject.Functors
         }
     }
 
-    public partial class LoggedSyncFunctorWithResult<T1, T2, TResult> : BaseSyncFunctorWithResult<IMonitorLogger, T1, T2, TResult>
+    public partial class LoggedSyncFunctorWithResult<T1, T2, TResult> : SyncFunctorWithResult<IMonitorLogger, T1, T2, TResult>
     {
         public static LoggedSyncFunctorWithResult<T1, T2, TResult> Run(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, Func<IMonitorLogger, T1, T2, TResult> func, ISerializationAnchor serializationAnchor)
         {

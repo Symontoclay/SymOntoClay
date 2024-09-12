@@ -3,7 +3,7 @@ using System;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
-    public partial class LoggedSyncFunctorWithoutResult: BaseSyncFunctorWithoutResult<IMonitorLogger>
+    public partial class LoggedSyncFunctorWithoutResult: SyncFunctorWithoutResult<IMonitorLogger>
     {
         public static LoggedSyncFunctorWithoutResult Run(IMonitorLogger logger, string functorId, Action<IMonitorLogger> action, ISerializationAnchor serializationAnchor)
         {
@@ -18,7 +18,7 @@ namespace SymOntoClay.ActiveObject.Functors
         }
     }
 
-    public partial class LoggedSyncFunctorWithoutResult<T> : BaseSyncFunctorWithoutResult<IMonitorLogger, T>
+    public partial class LoggedSyncFunctorWithoutResult<T> : SyncFunctorWithoutResult<IMonitorLogger, T>
     {
         public static LoggedSyncFunctorWithoutResult<T> Run(IMonitorLogger logger, string functorId, T arg, Action<IMonitorLogger, T> action, ISerializationAnchor serializationAnchor)
         {
@@ -33,7 +33,7 @@ namespace SymOntoClay.ActiveObject.Functors
         }
     }
 
-    public partial class LoggedSyncFunctorWithoutResult<T1, T2> : BaseSyncFunctorWithoutResult<IMonitorLogger, T1, T2>
+    public partial class LoggedSyncFunctorWithoutResult<T1, T2> : SyncFunctorWithoutResult<IMonitorLogger, T1, T2>
     {
         public static LoggedSyncFunctorWithoutResult<T1, T2> Run(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, Action<IMonitorLogger, T1, T2> action, ISerializationAnchor serializationAnchor)
         {

@@ -1,0 +1,110 @@
+﻿using SymOntoClay.ActiveObject.MethodResponses;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Serialization;
+using System;
+
+namespace SymOntoClay.ActiveObject.Functors
+{
+    public partial class SyncFunctorWithoutResult : BaseSyncFunctorWithoutResult
+    {
+        public SyncFunctorWithoutResult(IMonitorLogger logger, string functorId, Action action, ISerializationAnchor serializationAnchor)
+            : base(logger, serializationAnchor)
+        {
+            _functorId = functorId;
+
+            _action = action;
+        }
+
+        [SocSerializableActionKey]
+        private string _functorId;
+
+        private Action _action;
+
+        /// <inheritdoc/>
+        protected override void OnRun()
+        {
+            _action();
+        }
+    }
+
+    public partial class SyncFunctorWithoutResult<T> : BaseSyncFunctorWithoutResult
+    {
+        public SyncFunctorWithoutResult(IMonitorLogger logger, string functorId, T arg, Action<T> action, ISerializationAnchor serializationAnchor)
+            : base(logger, serializationAnchor)
+        {
+            _functorId = functorId;
+
+            _action = action;
+            _arg = arg;
+        }
+
+        [SocSerializableActionKey]
+        private string _functorId;
+
+        private Action<T> _action;
+
+        private T _arg;
+
+        /// <inheritdoc/>
+        protected override void OnRun()
+        {
+            _action(_arg);
+        }
+    }
+
+    public partial class SyncFunctorWithoutResult<T1, T2> : BaseSyncFunctorWithoutResult
+    {
+        public SyncFunctorWithoutResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, Action<T1, T2> action, ISerializationAnchor serializationAnchor)
+            : base(logger, serializationAnchor)
+        {
+            _functorId = functorId;
+
+            _action = action;
+            _arg1 = arg1;
+            _arg2 = arg2;
+        }
+
+        [SocSerializableActionKey]
+        private string _functorId;
+
+        private Action<T1, T2> _action;
+
+        private T1 _arg1;
+        private T2 _arg2;
+
+        /// <inheritdoc/>
+        protected override void OnRun()
+        {
+            _action(_arg1, _arg2);
+        }
+    }
+
+    public partial class SyncFunctorWithoutResult<T1, T2, T3> : BaseSyncFunctorWithoutResult
+    {
+        public SyncFunctorWithoutResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, T3 arg3, Action<T1, T2, T3> action, ISerializationAnchor serializationAnchor)
+            : base(logger, serializationAnchor)
+        {
+            _functorId = functorId;
+
+            _action = action;
+            _arg1 = arg1;
+            _arg2 = arg2;
+            _arg3 = arg3;
+        }
+
+        [SocSerializableActionKey]
+        private string _functorId;
+
+        private Action<T1, T2, T3> _action;
+
+        private T1 _arg1;
+        private T2 _arg2;
+        private T3 _arg3;
+
+        /// <inheritdoc/>
+        protected override void OnRun()
+        {
+            _action(_arg1, _arg2, _arg3);
+        }
+    }
+}

@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.ActiveObject.Functors;
 using SymOntoClay.ActiveObject.MethodResponses;
+using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Monitor.Common;
@@ -14,10 +15,12 @@ namespace SymOntoClay.Core.Internal
             : base(settings.MonitorNode)
         {
             _context = EngineContextHelper.CreateAndInitContext(settings);
+            _activeObjectContext = _context.ActiveObjectContext;
             _serializationAnchor = new SerializationAnchor();
         }
 
         private EngineContext _context;
+        private IActiveObjectContext _activeObjectContext;
         private SerializationAnchor _serializationAnchor;
 
         public IEngineContext EngineContext => _context;
@@ -82,19 +85,13 @@ namespace SymOntoClay.Core.Internal
             }
         }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public string OldInsertPublicFact(IMonitorLogger logger, string text)
-        {
-            return NInsertPublicFact(logger, text);
-        }
-
         public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
         {
             return LoggedSyncFunctorWithResult<InternalEngine, string, string>.Run(logger, "5B25A0FF-9EB3-490B-895D-3617CFD9DD1B", this, text,
                 string (IMonitorLogger loggerValue, InternalEngine instanceValue, string textValue) => { 
                     return instanceValue.NInsertPublicFact(loggerValue, textValue);
                 },
-                _serializationAnchor).ToMethodResponse();
+                _activeObjectContext, _serializationAnchor).ToMethodResponse();
         }
 
         public string NInsertPublicFact(IMonitorLogger logger, string text)
@@ -105,12 +102,27 @@ namespace SymOntoClay.Core.Internal
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
         {
-            return _context.Storage.InsertPublicFact(logger, factName, text);
+            return NInsertPublicFact(logger, factName, text);
         }
 
-        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text);
-        public string DirectInsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text);
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        {
+            return LoggedSyncFunctorWithResult<InternalEngine, StrongIdentifierValue, string, string>.Run(logger, "99B30FB7-7425-46CA-9320-70DF92727FD0", this, factName, text,
+                string (IMonitorLogger loggerValue, InternalEngine instanceValue, StrongIdentifierValue factNameValue, string textValue) => {
+                    return instanceValue.NInsertPublicFact(loggerValue, factNameValue, textValue);
+                },
+                _activeObjectContext, _serializationAnchor).ToMethodResponse();
+        }
 
+        public string DirectInsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        {
+            return NInsertPublicFact(logger, factName, text);
+        }
+
+        public string NInsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        {
+            return _context.Storage.InsertPublicFact(logger, factName, text);
+        }
 
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact)

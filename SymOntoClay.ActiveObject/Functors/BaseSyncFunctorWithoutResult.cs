@@ -1,76 +1,38 @@
 ﻿using SymOntoClay.ActiveObject.MethodResponses;
+using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Monitor.Common;
-using SymOntoClay.Serialization;
-using System;
+using System.Threading;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
-    public abstract partial class BaseSyncFunctorWithoutResult : IBaseFunctor
+    public abstract partial class BaseSyncFunctorWithoutResult : ISyncOnceObject, IBaseFunctor
     {
-        protected BaseSyncFunctorWithoutResult(IMonitorLogger logger, string functorId, Action action, ISerializationAnchor serializationAnchor)
+        protected BaseSyncFunctorWithoutResult(IMonitorLogger logger, IActiveObjectContext activeObjectContext, ISerializationAnchor serializationAnchor)
         {
             _serializationAnchor = serializationAnchor;
             serializationAnchor.AddFunctor(this);
 
-            _functorId = functorId;
+            _activeObjectContext = activeObjectContext;
+            activeObjectContext.AddChild(this);
 
-            _action = action;
+            _cancellationToken = activeObjectContext.Token;
+
             _logger = logger;
         }
 
-        [SocSerializableActionKey]
-        private string _functorId;
+        protected abstract void OnRun();
 
+        private IActiveObjectContext _activeObjectContext;
         private ISerializationAnchor _serializationAnchor;
+        private readonly CancellationToken _cancellationToken;
 
-        private Action _action;
+        private bool _isWaited;
 
-        private IMonitorLogger _logger;
+        /// <inheritdoc/>
+        public bool IsWaited => _isWaited;
 
-        private bool _isFinished;
-
-        public void Run()
-        {
-            if(_isFinished)
-            {
-                return;
-            }
-
-            _action();
-
-            _isFinished = true;
-
-            _serializationAnchor.RemoveFunctor(this);
-        }
-
-        public IMethodResponse ToMethodResponse()
-        {
-            return CompletedMethodResponse.Instance;
-        }
-    }
-
-    public abstract partial class BaseSyncFunctorWithoutResult<T> : IBaseFunctor
-    {
-        protected BaseSyncFunctorWithoutResult(IMonitorLogger logger, string functorId, T arg, Action<T> action, ISerializationAnchor serializationAnchor)
-        {
-            _serializationAnchor = serializationAnchor;
-            serializationAnchor.AddFunctor(this);
-
-            _functorId = functorId;
-
-            _action = action;
-            _arg = arg;
-            _logger = logger;
-        }
-
-        [SocSerializableActionKey]
-        private string _functorId;
-
-        private ISerializationAnchor _serializationAnchor;
-
-        private Action<T> _action;
-
-        private T _arg;
+        /// <inheritdoc/>
+        public bool IsActive => !_isFinished && !_isWaited;
 
         private IMonitorLogger _logger;
 
@@ -83,116 +45,52 @@ namespace SymOntoClay.ActiveObject.Functors
                 return;
             }
 
-            _action(_arg);
+            _isWaited = false;
+
+            var autoResetEvent = _activeObjectContext.WaitEvent;
+
+            if (_cancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
+
+            if (_activeObjectContext.IsNeedWating)
+            {
+                _isWaited = true;
+                autoResetEvent.WaitOne();
+                _isWaited = false;
+            }
+
+            if (_cancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
+
+            OnRun();
 
             _isFinished = true;
 
             _serializationAnchor.RemoveFunctor(this);
+            _activeObjectContext.RemoveChild(this);
         }
 
         public IMethodResponse ToMethodResponse()
         {
             return CompletedMethodResponse.Instance;
         }
-    }
 
-    public abstract partial class BaseSyncFunctorWithoutResult<T1, T2> : IBaseFunctor
-    {
-        protected BaseSyncFunctorWithoutResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, Action<T1, T2> action, ISerializationAnchor serializationAnchor)
-        {
-            _serializationAnchor = serializationAnchor;
-            serializationAnchor.AddFunctor(this);
-
-            _functorId = functorId;
-
-            _action = action;
-            _arg1 = arg1;
-            _arg2 = arg2;
-            _logger = logger;
-        }
-
-        [SocSerializableActionKey]
-        private string _functorId;
-
-        private ISerializationAnchor _serializationAnchor;
-
-        private Action<T1, T2> _action;
-
-        private T1 _arg1;
-        private T2 _arg2;
-
-        private IMonitorLogger _logger;
-
-        private bool _isFinished;
-
-        public void Run()
+        /// <inheritdoc/>
+        public void Dispose()
         {
             if (_isFinished)
             {
                 return;
             }
 
-            _action(_arg1, _arg2);
-
             _isFinished = true;
 
             _serializationAnchor.RemoveFunctor(this);
-        }
-
-        public IMethodResponse ToMethodResponse()
-        {
-            return CompletedMethodResponse.Instance;
-        }
-    }
-
-    public abstract partial class BaseSyncFunctorWithoutResult<T1, T2, T3> : IBaseFunctor
-    {
-        protected BaseSyncFunctorWithoutResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, T3 arg3, Action<T1, T2, T3> action, ISerializationAnchor serializationAnchor)
-        {
-            _serializationAnchor = serializationAnchor;
-            serializationAnchor.AddFunctor(this);
-
-            _functorId = functorId;
-
-            _action = action;
-            _arg1 = arg1;
-            _arg2 = arg2;
-            _arg3 = arg3;
-            _logger = logger;
-        }
-
-        [SocSerializableActionKey]
-        private string _functorId;
-
-        private ISerializationAnchor _serializationAnchor;
-
-        private Action<T1, T2, T3> _action;
-
-        private T1 _arg1;
-        private T2 _arg2;
-        private T3 _arg3;
-
-        private IMonitorLogger _logger;
-
-        private bool _isFinished;
-
-        public void Run()
-        {
-            if (_isFinished)
-            {
-                return;
-            }
-
-            _action(_arg1, _arg2, _arg3);
-
-            _isFinished = true;
-
-            _serializationAnchor.RemoveFunctor(this);
-        }
-
-        public IMethodResponse ToMethodResponse()
-        {
-            return CompletedMethodResponse.Instance;
+            _activeObjectContext.RemoveChild(this);
         }
     }
 }

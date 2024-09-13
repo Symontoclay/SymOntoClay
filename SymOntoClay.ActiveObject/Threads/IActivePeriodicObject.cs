@@ -25,7 +25,7 @@ using System;
 
 namespace SymOntoClay.ActiveObject.Threads
 {
-    public interface IActivePeriodicObject : IActiveObject
+    public interface IActivePeriodicObject : IActiveAsyncObject
     {
         PeriodicDelegate PeriodicMethod { get; set; }
         void Stop();

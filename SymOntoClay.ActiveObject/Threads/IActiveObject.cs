@@ -7,7 +7,5 @@ namespace SymOntoClay.ActiveObject.Threads
     {
         bool IsActive { get; }
         bool IsWaited { get; }
-        IThreadTask TaskValue { get; }
-        IThreadTask Start();
     }
 }

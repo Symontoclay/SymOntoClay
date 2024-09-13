@@ -33,6 +33,9 @@ namespace SymOntoClay.ActiveObject.Threads
         void AddChildActiveObject(IActiveOnceObject activeObject);
         void RemoveChildActiveObject(IActiveOnceObject activeObject);
 
+        void AddChild(ISyncOnceObject onceObject);
+        void RemoveChild(ISyncOnceObject onceObject);
+
         void WaitWhenAllIsNotWaited();
 
         void StartAll();

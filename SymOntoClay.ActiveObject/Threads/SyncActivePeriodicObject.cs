@@ -27,11 +27,13 @@ namespace SymOntoClay.ActiveObject.Threads
 {
     public class SyncActivePeriodicObject : IActivePeriodicObject
     {
-        public SyncActivePeriodicObject(CancellationToken cancellationToken)
+        public SyncActivePeriodicObject(IActiveObjectContext context)
         {
-            _cancellationToken = cancellationToken;
+            _context = context;
+            _cancellationToken = context.Token;
         }
 
+        private readonly IActiveObjectContext _context;
         private readonly CancellationToken _cancellationToken;
 
         /// <inheritdoc/>
@@ -42,8 +44,10 @@ namespace SymOntoClay.ActiveObject.Threads
         /// <inheritdoc/>
         public bool IsActive => _isActive;
 
+        private bool _isWaited;
+
         /// <inheritdoc/>
-        public bool IsWaited => false;
+        public bool IsWaited => _isWaited;
 
         private IThreadTask _taskValue = null;
 
@@ -54,9 +58,24 @@ namespace SymOntoClay.ActiveObject.Threads
         public IThreadTask Start()
         {
             _isActive = true;
+            _isWaited = false;
+
+            var autoResetEvent = _context.WaitEvent;
 
             while (true)
             {
+                if (_cancellationToken.IsCancellationRequested)
+                {
+                    return _taskValue;
+                }
+
+                if (_context.IsNeedWating)
+                {
+                    _isWaited = true;
+                    autoResetEvent.WaitOne();
+                    _isWaited = false;
+                }
+
                 if (_cancellationToken.IsCancellationRequested)
                 {
                     return _taskValue;
@@ -78,6 +97,7 @@ namespace SymOntoClay.ActiveObject.Threads
         /// <inheritdoc/>
         public void Dispose()
         {
+            _context.RemoveChildActiveObject(this);
         }
     }
 }

@@ -35,8 +35,8 @@ namespace SymOntoClay.ActiveObject.Threads
             _cancellationToken = cancellationToken;
         }
 
-        private readonly IActiveObjectCommonContext _commonContext;
-        private readonly CancellationToken _cancellationToken;
+        private IActiveObjectCommonContext _commonContext;
+        private CancellationToken _cancellationToken;
 
         /// <inheritdoc/>
         public bool IsNeedWating => _commonContext.IsNeedWating;
@@ -48,6 +48,7 @@ namespace SymOntoClay.ActiveObject.Threads
 
         private List<IActivePeriodicObject> _periodicChildren = new List<IActivePeriodicObject>();
         private List<IActiveOnceObject> _onceChildren = new List<IActiveOnceObject>();
+        private List<ISyncOnceObject> _syncOnceChildren = new List<ISyncOnceObject>();
 
         /// <inheritdoc/>
         void IActiveObjectContext.AddChildActiveObject(IActivePeriodicObject activeObject)
@@ -82,8 +83,10 @@ namespace SymOntoClay.ActiveObject.Threads
             {
                 if (_onceChildren.Contains(activeObject))
                 {
-                    _onceChildren.Remove(activeObject);
+                    return;
                 }
+
+                _onceChildren.Add(activeObject);
             }
         }
 
@@ -99,12 +102,36 @@ namespace SymOntoClay.ActiveObject.Threads
             }
         }
 
+        void IActiveObjectContext.AddChild(ISyncOnceObject onceObject)
+        {
+            lock (_lockObj)
+            {
+                if (_syncOnceChildren.Contains(onceObject))
+                {
+                    return;
+                }
+
+                _syncOnceChildren.Add(onceObject);
+            }
+        }
+
+        void IActiveObjectContext.RemoveChild(ISyncOnceObject onceObject)
+        {
+            lock (_lockObj)
+            {
+                if (_syncOnceChildren.Contains(onceObject))
+                {
+                    _syncOnceChildren.Remove(onceObject);
+                }
+            }
+        }
+
         /// <inheritdoc/>
         public void WaitWhenAllIsNotWaited()
         {
             lock (_lockObj)
             {
-                while ((!_periodicChildren.All(p => p.IsWaited)) && (!_onceChildren.All(p => p.IsWaited)))
+                while ((!_periodicChildren.All(p => p.IsWaited)) && (!_onceChildren.All(p => p.IsWaited)) && (!_syncOnceChildren.All(p => p.IsWaited)))
                 {
                 }
             }
@@ -159,6 +186,7 @@ namespace SymOntoClay.ActiveObject.Threads
 
             var tmpPeriodicChildren = _periodicChildren.ToList();
             var tmpOnceChildren = _onceChildren.ToList();
+            var tmpSyncOnceChildren = _syncOnceChildren.ToList();
 
             foreach (var child in tmpPeriodicChildren)
             {
@@ -166,6 +194,11 @@ namespace SymOntoClay.ActiveObject.Threads
             }
 
             foreach (var child in tmpOnceChildren)
+            {
+                child.Dispose();
+            }
+
+            foreach (var child in tmpSyncOnceChildren)
             {
                 child.Dispose();
             }

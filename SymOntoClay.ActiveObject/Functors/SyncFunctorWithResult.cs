@@ -1,4 +1,5 @@
 ﻿using SymOntoClay.ActiveObject.MethodResponses;
+using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Serialization;
 using System;
@@ -7,8 +8,8 @@ namespace SymOntoClay.ActiveObject.Functors
 {
     public partial class SyncFunctorWithResult<TResult> : BaseSyncFunctorWithResult<TResult>
     {
-        public SyncFunctorWithResult(IMonitorLogger logger, string functorId, Func<TResult> func, ISerializationAnchor serializationAnchor)
-            : base(logger, serializationAnchor)
+        public SyncFunctorWithResult(IMonitorLogger logger, string functorId, Func<TResult> func, IActiveObjectContext activeObjectContext, ISerializationAnchor serializationAnchor)
+            : base(logger, activeObjectContext, serializationAnchor)
         {
             _functorId = functorId;
 
@@ -29,8 +30,8 @@ namespace SymOntoClay.ActiveObject.Functors
 
     public partial class SyncFunctorWithResult<T, TResult> : BaseSyncFunctorWithResult<TResult>
     {
-        public SyncFunctorWithResult(IMonitorLogger logger, string functorId, T arg, Func<T, TResult> func, ISerializationAnchor serializationAnchor)
-            : base(logger, serializationAnchor)
+        public SyncFunctorWithResult(IMonitorLogger logger, string functorId, T arg, Func<T, TResult> func, IActiveObjectContext activeObjectContext, ISerializationAnchor serializationAnchor)
+            : base(logger, activeObjectContext, serializationAnchor)
         {
             _functorId = functorId;
 
@@ -53,8 +54,8 @@ namespace SymOntoClay.ActiveObject.Functors
 
     public partial class SyncFunctorWithResult<T1, T2, TResult> : BaseSyncFunctorWithResult<TResult>
     {
-        public SyncFunctorWithResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, Func<T1, T2, TResult> func, ISerializationAnchor serializationAnchor)
-            : base(logger, serializationAnchor)
+        public SyncFunctorWithResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, Func<T1, T2, TResult> func, IActiveObjectContext activeObjectContext, ISerializationAnchor serializationAnchor)
+            : base(logger, activeObjectContext, serializationAnchor)
         {
             _functorId = functorId;
 
@@ -80,8 +81,8 @@ namespace SymOntoClay.ActiveObject.Functors
 
     public partial class SyncFunctorWithResult<T1, T2, T3, TResult> : BaseSyncFunctorWithResult<TResult>
     {
-        public SyncFunctorWithResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, T3 arg3, Func<T1, T2, T3, TResult> func, ISerializationAnchor serializationAnchor)
-            : base(logger, serializationAnchor)
+        public SyncFunctorWithResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, T3 arg3, Func<T1, T2, T3, TResult> func, IActiveObjectContext activeObjectContext, ISerializationAnchor serializationAnchor)
+            : base(logger, activeObjectContext, serializationAnchor)
         {
             _functorId = functorId;
 

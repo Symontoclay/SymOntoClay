@@ -170,122 +170,236 @@ namespace SymOntoClay.Core.Internal
             return _context.Storage.InsertFact(logger, text);
         }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public string OldInsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        public IMethodResponse<string> InsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        {
+            return LoggedSyncFunctorWithResult<InternalEngine, StrongIdentifierValue, string, string>.Run(logger, "6415CB6F-6697-4BA1-B661-C986397F5450", this, factName, text,
+                string(IMonitorLogger loggerValue, InternalEngine instanceValue, StrongIdentifierValue factNameValue, string textValue) => {
+                    return instanceValue.NInsertFact(loggerValue, factNameValue, textValue);
+                },
+                _activeObjectContext, _serializationAnchor).ToMethodResponse();
+        }
+
+        public string DirectInsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        {
+            return NInsertFact(logger, factName, text);
+        }
+
+        public string NInsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
         {
             return _context.Storage.InsertFact(logger, factName, text);
         }
 
-        public IMethodResponse<string> InsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text);
-        public string DirectInsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text);
+        public IMethodResponse RemoveFact(IMonitorLogger logger, string id)
+        {
+            return LoggedSyncFunctorWithoutResult<InternalEngine, string>.Run(logger, "2C287D0D-F572-4525-8262-D9D614CA0E47", this, id,
+                (IMonitorLogger loggerValue, InternalEngine instanceValue, string idValue) => {
+                    instanceValue.NRemoveFact(loggerValue, idValue);
+                },
+                _activeObjectContext, _serializationAnchor).ToMethodResponse();
+        }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemoveFact(IMonitorLogger logger, string id)
+        public void DirectRemoveFact(IMonitorLogger logger, string id)
+        {
+            NRemoveFact(logger, id);
+        }
+
+        public void NRemoveFact(IMonitorLogger logger, string id)
         {
             _context.Storage.RemoveFact(logger, id);
         }
 
-        public IMethodResponse RemoveFact(IMonitorLogger logger, string id);
-        public void DirectRemoveFact(IMonitorLogger logger, string id);
-
         public IStorage PublicFactsStorage => _context.Storage.PublicFactsStorage;
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldAddVisibleStorage(IMonitorLogger logger, IStorage storage)
+        public IMethodResponse AddVisibleStorage(IMonitorLogger logger, IStorage storage)
+        {
+            return LoggedSyncFunctorWithoutResult<InternalEngine, IStorage>.Run(logger, "A8A23D7C-1A13-4126-9369-346927C6BDEE", this, storage,
+                (IMonitorLogger loggerValue, InternalEngine instanceValue, IStorage storageValue) => {
+                    instanceValue.NAddVisibleStorage(loggerValue, storageValue);
+                },
+                _activeObjectContext, _serializationAnchor).ToMethodResponse();
+        }
+
+        public void DirectAddVisibleStorage(IMonitorLogger logger, IStorage storage)
+        {
+            NAddVisibleStorage(logger, storage);
+        }
+
+        public void NAddVisibleStorage(IMonitorLogger logger, IStorage storage)
         {
             _context.Storage.AddVisibleStorage(logger, storage);
         }
 
-        public IMethodResponse AddVisibleStorage(IMonitorLogger logger, IStorage storage);
-        public void DirectAddVisibleStorage(IMonitorLogger logger, IStorage storage);
+        public IMethodResponse RemoveVisibleStorage(IMonitorLogger logger, IStorage storage)
+        {
+            return LoggedSyncFunctorWithoutResult<InternalEngine, IStorage>.Run(logger, "A403D8B7-2390-4ACE-A41C-43848013200B", this, storage,
+                (IMonitorLogger loggerValue, InternalEngine instanceValue, IStorage storageValue) => {
+                    instanceValue.NRemoveVisibleStorage(loggerValue, storageValue);
+                },
+                _activeObjectContext, _serializationAnchor).ToMethodResponse();
+        }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemoveVisibleStorage(IMonitorLogger logger, IStorage storage)
+        public void DirectRemoveVisibleStorage(IMonitorLogger logger, IStorage storage)
+        {
+            NRemoveVisibleStorage(logger, storage);
+        }
+
+        public void NRemoveVisibleStorage(IMonitorLogger logger, IStorage storage)
         {
             _context.Storage.RemoveVisibleStorage(logger, storage);
         }
 
-        public IMethodResponse RemoveVisibleStorage(IMonitorLogger logger, IStorage storage);
-        public void DirectRemoveVisibleStorage(IMonitorLogger logger, IStorage storage);
+        public IMethodResponse<string> InsertPerceptedFact(IMonitorLogger logger, string text)
+        {
+            return LoggedSyncFunctorWithResult<InternalEngine, string, string>.Run(logger, "CEDE7288-D779-4F86-B334-C6D84E82FD16", this, text,
+                string(IMonitorLogger loggerValue, InternalEngine instanceValue, string textValue) => {
+                    return instanceValue.NInsertPerceptedFact(loggerValue, textValue);
+                },
+                _activeObjectContext, _serializationAnchor).ToMethodResponse();
+        }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public string OldInsertPerceptedFact(IMonitorLogger logger, string text)
+        public string DirectInsertPerceptedFact(IMonitorLogger logger, string text)
+        {
+            return NInsertPerceptedFact(logger, text);
+        }
+
+        public string NInsertPerceptedFact(IMonitorLogger logger, string text)
         {
             return _context.Storage.InsertPerceptedFact(logger, text);
         }
 
-        public IMethodResponse<string> InsertPerceptedFact(IMonitorLogger logger, string text);
-        public string DirectInsertPerceptedFact(IMonitorLogger logger, string text);
+        public IMethodResponse RemovePerceptedFact(IMonitorLogger logger, string id)
+        {
+            return LoggedSyncFunctorWithoutResult<InternalEngine, string>.Run(logger, "6CDD5CF7-4870-4C62-9DC6-A620F352B439", this, id,
+                (IMonitorLogger loggerValue, InternalEngine instanceValue, string idValue) => {
+                    instanceValue.NRemovePerceptedFact(loggerValue, idValue);
+                },
+                _activeObjectContext, _serializationAnchor).ToMethodResponse();
+        }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemovePerceptedFact(IMonitorLogger logger, string id)
+        public void DirectRemovePerceptedFact(IMonitorLogger logger, string id)
+        {
+            NRemovePerceptedFact(logger, id);
+        }
+
+        public void NRemovePerceptedFact(IMonitorLogger logger, string id)
         {
             _context.Storage.RemovePerceptedFact(logger, id);
         }
 
-        public IMethodResponse RemovePerceptedFact(IMonitorLogger logger, string id);
-        public void DirectRemovePerceptedFact(IMonitorLogger logger, string id);
+        public IMethodResponse InsertListenedFact(IMonitorLogger logger, string text)
+        {
+            return LoggedSyncFunctorWithoutResult<InternalEngine, string>.Run(logger, "2B86544E-1FFB-4895-91DB-0185E717FCC1", this, text,
+                (IMonitorLogger loggerValue, InternalEngine instanceValue, string textValue) => {
+                    instanceValue.NInsertListenedFact(loggerValue, textValue);
+                },
+                _activeObjectContext, _serializationAnchor).ToMethodResponse();
+        }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldInsertListenedFact(IMonitorLogger logger, string text)
+        public void NInsertListenedFact(IMonitorLogger logger, string text)
         {
             _context.Storage.InsertListenedFact(logger, text);
         }
 
-        public IMethodResponse InsertListenedFact(IMonitorLogger logger, string text);
+        public IMethodResponse InsertListenedFact(IMonitorLogger logger, RuleInstance fact)
+        {
+            return LoggedSyncFunctorWithoutResult<InternalEngine, RuleInstance>.Run(logger, "C07E04DF-6455-406A-BC74-3F5236F380BF", this, fact,
+                (IMonitorLogger loggerValue, InternalEngine instanceValue, RuleInstance factValue) => {
+                    instanceValue.NInsertListenedFact(loggerValue, factValue);
+                },
+                _activeObjectContext, _serializationAnchor).ToMethodResponse();
+        }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldInsertListenedFact(IMonitorLogger logger, RuleInstance fact)
+        public void NInsertListenedFact(IMonitorLogger logger, RuleInstance fact)
         {
             _context.Storage.InsertListenedFact(logger, fact);
         }
 
-        public IMethodResponse InsertListenedFact(IMonitorLogger logger, RuleInstance fact);
+        public IMethodResponse AddCategory(IMonitorLogger logger, string category)
+        {
+            return LoggedSyncFunctorWithoutResult<InternalEngine, string>.Run(logger, "FF6E8585-CA95-440E-8824-0FEEC13286A6", this, category,
+                (IMonitorLogger loggerValue, InternalEngine instanceValue, string categoryValue) => {
+                    instanceValue.NAddCategory(loggerValue, categoryValue);
+                },
+                _activeObjectContext, _serializationAnchor).ToMethodResponse();
+        }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldAddCategory(IMonitorLogger logger, string category)
+        public void NAddCategory(IMonitorLogger logger, string category)
         {
             _context.Storage.AddCategory(logger, category);
         }
 
-        public IMethodResponse AddCategory(IMonitorLogger logger, string category);
+        public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
+        {
+            return LoggedSyncFunctorWithoutResult<InternalEngine, List<string>>.Run(logger, "7A2E1229-34FD-4D8A-937C-5490815B588D", this, categories,
+                (IMonitorLogger loggerValue, InternalEngine instanceValue, List<string> categoriesValue) => {
+                    instanceValue.NAddCategories(loggerValue, categoriesValue);
+                },
+                _activeObjectContext, _serializationAnchor).ToMethodResponse();
+        }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldAddCategories(IMonitorLogger logger, List<string> categories)
+        public void DirectAddCategories(IMonitorLogger logger, List<string> categories)
+        {
+            NAddCategories(logger, categories);
+        }
+
+        public void NAddCategories(IMonitorLogger logger, List<string> categories)
         {
             _context.Storage.AddCategories(logger, categories);
         }
 
-        public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories);
-        public void DirectAddCategories(IMonitorLogger logger, List<string> categories);
+        public IMethodResponse RemoveCategory(IMonitorLogger logger, string category)
+        {
+            return LoggedSyncFunctorWithoutResult<InternalEngine, string>.Run(logger, "EAA752D6-E54D-45F9-A179-DB4A881C273E", this, category,
+                (IMonitorLogger loggerValue, InternalEngine instanceValue, string categoryValue) => {
+                    instanceValue.NRemoveCategory(loggerValue, categoryValue);
+                },
+                _activeObjectContext, _serializationAnchor).ToMethodResponse();
+        }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemoveCategory(IMonitorLogger logger, string category)
+        public void NRemoveCategory(IMonitorLogger logger, string category)
         {
             _context.Storage.RemoveCategory(logger, category);
         }
 
-        public IMethodResponse RemoveCategory(IMonitorLogger logger, string category);
+        public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
+        {
+            return LoggedSyncFunctorWithoutResult<InternalEngine, List<string>>.Run(logger, "E502A605-89C3-4FCB-BC7B-393CF1478A79", this, categories,
+                (IMonitorLogger loggerValue, InternalEngine instanceValue, List<string> categoriesValue) => {
+                    instanceValue.NRemoveCategories(loggerValue, categoriesValue);
+                },
+                _activeObjectContext, _serializationAnchor).ToMethodResponse();
+        }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemoveCategories(IMonitorLogger logger, List<string> categories)
+        public void DirectRemoveCategories(IMonitorLogger logger, List<string> categories)
+        {
+            NRemoveCategories(logger, categories);
+        }
+
+        public void NRemoveCategories(IMonitorLogger logger, List<string> categories)
         {
             _context.Storage.RemoveCategories(logger, categories);
         }
 
-        public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories);
-        public void DirectRemoveCategories(IMonitorLogger logger, List<string> categories);
-
         public bool EnableCategories { get => _context.Storage.EnableCategories; set => _context.Storage.EnableCategories = value; }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldDie()
+        public IMethodResponse Die()
+        {
+            return LoggedSyncFunctorWithoutResult<InternalEngine>.Run(Logger, "56B53133-0391-44D3-B2E7-AA1A4FF40547", this,
+                (IMonitorLogger loggerValue, InternalEngine instanceValue) => {
+                    instanceValue.NDie();
+                },
+                _activeObjectContext, _serializationAnchor).ToMethodResponse();
+        }
+
+        public void DirectDie()
+        {
+            NDie();
+        }
+
+        public void NDie()
         {
             _context.Die();
         }
-
-        public IMethodResponse Die();
-        public void DirectDie();
 
         /// <inheritdoc/>
         protected override void OnDisposed()

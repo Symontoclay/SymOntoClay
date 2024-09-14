@@ -99,12 +99,6 @@ namespace SymOntoClay.Core.Internal
             return _context.Storage.InsertPublicFact(logger, text);
         }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public string OldInsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
-        {
-            return NInsertPublicFact(logger, factName, text);
-        }
-
         public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
         {
             return LoggedSyncFunctorWithResult<InternalEngine, StrongIdentifierValue, string, string>.Run(logger, "99B30FB7-7425-46CA-9320-70DF92727FD0", this, factName, text,
@@ -124,14 +118,24 @@ namespace SymOntoClay.Core.Internal
             return _context.Storage.InsertPublicFact(logger, factName, text);
         }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        {
+            return LoggedSyncFunctorWithResult<InternalEngine, RuleInstance, string>.Run(logger, "6DF4CC30-42D7-4955-A866-67C7EB132F80", this, fact,
+                string (IMonitorLogger loggerValue, InternalEngine instanceValue, RuleInstance factValue) => {
+                    return instanceValue.NInsertPublicFact(loggerValue, factValue);
+                },
+                _activeObjectContext, _serializationAnchor).ToMethodResponse();
+        }
+
+        public string DirectInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        {
+            return NInsertPublicFact(logger, fact);
+        }
+
+        public string NInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             return _context.Storage.InsertPublicFact(logger, fact);
         }
-
-        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact);
-        public string DirectInsertPublicFact(IMonitorLogger logger, RuleInstance fact);
 
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemovePublicFact(IMonitorLogger logger, string id)

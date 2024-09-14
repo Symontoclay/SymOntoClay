@@ -346,5 +346,13 @@ namespace SymOntoClay.Core.Internal
         public void DirectRemoveCategories(IMonitorLogger logger, List<string> categories);
 
         public bool EnableCategories { get => _storageComponent.EnableCategories; set => _storageComponent.EnableCategories = value; }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            _context.Dispose();
+
+            base.OnDisposed();
+        }
     }
 }

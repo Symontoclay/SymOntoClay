@@ -189,5 +189,13 @@ namespace SymOntoClay.Core
 
         /// <inheritdoc/>
         public bool EnableCategories { get => _internalStandaloneStorage.EnableCategories; set => _internalStandaloneStorage.EnableCategories = value; }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            _internalStandaloneStorage.Dispose();
+
+            base.OnDisposed();
+        }
     }
 }

@@ -21,16 +21,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.ActiveObject.MethodResponses;
-using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.CodeModel.Helpers;
-using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SymOntoClay.Core
 {
@@ -39,43 +35,21 @@ namespace SymOntoClay.Core
         public StandaloneStorage(StandaloneStorageSettings settings)
             : base(settings.MonitorNode)
         {
-
-            _additionalSourceCodePaths = settings.AdditionalSourceCodePaths;
-
-            _context = EngineContextHelper.CreateAndInitMainStorageContext(settings);
+            _internalStandaloneStorage = new InternalStandaloneStorage(settings);
         }
-        
-        private readonly MainStorageContext _context;
+
+        private InternalStandaloneStorage _internalStandaloneStorage;
 
         /// <inheritdoc/>
-        public IMainStorageContext Context => _context;
-        private readonly IList<string> _additionalSourceCodePaths;
+        public IMainStorageContext Context => _internalStandaloneStorage.Context;
 
-        private IStorageComponent _storageComponent;
-        private IStorage _storage;
-        private IStorage _publicFactsStorage;
-        private ConsolidatedPublicFactsStorage _worldPublicFactsStorage;
-
-        private List<(StrongIdentifierValue, string)> _deferredPublicFactsTexts = new List<(StrongIdentifierValue, string)>();
-        private List<RuleInstance> _deferredPublicFactsInstances = new List<RuleInstance>();
-        private List<string> _defferedRemovedPublicFacts = new List<string>();
-        private List<string> _deferredAddedCategories = new List<string>();
-        private List<string> _deferredRemovedCategories = new List<string>();
 
         /// <inheritdoc/>
         public IStorageComponent StorageComponent
         {
             get
             {
-                lock (_stateLockObj)
-                {
-                    if (_state == ComponentState.Disposed)
-                    {
-                        throw new ObjectDisposedException(null);
-                    }
-
-                    return _storageComponent;
-                }
+                return _internalStandaloneStorage.StorageComponent;
             }
         }
 
@@ -84,15 +58,7 @@ namespace SymOntoClay.Core
         {
             get
             {
-                lock (_stateLockObj)
-                {
-                    if (_state == ComponentState.Disposed)
-                    {
-                        throw new ObjectDisposedException(null);
-                    }
-
-                    return _storage;
-                }
+                return _internalStandaloneStorage.Storage;
             }
         }
 
@@ -101,15 +67,7 @@ namespace SymOntoClay.Core
         {
             get
             {
-                lock (_stateLockObj)
-                {
-                    if (_state == ComponentState.Disposed)
-                    {
-                        throw new ObjectDisposedException(null);
-                    }
-
-                    return _publicFactsStorage;
-                }
+                return _internalStandaloneStorage.PublicFactsStorage;
             }
         }
 
@@ -118,277 +76,118 @@ namespace SymOntoClay.Core
         {
             get
             {
-                lock (_stateLockObj)
-                {
-                    if (_state == ComponentState.Disposed)
-                    {
-                        throw new ObjectDisposedException(null);
-                    }
-
-                    return _worldPublicFactsStorage;
-                }
+                return _internalStandaloneStorage.WorldPublicFactsStorage;
             }
         }
 
         /// <inheritdoc/>
         public void LoadFromSourceCode()
         {
-            lock (_stateLockObj)
-            {
-                if (_state == ComponentState.Disposed)
-                {
-                    throw new ObjectDisposedException(null);
-                }
-
-                EngineContextHelper.LoadFromSourceCode(_context);
-
-                if (!_additionalSourceCodePaths.IsNullOrEmpty())
-                {
-                    _context.LoaderFromSourceCode.LoadFromPaths(_additionalSourceCodePaths);
-                }
-
-                _storageComponent = _context.Storage;
-                _storage = _storageComponent.GlobalStorage;
-                _publicFactsStorage = _storageComponent.PublicFactsStorage;
-                _worldPublicFactsStorage = _storageComponent.WorldPublicFactsStorage;
-
-                if (_deferredPublicFactsTexts.Any())
-                {
-                    foreach (var item in _deferredPublicFactsTexts)
-                    {
-                        _storageComponent.InsertPublicFact(Logger, item.Item1, item.Item2);
-                    }
-
-                    _deferredPublicFactsTexts.Clear();
-                    _deferredPublicFactsTexts = null;
-                }
-                else
-                {
-                    _deferredPublicFactsTexts = null;
-                }
-
-                if (_deferredPublicFactsInstances.Any())
-                {
-                    foreach(var fact in _deferredPublicFactsInstances)
-                    {
-                        _storageComponent.InsertPublicFact(Logger, fact);
-                    }
-                    _deferredPublicFactsInstances.Clear();
-                    _deferredPublicFactsInstances = null;
-                }
-                else
-                {
-                    _deferredPublicFactsInstances = null;
-                }
-
-                if (_defferedRemovedPublicFacts.Any())
-                {
-                    foreach (var item in _defferedRemovedPublicFacts)
-                    {
-                        _storageComponent.RemovePublicFact(Logger, item);
-                    }
-
-                    _defferedRemovedPublicFacts.Clear();
-                    _defferedRemovedPublicFacts = null;
-                }
-                else
-                {
-                    _defferedRemovedPublicFacts = null;
-                }
-
-                if (_deferredAddedCategories.Any())
-                {
-                    _storageComponent.AddCategories(Logger, _deferredAddedCategories);
-
-                    _deferredAddedCategories.Clear();
-                    _deferredAddedCategories = null;
-                }
-                else
-                {
-                    _deferredAddedCategories = null;
-                }
-
-                if (_deferredRemovedCategories.Any())
-                {
-                    _storageComponent.RemoveCategories(Logger, _deferredRemovedCategories);
-
-                    _deferredRemovedCategories.Clear();
-                    _deferredRemovedCategories = null;
-                }
-                else
-                {
-                    _deferredRemovedCategories = null;
-                }
-
-                _state = ComponentState.Loaded;
-            }
+            _internalStandaloneStorage.LoadFromSourceCode();
         }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertPublicFact(IMonitorLogger logger, string text)
         {
-            lock (_stateLockObj)
-            {
-                if(_storageComponent == null)
-                {
-                    var factName = NameHelper.CreateRuleOrFactName();
-                    _deferredPublicFactsTexts.Add((factName, text));
-                    return factName.NameValue;
-                }
-
-                return _storageComponent.InsertPublicFact(logger, text);
-            }
+            throw new NotSupportedException("BB4ECC8C-A536-48A5-8B9A-579804F54513");
         }
 
         /// <inheritdoc/>
         public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
         {
-
+            return _internalStandaloneStorage.InsertPublicFact(logger, text);
         }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
-            lock (_stateLockObj)
-            {
-                if (_storageComponent == null)
-                {
-                    if(fact.Name == null)
-                    {
-                        fact.Name = NameHelper.CreateRuleOrFactName();
-                    }
-
-                    _deferredPublicFactsInstances.Add(fact);
-                    return fact.Name.NameValue;
-                }
-
-                return _storageComponent.InsertPublicFact(logger, fact);
-            }                
+            throw new NotSupportedException("31339C37-BFBE-471D-A4A3-A236AF11C8DD");
         }
 
         /// <inheritdoc/>
         public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
-
+            return _internalStandaloneStorage.InsertPublicFact(logger, fact);
         }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemovePublicFact(IMonitorLogger logger, string id)
         {
-            lock (_stateLockObj)
-            {
-                if (_storageComponent == null)
-                {
-                    _defferedRemovedPublicFacts.Add(id);
-                    return;
-                }
-
-                _storageComponent.RemovePublicFact(logger, id);
-            }            
+            throw new NotSupportedException("A09FF186-D3E7-4263-829F-9EAD2E74A4F5");
         }
 
         /// <inheritdoc/>
         public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
         {
-
+            return _internalStandaloneStorage.RemovePublicFact(logger, id);
         }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldAddCategory(IMonitorLogger logger, string category)
         {
-            lock (_stateLockObj)
-            {
-                if (_storageComponent == null)
-                {
-                    _deferredAddedCategories.Add(category);
-                    return;
-                }
-
-                _storageComponent.AddCategory(logger, category);
-            }
+            throw new NotSupportedException("EE9B9270-71C7-46C2-ADC8-2B9BE3B3115D");
         }
 
         /// <inheritdoc/>
         public IMethodResponse AddCategory(IMonitorLogger logger, string category)
         {
-
+            return _internalStandaloneStorage.AddCategory(logger, category);
         }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldAddCategories(IMonitorLogger logger, List<string> categories)
         {
-            lock (_stateLockObj)
-            {
-                if (_storageComponent == null)
-                {
-                    _deferredAddedCategories.AddRange(categories);
-                    return;
-                }
-
-                _storageComponent.AddCategories(logger, categories);
-            }            
+            throw new NotSupportedException("86A196A2-49A9-481E-BD28-C6066F9999E0");
         }
 
         /// <inheritdoc/>
         public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
         {
-
+            return _internalStandaloneStorage.AddCategories(logger, categories);
         }
 
-        void IDirectStandaloneStorage.DirectAddCategories(IMonitorLogger logger, List<string> categories);
+        void IDirectStandaloneStorage.DirectAddCategories(IMonitorLogger logger, List<string> categories)
+        {
+            _internalStandaloneStorage.DirectAddCategories(logger, categories);
+        }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemoveCategory(IMonitorLogger logger, string category)
         {
-            lock (_stateLockObj)
-            {
-                if (_storageComponent == null)
-                {
-                    _deferredRemovedCategories.Add(category);
-                    return;
-                }
-
-                _storageComponent.RemoveCategory(logger, category);
-            }            
+            throw new NotSupportedException("1CF43D34-ED37-4766-BE44-35DCCD8E873D");
         }
 
         /// <inheritdoc/>
         public IMethodResponse RemoveCategory(IMonitorLogger logger, string category)
         {
-
+            return _internalStandaloneStorage.RemoveCategory(logger, category);
         }
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemoveCategories(IMonitorLogger logger, List<string> categories)
         {
-            lock (_stateLockObj)
-            {
-                if (_storageComponent == null)
-                {
-                    _deferredRemovedCategories.AddRange(categories);
-                    return;
-                }
-
-                _storageComponent.RemoveCategories(logger, categories);
-            }            
+            throw new NotSupportedException("C3A95594-0441-42FE-B1CD-4F34ED41886D");
         }
 
         /// <inheritdoc/>
         public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
-
+            return _internalStandaloneStorage.RemoveCategories(logger, categories);
         }
 
-        void IDirectStandaloneStorage.DirectRemoveCategories(IMonitorLogger logger, List<string> categories);
+        void IDirectStandaloneStorage.DirectRemoveCategories(IMonitorLogger logger, List<string> categories)
+        {
+            _internalStandaloneStorage.DirectRemoveCategories(logger, categories);
+        }
 
         /// <inheritdoc/>
-        public bool EnableCategories { get => _storageComponent.EnableCategories; set => _storageComponent.EnableCategories = value; }
+        public bool EnableCategories { get => _internalStandaloneStorage.EnableCategories; set => _internalStandaloneStorage.EnableCategories = value; }
     }
 }

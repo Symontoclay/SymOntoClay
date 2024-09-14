@@ -140,11 +140,19 @@ namespace SymOntoClay.Core.Internal
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemovePublicFact(IMonitorLogger logger, string id)
         {
-            _context.Storage.RemovePublicFact(logger, id);
+            NRemovePublicFact(logger, id);
         }
 
         public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id);
-        public void DirectRemovePublicFact(IMonitorLogger logger, string id);
+        public void DirectRemovePublicFact(IMonitorLogger logger, string id)
+        {
+            NRemovePublicFact(logger, id);
+        }
+
+        public void NRemovePublicFact(IMonitorLogger logger, string id)
+        {
+            _context.Storage.RemovePublicFact(logger, id);
+        }
 
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertFact(IMonitorLogger logger, string text)

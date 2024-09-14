@@ -17,18 +17,26 @@ namespace SymOntoClay.SourceGenerator
 
         private List<string> _targetConstructors = new List<string>()
         {
-            "LoggedCodeChunkFunctorWithoutResult",
-            "LoggedCodeChunkFunctorWithResult",
-            "LoggedCodeChunkSyncFunctorWithoutResult",
-            "LoggedCodeChunkSyncFunctorWithResult"
+            "LoggedAndContextedCodeChunkSyncFunctorWithResult",
+            "LoggedAndContextedCodeChunkSyncFunctorWithoutResult",
+            "LoggedAndContextedCodeChunkFunctorWithResult",
+            "LoggedAndContextedCodeChunkFunctorWithoutResult",
+            "LoggedAndContextedCodeChunkDrivenSyncFunctorWithResult",
+            "LoggedAndContextedCodeChunkDrivenSyncFunctorWithoutResult",
+            "LoggedSyncFunctorWithoutResult",
+            "LoggedSyncFunctorWithResult"
         };
 
         private List<(string FirstIdenfifier, string SecondIdenfifier)> _targetInvocations = new List<(string FirstIdenfifier, string SecondIdenfifier)>()
         {
-            ("LoggedCodeChunkFunctorWithoutResult", "Run"),
-            ("LoggedCodeChunkFunctorWithResult", "Run"),
-            ("LoggedCodeChunkSyncFunctorWithoutResult", "Run"),
-            ("LoggedCodeChunkSyncFunctorWithResult", "Run"),
+            ("LoggedAndContextedCodeChunkSyncFunctorWithResult", "Run"),
+            ("LoggedAndContextedCodeChunkSyncFunctorWithoutResult", "Run"),
+            ("LoggedAndContextedCodeChunkFunctorWithResult", "Run"),
+            ("LoggedAndContextedCodeChunkFunctorWithoutResult", "Run"),
+            ("LoggedAndContextedCodeChunkDrivenSyncFunctorWithResult", "Run"),
+            ("LoggedAndContextedCodeChunkDrivenSyncFunctorWithoutResult", "Run"),
+            ("LoggedSyncFunctorWithoutResult", "Run"),
+            ("LoggedSyncFunctorWithResult", "Run"),
             (null, "CreateCodeChunk"),
             (null, "CreateSyncCall"),
             (null, "CreateAsyncCall")

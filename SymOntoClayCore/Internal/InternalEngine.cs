@@ -137,13 +137,15 @@ namespace SymOntoClay.Core.Internal
             return _context.Storage.InsertPublicFact(logger, fact);
         }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemovePublicFact(IMonitorLogger logger, string id)
+        public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
         {
-            NRemovePublicFact(logger, id);
+            return LoggedSyncFunctorWithoutResult<InternalEngine, string>.Run(logger, "7D2C2F53-F0C0-481F-AF43-2510EF145784", this, id,
+                (IMonitorLogger loggerValue, InternalEngine instanceValue, string idValue) => {
+                    instanceValue.NRemovePublicFact(loggerValue, idValue);
+                },
+                _activeObjectContext, _serializationAnchor).ToMethodResponse();
         }
 
-        public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id);
         public void DirectRemovePublicFact(IMonitorLogger logger, string id)
         {
             NRemovePublicFact(logger, id);
@@ -154,13 +156,19 @@ namespace SymOntoClay.Core.Internal
             _context.Storage.RemovePublicFact(logger, id);
         }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public string OldInsertFact(IMonitorLogger logger, string text)
+        public IMethodResponse<string> InsertFact(IMonitorLogger logger, string text)
+        {
+            return LoggedSyncFunctorWithResult<InternalEngine, string, string>.Run(logger, "F27B76F3-DF59-45B1-9B4A-D64A0C544588", this, text,
+                string (IMonitorLogger loggerValue, InternalEngine instanceValue, string textValue) => {
+                    return instanceValue.NInsertFact(loggerValue, textValue);
+                },
+                _activeObjectContext, _serializationAnchor).ToMethodResponse();
+        }
+
+        public string NInsertFact(IMonitorLogger logger, string text)
         {
             return _context.Storage.InsertFact(logger, text);
         }
-
-        public IMethodResponse<string> InsertFact(IMonitorLogger logger, string text);
 
         [Obsolete("Serialization Refactoring", true)]
         public string OldInsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)

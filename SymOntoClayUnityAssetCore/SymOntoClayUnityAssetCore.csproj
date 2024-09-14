@@ -28,4 +28,9 @@
     <ProjectReference Include="..\SymOntoClayCore\SymOntoClayCore.csproj" />
     <ProjectReference Include="..\SymOntoClayProjectFiles\SymOntoClayProjectFiles.csproj" />
   </ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\SymOntoClay.SourceGenerator\SymOntoClay.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+	</ItemGroup>
+
 </Project>

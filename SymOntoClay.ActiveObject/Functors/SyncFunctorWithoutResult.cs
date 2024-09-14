@@ -108,4 +108,35 @@ namespace SymOntoClay.ActiveObject.Functors
             _action(_arg1, _arg2, _arg3);
         }
     }
+
+    public partial class SyncFunctorWithoutResult<T1, T2, T3, T4> : BaseSyncFunctorWithoutResult
+    {
+        public SyncFunctorWithoutResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, T3 arg3, T4 arg4, Action<T1, T2, T3, T4> action, IActiveObjectContext activeObjectContext, ISerializationAnchor serializationAnchor)
+            : base(logger, activeObjectContext, serializationAnchor)
+        {
+            _functorId = functorId;
+
+            _action = action;
+            _arg1 = arg1;
+            _arg2 = arg2;
+            _arg3 = arg3;
+            _arg4 = arg4;
+        }
+
+        [SocSerializableActionKey]
+        private string _functorId;
+
+        private Action<T1, T2, T3, T4> _action;
+
+        private T1 _arg1;
+        private T2 _arg2;
+        private T3 _arg3;
+        private T4 _arg4;
+
+        /// <inheritdoc/>
+        protected override void OnRun()
+        {
+            _action(_arg1, _arg2, _arg3, _arg4);
+        }
+    }
 }

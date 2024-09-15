@@ -20,7 +20,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using NLog;
 using SymOntoClay.ActiveObject.Functors;
 using SymOntoClay.ActiveObject.MethodResponses;
 using SymOntoClay.Core;
@@ -138,7 +137,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             _coreEngine.LoadFromSourceCode();
 
             _worldContext.AddPublicFactsStorage(this);
-
         }
 
         /// <inheritdoc/>
@@ -233,12 +231,30 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
         public IMethodResponse PushSoundFact(float power, string text)
         {
-            return _soundPublisher.PushSoundFact(power, text);
+            return LoggedSyncFunctorWithoutResult<HumanoidNPCGameComponent, float, string>.Run(Logger, "B568048D-680D-4DE3-B3CC-4B16A72AAFBF", this, power, text,
+                (IMonitorLogger loggerValue, HumanoidNPCGameComponent instanceValue, float powerValue, string textValue) => {
+                    instanceValue.NPushSoundFact(powerValue, textValue);
+                },
+                _activeObjectContext, _serializationAnchor).ToMethodResponse();
+        }
+
+        public void NPushSoundFact(float power, string text)
+        {
+            _soundPublisher.PushSoundFact(power, text);
         }
 
         public IMethodResponse PushSoundFact(float power, RuleInstance fact)
         {
-            return _soundPublisher.PushSoundFact(power, fact);
+            return LoggedSyncFunctorWithoutResult<HumanoidNPCGameComponent, float, RuleInstance>.Run(Logger, "24F76F7D-76E6-4417-B1FB-9C8CE3986E32", this, power, fact,
+                (IMonitorLogger loggerValue, HumanoidNPCGameComponent instanceValue, float powerValue, RuleInstance factValue) => {
+                    instanceValue.NPushSoundFact(powerValue, factValue);
+                },
+                _activeObjectContext, _serializationAnchor).ToMethodResponse();
+        }
+
+        public void NPushSoundFact(float power, RuleInstance fact)
+        {
+            _soundPublisher.PushSoundFact(power, fact);
         }
 
         public IMethodResponse AddCategory(IMonitorLogger logger, string category)

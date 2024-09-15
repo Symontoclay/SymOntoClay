@@ -52,8 +52,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         private readonly IStandardFactsBuilder _standardFactsBuilder;
 
         /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldPushSoundFact(float power, string factStr)
+        public void PushSoundFact(float power, string factStr)
         {
             if(_soundBus == null)
             {
@@ -64,42 +63,27 @@ namespace SymOntoClay.UnityAsset.Core.Internal.SoundPerception
         }
 
         /// <inheritdoc/>
-        public IMethodResponse PushSoundFact(float power, string factStr);
-
-        /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldPushSoundFact(float power, RuleInstance fact)
+        public void PushSoundFact(float power, RuleInstance fact)
         {
             var factStr = fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent);
 
-            OldPushSoundFact(power, factStr);
+            PushSoundFact(power, factStr);
         }
 
         /// <inheritdoc/>
-        public IMethodResponse PushSoundFact(float power, RuleInstance fact);
-
-        /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldPushSpeechFact(float power, string factStr)
+        public void PushSpeechFact(float power, string factStr)
         {
             factStr = _standardFactsBuilder.BuildSayFactString(_idForFacts, factStr);
 
-            OldPushSoundFact(power, factStr);
+            PushSoundFact(power, factStr);
         }
 
         /// <inheritdoc/>
-        public IMethodResponse PushSpeechFact(float power, string factStr);
-
-        /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldPushSpeechFact(float power, RuleInstance fact)
+        public void PushSpeechFact(float power, RuleInstance fact)
         {
             var factStr = fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent);
 
-            OldPushSpeechFact(power, factStr);
+            PushSpeechFact(power, factStr);
         }
-
-        /// <inheritdoc/>
-        public IMethodResponse PushSpeechFact(float power, RuleInstance fact);
     }
 }

@@ -21,7 +21,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
+using SymOntoClay.ActiveObject.Functors;
 using SymOntoClay.ActiveObject.MethodResponses;
+using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
@@ -63,6 +65,9 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 
                 HostStorage = new StandaloneStorage(standaloneStorageSettings);
                 _directHostStorage = HostStorage;
+
+                _activeObjectContext = ActiveObjectContext;
+                _serializationAnchor = new SerializationAnchor();
             }
             catch (Exception e)
             {
@@ -72,9 +77,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             }
         }
         
-        private readonly HostSupportComponent _hostSupport;
-        private readonly SoundPublisherComponent _soundPublisher;
-        
+        private HostSupportComponent _hostSupport;
+        private SoundPublisherComponent _soundPublisher;
+
+        private IActiveObjectContext _activeObjectContext;
+        private SerializationAnchor _serializationAnchor;
+
         protected StandaloneStorage HostStorage { get; private set; }
 
         private IDirectStandaloneStorage _directHostStorage;
@@ -113,13 +121,31 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         /// <inheritdoc/>
         public IMethodResponse PushSoundFact(float power, string text)
         {
-            return _soundPublisher.PushSoundFact(power, text);
+            return LoggedSyncFunctorWithoutResult<BaseStoredGameComponent, float, string>.Run(Logger, "06AB8E90-47E0-42DD-830E-CEB5B298FEF6", this, power, text,
+                (IMonitorLogger loggerValue, BaseStoredGameComponent instanceValue, float powerValue, string textValue) => {
+                    instanceValue.NPushSoundFact(powerValue, textValue);
+                },
+                _activeObjectContext, _serializationAnchor).ToMethodResponse();
+        }
+
+        public void NPushSoundFact(float power, string text)
+        {
+            _soundPublisher.PushSoundFact(power, text);
         }
 
         /// <inheritdoc/>
         public IMethodResponse PushSoundFact(float power, RuleInstance fact)
         {
-            return _soundPublisher.PushSoundFact(power, fact);
+            return LoggedSyncFunctorWithoutResult<BaseStoredGameComponent, float, RuleInstance>.Run(Logger, "9B6625A9-8F6B-479D-9541-90638BB7BA68", this, power, fact,
+                (IMonitorLogger loggerValue, BaseStoredGameComponent instanceValue, float powerValue, RuleInstance factValue) => {
+                    instanceValue.NPushSoundFact(powerValue, factValue);
+                },
+                _activeObjectContext, _serializationAnchor).ToMethodResponse();
+        }
+
+        public void NPushSoundFact(float power, RuleInstance fact)
+        {
+            _soundPublisher.PushSoundFact(power, fact);
         }
 
         /// <inheritdoc/>

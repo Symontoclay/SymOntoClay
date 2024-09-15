@@ -74,11 +74,11 @@ namespace SymOntoClay.ActiveObject.Functors
             _activeObjectContext.RemoveChild(this);
         }
 
-        public IMethodResponse ToMethodResponse()
+        public ISyncMethodResponse ToMethodResponse()
         {
-            return CompletedMethodResponse.Instance;
+            return CompletedSyncMethodResponse.Instance;
         }
-
+        
         /// <inheritdoc/>
         public void Dispose()
         {

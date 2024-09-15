@@ -8,7 +8,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         BaseAsyncCallCodeChunkWithResultForMethodWithoutResult<TResult>,
         IAsyncCallCodeChunkWithResultForMethodWithoutResult<TResult>
     {
-        public AsyncCallCodeChunkWithResultForMethodWithoutResult(string id, ICodeChunksContextWithResult<TResult> codeChunksContext, Func<IMethodResponse> handler)
+        public AsyncCallCodeChunkWithResultForMethodWithoutResult(string id, ICodeChunksContextWithResult<TResult> codeChunksContext, Func<IAsyncMethodResponse> handler)
             : base(codeChunksContext)
         {
             _id = id;
@@ -18,10 +18,10 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         [SocSerializableActionKey]
         private string _id;
 
-        private Func<IMethodResponse> _handler;
+        private Func<IAsyncMethodResponse> _handler;
 
         /// <inheritdoc/>
-        protected override IMethodResponse OnRunHandler()
+        protected override IAsyncMethodResponse OnRunHandler()
         {
             return _handler();
         }
@@ -31,7 +31,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         BaseAsyncCallCodeChunkWithResultForMethodWithoutResult<TResult>,
         IAsyncCallCodeChunkWithResultForMethodWithoutResult<T, TResult>
     {
-        public AsyncCallCodeChunkWithResultForMethodWithoutResult(string id, ICodeChunksContextWithResult<T, TResult> codeChunksContext, T arg1, Func<T, IMethodResponse> handler)
+        public AsyncCallCodeChunkWithResultForMethodWithoutResult(string id, ICodeChunksContextWithResult<T, TResult> codeChunksContext, T arg1, Func<T, IAsyncMethodResponse> handler)
             : base(codeChunksContext)
         {
             _id = id;
@@ -44,10 +44,10 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 
         private T _arg1;
 
-        private Func<T, IMethodResponse> _handler;
+        private Func<T, IAsyncMethodResponse> _handler;
 
         /// <inheritdoc/>
-        protected override IMethodResponse OnRunHandler()
+        protected override IAsyncMethodResponse OnRunHandler()
         {
             return _handler(_arg1);
         }
@@ -57,7 +57,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         BaseAsyncCallCodeChunkWithResultForMethodWithoutResult<TResult>,
         IAsyncCallCodeChunkWithResultForMethodWithoutResult<T1, T2, TResult>
     {
-        public AsyncCallCodeChunkWithResultForMethodWithoutResult(string id, ICodeChunksContextWithResult<T1, T2, TResult> codeChunksContext, T1 arg1, T2 arg2, Func<T1, T2, IMethodResponse> handler)
+        public AsyncCallCodeChunkWithResultForMethodWithoutResult(string id, ICodeChunksContextWithResult<T1, T2, TResult> codeChunksContext, T1 arg1, T2 arg2, Func<T1, T2, IAsyncMethodResponse> handler)
             : base(codeChunksContext)
         {
             _id = id;
@@ -72,10 +72,10 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         private T1 _arg1;
         private T2 _arg2;
 
-        private Func<T1, T2, IMethodResponse> _handler;
+        private Func<T1, T2, IAsyncMethodResponse> _handler;
 
         /// <inheritdoc/>
-        protected override IMethodResponse OnRunHandler()
+        protected override IAsyncMethodResponse OnRunHandler()
         {
             return _handler(_arg1, _arg2);
         }
@@ -85,7 +85,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         BaseAsyncCallCodeChunkWithResultForMethodWithoutResult<TResult>,
         IAsyncCallCodeChunkWithResultForMethodWithoutResult<T1, T2, T3, TResult>
     {
-        public AsyncCallCodeChunkWithResultForMethodWithoutResult(string id, ICodeChunksContextWithResult<T1, T2, T3, TResult> codeChunksContext, T1 arg1, T2 arg2, T3 arg3, Func<T1, T2, T3, IMethodResponse> handler)
+        public AsyncCallCodeChunkWithResultForMethodWithoutResult(string id, ICodeChunksContextWithResult<T1, T2, T3, TResult> codeChunksContext, T1 arg1, T2 arg2, T3 arg3, Func<T1, T2, T3, IAsyncMethodResponse> handler)
             : base(codeChunksContext)
         {
             _id = id;
@@ -102,10 +102,10 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         private T2 _arg2;
         private T3 _arg3;
 
-        private Func<T1, T2, T3, IMethodResponse> _handler;
+        private Func<T1, T2, T3, IAsyncMethodResponse> _handler;
 
         /// <inheritdoc/>
-        protected override IMethodResponse OnRunHandler()
+        protected override IAsyncMethodResponse OnRunHandler()
         {
             return _handler(_arg1, _arg2, _arg3);
         }

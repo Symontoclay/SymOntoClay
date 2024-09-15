@@ -4,10 +4,10 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
     public abstract partial class BaseAsyncCallCodeChunkWithoutResultForMethodWithoutResult
     {
-        protected abstract IMethodResponse OnRunHandler();
+        protected abstract IAsyncMethodResponse OnRunHandler();
 
         private bool _isHandlerFinished;
-        private IMethodResponse _syncMethodResponse;
+        private IAsyncMethodResponse _syncMethodResponse;
         private bool _isSyncMethodFinished;
         private bool _isFinished;
 

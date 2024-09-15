@@ -68,9 +68,9 @@ namespace SymOntoClay.ActiveObject.Functors
 
         bool IBaseLoggedCodeChunkDrivenSyncFunctorWithoutResult.IsFinished => _codeChunksContext.IsFinished;
 
-        public ISyncMethodResponse ToMethodResponse()
+        public IDrivenSyncMethodResponse ToMethodResponse()
         {
-            return new SyncMethodResponse(this);
+            return new DrivenSyncMethodResponse(this);
         }
     }
 }

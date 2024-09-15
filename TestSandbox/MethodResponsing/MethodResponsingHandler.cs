@@ -30,7 +30,7 @@ namespace TestSandbox.MethodResponsing
             _logger.Info("0E0F952F-1992-4FFA-8387-B78FA674328F", $"result = {result}");
         }
 
-        private IMethodResponse<int> SomeIntMethod()
+        private IAsyncMethodResponse<int> SomeIntMethod()
         {
             _logger.Info("D70E947A-25D2-4DEA-9493-0BDDAAA67D9D", "Run");
 
@@ -42,7 +42,7 @@ namespace TestSandbox.MethodResponsing
             var methodResponse = SomeMethod();
         }
 
-        private IMethodResponse SomeMethod()
+        private IAsyncMethodResponse SomeMethod()
         {
             _logger.Info("0AFED997-8094-419F-BFE5-D8A2EA410026", "Run");
 

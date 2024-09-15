@@ -78,9 +78,9 @@ namespace SymOntoClay.ActiveObject.Functors
             _serializationAnchor.RemoveFunctor(this);
         }
 
-        public IMethodResponse<TResult> ToMethodResponse()
+        public IAsyncMethodResponse<TResult> ToMethodResponse()
         {
-            return new CompletedMethodResponse<TResult>(_codeChunksContext.Result);
+            return new CompletedAsyncMethodResponse<TResult>(_codeChunksContext.Result);
         }
     }
 }

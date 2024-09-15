@@ -2,9 +2,9 @@
 
 namespace SymOntoClay.ActiveObject.MethodResponses
 {
-    public class SyncMethodResponse: ISyncMethodResponse
+    public class DrivenSyncMethodResponse: IDrivenSyncMethodResponse
     {
-        public SyncMethodResponse(IBaseLoggedCodeChunkDrivenSyncFunctorWithoutResult functor)
+        public DrivenSyncMethodResponse(IBaseLoggedCodeChunkDrivenSyncFunctorWithoutResult functor)
         {
             _functor = functor;
         }
@@ -21,9 +21,9 @@ namespace SymOntoClay.ActiveObject.MethodResponses
         public bool IsFinished => _functor.IsFinished;
     }
 
-    public class SyncMethodResponse<TResult> : ISyncMethodResponse<TResult>
+    public class DrivenSyncMethodResponse<TResult> : IDrivenSyncMethodResponse<TResult>
     {
-        public SyncMethodResponse(IBaseLoggedCodeChunkDrivenSyncFunctorWithResult<TResult> functor)
+        public DrivenSyncMethodResponse(IBaseLoggedCodeChunkDrivenSyncFunctorWithResult<TResult> functor)
         {
             _functor = functor;
         }

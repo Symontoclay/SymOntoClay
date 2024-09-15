@@ -2,9 +2,9 @@
 
 namespace SymOntoClay.ActiveObject.MethodResponses
 {
-    public class CompletedMethodResponse : IMethodResponse
+    public class CompletedAsyncMethodResponse : IAsyncMethodResponse
     {
-        public static CompletedMethodResponse Instance = new CompletedMethodResponse();
+        public static CompletedAsyncMethodResponse Instance = new CompletedAsyncMethodResponse();
 
         /// <inheritdoc/>
         public Task Task => Task.CompletedTask;
@@ -15,16 +15,16 @@ namespace SymOntoClay.ActiveObject.MethodResponses
         }
     }
 
-    public class CompletedMethodResponse<TResult> : IMethodResponse<TResult>
+    public class CompletedAsyncMethodResponse<TResult> : IAsyncMethodResponse<TResult>
     {
-        public static CompletedMethodResponse<TResult> Instance = new CompletedMethodResponse<TResult>();
+        public static CompletedAsyncMethodResponse<TResult> Instance = new CompletedAsyncMethodResponse<TResult>();
 
-        public CompletedMethodResponse()
+        public CompletedAsyncMethodResponse()
             : this(default(TResult))
         {
         }
 
-        public CompletedMethodResponse(TResult result)
+        public CompletedAsyncMethodResponse(TResult result)
         {
             _result = result;
         }

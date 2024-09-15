@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.ActiveObject.MethodResponses
 {
-    public class MethodResponseOfBaseFunctor : IMethodResponse
+    public class AsyncMethodResponseOfBaseFunctor : IAsyncMethodResponse
     {
-        public MethodResponseOfBaseFunctor(BaseFunctor source)
+        public AsyncMethodResponseOfBaseFunctor(BaseFunctor source)
         {
             _source = source;
         }
@@ -22,9 +22,9 @@ namespace SymOntoClay.ActiveObject.MethodResponses
         }
     }
 
-    public class MethodResponseOfBaseFunctor<TResult> : IMethodResponse<TResult>
+    public class AsyncMethodResponseOfBaseFunctor<TResult> : IAsyncMethodResponse<TResult>
     {
-        public MethodResponseOfBaseFunctor(BaseFunctor<TResult> source)
+        public AsyncMethodResponseOfBaseFunctor(BaseFunctor<TResult> source)
         {
             _source = source;
         }

@@ -2,11 +2,9 @@
 {
     public interface ISyncMethodResponse
     {
-        void Run();
-        bool IsFinished { get; }
     }
 
-    public interface ISyncMethodResponse<TResult>: ISyncMethodResponse
+    public interface ISyncMethodResponse<TResult> : ISyncMethodResponse
     {
         TResult Result { get; }
     }

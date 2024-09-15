@@ -107,13 +107,13 @@ namespace TestSandbox.Threads
                 loggerValue.Info("29B0879D-CAD1-4B61-8D65-B235FCC10D5E", "Chunk1");
             });
 
-            codeChunksContext.CreateSyncCall("B7F7C4B0-EF14-46D9-9CC1-9B307A6F3F07", ISyncMethodResponse (IMonitorLogger loggerValue, CodeChunksHandler instance) => {
+            codeChunksContext.CreateSyncCall("B7F7C4B0-EF14-46D9-9CC1-9B307A6F3F07", IDrivenSyncMethodResponse (IMonitorLogger loggerValue, CodeChunksHandler instance) => {
                 loggerValue.Info("E47E339B-BDFD-4C2E-88D2-8C1DD60ED4A1", "Chunk2");
 
                 return instance.SyncMethodForCase9(loggerValue, instance);
             });
 
-            codeChunksContext.CreateSyncCall<int>("7CADB8B3-A559-4B4F-A8F7-9B90A24C1DDA", ISyncMethodResponse<int> (IMonitorLogger loggerValue, CodeChunksHandler instance) => {
+            codeChunksContext.CreateSyncCall<int>("7CADB8B3-A559-4B4F-A8F7-9B90A24C1DDA", IDrivenSyncMethodResponse<int> (IMonitorLogger loggerValue, CodeChunksHandler instance) => {
                 loggerValue.Info("389A53AE-EBA5-406A-B762-58E2A14DDDE4", "Pre Chunk3");
 
                 return instance.SyncMethodWithResultForCase9(loggerValue, instance);
@@ -125,7 +125,7 @@ namespace TestSandbox.Threads
             codeChunksContext.Run();
         }
 
-        public ISyncMethodResponse SyncMethodForCase9(IMonitorLogger logger, CodeChunksHandler instance)
+        public IDrivenSyncMethodResponse SyncMethodForCase9(IMonitorLogger logger, CodeChunksHandler instance)
         {
             logger.Info("44EABFD7-4866-4C97-BC8C-8A6FE4477ACF", "Hi!");
 
@@ -138,7 +138,7 @@ namespace TestSandbox.Threads
             }).ToMethodResponse();
         }
 
-        public ISyncMethodResponse<int> SyncMethodWithResultForCase9(IMonitorLogger logger, CodeChunksHandler instance)
+        public IDrivenSyncMethodResponse<int> SyncMethodWithResultForCase9(IMonitorLogger logger, CodeChunksHandler instance)
         {
             logger.Info("44EABFD7-4866-4C97-BC8C-8A6FE4477ACF", "Hello!");
 

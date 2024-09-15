@@ -8,7 +8,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         : BaseSyncCallCodeChunkWithResultForMethodWithResult<TResult, MethodResult>,
         ISyncCallCodeChunkWithResultForMethodWithResult<TResult>
     {
-        public SyncCallCodeChunkWithResultForMethodWithResult(string id, ICodeChunksContextWithResult<TResult> codeChunksContext, Func<ISyncMethodResponse<MethodResult>> preHandler, Action<MethodResult> postHandler)
+        public SyncCallCodeChunkWithResultForMethodWithResult(string id, ICodeChunksContextWithResult<TResult> codeChunksContext, Func<IDrivenSyncMethodResponse<MethodResult>> preHandler, Action<MethodResult> postHandler)
             : base(codeChunksContext)
         {
             _id = id;
@@ -19,10 +19,10 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         [SocSerializableActionKey]
         private string _id;
 
-        private Func<ISyncMethodResponse<MethodResult>> _preHandler;
+        private Func<IDrivenSyncMethodResponse<MethodResult>> _preHandler;
         private Action<MethodResult> _postHandler;
 
-        protected override ISyncMethodResponse<MethodResult> OnRunPreHandler()
+        protected override IDrivenSyncMethodResponse<MethodResult> OnRunPreHandler()
         {
             return _preHandler();
         }
@@ -37,7 +37,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         : BaseSyncCallCodeChunkWithResultForMethodWithResult<TResult, MethodResult>,
         ISyncCallCodeChunkWithResultForMethodWithResult<T, TResult>
     {
-        public SyncCallCodeChunkWithResultForMethodWithResult(string id, ICodeChunksContextWithResult<T, TResult> codeChunksContext, T arg1, Func<T, ISyncMethodResponse<MethodResult>> preHandler, Action<T, MethodResult> postHandler)
+        public SyncCallCodeChunkWithResultForMethodWithResult(string id, ICodeChunksContextWithResult<T, TResult> codeChunksContext, T arg1, Func<T, IDrivenSyncMethodResponse<MethodResult>> preHandler, Action<T, MethodResult> postHandler)
             : base(codeChunksContext)
         {
             _id = id;
@@ -51,10 +51,10 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 
         private T _arg1;
 
-        private Func<T, ISyncMethodResponse<MethodResult>> _preHandler;
+        private Func<T, IDrivenSyncMethodResponse<MethodResult>> _preHandler;
         private Action<T, MethodResult> _postHandler;
 
-        protected override ISyncMethodResponse<MethodResult> OnRunPreHandler()
+        protected override IDrivenSyncMethodResponse<MethodResult> OnRunPreHandler()
         {
             return _preHandler(_arg1);
         }
@@ -69,7 +69,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         : BaseSyncCallCodeChunkWithResultForMethodWithResult<TResult, MethodResult>,
         ISyncCallCodeChunkWithResultForMethodWithResult<T1, T2, TResult>
     {
-        public SyncCallCodeChunkWithResultForMethodWithResult(string id, ICodeChunksContextWithResult<T1, T2, TResult> codeChunksContext, T1 arg1, T2 arg2, Func<T1, T2, ISyncMethodResponse<MethodResult>> preHandler, Action<T1, T2, MethodResult> postHandler)
+        public SyncCallCodeChunkWithResultForMethodWithResult(string id, ICodeChunksContextWithResult<T1, T2, TResult> codeChunksContext, T1 arg1, T2 arg2, Func<T1, T2, IDrivenSyncMethodResponse<MethodResult>> preHandler, Action<T1, T2, MethodResult> postHandler)
             : base(codeChunksContext)
         {
             _id = id;
@@ -85,10 +85,10 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         private T1 _arg1;
         private T2 _arg2;
 
-        private Func<T1, T2, ISyncMethodResponse<MethodResult>> _preHandler;
+        private Func<T1, T2, IDrivenSyncMethodResponse<MethodResult>> _preHandler;
         private Action<T1, T2, MethodResult> _postHandler;
 
-        protected override ISyncMethodResponse<MethodResult> OnRunPreHandler()
+        protected override IDrivenSyncMethodResponse<MethodResult> OnRunPreHandler()
         {
             return _preHandler(_arg1, _arg2);
         }
@@ -103,7 +103,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         : BaseSyncCallCodeChunkWithResultForMethodWithResult<TResult, MethodResult>,
         ISyncCallCodeChunkWithResultForMethodWithResult<T1, T2, T3, TResult>
     {
-        public SyncCallCodeChunkWithResultForMethodWithResult(string id, ICodeChunksContextWithResult<T1, T2, T3, TResult> codeChunksContext, T1 arg1, T2 arg2, T3 arg3, Func<T1, T2, T3, ISyncMethodResponse<MethodResult>> preHandler, Action<T1, T2, T3, MethodResult> postHandler)
+        public SyncCallCodeChunkWithResultForMethodWithResult(string id, ICodeChunksContextWithResult<T1, T2, T3, TResult> codeChunksContext, T1 arg1, T2 arg2, T3 arg3, Func<T1, T2, T3, IDrivenSyncMethodResponse<MethodResult>> preHandler, Action<T1, T2, T3, MethodResult> postHandler)
             : base(codeChunksContext)
         {
             _id = id;
@@ -121,10 +121,10 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         private T2 _arg2;
         private T3 _arg3;
 
-        private Func<T1, T2, T3, ISyncMethodResponse<MethodResult>> _preHandler;
+        private Func<T1, T2, T3, IDrivenSyncMethodResponse<MethodResult>> _preHandler;
         private Action<T1, T2, T3, MethodResult> _postHandler;
 
-        protected override ISyncMethodResponse<MethodResult> OnRunPreHandler()
+        protected override IDrivenSyncMethodResponse<MethodResult> OnRunPreHandler()
         {
             return _preHandler(_arg1, _arg2, _arg3);
         }

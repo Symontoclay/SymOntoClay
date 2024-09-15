@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace TestSandbox.MethodResponsing
 {
-    public class TstIntMethodResponse : IMethodResponse<int>
+    public class TstIntMethodResponse : IAsyncMethodResponse<int>
     {
         public TstIntMethodResponse(Task<int> task)
         {

@@ -41,9 +41,9 @@ namespace SymOntoClay.ActiveObject.Functors
             _asyncActiveOnceObject = null;
         }
 
-        public IMethodResponse ToMethodResponse()
+        public IAsyncMethodResponse ToMethodResponse()
         {
-            return new MethodResponseOfBaseFunctor(this);
+            return new AsyncMethodResponseOfBaseFunctor(this);
         }
     }
 
@@ -88,9 +88,9 @@ namespace SymOntoClay.ActiveObject.Functors
 
         public TResult Result => _asyncActiveOnceObject == null ? _result : _asyncActiveOnceObject.Result;
 
-        public IMethodResponse<TResult> ToMethodResponse()
+        public IAsyncMethodResponse<TResult> ToMethodResponse()
         {
-            return new MethodResponseOfBaseFunctor<TResult>(this);
+            return new AsyncMethodResponseOfBaseFunctor<TResult>(this);
         }
     }
 }

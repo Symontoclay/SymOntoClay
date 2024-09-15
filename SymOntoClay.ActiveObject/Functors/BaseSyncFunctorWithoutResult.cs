@@ -74,9 +74,9 @@ namespace SymOntoClay.ActiveObject.Functors
             _activeObjectContext.RemoveChild(this);
         }
 
-        public IMethodResponse ToMethodResponse()
+        public IAsyncMethodResponse ToMethodResponse()
         {
-            return CompletedMethodResponse.Instance;
+            return CompletedAsyncMethodResponse.Instance;
         }
 
         /// <inheritdoc/>

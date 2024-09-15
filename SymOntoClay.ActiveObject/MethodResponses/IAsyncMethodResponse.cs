@@ -2,13 +2,13 @@
 
 namespace SymOntoClay.ActiveObject.MethodResponses
 {
-    public interface IMethodResponse
+    public interface IAsyncMethodResponse
     {
         Task Task { get; }
         void Wait();
     }
 
-    public interface IMethodResponse<TResult>
+    public interface IAsyncMethodResponse<TResult>
     {
         Task<TResult> Task { get; }
         TResult Result { get; }

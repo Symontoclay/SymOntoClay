@@ -71,9 +71,9 @@ namespace SymOntoClay.ActiveObject.Functors
 
         TResult IBaseLoggedCodeChunkDrivenSyncFunctorWithResult<TResult>.Result => _codeChunksContext.Result;
 
-        public ISyncMethodResponse<TResult> ToMethodResponse()
+        public IDrivenSyncMethodResponse<TResult> ToMethodResponse()
         {
-            return new SyncMethodResponse<TResult>(this);
+            return new DrivenSyncMethodResponse<TResult>(this);
         }
     }
 }

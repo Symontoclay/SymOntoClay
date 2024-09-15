@@ -11,10 +11,10 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 
         private IBaseCodeChunksContextWithResult<TResult> _codeChunksContext;
 
-        protected abstract ISyncMethodResponse OnRunHandler();
+        protected abstract IDrivenSyncMethodResponse OnRunHandler();
 
         private bool _isHandlerFinished;
-        private ISyncMethodResponse _syncMethodResponse;
+        private IDrivenSyncMethodResponse _syncMethodResponse;
         private bool _isSyncMethodFinished;
         private bool _isFinished;
 

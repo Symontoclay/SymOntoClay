@@ -9,11 +9,11 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _codeChunksContext = codeChunksContext;
         }
 
-        protected abstract ISyncMethodResponse<MethodResult> OnRunPreHandler();
+        protected abstract IDrivenSyncMethodResponse<MethodResult> OnRunPreHandler();
         protected abstract void OnRunPostHandler(MethodResult methodResult);
 
         private bool _isPreHandlerFinished;
-        private ISyncMethodResponse<MethodResult> _syncMethodResponse;
+        private IDrivenSyncMethodResponse<MethodResult> _syncMethodResponse;
         private bool _isSyncMethodFinished;
         private bool _isPostHandlerFinished;
         private bool _isFinished;

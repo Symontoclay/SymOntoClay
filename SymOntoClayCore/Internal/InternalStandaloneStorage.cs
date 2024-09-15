@@ -1,4 +1,7 @@
-﻿using SymOntoClay.ActiveObject.MethodResponses;
+﻿using Newtonsoft.Json.Linq;
+using SymOntoClay.ActiveObject.Functors;
+using SymOntoClay.ActiveObject.MethodResponses;
+using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
@@ -19,9 +22,13 @@ namespace SymOntoClay.Core.Internal
             _additionalSourceCodePaths = settings.AdditionalSourceCodePaths;
 
             _context = EngineContextHelper.CreateAndInitMainStorageContext(settings);
+            _activeObjectContext = _context.ActiveObjectContext;
+            _serializationAnchor = new SerializationAnchor();
         }
 
         private MainStorageContext _context;
+        private readonly IActiveObjectContext _activeObjectContext;
+        private SerializationAnchor _serializationAnchor;
 
         public IMainStorageContext Context => _context;
 
@@ -206,7 +213,11 @@ namespace SymOntoClay.Core.Internal
                     return new CompletedMethodResponse<string>(factName.NameValue);
                 }
 
-                return NInsertPublicFact(logger, text);
+                return LoggedSyncFunctorWithResult<InternalStandaloneStorage, string, string>.Run(logger, "9A943BBE-0E7A-49FB-B59B-18257B4B0BEE", this, text,
+                    string(IMonitorLogger loggerValue, InternalStandaloneStorage instanceValue, string textValue) => { 
+                        return instanceValue.NInsertPublicFact(loggerValue, textValue);
+                    },
+                    _activeObjectContext, _serializationAnchor).ToMethodResponse();
             }
         }
 
@@ -230,7 +241,11 @@ namespace SymOntoClay.Core.Internal
                     return new CompletedMethodResponse<string>(fact.Name.NameValue);
                 }
 
-                return NInsertPublicFact(logger, fact);
+                return LoggedSyncFunctorWithResult<InternalStandaloneStorage, RuleInstance, string>.Run(logger, "F6F736D8-8365-4D55-930A-51CFCED6985B", this, fact,
+                    string(IMonitorLogger loggerValue, InternalStandaloneStorage instanceValue, RuleInstance factValue) => {
+                        return instanceValue.NInsertPublicFact(loggerValue, factValue);
+                    },
+                    _activeObjectContext, _serializationAnchor).ToMethodResponse();
             }
         }
 
@@ -249,7 +264,11 @@ namespace SymOntoClay.Core.Internal
                     return CompletedMethodResponse.Instance;
                 }
 
-                NRemovePublicFact(logger, id);
+                return LoggedSyncFunctorWithoutResult<InternalStandaloneStorage, string>.Run(logger, "E906C9AD-3469-4956-80D9-FB7A5F0D07D8", this, id,
+                    (IMonitorLogger loggerValue, InternalStandaloneStorage instanceValue, string idValue) => {
+                        instanceValue.NRemovePublicFact(loggerValue, idValue);
+                    },
+                    _activeObjectContext, _serializationAnchor).ToMethodResponse();
             }
         }
 
@@ -268,7 +287,11 @@ namespace SymOntoClay.Core.Internal
                     return CompletedMethodResponse.Instance;
                 }
 
-                NAddCategory(logger, category);
+                return LoggedSyncFunctorWithoutResult<InternalStandaloneStorage, string>.Run(logger, "98D58843-1D5F-4662-999B-8AB34225B7FF", this, category,
+                    (IMonitorLogger loggerValue, InternalStandaloneStorage instanceValue, string categoryValue) => {
+                        instanceValue.NAddCategory(loggerValue, categoryValue);
+                    },
+                    _activeObjectContext, _serializationAnchor).ToMethodResponse();
             }
         }
 
@@ -287,7 +310,11 @@ namespace SymOntoClay.Core.Internal
                     return CompletedMethodResponse.Instance;
                 }
 
-                NAddCategories(logger, categories);
+                return LoggedSyncFunctorWithoutResult<InternalStandaloneStorage, List<string>>.Run(logger, "82EC25C9-7430-467D-9C45-D1669632C719", this, categories,
+                    (IMonitorLogger loggerValue, InternalStandaloneStorage instanceValue, List<string> categoriesValue) => {
+                        instanceValue.NAddCategories(loggerValue, categoriesValue);
+                    },
+                    _activeObjectContext, _serializationAnchor).ToMethodResponse();
             }
         }
 
@@ -320,7 +347,11 @@ namespace SymOntoClay.Core.Internal
                     return CompletedMethodResponse.Instance;
                 }
 
-                NRemoveCategory(logger, category);
+                return LoggedSyncFunctorWithoutResult<InternalStandaloneStorage, string>.Run(logger, "ED81F452-0401-42E9-BBAB-FABF9EBABF28", this, category,
+                    (IMonitorLogger loggerValue, InternalStandaloneStorage instanceValue, string categoryValue) => {
+                        instanceValue.NRemoveCategory(loggerValue, categoryValue);
+                    },
+                    _activeObjectContext, _serializationAnchor).ToMethodResponse();
             }
         }
 
@@ -339,7 +370,11 @@ namespace SymOntoClay.Core.Internal
                     return CompletedMethodResponse.Instance;
                 }
 
-                NRemoveCategories(logger, categories);
+                return LoggedSyncFunctorWithoutResult<InternalStandaloneStorage, List<string>>.Run(logger, "00C6AD56-50FB-4D9C-899F-2F641E6829BF", this, categories,
+                    (IMonitorLogger loggerValue, InternalStandaloneStorage instanceValue, List<string> categoriesValue) => {
+                        instanceValue.NRemoveCategories(loggerValue, categoriesValue);
+                    },
+                    _activeObjectContext, _serializationAnchor).ToMethodResponse();
             }
         }
 

@@ -82,8 +82,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 
         private object _manualControlLockObj = new object();
 
-        private IActiveObjectContext _activeObjectContext;
-        private SerializationAnchor _serializationAnchor;
+        protected IActiveObjectContext _activeObjectContext;
+        protected SerializationAnchor _serializationAnchor;
 
         [Obsolete("Serialization Refactoring", true)]
         public void OldAddToManualControl(IGameObject obj, int device)
@@ -94,12 +94,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         public IMethodResponse AddToManualControl(IGameObject obj, int device)
         {
             return AddToManualControl(obj, new List<int>() { device });
-        }
-
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldAddToManualControl(IGameObject obj, IList<int> devices)
-        {
-            NAddToManualControl(obj, devices);
         }
 
         public IMethodResponse AddToManualControl(IGameObject obj, IList<int> devices)

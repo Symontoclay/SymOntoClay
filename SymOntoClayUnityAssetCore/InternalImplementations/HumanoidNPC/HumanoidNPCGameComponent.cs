@@ -20,6 +20,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
+using SymOntoClay.ActiveObject.Functors;
 using SymOntoClay.ActiveObject.MethodResponses;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
@@ -290,35 +292,53 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
         public IStorage BackpackStorage => _backpackStorage;
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldAddToBackpack(IMonitorLogger logger, IGameObject obj)
+        public IMethodResponse AddToBackpack(IMonitorLogger logger, IGameObject obj)
+        {
+            return LoggedSyncFunctorWithoutResult<HumanoidNPCGameComponent, IGameObject>.Run(logger, "17F2084B-201C-486A-A94F-ADE42188AB9E", this, obj,
+                (IMonitorLogger loggerValue, HumanoidNPCGameComponent instanceValue, IGameObject objValue) => {
+                    instanceValue.NAddToBackpack(loggerValue, objValue);
+                },
+                _activeObjectContext, _serializationAnchor).ToMethodResponse();
+        }
+
+        public void NAddToBackpack(IMonitorLogger logger, IGameObject obj)
         {
             _backpackStorage.AddConsolidatedStorage(logger, obj.PublicFactsStorage);
         }
 
-        public IMethodResponse AddToBackpack(IMonitorLogger logger, IGameObject obj);
+        public IMethodResponse RemoveFromBackpack(IMonitorLogger logger, IGameObject obj)
+        {
+            return LoggedSyncFunctorWithoutResult<HumanoidNPCGameComponent, IGameObject>.Run(logger, "19E62F24-5F37-4853-9423-9DB87FB8D061", this, obj,
+                (IMonitorLogger loggerValue, HumanoidNPCGameComponent instanceValue, IGameObject objValue) => {
+                    instanceValue.NRemoveFromBackpack(loggerValue, objValue);
+                },
+                _activeObjectContext, _serializationAnchor).ToMethodResponse();
+        }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemoveFromBackpack(IMonitorLogger logger, IGameObject obj)
+        public void NRemoveFromBackpack(IMonitorLogger logger, IGameObject obj)
         {
             _backpackStorage.RemoveConsolidatedStorage(logger, obj.PublicFactsStorage);
         }
-
-        public IMethodResponse RemoveFromBackpack(IMonitorLogger logger, IGameObject obj);
 
         /// <summary>
         /// Gets engine context. Onkly for debugging and testing!
         /// </summary>
         public IEngineContext EngineContext => _coreEngine.EngineContext;
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldDie()
+        public IMethodResponse Die()
         {
-            _coreEngine.OldDie();
-            _visionComponent?.OldDie();
+            return LoggedSyncFunctorWithoutResult<HumanoidNPCGameComponent>.Run(Logger, "6C3E7934-1F44-4AD8-A0CE-EDB068DDE8F9", this,
+                (IMonitorLogger loggerValue, HumanoidNPCGameComponent instanceValue) => {
+                    instanceValue.NDie();
+                },
+                _activeObjectContext, _serializationAnchor).ToMethodResponse();
         }
 
-        public IMethodResponse Die();
+        public void NDie()
+        {
+            _directEngine.DirectDie();
+            _visionComponent?.DirectDie();
+        }
 
         /// <inheritdoc/>
         protected override void OnDisposed()

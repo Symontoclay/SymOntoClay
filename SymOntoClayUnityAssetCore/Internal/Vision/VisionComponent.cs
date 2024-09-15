@@ -20,11 +20,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.Functors;
+using SymOntoClay.ActiveObject.MethodResponses;
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -46,18 +49,22 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
             _activeObjectContext = new ActiveObjectContext(worldContext.SyncContext, internalContext.CancellationToken);
             _activeObject = new AsyncActivePeriodicObject(_activeObjectContext, internalContext.AsyncEventsThreadPool, logger);
             _activeObject.PeriodicMethod = CommandLoop;
+
+            _serializationAnchor = new SerializationAnchor();
         }
 
-        private readonly HumanoidNPCGameComponentContext _internalContext;
-        private readonly IWorldCoreGameComponentContext _worldContext;
-        private readonly int _selfInstanceId;
-        private readonly IVisionProvider _visionProvider;
-        private readonly IActiveObjectContext _activeObjectContext;
-        private readonly AsyncActivePeriodicObject _activeObject;
-        private readonly object _lockObj = new object();
+        private HumanoidNPCGameComponentContext _internalContext;
+        private IWorldCoreGameComponentContext _worldContext;
+        private int _selfInstanceId;
+        private IVisionProvider _visionProvider;
+        private IActiveObjectContext _activeObjectContext;
+        private AsyncActivePeriodicObject _activeObject;
+        private object _lockObj = new object();
         private string _idForFacts;
         private Engine _coreEngine;
         private IDirectEngine _directEngine;
+
+        private SerializationAnchor _serializationAnchor;
 
         private Dictionary<int, VisibleItem> _visibleObjectsRegistry;
         private Dictionary<int, Vector3> _visibleObjectsPositionRegistry;
@@ -340,7 +347,16 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
             }
         }
 
-        public void OldDie()
+        public IMethodResponse Die()
+        {
+            return LoggedSyncFunctorWithoutResult<VisionComponent>.Run(Logger, "600A11AD-266E-491D-975C-DA2540BA82CC", this,
+                (IMonitorLogger loggerValue, VisionComponent instanceValue) => {
+                    instanceValue.DirectDie();
+                },
+                _activeObjectContext, _serializationAnchor).ToMethodResponse();
+        }
+
+        public void DirectDie()
         {
             _activeObject.Dispose();
         }

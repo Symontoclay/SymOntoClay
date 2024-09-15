@@ -195,8 +195,7 @@ namespace SymOntoClay.Core.Internal
             }
         }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public string OldInsertPublicFact(IMonitorLogger logger, string text)
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
         {
             lock (_stateLockObj)
             {
@@ -204,20 +203,19 @@ namespace SymOntoClay.Core.Internal
                 {
                     var factName = NameHelper.CreateRuleOrFactName();
                     _deferredPublicFactsTexts.Add((factName, text));
-                    return factName.NameValue;
+                    return new CompletedMethodResponse<string>(factName.NameValue);
                 }
 
-                return _storageComponent.InsertPublicFact(logger, text);
+                return NInsertPublicFact(logger, text);
             }
         }
 
-        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
+        public string NInsertPublicFact(IMonitorLogger logger, string text)
         {
-
+            return _storageComponent.InsertPublicFact(logger, text);
         }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             lock (_stateLockObj)
             {
@@ -232,17 +230,16 @@ namespace SymOntoClay.Core.Internal
                     return fact.Name.NameValue;
                 }
 
-                return _storageComponent.InsertPublicFact(logger, fact);
+                return NInsertPublicFact(logger, fact);
             }
         }
 
-        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        public string NInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
-
+            return _storageComponent.InsertPublicFact(logger, fact);
         }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemovePublicFact(IMonitorLogger logger, string id)
+        public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
         {
             lock (_stateLockObj)
             {
@@ -252,17 +249,16 @@ namespace SymOntoClay.Core.Internal
                     return;
                 }
 
-                _storageComponent.RemovePublicFact(logger, id);
+                NRemovePublicFact(logger, id);
             }
         }
 
-        public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
+        public void NRemovePublicFact(IMonitorLogger logger, string id)
         {
-
+            _storageComponent.RemovePublicFact(logger, id);
         }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldAddCategory(IMonitorLogger logger, string category)
+        public IMethodResponse AddCategory(IMonitorLogger logger, string category)
         {
             lock (_stateLockObj)
             {
@@ -272,13 +268,13 @@ namespace SymOntoClay.Core.Internal
                     return;
                 }
 
-                _storageComponent.AddCategory(logger, category);
+                NAddCategory(logger, category);
             }
         }
 
-        public IMethodResponse AddCategory(IMonitorLogger logger, string category)
+        public void NAddCategory(IMonitorLogger logger, string category)
         {
-
+            _storageComponent.AddCategory(logger, category);
         }
 
         [Obsolete("Serialization Refactoring", true)]

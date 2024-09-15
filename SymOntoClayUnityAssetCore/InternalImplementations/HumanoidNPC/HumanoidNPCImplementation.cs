@@ -203,36 +203,15 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldAddToManualControl(IGameObject obj, DeviceOfBiped device)
-        {
-            throw new NotSupportedException("FF96775B-31A1-4BA5-8444-5FB17298523F");
-        }
-
-        /// <inheritdoc/>
         public ISyncMethodResponse AddToManualControl(IGameObject obj, DeviceOfBiped device)
         {
             return _gameComponent.AddToManualControl(obj, (int)device);
         }
 
         /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldAddToManualControl(IGameObject obj, IList<DeviceOfBiped> devices)
-        {
-            throw new NotSupportedException("4FF8E4AC-C6E9-4CEF-8BC7-7BC7B38A22DA");
-        }
-
-        /// <inheritdoc/>
         public ISyncMethodResponse AddToManualControl(IGameObject obj, IList<DeviceOfBiped> devices)
         {
             return _gameComponent.AddToManualControl(obj, devices?.Select(p => (int)p).ToList());
-        }
-
-        /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemoveFromManualControl(IGameObject obj)
-        {
-            throw new NotSupportedException("CF47174D-60F6-4FC6-89D3-86C090B4567A");
         }
 
         /// <inheritdoc/>
@@ -262,13 +241,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public string OldInsertPublicFact(IMonitorLogger logger, string text)
-        {
-            throw new NotSupportedException("091EE105-F536-4C8B-8F6E-2FB54EFC5785");
-        }
-
-        /// <inheritdoc/>
         public ISyncMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
         {
             lock (_initializeLockObj)
@@ -282,13 +254,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
                 return _gameComponent.InsertPublicFact(logger, text);
             }
-        }
-
-        /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
-        {
-            throw new NotSupportedException("9515CD90-8748-4DB0-9045-B9FBE06B2FB4");
         }
 
         /// <inheritdoc/>
@@ -312,13 +277,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemovePublicFact(IMonitorLogger logger, string id)
-        {
-            throw new NotSupportedException("1BB050AC-9062-4246-AB13-329D91A5BA39");
-        }
-
-        /// <inheritdoc/>
         public ISyncMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
         {
             lock (_initializeLockObj)
@@ -331,13 +289,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
                 return _gameComponent.RemovePublicFact(logger, id);
             }
-        }
-
-        /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public string OldInsertFact(IMonitorLogger logger, string text)
-        {
-            throw new NotSupportedException("8458C937-A928-4467-A79E-523D347B10C4");
         }
 
         /// <inheritdoc/>
@@ -357,13 +308,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemoveFact(IMonitorLogger logger, string id)
-        {
-            throw new NotSupportedException("1379352D-5020-42DE-BB9F-E9263C83396C");
-        }
-
-        /// <inheritdoc/>
         public ISyncMethodResponse RemoveFact(IMonitorLogger logger, string id)
         {
             lock (_initializeLockObj)
@@ -379,36 +323,15 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldPushSoundFact(float power, string text)
-        {
-            throw new NotSupportedException("BDE4A752-D659-4C39-B668-F87BF438EB77");
-        }
-
-        /// <inheritdoc/>
         public ISyncMethodResponse PushSoundFact(float power, string text)
         {
             return _gameComponent.PushSoundFact(power, text);
         }
 
         /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldPushSoundFact(float power, RuleInstance fact)
-        {
-            throw new NotSupportedException("969032FD-9238-4403-A917-8375D1D172D3");
-        }
-
-        /// <inheritdoc/>
         public ISyncMethodResponse PushSoundFact(float power, RuleInstance fact)
         {
             return _gameComponent.PushSoundFact(power, fact);
-        }
-
-        /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldAddCategory(IMonitorLogger logger, string category)
-        {
-            throw new NotSupportedException("E2661503-558D-40CA-920D-E1A420205CCA");
         }
 
         /// <inheritdoc/>
@@ -427,13 +350,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldAddCategories(IMonitorLogger logger, List<string> categories)
-        {
-            throw new NotSupportedException("1DDAA528-869A-41C7-BC6C-4A2DA79138D5");
-        }
-
-        /// <inheritdoc/>
         public ISyncMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
         {
             lock (_initializeLockObj)
@@ -449,13 +365,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemoveCategory(IMonitorLogger logger, string category)
-        {
-            throw new NotSupportedException("0A85FA33-D166-45B1-9643-8349D1C3ED25");
-        }
-
-        /// <inheritdoc/>
         public ISyncMethodResponse RemoveCategory(IMonitorLogger logger, string category)
         {
             lock (_initializeLockObj)
@@ -468,13 +377,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
                 return _gameComponent.RemoveCategory(logger, category);
             }
-        }
-
-        /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemoveCategories(IMonitorLogger logger, List<string> categories)
-        {
-            throw new NotSupportedException("DFA1FE6C-C757-486A-94E2-3E93554B4F9A");
         }
 
         /// <inheritdoc/>
@@ -527,23 +429,9 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         public IStorage BackpackStorage => _gameComponent.BackpackStorage;
 
         /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldAddToBackpack(IMonitorLogger logger, IGameObject obj)
-        {
-            throw new NotSupportedException("85468F3C-658C-4942-9B26-411B897E27F5");
-        }
-
-        /// <inheritdoc/>
         public ISyncMethodResponse AddToBackpack(IMonitorLogger logger, IGameObject obj)
         {
             return _gameComponent.AddToBackpack(logger, obj);
-        }
-
-        /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemoveFromBackpack(IMonitorLogger logger, IGameObject obj)
-        {
-            throw new NotSupportedException("D2243034-4A17-463B-AB1A-3DBF0F4E4ABC");
         }
 
         /// <inheritdoc/>
@@ -557,13 +445,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
         /// <inheritdoc/>
         public IStandardFactsBuilder StandardFactsBuilder => _gameComponent.StandardFactsBuilder;
-
-        /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldDie()
-        {
-            throw new NotSupportedException("387F6511-2201-4249-B713-9B546BB83E11");
-        }
 
         /// <inheritdoc/>
         public ISyncMethodResponse Die()

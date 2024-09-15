@@ -37,9 +37,7 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         /// <param name="obj">Instance of the game object.</param>
         /// <param name="device">Describes biped device which will be using the game object.</param>
-        [Obsolete("Serialization Refactoring", true)]
-        void OldAddToManualControl(IGameObject obj, DeviceOfBiped device);
-
+        /// <returns>Method response.</returns>
         ISyncMethodResponse AddToManualControl(IGameObject obj, DeviceOfBiped device);
 
         /// <summary>
@@ -47,18 +45,14 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         /// <param name="obj">Instance of the game object.</param>
         /// <param name="devices">Describes list of biped devices which will be using the game object.</param>
-        [Obsolete("Serialization Refactoring", true)]
-        void OldAddToManualControl(IGameObject obj, IList<DeviceOfBiped> devices);
-
+        /// <returns>Method response.</returns>
         ISyncMethodResponse AddToManualControl(IGameObject obj, IList<DeviceOfBiped> devices);
 
         /// <summary>
         /// Removes a game object from manual controlled area of an NPC.
         /// </summary>
         /// <param name="obj">Instance of the game object.</param>
-        [Obsolete("Serialization Refactoring", true)]
-        void OldRemoveFromManualControl(IGameObject obj);
-
+        /// <returns>Method response.</returns>
         ISyncMethodResponse RemoveFromManualControl(IGameObject obj);
 
         /// <summary>

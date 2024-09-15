@@ -105,23 +105,9 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         }
 
         /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public string OldInsertPublicFact(IMonitorLogger logger, string text)
-        {
-            throw new NotSupportedException("8F1D372F-DB41-4ED6-9970-F6469D50C152");
-        }
-
-        /// <inheritdoc/>
         public ISyncMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
         {
             return _gameComponent.InsertPublicFact(logger, text);
-        }
-
-        /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
-        {
-            throw new NotSupportedException("6EA70B49-5C19-45F2-8DA7-DB8B6F47398B");
         }
 
         /// <inheritdoc/>
@@ -131,23 +117,9 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         }
 
         /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemovePublicFact(IMonitorLogger logger, string id)
-        {
-            throw new NotSupportedException("379CB4BA-9B74-495E-B315-9E1FC5C4FCFB");
-        }
-
-        /// <inheritdoc/>
         public ISyncMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
         {
             return _gameComponent.RemovePublicFact(logger, id);
-        }
-
-        /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldPushSoundFact(float power, string text)
-        {
-            throw new NotSupportedException("0A786464-7CA8-491A-889C-70C3F8A0790E");
         }
 
         /// <inheritdoc/>
@@ -157,23 +129,9 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         }
 
         /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldPushSoundFact(float power, RuleInstance fact)
-        {
-            throw new NotSupportedException("97D67CAC-73CD-44C9-B5A6-9F2DDA413B05");
-        }
-
-        /// <inheritdoc/>
         public ISyncMethodResponse PushSoundFact(float power, RuleInstance fact)
         {
             return _gameComponent.PushSoundFact(power, fact);
-        }
-
-        /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldAddCategory(IMonitorLogger logger, string category)
-        {
-            throw new NotSupportedException("B05C9B82-635C-4ED3-A27F-D866B6243507");
         }
 
         /// <inheritdoc/>
@@ -192,13 +150,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         }
 
         /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldAddCategories(IMonitorLogger logger, List<string> categories)
-        {
-            throw new NotSupportedException("D2EBB424-7E47-47BF-84A8-2383C1D660EC");
-        }
-
-        /// <inheritdoc/>
         public ISyncMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
         {
             lock (_initializeLockObj)
@@ -214,13 +165,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         }
 
         /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemoveCategory(IMonitorLogger logger, string category)
-        {
-            throw new NotSupportedException("A9DB4087-2A18-448B-B42A-FE9E49DB34F1");
-        }
-
-        /// <inheritdoc/>
         public ISyncMethodResponse RemoveCategory(IMonitorLogger logger, string category)
         {
             lock (_initializeLockObj)
@@ -233,13 +177,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
 
                 return _gameComponent.RemoveCategory(logger, category);
             }
-        }
-
-        /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemoveCategories(IMonitorLogger logger, List<string> categories)
-        {
-            throw new NotSupportedException("8C8F0967-522F-40A6-9CF4-BD9AA9A3E3ED");
         }
 
         /// <inheritdoc/>

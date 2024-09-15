@@ -168,21 +168,9 @@ namespace SymOntoClay.Core
             _internalEngine.DirectRemovePerceptedFact(logger, id);
         }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldInsertListenedFact(IMonitorLogger logger, string text)
-        {
-            throw new NotSupportedException("8641EFFD-60C0-4E88-869D-E0A568D334B5");
-        }
-
         public ISyncMethodResponse InsertListenedFact(IMonitorLogger logger, string text)
         {
             return _internalEngine.InsertListenedFact(logger, text);
-        }
-
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldInsertListenedFact(IMonitorLogger logger, RuleInstance fact)
-        {
-            throw new NotSupportedException("02EA437B-878B-42B8-93EC-43A89B967021");
         }
 
         public ISyncMethodResponse InsertListenedFact(IMonitorLogger logger, RuleInstance fact)
@@ -221,12 +209,6 @@ namespace SymOntoClay.Core
         }
 
         public bool EnableCategories { get => _internalEngine.EnableCategories; set => _internalEngine.EnableCategories = value; }
-
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldDie()
-        {
-            throw new NotSupportedException("C3E95372-D2A5-4B14-8512-38308EEA61E0");
-        }
 
         public ISyncMethodResponse Die()
         {

@@ -85,12 +85,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         protected IActiveObjectContext _activeObjectContext;
         protected SerializationAnchor _serializationAnchor;
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldAddToManualControl(IGameObject obj, int device)
-        {
-            throw new NotSupportedException("7A810CF0-73B7-4CCB-B797-D809221AB10F");
-        }
-
         public ISyncMethodResponse AddToManualControl(IGameObject obj, int device)
         {
             return AddToManualControl(obj, new List<int>() { device });
@@ -127,12 +121,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
                 _endpointsRegistries.Add(endpointsProxyRegistryForDevices);
                 _endpointsRegistryForManualControlledObjectsDict[obj] = endpointsProxyRegistryForDevices;
             }
-        }
-
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemoveFromManualControl(IGameObject obj)
-        {
-            throw new NotSupportedException("B5C18E75-E9C4-4498-90D2-DB8357BFE1B0");
         }
 
         public ISyncMethodResponse RemoveFromManualControl(IGameObject obj)

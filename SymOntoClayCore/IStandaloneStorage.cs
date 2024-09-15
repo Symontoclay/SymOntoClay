@@ -35,18 +35,9 @@ namespace SymOntoClay.Core
         IStorageComponent StorageComponent { get; }
         IStorage Storage { get; }
 
-        [Obsolete("Serialization Refactoring", true)]
-        string OldInsertPublicFact(IMonitorLogger logger, string text);
-
         ISyncMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text);
 
-        [Obsolete("Serialization Refactoring", true)]
-        string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact);
-
         ISyncMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact);
-
-        [Obsolete("Serialization Refactoring", true)]
-        void OldRemovePublicFact(IMonitorLogger logger, string id);
 
         ISyncMethodResponse RemovePublicFact(IMonitorLogger logger, string id);
 
@@ -54,23 +45,11 @@ namespace SymOntoClay.Core
         ConsolidatedPublicFactsStorage WorldPublicFactsStorage { get; }
         IMainStorageContext Context { get; }
 
-        [Obsolete("Serialization Refactoring", true)]
-        void OldAddCategory(IMonitorLogger logger, string category);
-
         ISyncMethodResponse AddCategory(IMonitorLogger logger, string category);
-
-        [Obsolete("Serialization Refactoring", true)]
-        void OldAddCategories(IMonitorLogger logger, List<string> categories);
 
         ISyncMethodResponse AddCategories(IMonitorLogger logger, List<string> categories);
 
-        [Obsolete("Serialization Refactoring", true)]
-        void OldRemoveCategory(IMonitorLogger logger, string category);
-
         ISyncMethodResponse RemoveCategory(IMonitorLogger logger, string category);
-
-        [Obsolete("Serialization Refactoring", true)]
-        void OldRemoveCategories(IMonitorLogger logger, List<string> categories);
 
         ISyncMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories);
 

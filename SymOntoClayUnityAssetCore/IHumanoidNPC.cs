@@ -47,18 +47,10 @@ namespace SymOntoClay.UnityAsset.Core
         /// All active processes will have been stopped.
         /// Another NPCs will percept the NPC as died.
         /// </summary>
-        [Obsolete("Serialization Refactoring", true)]
-        void OldDie();
-
+        /// <returns>Method response.</returns>
         ISyncMethodResponse Die();
 
-        [Obsolete("Serialization Refactoring", true)]
-        string OldInsertFact(IMonitorLogger logger, string text);
-
         ISyncMethodResponse<string> InsertFact(IMonitorLogger logger, string text);
-
-        [Obsolete("Serialization Refactoring", true)]
-        void OldRemoveFact(IMonitorLogger logger, string id);
 
         ISyncMethodResponse RemoveFact(IMonitorLogger logger, string id);
 
@@ -72,9 +64,7 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         /// <param name="logger">Logger.</param>
         /// <param name="obj">Instance of the game object.</param>
-        [Obsolete("Serialization Refactoring", true)]
-        void OldAddToBackpack(IMonitorLogger logger, IGameObject obj);
-
+        /// <returns>Method response.</returns>
         ISyncMethodResponse AddToBackpack(IMonitorLogger logger, IGameObject obj);
 
         /// <summary>
@@ -82,9 +72,7 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         /// <param name="logger">Logger.</param>
         /// <param name="obj">Instance of the game object.</param>
-        [Obsolete("Serialization Refactoring", true)]
-        void OldRemoveFromBackpack(IMonitorLogger logger, IGameObject obj);
-
+        /// <returns>Method response.</returns>
         ISyncMethodResponse RemoveFromBackpack(IMonitorLogger logger, IGameObject obj);
 
         /// <summary>

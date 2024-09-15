@@ -78,51 +78,16 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.World
         public IPlace GetPlace(PlaceSettings settings) => _worldCore.GetPlace(settings);
 
         /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public string OldInsertPublicFact(IMonitorLogger logger, string text)
-        {
-            throw new NotSupportedException("5DDFB479-76EA-45B8-815C-08C8040836EF");
-        }
-
-        /// <inheritdoc/>
         public ISyncMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text) => _worldCore.InsertPublicFact(logger, text);
-
-        /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact)
-        {
-            throw new NotSupportedException("E3C92A4E-1DB1-44A7-8DE3-AD31AEA68F6B");
-        }
 
         /// <inheritdoc/>
         public ISyncMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact) => _worldCore.InsertPublicFact(logger, fact);
 
         /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemovePublicFact(IMonitorLogger logger, string id)
-        {
-            throw new NotSupportedException("359EF9E0-F336-425F-8DAF-EAFB4A59BBD0");
-        }
-
-        /// <inheritdoc/>
         public ISyncMethodResponse RemovePublicFact(IMonitorLogger logger, string id) => _worldCore.RemovePublicFact(logger, id);
 
         /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldPushSoundFact(float power, string text)
-        {
-            throw new NotSupportedException("68A0CCDA-6C04-49B4-B780-1D17182601EE");
-        }
-
-        /// <inheritdoc/>
         public ISyncMethodResponse PushSoundFact(float power, string text) => _worldCore.PushSoundFact(power, text);
-
-        /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldPushSoundFact(float power, RuleInstance fact)
-        {
-            throw new NotSupportedException("9E09C25C-1C95-4213-8A9B-698FC0FD746A");
-        }
 
         /// <inheritdoc/>
         public ISyncMethodResponse PushSoundFact(float power, RuleInstance fact) => _worldCore.PushSoundFact(power, fact);
@@ -131,41 +96,13 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.World
         public IStandardFactsBuilder StandardFactsBuilder => _worldCore.StandardFactsBuilder;
 
         /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldAddCategory(IMonitorLogger logger, string category)
-        {
-            throw new NotSupportedException("87F248C0-F45E-4E02-ACF0-9DE011A48067");
-        }
-
-        /// <inheritdoc/>
         public ISyncMethodResponse AddCategory(IMonitorLogger logger, string category) => _worldCore.AddCategory(logger, category);
-
-        /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldAddCategories(IMonitorLogger logger, List<string> categories)
-        {
-            throw new NotSupportedException("EFC13128-9880-4B10-8277-CAAC877AFE8E");
-        }
 
         /// <inheritdoc/>
         public ISyncMethodResponse AddCategories(IMonitorLogger logger, List<string> categories) => _worldCore.AddCategories(logger, categories);
 
         /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemoveCategory(IMonitorLogger logger, string category)
-        {
-            throw new NotSupportedException("4CA2D803-AAA3-46E1-9765-A6969BCD86AB");
-        }
-
-        /// <inheritdoc/>
         public ISyncMethodResponse RemoveCategory(IMonitorLogger logger, string category) => _worldCore.RemoveCategory(logger, category);
-
-        /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemoveCategories(IMonitorLogger logger, List<string> categories)
-        {
-            throw new NotSupportedException("6352356D-3F0C-4B7A-A480-67D463AB93E4");
-        }
 
         public ISyncMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories) => _worldCore.RemoveCategories(logger, categories);
 

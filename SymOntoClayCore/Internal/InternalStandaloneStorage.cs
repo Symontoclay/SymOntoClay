@@ -227,7 +227,7 @@ namespace SymOntoClay.Core.Internal
                     }
 
                     _deferredPublicFactsInstances.Add(fact);
-                    return fact.Name.NameValue;
+                    return new CompletedMethodResponse<string>(fact.Name.NameValue);
                 }
 
                 return NInsertPublicFact(logger, fact);
@@ -246,7 +246,7 @@ namespace SymOntoClay.Core.Internal
                 if (_storageComponent == null)
                 {
                     _defferedRemovedPublicFacts.Add(id);
-                    return;
+                    return CompletedMethodResponse.Instance;
                 }
 
                 NRemovePublicFact(logger, id);
@@ -265,7 +265,7 @@ namespace SymOntoClay.Core.Internal
                 if (_storageComponent == null)
                 {
                     _deferredAddedCategories.Add(category);
-                    return;
+                    return CompletedMethodResponse.Instance;
                 }
 
                 NAddCategory(logger, category);
@@ -277,8 +277,21 @@ namespace SymOntoClay.Core.Internal
             _storageComponent.AddCategory(logger, category);
         }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldAddCategories(IMonitorLogger logger, List<string> categories)
+        public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
+        {
+            lock (_stateLockObj)
+            {
+                if (_storageComponent == null)
+                {
+                    _deferredAddedCategories.AddRange(categories);
+                    return CompletedMethodResponse.Instance;
+                }
+
+                NAddCategories(logger, categories);
+            }
+        }
+
+        public void DirectAddCategories(IMonitorLogger logger, List<string> categories)
         {
             lock (_stateLockObj)
             {
@@ -288,39 +301,49 @@ namespace SymOntoClay.Core.Internal
                     return;
                 }
 
-                _storageComponent.AddCategories(logger, categories);
+                NAddCategories(logger, categories);
             }
         }
 
-        public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
+        public void NAddCategories(IMonitorLogger logger, List<string> categories)
         {
-
+            _storageComponent.AddCategories(logger, categories);
         }
 
-        public void DirectAddCategories(IMonitorLogger logger, List<string> categories);
-
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemoveCategory(IMonitorLogger logger, string category)
+        public IMethodResponse RemoveCategory(IMonitorLogger logger, string category)
         {
             lock (_stateLockObj)
             {
                 if (_storageComponent == null)
                 {
                     _deferredRemovedCategories.Add(category);
-                    return;
+                    return CompletedMethodResponse.Instance;
                 }
 
-                _storageComponent.RemoveCategory(logger, category);
+                NRemoveCategory(logger, category);
             }
         }
 
-        public IMethodResponse RemoveCategory(IMonitorLogger logger, string category)
+        public void NRemoveCategory(IMonitorLogger logger, string category)
         {
-
+            _storageComponent.RemoveCategory(logger, category);
         }
 
-        [Obsolete("Serialization Refactoring", true)]
-        public void OldRemoveCategories(IMonitorLogger logger, List<string> categories)
+        public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
+        {
+            lock (_stateLockObj)
+            {
+                if (_storageComponent == null)
+                {
+                    _deferredRemovedCategories.AddRange(categories);
+                    return CompletedMethodResponse.Instance;
+                }
+
+                NRemoveCategories(logger, categories);
+            }
+        }
+
+        public void DirectRemoveCategories(IMonitorLogger logger, List<string> categories)
         {
             lock (_stateLockObj)
             {
@@ -330,16 +353,14 @@ namespace SymOntoClay.Core.Internal
                     return;
                 }
 
-                _storageComponent.RemoveCategories(logger, categories);
+                NRemoveCategories(logger, categories);
             }
         }
 
-        public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
+        public void NRemoveCategories(IMonitorLogger logger, List<string> categories)
         {
-
+            _storageComponent.RemoveCategories(logger, categories);
         }
-
-        public void DirectRemoveCategories(IMonitorLogger logger, List<string> categories);
 
         public bool EnableCategories { get => _storageComponent.EnableCategories; set => _storageComponent.EnableCategories = value; }
 

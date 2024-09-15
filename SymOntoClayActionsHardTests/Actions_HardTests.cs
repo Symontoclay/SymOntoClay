@@ -164,7 +164,7 @@ action check
             var enemy = instance.GetHumanoidNPC(enemySettings);
 
             hostListener.AddOnEndPointEnterSyncHandler("Go", () => {
-                npc.OldInsertFact(null, standardFactsBuilder.BuildSeeFactString(enemyId));
+                npc.InsertFact(null, standardFactsBuilder.BuildSeeFactString(enemyId));
             });
 
             instance.StartWorld();
@@ -300,7 +300,7 @@ action check
             var enemy = instance.GetHumanoidNPC(enemySettings);
 
             hostListener.AddOnEndPointEnterSyncHandler("Go", () => {
-                npc.OldInsertFact(null, standardFactsBuilder.BuildSeeFactString(enemyId));
+                npc.InsertFact(null, standardFactsBuilder.BuildSeeFactString(enemyId));
             });
 
             instance.StartWorld();
@@ -450,7 +450,7 @@ action move
             var enemy = instance.GetHumanoidNPC(enemySettings);
 
             hostListener.AddOnEndPointEnterSyncHandler("Go", () => {
-                npc.OldInsertFact(null, standardFactsBuilder.BuildSeeFactString(enemyId));
+                npc.InsertFact(null, standardFactsBuilder.BuildSeeFactString(enemyId));
             });
 
             instance.StartWorld();
@@ -601,7 +601,7 @@ action move
             var enemy = instance.GetHumanoidNPC(enemySettings);
 
             hostListener.AddOnEndPointEnterSyncHandler("Go", () => {
-                npc.OldInsertFact(null, standardFactsBuilder.BuildSeeFactString(enemyId));
+                npc.InsertFact(null, standardFactsBuilder.BuildSeeFactString(enemyId));
             });
 
             instance.StartWorld();
@@ -755,9 +755,9 @@ action move
             var enemy = instance.GetHumanoidNPC(enemySettings);
 
             hostListener.AddOnEndPointEnterSyncHandler("Go", () => {
-                npc.OldInsertFact(null, standardFactsBuilder.BuildAliveFactString(enemyId));
-                npc.OldInsertFact(null, standardFactsBuilder.BuildDefaultInheritanceFactString(enemyId, "soldier"));
-                npc.OldInsertFact(null, standardFactsBuilder.BuildSeeFactString(enemyId));
+                npc.InsertFact(null, standardFactsBuilder.BuildAliveFactString(enemyId));
+                npc.InsertFact(null, standardFactsBuilder.BuildDefaultInheritanceFactString(enemyId, "soldier"));
+                npc.InsertFact(null, standardFactsBuilder.BuildSeeFactString(enemyId));
             });
 
             instance.StartWorld();

@@ -1179,7 +1179,7 @@ action Go
 
             Thread.Sleep(1000);
 
-            npc.OldInsertFact(_logger, "{: see(I, #a) :}");
+            npc.InsertFact(_logger, "{: see(I, #a) :}");
 
             Thread.Sleep(1000);
 

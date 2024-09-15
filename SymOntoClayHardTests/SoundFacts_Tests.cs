@@ -85,7 +85,7 @@ namespace SymOntoClay.Core.Tests
 
                 Thread.Sleep(100);
 
-                gun.OldPushSoundFact(60, "act(M4A1, shoot)");
+                gun.PushSoundFact(60, "act(M4A1, shoot)");
 
                 Thread.Sleep(5000);
             }

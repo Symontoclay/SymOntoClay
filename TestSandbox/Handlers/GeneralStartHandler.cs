@@ -101,7 +101,7 @@ namespace TestSandbox.Handlers
             var factStr = "{: $x = {: act(M16, shoot) :} & hear(I, $x) & distance(I, $x, 15.588457107543945) & direction($x, 12) & point($x, #@[15.588457107543945, 12]) :}";
             _npc.EngineContext.Storage.InsertListenedFact(_npc.Logger, factStr);
 
-            var factId = _npc.OldInsertFact(_npc.Logger, "{: see(I, #a) :}");
+            var factId = _npc.InsertFact(_npc.Logger, "{: see(I, #a) :}").Result;
 
             _npc.Logger.Output("DEEBC565-B66B-48F5-9DF6-4716C2E1623E", "|-|-|-|-|-|-|-|-|-|-|-|-|");
             _logger.Info("ED0C4551-A685-4CC0-ADB8-ACAA419FA244", "|-|-|-|-|-|-|-|-|-|-|-|-|");

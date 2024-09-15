@@ -347,7 +347,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
             }
         }
 
-        public IMethodResponse Die()
+        public ISyncMethodResponse Die()
         {
             return LoggedSyncFunctorWithoutResult<VisionComponent>.Run(Logger, "600A11AD-266E-491D-975C-DA2540BA82CC", this,
                 (IMonitorLogger loggerValue, VisionComponent instanceValue) => {

@@ -210,7 +210,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        public IMethodResponse AddToManualControl(IGameObject obj, DeviceOfBiped device)
+        public ISyncMethodResponse AddToManualControl(IGameObject obj, DeviceOfBiped device)
         {
             return _gameComponent.AddToManualControl(obj, (int)device);
         }
@@ -223,7 +223,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        public IMethodResponse AddToManualControl(IGameObject obj, IList<DeviceOfBiped> devices)
+        public ISyncMethodResponse AddToManualControl(IGameObject obj, IList<DeviceOfBiped> devices)
         {
             return _gameComponent.AddToManualControl(obj, devices?.Select(p => (int)p).ToList());
         }
@@ -236,7 +236,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        public IMethodResponse RemoveFromManualControl(IGameObject obj)
+        public ISyncMethodResponse RemoveFromManualControl(IGameObject obj)
         {
             return _gameComponent.RemoveFromManualControl(obj);
         }
@@ -269,7 +269,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
+        public ISyncMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
         {
             lock (_initializeLockObj)
             {
@@ -277,7 +277,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 {
                     var factName = NameHelper.CreateRuleOrFactName();
                     _deferredPublicFactsTexts.Add((factName, text));
-                    return new CompletedMethodResponse<string>(factName.NameValue);
+                    return new CompletedSyncMethodResponse<string>(factName.NameValue);
                 }
 
                 return _gameComponent.InsertPublicFact(logger, text);
@@ -292,7 +292,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        public ISyncMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             lock (_initializeLockObj)
             {
@@ -304,7 +304,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                     }
 
                     _deferredPublicFactsInstances.Add(fact);
-                    return new CompletedMethodResponse<string>(fact.Name.NameValue);
+                    return new CompletedSyncMethodResponse<string>(fact.Name.NameValue);
                 }
 
                 return _gameComponent.InsertPublicFact(logger, fact);
@@ -319,14 +319,14 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
+        public ISyncMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
         {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
                 {
                     _defferedRemovedPublicFacts.Add(id);
-                    return CompletedMethodResponse.Instance;
+                    return CompletedSyncMethodResponse.Instance;
                 }
 
                 return _gameComponent.RemovePublicFact(logger, id);
@@ -341,7 +341,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        public IMethodResponse<string> InsertFact(IMonitorLogger logger, string text)
+        public ISyncMethodResponse<string> InsertFact(IMonitorLogger logger, string text)
         {
             lock (_initializeLockObj)
             {
@@ -349,7 +349,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 {
                     var factName = NameHelper.CreateRuleOrFactName();
                     _deferredFactsTexts.Add((factName, text));
-                    return new CompletedMethodResponse<string>(factName.NameValue);
+                    return new CompletedSyncMethodResponse<string>(factName.NameValue);
                 }
 
                 return _gameComponent.InsertFact(logger, text);
@@ -364,14 +364,14 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        public IMethodResponse RemoveFact(IMonitorLogger logger, string id)
+        public ISyncMethodResponse RemoveFact(IMonitorLogger logger, string id)
         {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
                 {
                     _defferedRemovedFacts.Add(id);
-                    return CompletedMethodResponse.Instance;
+                    return CompletedSyncMethodResponse.Instance;
                 }
 
                 return _gameComponent.RemoveFact(logger, id);
@@ -386,7 +386,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        public IMethodResponse PushSoundFact(float power, string text)
+        public ISyncMethodResponse PushSoundFact(float power, string text)
         {
             return _gameComponent.PushSoundFact(power, text);
         }
@@ -399,7 +399,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        public IMethodResponse PushSoundFact(float power, RuleInstance fact)
+        public ISyncMethodResponse PushSoundFact(float power, RuleInstance fact)
         {
             return _gameComponent.PushSoundFact(power, fact);
         }
@@ -412,14 +412,14 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        public IMethodResponse AddCategory(IMonitorLogger logger, string category)
+        public ISyncMethodResponse AddCategory(IMonitorLogger logger, string category)
         {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
                 {
                     _deferredAddedCategories.Add(category);
-                    return CompletedMethodResponse.Instance;
+                    return CompletedSyncMethodResponse.Instance;
                 }
 
                 return _gameComponent.AddCategory(logger, category);
@@ -434,14 +434,14 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
+        public ISyncMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
         {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
                 {
                     _deferredAddedCategories.AddRange(categories);
-                    return CompletedMethodResponse.Instance;
+                    return CompletedSyncMethodResponse.Instance;
                 }
 
                 return _gameComponent.AddCategories(logger, categories);
@@ -456,14 +456,14 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        public IMethodResponse RemoveCategory(IMonitorLogger logger, string category)
+        public ISyncMethodResponse RemoveCategory(IMonitorLogger logger, string category)
         {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
                 {
                     _deferredRemovedCategories.Add(category);
-                    return CompletedMethodResponse.Instance;
+                    return CompletedSyncMethodResponse.Instance;
                 }
 
                 return _gameComponent.RemoveCategory(logger, category);
@@ -478,14 +478,14 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
+        public ISyncMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
                 {
                     _deferredRemovedCategories.AddRange(categories);
-                    return CompletedMethodResponse.Instance;
+                    return CompletedSyncMethodResponse.Instance;
                 }
 
                 return _gameComponent.RemoveCategories(logger, categories);
@@ -534,7 +534,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        public IMethodResponse AddToBackpack(IMonitorLogger logger, IGameObject obj)
+        public ISyncMethodResponse AddToBackpack(IMonitorLogger logger, IGameObject obj)
         {
             return _gameComponent.AddToBackpack(logger, obj);
         }
@@ -547,7 +547,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        public IMethodResponse RemoveFromBackpack(IMonitorLogger logger, IGameObject obj)
+        public ISyncMethodResponse RemoveFromBackpack(IMonitorLogger logger, IGameObject obj)
         {
             return _gameComponent.RemoveFromBackpack(logger, obj);
         }
@@ -566,7 +566,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
-        public IMethodResponse Die()
+        public ISyncMethodResponse Die()
         {
             return _gameComponent.Die();
         }

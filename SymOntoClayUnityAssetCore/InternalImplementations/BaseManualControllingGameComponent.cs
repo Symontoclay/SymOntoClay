@@ -91,12 +91,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             throw new NotSupportedException("7A810CF0-73B7-4CCB-B797-D809221AB10F");
         }
 
-        public IMethodResponse AddToManualControl(IGameObject obj, int device)
+        public ISyncMethodResponse AddToManualControl(IGameObject obj, int device)
         {
             return AddToManualControl(obj, new List<int>() { device });
         }
 
-        public IMethodResponse AddToManualControl(IGameObject obj, IList<int> devices)
+        public ISyncMethodResponse AddToManualControl(IGameObject obj, IList<int> devices)
         {
             return LoggedSyncFunctorWithoutResult<BaseManualControllingGameComponent, IGameObject, IList<int>>.Run(Logger, "4B621E74-7606-4F98-97F0-4C4DE29704E8", this, obj, devices,
                 (IMonitorLogger loggerValue, BaseManualControllingGameComponent instanceValue, IGameObject objValue, IList<int> devicesValue) => {
@@ -135,7 +135,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             throw new NotSupportedException("B5C18E75-E9C4-4498-90D2-DB8357BFE1B0");
         }
 
-        public IMethodResponse RemoveFromManualControl(IGameObject obj)
+        public ISyncMethodResponse RemoveFromManualControl(IGameObject obj)
         {
             return LoggedSyncFunctorWithoutResult<BaseManualControllingGameComponent, IGameObject>.Run(Logger, "0BC7B04D-81C2-47ED-A36C-1E9D3A381DAE", this, obj,
                 (IMonitorLogger loggerValue, BaseManualControllingGameComponent instanceValue, IGameObject objValue) => {

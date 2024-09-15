@@ -66,12 +66,12 @@ namespace SymOntoClay.Core
             }
         }
 
-        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
+        public ISyncMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
         {
             return _internalEngine.InsertPublicFact(logger, text);
         }
 
-        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        public ISyncMethodResponse<string> InsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
         {
             return _internalEngine.InsertPublicFact(logger, factName, text);
         }
@@ -81,7 +81,7 @@ namespace SymOntoClay.Core
             return _internalEngine.DirectInsertPublicFact(logger, factName, text);
         }
 
-        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        public ISyncMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             return _internalEngine.InsertPublicFact(logger, fact);
         }
@@ -91,7 +91,7 @@ namespace SymOntoClay.Core
             return _internalEngine.DirectInsertPublicFact(logger, fact);
         }
 
-        public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
+        public ISyncMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
         {
             return _internalEngine.RemovePublicFact(logger, id);
         }
@@ -101,12 +101,12 @@ namespace SymOntoClay.Core
             _internalEngine.DirectRemovePublicFact(logger, id);
         }
 
-        public IMethodResponse<string> InsertFact(IMonitorLogger logger, string text)
+        public ISyncMethodResponse<string> InsertFact(IMonitorLogger logger, string text)
         {
             return _internalEngine.InsertFact(logger, text);
         }
 
-        public IMethodResponse<string> InsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        public ISyncMethodResponse<string> InsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
         {
             return _internalEngine.InsertFact(logger, factName, text);
         }
@@ -116,7 +116,7 @@ namespace SymOntoClay.Core
             return _internalEngine.DirectInsertFact(logger, factName, text);
         }
 
-        public IMethodResponse RemoveFact(IMonitorLogger logger, string id)
+        public ISyncMethodResponse RemoveFact(IMonitorLogger logger, string id)
         {
             return _internalEngine.RemoveFact(logger, id);
         }
@@ -128,7 +128,7 @@ namespace SymOntoClay.Core
 
         public IStorage PublicFactsStorage => _internalEngine.PublicFactsStorage;
 
-        public IMethodResponse AddVisibleStorage(IMonitorLogger logger, IStorage storage)
+        public ISyncMethodResponse AddVisibleStorage(IMonitorLogger logger, IStorage storage)
         {
             return _internalEngine.AddVisibleStorage(logger, storage);
         }
@@ -138,7 +138,7 @@ namespace SymOntoClay.Core
             _internalEngine.DirectAddVisibleStorage(logger, storage);
         }
 
-        public IMethodResponse RemoveVisibleStorage(IMonitorLogger logger, IStorage storage)
+        public ISyncMethodResponse RemoveVisibleStorage(IMonitorLogger logger, IStorage storage)
         {
             return _internalEngine.RemoveVisibleStorage(logger, storage);
         }
@@ -148,7 +148,7 @@ namespace SymOntoClay.Core
             _internalEngine.DirectRemoveVisibleStorage(logger, storage);
         }
 
-        public IMethodResponse<string> InsertPerceptedFact(IMonitorLogger logger, string text)
+        public ISyncMethodResponse<string> InsertPerceptedFact(IMonitorLogger logger, string text)
         {
             return _internalEngine.InsertPerceptedFact(logger, text);
         }
@@ -158,7 +158,7 @@ namespace SymOntoClay.Core
             return _internalEngine.DirectInsertPerceptedFact(logger, text);
         }
 
-        public IMethodResponse RemovePerceptedFact(IMonitorLogger logger, string id)
+        public ISyncMethodResponse RemovePerceptedFact(IMonitorLogger logger, string id)
         {
             return _internalEngine.RemovePerceptedFact(logger, id);
         }
@@ -174,7 +174,7 @@ namespace SymOntoClay.Core
             throw new NotSupportedException("8641EFFD-60C0-4E88-869D-E0A568D334B5");
         }
 
-        public IMethodResponse InsertListenedFact(IMonitorLogger logger, string text)
+        public ISyncMethodResponse InsertListenedFact(IMonitorLogger logger, string text)
         {
             return _internalEngine.InsertListenedFact(logger, text);
         }
@@ -185,17 +185,17 @@ namespace SymOntoClay.Core
             throw new NotSupportedException("02EA437B-878B-42B8-93EC-43A89B967021");
         }
 
-        public IMethodResponse InsertListenedFact(IMonitorLogger logger, RuleInstance fact)
+        public ISyncMethodResponse InsertListenedFact(IMonitorLogger logger, RuleInstance fact)
         {
             return _internalEngine.InsertListenedFact(logger, fact);
         }
 
-        public IMethodResponse AddCategory(IMonitorLogger logger, string category)
+        public ISyncMethodResponse AddCategory(IMonitorLogger logger, string category)
         {
             return _internalEngine.AddCategory(logger, category);
         }
 
-        public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
+        public ISyncMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
         {
             return _internalEngine.AddCategories(logger, categories);
         }
@@ -205,12 +205,12 @@ namespace SymOntoClay.Core
             _internalEngine.DirectAddCategories(logger, categories);
         }
 
-        public IMethodResponse RemoveCategory(IMonitorLogger logger, string category)
+        public ISyncMethodResponse RemoveCategory(IMonitorLogger logger, string category)
         {
             return _internalEngine.RemoveCategory(logger, category);
         }
 
-        public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
+        public ISyncMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
             return _internalEngine.RemoveCategories(logger, categories);
         }
@@ -228,7 +228,7 @@ namespace SymOntoClay.Core
             throw new NotSupportedException("C3E95372-D2A5-4B14-8512-38308EEA61E0");
         }
 
-        public IMethodResponse Die()
+        public ISyncMethodResponse Die()
         {
             return _internalEngine.Die();
         }

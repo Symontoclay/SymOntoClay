@@ -85,7 +85,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.World
         }
 
         /// <inheritdoc/>
-        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text) => _worldCore.InsertPublicFact(logger, text);
+        public ISyncMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text) => _worldCore.InsertPublicFact(logger, text);
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
@@ -95,7 +95,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.World
         }
 
         /// <inheritdoc/>
-        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact) => _worldCore.InsertPublicFact(logger, fact);
+        public ISyncMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact) => _worldCore.InsertPublicFact(logger, fact);
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
@@ -105,7 +105,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.World
         }
 
         /// <inheritdoc/>
-        public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id) => _worldCore.RemovePublicFact(logger, id);
+        public ISyncMethodResponse RemovePublicFact(IMonitorLogger logger, string id) => _worldCore.RemovePublicFact(logger, id);
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
@@ -115,7 +115,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.World
         }
 
         /// <inheritdoc/>
-        public IMethodResponse PushSoundFact(float power, string text) => _worldCore.PushSoundFact(power, text);
+        public ISyncMethodResponse PushSoundFact(float power, string text) => _worldCore.PushSoundFact(power, text);
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
@@ -125,7 +125,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.World
         }
 
         /// <inheritdoc/>
-        public IMethodResponse PushSoundFact(float power, RuleInstance fact) => _worldCore.PushSoundFact(power, fact);
+        public ISyncMethodResponse PushSoundFact(float power, RuleInstance fact) => _worldCore.PushSoundFact(power, fact);
 
         /// <inheritdoc/>
         public IStandardFactsBuilder StandardFactsBuilder => _worldCore.StandardFactsBuilder;
@@ -138,7 +138,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.World
         }
 
         /// <inheritdoc/>
-        public IMethodResponse AddCategory(IMonitorLogger logger, string category) => _worldCore.AddCategory(logger, category);
+        public ISyncMethodResponse AddCategory(IMonitorLogger logger, string category) => _worldCore.AddCategory(logger, category);
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
@@ -148,7 +148,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.World
         }
 
         /// <inheritdoc/>
-        public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories) => _worldCore.AddCategories(logger, categories);
+        public ISyncMethodResponse AddCategories(IMonitorLogger logger, List<string> categories) => _worldCore.AddCategories(logger, categories);
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
@@ -158,7 +158,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.World
         }
 
         /// <inheritdoc/>
-        public IMethodResponse RemoveCategory(IMonitorLogger logger, string category) => _worldCore.RemoveCategory(logger, category);
+        public ISyncMethodResponse RemoveCategory(IMonitorLogger logger, string category) => _worldCore.RemoveCategory(logger, category);
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)]
@@ -167,7 +167,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.World
             throw new NotSupportedException("6352356D-3F0C-4B7A-A480-67D463AB93E4");
         }
 
-        public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories) => _worldCore.RemoveCategories(logger, categories);
+        public ISyncMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories) => _worldCore.RemoveCategories(logger, categories);
 
         /// <inheritdoc/>
         public bool EnableCategories { get => _worldCore.EnableCategories; set => _worldCore.EnableCategories = value; }

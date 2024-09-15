@@ -169,12 +169,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             }
         }
 
-        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
+        public ISyncMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
         {
             return _coreEngine.InsertPublicFact(logger, text);
         }
 
-        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        public ISyncMethodResponse<string> InsertPublicFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
         {
             return _coreEngine.InsertPublicFact(logger, factName, text);
         }
@@ -184,7 +184,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             return _directEngine.DirectInsertPublicFact(logger, factName, text);
         }
 
-        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        public ISyncMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             return _coreEngine.InsertPublicFact(logger, fact);
         }
@@ -194,7 +194,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             return _directEngine.DirectInsertPublicFact(logger, fact);
         }
 
-        public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
+        public ISyncMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
         {
             return _coreEngine.RemovePublicFact(logger, id);
         }
@@ -204,12 +204,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             _directEngine.DirectRemovePublicFact(logger, id);
         }
 
-        public IMethodResponse<string> InsertFact(IMonitorLogger logger, string text)
+        public ISyncMethodResponse<string> InsertFact(IMonitorLogger logger, string text)
         {
             return _coreEngine.InsertFact(logger, text);
         }
 
-        public IMethodResponse<string> InsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
+        public ISyncMethodResponse<string> InsertFact(IMonitorLogger logger, StrongIdentifierValue factName, string text)
         {
             return _coreEngine.InsertFact(logger, factName, text);
         }
@@ -219,7 +219,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             return _directEngine.DirectInsertFact(logger, factName, text);
         }
 
-        public IMethodResponse RemoveFact(IMonitorLogger logger, string id)
+        public ISyncMethodResponse RemoveFact(IMonitorLogger logger, string id)
         {
             return _coreEngine.RemoveFact(logger, id);
         }
@@ -229,7 +229,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             _directEngine.DirectRemoveFact(logger, id);
         }
 
-        public IMethodResponse PushSoundFact(float power, string text)
+        public ISyncMethodResponse PushSoundFact(float power, string text)
         {
             return LoggedSyncFunctorWithoutResult<HumanoidNPCGameComponent, float, string>.Run(Logger, "B568048D-680D-4DE3-B3CC-4B16A72AAFBF", this, power, text,
                 (IMonitorLogger loggerValue, HumanoidNPCGameComponent instanceValue, float powerValue, string textValue) => {
@@ -243,7 +243,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             _soundPublisher.PushSoundFact(power, text);
         }
 
-        public IMethodResponse PushSoundFact(float power, RuleInstance fact)
+        public ISyncMethodResponse PushSoundFact(float power, RuleInstance fact)
         {
             return LoggedSyncFunctorWithoutResult<HumanoidNPCGameComponent, float, RuleInstance>.Run(Logger, "24F76F7D-76E6-4417-B1FB-9C8CE3986E32", this, power, fact,
                 (IMonitorLogger loggerValue, HumanoidNPCGameComponent instanceValue, float powerValue, RuleInstance factValue) => {
@@ -257,12 +257,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             _soundPublisher.PushSoundFact(power, fact);
         }
 
-        public IMethodResponse AddCategory(IMonitorLogger logger, string category)
+        public ISyncMethodResponse AddCategory(IMonitorLogger logger, string category)
         {
             return _coreEngine.AddCategory(logger, category);
         }
 
-        public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
+        public ISyncMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
         {
             return _coreEngine.AddCategories(logger, categories);
         }
@@ -272,12 +272,12 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             _directEngine.DirectAddCategories(logger, categories);
         }
 
-        public IMethodResponse RemoveCategory(IMonitorLogger logger, string category)
+        public ISyncMethodResponse RemoveCategory(IMonitorLogger logger, string category)
         {
             return _coreEngine.RemoveCategory(logger, category);
         }
 
-        public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
+        public ISyncMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
             return _coreEngine.RemoveCategories(logger, categories);
         }
@@ -308,7 +308,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
 
         public IStorage BackpackStorage => _backpackStorage;
 
-        public IMethodResponse AddToBackpack(IMonitorLogger logger, IGameObject obj)
+        public ISyncMethodResponse AddToBackpack(IMonitorLogger logger, IGameObject obj)
         {
             return LoggedSyncFunctorWithoutResult<HumanoidNPCGameComponent, IGameObject>.Run(logger, "17F2084B-201C-486A-A94F-ADE42188AB9E", this, obj,
                 (IMonitorLogger loggerValue, HumanoidNPCGameComponent instanceValue, IGameObject objValue) => {
@@ -322,7 +322,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
             _backpackStorage.AddConsolidatedStorage(logger, obj.PublicFactsStorage);
         }
 
-        public IMethodResponse RemoveFromBackpack(IMonitorLogger logger, IGameObject obj)
+        public ISyncMethodResponse RemoveFromBackpack(IMonitorLogger logger, IGameObject obj)
         {
             return LoggedSyncFunctorWithoutResult<HumanoidNPCGameComponent, IGameObject>.Run(logger, "19E62F24-5F37-4853-9423-9DB87FB8D061", this, obj,
                 (IMonitorLogger loggerValue, HumanoidNPCGameComponent instanceValue, IGameObject objValue) => {
@@ -341,7 +341,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         /// </summary>
         public IEngineContext EngineContext => _coreEngine.EngineContext;
 
-        public IMethodResponse Die()
+        public ISyncMethodResponse Die()
         {
             return LoggedSyncFunctorWithoutResult<HumanoidNPCGameComponent>.Run(Logger, "6C3E7934-1F44-4AD8-A0CE-EDB068DDE8F9", this,
                 (IMonitorLogger loggerValue, HumanoidNPCGameComponent instanceValue) => {

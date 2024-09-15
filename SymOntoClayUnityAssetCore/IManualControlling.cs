@@ -40,7 +40,7 @@ namespace SymOntoClay.UnityAsset.Core
         [Obsolete("Serialization Refactoring", true)]
         void OldAddToManualControl(IGameObject obj, DeviceOfBiped device);
 
-        IMethodResponse AddToManualControl(IGameObject obj, DeviceOfBiped device);
+        ISyncMethodResponse AddToManualControl(IGameObject obj, DeviceOfBiped device);
 
         /// <summary>
         /// Adds a game object into manual controlled area of the NPC.
@@ -50,7 +50,7 @@ namespace SymOntoClay.UnityAsset.Core
         [Obsolete("Serialization Refactoring", true)]
         void OldAddToManualControl(IGameObject obj, IList<DeviceOfBiped> devices);
 
-        IMethodResponse AddToManualControl(IGameObject obj, IList<DeviceOfBiped> devices);
+        ISyncMethodResponse AddToManualControl(IGameObject obj, IList<DeviceOfBiped> devices);
 
         /// <summary>
         /// Removes a game object from manual controlled area of an NPC.
@@ -59,7 +59,7 @@ namespace SymOntoClay.UnityAsset.Core
         [Obsolete("Serialization Refactoring", true)]
         void OldRemoveFromManualControl(IGameObject obj);
 
-        IMethodResponse RemoveFromManualControl(IGameObject obj);
+        ISyncMethodResponse RemoveFromManualControl(IGameObject obj);
 
         /// <summary>
         /// Gets list of manual controlled game objects by the NPC.

@@ -112,7 +112,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         }
 
         /// <inheritdoc/>
-        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
+        public ISyncMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
         {
             return _gameComponent.InsertPublicFact(logger, text);
         }
@@ -125,7 +125,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         }
 
         /// <inheritdoc/>
-        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        public ISyncMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             return _gameComponent.InsertPublicFact(logger, fact);
         }
@@ -138,7 +138,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         }
 
         /// <inheritdoc/>
-        public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
+        public ISyncMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
         {
             return _gameComponent.RemovePublicFact(logger, id);
         }
@@ -151,7 +151,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         }
 
         /// <inheritdoc/>
-        public IMethodResponse PushSoundFact(float power, string text)
+        public ISyncMethodResponse PushSoundFact(float power, string text)
         {
             return _gameComponent.PushSoundFact(power, text);
         }
@@ -164,7 +164,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         }
 
         /// <inheritdoc/>
-        public IMethodResponse PushSoundFact(float power, RuleInstance fact)
+        public ISyncMethodResponse PushSoundFact(float power, RuleInstance fact)
         {
             return _gameComponent.PushSoundFact(power, fact);
         }
@@ -177,14 +177,14 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         }
 
         /// <inheritdoc/>
-        public IMethodResponse AddCategory(IMonitorLogger logger, string category)
+        public ISyncMethodResponse AddCategory(IMonitorLogger logger, string category)
         {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
                 {
                     _addedCategories.Add(category);
-                    return CompletedMethodResponse.Instance;
+                    return CompletedSyncMethodResponse.Instance;
                 }
 
                 return _gameComponent.AddCategory(logger, category);
@@ -199,14 +199,14 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         }
 
         /// <inheritdoc/>
-        public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
+        public ISyncMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
         {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
                 {
                     _addedCategories.AddRange(categories);
-                    return CompletedMethodResponse.Instance;
+                    return CompletedSyncMethodResponse.Instance;
                 }
 
                 return _gameComponent.AddCategories(logger, categories);
@@ -221,14 +221,14 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         }
 
         /// <inheritdoc/>
-        public IMethodResponse RemoveCategory(IMonitorLogger logger, string category)
+        public ISyncMethodResponse RemoveCategory(IMonitorLogger logger, string category)
         {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
                 {
                     _removedCategories.Add(category);
-                    return CompletedMethodResponse.Instance;
+                    return CompletedSyncMethodResponse.Instance;
                 }
 
                 return _gameComponent.RemoveCategory(logger, category);
@@ -243,14 +243,14 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.Player
         }
 
         /// <inheritdoc/>
-        public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
+        public ISyncMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
             lock (_initializeLockObj)
             {
                 if (_gameComponent == null)
                 {
                     _removedCategories.AddRange(categories);
-                    return CompletedMethodResponse.Instance;
+                    return CompletedSyncMethodResponse.Instance;
                 }
 
                 return _gameComponent.RemoveCategories(logger, categories);

@@ -202,7 +202,7 @@ namespace SymOntoClay.Core.Internal
             }
         }
 
-        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
+        public ISyncMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
         {
             lock (_stateLockObj)
             {
@@ -210,7 +210,7 @@ namespace SymOntoClay.Core.Internal
                 {
                     var factName = NameHelper.CreateRuleOrFactName();
                     _deferredPublicFactsTexts.Add((factName, text));
-                    return new CompletedMethodResponse<string>(factName.NameValue);
+                    return new CompletedSyncMethodResponse<string>(factName.NameValue);
                 }
 
                 return LoggedSyncFunctorWithResult<InternalStandaloneStorage, string, string>.Run(logger, "9A943BBE-0E7A-49FB-B59B-18257B4B0BEE", this, text,
@@ -226,7 +226,7 @@ namespace SymOntoClay.Core.Internal
             return _storageComponent.InsertPublicFact(logger, text);
         }
 
-        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        public ISyncMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             lock (_stateLockObj)
             {
@@ -238,7 +238,7 @@ namespace SymOntoClay.Core.Internal
                     }
 
                     _deferredPublicFactsInstances.Add(fact);
-                    return new CompletedMethodResponse<string>(fact.Name.NameValue);
+                    return new CompletedSyncMethodResponse<string>(fact.Name.NameValue);
                 }
 
                 return LoggedSyncFunctorWithResult<InternalStandaloneStorage, RuleInstance, string>.Run(logger, "F6F736D8-8365-4D55-930A-51CFCED6985B", this, fact,
@@ -254,14 +254,14 @@ namespace SymOntoClay.Core.Internal
             return _storageComponent.InsertPublicFact(logger, fact);
         }
 
-        public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
+        public ISyncMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
         {
             lock (_stateLockObj)
             {
                 if (_storageComponent == null)
                 {
                     _defferedRemovedPublicFacts.Add(id);
-                    return CompletedMethodResponse.Instance;
+                    return CompletedSyncMethodResponse.Instance;
                 }
 
                 return LoggedSyncFunctorWithoutResult<InternalStandaloneStorage, string>.Run(logger, "E906C9AD-3469-4956-80D9-FB7A5F0D07D8", this, id,
@@ -277,14 +277,14 @@ namespace SymOntoClay.Core.Internal
             _storageComponent.RemovePublicFact(logger, id);
         }
 
-        public IMethodResponse AddCategory(IMonitorLogger logger, string category)
+        public ISyncMethodResponse AddCategory(IMonitorLogger logger, string category)
         {
             lock (_stateLockObj)
             {
                 if (_storageComponent == null)
                 {
                     _deferredAddedCategories.Add(category);
-                    return CompletedMethodResponse.Instance;
+                    return CompletedSyncMethodResponse.Instance;
                 }
 
                 return LoggedSyncFunctorWithoutResult<InternalStandaloneStorage, string>.Run(logger, "98D58843-1D5F-4662-999B-8AB34225B7FF", this, category,
@@ -300,14 +300,14 @@ namespace SymOntoClay.Core.Internal
             _storageComponent.AddCategory(logger, category);
         }
 
-        public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
+        public ISyncMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
         {
             lock (_stateLockObj)
             {
                 if (_storageComponent == null)
                 {
                     _deferredAddedCategories.AddRange(categories);
-                    return CompletedMethodResponse.Instance;
+                    return CompletedSyncMethodResponse.Instance;
                 }
 
                 return LoggedSyncFunctorWithoutResult<InternalStandaloneStorage, List<string>>.Run(logger, "82EC25C9-7430-467D-9C45-D1669632C719", this, categories,
@@ -337,14 +337,14 @@ namespace SymOntoClay.Core.Internal
             _storageComponent.AddCategories(logger, categories);
         }
 
-        public IMethodResponse RemoveCategory(IMonitorLogger logger, string category)
+        public ISyncMethodResponse RemoveCategory(IMonitorLogger logger, string category)
         {
             lock (_stateLockObj)
             {
                 if (_storageComponent == null)
                 {
                     _deferredRemovedCategories.Add(category);
-                    return CompletedMethodResponse.Instance;
+                    return CompletedSyncMethodResponse.Instance;
                 }
 
                 return LoggedSyncFunctorWithoutResult<InternalStandaloneStorage, string>.Run(logger, "ED81F452-0401-42E9-BBAB-FABF9EBABF28", this, category,
@@ -360,14 +360,14 @@ namespace SymOntoClay.Core.Internal
             _storageComponent.RemoveCategory(logger, category);
         }
 
-        public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
+        public ISyncMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
             lock (_stateLockObj)
             {
                 if (_storageComponent == null)
                 {
                     _deferredRemovedCategories.AddRange(categories);
-                    return CompletedMethodResponse.Instance;
+                    return CompletedSyncMethodResponse.Instance;
                 }
 
                 return LoggedSyncFunctorWithoutResult<InternalStandaloneStorage, List<string>>.Run(logger, "00C6AD56-50FB-4D9C-899F-2F641E6829BF", this, categories,

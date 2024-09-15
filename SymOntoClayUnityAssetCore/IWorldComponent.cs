@@ -38,50 +38,50 @@ namespace SymOntoClay.UnityAsset.Core
 
         [Obsolete("Serialization Refactoring", true)]
         string OldInsertPublicFact(IMonitorLogger logger, string text);
-        
-        IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text);
+
+        ISyncMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text);
 
         [Obsolete("Serialization Refactoring", true)]
         string OldInsertPublicFact(IMonitorLogger logger, RuleInstance fact);
 
-        IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact);
+        ISyncMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact);
 
         [Obsolete("Serialization Refactoring", true)]
         void OldRemovePublicFact(IMonitorLogger logger, string id);
 
-        IMethodResponse RemovePublicFact(IMonitorLogger logger, string id);
+        ISyncMethodResponse RemovePublicFact(IMonitorLogger logger, string id);
 
         [Obsolete("Serialization Refactoring", true)]
         void OldPushSoundFact(float power, string text);
 
-        IMethodResponse PushSoundFact(float power, string text);
+        ISyncMethodResponse PushSoundFact(float power, string text);
 
         [Obsolete("Serialization Refactoring", true)]
         void OldPushSoundFact(float power, RuleInstance fact);
 
-        IMethodResponse PushSoundFact(float power, RuleInstance fact);
+        ISyncMethodResponse PushSoundFact(float power, RuleInstance fact);
 
         IStandardFactsBuilder StandardFactsBuilder { get; }
 
         [Obsolete("Serialization Refactoring", true)]
         void OldAddCategory(IMonitorLogger logger, string category);
 
-        IMethodResponse AddCategory(IMonitorLogger logger, string category);
+        ISyncMethodResponse AddCategory(IMonitorLogger logger, string category);
 
         [Obsolete("Serialization Refactoring", true)]
         void OldAddCategories(IMonitorLogger logger, List<string> categories);
 
-        IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories);
+        ISyncMethodResponse AddCategories(IMonitorLogger logger, List<string> categories);
 
         [Obsolete("Serialization Refactoring", true)]
         void OldRemoveCategory(IMonitorLogger logger, string category);
 
-        IMethodResponse RemoveCategory(IMonitorLogger logger, string category);
+        ISyncMethodResponse RemoveCategory(IMonitorLogger logger, string category);
 
         [Obsolete("Serialization Refactoring", true)]
         void OldRemoveCategories(IMonitorLogger logger, List<string> categories);
 
-        IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories);
+        ISyncMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories);
 
         bool EnableCategories { get; set; }
     }

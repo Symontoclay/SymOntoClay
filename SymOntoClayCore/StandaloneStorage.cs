@@ -94,7 +94,7 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
+        public ISyncMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
         {
             return _internalStandaloneStorage.InsertPublicFact(logger, text);
         }
@@ -107,7 +107,7 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        public ISyncMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             return _internalStandaloneStorage.InsertPublicFact(logger, fact);
         }
@@ -120,7 +120,7 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
+        public ISyncMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
         {
             return _internalStandaloneStorage.RemovePublicFact(logger, id);
         }
@@ -133,7 +133,7 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public IMethodResponse AddCategory(IMonitorLogger logger, string category)
+        public ISyncMethodResponse AddCategory(IMonitorLogger logger, string category)
         {
             return _internalStandaloneStorage.AddCategory(logger, category);
         }
@@ -146,7 +146,7 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
+        public ISyncMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
         {
             return _internalStandaloneStorage.AddCategories(logger, categories);
         }
@@ -164,7 +164,7 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public IMethodResponse RemoveCategory(IMonitorLogger logger, string category)
+        public ISyncMethodResponse RemoveCategory(IMonitorLogger logger, string category)
         {
             return _internalStandaloneStorage.RemoveCategory(logger, category);
         }
@@ -177,7 +177,7 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
+        public ISyncMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
             return _internalStandaloneStorage.RemoveCategories(logger, categories);
         }

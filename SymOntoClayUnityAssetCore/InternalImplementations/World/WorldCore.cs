@@ -152,49 +152,49 @@ namespace SymOntoClay.UnityAsset.Core.World
             return result;
         }
 
-        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
+        public ISyncMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
         {
             throw new NotImplementedException("E33E5B22-DED1-48D1-858F-B5DAC5718854");
         }
 
-        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        public ISyncMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             throw new NotImplementedException("6DAA88AB-D6E7-49BF-826C-01483F650BAD");
         }
 
-        public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
+        public ISyncMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
         {
             throw new NotImplementedException("5E04617D-9C71-4A38-BD82-47480F32C660");
         }
 
-        public IMethodResponse PushSoundFact(float power, string text)
+        public ISyncMethodResponse PushSoundFact(float power, string text)
         {
             throw new NotImplementedException("C3641CE4-73D6-459B-904D-AB9623E6D96A");
         }
 
-        public IMethodResponse PushSoundFact(float power, RuleInstance fact)
+        public ISyncMethodResponse PushSoundFact(float power, RuleInstance fact)
         {
             throw new NotImplementedException("169604B9-2661-43FF-9321-572EBADE7E6C");
         }
 
         public IStandardFactsBuilder StandardFactsBuilder => throw new NotImplementedException("AA896824-F1FE-4012-9F25-A702C837D52B");
 
-        public IMethodResponse AddCategory(IMonitorLogger logger, string category)
+        public ISyncMethodResponse AddCategory(IMonitorLogger logger, string category)
         {
             throw new NotImplementedException("0A8D1B89-5E02-447C-8A95-9F805B871A6A");
         }
 
-        public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
+        public ISyncMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
         {
             throw new NotImplementedException("3388265A-2A24-4790-8BFD-DAD36A3A4C07");
         }
 
-        public IMethodResponse RemoveCategory(IMonitorLogger logger, string category)
+        public ISyncMethodResponse RemoveCategory(IMonitorLogger logger, string category)
         {
             throw new NotImplementedException("B43DD791-F8CE-4ECD-9D11-C256A0C7D3A0");
         }
 
-        public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
+        public ISyncMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
             throw new NotImplementedException("897967D3-58EE-4E27-9C19-1A0216083A8D");
         }

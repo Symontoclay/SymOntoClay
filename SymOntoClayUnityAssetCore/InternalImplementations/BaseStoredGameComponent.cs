@@ -101,25 +101,25 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         }
 
         /// <inheritdoc/>
-        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
+        public ISyncMethodResponse<string> InsertPublicFact(IMonitorLogger logger, string text)
         {
             return HostStorage.InsertPublicFact(logger, text);
         }
 
         /// <inheritdoc/>
-        public IMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
+        public ISyncMethodResponse<string> InsertPublicFact(IMonitorLogger logger, RuleInstance fact)
         {
             return HostStorage.InsertPublicFact(logger, fact);
         }
 
         /// <inheritdoc/>
-        public IMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
+        public ISyncMethodResponse RemovePublicFact(IMonitorLogger logger, string id)
         {
             return HostStorage.RemovePublicFact(logger, id);
         }
 
         /// <inheritdoc/>
-        public IMethodResponse PushSoundFact(float power, string text)
+        public ISyncMethodResponse PushSoundFact(float power, string text)
         {
             return LoggedSyncFunctorWithoutResult<BaseStoredGameComponent, float, string>.Run(Logger, "06AB8E90-47E0-42DD-830E-CEB5B298FEF6", this, power, text,
                 (IMonitorLogger loggerValue, BaseStoredGameComponent instanceValue, float powerValue, string textValue) => {
@@ -134,7 +134,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         }
 
         /// <inheritdoc/>
-        public IMethodResponse PushSoundFact(float power, RuleInstance fact)
+        public ISyncMethodResponse PushSoundFact(float power, RuleInstance fact)
         {
             return LoggedSyncFunctorWithoutResult<BaseStoredGameComponent, float, RuleInstance>.Run(Logger, "9B6625A9-8F6B-479D-9541-90638BB7BA68", this, power, fact,
                 (IMonitorLogger loggerValue, BaseStoredGameComponent instanceValue, float powerValue, RuleInstance factValue) => {
@@ -149,13 +149,13 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         }
 
         /// <inheritdoc/>
-        public IMethodResponse AddCategory(IMonitorLogger logger, string category)
+        public ISyncMethodResponse AddCategory(IMonitorLogger logger, string category)
         {
             return HostStorage.AddCategory(logger, category);
         }
 
         /// <inheritdoc/>
-        public IMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
+        public ISyncMethodResponse AddCategories(IMonitorLogger logger, List<string> categories)
         {
             return HostStorage.AddCategories(logger, categories);
         }
@@ -166,13 +166,13 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         }
 
         /// <inheritdoc/>
-        public IMethodResponse RemoveCategory(IMonitorLogger logger, string category)
+        public ISyncMethodResponse RemoveCategory(IMonitorLogger logger, string category)
         {
             return HostStorage.RemoveCategory(logger, category);
         }
 
         /// <inheritdoc/>
-        public IMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
+        public ISyncMethodResponse RemoveCategories(IMonitorLogger logger, List<string> categories)
         {
             return HostStorage.RemoveCategories(logger, categories);
         }

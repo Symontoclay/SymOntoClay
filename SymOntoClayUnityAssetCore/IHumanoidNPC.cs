@@ -50,17 +50,17 @@ namespace SymOntoClay.UnityAsset.Core
         [Obsolete("Serialization Refactoring", true)]
         void OldDie();
 
-        IMethodResponse Die();
+        ISyncMethodResponse Die();
 
         [Obsolete("Serialization Refactoring", true)]
         string OldInsertFact(IMonitorLogger logger, string text);
 
-        IMethodResponse<string> InsertFact(IMonitorLogger logger, string text);
+        ISyncMethodResponse<string> InsertFact(IMonitorLogger logger, string text);
 
         [Obsolete("Serialization Refactoring", true)]
         void OldRemoveFact(IMonitorLogger logger, string id);
 
-        IMethodResponse RemoveFact(IMonitorLogger logger, string id);
+        ISyncMethodResponse RemoveFact(IMonitorLogger logger, string id);
 
         /// <summary>
         /// Returns storage that represents a backpack.
@@ -75,7 +75,7 @@ namespace SymOntoClay.UnityAsset.Core
         [Obsolete("Serialization Refactoring", true)]
         void OldAddToBackpack(IMonitorLogger logger, IGameObject obj);
 
-        IMethodResponse AddToBackpack(IMonitorLogger logger, IGameObject obj);
+        ISyncMethodResponse AddToBackpack(IMonitorLogger logger, IGameObject obj);
 
         /// <summary>
         /// Removes game object from backpack.
@@ -85,7 +85,7 @@ namespace SymOntoClay.UnityAsset.Core
         [Obsolete("Serialization Refactoring", true)]
         void OldRemoveFromBackpack(IMonitorLogger logger, IGameObject obj);
 
-        IMethodResponse RemoveFromBackpack(IMonitorLogger logger, IGameObject obj);
+        ISyncMethodResponse RemoveFromBackpack(IMonitorLogger logger, IGameObject obj);
 
         /// <summary>
         /// Gets engine context. Onkly for debugging and testing!

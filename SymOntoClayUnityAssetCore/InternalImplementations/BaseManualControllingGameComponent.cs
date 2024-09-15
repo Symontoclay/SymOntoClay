@@ -36,6 +36,8 @@ using SymOntoClay.Monitor.Common;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.ActiveObject.MethodResponses;
+using SymOntoClay.ActiveObject.Functors;
+using SymOntoClay.ActiveObject.Threads;
 
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 {
@@ -64,33 +66,56 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             _internalManualControlledObjectsList = new List<IInternalManualControlledObject>();
             _internalManualControlledObjectsDict = new Dictionary<IGameObject, InternalManualControlledObject>();
             _endpointsRegistryForManualControlledObjectsDict = new Dictionary<IGameObject, EndpointsProxyRegistryForDevices>();
+
+            _activeObjectContext = ActiveObjectContext;
+            _serializationAnchor = new SerializationAnchor();
         }
 
-        private readonly List<IEndpointsRegistry> _endpointsRegistries;
-        private readonly EndpointsRegistry _hostEndpointsRegistry;
-        private readonly EndPointsResolver _endPointsResolver;
-        private readonly EndPointActivator _endPointActivator;
+        private List<IEndpointsRegistry> _endpointsRegistries;
+        private EndpointsRegistry _hostEndpointsRegistry;
+        private EndPointsResolver _endPointsResolver;
+        private EndPointActivator _endPointActivator;
 
-        private readonly List<IInternalManualControlledObject> _internalManualControlledObjectsList;
-        private readonly Dictionary<IGameObject, InternalManualControlledObject> _internalManualControlledObjectsDict;
-        private readonly Dictionary<IGameObject, EndpointsProxyRegistryForDevices> _endpointsRegistryForManualControlledObjectsDict;
+        private List<IInternalManualControlledObject> _internalManualControlledObjectsList;
+        private Dictionary<IGameObject, InternalManualControlledObject> _internalManualControlledObjectsDict;
+        private Dictionary<IGameObject, EndpointsProxyRegistryForDevices> _endpointsRegistryForManualControlledObjectsDict;
 
-        private readonly object _manualControlLockObj = new object();
+        private object _manualControlLockObj = new object();
+
+        private IActiveObjectContext _activeObjectContext;
+        private SerializationAnchor _serializationAnchor;
 
         [Obsolete("Serialization Refactoring", true)]
         public void OldAddToManualControl(IGameObject obj, int device)
         {
-            OldAddToManualControl(obj, new List<int>() { device});
+            throw new NotSupportedException("7A810CF0-73B7-4CCB-B797-D809221AB10F");
         }
 
-        public IMethodResponse AddToManualControl(IGameObject obj, int device);
+        public IMethodResponse AddToManualControl(IGameObject obj, int device)
+        {
+            return AddToManualControl(obj, new List<int>() { device });
+        }
 
         [Obsolete("Serialization Refactoring", true)]
         public void OldAddToManualControl(IGameObject obj, IList<int> devices)
         {
+            NAddToManualControl(obj, devices);
+        }
+
+        public IMethodResponse AddToManualControl(IGameObject obj, IList<int> devices)
+        {
+            return LoggedSyncFunctorWithoutResult<BaseManualControllingGameComponent, IGameObject, IList<int>>.Run(Logger, "4B621E74-7606-4F98-97F0-4C4DE29704E8", this, obj, devices,
+                (IMonitorLogger loggerValue, BaseManualControllingGameComponent instanceValue, IGameObject objValue, IList<int> devicesValue) => {
+                    instanceValue.NAddToManualControl(objValue, devicesValue);
+                },
+                _activeObjectContext, _serializationAnchor).ToMethodResponse();
+        }
+
+        public void NAddToManualControl(IGameObject obj, IList<int> devices)
+        {
             lock (_manualControlLockObj)
             {
-                if(_internalManualControlledObjectsDict.ContainsKey(obj))
+                if (_internalManualControlledObjectsDict.ContainsKey(obj))
                 {
                     _internalManualControlledObjectsDict[obj].Devices = devices;
                     _endpointsRegistryForManualControlledObjectsDict[obj].Devices = devices;
@@ -110,14 +135,26 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
             }
         }
 
-        public IMethodResponse AddToManualControl(IGameObject obj, IList<int> devices);
-
         [Obsolete("Serialization Refactoring", true)]
         public void OldRemoveFromManualControl(IGameObject obj)
         {
+            throw new NotSupportedException("B5C18E75-E9C4-4498-90D2-DB8357BFE1B0");
+        }
+
+        public IMethodResponse RemoveFromManualControl(IGameObject obj)
+        {
+            return LoggedSyncFunctorWithoutResult<BaseManualControllingGameComponent, IGameObject>.Run(Logger, "0BC7B04D-81C2-47ED-A36C-1E9D3A381DAE", this, obj,
+                (IMonitorLogger loggerValue, BaseManualControllingGameComponent instanceValue, IGameObject objValue) => {
+                    instanceValue.NRemoveFromManualControl(objValue);
+                },
+                _activeObjectContext, _serializationAnchor).ToMethodResponse();
+        }
+
+        public void NRemoveFromManualControl(IGameObject obj)
+        {
             lock (_manualControlLockObj)
             {
-                if(!_internalManualControlledObjectsDict.ContainsKey(obj))
+                if (!_internalManualControlledObjectsDict.ContainsKey(obj))
                 {
                     return;
                 }
@@ -133,8 +170,6 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
                 _endpointsRegistries.Remove(endpointsProxyRegistryForDevices);
             }
         }
-
-        public IMethodResponse RemoveFromManualControl(IGameObject obj);
 
         public IList<IInternalManualControlledObject> GetManualControlledObjects()
         {

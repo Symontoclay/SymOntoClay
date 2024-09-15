@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
+using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -58,6 +59,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             _cancellationTokenSource = new CancellationTokenSource();
             _linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, worldContext.GetCancellationToken());
 
+            ActiveObjectContext = new ActiveObjectContext(worldContext.SyncContext, _linkedCancellationTokenSource.Token);
+
             var threadingSettings = settings.ThreadingSettings?.AsyncEvents;
             var worldThreadingSettings = worldContext.ThreadingSettings;
 
@@ -76,6 +79,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         private readonly IStandardFactsBuilder _standardFactsBuilder;
         private readonly string _idForFacts;
         private readonly string _id;
+
+        public ActiveObjectContext ActiveObjectContext { get; private set; }
 
         /// <inheritdoc/>
         public ICustomThreadPool AsyncEventsThreadPool { get; private set; }

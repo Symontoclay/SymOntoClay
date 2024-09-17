@@ -175,7 +175,6 @@ namespace SymOntoClay.ActiveObject.Threads
                 _task = null;
 
                 _onCompletedHandlers.Clear();
-                _onCompletedHandlers = null;
             }
         }
     }
@@ -373,7 +372,6 @@ namespace SymOntoClay.ActiveObject.Threads
                 _task = null;
 
                 _onCompletedHandlers.Clear();
-                _onCompletedHandlers = null;
             }
         }
     }

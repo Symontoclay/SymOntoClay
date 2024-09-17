@@ -144,8 +144,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private void EmitOnChanged(IMonitorLogger logger, IList<StrongIdentifierValue> usedKeysList)
         {
-            OnChanged?.Invoke();
-            OnChangedWithKeys?.Invoke(usedKeysList);
+            EmitOnChangedHandlers();
+            EmitOnChangedWithKeysHandlers(usedKeysList);
         }
 
         private void LogicalStorage_OnChangedWithKeys(IList<StrongIdentifierValue> changedKeysList)
@@ -241,27 +241,70 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         void ILogicalStorage.AddOnChangedHandler(IOnChangedLogicalStorageHandler handler)
         {
+            lock(_onChangedHandlersLockObj)
+            {
+
+            }
+
             d
         }
 
         void ILogicalStorage.RemoveOnChangedHandler(IOnChangedLogicalStorageHandler handler)
         {
+            lock (_onChangedHandlersLockObj)
+            {
+
+            }
+
             d
         }
 
+        private void EmitOnChangedHandlers()
+        {
+            lock (_onChangedHandlersLockObj)
+            {
+
+            }
+
+            d
+        }
+
+        private object _onChangedHandlersLockObj = new object();
+        private List<IOnChangedLogicalStorageHandler> _onChangedHandlers = new List<IOnChangedLogicalStorageHandler>();
+
         void ILogicalStorage.AddOnChangedWithKeysHandler(IOnChangedWithKeysLogicalStorageHandler handler)
         {
-            d
+            lock(_onChangedWithKeysHandlersLockObj)
+            {
+                if (_onChangedWithKeysHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onChangedWithKeysHandlers.Add(handler);
+            }
         }
 
         void ILogicalStorage.RemoveOnChangedWithKeysHandler(IOnChangedWithKeysLogicalStorageHandler handler)
         {
-            d
+            lock (_onChangedWithKeysHandlersLockObj)
+            {
+                if(_onChangedWithKeysHandlers.Contains(handler))
+                {
+                    _onChangedWithKeysHandlers.Remove(handler);
+                }
+            }
         }
 
         private void EmitOnChangedWithKeysHandlers(IList<StrongIdentifierValue> value)
         {
-            d
+            lock (_onChangedWithKeysHandlersLockObj)
+            {
+                foreach(var handler in _onChangedWithKeysHandlers)
+                {
+                    handler.Invoke(value);
+                }
+            }
         }
 
         private object _onChangedWithKeysHandlersLockObj = new object();
@@ -829,6 +872,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 }
 
                 _logicalStorages.Clear();
+                _onChangedHandlers.Clear();
+                _onChangedWithKeysHandlers.Clear();
+                _onAddingFactHandlers.Clear();
             }
 
             base.OnDisposed();

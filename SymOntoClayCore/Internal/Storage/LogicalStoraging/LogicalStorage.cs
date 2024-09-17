@@ -454,10 +454,10 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         }
 
         /// <inheritdoc/>
-        public event Action OnChanged;
+        [Obsolete("Serialization Refactoring", true)] public event Action OnChanged;
 
         /// <inheritdoc/>
-        public event Action<IList<StrongIdentifierValue>> OnChangedWithKeys;
+        [Obsolete("Serialization Refactoring", true)] public event Action<IList<StrongIdentifierValue>> OnChangedWithKeys;
 
         protected void EmitOnChanged(IMonitorLogger logger, IList<StrongIdentifierValue> usedKeysList)
         {

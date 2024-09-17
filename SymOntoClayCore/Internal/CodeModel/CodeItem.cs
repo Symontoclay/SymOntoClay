@@ -112,7 +112,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
         }
 
-        public event Action<StrongIdentifierValue> OnNameChanged;
+        [Obsolete("Serialization Refactoring", true)] public event Action<StrongIdentifierValue> OnNameChanged;
 
         private StrongIdentifierValue _name;
         private StrongIdentifierValue _holder;

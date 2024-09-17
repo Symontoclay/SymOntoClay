@@ -40,7 +40,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         void SetExecutionStatus(IMonitorLogger logger, string messagePointId, ActionExecutionStatus actionExecutionStatus);
         bool IsFinished { get; }
         RuleInstance RuleInstance { get; set; }
-        event Action OnFinished;
+
+        [Obsolete("Serialization Refactoring", true)] event Action OnFinished;
 
         void AddProcessInfo(IProcessInfo processInfo);
     }

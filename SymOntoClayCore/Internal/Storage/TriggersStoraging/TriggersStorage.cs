@@ -347,10 +347,10 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
         }
 
         /// <inheritdoc/>
-        public event Action OnNamedTriggerInstanceChanged;
+        [Obsolete("Serialization Refactoring", true)] public event Action OnNamedTriggerInstanceChanged;
 
         /// <inheritdoc/>
-        public event Action<IList<StrongIdentifierValue>> OnNamedTriggerInstanceChangedWithKeys;
+        [Obsolete("Serialization Refactoring", true)] public event Action<IList<StrongIdentifierValue>> OnNamedTriggerInstanceChangedWithKeys;
 
         private void NamedTriggerInstance_OnChanged(IList<StrongIdentifierValue> namesList)
         {

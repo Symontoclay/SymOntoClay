@@ -35,7 +35,7 @@ namespace SymOntoClay.Core.Internal.Instances
         void AppendProcessInfo(IMonitorLogger logger, IProcessInfo processInfo);
         void AppendAndTryStartProcessInfo(IMonitorLogger logger, string callMethodId, IProcessInfo processInfo);
 
-        event Action OnIdle;
+        [Obsolete("Serialization Refactoring", true)] event Action OnIdle;
         int GetCountOfCurrentProcesses(IMonitorLogger logger);
 
         void ActivateState(IMonitorLogger logger, StateDef state);

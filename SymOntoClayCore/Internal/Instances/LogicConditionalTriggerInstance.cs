@@ -160,7 +160,7 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        public event Action<IList<StrongIdentifierValue>> OnChanged;
+        [Obsolete("Serialization Refactoring", true)] public event Action<IList<StrongIdentifierValue>> OnChanged;
 
         public void Init(IMonitorLogger logger)
         {

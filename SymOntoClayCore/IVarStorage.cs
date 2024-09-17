@@ -39,9 +39,9 @@ namespace SymOntoClay.Core
         Var GetLocalVarDirectly(IMonitorLogger logger, StrongIdentifierValue name);
 
         void SetValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value);
-        
-        event Action OnChanged;
-        event Action<StrongIdentifierValue> OnChangedWithKeys;
+
+        [Obsolete("Serialization Refactoring", true)] event Action OnChanged;
+        [Obsolete("Serialization Refactoring", true)] event Action<StrongIdentifierValue> OnChangedWithKeys;
 
 #if DEBUG
         void DbgPrintVariables(IMonitorLogger logger);

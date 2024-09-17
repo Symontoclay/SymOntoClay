@@ -52,10 +52,10 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
         private readonly object _lockObj = new object();
 
         /// <inheritdoc/>
-        public event Action OnChanged;
+        [Obsolete("Serialization Refactoring", true)] public event Action OnChanged;
 
         /// <inheritdoc/>
-        public event Action<StrongIdentifierValue> OnChangedWithKeys;
+        [Obsolete("Serialization Refactoring", true)] public event Action<StrongIdentifierValue> OnChangedWithKeys;
 
         private List<IVarStorage> _parentVarStoragesList = new List<IVarStorage>();
 

@@ -67,7 +67,7 @@ namespace SymOntoClay.Core
 
         List<StorageUsingOptions> CodeItemsStoragesList { get; set; }
 
-        event Action OnParentStorageChanged;
+        [Obsolete("Serialization Refactoring", true)] event Action OnParentStorageChanged;
 
 #if DEBUG
         void DbgPrintFactsAndRules(IMonitorLogger logger);

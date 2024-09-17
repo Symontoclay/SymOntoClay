@@ -2,6 +2,8 @@
 using SymOntoClay.Threading;
 using System.Threading;
 using System;
+using SymOntoClay.ActiveObject.EventsInterfaces;
+using System.Collections.Generic;
 
 namespace SymOntoClay.ActiveObject.Threads
 {
@@ -50,7 +52,43 @@ namespace SymOntoClay.ActiveObject.Threads
             }
         }
 
-        public event Action OnCompleted;
+        public void AddOnCompletedHandler(IOnCompletedAsyncActiveOnceObjectHandler handler)
+        {
+            lock (_onCompletedHandlersLockObj)
+            {
+                if (_onCompletedHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onCompletedHandlers.Add(handler);
+            }
+        }
+
+        public void RemoveOnCompletedHandler(IOnCompletedAsyncActiveOnceObjectHandler handler)
+        {
+            lock (_onCompletedHandlersLockObj)
+            {
+                if (_onCompletedHandlers.Contains(handler))
+                {
+                    _onCompletedHandlers.Remove(handler);
+                }
+            }
+        }
+
+        private void EmitOnCompletedHandlers()
+        {
+            lock (_onCompletedHandlersLockObj)
+            {
+                foreach (var handler in _onCompletedHandlers)
+                {
+                    handler.Invoke();
+                }
+            }
+        }
+
+        private object _onCompletedHandlersLockObj = new object();
+        private List<IOnCompletedAsyncActiveOnceObjectHandler> _onCompletedHandlers = new List<IOnCompletedAsyncActiveOnceObjectHandler>();
 
         /// <inheritdoc/>
         public IThreadTask Start()
@@ -105,7 +143,7 @@ namespace SymOntoClay.ActiveObject.Threads
                     _isExited = true;
                 }, _threadPool, _cancellationToken);
 
-                task.OnCompleted += OnCompletedHandler;//no need
+                task.OnCompleted += EmitOnCompletedHandlers;
 
                 _task = task;
 
@@ -113,11 +151,6 @@ namespace SymOntoClay.ActiveObject.Threads
 
                 return _task;
             }
-        }
-
-        private void OnCompletedHandler()
-        {
-            OnCompleted?.Invoke();
         }
 
         private bool _isDisposed;
@@ -138,8 +171,11 @@ namespace SymOntoClay.ActiveObject.Threads
 
                 _context.RemoveChildActiveObject(this);
 
-                _task.OnCompleted -= OnCompletedHandler;
+                _task.OnCompleted -= EmitOnCompletedHandlers;
                 _task = null;
+
+                _onCompletedHandlers.Clear();
+                _onCompletedHandlers = null;
             }
         }
     }
@@ -212,7 +248,43 @@ namespace SymOntoClay.ActiveObject.Threads
             }
         }
 
-        public event Action OnCompleted;
+        public void AddOnCompletedHandler(IOnCompletedAsyncActiveOnceObjectHandler handler)
+        {
+            lock (_onCompletedHandlersLockObj)
+            {
+                if (_onCompletedHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onCompletedHandlers.Add(handler);
+            }
+        }
+
+        public void RemoveOnCompletedHandler(IOnCompletedAsyncActiveOnceObjectHandler handler)
+        {
+            lock (_onCompletedHandlersLockObj)
+            {
+                if (_onCompletedHandlers.Contains(handler))
+                {
+                    _onCompletedHandlers.Remove(handler);
+                }
+            }
+        }
+
+        private void EmitOnCompletedHandlers()
+        {
+            lock (_onCompletedHandlersLockObj)
+            {
+                foreach (var handler in _onCompletedHandlers)
+                {
+                    handler.Invoke();
+                }
+            }
+        }
+
+        private object _onCompletedHandlersLockObj = new object();
+        private List<IOnCompletedAsyncActiveOnceObjectHandler> _onCompletedHandlers = new List<IOnCompletedAsyncActiveOnceObjectHandler>();
 
         /// <inheritdoc/>
         public IThreadTask Start()
@@ -269,7 +341,7 @@ namespace SymOntoClay.ActiveObject.Threads
                     }
                 }, _threadPool, _cancellationToken);
 
-                task.OnCompleted += OnCompletedHandler;//no need
+                task.OnCompleted += EmitOnCompletedHandlers;//no need
 
                 _task = task;
 
@@ -277,11 +349,6 @@ namespace SymOntoClay.ActiveObject.Threads
 
                 return _task;
             }
-        }
-
-        private void OnCompletedHandler()
-        {
-            OnCompleted?.Invoke();
         }
 
         private bool _isDisposed;
@@ -302,8 +369,11 @@ namespace SymOntoClay.ActiveObject.Threads
 
                 _context.RemoveChildActiveObject(this);
 
-                _task.OnCompleted -= OnCompletedHandler;
+                _task.OnCompleted -= EmitOnCompletedHandlers;
                 _task = null;
+
+                _onCompletedHandlers.Clear();
+                _onCompletedHandlers = null;
             }
         }
     }

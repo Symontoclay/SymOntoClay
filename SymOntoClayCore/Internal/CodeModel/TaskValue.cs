@@ -82,7 +82,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private IThreadTask _systemTask;
 
-        public event Action OnComplete
+        [Obsolete("Serialization Refactoring", true)] public event Action OnComplete
         {
             add
             {
@@ -103,7 +103,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
         }
 
-        private event Action InternalOnComplete;
+        [Obsolete("Serialization Refactoring", true)] private event Action InternalOnComplete;
 
         private object _checkOnCompleteLockObj = new object();
 

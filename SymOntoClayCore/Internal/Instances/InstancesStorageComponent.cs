@@ -381,7 +381,7 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        public override event Action OnIdle;
+        [Obsolete("Serialization Refactoring", true)] public override event Action OnIdle;
 
         /// <inheritdoc/>
         public override int GetCountOfCurrentProcesses(IMonitorLogger logger)

@@ -74,7 +74,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public List<StrongIdentifierValue> TypesList { get; set; } = new List<StrongIdentifierValue>();
 
-        public event Action<StrongIdentifierValue> OnChanged;
+        [Obsolete("Serialization Refactoring", true)] public event Action<StrongIdentifierValue> OnChanged;
 
         private readonly object _lockObj = new object();
 

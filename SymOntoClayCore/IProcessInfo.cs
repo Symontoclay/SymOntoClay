@@ -51,9 +51,9 @@ namespace SymOntoClay.Core
         void Cancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, List<Changer> changers, string callMethodId = "");
         void WeakCancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, Changer changer = null, string callMethodId = "");
         void WeakCancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, List<Changer> changers, string callMethodId = "");
-        event ProcessInfoEvent OnFinish;
-        event ProcessInfoEvent OnComplete;
-        event ProcessInfoEvent OnWeakCanceled;
+        [Obsolete("Serialization Refactoring", true)] event ProcessInfoEvent OnFinish;
+        [Obsolete("Serialization Refactoring", true)] event ProcessInfoEvent OnComplete;
+        [Obsolete("Serialization Refactoring", true)] event ProcessInfoEvent OnWeakCanceled;
         float Priority { get; }
         IReadOnlyList<string> Friends { get; }
         bool IsFriend(IMonitorLogger logger, IProcessInfo other);

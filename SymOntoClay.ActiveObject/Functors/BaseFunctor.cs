@@ -1,4 +1,5 @@
-﻿using SymOntoClay.ActiveObject.MethodResponses;
+﻿using SymOntoClay.ActiveObject.EventsInterfaces;
+using SymOntoClay.ActiveObject.MethodResponses;
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
@@ -6,7 +7,7 @@ using System.Threading;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
-    public abstract class BaseFunctor: IBaseFunctor
+    public abstract class BaseFunctor: IBaseFunctor, IOnCompletedAsyncActiveOnceObjectHandler
     {
         protected BaseFunctor(IMonitorLogger logger, IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
         {
@@ -18,7 +19,7 @@ namespace SymOntoClay.ActiveObject.Functors
                 OnceMethod = OnRun
             };
 
-            _asyncActiveOnceObject.OnCompleted += OnCompletedHandler;
+            _asyncActiveOnceObject.AddOnCompletedHandler(this);
         }
 
         private AsyncActiveOnceObject _asyncActiveOnceObject;
@@ -33,10 +34,15 @@ namespace SymOntoClay.ActiveObject.Functors
             _asyncActiveOnceObject.Start();
         }
 
+        void IOnCompletedAsyncActiveOnceObjectHandler.Invoke()
+        {
+            OnCompletedHandler();
+        }
+
         private void OnCompletedHandler()
         {
             _serializationAnchor.RemoveFunctor(this);
-            _asyncActiveOnceObject.OnCompleted -= OnCompletedHandler;
+            _asyncActiveOnceObject.RemoveOnCompletedHandler(this);
             _asyncActiveOnceObject.Dispose();
             _asyncActiveOnceObject = null;
         }
@@ -47,7 +53,7 @@ namespace SymOntoClay.ActiveObject.Functors
         }
     }
 
-    public abstract class BaseFunctor<TResult> : IBaseFunctor
+    public abstract class BaseFunctor<TResult> : IBaseFunctor, IOnCompletedAsyncActiveOnceObjectHandler
     {
         protected BaseFunctor(IMonitorLogger logger, IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
         {
@@ -59,7 +65,7 @@ namespace SymOntoClay.ActiveObject.Functors
                 OnceMethod = OnRun
             };
 
-            _asyncActiveOnceObject.OnCompleted += OnCompletedHandler;
+            _asyncActiveOnceObject.AddOnCompletedHandler(this);
         }
 
         private AsyncActiveOnceObject<TResult> _asyncActiveOnceObject;
@@ -75,11 +81,16 @@ namespace SymOntoClay.ActiveObject.Functors
             _asyncActiveOnceObject.Start();
         }
 
+        void IOnCompletedAsyncActiveOnceObjectHandler.Invoke()
+        {
+            OnCompletedHandler();
+        }
+
         private void OnCompletedHandler()
         {
             _serializationAnchor.RemoveFunctor(this);
             _result = _asyncActiveOnceObject.Result;
-            _asyncActiveOnceObject.OnCompleted -= OnCompletedHandler;
+            _asyncActiveOnceObject.RemoveOnCompletedHandler(this);
             _asyncActiveOnceObject.Dispose();
             _asyncActiveOnceObject = null;
         }

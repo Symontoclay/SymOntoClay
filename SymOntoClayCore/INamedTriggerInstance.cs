@@ -31,6 +31,7 @@ namespace SymOntoClay.Core
     {
         IList<StrongIdentifierValue> NamesList { get; }
         bool IsOn { get; }
-        event Action<IList<StrongIdentifierValue>> OnChanged;
+
+        [Obsolete("Serialization Refactoring", true)] event Action<IList<StrongIdentifierValue>> OnChanged;
     }
 }

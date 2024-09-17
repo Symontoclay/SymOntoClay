@@ -345,7 +345,7 @@ namespace SymOntoClay.Core.Internal.Storage
         }
 
         /// <inheritdoc/>
-        public event Action OnParentStorageChanged;
+        [Obsolete("Serialization Refactoring", true)] public event Action OnParentStorageChanged;
 
         /// <inheritdoc/>
         public DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get; set; }

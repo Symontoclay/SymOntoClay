@@ -35,7 +35,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
         {
         }
 
-        public event Action OnChanged;
+        [Obsolete("Serialization Refactoring", true)] public event Action OnChanged;
 
         protected void EmitOnChanged()
         {

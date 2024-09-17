@@ -25,6 +25,7 @@ using SymOntoClay.Common;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
@@ -90,11 +91,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         /// <inheritdoc/>
         public IStorage Storage => _parent;
 
-        /// <inheritdoc/>
-        public event Action OnChanged;
+        ///// <inheritdoc/>
+        //[Obsolete("Serialization Refactoring", true)] public event Action OnChanged;
 
-        /// <inheritdoc/>
-        public event Action<IList<StrongIdentifierValue>> OnChangedWithKeys;
+        ///// <inheritdoc/>
+        //[Obsolete("Serialization Refactoring", true)] public event Action<IList<StrongIdentifierValue>> OnChangedWithKeys;
 
         public void AddConsolidatedStorage(IMonitorLogger logger, ILogicalStorage storage)
         {
@@ -237,6 +238,34 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 }
             }            
         }
+
+        void ILogicalStorage.AddOnChangedHandler(IOnChangedLogicalStorageHandler handler)
+        {
+            d
+        }
+
+        void ILogicalStorage.RemoveOnChangedHandler(IOnChangedLogicalStorageHandler handler)
+        {
+            d
+        }
+
+        void ILogicalStorage.AddOnChangedWithKeysHandler(IOnChangedWithKeysLogicalStorageHandler handler)
+        {
+            d
+        }
+
+        void ILogicalStorage.RemoveOnChangedWithKeysHandler(IOnChangedWithKeysLogicalStorageHandler handler)
+        {
+            d
+        }
+
+        private void EmitOnChangedWithKeysHandlers(IList<StrongIdentifierValue> value)
+        {
+            d
+        }
+
+        private object _onChangedWithKeysHandlersLockObj = new object();
+        private List<IOnChangedWithKeysLogicalStorageHandler> _onChangedWithKeysHandlers = new List<IOnChangedWithKeysLogicalStorageHandler>();
 
         private object _onAddingFactHandlerLockObj = new object();
         private List<IOnAddingFactHandler> _onAddingFactHandlers = new List<IOnAddingFactHandler>();

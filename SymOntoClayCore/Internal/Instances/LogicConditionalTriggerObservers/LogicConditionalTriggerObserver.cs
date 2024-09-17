@@ -42,7 +42,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
         private List<BaseTriggerConditionNodeObserver> _observersList;
 
-        public event Action OnChanged;
+        [Obsolete("Serialization Refactoring", true)] public event Action OnChanged;
 
         private void Observer_OnChanged()
         {

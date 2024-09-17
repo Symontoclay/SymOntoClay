@@ -81,8 +81,8 @@ namespace SymOntoClay.Core.Internal.Storage
             OnRemoveParentStorage?.Invoke(storage);
         }
 
-        public event Action<IStorage> OnAddParentStorage;
-        public event Action<IStorage> OnRemoveParentStorage;
+        [Obsolete("Serialization Refactoring", true)] public event Action<IStorage> OnAddParentStorage;
+        [Obsolete("Serialization Refactoring", true)] public event Action<IStorage> OnRemoveParentStorage;
 
         public void Dispose()
         {

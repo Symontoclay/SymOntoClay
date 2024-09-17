@@ -71,10 +71,10 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
         }
 
         /// <inheritdoc/>
-        public event Action OnChanged;
+        [Obsolete("Serialization Refactoring", true)] public event Action OnChanged;
 
         /// <inheritdoc/>
-        public event Action<StrongIdentifierValue> OnChangedWithKeys;
+        [Obsolete("Serialization Refactoring", true)] public event Action<StrongIdentifierValue> OnChangedWithKeys;
 
 #if DEBUG
         /// <inheritdoc/>

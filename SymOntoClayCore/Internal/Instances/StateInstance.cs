@@ -69,7 +69,7 @@ namespace SymOntoClay.Core.Internal.Instances
             base.ExecutionCoordinator_OnFinished();
         }
 
-        public event Action<StateInstance> OnStateInstanceFinished;
+        [Obsolete("Serialization Refactoring", true)] public event Action<StateInstance> OnStateInstanceFinished;
 
         /// <inheritdoc/>
         protected override void OnDisposed()

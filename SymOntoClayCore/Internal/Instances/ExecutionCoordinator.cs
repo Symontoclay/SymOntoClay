@@ -164,7 +164,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private RuleInstance _ruleInstance;
 
         /// <inheritdoc/>
-        public event Action OnFinished
+        [Obsolete("Serialization Refactoring", true)] public event Action OnFinished
         {
             add
             {
@@ -182,7 +182,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
         }
 
-        private event Action InternalOnFinish;
+        [Obsolete("Serialization Refactoring", true)] private event Action InternalOnFinish;
 
         /// <inheritdoc/>
         public void AddProcessInfo(IProcessInfo processInfo)

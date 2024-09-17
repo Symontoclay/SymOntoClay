@@ -39,8 +39,8 @@ namespace SymOntoClay.Core
         void Append(IMonitorLogger logger, INamedTriggerInstance namedTriggerInstance);
         void Remove(IMonitorLogger logger, INamedTriggerInstance namedTriggerInstance);
 
-        event Action OnNamedTriggerInstanceChanged;
-        event Action<IList<StrongIdentifierValue>> OnNamedTriggerInstanceChangedWithKeys;
+        [Obsolete("Serialization Refactoring", true)] event Action OnNamedTriggerInstanceChanged;
+        [Obsolete("Serialization Refactoring", true)] event Action<IList<StrongIdentifierValue>> OnNamedTriggerInstanceChangedWithKeys;
 
         IList<INamedTriggerInstance> GetNamedTriggerInstancesDirectly(IMonitorLogger logger, StrongIdentifierValue name);
     }

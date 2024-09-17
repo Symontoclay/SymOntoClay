@@ -415,7 +415,7 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public event ProcessInfoEvent OnFinish
+        [Obsolete("Serialization Refactoring", true)] public event ProcessInfoEvent OnFinish
         {
             add
             {
@@ -436,10 +436,10 @@ namespace SymOntoClay.Core
             }
         }
 
-        private event ProcessInfoEvent InternalOnFinish;
+        [Obsolete("Serialization Refactoring", true)] private event ProcessInfoEvent InternalOnFinish;
 
         /// <inheritdoc/>
-        public event ProcessInfoEvent OnComplete
+        [Obsolete("Serialization Refactoring", true)] public event ProcessInfoEvent OnComplete
         {
             add
             {
@@ -460,10 +460,10 @@ namespace SymOntoClay.Core
             }
         }
 
-        private event ProcessInfoEvent InternalOnComplete;
+        [Obsolete("Serialization Refactoring", true)] private event ProcessInfoEvent InternalOnComplete;
 
         /// <inheritdoc/>
-        public event ProcessInfoEvent OnWeakCanceled
+        [Obsolete("Serialization Refactoring", true)] public event ProcessInfoEvent OnWeakCanceled
         {
             add
             {
@@ -484,7 +484,7 @@ namespace SymOntoClay.Core
             }
         }
 
-        private event ProcessInfoEvent InternalOnWeakCanceled;
+        [Obsolete("Serialization Refactoring", true)] private event ProcessInfoEvent InternalOnWeakCanceled;
 
         protected void CheckOnFinishStatus(IMonitorLogger logger)
         {

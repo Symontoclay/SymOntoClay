@@ -41,7 +41,7 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 {
-    public class ConsolidatedPublicFactsLogicalStorage : BaseComponent, ILogicalStorage, IOnAddingFactHandler
+    public class ConsolidatedPublicFactsLogicalStorage : BaseComponent, ILogicalStorage, IOnAddingFactHandler, IOnChangedWithKeysLogicalStorageHandler
     {
         public ConsolidatedPublicFactsLogicalStorage(ConsolidatedPublicFactsStorage parent, IMonitorLogger logger, KindOfStorage kind, ConsolidatedPublicFactsStorageSettings settings)
             : base(logger)
@@ -91,12 +91,6 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         /// <inheritdoc/>
         public IStorage Storage => _parent;
 
-        ///// <inheritdoc/>
-        //[Obsolete("Serialization Refactoring", true)] public event Action OnChanged;
-
-        ///// <inheritdoc/>
-        //[Obsolete("Serialization Refactoring", true)] public event Action<IList<StrongIdentifierValue>> OnChangedWithKeys;
-
         public void AddConsolidatedStorage(IMonitorLogger logger, ILogicalStorage storage)
         {
             lock(_lockObj)
@@ -106,7 +100,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     return;
                 }
 
-                storage.OnChangedWithKeys += LogicalStorage_OnChangedWithKeys;
+                storage.AddOnChangedWithKeysHandler(this);
 
                 if(_enableOnAddingFactEvent != KindOfOnAddingFactEvent.None)
                 {
@@ -131,7 +125,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     return;
                 }
 
-                storage.OnChangedWithKeys -= LogicalStorage_OnChangedWithKeys;
+                storage.RemoveOnChangedWithKeysHandler(this);
 
                 if (_enableOnAddingFactEvent != KindOfOnAddingFactEvent.None)
                 {
@@ -146,6 +140,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         {
             EmitOnChangedHandlers();
             EmitOnChangedWithKeysHandlers(usedKeysList);
+        }
+
+        void IOnChangedWithKeysLogicalStorageHandler.Invoke(IList<StrongIdentifierValue> value)
+        {
+            LogicalStorage_OnChangedWithKeys(value);
         }
 
         private void LogicalStorage_OnChangedWithKeys(IList<StrongIdentifierValue> changedKeysList)
@@ -243,30 +242,35 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         {
             lock(_onChangedHandlersLockObj)
             {
+                if(_onChangedHandlers.Contains(handler))
+                {
+                    return;
+                }
 
+                _onChangedHandlers.Add(handler);
             }
-
-            d
         }
 
         void ILogicalStorage.RemoveOnChangedHandler(IOnChangedLogicalStorageHandler handler)
         {
             lock (_onChangedHandlersLockObj)
             {
-
+                if (_onChangedHandlers.Contains(handler))
+                {
+                    _onChangedHandlers.Remove(handler);
+                }
             }
-
-            d
         }
 
         private void EmitOnChangedHandlers()
         {
             lock (_onChangedHandlersLockObj)
             {
-
+                foreach(var handler in _onChangedHandlers)
+                {
+                    handler.Invoke();
+                }
             }
-
-            d
         }
 
         private object _onChangedHandlersLockObj = new object();
@@ -853,7 +857,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             {
                 foreach (var storage in _logicalStorages)
                 {
-                    storage.OnChangedWithKeys -= LogicalStorage_OnChangedWithKeys;
+                    storage.RemoveOnChangedWithKeysHandler(this);
                 }
 
                 if (_enableOnAddingFactEvent != KindOfOnAddingFactEvent.None)

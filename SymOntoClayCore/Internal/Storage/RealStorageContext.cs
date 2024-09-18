@@ -20,8 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.Core.Internal.CodeExecution;
-using SymOntoClay.Core.Internal.Compiling;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.Storage.ActionsStoraging;
 using SymOntoClay.Core.Internal.Storage.ChannelsStoraging;
 using SymOntoClay.Core.Internal.Storage.ConstructorsStoraging;
@@ -37,11 +36,9 @@ using SymOntoClay.Core.Internal.Storage.StatesStoraging;
 using SymOntoClay.Core.Internal.Storage.SynonymsStoraging;
 using SymOntoClay.Core.Internal.Storage.TriggersStoraging;
 using SymOntoClay.Core.Internal.Storage.VarStoraging;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage
 {
@@ -73,16 +70,89 @@ namespace SymOntoClay.Core.Internal.Storage
 
         public void EmitOnAddParentStorage(IMonitorLogger logger, IStorage storage)
         {
-            OnAddParentStorage?.Invoke(storage);
+            EmitOnAddParentStorageHandlers(storage);
         }
 
         public void EmitOnRemoveParentStorage(IMonitorLogger logger, IStorage storage)
         {
-            OnRemoveParentStorage?.Invoke(storage);
+            EmitOnRemoveParentStorageHandlers(storage);
         }
 
-        [Obsolete("Serialization Refactoring", true)] public event Action<IStorage> OnAddParentStorage;
-        [Obsolete("Serialization Refactoring", true)] public event Action<IStorage> OnRemoveParentStorage;
+        public void AddOnAddParentStorageHandler(IOnAddParentStorageHandler handler)
+        {
+            lock(_onAddParentStorageHandlersLockObj)
+            {
+                if(_onAddParentStorageHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onAddParentStorageHandlers.Add(handler);
+            }
+        }
+
+        public void RemoveOnAddParentStorageHandler(IOnAddParentStorageHandler handler)
+        {
+            lock (_onAddParentStorageHandlersLockObj)
+            {
+                if (_onAddParentStorageHandlers.Contains(handler))
+                {
+                    _onAddParentStorageHandlers.Remove(handler);
+                }
+            }
+        }
+
+        public void EmitOnAddParentStorageHandlers(IStorage storage)
+        {
+            lock (_onAddParentStorageHandlersLockObj)
+            {
+                foreach(var handler in _onAddParentStorageHandlers)
+                {
+                    handler.Invoke(storage);
+                }
+            }
+        }
+
+        private object _onAddParentStorageHandlersLockObj = new object();
+        private List<IOnAddParentStorageHandler> _onAddParentStorageHandlers = new List<IOnAddParentStorageHandler>();
+
+        public void AddOnRemoveParentStorageHandler(IOnRemoveParentStorageHandler handler)
+        {
+            lock (_onRemoveParentStorageHandlersLockObj)
+            {
+                if(_onRemoveParentStorageHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onRemoveParentStorageHandlers.Add(handler);
+            }
+        }
+
+        public void RemoveOnRemoveParentStorageHandler(IOnRemoveParentStorageHandler handler)
+        {
+            lock (_onRemoveParentStorageHandlersLockObj)
+            {
+                if (_onRemoveParentStorageHandlers.Contains(handler))
+                {
+                    _onRemoveParentStorageHandlers.Remove(handler);
+                }
+            }
+        }
+
+        public void EmitOnRemoveParentStorageHandlers(IStorage storage)
+        {
+            lock (_onRemoveParentStorageHandlersLockObj)
+            {
+                foreach(var handler in _onRemoveParentStorageHandlers)
+                { 
+                    handler.Invoke(storage);
+                }
+            }
+        }
+
+        private object _onRemoveParentStorageHandlersLockObj = new object();
+        private List<IOnRemoveParentStorageHandler> _onRemoveParentStorageHandlers = new List<IOnRemoveParentStorageHandler>();
 
         public void Dispose()
         {
@@ -101,6 +171,9 @@ namespace SymOntoClay.Core.Internal.Storage
             VarStorage.Dispose();
             FuzzyLogicStorage.Dispose();
             IdleActionItemsStorage.Dispose();
+
+            _onAddParentStorageHandlers.Clear();
+            _onRemoveParentStorageHandlers.Clear();
         }
     }
 }

@@ -404,6 +404,8 @@ namespace SymOntoClay.Core.Internal
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
+            _serializationAnchor.Dispose();
+
             _context.Dispose();
 
             base.OnDisposed();

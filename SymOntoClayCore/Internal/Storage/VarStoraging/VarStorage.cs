@@ -21,9 +21,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using Newtonsoft.Json;
+using SymOntoClay.ActiveObject.Functors;
+using SymOntoClay.ActiveObject.Threads;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.Storage.LogicalStoraging;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
@@ -33,11 +37,14 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 {
-    public class VarStorage: BaseSpecificStorage, IVarStorage
+    public class VarStorage: BaseSpecificStorage, IVarStorage, IOnAddParentStorageHandler, IOnRemoveParentStorageHandler
     {
         public VarStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
         {
+            _activeObjectContext = _mainStorageContext.ActiveObjectContext;
+            _serializationAnchor = new SerializationAnchor();
+
             _parentVarStoragesList = realStorageContext.Parents.Select(p => p.VarStorage).ToList();
 
             foreach (var parentStorage in _parentVarStoragesList)
@@ -45,9 +52,12 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
                 parentStorage.OnChangedWithKeys += VarStorage_OnChangedWithKeys;
             }
 
-            realStorageContext.OnAddParentStorage += RealStorageContext_OnAddParentStorage;
-            realStorageContext.OnRemoveParentStorage += RealStorageContext_OnRemoveParentStorage;
+            realStorageContext.AddOnAddParentStorageHandler(this);
+            realStorageContext.AddOnRemoveParentStorageHandler(this);
         }
+
+        private IActiveObjectContext _activeObjectContext;
+        private SerializationAnchor _serializationAnchor;
 
         private readonly object _lockObj = new object();
 
@@ -267,7 +277,21 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
             EmitOnChanged(Logger, varName);
         }
 
+        void IOnRemoveParentStorageHandler.Invoke(IStorage storage)
+        {
+            RealStorageContext_OnRemoveParentStorage(storage);
+        }
+
         private void RealStorageContext_OnRemoveParentStorage(IStorage storage)
+        {
+            LoggedSyncFunctorWithoutResult<VarStorage, IStorage>.Run(Logger, "B0E0BA4D-6F0D-4C69-BC14-0FEC022DE01C", this, storage,
+                (IMonitorLogger loggerValue, VarStorage instanceValue, IStorage storageValue) => {
+                    instanceValue.NRealStorageContext_OnRemoveParentStorage(storageValue);
+                },
+                _activeObjectContext, _serializationAnchor);
+        }
+
+        public void NRealStorageContext_OnRemoveParentStorage(IStorage storage)
         {
             var varStorage = storage.VarStorage;
             varStorage.OnChangedWithKeys -= VarStorage_OnChangedWithKeys;
@@ -275,7 +299,21 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
             _parentVarStoragesList.Remove(varStorage);
         }
 
+        void IOnAddParentStorageHandler.Invoke(IStorage storage)
+        {
+            RealStorageContext_OnAddParentStorage(storage);
+        }
+
         private void RealStorageContext_OnAddParentStorage(IStorage storage)
+        {
+            LoggedSyncFunctorWithoutResult<VarStorage, IStorage>.Run(Logger, "2C400FE9-AFAE-4819-AC7B-35D9DFFB687A", this, storage,
+                (IMonitorLogger loggerValue, VarStorage instanceValue, IStorage storageValue) => {
+                    instanceValue.NRealStorageContext_OnAddParentStorage(storageValue);
+                },
+                _activeObjectContext, _serializationAnchor);
+        }
+
+        public void NRealStorageContext_OnAddParentStorage(IStorage storage)
         {
             var varStroage = storage.VarStorage;
             varStroage.OnChangedWithKeys += VarStorage_OnChangedWithKeys;
@@ -296,10 +334,15 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
                 varItem.OnChanged -= VarItem_OnChanged;
             }
 
+            _realStorageContext.RemoveOnAddParentStorageHandler(this);
+            _realStorageContext.RemoveOnRemoveParentStorageHandler(this);
+
             _allVariablesList.Clear();
             _systemVariables.Clear();
             _variablesDict.Clear();
             _localVariablesDict.Clear();
+
+            _serializationAnchor.Dispose();
 
             base.OnDisposed();
         }

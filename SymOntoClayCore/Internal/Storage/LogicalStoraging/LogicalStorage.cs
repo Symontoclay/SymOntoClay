@@ -986,6 +986,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             _onChangedWithKeysHandlers.Clear();
             _onAddingFactHandlers.Clear();
 
+            _serializationAnchor.Dispose();
+
             base.OnDisposed();
         }
 

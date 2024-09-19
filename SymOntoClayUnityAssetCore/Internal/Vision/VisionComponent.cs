@@ -364,6 +364,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
+            _serializationAnchor.Dispose();
+
             _activeObject.Dispose();
 
             base.OnDisposed();

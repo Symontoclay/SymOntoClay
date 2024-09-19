@@ -187,6 +187,8 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
+            _serializationAnchor.Dispose();
+
             HostStorage.Dispose();
 
             base.OnDisposed();

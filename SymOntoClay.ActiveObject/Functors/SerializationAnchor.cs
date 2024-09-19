@@ -43,5 +43,11 @@ namespace SymOntoClay.ActiveObject.Functors
                 }
             }
         }
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            _functors.Clear();
+        }
     }
 }

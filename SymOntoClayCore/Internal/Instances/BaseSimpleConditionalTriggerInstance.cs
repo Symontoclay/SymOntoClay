@@ -20,9 +20,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.Functors;
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
@@ -36,14 +38,13 @@ using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public abstract class BaseSimpleConditionalTriggerInstance : BaseComponent, IObjectToString, IObjectToShortString, IObjectToBriefString
+    public abstract class BaseSimpleConditionalTriggerInstance : BaseComponent, IOnChangedLogicalStorageHandler, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         protected BaseSimpleConditionalTriggerInstance(RuleInstance condition, BaseInstance parent, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext)
             : base(context.Logger)
         {
             _context = context;
             _parent = parent;
-
 
             _condition = condition;
 
@@ -60,7 +61,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _localCodeExecutionContext = localCodeExecutionContext;
 
-            _storage.LogicalStorage.OnChanged += LogicalStorage_OnChanged;
+            _storage.LogicalStorage.AddOnChangedHandler(this);
 
             _searchOptions = new LogicalSearchOptions();
             _searchOptions.QueryExpression = _condition;
@@ -108,8 +109,15 @@ namespace SymOntoClay.Core.Internal.Instances
             return true;
         }
 
+        void IOnChangedLogicalStorageHandler.Invoke()
+        {
+            LogicalStorage_OnChanged();
+        }
+
         private void LogicalStorage_OnChanged()
         {
+            LoggedSyncFunctorWithoutResult
+
             lock (_lockObj)
             {
                 _needRun = true;
@@ -245,7 +253,7 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
-            _storage.LogicalStorage.OnChanged -= LogicalStorage_OnChanged;
+            _storage.LogicalStorage.RemoveOnChangedHandler(this);
 
             base.OnDisposed();
         }

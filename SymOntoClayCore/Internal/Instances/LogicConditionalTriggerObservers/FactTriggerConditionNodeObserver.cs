@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
@@ -29,16 +30,21 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 {
-    public class FactTriggerConditionNodeObserver: BaseTriggerConditionNodeObserver
+    public class FactTriggerConditionNodeObserver: BaseTriggerConditionNodeObserver, IOnChangedLogicalStorageHandler
     {
         public FactTriggerConditionNodeObserver(IMonitorLogger logger, IStorage storage, KindOfTriggerCondition kindOfTriggerCondition)
             : base(logger)
         {
-            storage.LogicalStorage.OnChanged += LogicalStorage_OnChanged;
+            storage.LogicalStorage.AddOnChangedHandler(this);
             _storage = storage;
         }
 
         private readonly IStorage _storage;
+
+        void IOnChangedLogicalStorageHandler.Invoke()
+        {
+            LogicalStorage_OnChanged();
+        }
 
         private void LogicalStorage_OnChanged()
         {
@@ -48,7 +54,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
-            _storage.LogicalStorage.OnChanged -= LogicalStorage_OnChanged;
+            _storage.LogicalStorage.RemoveOnChangedHandler(this);
 
             base.OnDisposed();
         }

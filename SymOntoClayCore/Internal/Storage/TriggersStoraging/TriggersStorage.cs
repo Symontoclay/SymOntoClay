@@ -385,8 +385,15 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
         private void RealStorageContext_OnRemoveParentStorage(IStorage storage)
         {
-            LoggedSyncFunctorWithoutResult<TriggersStorage, IStorage>.Run(Logger, "CE9E5E18-3D8B-47B7-874C-FD1E6F985354");
+            LoggedSyncFunctorWithoutResult<TriggersStorage, IStorage>.Run(Logger, "CE9E5E18-3D8B-47B7-874C-FD1E6F985354", this, storage,
+                (IMonitorLogger loggerValue, TriggersStorage instanceValue, IStorage storageValue) => {
+                    instanceValue.NRealStorageContext_OnRemoveParentStorage(storageValue);
+                },
+                _activeObjectContext, _serializationAnchor);
+        }
 
+        public void NRealStorageContext_OnRemoveParentStorage(IStorage storage)
+        {
             var triggersStorage = storage.TriggersStorage;
             triggersStorage.OnNamedTriggerInstanceChangedWithKeys -= TriggersStorage_OnNamedTriggerInstanceChangedWithKeys;
 
@@ -400,8 +407,15 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
         private void RealStorageContext_OnAddParentStorage(IStorage storage)
         {
-            LoggedSyncFunctorWithoutResult<TriggersStorage, IStorage>.Run(Logger, "403E1946-20F0-40DD-B587-C17B408BA842");
+            LoggedSyncFunctorWithoutResult<TriggersStorage, IStorage>.Run(Logger, "403E1946-20F0-40DD-B587-C17B408BA842", this, storage,
+                (IMonitorLogger loggerValue, TriggersStorage instanceValue, IStorage storageValue) => {
+                    instanceValue.NRealStorageContext_OnAddParentStorage(storageValue);
+                },
+                _activeObjectContext, _serializationAnchor);
+        }
 
+        public void NRealStorageContext_OnAddParentStorage(IStorage storage)
+        {
             var triggersStorage = storage.TriggersStorage;
             triggersStorage.OnNamedTriggerInstanceChangedWithKeys += TriggersStorage_OnNamedTriggerInstanceChangedWithKeys;
 

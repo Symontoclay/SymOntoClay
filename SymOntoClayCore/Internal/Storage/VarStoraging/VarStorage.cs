@@ -20,20 +20,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using Newtonsoft.Json;
 using SymOntoClay.ActiveObject.Functors;
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
-using SymOntoClay.Core.Internal.Storage.LogicalStoraging;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 {
@@ -62,6 +59,40 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
         private object _lockObj = new object();
 
         /// <inheritdoc/>
+        public void AddOnChangedHandler(IOnChangedVarStorageHandler handler)
+        {
+            d
+        }
+
+        /// <inheritdoc/>
+        public void RemoveOnChangedHandler(IOnChangedVarStorageHandler handler)
+        {
+            d
+        }
+
+        private void EmitOnChangedHandlers()
+        {
+            d
+        }
+
+        /// <inheritdoc/>
+        public void AddOnChangedWithKeysHandler(IOnChangedWithKeysVarStorageHandler handler)
+        {
+            d
+        }
+
+        /// <inheritdoc/>
+        public void RemoveOnChangedWithKeysHandler(IOnChangedWithKeysVarStorageHandler handler)
+        {
+            d
+        }
+
+        private void EmitOnChangedWithKeysHandlers(StrongIdentifierValue value)
+        {
+            d
+        }
+
+        // <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)] public event Action OnChanged;
 
         /// <inheritdoc/>

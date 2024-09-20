@@ -42,7 +42,7 @@ using System.Threading;
 namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 {
     public class LogicalStorage: BaseSpecificStorage, ILogicalStorage,
-        IOnAddingFactHandler, IOnAddParentStorageHandler, IOnRemoveParentStorageHandler, IOnChangedLogicalStorageHandler, IOnChangedWithKeysLogicalStorageHandler
+        IOnAddingFactHandler, IOnAddParentStorageRealStorageContextHandler, IOnRemoveParentStorageRealStorageContextHandler, IOnChangedLogicalStorageHandler, IOnChangedWithKeysLogicalStorageHandler
     {
         private const int DEFAULT_INITIAL_TIME = 20;
 
@@ -614,7 +614,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             return AddingFactHelper.CallEvent(logger, _onAddingFactHandlers, ruleInstance, _fuzzyLogicResolver, _localCodeExecutionContext);
         }
 
-        void IOnAddParentStorageHandler.Invoke(IStorage storage)
+        void IOnAddParentStorageRealStorageContextHandler.Invoke(IStorage storage)
         {
             RealStorageContext_OnAddParentStorage(storage);
         }
@@ -638,7 +638,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             _parentLogicalStoragesList.Add(logicalStorage);
         }
 
-        void IOnRemoveParentStorageHandler.Invoke(IStorage storage)
+        void IOnRemoveParentStorageRealStorageContextHandler.Invoke(IStorage storage)
         {
             RealStorageContext_OnRemoveParentStorage(storage);
         }

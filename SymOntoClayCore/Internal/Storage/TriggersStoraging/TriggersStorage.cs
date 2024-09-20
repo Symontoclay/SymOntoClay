@@ -34,7 +34,7 @@ using System.Linq;
 
 namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 {
-    public class TriggersStorage: BaseSpecificStorage, ITriggersStorage, IOnAddParentStorageHandler, IOnRemoveParentStorageHandler
+    public class TriggersStorage: BaseSpecificStorage, ITriggersStorage, IOnAddParentStorageRealStorageContextHandler, IOnRemoveParentStorageRealStorageContextHandler
     {
         public TriggersStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
@@ -378,7 +378,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
             EmitOnChanged(Logger, namesList);
         }
 
-        void IOnRemoveParentStorageHandler.Invoke(IStorage storage)
+        void IOnRemoveParentStorageRealStorageContextHandler.Invoke(IStorage storage)
         {
             RealStorageContext_OnRemoveParentStorage(storage);
         }
@@ -400,7 +400,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
             _parentTriggersStoragesList.Remove(triggersStorage);
         }
 
-        void IOnAddParentStorageHandler.Invoke(IStorage storage)
+        void IOnAddParentStorageRealStorageContextHandler.Invoke(IStorage storage)
         {
             RealStorageContext_OnAddParentStorage(storage);
         }

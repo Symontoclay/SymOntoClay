@@ -1,6 +1,6 @@
 ﻿namespace SymOntoClay.Core.EventsInterfaces
 {
-    public interface IOnRemoveParentStorageHandler
+    public interface IOnAddParentStorageRealStorageContextHandler
     {
         void Invoke(IStorage storage);
     }

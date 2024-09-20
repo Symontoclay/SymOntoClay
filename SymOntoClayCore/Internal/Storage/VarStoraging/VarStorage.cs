@@ -37,7 +37,7 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 {
-    public class VarStorage: BaseSpecificStorage, IVarStorage, IOnAddParentStorageHandler, IOnRemoveParentStorageHandler
+    public class VarStorage: BaseSpecificStorage, IVarStorage, IOnAddParentStorageRealStorageContextHandler, IOnRemoveParentStorageRealStorageContextHandler
     {
         public VarStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
@@ -277,7 +277,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
             EmitOnChanged(Logger, varName);
         }
 
-        void IOnRemoveParentStorageHandler.Invoke(IStorage storage)
+        void IOnRemoveParentStorageRealStorageContextHandler.Invoke(IStorage storage)
         {
             RealStorageContext_OnRemoveParentStorage(storage);
         }
@@ -299,7 +299,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
             _parentVarStoragesList.Remove(varStorage);
         }
 
-        void IOnAddParentStorageHandler.Invoke(IStorage storage)
+        void IOnAddParentStorageRealStorageContextHandler.Invoke(IStorage storage)
         {
             RealStorageContext_OnAddParentStorage(storage);
         }

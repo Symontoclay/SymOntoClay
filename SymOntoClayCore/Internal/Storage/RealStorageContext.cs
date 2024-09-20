@@ -78,7 +78,7 @@ namespace SymOntoClay.Core.Internal.Storage
             EmitOnRemoveParentStorageHandlers(storage);
         }
 
-        public void AddOnAddParentStorageHandler(IOnAddParentStorageHandler handler)
+        public void AddOnAddParentStorageHandler(IOnAddParentStorageRealStorageContextHandler handler)
         {
             lock(_onAddParentStorageHandlersLockObj)
             {
@@ -91,7 +91,7 @@ namespace SymOntoClay.Core.Internal.Storage
             }
         }
 
-        public void RemoveOnAddParentStorageHandler(IOnAddParentStorageHandler handler)
+        public void RemoveOnAddParentStorageHandler(IOnAddParentStorageRealStorageContextHandler handler)
         {
             lock (_onAddParentStorageHandlersLockObj)
             {
@@ -114,9 +114,9 @@ namespace SymOntoClay.Core.Internal.Storage
         }
 
         private object _onAddParentStorageHandlersLockObj = new object();
-        private List<IOnAddParentStorageHandler> _onAddParentStorageHandlers = new List<IOnAddParentStorageHandler>();
+        private List<IOnAddParentStorageRealStorageContextHandler> _onAddParentStorageHandlers = new List<IOnAddParentStorageRealStorageContextHandler>();
 
-        public void AddOnRemoveParentStorageHandler(IOnRemoveParentStorageHandler handler)
+        public void AddOnRemoveParentStorageHandler(IOnRemoveParentStorageRealStorageContextHandler handler)
         {
             lock (_onRemoveParentStorageHandlersLockObj)
             {
@@ -129,7 +129,7 @@ namespace SymOntoClay.Core.Internal.Storage
             }
         }
 
-        public void RemoveOnRemoveParentStorageHandler(IOnRemoveParentStorageHandler handler)
+        public void RemoveOnRemoveParentStorageHandler(IOnRemoveParentStorageRealStorageContextHandler handler)
         {
             lock (_onRemoveParentStorageHandlersLockObj)
             {
@@ -152,7 +152,7 @@ namespace SymOntoClay.Core.Internal.Storage
         }
 
         private object _onRemoveParentStorageHandlersLockObj = new object();
-        private List<IOnRemoveParentStorageHandler> _onRemoveParentStorageHandlers = new List<IOnRemoveParentStorageHandler>();
+        private List<IOnRemoveParentStorageRealStorageContextHandler> _onRemoveParentStorageHandlers = new List<IOnRemoveParentStorageRealStorageContextHandler>();
 
         public void Dispose()
         {

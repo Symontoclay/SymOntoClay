@@ -67,6 +67,9 @@ namespace SymOntoClay.Core.Internal.Instances
             _searchOptions.QueryExpression = _condition;
             _searchOptions.LocalCodeExecutionContext = _localCodeExecutionContext;
 
+            _activeObjectContext = context.ActiveObjectContext;
+            _serializationAnchor = new SerializationAnchor();
+
             _activeObject = new AsyncActivePeriodicObject(context.ActiveObjectContext, context.TriggersThreadPool, Logger);
             _activeObject.PeriodicMethod = Handler;
         }
@@ -87,6 +90,9 @@ namespace SymOntoClay.Core.Internal.Instances
         private int _runInterval = 100;
 
         //private bool _needRepeat;
+
+        private IActiveObjectContext _activeObjectContext;
+        private SerializationAnchor _serializationAnchor;
 
         private IActivePeriodicObject _activeObject;
 
@@ -116,8 +122,15 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void LogicalStorage_OnChanged()
         {
-            LoggedSyncFunctorWithoutResult
+            LoggedSyncFunctorWithoutResult<BaseSimpleConditionalTriggerInstance>.Run(Logger, "3F83EE57-5F84-4B5E-9C7A-BAC8D4F225AC", this,
+                (IMonitorLogger loggerValue, BaseSimpleConditionalTriggerInstance instanceValue) => {
+                    instanceValue.NLogicalStorage_OnChanged();
+                },
+                _activeObjectContext, _serializationAnchor);
+        }
 
+        public void NLogicalStorage_OnChanged()
+        {
             lock (_lockObj)
             {
                 _needRun = true;

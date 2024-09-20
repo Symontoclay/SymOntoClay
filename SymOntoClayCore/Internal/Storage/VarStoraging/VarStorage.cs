@@ -59,7 +59,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
         private IActiveObjectContext _activeObjectContext;
         private SerializationAnchor _serializationAnchor;
 
-        private readonly object _lockObj = new object();
+        private object _lockObj = new object();
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)] public event Action OnChanged;

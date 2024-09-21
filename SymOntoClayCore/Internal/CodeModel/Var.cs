@@ -24,6 +24,7 @@ using NLog;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using System;
@@ -66,15 +67,51 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 _value = value;
 
-                OnChanged?.Invoke(Name);
+                EmitOnChangedHandlers(Name);
             }
         }
 
         private Value _value = new NullValue();
 
         public List<StrongIdentifierValue> TypesList { get; set; } = new List<StrongIdentifierValue>();
+        
+        public void AddOnChangedHandler(IOnChangedVarHandler handler)
+        {
+            lock(_onChangedHandlersLockObj)
+            {
+                if(_onChangedHandlers.Contains(handler))
+                {
+                    return;
+                }
 
-        [Obsolete("Serialization Refactoring", true)] public event Action<StrongIdentifierValue> OnChanged;
+                _onChangedHandlers.Add(handler);
+            }
+        }
+
+        public void RemoveOnChangedHandler(IOnChangedVarHandler handler)
+        {
+            lock (_onChangedHandlersLockObj)
+            {
+                if (_onChangedHandlers.Contains(handler))
+                {
+                    _onChangedHandlers.Remove(handler);
+                }
+            }
+        }
+
+        private void EmitOnChangedHandlers(StrongIdentifierValue value)
+        {
+            lock (_onChangedHandlersLockObj)
+            {
+                foreach(var hander in _onChangedHandlers)
+                {
+                    hander.Invoke(value);
+                }
+            }
+        }
+
+        private object _onChangedHandlersLockObj = new object();
+        private List<IOnChangedVarHandler> _onChangedHandlers = new List<IOnChangedVarHandler>();
 
         private readonly object _lockObj = new object();
 

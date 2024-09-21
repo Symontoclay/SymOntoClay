@@ -35,7 +35,7 @@ using System.Text;
 namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 {
     public class VarStorage: BaseSpecificStorage, IVarStorage,
-        IOnAddParentStorageRealStorageContextHandler, IOnRemoveParentStorageRealStorageContextHandler, IOnChangedWithKeysVarStorageHandler
+        IOnAddParentStorageRealStorageContextHandler, IOnRemoveParentStorageRealStorageContextHandler, IOnChangedWithKeysVarStorageHandler, IOnChangedVarHandler
     {
         public VarStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
@@ -199,7 +199,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
                 AnnotatedItemHelper.CheckAndFillUpHolder(logger, varItem, _realStorageContext.MainStorageContext.CommonNamesStorage);
             }
 
-            varItem.OnChanged += VarItem_OnChanged;
+            varItem.AddOnChangedHandler(this);
 
             varItem.CheckDirty();
 
@@ -234,7 +234,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
                 foreach(var itemForRemoving in itemsForRemoving)
                 {
-                    itemForRemoving.OnChanged -= VarItem_OnChanged;
+                    itemForRemoving.RemoveOnChangedHandler(this);
                     _allVariablesList.Remove(itemForRemoving);
                 }
 
@@ -332,6 +332,11 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
             }
         }
 
+        void IOnChangedVarHandler.Invoke(StrongIdentifierValue value)
+        {
+            VarItem_OnChanged(value);
+        }
+
         private void VarItem_OnChanged(StrongIdentifierValue name)
         {
             EmitOnChanged(Logger, name);
@@ -408,7 +413,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
             foreach(var varItem in _allVariablesList)
             {
-                varItem.OnChanged -= VarItem_OnChanged;
+                varItem.RemoveOnChangedHandler(this);
             }
 
             _realStorageContext.RemoveOnAddParentStorageHandler(this);

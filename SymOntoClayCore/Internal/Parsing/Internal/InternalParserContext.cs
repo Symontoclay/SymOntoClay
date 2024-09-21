@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Compiling;
@@ -33,7 +34,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
-    public class InternalParserContext
+    public class InternalParserContext: IOnNameChangedCodeItemHandler
     {
         private InternalParserContext()
         {
@@ -67,12 +68,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             if(_currCodeItem != null)
             {
-                _currCodeItem.OnNameChanged -= OnNameOfCurrentCodeItemChanged;
+                _currCodeItem.RemoveOnNameChangedHandler(this);
             }
 
             _currCodeItem = codeEntity;
 
-            _currCodeItem.OnNameChanged += OnNameOfCurrentCodeItemChanged;
+            _currCodeItem.AddOnNameChangedHandler(this);
         }
 
         public void RemoveCurrentCodeItem()
@@ -81,7 +82,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             if (_currCodeItem != null)
             {
-                _currCodeItem.OnNameChanged -= OnNameOfCurrentCodeItemChanged;
+                _currCodeItem.RemoveOnNameChangedHandler(this);
             }
 
             if(_codeItems.Count == 0)
@@ -96,8 +97,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             else
             {
                 _currCodeItem = _codeItems.Peek();
-                _currCodeItem.OnNameChanged += OnNameOfCurrentCodeItemChanged;
+                _currCodeItem.AddOnNameChangedHandler(this);
             }
+        }
+
+        void IOnNameChangedCodeItemHandler.Invoke(StrongIdentifierValue value)
+        {
+            OnNameOfCurrentCodeItemChanged(value);
         }
 
         private void OnNameOfCurrentCodeItemChanged(StrongIdentifierValue name)

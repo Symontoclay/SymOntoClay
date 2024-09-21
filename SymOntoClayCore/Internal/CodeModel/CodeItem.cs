@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.IndexedData;
 using System;
 using System.Collections.Generic;
@@ -54,7 +55,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
                 _name = value;
 
-                OnNameChanged?.Invoke(value);
+                EmitOnNameChangedHandlers(value);
             }
         }
 
@@ -112,7 +113,43 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
         }
 
-        [Obsolete("Serialization Refactoring", true)] public event Action<StrongIdentifierValue> OnNameChanged;
+        public void AddOnNameChangedHandler(IOnNameChangedCodeItemHandler handler)
+        {
+            lock(_onNameChangedHandlersLockObj)
+            {
+                if(_onNameChangedHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onNameChangedHandlers.Add(handler);
+            }
+        }
+
+        public void RemoveOnNameChangedHandler(IOnNameChangedCodeItemHandler handler)
+        {
+            lock (_onNameChangedHandlersLockObj)
+            {
+                if (_onNameChangedHandlers.Contains(handler))
+                {
+                    _onNameChangedHandlers.Remove(handler);
+                }
+            }
+        }
+
+        private void EmitOnNameChangedHandlers(StrongIdentifierValue value)
+        {
+            lock (_onNameChangedHandlersLockObj)
+            {
+                foreach(var handler in _onNameChangedHandlers)
+                {
+                    handler.Invoke(value);
+                }
+            }
+        }
+
+        private object _onNameChangedHandlersLockObj = new object();
+        private List<IOnNameChangedCodeItemHandler> _onNameChangedHandlers = new List<IOnNameChangedCodeItemHandler>();
 
         private StrongIdentifierValue _name;
         private StrongIdentifierValue _holder;

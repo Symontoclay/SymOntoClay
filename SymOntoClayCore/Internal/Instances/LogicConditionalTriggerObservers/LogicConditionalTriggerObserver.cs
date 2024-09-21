@@ -43,16 +43,47 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
         private List<BaseTriggerConditionNodeObserver> _observersList;
 
-        [Obsolete("Serialization Refactoring", true)] public event Action OnChanged;
+        public void AddOnChangedHandler(IOnChangedLogicConditionalTriggerObserverHandler handler)
+        {
+            lock(_onChangedHandlersLockObj)
+            {
+                if(_onChangedHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onChangedHandlers.Add(handler);
+            }
+        }
+
+        public void RemoveOnChangedHandler(IOnChangedLogicConditionalTriggerObserverHandler handler)
+        {
+            lock (_onChangedHandlersLockObj)
+            {
+                if (_onChangedHandlers.Contains(handler))
+                {
+                    _onChangedHandlers.Remove(handler);
+                }
+            }
+        }
+
+        private void EmitOnChangedHandlers()
+        {
+            lock (_onChangedHandlersLockObj)
+            {
+                foreach (var handler in _onChangedHandlers)
+                {
+                    handler.Invoke();
+                }
+            }
+        }
+
+        private object _onChangedHandlersLockObj = new object();
+        private List<IOnChangedLogicConditionalTriggerObserverHandler> _onChangedHandlers = new List<IOnChangedLogicConditionalTriggerObserverHandler>();
 
         void IOnChangedBaseTriggerConditionNodeObserverHandler.Invoke()
         {
-            Observer_OnChanged();
-        }
-
-        private void Observer_OnChanged()
-        {
-            OnChanged?.Invoke();
+            EmitOnChangedHandlers();
         }
 
         /// <inheritdoc/>
@@ -65,7 +96,11 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
                     observer.RemoveOnChangedHandler(this);
                     observer.Dispose();
                 }
+
+                _observersList.Clear();
             }
+
+            _onChangedHandlers.Clear();
 
             base.OnDisposed();
         }

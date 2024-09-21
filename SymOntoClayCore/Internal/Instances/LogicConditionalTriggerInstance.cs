@@ -20,10 +20,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.Functors;
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
@@ -39,7 +41,9 @@ using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public class LogicConditionalTriggerInstance : BaseComponent, INamedTriggerInstance, IObjectToString, IObjectToShortString, IObjectToBriefString
+    public class LogicConditionalTriggerInstance : BaseComponent, INamedTriggerInstance,
+        IObjectToString, IObjectToShortString, IObjectToBriefString,
+        IOnChangedLogicConditionalTriggerObserverHandler
     {
         public LogicConditionalTriggerInstance(InlineTrigger trigger, BaseInstance parent, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext)
             : base(context.Logger)
@@ -54,6 +58,9 @@ namespace SymOntoClay.Core.Internal.Instances
             _namesList = trigger.NamesList;
             _hasNames = !_namesList.IsNullOrEmpty();
             _dateTimeProvider = _context.DateTimeProvider;
+
+            _activeObjectContext = context.ActiveObjectContext;
+            _serializationAnchor = new SerializationAnchor();
 
             var localCodeExecutionContext = new LocalCodeExecutionContext(parentCodeExecutionContext);
             var localStorageSettings = RealStorageSettingsHelper.Create(context, parentStorage);
@@ -80,7 +87,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _setConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext,  trigger.SetCondition, KindOfTriggerCondition.SetCondition, trigger.SetBindingVariables, _localCodeExecutionContext);
 
             _setConditionalTriggerObserver = new LogicConditionalTriggerObserver(_triggerConditionNodeObserverContext, trigger.SetCondition, KindOfTriggerCondition.SetCondition, _setConditionalTriggerExecutor.LocalCodeExecutionContext);
-            _setConditionalTriggerObserver.OnChanged += Observer_OnChanged;
+            _setConditionalTriggerObserver.AddOnChangedHandler(this);
 
             _hasResetHandler = trigger.ResetCompiledFunctionBody != null;
 
@@ -103,7 +110,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 _resetConditionalTriggerExecutor = new LogicConditionalTriggerExecutor(_triggerConditionNodeObserverContext, trigger.ResetCondition, KindOfTriggerCondition.ResetCondition, resetBindingVariables, _localCodeExecutionContext);
 
                 _resetConditionalTriggerObserver = new LogicConditionalTriggerObserver(_triggerConditionNodeObserverContext, trigger.ResetCondition, KindOfTriggerCondition.ResetCondition, _setConditionalTriggerExecutor.LocalCodeExecutionContext);
-                _resetConditionalTriggerObserver.OnChanged += Observer_OnChanged;
+                _resetConditionalTriggerObserver.AddOnChangedHandler(this);
             }
 
             _activeObject = new AsyncActivePeriodicObject(context.ActiveObjectContext, context.TriggersThreadPool, Logger);
@@ -114,6 +121,9 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private readonly TriggerConditionNodeObserverContext _triggerConditionNodeObserverContext;
         private readonly IDateTimeProvider _dateTimeProvider;
+
+        private IActiveObjectContext _activeObjectContext;
+        private SerializationAnchor _serializationAnchor;
 
         private readonly IExecutionCoordinator _executionCoordinator;
         private readonly IEngineContext _context;
@@ -169,7 +179,16 @@ namespace SymOntoClay.Core.Internal.Instances
             _needRun = true;
         }
 
-        private void Observer_OnChanged()
+        void IOnChangedLogicConditionalTriggerObserverHandler.Invoke()
+        {
+            LoggedSyncFunctorWithoutResult<LogicConditionalTriggerInstance>.Run(Logger, "F5C7D84D-770E-40D0-AE92-48E497F75A82", this,
+                (IMonitorLogger loggerValue, LogicConditionalTriggerInstance instanceValue) => {
+                    instanceValue.NObserver_OnChanged();
+                },
+                _activeObjectContext, _serializationAnchor);
+        }
+
+        public void NObserver_OnChanged()
         {
 #if DEBUG
             //Info("5AF67C00-E174-436C-9BB0-95889FCE46F9", $"Observer_OnChanged();{_trigger.ToHumanizedLabel()}");
@@ -624,14 +643,16 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
+            _serializationAnchor.Dispose();
+
             _activeObject.Dispose();
 
-            _setConditionalTriggerObserver.OnChanged -= Observer_OnChanged;
+            _setConditionalTriggerObserver.RemoveOnChangedHandler(this);
             _setConditionalTriggerObserver.Dispose();
 
             if(_resetConditionalTriggerObserver != null)
             {
-                _resetConditionalTriggerObserver.OnChanged -= Observer_OnChanged;
+                _resetConditionalTriggerObserver.RemoveOnChangedHandler(this);
                 _resetConditionalTriggerObserver.Dispose();
             }
 

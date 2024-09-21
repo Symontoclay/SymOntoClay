@@ -20,8 +20,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.Functors;
+using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Storage.ActionsStoraging;
@@ -39,7 +42,6 @@ using SymOntoClay.Core.Internal.Storage.StatesStoraging;
 using SymOntoClay.Core.Internal.Storage.SynonymsStoraging;
 using SymOntoClay.Core.Internal.Storage.TriggersStoraging;
 using SymOntoClay.Core.Internal.Storage.VarStoraging;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
@@ -48,11 +50,14 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Storage
 {
-    public class RealStorage : BaseLoggedComponent, IStorage
+    public class RealStorage : BaseLoggedComponent, IStorage, IOnParentStorageChangedStorageHandler
     {
         public RealStorage(KindOfStorage kind, RealStorageSettings settings)
             : base(settings.MainStorageContext.Logger)
         {
+            _activeObjectContext = settings.MainStorageContext.ActiveObjectContext;
+            _serializationAnchor = new SerializationAnchor();
+
             _kind = kind;
             _realStorageContext = new RealStorageContext();
             _realStorageContext.KindOfGC = settings.KindOfGC;
@@ -123,6 +128,9 @@ namespace SymOntoClay.Core.Internal.Storage
             _realStorageContext.IdleActionItemsStorage = new IdleActionItemsStorage(_kind, _realStorageContext);
             _idleActionItemsStorage = _realStorageContext.IdleActionItemsStorage;
         }
+
+        private IActiveObjectContext _activeObjectContext;
+        private SerializationAnchor _serializationAnchor;
 
         private readonly KindOfStorage _kind;
 
@@ -223,11 +231,11 @@ namespace SymOntoClay.Core.Internal.Storage
 
                 CodeItemsStoragesList = null;
 
-                storage.OnParentStorageChanged += OnParentStorageChangedHandler;
+                storage.AddOnParentStorageChangedHandler(this);
 
-                _realStorageContext.EmitOnAddParentStorage(logger, storage);         
+                _realStorageContext.EmitOnAddParentStorage(logger, storage);
 
-                OnParentStorageChanged?.Invoke();
+                EmitOnParentStorageChangedHandlers();
             }
         }
 
@@ -244,19 +252,33 @@ namespace SymOntoClay.Core.Internal.Storage
 
                     CodeItemsStoragesList = null;
 
-                    storage.OnParentStorageChanged -= OnParentStorageChangedHandler;
+                    storage.RemoveOnParentStorageChangedHandler(this);
 
                     _realStorageContext.EmitOnRemoveParentStorage(logger, storage);
-                    OnParentStorageChanged?.Invoke();
+                    EmitOnParentStorageChangedHandlers();
                 }
             }
         }
 
+        void IOnParentStorageChangedStorageHandler.Invoke()
+        {
+            OnParentStorageChangedHandler();
+        }
+
         private void OnParentStorageChangedHandler()
+        {
+            LoggedSyncFunctorWithoutResult<RealStorage>.Run(Logger, "B941A0F5-D2A1-4DEB-A588-5E379E867FA2", this,
+                (IMonitorLogger loggerValue, RealStorage instanceValue) => {
+                    instanceValue.NOnParentStorageChangedHandler();
+                },
+                _activeObjectContext, _serializationAnchor);
+        }
+
+        public void NOnParentStorageChangedHandler()
         {
             CodeItemsStoragesList = null;
 
-            OnParentStorageChanged?.Invoke();
+            EmitOnParentStorageChangedHandlers();
         }
 
         /// <inheritdoc/>
@@ -345,7 +367,44 @@ namespace SymOntoClay.Core.Internal.Storage
         }
 
         /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)] public event Action OnParentStorageChanged;
+        public void AddOnParentStorageChangedHandler(IOnParentStorageChangedStorageHandler handler)
+        {
+            lock(_onParentStorageChangedHandlersLockObj)
+            {
+                if(_onParentStorageChangedHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onParentStorageChangedHandlers.Add(handler);
+            }
+        }
+
+        /// <inheritdoc/>
+        public void RemoveOnParentStorageChangedHandler(IOnParentStorageChangedStorageHandler handler)
+        {
+            lock (_onParentStorageChangedHandlersLockObj)
+            {
+                if (_onParentStorageChangedHandlers.Contains(handler))
+                {
+                    _onParentStorageChangedHandlers.Remove(handler);
+                }
+            }
+        }
+
+        private void EmitOnParentStorageChangedHandlers()
+        {
+            lock (_onParentStorageChangedHandlersLockObj)
+            {
+                foreach(var handler in _onParentStorageChangedHandlers)
+                {
+                    handler.Invoke();
+                }
+            }
+        }
+
+        private object _onParentStorageChangedHandlersLockObj = new object();
+        private List<IOnParentStorageChangedStorageHandler> _onParentStorageChangedHandlers = new List<IOnParentStorageChangedStorageHandler>();
 
         /// <inheritdoc/>
         public DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get; set; }
@@ -385,6 +444,8 @@ namespace SymOntoClay.Core.Internal.Storage
 
         protected virtual void OnDisposed()
         {
+            _onParentStorageChangedHandlers.Clear();
+
             _realStorageContext.Dispose();
         }
 

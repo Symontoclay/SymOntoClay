@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Common;
 using SymOntoClay.Common.Disposing;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
@@ -67,7 +68,8 @@ namespace SymOntoClay.Core
 
         List<StorageUsingOptions> CodeItemsStoragesList { get; set; }
 
-        [Obsolete("Serialization Refactoring", true)] event Action OnParentStorageChanged;
+        void AddOnParentStorageChangedHandler(IOnParentStorageChangedStorageHandler handler);
+        void RemoveOnParentStorageChangedHandler(IOnParentStorageChangedStorageHandler handler);
 
 #if DEBUG
         void DbgPrintFactsAndRules(IMonitorLogger logger);

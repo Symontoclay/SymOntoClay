@@ -20,9 +20,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using NLog;
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Storage.ActionsStoraging;
@@ -40,7 +40,6 @@ using SymOntoClay.Core.Internal.Storage.StatesStoraging;
 using SymOntoClay.Core.Internal.Storage.SynonymsStoraging;
 using SymOntoClay.Core.Internal.Storage.TriggersStoraging;
 using SymOntoClay.Core.Internal.Storage.VarStoraging;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
@@ -265,8 +264,13 @@ namespace SymOntoClay.Core.Internal.Storage
             result.Add(this);
         }
 
-        /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)] public event Action OnParentStorageChanged;
+        void IStorage.AddOnParentStorageChangedHandler(IOnParentStorageChangedStorageHandler handler)
+        {
+        }
+
+        void IStorage.RemoveOnParentStorageChangedHandler(IOnParentStorageChangedStorageHandler handler)
+        {
+        }
 
 #if DEBUG
         /// <inheritdoc/>

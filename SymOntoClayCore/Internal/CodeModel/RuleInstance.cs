@@ -552,8 +552,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public List<StorageUsingOptions> CodeItemsStoragesList { get; set; }
 
-        /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)] public event Action OnParentStorageChanged;
+        void IStorage.AddOnParentStorageChangedHandler(IOnParentStorageChangedStorageHandler handler)
+        {
+        }
+
+        void IStorage.RemoveOnParentStorageChangedHandler(IOnParentStorageChangedStorageHandler handler)
+        {
+        }
 
 #if DEBUG
         /// <inheritdoc/>

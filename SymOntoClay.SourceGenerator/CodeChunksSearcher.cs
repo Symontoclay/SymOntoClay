@@ -24,7 +24,9 @@ namespace SymOntoClay.SourceGenerator
             "LoggedAndContextedCodeChunkDrivenSyncFunctorWithResult",
             "LoggedAndContextedCodeChunkDrivenSyncFunctorWithoutResult",
             "LoggedSyncFunctorWithoutResult",
-            "LoggedSyncFunctorWithResult"
+            "LoggedSyncFunctorWithResult",
+            "LoggedFunctorWithoutResult",
+            "LoggedFunctorWithResult"
         };
 
         private List<(string FirstIdenfifier, string SecondIdenfifier)> _targetInvocations = new List<(string FirstIdenfifier, string SecondIdenfifier)>()
@@ -37,6 +39,8 @@ namespace SymOntoClay.SourceGenerator
             ("LoggedAndContextedCodeChunkDrivenSyncFunctorWithoutResult", "Run"),
             ("LoggedSyncFunctorWithoutResult", "Run"),
             ("LoggedSyncFunctorWithResult", "Run"),
+            ("LoggedFunctorWithoutResult", "Run"),
+            ("LoggedFunctorWithResult", "Run"),
             (null, "CreateCodeChunk"),
             (null, "CreateSyncCall"),
             (null, "CreateAsyncCall")

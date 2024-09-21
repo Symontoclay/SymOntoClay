@@ -24,9 +24,6 @@ using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
@@ -35,8 +32,6 @@ namespace SymOntoClay.Core.Internal.Instances
         void ActivateMainEntity(IMonitorLogger logger);
         void AppendProcessInfo(IMonitorLogger logger, IProcessInfo processInfo);
         void AppendAndTryStartProcessInfo(IMonitorLogger logger, string callMethodId, IProcessInfo processInfo);
-
-        //[Obsolete("Serialization Refactoring", true)] event Action OnIdle;
 
         void AddOnIdleHandler(IOnIdleInstancesStorageComponentHandler handler);
         void RemoveOnIdleHandler(IOnIdleInstancesStorageComponentHandler handler);

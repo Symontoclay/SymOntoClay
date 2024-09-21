@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.ActiveObject.Functors;
+using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
@@ -48,20 +49,26 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             _context = context;
 
+            _activeObjectContext = context.ActiveObjectContext;
+            _threadPool = context.AsyncEventsThreadPool;
+            _serializationAnchor = new SerializationAnchor();
+
             _metadataResolver = context.DataResolversFactory.GetMetadataResolver();
 
             _projectLoader = new ProjectLoader(context);
-
-            OnIdle += DispatchOnIdle;
         }
 
-        private readonly IEngineContext _context;
-        private readonly MetadataResolver _metadataResolver;
+        private IEngineContext _context;
+        private MetadataResolver _metadataResolver;
 
-        private readonly object _registryLockObj = new object();
-        private readonly object _processLockObj = new object();
+        private IActiveObjectContext _activeObjectContext;
+        private ICustomThreadPool _threadPool;
+        private SerializationAnchor _serializationAnchor;
 
-        private readonly ProjectLoader _projectLoader;
+        private object _registryLockObj = new object();
+        private object _processLockObj = new object();
+
+        private ProjectLoader _projectLoader;
 
         private Dictionary<StrongIdentifierValue, AppInstance> _namesDict;
         private AppInstance _rootInstanceInfo;
@@ -135,30 +142,34 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
 
                 logger.StopTask("54E83ADE-6CC4-4655-A1D8-68FDA40DBB22", taskId);
-            }, _context.AsyncEventsThreadPool, _context.GetCancellationToken());
+            }, _threadPool, _context.GetCancellationToken());
         }
 
-        [Obsolete("Serialization Refactoring", true)]
-        private void DispatchOnIdle()
+        protected override void DispatchOnIdle()
         {
+            base.DispatchOnIdle();
+
             LoggedFunctorWithoutResult<InstancesStorageComponent>.Run(Logger, "DA5D128E-7568-4186-97A5-847FE7FB68E8", this,
-                () => { },
-                );
+                (IMonitorLogger loggerValue, InstancesStorageComponent instanceValue) => {
+                    instanceValue.NDispatchOnIdle();
+                },
+                _activeObjectContext, _threadPool, _serializationAnchor);
+        }
 
-            ThreadTask.Run(() => {
-                var taskId = Logger.StartTask("F3A7C7F7-1D36-4321-9467-B5E075A04E6F");
+        public void NDispatchOnIdle()
+        {
+            var taskId = Logger.StartTask("F3A7C7F7-1D36-4321-9467-B5E075A04E6F");
 
-                try
-                {
-                    DispatchIdleActions(Logger);
-                }
-                catch (Exception e)
-                {
-                    Error("1617E55E-58BC-4B63-9418-D5967AD99678", e);
-                }
+            try
+            {
+                DispatchIdleActions(Logger);
+            }
+            catch (Exception e)
+            {
+                Error("1617E55E-58BC-4B63-9418-D5967AD99678", e);
+            }
 
-                Logger.StopTask("97C0FBD9-7D7B-4E6B-BEA5-1D6D37FE2005", taskId);
-            }, _context.AsyncEventsThreadPool, _context.GetCancellationToken());
+            Logger.StopTask("97C0FBD9-7D7B-4E6B-BEA5-1D6D37FE2005", taskId);
         }
 
         private void DispatchIdleActions(IMonitorLogger logger)
@@ -293,7 +304,7 @@ namespace SymOntoClay.Core.Internal.Instances
                         }
 
                         logger.StopTask("594DAE42-0F2E-42AC-8DA4-0F406DCC227A", taskId);
-                    }, _context.AsyncEventsThreadPool, _context.GetCancellationToken());
+                    }, _threadPool, _context.GetCancellationToken());
 
                     logger.EndHostMethodStarting("A919AF23-C7E3-4678-97AA-1E2E596B9EE1", callMethodId);
 
@@ -373,10 +384,11 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 try
                 {
-                    OnIdle?.Invoke();
+                    EmitOnIdleHandlers();
                 }
-                catch
+                catch(Exception e)
                 {
+                    Error("2D9296C0-9535-42F6-B521-040550CDA323", e);
                 }
             }
         }
@@ -385,9 +397,6 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             return _processesInfoByDevicesDict.Count + _processesInfoList.Count; 
         }
-
-        /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)] public override event Action OnIdle;
 
         /// <inheritdoc/>
         public override int GetCountOfCurrentProcesses(IMonitorLogger logger)
@@ -521,6 +530,8 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 processInfo.Dispose();
             }
+
+            _serializationAnchor.Dispose();
 
             base.OnDisposed();
         }

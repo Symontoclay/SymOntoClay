@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
@@ -129,8 +130,50 @@ namespace SymOntoClay.Core.Internal.Instances
             throw new NotImplementedException("7D9D2B9B-80ED-414E-9750-FEC5153FDAE9");
         }
 
+        public void AddOnIdleHandler(IOnIdleInstancesStorageComponentHandler handler)
+        {
+            lock(_onIdleHandlersLockObj)
+            {
+                if(_onIdleHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onIdleHandlers.Add(handler);
+            }
+        }
+
         /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)] public virtual event Action OnIdle;
+        public void RemoveOnIdleHandler(IOnIdleInstancesStorageComponentHandler handler)
+        {
+            lock (_onIdleHandlersLockObj)
+            {
+                if (_onIdleHandlers.Contains(handler))
+                {
+                    _onIdleHandlers.Remove(handler);
+                }
+            }
+        }
+
+        protected void EmitOnIdleHandlers()
+        {
+            DispatchOnIdle();
+
+            lock (_onIdleHandlersLockObj)
+            {
+                foreach(var handler in _onIdleHandlers)
+                {
+                    handler.Invoke();
+                }
+            }
+        }
+
+        private object _onIdleHandlersLockObj = new object();
+        private List<IOnIdleInstancesStorageComponentHandler> _onIdleHandlers = new List<IOnIdleInstancesStorageComponentHandler>();
+
+        protected virtual void DispatchOnIdle()
+        {
+        }
 
         /// <inheritdoc/>
         public virtual int GetCountOfCurrentProcesses(IMonitorLogger logger)

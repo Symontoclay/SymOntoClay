@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.Functors;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
@@ -137,8 +138,11 @@ namespace SymOntoClay.Core.Internal.Instances
             }, _context.AsyncEventsThreadPool, _context.GetCancellationToken());
         }
 
+        [Obsolete("Serialization Refactoring", true)]
         private void DispatchOnIdle()
         {
+            LoggedFunctorWithoutResult
+
             ThreadTask.Run(() => {
                 var taskId = Logger.StartTask("F3A7C7F7-1D36-4321-9467-B5E075A04E6F");
 

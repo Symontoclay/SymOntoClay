@@ -169,8 +169,44 @@ namespace SymOntoClay.Core.Internal.Instances
             return _trigger.GetLongConditionalHashCode();
         }
 
+        //[Obsolete("Serialization Refactoring", true)] public event Action<IList<StrongIdentifierValue>> OnChanged;
+
         /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)] public event Action<IList<StrongIdentifierValue>> OnChanged;
+        public void AddOnChangedHandler(IOnChangedNamedTriggerInstanceHandler handler)
+        {
+            lock(_onChangedHandlersLockObj)
+            {
+                if(_onChangedHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                d
+            }
+        }
+
+        /// <inheritdoc/>
+        public void RemoveOnChangedHandler(IOnChangedNamedTriggerInstanceHandler handler)
+        {
+            lock (_onChangedHandlersLockObj)
+            {
+                if (_onChangedHandlers.Contains(handler))
+                {
+                    d
+                }
+            }
+        }
+
+        private void EmitOnChangedHandlers(IList<StrongIdentifierValue> value)
+        {
+            lock (_onChangedHandlersLockObj)
+            {
+                d
+            }
+        }
+
+        private object _onChangedHandlersLockObj = new object();
+        private List<IOnChangedNamedTriggerInstanceHandler> _onChangedHandlers = new List<IOnChangedNamedTriggerInstanceHandler>();
 
         public void Init(IMonitorLogger logger)
         {
@@ -658,6 +694,8 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _setConditionalTriggerExecutor.Dispose();
             _resetConditionalTriggerExecutor?.Dispose();
+
+            _onChangedHandlers.Clear();
 
             base.OnDisposed();
         }

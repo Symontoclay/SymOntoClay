@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,7 @@ namespace SymOntoClay.Core
         IList<StrongIdentifierValue> NamesList { get; }
         bool IsOn { get; }
 
-        [Obsolete("Serialization Refactoring", true)] event Action<IList<StrongIdentifierValue>> OnChanged;
+        void AddOnChangedHandler(IOnChangedNamedTriggerInstanceHandler handler);
+        void RemoveOnChangedHandler(IOnChangedNamedTriggerInstanceHandler handler);
     }
 }

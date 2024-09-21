@@ -2,8 +2,6 @@
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.Serialization.Functors
 {

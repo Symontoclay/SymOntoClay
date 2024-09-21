@@ -34,7 +34,9 @@ using System.Linq;
 
 namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 {
-    public class TriggersStorage: BaseSpecificStorage, ITriggersStorage, IOnAddParentStorageRealStorageContextHandler, IOnRemoveParentStorageRealStorageContextHandler
+    public class TriggersStorage: BaseSpecificStorage, ITriggersStorage,
+        IOnAddParentStorageRealStorageContextHandler, IOnRemoveParentStorageRealStorageContextHandler,
+        IOnChangedNamedTriggerInstanceHandler
     {
         public TriggersStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
@@ -273,7 +275,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
                 _namedTriggerInstancesList.Add(namedTriggerInstance);
 
-                namedTriggerInstance.OnChanged += NamedTriggerInstance_OnChanged;
+                namedTriggerInstance.AddOnChangedHandler(this);
 
                 foreach(var name in namesList)
                 {
@@ -285,7 +287,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
                         foreach (var itemForRemoving in itemsForRemoving)
                         {
-                            itemForRemoving.OnChanged -= NamedTriggerInstance_OnChanged;
+                            itemForRemoving.RemoveOnChangedHandler(this);
                             _namedTriggerInstancesList.Remove(itemForRemoving);
                         }
 
@@ -318,7 +320,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
                 _namedTriggerInstancesList.Remove(namedTriggerInstance);
 
-                namedTriggerInstance.OnChanged -= NamedTriggerInstance_OnChanged;
+                namedTriggerInstance.RemoveOnChangedHandler(this);
 
                 foreach (var name in namesList)
                 {
@@ -360,6 +362,11 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
         /// <inheritdoc/>
         [Obsolete("Serialization Refactoring", true)] public event Action<IList<StrongIdentifierValue>> OnNamedTriggerInstanceChangedWithKeys;
+
+        void IOnChangedNamedTriggerInstanceHandler.Invoke(IList<StrongIdentifierValue> value)
+        {
+            NamedTriggerInstance_OnChanged(value);
+        }
 
         private void NamedTriggerInstance_OnChanged(IList<StrongIdentifierValue> namesList)
         {
@@ -432,7 +439,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
             foreach (var item in _namedTriggerInstancesList)
             {
-                item.OnChanged -= NamedTriggerInstance_OnChanged;
+                item.RemoveOnChangedHandler(this);
             }
 
             _realStorageContext.RemoveOnAddParentStorageHandler(this);

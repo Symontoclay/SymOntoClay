@@ -169,8 +169,6 @@ namespace SymOntoClay.Core.Internal.Instances
             return _trigger.GetLongConditionalHashCode();
         }
 
-        //[Obsolete("Serialization Refactoring", true)] public event Action<IList<StrongIdentifierValue>> OnChanged;
-
         /// <inheritdoc/>
         public void AddOnChangedHandler(IOnChangedNamedTriggerInstanceHandler handler)
         {
@@ -181,7 +179,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     return;
                 }
 
-                d
+                _onChangedHandlers.Add(handler);
             }
         }
 
@@ -192,7 +190,7 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 if (_onChangedHandlers.Contains(handler))
                 {
-                    d
+                    _onChangedHandlers.Remove(handler);
                 }
             }
         }
@@ -201,7 +199,10 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             lock (_onChangedHandlersLockObj)
             {
-                d
+                foreach(var handler in _onChangedHandlers)
+                {
+                    handler.Invoke(value);
+                }
             }
         }
 
@@ -335,7 +336,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             if(_hasNames && oldIsOn != _triggerConditionNodeObserverContext.IsOn)
             {
-                OnChanged?.Invoke(_namesList);
+                EmitOnChangedHandlers(_namesList);
             }
 
             logger.EndDoTriggerSearch("4BB95054-441B-4372-9B33-7429D189BF5D", doTriggerSearchId);

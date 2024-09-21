@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using System;
@@ -35,11 +36,47 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
         {
         }
 
-        [Obsolete("Serialization Refactoring", true)] public event Action OnChanged;
+        public void AddOnChangedHandler(IOnChangedBaseTriggerConditionNodeObserverHandler handler)
+        {
+            lock(_onChangedHandlersLockObj)
+            {
+                if(_onChangedHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onChangedHandlers.Add(handler);
+            }
+        }
+
+        public void RemoveOnChangedHandler(IOnChangedBaseTriggerConditionNodeObserverHandler handler)
+        {
+            lock (_onChangedHandlersLockObj)
+            {
+                if (_onChangedHandlers.Contains(handler))
+                {
+                    _onChangedHandlers.Remove(handler);
+                }
+            }
+        }
+
+        private void EmitOnChangedHandlers()
+        {
+            lock (_onChangedHandlersLockObj)
+            {
+                foreach (var handler in _onChangedHandlers)
+                {
+                    handler.Invoke();
+                }
+            }
+        }
+
+        private object _onChangedHandlersLockObj = new object();
+        private List<IOnChangedBaseTriggerConditionNodeObserverHandler> _onChangedHandlers = new List<IOnChangedBaseTriggerConditionNodeObserverHandler>();
 
         protected void EmitOnChanged()
         {
-            OnChanged?.Invoke();
+            EmitOnChangedHandlers();
         }
     }
 }

@@ -21,13 +21,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Common.CollectionsHelpers;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
 using System;
 using System.Collections.Generic;
 
 namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 {
-    public class LogicConditionalTriggerObserver : BaseComponent
+    public class LogicConditionalTriggerObserver : BaseComponent, IOnChangedBaseTriggerConditionNodeObserverHandler
     {
         public LogicConditionalTriggerObserver(TriggerConditionNodeObserverContext context, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition, ILocalCodeExecutionContext localCodeExecutionContext)
             : base(context.EngineContext.Logger)
@@ -36,13 +37,18 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
             foreach (var observer in _observersList)
             {
-                observer.OnChanged += Observer_OnChanged;
+                observer.AddOnChangedHandler(this);
             }
         }
 
         private List<BaseTriggerConditionNodeObserver> _observersList;
 
         [Obsolete("Serialization Refactoring", true)] public event Action OnChanged;
+
+        void IOnChangedBaseTriggerConditionNodeObserverHandler.Invoke()
+        {
+            Observer_OnChanged();
+        }
 
         private void Observer_OnChanged()
         {
@@ -56,7 +62,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
             {
                 foreach(var observer in _observersList)
                 {
-                    observer.OnChanged -= Observer_OnChanged;
+                    observer.RemoveOnChangedHandler(this);
                     observer.Dispose();
                 }
             }

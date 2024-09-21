@@ -141,7 +141,9 @@ namespace SymOntoClay.Core.Internal.Instances
         [Obsolete("Serialization Refactoring", true)]
         private void DispatchOnIdle()
         {
-            LoggedFunctorWithoutResult
+            LoggedFunctorWithoutResult<InstancesStorageComponent>.Run(Logger, "DA5D128E-7568-4186-97A5-847FE7FB68E8", this,
+                () => { },
+                );
 
             ThreadTask.Run(() => {
                 var taskId = Logger.StartTask("F3A7C7F7-1D36-4321-9467-B5E075A04E6F");

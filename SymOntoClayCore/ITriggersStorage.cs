@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Monitor.Common;
@@ -39,8 +40,11 @@ namespace SymOntoClay.Core
         void Append(IMonitorLogger logger, INamedTriggerInstance namedTriggerInstance);
         void Remove(IMonitorLogger logger, INamedTriggerInstance namedTriggerInstance);
 
-        [Obsolete("Serialization Refactoring", true)] event Action OnNamedTriggerInstanceChanged;
-        [Obsolete("Serialization Refactoring", true)] event Action<IList<StrongIdentifierValue>> OnNamedTriggerInstanceChangedWithKeys;
+        void AddOnNamedTriggerInstanceChangedHandler(IOnNamedTriggerInstanceChangedTriggersStorageHandler handler);
+        void RemoveOnNamedTriggerInstanceChangedHandler(IOnNamedTriggerInstanceChangedTriggersStorageHandler handler);
+
+        void AddOnNamedTriggerInstanceChangedWithKeysHandler(IOnNamedTriggerInstanceChangedWithKeysTriggersStorageHandler handler);
+        void RemoveOnNamedTriggerInstanceChangedWithKeysHandler(IOnNamedTriggerInstanceChangedWithKeysTriggersStorageHandler handler);
 
         IList<INamedTriggerInstance> GetNamedTriggerInstancesDirectly(IMonitorLogger logger, StrongIdentifierValue name);
     }

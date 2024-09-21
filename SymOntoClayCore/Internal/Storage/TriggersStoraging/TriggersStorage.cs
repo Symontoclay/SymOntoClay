@@ -358,10 +358,84 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
         }
 
         /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)] public event Action OnNamedTriggerInstanceChanged;
+        public void AddOnNamedTriggerInstanceChangedHandler(IOnNamedTriggerInstanceChangedTriggersStorageHandler handler)
+        {
+            lock(_onNamedTriggerInstanceChangedHandlersLockObj)
+            {
+                if(_onNamedTriggerInstanceChangedHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onNamedTriggerInstanceChangedHandlers.Add(handler);
+            }
+        }
 
         /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)] public event Action<IList<StrongIdentifierValue>> OnNamedTriggerInstanceChangedWithKeys;
+        public void RemoveOnNamedTriggerInstanceChangedHandler(IOnNamedTriggerInstanceChangedTriggersStorageHandler handler)
+        {
+            lock (_onNamedTriggerInstanceChangedHandlersLockObj)
+            {
+                if (_onNamedTriggerInstanceChangedHandlers.Contains(handler))
+                {
+                    _onNamedTriggerInstanceChangedHandlers.Remove(handler);
+                }
+            }
+        }
+
+        private void EmitOnNamedTriggerInstanceChangedHandlers()
+        {
+            lock (_onNamedTriggerInstanceChangedHandlersLockObj)
+            {
+                foreach(var handler in _onNamedTriggerInstanceChangedHandlers)
+                {
+                    handler.Invoke();
+                }
+            }
+        }
+
+        private object _onNamedTriggerInstanceChangedHandlersLockObj = new object();
+        private List<IOnNamedTriggerInstanceChangedTriggersStorageHandler> _onNamedTriggerInstanceChangedHandlers = new List<IOnNamedTriggerInstanceChangedTriggersStorageHandler>();
+
+        /// <inheritdoc/>
+        public void AddOnNamedTriggerInstanceChangedWithKeysHandler(IOnNamedTriggerInstanceChangedWithKeysTriggersStorageHandler handler)
+        {
+            lock(_onNamedTriggerInstanceChangedWithKeysHandlersLockObj)
+            {
+                if(_onNamedTriggerInstanceChangedWithKeysHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onNamedTriggerInstanceChangedWithKeysHandlers.Add(handler);
+            }
+        }
+
+        /// <inheritdoc/>
+        public void RemoveOnNamedTriggerInstanceChangedWithKeysHandler(IOnNamedTriggerInstanceChangedWithKeysTriggersStorageHandler handler)
+        {
+            lock (_onNamedTriggerInstanceChangedWithKeysHandlersLockObj)
+            {
+                if (_onNamedTriggerInstanceChangedWithKeysHandlers.Contains(handler))
+                {
+                    _onNamedTriggerInstanceChangedWithKeysHandlers.Remove(handler);
+                }
+            }
+        }
+
+        private void EmitOnNamedTriggerInstanceChangedWithKeysHandlers(IList<StrongIdentifierValue> value)
+        {
+            lock (_onNamedTriggerInstanceChangedWithKeysHandlersLockObj)
+            {
+                foreach(var handler in _onNamedTriggerInstanceChangedWithKeysHandlers)
+                {
+                    handler.Invoke(value);
+                }
+            }
+        }
+
+        private object _onNamedTriggerInstanceChangedWithKeysHandlersLockObj = new object();
+        private List<IOnNamedTriggerInstanceChangedWithKeysTriggersStorageHandler> _onNamedTriggerInstanceChangedWithKeysHandlers = new List<IOnNamedTriggerInstanceChangedWithKeysTriggersStorageHandler>();
 
         void IOnChangedNamedTriggerInstanceHandler.Invoke(IList<StrongIdentifierValue> value)
         {
@@ -375,10 +449,12 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
         protected void EmitOnChanged(IMonitorLogger logger, IList<StrongIdentifierValue> namesList)
         {
-            OnNamedTriggerInstanceChanged?.Invoke();
+            EmitOnNamedTriggerInstanceChangedHandlers();
 
-            OnNamedTriggerInstanceChangedWithKeys?.Invoke(namesList);
+            EmitOnNamedTriggerInstanceChangedWithKeysHandlers(namesList);
         }
+
+        void IOnNamedTriggerInstanceChangedWithKeysTriggersStorageHandler.Invoke(IList<StrongIdentifierValue> value)
 
         private void TriggersStorage_OnNamedTriggerInstanceChangedWithKeys(IList<StrongIdentifierValue> namesList)
         {
@@ -447,6 +523,9 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
             _systemEventsInfoDict.Clear();
             _logicConditionalsDict.Clear();
+
+            _onNamedTriggerInstanceChangedHandlers.Clear();
+            _onNamedTriggerInstanceChangedWithKeysHandlers.Clear();
 
             _serializationAnchor.Dispose();
 

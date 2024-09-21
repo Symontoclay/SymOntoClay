@@ -132,7 +132,7 @@ namespace SymOntoClay.Core.Internal.Storage
         private IActiveObjectContext _activeObjectContext;
         private SerializationAnchor _serializationAnchor;
 
-        private readonly KindOfStorage _kind;
+        private KindOfStorage _kind;
 
         /// <inheritdoc/>
         public KindOfStorage Kind => _kind;

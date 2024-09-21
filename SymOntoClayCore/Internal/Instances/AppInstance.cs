@@ -20,31 +20,35 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.ActiveObject.Functors;
+using SymOntoClay.ActiveObject.Threads;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
-using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Storage;
-using SymOntoClay.CoreHelper;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public class AppInstance : BaseIndependentInstance
+    public class AppInstance : BaseIndependentInstance, IOnStateInstanceFinishedStateInstanceHandler
     {
         public AppInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage)
             : base(codeItem, context, parentStorage, null, new ObjectStorageFactory(), null)
         {
+            _activeObjectContext = context.ActiveObjectContext;
+            _serializationAnchor = new SerializationAnchor();
+
             _statesResolver = _context.DataResolversFactory.GetStatesResolver();
         }
-        
+
+        private IActiveObjectContext _activeObjectContext;
+        private SerializationAnchor _serializationAnchor;
+
         /// <inheritdoc/>
         public override KindOfInstance KindOfInstance => KindOfInstance.AppInstance;
 
@@ -211,7 +215,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
                         _activeStatesDict[stateName] = stateInstance;
 
-                        stateInstance.OnStateInstanceFinished += ChildStateInstance_OnFinished;
+                        stateInstance.AddOnStateInstanceFinishedHandler(this);
                     }
 
                     if (statesForDeactivating.Any())
@@ -245,9 +249,18 @@ namespace SymOntoClay.Core.Internal.Instances
             }
         }
 
-        private void ChildStateInstance_OnFinished(StateInstance stateInstance)
+        void IOnStateInstanceFinishedStateInstanceHandler.Invoke(StateInstance value)
         {
-            stateInstance.OnStateInstanceFinished -= ChildStateInstance_OnFinished;
+            LoggedSyncFunctorWithoutResult<AppInstance, StateInstance>.Run(Logger, "18D1B4E5-7692-42ED-8831-7364DFF6A14F", this, value,
+                (IMonitorLogger loggerValue, AppInstance instanceValue, StateInstance stateInstanceValue) => {
+                    instanceValue.NChildStateInstance_OnFinished(stateInstanceValue);
+                },
+                _activeObjectContext, _serializationAnchor);
+        }
+        
+        public void NChildStateInstance_OnFinished(StateInstance stateInstance)
+        {
+            stateInstance.RemoveOnStateInstanceFinishedHandler(this);
 
             lock(_statesLockObj)
             {
@@ -287,6 +300,8 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 stateActivator.Dispose();
             }
+
+            _serializationAnchor.Dispose();
 
             base.OnDisposed();
         }

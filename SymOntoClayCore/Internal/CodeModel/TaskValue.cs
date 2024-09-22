@@ -20,8 +20,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using Newtonsoft.Json.Linq;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel.Handlers;
 using SymOntoClay.Monitor.Common;
@@ -33,6 +35,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
+    [Obsolete("Serialization Refactoring"/*, true*/)]
     public class TaskValue : Value
     {
         public TaskValue(IThreadTask systemTask)
@@ -82,34 +85,58 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private IThreadTask _systemTask;
 
-        [Obsolete("Serialization Refactoring", true)] public event Action OnComplete
+        public void AddOnCompleteHandler(IOnCompleteTaskValueHandler handler)
         {
-            add
+            lock(_onCompleteHandlersLockObj)
             {
-                InternalOnComplete += value;
-
-                if(_systemTask != null)
+                if (_onCompleteHandlers.Contains(handler))
                 {
-                    if(_systemTask.Status == ThreadTaskStatus.RanToCompletion)
+                    return;
+                }
+
+                _onCompleteHandlers.Add(handler);
+
+                if (_systemTask != null)
+                {
+                    if (_systemTask.Status == ThreadTaskStatus.RanToCompletion)
                     {
-                        value?.Invoke();
+                        handler.Invoke();
                     }
                 }
             }
+        }
 
-            remove 
-            { 
-                InternalOnComplete -= value; 
+        public void RemoveOnCompleteHandler(IOnCompleteTaskValueHandler handler)
+        {
+            lock(_onCompleteHandlersLockObj)
+            {
+                if(_onCompleteHandlers.Contains(handler))
+                {
+                    _onCompleteHandlers.Remove(handler);
+                }
             }
         }
 
-        [Obsolete("Serialization Refactoring", true)] private event Action InternalOnComplete;
+        private void EmitOnCompleteHandlers()
+        {
+            lock(_onCompleteHandlersLockObj)
+            {
+                foreach(var handler in _onCompleteHandlers)
+                {
+                    handler.Invoke();
+                }
+            }
+        }
+
+        private object _onCompleteHandlersLockObj = new object();
+        private List<IOnCompleteTaskValueHandler> _onCompleteHandlers = new List<IOnCompleteTaskValueHandler>();
+
 
         private object _checkOnCompleteLockObj = new object();
 
         private void OnCompleteHandler()
         {
-            InternalOnComplete?.Invoke();
+            EmitOnCompleteHandlers();
         }
 
         public void Wait()

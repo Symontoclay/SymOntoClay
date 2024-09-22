@@ -38,7 +38,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
@@ -47,6 +46,9 @@ namespace SymOntoClay.Core.Internal.Instances
         public InstancesStorageComponent(IEngineContext context)
             : base(context)
         {
+            _instancesStorageComponentOnFinishProcessWithoutDevicesHandler = new InstancesStorageComponentOnFinishProcessWithoutDevicesHandler(this);
+            _instancesStorageComponentOnFinishProcessWithDevicesHandler = new InstancesStorageComponentOnFinishProcessWithDevicesHandler(this);
+
             _context = context;
 
             _activeObjectContext = context.ActiveObjectContext;
@@ -57,6 +59,9 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _projectLoader = new ProjectLoader(context);
         }
+
+        private InstancesStorageComponentOnFinishProcessWithoutDevicesHandler _instancesStorageComponentOnFinishProcessWithoutDevicesHandler;
+        private InstancesStorageComponentOnFinishProcessWithDevicesHandler _instancesStorageComponentOnFinishProcessWithDevicesHandler;
 
         private IEngineContext _context;
         private MetadataResolver _metadataResolver;
@@ -326,12 +331,21 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _processesInfoList.Add(processInfo);
 
-            processInfo.OnFinish += OnFinishProcessWithoutDevicesHandler;
-
+            processInfo.AddOnFinishHandler(_instancesStorageComponentOnFinishProcessWithoutDevicesHandler);
+            
             return true;
         }
 
-        private void OnFinishProcessWithoutDevicesHandler(IProcessInfo sender)
+        public void OnFinishProcessWithoutDevicesHandler(IProcessInfo sender)
+        {
+            LoggedSyncFunctorWithoutResult<InstancesStorageComponent, IProcessInfo>.Run(Logger, "4B1CAD26-CE50-43EF-84ED-56008CF2914C", this, sender,
+                (IMonitorLogger loggerValue, InstancesStorageComponent instanceValue, IProcessInfo senderValue) => {
+                    instanceValue.NOnFinishProcessWithoutDevicesHandler(senderValue);
+                },
+                _activeObjectContext, _serializationAnchor);
+        }
+
+        public void NOnFinishProcessWithoutDevicesHandler(IProcessInfo sender)
         {
             lock (_processLockObj)
             {
@@ -354,19 +368,27 @@ namespace SymOntoClay.Core.Internal.Instances
                 _processesInfoByDevicesDict[device] = processInfo;
             }
 
-            processInfo.OnFinish += OnFinishProcessWithDevicesHandler;
+            processInfo.AddOnFinishHandler(_instancesStorageComponentOnFinishProcessWithDevicesHandler);
 
             processInfo.Start(logger, "5E6C3B30-3111-49AC-BE18-2CCC6C523277");
-
         }
 
-        private void OnFinishProcessWithDevicesHandler(IProcessInfo sender)
+        public void OnFinishProcessWithDevicesHandler(IProcessInfo sender)
+        {
+            LoggedSyncFunctorWithoutResult<InstancesStorageComponent, IProcessInfo>.Run(Logger, "45A122AD-559E-4AB6-B348-767E0DC0C6BD", this, sender,
+                (IMonitorLogger loggerValue, InstancesStorageComponent instanceValue, IProcessInfo senderValue) => {
+                    instanceValue.NOnFinishProcessWithDevicesHandler(senderValue);
+                },
+                _activeObjectContext, _serializationAnchor);
+        }
+
+        public void NOnFinishProcessWithDevicesHandler(IProcessInfo sender)
         {
             lock (_processLockObj)
             {
                 foreach (var device in sender.Devices)
                 {
-                    if(_processesInfoByDevicesDict.ContainsKey(device) && _processesInfoByDevicesDict[device] == sender)
+                    if (_processesInfoByDevicesDict.ContainsKey(device) && _processesInfoByDevicesDict[device] == sender)
                     {
                         _processesInfoByDevicesDict.Remove(device);
                     }

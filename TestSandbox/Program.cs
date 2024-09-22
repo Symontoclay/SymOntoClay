@@ -426,15 +426,15 @@ namespace TestSandbox
 
             var taskValue = new TaskValue(task);
 
-            taskValue.OnComplete += () => 
-            {
-                _logger.Info("2CD55AB4-7F0D-49BE-B17F-455D69263E48", "taskValue.OnComplete!!!!!");
-            };
+            //taskValue.OnComplete += () => 
+            //{
+            //    _logger.Info("2CD55AB4-7F0D-49BE-B17F-455D69263E48", "taskValue.OnComplete!!!!!");
+            //};
 
-            taskValue.OnComplete += () =>
-            {
-                _logger.Info("674D6CA3-085C-4174-9B21-6AA992F99157", "(2) taskValue.OnComplete!!!!!");
-            };
+            //taskValue.OnComplete += () =>
+            //{
+            //    _logger.Info("674D6CA3-085C-4174-9B21-6AA992F99157", "(2) taskValue.OnComplete!!!!!");
+            //};
 
             Thread.Sleep(20000);
 
@@ -1679,12 +1679,12 @@ action Go
         {
             _logger.Info("290EA263-EB27-4AE1-B8C1-6AB49B2A3153", "Begin");
 
-            var parentProcessInfo = new ProcessInfo(CancellationToken.None, null);
+            var parentProcessInfo = new ProcessInfo(CancellationToken.None, null, null);
 
-            var child_1 = new ProcessInfo(CancellationToken.None, null);
+            var child_1 = new ProcessInfo(CancellationToken.None, null, null);
             child_1.ParentProcessInfo = parentProcessInfo;
 
-            var child_2 = new ProcessInfo(CancellationToken.None, null);
+            var child_2 = new ProcessInfo(CancellationToken.None, null, null);
             parentProcessInfo.AddChild(_logger, child_2);
 
             _logger.Info("789033F5-F42A-46E0-9E02-26E9AFBECE22", $"parentProcessInfo = {parentProcessInfo}");
@@ -1696,7 +1696,7 @@ action Go
         {
             _logger.Info("F3B2D5BF-65E8-4B27-A445-805093C376A0", "Begin");
 
-            var processInfo = new ProcessInfo(CancellationToken.None, null);
+            var processInfo = new ProcessInfo(CancellationToken.None, null, null);
 
             var task = new Task(() => {
                 processInfo.SetStatus(_logger, "7237984F-0628-432D-AE80-F01AE12D48B0", ProcessStatus.Running);

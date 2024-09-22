@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Core;
 using SymOntoClay.Core.DebugHelpers;
@@ -36,8 +37,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 {
     public class PlatformProcessInfo : BaseProcessInfo
     {
-        public PlatformProcessInfo(CancellationTokenSource cancellationTokenSource, CancellationToken parentCancellationToken, ICustomThreadPool threadPool, string endPointName, Dictionary<string, Value> arguments, IReadOnlyList<int> devices, IReadOnlyList<string> friends, string callMethodId)
-            : base(parentCancellationToken, threadPool)
+        public PlatformProcessInfo(CancellationTokenSource cancellationTokenSource, CancellationToken parentCancellationToken, ICustomThreadPool threadPool, IActiveObjectContext activeObjectContext,
+            string endPointName, Dictionary<string, Value> arguments, IReadOnlyList<int> devices, IReadOnlyList<string> friends, string callMethodId)
+            : base(parentCancellationToken, threadPool, activeObjectContext)
         {
             _cancellationTokenSource = cancellationTokenSource;
             _endPointName = endPointName;

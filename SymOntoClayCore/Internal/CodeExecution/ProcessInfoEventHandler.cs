@@ -21,13 +21,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.ActiveObject.Functors;
+using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Core.Internal.CodeExecution.Helpers;
 using SymOntoClay.Core.Internal.Services;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
 {
@@ -38,6 +41,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             _parentThreadId = parentThreadId;
             _context = context;
+
+            _activeObjectContext = context.ActiveObjectContext;
+            _threadPool = context.AsyncEventsThreadPool;
+            _serializationAnchor = new SerializationAnchor();
+
             _codeFrameService = context.ServicesFactory.GetCodeFrameService();
             _codeFrameAsyncExecutor = new CodeFrameAsyncExecutor(context);
             _handler = handler;
@@ -48,36 +56,48 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         /// <inheritdoc/>
         public IProcessInfo ProcessInfo { get; set; }
 
-        private readonly IEngineContext _context;
-        private readonly ICodeFrameService _codeFrameService;
+        private IEngineContext _context;
 
-        private readonly CodeFrameAsyncExecutor _codeFrameAsyncExecutor;
+        private IActiveObjectContext _activeObjectContext;
+        private ICustomThreadPool _threadPool;
+        private SerializationAnchor _serializationAnchor;
 
-        private readonly string _parentThreadId;
+        private ICodeFrameService _codeFrameService;
+
+        private CodeFrameAsyncExecutor _codeFrameAsyncExecutor;
+
+        private string _parentThreadId;
 
         private IExecutable _handler;
         private CodeFrame _currentCodeFrame;
-        private readonly bool _runOnce;
+        private bool _runOnce;
         private bool _isAlreadyRun;
 
-        private readonly object _lockObj = new object();
+        private object _lockObj = new object();
 
         /// <inheritdoc/>
         public void Run(IMonitorLogger logger)
         {
-            LoggedFunctorWithoutResult
+            LoggedFunctorWithoutResult<ProcessInfoEventHandler>.Run(logger, "ABE6896A-7A1E-4328-873A-DB969E38392E", this,
+                (IMonitorLogger loggerValue, ProcessInfoEventHandler instanceValue) => {
+                    instanceValue.NRun(loggerValue);
+                },
+                _activeObjectContext, _threadPool, _serializationAnchor);
+        }
 
+        public void NRun(IMonitorLogger logger)
+        {
             lock (_lockObj)
             {
-                if(_runOnce)
+                if (_runOnce)
                 {
-                    if(_isAlreadyRun)
+                    if (_isAlreadyRun)
                     {
                         return;
                     }
 
                     _isAlreadyRun = true;
-                }                
+                }
             }
 
             var lifeCycleEventCoordinator = _handler.GetCoordinator(logger, _context, _currentCodeFrame.LocalContext);

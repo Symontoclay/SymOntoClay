@@ -24,19 +24,13 @@ using SymOntoClay.Common;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeExecution;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Core
 {
-    [Obsolete("Serialization Refactoring", true)]
-    public delegate void ProcessInfoEvent(IProcessInfo sender);
-
     public interface IProcessInfo : IDisposable, IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToHumanizedString, IMonitoredHumanizedObject
     {
         string Id { get; }

@@ -20,47 +20,45 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using Newtonsoft.Json.Linq;
-using NLog;
-using NLog.Fluent;
+using SymOntoClay.ActiveObject.Functors;
+using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeExecution;
-using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
-using SymOntoClay.Core.Internal.Instances;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.NLog;
 using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Core
 {
-    public abstract class BaseProcessInfo : IProcessInfo
+    public abstract class BaseProcessInfo : IProcessInfo,
+        IOnFinishProcessInfoHandler
     {
         protected static IMonitorLogger _logger = MonitorLoggerNLogImpementation.Instance;
         
-        protected BaseProcessInfo(CancellationToken cancellationToken, ICustomThreadPool threadPool)
+        protected BaseProcessInfo(CancellationToken cancellationToken, ICustomThreadPool threadPool, IActiveObjectContext activeObjectContext)
         {
             _cancellationToken = cancellationToken;
             _threadPool = threadPool;
+            _activeObjectContext = activeObjectContext;
+            _serializationAnchor = new SerializationAnchor();
 
             Id = NameHelper.GetNewEntityNameString();
         }
 
-        protected readonly CancellationToken _cancellationToken;
-        protected readonly ICustomThreadPool _threadPool;
+        protected CancellationToken _cancellationToken;
+        protected ICustomThreadPool _threadPool;
+        protected IActiveObjectContext _activeObjectContext;
+        protected SerializationAnchor _serializationAnchor;
 
         /// <inheritdoc/>
         public string Id { get; private set; }
@@ -580,7 +578,7 @@ namespace SymOntoClay.Core
 
                 _childrenProcessInfoList.Add(processInfo);
 
-                processInfo.OnFinish += ProcessInfo_OnFinish;
+                processInfo.AddOnFinishHandler(this);
 
                 if (processInfo.ParentProcessInfo != this)
                 {
@@ -589,7 +587,16 @@ namespace SymOntoClay.Core
             }
         }
 
-        private void ProcessInfo_OnFinish(IProcessInfo processInfo)
+        void IOnFinishProcessInfoHandler.Invoke(IProcessInfo sender)
+        {
+            LoggedSyncFunctorWithoutResult<BaseProcessInfo, IProcessInfo>.Run(_logger, "54EEC6FF-3764-4F05-A28A-158B48FB2309", this, sender,
+                (IMonitorLogger loggerValue, BaseProcessInfo instanceValue, IProcessInfo senderValue) => {
+                    instanceValue.NProcessInfoOnFinish(senderValue);
+                },
+                _activeObjectContext, _serializationAnchor);
+        }
+
+        public void NProcessInfoOnFinish(IProcessInfo processInfo)
         {
             lock (_parentAndChildrenLockObj)
             {
@@ -616,7 +623,7 @@ namespace SymOntoClay.Core
             _childrenProcessInfoList.Remove(processInfo);
             _removedChildrenProcessInfoList.Add(processInfo);
 
-            processInfo.OnFinish -= ProcessInfo_OnFinish;
+            processInfo.RemoveOnFinishHandler(this);
 
             if (processInfo.ParentProcessInfo == this)
             {

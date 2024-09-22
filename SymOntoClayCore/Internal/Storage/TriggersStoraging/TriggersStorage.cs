@@ -36,7 +36,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 {
     public class TriggersStorage: BaseSpecificStorage, ITriggersStorage,
         IOnAddParentStorageRealStorageContextHandler, IOnRemoveParentStorageRealStorageContextHandler,
-        IOnChangedNamedTriggerInstanceHandler
+        IOnChangedNamedTriggerInstanceHandler, IOnNamedTriggerInstanceChangedWithKeysTriggersStorageHandler
     {
         public TriggersStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
@@ -48,7 +48,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
             foreach (var parentStorage in _parentTriggersStoragesList)
             {
-                parentStorage.OnNamedTriggerInstanceChangedWithKeys += TriggersStorage_OnNamedTriggerInstanceChangedWithKeys;
+                parentStorage.AddOnNamedTriggerInstanceChangedWithKeysHandler(this);
             }
 
             realStorageContext.AddOnAddParentStorageHandler(this);
@@ -455,10 +455,8 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
         }
 
         void IOnNamedTriggerInstanceChangedWithKeysTriggersStorageHandler.Invoke(IList<StrongIdentifierValue> value)
-
-        private void TriggersStorage_OnNamedTriggerInstanceChangedWithKeys(IList<StrongIdentifierValue> namesList)
         {
-            EmitOnChanged(Logger, namesList);
+            EmitOnChanged(Logger, value);
         }
 
         void IOnRemoveParentStorageRealStorageContextHandler.Invoke(IStorage storage)
@@ -478,7 +476,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
         public void NRealStorageContext_OnRemoveParentStorage(IStorage storage)
         {
             var triggersStorage = storage.TriggersStorage;
-            triggersStorage.OnNamedTriggerInstanceChangedWithKeys -= TriggersStorage_OnNamedTriggerInstanceChangedWithKeys;
+            triggersStorage.RemoveOnNamedTriggerInstanceChangedWithKeysHandler(this);
 
             _parentTriggersStoragesList.Remove(triggersStorage);
         }
@@ -500,7 +498,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
         public void NRealStorageContext_OnAddParentStorage(IStorage storage)
         {
             var triggersStorage = storage.TriggersStorage;
-            triggersStorage.OnNamedTriggerInstanceChangedWithKeys += TriggersStorage_OnNamedTriggerInstanceChangedWithKeys;
+            triggersStorage.AddOnNamedTriggerInstanceChangedWithKeysHandler(this);
 
             _parentTriggersStoragesList.Add(triggersStorage);
         }
@@ -510,7 +508,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
         {
             foreach (var parentStorage in _parentTriggersStoragesList)
             {
-                parentStorage.OnNamedTriggerInstanceChangedWithKeys -= TriggersStorage_OnNamedTriggerInstanceChangedWithKeys;
+                parentStorage.RemoveOnNamedTriggerInstanceChangedWithKeysHandler(this);
             }
 
             foreach (var item in _namedTriggerInstancesList)

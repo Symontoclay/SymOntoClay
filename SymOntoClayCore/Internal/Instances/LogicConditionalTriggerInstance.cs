@@ -33,6 +33,7 @@ using SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors;
 using SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,6 +61,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _dateTimeProvider = _context.DateTimeProvider;
 
             _activeObjectContext = context.ActiveObjectContext;
+            _threadPool = context.AsyncEventsThreadPool;
             _serializationAnchor = new SerializationAnchor();
 
             var localCodeExecutionContext = new LocalCodeExecutionContext(parentCodeExecutionContext);
@@ -123,6 +125,7 @@ namespace SymOntoClay.Core.Internal.Instances
         private readonly IDateTimeProvider _dateTimeProvider;
 
         private IActiveObjectContext _activeObjectContext;
+        private ICustomThreadPool _threadPool;
         private SerializationAnchor _serializationAnchor;
 
         private readonly IExecutionCoordinator _executionCoordinator;
@@ -218,11 +221,19 @@ namespace SymOntoClay.Core.Internal.Instances
 
         void IOnChangedLogicConditionalTriggerObserverHandler.Invoke()
         {
-            LoggedSyncFunctorWithoutResult<LogicConditionalTriggerInstance>.Run(Logger, "F5C7D84D-770E-40D0-AE92-48E497F75A82", this,
+            lock (_lockObj)
+            {
+                if(_needRun)
+                {
+                    return;
+                }
+            }
+
+            LoggedFunctorWithoutResult<LogicConditionalTriggerInstance>.Run(Logger, "F5C7D84D-770E-40D0-AE92-48E497F75A82", this,
                 (IMonitorLogger loggerValue, LogicConditionalTriggerInstance instanceValue) => {
                     instanceValue.NObserver_OnChanged();
                 },
-                _activeObjectContext, _serializationAnchor);
+                _activeObjectContext, _threadPool, _serializationAnchor);
         }
 
         public void NObserver_OnChanged()

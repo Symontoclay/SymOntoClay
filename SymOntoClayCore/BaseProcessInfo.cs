@@ -589,11 +589,11 @@ namespace SymOntoClay.Core
 
         void IOnFinishProcessInfoHandler.Invoke(IProcessInfo sender)
         {
-            LoggedSyncFunctorWithoutResult<BaseProcessInfo, IProcessInfo>.Run(_logger, "54EEC6FF-3764-4F05-A28A-158B48FB2309", this, sender,
+            LoggedFunctorWithoutResult<BaseProcessInfo, IProcessInfo>.Run(_logger, "54EEC6FF-3764-4F05-A28A-158B48FB2309", this, sender,
                 (IMonitorLogger loggerValue, BaseProcessInfo instanceValue, IProcessInfo senderValue) => {
                     instanceValue.NProcessInfoOnFinish(senderValue);
                 },
-                _activeObjectContext, _serializationAnchor);
+                _activeObjectContext, _threadPool, _serializationAnchor);
         }
 
         public void NProcessInfoOnFinish(IProcessInfo processInfo)

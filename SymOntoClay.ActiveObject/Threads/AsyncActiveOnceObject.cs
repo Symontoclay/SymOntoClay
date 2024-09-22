@@ -80,7 +80,7 @@ namespace SymOntoClay.ActiveObject.Threads
         {
             lock (_onCompletedHandlersLockObj)
             {
-                foreach (var handler in _onCompletedHandlers)
+                foreach (var handler in _onCompletedHandlers.ToArray())
                 {
                     handler.Invoke();
                 }

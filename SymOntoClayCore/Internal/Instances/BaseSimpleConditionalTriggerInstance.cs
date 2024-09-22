@@ -31,6 +31,7 @@ using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -68,6 +69,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _searchOptions.LocalCodeExecutionContext = _localCodeExecutionContext;
 
             _activeObjectContext = context.ActiveObjectContext;
+            _threadPool = context.AsyncEventsThreadPool;
             _serializationAnchor = new SerializationAnchor();
 
             _activeObject = new AsyncActivePeriodicObject(context.ActiveObjectContext, context.TriggersThreadPool, Logger);
@@ -92,6 +94,7 @@ namespace SymOntoClay.Core.Internal.Instances
         //private bool _needRepeat;
 
         private IActiveObjectContext _activeObjectContext;
+        private ICustomThreadPool _threadPool;
         private SerializationAnchor _serializationAnchor;
 
         private IActivePeriodicObject _activeObject;
@@ -122,11 +125,11 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void LogicalStorage_OnChanged()
         {
-            LoggedSyncFunctorWithoutResult<BaseSimpleConditionalTriggerInstance>.Run(Logger, "3F83EE57-5F84-4B5E-9C7A-BAC8D4F225AC", this,
+            LoggedFunctorWithoutResult<BaseSimpleConditionalTriggerInstance>.Run(Logger, "3F83EE57-5F84-4B5E-9C7A-BAC8D4F225AC", this,
                 (IMonitorLogger loggerValue, BaseSimpleConditionalTriggerInstance instanceValue) => {
                     instanceValue.NLogicalStorage_OnChanged();
                 },
-                _activeObjectContext, _serializationAnchor);
+                _activeObjectContext, _threadPool, _serializationAnchor);
         }
 
         public void NLogicalStorage_OnChanged()

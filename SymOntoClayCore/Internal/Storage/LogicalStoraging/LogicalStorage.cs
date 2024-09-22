@@ -33,6 +33,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +51,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             : base(kind, realStorageContext)
         {
             _activeObjectContext = _mainStorageContext.ActiveObjectContext;
+            _threadPool = _mainStorageContext.AsyncEventsThreadPool;
             _serializationAnchor = new SerializationAnchor();
 
             var logger = _mainStorageContext.Logger;
@@ -122,6 +124,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         private List<ILogicalStorage> _parentLogicalStoragesList = new List<ILogicalStorage>();
 
         private IActiveObjectContext _activeObjectContext;
+        private ICustomThreadPool _threadPool;
         private SerializationAnchor _serializationAnchor;
 
         private AsyncActivePeriodicObject _activeObject;
@@ -621,11 +624,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private void RealStorageContext_OnAddParentStorage(IStorage storage)
         {
-            LoggedSyncFunctorWithoutResult<LogicalStorage, IStorage>.Run(Logger, "B0A51B85-F56B-4A35-A310-6616A97899DB", this, storage,
+            LoggedFunctorWithoutResult<LogicalStorage, IStorage>.Run(Logger, "B0A51B85-F56B-4A35-A310-6616A97899DB", this, storage,
                 (IMonitorLogger loggerValue, LogicalStorage instanceValue, IStorage storageValue) => {
                     instanceValue.NRealStorageContext_OnAddParentStorage(storageValue);
                 },
-                _activeObjectContext, _serializationAnchor);
+                _activeObjectContext, _threadPool, _serializationAnchor);
         }
 
         public void NRealStorageContext_OnAddParentStorage(IStorage storage)
@@ -645,11 +648,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private void RealStorageContext_OnRemoveParentStorage(IStorage storage)
         {
-            LoggedSyncFunctorWithoutResult<LogicalStorage, IStorage>.Run(Logger, "1A999A30-68D4-4166-99FE-A02569B22854", this, storage,
+            LoggedFunctorWithoutResult<LogicalStorage, IStorage>.Run(Logger, "1A999A30-68D4-4166-99FE-A02569B22854", this, storage,
                 (IMonitorLogger loggerValue, LogicalStorage instanceValue, IStorage storageValue) => {
                     instanceValue.NRealStorageContext_OnRemoveParentStorage(storageValue);
                 },
-                _activeObjectContext, _serializationAnchor);
+                _activeObjectContext, _threadPool, _serializationAnchor);
         }
 
         public void NRealStorageContext_OnRemoveParentStorage(IStorage storage)

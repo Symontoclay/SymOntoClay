@@ -43,10 +43,12 @@ using SymOntoClay.Core.Internal.Storage.SynonymsStoraging;
 using SymOntoClay.Core.Internal.Storage.TriggersStoraging;
 using SymOntoClay.Core.Internal.Storage.VarStoraging;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Storage
 {
@@ -56,6 +58,7 @@ namespace SymOntoClay.Core.Internal.Storage
             : base(settings.MainStorageContext.Logger)
         {
             _activeObjectContext = settings.MainStorageContext.ActiveObjectContext;
+            _threadPool = settings.MainStorageContext.AsyncEventsThreadPool;
             _serializationAnchor = new SerializationAnchor();
 
             _kind = kind;
@@ -130,6 +133,7 @@ namespace SymOntoClay.Core.Internal.Storage
         }
 
         private IActiveObjectContext _activeObjectContext;
+        private ICustomThreadPool _threadPool;
         private SerializationAnchor _serializationAnchor;
 
         private KindOfStorage _kind;
@@ -267,11 +271,11 @@ namespace SymOntoClay.Core.Internal.Storage
 
         private void OnParentStorageChangedHandler()
         {
-            LoggedSyncFunctorWithoutResult<RealStorage>.Run(Logger, "B941A0F5-D2A1-4DEB-A588-5E379E867FA2", this,
+            LoggedFunctorWithoutResult<RealStorage>.Run(Logger, "B941A0F5-D2A1-4DEB-A588-5E379E867FA2", this,
                 (IMonitorLogger loggerValue, RealStorage instanceValue) => {
                     instanceValue.NOnParentStorageChangedHandler();
                 },
-                _activeObjectContext, _serializationAnchor);
+                _activeObjectContext, _threadPool, _serializationAnchor);
         }
 
         public void NOnParentStorageChangedHandler()

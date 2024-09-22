@@ -33,10 +33,12 @@ using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
@@ -55,6 +57,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _parentStorage = parentStorage;
 
             _activeObjectContext = context.ActiveObjectContext;
+            _threadPool = context.AsyncEventsThreadPool;
             _serializationAnchor = new SerializationAnchor();
 
             var dataResolversFactory = context.DataResolversFactory;
@@ -68,7 +71,7 @@ namespace SymOntoClay.Core.Internal.Instances
             _executionCoordinator = new ExecutionCoordinator(this);
             _executionCoordinator.AddOnFinishedHandler(this);
 
-            _baseInstanceParentExecutionCoordinatorOnFinishedHandler = new BaseInstanceParentExecutionCoordinatorOnFinishedHandler(Logger, _executionCoordinator, _activeObjectContext, _serializationAnchor);
+            _baseInstanceParentExecutionCoordinatorOnFinishedHandler = new BaseInstanceParentExecutionCoordinatorOnFinishedHandler(Logger, _executionCoordinator, _activeObjectContext, _threadPool, _serializationAnchor);
 
             _parentExecutionCoordinator = parentExecutionCoordinator;
 
@@ -115,6 +118,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private IActiveObjectContext _activeObjectContext;
         private SerializationAnchor _serializationAnchor;
+        protected ICustomThreadPool _threadPool;
 
         protected readonly IEngineContext _context;
         private readonly ITriggersStorage _globalTriggersStorage;
@@ -531,11 +535,11 @@ namespace SymOntoClay.Core.Internal.Instances
 
         void IOnFinishedExecutionCoordinatorHandler.Invoke()
         {
-            LoggedSyncFunctorWithoutResult<BaseInstance>.Run(Logger, "F79DC0DC-545C-4664-8530-71CBC0B20E77", this,
+            LoggedFunctorWithoutResult<BaseInstance>.Run(Logger, "F79DC0DC-545C-4664-8530-71CBC0B20E77", this,
                 (IMonitorLogger loggerValue, BaseInstance instanceValue) => {
                     instanceValue.ExecutionCoordinator_OnFinished();
                 },
-                _activeObjectContext, _serializationAnchor);
+                _activeObjectContext, _threadPool, _serializationAnchor);
         }
 
         public virtual void ExecutionCoordinator_OnFinished()

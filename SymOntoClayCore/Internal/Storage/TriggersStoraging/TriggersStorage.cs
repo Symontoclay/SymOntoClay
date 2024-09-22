@@ -28,9 +28,11 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 {
@@ -42,6 +44,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
             : base(kind, realStorageContext)
         {
             _activeObjectContext = _mainStorageContext.ActiveObjectContext;
+            _threadPool = _mainStorageContext.AsyncEventsThreadPool;
             _serializationAnchor = new SerializationAnchor();
 
             _parentTriggersStoragesList = realStorageContext.Parents.Select(p => p.TriggersStorage).ToList();
@@ -56,6 +59,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
         }
 
         private IActiveObjectContext _activeObjectContext;
+        private ICustomThreadPool _threadPool;
         private SerializationAnchor _serializationAnchor;
 
         private readonly object _lockObj = new object();
@@ -466,11 +470,11 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
         private void RealStorageContext_OnRemoveParentStorage(IStorage storage)
         {
-            LoggedSyncFunctorWithoutResult<TriggersStorage, IStorage>.Run(Logger, "CE9E5E18-3D8B-47B7-874C-FD1E6F985354", this, storage,
+            LoggedFunctorWithoutResult<TriggersStorage, IStorage>.Run(Logger, "CE9E5E18-3D8B-47B7-874C-FD1E6F985354", this, storage,
                 (IMonitorLogger loggerValue, TriggersStorage instanceValue, IStorage storageValue) => {
                     instanceValue.NRealStorageContext_OnRemoveParentStorage(storageValue);
                 },
-                _activeObjectContext, _serializationAnchor);
+                _activeObjectContext, _threadPool, _serializationAnchor);
         }
 
         public void NRealStorageContext_OnRemoveParentStorage(IStorage storage)
@@ -488,11 +492,11 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
         private void RealStorageContext_OnAddParentStorage(IStorage storage)
         {
-            LoggedSyncFunctorWithoutResult<TriggersStorage, IStorage>.Run(Logger, "403E1946-20F0-40DD-B587-C17B408BA842", this, storage,
+            LoggedFunctorWithoutResult<TriggersStorage, IStorage>.Run(Logger, "403E1946-20F0-40DD-B587-C17B408BA842", this, storage,
                 (IMonitorLogger loggerValue, TriggersStorage instanceValue, IStorage storageValue) => {
                     instanceValue.NRealStorageContext_OnAddParentStorage(storageValue);
                 },
-                _activeObjectContext, _serializationAnchor);
+                _activeObjectContext, _threadPool, _serializationAnchor);
         }
 
         public void NRealStorageContext_OnAddParentStorage(IStorage storage)

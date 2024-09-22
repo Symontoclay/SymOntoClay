@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Common;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -41,7 +42,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         bool IsFinished { get; }
         RuleInstance RuleInstance { get; set; }
 
-        [Obsolete("Serialization Refactoring", true)] event Action OnFinished;
+        void AddOnFinishedHandler(IOnFinishedExecutionCoordinatorHandler handler);
+        void RemoveOnFinishedHandler(IOnFinishedExecutionCoordinatorHandler handler);
 
         void AddProcessInfo(IProcessInfo processInfo);
     }

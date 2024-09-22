@@ -63,7 +63,7 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        protected override void ExecutionCoordinator_OnFinished()
+        public override void ExecutionCoordinator_OnFinished()
         {
             EmitOnStateInstanceFinishedHandlers(this);
 

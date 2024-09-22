@@ -20,20 +20,18 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using Newtonsoft.Json.Linq;
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeExecution.Helpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
@@ -121,7 +119,7 @@ namespace SymOntoClay.Core.Internal.Instances
                             }
                         }
 
-                        InternalOnFinish?.Invoke();
+                        EmitOnFinishedHandlers();
                     }
                 }
             }
@@ -164,25 +162,49 @@ namespace SymOntoClay.Core.Internal.Instances
         private RuleInstance _ruleInstance;
 
         /// <inheritdoc/>
-        [Obsolete("Serialization Refactoring", true)] public event Action OnFinished
+        public void AddOnFinishedHandler(IOnFinishedExecutionCoordinatorHandler handler)
         {
-            add
+            lock(_onFinishedHandlersLockObj)
             {
-                InternalOnFinish += value;
+                if (_onFinishedHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onFinishedHandlers.Add(handler);
 
                 if (_isFinished)
                 {
-                    InternalOnFinish?.Invoke();
+                    handler.Invoke();
                 }
-            }
-
-            remove
-            {
-                InternalOnFinish -= value;
             }
         }
 
-        [Obsolete("Serialization Refactoring", true)] private event Action InternalOnFinish;
+        /// <inheritdoc/>
+        public void RemoveOnFinishedHandler(IOnFinishedExecutionCoordinatorHandler handler)
+        {
+            lock (_onFinishedHandlersLockObj)
+            {
+                if(_onFinishedHandlers.Contains(handler))
+                {
+                    _onFinishedHandlers.Remove(handler);
+                }
+            }
+        }
+
+        private void EmitOnFinishedHandlers()
+        {
+            lock (_onFinishedHandlersLockObj)
+            {
+                foreach (var handler in _onFinishedHandlers)
+                {
+                    handler.Invoke();
+                }
+            }
+        }
+
+        private object _onFinishedHandlersLockObj = new object();
+        private List<IOnFinishedExecutionCoordinatorHandler> _onFinishedHandlers = new List<IOnFinishedExecutionCoordinatorHandler>();
 
         /// <inheritdoc/>
         public void AddProcessInfo(IProcessInfo processInfo)

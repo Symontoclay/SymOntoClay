@@ -2,6 +2,7 @@
 {
     public interface ISerializationContext: ISerializedObjectsPool
     {
-        string DirName { get; }
+        string HeapDirName { get; }
+        string RootDirName { get; }
     }
 }

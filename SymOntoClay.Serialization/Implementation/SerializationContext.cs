@@ -21,7 +21,7 @@ namespace SymOntoClay.Serialization.Implementation
         }
 
         private string _dirName;
-        private Dictionary<object, ObjectPtr> _serializedObjects = new Dictionary<object, ObjectPtr>();
+        private SerializedObjectsPool _serializedObjectsPool = new SerializedObjectsPool();
 
         /// <inheritdoc/>
         public string DirName => _dirName;
@@ -29,19 +29,19 @@ namespace SymOntoClay.Serialization.Implementation
         /// <inheritdoc/>
         public bool IsSerialized(object obj)
         {
-            return _serializedObjects.ContainsKey(obj);
+            return _serializedObjectsPool.IsSerialized(obj);
         }
 
         /// <inheritdoc/>
         public bool TryGetObjectPtr(object obj, out ObjectPtr objectPtr)
         {
-            return _serializedObjects.TryGetValue(obj, out objectPtr);
+            return _serializedObjectsPool.TryGetObjectPtr(obj, out objectPtr);
         }
 
         /// <inheritdoc/>
         public void RegObjectPtr(object obj, ObjectPtr objectPtr)
         {
-            _serializedObjects[obj] = objectPtr;
+            _serializedObjectsPool.RegObjectPtr(obj, objectPtr);
         }
     }
 }

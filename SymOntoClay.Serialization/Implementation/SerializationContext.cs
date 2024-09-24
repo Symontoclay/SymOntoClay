@@ -7,27 +7,48 @@ namespace SymOntoClay.Serialization.Implementation
     public class SerializationContext : ISerializationContext
     {
         public SerializationContext(string dirName)
+            : this(dirName, dirName, true, new SerializedObjectsPool())
         {
-            //_dirName = Path.Combine(Directory.GetCurrentDirectory(), Guid.NewGuid().ToString("D"));
-
-            _dirName = dirName;
-
-            if(Directory.Exists(_dirName))
-            {
-                Directory.Delete(_dirName, true);
-            }
-
-            Directory.CreateDirectory(_dirName);
         }
 
-        private string _dirName;
-        private SerializedObjectsPool _serializedObjectsPool = new SerializedObjectsPool();
+        public SerializationContext(string heapDirName, string rootDirName, ISerializedObjectsPool serializedObjectsPool)
+            : this(heapDirName, rootDirName, true, serializedObjectsPool)
+        {
+        }
+
+        public SerializationContext(string heapDirName, string rootDirName, bool checkDirectories, ISerializedObjectsPool serializedObjectsPool)
+        {
+            _heapDirName = heapDirName;
+            _rootDirName = rootDirName;
+
+            if(checkDirectories)
+            {
+                CheckDirectory(heapDirName);
+                CheckDirectory(rootDirName);
+            }
+
+            _serializedObjectsPool = serializedObjectsPool;
+        }
+
+        private void CheckDirectory(string dirName)
+        {
+            if (Directory.Exists(dirName))
+            {
+                Directory.Delete(dirName, true);
+            }
+
+            Directory.CreateDirectory(dirName);
+        }
+
+        private string _heapDirName;
+        private string _rootDirName;
+        private ISerializedObjectsPool _serializedObjectsPool;
 
         /// <inheritdoc/>
-        public string HeapDirName => _dirName;
+        public string HeapDirName => _heapDirName;
 
         /// <inheritdoc/>
-        public string RootDirName => _dirName;
+        public string RootDirName => _rootDirName;
 
         /// <inheritdoc/>
         public bool IsSerialized(object obj)

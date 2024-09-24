@@ -8,22 +8,33 @@ namespace SymOntoClay.Serialization.Implementation
         private static ILogger _logger = LogManager.GetCurrentClassLogger();
 
         public DeserializationContext(string dirName)
+            : this(dirName, dirName, new DeserializedObjectPool())
         {
-            _dirName = dirName;
-
-#if DEBUG
-            _logger.Info($"_dirName = {_dirName}");
-#endif
         }
 
-        private string _dirName;
-        private DeserializedObjectPool _deserializedObjectPool = new DeserializedObjectPool();
+        public DeserializationContext(string heapDirName, string rootDirName, IDeserializedObjectPool deserializedObjectPool)
+        {
+#if DEBUG
+            _logger.Info($"heapDirName = {heapDirName}");
+            _logger.Info($"rootDirName = {rootDirName}");
+#endif
+
+            _heapDirName = heapDirName;
+            _rootDirName = rootDirName;
+
+            _deserializedObjectPool = deserializedObjectPool;
+        }
+
+        private string _heapDirName;
+        private string _rootDirName;
+
+        private IDeserializedObjectPool _deserializedObjectPool;
 
         /// <inheritdoc/>
-        public string HeapDirName => _dirName;
+        public string HeapDirName => _heapDirName;
 
         /// <inheritdoc/>
-        public string RootDirName => _dirName;
+        public string RootDirName => _rootDirName;
 
         /// <inheritdoc/>
         public bool TryGetDeserializedObject(string instanceId, out object instance)

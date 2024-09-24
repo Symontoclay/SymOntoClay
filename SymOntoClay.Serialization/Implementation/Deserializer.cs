@@ -23,7 +23,7 @@ namespace SymOntoClay.Serialization.Implementation
         /// <inheritdoc/>
         public T Deserialize<T>()
         {
-            var rootFileFullName = Path.Combine(_deserializationContext.DirName, "root.json");
+            var rootFileFullName = Path.Combine(_deserializationContext.RootDirName, "root.json");
 
 #if DEBUG
             _logger.Info($"rootFileFullName = {rootFileFullName}");
@@ -83,7 +83,7 @@ namespace SymOntoClay.Serialization.Implementation
 
             var fileName = $"{objectPtr.Id}.json";
 
-            var fullFileName = Path.Combine(_deserializationContext.DirName, fileName);
+            var fullFileName = Path.Combine(_deserializationContext.HeapDirName, fileName);
 
 #if DEBUG
             _logger.Info($"fullFileName = {fullFileName}");

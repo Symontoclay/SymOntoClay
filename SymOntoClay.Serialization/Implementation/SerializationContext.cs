@@ -24,7 +24,10 @@ namespace SymOntoClay.Serialization.Implementation
         private SerializedObjectsPool _serializedObjectsPool = new SerializedObjectsPool();
 
         /// <inheritdoc/>
-        public string DirName => _dirName;
+        public string HeapDirName => _dirName;
+
+        /// <inheritdoc/>
+        public string RootDirName => _dirName;
 
         /// <inheritdoc/>
         public bool IsSerialized(object obj)

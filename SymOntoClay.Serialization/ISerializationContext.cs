@@ -1,8 +1,6 @@
 ﻿namespace SymOntoClay.Serialization
 {
-    public interface ISerializationContext: ISerializedObjectsPool
+    public interface ISerializationContext: ISerializedObjectsPool, ISerializationDirs
     {
-        string HeapDirName { get; }
-        string RootDirName { get; }
     }
 }

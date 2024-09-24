@@ -17,21 +17,24 @@ namespace SymOntoClay.Serialization.Implementation
         }
 
         private string _dirName;
-        private Dictionary<string, object> _deserializedObject = new Dictionary<string, object>();
+        private DeserializedObjectPool _deserializedObjectPool = new DeserializedObjectPool();
 
         /// <inheritdoc/>
-        public string DirName => _dirName;
+        public string HeapDirName => _dirName;
+
+        /// <inheritdoc/>
+        public string RootDirName => _dirName;
 
         /// <inheritdoc/>
         public bool TryGetDeserializedObject(string instanceId, out object instance)
         {
-            return _deserializedObject.TryGetValue(instanceId, out instance);
+            return _deserializedObjectPool.TryGetDeserializedObject(instanceId, out instance);
         }
 
         /// <inheritdoc/>
         public void RegDeserializedObject(string instanceId, object instance)
         {
-            _deserializedObject[instanceId] = instance;
+            _deserializedObjectPool.RegDeserializedObject(instanceId, instance);
         }
     }
 }

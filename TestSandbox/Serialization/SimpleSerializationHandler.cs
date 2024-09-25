@@ -15,8 +15,8 @@ namespace TestSandbox.Serialization
         {
             _logger.Info("Begin");
 
-            //Deserialize();
-            Serialize();
+            Deserialize();
+            //Serialize();
 
             _logger.Info("End");
         }

@@ -100,6 +100,9 @@ namespace SymOntoClay.Serialization.Implementation
 
             switch(type.FullName)
             {
+                case "System.Object":
+                    return NDeserializeBareObject(objectPtr);
+
                 case "System.Threading.CancellationTokenSource":
                     throw new NotImplementedException("22670DE5-19C5-44C8-896E-EC945E977DCA");
 
@@ -226,6 +229,15 @@ namespace SymOntoClay.Serialization.Implementation
 #endif
 
             return type.GetInterfaces().Any(p => p == typeof(ISerializable));
+        }
+
+        private object NDeserializeBareObject(ObjectPtr objectPtr)
+        {
+            var instance = new object();
+
+            _deserializationContext.RegDeserializedObject(objectPtr.Id, instance);
+
+            return instance;
         }
 
         private object NDeserializeGenericList(Type type, ObjectPtr objectPtr, string fullFileName)

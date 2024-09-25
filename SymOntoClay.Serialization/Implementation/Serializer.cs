@@ -81,6 +81,9 @@ namespace SymOntoClay.Serialization.Implementation
 
                 switch (type.FullName)
                 {
+                    case "System.Object":
+                        return NSerializeBareObject(obj);
+
                     case "System.Threading.CancellationTokenSource":
                         throw new NotImplementedException("C8501866-C633-49CC-B3B0-237E116B7B3F");
 
@@ -101,6 +104,33 @@ namespace SymOntoClay.Serialization.Implementation
             {
                 return NSerialize(serializable);
             }
+        }
+
+        private ObjectPtr NSerializeBareObject(object obj)
+        {
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, obj.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(obj, objectPtr);
+
+            var plainObject = new object();
+
+#if DEBUG
+            _logger.Info($"plainObject = {plainObject}");
+#endif
+
+            WriteToFile(plainObject, instanceId);
+
+            return objectPtr;
         }
 
         private ObjectPtr NSerializeGenericList(IEnumerable enumerable)

@@ -11,6 +11,8 @@ namespace TestSandbox.Serialization
     {
         public int IntField;
 
+        private object _lockObj = new object();
+
         /// <inheritdoc/>
         public override string ToString()
         {

@@ -28,6 +28,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Serialization;
 using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core.Internal.DateAndTime;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
@@ -47,7 +48,8 @@ using System.Threading;
 
 namespace SymOntoClay.UnityAsset.Core.Internal
 {
-    public class WorldContext: IWorldCoreContext, IWorldCoreGameComponentContext, ISymOntoClayDisposable
+    [SocSerialization]
+    public partial class WorldContext: IWorldCoreContext, IWorldCoreGameComponentContext, ISymOntoClayDisposable
     {
         public void SetSettings(WorldSettings settings)
         {
@@ -203,8 +205,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         ILogicQueryParseAndCache IWorldCoreGameComponentContext.LogicQueryParseAndCache => LogicQueryParseAndCache;
         ILogicQueryParseAndCache IWorldCoreContext.LogicQueryParseAndCache => LogicQueryParseAndCache;
 
-        private readonly object _worldComponentsListLockObj = new object();
-        private readonly List<IWorldCoreComponent> _worldComponentsList = new List<IWorldCoreComponent>();
+        private object _worldComponentsListLockObj = new object();
+        private List<IWorldCoreComponent> _worldComponentsList = new List<IWorldCoreComponent>();
 
         /// <inheritdoc/>
         void IWorldCoreContext.AddWorldComponent(IWorldCoreComponent component)
@@ -220,13 +222,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             }
         }
 
-        private readonly object _gameComponentsListLockObj = new object();
-        private readonly List<IGameComponent> _gameComponentsList = new List<IGameComponent>();
-        private readonly List<int> _availableInstanceIdList = new List<int>();
-        private readonly Dictionary<int, IGameComponent> _gameComponentsDictByInstanceId = new Dictionary<int, IGameComponent>();
-        private readonly Dictionary<string, int> _instancesIdDict = new Dictionary<string, int>();
+        private object _gameComponentsListLockObj = new object();
+        private List<IGameComponent> _gameComponentsList = new List<IGameComponent>();
+        private List<int> _availableInstanceIdList = new List<int>();
+        private Dictionary<int, IGameComponent> _gameComponentsDictByInstanceId = new Dictionary<int, IGameComponent>();
+        private Dictionary<string, int> _instancesIdDict = new Dictionary<string, int>();
 
-        private readonly List<IGameComponent> _gameComponentsForLateInitializingList = new List<IGameComponent>();
+        private List<IGameComponent> _gameComponentsForLateInitializingList = new List<IGameComponent>();
 
         /// <inheritdoc/>
         void IWorldCoreGameComponentContext.AddGameComponent(IGameComponent component)
@@ -505,7 +507,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         }
 
         private ComponentState _state = ComponentState.Created;
-        private readonly object _stateLockObj = new object();
+        private object _stateLockObj = new object();
 
         /// <inheritdoc/>
         public bool IsDisposed

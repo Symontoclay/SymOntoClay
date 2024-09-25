@@ -24,6 +24,7 @@ using SymOntoClay.ActiveObject.MethodResponses;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Serialization;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.InternalImplementations;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.GameObject;
@@ -35,7 +36,8 @@ using System.Collections.Generic;
 
 namespace SymOntoClay.UnityAsset.Core.World
 {
-    public class WorldCore
+    [SocSerialization]
+    public partial class WorldCore
     {
         #region constructors
         public WorldCore()
@@ -225,9 +227,9 @@ namespace SymOntoClay.UnityAsset.Core.World
         #endregion
 
         #region private members
-        private readonly object _lockObj = new object();
+        private object _lockObj = new object();
 
-        private readonly WorldContext _context;
+        private WorldContext _context;
 
         private void AddToDeferredInitialization(IDeferredInitialized deferredInitialized)
         {

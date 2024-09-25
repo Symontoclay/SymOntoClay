@@ -41,7 +41,7 @@ namespace SymOntoClay.Serialization.Implementation
 
             var fileName = $"root.json";
 
-            var fullFileName = Path.Combine(_serializationContext.DirName, fileName);
+            var fullFileName = Path.Combine(_serializationContext.RootDirName, fileName);
 
 #if DEBUG
             _logger.Info($"fullFileName = {fullFileName}");
@@ -292,7 +292,7 @@ namespace SymOntoClay.Serialization.Implementation
         {
             var fileName = $"{instanceId}.json";
 
-            var fullFileName = Path.Combine(_serializationContext.DirName, fileName);
+            var fullFileName = Path.Combine(_serializationContext.HeapDirName, fileName);
 
 #if DEBUG
             _logger.Info($"fullFileName = {fullFileName}");

@@ -8,30 +8,44 @@ namespace SymOntoClay.Serialization.Implementation
         private static ILogger _logger = LogManager.GetCurrentClassLogger();
 
         public DeserializationContext(string dirName)
+            : this(dirName, dirName, new DeserializedObjectPool())
         {
-            _dirName = dirName;
-
-#if DEBUG
-            _logger.Info($"_dirName = {_dirName}");
-#endif
         }
 
-        private string _dirName;
-        private Dictionary<string, object> _deserializedObject = new Dictionary<string, object>();
+        public DeserializationContext(string heapDirName, string rootDirName, IDeserializedObjectPool deserializedObjectPool)
+        {
+#if DEBUG
+            _logger.Info($"heapDirName = {heapDirName}");
+            _logger.Info($"rootDirName = {rootDirName}");
+#endif
+
+            _heapDirName = heapDirName;
+            _rootDirName = rootDirName;
+
+            _deserializedObjectPool = deserializedObjectPool;
+        }
+
+        private string _heapDirName;
+        private string _rootDirName;
+
+        private IDeserializedObjectPool _deserializedObjectPool;
 
         /// <inheritdoc/>
-        public string DirName => _dirName;
+        public string HeapDirName => _heapDirName;
+
+        /// <inheritdoc/>
+        public string RootDirName => _rootDirName;
 
         /// <inheritdoc/>
         public bool TryGetDeserializedObject(string instanceId, out object instance)
         {
-            return _deserializedObject.TryGetValue(instanceId, out instance);
+            return _deserializedObjectPool.TryGetDeserializedObject(instanceId, out instance);
         }
 
         /// <inheritdoc/>
         public void RegDeserializedObject(string instanceId, object instance)
         {
-            _deserializedObject[instanceId] = instance;
+            _deserializedObjectPool.RegDeserializedObject(instanceId, instance);
         }
     }
 }

@@ -1,9 +1,6 @@
 ﻿namespace SymOntoClay.Serialization
 {
-    public interface IDeserializationContext
+    public interface IDeserializationContext: IDeserializedObjectPool, ISerializationDirs
     {
-        string DirName { get; }
-        bool TryGetDeserializedObject(string instanceId, out object instance);
-        void RegDeserializedObject(string instanceId, object instance);
     }
 }

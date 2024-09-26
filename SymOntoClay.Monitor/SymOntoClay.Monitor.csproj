@@ -10,6 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SymOntoClay.Monitor.Common.Data\SymOntoClay.Monitor.Common.Data.csproj" />
     <ProjectReference Include="..\SymOntoClay.Monitor.Common\SymOntoClay.Monitor.Common.csproj" />
+    <ProjectReference Include="..\SymOntoClay.Serializable.CoreHelper\SymOntoClay.Serializable.CoreHelper.csproj" />
     <ProjectReference Include="..\SymOntoClayCoreHelper\SymOntoClayCoreHelper.csproj" />
   </ItemGroup>
 

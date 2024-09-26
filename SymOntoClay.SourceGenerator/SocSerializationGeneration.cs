@@ -155,6 +155,16 @@ namespace SymOntoClay.SourceGenerator
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}/// <inheritdoc/>");
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}string IObjectToString.PropertiesToString(uint n)");
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}{{");
+            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentIdentation)}return PropertiesToString(n);");
+            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}}}");
+
+            if(hasBaseType)
+            {
+                sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}/// <inheritdoc/>");
+            }
+
+            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}protected {(hasBaseType ? "override" : "virtual")} string PropertiesToString(uint n)");
+            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}{{");
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentIdentation)}var spaces = DisplayHelper.Spaces(n);");
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentIdentation)}var sb = new StringBuilder();");
             foreach (var propertyItem in propertyItems)

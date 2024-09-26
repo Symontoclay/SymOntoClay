@@ -20,60 +20,57 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.Monitor.Common;
-using SymOntoClay.Monitor.Internal.FileCache;
-using SymOntoClay.Monitor.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using SymOntoClay.Monitor.Common.Data;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using System.Reflection;
-using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
-using System.Threading;
 using SymOntoClay.Common.Disposing;
+using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
+using SymOntoClay.Monitor.Common.Data;
+using SymOntoClay.Monitor.Common.Models;
+using SymOntoClay.Monitor.Internal;
+using SymOntoClay.Monitor.Internal.FileCache;
 using SymOntoClay.Threading;
+using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading;
 
 namespace SymOntoClay.Monitor
 {
-    public class Monitor : Disposable, IMonitorLoggerContext, IMonitorFeatures, IMonitor
+    public partial class Monitor : Disposable, IMonitorLoggerContext, IMonitorFeatures, IMonitor
     {
 #if DEBUG
         //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        private readonly MonitorContext _monitorContext;
-        private readonly IRemoteMonitor _remoteMonitor;
-        private readonly MessageProcessor _messageProcessor;
-        private readonly MonitorFeatures _features;
-        private readonly MonitorFileCache _fileCache;
+        private MonitorContext _monitorContext;
+        private IRemoteMonitor _remoteMonitor;
+        private MessageProcessor _messageProcessor;
+        private MonitorFeatures _features;
+        private MonitorFileCache _fileCache;
 
-        private readonly CancellationTokenSource _cancellationTokenSource;
-        private readonly CancellationTokenSource _linkedCancellationTokenSource;
+        private CancellationTokenSource _cancellationTokenSource;
+        private CancellationTokenSource _linkedCancellationTokenSource;
 
-        private readonly ICustomThreadPool _threadPool;
+        private ICustomThreadPool _threadPool;
 
-        private readonly MessageNumberGenerator _globalMessageNumberGenerator;
-        private readonly MessageNumberGenerator _messageNumberGenerator = new MessageNumberGenerator();
+        private MessageNumberGenerator _globalMessageNumberGenerator;
+        private MessageNumberGenerator _messageNumberGenerator = new MessageNumberGenerator();
 
-        private readonly IDictionary<string, BaseMonitorSettings> _nodesSettings;
-        private readonly bool _enableOnlyDirectlySetUpNodes;
+        private IDictionary<string, BaseMonitorSettings> _nodesSettings;
+        private bool _enableOnlyDirectlySetUpNodes;
 
-        private readonly MonitorLogger _monitorLoggerImpl;
+        private MonitorLogger _monitorLoggerImpl;
 
-        private readonly BaseMonitorSettings _baseMonitorSettings;
+        private BaseMonitorSettings _baseMonitorSettings;
 
-        private readonly bool _TopSysEnable = true;
+        private bool _TopSysEnable = true;
 
         /// <inheritdoc/>
         public string Id => "monitor_core";
 
-        private readonly string _sessionName;
+        private string _sessionName;
 
         public Monitor(MonitorSettings monitorSettings)
         {

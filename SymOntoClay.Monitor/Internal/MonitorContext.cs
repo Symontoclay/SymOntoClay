@@ -22,26 +22,29 @@ SOFTWARE.*/
 
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Internal.FileCache;
+using SymOntoClay.Serialization;
 using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.Internal
 {
-    public class MonitorContext : IObjectToString
+    public partial class MonitorContext : IObjectToString
     {
         public MonitorFeatures Features { get; set; }
         public MonitorFileCache FileCache { get; set; }
         public MessageProcessor MessageProcessor { get; set; }
         public MessageNumberGenerator GlobalMessageNumberGenerator { get; set; } = new MessageNumberGenerator();
+
+        [Obsolete("Serialization Refactoring", true)]
         public Action<string> OutputHandler { get; set; }
+
+        [Obsolete("Serialization Refactoring", true)]
         public Action<string> ErrorHandler { get; set; }
 
         public BaseMonitorSettings Settings { get; set; }

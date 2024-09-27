@@ -32,7 +32,10 @@ namespace SymOntoClay.Monitor.Internal
 {
     public interface IMonitorLoggerContext
     {
+        [Obsolete("Serialization Refactoring", true)]
         Action<string> OutputHandler { get; }
+
+        [Obsolete("Serialization Refactoring", true)]
         Action<string> ErrorHandler { get; }
         MessageProcessor MessageProcessor { get; }
         IMonitorFeatures Features { get; }

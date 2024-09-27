@@ -1,11 +1,11 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CodeAnalysis.Text;
-using Microsoft.CodeAnalysis;
-using System.Collections.Generic;
-using System.Text;
-using System;
-using System.Linq;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Text;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace SymOntoClay.SourceGenerator
 {
@@ -122,7 +122,7 @@ namespace SymOntoClay.SourceGenerator
             sourceCodeBuilder.AppendLine();
             sourceCodeBuilder.AppendLine($"namespace {targetClassItem.Namespace}.PlainObjects");
             sourceCodeBuilder.AppendLine("{");
-            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classDeclIdentation)}public partial class {plainObjectClassName}: {(hasBaseType ? $": {plainObjectBaseType}, " : string.Empty)}IObjectToString");
+            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classDeclIdentation)}public partial class {plainObjectClassName}: {(hasBaseType ? $" {plainObjectBaseType}, " : string.Empty)}IObjectToString");
             sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classDeclIdentation)}{{");
             foreach (var propertyItem in propertyItems)
             {

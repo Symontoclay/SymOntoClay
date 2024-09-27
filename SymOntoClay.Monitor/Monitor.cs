@@ -41,7 +41,7 @@ using System.Threading;
 namespace SymOntoClay.Monitor
 {
     [SocSerialization]
-    [SocBasePlainObject("SymOntoClay.Serializable.CoreHelper.Disposing.SymOntoClayDisposablePo")]
+    [SocBasePlainObject("SymOntoClay.Serializable.CoreHelper.Disposing.PlainObjects.SymOntoClayDisposablePo")]
     public partial class Monitor : SymOntoClayDisposable, IMonitorLoggerContext, IMonitorFeatures, IMonitor
     {
 #if DEBUG

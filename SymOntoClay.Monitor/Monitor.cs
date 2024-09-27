@@ -29,6 +29,8 @@ using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.Internal;
 using SymOntoClay.Monitor.Internal.FileCache;
+using SymOntoClay.Serializable.CoreHelper.Disposing;
+using SymOntoClay.Serialization;
 using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
@@ -38,7 +40,9 @@ using System.Threading;
 
 namespace SymOntoClay.Monitor
 {
-    public partial class Monitor : Disposable, IMonitorLoggerContext, IMonitorFeatures, IMonitor
+    [SocSerialization]
+    [SocBasePlainObject("SymOntoClay.Serializable.CoreHelper.Disposing.SymOntoClayDisposablePo")]
+    public partial class Monitor : SymOntoClayDisposable, IMonitorLoggerContext, IMonitorFeatures, IMonitor
     {
 #if DEBUG
         //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();

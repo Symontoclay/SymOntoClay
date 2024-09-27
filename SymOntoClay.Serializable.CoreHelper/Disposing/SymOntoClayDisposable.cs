@@ -1,7 +1,9 @@
 ﻿using SymOntoClay.Common.Disposing;
+using SymOntoClay.Serialization;
 
 namespace SymOntoClay.Serializable.CoreHelper.Disposing
 {
+    [SocSerialization]
     public abstract partial class SymOntoClayDisposable : ISymOntoClayDisposable
     {
         /// <inheritdoc/>

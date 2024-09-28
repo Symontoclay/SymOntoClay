@@ -1,10 +1,12 @@
 ﻿using Newtonsoft.Json;
 using NLog;
+using SymOntoClay.Serialization.Implementation.InternalPlainObjects;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
+using System.Threading;
 
 namespace SymOntoClay.Serialization.Implementation
 {
@@ -85,7 +87,7 @@ namespace SymOntoClay.Serialization.Implementation
                         return NSerializeBareObject(obj);
 
                     case "System.Threading.CancellationTokenSource":
-                        throw new NotImplementedException("C8501866-C633-49CC-B3B0-237E116B7B3F");
+                        return NSerializeCancellationTokenSource((CancellationTokenSource)obj);
 
                     case "System.Threading.CancellationToken":
                         throw new NotImplementedException("5F935FAA-E834-405A-83F6-DDDC80980B29");
@@ -104,6 +106,38 @@ namespace SymOntoClay.Serialization.Implementation
             {
                 return NSerialize(serializable);
             }
+        }
+
+        private ObjectPtr NSerializeCancellationTokenSource(CancellationTokenSource cancellationTokenSource)
+        {
+#if DEBUG
+            _logger.Info($"cancellationTokenSource.IsCancellationRequested = {cancellationTokenSource.IsCancellationRequested}");
+#endif
+
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, cancellationTokenSource.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(cancellationTokenSource, objectPtr);
+
+            var plainObject = new CancellationTokenSourcePo();
+            plainObject.IsCancelled = cancellationTokenSource.IsCancellationRequested;
+
+#if DEBUG
+            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, SerializationHelper.JsonSerializerSettings)}");
+#endif
+
+            WriteToFile(plainObject, instanceId);
+
+            return objectPtr;
         }
 
         private ObjectPtr NSerializeBareObject(object obj)

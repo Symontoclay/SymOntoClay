@@ -9,9 +9,20 @@ namespace TestSandbox.Serialization
     [SocSerialization]
     public partial class SerializedObject : IObjectToString
     {
+        public SerializedObject(bool value) 
+        {
+            _cancellationTokenSource = new CancellationTokenSource();
+            //_cancellationToken = _cancellationTokenSource.Token;
+
+            _cancellationTokenSource.Cancel();
+        }
+
         public int IntField;
 
         private object _lockObj = new object();
+
+        private CancellationTokenSource _cancellationTokenSource;
+        //private CancellationToken _cancellationToken;
 
         /// <inheritdoc/>
         public override string ToString()

@@ -15,8 +15,8 @@ namespace TestSandbox.Serialization
         {
             _logger.Info("Begin");
 
-            Deserialize();
-            //Serialize();
+            //Deserialize();
+            Serialize();
 
             _logger.Info("End");
         }
@@ -38,7 +38,7 @@ namespace TestSandbox.Serialization
 
         private void Serialize()
         {
-            var instance = new SerializedObject()
+            var instance = new SerializedObject(true)
             {
                 IntField = 16
             };

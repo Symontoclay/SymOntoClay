@@ -12,7 +12,7 @@ namespace TestSandbox.Serialization
         public SerializedObject(bool value) 
         {
             _cancellationTokenSource = new CancellationTokenSource();
-            //_cancellationToken = _cancellationTokenSource.Token;
+            _cancellationToken = _cancellationTokenSource.Token;
 
             _cancellationTokenSource.Cancel();
         }
@@ -22,7 +22,7 @@ namespace TestSandbox.Serialization
         private object _lockObj = new object();
 
         private CancellationTokenSource _cancellationTokenSource;
-        //private CancellationToken _cancellationToken;
+        private CancellationToken _cancellationToken;
 
         /// <inheritdoc/>
         public override string ToString()

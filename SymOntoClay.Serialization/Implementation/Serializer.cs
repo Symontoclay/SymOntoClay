@@ -1,10 +1,13 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NLog;
 using SymOntoClay.Serialization.Implementation.InternalPlainObjects;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Threading;
 
@@ -90,7 +93,7 @@ namespace SymOntoClay.Serialization.Implementation
                         return NSerializeCancellationTokenSource((CancellationTokenSource)obj);
 
                     case "System.Threading.CancellationToken":
-                        throw new NotImplementedException("5F935FAA-E834-405A-83F6-DDDC80980B29");
+                        return NSerializeCancellationToken((CancellationToken)obj);
                 }
 
                 switch (type.Name)
@@ -106,6 +109,41 @@ namespace SymOntoClay.Serialization.Implementation
             {
                 return NSerialize(serializable);
             }
+        }
+
+        private ObjectPtr NSerializeCancellationToken(CancellationToken cancellationToken)
+        {
+            var sourceField = cancellationToken.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetField | BindingFlags.DeclaredOnly).Single(p => p.Name == "_source");
+
+            var fieldValue = sourceField.GetValue(cancellationToken);
+
+#if DEBUG
+            _logger.Info($"fieldValue.GetType() = {fieldValue.GetType()}");
+            _logger.Info($"((CancellationTokenSource)fieldValue).IsCancellationRequested = {((CancellationTokenSource)fieldValue).IsCancellationRequested}");
+#endif
+
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, cancellationToken.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            var plainObject = new CancellationTokenPo();
+            plainObject.Source = GetSerializedObjectPtr(fieldValue);
+
+#if DEBUG
+            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject)}");
+#endif
+
+            WriteToFile(plainObject, instanceId);
+
+            return objectPtr;
         }
 
         private ObjectPtr NSerializeCancellationTokenSource(CancellationTokenSource cancellationTokenSource)

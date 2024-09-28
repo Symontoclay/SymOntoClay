@@ -610,7 +610,7 @@ namespace SymOntoClay.SourceGenerator
 
                     if (genericName == null)
                     {
-                        throw new NotImplementedException();
+                        throw new NotImplementedException("8E504D11-8586-4B60-832C-D890CFD7D10D");
                     }
                     else
                     {

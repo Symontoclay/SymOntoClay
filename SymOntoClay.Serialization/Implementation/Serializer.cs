@@ -97,7 +97,7 @@ namespace SymOntoClay.Serialization.Implementation
                         return NSerializeGenericList((IEnumerable)obj);
 
                     default:
-                        throw new NotImplementedException();
+                        throw new NotImplementedException("B3784FDD-7AFC-4947-AA62-00398400E52B");
                 }
             }
             else
@@ -159,12 +159,12 @@ namespace SymOntoClay.Serialization.Implementation
 
             if(SerializationHelper.IsPrimitiveType(genericParameterType))
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("9B48CB69-4F44-4C9E-9C7D-B57593946B70");
             }
 
             if(genericParameterType == typeof(ISerializable))
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("70E2078C-ECBF-4896-BC07-CCE1FAFFF41F");
             }
 
             return NSerializeListWithPossibleSerializebleParameter(enumerable);
@@ -209,7 +209,7 @@ namespace SymOntoClay.Serialization.Implementation
                     _logger.Info($"itemType.IsGenericType = {itemType.IsGenericType}");
 #endif
 
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("1A7ACA8A-95A7-4096-94E6-53BF131E8960");
                 }
                 else
                 {
@@ -272,7 +272,7 @@ namespace SymOntoClay.Serialization.Implementation
                     _logger.Info($"itemType.IsGenericType = {itemType.IsGenericType}");
 #endif
 
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("79D76024-320E-4BA4-AB03-DA46959D2894");
                 }
                 else
                 {

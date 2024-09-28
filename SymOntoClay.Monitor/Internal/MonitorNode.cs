@@ -103,9 +103,6 @@ namespace SymOntoClay.Monitor.Internal
             _monitorNodeContext.FileCache = _fileCache;
             _monitorNodeContext.NodeId = nodeId;
 
-            _monitorNodeContext.OutputHandler = monitorContext.OutputHandler;
-            _monitorNodeContext.ErrorHandler = monitorContext.ErrorHandler;
-
             _monitorContext = monitorContext;
             _globalMessageNumberGenerator = monitorContext.GlobalMessageNumberGenerator;
             _messageProcessor = monitorContext.MessageProcessor;
@@ -113,8 +110,6 @@ namespace SymOntoClay.Monitor.Internal
             _monitorLoggerImpl = new MonitorLogger(this);
         }
 
-        Action<string> IMonitorLoggerContext.OutputHandler => _monitorContext.OutputHandler;
-        Action<string> IMonitorLoggerContext.ErrorHandler => _monitorContext.ErrorHandler;
         MessageProcessor IMonitorLoggerContext.MessageProcessor => _messageProcessor;
         IMonitorFeatures IMonitorLoggerContext.Features => this;
         IList<IPlatformLogger> IMonitorLoggerContext.PlatformLoggers => _monitorContext.PlatformLoggers;

@@ -30,11 +30,9 @@ using SymOntoClay.Monitor.Internal.FileCache;
 using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.Internal
 {
@@ -92,8 +90,6 @@ namespace SymOntoClay.Monitor.Internal
             _monitorLoggerImpl = new MonitorLogger(this);
         }
 
-        Action<string> IMonitorLoggerContext.OutputHandler => _monitorNodeContext.OutputHandler;
-        Action<string> IMonitorLoggerContext.ErrorHandler => _monitorNodeContext.ErrorHandler;
         MessageProcessor IMonitorLoggerContext.MessageProcessor => _messageProcessor;
         IMonitorFeatures IMonitorLoggerContext.Features => this;
         IList<IPlatformLogger> IMonitorLoggerContext.PlatformLoggers => _monitorNodeContext.MonitorContext.PlatformLoggers;

@@ -154,7 +154,6 @@ namespace TestSandbox.Handlers
                 ThreadingSettings = ConfigureThreadingSettings().AsyncEvents,
                 Enable = true,
                 MessagesDir = Path.Combine(Directory.GetCurrentDirectory(), "MessagesDir"),
-                OutputHandler = message => { _globalLogger.Info($"message = {message}"); },
                 KindOfLogicalSearchExplain = KindOfLogicalSearchExplain.None,
                 //LogicalSearchExplainDumpDir = Directory.GetCurrentDirectory(),
                 EnableAddingRemovingFactLoggingInStorages = false,

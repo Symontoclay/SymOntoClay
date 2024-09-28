@@ -29,17 +29,11 @@ using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.Internal.FileCache;
 using SymOntoClay.Threading;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime;
 using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.Internal
 {
@@ -53,8 +47,6 @@ namespace SymOntoClay.Monitor.Internal
         {
             _context = context;
 
-            _outputHandler = context.OutputHandler;
-            _errorHandler = context.ErrorHandler;
             _messageProcessor = context.MessageProcessor;
             _features = context.Features;
             _platformLoggers = context.PlatformLoggers;
@@ -91,9 +83,6 @@ namespace SymOntoClay.Monitor.Internal
         private string _threadId;
 
         private MessageNumberGenerator _messageNumberGenerator;
-
-        private readonly Action<string> _outputHandler;
-        private readonly Action<string> _errorHandler;
 
         string IMonitorLogger.Id => throw new NotImplementedException("DB6C455C-9ED3-41D1-BF0D-519E637F1CD8");
 
@@ -3362,8 +3351,6 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            _outputHandler?.Invoke(message);
-
             if (_platformLoggers.Any())
             {
                 foreach (var platformLogger in _platformLoggers)
@@ -3734,8 +3721,6 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            _errorHandler?.Invoke(message);
-
             if (_platformLoggers.Any())
             {
                 foreach (var platformLogger in _platformLoggers)
@@ -3819,8 +3804,6 @@ namespace SymOntoClay.Monitor.Internal
             }
 
             var now = DateTime.Now;
-
-            _errorHandler?.Invoke(message);
 
             if (_platformLoggers.Any())
             {

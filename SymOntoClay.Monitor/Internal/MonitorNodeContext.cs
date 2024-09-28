@@ -22,12 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Monitor.Internal.FileCache;
 using SymOntoClay.Threading;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.Internal
 {
@@ -39,9 +34,6 @@ namespace SymOntoClay.Monitor.Internal
         public MonitorFeatures Features { get; set; }
 
         public string NodeId { get; set; }
-
-        public Action<string> OutputHandler { get; set; }
-        public Action<string> ErrorHandler { get; set; }
 
         public BaseMonitorSettings Settings { get; set; }
 

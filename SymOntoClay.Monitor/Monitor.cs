@@ -22,7 +22,6 @@ SOFTWARE.*/
 
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
-using SymOntoClay.Common.Disposing;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Data;
@@ -172,8 +171,6 @@ namespace SymOntoClay.Monitor
 
             _monitorContext = new MonitorContext()
             {
-                OutputHandler = monitorSettings.OutputHandler,
-                ErrorHandler = monitorSettings.ErrorHandler,
                 PlatformLoggers = monitorSettings.PlatformLoggers ?? new List<IPlatformLogger>(),
                 Features = _features,
                 Settings = _baseMonitorSettings,
@@ -204,8 +201,6 @@ namespace SymOntoClay.Monitor
         /// <inheritdoc/>
         public string SessionDirectoryFullName => _fileCache.AbsoluteDirectoryName;
 
-        Action<string> IMonitorLoggerContext.OutputHandler => _monitorContext.OutputHandler;
-        Action<string> IMonitorLoggerContext.ErrorHandler => _monitorContext.ErrorHandler;
         MessageProcessor IMonitorLoggerContext.MessageProcessor => _messageProcessor;
         IMonitorFeatures IMonitorLoggerContext.Features => this;
         IList<IPlatformLogger> IMonitorLoggerContext.PlatformLoggers => _monitorContext.PlatformLoggers;

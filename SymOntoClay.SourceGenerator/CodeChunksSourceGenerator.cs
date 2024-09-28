@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using System;
 
 namespace SymOntoClay.SourceGenerator
 {
@@ -7,15 +8,26 @@ namespace SymOntoClay.SourceGenerator
     {
         public void Execute(GeneratorExecutionContext context)
         {
-            var codeChunksSearcher = new CodeChunksSearcher(context);
-
-            var codeChunkCodeGenerator = new CodeChunkCodeGenerator(context);
-
-            var items = codeChunksSearcher.Run();
-
-            foreach (var item in items)
+            try
             {
-                codeChunkCodeGenerator.Run(item);
+                var codeChunksSearcher = new CodeChunksSearcher(context);
+
+                var codeChunkCodeGenerator = new CodeChunkCodeGenerator(context);
+
+                var items = codeChunksSearcher.Run();
+
+                foreach (var item in items)
+                {
+                    codeChunkCodeGenerator.Run(item);
+                }
+            }
+            catch (Exception e)
+            {
+#if DEBUG
+                FileLogger.WriteLn(e.ToString());
+#endif
+
+                throw;
             }
         }
 

@@ -85,6 +85,8 @@ namespace SymOntoClay.SourceGenerator
         {
             var sb = new StringBuilder();
 
+            var inMultilineComment = false;
+
             foreach (var line in sourceText.Lines)
             {
                 var lineStr = line.ToString();
@@ -94,8 +96,48 @@ namespace SymOntoClay.SourceGenerator
                     continue;
                 }
 
+                lineStr = lineStr.Trim();
+
+#if DEBUG
+                //FileLogger.WriteLn($"lineStr = '{lineStr}'");
+#endif
+
+                if (!inMultilineComment && lineStr.StartsWith("/*"))
+                {
+                    inMultilineComment = true;
+                    continue;
+                }
+
+                if (inMultilineComment && lineStr.EndsWith("*/"))
+                {
+                    inMultilineComment = false;
+                    continue;
+                }
+
+                if(inMultilineComment)
+                {
+                    continue;
+                }
+
+#if DEBUG
+                //FileLogger.WriteLn($"lineStr = '{lineStr}'");
+#endif
+
+                if(lineStr.StartsWith("#"))
+                {
+                    continue;
+                }
+
+#if DEBUG
+                //FileLogger.WriteLn($"lineStr = '{lineStr}'");
+#endif
+
                 sb.Append(lineStr);
             }
+
+#if DEBUG
+            //FileLogger.WriteLn($"sb.ToString().Trim() = '{sb.ToString().Trim()}'");
+#endif
 
             return sb.ToString().Trim();
         }

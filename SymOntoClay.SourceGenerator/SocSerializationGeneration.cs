@@ -476,6 +476,10 @@ namespace SymOntoClay.SourceGenerator
 
         private string GetTypeName(SyntaxNode syntaxNode)
         {
+#if DEBUG
+            //GeneratorsHelper.ShowSyntaxNode(0, syntaxNode);
+#endif
+
             return GeneratorsHelper.ToString(syntaxNode.GetText()); ;
         }
 
@@ -495,6 +499,17 @@ namespace SymOntoClay.SourceGenerator
                 var hasNoSerializableMemberAttribute = HasNoSerializableMemberAttribute(propertyDeclaration);
 
                 if (hasNoSerializableMemberAttribute)
+                {
+                    continue;
+                }
+
+                var propertyDeclarationText = GeneratorsHelper.ToString(propertyDeclaration.GetText());
+
+#if DEBUG
+                //FileLogger.WriteLn($"propertyDeclarationText = '{propertyDeclarationText}'");
+#endif
+
+                if (propertyDeclarationText.Contains("static "))
                 {
                     continue;
                 }
@@ -562,6 +577,21 @@ namespace SymOntoClay.SourceGenerator
                     continue;
                 }
 
+#if DEBUG
+                //GeneratorsHelper.ShowSyntaxNode(0, fieldDeclaration);
+#endif
+
+                var fieldDeclarationText = GeneratorsHelper.ToString(fieldDeclaration.GetText());
+
+#if DEBUG
+                //FileLogger.WriteLn($"fieldDeclarationText = '{fieldDeclarationText}'");
+#endif
+
+                if(fieldDeclarationText.Contains("static "))
+                {
+                    continue;
+                }
+
                 var hasActionKeyAttribute = HasActionKeyAttribute(fieldDeclaration);
 
                 var item = new FieldItem()
@@ -610,7 +640,21 @@ namespace SymOntoClay.SourceGenerator
 
                     if (genericName == null)
                     {
-                        throw new NotImplementedException("8E504D11-8586-4B60-832C-D890CFD7D10D");
+#if DEBUG
+                        //GeneratorsHelper.ShowSyntaxNode(0, syntaxNode);
+#endif
+
+                        var qualifiedName = syntaxNode.ChildNodes()?.FirstOrDefault(p => p.IsKind(SyntaxKind.QualifiedName));
+
+                        if(qualifiedName == null)
+                        {
+                            throw new NotImplementedException("8E504D11-8586-4B60-832C-D890CFD7D10D");
+                        }
+                        else
+                        {
+                            baseFieldItem.FieldTypeSyntaxNode = qualifiedName;
+                            baseFieldItem.KindFieldType = KindFieldType.Identifier;
+                        }                        
                     }
                     else
                     {

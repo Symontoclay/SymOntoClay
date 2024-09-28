@@ -122,7 +122,7 @@ namespace SymOntoClay.Serialization.Implementation
                             return NDeserializeISerializable(type, objectPtr, fullFileName);
                         }
                     }
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("615629EF-E2D6-4457-8445-55EA563ECF49");
             }
         }
 
@@ -216,7 +216,7 @@ namespace SymOntoClay.Serialization.Implementation
                 //    return targetType;
                 //}
 
-                throw new NotImplementedException();
+                throw new NotImplementedException("93F4E4E5-41DE-4600-BC21-AF0C92E31FB4");
             }
 
             return null;
@@ -258,12 +258,12 @@ namespace SymOntoClay.Serialization.Implementation
 
             if (SerializationHelper.IsPrimitiveType(genericParameterType))
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("CCBC128D-B66C-4CC1-89E6-020262E7B424");
             }
 
             if (genericParameterType == typeof(ISerializable))
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("A8778677-669D-4372-A3D6-E5404B46A447");
             }
 
             return NDeserializeListWithPossibleSerializebleParameter(type, objectPtr, fullFileName);
@@ -304,7 +304,7 @@ namespace SymOntoClay.Serialization.Implementation
                     continue;
                 }
 
-                throw new NotImplementedException();
+                throw new NotImplementedException("EFAED86D-2860-4B64-801C-3615B9F7D7E7");
             }
 
 #if DEBUG
@@ -356,7 +356,7 @@ namespace SymOntoClay.Serialization.Implementation
                     continue;
                 }
 
-                throw new NotImplementedException();
+                throw new NotImplementedException("1AF9ED38-8427-42DF-A6E6-C2009A57DE30");
 
                 //if (IsSerializable(type))
                 //{
@@ -368,7 +368,7 @@ namespace SymOntoClay.Serialization.Implementation
                 //if (serializable == null)
                 //{
 
-                //    throw new NotImplementedException();
+                //    throw new NotImplementedException("FA3ADB12-D19E-4191-A1F6-34A0B1EB5A3D");
                 //}
                 //else
                 //{

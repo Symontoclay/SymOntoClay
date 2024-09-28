@@ -35,7 +35,7 @@ namespace SymOntoClay.Monitor.Internal.FileCache
         //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        private readonly string _nodeId;
+        private string _nodeId;
 
         public MonitorNodeFileCache(string absoluteDirectory, string relativeDirectory, string nodeId)
             : base(Path.Combine(absoluteDirectory, nodeId), Path.Combine(relativeDirectory, nodeId))

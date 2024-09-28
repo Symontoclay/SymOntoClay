@@ -23,22 +23,19 @@ SOFTWARE.*/
 using Newtonsoft.Json;
 using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.Monitor.Internal.FileCache;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SymOntoClay.Serialization;
 
 namespace SymOntoClay.Monitor.Internal
 {
-    public class MessageProcessor
+    [SocSerialization]
+    public partial class MessageProcessor
     {
 #if DEBUG
         //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        private readonly IRemoteMonitor _remoteMonitor;
-        private readonly bool _hasRemoteMonitor;
+        private IRemoteMonitor _remoteMonitor;
+        private bool _hasRemoteMonitor;
 
         public MessageProcessor(IRemoteMonitor remoteMonitor)
         {

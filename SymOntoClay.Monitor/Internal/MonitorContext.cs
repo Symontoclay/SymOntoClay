@@ -24,6 +24,7 @@ using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Internal.FileCache;
+using SymOntoClay.Serialization;
 using SymOntoClay.Threading;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,7 @@ using System.Threading;
 
 namespace SymOntoClay.Monitor.Internal
 {
+    [SocSerialization]
     public partial class MonitorContext : IObjectToString
     {
         public MonitorFeatures Features { get; set; }

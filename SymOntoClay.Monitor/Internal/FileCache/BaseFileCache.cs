@@ -20,16 +20,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using System;
-using System.Collections.Generic;
+using SymOntoClay.Serialization;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.Internal.FileCache
 {
-    public abstract class BaseFileCache : IFileCache
+    [SocSerialization]
+    public abstract partial class BaseFileCache : IFileCache
     {
 #if DEBUG
         private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
@@ -43,8 +40,8 @@ namespace SymOntoClay.Monitor.Internal.FileCache
             Directory.CreateDirectory(absoluteDirectory);
         }
 
-        protected readonly string _absoluteDirectory;
-        protected readonly string _relativeDirectory;
+        protected string _absoluteDirectory;
+        protected string _relativeDirectory;
 
         /// <inheritdoc/>
         public string AbsoluteDirectoryName => _absoluteDirectory;

@@ -22,17 +22,14 @@ SOFTWARE.*/
 
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using SymOntoClay.Serialization;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.Internal
 {
-    public class MonitorFeatures : IMonitorFeatures, IObjectToString
+    [SocSerialization]
+    public partial class MonitorFeatures : IMonitorFeatures, IObjectToString
     {
         /// <inheritdoc/>
         public bool EnableCallMethod { get; set; }

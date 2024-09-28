@@ -1,11 +1,13 @@
 ﻿using Newtonsoft.Json;
 using NLog;
+using SymOntoClay.Serialization.Implementation.InternalPlainObjects;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Threading;
 
 namespace SymOntoClay.Serialization.Implementation
 {
@@ -104,8 +106,8 @@ namespace SymOntoClay.Serialization.Implementation
                     return NDeserializeBareObject(objectPtr);
 
                 case "System.Threading.CancellationTokenSource":
-                    throw new NotImplementedException("22670DE5-19C5-44C8-896E-EC945E977DCA");
-
+                    return NDeserializeCancellationTokenSource(objectPtr, fullFileName);
+                    
                 case "System.Threading.CancellationToken":
                     throw new NotImplementedException("2F82C7B6-68B0-4CCF-9358-AF662C2EA47E");
             }
@@ -229,6 +231,26 @@ namespace SymOntoClay.Serialization.Implementation
 #endif
 
             return type.GetInterfaces().Any(p => p == typeof(ISerializable));
+        }
+
+        private object NDeserializeCancellationTokenSource(ObjectPtr objectPtr, string fullFileName)
+        {
+            var plainObject = JsonConvert.DeserializeObject<CancellationTokenSourcePo>(File.ReadAllText(fullFileName), SerializationHelper.JsonSerializerSettings);
+
+#if DEBUG
+            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, Formatting.Indented)}");
+#endif
+
+            var instance = new CancellationTokenSource();
+            
+            if(plainObject.IsCancelled)
+            {
+                instance.Cancel();
+            }
+
+            _deserializationContext.RegDeserializedObject(objectPtr.Id, instance);
+
+            return instance;
         }
 
         private object NDeserializeBareObject(ObjectPtr objectPtr)

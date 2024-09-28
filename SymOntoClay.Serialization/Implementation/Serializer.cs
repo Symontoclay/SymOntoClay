@@ -132,7 +132,7 @@ namespace SymOntoClay.Serialization.Implementation
             plainObject.IsCancelled = cancellationTokenSource.IsCancellationRequested;
 
 #if DEBUG
-            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, SerializationHelper.JsonSerializerSettings)}");
+            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject)}");
 #endif
 
             WriteToFile(plainObject, instanceId);
@@ -315,7 +315,7 @@ namespace SymOntoClay.Serialization.Implementation
             }
 
 #if DEBUG
-            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, SerializationHelper.JsonSerializerSettings)}");
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, Formatting.Indented)}");
 #endif
 
             WriteToFile(listWithPlainObjects, instanceId);

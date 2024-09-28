@@ -1,7 +1,5 @@
 ﻿using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
-using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.Serialization.Implementation.InternalPlainObjects

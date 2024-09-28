@@ -40,6 +40,7 @@ namespace TestSandbox.Serialization
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(IntField)} = {IntField}");
+            sb.AppendLine($"{spaces}{nameof(_cancellationTokenSource)}.{nameof(_cancellationTokenSource.IsCancellationRequested)} = {_cancellationTokenSource?.IsCancellationRequested}");
             return sb.ToString();
         }
     }

@@ -114,6 +114,12 @@ namespace SymOntoClay.Serialization.Implementation
             }
         }
 
+        /// <inheritdoc/>
+        public ObjectPtr GetSerializedObjectPtr(object obj, object settingsParameter)
+        {
+            throw new NotImplementedException("2DCDD49F-E7D0-4BD9-B5E1-4FE1D034599E");
+        }
+
         private ObjectPtr NSerializeCancellationToken(CancellationToken cancellationToken)
         {
             var sourceField = cancellationToken.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetField | BindingFlags.DeclaredOnly).Single(p => p.Name == "_source");

@@ -56,6 +56,12 @@ namespace SymOntoClay.Serialization.Implementation
             return (T)GetDeserializedObject(objectPtr);
         }
 
+        /// <inheritdoc/>
+        public T GetDeserializedObject<T>(ObjectPtr objectPtr, ObjectPtr settingsParameterPtr)
+        {
+            throw new NotImplementedException("045EC3B8-8EA8-4C4A-8FB8-6ECF41D326F0");
+        }
+
         private object GetDeserializedObject(ObjectPtr objectPtr)
         {
 #if DEBUG

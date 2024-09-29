@@ -92,6 +92,9 @@ namespace SymOntoClay.Serialization.Implementation
                     case "System.Threading.CancellationTokenSource":
                         return NSerializeCancellationTokenSource((CancellationTokenSource)obj);
 
+                    case "System.Threading.CancellationTokenSource+Linked2CancellationTokenSource":
+                        throw new NotImplementedException("06F829D3-568D-4168-9D79-60FD74151E30");
+
                     case "System.Threading.CancellationToken":
                         return NSerializeCancellationToken((CancellationToken)obj);
                 }
@@ -118,8 +121,11 @@ namespace SymOntoClay.Serialization.Implementation
             var fieldValue = sourceField.GetValue(cancellationToken);
 
 #if DEBUG
-            _logger.Info($"fieldValue.GetType() = {fieldValue.GetType()}");
-            _logger.Info($"((CancellationTokenSource)fieldValue).IsCancellationRequested = {((CancellationTokenSource)fieldValue).IsCancellationRequested}");
+            _logger.Info($"fieldValue?.GetType() = {fieldValue?.GetType()}");
+            if(fieldValue != null)
+            {
+                _logger.Info($"((CancellationTokenSource)fieldValue).IsCancellationRequested = {((CancellationTokenSource)fieldValue).IsCancellationRequested}");
+            }            
 #endif
 
             var instanceId = CreateInstanceId();

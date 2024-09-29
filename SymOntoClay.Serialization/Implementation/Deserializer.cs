@@ -107,9 +107,12 @@ namespace SymOntoClay.Serialization.Implementation
 
                 case "System.Threading.CancellationTokenSource":
                     return NDeserializeCancellationTokenSource(objectPtr, fullFileName);
-                    
+
+                case "System.Threading.CancellationTokenSource+Linked2CancellationTokenSource":
+                    throw new NotImplementedException("24C0242F-DDCF-4CAB-AF22-73F29A2AEA57");
+
                 case "System.Threading.CancellationToken":
-                    throw new NotImplementedException("2F82C7B6-68B0-4CCF-9358-AF662C2EA47E");
+                    return NDeserializeCancellationToken(objectPtr, fullFileName);                    
             }
 
             switch (type.Name)
@@ -231,6 +234,28 @@ namespace SymOntoClay.Serialization.Implementation
 #endif
 
             return type.GetInterfaces().Any(p => p == typeof(ISerializable));
+        }
+
+        private object NDeserializeCancellationToken(ObjectPtr objectPtr, string fullFileName)
+        {
+            var plainObject = JsonConvert.DeserializeObject<CancellationTokenPo>(File.ReadAllText(fullFileName), SerializationHelper.JsonSerializerSettings);
+
+#if DEBUG
+            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, Formatting.Indented)}");
+#endif
+
+            var cancelationTokenSource = GetDeserializedObject(plainObject.Source) as CancellationTokenSource;
+
+#if DEBUG
+            _logger.Info($"cancelationTokenSource = {JsonConvert.SerializeObject(cancelationTokenSource, Formatting.Indented)}");
+#endif
+
+            if(cancelationTokenSource == null)
+            {
+                return CancellationToken.None;
+            }
+
+            return cancelationTokenSource.Token;
         }
 
         private object NDeserializeCancellationTokenSource(ObjectPtr objectPtr, string fullFileName)

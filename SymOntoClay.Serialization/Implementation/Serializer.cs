@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using NLog;
 using SymOntoClay.Serialization.Implementation.InternalPlainObjects;
+using SymOntoClay.Serialization.Settings;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -58,6 +59,12 @@ namespace SymOntoClay.Serialization.Implementation
         /// <inheritdoc/>
         public ObjectPtr GetSerializedObjectPtr(object obj)
         {
+            return GetSerializedObjectPtr(obj, null);
+        }
+
+        /// <inheritdoc/>
+        public ObjectPtr GetSerializedObjectPtr(object obj, object settingsParameter)
+        {
 #if DEBUG
             _logger.Info($"obj = {obj}");
 #endif
@@ -93,8 +100,8 @@ namespace SymOntoClay.Serialization.Implementation
                         return NSerializeCancellationTokenSource((CancellationTokenSource)obj);
 
                     case "System.Threading.CancellationTokenSource+Linked2CancellationTokenSource":
-                        throw new NotImplementedException("06F829D3-568D-4168-9D79-60FD74151E30");
-
+                        return NSerializeLinkedCancellationTokenSource((CancellationTokenSource)obj, (LinkedCancellationTokenSourceSettings)settingsParameter);
+                    
                     case "System.Threading.CancellationToken":
                         return NSerializeCancellationToken((CancellationToken)obj);
                 }
@@ -112,50 +119,6 @@ namespace SymOntoClay.Serialization.Implementation
             {
                 return NSerialize(serializable);
             }
-        }
-
-        /// <inheritdoc/>
-        public ObjectPtr GetSerializedObjectPtr(object obj, object settingsParameter)
-        {
-            throw new NotImplementedException("2DCDD49F-E7D0-4BD9-B5E1-4FE1D034599E");
-        }
-
-        private ObjectPtr NSerializeCancellationToken(CancellationToken cancellationToken)
-        {
-            var sourceField = cancellationToken.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetField | BindingFlags.DeclaredOnly).Single(p => p.Name == "_source");
-
-            var fieldValue = sourceField.GetValue(cancellationToken);
-
-#if DEBUG
-            _logger.Info($"fieldValue?.GetType() = {fieldValue?.GetType()}");
-            if(fieldValue != null)
-            {
-                _logger.Info($"((CancellationTokenSource)fieldValue).IsCancellationRequested = {((CancellationTokenSource)fieldValue).IsCancellationRequested}");
-            }            
-#endif
-
-            var instanceId = CreateInstanceId();
-
-#if DEBUG
-            _logger.Info($"instanceId = {instanceId}");
-#endif
-
-            var objectPtr = new ObjectPtr(instanceId, cancellationToken.GetType().FullName);
-
-#if DEBUG
-            _logger.Info($"objectPtr = {objectPtr}");
-#endif
-
-            var plainObject = new CancellationTokenPo();
-            plainObject.Source = GetSerializedObjectPtr(fieldValue);
-
-#if DEBUG
-            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject)}");
-#endif
-
-            WriteToFile(plainObject, instanceId);
-
-            return objectPtr;
         }
 
         private ObjectPtr NSerializeCancellationTokenSource(CancellationTokenSource cancellationTokenSource)
@@ -180,6 +143,76 @@ namespace SymOntoClay.Serialization.Implementation
 
             var plainObject = new CancellationTokenSourcePo();
             plainObject.IsCancelled = cancellationTokenSource.IsCancellationRequested;
+
+#if DEBUG
+            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject)}");
+#endif
+
+            WriteToFile(plainObject, instanceId);
+
+            return objectPtr;
+        }
+
+        private ObjectPtr NSerializeLinkedCancellationTokenSource(CancellationTokenSource cancellationTokenSource, LinkedCancellationTokenSourceSettings settingsParameter)
+        {
+#if DEBUG
+            _logger.Info($"settingsParameter = {settingsParameter}");
+            _logger.Info($"cancellationTokenSource.IsCancellationRequested = {cancellationTokenSource.IsCancellationRequested}");
+#endif
+
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, cancellationTokenSource.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(cancellationTokenSource, objectPtr);
+
+            var plainObject = new LinkedCancellationTokenSourcePo();
+            plainObject.IsCancelled = cancellationTokenSource.IsCancellationRequested;
+            plainObject.Settings = GetSerializedObjectPtr(settingsParameter);
+
+#if DEBUG
+            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject)}");
+#endif
+
+            throw new NotImplementedException("06F829D3-568D-4168-9D79-60FD74151E30");
+        }
+
+        private ObjectPtr NSerializeCancellationToken(CancellationToken cancellationToken)
+        {
+            var sourceField = cancellationToken.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetField | BindingFlags.DeclaredOnly).Single(p => p.Name == "_source");
+
+            var fieldValue = sourceField.GetValue(cancellationToken);
+
+#if DEBUG
+            _logger.Info($"fieldValue?.GetType() = {fieldValue?.GetType()}");
+            if (fieldValue != null)
+            {
+                _logger.Info($"((CancellationTokenSource)fieldValue).IsCancellationRequested = {((CancellationTokenSource)fieldValue).IsCancellationRequested}");
+            }
+#endif
+
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, cancellationToken.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            var plainObject = new CancellationTokenPo();
+            plainObject.Source = GetSerializedObjectPtr(fieldValue);
 
 #if DEBUG
             _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject)}");

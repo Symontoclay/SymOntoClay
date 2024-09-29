@@ -361,43 +361,7 @@ namespace SymOntoClay.SourceGenerator
 
         private string GetPlainObjectClassIdentifierFromAttribute(ClassDeclarationSyntax syntaxNode)
         {
-            var socBasePlainObjectAttribute = syntaxNode
-                ?.ChildNodes()
-                ?.OfType<AttributeListSyntax>()
-                ?.SelectMany(p => p.ChildNodes()?.OfType<AttributeSyntax>().Where(x => x.ChildNodes()?.OfType<IdentifierNameSyntax>()?.Any(y => GeneratorsHelper.ToString(y.GetText()) == Constants.SocBasePlainObjectAttributeName) ?? false))
-                ?.FirstOrDefault();
-
-            if (socBasePlainObjectAttribute == null)
-            {
-                return string.Empty;
-            }
-
-            var socBasePlainObjectArgument = socBasePlainObjectAttribute.ChildNodes()?.OfType<AttributeArgumentListSyntax>()?.SelectMany(p => p.ChildNodes()?.OfType<AttributeArgumentSyntax>())?.FirstOrDefault();
-
-            if (socBasePlainObjectArgument == null)
-            {
-                return string.Empty;
-            }
-
-            var socBasePlainObjectNameNode = socBasePlainObjectArgument.ChildNodes()?.OfType<LiteralExpressionSyntax>().FirstOrDefault();
-
-            if (socBasePlainObjectNameNode != null)
-            {
-                return GeneratorsHelper.ToString(socBasePlainObjectNameNode.GetText()).Replace("\"", string.Empty).Trim();
-            }
-
-            var socBasePlainObjectNameOfNode = socBasePlainObjectArgument
-                .ChildNodes()
-                ?.OfType<InvocationExpressionSyntax>()
-                ?.SelectMany(x => x.ChildNodes()?.OfType<ArgumentListSyntax>().SelectMany(y => y.ChildNodes()?.OfType<ArgumentSyntax>()?.SelectMany(n => n.ChildNodes()?.OfType<IdentifierNameSyntax>())))
-                .FirstOrDefault();
-
-            if (socBasePlainObjectNameOfNode == null)
-            {
-                return string.Empty;
-            }
-
-            return GeneratorsHelper.ToString(socBasePlainObjectNameOfNode.GetText()).Trim();
+            return GeneratorsHelper.GetStringValueOfSingleCtorArgumentOfAttribute(syntaxNode, Constants.SocBasePlainObjectAttributeName);
         }
 
         private string GetPlainObjectClassIdentifier(string typeName)
@@ -505,11 +469,14 @@ namespace SymOntoClay.SourceGenerator
 
                 var hasActionKeyAttribute = HasActionKeyAttribute(propertyDeclaration);
 
+                var settingsParameterName = GetSettingsParameterName(propertyDeclaration);
+
                 var item = new PropertyItem()
                 {
                     ClassDeclarationSyntaxNode = syntaxNode,
                     SyntaxNode = propertyDeclaration,
-                    IsActionKey = hasActionKeyAttribute
+                    IsActionKey = hasActionKeyAttribute,
+                    SettingsParameterName = settingsParameterName
                 };
 
                 FillUpBaseFieldItem(propertyDeclaration, item);
@@ -568,11 +535,14 @@ namespace SymOntoClay.SourceGenerator
 
                 var hasActionKeyAttribute = HasActionKeyAttribute(fieldDeclaration);
 
+                var settingsParameterName = GetSettingsParameterName(fieldDeclaration);
+
                 var item = new FieldItem()
                 {
                     ClassDeclarationSyntaxNode = syntaxNode,
                     SyntaxNode = fieldDeclaration,
-                    IsActionKey = hasActionKeyAttribute
+                    IsActionKey = hasActionKeyAttribute,
+                    SettingsParameterName = settingsParameterName
                 };
 
                 var variableDeclaration = fieldDeclaration.ChildNodes()?.FirstOrDefault(p => p.IsKind(SyntaxKind.VariableDeclaration));
@@ -598,6 +568,11 @@ namespace SymOntoClay.SourceGenerator
         private bool HasMemberAttribute(SyntaxNode syntaxNode, string attributeName)
         {
             return syntaxNode.ChildNodes().OfType<AttributeListSyntax>().Any(p => p.ChildNodes().OfType<AttributeSyntax>().Any(x => x.ChildNodes().OfType<IdentifierNameSyntax>().Any(y => y.Identifier.Text == attributeName)));
+        }
+
+        private string GetSettingsParameterName(SyntaxNode syntaxNode)
+        {
+            return GeneratorsHelper.GetStringValueOfSingleCtorArgumentOfAttribute(syntaxNode, Constants.SocObjectSerializationSettingsAttributeName);
         }
 
         private void FillUpBaseFieldItem(SyntaxNode syntaxNode, BaseFieldItem baseFieldItem)
@@ -678,7 +653,14 @@ namespace SymOntoClay.SourceGenerator
                     break;
 
                 default:
-                    sb.Append($"serializer.GetSerializedObjectPtr({memberIdentifier})");
+                    sb.Append($"serializer.GetSerializedObjectPtr({memberIdentifier}");
+
+                    if(!string.IsNullOrWhiteSpace(baseFieldItem.SettingsParameterName))
+                    {
+                        sb.Append($", {baseFieldItem.SettingsParameterName}");
+                    }
+
+                    sb.Append(")");
                     break;
             }
             sb.Append(";");
@@ -723,7 +705,14 @@ namespace SymOntoClay.SourceGenerator
                             break;
                         }
 
-                        sb.Append($"deserializer.GetDeserializedObject<{typeName}>(plainObject.{memberIdentifier})");
+                        sb.Append($"deserializer.GetDeserializedObject<{typeName}>(plainObject.{memberIdentifier}");
+
+                        if (!string.IsNullOrWhiteSpace(baseFieldItem.SettingsParameterName))
+                        {
+                            sb.Append($", plainObject.{baseFieldItem.SettingsParameterName}");
+                        }
+
+                        sb.Append(")");
                     }
                     break;
             }

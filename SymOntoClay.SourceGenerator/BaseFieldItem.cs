@@ -12,6 +12,8 @@ namespace SymOntoClay.SourceGenerator
         public bool IsActionKey { get; set; }
         public bool IsActionOrFunc { get; set; }
 
+        public string SettingsParameterName { get; set; }
+
         public abstract string Identifier { get; }
     }
 }

@@ -23,6 +23,11 @@ namespace SymOntoClay.Serialization.Implementation.InternalPlainObjects
         /// <inheritdoc/>
         string IObjectToString.PropertiesToString(uint n)
         {
+            return PropertiesToString(n);
+        }
+
+        protected virtual string PropertiesToString(uint n)
+        {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(IsCancelled)} = {IsCancelled}");

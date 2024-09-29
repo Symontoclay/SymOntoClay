@@ -467,6 +467,17 @@ namespace SymOntoClay.SourceGenerator
                     continue;
                 }
 
+                var propertyDeclarationText = GeneratorsHelper.ToString(propertyDeclaration.GetText());
+
+#if DEBUG
+                //FileLogger.WriteLn($"propertyDeclarationText = '{propertyDeclarationText}'");
+#endif
+
+                if (propertyDeclarationText.Contains("static "))
+                {
+                    continue;
+                }
+
                 var hasActionKeyAttribute = HasActionKeyAttribute(propertyDeclaration);
 
                 var settingsParameterName = GetSettingsParameterName(propertyDeclaration);
@@ -533,6 +544,21 @@ namespace SymOntoClay.SourceGenerator
                     continue;
                 }
 
+#if DEBUG
+                //GeneratorsHelper.ShowSyntaxNode(0, fieldDeclaration);
+#endif
+
+                var fieldDeclarationText = GeneratorsHelper.ToString(fieldDeclaration.GetText());
+
+#if DEBUG
+                //FileLogger.WriteLn($"fieldDeclarationText = '{fieldDeclarationText}'");
+#endif
+
+                if (fieldDeclarationText.Contains("static "))
+                {
+                    continue;
+                }
+
                 var hasActionKeyAttribute = HasActionKeyAttribute(fieldDeclaration);
 
                 var settingsParameterName = GetSettingsParameterName(fieldDeclaration);
@@ -589,7 +615,21 @@ namespace SymOntoClay.SourceGenerator
 
                     if (genericName == null)
                     {
-                        throw new NotImplementedException("8E504D11-8586-4B60-832C-D890CFD7D10D");
+#if DEBUG
+                        //GeneratorsHelper.ShowSyntaxNode(0, syntaxNode);
+#endif
+
+                        var qualifiedName = syntaxNode.ChildNodes()?.FirstOrDefault(p => p.IsKind(SyntaxKind.QualifiedName));
+
+                        if (qualifiedName == null)
+                        {
+                            throw new NotImplementedException("8E504D11-8586-4B60-832C-D890CFD7D10D");
+                        }
+                        else
+                        {
+                            baseFieldItem.FieldTypeSyntaxNode = qualifiedName;
+                            baseFieldItem.KindFieldType = KindFieldType.Identifier;
+                        }
                     }
                     else
                     {

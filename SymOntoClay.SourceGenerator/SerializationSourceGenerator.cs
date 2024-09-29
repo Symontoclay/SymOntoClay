@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using System;
 
 namespace SymOntoClay.SourceGenerator
 {
@@ -7,26 +8,37 @@ namespace SymOntoClay.SourceGenerator
     {
         public void Execute(GeneratorExecutionContext context)
         {
-            var syntaxTrees = context.Compilation.SyntaxTrees;
-
-            var searcher = new TargetClassSearcher(syntaxTrees);
-
-            var items = searcher.Run(Constants.SerializationAttributeName);
-
-            var plainObjectsRegistry = new PlainObjectsRegistry();
-
-            var plainObjectsSearcher = new PlainObjectsSearcher(context);
-
-            foreach (var item in items)
+            try
             {
-                plainObjectsSearcher.Run(item, plainObjectsRegistry);
+                var syntaxTrees = context.Compilation.SyntaxTrees;
+
+                var searcher = new TargetClassSearcher(syntaxTrees);
+
+                var items = searcher.Run(Constants.SerializationAttributeName);
+
+                var plainObjectsRegistry = new PlainObjectsRegistry();
+
+                var plainObjectsSearcher = new PlainObjectsSearcher(context);
+
+                foreach (var item in items)
+                {
+                    plainObjectsSearcher.Run(item, plainObjectsRegistry);
+                }
+
+                var socSerializationGeneration = new SocSerializationGeneration(context);
+
+                foreach (var item in items)
+                {
+                    socSerializationGeneration.Run(item, plainObjectsRegistry);
+                }
             }
-
-            var socSerializationGeneration = new SocSerializationGeneration(context);
-
-            foreach (var item in items)
+            catch(Exception e)
             {
-                socSerializationGeneration.Run(item, plainObjectsRegistry);
+#if DEBUG
+                FileLogger.WriteLn(e.ToString());
+#endif
+
+                throw;
             }
         }
         

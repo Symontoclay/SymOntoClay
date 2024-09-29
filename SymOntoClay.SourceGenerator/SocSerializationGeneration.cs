@@ -615,15 +615,25 @@ namespace SymOntoClay.SourceGenerator
 
                     if (genericName == null)
                     {
-#if DEBUG
-                        //GeneratorsHelper.ShowSyntaxNode(0, syntaxNode);
-#endif
-
                         var qualifiedName = syntaxNode.ChildNodes()?.FirstOrDefault(p => p.IsKind(SyntaxKind.QualifiedName));
 
                         if (qualifiedName == null)
                         {
-                            throw new NotImplementedException("8E504D11-8586-4B60-832C-D890CFD7D10D");
+#if DEBUG
+                            //GeneratorsHelper.ShowSyntaxNode(0, syntaxNode);
+#endif
+
+                            var nullableTypeSyntax = syntaxNode.ChildNodes()?.FirstOrDefault(p => p.IsKind(SyntaxKind.NullableType));
+
+                            if(nullableTypeSyntax == null)
+                            {
+                                throw new NotImplementedException("8E504D11-8586-4B60-832C-D890CFD7D10D");
+                            }
+                            else
+                            {
+                                baseFieldItem.FieldTypeSyntaxNode = nullableTypeSyntax;
+                                baseFieldItem.KindFieldType = KindFieldType.Identifier;
+                            }
                         }
                         else
                         {

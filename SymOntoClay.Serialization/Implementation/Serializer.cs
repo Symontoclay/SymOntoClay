@@ -182,7 +182,9 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject)}");
 #endif
 
-            throw new NotImplementedException("06F829D3-568D-4168-9D79-60FD74151E30");
+            WriteToFile(plainObject, instanceId);
+
+            return objectPtr;
         }
 
         private ObjectPtr NSerializeCancellationToken(CancellationToken cancellationToken)

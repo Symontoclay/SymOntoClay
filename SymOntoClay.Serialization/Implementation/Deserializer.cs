@@ -268,7 +268,7 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, Formatting.Indented)}");
 #endif
 
-            var settings = GetDeserializedObject<LinkedCancellationTokenSourceSettings>(plainObject.Settings);
+            var settings = GetDeserializedObject<LinkedCancellationTokenSourceSerializationSettings>(plainObject.Settings);
 
 #if DEBUG
             _logger.Info($"settings = {JsonConvert.SerializeObject(settings, Formatting.Indented)}");
@@ -286,7 +286,7 @@ namespace SymOntoClay.Serialization.Implementation
             return instance;
         }
 
-        private CancellationTokenSource CreateLinkedTokenSource(LinkedCancellationTokenSourceSettings settings)
+        private CancellationTokenSource CreateLinkedTokenSource(LinkedCancellationTokenSourceSerializationSettings settings)
         {
             var token1 = settings.Token1;
             var token2 = settings.Token2;

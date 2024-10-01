@@ -6,7 +6,7 @@ using System.Threading;
 namespace SymOntoClay.Serialization.Settings
 {
     [SocSerialization]
-    public partial class LinkedCancellationTokenSourceSettings: IObjectToString
+    public partial class LinkedCancellationTokenSourceSerializationSettings : IObjectToString
     {
         public CancellationToken? Token1 { get; set; }
         public CancellationToken? Token2 { get; set; }

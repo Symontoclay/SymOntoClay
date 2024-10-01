@@ -2,6 +2,7 @@
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Serialization;
 using SymOntoClay.Serialization.Settings;
+using SymOntoClay.Threading;
 using System.Text;
 using System.Threading;
 
@@ -19,7 +20,7 @@ namespace TestSandbox.Serialization
 
             _cancellationTokenSource2 = new CancellationTokenSource();
 
-            _linkedCancellationTokenSourceSettings = new LinkedCancellationTokenSourceSettings()
+            _linkedCancellationTokenSourceSettings = new LinkedCancellationTokenSourceSerializationSettings()
             {
                 Token1 = _cancellationTokenSource.Token,
                 Token2 = _cancellationTokenSource2.Token
@@ -27,7 +28,7 @@ namespace TestSandbox.Serialization
 
             _linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, _cancellationTokenSource2.Token);
 
-            _linkedCancellationTokenSourceSettings2 = new LinkedCancellationTokenSourceSettings()
+            _linkedCancellationTokenSourceSettings2 = new LinkedCancellationTokenSourceSerializationSettings()
             {
                 Token1 = _cancellationTokenSource.Token,
                 Token2 = _cancellationTokenSource2.Token,
@@ -53,10 +54,13 @@ namespace TestSandbox.Serialization
         [SocObjectSerializationSettings(nameof(_linkedCancellationTokenSourceSettings2))]
         private CancellationTokenSource _linkedCancellationTokenSource2;
 
-        private LinkedCancellationTokenSourceSettings _linkedCancellationTokenSourceSettings;
-        private LinkedCancellationTokenSourceSettings _linkedCancellationTokenSourceSettings2;
+        private LinkedCancellationTokenSourceSerializationSettings _linkedCancellationTokenSourceSettings;
+        private LinkedCancellationTokenSourceSerializationSettings _linkedCancellationTokenSourceSettings2;
 
         private CancellationToken _noneCancelationToken;
+
+
+        private ICustomThreadPool _threadPool;
 
         /// <inheritdoc/>
         public override string ToString()

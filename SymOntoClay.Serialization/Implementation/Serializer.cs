@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using NLog;
 using SymOntoClay.Serialization.Implementation.InternalPlainObjects;
 using SymOntoClay.Serialization.Settings;
+using SymOntoClay.Threading;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -102,10 +103,13 @@ namespace SymOntoClay.Serialization.Implementation
                     case "System.Threading.CancellationTokenSource+Linked1CancellationTokenSource":
                     case "System.Threading.CancellationTokenSource+Linked2CancellationTokenSource":
                     case "System.Threading.CancellationTokenSource+LinkedNCancellationTokenSource":
-                        return NSerializeLinkedCancellationTokenSource((CancellationTokenSource)obj, (LinkedCancellationTokenSourceSerializationSettings)settingsParameter);
+                        return NSerializeLinkedCancellationTokenSource((CancellationTokenSource)obj, settingsParameter as LinkedCancellationTokenSourceSerializationSettings);
                     
                     case "System.Threading.CancellationToken":
                         return NSerializeCancellationToken((CancellationToken)obj);
+
+                    case "SymOntoClay.Threading.CustomThreadPool":
+                        return NSerializeCustomThreadPool((CustomThreadPool)obj, settingsParameter as CustomThreadPoolSerializationSettings);
                 }
 
                 switch (type.Name)
@@ -121,6 +125,38 @@ namespace SymOntoClay.Serialization.Implementation
             {
                 return NSerialize(serializable);
             }
+        }
+
+        private ObjectPtr NSerializeCustomThreadPool(CustomThreadPool customThreadPool, CustomThreadPoolSerializationSettings settingsParameter)
+        {
+#if DEBUG
+            _logger.Info($"settingsParameter = {settingsParameter}");
+#endif
+
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, customThreadPool.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(customThreadPool, objectPtr);
+
+            var plainObject = new CustomThreadPoolPo();
+            plainObject.Settings = GetSerializedObjectPtr(settingsParameter);
+
+#if DEBUG
+            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject)}");
+#endif
+
+            WriteToFile(plainObject, instanceId);
+
+            return objectPtr;
         }
 
         private ObjectPtr NSerializeCancellationTokenSource(CancellationTokenSource cancellationTokenSource)

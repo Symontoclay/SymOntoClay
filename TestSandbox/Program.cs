@@ -160,7 +160,7 @@ namespace TestSandbox
             //TstRegOperatorsHandler();
             //TstCreateEngineContext();
             //TstSerializedCodeChunksHandler();
-            //TstSimpleSerializationHandler();
+            TstSimpleSerializationHandler();
             //TstCodeChunksHandler();
             //TstMethodResponsingHandler();
             //TstAsyncActiveOnceObjectHandler();

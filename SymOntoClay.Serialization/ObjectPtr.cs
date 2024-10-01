@@ -24,5 +24,7 @@
         public bool IsNull { get; set; }
 
         public override string ToString() => $"({nameof(Id)}: '{Id}', {nameof(TypeName)}: '{TypeName}', {nameof(IsNull)}: {IsNull})";
+
+        public static ObjectPtr NullPtr = new ObjectPtr(true);
     }
 }

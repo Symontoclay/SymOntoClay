@@ -16,6 +16,7 @@ namespace SymOntoClay.SourceGenerator
             sb.AppendLine($"{nameof(Identifier)} = {Identifier}");
             sb.AppendLine($"{nameof(IsActionKey)} = {IsActionKey}");
             sb.AppendLine($"{nameof(IsActionOrFunc)} = {IsActionOrFunc}");
+            sb.AppendLine($"{nameof(SettingsParameterName)} = {SettingsParameterName}");
             //sb.AppendLine($"{nameof()} = {}");
             return sb.ToString();
         }

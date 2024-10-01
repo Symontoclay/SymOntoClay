@@ -38,7 +38,7 @@ namespace TestSandbox.Serialization
 
         private void Serialize()
         {
-            var instance = new SerializedObject()
+            var instance = new SerializedObject(true)
             {
                 IntField = 16
             };

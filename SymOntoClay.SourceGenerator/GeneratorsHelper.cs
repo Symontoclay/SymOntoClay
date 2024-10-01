@@ -59,6 +59,47 @@ namespace SymOntoClay.SourceGenerator
                 .Select(p => ToString(p.GetText())) ?? Enumerable.Empty<string>();
         }
 
+        public static string GetStringValueOfSingleCtorArgumentOfAttribute(SyntaxNode syntaxNode, string attributeName)
+        {
+            var attributeNode = syntaxNode
+                ?.ChildNodes()
+                ?.OfType<AttributeListSyntax>()
+                ?.SelectMany(p => p.ChildNodes()?.OfType<AttributeSyntax>().Where(x => x.ChildNodes()?.OfType<IdentifierNameSyntax>()?.Any(y => GeneratorsHelper.ToString(y.GetText()) == attributeName) ?? false))
+                ?.FirstOrDefault();
+
+            if (attributeNode == null)
+            {
+                return string.Empty;
+            }
+
+            var attributeArgumentNode = attributeNode.ChildNodes()?.OfType<AttributeArgumentListSyntax>()?.SelectMany(p => p.ChildNodes()?.OfType<AttributeArgumentSyntax>())?.FirstOrDefault();
+
+            if (attributeArgumentNode == null)
+            {
+                return string.Empty;
+            }
+
+            var valueNameNode = attributeArgumentNode.ChildNodes()?.OfType<LiteralExpressionSyntax>().FirstOrDefault();
+
+            if (valueNameNode != null)
+            {
+                return GeneratorsHelper.ToString(valueNameNode.GetText()).Replace("\"", string.Empty).Trim();
+            }
+
+            var valueNameOfNode = attributeArgumentNode
+                .ChildNodes()
+                ?.OfType<InvocationExpressionSyntax>()
+                ?.SelectMany(x => x.ChildNodes()?.OfType<ArgumentListSyntax>().SelectMany(y => y.ChildNodes()?.OfType<ArgumentSyntax>()?.SelectMany(n => n.ChildNodes()?.OfType<IdentifierNameSyntax>())))
+                .FirstOrDefault();
+
+            if (valueNameOfNode == null)
+            {
+                return string.Empty;
+            }
+
+            return GeneratorsHelper.ToString(valueNameOfNode.GetText()).Trim();
+        }
+
         public static string GetPropertyIdentifier(PropertyItem propertyItem)
         {
             return GetPropertyIdentifier(propertyItem.SyntaxNode);
@@ -114,7 +155,7 @@ namespace SymOntoClay.SourceGenerator
                     continue;
                 }
 
-                if(inMultilineComment)
+                if (inMultilineComment)
                 {
                     continue;
                 }
@@ -123,7 +164,7 @@ namespace SymOntoClay.SourceGenerator
                 //FileLogger.WriteLn($"lineStr = '{lineStr}'");
 #endif
 
-                if(lineStr.StartsWith("#"))
+                if (lineStr.StartsWith("#"))
                 {
                     continue;
                 }

@@ -133,6 +133,11 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"settingsParameter = {settingsParameter}");
 #endif
 
+            if(settingsParameter == null)
+            {
+                throw new ArgumentNullException(nameof(settingsParameter), $"Serialization parameter is required for type {nameof(CustomThreadPool)}.");
+            }
+
             var instanceId = CreateInstanceId();
 
 #if DEBUG
@@ -197,6 +202,11 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"settingsParameter = {settingsParameter}");
             _logger.Info($"cancellationTokenSource.IsCancellationRequested = {cancellationTokenSource.IsCancellationRequested}");
 #endif
+
+            if (settingsParameter == null)
+            {
+                throw new ArgumentNullException(nameof(settingsParameter), $"Serialization parameter is required for linked {nameof(CancellationTokenSource)}.");
+            }
 
             var instanceId = CreateInstanceId();
 

@@ -3,6 +3,7 @@ using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Serialization;
 using SymOntoClay.Serialization.Settings;
 using SymOntoClay.Threading;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
@@ -58,6 +59,7 @@ namespace TestSandbox.Serialization
 
         public int IntField;
 
+        //private Dictionary<int, sbyte> _dict = new Dictionary<int, sbyte>();
         private Dictionary<int, string> _dict1 = new Dictionary<int, string>();
 
         //private object _lockObj = new object();

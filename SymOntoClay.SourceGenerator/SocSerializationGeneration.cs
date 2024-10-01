@@ -619,10 +619,6 @@ namespace SymOntoClay.SourceGenerator
 
                         if (qualifiedName == null)
                         {
-#if DEBUG
-                            //GeneratorsHelper.ShowSyntaxNode(0, syntaxNode);
-#endif
-
                             var nullableTypeSyntax = syntaxNode.ChildNodes()?.FirstOrDefault(p => p.IsKind(SyntaxKind.NullableType));
 
                             if(nullableTypeSyntax == null)
@@ -631,8 +627,40 @@ namespace SymOntoClay.SourceGenerator
                             }
                             else
                             {
+#if DEBUG
+                                //GeneratorsHelper.ShowSyntaxNode(0, syntaxNode);
+#endif
+
                                 baseFieldItem.FieldTypeSyntaxNode = nullableTypeSyntax;
-                                baseFieldItem.KindFieldType = KindFieldType.Identifier;
+
+                                var childPredefinedType = nullableTypeSyntax.ChildNodes()?.FirstOrDefault(p => p.IsKind(SyntaxKind.PredefinedType));
+
+                                if(childPredefinedType == null)
+                                {
+                                    var childGenericName = nullableTypeSyntax.ChildNodes()?.FirstOrDefault(p => p.IsKind(SyntaxKind.GenericName));
+
+                                    if(childGenericName == null)
+                                    {
+                                        baseFieldItem.KindFieldType = KindFieldType.Identifier;
+                                    }
+                                    else
+                                    {
+                                        baseFieldItem.KindFieldType = KindFieldType.GenericType;
+                                    }                                    
+                                }
+                                else
+                                {
+                                    var typeName = GeneratorsHelper.ToString(childPredefinedType.GetText());
+
+                                    if (typeName == "object")
+                                    {
+                                        baseFieldItem.KindFieldType = KindFieldType.Object;
+                                    }
+                                    else
+                                    {
+                                        baseFieldItem.KindFieldType = KindFieldType.PredefinedType;
+                                    }
+                                }
                             }
                         }
                         else

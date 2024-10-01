@@ -337,7 +337,7 @@ namespace SymOntoClay.Serialization.Implementation
                 {
                     if (SerializationHelper.IsPrimitiveType(valueGenericParameterType))
                     {
-                        throw new NotImplementedException("A9A68B31-6A81-4FC2-A78E-2120B7B9457C");
+                        return NSerializeGenericDictionaryWithPrimitiveKeyAndPrimitiveValue(dictionary, keyGenericParameterType, valueGenericParameterType);
                     }
                     else
                     {
@@ -358,6 +358,25 @@ namespace SymOntoClay.Serialization.Implementation
             }
 
             throw new NotImplementedException("D55AE149-D344-4855-8EC0-2AD18C0F90D5");
+        }
+
+        private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndPrimitiveValue(IDictionary dictionary, Type keyGenericParameterType, Type valueGenericParameterType)
+        {
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, dictionary.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(dictionary, objectPtr);
+
+            throw new NotImplementedException("A8F47D75-5DBB-4543-80AC-14CB9C84056F");
         }
 
         private ObjectPtr NSerializeGenericList(IEnumerable enumerable)

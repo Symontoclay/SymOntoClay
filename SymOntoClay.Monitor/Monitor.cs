@@ -30,6 +30,7 @@ using SymOntoClay.Monitor.Internal;
 using SymOntoClay.Monitor.Internal.FileCache;
 using SymOntoClay.Serializable.CoreHelper.Disposing;
 using SymOntoClay.Serialization;
+using SymOntoClay.Serialization.Settings;
 using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
@@ -54,8 +55,15 @@ namespace SymOntoClay.Monitor
         private MonitorFileCache _fileCache;
 
         private CancellationTokenSource _cancellationTokenSource;
+
+        private LinkedCancellationTokenSourceSerializationSettings _linkedCancellationTokenSourceSettings;
+
+        [SocObjectSerializationSettings(nameof(_linkedCancellationTokenSourceSettings))]
         private CancellationTokenSource _linkedCancellationTokenSource;
 
+        private CustomThreadPoolSerializationSettings _threadPoolSerializationSettings;
+
+        [SocObjectSerializationSettings(nameof(_threadPoolSerializationSettings))]
         private ICustomThreadPool _threadPool;
 
         private MessageNumberGenerator _globalMessageNumberGenerator;
@@ -82,12 +90,29 @@ namespace SymOntoClay.Monitor
 #endif
 
             _cancellationTokenSource = new CancellationTokenSource();
+
+            _linkedCancellationTokenSourceSettings = new LinkedCancellationTokenSourceSerializationSettings()
+            {
+                Token1 = _cancellationTokenSource.Token,
+                Token2 = monitorSettings.CancellationToken
+            };
+
             _linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, monitorSettings.CancellationToken);
 
             var threadingSettings = monitorSettings.ThreadingSettings;
 
-            _threadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
-                threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
+            var minThreadsCount = threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount;
+            var maxThreadsCount = threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount;
+
+            _threadPoolSerializationSettings = new CustomThreadPoolSerializationSettings()
+            {
+                MinThreadsCount = minThreadsCount,
+                MaxThreadsCount = maxThreadsCount,
+                CancellationToken = _linkedCancellationTokenSource.Token
+            };
+
+            _threadPool = new CustomThreadPool(minThreadsCount,
+                maxThreadsCount,
                 _linkedCancellationTokenSource.Token);
 
             _nodesSettings = monitorSettings.NodesSettings;

@@ -7,7 +7,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Threading;
 
 namespace SymOntoClay.Serialization.Implementation
@@ -54,13 +53,6 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"objectPtr = {objectPtr}");
 #endif
 
-            return (T)GetDeserializedObject(objectPtr);
-        }
-
-        /// <inheritdoc/>
-        public T GetDeserializedObject<T>(ObjectPtr objectPtr, ObjectPtr settingsParameterPtr)
-        {
-            //throw new NotImplementedException("045EC3B8-8EA8-4C4A-8FB8-6ECF41D326F0");
             return (T)GetDeserializedObject(objectPtr);
         }
 

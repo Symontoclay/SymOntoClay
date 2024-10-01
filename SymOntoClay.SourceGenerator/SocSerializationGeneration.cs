@@ -757,11 +757,6 @@ namespace SymOntoClay.SourceGenerator
 
                         sb.Append($"deserializer.GetDeserializedObject<{typeName}>(plainObject.{memberIdentifier}");
 
-                        if (!string.IsNullOrWhiteSpace(baseFieldItem.SettingsParameterName))
-                        {
-                            sb.Append($", plainObject.{baseFieldItem.SettingsParameterName}");
-                        }
-
                         sb.Append(")");
                     }
                     break;

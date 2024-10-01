@@ -2,6 +2,7 @@
 using NLog;
 using SymOntoClay.Serialization.Implementation.InternalPlainObjects;
 using SymOntoClay.Serialization.Settings;
+using SymOntoClay.Threading;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -114,7 +115,10 @@ namespace SymOntoClay.Serialization.Implementation
                     return NDeserializeLinkedCancellationTokenSource(objectPtr, fullFileName);                    
 
                 case "System.Threading.CancellationToken":
-                    return NDeserializeCancellationToken(objectPtr, fullFileName);                    
+                    return NDeserializeCancellationToken(objectPtr, fullFileName);
+
+                case "SymOntoClay.Threading.CustomThreadPool":
+                    return NDeserializeCustomThreadPool(objectPtr, fullFileName);
             }
 
             switch (type.Name)
@@ -236,6 +240,29 @@ namespace SymOntoClay.Serialization.Implementation
 #endif
 
             return type.GetInterfaces().Any(p => p == typeof(ISerializable));
+        }
+
+        private object NDeserializeCustomThreadPool(ObjectPtr objectPtr, string fullFileName)
+        {
+            var plainObject = JsonConvert.DeserializeObject<CustomThreadPoolPo>(File.ReadAllText(fullFileName), SerializationHelper.JsonSerializerSettings);
+
+#if DEBUG
+            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, Formatting.Indented)}");
+#endif
+
+            var settings = GetDeserializedObject<CustomThreadPoolSerializationSettings>(plainObject.Settings);
+
+#if DEBUG
+            _logger.Info($"settings = {JsonConvert.SerializeObject(settings, Formatting.Indented)}");
+#endif
+
+            var instance = new CustomThreadPool(settings.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
+                settings.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
+                settings.CancellationToken ?? CancellationToken.None);
+
+            _deserializationContext.RegDeserializedObject(objectPtr.Id, instance);
+
+            return instance;
         }
 
         private object NDeserializeCancellationToken(ObjectPtr objectPtr, string fullFileName)

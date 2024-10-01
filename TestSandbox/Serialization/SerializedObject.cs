@@ -27,6 +27,15 @@ namespace TestSandbox.Serialization
 
             _linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, _cancellationTokenSource2.Token);
 
+            _linkedCancellationTokenSourceSettings2 = new LinkedCancellationTokenSourceSettings()
+            {
+                Token1 = _cancellationTokenSource.Token,
+                Token2 = _cancellationTokenSource2.Token,
+                Token3 = CancellationToken.None
+            };
+
+            _linkedCancellationTokenSource2 = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, _cancellationTokenSource2.Token, CancellationToken.None);
+
             _noneCancelationToken = CancellationToken.None;
         }
 
@@ -41,7 +50,11 @@ namespace TestSandbox.Serialization
         [SocObjectSerializationSettings(nameof(_linkedCancellationTokenSourceSettings))]
         private CancellationTokenSource _linkedCancellationTokenSource;
 
+        [SocObjectSerializationSettings(nameof(_linkedCancellationTokenSourceSettings2))]
+        private CancellationTokenSource _linkedCancellationTokenSource2;
+
         private LinkedCancellationTokenSourceSettings _linkedCancellationTokenSourceSettings;
+        private LinkedCancellationTokenSourceSettings _linkedCancellationTokenSourceSettings2;
 
         private CancellationToken _noneCancelationToken;
 

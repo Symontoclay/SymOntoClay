@@ -99,7 +99,9 @@ namespace SymOntoClay.Serialization.Implementation
                     case "System.Threading.CancellationTokenSource":
                         return NSerializeCancellationTokenSource((CancellationTokenSource)obj);
 
+                    case "System.Threading.CancellationTokenSource+Linked1CancellationTokenSource":
                     case "System.Threading.CancellationTokenSource+Linked2CancellationTokenSource":
+                    case "System.Threading.CancellationTokenSource+LinkedNCancellationTokenSource":
                         return NSerializeLinkedCancellationTokenSource((CancellationTokenSource)obj, (LinkedCancellationTokenSourceSettings)settingsParameter);
                     
                     case "System.Threading.CancellationToken":

@@ -116,7 +116,9 @@ namespace SymOntoClay.Serialization.Implementation
                 case "System.Threading.CancellationTokenSource":
                     return NDeserializeCancellationTokenSource(objectPtr, fullFileName);
 
+                case "System.Threading.CancellationTokenSource+Linked1CancellationTokenSource":
                 case "System.Threading.CancellationTokenSource+Linked2CancellationTokenSource":
+                case "System.Threading.CancellationTokenSource+LinkedNCancellationTokenSource":
                     return NDeserializeLinkedCancellationTokenSource(objectPtr, fullFileName);                    
 
                 case "System.Threading.CancellationToken":

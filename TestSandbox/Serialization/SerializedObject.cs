@@ -38,6 +38,18 @@ namespace TestSandbox.Serialization
             _linkedCancellationTokenSource2 = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, _cancellationTokenSource2.Token, CancellationToken.None);
 
             _noneCancelationToken = CancellationToken.None;
+
+            var minThreadsCount = 1;
+            var maxThreadsCount = 5;
+
+            _customThreadPoolSerializationSettings = new CustomThreadPoolSerializationSettings()
+            {
+                MaxThreadsCount = maxThreadsCount,
+                MinThreadsCount = minThreadsCount,
+                CancellationToken = _noneCancelationToken
+            };
+
+            _threadPool = new CustomThreadPool(minThreadsCount, maxThreadsCount, _noneCancelationToken);
         }
 
         public int IntField;
@@ -59,7 +71,9 @@ namespace TestSandbox.Serialization
 
         private CancellationToken _noneCancelationToken;
 
+        private CustomThreadPoolSerializationSettings _customThreadPoolSerializationSettings;
 
+        [SocObjectSerializationSettings(nameof(_customThreadPoolSerializationSettings))]
         private ICustomThreadPool _threadPool;
 
         /// <inheritdoc/>

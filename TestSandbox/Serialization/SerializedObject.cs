@@ -3,6 +3,7 @@ using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Serialization;
 using SymOntoClay.Serialization.Settings;
 using SymOntoClay.Threading;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
@@ -13,68 +14,73 @@ namespace TestSandbox.Serialization
     {
         public SerializedObject(bool value) 
         {
-            _cancellationTokenSource = new CancellationTokenSource();
-            _cancellationToken = _cancellationTokenSource.Token;
+            _dict1[1] = "Hi!";
+            _dict1[5] = "Hello!";
 
-            //_cancellationTokenSource.Cancel();
+            //_cancellationTokenSource = new CancellationTokenSource();
+            //_cancellationToken = _cancellationTokenSource.Token;
 
-            _cancellationTokenSource2 = new CancellationTokenSource();
+            ////_cancellationTokenSource.Cancel();
 
-            _linkedCancellationTokenSourceSettings = new LinkedCancellationTokenSourceSerializationSettings()
-            {
-                Token1 = _cancellationTokenSource.Token,
-                Token2 = _cancellationTokenSource2.Token
-            };
+            //_cancellationTokenSource2 = new CancellationTokenSource();
 
-            _linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, _cancellationTokenSource2.Token);
+            //_linkedCancellationTokenSourceSettings = new LinkedCancellationTokenSourceSerializationSettings()
+            //{
+            //    Token1 = _cancellationTokenSource.Token,
+            //    Token2 = _cancellationTokenSource2.Token
+            //};
 
-            _linkedCancellationTokenSourceSettings2 = new LinkedCancellationTokenSourceSerializationSettings()
-            {
-                Token1 = _cancellationTokenSource.Token,
-                Token2 = _cancellationTokenSource2.Token,
-                Token3 = CancellationToken.None
-            };
+            //_linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, _cancellationTokenSource2.Token);
 
-            _linkedCancellationTokenSource2 = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, _cancellationTokenSource2.Token, CancellationToken.None);
+            //_linkedCancellationTokenSourceSettings2 = new LinkedCancellationTokenSourceSerializationSettings()
+            //{
+            //    Token1 = _cancellationTokenSource.Token,
+            //    Token2 = _cancellationTokenSource2.Token,
+            //    Token3 = CancellationToken.None
+            //};
 
-            _noneCancelationToken = CancellationToken.None;
+            //_linkedCancellationTokenSource2 = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, _cancellationTokenSource2.Token, CancellationToken.None);
 
-            var minThreadsCount = 1;
-            var maxThreadsCount = 5;
+            //_noneCancelationToken = CancellationToken.None;
 
-            _customThreadPoolSerializationSettings = new CustomThreadPoolSerializationSettings()
-            {
-                MaxThreadsCount = maxThreadsCount,
-                MinThreadsCount = minThreadsCount,
-                CancellationToken = _noneCancelationToken
-            };
+            //var minThreadsCount = 1;
+            //var maxThreadsCount = 5;
 
-            _threadPool = new CustomThreadPool(minThreadsCount, maxThreadsCount, _noneCancelationToken);
+            //_customThreadPoolSerializationSettings = new CustomThreadPoolSerializationSettings()
+            //{
+            //    MaxThreadsCount = maxThreadsCount,
+            //    MinThreadsCount = minThreadsCount,
+            //    CancellationToken = _noneCancelationToken
+            //};
+
+            //_threadPool = new CustomThreadPool(minThreadsCount, maxThreadsCount, _noneCancelationToken);
         }
 
         public int IntField;
 
-        private object _lockObj = new object();
+        private Dictionary<int, string> _dict1 = new Dictionary<int, string>();
 
-        private CancellationTokenSource _cancellationTokenSource;
-        private CancellationToken _cancellationToken;
-        private CancellationTokenSource _cancellationTokenSource2;
+        //private object _lockObj = new object();
 
-        [SocObjectSerializationSettings(nameof(_linkedCancellationTokenSourceSettings))]
-        private CancellationTokenSource _linkedCancellationTokenSource;
+        //private CancellationTokenSource _cancellationTokenSource;
+        //private CancellationToken _cancellationToken;
+        //private CancellationTokenSource _cancellationTokenSource2;
 
-        [SocObjectSerializationSettings(nameof(_linkedCancellationTokenSourceSettings2))]
-        private CancellationTokenSource _linkedCancellationTokenSource2;
+        //[SocObjectSerializationSettings(nameof(_linkedCancellationTokenSourceSettings))]
+        //private CancellationTokenSource _linkedCancellationTokenSource;
 
-        private LinkedCancellationTokenSourceSerializationSettings _linkedCancellationTokenSourceSettings;
-        private LinkedCancellationTokenSourceSerializationSettings _linkedCancellationTokenSourceSettings2;
+        //[SocObjectSerializationSettings(nameof(_linkedCancellationTokenSourceSettings2))]
+        //private CancellationTokenSource _linkedCancellationTokenSource2;
 
-        private CancellationToken _noneCancelationToken;
+        //private LinkedCancellationTokenSourceSerializationSettings _linkedCancellationTokenSourceSettings;
+        //private LinkedCancellationTokenSourceSerializationSettings _linkedCancellationTokenSourceSettings2;
 
-        private CustomThreadPoolSerializationSettings _customThreadPoolSerializationSettings;
+        //private CancellationToken _noneCancelationToken;
 
-        [SocObjectSerializationSettings(nameof(_customThreadPoolSerializationSettings))]
-        private ICustomThreadPool _threadPool;
+        //private CustomThreadPoolSerializationSettings _customThreadPoolSerializationSettings;
+
+        //[SocObjectSerializationSettings(nameof(_customThreadPoolSerializationSettings))]
+        //private ICustomThreadPool _threadPool;
 
         /// <inheritdoc/>
         public override string ToString()
@@ -92,7 +98,8 @@ namespace TestSandbox.Serialization
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(IntField)} = {IntField}");
-            sb.AppendLine($"{spaces}{nameof(_cancellationTokenSource)}.{nameof(_cancellationTokenSource.IsCancellationRequested)} = {_cancellationTokenSource?.IsCancellationRequested}");
+            //sb.AppendLine($"{spaces}{nameof(_cancellationTokenSource)}.{nameof(_cancellationTokenSource.IsCancellationRequested)} = {_cancellationTokenSource?.IsCancellationRequested}");
+            sb.PrintPODDictProp(n, nameof(_dict1), _dict1);
             return sb.ToString();
         }
     }

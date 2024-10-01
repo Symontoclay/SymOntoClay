@@ -117,6 +117,9 @@ namespace SymOntoClay.Serialization.Implementation
                     case "List`1":
                         return NSerializeGenericList((IEnumerable)obj);
 
+                    case "Dictionary`2":
+                        return NSerializeGenericDictionary((IDictionary)obj);
+
                     default:
                         throw new NotImplementedException("B3784FDD-7AFC-4947-AA62-00398400E52B");
                 }
@@ -300,6 +303,63 @@ namespace SymOntoClay.Serialization.Implementation
             return objectPtr;
         }
 
+        private ObjectPtr NSerializeGenericDictionary(IDictionary dictionary)
+        {
+            var type = dictionary.GetType();
+
+#if DEBUG
+            _logger.Info($"type.FullName = {type.FullName}");
+            _logger.Info($"type.Name = {type.Name}");
+            _logger.Info($"type.IsGenericType = {type.IsGenericType}");
+#endif
+
+            if(type.IsGenericType)
+            {
+                var keyGenericParameterType = type.GetGenericArguments()[0];
+
+#if DEBUG
+                _logger.Info($"keyGenericParameterType.FullName = {keyGenericParameterType.FullName}");
+                _logger.Info($"keyGenericParameterType.Name = {keyGenericParameterType.Name}");
+                _logger.Info($"keyGenericParameterType.IsGenericType = {keyGenericParameterType.IsGenericType}");
+                _logger.Info($"keyGenericParameterType.IsPrimitive = {keyGenericParameterType.IsPrimitive}");
+#endif
+
+                var valueGenericParameterType = type.GetGenericArguments()[1];
+
+#if DEBUG
+                _logger.Info($"valueGenericParameterType.FullName = {valueGenericParameterType.FullName}");
+                _logger.Info($"valueGenericParameterType.Name = {valueGenericParameterType.Name}");
+                _logger.Info($"valueGenericParameterType.IsGenericType = {valueGenericParameterType.IsGenericType}");
+                _logger.Info($"valueGenericParameterType.IsPrimitive = {valueGenericParameterType.IsPrimitive}");
+#endif
+
+                if (SerializationHelper.IsPrimitiveType(keyGenericParameterType))
+                {
+                    if (SerializationHelper.IsPrimitiveType(valueGenericParameterType))
+                    {
+                        throw new NotImplementedException("A9A68B31-6A81-4FC2-A78E-2120B7B9457C");
+                    }
+                    else
+                    {
+                        throw new NotImplementedException("CF8D5901-5409-4347-8064-D555A0B7A25F");
+                    }
+                }
+                else
+                {
+                    if (SerializationHelper.IsPrimitiveType(valueGenericParameterType))
+                    {
+                        throw new NotImplementedException("ED7A7AC5-8982-47EE-99BC-DA5EAE30C0D1");
+                    }
+                    else
+                    {
+                        throw new NotImplementedException("3F2EA372-5B3D-4FC5-A3E3-0AE8721FB406");
+                    }
+                }
+            }
+
+            throw new NotImplementedException("D55AE149-D344-4855-8EC0-2AD18C0F90D5");
+        }
+
         private ObjectPtr NSerializeGenericList(IEnumerable enumerable)
         {
             var type = enumerable.GetType();
@@ -310,28 +370,26 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"type.IsGenericType = {type.IsGenericType}");
 #endif
 
-            var genericParameterType = type.GetGenericArguments()[0];
+            if(type.IsGenericType)
+            {
+                var genericParameterType = type.GetGenericArguments()[0];
 
 #if DEBUG
-            _logger.Info($"genericParameterType.FullName = {genericParameterType.FullName}");
-            _logger.Info($"genericParameterType.Name = {genericParameterType.Name}");
-            _logger.Info($"genericParameterType.IsGenericType = {genericParameterType.IsGenericType}");
-            _logger.Info($"genericParameterType.IsPrimitive = {genericParameterType.IsPrimitive}");
+                _logger.Info($"genericParameterType.FullName = {genericParameterType.FullName}");
+                _logger.Info($"genericParameterType.Name = {genericParameterType.Name}");
+                _logger.Info($"genericParameterType.IsGenericType = {genericParameterType.IsGenericType}");
+                _logger.Info($"genericParameterType.IsPrimitive = {genericParameterType.IsPrimitive}");
 #endif
 
-            if (SerializationHelper.IsObject(genericParameterType))
-            {
-                return NSerializeListWithObjectParameter(enumerable);
-            }
+                if (SerializationHelper.IsPrimitiveType(genericParameterType))
+                {
+                    throw new NotImplementedException("9B48CB69-4F44-4C9E-9C7D-B57593946B70");
+                }
 
-            if(SerializationHelper.IsPrimitiveType(genericParameterType))
-            {
-                throw new NotImplementedException("9B48CB69-4F44-4C9E-9C7D-B57593946B70");
-            }
-
-            if(genericParameterType == typeof(ISerializable))
-            {
-                throw new NotImplementedException("70E2078C-ECBF-4896-BC07-CCE1FAFFF41F");
+                if (SerializationHelper.IsObject(genericParameterType))
+                {
+                    return NSerializeListWithObjectParameter(enumerable);
+                }
             }
 
             return NSerializeListWithPossibleSerializebleParameter(enumerable);

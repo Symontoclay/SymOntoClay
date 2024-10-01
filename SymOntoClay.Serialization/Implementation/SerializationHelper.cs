@@ -54,6 +54,9 @@ namespace SymOntoClay.Serialization.Implementation
                 case "System.Int64":
                     return true;
 
+                case "System.String":
+                    return true;
+
                 default:
                     return false;
             }

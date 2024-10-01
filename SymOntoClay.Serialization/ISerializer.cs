@@ -4,5 +4,6 @@
     {
         void Serialize(ISerializable serializable);
         ObjectPtr GetSerializedObjectPtr(object obj);
+        ObjectPtr GetSerializedObjectPtr(object obj, object settingsParameter);
     }
 }

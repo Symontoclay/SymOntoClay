@@ -142,21 +142,25 @@ namespace SymOntoClay.SourceGenerator
 
                 sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}public {GetBaseFieldMemberType(fieldItem)} {fieldItem.Identifier};");
             }
-            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}/// <inheritdoc/>");
-            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}public override string ToString()");
-            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}{{");
-            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentIdentation)}return ToString(0u);");
-            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}}}");
-            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}/// <inheritdoc/>");
-            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}public string ToString(uint n)");
-            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}{{");
-            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentIdentation)}return this.GetDefaultToStringInformation(n);");
-            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}}}");
-            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}/// <inheritdoc/>");
-            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}string IObjectToString.PropertiesToString(uint n)");
-            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}{{");
-            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentIdentation)}return PropertiesToString(n);");
-            sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}}}");
+
+            if(!hasBaseType)
+            {
+                sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}/// <inheritdoc/>");
+                sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}public override string ToString()");
+                sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}{{");
+                sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentIdentation)}return ToString(0u);");
+                sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}}}");
+                sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}/// <inheritdoc/>");
+                sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}public string ToString(uint n)");
+                sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}{{");
+                sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentIdentation)}return this.GetDefaultToStringInformation(n);");
+                sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}}}");
+                sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}/// <inheritdoc/>");
+                sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}string IObjectToString.PropertiesToString(uint n)");
+                sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}{{");
+                sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentIdentation)}return PropertiesToString(n);");
+                sourceCodeBuilder.AppendLine($"{GeneratorsHelper.Spaces(classContentDeclIdentation)}}}");
+            }
 
             if(hasBaseType)
             {
@@ -357,43 +361,7 @@ namespace SymOntoClay.SourceGenerator
 
         private string GetPlainObjectClassIdentifierFromAttribute(ClassDeclarationSyntax syntaxNode)
         {
-            var socBasePlainObjectAttribute = syntaxNode
-                ?.ChildNodes()
-                ?.OfType<AttributeListSyntax>()
-                ?.SelectMany(p => p.ChildNodes()?.OfType<AttributeSyntax>().Where(x => x.ChildNodes()?.OfType<IdentifierNameSyntax>()?.Any(y => GeneratorsHelper.ToString(y.GetText()) == Constants.SocBasePlainObjectAttributeName) ?? false))
-                ?.FirstOrDefault();
-
-            if (socBasePlainObjectAttribute == null)
-            {
-                return string.Empty;
-            }
-
-            var socBasePlainObjectArgument = socBasePlainObjectAttribute.ChildNodes()?.OfType<AttributeArgumentListSyntax>()?.SelectMany(p => p.ChildNodes()?.OfType<AttributeArgumentSyntax>())?.FirstOrDefault();
-
-            if (socBasePlainObjectArgument == null)
-            {
-                return string.Empty;
-            }
-
-            var socBasePlainObjectNameNode = socBasePlainObjectArgument.ChildNodes()?.OfType<LiteralExpressionSyntax>().FirstOrDefault();
-
-            if (socBasePlainObjectNameNode != null)
-            {
-                return GeneratorsHelper.ToString(socBasePlainObjectNameNode.GetText()).Replace("\"", string.Empty).Trim();
-            }
-
-            var socBasePlainObjectNameOfNode = socBasePlainObjectArgument
-                .ChildNodes()
-                ?.OfType<InvocationExpressionSyntax>()
-                ?.SelectMany(x => x.ChildNodes()?.OfType<ArgumentListSyntax>().SelectMany(y => y.ChildNodes()?.OfType<ArgumentSyntax>()?.SelectMany(n => n.ChildNodes()?.OfType<IdentifierNameSyntax>())))
-                .FirstOrDefault();
-
-            if (socBasePlainObjectNameOfNode == null)
-            {
-                return string.Empty;
-            }
-
-            return GeneratorsHelper.ToString(socBasePlainObjectNameOfNode.GetText()).Trim();
+            return GeneratorsHelper.GetStringValueOfSingleCtorArgumentOfAttribute(syntaxNode, Constants.SocBasePlainObjectAttributeName);
         }
 
         private string GetPlainObjectClassIdentifier(string typeName)
@@ -499,13 +467,27 @@ namespace SymOntoClay.SourceGenerator
                     continue;
                 }
 
+                var propertyDeclarationText = GeneratorsHelper.ToString(propertyDeclaration.GetText());
+
+#if DEBUG
+                //FileLogger.WriteLn($"propertyDeclarationText = '{propertyDeclarationText}'");
+#endif
+
+                if (propertyDeclarationText.Contains("static "))
+                {
+                    continue;
+                }
+
                 var hasActionKeyAttribute = HasActionKeyAttribute(propertyDeclaration);
+
+                var settingsParameterName = GetSettingsParameterName(propertyDeclaration);
 
                 var item = new PropertyItem()
                 {
                     ClassDeclarationSyntaxNode = syntaxNode,
                     SyntaxNode = propertyDeclaration,
-                    IsActionKey = hasActionKeyAttribute
+                    IsActionKey = hasActionKeyAttribute,
+                    SettingsParameterName = settingsParameterName
                 };
 
                 FillUpBaseFieldItem(propertyDeclaration, item);
@@ -562,13 +544,31 @@ namespace SymOntoClay.SourceGenerator
                     continue;
                 }
 
+#if DEBUG
+                //GeneratorsHelper.ShowSyntaxNode(0, fieldDeclaration);
+#endif
+
+                var fieldDeclarationText = GeneratorsHelper.ToString(fieldDeclaration.GetText());
+
+#if DEBUG
+                //FileLogger.WriteLn($"fieldDeclarationText = '{fieldDeclarationText}'");
+#endif
+
+                if (fieldDeclarationText.Contains("static "))
+                {
+                    continue;
+                }
+
                 var hasActionKeyAttribute = HasActionKeyAttribute(fieldDeclaration);
+
+                var settingsParameterName = GetSettingsParameterName(fieldDeclaration);
 
                 var item = new FieldItem()
                 {
                     ClassDeclarationSyntaxNode = syntaxNode,
                     SyntaxNode = fieldDeclaration,
-                    IsActionKey = hasActionKeyAttribute
+                    IsActionKey = hasActionKeyAttribute,
+                    SettingsParameterName = settingsParameterName
                 };
 
                 var variableDeclaration = fieldDeclaration.ChildNodes()?.FirstOrDefault(p => p.IsKind(SyntaxKind.VariableDeclaration));
@@ -596,6 +596,11 @@ namespace SymOntoClay.SourceGenerator
             return syntaxNode.ChildNodes().OfType<AttributeListSyntax>().Any(p => p.ChildNodes().OfType<AttributeSyntax>().Any(x => x.ChildNodes().OfType<IdentifierNameSyntax>().Any(y => y.Identifier.Text == attributeName)));
         }
 
+        private string GetSettingsParameterName(SyntaxNode syntaxNode)
+        {
+            return GeneratorsHelper.GetStringValueOfSingleCtorArgumentOfAttribute(syntaxNode, Constants.SocObjectSerializationSettingsAttributeName);
+        }
+
         private void FillUpBaseFieldItem(SyntaxNode syntaxNode, BaseFieldItem baseFieldItem)
         {
             var predefinedType = syntaxNode.ChildNodes()?.FirstOrDefault(p => p.IsKind(SyntaxKind.PredefinedType));
@@ -610,7 +615,59 @@ namespace SymOntoClay.SourceGenerator
 
                     if (genericName == null)
                     {
-                        throw new NotImplementedException("8E504D11-8586-4B60-832C-D890CFD7D10D");
+                        var qualifiedName = syntaxNode.ChildNodes()?.FirstOrDefault(p => p.IsKind(SyntaxKind.QualifiedName));
+
+                        if (qualifiedName == null)
+                        {
+                            var nullableTypeSyntax = syntaxNode.ChildNodes()?.FirstOrDefault(p => p.IsKind(SyntaxKind.NullableType));
+
+                            if(nullableTypeSyntax == null)
+                            {
+                                throw new NotImplementedException("8E504D11-8586-4B60-832C-D890CFD7D10D");
+                            }
+                            else
+                            {
+#if DEBUG
+                                //GeneratorsHelper.ShowSyntaxNode(0, syntaxNode);
+#endif
+
+                                baseFieldItem.FieldTypeSyntaxNode = nullableTypeSyntax;
+
+                                var childPredefinedType = nullableTypeSyntax.ChildNodes()?.FirstOrDefault(p => p.IsKind(SyntaxKind.PredefinedType));
+
+                                if(childPredefinedType == null)
+                                {
+                                    var childGenericName = nullableTypeSyntax.ChildNodes()?.FirstOrDefault(p => p.IsKind(SyntaxKind.GenericName));
+
+                                    if(childGenericName == null)
+                                    {
+                                        baseFieldItem.KindFieldType = KindFieldType.Identifier;
+                                    }
+                                    else
+                                    {
+                                        baseFieldItem.KindFieldType = KindFieldType.GenericType;
+                                    }                                    
+                                }
+                                else
+                                {
+                                    var typeName = GeneratorsHelper.ToString(childPredefinedType.GetText());
+
+                                    if (typeName == "object")
+                                    {
+                                        baseFieldItem.KindFieldType = KindFieldType.Object;
+                                    }
+                                    else
+                                    {
+                                        baseFieldItem.KindFieldType = KindFieldType.PredefinedType;
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            baseFieldItem.FieldTypeSyntaxNode = qualifiedName;
+                            baseFieldItem.KindFieldType = KindFieldType.Identifier;
+                        }
                     }
                     else
                     {
@@ -674,7 +731,14 @@ namespace SymOntoClay.SourceGenerator
                     break;
 
                 default:
-                    sb.Append($"serializer.GetSerializedObjectPtr({memberIdentifier})");
+                    sb.Append($"serializer.GetSerializedObjectPtr({memberIdentifier}");
+
+                    if(!string.IsNullOrWhiteSpace(baseFieldItem.SettingsParameterName))
+                    {
+                        sb.Append($", {baseFieldItem.SettingsParameterName}");
+                    }
+
+                    sb.Append(")");
                     break;
             }
             sb.Append(";");
@@ -719,7 +783,9 @@ namespace SymOntoClay.SourceGenerator
                             break;
                         }
 
-                        sb.Append($"deserializer.GetDeserializedObject<{typeName}>(plainObject.{memberIdentifier})");
+                        sb.Append($"deserializer.GetDeserializedObject<{typeName}>(plainObject.{memberIdentifier}");
+
+                        sb.Append(")");
                     }
                     break;
             }

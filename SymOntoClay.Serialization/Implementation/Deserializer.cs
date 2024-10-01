@@ -1,11 +1,14 @@
 ﻿using Newtonsoft.Json;
 using NLog;
+using SymOntoClay.Serialization.Implementation.InternalPlainObjects;
+using SymOntoClay.Serialization.Settings;
+using SymOntoClay.Threading;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
+using System.Threading;
 
 namespace SymOntoClay.Serialization.Implementation
 {
@@ -104,10 +107,18 @@ namespace SymOntoClay.Serialization.Implementation
                     return NDeserializeBareObject(objectPtr);
 
                 case "System.Threading.CancellationTokenSource":
-                    throw new NotImplementedException("22670DE5-19C5-44C8-896E-EC945E977DCA");
+                    return NDeserializeCancellationTokenSource(objectPtr, fullFileName);
+
+                case "System.Threading.CancellationTokenSource+Linked1CancellationTokenSource":
+                case "System.Threading.CancellationTokenSource+Linked2CancellationTokenSource":
+                case "System.Threading.CancellationTokenSource+LinkedNCancellationTokenSource":
+                    return NDeserializeLinkedCancellationTokenSource(objectPtr, fullFileName);                    
 
                 case "System.Threading.CancellationToken":
-                    throw new NotImplementedException("2F82C7B6-68B0-4CCF-9358-AF662C2EA47E");
+                    return NDeserializeCancellationToken(objectPtr, fullFileName);
+
+                case "SymOntoClay.Threading.CustomThreadPool":
+                    return NDeserializeCustomThreadPool(objectPtr, fullFileName);
             }
 
             switch (type.Name)
@@ -229,6 +240,171 @@ namespace SymOntoClay.Serialization.Implementation
 #endif
 
             return type.GetInterfaces().Any(p => p == typeof(ISerializable));
+        }
+
+        private object NDeserializeCustomThreadPool(ObjectPtr objectPtr, string fullFileName)
+        {
+            var plainObject = JsonConvert.DeserializeObject<CustomThreadPoolPo>(File.ReadAllText(fullFileName), SerializationHelper.JsonSerializerSettings);
+
+#if DEBUG
+            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, Formatting.Indented)}");
+#endif
+
+            var settings = GetDeserializedObject<CustomThreadPoolSerializationSettings>(plainObject.Settings);
+
+#if DEBUG
+            _logger.Info($"settings = {JsonConvert.SerializeObject(settings, Formatting.Indented)}");
+#endif
+
+            var instance = new CustomThreadPool(settings.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
+                settings.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
+                settings.CancellationToken ?? CancellationToken.None);
+
+            _deserializationContext.RegDeserializedObject(objectPtr.Id, instance);
+
+            return instance;
+        }
+
+        private object NDeserializeCancellationToken(ObjectPtr objectPtr, string fullFileName)
+        {
+            var plainObject = JsonConvert.DeserializeObject<CancellationTokenPo>(File.ReadAllText(fullFileName), SerializationHelper.JsonSerializerSettings);
+
+#if DEBUG
+            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, Formatting.Indented)}");
+#endif
+
+            var cancelationTokenSource = GetDeserializedObject(plainObject.Source) as CancellationTokenSource;
+
+#if DEBUG
+            _logger.Info($"cancelationTokenSource = {JsonConvert.SerializeObject(cancelationTokenSource, Formatting.Indented)}");
+#endif
+
+            if(cancelationTokenSource == null)
+            {
+                return CancellationToken.None;
+            }
+
+            return cancelationTokenSource.Token;
+        }
+
+        private object NDeserializeLinkedCancellationTokenSource(ObjectPtr objectPtr, string fullFileName)
+        {
+            var plainObject = JsonConvert.DeserializeObject<LinkedCancellationTokenSourcePo>(File.ReadAllText(fullFileName), SerializationHelper.JsonSerializerSettings);
+
+#if DEBUG
+            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, Formatting.Indented)}");
+#endif
+
+            var settings = GetDeserializedObject<LinkedCancellationTokenSourceSerializationSettings>(plainObject.Settings);
+
+#if DEBUG
+            _logger.Info($"settings = {JsonConvert.SerializeObject(settings, Formatting.Indented)}");
+#endif
+
+            var instance = CreateLinkedTokenSource(settings);
+
+            if (plainObject.IsCancelled)
+            {
+                instance.Cancel();
+            }
+
+            _deserializationContext.RegDeserializedObject(objectPtr.Id, instance);
+
+            return instance;
+        }
+
+        private CancellationTokenSource CreateLinkedTokenSource(LinkedCancellationTokenSourceSerializationSettings settings)
+        {
+            var token1 = settings.Token1;
+            var token2 = settings.Token2;
+            var token3 = settings.Token3;
+            var token4 = settings.Token4;
+            var token5 = settings.Token5;
+            var token6 = settings.Token6;
+            var token7 = settings.Token7;
+            var token8 = settings.Token8;
+            var token9 = settings.Token9;
+            var token10 = settings.Token10;
+
+            if(token1.HasValue && token2.HasValue && token3.HasValue && token4.HasValue && token5.HasValue &&
+                token6.HasValue && token7.HasValue && token8.HasValue && token9.HasValue && token10.HasValue)
+            {
+                return CancellationTokenSource.CreateLinkedTokenSource(token1.Value, token2.Value, token3.Value, token4.Value, token5.Value,
+                    token6.Value, token7.Value, token8.Value, token9.Value, token10.Value);
+            }
+
+            if (token1.HasValue && token2.HasValue && token3.HasValue && token4.HasValue && token5.HasValue &&
+                token6.HasValue && token7.HasValue && token8.HasValue && token9.HasValue)
+            {
+                return CancellationTokenSource.CreateLinkedTokenSource(token1.Value, token2.Value, token3.Value, token4.Value, token5.Value,
+                    token6.Value, token7.Value, token8.Value, token9.Value);
+            }
+
+            if (token1.HasValue && token2.HasValue && token3.HasValue && token4.HasValue &&
+                token5.HasValue && token6.HasValue && token7.HasValue && token8.HasValue)
+            {
+                return CancellationTokenSource.CreateLinkedTokenSource(token1.Value, token2.Value, token3.Value, token4.Value,
+                    token5.Value, token6.Value, token7.Value, token8.Value);
+            }
+
+            if (token1.HasValue && token2.HasValue && token3.HasValue && token4.HasValue &&
+                token5.HasValue && token6.HasValue && token7.HasValue)
+            {
+                return CancellationTokenSource.CreateLinkedTokenSource(token1.Value, token2.Value, token3.Value, token4.Value,
+                    token5.Value, token6.Value, token7.Value);
+            }
+
+            if (token1.HasValue && token2.HasValue && token3.HasValue && token4.HasValue && token5.HasValue && token6.HasValue)
+            {
+                return CancellationTokenSource.CreateLinkedTokenSource(token1.Value, token2.Value, token3.Value, token4.Value, token5.Value, token6.Value);
+            }
+
+            if (token1.HasValue && token2.HasValue && token3.HasValue && token4.HasValue && token5.HasValue)
+            {
+                return CancellationTokenSource.CreateLinkedTokenSource(token1.Value, token2.Value, token3.Value, token4.Value, token5.Value);
+            }
+
+            if (token1.HasValue && token2.HasValue && token3.HasValue && token4.HasValue)
+            {
+                return CancellationTokenSource.CreateLinkedTokenSource(token1.Value, token2.Value, token3.Value, token4.Value);
+            }
+
+            if (token1.HasValue && token2.HasValue && token3.HasValue)
+            {
+                return CancellationTokenSource.CreateLinkedTokenSource(token1.Value, token2.Value, token3.Value);
+            }
+
+            if (token1.HasValue && token2.HasValue)
+            {
+                return CancellationTokenSource.CreateLinkedTokenSource(token1.Value, token2.Value);
+            }
+
+            if (token1.HasValue)
+            {
+                return CancellationTokenSource.CreateLinkedTokenSource(token1.Value);
+            }
+
+            throw new NotSupportedException("2A54A7AB-56FC-4EA0-BA51-E33D70841177");
+        }
+
+        private object NDeserializeCancellationTokenSource(ObjectPtr objectPtr, string fullFileName)
+        {
+            var plainObject = JsonConvert.DeserializeObject<CancellationTokenSourcePo>(File.ReadAllText(fullFileName), SerializationHelper.JsonSerializerSettings);
+
+#if DEBUG
+            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, Formatting.Indented)}");
+#endif
+
+            var instance = new CancellationTokenSource();
+            
+            if(plainObject.IsCancelled)
+            {
+                instance.Cancel();
+            }
+
+            _deserializationContext.RegDeserializedObject(objectPtr.Id, instance);
+
+            return instance;
         }
 
         private object NDeserializeBareObject(ObjectPtr objectPtr)

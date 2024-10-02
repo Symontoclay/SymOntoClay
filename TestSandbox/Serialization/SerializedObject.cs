@@ -18,6 +18,10 @@ namespace TestSandbox.Serialization
             _dict1[1] = "Hi!";
             _dict1[5] = "Hello!";
 
+            _dict2[3] = "Hi!";
+            _dict2[5] = 12;
+            _dict2[7] = new object();
+
             //_cancellationTokenSource = new CancellationTokenSource();
             //_cancellationToken = _cancellationTokenSource.Token;
 
@@ -61,6 +65,7 @@ namespace TestSandbox.Serialization
 
         //private Dictionary<int, sbyte> _dict = new Dictionary<int, sbyte>();
         private Dictionary<int, string> _dict1 = new Dictionary<int, string>();
+        private Dictionary<int, object> _dict2 = new Dictionary<int, object>();
 
         //private object _lockObj = new object();
 
@@ -102,6 +107,7 @@ namespace TestSandbox.Serialization
             sb.AppendLine($"{spaces}{nameof(IntField)} = {IntField}");
             //sb.AppendLine($"{spaces}{nameof(_cancellationTokenSource)}.{nameof(_cancellationTokenSource.IsCancellationRequested)} = {_cancellationTokenSource?.IsCancellationRequested}");
             sb.PrintPODDictProp(n, nameof(_dict1), _dict1);
+            sb.PrintPODDictProp(n, nameof(_dict2), _dict2);
             return sb.ToString();
         }
     }

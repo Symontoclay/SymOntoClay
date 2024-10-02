@@ -348,7 +348,7 @@ namespace SymOntoClay.Serialization.Implementation
                         else
                         {
                             throw new NotImplementedException("EF93BCF0-BAD9-44A8-9D16-A4581F6988ED");
-                        }                        
+                        }
                     }
                 }
                 else

@@ -159,7 +159,7 @@ namespace SymOntoClay.Serialization.Implementation
             plainObject.Settings = GetSerializedObjectPtr(settingsParameter);
 
 #if DEBUG
-            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject)}");
+            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, Formatting.Indented)}");
 #endif
 
             WriteToFile(plainObject, instanceId);
@@ -230,7 +230,7 @@ namespace SymOntoClay.Serialization.Implementation
             plainObject.Settings = GetSerializedObjectPtr(settingsParameter);
 
 #if DEBUG
-            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject)}");
+            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, Formatting.Indented)}");
 #endif
 
             WriteToFile(plainObject, instanceId);
@@ -268,7 +268,7 @@ namespace SymOntoClay.Serialization.Implementation
             plainObject.Source = GetSerializedObjectPtr(fieldValue);
 
 #if DEBUG
-            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject)}");
+            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, Formatting.Indented)}");
 #endif
 
             WriteToFile(plainObject, instanceId);
@@ -404,7 +404,13 @@ namespace SymOntoClay.Serialization.Implementation
 
             _serializationContext.RegObjectPtr(dictionary, objectPtr);
 
-            throw new NotImplementedException("A8F47D75-5DBB-4543-80AC-14CB9C84056F");
+#if DEBUG
+            _logger.Info($"dictionary = {JsonConvert.SerializeObject(dictionary, Formatting.Indented)}");
+#endif
+
+            WriteToFile(dictionary, instanceId);
+
+            return objectPtr;
         }
 
         private ObjectPtr NSerializeGenericList(IEnumerable enumerable)
@@ -490,7 +496,7 @@ namespace SymOntoClay.Serialization.Implementation
             }
 
 #if DEBUG
-            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, SerializationHelper.JsonSerializerSettings)}");
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, Formatting.Indented)}");
 #endif
 
             WriteToFile(listWithPlainObjects, instanceId);

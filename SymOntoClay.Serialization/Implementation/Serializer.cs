@@ -337,7 +337,7 @@ namespace SymOntoClay.Serialization.Implementation
                 {
                     if (SerializationHelper.IsPrimitiveType(valueGenericParameterType))
                     {
-                        return NSerializeGenericDictionaryWithPrimitiveKeyAndPrimitiveValue(dictionary, keyGenericParameterType, valueGenericParameterType);
+                        return NSerializeGenericDictionaryWithPrimitiveKeyAndPrimitiveValue(dictionary);
                     }
                     else
                     {
@@ -388,7 +388,7 @@ namespace SymOntoClay.Serialization.Implementation
             throw new NotImplementedException("D55AE149-D344-4855-8EC0-2AD18C0F90D5");
         }
 
-        private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndPrimitiveValue(IDictionary dictionary, Type keyGenericParameterType, Type valueGenericParameterType)
+        private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndPrimitiveValue(IDictionary dictionary)
         {
             var instanceId = CreateInstanceId();
 

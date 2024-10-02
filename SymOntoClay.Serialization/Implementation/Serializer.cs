@@ -341,18 +341,46 @@ namespace SymOntoClay.Serialization.Implementation
                     }
                     else
                     {
-                        throw new NotImplementedException("CF8D5901-5409-4347-8064-D555A0B7A25F");
+                        if(SerializationHelper.IsObject(valueGenericParameterType))
+                        {
+                            throw new NotImplementedException("CF8D5901-5409-4347-8064-D555A0B7A25F");
+                        }
+                        else
+                        {
+                            throw new NotImplementedException("EF93BCF0-BAD9-44A8-9D16-A4581F6988ED");
+                        }                        
                     }
                 }
                 else
                 {
-                    if (SerializationHelper.IsPrimitiveType(valueGenericParameterType))
+                    if(SerializationHelper.IsObject(keyGenericParameterType))
                     {
-                        throw new NotImplementedException("ED7A7AC5-8982-47EE-99BC-DA5EAE30C0D1");
+                        if (SerializationHelper.IsPrimitiveType(valueGenericParameterType))
+                        {
+                            throw new NotImplementedException("ED7A7AC5-8982-47EE-99BC-DA5EAE30C0D1");
+                        }
+                        else
+                        {
+                            throw new NotImplementedException("3F2EA372-5B3D-4FC5-A3E3-0AE8721FB406");
+                        }
                     }
                     else
                     {
-                        throw new NotImplementedException("3F2EA372-5B3D-4FC5-A3E3-0AE8721FB406");
+                        if (SerializationHelper.IsPrimitiveType(valueGenericParameterType))
+                        {
+                            throw new NotImplementedException("358AA9A3-7827-4B1A-847A-3CC44F48F5A2");
+                        }
+                        else
+                        {
+                            if (SerializationHelper.IsObject(valueGenericParameterType))
+                            {
+                                throw new NotImplementedException("FABC69AF-4885-4F02-A0CA-5B1E9BE1F2D3");
+                            }
+                            else
+                            {
+                                throw new NotImplementedException("31F1F400-81C7-4110-8D7F-D25F4818F413");
+                            }
+                        }
                     }
                 }
             }

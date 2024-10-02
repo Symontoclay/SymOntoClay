@@ -126,6 +126,9 @@ namespace SymOntoClay.Serialization.Implementation
                 case "List`1":
                     return NDeserializeGenericList(type, objectPtr, fullFileName);
 
+                case "Dictionary`2":
+                    return NDeserializeGenericDictionary(type, objectPtr, fullFileName);
+
                 default:
                     {
                         if (IsSerializable(type))
@@ -416,30 +419,33 @@ namespace SymOntoClay.Serialization.Implementation
             return instance;
         }
 
+        private object NDeserializeGenericDictionary(Type type, ObjectPtr objectPtr, string fullFileName)
+        {
+            throw new NotImplementedException("5BA58F8C-E959-486F-87D7-3211CDC20B8B");
+        }
+
         private object NDeserializeGenericList(Type type, ObjectPtr objectPtr, string fullFileName)
         {
-            var genericParameterType = type.GetGenericArguments()[0];
+            if(type.IsGenericType)
+            {
+                var genericParameterType = type.GetGenericArguments()[0];
 
 #if DEBUG
-            _logger.Info($"genericParameterType.FullName = {genericParameterType.FullName}");
-            _logger.Info($"genericParameterType.Name = {genericParameterType.Name}");
-            _logger.Info($"genericParameterType.IsGenericType = {genericParameterType.IsGenericType}");
-            _logger.Info($"genericParameterType.IsPrimitive = {genericParameterType.IsPrimitive}");
+                _logger.Info($"genericParameterType.FullName = {genericParameterType.FullName}");
+                _logger.Info($"genericParameterType.Name = {genericParameterType.Name}");
+                _logger.Info($"genericParameterType.IsGenericType = {genericParameterType.IsGenericType}");
+                _logger.Info($"genericParameterType.IsPrimitive = {genericParameterType.IsPrimitive}");
 #endif
 
-            if (SerializationHelper.IsObject(genericParameterType))
-            {
-                return NDeserializeListWithObjectParameter(type, objectPtr, fullFileName);
-            }
+                if (SerializationHelper.IsPrimitiveType(genericParameterType))
+                {
+                    throw new NotImplementedException("CCBC128D-B66C-4CC1-89E6-020262E7B424");
+                }
 
-            if (SerializationHelper.IsPrimitiveType(genericParameterType))
-            {
-                throw new NotImplementedException("CCBC128D-B66C-4CC1-89E6-020262E7B424");
-            }
-
-            if (genericParameterType == typeof(ISerializable))
-            {
-                throw new NotImplementedException("A8778677-669D-4372-A3D6-E5404B46A447");
+                if (SerializationHelper.IsObject(genericParameterType))
+                {
+                    return NDeserializeListWithObjectParameter(type, objectPtr, fullFileName);
+                }
             }
 
             return NDeserializeListWithPossibleSerializebleParameter(type, objectPtr, fullFileName);

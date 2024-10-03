@@ -469,7 +469,14 @@ namespace SymOntoClay.Serialization.Implementation
                         }
                         else
                         {
-                            throw new NotImplementedException("BD4D4EDA-EAAF-4D79-BCDA-97A975C59842");
+                            if(SerializationHelper.IsObject(valueGenericParameterType))
+                            {
+                                throw new NotImplementedException("BD4D4EDA-EAAF-4D79-BCDA-97A975C59842");
+                            }
+                            else
+                            {
+                                throw new NotImplementedException("D4C10193-1643-4427-90F9-51CD77D128DF");
+                            }
                         }
                     }
                     else

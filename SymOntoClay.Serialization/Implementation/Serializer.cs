@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using NLog;
 using SymOntoClay.Serialization.Implementation.InternalPlainObjects;
 using SymOntoClay.Serialization.Settings;
@@ -10,7 +9,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Serialization;
 using System.Threading;
 
 namespace SymOntoClay.Serialization.Implementation
@@ -343,11 +341,11 @@ namespace SymOntoClay.Serialization.Implementation
                     {
                         if(SerializationHelper.IsObject(valueGenericParameterType))
                         {
-                            throw new NotImplementedException("CF8D5901-5409-4347-8064-D555A0B7A25F");
+                            return NSerializeGenericDictionaryWithPrimitiveKeyAndObjectValue(dictionary);
                         }
                         else
                         {
-                            throw new NotImplementedException("EF93BCF0-BAD9-44A8-9D16-A4581F6988ED");
+                            return NSerializeGenericDictionaryWithPrimitiveKeyAndCompositeValue(dictionary);                            
                         }
                     }
                 }
@@ -357,28 +355,35 @@ namespace SymOntoClay.Serialization.Implementation
                     {
                         if (SerializationHelper.IsPrimitiveType(valueGenericParameterType))
                         {
-                            throw new NotImplementedException("ED7A7AC5-8982-47EE-99BC-DA5EAE30C0D1");
+                            return NSerializeGenericDictionaryWithObjectKeyAndPrimitiveValue(dictionary);
                         }
                         else
                         {
-                            throw new NotImplementedException("3F2EA372-5B3D-4FC5-A3E3-0AE8721FB406");
+                            if(SerializationHelper.IsObject(valueGenericParameterType))
+                            {
+                                return NSerializeGenericDictionaryWithObjectKeyAndObjectValue(dictionary);
+                            }
+                            else
+                            {
+                                return NSerializeGenericDictionaryWithObjectKeyAndCompositeValue(dictionary);
+                            }
                         }
                     }
                     else
                     {
                         if (SerializationHelper.IsPrimitiveType(valueGenericParameterType))
                         {
-                            throw new NotImplementedException("358AA9A3-7827-4B1A-847A-3CC44F48F5A2");
+                            return NSerializeGenericDictionaryWithCompositeKeyAndPrimitiveValue(dictionary);
                         }
                         else
                         {
                             if (SerializationHelper.IsObject(valueGenericParameterType))
                             {
-                                throw new NotImplementedException("FABC69AF-4885-4F02-A0CA-5B1E9BE1F2D3");
+                                return NSerializeGenericDictionaryWithCompositeKeyAndObjectValue(dictionary);
                             }
                             else
                             {
-                                throw new NotImplementedException("31F1F400-81C7-4110-8D7F-D25F4818F413");
+                                return NSerializeGenericDictionaryWithCompositeKeyAndCompositeValue(dictionary);
                             }
                         }
                     }
@@ -386,6 +391,160 @@ namespace SymOntoClay.Serialization.Implementation
             }
 
             throw new NotImplementedException("D55AE149-D344-4855-8EC0-2AD18C0F90D5");
+        }
+
+        private ObjectPtr NSerializeGenericDictionaryWithCompositeKeyAndCompositeValue(IDictionary dictionary)
+        {
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, dictionary.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(dictionary, objectPtr);
+
+            throw new NotImplementedException("31F1F400-81C7-4110-8D7F-D25F4818F413");
+        }
+
+        private ObjectPtr NSerializeGenericDictionaryWithCompositeKeyAndObjectValue(IDictionary dictionary)
+        {
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, dictionary.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(dictionary, objectPtr);
+
+            throw new NotImplementedException("FABC69AF-4885-4F02-A0CA-5B1E9BE1F2D3");
+        }
+
+        private ObjectPtr NSerializeGenericDictionaryWithCompositeKeyAndPrimitiveValue(IDictionary dictionary)
+        {
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, dictionary.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(dictionary, objectPtr);
+
+            throw new NotImplementedException("358AA9A3-7827-4B1A-847A-3CC44F48F5A2");
+        }
+
+        private ObjectPtr NSerializeGenericDictionaryWithObjectKeyAndCompositeValue(IDictionary dictionary)
+        {
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, dictionary.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(dictionary, objectPtr);
+
+            throw new NotImplementedException("11F3491A-91B7-4D38-B8AB-8C1EA3401D87");
+        }
+
+        private ObjectPtr NSerializeGenericDictionaryWithObjectKeyAndObjectValue(IDictionary dictionary)
+        {
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, dictionary.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(dictionary, objectPtr);
+
+            throw new NotImplementedException("3F2EA372-5B3D-4FC5-A3E3-0AE8721FB406");
+        }
+
+        private ObjectPtr NSerializeGenericDictionaryWithObjectKeyAndPrimitiveValue(IDictionary dictionary)
+        {
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, dictionary.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(dictionary, objectPtr);
+
+            throw new NotImplementedException("ED7A7AC5-8982-47EE-99BC-DA5EAE30C0D1");
+        }
+
+        private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndCompositeValue(IDictionary dictionary)
+        {
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, dictionary.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(dictionary, objectPtr);
+
+            throw new NotImplementedException("EF93BCF0-BAD9-44A8-9D16-A4581F6988ED");
+        }
+
+        private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndObjectValue(IDictionary dictionary)
+        {
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, dictionary.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(dictionary, objectPtr);
+
+            var dictWithPlainObjects = new Dictionary<object, object>();
+
+            throw new NotImplementedException("CF8D5901-5409-4347-8064-D555A0B7A25F");
         }
 
         private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndPrimitiveValue(IDictionary dictionary)

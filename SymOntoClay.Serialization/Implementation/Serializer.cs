@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 using System.Threading;
 
 namespace SymOntoClay.Serialization.Implementation
@@ -544,7 +545,43 @@ namespace SymOntoClay.Serialization.Implementation
 
             var dictWithPlainObjects = new Dictionary<object, object>();
 
-            throw new NotImplementedException("CF8D5901-5409-4347-8064-D555A0B7A25F");
+            foreach(var item in dictionary)
+            {
+                var dictEntry = (DictionaryEntry)item;
+
+                var itemKey = dictEntry.Key;
+                var itemValue = dictEntry.Value;
+
+#if DEBUG
+                _logger.Info($"itemKey = {itemKey}");
+                _logger.Info($"itemValue = {itemValue}");
+#endif
+
+                object plainValue = null;
+
+                if (SerializationHelper.IsPrimitiveType(itemValue))
+                {
+                    plainValue = itemValue;
+                }
+                else
+                {
+                    plainValue = GetSerializedObjectPtr(itemValue);
+                }
+
+#if DEBUG
+                _logger.Info($"plainValue = {plainValue}");
+#endif
+
+                dictWithPlainObjects[itemKey] = plainValue;
+            }
+
+#if DEBUG
+            _logger.Info($"dictWithPlainObjects = {JsonConvert.SerializeObject(dictWithPlainObjects, Formatting.Indented)}");
+#endif
+
+            WriteToFile(dictWithPlainObjects, instanceId);
+
+            return objectPtr;
         }
 
         private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndPrimitiveValue(IDictionary dictionary)
@@ -634,24 +671,7 @@ namespace SymOntoClay.Serialization.Implementation
 
             foreach (var item in enumerable)
             {
-                var serializable = item as ISerializable;
-
-                if (serializable == null)
-                {
-                    var itemType = item.GetType();
-
-#if DEBUG
-                    _logger.Info($"itemType.FullName = {itemType.FullName}");
-                    _logger.Info($"itemType.Name = {itemType.Name}");
-                    _logger.Info($"itemType.IsGenericType = {itemType.IsGenericType}");
-#endif
-
-                    throw new NotImplementedException("1A7ACA8A-95A7-4096-94E6-53BF131E8960");
-                }
-                else
-                {
-                    listWithPlainObjects.Add(NSerialize(serializable));
-                }
+                listWithPlainObjects.Add(GetSerializedObjectPtr(item));
             }
 
 #if DEBUG
@@ -697,24 +717,7 @@ namespace SymOntoClay.Serialization.Implementation
                     continue;
                 }
 
-                var serializable = item as ISerializable;
-
-                if (serializable == null)
-                {
-                    var itemType = item.GetType();
-
-#if DEBUG
-                    _logger.Info($"itemType.FullName = {itemType.FullName}");
-                    _logger.Info($"itemType.Name = {itemType.Name}");
-                    _logger.Info($"itemType.IsGenericType = {itemType.IsGenericType}");
-#endif
-
-                    throw new NotImplementedException("79D76024-320E-4BA4-AB03-DA46959D2894");
-                }
-                else
-                {
-                    listWithPlainObjects.Add(NSerialize(serializable));
-                }
+                listWithPlainObjects.Add(GetSerializedObjectPtr(item));
             }
 
 #if DEBUG

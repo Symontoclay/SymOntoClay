@@ -455,7 +455,7 @@ namespace SymOntoClay.Serialization.Implementation
                         }
                         else
                         {
-                            return NDeserializeGenericDictionaryWithPrimitiveKeyAndCompositeValue(type, objectPtr, fullFileName);
+                            return NDeserializeGenericDictionaryWithPrimitiveKeyAndCompositeValue(type, keyGenericParameterType, objectPtr, fullFileName);
                         }
                     }
                 }
@@ -533,9 +533,45 @@ namespace SymOntoClay.Serialization.Implementation
             throw new NotImplementedException("B97EE398-6CA5-49EA-B035-5FBB495C5E9C");
         }
 
-        private object NDeserializeGenericDictionaryWithPrimitiveKeyAndCompositeValue(Type type, ObjectPtr objectPtr, string fullFileName)
+        private object NDeserializeGenericDictionaryWithPrimitiveKeyAndCompositeValue(Type type, Type keyGenericParameterType, ObjectPtr objectPtr, string fullFileName)
         {
-            throw new NotImplementedException("0B528C10-9041-4738-87B3-FB3B63788460");
+            var instance = Activator.CreateInstance(type);
+
+#if DEBUG
+            _logger.Info($"instance = {instance}");
+#endif
+
+            _deserializationContext.RegDeserializedObject(objectPtr.Id, instance);
+
+            var dictionary = (IDictionary)instance;
+
+            var dictWithPlainObjects = JsonConvert.DeserializeObject<Dictionary<object, ObjectPtr>>(File.ReadAllText(fullFileName), SerializationHelper.JsonSerializerSettings);
+
+#if DEBUG
+            _logger.Info($"dictWithPlainObjects = {JsonConvert.SerializeObject(dictWithPlainObjects, Formatting.Indented)}");
+#endif
+
+            foreach (var plainObjectItem in dictWithPlainObjects)
+            {
+                var plainObjectItemKey = plainObjectItem.Key;
+                var plainObjectItemValue = plainObjectItem.Value;
+
+#if DEBUG
+                _logger.Info($"plainObjectItemKey = {plainObjectItemKey}");
+                _logger.Info($"plainObjectItemKey?.GetType()?.FullName = {plainObjectItemKey?.GetType()?.FullName}");
+                _logger.Info($"plainObjectItemValue = {plainObjectItemValue}");
+#endif
+
+                var itemValue = GetDeserializedObject((ObjectPtr)plainObjectItemValue);
+
+#if DEBUG
+                _logger.Info($"itemValue = {itemValue}");
+#endif
+
+                dictionary.Add(Convert.ChangeType(plainObjectItemKey, keyGenericParameterType), itemValue);
+            }
+
+            return instance;
         }
 
         private object NDeserializeGenericDictionaryWithPrimitiveKeyAndObjectValue(Type type, Type keyGenericParameterType, ObjectPtr objectPtr, string fullFileName)

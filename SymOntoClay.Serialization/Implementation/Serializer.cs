@@ -505,7 +505,45 @@ namespace SymOntoClay.Serialization.Implementation
 
             _serializationContext.RegObjectPtr(dictionary, objectPtr);
 
-            throw new NotImplementedException("ED7A7AC5-8982-47EE-99BC-DA5EAE30C0D1");
+            var dictWithPlainObjects = new Dictionary<object, object>();
+
+            foreach (var item in dictionary)
+            {
+                var dictEntry = (DictionaryEntry)item;
+
+                var itemKey = dictEntry.Key;
+                var itemValue = dictEntry.Value;
+
+#if DEBUG
+                _logger.Info($"itemKey = {itemKey}");
+                _logger.Info($"itemValue = {itemValue}");
+#endif
+
+                object plainKey = null;
+
+                if (SerializationHelper.IsPrimitiveType(itemKey))
+                {
+                    plainKey = itemValue;
+                }
+                else
+                {
+                    plainKey = GetSerializedObjectPtr(itemKey);
+                }
+
+#if DEBUG
+                _logger.Info($"plainKey = {plainKey}");
+#endif
+
+                dictWithPlainObjects[plainKey] = itemValue;
+            }
+
+#if DEBUG
+            _logger.Info($"dictWithPlainObjects = {JsonConvert.SerializeObject(dictWithPlainObjects, Formatting.Indented)}");
+#endif
+
+            WriteToFile(dictWithPlainObjects, instanceId);
+
+            return objectPtr;
         }
 
         private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndCompositeValue(IDictionary dictionary)

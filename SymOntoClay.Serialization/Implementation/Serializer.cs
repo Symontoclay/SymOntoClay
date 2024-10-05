@@ -523,7 +523,7 @@ namespace SymOntoClay.Serialization.Implementation
 
                 if (SerializationHelper.IsPrimitiveType(itemKey))
                 {
-                    plainKey = itemValue;
+                    plainKey = itemKey;
                 }
                 else
                 {

@@ -11,7 +11,7 @@ using System.Threading;
 namespace TestSandbox.Serialization
 {
     [SocSerialization]
-    public partial class SerializedObject : IObjectToString
+    public partial class SerializedObject : IObjectToString, IObjectToBriefString
     {
         public SerializedObject(bool value) 
         {
@@ -21,6 +21,8 @@ namespace TestSandbox.Serialization
             _dict2[3] = "Hi!";
             _dict2[5] = 12;
             _dict2[7] = new object();
+
+            _dict3[12] = this;
 
             //_cancellationTokenSource = new CancellationTokenSource();
             //_cancellationToken = _cancellationTokenSource.Token;
@@ -66,6 +68,7 @@ namespace TestSandbox.Serialization
         //private Dictionary<int, sbyte> _dict = new Dictionary<int, sbyte>();
         private Dictionary<int, string> _dict1 = new Dictionary<int, string>();
         private Dictionary<int, object> _dict2 = new Dictionary<int, object>();
+        private Dictionary<int, SerializedObject> _dict3 = new Dictionary<int, SerializedObject>();
 
         //private object _lockObj = new object();
 
@@ -108,6 +111,28 @@ namespace TestSandbox.Serialization
             //sb.AppendLine($"{spaces}{nameof(_cancellationTokenSource)}.{nameof(_cancellationTokenSource.IsCancellationRequested)} = {_cancellationTokenSource?.IsCancellationRequested}");
             sb.PrintPODDictProp(n, nameof(_dict1), _dict1);
             sb.PrintPODDictProp(n, nameof(_dict2), _dict2);
+            sb.PrintBriefObjDict_2_Prop(n, nameof(_dict3), _dict3);
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string ToBriefString()
+        {
+            return ToBriefString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToBriefString(uint n)
+        {
+            return this.GetDefaultToBriefStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToBriefString.PropertiesToBriefString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}{nameof(IntField)} = {IntField}");
             return sb.ToString();
         }
     }

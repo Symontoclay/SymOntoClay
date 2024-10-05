@@ -552,6 +552,10 @@ namespace SymOntoClay.Serialization.Implementation
 
             var dictWithPlainObjects = JsonConvert.DeserializeObject<Dictionary<object, object>>(File.ReadAllText(fullFileName), SerializationHelper.JsonSerializerSettings);
 
+#if DEBUG
+            _logger.Info($"dictWithPlainObjects = {JsonConvert.SerializeObject(dictWithPlainObjects, Formatting.Indented)}");
+#endif
+
             foreach (var plainObjectItem in dictWithPlainObjects)
             {
                 var plainObjectItemKey = plainObjectItem.Key;

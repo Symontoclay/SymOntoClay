@@ -101,7 +101,7 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"type.FullName = {type.FullName}");
 #endif
 
-            switch(type.FullName)
+            switch (type.FullName)
             {
                 case "System.Object":
                     return NDeserializeBareObject(objectPtr);
@@ -112,7 +112,7 @@ namespace SymOntoClay.Serialization.Implementation
                 case "System.Threading.CancellationTokenSource+Linked1CancellationTokenSource":
                 case "System.Threading.CancellationTokenSource+Linked2CancellationTokenSource":
                 case "System.Threading.CancellationTokenSource+LinkedNCancellationTokenSource":
-                    return NDeserializeLinkedCancellationTokenSource(objectPtr, fullFileName);                    
+                    return NDeserializeLinkedCancellationTokenSource(objectPtr, fullFileName);
 
                 case "System.Threading.CancellationToken":
                     return NDeserializeCancellationToken(objectPtr, fullFileName);
@@ -158,7 +158,7 @@ namespace SymOntoClay.Serialization.Implementation
                 //_logger.Info($"type?.FullName = {type?.FullName}");
 #endif
 
-                if(type == null)
+                if (type == null)
                 {
                     continue;
                 }
@@ -282,7 +282,7 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"cancelationTokenSource = {JsonConvert.SerializeObject(cancelationTokenSource, Formatting.Indented)}");
 #endif
 
-            if(cancelationTokenSource == null)
+            if (cancelationTokenSource == null)
             {
                 return CancellationToken.None;
             }
@@ -329,7 +329,7 @@ namespace SymOntoClay.Serialization.Implementation
             var token9 = settings.Token9;
             var token10 = settings.Token10;
 
-            if(token1.HasValue && token2.HasValue && token3.HasValue && token4.HasValue && token5.HasValue &&
+            if (token1.HasValue && token2.HasValue && token3.HasValue && token4.HasValue && token5.HasValue &&
                 token6.HasValue && token7.HasValue && token8.HasValue && token9.HasValue && token10.HasValue)
             {
                 return CancellationTokenSource.CreateLinkedTokenSource(token1.Value, token2.Value, token3.Value, token4.Value, token5.Value,
@@ -399,8 +399,8 @@ namespace SymOntoClay.Serialization.Implementation
 #endif
 
             var instance = new CancellationTokenSource();
-            
-            if(plainObject.IsCancelled)
+
+            if (plainObject.IsCancelled)
             {
                 instance.Cancel();
             }
@@ -445,17 +445,17 @@ namespace SymOntoClay.Serialization.Implementation
                 {
                     if (SerializationHelper.IsPrimitiveType(valueGenericParameterType))
                     {
-                        return NDeserializeGenericDictionaryWithPrimitiveKeyAndPrimitiveValue(type, objectPtr, fullFileName);                        
+                        return NDeserializeGenericDictionaryWithPrimitiveKeyAndPrimitiveValue(type, objectPtr, fullFileName);
                     }
                     else
                     {
                         if (SerializationHelper.IsObject(valueGenericParameterType))
                         {
-                            throw new NotImplementedException("0F2D8965-160F-4A1E-B8C8-2D8E5A7D2817");
+                            return NDeserializeGenericDictionaryWithPrimitiveKeyAndObjectValue(type, keyGenericParameterType, objectPtr, fullFileName);
                         }
                         else
                         {
-                            throw new NotImplementedException("0B528C10-9041-4738-87B3-FB3B63788460");
+                            return NDeserializeGenericDictionaryWithPrimitiveKeyAndCompositeValue(type, objectPtr, fullFileName);
                         }
                     }
                 }
@@ -465,17 +465,17 @@ namespace SymOntoClay.Serialization.Implementation
                     {
                         if (SerializationHelper.IsPrimitiveType(valueGenericParameterType))
                         {
-                            throw new NotImplementedException("B97EE398-6CA5-49EA-B035-5FBB495C5E9C");
+                            return NDeserializeGenericDictionaryWithObjectKeyAndPrimitiveValue(type, objectPtr, fullFileName);
                         }
                         else
                         {
-                            if(SerializationHelper.IsObject(valueGenericParameterType))
+                            if (SerializationHelper.IsObject(valueGenericParameterType))
                             {
-                                throw new NotImplementedException("BD4D4EDA-EAAF-4D79-BCDA-97A975C59842");
+                                return NDeserializeGenericDictionaryWithObjectKeyAndObjectValue(type, objectPtr, fullFileName);
                             }
                             else
                             {
-                                throw new NotImplementedException("D4C10193-1643-4427-90F9-51CD77D128DF");
+                                return NDeserializeGenericDictionaryWithObjectKeyAndCompositeValue(type, objectPtr, fullFileName);
                             }
                         }
                     }
@@ -483,17 +483,17 @@ namespace SymOntoClay.Serialization.Implementation
                     {
                         if (SerializationHelper.IsPrimitiveType(valueGenericParameterType))
                         {
-                            throw new NotImplementedException("C1FE08FC-CFDE-4C47-BD33-190B2E673E88");
+                            return NDeserializeGenericDictionaryWithCompositeKeyAndPrimitiveValue(type, objectPtr, fullFileName);
                         }
                         else
                         {
                             if (SerializationHelper.IsObject(valueGenericParameterType))
                             {
-                                throw new NotImplementedException("7608FB03-EF92-4EC5-A127-AA7A9DEC9DB1");
+                                return NDeserializeGenericDictionaryWithCompositeKeyAndObjectValue(type, objectPtr, fullFileName);
                             }
                             else
                             {
-                                throw new NotImplementedException("7B46F83C-7895-410A-B886-04210DDBB662");
+                                return NDeserializeGenericDictionaryWithCompositeKeyAndCompositeValue(type, objectPtr, fullFileName);
                             }
                         }
                     }
@@ -501,6 +501,87 @@ namespace SymOntoClay.Serialization.Implementation
             }
 
             throw new NotImplementedException("5BA58F8C-E959-486F-87D7-3211CDC20B8B");
+        }
+
+        private object NDeserializeGenericDictionaryWithCompositeKeyAndCompositeValue(Type type, ObjectPtr objectPtr, string fullFileName)
+        {
+            throw new NotImplementedException("7B46F83C-7895-410A-B886-04210DDBB662");
+        }
+
+        private object NDeserializeGenericDictionaryWithCompositeKeyAndObjectValue(Type type, ObjectPtr objectPtr, string fullFileName)
+        {
+            throw new NotImplementedException("7608FB03-EF92-4EC5-A127-AA7A9DEC9DB1");
+        }
+
+        private object NDeserializeGenericDictionaryWithCompositeKeyAndPrimitiveValue(Type type, ObjectPtr objectPtr, string fullFileName)
+        {
+            throw new NotImplementedException("C1FE08FC-CFDE-4C47-BD33-190B2E673E88");
+        }
+
+        private object NDeserializeGenericDictionaryWithObjectKeyAndCompositeValue(Type type, ObjectPtr objectPtr, string fullFileName)
+        {
+            throw new NotImplementedException("D4C10193-1643-4427-90F9-51CD77D128DF");
+        }
+        
+        private object NDeserializeGenericDictionaryWithObjectKeyAndObjectValue(Type type, ObjectPtr objectPtr, string fullFileName)
+        {
+            throw new NotImplementedException("BD4D4EDA-EAAF-4D79-BCDA-97A975C59842");
+        }
+
+        private object NDeserializeGenericDictionaryWithObjectKeyAndPrimitiveValue(Type type, ObjectPtr objectPtr, string fullFileName)
+        {
+            throw new NotImplementedException("B97EE398-6CA5-49EA-B035-5FBB495C5E9C");
+        }
+
+        private object NDeserializeGenericDictionaryWithPrimitiveKeyAndCompositeValue(Type type, ObjectPtr objectPtr, string fullFileName)
+        {
+            throw new NotImplementedException("0B528C10-9041-4738-87B3-FB3B63788460");
+        }
+
+        private object NDeserializeGenericDictionaryWithPrimitiveKeyAndObjectValue(Type type, Type keyGenericParameterType, ObjectPtr objectPtr, string fullFileName)
+        {
+            var instance = Activator.CreateInstance(type);
+
+#if DEBUG
+            _logger.Info($"instance = {instance}");
+#endif
+
+            _deserializationContext.RegDeserializedObject(objectPtr.Id, instance);
+
+            var dictionary = (IDictionary)instance;
+
+            var dictWithPlainObjects = JsonConvert.DeserializeObject<Dictionary<object, object>>(File.ReadAllText(fullFileName), SerializationHelper.JsonSerializerSettings);
+
+            foreach (var plainObjectItem in dictWithPlainObjects)
+            {
+                var plainObjectItemKey = plainObjectItem.Key;
+                var plainObjectItemValue = plainObjectItem.Value;
+
+#if DEBUG
+                _logger.Info($"plainObjectItemKey = {plainObjectItemKey}");
+                _logger.Info($"plainObjectItemKey?.GetType()?.FullName = {plainObjectItemKey?.GetType()?.FullName}");
+                _logger.Info($"plainObjectItemValue = {plainObjectItemValue}");
+#endif
+
+                object itemValue = null;
+
+                if (SerializationHelper.IsPrimitiveType(plainObjectItemValue))
+                {
+                    itemValue = plainObjectItemValue;
+                }
+                else
+                {
+                    itemValue = GetDeserializedObject((ObjectPtr)plainObjectItemValue);
+                }
+
+#if DEBUG
+                _logger.Info($"itemValue = {itemValue}");
+#endif
+
+                dictionary.Add(Convert.ChangeType(plainObjectItemKey, keyGenericParameterType), itemValue);
+            }
+
+            return instance;
         }
 
         private object NDeserializeGenericDictionaryWithPrimitiveKeyAndPrimitiveValue(Type type, ObjectPtr objectPtr, string fullFileName)

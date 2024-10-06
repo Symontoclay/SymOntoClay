@@ -384,7 +384,7 @@ namespace SymOntoClay.Serialization.Implementation
                     {
                         if (SerializationHelper.IsPrimitiveType(valueGenericParameterType))
                         {
-                            return NSerializeGenericDictionaryWithObjectKeyAndPrimitiveValue(dictionary);
+                            return NSerializeGenericDictionaryWithObjectKeyAndPrimitiveValue(dictionary, valueGenericParameterType);
                         }
                         else
                         {
@@ -517,7 +517,7 @@ namespace SymOntoClay.Serialization.Implementation
             throw new NotImplementedException("3F2EA372-5B3D-4FC5-A3E3-0AE8721FB406");
         }
 
-        private ObjectPtr NSerializeGenericDictionaryWithObjectKeyAndPrimitiveValue(IDictionary dictionary)
+        private ObjectPtr NSerializeGenericDictionaryWithObjectKeyAndPrimitiveValue(IDictionary dictionary, Type valueGenericParameterType)
         {
             var instanceId = CreateInstanceId();
 
@@ -533,32 +533,21 @@ namespace SymOntoClay.Serialization.Implementation
 
             _serializationContext.RegObjectPtr(dictionary, objectPtr);
 
-            var dictWithPlainObjects = new Dictionary<object, object>();
+            var dictWithPlainObjectsType = typeof(Dictionary<,>).MakeGenericType(typeof(ObjectPtr), valueGenericParameterType);
 
-            throw new NotImplementedException("40BF179D-0917-4D94-B2C0-9183A4C65788");
+            var dictWithPlainObjects = (IDictionary)Activator.CreateInstance(dictWithPlainObjectsType);
 
-            foreach (var item in dictionary)
+            foreach (DictionaryEntry item in dictionary)
             {
-                var dictEntry = (DictionaryEntry)item;
-
-                var itemKey = dictEntry.Key;
-                var itemValue = dictEntry.Value;
+                var itemKey = item.Key;
+                var itemValue = item.Value;
 
 #if DEBUG
                 _logger.Info($"itemKey = {itemKey}");
                 _logger.Info($"itemValue = {itemValue}");
 #endif
 
-                object plainKey = null;
-
-                if (SerializationHelper.IsPrimitiveType(itemKey))
-                {
-                    plainKey = itemKey;
-                }
-                else
-                {
-                    plainKey = GetSerializedObjectPtr(itemKey);
-                }
+                var plainKey = GetSerializedObjectPtr(itemKey);
 
 #if DEBUG
                 _logger.Info($"plainKey = {plainKey}");
@@ -596,12 +585,10 @@ namespace SymOntoClay.Serialization.Implementation
 
             var dictWithPlainObjects = (IDictionary)Activator.CreateInstance(dictWithPlainObjectsType);
 
-            foreach (var item in dictionary)
+            foreach (DictionaryEntry item in dictionary)
             {
-                var dictEntry = (DictionaryEntry)item;
-
-                var itemKey = dictEntry.Key;
-                var itemValue = dictEntry.Value;
+                var itemKey = item.Key;
+                var itemValue = item.Value;
 
 #if DEBUG
                 _logger.Info($"itemKey = {itemKey}");
@@ -646,12 +633,10 @@ namespace SymOntoClay.Serialization.Implementation
 
             var dictWithPlainObjects = (IDictionary)Activator.CreateInstance(dictWithPlainObjectsType);
 
-            foreach (var item in dictionary)
+            foreach (DictionaryEntry item in dictionary)
             {
-                var dictEntry = (DictionaryEntry)item;
-
-                var itemKey = dictEntry.Key;
-                var itemValue = dictEntry.Value;
+                var itemKey = item.Key;
+                var itemValue = item.Value;
 
 #if DEBUG
                 _logger.Info($"itemKey = {itemKey}");

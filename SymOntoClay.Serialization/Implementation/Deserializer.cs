@@ -610,7 +610,13 @@ namespace SymOntoClay.Serialization.Implementation
 
             var dictionary = (IDictionary)instance;
 
-            var dictWithPlainObjects = JsonConvert.DeserializeObject<Dictionary<object, object>>(File.ReadAllText(fullFileName), SerializationHelper.JsonSerializerSettings);
+            var dictWithPlainObjectsType = typeof(Dictionary<,>).MakeGenericType(typeof(ObjectPtr), valueGenericParameterType);
+
+#if DEBUG
+            _logger.Info($"File.ReadAllText(fullFileName) = '{File.ReadAllText(fullFileName)}'");
+#endif
+
+            var dictWithPlainObjects = (IDictionary)JsonConvert.DeserializeObject(File.ReadAllText(fullFileName), dictWithPlainObjectsType, SerializationHelper.JsonSerializerSettings);
 
 #if DEBUG
             _logger.Info($"dictWithPlainObjects = {JsonConvert.SerializeObject(dictWithPlainObjects, Formatting.Indented)}");
@@ -618,7 +624,7 @@ namespace SymOntoClay.Serialization.Implementation
 
             throw new NotImplementedException("12E2500E-032B-42F7-B456-1D5A21ED23D0");
 
-            foreach (var plainObjectItem in dictWithPlainObjects)
+            foreach (DictionaryEntry plainObjectItem in dictWithPlainObjects)
             {
                 var plainObjectItemKey = plainObjectItem.Key;
                 var plainObjectItemValue = plainObjectItem.Value;

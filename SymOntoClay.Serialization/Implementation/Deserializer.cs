@@ -662,15 +662,15 @@ namespace SymOntoClay.Serialization.Implementation
 
             var dictionary = (IDictionary)instance;
 
-            var dictWithPlainObjects = JsonConvert.DeserializeObject<Dictionary<object, ObjectPtr>>(File.ReadAllText(fullFileName), SerializationHelper.JsonSerializerSettings);
+            var dictWithPlainObjectsType = typeof(Dictionary<,>).MakeGenericType(keyGenericParameterType, typeof(ObjectPtr));
+
+            var dictWithPlainObjects = (IDictionary)JsonConvert.DeserializeObject(File.ReadAllText(fullFileName), dictWithPlainObjectsType, SerializationHelper.JsonSerializerSettings);
 
 #if DEBUG
             _logger.Info($"dictWithPlainObjects = {JsonConvert.SerializeObject(dictWithPlainObjects, Formatting.Indented)}");
 #endif
 
-            throw new NotImplementedException("FFBACFCC-E1C5-46E6-B949-2831BB304B3D");
-
-            foreach (var plainObjectItem in dictWithPlainObjects)
+            foreach (DictionaryEntry plainObjectItem in dictWithPlainObjects)
             {
                 var plainObjectItemKey = plainObjectItem.Key;
                 var plainObjectItemValue = plainObjectItem.Value;
@@ -687,7 +687,7 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"itemValue = {itemValue}");
 #endif
 
-                dictionary.Add(Convert.ChangeType(plainObjectItemKey, keyGenericParameterType), itemValue);
+                dictionary.Add(plainObjectItemKey, itemValue);
             }
 
             return instance;

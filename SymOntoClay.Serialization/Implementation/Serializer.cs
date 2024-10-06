@@ -91,6 +91,11 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"type.IsGenericType = {type.IsGenericType}");
 #endif
 
+                if (SerializationHelper.IsPrimitiveType(type))
+                {
+                    return BoxPrimitiveType(obj);
+                }
+
                 switch (type.FullName)
                 {
                     case "System.Object":
@@ -127,6 +132,29 @@ namespace SymOntoClay.Serialization.Implementation
             {
                 return NSerialize(serializable);
             }
+        }
+
+        private ObjectPtr BoxPrimitiveType(object obj)
+        {
+#if DEBUG
+            _logger.Info($"obj = {obj}");
+#endif
+
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var type = obj.GetType();
+
+            var objectPtr = ObjectPtr.FromPrimitive(instanceId, type.FullName, SerializationHelper.PrimitiveTypeToString(type, obj));
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            return objectPtr;
         }
 
         private ObjectPtr NSerializeCustomThreadPool(CustomThreadPool customThreadPool, CustomThreadPoolSerializationSettings settingsParameter)
@@ -342,11 +370,11 @@ namespace SymOntoClay.Serialization.Implementation
                     {
                         if(SerializationHelper.IsObject(valueGenericParameterType))
                         {
-                            return NSerializeGenericDictionaryWithPrimitiveKeyAndObjectValue(dictionary);
+                            return NSerializeGenericDictionaryWithPrimitiveKeyAndObjectValue(dictionary, keyGenericParameterType);
                         }
                         else
                         {
-                            return NSerializeGenericDictionaryWithPrimitiveKeyAndCompositeValue(dictionary);                            
+                            return NSerializeGenericDictionaryWithPrimitiveKeyAndCompositeValue(dictionary, keyGenericParameterType);                            
                         }
                     }
                 }
@@ -507,6 +535,8 @@ namespace SymOntoClay.Serialization.Implementation
 
             var dictWithPlainObjects = new Dictionary<object, object>();
 
+            throw new NotImplementedException("40BF179D-0917-4D94-B2C0-9183A4C65788");
+
             foreach (var item in dictionary)
             {
                 var dictEntry = (DictionaryEntry)item;
@@ -546,7 +576,7 @@ namespace SymOntoClay.Serialization.Implementation
             return objectPtr;
         }
 
-        private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndCompositeValue(IDictionary dictionary)
+        private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndCompositeValue(IDictionary dictionary, Type keyGenericParameterType)
         {
             var instanceId = CreateInstanceId();
 
@@ -562,7 +592,9 @@ namespace SymOntoClay.Serialization.Implementation
 
             _serializationContext.RegObjectPtr(dictionary, objectPtr);
 
-            var dictWithPlainObjects = new Dictionary<object, ObjectPtr>();
+            var dictWithPlainObjectsType = typeof(Dictionary<,>).MakeGenericType(keyGenericParameterType, typeof(ObjectPtr));
+
+            var dictWithPlainObjects = (IDictionary)Activator.CreateInstance(dictWithPlainObjectsType);
 
             foreach (var item in dictionary)
             {
@@ -594,7 +626,7 @@ namespace SymOntoClay.Serialization.Implementation
             return objectPtr;
         }
 
-        private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndObjectValue(IDictionary dictionary)
+        private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndObjectValue(IDictionary dictionary, Type keyGenericParameterType)
         {
             var instanceId = CreateInstanceId();
 
@@ -610,9 +642,11 @@ namespace SymOntoClay.Serialization.Implementation
 
             _serializationContext.RegObjectPtr(dictionary, objectPtr);
 
-            var dictWithPlainObjects = new Dictionary<object, object>();
+            var dictWithPlainObjectsType = typeof(Dictionary<,>).MakeGenericType(keyGenericParameterType, typeof(ObjectPtr));
 
-            foreach(var item in dictionary)
+            var dictWithPlainObjects = (IDictionary)Activator.CreateInstance(dictWithPlainObjectsType);
+
+            foreach (var item in dictionary)
             {
                 var dictEntry = (DictionaryEntry)item;
 
@@ -624,16 +658,7 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"itemValue = {itemValue}");
 #endif
 
-                object plainValue = null;
-
-                if (SerializationHelper.IsPrimitiveType(itemValue))
-                {
-                    plainValue = itemValue;
-                }
-                else
-                {
-                    plainValue = GetSerializedObjectPtr(itemValue);
-                }
+                var plainValue = GetSerializedObjectPtr(itemValue);
 
 #if DEBUG
                 _logger.Info($"plainValue = {plainValue}");

@@ -21,10 +21,13 @@ namespace TestSandbox.Serialization
             _dict2[3] = "Hi!";
             _dict2[5] = 12;
             _dict2[7] = new object();
+            _dict2[8] = true;
+            _dict2[9] = 1.23;
+            _dict2[10] = DateTime.Now;
 
-            _dict3[12] = this;
+            //_dict3[12] = this;
 
-            _dict4[5] = 16;
+            //_dict4[5] = 16;
 
             //_cancellationTokenSource = new CancellationTokenSource();
             //_cancellationToken = _cancellationTokenSource.Token;
@@ -70,8 +73,8 @@ namespace TestSandbox.Serialization
         //private Dictionary<int, sbyte> _dict = new Dictionary<int, sbyte>();
         private Dictionary<int, string> _dict1 = new Dictionary<int, string>();
         private Dictionary<int, object> _dict2 = new Dictionary<int, object>();
-        private Dictionary<int, SerializedObject> _dict3 = new Dictionary<int, SerializedObject>();
-        private Dictionary<object, int> _dict4 = new Dictionary<object, int>();
+        //private Dictionary<int, SerializedObject> _dict3 = new Dictionary<int, SerializedObject>();
+        //private Dictionary<object, int> _dict4 = new Dictionary<object, int>();
 
         //private object _lockObj = new object();
 
@@ -114,8 +117,8 @@ namespace TestSandbox.Serialization
             //sb.AppendLine($"{spaces}{nameof(_cancellationTokenSource)}.{nameof(_cancellationTokenSource.IsCancellationRequested)} = {_cancellationTokenSource?.IsCancellationRequested}");
             sb.PrintPODDictProp(n, nameof(_dict1), _dict1);
             sb.PrintPODDictProp(n, nameof(_dict2), _dict2);
-            sb.PrintBriefObjDict_2_Prop(n, nameof(_dict3), _dict3);
-            sb.PrintPODDictProp(n, nameof(_dict4), _dict4);
+            //sb.PrintBriefObjDict_2_Prop(n, nameof(_dict3), _dict3);
+            //sb.PrintPODDictProp(n, nameof(_dict4), _dict4);
             return sb.ToString();
         }
 

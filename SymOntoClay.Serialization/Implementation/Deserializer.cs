@@ -610,7 +610,7 @@ namespace SymOntoClay.Serialization.Implementation
 
             var dictionary = (IDictionary)instance;
 
-            var dictWithPlainObjectsType = typeof(Dictionary<,>).MakeGenericType(typeof(ObjectPtr), valueGenericParameterType);
+            var dictWithPlainObjectsType = typeof(Dictionary<,>).MakeGenericType(typeof(string), valueGenericParameterType);
 
 #if DEBUG
             _logger.Info($"File.ReadAllText(fullFileName) = '{File.ReadAllText(fullFileName)}'");
@@ -621,8 +621,6 @@ namespace SymOntoClay.Serialization.Implementation
 #if DEBUG
             _logger.Info($"dictWithPlainObjects = {JsonConvert.SerializeObject(dictWithPlainObjects, Formatting.Indented)}");
 #endif
-
-            throw new NotImplementedException("12E2500E-032B-42F7-B456-1D5A21ED23D0");
 
             foreach (DictionaryEntry plainObjectItem in dictWithPlainObjects)
             {
@@ -635,25 +633,18 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"plainObjectItemValue = {plainObjectItemValue}");
 #endif
 
-                object itemKey = null;
+                var plainKeyStr = (string)plainObjectItemKey;
 
-                if (SerializationHelper.IsPrimitiveType(plainObjectItemKey))
-                {
-                    itemKey = plainObjectItemKey;
-                }
-                else
-                {
-                    itemKey = GetDeserializedObject((ObjectPtr)plainObjectItemKey);
-                }
+                var itemKey = GetDeserializedObject(JsonConvert.DeserializeObject<ObjectPtr>(Base64Helper.FromBase64String(plainKeyStr)));
 
 #if DEBUG
                 _logger.Info($"itemKey = {itemKey}");
 #endif
 
-                dictionary.Add(itemKey, Convert.ChangeType(plainObjectItemValue, valueGenericParameterType));
+                dictionary.Add(itemKey, plainObjectItemValue);
             }
 
-            throw new NotImplementedException("B97EE398-6CA5-49EA-B035-5FBB495C5E9C");
+            return instance;
         }
 
         private object NDeserializeGenericDictionaryWithPrimitiveKeyAndCompositeValue(Type type, Type keyGenericParameterType, ObjectPtr objectPtr, string fullFileName)

@@ -533,7 +533,7 @@ namespace SymOntoClay.Serialization.Implementation
 
             _serializationContext.RegObjectPtr(dictionary, objectPtr);
 
-            var dictWithPlainObjectsType = typeof(Dictionary<,>).MakeGenericType(typeof(ObjectPtr), valueGenericParameterType);
+            var dictWithPlainObjectsType = typeof(Dictionary<,>).MakeGenericType(typeof(string), valueGenericParameterType);
 
             var dictWithPlainObjects = (IDictionary)Activator.CreateInstance(dictWithPlainObjectsType);
 
@@ -553,7 +553,13 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"plainKey = {plainKey}");
 #endif
 
-                dictWithPlainObjects[plainKey] = itemValue;
+                var plainKeyStr = Base64Helper.ToBase64String(JsonConvert.SerializeObject(plainKey, Formatting.None));
+
+#if DEBUG
+                _logger.Info($"plainKeyStr = '{plainKeyStr}'");
+#endif
+
+                dictWithPlainObjects[plainKeyStr] = itemValue;
             }
 
 #if DEBUG

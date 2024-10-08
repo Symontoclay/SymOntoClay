@@ -514,6 +514,51 @@ namespace SymOntoClay.Serialization.Implementation
 
             _serializationContext.RegObjectPtr(dictionary, objectPtr);
 
+            var dictWithPlainObjectsType = typeof(Dictionary<,>).MakeGenericType(typeof(string), typeof(ObjectPtr));
+
+            var dictWithPlainObjects = (IDictionary)Activator.CreateInstance(dictWithPlainObjectsType);
+
+            var tmpPlainObjectsList = new List<KeyValuePair<ObjectPtr, ObjectPtr>>();
+
+            foreach (DictionaryEntry item in dictionary)
+            {
+                var itemKey = item.Key;
+                var itemValue = item.Value;
+
+#if DEBUG
+                _logger.Info($"itemKey = {itemKey}");
+                _logger.Info($"itemValue = {itemValue}");
+#endif
+
+                var plainKey = GetSerializedObjectPtr(itemKey);
+
+#if DEBUG
+                _logger.Info($"plainKey = {plainKey}");
+#endif
+
+                var plainKeyStr = Base64Helper.ToBase64String(JsonConvert.SerializeObject(plainKey, Formatting.None));
+
+#if DEBUG
+                _logger.Info($"plainKeyStr = '{plainKeyStr}'");
+#endif
+
+                var plainValue = GetSerializedObjectPtr(itemValue);
+
+#if DEBUG
+                _logger.Info($"plainValue = {plainValue}");
+#endif
+
+                dictWithPlainObjects[plainKeyStr] = plainValue;
+
+                tmpPlainObjectsList.Add(new KeyValuePair<ObjectPtr, ObjectPtr>(plainKey, plainValue));
+            }
+
+#if DEBUG
+            _logger.Info($"dictWithPlainObjects = {JsonConvert.SerializeObject(dictWithPlainObjects, Formatting.Indented)}");
+            _logger.Info($"tmpPlainObjectsList = {JsonConvert.SerializeObject(tmpPlainObjectsList, Formatting.Indented)}");
+            _logger.Info($"tmpPlainObjectsList = {JsonConvert.SerializeObject(tmpPlainObjectsList, SerializationHelper.JsonSerializerSettings)}");
+#endif
+
             throw new NotImplementedException("3F2EA372-5B3D-4FC5-A3E3-0AE8721FB406");
         }
 

@@ -29,7 +29,7 @@ namespace TestSandbox.Serialization
 
             _dict4[5] = 16;
 
-            _dict5[this] = "Some value";
+            //_dict5[this] = "Some value";
 
             //_cancellationTokenSource = new CancellationTokenSource();
             //_cancellationToken = _cancellationTokenSource.Token;
@@ -77,7 +77,7 @@ namespace TestSandbox.Serialization
         private Dictionary<int, object> _dict2 = new Dictionary<int, object>();
         private Dictionary<int, SerializedObject> _dict3 = new Dictionary<int, SerializedObject>();
         private Dictionary<object, int> _dict4 = new Dictionary<object, int>();
-        private Dictionary<object, object> _dict5 = new Dictionary<object, object>();
+        //private Dictionary<object, object> _dict5 = new Dictionary<object, object>();
 
         //private object _lockObj = new object();
 

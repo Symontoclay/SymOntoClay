@@ -2,6 +2,9 @@
 using SymOntoClay.Serialization.Implementation;
 using System.IO;
 using System;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using System.Linq;
 
 namespace TestSandbox.Serialization
 {
@@ -15,10 +18,44 @@ namespace TestSandbox.Serialization
         {
             _logger.Info("Begin");
 
+            SimpleDictionarySerialization();
             //Deserialize();
-            Serialize();
+            //Serialize();
 
             _logger.Info("End");
+        }
+
+        private void SimpleDictionarySerialization()
+        {
+            var dict = new Dictionary<object, object>();
+
+            dict["Hi"] = 16;
+            dict[5] = "DDD";
+            dict[this] = 7;
+
+#if DEBUG
+            _logger.Info($"dict = {JsonConvert.SerializeObject(dict, Formatting.Indented)}");
+#endif
+
+            var kvpList = dict.ToList();
+
+#if DEBUG
+            _logger.Info($"kvpList = {JsonConvert.SerializeObject(kvpList, Formatting.Indented)}");
+#endif
+
+            var kvpListJson = JsonConvert.SerializeObject(kvpList, SerializationHelper.JsonSerializerSettings);
+
+#if DEBUG
+            _logger.Info($"kvpListJson = {kvpListJson}");
+#endif
+
+            var kvpList2 = JsonConvert.DeserializeObject<List<KeyValuePair<object, object>>>(kvpListJson, SerializationHelper.JsonSerializerSettings);
+
+            var dict2 = kvpList2.ToDictionary();
+
+#if DEBUG
+            _logger.Info($"dict2 = {JsonConvert.SerializeObject(dict2, Formatting.Indented)}");
+#endif
         }
 
         private void Deserialize()

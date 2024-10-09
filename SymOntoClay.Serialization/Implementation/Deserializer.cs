@@ -622,6 +622,8 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"dictWithPlainObjects = {JsonConvert.SerializeObject(dictWithPlainObjects, Formatting.Indented)}");
 #endif
 
+            throw new NotImplementedException("53AA08D6-F8A4-4734-920A-B062C752D143");
+
             foreach (DictionaryEntry plainObjectItem in dictWithPlainObjects)
             {
                 var plainObjectItemKey = plainObjectItem.Key;

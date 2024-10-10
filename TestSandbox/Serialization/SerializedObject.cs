@@ -28,6 +28,8 @@ namespace TestSandbox.Serialization
             _dict3[12] = this;
 
             _dict4[5] = 16;
+            _dict4["Hi"] = 2000;
+            _dict4[new object()] = 12;
 
             //_dict5[this] = "Some value";
 

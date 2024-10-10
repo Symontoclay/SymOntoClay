@@ -84,11 +84,6 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"objectPtr = {objectPtr}");
 #endif
 
-            if (objectPtr.IsPrimitive)
-            {
-                return UnBoxPrimitiveType(objectPtr);
-            }
-
             var fileName = $"{objectPtr.Id}.json";
 
             var fullFileName = Path.Combine(_deserializationContext.HeapDirName, fileName);
@@ -248,21 +243,6 @@ namespace SymOntoClay.Serialization.Implementation
 #endif
 
             return type.GetInterfaces().Any(p => p == typeof(ISerializable));
-        }
-
-        private object UnBoxPrimitiveType(ObjectPtr objectPtr)
-        {
-#if DEBUG
-            _logger.Info($"objectPtr = {objectPtr}");
-#endif
-
-            var type = GetType(objectPtr.TypeName);
-
-#if DEBUG
-            _logger.Info($"type.FullName = {type.FullName}");
-#endif
-
-            return SerializationHelper.PrimitiveTypeFromString(type, objectPtr.PrimitiveValue);
         }
 
         private object NDeserializeCustomThreadPool(ObjectPtr objectPtr, string fullFileName)
@@ -610,24 +590,32 @@ namespace SymOntoClay.Serialization.Implementation
 
             var dictionary = (IDictionary)instance;
 
-            var dictWithPlainObjectsType = typeof(Dictionary<,>).MakeGenericType(typeof(string), valueGenericParameterType);
+            var keyValuePairType = typeof(KeyValuePair<,>).MakeGenericType(typeof(object), valueGenericParameterType);
+
+            var listWithPlainObjectsType = typeof(List<>).MakeGenericType(keyValuePairType);
 
 #if DEBUG
             _logger.Info($"File.ReadAllText(fullFileName) = '{File.ReadAllText(fullFileName)}'");
 #endif
 
-            var dictWithPlainObjects = (IDictionary)JsonConvert.DeserializeObject(File.ReadAllText(fullFileName), dictWithPlainObjectsType, SerializationHelper.JsonSerializerSettings);
+            var listWithPlainObjects = (IList)JsonConvert.DeserializeObject(File.ReadAllText(fullFileName), listWithPlainObjectsType, SerializationHelper.JsonSerializerSettings);
 
 #if DEBUG
-            _logger.Info($"dictWithPlainObjects = {JsonConvert.SerializeObject(dictWithPlainObjects, Formatting.Indented)}");
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, Formatting.Indented)}");
 #endif
 
-            throw new NotImplementedException("53AA08D6-F8A4-4734-920A-B062C752D143");
+            var keyProperty = keyValuePairType.GetProperty("Key");
+            var valueProperty = keyValuePairType.GetProperty("Value");
 
-            foreach (DictionaryEntry plainObjectItem in dictWithPlainObjects)
+            foreach (var plainObjectItem in listWithPlainObjects)
             {
-                var plainObjectItemKey = plainObjectItem.Key;
-                var plainObjectItemValue = plainObjectItem.Value;
+#if DEBUG
+                _logger.Info($"plainObjectItem = {plainObjectItem}");
+                _logger.Info($"plainObjectItem?.GetType()?.FullName = {plainObjectItem?.GetType()?.FullName}");
+#endif
+
+                var plainObjectItemKey = keyProperty.GetValue(plainObjectItem);
+                var plainObjectItemValue = valueProperty.GetValue(plainObjectItem);
 
 #if DEBUG
                 _logger.Info($"plainObjectItemKey = {plainObjectItemKey}");
@@ -635,9 +623,7 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"plainObjectItemValue = {plainObjectItemValue}");
 #endif
 
-                var plainKeyStr = (string)plainObjectItemKey;
-
-                var itemKey = GetDeserializedObject(JsonConvert.DeserializeObject<ObjectPtr>(Base64Helper.FromBase64String(plainKeyStr)));
+                var itemKey = ConvertObjectCollectionValueFromSerializableFormat(plainObjectItemKey);
 
 #if DEBUG
                 _logger.Info($"itemKey = {itemKey}");
@@ -704,7 +690,7 @@ namespace SymOntoClay.Serialization.Implementation
 
             var dictionary = (IDictionary)instance;
 
-            var dictWithPlainObjectsType = typeof(Dictionary<,>).MakeGenericType(keyGenericParameterType, typeof(ObjectPtr));
+            var dictWithPlainObjectsType = typeof(Dictionary<,>).MakeGenericType(keyGenericParameterType, typeof(object));
 
             var dictWithPlainObjects = (IDictionary)JsonConvert.DeserializeObject(File.ReadAllText(fullFileName), dictWithPlainObjectsType, SerializationHelper.JsonSerializerSettings);
 
@@ -723,7 +709,7 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"plainObjectItemValue = {plainObjectItemValue}");
 #endif
 
-                var itemValue = GetDeserializedObject((ObjectPtr)plainObjectItemValue);
+                var itemValue = ConvertObjectCollectionValueFromSerializableFormat(plainObjectItemValue);
 
 #if DEBUG
                 _logger.Info($"itemValue = {itemValue}");
@@ -840,46 +826,7 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"plainObjectItem = {JsonConvert.SerializeObject(plainObjectItem, Formatting.Indented)}");
 #endif
 
-                if (SerializationHelper.IsPrimitiveType(plainObjectItem))
-                {
-                    list.Add(plainObjectItem);
-
-                    continue;
-                }
-
-                var itemType = plainObjectItem.GetType();
-
-#if DEBUG
-                _logger.Info($"itemType.FullName = {itemType.FullName}");
-                _logger.Info($"itemType.Name = {itemType.Name}");
-                _logger.Info($"itemType.IsGenericType = {itemType.IsGenericType}");
-#endif
-
-                if (SerializationHelper.IsObjectPtr(itemType))
-                {
-                    list.Add(GetDeserializedObject((ObjectPtr)plainObjectItem));
-
-                    continue;
-                }
-
-                throw new NotImplementedException("1AF9ED38-8427-42DF-A6E6-C2009A57DE30");
-
-                //if (IsSerializable(type))
-                //{
-                //    return NDeserializeISerializable<T>(, objectPtr, fullFileName);
-                //}
-
-                //var serializable = plainObjectItem as ISerializable;
-
-                //if (serializable == null)
-                //{
-
-                //    throw new NotImplementedException("FA3ADB12-D19E-4191-A1F6-34A0B1EB5A3D");
-                //}
-                //else
-                //{
-                //    list.Add(NDeserializeISerializable<T>(serializable));
-                //}
+                list.Add(ConvertObjectCollectionValueFromSerializableFormat(plainObjectItem));
             }
 
 #if DEBUG
@@ -887,6 +834,21 @@ namespace SymOntoClay.Serialization.Implementation
 #endif
 
             return list;
+        }
+
+        private object ConvertObjectCollectionValueFromSerializableFormat(object value)
+        {
+            if (value == null)
+            {
+                return null;
+            }
+
+            if (SerializationHelper.IsPrimitiveType(value))
+            {
+                return value;
+            }
+
+            return GetDeserializedObject((ObjectPtr)value);
         }
 
         private object NDeserializeISerializable(Type type, ObjectPtr objectPtr, string fullFileName)

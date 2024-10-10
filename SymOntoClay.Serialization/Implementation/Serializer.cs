@@ -91,11 +91,6 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"type.IsGenericType = {type.IsGenericType}");
 #endif
 
-                if (SerializationHelper.IsPrimitiveType(type))
-                {
-                    return BoxPrimitiveType(obj);
-                }
-
                 switch (type.FullName)
                 {
                     case "System.Object":
@@ -132,29 +127,6 @@ namespace SymOntoClay.Serialization.Implementation
             {
                 return NSerialize(serializable);
             }
-        }
-
-        private ObjectPtr BoxPrimitiveType(object obj)
-        {
-#if DEBUG
-            _logger.Info($"obj = {obj}");
-#endif
-
-            var instanceId = CreateInstanceId();
-
-#if DEBUG
-            _logger.Info($"instanceId = {instanceId}");
-#endif
-
-            var type = obj.GetType();
-
-            var objectPtr = ObjectPtr.FromPrimitive(instanceId, type.FullName, SerializationHelper.PrimitiveTypeToString(type, obj));
-
-#if DEBUG
-            _logger.Info($"objectPtr = {objectPtr}");
-#endif
-
-            return objectPtr;
         }
 
         private ObjectPtr NSerializeCustomThreadPool(CustomThreadPool customThreadPool, CustomThreadPoolSerializationSettings settingsParameter)
@@ -578,9 +550,11 @@ namespace SymOntoClay.Serialization.Implementation
 
             _serializationContext.RegObjectPtr(dictionary, objectPtr);
 
-            var dictWithPlainObjectsType = typeof(Dictionary<,>).MakeGenericType(typeof(string), valueGenericParameterType);
+            var keyValuePairType = typeof(KeyValuePair<,>).MakeGenericType(typeof(object), valueGenericParameterType);
 
-            var dictWithPlainObjects = (IDictionary)Activator.CreateInstance(dictWithPlainObjectsType);
+            var listWithPlainObjectsType = typeof(List<>).MakeGenericType(keyValuePairType);
+
+            var listWithPlainObjects = (IList)Activator.CreateInstance(listWithPlainObjectsType);
 
             foreach (DictionaryEntry item in dictionary)
             {
@@ -592,28 +566,29 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"itemValue = {itemValue}");
 #endif
 
-                var plainKey = GetSerializedObjectPtr(itemKey);
+                var plainKey = ConvertObjectCollectionValueToSerializableFormat(itemKey);
 
 #if DEBUG
                 _logger.Info($"plainKey = {plainKey}");
 #endif
 
-                var plainKeyStr = Base64Helper.ToBase64String(JsonConvert.SerializeObject(plainKey, Formatting.None));
+                var keyValuePair = Activator.CreateInstance(keyValuePairType, plainKey, itemValue);
 
 #if DEBUG
-                _logger.Info($"plainKeyStr = '{plainKeyStr}'");
+                _logger.Info($"keyValuePair = {keyValuePair}");
 #endif
 
-                dictWithPlainObjects[plainKeyStr] = itemValue;
+                listWithPlainObjects.Add(keyValuePair);
+
+                //listWithPlainObjects[plainKeyStr] = itemValue;
             }
 
 #if DEBUG
-            _logger.Info($"dictWithPlainObjects = {JsonConvert.SerializeObject(dictWithPlainObjects, Formatting.Indented)}");
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, Formatting.Indented)}");
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, SerializationHelper.JsonSerializerSettings)}");
 #endif
 
-            throw new NotImplementedException("A98E7CEE-0BBC-4500-BE92-DBF61515CAAE");
-
-            WriteToFile(dictWithPlainObjects, instanceId);
+            WriteToFile(listWithPlainObjects, instanceId);
 
             return objectPtr;
         }
@@ -682,7 +657,7 @@ namespace SymOntoClay.Serialization.Implementation
 
             _serializationContext.RegObjectPtr(dictionary, objectPtr);
 
-            var dictWithPlainObjectsType = typeof(Dictionary<,>).MakeGenericType(keyGenericParameterType, typeof(ObjectPtr));
+            var dictWithPlainObjectsType = typeof(Dictionary<,>).MakeGenericType(keyGenericParameterType, typeof(object));
 
             var dictWithPlainObjects = (IDictionary)Activator.CreateInstance(dictWithPlainObjectsType);
 
@@ -696,7 +671,7 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"itemValue = {itemValue}");
 #endif
 
-                var plainValue = GetSerializedObjectPtr(itemValue);
+                var plainValue = ConvertObjectCollectionValueToSerializableFormat(itemValue);
 
 #if DEBUG
                 _logger.Info($"plainValue = {plainValue}");
@@ -840,14 +815,7 @@ namespace SymOntoClay.Serialization.Implementation
 
             foreach (var item in enumerable)
             {
-                if (SerializationHelper.IsPrimitiveType(item))
-                {
-                    listWithPlainObjects.Add(item);
-
-                    continue;
-                }
-
-                listWithPlainObjects.Add(GetSerializedObjectPtr(item));
+                listWithPlainObjects.Add(ConvertObjectCollectionValueToSerializableFormat(item));
             }
 
 #if DEBUG
@@ -857,6 +825,21 @@ namespace SymOntoClay.Serialization.Implementation
             WriteToFile(listWithPlainObjects, instanceId);
 
             return objectPtr;
+        }
+
+        private object ConvertObjectCollectionValueToSerializableFormat(object value)
+        {
+            if(value == null)
+            {
+                return null;
+            }
+
+            if (SerializationHelper.IsPrimitiveType(value))
+            {
+                return value;
+            }
+
+            return GetSerializedObjectPtr(value);
         }
 
         private ObjectPtr NSerialize(ISerializable serializable)

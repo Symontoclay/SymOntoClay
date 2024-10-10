@@ -18,8 +18,8 @@ namespace TestSandbox.Serialization
         {
             _logger.Info("Begin");
 
-            SimpleDictionarySerialization();
-            //Deserialize();
+            //SimpleDictionarySerialization();
+            Deserialize();
             //Serialize();
 
             _logger.Info("End");

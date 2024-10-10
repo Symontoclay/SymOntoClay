@@ -1,43 +1,30 @@
 ﻿namespace SymOntoClay.Serialization
 {
-    public class ObjectPtr
+    public struct ObjectPtr
     {
-        public ObjectPtr()
-        {
-        }
-
         public ObjectPtr(bool isNull)
-            : this(null, null, isNull, false, string.Empty)
+            : this(null, null, isNull)
         {
         }
 
         public ObjectPtr(string id, string typeName)
-            : this(id, typeName, false, false, string.Empty)
+            : this(id, typeName, false)
         {
         }
 
-        public ObjectPtr(string id, string typeName, bool isNull, bool isPrimitive, string primitiveValue)
+        public ObjectPtr(string id, string typeName, bool isNull)
         {
             Id = id;
             TypeName = typeName;
             IsNull = isNull;
-            IsPrimitive = isPrimitive;
-            PrimitiveValue = primitiveValue;
         }
 
         public string Id { get; set; }
         public string TypeName { get; set; }
         public bool IsNull { get; set; }
-        public bool IsPrimitive { get; set; }
-        public string PrimitiveValue { get; set; }
 
-        public override string ToString() => $"({nameof(Id)}: '{Id}', {nameof(TypeName)}: '{TypeName}', {nameof(IsNull)}: {IsNull}, {nameof(IsPrimitive)}: {IsPrimitive}, {nameof(PrimitiveValue)} : '{PrimitiveValue}')";
+        public override string ToString() => $"({nameof(Id)}: '{Id}', {nameof(TypeName)}: '{TypeName}', {nameof(IsNull)}: {IsNull})";
 
         public static ObjectPtr NullPtr = new ObjectPtr(true);
-
-        public static ObjectPtr FromPrimitive(string id, string typeName, string primitiveValue)
-        {
-            return new ObjectPtr(id: id, typeName: typeName, isNull: false, isPrimitive: true, primitiveValue: primitiveValue);
-        }
     }
 }

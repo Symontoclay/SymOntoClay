@@ -575,7 +575,55 @@ namespace SymOntoClay.Serialization.Implementation
 
             var dictionary = (IDictionary)instance;
 
-            throw new NotImplementedException("BD4D4EDA-EAAF-4D79-BCDA-97A975C59842");
+            var keyValuePairType = typeof(KeyValuePair<,>).MakeGenericType(typeof(object), typeof(object));
+
+            var listWithPlainObjectsType = typeof(List<>).MakeGenericType(keyValuePairType);
+
+#if DEBUG
+            _logger.Info($"File.ReadAllText(fullFileName) = '{File.ReadAllText(fullFileName)}'");
+#endif
+
+            var listWithPlainObjects = (IList)JsonConvert.DeserializeObject(File.ReadAllText(fullFileName), listWithPlainObjectsType, SerializationHelper.JsonSerializerSettings);
+
+#if DEBUG
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, Formatting.Indented)}");
+#endif
+
+            var keyProperty = keyValuePairType.GetProperty("Key");
+            var valueProperty = keyValuePairType.GetProperty("Value");
+
+            foreach (var plainObjectItem in listWithPlainObjects)
+            {
+#if DEBUG
+                _logger.Info($"plainObjectItem = {plainObjectItem}");
+                _logger.Info($"plainObjectItem?.GetType()?.FullName = {plainObjectItem?.GetType()?.FullName}");
+#endif
+
+                var plainObjectItemKey = keyProperty.GetValue(plainObjectItem);
+                var plainObjectItemValue = valueProperty.GetValue(plainObjectItem);
+
+#if DEBUG
+                _logger.Info($"plainObjectItemKey = {plainObjectItemKey}");
+                _logger.Info($"plainObjectItemKey?.GetType()?.FullName = {plainObjectItemKey?.GetType()?.FullName}");
+                _logger.Info($"plainObjectItemValue = {plainObjectItemValue}");
+#endif
+
+                var itemKey = ConvertObjectCollectionValueFromSerializableFormat(plainObjectItemKey);
+
+#if DEBUG
+                _logger.Info($"itemKey = {itemKey}");
+#endif
+
+                var itemValue = ConvertObjectCollectionValueFromSerializableFormat(plainObjectItemValue);
+
+#if DEBUG
+                _logger.Info($"itemValue = {itemValue}");
+#endif
+
+                dictionary.Add(itemKey, itemValue);
+            }
+
+            return instance;
         }
 
         private object NDeserializeGenericDictionaryWithObjectKeyAndPrimitiveValue(Type type, Type valueGenericParameterType, ObjectPtr objectPtr, string fullFileName)

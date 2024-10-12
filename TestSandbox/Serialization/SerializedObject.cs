@@ -45,6 +45,10 @@ namespace TestSandbox.Serialization
 
             _dict9[_serializedSubObject] = _serializedSubObject;
 
+            _list1.Add(16);
+            _list2.Add("SomeValue");
+            _list3.Add(_serializedSubObject);
+
             //_cancellationTokenSource = new CancellationTokenSource();
             //_cancellationToken = _cancellationTokenSource.Token;
 
@@ -99,6 +103,10 @@ namespace TestSandbox.Serialization
         private Dictionary<SerializedSubObject, object> _dict8 = new Dictionary<SerializedSubObject, object>();
         private Dictionary<SerializedSubObject, SerializedSubObject> _dict9 = new Dictionary<SerializedSubObject, SerializedSubObject>();
 
+        private List<int> _list1 = new List<int>();
+        private List<object> _list2 = new List<object>();
+        private List<SerializedSubObject> _list3 = new List<SerializedSubObject>();
+
         //private object _lockObj = new object();
 
         //private CancellationTokenSource _cancellationTokenSource;
@@ -148,6 +156,9 @@ namespace TestSandbox.Serialization
             sb.PrintPODDictProp(n, nameof(_dict7), _dict7);
             sb.PrintPODDictProp(n, nameof(_dict8), _dict8);
             sb.PrintPODDictProp(n, nameof(_dict9), _dict9);
+            sb.PrintPODList(n, nameof(_list1), _list1);
+            sb.PrintPODList(n, nameof(_list2), _list2);
+            sb.PrintObjListProp(n, nameof(_list3), _list3);
             return sb.ToString();
         }
 

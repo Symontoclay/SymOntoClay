@@ -904,7 +904,7 @@ namespace SymOntoClay.Serialization.Implementation
 
                 if (SerializationHelper.IsPrimitiveType(genericParameterType))
                 {
-                    throw new NotImplementedException("9B48CB69-4F44-4C9E-9C7D-B57593946B70");
+                    return NSerializeListWithPrimitiveParameter(enumerable);
                 }
 
                 if (SerializationHelper.IsObject(genericParameterType))
@@ -913,10 +913,10 @@ namespace SymOntoClay.Serialization.Implementation
                 }
             }
 
-            return NSerializeListWithPossibleSerializebleParameter(enumerable);
+            return NSerializeListWithCompositeParameter(enumerable);
         }
 
-        private ObjectPtr NSerializeListWithPossibleSerializebleParameter(IEnumerable enumerable)
+        private ObjectPtr NSerializeListWithCompositeParameter(IEnumerable enumerable)
         {
 #if DEBUG
             var type = enumerable.GetType();
@@ -990,6 +990,31 @@ namespace SymOntoClay.Serialization.Implementation
 #endif
 
             WriteToFile(listWithPlainObjects, instanceId);
+
+            return objectPtr;
+        }
+
+        private ObjectPtr NSerializeListWithPrimitiveParameter(IEnumerable enumerable)
+        {
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, enumerable.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(enumerable, objectPtr);
+
+#if DEBUG
+            _logger.Info($"enumerable = {JsonConvert.SerializeObject(enumerable, Formatting.Indented)}");
+#endif
+
+            WriteToFile(enumerable, instanceId);
 
             return objectPtr;
         }

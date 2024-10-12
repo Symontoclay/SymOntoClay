@@ -37,7 +37,9 @@ namespace TestSandbox.Serialization
 
             _dict5[5] = "Some value";
 
-            _dict6[7] = _serializedSubObject;            
+            _dict6[7] = _serializedSubObject;
+
+            _dict7[_serializedSubObject] = 7;
 
             //_cancellationTokenSource = new CancellationTokenSource();
             //_cancellationToken = _cancellationTokenSource.Token;
@@ -89,6 +91,7 @@ namespace TestSandbox.Serialization
         private Dictionary<object, int> _dict4 = new Dictionary<object, int>();
         private Dictionary<object, object> _dict5 = new Dictionary<object, object>();
         private Dictionary<object, SerializedSubObject> _dict6 = new Dictionary<object, SerializedSubObject>();
+        private Dictionary<SerializedSubObject, int> _dict7 = new Dictionary<SerializedSubObject, int>();
 
         //private object _lockObj = new object();
 
@@ -136,6 +139,7 @@ namespace TestSandbox.Serialization
             sb.PrintPODDictProp(n, nameof(_dict4), _dict4);
             sb.PrintPODDictProp(n, nameof(_dict5), _dict5);
             sb.PrintPODDictProp(n, nameof(_dict6), _dict6);
+            sb.PrintPODDictProp(n, nameof(_dict7), _dict7);
             return sb.ToString();
         }
 

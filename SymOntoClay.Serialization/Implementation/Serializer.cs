@@ -410,7 +410,51 @@ namespace SymOntoClay.Serialization.Implementation
 
             _serializationContext.RegObjectPtr(dictionary, objectPtr);
 
-            throw new NotImplementedException("31F1F400-81C7-4110-8D7F-D25F4818F413");
+            var keyValuePairType = typeof(KeyValuePair<,>).MakeGenericType(typeof(ObjectPtr), typeof(ObjectPtr));
+
+            var listWithPlainObjectsType = typeof(List<>).MakeGenericType(keyValuePairType);
+
+            var listWithPlainObjects = (IList)Activator.CreateInstance(listWithPlainObjectsType);
+
+            foreach (DictionaryEntry item in dictionary)
+            {
+                var itemKey = item.Key;
+                var itemValue = item.Value;
+
+#if DEBUG
+                _logger.Info($"itemKey = {itemKey}");
+                _logger.Info($"itemValue = {itemValue}");
+#endif
+
+                var plainKey = GetSerializedObjectPtr(itemKey);
+
+#if DEBUG
+                _logger.Info($"plainKey = {plainKey}");
+#endif
+
+                var plainValue = GetSerializedObjectPtr(itemValue);
+
+#if DEBUG
+                _logger.Info($"plainValue = {plainValue}");
+#endif
+
+                var keyValuePair = Activator.CreateInstance(keyValuePairType, plainKey, plainValue);
+
+#if DEBUG
+                _logger.Info($"keyValuePair = {keyValuePair}");
+#endif
+
+                listWithPlainObjects.Add(keyValuePair);
+            }
+
+#if DEBUG
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, Formatting.Indented)}");
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, SerializationHelper.JsonSerializerSettings)}");
+#endif
+
+            WriteToFile(listWithPlainObjects, instanceId);
+
+            return objectPtr;
         }
 
         private ObjectPtr NSerializeGenericDictionaryWithCompositeKeyAndObjectValue(IDictionary dictionary)

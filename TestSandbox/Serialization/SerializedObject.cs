@@ -1,12 +1,9 @@
 ﻿using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Serialization;
-using SymOntoClay.Serialization.Settings;
-using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading;
 
 namespace TestSandbox.Serialization
 {
@@ -15,6 +12,11 @@ namespace TestSandbox.Serialization
     {
         public SerializedObject(bool value) 
         {
+            _serializedSubObject = new SerializedSubObject()
+            {
+                SomeField = 222
+            };
+
             _dict1[1] = "Hi!";
             _dict1[5] = "Hello!";
 
@@ -24,14 +26,18 @@ namespace TestSandbox.Serialization
             _dict2[8] = true;
             _dict2[9] = 1.23;
             _dict2[10] = DateTime.Now;
+            _dict2[11] = _serializedSubObject;
 
-            _dict3[12] = this;
+            _dict3[12] = _serializedSubObject;
 
             _dict4[5] = 16;
             _dict4["Hi"] = 2000;
             _dict4[new object()] = 12;
+            _dict4[_serializedSubObject] = 56;
 
             _dict5[5] = "Some value";
+
+            _dict6[7] = _serializedSubObject;            
 
             //_cancellationTokenSource = new CancellationTokenSource();
             //_cancellationToken = _cancellationTokenSource.Token;
@@ -72,14 +78,17 @@ namespace TestSandbox.Serialization
             //_threadPool = new CustomThreadPool(minThreadsCount, maxThreadsCount, _noneCancelationToken);
         }
 
+        private SerializedSubObject _serializedSubObject;
+
         public int IntField;
 
         //private Dictionary<int, sbyte> _dict = new Dictionary<int, sbyte>();
         private Dictionary<int, string> _dict1 = new Dictionary<int, string>();
         private Dictionary<int, object> _dict2 = new Dictionary<int, object>();
-        private Dictionary<int, SerializedObject> _dict3 = new Dictionary<int, SerializedObject>();
+        private Dictionary<int, SerializedSubObject> _dict3 = new Dictionary<int, SerializedSubObject>();
         private Dictionary<object, int> _dict4 = new Dictionary<object, int>();
         private Dictionary<object, object> _dict5 = new Dictionary<object, object>();
+        private Dictionary<object, SerializedSubObject> _dict6 = new Dictionary<object, SerializedSubObject>();
 
         //private object _lockObj = new object();
 
@@ -118,13 +127,15 @@ namespace TestSandbox.Serialization
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+            sb.PrintObjProp(n, nameof(_serializedSubObject), _serializedSubObject);
             sb.AppendLine($"{spaces}{nameof(IntField)} = {IntField}");
             //sb.AppendLine($"{spaces}{nameof(_cancellationTokenSource)}.{nameof(_cancellationTokenSource.IsCancellationRequested)} = {_cancellationTokenSource?.IsCancellationRequested}");
             sb.PrintPODDictProp(n, nameof(_dict1), _dict1);
             sb.PrintPODDictProp(n, nameof(_dict2), _dict2);
-            sb.PrintBriefObjDict_2_Prop(n, nameof(_dict3), _dict3);
+            sb.PrintObjDict_2_Prop(n, nameof(_dict3), _dict3);
             sb.PrintPODDictProp(n, nameof(_dict4), _dict4);
             sb.PrintPODDictProp(n, nameof(_dict5), _dict5);
+            sb.PrintPODDictProp(n, nameof(_dict6), _dict6);
             return sb.ToString();
         }
 

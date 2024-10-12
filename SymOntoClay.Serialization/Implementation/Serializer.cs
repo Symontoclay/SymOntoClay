@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using NLog;
 using SymOntoClay.Serialization.Implementation.InternalPlainObjects;
 using SymOntoClay.Serialization.Settings;
@@ -117,6 +116,9 @@ namespace SymOntoClay.Serialization.Implementation
                     case "List`1":
                         return NSerializeGenericList((IEnumerable)obj);
 
+                    case "Dictionary`2":
+                        return NSerializeGenericDictionary((IDictionary)obj);
+
                     default:
                         throw new NotImplementedException("B3784FDD-7AFC-4947-AA62-00398400E52B");
                 }
@@ -156,7 +158,7 @@ namespace SymOntoClay.Serialization.Implementation
             plainObject.Settings = GetSerializedObjectPtr(settingsParameter);
 
 #if DEBUG
-            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject)}");
+            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, Formatting.Indented)}");
 #endif
 
             WriteToFile(plainObject, instanceId);
@@ -227,7 +229,7 @@ namespace SymOntoClay.Serialization.Implementation
             plainObject.Settings = GetSerializedObjectPtr(settingsParameter);
 
 #if DEBUG
-            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject)}");
+            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, Formatting.Indented)}");
 #endif
 
             WriteToFile(plainObject, instanceId);
@@ -265,7 +267,7 @@ namespace SymOntoClay.Serialization.Implementation
             plainObject.Source = GetSerializedObjectPtr(fieldValue);
 
 #if DEBUG
-            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject)}");
+            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, Formatting.Indented)}");
 #endif
 
             WriteToFile(plainObject, instanceId);
@@ -300,6 +302,585 @@ namespace SymOntoClay.Serialization.Implementation
             return objectPtr;
         }
 
+        private ObjectPtr NSerializeGenericDictionary(IDictionary dictionary)
+        {
+            var type = dictionary.GetType();
+
+#if DEBUG
+            _logger.Info($"type.FullName = {type.FullName}");
+            _logger.Info($"type.Name = {type.Name}");
+            _logger.Info($"type.IsGenericType = {type.IsGenericType}");
+#endif
+
+            if(type.IsGenericType)
+            {
+                var keyGenericParameterType = type.GetGenericArguments()[0];
+
+#if DEBUG
+                _logger.Info($"keyGenericParameterType.FullName = {keyGenericParameterType.FullName}");
+                _logger.Info($"keyGenericParameterType.Name = {keyGenericParameterType.Name}");
+                _logger.Info($"keyGenericParameterType.IsGenericType = {keyGenericParameterType.IsGenericType}");
+                _logger.Info($"keyGenericParameterType.IsPrimitive = {keyGenericParameterType.IsPrimitive}");
+#endif
+
+                var valueGenericParameterType = type.GetGenericArguments()[1];
+
+#if DEBUG
+                _logger.Info($"valueGenericParameterType.FullName = {valueGenericParameterType.FullName}");
+                _logger.Info($"valueGenericParameterType.Name = {valueGenericParameterType.Name}");
+                _logger.Info($"valueGenericParameterType.IsGenericType = {valueGenericParameterType.IsGenericType}");
+                _logger.Info($"valueGenericParameterType.IsPrimitive = {valueGenericParameterType.IsPrimitive}");
+#endif
+
+                if (SerializationHelper.IsPrimitiveType(keyGenericParameterType))
+                {
+                    if (SerializationHelper.IsPrimitiveType(valueGenericParameterType))
+                    {
+                        return NSerializeGenericDictionaryWithPrimitiveKeyAndPrimitiveValue(dictionary);
+                    }
+                    else
+                    {
+                        if(SerializationHelper.IsObject(valueGenericParameterType))
+                        {
+                            return NSerializeGenericDictionaryWithPrimitiveKeyAndObjectValue(dictionary, keyGenericParameterType);
+                        }
+                        else
+                        {
+                            return NSerializeGenericDictionaryWithPrimitiveKeyAndCompositeValue(dictionary, keyGenericParameterType);                            
+                        }
+                    }
+                }
+                else
+                {
+                    if(SerializationHelper.IsObject(keyGenericParameterType))
+                    {
+                        if (SerializationHelper.IsPrimitiveType(valueGenericParameterType))
+                        {
+                            return NSerializeGenericDictionaryWithObjectKeyAndPrimitiveValue(dictionary, valueGenericParameterType);
+                        }
+                        else
+                        {
+                            if(SerializationHelper.IsObject(valueGenericParameterType))
+                            {
+                                return NSerializeGenericDictionaryWithObjectKeyAndObjectValue(dictionary);
+                            }
+                            else
+                            {
+                                return NSerializeGenericDictionaryWithObjectKeyAndCompositeValue(dictionary);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (SerializationHelper.IsPrimitiveType(valueGenericParameterType))
+                        {
+                            return NSerializeGenericDictionaryWithCompositeKeyAndPrimitiveValue(dictionary, valueGenericParameterType);
+                        }
+                        else
+                        {
+                            if (SerializationHelper.IsObject(valueGenericParameterType))
+                            {
+                                return NSerializeGenericDictionaryWithCompositeKeyAndObjectValue(dictionary);
+                            }
+                            else
+                            {
+                                return NSerializeGenericDictionaryWithCompositeKeyAndCompositeValue(dictionary);
+                            }
+                        }
+                    }
+                }
+            }
+
+            throw new NotImplementedException("D55AE149-D344-4855-8EC0-2AD18C0F90D5");
+        }
+
+        private ObjectPtr NSerializeGenericDictionaryWithCompositeKeyAndCompositeValue(IDictionary dictionary)
+        {
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, dictionary.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(dictionary, objectPtr);
+
+            var keyValuePairType = typeof(KeyValuePair<,>).MakeGenericType(typeof(ObjectPtr), typeof(ObjectPtr));
+
+            var listWithPlainObjectsType = typeof(List<>).MakeGenericType(keyValuePairType);
+
+            var listWithPlainObjects = (IList)Activator.CreateInstance(listWithPlainObjectsType);
+
+            foreach (DictionaryEntry item in dictionary)
+            {
+                var itemKey = item.Key;
+                var itemValue = item.Value;
+
+#if DEBUG
+                _logger.Info($"itemKey = {itemKey}");
+                _logger.Info($"itemValue = {itemValue}");
+#endif
+
+                var plainKey = GetSerializedObjectPtr(itemKey);
+
+#if DEBUG
+                _logger.Info($"plainKey = {plainKey}");
+#endif
+
+                var plainValue = GetSerializedObjectPtr(itemValue);
+
+#if DEBUG
+                _logger.Info($"plainValue = {plainValue}");
+#endif
+
+                var keyValuePair = Activator.CreateInstance(keyValuePairType, plainKey, plainValue);
+
+#if DEBUG
+                _logger.Info($"keyValuePair = {keyValuePair}");
+#endif
+
+                listWithPlainObjects.Add(keyValuePair);
+            }
+
+#if DEBUG
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, Formatting.Indented)}");
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, SerializationHelper.JsonSerializerSettings)}");
+#endif
+
+            WriteToFile(listWithPlainObjects, instanceId);
+
+            return objectPtr;
+        }
+
+        private ObjectPtr NSerializeGenericDictionaryWithCompositeKeyAndObjectValue(IDictionary dictionary)
+        {
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, dictionary.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(dictionary, objectPtr);
+
+            var keyValuePairType = typeof(KeyValuePair<,>).MakeGenericType(typeof(ObjectPtr), typeof(object));
+
+            var listWithPlainObjectsType = typeof(List<>).MakeGenericType(keyValuePairType);
+
+            var listWithPlainObjects = (IList)Activator.CreateInstance(listWithPlainObjectsType);
+
+            foreach (DictionaryEntry item in dictionary)
+            {
+                var itemKey = item.Key;
+                var itemValue = item.Value;
+
+#if DEBUG
+                _logger.Info($"itemKey = {itemKey}");
+                _logger.Info($"itemValue = {itemValue}");
+#endif
+
+                var plainKey = GetSerializedObjectPtr(itemKey);
+
+#if DEBUG
+                _logger.Info($"plainKey = {plainKey}");
+#endif
+
+                var plainValue = ConvertObjectCollectionValueToSerializableFormat(itemValue);
+
+#if DEBUG
+                _logger.Info($"plainValue = {plainValue}");
+#endif
+
+                var keyValuePair = Activator.CreateInstance(keyValuePairType, plainKey, itemValue);
+
+#if DEBUG
+                _logger.Info($"keyValuePair = {keyValuePair}");
+#endif
+
+                listWithPlainObjects.Add(keyValuePair);
+            }
+
+#if DEBUG
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, Formatting.Indented)}");
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, SerializationHelper.JsonSerializerSettings)}");
+#endif
+
+            WriteToFile(listWithPlainObjects, instanceId);
+
+            return objectPtr;
+        }
+
+        private ObjectPtr NSerializeGenericDictionaryWithCompositeKeyAndPrimitiveValue(IDictionary dictionary, Type valueGenericParameterType)
+        {
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, dictionary.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(dictionary, objectPtr);
+
+            var keyValuePairType = typeof(KeyValuePair<,>).MakeGenericType(typeof(ObjectPtr), valueGenericParameterType);
+
+            var listWithPlainObjectsType = typeof(List<>).MakeGenericType(keyValuePairType);
+
+            var listWithPlainObjects = (IList)Activator.CreateInstance(listWithPlainObjectsType);
+
+            foreach (DictionaryEntry item in dictionary)
+            {
+                var itemKey = item.Key;
+                var itemValue = item.Value;
+
+#if DEBUG
+                _logger.Info($"itemKey = {itemKey}");
+                _logger.Info($"itemValue = {itemValue}");
+#endif
+
+                var plainKey = GetSerializedObjectPtr(itemKey);
+
+#if DEBUG
+                _logger.Info($"plainKey = {plainKey}");
+#endif
+
+                var keyValuePair = Activator.CreateInstance(keyValuePairType, plainKey, itemValue);
+
+#if DEBUG
+                _logger.Info($"keyValuePair = {keyValuePair}");
+#endif
+
+                listWithPlainObjects.Add(keyValuePair);
+            }
+
+#if DEBUG
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, Formatting.Indented)}");
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, SerializationHelper.JsonSerializerSettings)}");
+#endif
+
+            WriteToFile(listWithPlainObjects, instanceId);
+
+            return objectPtr;
+        }
+
+        private ObjectPtr NSerializeGenericDictionaryWithObjectKeyAndCompositeValue(IDictionary dictionary)
+        {
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, dictionary.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(dictionary, objectPtr);
+
+            var keyValuePairType = typeof(KeyValuePair<,>).MakeGenericType(typeof(object), typeof(ObjectPtr));
+
+            var listWithPlainObjectsType = typeof(List<>).MakeGenericType(keyValuePairType);
+
+            var listWithPlainObjects = (IList)Activator.CreateInstance(listWithPlainObjectsType);
+
+            foreach (DictionaryEntry item in dictionary)
+            {
+                var itemKey = item.Key;
+                var itemValue = item.Value;
+
+#if DEBUG
+                _logger.Info($"itemKey = {itemKey}");
+                _logger.Info($"itemValue = {itemValue}");
+#endif
+
+                var plainKey = ConvertObjectCollectionValueToSerializableFormat(itemKey);
+
+#if DEBUG
+                _logger.Info($"plainKey = {plainKey}");
+#endif
+
+                var plainValue = GetSerializedObjectPtr(itemValue);
+
+#if DEBUG
+                _logger.Info($"plainValue = {plainValue}");
+#endif
+
+                var keyValuePair = Activator.CreateInstance(keyValuePairType, plainKey, plainValue);
+
+#if DEBUG
+                _logger.Info($"keyValuePair = {keyValuePair}");
+#endif
+
+                listWithPlainObjects.Add(keyValuePair);
+            }
+
+#if DEBUG
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, Formatting.Indented)}");
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, SerializationHelper.JsonSerializerSettings)}");
+#endif
+
+            WriteToFile(listWithPlainObjects, instanceId);
+
+            return objectPtr;
+        }
+
+        private ObjectPtr NSerializeGenericDictionaryWithObjectKeyAndObjectValue(IDictionary dictionary)
+        {
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, dictionary.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(dictionary, objectPtr);
+
+            var keyValuePairType = typeof(KeyValuePair<,>).MakeGenericType(typeof(object), typeof(object));
+
+            var listWithPlainObjectsType = typeof(List<>).MakeGenericType(keyValuePairType);
+
+            var listWithPlainObjects = (IList)Activator.CreateInstance(listWithPlainObjectsType);
+
+            foreach (DictionaryEntry item in dictionary)
+            {
+                var itemKey = item.Key;
+                var itemValue = item.Value;
+
+#if DEBUG
+                _logger.Info($"itemKey = {itemKey}");
+                _logger.Info($"itemValue = {itemValue}");
+#endif
+
+                var plainKey = ConvertObjectCollectionValueToSerializableFormat(itemKey);
+
+#if DEBUG
+                _logger.Info($"plainKey = {plainKey}");
+#endif
+
+                var plainValue = ConvertObjectCollectionValueToSerializableFormat(itemValue);
+
+#if DEBUG
+                _logger.Info($"plainValue = {plainValue}");
+#endif
+
+                var keyValuePair = Activator.CreateInstance(keyValuePairType, plainKey, itemValue);
+
+#if DEBUG
+                _logger.Info($"keyValuePair = {keyValuePair}");
+#endif
+
+                listWithPlainObjects.Add(keyValuePair);
+            }
+
+#if DEBUG
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, Formatting.Indented)}");
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, SerializationHelper.JsonSerializerSettings)}");
+#endif
+
+            WriteToFile(listWithPlainObjects, instanceId);
+
+            return objectPtr;
+        }
+
+        private ObjectPtr NSerializeGenericDictionaryWithObjectKeyAndPrimitiveValue(IDictionary dictionary, Type valueGenericParameterType)
+        {
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, dictionary.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(dictionary, objectPtr);
+
+            var keyValuePairType = typeof(KeyValuePair<,>).MakeGenericType(typeof(object), valueGenericParameterType);
+
+            var listWithPlainObjectsType = typeof(List<>).MakeGenericType(keyValuePairType);
+
+            var listWithPlainObjects = (IList)Activator.CreateInstance(listWithPlainObjectsType);
+
+            foreach (DictionaryEntry item in dictionary)
+            {
+                var itemKey = item.Key;
+                var itemValue = item.Value;
+
+#if DEBUG
+                _logger.Info($"itemKey = {itemKey}");
+                _logger.Info($"itemValue = {itemValue}");
+#endif
+
+                var plainKey = ConvertObjectCollectionValueToSerializableFormat(itemKey);
+
+#if DEBUG
+                _logger.Info($"plainKey = {plainKey}");
+#endif
+
+                var keyValuePair = Activator.CreateInstance(keyValuePairType, plainKey, itemValue);
+
+#if DEBUG
+                _logger.Info($"keyValuePair = {keyValuePair}");
+#endif
+
+                listWithPlainObjects.Add(keyValuePair);
+            }
+
+#if DEBUG
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, Formatting.Indented)}");
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, SerializationHelper.JsonSerializerSettings)}");
+#endif
+
+            WriteToFile(listWithPlainObjects, instanceId);
+
+            return objectPtr;
+        }
+
+        private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndCompositeValue(IDictionary dictionary, Type keyGenericParameterType)
+        {
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, dictionary.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(dictionary, objectPtr);
+
+            var dictWithPlainObjectsType = typeof(Dictionary<,>).MakeGenericType(keyGenericParameterType, typeof(ObjectPtr));
+
+            var dictWithPlainObjects = (IDictionary)Activator.CreateInstance(dictWithPlainObjectsType);
+
+            foreach (DictionaryEntry item in dictionary)
+            {
+                var itemKey = item.Key;
+                var itemValue = item.Value;
+
+#if DEBUG
+                _logger.Info($"itemKey = {itemKey}");
+                _logger.Info($"itemValue = {itemValue}");
+#endif
+
+                var plainValue = GetSerializedObjectPtr(itemValue);
+
+#if DEBUG
+                _logger.Info($"plainValue = {plainValue}");
+#endif
+
+                dictWithPlainObjects[itemKey] = plainValue;
+            }
+
+#if DEBUG
+            _logger.Info($"dictWithPlainObjects = {JsonConvert.SerializeObject(dictWithPlainObjects, Formatting.Indented)}");
+#endif
+
+            WriteToFile(dictWithPlainObjects, instanceId);
+
+            return objectPtr;
+        }
+
+        private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndObjectValue(IDictionary dictionary, Type keyGenericParameterType)
+        {
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, dictionary.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(dictionary, objectPtr);
+
+            var dictWithPlainObjectsType = typeof(Dictionary<,>).MakeGenericType(keyGenericParameterType, typeof(object));
+
+            var dictWithPlainObjects = (IDictionary)Activator.CreateInstance(dictWithPlainObjectsType);
+
+            foreach (DictionaryEntry item in dictionary)
+            {
+                var itemKey = item.Key;
+                var itemValue = item.Value;
+
+#if DEBUG
+                _logger.Info($"itemKey = {itemKey}");
+                _logger.Info($"itemValue = {itemValue}");
+#endif
+
+                var plainValue = ConvertObjectCollectionValueToSerializableFormat(itemValue);
+
+#if DEBUG
+                _logger.Info($"plainValue = {plainValue}");
+#endif
+
+                dictWithPlainObjects[itemKey] = plainValue;
+            }
+
+#if DEBUG
+            _logger.Info($"dictWithPlainObjects = {JsonConvert.SerializeObject(dictWithPlainObjects, Formatting.Indented)}");
+#endif
+
+            WriteToFile(dictWithPlainObjects, instanceId);
+
+            return objectPtr;
+        }
+
+        private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndPrimitiveValue(IDictionary dictionary)
+        {
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, dictionary.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(dictionary, objectPtr);
+
+#if DEBUG
+            _logger.Info($"dictionary = {JsonConvert.SerializeObject(dictionary, Formatting.Indented)}");
+#endif
+
+            WriteToFile(dictionary, instanceId);
+
+            return objectPtr;
+        }
+
         private ObjectPtr NSerializeGenericList(IEnumerable enumerable)
         {
             var type = enumerable.GetType();
@@ -310,34 +891,32 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"type.IsGenericType = {type.IsGenericType}");
 #endif
 
-            var genericParameterType = type.GetGenericArguments()[0];
+            if(type.IsGenericType)
+            {
+                var genericParameterType = type.GetGenericArguments()[0];
 
 #if DEBUG
-            _logger.Info($"genericParameterType.FullName = {genericParameterType.FullName}");
-            _logger.Info($"genericParameterType.Name = {genericParameterType.Name}");
-            _logger.Info($"genericParameterType.IsGenericType = {genericParameterType.IsGenericType}");
-            _logger.Info($"genericParameterType.IsPrimitive = {genericParameterType.IsPrimitive}");
+                _logger.Info($"genericParameterType.FullName = {genericParameterType.FullName}");
+                _logger.Info($"genericParameterType.Name = {genericParameterType.Name}");
+                _logger.Info($"genericParameterType.IsGenericType = {genericParameterType.IsGenericType}");
+                _logger.Info($"genericParameterType.IsPrimitive = {genericParameterType.IsPrimitive}");
 #endif
 
-            if (SerializationHelper.IsObject(genericParameterType))
-            {
-                return NSerializeListWithObjectParameter(enumerable);
+                if (SerializationHelper.IsPrimitiveType(genericParameterType))
+                {
+                    return NSerializeListWithPrimitiveParameter(enumerable);
+                }
+
+                if (SerializationHelper.IsObject(genericParameterType))
+                {
+                    return NSerializeListWithObjectParameter(enumerable);
+                }
             }
 
-            if(SerializationHelper.IsPrimitiveType(genericParameterType))
-            {
-                throw new NotImplementedException("9B48CB69-4F44-4C9E-9C7D-B57593946B70");
-            }
-
-            if(genericParameterType == typeof(ISerializable))
-            {
-                throw new NotImplementedException("70E2078C-ECBF-4896-BC07-CCE1FAFFF41F");
-            }
-
-            return NSerializeListWithPossibleSerializebleParameter(enumerable);
+            return NSerializeListWithCompositeParameter(enumerable);
         }
 
-        private ObjectPtr NSerializeListWithPossibleSerializebleParameter(IEnumerable enumerable)
+        private ObjectPtr NSerializeListWithCompositeParameter(IEnumerable enumerable)
         {
 #if DEBUG
             var type = enumerable.GetType();
@@ -364,28 +943,11 @@ namespace SymOntoClay.Serialization.Implementation
 
             foreach (var item in enumerable)
             {
-                var serializable = item as ISerializable;
-
-                if (serializable == null)
-                {
-                    var itemType = item.GetType();
-
-#if DEBUG
-                    _logger.Info($"itemType.FullName = {itemType.FullName}");
-                    _logger.Info($"itemType.Name = {itemType.Name}");
-                    _logger.Info($"itemType.IsGenericType = {itemType.IsGenericType}");
-#endif
-
-                    throw new NotImplementedException("1A7ACA8A-95A7-4096-94E6-53BF131E8960");
-                }
-                else
-                {
-                    listWithPlainObjects.Add(NSerialize(serializable));
-                }
+                listWithPlainObjects.Add(GetSerializedObjectPtr(item));
             }
 
 #if DEBUG
-            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, SerializationHelper.JsonSerializerSettings)}");
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, Formatting.Indented)}");
 #endif
 
             WriteToFile(listWithPlainObjects, instanceId);
@@ -420,31 +982,7 @@ namespace SymOntoClay.Serialization.Implementation
 
             foreach (var item in enumerable)
             {
-                if (SerializationHelper.IsPrimitiveType(item))
-                {
-                    listWithPlainObjects.Add(item);
-
-                    continue;
-                }
-
-                var serializable = item as ISerializable;
-
-                if (serializable == null)
-                {
-                    var itemType = item.GetType();
-
-#if DEBUG
-                    _logger.Info($"itemType.FullName = {itemType.FullName}");
-                    _logger.Info($"itemType.Name = {itemType.Name}");
-                    _logger.Info($"itemType.IsGenericType = {itemType.IsGenericType}");
-#endif
-
-                    throw new NotImplementedException("79D76024-320E-4BA4-AB03-DA46959D2894");
-                }
-                else
-                {
-                    listWithPlainObjects.Add(NSerialize(serializable));
-                }
+                listWithPlainObjects.Add(ConvertObjectCollectionValueToSerializableFormat(item));
             }
 
 #if DEBUG
@@ -454,6 +992,46 @@ namespace SymOntoClay.Serialization.Implementation
             WriteToFile(listWithPlainObjects, instanceId);
 
             return objectPtr;
+        }
+
+        private ObjectPtr NSerializeListWithPrimitiveParameter(IEnumerable enumerable)
+        {
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, enumerable.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(enumerable, objectPtr);
+
+#if DEBUG
+            _logger.Info($"enumerable = {JsonConvert.SerializeObject(enumerable, Formatting.Indented)}");
+#endif
+
+            WriteToFile(enumerable, instanceId);
+
+            return objectPtr;
+        }
+
+        private object ConvertObjectCollectionValueToSerializableFormat(object value)
+        {
+            if(value == null)
+            {
+                return null;
+            }
+
+            if (SerializationHelper.IsPrimitiveType(value))
+            {
+                return value;
+            }
+
+            return GetSerializedObjectPtr(value);
         }
 
         private ObjectPtr NSerialize(ISerializable serializable)

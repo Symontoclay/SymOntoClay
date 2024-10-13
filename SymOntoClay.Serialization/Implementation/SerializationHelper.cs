@@ -3,6 +3,7 @@ using NLog;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 
 namespace SymOntoClay.Serialization.Implementation
@@ -125,13 +126,60 @@ namespace SymOntoClay.Serialization.Implementation
 
         public static FieldInfo[] GetFields(Type type)
         {
+            var usedNamesList = new List<string>();
+
             var result = new List<FieldInfo>();
 
             var targetType = type;
 
             while (targetType != null)
             {
-                result.AddRange(targetType.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance));
+                var items = targetType.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+
+                foreach (var item in items)
+                {
+                    if (usedNamesList.Contains(item.Name))
+                    {
+                        continue;
+                    }
+
+                    usedNamesList.Add(item.Name);
+                    result.Add(item);
+                }
+
+                targetType = targetType.BaseType;
+            }
+
+            return result.ToArray();
+        }
+
+        public static PropertyInfo[] GetProperties(object obj)
+        {
+            return GetProperties(obj.GetType());
+        }
+
+        public static PropertyInfo[] GetProperties(Type type)
+        {
+            var usedNamesList = new List<string>();
+
+            var result = new List<PropertyInfo>();
+
+            var targetType = type;
+
+            while (targetType != null)
+            {
+                var items = targetType.GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+
+                foreach (var item in items)
+                {
+                    if(usedNamesList.Contains(item.Name))
+                    {
+                        continue;
+                    }
+
+                    usedNamesList.Add(item.Name);
+                    result.Add(item);
+                }
 
                 targetType = targetType.BaseType;
             }

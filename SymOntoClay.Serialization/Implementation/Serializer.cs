@@ -87,8 +87,6 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"type.IsGenericType = {type.IsGenericType}");
 #endif
 
-
-
             switch (type.FullName)
             {
                 case "System.Object":
@@ -152,6 +150,37 @@ namespace SymOntoClay.Serialization.Implementation
 
             var plainObjectsDict = new Dictionary<string, object>();
 
+            var properties = SerializationHelper.GetProperties(type);
+
+#if DEBUG
+            _logger.Info($"properties.Length = {properties.Length}");
+#endif
+
+            foreach (var property in properties)
+            {
+#if DEBUG
+                _logger.Info($"property.Name = {property.Name}");
+                _logger.Info($"property.CustomAttributes.Count() = {property.CustomAttributes.Count()}");
+                foreach (var attr in property.CustomAttributes)
+                {
+                    _logger.Info($"attr.AttributeType?.FullName = {attr.AttributeType?.FullName}");
+
+                    foreach (var ctorArg in attr.ConstructorArguments)
+                    {
+                        _logger.Info($"ctorArg.Value = {ctorArg.Value}");
+                    }
+
+                    foreach (var namedArg in attr.NamedArguments)
+                    {
+                        _logger.Info($"namedArg.MemberName = {namedArg.MemberName}");
+                        _logger.Info($"namedArg.TypedValue.Value = {namedArg.TypedValue.Value}");
+                    }
+                }
+#endif
+            }
+
+            var propertiesAttributesDict = properties.ToDictionary(p => p.Name, p => p.CustomAttributes);
+
             var fields = SerializationHelper.GetFields(type);
 
 #if DEBUG
@@ -187,13 +216,31 @@ namespace SymOntoClay.Serialization.Implementation
                     }
                 }
 
+                var customAttributes = field.CustomAttributes;
+
+                var customAttributeDataFromProperties = GetCustomAttributeDataFromProperties(propertiesAttributesDict, field.Name);
+
+#if DEBUG
+                _logger.Info($"customAttributeDataFromProperties?.Count() = {customAttributeDataFromProperties?.Count()}");
+#endif
+
+                if(customAttributeDataFromProperties?.Any() ?? false)
+                {
+                    customAttributes = customAttributes.Concat(customAttributeDataFromProperties);
+                }
+
+                if(IsNoSerialiable(customAttributes))
+                {
+                    continue;
+                }
+
                 var itemValue = field.GetValue(obj);
 
 #if DEBUG
                 _logger.Info($"itemValue = {itemValue}");
 #endif
 
-                var settingsParameterName = GetSettingsParameterName(field);
+                var settingsParameterName = GetSettingsParameterName(customAttributes);
 
 #if DEBUG
                 _logger.Info($"settingsParameterName = {settingsParameterName}");
@@ -224,6 +271,37 @@ namespace SymOntoClay.Serialization.Implementation
             return objectPtr;
         }
 
+        private IEnumerable<CustomAttributeData> GetCustomAttributeDataFromProperties(Dictionary<string, IEnumerable<CustomAttributeData>> propertiesAttributesDict, string fieldName)
+        {
+#if DEBUG
+            _logger.Info($"fieldName = {fieldName}");
+#endif
+
+            var properyName = GetProperyName(fieldName);
+
+#if DEBUG
+            _logger.Info($"properyName = {properyName}");
+#endif
+
+            propertiesAttributesDict.TryGetValue(properyName, out var value);
+
+            return value ?? Enumerable.Empty<CustomAttributeData>();
+        }
+
+        private string GetProperyName(string fieldName)
+        {
+#if DEBUG
+            _logger.Info($"fieldName = {fieldName}");
+#endif
+
+            if(fieldName.EndsWith("k__BackingField"))
+            {
+                return fieldName.Substring(1, fieldName.IndexOf(">") - 1);
+            }
+
+            return string.Empty;
+        }
+
         private object GetSettingsParameter(FieldInfo[] fields, object obj, string settingsParameterName)
         {
 #if DEBUG
@@ -245,16 +323,26 @@ namespace SymOntoClay.Serialization.Implementation
             return field.GetValue(obj);
         }
 
-        private string GetSettingsParameterName(FieldInfo field)
+        private bool IsNoSerialiable(IEnumerable<CustomAttributeData> customAttributes)
         {
-            var customAttributes = field.CustomAttributes;
+            if ((customAttributes?.Count() ?? 0) == 0)
+            {
+                return false;
+            }
 
+            var targetAttribute = customAttributes.SingleOrDefault(p => p.AttributeType == typeof(SocNoSerializable));
+
+            return targetAttribute != null;
+        }
+
+        private string GetSettingsParameterName(IEnumerable<CustomAttributeData> customAttributes)
+        {
             if ((customAttributes?.Count() ?? 0) == 0)
             {
                 return null;
             }
 
-            var targetAttribute = customAttributes.SingleOrDefault(p => p.AttributeType.FullName == "SymOntoClay.Serialization.SocObjectSerializationSettings");
+            var targetAttribute = customAttributes.SingleOrDefault(p => p.AttributeType == typeof(SocObjectSerializationSettings));
 
             if(targetAttribute == null)
             {

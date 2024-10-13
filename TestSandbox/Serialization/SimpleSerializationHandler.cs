@@ -69,8 +69,9 @@ namespace TestSandbox.Serialization
             var deserializer = new Deserializer(deserializationContext);
 
             //var instance = deserializer.Deserialize<SerializedObject>();
-            var instance = deserializer.Deserialize<Class1>();
+            //var instance = deserializer.Deserialize<Class1>();
             //var instance = deserializer.Deserialize<Class2>();
+            var instance = deserializer.Deserialize<Class3>();
 
             _logger.Info($"instance = {instance}");
         }
@@ -82,8 +83,9 @@ namespace TestSandbox.Serialization
             //    IntField = 16
             //};
 
-            var instance = new Class1();
+            //var instance = new Class1();
             //var instance = new Class2(true);
+            var instance = new Class3(true);
 
             _logger.Info($"instance = {instance}");
 

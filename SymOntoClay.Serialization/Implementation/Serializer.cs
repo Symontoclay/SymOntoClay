@@ -67,6 +67,7 @@ namespace SymOntoClay.Serialization.Implementation
         {
 #if DEBUG
             _logger.Info($"obj = {obj}");
+            _logger.Info($"settingsParameter = {settingsParameter}");
 #endif
 
             if (obj == null)
@@ -86,6 +87,16 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"type.Name = {type.Name}");
             _logger.Info($"type.IsGenericType = {type.IsGenericType}");
 #endif
+
+            if(type.FullName.StartsWith("System.Action"))
+            {
+                throw new NotImplementedException("D5ABDA05-9524-484F-8C1B-A414A34DB300");
+            }
+
+            if (type.FullName.StartsWith("System.Func"))
+            {
+                throw new NotImplementedException("BE4BDEB6-08E7-4178-A938-C629BF848A47");
+            }
 
             switch (type.FullName)
             {
@@ -191,6 +202,8 @@ namespace SymOntoClay.Serialization.Implementation
             {
 #if DEBUG
                 _logger.Info($"field.Name = {field.Name}");
+                _logger.Info($"field.FieldType.FullName = {field.FieldType.FullName}");
+                _logger.Info($"field.FieldType.Name = {field.FieldType.Name}");
                 _logger.Info($"field.CustomAttributes.Count() = {field.CustomAttributes.Count()}");
 #endif
 

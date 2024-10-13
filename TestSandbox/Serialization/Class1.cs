@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Common;
 using System.Text;
+using SymOntoClay.Serialization;
 
 namespace TestSandbox.Serialization
 {
@@ -15,6 +16,7 @@ namespace TestSandbox.Serialization
     {
         public static int SProp1 { get; set; }
 
+        [SocNoSerializable]
         public int Prop1 { get; set; }
         public int Prop2 { get; set; } = 12;
         public int Prop3 => Field2;
@@ -36,6 +38,7 @@ namespace TestSandbox.Serialization
             }
         }
 
+        [SocNoSerializable]
         private int Field1;
         private int Field2 = 16;
         private readonly int Field3;

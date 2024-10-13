@@ -8,7 +8,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Threading;
 
 namespace SymOntoClay.Serialization.Implementation
@@ -102,12 +101,6 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"type.FullName = {type.FullName}");
 #endif
 
-            if (type.FullName.StartsWith("System.Threading.") ||
-                type.FullName.StartsWith("System.Collections."))
-            {
-                throw new NotImplementedException("CE6ABC55-44C9-49EF-B431-738880E68CB4");
-            }
-
             switch (type.FullName)
             {
                 case "System.Object":
@@ -137,8 +130,13 @@ namespace SymOntoClay.Serialization.Implementation
                     return NDeserializeGenericDictionary(type, objectPtr, fullFileName);
 
                 default:
-                    return NDeserializeComposite(type, objectPtr, fullFileName);
+                    if (type.FullName.StartsWith("System.Threading.") ||
+                        type.FullName.StartsWith("System.Collections."))
+                    {
+                        throw new NotImplementedException("CE6ABC55-44C9-49EF-B431-738880E68CB4");
+                    }
 
+                    return NDeserializeComposite(type, objectPtr, fullFileName);
             }
         }
 
@@ -287,37 +285,33 @@ namespace SymOntoClay.Serialization.Implementation
 
 #if DEBUG
                 _logger.Info($"itemValue = {itemValue}");
+                _logger.Info($"itemValue?.GetType()?.FullName = {itemValue?.GetType()?.FullName}");
+                _logger.Info($"itemValue?.GetType()?.Name = {itemValue?.GetType()?.Name}");
+                _logger.Info($"field.FieldType.FullName = {field.FieldType.FullName}");
+                _logger.Info($"field.FieldType.Name = {field.FieldType.Name}");
 #endif
 
-                field.SetValue(instance, Convert.ChangeType(itemValue, field.FieldType));
+                field.SetValue(instance, ChangeType(itemValue, field.FieldType));
             }
 
             return instance;
         }
 
-        /*
-         //            
+        private object ChangeType(object value, Type conversionType)
+        {
+            if(conversionType.Name == "Nullable`1" && value.GetType().Name != "Nullable`1")
+            {
+                var realFieldType = conversionType.GenericTypeArguments[0];
 
+#if DEBUG
+                _logger.Info($"realFieldType.FullName = {realFieldType.FullName}");
+#endif
 
+                return Convert.ChangeType(value, realFieldType);
+            }
 
-//            
-
-//            var serializable = (ISerializable)instance;
-
-//            var plainObject = JsonConvert.DeserializeObject(File.ReadAllText(fullFileName), serializable.GetPlainObjectType(), SerializationHelper.JsonSerializerSettings);
-
-//#if DEBUG
-//            _logger.Info($"plainObject = {plainObject}");
-//#endif
-
-//            serializable.OnReadPlainObject(plainObject, this);
-
-//#if DEBUG
-//            _logger.Info($"serializable = {serializable}");
-//#endif
-
-//            return serializable;
-         */
+            return Convert.ChangeType(value, conversionType);
+        }
 
         private object NDeserializeCustomThreadPool(ObjectPtr objectPtr, string fullFileName)
         {

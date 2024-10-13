@@ -19,8 +19,8 @@ namespace TestSandbox.Serialization
             _logger.Info("Begin");
 
             //SimpleDictionarySerialization();
-            Deserialize();
-            //Serialize();
+            //Deserialize();
+            Serialize();
 
             _logger.Info("End");
         }
@@ -70,6 +70,7 @@ namespace TestSandbox.Serialization
 
             //var instance = deserializer.Deserialize<SerializedObject>();
             var instance = deserializer.Deserialize<Class1>();
+            //var instance = deserializer.Deserialize<Class2>();
 
             _logger.Info($"instance = {instance}");
         }
@@ -82,6 +83,7 @@ namespace TestSandbox.Serialization
             //};
 
             var instance = new Class1();
+            //var instance = new Class2(true);
 
             _logger.Info($"instance = {instance}");
 

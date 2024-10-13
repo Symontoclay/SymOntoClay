@@ -87,11 +87,7 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"type.IsGenericType = {type.IsGenericType}");
 #endif
 
-            if(type.FullName.StartsWith("System.Threading.") ||
-                type.FullName.StartsWith("System.Collections."))
-            {
-                throw new NotImplementedException("4161028A-A2DB-41F0-8D53-6BCC81D317A4");
-            }
+
 
             switch (type.FullName)
             {
@@ -122,6 +118,12 @@ namespace SymOntoClay.Serialization.Implementation
                     return NSerializeGenericDictionary((IDictionary)obj);
 
                 default:
+                    if (type.FullName.StartsWith("System.Threading.") ||
+                        type.FullName.StartsWith("System.Collections."))
+                    {
+                        throw new NotImplementedException("4161028A-A2DB-41F0-8D53-6BCC81D317A4");
+                    }
+
                     return NSerializeComposite(obj);
             }
         }
@@ -138,7 +140,9 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"instanceId = {instanceId}");
 #endif
 
-            var objectPtr = new ObjectPtr(instanceId, obj.GetType().FullName);
+            var type = obj.GetType();
+
+            var objectPtr = new ObjectPtr(instanceId, type.FullName);
 
 #if DEBUG
             _logger.Info($"objectPtr = {objectPtr}");
@@ -148,7 +152,7 @@ namespace SymOntoClay.Serialization.Implementation
 
             var plainObjectsDict = new Dictionary<string, object>();
 
-            var fields = SerializationHelper.GetFields(obj);
+            var fields = SerializationHelper.GetFields(type);
 
 #if DEBUG
             _logger.Info($"fields.Length = {fields.Length}");
@@ -158,7 +162,30 @@ namespace SymOntoClay.Serialization.Implementation
             {
 #if DEBUG
                 _logger.Info($"field.Name = {field.Name}");
+                _logger.Info($"field.CustomAttributes.Count() = {field.CustomAttributes.Count()}");
 #endif
+
+                foreach (var attr in field.CustomAttributes)
+                {
+#if DEBUG
+                    _logger.Info($"attr.AttributeType?.FullName = {attr.AttributeType?.FullName}");
+#endif
+
+                    foreach (var ctorArg in attr.ConstructorArguments)
+                    {
+#if DEBUG
+                        _logger.Info($"ctorArg.Value = {ctorArg.Value}");
+#endif
+                    }
+
+                    foreach (var namedArg in attr.NamedArguments)
+                    {
+#if DEBUG
+                        _logger.Info($"namedArg.MemberName = {namedArg.MemberName}");
+                        _logger.Info($"namedArg.TypedValue.Value = {namedArg.TypedValue.Value}");
+#endif
+                    }
+                }
 
                 var itemValue = field.GetValue(obj);
 
@@ -166,7 +193,19 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"itemValue = {itemValue}");
 #endif
 
-                var plainValue = ConvertObjectCollectionValueToSerializableFormat(itemValue);
+                var settingsParameterName = GetSettingsParameterName(field);
+
+#if DEBUG
+                _logger.Info($"settingsParameterName = {settingsParameterName}");
+#endif
+
+                var settingsParameter = GetSettingsParameter(fields, obj, settingsParameterName);
+
+#if DEBUG
+                _logger.Info($"settingsParameter = {settingsParameter}");
+#endif
+
+                var plainValue = ConvertObjectCollectionValueToSerializableFormat(itemValue, settingsParameter);
 
 #if DEBUG
                 _logger.Info($"plainValue = {plainValue}");
@@ -183,6 +222,46 @@ namespace SymOntoClay.Serialization.Implementation
             WriteToFile(plainObjectsDict, instanceId);
 
             return objectPtr;
+        }
+
+        private object GetSettingsParameter(FieldInfo[] fields, object obj, string settingsParameterName)
+        {
+#if DEBUG
+            _logger.Info($"settingsParameterName = {settingsParameterName}");
+#endif
+
+            if(string.IsNullOrWhiteSpace(settingsParameterName))
+            {
+                return null;
+            }
+
+            var field = fields.SingleOrDefault(f => f.Name == settingsParameterName);
+
+            if(field == null)
+            {
+                return null;
+            }
+
+            return field.GetValue(obj);
+        }
+
+        private string GetSettingsParameterName(FieldInfo field)
+        {
+            var customAttributes = field.CustomAttributes;
+
+            if ((customAttributes?.Count() ?? 0) == 0)
+            {
+                return null;
+            }
+
+            var targetAttribute = customAttributes.SingleOrDefault(p => p.AttributeType.FullName == "SymOntoClay.Serialization.SocObjectSerializationSettings");
+
+            if(targetAttribute == null)
+            {
+                return null;
+            }
+
+            return targetAttribute.ConstructorArguments.Single().Value as string;
         }
 
         private ObjectPtr NSerializeCustomThreadPool(CustomThreadPool customThreadPool, CustomThreadPoolSerializationSettings settingsParameter)
@@ -1075,7 +1154,7 @@ namespace SymOntoClay.Serialization.Implementation
             return objectPtr;
         }
 
-        private object ConvertObjectCollectionValueToSerializableFormat(object value)
+        private object ConvertObjectCollectionValueToSerializableFormat(object value, object settingsParameter = null)
         {
             if(value == null)
             {
@@ -1087,7 +1166,7 @@ namespace SymOntoClay.Serialization.Implementation
                 return value;
             }
 
-            return GetSerializedObjectPtr(value);
+            return GetSerializedObjectPtr(value, settingsParameter);
         }
 
         private ObjectPtr NSerialize(object serializable)

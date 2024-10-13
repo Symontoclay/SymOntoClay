@@ -52,6 +52,11 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"type.IsGenericType = {type.IsGenericType}");
 #endif
 
+            if(type.Name == "Nullable`1")
+            {
+                throw new NotImplementedException("70CA8FE2-2DFB-4916-B9CE-16C4341DE645");
+            }
+
             switch (type.FullName)
             {
                 case "System.Byte":

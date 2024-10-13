@@ -27,7 +27,7 @@ namespace SymOntoClay.Serialization.Implementation
         private readonly ISerializationContext _serializationContext;
 
         /// <inheritdoc/>
-        public void Serialize(ISerializable serializable)
+        public void Serialize(object serializable)
         {
 #if DEBUG
             _logger.Info($"serializable = {serializable}");
@@ -39,7 +39,7 @@ namespace SymOntoClay.Serialization.Implementation
             }
 
             var rootObject = new RootObject();
-            rootObject.Data = NSerialize(serializable);
+            rootObject.Data = GetSerializedObjectPtr(serializable);
 
 #if DEBUG
             _logger.Info($"rootObject = {rootObject}");
@@ -79,54 +79,110 @@ namespace SymOntoClay.Serialization.Implementation
                 return objectPtr;
             }
 
-            var serializable = obj as ISerializable;
-
-            if (serializable == null)
-            {
-                var type = obj.GetType();
+            var type = obj.GetType();
 
 #if DEBUG
-                _logger.Info($"type.FullName = {type.FullName}");
-                _logger.Info($"type.Name = {type.Name}");
-                _logger.Info($"type.IsGenericType = {type.IsGenericType}");
+            _logger.Info($"type.FullName = {type.FullName}");
+            _logger.Info($"type.Name = {type.Name}");
+            _logger.Info($"type.IsGenericType = {type.IsGenericType}");
 #endif
 
-                switch (type.FullName)
-                {
-                    case "System.Object":
-                        return NSerializeBareObject(obj);
-
-                    case "System.Threading.CancellationTokenSource":
-                        return NSerializeCancellationTokenSource((CancellationTokenSource)obj);
-
-                    case "System.Threading.CancellationTokenSource+Linked1CancellationTokenSource":
-                    case "System.Threading.CancellationTokenSource+Linked2CancellationTokenSource":
-                    case "System.Threading.CancellationTokenSource+LinkedNCancellationTokenSource":
-                        return NSerializeLinkedCancellationTokenSource((CancellationTokenSource)obj, settingsParameter as LinkedCancellationTokenSourceSerializationSettings);
-                    
-                    case "System.Threading.CancellationToken":
-                        return NSerializeCancellationToken((CancellationToken)obj);
-
-                    case "SymOntoClay.Threading.CustomThreadPool":
-                        return NSerializeCustomThreadPool((CustomThreadPool)obj, settingsParameter as CustomThreadPoolSerializationSettings);
-                }
-
-                switch (type.Name)
-                {
-                    case "List`1":
-                        return NSerializeGenericList((IEnumerable)obj);
-
-                    case "Dictionary`2":
-                        return NSerializeGenericDictionary((IDictionary)obj);
-
-                    default:
-                        throw new NotImplementedException("B3784FDD-7AFC-4947-AA62-00398400E52B");
-                }
-            }
-            else
+            if(type.FullName.StartsWith("System.Threading.") ||
+                type.FullName.StartsWith("System.Collections."))
             {
-                return NSerialize(serializable);
+                throw new NotImplementedException("4161028A-A2DB-41F0-8D53-6BCC81D317A4");
             }
+
+            switch (type.FullName)
+            {
+                case "System.Object":
+                    return NSerializeBareObject(obj);
+
+                case "System.Threading.CancellationTokenSource":
+                    return NSerializeCancellationTokenSource((CancellationTokenSource)obj);
+
+                case "System.Threading.CancellationTokenSource+Linked1CancellationTokenSource":
+                case "System.Threading.CancellationTokenSource+Linked2CancellationTokenSource":
+                case "System.Threading.CancellationTokenSource+LinkedNCancellationTokenSource":
+                    return NSerializeLinkedCancellationTokenSource((CancellationTokenSource)obj, settingsParameter as LinkedCancellationTokenSourceSerializationSettings);
+
+                case "System.Threading.CancellationToken":
+                    return NSerializeCancellationToken((CancellationToken)obj);
+
+                case "SymOntoClay.Threading.CustomThreadPool":
+                    return NSerializeCustomThreadPool((CustomThreadPool)obj, settingsParameter as CustomThreadPoolSerializationSettings);
+            }
+
+            switch (type.Name)
+            {
+                case "List`1":
+                    return NSerializeGenericList((IEnumerable)obj);
+
+                case "Dictionary`2":
+                    return NSerializeGenericDictionary((IDictionary)obj);
+
+                default:
+                    return NSerializeComposite(obj);
+            }
+        }
+
+        private ObjectPtr NSerializeComposite(object obj)
+        {
+#if DEBUG
+            _logger.Info($"obj = {obj}");
+#endif
+
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, obj.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(obj, objectPtr);
+
+            var plainObjectsDict = new Dictionary<string, object>();
+
+            var fields = SerializationHelper.GetFields(obj);
+
+#if DEBUG
+            _logger.Info($"fields.Length = {fields.Length}");
+#endif
+
+            foreach (var field in fields)
+            {
+#if DEBUG
+                _logger.Info($"field.Name = {field.Name}");
+#endif
+
+                var itemValue = field.GetValue(obj);
+
+#if DEBUG
+                _logger.Info($"itemValue = {itemValue}");
+#endif
+
+                var plainValue = ConvertObjectCollectionValueToSerializableFormat(itemValue);
+
+#if DEBUG
+                _logger.Info($"plainValue = {plainValue}");
+#endif
+
+                plainObjectsDict[field.Name] = plainValue;
+            }
+
+#if DEBUG
+            _logger.Info($"plainObjectsDict = {JsonConvert.SerializeObject(plainObjectsDict, Formatting.Indented)}");
+            _logger.Info($"plainObjectsDict = {JsonConvert.SerializeObject(plainObjectsDict, SerializationHelper.JsonSerializerSettings)}");
+#endif
+
+            WriteToFile(plainObjectsDict, instanceId);
+
+            return objectPtr;
         }
 
         private ObjectPtr NSerializeCustomThreadPool(CustomThreadPool customThreadPool, CustomThreadPoolSerializationSettings settingsParameter)
@@ -1034,33 +1090,35 @@ namespace SymOntoClay.Serialization.Implementation
             return GetSerializedObjectPtr(value);
         }
 
-        private ObjectPtr NSerialize(ISerializable serializable)
+        private ObjectPtr NSerialize(object serializable)
         {
-            var instanceId = CreateInstanceId();
+            throw new NotImplementedException("3C60693C-938A-4AB1-B6FF-C448E78F1D5B");
 
-#if DEBUG
-            _logger.Info($"instanceId = {instanceId}");
-#endif
+//            var instanceId = CreateInstanceId();
 
-            var objectPtr = new ObjectPtr(instanceId, serializable.GetType().FullName);
+//#if DEBUG
+//            _logger.Info($"instanceId = {instanceId}");
+//#endif
 
-#if DEBUG
-            _logger.Info($"objectPtr = {objectPtr}");
-#endif
+//            var objectPtr = new ObjectPtr(instanceId, serializable.GetType().FullName);
 
-            _serializationContext.RegObjectPtr(serializable, objectPtr);
+//#if DEBUG
+//            _logger.Info($"objectPtr = {objectPtr}");
+//#endif
 
-            var plainObject = Activator.CreateInstance(serializable.GetPlainObjectType());
+//            _serializationContext.RegObjectPtr(serializable, objectPtr);
 
-            serializable.OnWritePlainObject(plainObject, this);
+//            var plainObject = Activator.CreateInstance(serializable.GetPlainObjectType());
 
-#if DEBUG
-            _logger.Info($"plainObject = {plainObject}");
-#endif
+//            serializable.OnWritePlainObject(plainObject, this);
 
-            WriteToFile(plainObject, instanceId);
+//#if DEBUG
+//            _logger.Info($"plainObject = {plainObject}");
+//#endif
 
-            return objectPtr;
+//            WriteToFile(plainObject, instanceId);
+
+//            return objectPtr;
         }
 
         private void WriteToFile(object value, string instanceId)

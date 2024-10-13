@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
 using NLog;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Reflection;
 
 namespace SymOntoClay.Serialization.Implementation
 {
@@ -11,11 +13,14 @@ namespace SymOntoClay.Serialization.Implementation
         private static ILogger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
+        private static CultureInfo _cultureInfo = new CultureInfo("en-150");
+
         public static readonly JsonSerializerSettings JsonSerializerSettings = new JsonSerializerSettings()
         {
             PreserveReferencesHandling = PreserveReferencesHandling.All,
             StringEscapeHandling = StringEscapeHandling.EscapeHtml,
-            TypeNameHandling = TypeNameHandling.All//,
+            TypeNameHandling = TypeNameHandling.All,
+            Culture = _cultureInfo
             //ReferenceLoopHandling = ReferenceLoopHandling.Serialize
         };
 
@@ -108,6 +113,25 @@ namespace SymOntoClay.Serialization.Implementation
             }
         }
 
-        private static CultureInfo _cultureInfo = new CultureInfo("en-150");
+        public static FieldInfo[] GetFields(object obj)
+        {
+            return GetFields(obj.GetType());
+        }
+
+        public static FieldInfo[] GetFields(Type type)
+        {
+            var result = new List<FieldInfo>();
+
+            var targetType = type;
+
+            while (targetType != null)
+            {
+                result.AddRange(targetType.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance));
+
+                targetType = targetType.BaseType;
+            }
+
+            return result.ToArray();
+        }
     }
 }

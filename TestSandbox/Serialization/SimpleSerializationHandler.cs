@@ -68,17 +68,20 @@ namespace TestSandbox.Serialization
 
             var deserializer = new Deserializer(deserializationContext);
 
-            var instance = deserializer.Deserialize<SerializedObject>();
+            //var instance = deserializer.Deserialize<SerializedObject>();
+            var instance = deserializer.Deserialize<Class1>();
 
             _logger.Info($"instance = {instance}");
         }
 
         private void Serialize()
         {
-            var instance = new SerializedObject(true)
-            {
-                IntField = 16
-            };
+            //var instance = new SerializedObject(true)
+            //{
+            //    IntField = 16
+            //};
+
+            var instance = new Class1();
 
             _logger.Info($"instance = {instance}");
 

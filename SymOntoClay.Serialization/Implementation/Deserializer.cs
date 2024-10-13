@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Threading;
 
 namespace SymOntoClay.Serialization.Implementation
@@ -101,6 +102,12 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"type.FullName = {type.FullName}");
 #endif
 
+            if (type.FullName.StartsWith("System.Threading.") ||
+                type.FullName.StartsWith("System.Collections."))
+            {
+                throw new NotImplementedException("CE6ABC55-44C9-49EF-B431-738880E68CB4");
+            }
+
             switch (type.FullName)
             {
                 case "System.Object":
@@ -130,13 +137,8 @@ namespace SymOntoClay.Serialization.Implementation
                     return NDeserializeGenericDictionary(type, objectPtr, fullFileName);
 
                 default:
-                    {
-                        if (IsSerializable(type))
-                        {
-                            return NDeserializeISerializable(type, objectPtr, fullFileName);
-                        }
-                    }
-                    throw new NotImplementedException("615629EF-E2D6-4457-8445-55EA563ECF49");
+                    return NDeserializeComposite(type, objectPtr, fullFileName);
+
             }
         }
 
@@ -244,6 +246,78 @@ namespace SymOntoClay.Serialization.Implementation
 
             return type.GetInterfaces().Any(p => p == typeof(ISerializable));
         }
+
+        private object NDeserializeComposite(Type type, ObjectPtr objectPtr, string fullFileName)
+        {
+            var instance = Activator.CreateInstance(type);
+
+#if DEBUG
+            _logger.Info($"instance = {instance}");
+#endif
+
+            _deserializationContext.RegDeserializedObject(objectPtr.Id, instance);
+
+            var fields = SerializationHelper.GetFields(instance);
+
+#if DEBUG
+            _logger.Info($"fields.Length = {fields.Length}");
+#endif
+
+            var plainObjectsDict = JsonConvert.DeserializeObject<Dictionary<string, object>>(File.ReadAllText(fullFileName), SerializationHelper.JsonSerializerSettings);
+
+#if DEBUG
+            _logger.Info($"plainObjectsDict = {JsonConvert.SerializeObject(plainObjectsDict, Formatting.Indented)}");
+            _logger.Info($"plainObjectsDict = {JsonConvert.SerializeObject(plainObjectsDict, SerializationHelper.JsonSerializerSettings)}");
+#endif
+
+            foreach (var field in fields)
+            {
+#if DEBUG
+                _logger.Info($"field.Name = {field.Name}");
+                _logger.Info($"field.FieldType?.FullName = {field.FieldType?.FullName}");
+#endif
+
+                var plainValue = plainObjectsDict[field.Name];
+
+#if DEBUG
+                _logger.Info($"plainValue = {plainValue}");
+#endif
+
+                var itemValue = ConvertObjectCollectionValueFromSerializableFormat(plainValue);
+
+#if DEBUG
+                _logger.Info($"itemValue = {itemValue}");
+#endif
+
+                field.SetValue(instance, Convert.ChangeType(itemValue, field.FieldType));
+            }
+
+            return instance;
+        }
+
+        /*
+         //            
+
+
+
+//            
+
+//            var serializable = (ISerializable)instance;
+
+//            var plainObject = JsonConvert.DeserializeObject(File.ReadAllText(fullFileName), serializable.GetPlainObjectType(), SerializationHelper.JsonSerializerSettings);
+
+//#if DEBUG
+//            _logger.Info($"plainObject = {plainObject}");
+//#endif
+
+//            serializable.OnReadPlainObject(plainObject, this);
+
+//#if DEBUG
+//            _logger.Info($"serializable = {serializable}");
+//#endif
+
+//            return serializable;
+         */
 
         private object NDeserializeCustomThreadPool(ObjectPtr objectPtr, string fullFileName)
         {
@@ -1092,29 +1166,31 @@ namespace SymOntoClay.Serialization.Implementation
 
         private object NDeserializeISerializable(Type type, ObjectPtr objectPtr, string fullFileName)
         {
-            var instance = Activator.CreateInstance(type);
+            throw new NotImplementedException("9B62CD6D-EE3F-4E60-8F87-784BA0C1CAF1");
 
-#if DEBUG
-            _logger.Info($"instance = {instance}");
-#endif
+//            var instance = Activator.CreateInstance(type);
 
-            _deserializationContext.RegDeserializedObject(objectPtr.Id, instance);
+//#if DEBUG
+//            _logger.Info($"instance = {instance}");
+//#endif
 
-            var serializable = (ISerializable)instance;
+//            _deserializationContext.RegDeserializedObject(objectPtr.Id, instance);
 
-            var plainObject = JsonConvert.DeserializeObject(File.ReadAllText(fullFileName), serializable.GetPlainObjectType(), SerializationHelper.JsonSerializerSettings);
+//            var serializable = (ISerializable)instance;
 
-#if DEBUG
-            _logger.Info($"plainObject = {plainObject}");
-#endif
+//            var plainObject = JsonConvert.DeserializeObject(File.ReadAllText(fullFileName), serializable.GetPlainObjectType(), SerializationHelper.JsonSerializerSettings);
 
-            serializable.OnReadPlainObject(plainObject, this);
+//#if DEBUG
+//            _logger.Info($"plainObject = {plainObject}");
+//#endif
 
-#if DEBUG
-            _logger.Info($"serializable = {serializable}");
-#endif
+//            serializable.OnReadPlainObject(plainObject, this);
 
-            return serializable;
+//#if DEBUG
+//            _logger.Info($"serializable = {serializable}");
+//#endif
+
+//            return serializable;
         }
 
         /// <inheritdoc/>

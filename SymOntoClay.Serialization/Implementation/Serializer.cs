@@ -265,7 +265,13 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"settingsParameter = {settingsParameter}");
 #endif
 
-                var plainValue = ConvertObjectCollectionValueToSerializableFormat(itemValue, settingsParameter);
+                var actionPlainObject = CreateActionPlainObject(customAttributes);
+
+#if DEBUG
+                _logger.Info($"actionPlainObject = {actionPlainObject}");
+#endif
+
+                var plainValue = ConvertObjectCollectionValueToSerializableFormat(itemValue, settingsParameter ?? actionPlainObject);
 
 #if DEBUG
                 _logger.Info($"plainValue = {plainValue}");
@@ -363,6 +369,37 @@ namespace SymOntoClay.Serialization.Implementation
             var targetAttribute = customAttributes.SingleOrDefault(p => p.AttributeType == typeof(SocNoSerializable));
 
             return targetAttribute != null;
+        }
+
+        private ActionPo CreateActionPlainObject(IEnumerable<CustomAttributeData> customAttributes)
+        {
+            if ((customAttributes?.Count() ?? 0) == 0)
+            {
+                return null;
+            }
+
+            var targetAttribute = customAttributes.SingleOrDefault(p => p.AttributeType == typeof(SocSerializableActionMember));
+
+#if DEBUG
+            _logger.Info($"targetAttribute.AttributeType?.FullName = {targetAttribute.AttributeType?.FullName}");
+
+            foreach (var ctorArg in targetAttribute.ConstructorArguments)
+            {
+                _logger.Info($"ctorArg.Value = {ctorArg.Value}");
+            }
+
+            foreach (var namedArg in targetAttribute.NamedArguments)
+            {
+                _logger.Info($"namedArg.MemberName = {namedArg.MemberName}");
+                _logger.Info($"namedArg.TypedValue.Value = {namedArg.TypedValue.Value}");
+            }
+#endif
+
+            return new ActionPo
+            {
+                Key = (string)targetAttribute.ConstructorArguments[0].Value,
+                Index = (int)targetAttribute.ConstructorArguments[1].Value
+            };
         }
 
         private ObjectPtr NSerializeCustomThreadPool(CustomThreadPool customThreadPool, CustomThreadPoolSerializationSettings settingsParameter)

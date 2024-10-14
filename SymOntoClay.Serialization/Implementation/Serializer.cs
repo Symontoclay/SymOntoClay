@@ -336,18 +336,6 @@ namespace SymOntoClay.Serialization.Implementation
             return field.GetValue(obj);
         }
 
-        private bool IsNoSerialiable(IEnumerable<CustomAttributeData> customAttributes)
-        {
-            if ((customAttributes?.Count() ?? 0) == 0)
-            {
-                return false;
-            }
-
-            var targetAttribute = customAttributes.SingleOrDefault(p => p.AttributeType == typeof(SocNoSerializable));
-
-            return targetAttribute != null;
-        }
-
         private string GetSettingsParameterName(IEnumerable<CustomAttributeData> customAttributes)
         {
             if ((customAttributes?.Count() ?? 0) == 0)
@@ -363,6 +351,18 @@ namespace SymOntoClay.Serialization.Implementation
             }
 
             return targetAttribute.ConstructorArguments.Single().Value as string;
+        }
+
+        private bool IsNoSerialiable(IEnumerable<CustomAttributeData> customAttributes)
+        {
+            if ((customAttributes?.Count() ?? 0) == 0)
+            {
+                return false;
+            }
+
+            var targetAttribute = customAttributes.SingleOrDefault(p => p.AttributeType == typeof(SocNoSerializable));
+
+            return targetAttribute != null;
         }
 
         private ObjectPtr NSerializeCustomThreadPool(CustomThreadPool customThreadPool, CustomThreadPoolSerializationSettings settingsParameter)

@@ -101,6 +101,16 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"type.FullName = {type.FullName}");
 #endif
 
+            if(type.FullName.StartsWith("System.Action"))
+            {
+                throw new NotImplementedException("76BF75F1-51C6-49F0-9E08-55B45771828F");
+            }
+
+            if (type.FullName.StartsWith("System.Func"))
+            {
+                throw new NotImplementedException("4BBF7966-ACAD-463C-9FE1-C0B641D85174");
+            }
+
             switch (type.FullName)
             {
                 case "System.Object":

@@ -14,6 +14,10 @@ namespace TestSandbox.Serialization
             _action = (NLog.ILogger logger) => {
                 logger.Info("Hi");
             };
+
+            _func = int () => {
+                return 16;
+            };
         }
 
         private string _functorId = "2FFB6DA6-3048-4310-9BCC-9944BC0A87F6";

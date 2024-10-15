@@ -90,12 +90,12 @@ namespace SymOntoClay.Serialization.Implementation
 
             if(type.FullName.StartsWith("System.Action"))
             {
-                throw new NotImplementedException("D5ABDA05-9524-484F-8C1B-A414A34DB300");
+                return NSerializeAction(obj, settingsParameter as ActionPo, type);
             }
 
             if (type.FullName.StartsWith("System.Func"))
             {
-                throw new NotImplementedException("BE4BDEB6-08E7-4178-A938-C629BF848A47");
+                return NSerializeAction(obj, settingsParameter as ActionPo, type);
             }
 
             switch (type.FullName)
@@ -135,6 +135,40 @@ namespace SymOntoClay.Serialization.Implementation
 
                     return NSerializeComposite(obj);
             }
+        }
+
+        private ObjectPtr NSerializeAction(object obj, ActionPo settingsParameter, Type type)
+        {
+#if DEBUG
+            _logger.Info($"settingsParameter = {settingsParameter}");
+#endif
+
+            if (settingsParameter == null)
+            {
+                throw new ArgumentNullException(nameof(settingsParameter), $"Serialization parameter is required for type {type.Name}.");
+            }
+
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, type.FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(obj, objectPtr);
+
+#if DEBUG
+            _logger.Info($"settingsParameter = {JsonConvert.SerializeObject(settingsParameter, Formatting.Indented)}");
+#endif
+
+            WriteToFile(settingsParameter, instanceId);
+
+            return objectPtr;
         }
 
         private ObjectPtr NSerializeComposite(object obj)

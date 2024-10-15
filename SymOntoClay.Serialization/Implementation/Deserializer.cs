@@ -103,12 +103,12 @@ namespace SymOntoClay.Serialization.Implementation
 
             if(type.FullName.StartsWith("System.Action"))
             {
-                throw new NotImplementedException("76BF75F1-51C6-49F0-9E08-55B45771828F");
+                return NDeserializeAction(type, objectPtr, fullFileName);
             }
 
             if (type.FullName.StartsWith("System.Func"))
             {
-                throw new NotImplementedException("4BBF7966-ACAD-463C-9FE1-C0B641D85174");
+                return NDeserializeAction(type, objectPtr, fullFileName);
             }
 
             switch (type.FullName)
@@ -253,6 +253,11 @@ namespace SymOntoClay.Serialization.Implementation
 #endif
 
             return type.GetInterfaces().Any(p => p == typeof(ISerializable));
+        }
+
+        private object NDeserializeAction(Type type, ObjectPtr objectPtr, string fullFileName)
+        {
+            throw new NotImplementedException("76BF75F1-51C6-49F0-9E08-55B45771828F");
         }
 
         private object NDeserializeComposite(Type type, ObjectPtr objectPtr, string fullFileName)

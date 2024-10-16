@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 
 namespace SymOntoClay.Serialization.Implementation
@@ -235,10 +236,20 @@ namespace SymOntoClay.Serialization.Implementation
 
                 //_logger.Info($"targetType?.FullName = {targetType?.FullName}");
 
-                //if(targetType != null)
+                //if (targetType != null)
                 //{
                 //    return targetType;
                 //}
+
+                var targetType = assembly.GetTypes().Where(p => p.GetInterfaces().Any(x => x == typeof(ISocSerializableActionFactory)))
+                    .FirstOrDefault(p => p.CustomAttributes.Any(x => x.NamedArguments.Any(y => y.MemberName == "Id" && y.TypedValue.Value.Equals(id))));
+
+                _logger.Info($"targetType?.FullName = {targetType?.FullName}");
+
+                if (targetType != null)
+                {
+                    return targetType;
+                }
 
                 throw new NotImplementedException("93F4E4E5-41DE-4600-BC21-AF0C92E31FB4");
             }
@@ -257,7 +268,26 @@ namespace SymOntoClay.Serialization.Implementation
 
         private object NDeserializeAction(Type type, ObjectPtr objectPtr, string fullFileName)
         {
-            throw new NotImplementedException("76BF75F1-51C6-49F0-9E08-55B45771828F");
+            var plainObject = JsonConvert.DeserializeObject<ActionPo>(File.ReadAllText(fullFileName), SerializationHelper.JsonSerializerSettings);
+
+#if DEBUG
+            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, Formatting.Indented)}");
+            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, SerializationHelper.JsonSerializerSettings)}");
+#endif
+
+            var actionFactoryType = GetActionFactoryType(plainObject.Key);
+
+#if DEBUG
+            _logger.Info($"actionFactoryType.FullName = {actionFactoryType.FullName}");
+#endif
+
+            var factoryInstance = (ISocSerializableActionFactory)Activator.CreateInstance(actionFactoryType);
+
+            var instance = factoryInstance.GetAction(plainObject.Index);
+
+            _deserializationContext.RegDeserializedObject(objectPtr.Id, instance);
+
+            return instance;
         }
 
         private object NDeserializeComposite(Type type, ObjectPtr objectPtr, string fullFileName)

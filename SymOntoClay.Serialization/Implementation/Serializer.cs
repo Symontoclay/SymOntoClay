@@ -299,7 +299,7 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"settingsParameter = {settingsParameter}");
 #endif
 
-                var actionPlainObject = CreateActionPlainObject(customAttributes);
+                var actionPlainObject = CreateActionPlainObject(fields, obj, customAttributes);
 
 #if DEBUG
                 _logger.Info($"actionPlainObject = {actionPlainObject}");
@@ -405,7 +405,7 @@ namespace SymOntoClay.Serialization.Implementation
             return targetAttribute != null;
         }
 
-        private ActionPo CreateActionPlainObject(IEnumerable<CustomAttributeData> customAttributes)
+        private ActionPo CreateActionPlainObject(FieldInfo[] fields, object obj, IEnumerable<CustomAttributeData> customAttributes)
         {
             if ((customAttributes?.Count() ?? 0) == 0)
             {
@@ -413,6 +413,11 @@ namespace SymOntoClay.Serialization.Implementation
             }
 
             var targetAttribute = customAttributes.SingleOrDefault(p => p.AttributeType == typeof(SocSerializableActionMember));
+
+            if(targetAttribute == null)
+            {
+                return null;
+            }
 
 #if DEBUG
             _logger.Info($"targetAttribute.AttributeType?.FullName = {targetAttribute.AttributeType?.FullName}");
@@ -429,9 +434,23 @@ namespace SymOntoClay.Serialization.Implementation
             }
 #endif
 
+            var fieldName = (string)targetAttribute.ConstructorArguments[0].Value;
+
+#if DEBUG
+            _logger.Info($"fieldName = {fieldName}");
+#endif
+
+            var field = fields.SingleOrDefault(p => p.Name == fieldName);
+
+            var key = (string)field.GetValue(obj);
+
+#if DEBUG
+            _logger.Info($"key = {key}");
+#endif
+
             return new ActionPo
             {
-                Key = (string)targetAttribute.ConstructorArguments[0].Value,
+                Key = key,
                 Index = (int)targetAttribute.ConstructorArguments[1].Value
             };
         }

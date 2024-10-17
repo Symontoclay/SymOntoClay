@@ -40,9 +40,6 @@ namespace SymOntoClay.Monitor.Internal
 
         public string NodeId { get; set; }
 
-        public Action<string> OutputHandler { get; set; }
-        public Action<string> ErrorHandler { get; set; }
-
         public BaseMonitorSettings Settings { get; set; }
 
         public CancellationToken CancellationToken { get; set; } = CancellationToken.None;

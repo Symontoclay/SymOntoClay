@@ -38,6 +38,8 @@ using SymOntoClay.Common.DebugHelpers;
 using System.Threading;
 using SymOntoClay.Common.Disposing;
 using SymOntoClay.Threading;
+using SymOntoClay.Serialization.Settings;
+using SymOntoClay.Serialization;
 
 namespace SymOntoClay.Monitor
 {
@@ -54,8 +56,15 @@ namespace SymOntoClay.Monitor
         private readonly MonitorFileCache _fileCache;
 
         private readonly CancellationTokenSource _cancellationTokenSource;
+
+        private LinkedCancellationTokenSourceSerializationSettings _linkedCancellationTokenSourceSettings;
+
+        [SocObjectSerializationSettings(nameof(_linkedCancellationTokenSourceSettings))]
         private readonly CancellationTokenSource _linkedCancellationTokenSource;
 
+        private CustomThreadPoolSerializationSettings _threadPoolSerializationSettings;
+
+        [SocObjectSerializationSettings(nameof(_threadPoolSerializationSettings))]
         private readonly ICustomThreadPool _threadPool;
 
         private readonly MessageNumberGenerator _globalMessageNumberGenerator;
@@ -82,12 +91,29 @@ namespace SymOntoClay.Monitor
 #endif
 
             _cancellationTokenSource = new CancellationTokenSource();
+
+            _linkedCancellationTokenSourceSettings = new LinkedCancellationTokenSourceSerializationSettings()
+            {
+                Token1 = _cancellationTokenSource.Token,
+                Token2 = monitorSettings.CancellationToken
+            };
+
             _linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, monitorSettings.CancellationToken);
 
             var threadingSettings = monitorSettings.ThreadingSettings;
 
-            _threadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
-                threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
+            var minThreadsCount = threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount;
+            var maxThreadsCount = threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount;
+
+            _threadPoolSerializationSettings = new CustomThreadPoolSerializationSettings()
+            {
+                MinThreadsCount = minThreadsCount,
+                MaxThreadsCount = maxThreadsCount,
+                CancellationToken = _linkedCancellationTokenSource.Token
+            };
+
+            _threadPool = new CustomThreadPool(minThreadsCount,
+                maxThreadsCount,
                 _linkedCancellationTokenSource.Token);
 
             _nodesSettings = monitorSettings.NodesSettings;
@@ -171,8 +197,6 @@ namespace SymOntoClay.Monitor
 
             _monitorContext = new MonitorContext()
             {
-                OutputHandler = monitorSettings.OutputHandler,
-                ErrorHandler = monitorSettings.ErrorHandler,
                 PlatformLoggers = monitorSettings.PlatformLoggers ?? new List<IPlatformLogger>(),
                 Features = _features,
                 Settings = _baseMonitorSettings,
@@ -203,8 +227,6 @@ namespace SymOntoClay.Monitor
         /// <inheritdoc/>
         public string SessionDirectoryFullName => _fileCache.AbsoluteDirectoryName;
 
-        Action<string> IMonitorLoggerContext.OutputHandler => _monitorContext.OutputHandler;
-        Action<string> IMonitorLoggerContext.ErrorHandler => _monitorContext.ErrorHandler;
         MessageProcessor IMonitorLoggerContext.MessageProcessor => _messageProcessor;
         IMonitorFeatures IMonitorLoggerContext.Features => this;
         IList<IPlatformLogger> IMonitorLoggerContext.PlatformLoggers => _monitorContext.PlatformLoggers;

@@ -32,8 +32,6 @@ namespace SymOntoClay.Monitor.Internal
 {
     public interface IMonitorLoggerContext
     {
-        Action<string> OutputHandler { get; }
-        Action<string> ErrorHandler { get; }
         MessageProcessor MessageProcessor { get; }
         IMonitorFeatures Features { get; }
         IList<IPlatformLogger> PlatformLoggers { get; }

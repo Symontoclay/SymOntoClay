@@ -34,8 +34,7 @@ namespace SymOntoClay.Monitor
     {
         public string MessagesDir { get; set; }
         public IRemoteMonitor RemoteMonitor { get; set; }
-        public Action<string> OutputHandler { get; set; }
-        public Action<string> ErrorHandler { get; set; }
+
         /// <summary>
         /// Gets or sets list of platform specific loggers.
         /// It alows us to add, for example, console logger for Unity3D.
@@ -55,8 +54,6 @@ namespace SymOntoClay.Monitor
 
             sb.AppendLine($"{spaces}{nameof(MessagesDir)} = {MessagesDir}");
             sb.PrintExisting(n, nameof(RemoteMonitor), RemoteMonitor);
-            sb.PrintExisting(n, nameof(OutputHandler), OutputHandler);
-            sb.PrintExisting(n, nameof(ErrorHandler), ErrorHandler);
             sb.PrintExisting(n, nameof(PlatformLoggers), PlatformLoggers);
             sb.PrintObjDict_3_Prop(n, nameof(NodesSettings), NodesSettings);
             sb.AppendLine($"{spaces}{nameof(EnableOnlyDirectlySetUpNodes)} = {EnableOnlyDirectlySetUpNodes}");

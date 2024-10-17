@@ -27,6 +27,8 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.Internal.FileCache;
+using SymOntoClay.Serialization;
+using SymOntoClay.Serialization.Settings;
 using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
@@ -64,6 +66,10 @@ namespace SymOntoClay.Monitor.Internal
         public string Id => _threadId;
 
         private readonly CancellationTokenSource _cancellationTokenSource;
+
+        private LinkedCancellationTokenSourceSerializationSettings _linkedCancellationTokenSourceSettings;
+
+        [SocObjectSerializationSettings(nameof(_linkedCancellationTokenSourceSettings))]
         private readonly CancellationTokenSource _linkedCancellationTokenSource;
 
         public ThreadLogger(string threadId, MonitorNodeContext monitorNodeContext)
@@ -73,6 +79,13 @@ namespace SymOntoClay.Monitor.Internal
 #endif
 
             _cancellationTokenSource = new CancellationTokenSource();
+
+            _linkedCancellationTokenSourceSettings = new LinkedCancellationTokenSourceSerializationSettings()
+            {
+                Token1 = _cancellationTokenSource.Token,
+                Token2 = monitorNodeContext.CancellationToken
+            };
+
             _linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, monitorNodeContext.CancellationToken);
 
             _monitorNodeContext = monitorNodeContext;
@@ -92,8 +105,6 @@ namespace SymOntoClay.Monitor.Internal
             _monitorLoggerImpl = new MonitorLogger(this);
         }
 
-        Action<string> IMonitorLoggerContext.OutputHandler => _monitorNodeContext.OutputHandler;
-        Action<string> IMonitorLoggerContext.ErrorHandler => _monitorNodeContext.ErrorHandler;
         MessageProcessor IMonitorLoggerContext.MessageProcessor => _messageProcessor;
         IMonitorFeatures IMonitorLoggerContext.Features => this;
         IList<IPlatformLogger> IMonitorLoggerContext.PlatformLoggers => _monitorNodeContext.MonitorContext.PlatformLoggers;

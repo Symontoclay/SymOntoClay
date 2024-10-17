@@ -2,10 +2,12 @@
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Serialization;
+using SymOntoClay.Serialization.Implementation;
 using SymOntoClay.UnityAsset.Core.Internal;
 using SymOntoClay.UnityAsset.Core.World;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations.World
 {
@@ -120,6 +122,30 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.World
             {
                 _worldCore.Stop();
             }
+
+#if DEBUG
+            if (!Directory.Exists(settings.Path))
+            {
+                Directory.CreateDirectory(settings.Path);
+            }
+
+            var targetPath = Path.Combine(settings.Path, settings.ImageName);
+
+            _globalLogger.Info($"targetPath = {targetPath}");
+
+            if (Directory.Exists(targetPath))
+            {
+                Directory.Delete(targetPath, true);
+            }
+
+            Directory.CreateDirectory(targetPath);
+
+            var serializationContext = new SerializationContext(targetPath);
+
+            var serializer = new Serializer(serializationContext);
+
+            serializer.Serialize(_worldCore);
+#endif
 
             throw new NotImplementedException("F99E1765-298B-42A8-B0E9-E38D41D5767C");
         }

@@ -27,6 +27,8 @@ using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.Internal.FileCache;
+using SymOntoClay.Serialization.Settings;
+using SymOntoClay.Serialization;
 using SymOntoClay.Threading;
 using System;
 using System.Collections;
@@ -53,8 +55,6 @@ namespace SymOntoClay.Monitor.Internal
         {
             _context = context;
 
-            _outputHandler = context.OutputHandler;
-            _errorHandler = context.ErrorHandler;
             _messageProcessor = context.MessageProcessor;
             _features = context.Features;
             _platformLoggers = context.PlatformLoggers;
@@ -65,20 +65,44 @@ namespace SymOntoClay.Monitor.Internal
             _threadId = context.ThreadId;
 
             _cancellationTokenSource = new CancellationTokenSource();
+
+            _linkedCancellationTokenSourceSettings = new LinkedCancellationTokenSourceSerializationSettings()
+            {
+                Token1 = _cancellationTokenSource.Token,
+                Token2 = context.CancellationToken
+            };
+
             _linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, context.CancellationToken);
 
             var threadingSettings = context.ThreadingSettings;
 
-            _threadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount, 
-                threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount, 
-                context.CancellationToken);
+            var minThreadsCount = threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount;
+            var maxThreadsCount = threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount;
+
+            _threadPoolSerializationSettings = new CustomThreadPoolSerializationSettings()
+            {
+                MinThreadsCount = minThreadsCount,
+                MaxThreadsCount = maxThreadsCount,
+                CancellationToken = _linkedCancellationTokenSource.Token
+            };
+
+            _threadPool = new CustomThreadPool(minThreadsCount,
+                maxThreadsCount,
+                _linkedCancellationTokenSource.Token);
         }
 
         private readonly IMonitorLoggerContext _context;
 
         private readonly CancellationTokenSource _cancellationTokenSource;
+
+        private LinkedCancellationTokenSourceSerializationSettings _linkedCancellationTokenSourceSettings;
+
+        [SocObjectSerializationSettings(nameof(_linkedCancellationTokenSourceSettings))]
         private readonly CancellationTokenSource _linkedCancellationTokenSource;
 
+        private CustomThreadPoolSerializationSettings _threadPoolSerializationSettings;
+
+        [SocObjectSerializationSettings(nameof(_threadPoolSerializationSettings))]
         private readonly ICustomThreadPool _threadPool;
 
         private MessageProcessor _messageProcessor;
@@ -91,9 +115,6 @@ namespace SymOntoClay.Monitor.Internal
         private string _threadId;
 
         private MessageNumberGenerator _messageNumberGenerator;
-
-        private readonly Action<string> _outputHandler;
-        private readonly Action<string> _errorHandler;
 
         string IMonitorLogger.Id => throw new NotImplementedException("DB6C455C-9ED3-41D1-BF0D-519E637F1CD8");
 
@@ -3362,8 +3383,6 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            _outputHandler?.Invoke(message);
-
             if (_platformLoggers.Any())
             {
                 foreach (var platformLogger in _platformLoggers)
@@ -3734,8 +3753,6 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            _errorHandler?.Invoke(message);
-
             if (_platformLoggers.Any())
             {
                 foreach (var platformLogger in _platformLoggers)
@@ -3819,8 +3836,6 @@ namespace SymOntoClay.Monitor.Internal
             }
 
             var now = DateTime.Now;
-
-            _errorHandler?.Invoke(message);
 
             if (_platformLoggers.Any())
             {

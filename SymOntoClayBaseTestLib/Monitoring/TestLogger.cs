@@ -39,7 +39,7 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         {
             _monitorSettings = monitorSettings;
             _id = id;
-            _outputHandler = monitorSettings.OutputHandler;
+
             _platformLoggers = monitorSettings.PlatformLoggers ?? new List<IPlatformLogger>();
         }
 
@@ -47,7 +47,6 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         private readonly string _id;
 
         private readonly IList<IPlatformLogger> _platformLoggers;
-        private readonly Action<string> _outputHandler;
 
         /// <inheritdoc/>
         public virtual string Id => _id;
@@ -489,8 +488,6 @@ namespace SymOntoClay.BaseTestLib.Monitoring
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            _outputHandler?.Invoke(message);
-
             if (_platformLoggers.Any())
             {
                 foreach (var platformLogger in _platformLoggers)

@@ -41,9 +41,7 @@ namespace SymOntoClay.Monitor.Internal
         public MonitorFileCache FileCache { get; set; }
         public MessageProcessor MessageProcessor { get; set; }
         public MessageNumberGenerator GlobalMessageNumberGenerator { get; set; } = new MessageNumberGenerator();
-        public Action<string> OutputHandler { get; set; }
-        public Action<string> ErrorHandler { get; set; }
-
+        
         public BaseMonitorSettings Settings { get; set; }
 
         /// <summary>
@@ -75,8 +73,6 @@ namespace SymOntoClay.Monitor.Internal
             sb.PrintObjProp(n, nameof(Features), Features);
             sb.PrintExisting(n, nameof(FileCache), FileCache);
             sb.PrintExisting(n, nameof(MessageProcessor), MessageProcessor);
-            sb.PrintExisting(n, nameof(OutputHandler), OutputHandler);
-            sb.PrintExisting(n, nameof(ErrorHandler), ErrorHandler);
             var platformLoggersMark = PlatformLoggers == null ? "No" : PlatformLoggers.Any() ? "Yes" : "No";
             sb.AppendLine($"{spaces}{nameof(PlatformLoggers)} = {platformLoggersMark}");
             sb.PrintExisting(n, nameof(Settings), Settings);

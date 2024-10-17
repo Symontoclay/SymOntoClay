@@ -2,7 +2,7 @@
 {
     public interface ISerializer
     {
-        void Serialize(ISerializable serializable);
+        void Serialize(object serializable);
         ObjectPtr GetSerializedObjectPtr(object obj);
         ObjectPtr GetSerializedObjectPtr(object obj, object settingsParameter);
     }

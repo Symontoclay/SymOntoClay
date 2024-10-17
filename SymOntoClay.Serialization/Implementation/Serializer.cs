@@ -27,7 +27,7 @@ namespace SymOntoClay.Serialization.Implementation
         private readonly ISerializationContext _serializationContext;
 
         /// <inheritdoc/>
-        public void Serialize(ISerializable serializable)
+        public void Serialize(object serializable)
         {
 #if DEBUG
             _logger.Info($"serializable = {serializable}");
@@ -39,7 +39,7 @@ namespace SymOntoClay.Serialization.Implementation
             }
 
             var rootObject = new RootObject();
-            rootObject.Data = NSerialize(serializable);
+            rootObject.Data = GetSerializedObjectPtr(serializable);
 
 #if DEBUG
             _logger.Info($"rootObject = {rootObject}");
@@ -67,6 +67,7 @@ namespace SymOntoClay.Serialization.Implementation
         {
 #if DEBUG
             _logger.Info($"obj = {obj}");
+            _logger.Info($"settingsParameter = {settingsParameter}");
 #endif
 
             if (obj == null)
@@ -79,54 +80,379 @@ namespace SymOntoClay.Serialization.Implementation
                 return objectPtr;
             }
 
-            var serializable = obj as ISerializable;
-
-            if (serializable == null)
-            {
-                var type = obj.GetType();
+            var type = obj.GetType();
 
 #if DEBUG
-                _logger.Info($"type.FullName = {type.FullName}");
-                _logger.Info($"type.Name = {type.Name}");
-                _logger.Info($"type.IsGenericType = {type.IsGenericType}");
+            _logger.Info($"type.FullName = {type.FullName}");
+            _logger.Info($"type.Name = {type.Name}");
+            _logger.Info($"type.IsGenericType = {type.IsGenericType}");
 #endif
 
-                switch (type.FullName)
-                {
-                    case "System.Object":
-                        return NSerializeBareObject(obj);
-
-                    case "System.Threading.CancellationTokenSource":
-                        return NSerializeCancellationTokenSource((CancellationTokenSource)obj);
-
-                    case "System.Threading.CancellationTokenSource+Linked1CancellationTokenSource":
-                    case "System.Threading.CancellationTokenSource+Linked2CancellationTokenSource":
-                    case "System.Threading.CancellationTokenSource+LinkedNCancellationTokenSource":
-                        return NSerializeLinkedCancellationTokenSource((CancellationTokenSource)obj, settingsParameter as LinkedCancellationTokenSourceSerializationSettings);
-                    
-                    case "System.Threading.CancellationToken":
-                        return NSerializeCancellationToken((CancellationToken)obj);
-
-                    case "SymOntoClay.Threading.CustomThreadPool":
-                        return NSerializeCustomThreadPool((CustomThreadPool)obj, settingsParameter as CustomThreadPoolSerializationSettings);
-                }
-
-                switch (type.Name)
-                {
-                    case "List`1":
-                        return NSerializeGenericList((IEnumerable)obj);
-
-                    case "Dictionary`2":
-                        return NSerializeGenericDictionary((IDictionary)obj);
-
-                    default:
-                        throw new NotImplementedException("B3784FDD-7AFC-4947-AA62-00398400E52B");
-                }
-            }
-            else
+            if(type.FullName.StartsWith("System.Action"))
             {
-                return NSerialize(serializable);
+                return NSerializeAction(obj, settingsParameter as ActionPo, type);
             }
+
+            if (type.FullName.StartsWith("System.Func"))
+            {
+                return NSerializeAction(obj, settingsParameter as ActionPo, type);
+            }
+
+            switch (type.FullName)
+            {
+                case "System.Object":
+                    return NSerializeBareObject(obj);
+
+                case "System.Threading.CancellationTokenSource":
+                    return NSerializeCancellationTokenSource((CancellationTokenSource)obj);
+
+                case "System.Threading.CancellationTokenSource+Linked1CancellationTokenSource":
+                case "System.Threading.CancellationTokenSource+Linked2CancellationTokenSource":
+                case "System.Threading.CancellationTokenSource+LinkedNCancellationTokenSource":
+                    return NSerializeLinkedCancellationTokenSource((CancellationTokenSource)obj, settingsParameter as LinkedCancellationTokenSourceSerializationSettings);
+
+                case "System.Threading.CancellationToken":
+                    return NSerializeCancellationToken((CancellationToken)obj);
+
+                case "SymOntoClay.Threading.CustomThreadPool":
+                    return NSerializeCustomThreadPool((CustomThreadPool)obj, settingsParameter as CustomThreadPoolSerializationSettings);
+            }
+
+            switch (type.Name)
+            {
+                case "List`1":
+                    return NSerializeGenericList((IEnumerable)obj);
+
+                case "Dictionary`2":
+                    return NSerializeGenericDictionary((IDictionary)obj);
+
+                default:
+                    if (type.FullName.StartsWith("System.Threading.") ||
+                        type.FullName.StartsWith("System.Collections."))
+                    {
+                        throw new NotImplementedException("4161028A-A2DB-41F0-8D53-6BCC81D317A4");
+                    }
+
+                    return NSerializeComposite(obj);
+            }
+        }
+
+        private ObjectPtr NSerializeAction(object obj, ActionPo settingsParameter, Type type)
+        {
+#if DEBUG
+            _logger.Info($"settingsParameter = {settingsParameter}");
+#endif
+
+            if (settingsParameter == null)
+            {
+                throw new ArgumentNullException(nameof(settingsParameter), $"Serialization parameter is required for type {type.Name}.");
+            }
+
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, type.FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(obj, objectPtr);
+
+#if DEBUG
+            _logger.Info($"settingsParameter = {JsonConvert.SerializeObject(settingsParameter, Formatting.Indented)}");
+#endif
+
+            WriteToFile(settingsParameter, instanceId);
+
+            return objectPtr;
+        }
+
+        private ObjectPtr NSerializeComposite(object obj)
+        {
+#if DEBUG
+            _logger.Info($"obj = {obj}");
+#endif
+
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var type = obj.GetType();
+
+            var objectPtr = new ObjectPtr(instanceId, type.FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            _serializationContext.RegObjectPtr(obj, objectPtr);
+
+            var plainObjectsDict = new Dictionary<string, object>();
+
+            var properties = SerializationHelper.GetProperties(type);
+
+#if DEBUG
+            _logger.Info($"properties.Length = {properties.Length}");
+#endif
+
+            foreach (var property in properties)
+            {
+#if DEBUG
+                _logger.Info($"property.Name = {property.Name}");
+                _logger.Info($"property.CustomAttributes.Count() = {property.CustomAttributes.Count()}");
+                foreach (var attr in property.CustomAttributes)
+                {
+                    _logger.Info($"attr.AttributeType?.FullName = {attr.AttributeType?.FullName}");
+
+                    foreach (var ctorArg in attr.ConstructorArguments)
+                    {
+                        _logger.Info($"ctorArg.Value = {ctorArg.Value}");
+                    }
+
+                    foreach (var namedArg in attr.NamedArguments)
+                    {
+                        _logger.Info($"namedArg.MemberName = {namedArg.MemberName}");
+                        _logger.Info($"namedArg.TypedValue.Value = {namedArg.TypedValue.Value}");
+                    }
+                }
+#endif
+            }
+
+            var propertiesAttributesDict = properties.ToDictionary(p => p.Name, p => p.CustomAttributes);
+
+            var fields = SerializationHelper.GetFields(type);
+
+#if DEBUG
+            _logger.Info($"fields.Length = {fields.Length}");
+#endif
+
+            foreach (var field in fields)
+            {
+#if DEBUG
+                _logger.Info($"field.Name = {field.Name}");
+                _logger.Info($"field.FieldType.FullName = {field.FieldType.FullName}");
+                _logger.Info($"field.FieldType.Name = {field.FieldType.Name}");
+                _logger.Info($"field.CustomAttributes.Count() = {field.CustomAttributes.Count()}");
+#endif
+
+                foreach (var attr in field.CustomAttributes)
+                {
+#if DEBUG
+                    _logger.Info($"attr.AttributeType?.FullName = {attr.AttributeType?.FullName}");
+#endif
+
+                    foreach (var ctorArg in attr.ConstructorArguments)
+                    {
+#if DEBUG
+                        _logger.Info($"ctorArg.Value = {ctorArg.Value}");
+#endif
+                    }
+
+                    foreach (var namedArg in attr.NamedArguments)
+                    {
+#if DEBUG
+                        _logger.Info($"namedArg.MemberName = {namedArg.MemberName}");
+                        _logger.Info($"namedArg.TypedValue.Value = {namedArg.TypedValue.Value}");
+#endif
+                    }
+                }
+
+                var customAttributes = field.CustomAttributes;
+
+                var customAttributeDataFromProperties = GetCustomAttributeDataFromProperties(propertiesAttributesDict, field.Name);
+
+#if DEBUG
+                _logger.Info($"customAttributeDataFromProperties?.Count() = {customAttributeDataFromProperties?.Count()}");
+#endif
+
+                if(customAttributeDataFromProperties?.Any() ?? false)
+                {
+                    customAttributes = customAttributes.Concat(customAttributeDataFromProperties);
+                }
+
+                if(IsNoSerialiable(customAttributes))
+                {
+                    continue;
+                }
+
+                var itemValue = field.GetValue(obj);
+
+#if DEBUG
+                _logger.Info($"itemValue = {itemValue}");
+#endif
+
+                var settingsParameterName = GetSettingsParameterName(customAttributes);
+
+#if DEBUG
+                _logger.Info($"settingsParameterName = {settingsParameterName}");
+#endif
+
+                var settingsParameter = GetSettingsParameter(fields, obj, settingsParameterName);
+
+#if DEBUG
+                _logger.Info($"settingsParameter = {settingsParameter}");
+#endif
+
+                var actionPlainObject = CreateActionPlainObject(fields, obj, customAttributes);
+
+#if DEBUG
+                _logger.Info($"actionPlainObject = {actionPlainObject}");
+#endif
+
+                var plainValue = ConvertObjectCollectionValueToSerializableFormat(itemValue, settingsParameter ?? actionPlainObject);
+
+#if DEBUG
+                _logger.Info($"plainValue = {plainValue}");
+#endif
+
+                plainObjectsDict[field.Name] = plainValue;
+            }
+
+#if DEBUG
+            _logger.Info($"plainObjectsDict = {JsonConvert.SerializeObject(plainObjectsDict, Formatting.Indented)}");
+            _logger.Info($"plainObjectsDict = {JsonConvert.SerializeObject(plainObjectsDict, SerializationHelper.JsonSerializerSettings)}");
+#endif
+
+            WriteToFile(plainObjectsDict, instanceId);
+
+            return objectPtr;
+        }
+
+        private IEnumerable<CustomAttributeData> GetCustomAttributeDataFromProperties(Dictionary<string, IEnumerable<CustomAttributeData>> propertiesAttributesDict, string fieldName)
+        {
+#if DEBUG
+            _logger.Info($"fieldName = {fieldName}");
+#endif
+
+            var properyName = GetProperyName(fieldName);
+
+#if DEBUG
+            _logger.Info($"properyName = {properyName}");
+#endif
+
+            propertiesAttributesDict.TryGetValue(properyName, out var value);
+
+            return value ?? Enumerable.Empty<CustomAttributeData>();
+        }
+
+        private string GetProperyName(string fieldName)
+        {
+#if DEBUG
+            _logger.Info($"fieldName = {fieldName}");
+#endif
+
+            if(fieldName.EndsWith("k__BackingField"))
+            {
+                return fieldName.Substring(1, fieldName.IndexOf(">") - 1);
+            }
+
+            return string.Empty;
+        }
+
+        private object GetSettingsParameter(FieldInfo[] fields, object obj, string settingsParameterName)
+        {
+#if DEBUG
+            _logger.Info($"settingsParameterName = {settingsParameterName}");
+#endif
+
+            if(string.IsNullOrWhiteSpace(settingsParameterName))
+            {
+                return null;
+            }
+
+            var field = fields.SingleOrDefault(f => f.Name == settingsParameterName);
+
+            if(field == null)
+            {
+                return null;
+            }
+
+            return field.GetValue(obj);
+        }
+
+        private string GetSettingsParameterName(IEnumerable<CustomAttributeData> customAttributes)
+        {
+            if ((customAttributes?.Count() ?? 0) == 0)
+            {
+                return null;
+            }
+
+            var targetAttribute = customAttributes.SingleOrDefault(p => p.AttributeType == typeof(SocObjectSerializationSettings));
+
+            if(targetAttribute == null)
+            {
+                return null;
+            }
+
+            return targetAttribute.ConstructorArguments.Single().Value as string;
+        }
+
+        private bool IsNoSerialiable(IEnumerable<CustomAttributeData> customAttributes)
+        {
+            if ((customAttributes?.Count() ?? 0) == 0)
+            {
+                return false;
+            }
+
+            var targetAttribute = customAttributes.SingleOrDefault(p => p.AttributeType == typeof(SocNoSerializable));
+
+            return targetAttribute != null;
+        }
+
+        private ActionPo CreateActionPlainObject(FieldInfo[] fields, object obj, IEnumerable<CustomAttributeData> customAttributes)
+        {
+            if ((customAttributes?.Count() ?? 0) == 0)
+            {
+                return null;
+            }
+
+            var targetAttribute = customAttributes.SingleOrDefault(p => p.AttributeType == typeof(SocSerializableActionMember));
+
+            if(targetAttribute == null)
+            {
+                return null;
+            }
+
+#if DEBUG
+            _logger.Info($"targetAttribute.AttributeType?.FullName = {targetAttribute.AttributeType?.FullName}");
+
+            foreach (var ctorArg in targetAttribute.ConstructorArguments)
+            {
+                _logger.Info($"ctorArg.Value = {ctorArg.Value}");
+            }
+
+            foreach (var namedArg in targetAttribute.NamedArguments)
+            {
+                _logger.Info($"namedArg.MemberName = {namedArg.MemberName}");
+                _logger.Info($"namedArg.TypedValue.Value = {namedArg.TypedValue.Value}");
+            }
+#endif
+
+            var fieldName = (string)targetAttribute.ConstructorArguments[0].Value;
+
+#if DEBUG
+            _logger.Info($"fieldName = {fieldName}");
+#endif
+
+            var field = fields.SingleOrDefault(p => p.Name == fieldName);
+
+            var key = (string)field.GetValue(obj);
+
+#if DEBUG
+            _logger.Info($"key = {key}");
+#endif
+
+            return new ActionPo
+            {
+                Key = key,
+                Index = (int)targetAttribute.ConstructorArguments[1].Value
+            };
         }
 
         private ObjectPtr NSerializeCustomThreadPool(CustomThreadPool customThreadPool, CustomThreadPoolSerializationSettings settingsParameter)
@@ -1019,7 +1345,7 @@ namespace SymOntoClay.Serialization.Implementation
             return objectPtr;
         }
 
-        private object ConvertObjectCollectionValueToSerializableFormat(object value)
+        private object ConvertObjectCollectionValueToSerializableFormat(object value, object settingsParameter = null)
         {
             if(value == null)
             {
@@ -1031,36 +1357,38 @@ namespace SymOntoClay.Serialization.Implementation
                 return value;
             }
 
-            return GetSerializedObjectPtr(value);
+            return GetSerializedObjectPtr(value, settingsParameter);
         }
 
-        private ObjectPtr NSerialize(ISerializable serializable)
+        private ObjectPtr NSerialize(object serializable)
         {
-            var instanceId = CreateInstanceId();
+            throw new NotImplementedException("3C60693C-938A-4AB1-B6FF-C448E78F1D5B");
 
-#if DEBUG
-            _logger.Info($"instanceId = {instanceId}");
-#endif
+//            var instanceId = CreateInstanceId();
 
-            var objectPtr = new ObjectPtr(instanceId, serializable.GetType().FullName);
+//#if DEBUG
+//            _logger.Info($"instanceId = {instanceId}");
+//#endif
 
-#if DEBUG
-            _logger.Info($"objectPtr = {objectPtr}");
-#endif
+//            var objectPtr = new ObjectPtr(instanceId, serializable.GetType().FullName);
 
-            _serializationContext.RegObjectPtr(serializable, objectPtr);
+//#if DEBUG
+//            _logger.Info($"objectPtr = {objectPtr}");
+//#endif
 
-            var plainObject = Activator.CreateInstance(serializable.GetPlainObjectType());
+//            _serializationContext.RegObjectPtr(serializable, objectPtr);
 
-            serializable.OnWritePlainObject(plainObject, this);
+//            var plainObject = Activator.CreateInstance(serializable.GetPlainObjectType());
 
-#if DEBUG
-            _logger.Info($"plainObject = {plainObject}");
-#endif
+//            serializable.OnWritePlainObject(plainObject, this);
 
-            WriteToFile(plainObject, instanceId);
+//#if DEBUG
+//            _logger.Info($"plainObject = {plainObject}");
+//#endif
 
-            return objectPtr;
+//            WriteToFile(plainObject, instanceId);
+
+//            return objectPtr;
         }
 
         private void WriteToFile(object value, string instanceId)

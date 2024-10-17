@@ -1,7 +1,10 @@
 ﻿using Newtonsoft.Json;
 using NLog;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Reflection;
 
 namespace SymOntoClay.Serialization.Implementation
 {
@@ -11,11 +14,14 @@ namespace SymOntoClay.Serialization.Implementation
         private static ILogger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
+        private static CultureInfo _cultureInfo = new CultureInfo("en-150");
+
         public static readonly JsonSerializerSettings JsonSerializerSettings = new JsonSerializerSettings()
         {
             PreserveReferencesHandling = PreserveReferencesHandling.All,
             StringEscapeHandling = StringEscapeHandling.EscapeHtml,
-            TypeNameHandling = TypeNameHandling.All//,
+            TypeNameHandling = TypeNameHandling.All,
+            Culture = _cultureInfo
             //ReferenceLoopHandling = ReferenceLoopHandling.Serialize
         };
 
@@ -46,6 +52,11 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"type.Name = {type.Name}");
             _logger.Info($"type.IsGenericType = {type.IsGenericType}");
 #endif
+
+            if(type.Name == "Nullable`1")
+            {
+                throw new NotImplementedException("70CA8FE2-2DFB-4916-B9CE-16C4341DE645");
+            }
 
             switch (type.FullName)
             {
@@ -108,6 +119,72 @@ namespace SymOntoClay.Serialization.Implementation
             }
         }
 
-        private static CultureInfo _cultureInfo = new CultureInfo("en-150");
+        public static FieldInfo[] GetFields(object obj)
+        {
+            return GetFields(obj.GetType());
+        }
+
+        public static FieldInfo[] GetFields(Type type)
+        {
+            var usedNamesList = new List<string>();
+
+            var result = new List<FieldInfo>();
+
+            var targetType = type;
+
+            while (targetType != null)
+            {
+                var items = targetType.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+
+                foreach (var item in items)
+                {
+                    if (usedNamesList.Contains(item.Name))
+                    {
+                        continue;
+                    }
+
+                    usedNamesList.Add(item.Name);
+                    result.Add(item);
+                }
+
+                targetType = targetType.BaseType;
+            }
+
+            return result.ToArray();
+        }
+
+        public static PropertyInfo[] GetProperties(object obj)
+        {
+            return GetProperties(obj.GetType());
+        }
+
+        public static PropertyInfo[] GetProperties(Type type)
+        {
+            var usedNamesList = new List<string>();
+
+            var result = new List<PropertyInfo>();
+
+            var targetType = type;
+
+            while (targetType != null)
+            {
+                var items = targetType.GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+
+                foreach (var item in items)
+                {
+                    if(usedNamesList.Contains(item.Name))
+                    {
+                        continue;
+                    }
+
+                    usedNamesList.Add(item.Name);
+                    result.Add(item);
+                }
+
+                targetType = targetType.BaseType;
+            }
+
+            return result.ToArray();
+        }
     }
 }

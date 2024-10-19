@@ -49,6 +49,12 @@ namespace SymOntoClay.Monitor
         //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
+        private readonly MonitorContext _monitorContext;
+        private readonly IRemoteMonitor _remoteMonitor;
+        private readonly MessageProcessor _messageProcessor;
+        private readonly MonitorFeatures _features;
+        private readonly MonitorFileCache _fileCache;
+
         private readonly CancellationTokenSource _cancellationTokenSource;
 
         private LinkedCancellationTokenSourceSerializationSettings _linkedCancellationTokenSourceSettings;
@@ -60,12 +66,6 @@ namespace SymOntoClay.Monitor
 
         [SocObjectSerializationSettings(nameof(_threadPoolSerializationSettings))]
         private readonly ICustomThreadPool _threadPool;
-
-        private readonly MonitorContext _monitorContext;
-        private readonly IRemoteMonitor _remoteMonitor;
-        private readonly MessageProcessor _messageProcessor;
-        private readonly MonitorFeatures _features;
-        private readonly MonitorFileCache _fileCache;
 
         private readonly MessageNumberGenerator _globalMessageNumberGenerator;
         private readonly MessageNumberGenerator _messageNumberGenerator = new MessageNumberGenerator();

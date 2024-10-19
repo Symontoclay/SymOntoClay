@@ -47,6 +47,15 @@ namespace SymOntoClay.Monitor.Internal
         //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
+        private readonly MonitorContext _monitorContext;
+        private readonly MonitorNodeContext _monitorNodeContext;
+        private readonly MessageProcessor _messageProcessor;
+        private readonly MonitorFeatures _features;
+        private readonly MonitorNodeFileCache _fileCache;
+
+        private readonly MessageNumberGenerator _globalMessageNumberGenerator;
+        private readonly MessageNumberGenerator _messageNumberGenerator = new MessageNumberGenerator();
+
         private readonly string _nodeId;
 
         private readonly MonitorLogger _monitorLoggerImpl;
@@ -64,15 +73,6 @@ namespace SymOntoClay.Monitor.Internal
 
         [SocObjectSerializationSettings(nameof(_threadPoolSerializationSettings))]
         private readonly ICustomThreadPool _threadPool;
-
-        private readonly MonitorContext _monitorContext;
-        private readonly MonitorNodeContext _monitorNodeContext;
-        private readonly MessageProcessor _messageProcessor;
-        private readonly MonitorFeatures _features;
-        private readonly MonitorNodeFileCache _fileCache;
-
-        private readonly MessageNumberGenerator _globalMessageNumberGenerator;
-        private readonly MessageNumberGenerator _messageNumberGenerator = new MessageNumberGenerator();
 
         /// <inheritdoc/>
         public string Id => _nodeId;

@@ -1203,35 +1203,6 @@ namespace SymOntoClay.Serialization.Implementation
             return GetDeserializedObject((ObjectPtr)value);
         }
 
-        private object NDeserializeISerializable(Type type, ObjectPtr objectPtr, string fullFileName)
-        {
-            throw new NotImplementedException("9B62CD6D-EE3F-4E60-8F87-784BA0C1CAF1");
-
-//            var instance = Activator.CreateInstance(type);
-
-//#if DEBUG
-//            _logger.Info($"instance = {instance}");
-//#endif
-
-//            _deserializationContext.RegDeserializedObject(objectPtr.Id, instance);
-
-//            var serializable = (ISerializable)instance;
-
-//            var plainObject = JsonConvert.DeserializeObject(File.ReadAllText(fullFileName), serializable.GetPlainObjectType(), SerializationHelper.JsonSerializerSettings);
-
-//#if DEBUG
-//            _logger.Info($"plainObject = {plainObject}");
-//#endif
-
-//            serializable.OnReadPlainObject(plainObject, this);
-
-//#if DEBUG
-//            _logger.Info($"serializable = {serializable}");
-//#endif
-
-//            return serializable;
-        }
-
         /// <inheritdoc/>
         public T GetAction<T>(string id, int index)
         {

@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
+using System.Text;
 using System.Threading;
 
 namespace SymOntoClay.Serialization.Implementation
@@ -63,11 +64,19 @@ namespace SymOntoClay.Serialization.Implementation
         }
 
         /// <inheritdoc/>
-        public ObjectPtr GetSerializedObjectPtr(object obj, object settingsParameter)
+        public ObjectPtr GetSerializedObjectPtr(object obj, object settingsParameter,
+#if SHOW_PARENT_OBJECT
+            string parentObjInfo = ""
+#endif
+            )
         {
 #if DEBUG
             _logger.Info($"obj = {obj}");
             _logger.Info($"settingsParameter = {settingsParameter}");
+#endif
+
+#if SHOW_PARENT_OBJECT && DEBUG
+            _logger.Info($"parentObjInfo = {parentObjInfo}");
 #endif
 
             if (obj == null)
@@ -109,13 +118,21 @@ namespace SymOntoClay.Serialization.Implementation
                 case "System.Threading.CancellationTokenSource+Linked1CancellationTokenSource":
                 case "System.Threading.CancellationTokenSource+Linked2CancellationTokenSource":
                 case "System.Threading.CancellationTokenSource+LinkedNCancellationTokenSource":
-                    return NSerializeLinkedCancellationTokenSource((CancellationTokenSource)obj, settingsParameter as LinkedCancellationTokenSourceSerializationSettings);
+                    return NSerializeLinkedCancellationTokenSource((CancellationTokenSource)obj, settingsParameter as LinkedCancellationTokenSourceSerializationSettings
+#if SHOW_PARENT_OBJECT
+                        , parentObjInfo
+#endif
+                        );
 
                 case "System.Threading.CancellationToken":
                     return NSerializeCancellationToken((CancellationToken)obj);
 
                 case "SymOntoClay.Threading.CustomThreadPool":
-                    return NSerializeCustomThreadPool((CustomThreadPool)obj, settingsParameter as CustomThreadPoolSerializationSettings);
+                    return NSerializeCustomThreadPool((CustomThreadPool)obj, settingsParameter as CustomThreadPoolSerializationSettings
+#if SHOW_PARENT_OBJECT
+                        , parentObjInfo
+#endif
+                        );
             }
 
             switch (type.Name)
@@ -305,7 +322,19 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"actionPlainObject = {actionPlainObject}");
 #endif
 
-                var plainValue = ConvertObjectCollectionValueToSerializableFormat(itemValue, settingsParameter ?? actionPlainObject);
+#if SHOW_PARENT_OBJECT
+                var parentObjInfo = $"{type.FullName}.{field.Name}";
+#endif
+
+#if SHOW_PARENT_OBJECT && DEBUG
+                _logger.Info($"parentObjInfo = {parentObjInfo}");
+#endif
+
+                var plainValue = ConvertObjectCollectionValueToSerializableFormat(itemValue, settingsParameter ?? actionPlainObject,
+#if SHOW_PARENT_OBJECT
+                    parentObjInfo
+#endif
+                    );
 
 #if DEBUG
                 _logger.Info($"plainValue = {plainValue}");
@@ -455,7 +484,11 @@ namespace SymOntoClay.Serialization.Implementation
             };
         }
 
-        private ObjectPtr NSerializeCustomThreadPool(CustomThreadPool customThreadPool, CustomThreadPoolSerializationSettings settingsParameter)
+        private ObjectPtr NSerializeCustomThreadPool(CustomThreadPool customThreadPool, CustomThreadPoolSerializationSettings settingsParameter,
+#if SHOW_PARENT_OBJECT
+            string parentObjInfo
+#endif
+            )
         {
 #if DEBUG
             _logger.Info($"settingsParameter = {settingsParameter}");
@@ -463,7 +496,13 @@ namespace SymOntoClay.Serialization.Implementation
 
             if(settingsParameter == null)
             {
-                throw new ArgumentNullException(nameof(settingsParameter), $"Serialization parameter is required for type {nameof(CustomThreadPool)}.");
+                var errorSb = new StringBuilder($"Serialization parameter is required for type {nameof(CustomThreadPool)}.");
+
+#if SHOW_PARENT_OBJECT
+                errorSb.Append(parentObjInfo);
+#endif
+
+                throw new ArgumentNullException(nameof(settingsParameter), errorSb.ToString());
             }
 
             var instanceId = CreateInstanceId();
@@ -524,7 +563,11 @@ namespace SymOntoClay.Serialization.Implementation
             return objectPtr;
         }
 
-        private ObjectPtr NSerializeLinkedCancellationTokenSource(CancellationTokenSource cancellationTokenSource, LinkedCancellationTokenSourceSerializationSettings settingsParameter)
+        private ObjectPtr NSerializeLinkedCancellationTokenSource(CancellationTokenSource cancellationTokenSource, LinkedCancellationTokenSourceSerializationSettings settingsParameter,
+#if SHOW_PARENT_OBJECT
+            string parentObjInfo
+#endif
+            )
         {
 #if DEBUG
             _logger.Info($"settingsParameter = {settingsParameter}");
@@ -533,7 +576,13 @@ namespace SymOntoClay.Serialization.Implementation
 
             if (settingsParameter == null)
             {
-                throw new ArgumentNullException(nameof(settingsParameter), $"Serialization parameter is required for linked {nameof(CancellationTokenSource)}.");
+                var errorSb = new StringBuilder($"Serialization parameter is required for linked {nameof(CancellationTokenSource)}.");
+
+#if SHOW_PARENT_OBJECT
+                errorSb.Append(parentObjInfo);
+#endif
+
+                throw new ArgumentNullException(nameof(settingsParameter), errorSb.ToString());
             }
 
             var instanceId = CreateInstanceId();
@@ -1345,7 +1394,11 @@ namespace SymOntoClay.Serialization.Implementation
             return objectPtr;
         }
 
-        private object ConvertObjectCollectionValueToSerializableFormat(object value, object settingsParameter = null)
+        private object ConvertObjectCollectionValueToSerializableFormat(object value, object settingsParameter = null,
+#if SHOW_PARENT_OBJECT
+            string parentObjInfo = ""
+#endif
+            )
         {
             if(value == null)
             {
@@ -1357,38 +1410,11 @@ namespace SymOntoClay.Serialization.Implementation
                 return value;
             }
 
-            return GetSerializedObjectPtr(value, settingsParameter);
-        }
-
-        private ObjectPtr NSerialize(object serializable)
-        {
-            throw new NotImplementedException("3C60693C-938A-4AB1-B6FF-C448E78F1D5B");
-
-//            var instanceId = CreateInstanceId();
-
-//#if DEBUG
-//            _logger.Info($"instanceId = {instanceId}");
-//#endif
-
-//            var objectPtr = new ObjectPtr(instanceId, serializable.GetType().FullName);
-
-//#if DEBUG
-//            _logger.Info($"objectPtr = {objectPtr}");
-//#endif
-
-//            _serializationContext.RegObjectPtr(serializable, objectPtr);
-
-//            var plainObject = Activator.CreateInstance(serializable.GetPlainObjectType());
-
-//            serializable.OnWritePlainObject(plainObject, this);
-
-//#if DEBUG
-//            _logger.Info($"plainObject = {plainObject}");
-//#endif
-
-//            WriteToFile(plainObject, instanceId);
-
-//            return objectPtr;
+            return GetSerializedObjectPtr(value, settingsParameter,
+#if SHOW_PARENT_OBJECT
+                parentObjInfo
+#endif
+                );
         }
 
         private void WriteToFile(object value, string instanceId)

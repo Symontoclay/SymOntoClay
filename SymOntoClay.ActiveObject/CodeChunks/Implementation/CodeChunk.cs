@@ -3,7 +3,7 @@ using System;
 
 namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public partial class CodeChunk : BaseCodeChunk, ICodeChunk
+    public class CodeChunk : BaseCodeChunk, ICodeChunk
     {
         public CodeChunk(string id, ICodeChunksContext codeChunksContext, Action action)
         {
@@ -25,7 +25,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class CodeChunk<T> : BaseCodeChunk, ICodeChunk<T>
+    public class CodeChunk<T> : BaseCodeChunk, ICodeChunk<T>
     {
         public CodeChunk(string id, ICodeChunksContext<T> codeChunksContext, T arg1, Action<T> action)
         {
@@ -49,7 +49,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class CodeChunk<T1, T2> : BaseCodeChunk, ICodeChunk<T1, T2>
+    public class CodeChunk<T1, T2> : BaseCodeChunk, ICodeChunk<T1, T2>
     {
         public CodeChunk(string id, ICodeChunksContext<T1, T2> codeChunksContext, T1 arg1, T2 arg2, Action<T1, T2> action)
         {
@@ -75,7 +75,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class CodeChunk<T1, T2, T3> : BaseCodeChunk, ICodeChunk<T1, T2, T3>
+    public class CodeChunk<T1, T2, T3> : BaseCodeChunk, ICodeChunk<T1, T2, T3>
     {
         public CodeChunk(string id, ICodeChunksContext<T1, T2, T3> codeChunksContext, T1 arg1, T2 arg2, T3 arg3, Action<T1, T2, T3> action)
         {

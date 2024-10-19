@@ -7,8 +7,7 @@ using System.Text;
 
 namespace TestSandbox.Serialization
 {
-    [SocSerialization]
-    public partial class SerializedObject : IObjectToString, IObjectToBriefString
+    public class SerializedObject : IObjectToString, IObjectToBriefString
     {
         public SerializedObject(bool value) 
         {

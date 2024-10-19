@@ -5,8 +5,7 @@ using System.Threading;
 
 namespace SymOntoClay.Serialization.Settings
 {
-    [SocSerialization]
-    public partial class CustomThreadPoolSerializationSettings : IObjectToString
+    public class CustomThreadPoolSerializationSettings : IObjectToString
     {
         public int? MinThreadsCount { get; set; }
         public int? MaxThreadsCount { get; set; }

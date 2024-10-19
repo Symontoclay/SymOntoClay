@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public abstract partial class BaseCodeChunkWithSelfReference
+    public abstract class BaseCodeChunkWithSelfReference
     {
         protected BaseCodeChunkWithSelfReference(IBaseCodeChunksContext codeChunksContext)
         {

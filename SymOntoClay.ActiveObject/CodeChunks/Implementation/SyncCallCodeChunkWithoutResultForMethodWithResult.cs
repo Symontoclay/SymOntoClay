@@ -4,7 +4,7 @@ using System;
 
 namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public partial class SyncCallCodeChunkWithoutResultForMethodWithResult<MethodResult>
+    public class SyncCallCodeChunkWithoutResultForMethodWithResult<MethodResult>
         : BaseSyncCallCodeChunkWithoutResultForMethodWithResult<MethodResult>,
         ISyncCallCodeChunkWithoutResultForMethodWithResult
     {
@@ -32,7 +32,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class SyncCallCodeChunkWithoutResultForMethodWithResult<T, MethodResult>
+    public class SyncCallCodeChunkWithoutResultForMethodWithResult<T, MethodResult>
         : BaseSyncCallCodeChunkWithoutResultForMethodWithResult<MethodResult>,
         ISyncCallCodeChunkWithoutResultForMethodWithResult<T>
     {
@@ -63,7 +63,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class SyncCallCodeChunkWithoutResultForMethodWithResult<T1, T2, MethodResult>
+    public class SyncCallCodeChunkWithoutResultForMethodWithResult<T1, T2, MethodResult>
         : BaseSyncCallCodeChunkWithoutResultForMethodWithResult<MethodResult>,
         ISyncCallCodeChunkWithoutResultForMethodWithResult<T1, T2>
     {
@@ -96,7 +96,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class SyncCallCodeChunkWithoutResultForMethodWithResult<T1, T2, T3, MethodResult>
+    public class SyncCallCodeChunkWithoutResultForMethodWithResult<T1, T2, T3, MethodResult>
         : BaseSyncCallCodeChunkWithoutResultForMethodWithResult<MethodResult>,
         ISyncCallCodeChunkWithoutResultForMethodWithResult<T1, T2, T3>
     {

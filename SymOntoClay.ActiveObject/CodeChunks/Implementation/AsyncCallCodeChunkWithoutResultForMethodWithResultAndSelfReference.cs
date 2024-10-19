@@ -4,7 +4,7 @@ using System;
 
 namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public partial class AsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<MethodResult> :
+    public class AsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<MethodResult> :
         BaseAsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<MethodResult>,
         IAsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<MethodResult>
     {
@@ -33,7 +33,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class AsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T, MethodResult> :
+    public class AsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T, MethodResult> :
         BaseAsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<MethodResult>,
         IAsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T, MethodResult>
     {
@@ -65,7 +65,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class AsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T1, T2, MethodResult> :
+    public class AsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T1, T2, MethodResult> :
         BaseAsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<MethodResult>,
         IAsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T1, T2, MethodResult>
     {
@@ -99,7 +99,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class AsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T1, T2, T3, MethodResult> :
+    public class AsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T1, T2, T3, MethodResult> :
         BaseAsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<MethodResult>,
         IAsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T1, T2, T3, MethodResult>
     {

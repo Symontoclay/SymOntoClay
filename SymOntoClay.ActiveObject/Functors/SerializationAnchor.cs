@@ -5,8 +5,7 @@ using System.Text;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
-    [SocSerialization]
-    public partial class SerializationAnchor : ISerializationAnchor
+    public class SerializationAnchor : ISerializationAnchor
     {
         public SerializationAnchor()
         {

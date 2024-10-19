@@ -5,8 +5,7 @@ using System.Text;
 
 namespace TestSandbox.Serialization
 {
-    [SocSerialization]
-    public partial class SerializedSubObject : IObjectToString
+    public class SerializedSubObject : IObjectToString
     {
         public int SomeField { get; set; }
 

@@ -4,7 +4,7 @@ using System;
 
 namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public partial class SyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<MethodResult>:
+    public class SyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<MethodResult>:
         BaseSyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<MethodResult>,
         ISyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<MethodResult>
     {
@@ -33,7 +33,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class SyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T, MethodResult> :
+    public class SyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T, MethodResult> :
         BaseSyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<MethodResult>,
         ISyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T, MethodResult>
     {
@@ -65,7 +65,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class SyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T1, T2, MethodResult> :
+    public class SyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T1, T2, MethodResult> :
         BaseSyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<MethodResult>,
         ISyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T1, T2, MethodResult>
     {
@@ -99,7 +99,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class SyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T1, T2, T3, MethodResult> :
+    public class SyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T1, T2, T3, MethodResult> :
         BaseSyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<MethodResult>,
         ISyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T1, T2, T3, MethodResult>
     {

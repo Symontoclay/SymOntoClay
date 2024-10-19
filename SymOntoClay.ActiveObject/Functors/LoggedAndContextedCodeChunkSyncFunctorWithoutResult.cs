@@ -7,7 +7,7 @@ using System;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
-    public partial class LoggedAndContextedCodeChunkSyncFunctorWithoutResult<TGlobalContext, TLocalContext> : IBaseFunctor
+    public class LoggedAndContextedCodeChunkSyncFunctorWithoutResult<TGlobalContext, TLocalContext> : IBaseFunctor
         where TLocalContext : class, new()
     {
         public static LoggedAndContextedCodeChunkSyncFunctorWithoutResult<TGlobalContext, TLocalContext> Run(IMonitorLogger logger, string functorId, TGlobalContext globalContext,

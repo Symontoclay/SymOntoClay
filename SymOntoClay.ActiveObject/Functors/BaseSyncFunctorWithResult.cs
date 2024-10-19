@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
-    public abstract partial class BaseSyncFunctorWithResult<TResult> : ISyncOnceObject, IBaseFunctor
+    public abstract class BaseSyncFunctorWithResult<TResult> : ISyncOnceObject, IBaseFunctor
     {
         protected BaseSyncFunctorWithResult(IMonitorLogger logger, IActiveObjectContext activeObjectContext, ISerializationAnchor serializationAnchor) 
         {

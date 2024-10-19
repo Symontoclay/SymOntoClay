@@ -4,7 +4,7 @@ using System;
 
 namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public partial class SyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<TResult, MethodResult> :
+    public class SyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<TResult, MethodResult> :
             BaseSyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<TResult, MethodResult>,
             ISyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<TResult, MethodResult>
     {
@@ -33,7 +33,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class SyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T, TResult, MethodResult> :
+    public class SyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T, TResult, MethodResult> :
         BaseSyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<TResult, MethodResult>,
         ISyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T, TResult, MethodResult>
     {
@@ -65,7 +65,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class SyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T1, T2, TResult, MethodResult> :
+    public class SyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T1, T2, TResult, MethodResult> :
         BaseSyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<TResult, MethodResult>,
         ISyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T1, T2, TResult, MethodResult>
     {
@@ -99,7 +99,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class SyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T1, T2, T3, TResult, MethodResult> :
+    public class SyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T1, T2, T3, TResult, MethodResult> :
         BaseSyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<TResult, MethodResult>,
         ISyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T1, T2, T3, TResult, MethodResult>
     {

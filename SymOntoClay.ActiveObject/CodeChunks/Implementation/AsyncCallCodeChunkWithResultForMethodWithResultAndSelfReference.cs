@@ -4,7 +4,7 @@ using System;
 
 namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public partial class AsyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<TResult, MethodResult> :
+    public class AsyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<TResult, MethodResult> :
             BaseAsyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<TResult, MethodResult>,
             IAsyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<TResult, MethodResult>
     {
@@ -33,7 +33,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class AsyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T, TResult, MethodResult> :
+    public class AsyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T, TResult, MethodResult> :
         BaseAsyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<TResult, MethodResult>,
         IAsyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T, TResult, MethodResult>
     {
@@ -65,7 +65,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class AsyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T1, T2, TResult, MethodResult> :
+    public class AsyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T1, T2, TResult, MethodResult> :
         BaseAsyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<TResult, MethodResult>,
         IAsyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T1, T2, TResult, MethodResult>
     {
@@ -99,7 +99,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class AsyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T1, T2, T3, TResult, MethodResult> :
+    public class AsyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T1, T2, T3, TResult, MethodResult> :
         BaseAsyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<TResult, MethodResult>,
         IAsyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T1, T2, T3, TResult, MethodResult>
     {

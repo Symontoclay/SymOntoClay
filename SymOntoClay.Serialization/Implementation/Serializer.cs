@@ -233,15 +233,26 @@ namespace SymOntoClay.Serialization.Implementation
 
             WriteToFile(settingsParameter, instanceId);
 
+            f
+
             switch (kindOfSerialization)
             {
+                case KindOfSerialization.General:
+                    return objectPtr;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(obj, targetObject))
+                    {
+                        return objectPtr;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            f
-
-            return objectPtr;
         }
 
         private ObjectPtr NSerializeComposite(object obj, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
@@ -428,15 +439,26 @@ namespace SymOntoClay.Serialization.Implementation
 
             WriteToFile(plainObjectsDict, instanceId);
 
+            f
+
             switch (kindOfSerialization)
             {
+                case KindOfSerialization.General:
+                    return objectPtr;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(obj, targetObject))
+                    {
+                        return objectPtr;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            f
-
-            return objectPtr;
         }
 
         private IEnumerable<CustomAttributeData> GetCustomAttributeDataFromProperties(Dictionary<string, IEnumerable<CustomAttributeData>> propertiesAttributesDict, string fieldName)
@@ -650,13 +672,26 @@ namespace SymOntoClay.Serialization.Implementation
 
             WriteToFile(plainObject, instanceId);
 
+            f
+
             switch (kindOfSerialization)
             {
+                case KindOfSerialization.General:
+                    return objectPtr;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(customThreadPool, targetObject))
+                    {
+                        return objectPtr;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            return objectPtr;
         }
 
         private ObjectPtr NSerializeCancellationTokenSource(CancellationTokenSource cancellationTokenSource, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
@@ -715,15 +750,26 @@ namespace SymOntoClay.Serialization.Implementation
 
             WriteToFile(plainObject, instanceId);
 
+            f
+
             switch (kindOfSerialization)
             {
+                case KindOfSerialization.General:
+                    return objectPtr;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(cancellationTokenSource, targetObject))
+                    {
+                        return objectPtr;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            f
-
-            return objectPtr;
         }
 
         private ObjectPtr NSerializeLinkedCancellationTokenSource(CancellationTokenSource cancellationTokenSource, LinkedCancellationTokenSourceSerializationSettings settingsParameter,
@@ -810,15 +856,26 @@ namespace SymOntoClay.Serialization.Implementation
 
             WriteToFile(plainObject, instanceId);
 
+            f
+
             switch (kindOfSerialization)
             {
+                case KindOfSerialization.General:
+                    return objectPtr;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(cancellationTokenSource, targetObject))
+                    {
+                        return objectPtr;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            f
-
-            return objectPtr;
         }
 
         private ObjectPtr NSerializeCancellationToken(CancellationToken cancellationToken, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
@@ -878,15 +935,26 @@ namespace SymOntoClay.Serialization.Implementation
 
             WriteToFile(plainObject, instanceId);
 
+            f
+
             switch (kindOfSerialization)
             {
+                case KindOfSerialization.General:
+                    return objectPtr;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(cancellationToken, targetObject))
+                    {
+                        return objectPtr;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            f
-
-            return objectPtr;
         }
 
         private ObjectPtr NSerializeBareObject(object obj, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
@@ -941,15 +1009,26 @@ namespace SymOntoClay.Serialization.Implementation
 
             WriteToFile(plainObject, instanceId);
 
+            f
+
             switch (kindOfSerialization)
             {
+                case KindOfSerialization.General:
+                    return objectPtr;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(obj, targetObject))
+                    {
+                        return objectPtr;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            f
-
-            return objectPtr;
         }
 
         private ObjectPtr NSerializeGenericDictionary(IDictionary dictionary, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
@@ -1144,15 +1223,26 @@ namespace SymOntoClay.Serialization.Implementation
 
             WriteToFile(listWithPlainObjects, instanceId);
 
+            f
+
             switch (kindOfSerialization)
             {
+                case KindOfSerialization.General:
+                    return objectPtr;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(dictionary, targetObject))
+                    {
+                        return objectPtr;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            f
-
-            return objectPtr;
         }
 
         private ObjectPtr NSerializeGenericDictionaryWithCompositeKeyAndObjectValue(IDictionary dictionary, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
@@ -1255,15 +1345,26 @@ namespace SymOntoClay.Serialization.Implementation
 
             WriteToFile(listWithPlainObjects, instanceId);
 
+            f
+
             switch (kindOfSerialization)
             {
+                case KindOfSerialization.General:
+                    return objectPtr;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(dictionary, targetObject))
+                    {
+                        return objectPtr;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            f
-
-            return objectPtr;
         }
 
         private ObjectPtr NSerializeGenericDictionaryWithCompositeKeyAndPrimitiveValue(IDictionary dictionary, Type valueGenericParameterType,
@@ -1355,15 +1456,26 @@ namespace SymOntoClay.Serialization.Implementation
 
             WriteToFile(listWithPlainObjects, instanceId);
 
+            f
+
             switch (kindOfSerialization)
             {
+                case KindOfSerialization.General:
+                    return objectPtr;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(dictionary, targetObject))
+                    {
+                        return objectPtr;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            f
-
-            return objectPtr;
         }
 
         private ObjectPtr NSerializeGenericDictionaryWithObjectKeyAndCompositeValue(IDictionary dictionary, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
@@ -1466,15 +1578,26 @@ namespace SymOntoClay.Serialization.Implementation
 
             WriteToFile(listWithPlainObjects, instanceId);
 
+            f
+
             switch (kindOfSerialization)
             {
+                case KindOfSerialization.General:
+                    return objectPtr;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(dictionary, targetObject))
+                    {
+                        return objectPtr;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            f
-
-            return objectPtr;
         }
 
         private ObjectPtr NSerializeGenericDictionaryWithObjectKeyAndObjectValue(IDictionary dictionary, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
@@ -1577,15 +1700,26 @@ namespace SymOntoClay.Serialization.Implementation
 
             WriteToFile(listWithPlainObjects, instanceId);
 
+            d
+
             switch (kindOfSerialization)
             {
+                case KindOfSerialization.General:
+                    return objectPtr;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(dictionary, targetObject))
+                    {
+                        return objectPtr;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            f
-
-            return objectPtr;
         }
 
         private ObjectPtr NSerializeGenericDictionaryWithObjectKeyAndPrimitiveValue(IDictionary dictionary, Type valueGenericParameterType,
@@ -1677,15 +1811,26 @@ namespace SymOntoClay.Serialization.Implementation
 
             WriteToFile(listWithPlainObjects, instanceId);
 
+            f
+
             switch (kindOfSerialization)
             {
+                case KindOfSerialization.General:
+                    return objectPtr;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(dictionary, targetObject))
+                    {
+                        return objectPtr;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            f
-
-            return objectPtr;
         }
 
         private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndCompositeValue(IDictionary dictionary, Type keyGenericParameterType,
@@ -1768,15 +1913,26 @@ namespace SymOntoClay.Serialization.Implementation
 
             WriteToFile(dictWithPlainObjects, instanceId);
 
+            f
+
             switch (kindOfSerialization)
             {
+                case KindOfSerialization.General:
+                    return objectPtr;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(dictionary, targetObject))
+                    {
+                        return objectPtr;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            f
-
-            return objectPtr;
         }
 
         private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndObjectValue(IDictionary dictionary, Type keyGenericParameterType,
@@ -1859,15 +2015,26 @@ namespace SymOntoClay.Serialization.Implementation
 
             WriteToFile(dictWithPlainObjects, instanceId);
 
+            d
+
             switch (kindOfSerialization)
             {
+                case KindOfSerialization.General:
+                    return objectPtr;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(dictionary, targetObject))
+                    {
+                        return objectPtr;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            f
-
-            return objectPtr;
         }
 
         private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndPrimitiveValue(IDictionary dictionary,
@@ -1921,15 +2088,26 @@ namespace SymOntoClay.Serialization.Implementation
 
             WriteToFile(dictionary, instanceId);
 
+            f
+
             switch (kindOfSerialization)
             {
+                case KindOfSerialization.General:
+                    return objectPtr;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(dictionary, targetObject))
+                    {
+                        return objectPtr;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            f
-
-            return objectPtr;
         }
 
         private ObjectPtr NSerializeGenericList(IEnumerable enumerable, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
@@ -2037,15 +2215,26 @@ namespace SymOntoClay.Serialization.Implementation
 
             WriteToFile(listWithPlainObjects, instanceId);
 
+            f
+
             switch (kindOfSerialization)
             {
+                case KindOfSerialization.General:
+                    return objectPtr;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(enumerable, targetObject))
+                    {
+                        return objectPtr;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            f
-
-            return objectPtr;
         }
 
         private ObjectPtr NSerializeListWithObjectParameter(IEnumerable enumerable, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
@@ -2087,23 +2276,48 @@ namespace SymOntoClay.Serialization.Implementation
 
             switch (kindOfSerialization)
             {
+                case KindOfSerialization.General:
+                    _serializationContext.RegObjectPtr(enumerable, objectPtr);
+                    break;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(enumerable, targetObject))
+                    {
+                        _serializationContext.RegObjectPtr(enumerable, objectPtr);
+                    }
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            _serializationContext.RegObjectPtr(enumerable, objectPtr);
 
             var listWithPlainObjects = new List<object>();
 
             foreach (var item in enumerable)
             {
+                var itemResult = ConvertObjectCollectionValueToSerializableFormat(item, null, parentObjInfo, kindOfSerialization, targetObject, rootObj);
+
                 switch (kindOfSerialization)
                 {
+                    case KindOfSerialization.General:
+                        listWithPlainObjects.Add(itemResult.ConvertedObject);
+                        break;
+
+                    case KindOfSerialization.Searching:
+                        {
+                            var foundObject = itemResult.FoundObject;
+
+                            if(foundObject == null)
+                            {
+                                continue;
+                            }
+
+                            return foundObject;
+                        }
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
                 }
-
-                listWithPlainObjects.Add(ConvertObjectCollectionValueToSerializableFormat(item));
             }
 
 #if DEBUG
@@ -2112,21 +2326,39 @@ namespace SymOntoClay.Serialization.Implementation
 
             switch (kindOfSerialization)
             {
+                case KindOfSerialization.General:
+                    WriteToFile(listWithPlainObjects, instanceId);
+                    break;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(enumerable, targetObject))
+                    {
+                        WriteToFile(listWithPlainObjects, instanceId);
+                    }
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            WriteToFile(listWithPlainObjects, instanceId);
 
             switch (kindOfSerialization)
             {
+                case KindOfSerialization.General:
+                    return objectPtr;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(enumerable, targetObject))
+                    {
+                        return objectPtr;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            f
-
-            return objectPtr;
         }
 
         private ObjectPtr NSerializeListWithPrimitiveParameter(IEnumerable enumerable, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)

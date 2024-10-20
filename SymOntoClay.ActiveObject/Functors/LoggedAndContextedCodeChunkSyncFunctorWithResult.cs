@@ -36,11 +36,11 @@ namespace SymOntoClay.ActiveObject.Functors
             _globalContext = globalContext;
         }
 
-        [SocSerializableActionKey]
         private string _functorId;
 
         private ISerializationAnchor _serializationAnchor;
 
+        [SocSerializableActionMember(nameof(_functorId), 0)]
         private Action<ICodeChunksContextWithResult<IMonitorLogger, TGlobalContext, TLocalContext, TResult>> _action;
         private CodeChunksContextWithResult<IMonitorLogger, TGlobalContext, TLocalContext, TResult> _codeChunksContext;
 

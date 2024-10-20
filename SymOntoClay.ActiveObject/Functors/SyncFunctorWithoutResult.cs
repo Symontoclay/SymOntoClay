@@ -3,6 +3,7 @@ using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Serialization;
 using System;
+using System.Security.Cryptography;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
@@ -16,9 +17,9 @@ namespace SymOntoClay.ActiveObject.Functors
             _action = action;
         }
 
-        [SocSerializableActionKey]
         private string _functorId;
 
+        [SocSerializableActionMember(nameof(_functorId), 0)]
         private Action _action;
 
         /// <inheritdoc/>
@@ -39,9 +40,9 @@ namespace SymOntoClay.ActiveObject.Functors
             _arg = arg;
         }
 
-        [SocSerializableActionKey]
         private string _functorId;
 
+        [SocSerializableActionMember(nameof(_functorId), 0)]
         private Action<T> _action;
 
         private T _arg;
@@ -65,9 +66,9 @@ namespace SymOntoClay.ActiveObject.Functors
             _arg2 = arg2;
         }
 
-        [SocSerializableActionKey]
         private string _functorId;
 
+        [SocSerializableActionMember(nameof(_functorId), 0)]
         private Action<T1, T2> _action;
 
         private T1 _arg1;
@@ -93,9 +94,9 @@ namespace SymOntoClay.ActiveObject.Functors
             _arg3 = arg3;
         }
 
-        [SocSerializableActionKey]
         private string _functorId;
 
+        [SocSerializableActionMember(nameof(_functorId), 0)]
         private Action<T1, T2, T3> _action;
 
         private T1 _arg1;
@@ -123,9 +124,9 @@ namespace SymOntoClay.ActiveObject.Functors
             _arg4 = arg4;
         }
 
-        [SocSerializableActionKey]
         private string _functorId;
 
+        [SocSerializableActionMember(nameof(_functorId), 0)]
         private Action<T1, T2, T3, T4> _action;
 
         private T1 _arg1;

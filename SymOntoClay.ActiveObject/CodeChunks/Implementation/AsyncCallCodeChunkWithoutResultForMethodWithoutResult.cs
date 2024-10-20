@@ -14,9 +14,9 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _handler = handler;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Func<IAsyncMethodResponse> _handler;
 
         /// <inheritdoc/>
@@ -37,11 +37,11 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _handler = handler;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
         private T _arg1;
 
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Func<T, IAsyncMethodResponse> _handler;
 
         /// <inheritdoc/>
@@ -63,12 +63,12 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _handler = handler;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
         private T1 _arg1;
         private T2 _arg2;
 
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Func<T1, T2, IAsyncMethodResponse> _handler;
 
         /// <inheritdoc/>
@@ -91,13 +91,13 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _handler = handler;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
         private T1 _arg1;
         private T2 _arg2;
         private T3 _arg3;
 
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Func<T1, T2, T3, IAsyncMethodResponse> _handler;
 
         /// <inheritdoc/>

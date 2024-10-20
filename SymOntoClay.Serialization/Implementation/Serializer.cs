@@ -28,19 +28,19 @@ namespace SymOntoClay.Serialization.Implementation
         private readonly ISerializationContext _serializationContext;
 
         /// <inheritdoc/>
-        public void Serialize(object serializable)
+        public void Serialize(object obj)
         {
 #if DEBUG
-            _logger.Info($"serializable = {serializable}");
+            _logger.Info($"obj = {obj}");
 #endif
 
-            if (_serializationContext.IsSerialized(serializable))
+            if (_serializationContext.IsSerialized(obj))
             {
                 return;
             }
 
             var rootObject = new RootObject();
-            rootObject.Data = GetSerializedObjectPtr(serializable);
+            rootObject.Data = GetSerializedObjectPtr(obj, null, string.Empty, KindOfSerialization.General, null, obj);
 
 #if DEBUG
             _logger.Info($"rootObject = {rootObject}");
@@ -57,26 +57,25 @@ namespace SymOntoClay.Serialization.Implementation
             File.WriteAllText(fullFileName, JsonConvert.SerializeObject(rootObject));
         }
 
-        /// <inheritdoc/>
-        public ObjectPtr GetSerializedObjectPtr(object obj)
+        private ObjectPtr SearchForMainFieldDeclaration(object targetObject, object rootObj)
         {
-            return GetSerializedObjectPtr(obj, null);
+#if DEBUG
+            _logger.Info($"targetObject = {targetObject}");
+            _logger.Info($"rootObj = {rootObj}");
+#endif
+
+            throw new NotImplementedException("1142100F-33D7-4595-BA02-1D59FD3B7A65");
         }
 
-        /// <inheritdoc/>
-        public ObjectPtr GetSerializedObjectPtr(object obj, object settingsParameter,
-#if SHOW_PARENT_OBJECT
-            string parentObjInfo = ""
-#endif
-            )
+        private ObjectPtr GetSerializedObjectPtr(object obj, object settingsParameter, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
 #if DEBUG
             _logger.Info($"obj = {obj}");
             _logger.Info($"settingsParameter = {settingsParameter}");
-#endif
-
-#if SHOW_PARENT_OBJECT && DEBUG
             _logger.Info($"parentObjInfo = {parentObjInfo}");
+            _logger.Info($"kindOfSerialization = {kindOfSerialization}");
+            _logger.Info($"targetObject = {targetObject}");
+            _logger.Info($"rootObj = {rootObj}");
 #endif
 
             if (obj == null)
@@ -99,49 +98,43 @@ namespace SymOntoClay.Serialization.Implementation
 
             if(type.FullName.StartsWith("System.Action"))
             {
-                return NSerializeAction(obj, settingsParameter as ActionPo, type);
+                return NSerializeAction(obj, settingsParameter as ActionPo, type, parentObjInfo, kindOfSerialization, targetObject, rootObj);
             }
 
             if (type.FullName.StartsWith("System.Func"))
             {
-                return NSerializeAction(obj, settingsParameter as ActionPo, type);
+                return NSerializeAction(obj, settingsParameter as ActionPo, type, parentObjInfo, kindOfSerialization, targetObject, rootObj);
             }
 
             switch (type.FullName)
             {
                 case "System.Object":
-                    return NSerializeBareObject(obj);
+                    return NSerializeBareObject(obj, parentObjInfo, kindOfSerialization, targetObject, rootObj);
 
                 case "System.Threading.CancellationTokenSource":
-                    return NSerializeCancellationTokenSource((CancellationTokenSource)obj);
+                    return NSerializeCancellationTokenSource((CancellationTokenSource)obj, parentObjInfo, kindOfSerialization, targetObject, rootObj);
 
                 case "System.Threading.CancellationTokenSource+Linked1CancellationTokenSource":
                 case "System.Threading.CancellationTokenSource+Linked2CancellationTokenSource":
                 case "System.Threading.CancellationTokenSource+LinkedNCancellationTokenSource":
-                    return NSerializeLinkedCancellationTokenSource((CancellationTokenSource)obj, settingsParameter as LinkedCancellationTokenSourceSerializationSettings
-#if SHOW_PARENT_OBJECT
-                        , parentObjInfo
-#endif
-                        );
+                    return NSerializeLinkedCancellationTokenSource((CancellationTokenSource)obj, settingsParameter as LinkedCancellationTokenSourceSerializationSettings,
+                        parentObjInfo, kindOfSerialization, targetObject, rootObj);
 
                 case "System.Threading.CancellationToken":
-                    return NSerializeCancellationToken((CancellationToken)obj);
+                    return NSerializeCancellationToken((CancellationToken)obj, parentObjInfo, kindOfSerialization, targetObject, rootObj);
 
                 case "SymOntoClay.Threading.CustomThreadPool":
-                    return NSerializeCustomThreadPool((CustomThreadPool)obj, settingsParameter as CustomThreadPoolSerializationSettings
-#if SHOW_PARENT_OBJECT
-                        , parentObjInfo
-#endif
-                        );
+                    return NSerializeCustomThreadPool((CustomThreadPool)obj, settingsParameter as CustomThreadPoolSerializationSettings, parentObjInfo,
+                        kindOfSerialization, targetObject, rootObj);
             }
 
             switch (type.Name)
             {
                 case "List`1":
-                    return NSerializeGenericList((IEnumerable)obj);
+                    return NSerializeGenericList((IEnumerable)obj, parentObjInfo, kindOfSerialization, targetObject, rootObj);
 
                 case "Dictionary`2":
-                    return NSerializeGenericDictionary((IDictionary)obj);
+                    return NSerializeGenericDictionary((IDictionary)obj, parentObjInfo, kindOfSerialization, targetObject, rootObj);
 
                 default:
                     if (type.FullName.StartsWith("System.Threading.") ||
@@ -150,18 +143,61 @@ namespace SymOntoClay.Serialization.Implementation
                         throw new NotImplementedException("4161028A-A2DB-41F0-8D53-6BCC81D317A4");
                     }
 
-                    return NSerializeComposite(obj);
+                    return NSerializeComposite(obj, parentObjInfo, kindOfSerialization, targetObject, rootObj);
             }
         }
 
-        private ObjectPtr NSerializeAction(object obj, ActionPo settingsParameter, Type type)
+        private ObjectPtr NSerializeAction(object obj, ActionPo settingsParameter, Type type, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
 #if DEBUG
             _logger.Info($"settingsParameter = {settingsParameter}");
 #endif
 
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    break;
+
+                case KindOfSerialization.Searching:
+                    if (!ReferenceEquals(obj, targetObject))
+                    {
+                        return null;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
             if (settingsParameter == null)
             {
+                switch (kindOfSerialization)
+                {
+                    case KindOfSerialization.General:
+                        {
+                            var foundObject = SearchForMainFieldDeclaration(obj, rootObj);
+
+                            if (foundObject == null)
+                            {
+                                var errorSb = new StringBuilder($"Serialization parameter is required for linked {nameof(CancellationTokenSource)}.");
+
+                                errorSb.Append(parentObjInfo);
+
+                                throw new ArgumentNullException(nameof(settingsParameter), errorSb.ToString());
+                            }
+                            else
+                            {
+                                return foundObject;
+                            }
+                        }
+                        break;
+
+                        d
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+                }
+
                 throw new ArgumentNullException(nameof(settingsParameter), $"Serialization parameter is required for type {type.Name}.");
             }
 
@@ -177,22 +213,58 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"objectPtr = {objectPtr}");
 #endif
 
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
             _serializationContext.RegObjectPtr(obj, objectPtr);
 
 #if DEBUG
             _logger.Info($"settingsParameter = {JsonConvert.SerializeObject(settingsParameter, Formatting.Indented)}");
 #endif
 
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
             WriteToFile(settingsParameter, instanceId);
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            f
 
             return objectPtr;
         }
 
-        private ObjectPtr NSerializeComposite(object obj)
+        private ObjectPtr NSerializeComposite(object obj, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
 #if DEBUG
             _logger.Info($"obj = {obj}");
 #endif
+
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    break;
+
+                case KindOfSerialization.Searching:
+                    if (!ReferenceEquals(obj, targetObject))
+                    {
+                        return null;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
 
             var instanceId = CreateInstanceId();
 
@@ -207,6 +279,12 @@ namespace SymOntoClay.Serialization.Implementation
 #if DEBUG
             _logger.Info($"objectPtr = {objectPtr}");
 #endif
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
 
             _serializationContext.RegObjectPtr(obj, objectPtr);
 
@@ -322,19 +400,13 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"actionPlainObject = {actionPlainObject}");
 #endif
 
-#if SHOW_PARENT_OBJECT
                 var parentObjInfo = $"{type.FullName}.{field.Name}";
-#endif
 
-#if SHOW_PARENT_OBJECT && DEBUG
+#if DEBUG
                 _logger.Info($"parentObjInfo = {parentObjInfo}");
 #endif
 
-                var plainValue = ConvertObjectCollectionValueToSerializableFormat(itemValue, settingsParameter ?? actionPlainObject,
-#if SHOW_PARENT_OBJECT
-                    parentObjInfo
-#endif
-                    );
+                var plainValue = ConvertObjectCollectionValueToSerializableFormat(itemValue, settingsParameter ?? actionPlainObject, parentObjInfo);
 
 #if DEBUG
                 _logger.Info($"plainValue = {plainValue}");
@@ -348,7 +420,21 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"plainObjectsDict = {JsonConvert.SerializeObject(plainObjectsDict, SerializationHelper.JsonSerializerSettings)}");
 #endif
 
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
             WriteToFile(plainObjectsDict, instanceId);
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            f
 
             return objectPtr;
         }
@@ -484,25 +570,50 @@ namespace SymOntoClay.Serialization.Implementation
             };
         }
 
-        private ObjectPtr NSerializeCustomThreadPool(CustomThreadPool customThreadPool, CustomThreadPoolSerializationSettings settingsParameter,
-#if SHOW_PARENT_OBJECT
-            string parentObjInfo
-#endif
-            )
+        private ObjectPtr NSerializeCustomThreadPool(CustomThreadPool customThreadPool, CustomThreadPoolSerializationSettings settingsParameter, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
 #if DEBUG
             _logger.Info($"settingsParameter = {settingsParameter}");
 #endif
+            
+            switch(kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    break;
+
+                case KindOfSerialization.Searching:
+                    if(!ReferenceEquals(customThreadPool, targetObject))
+                    {
+                        return null;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
 
             if(settingsParameter == null)
             {
-                var errorSb = new StringBuilder($"Serialization parameter is required for type {nameof(CustomThreadPool)}.");
+                switch (kindOfSerialization)
+                {
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+                }
 
-#if SHOW_PARENT_OBJECT
-                errorSb.Append(parentObjInfo);
-#endif
+                var foundObject = SearchForMainFieldDeclaration();
 
-                throw new ArgumentNullException(nameof(settingsParameter), errorSb.ToString());
+                if (foundObject == null)
+                {
+                    var errorSb = new StringBuilder($"Serialization parameter is required for type {nameof(CustomThreadPool)}.");
+
+                    errorSb.Append(parentObjInfo);
+
+                    throw new ArgumentNullException(nameof(settingsParameter), errorSb.ToString());
+                }
+                else
+                {
+                    return foundObject;
+                }
             }
 
             var instanceId = CreateInstanceId();
@@ -517,6 +628,11 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"objectPtr = {objectPtr}");
 #endif
 
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
             _serializationContext.RegObjectPtr(customThreadPool, objectPtr);
 
             var plainObject = new CustomThreadPoolPo();
@@ -526,17 +642,44 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, Formatting.Indented)}");
 #endif
 
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
             WriteToFile(plainObject, instanceId);
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
 
             return objectPtr;
         }
 
-        private ObjectPtr NSerializeCancellationTokenSource(CancellationTokenSource cancellationTokenSource)
+        private ObjectPtr NSerializeCancellationTokenSource(CancellationTokenSource cancellationTokenSource, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
 #if DEBUG
             _logger.Info($"cancellationTokenSource.IsCancellationRequested = {cancellationTokenSource.IsCancellationRequested}");
 #endif
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    break;
 
+                case KindOfSerialization.Searching:
+                    if (!ReferenceEquals(cancellationTokenSource, targetObject))
+                    {
+                        return null;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+            
             var instanceId = CreateInstanceId();
 
 #if DEBUG
@@ -549,6 +692,12 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"objectPtr = {objectPtr}");
 #endif
 
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
             _serializationContext.RegObjectPtr(cancellationTokenSource, objectPtr);
 
             var plainObject = new CancellationTokenSourcePo();
@@ -558,31 +707,71 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject)}");
 #endif
 
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
             WriteToFile(plainObject, instanceId);
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            f
 
             return objectPtr;
         }
 
         private ObjectPtr NSerializeLinkedCancellationTokenSource(CancellationTokenSource cancellationTokenSource, LinkedCancellationTokenSourceSerializationSettings settingsParameter,
-#if SHOW_PARENT_OBJECT
-            string parentObjInfo
-#endif
-            )
+            string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
 #if DEBUG
             _logger.Info($"settingsParameter = {settingsParameter}");
             _logger.Info($"cancellationTokenSource.IsCancellationRequested = {cancellationTokenSource.IsCancellationRequested}");
 #endif
 
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    break;
+
+                case KindOfSerialization.Searching:
+                    if (!ReferenceEquals(cancellationTokenSource, targetObject))
+                    {
+                        return null;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
             if (settingsParameter == null)
             {
-                var errorSb = new StringBuilder($"Serialization parameter is required for linked {nameof(CancellationTokenSource)}.");
+                switch (kindOfSerialization)
+                {
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+                }
 
-#if SHOW_PARENT_OBJECT
-                errorSb.Append(parentObjInfo);
-#endif
+                var foundObject = SearchForMainFieldDeclaration();
 
-                throw new ArgumentNullException(nameof(settingsParameter), errorSb.ToString());
+                if(foundObject == null)
+                {
+                    var errorSb = new StringBuilder($"Serialization parameter is required for linked {nameof(CancellationTokenSource)}.");
+
+                    errorSb.Append(parentObjInfo);
+
+                    throw new ArgumentNullException(nameof(settingsParameter), errorSb.ToString());
+                }
+                else
+                {
+                    return foundObject;
+                }
             }
 
             var instanceId = CreateInstanceId();
@@ -597,6 +786,12 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"objectPtr = {objectPtr}");
 #endif
 
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
             _serializationContext.RegObjectPtr(cancellationTokenSource, objectPtr);
 
             var plainObject = new LinkedCancellationTokenSourcePo();
@@ -607,13 +802,43 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, Formatting.Indented)}");
 #endif
 
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
             WriteToFile(plainObject, instanceId);
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            f
 
             return objectPtr;
         }
 
-        private ObjectPtr NSerializeCancellationToken(CancellationToken cancellationToken)
+        private ObjectPtr NSerializeCancellationToken(CancellationToken cancellationToken, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    break;
+
+                case KindOfSerialization.Searching:
+                    if (!ReferenceEquals(cancellationToken, targetObject))
+                    {
+                        return null;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
             var sourceField = cancellationToken.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetField | BindingFlags.DeclaredOnly).Single(p => p.Name == "_source");
 
             var fieldValue = sourceField.GetValue(cancellationToken);
@@ -645,13 +870,43 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, Formatting.Indented)}");
 #endif
 
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
             WriteToFile(plainObject, instanceId);
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            f
 
             return objectPtr;
         }
 
-        private ObjectPtr NSerializeBareObject(object obj)
+        private ObjectPtr NSerializeBareObject(object obj, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    break;
+
+                case KindOfSerialization.Searching:
+                    if (!ReferenceEquals(obj, targetObject))
+                    {
+                        return null;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
             var instanceId = CreateInstanceId();
 
 #if DEBUG
@@ -664,6 +919,12 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"objectPtr = {objectPtr}");
 #endif
 
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
             _serializationContext.RegObjectPtr(obj, objectPtr);
 
             var plainObject = new object();
@@ -672,12 +933,26 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"plainObject = {plainObject}");
 #endif
 
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
             WriteToFile(plainObject, instanceId);
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            f
 
             return objectPtr;
         }
 
-        private ObjectPtr NSerializeGenericDictionary(IDictionary dictionary)
+        private ObjectPtr NSerializeGenericDictionary(IDictionary dictionary, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
             var type = dictionary.GetType();
 
@@ -711,17 +986,17 @@ namespace SymOntoClay.Serialization.Implementation
                 {
                     if (SerializationHelper.IsPrimitiveType(valueGenericParameterType))
                     {
-                        return NSerializeGenericDictionaryWithPrimitiveKeyAndPrimitiveValue(dictionary);
+                        return NSerializeGenericDictionaryWithPrimitiveKeyAndPrimitiveValue(dictionary, parentObjInfo, kindOfSerialization, targetObject, rootObj);
                     }
                     else
                     {
                         if(SerializationHelper.IsObject(valueGenericParameterType))
                         {
-                            return NSerializeGenericDictionaryWithPrimitiveKeyAndObjectValue(dictionary, keyGenericParameterType);
+                            return NSerializeGenericDictionaryWithPrimitiveKeyAndObjectValue(dictionary, keyGenericParameterType, parentObjInfo, kindOfSerialization, targetObject, rootObj);
                         }
                         else
                         {
-                            return NSerializeGenericDictionaryWithPrimitiveKeyAndCompositeValue(dictionary, keyGenericParameterType);                            
+                            return NSerializeGenericDictionaryWithPrimitiveKeyAndCompositeValue(dictionary, keyGenericParameterType, parentObjInfo, kindOfSerialization, targetObject, rootObj);                            
                         }
                     }
                 }
@@ -731,17 +1006,17 @@ namespace SymOntoClay.Serialization.Implementation
                     {
                         if (SerializationHelper.IsPrimitiveType(valueGenericParameterType))
                         {
-                            return NSerializeGenericDictionaryWithObjectKeyAndPrimitiveValue(dictionary, valueGenericParameterType);
+                            return NSerializeGenericDictionaryWithObjectKeyAndPrimitiveValue(dictionary, valueGenericParameterType, parentObjInfo, kindOfSerialization, targetObject, rootObj);
                         }
                         else
                         {
                             if(SerializationHelper.IsObject(valueGenericParameterType))
                             {
-                                return NSerializeGenericDictionaryWithObjectKeyAndObjectValue(dictionary);
+                                return NSerializeGenericDictionaryWithObjectKeyAndObjectValue(dictionary, parentObjInfo, kindOfSerialization, targetObject, rootObj);
                             }
                             else
                             {
-                                return NSerializeGenericDictionaryWithObjectKeyAndCompositeValue(dictionary);
+                                return NSerializeGenericDictionaryWithObjectKeyAndCompositeValue(dictionary, parentObjInfo, kindOfSerialization, targetObject, rootObj);
                             }
                         }
                     }
@@ -749,17 +1024,17 @@ namespace SymOntoClay.Serialization.Implementation
                     {
                         if (SerializationHelper.IsPrimitiveType(valueGenericParameterType))
                         {
-                            return NSerializeGenericDictionaryWithCompositeKeyAndPrimitiveValue(dictionary, valueGenericParameterType);
+                            return NSerializeGenericDictionaryWithCompositeKeyAndPrimitiveValue(dictionary, valueGenericParameterType, parentObjInfo, kindOfSerialization, targetObject, rootObj);
                         }
                         else
                         {
                             if (SerializationHelper.IsObject(valueGenericParameterType))
                             {
-                                return NSerializeGenericDictionaryWithCompositeKeyAndObjectValue(dictionary);
+                                return NSerializeGenericDictionaryWithCompositeKeyAndObjectValue(dictionary, parentObjInfo, kindOfSerialization, targetObject, rootObj);
                             }
                             else
                             {
-                                return NSerializeGenericDictionaryWithCompositeKeyAndCompositeValue(dictionary);
+                                return NSerializeGenericDictionaryWithCompositeKeyAndCompositeValue(dictionary, parentObjInfo, kindOfSerialization, targetObject, rootObj);
                             }
                         }
                     }
@@ -769,10 +1044,26 @@ namespace SymOntoClay.Serialization.Implementation
             throw new NotImplementedException("D55AE149-D344-4855-8EC0-2AD18C0F90D5");
         }
 
-        private ObjectPtr NSerializeGenericDictionaryWithCompositeKeyAndCompositeValue(IDictionary dictionary)
+        private ObjectPtr NSerializeGenericDictionaryWithCompositeKeyAndCompositeValue(IDictionary dictionary, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
-            var instanceId = CreateInstanceId();
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    break;
 
+                case KindOfSerialization.Searching:
+                    if (!ReferenceEquals(dictionary, targetObject))
+                    {
+                        return null;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            var instanceId = CreateInstanceId();
+            
 #if DEBUG
             _logger.Info($"instanceId = {instanceId}");
 #endif
@@ -782,6 +1073,12 @@ namespace SymOntoClay.Serialization.Implementation
 #if DEBUG
             _logger.Info($"objectPtr = {objectPtr}");
 #endif
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
 
             _serializationContext.RegObjectPtr(dictionary, objectPtr);
 
@@ -827,15 +1124,45 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, SerializationHelper.JsonSerializerSettings)}");
 #endif
 
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
             WriteToFile(listWithPlainObjects, instanceId);
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            f
 
             return objectPtr;
         }
 
-        private ObjectPtr NSerializeGenericDictionaryWithCompositeKeyAndObjectValue(IDictionary dictionary)
+        private ObjectPtr NSerializeGenericDictionaryWithCompositeKeyAndObjectValue(IDictionary dictionary, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
-            var instanceId = CreateInstanceId();
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    break;
 
+                case KindOfSerialization.Searching:
+                    if (!ReferenceEquals(dictionary, targetObject))
+                    {
+                        return null;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            var instanceId = CreateInstanceId();
+            
 #if DEBUG
             _logger.Info($"instanceId = {instanceId}");
 #endif
@@ -845,6 +1172,12 @@ namespace SymOntoClay.Serialization.Implementation
 #if DEBUG
             _logger.Info($"objectPtr = {objectPtr}");
 #endif
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
 
             _serializationContext.RegObjectPtr(dictionary, objectPtr);
 
@@ -890,15 +1223,46 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, SerializationHelper.JsonSerializerSettings)}");
 #endif
 
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
             WriteToFile(listWithPlainObjects, instanceId);
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            f
 
             return objectPtr;
         }
 
-        private ObjectPtr NSerializeGenericDictionaryWithCompositeKeyAndPrimitiveValue(IDictionary dictionary, Type valueGenericParameterType)
+        private ObjectPtr NSerializeGenericDictionaryWithCompositeKeyAndPrimitiveValue(IDictionary dictionary, Type valueGenericParameterType,
+            string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
-            var instanceId = CreateInstanceId();
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    break;
 
+                case KindOfSerialization.Searching:
+                    if (!ReferenceEquals(dictionary, targetObject))
+                    {
+                        return null;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            var instanceId = CreateInstanceId();
+            
 #if DEBUG
             _logger.Info($"instanceId = {instanceId}");
 #endif
@@ -908,6 +1272,12 @@ namespace SymOntoClay.Serialization.Implementation
 #if DEBUG
             _logger.Info($"objectPtr = {objectPtr}");
 #endif
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
 
             _serializationContext.RegObjectPtr(dictionary, objectPtr);
 
@@ -947,15 +1317,45 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, SerializationHelper.JsonSerializerSettings)}");
 #endif
 
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
             WriteToFile(listWithPlainObjects, instanceId);
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            f
 
             return objectPtr;
         }
 
-        private ObjectPtr NSerializeGenericDictionaryWithObjectKeyAndCompositeValue(IDictionary dictionary)
+        private ObjectPtr NSerializeGenericDictionaryWithObjectKeyAndCompositeValue(IDictionary dictionary, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
-            var instanceId = CreateInstanceId();
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    break;
 
+                case KindOfSerialization.Searching:
+                    if (!ReferenceEquals(dictionary, targetObject))
+                    {
+                        return null;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            var instanceId = CreateInstanceId();
+            
 #if DEBUG
             _logger.Info($"instanceId = {instanceId}");
 #endif
@@ -965,6 +1365,12 @@ namespace SymOntoClay.Serialization.Implementation
 #if DEBUG
             _logger.Info($"objectPtr = {objectPtr}");
 #endif
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
 
             _serializationContext.RegObjectPtr(dictionary, objectPtr);
 
@@ -1010,15 +1416,45 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, SerializationHelper.JsonSerializerSettings)}");
 #endif
 
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
             WriteToFile(listWithPlainObjects, instanceId);
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            f
 
             return objectPtr;
         }
 
-        private ObjectPtr NSerializeGenericDictionaryWithObjectKeyAndObjectValue(IDictionary dictionary)
+        private ObjectPtr NSerializeGenericDictionaryWithObjectKeyAndObjectValue(IDictionary dictionary, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
-            var instanceId = CreateInstanceId();
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    break;
 
+                case KindOfSerialization.Searching:
+                    if (!ReferenceEquals(dictionary, targetObject))
+                    {
+                        return null;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            var instanceId = CreateInstanceId();
+            
 #if DEBUG
             _logger.Info($"instanceId = {instanceId}");
 #endif
@@ -1028,6 +1464,12 @@ namespace SymOntoClay.Serialization.Implementation
 #if DEBUG
             _logger.Info($"objectPtr = {objectPtr}");
 #endif
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
 
             _serializationContext.RegObjectPtr(dictionary, objectPtr);
 
@@ -1073,15 +1515,46 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, SerializationHelper.JsonSerializerSettings)}");
 #endif
 
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
             WriteToFile(listWithPlainObjects, instanceId);
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            f
 
             return objectPtr;
         }
 
-        private ObjectPtr NSerializeGenericDictionaryWithObjectKeyAndPrimitiveValue(IDictionary dictionary, Type valueGenericParameterType)
+        private ObjectPtr NSerializeGenericDictionaryWithObjectKeyAndPrimitiveValue(IDictionary dictionary, Type valueGenericParameterType,
+            string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
-            var instanceId = CreateInstanceId();
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    break;
 
+                case KindOfSerialization.Searching:
+                    if (!ReferenceEquals(dictionary, targetObject))
+                    {
+                        return null;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            var instanceId = CreateInstanceId();
+            
 #if DEBUG
             _logger.Info($"instanceId = {instanceId}");
 #endif
@@ -1091,6 +1564,12 @@ namespace SymOntoClay.Serialization.Implementation
 #if DEBUG
             _logger.Info($"objectPtr = {objectPtr}");
 #endif
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
 
             _serializationContext.RegObjectPtr(dictionary, objectPtr);
 
@@ -1130,15 +1609,46 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, SerializationHelper.JsonSerializerSettings)}");
 #endif
 
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
             WriteToFile(listWithPlainObjects, instanceId);
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            f
 
             return objectPtr;
         }
 
-        private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndCompositeValue(IDictionary dictionary, Type keyGenericParameterType)
+        private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndCompositeValue(IDictionary dictionary, Type keyGenericParameterType,
+            string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
-            var instanceId = CreateInstanceId();
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    break;
 
+                case KindOfSerialization.Searching:
+                    if (!ReferenceEquals(dictionary, targetObject))
+                    {
+                        return null;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            var instanceId = CreateInstanceId();
+            
 #if DEBUG
             _logger.Info($"instanceId = {instanceId}");
 #endif
@@ -1148,6 +1658,12 @@ namespace SymOntoClay.Serialization.Implementation
 #if DEBUG
             _logger.Info($"objectPtr = {objectPtr}");
 #endif
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
 
             _serializationContext.RegObjectPtr(dictionary, objectPtr);
 
@@ -1178,15 +1694,46 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"dictWithPlainObjects = {JsonConvert.SerializeObject(dictWithPlainObjects, Formatting.Indented)}");
 #endif
 
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
             WriteToFile(dictWithPlainObjects, instanceId);
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            f
 
             return objectPtr;
         }
 
-        private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndObjectValue(IDictionary dictionary, Type keyGenericParameterType)
+        private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndObjectValue(IDictionary dictionary, Type keyGenericParameterType,
+            string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
-            var instanceId = CreateInstanceId();
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    break;
 
+                case KindOfSerialization.Searching:
+                    if (!ReferenceEquals(dictionary, targetObject))
+                    {
+                        return null;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            var instanceId = CreateInstanceId();
+            
 #if DEBUG
             _logger.Info($"instanceId = {instanceId}");
 #endif
@@ -1196,6 +1743,12 @@ namespace SymOntoClay.Serialization.Implementation
 #if DEBUG
             _logger.Info($"objectPtr = {objectPtr}");
 #endif
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
 
             _serializationContext.RegObjectPtr(dictionary, objectPtr);
 
@@ -1226,15 +1779,46 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"dictWithPlainObjects = {JsonConvert.SerializeObject(dictWithPlainObjects, Formatting.Indented)}");
 #endif
 
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
             WriteToFile(dictWithPlainObjects, instanceId);
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            f
 
             return objectPtr;
         }
 
-        private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndPrimitiveValue(IDictionary dictionary)
+        private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndPrimitiveValue(IDictionary dictionary,
+            string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
-            var instanceId = CreateInstanceId();
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    break;
 
+                case KindOfSerialization.Searching:
+                    if (!ReferenceEquals(dictionary, targetObject))
+                    {
+                        return null;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            var instanceId = CreateInstanceId();
+            
 #if DEBUG
             _logger.Info($"instanceId = {instanceId}");
 #endif
@@ -1245,18 +1829,38 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"objectPtr = {objectPtr}");
 #endif
 
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
             _serializationContext.RegObjectPtr(dictionary, objectPtr);
 
 #if DEBUG
             _logger.Info($"dictionary = {JsonConvert.SerializeObject(dictionary, Formatting.Indented)}");
 #endif
 
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
             WriteToFile(dictionary, instanceId);
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            f
 
             return objectPtr;
         }
 
-        private ObjectPtr NSerializeGenericList(IEnumerable enumerable)
+        private ObjectPtr NSerializeGenericList(IEnumerable enumerable, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
             var type = enumerable.GetType();
 
@@ -1279,27 +1883,43 @@ namespace SymOntoClay.Serialization.Implementation
 
                 if (SerializationHelper.IsPrimitiveType(genericParameterType))
                 {
-                    return NSerializeListWithPrimitiveParameter(enumerable);
+                    return NSerializeListWithPrimitiveParameter(enumerable, parentObjInfo, kindOfSerialization, targetObject, rootObj);
                 }
 
                 if (SerializationHelper.IsObject(genericParameterType))
                 {
-                    return NSerializeListWithObjectParameter(enumerable);
+                    return NSerializeListWithObjectParameter(enumerable, parentObjInfo, kindOfSerialization, targetObject, rootObj);
                 }
             }
 
-            return NSerializeListWithCompositeParameter(enumerable);
+            return NSerializeListWithCompositeParameter(enumerable, parentObjInfo, kindOfSerialization, targetObject, rootObj);
         }
 
-        private ObjectPtr NSerializeListWithCompositeParameter(IEnumerable enumerable)
+        private ObjectPtr NSerializeListWithCompositeParameter(IEnumerable enumerable, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    break;
+
+                case KindOfSerialization.Searching:
+                    if (!ReferenceEquals(enumerable, targetObject))
+                    {
+                        return null;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
 #if DEBUG
             var type = enumerable.GetType();
             _logger.Info($"type.FullName = {type.FullName}");
             _logger.Info($"type.Name = {type.Name}");
             _logger.Info($"type.IsGenericType = {type.IsGenericType}");
 #endif
-
+            
             var instanceId = CreateInstanceId();
 
 #if DEBUG
@@ -1311,6 +1931,12 @@ namespace SymOntoClay.Serialization.Implementation
 #if DEBUG
             _logger.Info($"objectPtr = {objectPtr}");
 #endif
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
 
             _serializationContext.RegObjectPtr(enumerable, objectPtr);
 
@@ -1325,20 +1951,50 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, Formatting.Indented)}");
 #endif
 
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
             WriteToFile(listWithPlainObjects, instanceId);
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            f
 
             return objectPtr;
         }
 
-        private ObjectPtr NSerializeListWithObjectParameter(IEnumerable enumerable)
+        private ObjectPtr NSerializeListWithObjectParameter(IEnumerable enumerable, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    break;
+
+                case KindOfSerialization.Searching:
+                    if (!ReferenceEquals(enumerable, targetObject))
+                    {
+                        return null;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
 #if DEBUG
             var type = enumerable.GetType();
             _logger.Info($"type.FullName = {type.FullName}");
             _logger.Info($"type.Name = {type.Name}");
             _logger.Info($"type.IsGenericType = {type.IsGenericType}");
 #endif
-
+            
             var instanceId = CreateInstanceId();
 
 #if DEBUG
@@ -1350,6 +2006,12 @@ namespace SymOntoClay.Serialization.Implementation
 #if DEBUG
             _logger.Info($"objectPtr = {objectPtr}");
 #endif
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
 
             _serializationContext.RegObjectPtr(enumerable, objectPtr);
 
@@ -1364,15 +2026,45 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, Formatting.Indented)}");
 #endif
 
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
             WriteToFile(listWithPlainObjects, instanceId);
+
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            f
 
             return objectPtr;
         }
 
-        private ObjectPtr NSerializeListWithPrimitiveParameter(IEnumerable enumerable)
+        private ObjectPtr NSerializeListWithPrimitiveParameter(IEnumerable enumerable, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
-            var instanceId = CreateInstanceId();
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    break;
 
+                case KindOfSerialization.Searching:
+                    if (!ReferenceEquals(enumerable, targetObject))
+                    {
+                        return null;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            var instanceId = CreateInstanceId();
+            
 #if DEBUG
             _logger.Info($"instanceId = {instanceId}");
 #endif
@@ -1383,38 +2075,79 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"objectPtr = {objectPtr}");
 #endif
 
-            _serializationContext.RegObjectPtr(enumerable, objectPtr);
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    _serializationContext.RegObjectPtr(enumerable, objectPtr);
+                    break;
+
+                    case KindOfSerialization.Searching:
+                    if (ReferenceEquals(enumerable, targetObject))
+                    {
+                        _serializationContext.RegObjectPtr(enumerable, objectPtr);
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
 
 #if DEBUG
             _logger.Info($"enumerable = {JsonConvert.SerializeObject(enumerable, Formatting.Indented)}");
 #endif
 
-            WriteToFile(enumerable, instanceId);
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    WriteToFile(enumerable, instanceId);
+                    break;
 
-            return objectPtr;
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(enumerable, targetObject))
+                    {
+                        WriteToFile(enumerable, instanceId);
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    return objectPtr;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(enumerable, targetObject))
+                    {
+                        return objectPtr;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }            
         }
 
-        private object ConvertObjectCollectionValueToSerializableFormat(object value, object settingsParameter = null,
-#if SHOW_PARENT_OBJECT
-            string parentObjInfo = ""
-#endif
-            )
+        private (object ConvertedObject, ObjectPtr FoundObject) ConvertObjectCollectionValueToSerializableFormat(object value, object settingsParameter, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
             if(value == null)
             {
-                return null;
+                return (null, null);
             }
 
             if (SerializationHelper.IsPrimitiveType(value))
             {
-                return value;
+                return (value, null);
             }
 
-            return GetSerializedObjectPtr(value, settingsParameter,
-#if SHOW_PARENT_OBJECT
-                parentObjInfo
-#endif
-                );
+            var objPtr = GetSerializedObjectPtr(value, settingsParameter, parentObjInfo, kindOfSerialization, targetObject, rootObj);
+
+            return (objPtr, objPtr);
         }
 
         private void WriteToFile(object value, string instanceId)

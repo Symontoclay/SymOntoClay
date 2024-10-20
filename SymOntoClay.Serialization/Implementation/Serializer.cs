@@ -1104,11 +1104,23 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"plainKey = {plainKey}");
 #endif
 
+                switch (kindOfSerialization)
+                {
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+                }
+
                 var plainValue = GetSerializedObjectPtr(itemValue);
 
 #if DEBUG
                 _logger.Info($"plainValue = {plainValue}");
 #endif
+
+                switch (kindOfSerialization)
+                {
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+                }
 
                 var keyValuePair = Activator.CreateInstance(keyValuePairType, plainKey, plainValue);
 
@@ -1203,11 +1215,23 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"plainKey = {plainKey}");
 #endif
 
+                switch (kindOfSerialization)
+                {
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+                }
+
                 var plainValue = ConvertObjectCollectionValueToSerializableFormat(itemValue);
 
 #if DEBUG
                 _logger.Info($"plainValue = {plainValue}");
 #endif
+
+                switch (kindOfSerialization)
+                {
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+                }
 
                 var keyValuePair = Activator.CreateInstance(keyValuePairType, plainKey, itemValue);
 
@@ -1303,6 +1327,12 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"plainKey = {plainKey}");
 #endif
 
+                switch (kindOfSerialization)
+                {
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+                }
+
                 var keyValuePair = Activator.CreateInstance(keyValuePairType, plainKey, itemValue);
 
 #if DEBUG
@@ -1396,11 +1426,23 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"plainKey = {plainKey}");
 #endif
 
+                switch (kindOfSerialization)
+                {
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+                }
+
                 var plainValue = GetSerializedObjectPtr(itemValue);
 
 #if DEBUG
                 _logger.Info($"plainValue = {plainValue}");
 #endif
+
+                switch (kindOfSerialization)
+                {
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+                }
 
                 var keyValuePair = Activator.CreateInstance(keyValuePairType, plainKey, plainValue);
 
@@ -1495,11 +1537,23 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"plainKey = {plainKey}");
 #endif
 
+                switch (kindOfSerialization)
+                {
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+                }
+
                 var plainValue = ConvertObjectCollectionValueToSerializableFormat(itemValue);
 
 #if DEBUG
                 _logger.Info($"plainValue = {plainValue}");
 #endif
+
+                switch (kindOfSerialization)
+                {
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+                }
 
                 var keyValuePair = Activator.CreateInstance(keyValuePairType, plainKey, itemValue);
 
@@ -1595,6 +1649,12 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"plainKey = {plainKey}");
 #endif
 
+                switch (kindOfSerialization)
+                {
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+                }
+
                 var keyValuePair = Activator.CreateInstance(keyValuePairType, plainKey, itemValue);
 
 #if DEBUG
@@ -1687,6 +1747,12 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"plainValue = {plainValue}");
 #endif
 
+                switch (kindOfSerialization)
+                {
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+                }
+
                 dictWithPlainObjects[itemKey] = plainValue;
             }
 
@@ -1771,6 +1837,12 @@ namespace SymOntoClay.Serialization.Implementation
 #if DEBUG
                 _logger.Info($"plainValue = {plainValue}");
 #endif
+
+                switch (kindOfSerialization)
+                {
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+                }
 
                 dictWithPlainObjects[itemKey] = plainValue;
             }
@@ -1944,6 +2016,12 @@ namespace SymOntoClay.Serialization.Implementation
 
             foreach (var item in enumerable)
             {
+                switch (kindOfSerialization)
+                {
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+                }
+
                 listWithPlainObjects.Add(GetSerializedObjectPtr(item));
             }
 
@@ -2019,6 +2097,12 @@ namespace SymOntoClay.Serialization.Implementation
 
             foreach (var item in enumerable)
             {
+                switch (kindOfSerialization)
+                {
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+                }
+
                 listWithPlainObjects.Add(ConvertObjectCollectionValueToSerializableFormat(item));
             }
 

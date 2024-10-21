@@ -216,21 +216,19 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    f
+                    _serializationContext.RegObjectPtr(obj, objectPtr);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(obj, targetObject))
                     {
-                        f
+                        _serializationContext.RegObjectPtr(obj, objectPtr);
                     }
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            _serializationContext.RegObjectPtr(obj, objectPtr);
 
 #if DEBUG
             _logger.Info($"settingsParameter = {JsonConvert.SerializeObject(settingsParameter, Formatting.Indented)}");
@@ -239,23 +237,19 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    f
+                    WriteToFile(settingsParameter, instanceId);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(obj, targetObject))
                     {
-                        f
+                        WriteToFile(settingsParameter, instanceId);
                     }
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            WriteToFile(settingsParameter, instanceId);
-
-            f
 
             switch (kindOfSerialization)
             {
@@ -316,21 +310,19 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    f
+                    _serializationContext.RegObjectPtr(obj, objectPtr);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(obj, targetObject))
                     {
-                        f
+                        _serializationContext.RegObjectPtr(obj, objectPtr);
                     }
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            _serializationContext.RegObjectPtr(obj, objectPtr);
 
             var plainObjectsDict = new Dictionary<string, object>();
 
@@ -456,6 +448,12 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"plainValue = {plainValue}");
 #endif
 
+                switch (kindOfSerialization)
+                {
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+                }
+
                 plainObjectsDict[field.Name] = plainValue;
             }
 
@@ -467,23 +465,19 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    f
+                    WriteToFile(plainObjectsDict, instanceId);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(obj, targetObject))
                     {
-                        f
+                        WriteToFile(plainObjectsDict, instanceId);
                     }
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            WriteToFile(plainObjectsDict, instanceId);
-
-            f
 
             switch (kindOfSerialization)
             {
@@ -697,21 +691,20 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    f
+                    _serializationContext.RegObjectPtr(customThreadPool, objectPtr);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(customThreadPool, targetObject))
                     {
-                        f
+                        _serializationContext.RegObjectPtr(customThreadPool, objectPtr);
                     }
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-            _serializationContext.RegObjectPtr(customThreadPool, objectPtr);
-
+            
             var plainObject = new CustomThreadPoolPo();
             plainObject.Settings = GetSerializedObjectPtr(settingsParameter);
 
@@ -722,23 +715,19 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    f
+                    WriteToFile(plainObject, instanceId);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(customThreadPool, targetObject))
                     {
-                        f
+                        WriteToFile(plainObject, instanceId);
                     }
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            WriteToFile(plainObject, instanceId);
-
-            f
 
             switch (kindOfSerialization)
             {
@@ -796,21 +785,19 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    f
+                    _serializationContext.RegObjectPtr(cancellationTokenSource, objectPtr);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(cancellationTokenSource, targetObject))
                     {
-                        f
+                        _serializationContext.RegObjectPtr(cancellationTokenSource, objectPtr);
                     }
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            _serializationContext.RegObjectPtr(cancellationTokenSource, objectPtr);
 
             var plainObject = new CancellationTokenSourcePo();
             plainObject.IsCancelled = cancellationTokenSource.IsCancellationRequested;
@@ -822,23 +809,19 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    f
+                    WriteToFile(plainObject, instanceId);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(cancellationTokenSource, targetObject))
                     {
-                        f
+                        WriteToFile(plainObject, instanceId);
                     }
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            WriteToFile(plainObject, instanceId);
-
-            f
 
             switch (kindOfSerialization)
             {
@@ -923,21 +906,19 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    f
+                    _serializationContext.RegObjectPtr(cancellationTokenSource, objectPtr);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(cancellationTokenSource, targetObject))
                     {
-                        f
+                        _serializationContext.RegObjectPtr(cancellationTokenSource, objectPtr);
                     }
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            _serializationContext.RegObjectPtr(cancellationTokenSource, objectPtr);
 
             var plainObject = new LinkedCancellationTokenSourcePo();
             plainObject.IsCancelled = cancellationTokenSource.IsCancellationRequested;
@@ -950,23 +931,19 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    f
+                    WriteToFile(plainObject, instanceId);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(cancellationTokenSource, targetObject))
                     {
-                        f
+                        WriteToFile(plainObject, instanceId);
                     }
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            WriteToFile(plainObject, instanceId);
-
-            f
 
             switch (kindOfSerialization)
             {
@@ -1040,23 +1017,19 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    f
+                    WriteToFile(plainObject, instanceId);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(cancellationToken, targetObject))
                     {
-                        f
+                        WriteToFile(plainObject, instanceId);
                     }
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            WriteToFile(plainObject, instanceId);
-
-            f
 
             switch (kindOfSerialization)
             {
@@ -1111,21 +1084,19 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    f
+                    _serializationContext.RegObjectPtr(obj, objectPtr);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(obj, targetObject))
                     {
-                        f
+                        _serializationContext.RegObjectPtr(obj, objectPtr);
                     }
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            _serializationContext.RegObjectPtr(obj, objectPtr);
 
             var plainObject = new object();
 
@@ -1136,23 +1107,19 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    f
+                    WriteToFile(plainObject, instanceId);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(obj, targetObject))
                     {
-                        f
+                        WriteToFile(plainObject, instanceId);
                     }
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            WriteToFile(plainObject, instanceId);
-
-            f
 
             switch (kindOfSerialization)
             {
@@ -1299,21 +1266,19 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    f
+                    _serializationContext.RegObjectPtr(dictionary, objectPtr);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(dictionary, targetObject))
                     {
-                        f
+                        _serializationContext.RegObjectPtr(dictionary, objectPtr);
                     }
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            _serializationContext.RegObjectPtr(dictionary, objectPtr);
 
             var keyValuePairType = typeof(KeyValuePair<,>).MakeGenericType(typeof(ObjectPtr), typeof(ObjectPtr));
 
@@ -1372,23 +1337,19 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    f
+                    WriteToFile(listWithPlainObjects, instanceId);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(dictionary, targetObject))
                     {
-                        f
+                        WriteToFile(listWithPlainObjects, instanceId);
                     }
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            WriteToFile(listWithPlainObjects, instanceId);
-
-            f
 
             switch (kindOfSerialization)
             {
@@ -1443,21 +1404,19 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    f
+                    _serializationContext.RegObjectPtr(dictionary, objectPtr);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(dictionary, targetObject))
                     {
-                        f
+                        _serializationContext.RegObjectPtr(dictionary, objectPtr);
                     }
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            _serializationContext.RegObjectPtr(dictionary, objectPtr);
 
             var keyValuePairType = typeof(KeyValuePair<,>).MakeGenericType(typeof(ObjectPtr), typeof(object));
 
@@ -1516,23 +1475,19 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    f
+                    WriteToFile(listWithPlainObjects, instanceId);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(dictionary, targetObject))
                     {
-                        f
+                        WriteToFile(listWithPlainObjects, instanceId);
                     }
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            WriteToFile(listWithPlainObjects, instanceId);
-
-            f
 
             switch (kindOfSerialization)
             {
@@ -1588,21 +1543,19 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    f
+                    _serializationContext.RegObjectPtr(dictionary, objectPtr);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(dictionary, targetObject))
                     {
-                        f
+                        _serializationContext.RegObjectPtr(dictionary, objectPtr);
                     }
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            _serializationContext.RegObjectPtr(dictionary, objectPtr);
 
             var keyValuePairType = typeof(KeyValuePair<,>).MakeGenericType(typeof(ObjectPtr), valueGenericParameterType);
 
@@ -1649,23 +1602,19 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    f
+                    WriteToFile(listWithPlainObjects, instanceId);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(dictionary, targetObject))
                     {
-                        f
+                        WriteToFile(listWithPlainObjects, instanceId);
                     }
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            WriteToFile(listWithPlainObjects, instanceId);
-
-            f
 
             switch (kindOfSerialization)
             {
@@ -1720,21 +1669,19 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    f
+                    _serializationContext.RegObjectPtr(dictionary, objectPtr);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(dictionary, targetObject))
                     {
-                        f
+                        _serializationContext.RegObjectPtr(dictionary, objectPtr);
                     }
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            _serializationContext.RegObjectPtr(dictionary, objectPtr);
 
             var keyValuePairType = typeof(KeyValuePair<,>).MakeGenericType(typeof(object), typeof(ObjectPtr));
 
@@ -1793,23 +1740,19 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    f
+                    WriteToFile(listWithPlainObjects, instanceId);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(dictionary, targetObject))
                     {
-                        f
+                        WriteToFile(listWithPlainObjects, instanceId);
                     }
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            WriteToFile(listWithPlainObjects, instanceId);
-
-            f
 
             switch (kindOfSerialization)
             {
@@ -1864,21 +1807,19 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    f
+                    _serializationContext.RegObjectPtr(dictionary, objectPtr);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(dictionary, targetObject))
                     {
-                        f
+                        _serializationContext.RegObjectPtr(dictionary, objectPtr);
                     }
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            _serializationContext.RegObjectPtr(dictionary, objectPtr);
 
             var keyValuePairType = typeof(KeyValuePair<,>).MakeGenericType(typeof(object), typeof(object));
 
@@ -1937,23 +1878,19 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    f
+                    WriteToFile(listWithPlainObjects, instanceId);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(dictionary, targetObject))
                     {
-                        f
+                        WriteToFile(listWithPlainObjects, instanceId);
                     }
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            WriteToFile(listWithPlainObjects, instanceId);
-
-            d
 
             switch (kindOfSerialization)
             {
@@ -2009,21 +1946,19 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    f
+                    _serializationContext.RegObjectPtr(dictionary, objectPtr);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(dictionary, targetObject))
                     {
-                        f
+                        _serializationContext.RegObjectPtr(dictionary, objectPtr);
                     }
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            _serializationContext.RegObjectPtr(dictionary, objectPtr);
 
             var keyValuePairType = typeof(KeyValuePair<,>).MakeGenericType(typeof(object), valueGenericParameterType);
 
@@ -2070,23 +2005,19 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    f
+                    WriteToFile(listWithPlainObjects, instanceId);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(dictionary, targetObject))
                     {
-                        f
+                        WriteToFile(listWithPlainObjects, instanceId);
                     }
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-
-            WriteToFile(listWithPlainObjects, instanceId);
-
-            f
 
             switch (kindOfSerialization)
             {

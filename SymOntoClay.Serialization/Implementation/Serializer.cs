@@ -922,8 +922,24 @@ namespace SymOntoClay.Serialization.Implementation
 
             var plainObject = new LinkedCancellationTokenSourcePo();
             plainObject.IsCancelled = cancellationTokenSource.IsCancellationRequested;
-            plainObject.Settings = GetSerializedObjectPtr(settingsParameter);
 
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    plainObject.Settings = GetSerializedObjectPtr(settingsParameter, null, parentObjInfo, KindOfSerialization.General, null, rootObj);
+                    break;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(cancellationTokenSource, targetObject))
+                    {
+                        plainObject.Settings = GetSerializedObjectPtr(settingsParameter, null, parentObjInfo, KindOfSerialization.General, null, rootObj);
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+            
 #if DEBUG
             _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, Formatting.Indented)}");
 #endif
@@ -2457,13 +2473,31 @@ namespace SymOntoClay.Serialization.Implementation
 
             foreach (var item in enumerable)
             {
+                var itemObjectPtr = GetSerializedObjectPtr(item, null, parentObjInfo, kindOfSerialization, targetObject, rootObj);
+
                 switch (kindOfSerialization)
                 {
+                    case KindOfSerialization.General:
+                        listWithPlainObjects.Add(itemObjectPtr);
+                        break;
+
+                    case KindOfSerialization.Searching:
+                        if (ReferenceEquals(enumerable, targetObject))
+                        {
+                            if(itemObjectPtr == null)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                return itemObjectPtr;
+                            }
+                        }
+                        break;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
                 }
-
-                listWithPlainObjects.Add(GetSerializedObjectPtr(item));
             }
 
 #if DEBUG

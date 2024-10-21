@@ -1026,6 +1026,12 @@ namespace SymOntoClay.Serialization.Implementation
             var plainObject = new CancellationTokenPo();
             plainObject.Source = GetSerializedObjectPtr(fieldValue);
 
+            switch (kindOfSerialization)
+            {
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
 #if DEBUG
             _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, Formatting.Indented)}");
 #endif
@@ -1249,6 +1255,16 @@ namespace SymOntoClay.Serialization.Implementation
             throw new NotImplementedException("D55AE149-D344-4855-8EC0-2AD18C0F90D5");
         }
 
+        private string GetKeyParentObjInfo(string parentObjInfo)
+        {
+            return $"{parentObjInfo}.key:";
+        }
+
+        private string GetValueParentObjInfo(string parentObjInfo)
+        {
+            return $"{parentObjInfo}.value:";
+        }
+
         private ObjectPtr NSerializeGenericDictionaryWithCompositeKeyAndCompositeValue(IDictionary dictionary, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
             switch (kindOfSerialization)
@@ -1301,6 +1317,9 @@ namespace SymOntoClay.Serialization.Implementation
             var listWithPlainObjectsType = typeof(List<>).MakeGenericType(keyValuePairType);
 
             var listWithPlainObjects = (IList)Activator.CreateInstance(listWithPlainObjectsType);
+
+            var keyParentObjInfo = GetKeyParentObjInfo(parentObjInfo);
+            var valueParentObjInfo = GetValueParentObjInfo(parentObjInfo);
 
             foreach (DictionaryEntry item in dictionary)
             {
@@ -1440,6 +1459,9 @@ namespace SymOntoClay.Serialization.Implementation
 
             var listWithPlainObjects = (IList)Activator.CreateInstance(listWithPlainObjectsType);
 
+            var keyParentObjInfo = GetKeyParentObjInfo(parentObjInfo);
+            var valueParentObjInfo = GetValueParentObjInfo(parentObjInfo);
+
             foreach (DictionaryEntry item in dictionary)
             {
                 var itemKey = item.Key;
@@ -1462,7 +1484,7 @@ namespace SymOntoClay.Serialization.Implementation
                         throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
                 }
 
-                var plainValue = ConvertObjectCollectionValueToSerializableFormat(itemValue);
+                var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue);
 
 #if DEBUG
                 _logger.Info($"plainValue = {plainValue}");
@@ -1578,6 +1600,8 @@ namespace SymOntoClay.Serialization.Implementation
             var listWithPlainObjectsType = typeof(List<>).MakeGenericType(keyValuePairType);
 
             var listWithPlainObjects = (IList)Activator.CreateInstance(listWithPlainObjectsType);
+
+            var keyParentObjInfo = GetKeyParentObjInfo(parentObjInfo);
 
             foreach (DictionaryEntry item in dictionary)
             {
@@ -1705,6 +1729,9 @@ namespace SymOntoClay.Serialization.Implementation
 
             var listWithPlainObjects = (IList)Activator.CreateInstance(listWithPlainObjectsType);
 
+            var keyParentObjInfo = GetKeyParentObjInfo(parentObjInfo);
+            var valueParentObjInfo = GetValueParentObjInfo(parentObjInfo);
+
             foreach (DictionaryEntry item in dictionary)
             {
                 var itemKey = item.Key;
@@ -1715,7 +1742,7 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"itemValue = {itemValue}");
 #endif
 
-                var plainKey = ConvertObjectCollectionValueToSerializableFormat(itemKey);
+                var plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey);
 
 #if DEBUG
                 _logger.Info($"plainKey = {plainKey}");
@@ -1843,6 +1870,9 @@ namespace SymOntoClay.Serialization.Implementation
 
             var listWithPlainObjects = (IList)Activator.CreateInstance(listWithPlainObjectsType);
 
+            var keyParentObjInfo = GetKeyParentObjInfo(parentObjInfo);
+            var valueParentObjInfo = GetValueParentObjInfo(parentObjInfo);
+
             foreach (DictionaryEntry item in dictionary)
             {
                 var itemKey = item.Key;
@@ -1853,7 +1883,7 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"itemValue = {itemValue}");
 #endif
 
-                var plainKey = ConvertObjectCollectionValueToSerializableFormat(itemKey);
+                var plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey);
 
 #if DEBUG
                 _logger.Info($"plainKey = {plainKey}");
@@ -1865,7 +1895,7 @@ namespace SymOntoClay.Serialization.Implementation
                         throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
                 }
 
-                var plainValue = ConvertObjectCollectionValueToSerializableFormat(itemValue);
+                var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue);
 
 #if DEBUG
                 _logger.Info($"plainValue = {plainValue}");
@@ -1982,6 +2012,8 @@ namespace SymOntoClay.Serialization.Implementation
 
             var listWithPlainObjects = (IList)Activator.CreateInstance(listWithPlainObjectsType);
 
+            var keyParentObjInfo = GetKeyParentObjInfo(parentObjInfo);
+
             foreach (DictionaryEntry item in dictionary)
             {
                 var itemKey = item.Key;
@@ -1992,7 +2024,7 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"itemValue = {itemValue}");
 #endif
 
-                var plainKey = ConvertObjectCollectionValueToSerializableFormat(itemKey);
+                var plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey);
 
 #if DEBUG
                 _logger.Info($"plainKey = {plainKey}");
@@ -2107,6 +2139,8 @@ namespace SymOntoClay.Serialization.Implementation
 
             var dictWithPlainObjects = (IDictionary)Activator.CreateInstance(dictWithPlainObjectsType);
 
+            var valueParentObjInfo = GetValueParentObjInfo(parentObjInfo);
+
             foreach (DictionaryEntry item in dictionary)
             {
                 var itemKey = item.Key;
@@ -2117,7 +2151,7 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"itemValue = {itemValue}");
 #endif
 
-                var plainValue = GetSerializedObjectPtr(itemValue);
+                var plainValue = GetSerializedObjectPtr(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj);
 
 #if DEBUG
                 _logger.Info($"plainValue = {plainValue}");
@@ -2125,11 +2159,27 @@ namespace SymOntoClay.Serialization.Implementation
 
                 switch (kindOfSerialization)
                 {
+                    case KindOfSerialization.General:
+                        dictWithPlainObjects[itemKey] = plainValue;
+                        break;
+
+                    case KindOfSerialization.Searching:
+                        if (ReferenceEquals(dictionary, targetObject))
+                        {
+                            if(plainValue == null)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                return plainValue;
+                            }
+                        }
+                        break;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
                 }
-
-                dictWithPlainObjects[itemKey] = plainValue;
             }
 
 #if DEBUG
@@ -2225,6 +2275,8 @@ namespace SymOntoClay.Serialization.Implementation
 
             var dictWithPlainObjects = (IDictionary)Activator.CreateInstance(dictWithPlainObjectsType);
 
+            var valueParentObjInfo = GetValueParentObjInfo(parentObjInfo);
+
             foreach (DictionaryEntry item in dictionary)
             {
                 var itemKey = item.Key;
@@ -2235,19 +2287,37 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"itemValue = {itemValue}");
 #endif
 
-                var plainValue = ConvertObjectCollectionValueToSerializableFormat(itemValue);
+                var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj);
 
 #if DEBUG
-                _logger.Info($"plainValue = {plainValue}");
+                _logger.Info($"plainValueResult = {plainValueResult}");
 #endif
 
                 switch (kindOfSerialization)
                 {
+                    case KindOfSerialization.General:
+                        dictWithPlainObjects[itemKey] = plainValueResult.ConvertedObject;
+                        break;
+
+                    case KindOfSerialization.Searching:
+                        if (ReferenceEquals(dictionary, targetObject))
+                        {
+                            var foundObject = plainValueResult.FoundObject;
+
+                            if(foundObject == null)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                return foundObject;
+                            }
+                        }
+                        break;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
                 }
-
-                dictWithPlainObjects[itemKey] = plainValue;
             }
 
 #if DEBUG

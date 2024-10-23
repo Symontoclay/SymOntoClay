@@ -1729,16 +1729,16 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"itemValue = {itemValue}");
 #endif
 
-                var plainKey = GetSerializedObjectPtr(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj);
-
-#if DEBUG
-                _logger.Info($"plainKey = {plainKey}");
-#endif
-
                 switch (kindOfSerialization)
                 {
                     case KindOfSerialization.General:
                         {
+                            var plainKey = GetSerializedObjectPtr(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj);
+
+#if DEBUG
+                            _logger.Info($"plainKey = {plainKey}");
+#endif
+
                             var keyValuePair = Activator.CreateInstance(keyValuePairType, plainKey, itemValue);
 
 #if DEBUG
@@ -1751,7 +1751,29 @@ namespace SymOntoClay.Serialization.Implementation
 
                     case KindOfSerialization.Searching:
                         if (ReferenceEquals(dictionary, targetObject))
-                        {f
+                        {
+                            var plainKey = GetSerializedObjectPtr(itemKey, null, keyParentObjInfo, KindOfSerialization.General, targetObject, rootObj);
+
+#if DEBUG
+                            _logger.Info($"plainKey = {plainKey}");
+#endif
+
+                            var keyValuePair = Activator.CreateInstance(keyValuePairType, plainKey, itemValue);
+
+#if DEBUG
+                            _logger.Info($"keyValuePair = {keyValuePair}");
+#endif
+
+                            listWithPlainObjects.Add(keyValuePair);
+                        }
+                        else
+                        {
+                            var plainKey = GetSerializedObjectPtr(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj);
+
+#if DEBUG
+                            _logger.Info($"plainKey = {plainKey}");
+#endif
+
                             if (plainKey == null)
                             {
                                 continue;
@@ -1876,20 +1898,35 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"itemValue = {itemValue}");
 #endif
 
-                var plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj);
-
-#if DEBUG
-                _logger.Info($"plainKeyResult = {plainKeyResult}");
-#endif
+                (object ConvertedObject, ObjectPtr FoundObject) plainKeyResult;
 
                 switch (kindOfSerialization)
                 {
                     case KindOfSerialization.General:
+                        plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj);
+
+#if DEBUG
+                        _logger.Info($"plainKeyResult = {plainKeyResult}");
+#endif
                         break;
 
                     case KindOfSerialization.Searching:
                         if (ReferenceEquals(dictionary, targetObject))
-                        {f
+                        {
+                            plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey, null, keyParentObjInfo, KindOfSerialization.General, targetObject, rootObj);
+
+#if DEBUG
+                            _logger.Info($"plainKeyResult = {plainKeyResult}");
+#endif
+                        }
+                        else
+                        {
+                            plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj);
+
+#if DEBUG
+                            _logger.Info($"plainKeyResult = {plainKeyResult}");
+#endif
+
                             var foundObject = plainKeyResult.FoundObject;
 
                             if (foundObject == null)
@@ -1907,16 +1944,16 @@ namespace SymOntoClay.Serialization.Implementation
                         throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
                 }
 
-                var plainValue = GetSerializedObjectPtr(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj);
-
-#if DEBUG
-                _logger.Info($"plainValue = {plainValue}");
-#endif
-
                 switch (kindOfSerialization)
                 {
                     case KindOfSerialization.General:
                         {
+                            var plainValue = GetSerializedObjectPtr(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj);
+
+#if DEBUG
+                            _logger.Info($"plainValue = {plainValue}");
+#endif
+
                             var keyValuePair = Activator.CreateInstance(keyValuePairType, plainKeyResult.ConvertedObject, plainValue);
 
 #if DEBUG
@@ -1929,7 +1966,29 @@ namespace SymOntoClay.Serialization.Implementation
 
                     case KindOfSerialization.Searching:
                         if (ReferenceEquals(dictionary, targetObject))
-                        {f
+                        {
+                            var plainValue = GetSerializedObjectPtr(itemValue, null, valueParentObjInfo, KindOfSerialization.General, targetObject, rootObj);
+
+#if DEBUG
+                            _logger.Info($"plainValue = {plainValue}");
+#endif
+
+                            var keyValuePair = Activator.CreateInstance(keyValuePairType, plainKeyResult.ConvertedObject, plainValue);
+
+#if DEBUG
+                            _logger.Info($"keyValuePair = {keyValuePair}");
+#endif
+
+                            listWithPlainObjects.Add(keyValuePair);
+                        }
+                        else
+                        {
+                            var plainValue = GetSerializedObjectPtr(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj);
+
+#if DEBUG
+                            _logger.Info($"plainValue = {plainValue}");
+#endif
+
                             if (plainValue == null)
                             {
                                 continue;
@@ -2054,20 +2113,35 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"itemValue = {itemValue}");
 #endif
 
-                var plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj);
-
-#if DEBUG
-                _logger.Info($"plainKeyResult = {plainKeyResult}");
-#endif
+                (object ConvertedObject, ObjectPtr FoundObject) plainKeyResult;
 
                 switch (kindOfSerialization)
                 {
                     case KindOfSerialization.General:
+                        plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj);
+
+#if DEBUG
+                        _logger.Info($"plainKeyResult = {plainKeyResult}");
+#endif
                         break;
 
                     case KindOfSerialization.Searching:
                         if (ReferenceEquals(dictionary, targetObject))
-                        {d
+                        {
+                            plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey, null, keyParentObjInfo, KindOfSerialization.General, targetObject, rootObj);
+
+#if DEBUG
+                            _logger.Info($"plainKeyResult = {plainKeyResult}");
+#endif
+                        }
+                        else
+                        {
+                            plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj);
+
+#if DEBUG
+                            _logger.Info($"plainKeyResult = {plainKeyResult}");
+#endif
+
                             var foundObject = plainKeyResult.FoundObject;
 
                             if (foundObject == null)
@@ -2085,16 +2159,16 @@ namespace SymOntoClay.Serialization.Implementation
                         throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
                 }
 
-                var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj);
-
-#if DEBUG
-                _logger.Info($"plainValueResult = {plainValueResult}");
-#endif
-
                 switch (kindOfSerialization)
                 {
                     case KindOfSerialization.General:
                         {
+                            var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj);
+
+#if DEBUG
+                            _logger.Info($"plainValueResult = {plainValueResult}");
+#endif
+
                             var keyValuePair = Activator.CreateInstance(keyValuePairType, plainKeyResult.ConvertedObject, plainValueResult.ConvertedObject);
 
 #if DEBUG
@@ -2107,7 +2181,29 @@ namespace SymOntoClay.Serialization.Implementation
 
                     case KindOfSerialization.Searching:
                         if (ReferenceEquals(dictionary, targetObject))
-                        {d
+                        {
+                            var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, null, valueParentObjInfo, KindOfSerialization.General, targetObject, rootObj);
+
+#if DEBUG
+                            _logger.Info($"plainValueResult = {plainValueResult}");
+#endif
+
+                            var keyValuePair = Activator.CreateInstance(keyValuePairType, plainKeyResult.ConvertedObject, plainValueResult.ConvertedObject);
+
+#if DEBUG
+                            _logger.Info($"keyValuePair = {keyValuePair}");
+#endif
+
+                            listWithPlainObjects.Add(keyValuePair);
+                        }
+                        else
+                        {
+                            var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj);
+
+#if DEBUG
+                            _logger.Info($"plainValueResult = {plainValueResult}");
+#endif
+
                             var foundObject = plainValueResult.FoundObject;
 
                             if (foundObject == null)

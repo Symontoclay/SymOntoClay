@@ -442,21 +442,39 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"fieldParentObjInfo = {fieldParentObjInfo}");
 #endif
 
-                var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, settingsParameter ?? actionPlainObject, fieldParentObjInfo, kindOfSerialization, targetObject, rootObj);
-
-#if DEBUG
-                _logger.Info($"plainValueResult = {plainValueResult}");
-#endif
-
                 switch (kindOfSerialization)
                 {
                     case KindOfSerialization.General:
-                        plainObjectsDict[field.Name] = plainValueResult.ConvertedObject;
+                        {
+                            var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, settingsParameter ?? actionPlainObject, fieldParentObjInfo, kindOfSerialization, targetObject, rootObj);
+
+#if DEBUG
+                            _logger.Info($"plainValueResult = {plainValueResult}");
+#endif
+
+                            plainObjectsDict[field.Name] = plainValueResult.ConvertedObject;
+                        }
                         break;
 
                     case KindOfSerialization.Searching:
                         if (ReferenceEquals(obj, targetObject))
-                        {f
+                        {
+                            var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, settingsParameter ?? actionPlainObject, fieldParentObjInfo, KindOfSerialization.General, targetObject, rootObj);
+
+#if DEBUG
+                            _logger.Info($"plainValueResult = {plainValueResult}");
+#endif
+
+                            plainObjectsDict[field.Name] = plainValueResult.ConvertedObject;
+                        }
+                        else
+                        {
+                            var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, settingsParameter ?? actionPlainObject, fieldParentObjInfo, kindOfSerialization, targetObject, rootObj);
+
+#if DEBUG
+                            _logger.Info($"plainValueResult = {plainValueResult}");
+#endif
+
                             var foundObject = plainValueResult.FoundObject;
 
                             if (foundObject == null)

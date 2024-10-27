@@ -3141,6 +3141,7 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
+                    WriteToFile(listWithPlainObjects, instanceId);
                     break;
 
                 case KindOfSerialization.Searching:

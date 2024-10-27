@@ -13,6 +13,10 @@ namespace TestSandbox.Serialization
 {
     public class SerializedObject : IObjectToString, IObjectToBriefString
     {
+        public SerializedObject()
+        {
+        }
+
         public SerializedObject(bool value) 
         {
             _cancellationTokenSource = new CancellationTokenSource();

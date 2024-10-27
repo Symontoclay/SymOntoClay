@@ -128,6 +128,9 @@ namespace SymOntoClay.Serialization.Implementation
                 case "System.Threading.CancellationToken":
                     return NDeserializeCancellationToken(objectPtr, fullFileName);
 
+                case "System.Threading.ManualResetEvent":
+                    return NDeserializeManualResetEvent(objectPtr, fullFileName);
+
                 case "SymOntoClay.Threading.CustomThreadPool":
                     return NDeserializeCustomThreadPool(objectPtr, fullFileName);
             }
@@ -292,6 +295,10 @@ namespace SymOntoClay.Serialization.Implementation
 
         private object NDeserializeComposite(Type type, ObjectPtr objectPtr, string fullFileName)
         {
+#if DEBUG
+            _logger.Info($"type.FullName = {type.FullName}");
+#endif
+
             var instance = Activator.CreateInstance(type);
 
 #if DEBUG
@@ -344,7 +351,16 @@ namespace SymOntoClay.Serialization.Implementation
 
         private object ChangeType(object value, Type conversionType)
         {
-            if(conversionType.Name == "Nullable`1" && value.GetType().Name != "Nullable`1")
+#if DEBUG
+            _logger.Info($"value = {value}");
+#endif
+
+            if(value == null)
+            {
+                return null;
+            }
+
+            if (conversionType.Name == "Nullable`1" && value.GetType().Name != "Nullable`1")
             {
                 var realFieldType = conversionType.GenericTypeArguments[0];
 
@@ -401,6 +417,21 @@ namespace SymOntoClay.Serialization.Implementation
             }
 
             return cancelationTokenSource.Token;
+        }
+
+        private object NDeserializeManualResetEvent(ObjectPtr objectPtr, string fullFileName)
+        {
+            var plainObject = JsonConvert.DeserializeObject<ManualResetEventPo>(File.ReadAllText(fullFileName), SerializationHelper.JsonSerializerSettings);
+
+#if DEBUG
+            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, Formatting.Indented)}");
+#endif
+
+            var instance = new ManualResetEvent(plainObject.State);
+
+            _deserializationContext.RegDeserializedObject(objectPtr.Id, instance);
+
+            return instance;
         }
 
         private object NDeserializeLinkedCancellationTokenSource(ObjectPtr objectPtr, string fullFileName)
@@ -1110,6 +1141,10 @@ namespace SymOntoClay.Serialization.Implementation
 
         private object NDeserializeListWithCompositeParameter(Type type, ObjectPtr objectPtr, string fullFileName)
         {
+#if DEBUG
+            _logger.Info($"fullFileName = {fullFileName}");
+#endif
+
             var instance = Activator.CreateInstance(type);
 
 #if DEBUG

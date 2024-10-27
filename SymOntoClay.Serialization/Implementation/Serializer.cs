@@ -70,6 +70,11 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"foundObject = {foundObject}");
 #endif
 
+            if(foundObject == null)
+            {
+                throw new NotImplementedException("DEFEDB94-1670-425E-A7C6-AC36F9497B7A");
+            }
+
             return foundObject;
         }
 

@@ -64,7 +64,13 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"rootObj = {rootObj}");
 #endif
 
-            throw new NotImplementedException("1142100F-33D7-4595-BA02-1D59FD3B7A65");
+            var foundObject = GetSerializedObjectPtr(rootObj, null, string.Empty, KindOfSerialization.Searching, targetObject, rootObj);
+
+#if DEBUG
+            _logger.Info($"foundObject = {foundObject}");
+#endif
+
+            return foundObject;
         }
 
         private ObjectPtr GetSerializedObjectPtr(object obj, object settingsParameter, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
@@ -83,9 +89,20 @@ namespace SymOntoClay.Serialization.Implementation
                 return new ObjectPtr(isNull: true);
             }
 
-            if (_serializationContext.TryGetObjectPtr(obj, out var objectPtr))
+            switch (kindOfSerialization)
             {
-                return objectPtr;
+                case KindOfSerialization.General:
+                    if (_serializationContext.TryGetObjectPtr(obj, out var objectPtr))
+                    {
+                        return objectPtr;
+                    }
+                    break;
+
+                case KindOfSerialization.Searching:
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
 
             var type = obj.GetType();
@@ -276,22 +293,6 @@ namespace SymOntoClay.Serialization.Implementation
 #if DEBUG
             _logger.Info($"obj = {obj}");
 #endif
-
-            switch (kindOfSerialization)
-            {
-                case KindOfSerialization.General:
-                    break;
-
-                case KindOfSerialization.Searching:
-                    if (!ReferenceEquals(obj, targetObject))
-                    {
-                        return null;
-                    }
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
-            }
 
             var instanceId = CreateInstanceId();
 
@@ -1343,22 +1344,6 @@ namespace SymOntoClay.Serialization.Implementation
 
         private ObjectPtr NSerializeGenericDictionaryWithCompositeKeyAndCompositeValue(IDictionary dictionary, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
-            switch (kindOfSerialization)
-            {
-                case KindOfSerialization.General:
-                    break;
-
-                case KindOfSerialization.Searching:
-                    if (!ReferenceEquals(dictionary, targetObject))
-                    {
-                        return null;
-                    }
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
-            }
-
             var instanceId = CreateInstanceId();
             
 #if DEBUG
@@ -1556,22 +1541,6 @@ namespace SymOntoClay.Serialization.Implementation
 
         private ObjectPtr NSerializeGenericDictionaryWithCompositeKeyAndObjectValue(IDictionary dictionary, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
-            switch (kindOfSerialization)
-            {
-                case KindOfSerialization.General:
-                    break;
-
-                case KindOfSerialization.Searching:
-                    if (!ReferenceEquals(dictionary, targetObject))
-                    {
-                        return null;
-                    }
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
-            }
-
             var instanceId = CreateInstanceId();
             
 #if DEBUG
@@ -1774,22 +1743,6 @@ namespace SymOntoClay.Serialization.Implementation
         private ObjectPtr NSerializeGenericDictionaryWithCompositeKeyAndPrimitiveValue(IDictionary dictionary, Type valueGenericParameterType,
             string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
-            switch (kindOfSerialization)
-            {
-                case KindOfSerialization.General:
-                    break;
-
-                case KindOfSerialization.Searching:
-                    if (!ReferenceEquals(dictionary, targetObject))
-                    {
-                        return null;
-                    }
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
-            }
-
             var instanceId = CreateInstanceId();
             
 #if DEBUG
@@ -1942,22 +1895,6 @@ namespace SymOntoClay.Serialization.Implementation
 
         private ObjectPtr NSerializeGenericDictionaryWithObjectKeyAndCompositeValue(IDictionary dictionary, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
-            switch (kindOfSerialization)
-            {
-                case KindOfSerialization.General:
-                    break;
-
-                case KindOfSerialization.Searching:
-                    if (!ReferenceEquals(dictionary, targetObject))
-                    {
-                        return null;
-                    }
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
-            }
-
             var instanceId = CreateInstanceId();
             
 #if DEBUG
@@ -2157,22 +2094,6 @@ namespace SymOntoClay.Serialization.Implementation
 
         private ObjectPtr NSerializeGenericDictionaryWithObjectKeyAndObjectValue(IDictionary dictionary, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
-            switch (kindOfSerialization)
-            {
-                case KindOfSerialization.General:
-                    break;
-
-                case KindOfSerialization.Searching:
-                    if (!ReferenceEquals(dictionary, targetObject))
-                    {
-                        return null;
-                    }
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
-            }
-
             var instanceId = CreateInstanceId();
             
 #if DEBUG
@@ -2375,22 +2296,6 @@ namespace SymOntoClay.Serialization.Implementation
         private ObjectPtr NSerializeGenericDictionaryWithObjectKeyAndPrimitiveValue(IDictionary dictionary, Type valueGenericParameterType,
             string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
-            switch (kindOfSerialization)
-            {
-                case KindOfSerialization.General:
-                    break;
-
-                case KindOfSerialization.Searching:
-                    if (!ReferenceEquals(dictionary, targetObject))
-                    {
-                        return null;
-                    }
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
-            }
-
             var instanceId = CreateInstanceId();
             
 #if DEBUG
@@ -2546,22 +2451,6 @@ namespace SymOntoClay.Serialization.Implementation
         private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndCompositeValue(IDictionary dictionary, Type keyGenericParameterType,
             string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
-            switch (kindOfSerialization)
-            {
-                case KindOfSerialization.General:
-                    break;
-
-                case KindOfSerialization.Searching:
-                    if (!ReferenceEquals(dictionary, targetObject))
-                    {
-                        return null;
-                    }
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
-            }
-
             var instanceId = CreateInstanceId();
             
 #if DEBUG
@@ -2700,22 +2589,6 @@ namespace SymOntoClay.Serialization.Implementation
         private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndObjectValue(IDictionary dictionary, Type keyGenericParameterType,
             string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
-            switch (kindOfSerialization)
-            {
-                case KindOfSerialization.General:
-                    break;
-
-                case KindOfSerialization.Searching:
-                    if (!ReferenceEquals(dictionary, targetObject))
-                    {
-                        return null;
-                    }
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
-            }
-
             var instanceId = CreateInstanceId();
             
 #if DEBUG
@@ -2980,22 +2853,6 @@ namespace SymOntoClay.Serialization.Implementation
 
         private ObjectPtr NSerializeListWithCompositeParameter(IEnumerable enumerable, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
-            switch (kindOfSerialization)
-            {
-                case KindOfSerialization.General:
-                    break;
-
-                case KindOfSerialization.Searching:
-                    if (!ReferenceEquals(enumerable, targetObject))
-                    {
-                        return null;
-                    }
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
-            }
-
 #if DEBUG
             var type = enumerable.GetType();
             _logger.Info($"type.FullName = {type.FullName}");
@@ -3115,22 +2972,6 @@ namespace SymOntoClay.Serialization.Implementation
 
         private ObjectPtr NSerializeListWithObjectParameter(IEnumerable enumerable, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
-            switch (kindOfSerialization)
-            {
-                case KindOfSerialization.General:
-                    break;
-
-                case KindOfSerialization.Searching:
-                    if (!ReferenceEquals(enumerable, targetObject))
-                    {
-                        return null;
-                    }
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
-            }
-
 #if DEBUG
             var type = enumerable.GetType();
             _logger.Info($"type.FullName = {type.FullName}");

@@ -1,6 +1,6 @@
 ﻿namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public abstract partial class BaseCodeChunk
+    public abstract class BaseCodeChunk
     {
         public void Finish()
         {

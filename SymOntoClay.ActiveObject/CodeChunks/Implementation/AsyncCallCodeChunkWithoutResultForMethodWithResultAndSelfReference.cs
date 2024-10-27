@@ -4,7 +4,7 @@ using System;
 
 namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public partial class AsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<MethodResult> :
+    public class AsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<MethodResult> :
         BaseAsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<MethodResult>,
         IAsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<MethodResult>
     {
@@ -16,10 +16,12 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _postHandler = postHandler;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Func<IAsyncMethodResponse<MethodResult>> _preHandler;
+
+        [SocSerializableActionMember(nameof(_id), 1)]
         private Action<IAsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<MethodResult>, MethodResult> _postHandler;
 
         protected override IAsyncMethodResponse<MethodResult> OnRunPreHandler()
@@ -33,7 +35,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class AsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T, MethodResult> :
+    public class AsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T, MethodResult> :
         BaseAsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<MethodResult>,
         IAsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T, MethodResult>
     {
@@ -46,12 +48,14 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _postHandler = postHandler;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
         private T _arg1;
 
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Func<T, IAsyncMethodResponse<MethodResult>> _preHandler;
+
+        [SocSerializableActionMember(nameof(_id), 1)]
         private Action<IAsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T, MethodResult>, T, MethodResult> _postHandler;
 
         protected override IAsyncMethodResponse<MethodResult> OnRunPreHandler()
@@ -65,7 +69,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class AsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T1, T2, MethodResult> :
+    public class AsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T1, T2, MethodResult> :
         BaseAsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<MethodResult>,
         IAsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T1, T2, MethodResult>
     {
@@ -79,13 +83,15 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _postHandler = postHandler;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
         private T1 _arg1;
         private T2 _arg2;
 
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Func<T1, T2, IAsyncMethodResponse<MethodResult>> _preHandler;
+
+        [SocSerializableActionMember(nameof(_id), 1)]
         private Action<IAsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T1, T2, MethodResult>, T1, T2, MethodResult> _postHandler;
 
         protected override IAsyncMethodResponse<MethodResult> OnRunPreHandler()
@@ -99,7 +105,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class AsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T1, T2, T3, MethodResult> :
+    public class AsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T1, T2, T3, MethodResult> :
         BaseAsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<MethodResult>,
         IAsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T1, T2, T3, MethodResult>
     {
@@ -114,14 +120,16 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _postHandler = postHandler;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
         private T1 _arg1;
         private T2 _arg2;
         private T3 _arg3;
 
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Func<T1, T2, T3, IAsyncMethodResponse<MethodResult>> _preHandler;
+
+        [SocSerializableActionMember(nameof(_id), 1)]
         private Action<IAsyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<T1, T2, T3, MethodResult>, T1, T2, T3, MethodResult> _postHandler;
 
         protected override IAsyncMethodResponse<MethodResult> OnRunPreHandler()

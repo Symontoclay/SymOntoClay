@@ -2,7 +2,7 @@
 
 namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public abstract partial class BaseSyncCallCodeChunkWithoutResultForMethodWithoutResult
+    public abstract class BaseSyncCallCodeChunkWithoutResultForMethodWithoutResult
     {
         protected abstract IDrivenSyncMethodResponse OnRunHandler();
 

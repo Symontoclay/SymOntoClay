@@ -4,7 +4,7 @@ using System;
 
 namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public partial class SyncCallCodeChunkWithoutResultForMethodWithResult<MethodResult>
+    public class SyncCallCodeChunkWithoutResultForMethodWithResult<MethodResult>
         : BaseSyncCallCodeChunkWithoutResultForMethodWithResult<MethodResult>,
         ISyncCallCodeChunkWithoutResultForMethodWithResult
     {
@@ -15,10 +15,12 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _postHandler = postHandler;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Func<IDrivenSyncMethodResponse<MethodResult>> _preHandler;
+
+        [SocSerializableActionMember(nameof(_id), 1)]
         private Action<MethodResult> _postHandler;
 
         protected override IDrivenSyncMethodResponse<MethodResult> OnRunPreHandler()
@@ -32,7 +34,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class SyncCallCodeChunkWithoutResultForMethodWithResult<T, MethodResult>
+    public class SyncCallCodeChunkWithoutResultForMethodWithResult<T, MethodResult>
         : BaseSyncCallCodeChunkWithoutResultForMethodWithResult<MethodResult>,
         ISyncCallCodeChunkWithoutResultForMethodWithResult<T>
     {
@@ -44,12 +46,14 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _postHandler = postHandler;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
         private T _arg1;
 
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Func<T, IDrivenSyncMethodResponse<MethodResult>> _preHandler;
+
+        [SocSerializableActionMember(nameof(_id), 1)]
         private Action<T, MethodResult> _postHandler;
 
         protected override IDrivenSyncMethodResponse<MethodResult> OnRunPreHandler()
@@ -63,7 +67,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class SyncCallCodeChunkWithoutResultForMethodWithResult<T1, T2, MethodResult>
+    public class SyncCallCodeChunkWithoutResultForMethodWithResult<T1, T2, MethodResult>
         : BaseSyncCallCodeChunkWithoutResultForMethodWithResult<MethodResult>,
         ISyncCallCodeChunkWithoutResultForMethodWithResult<T1, T2>
     {
@@ -76,13 +80,15 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _postHandler = postHandler;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
         private T1 _arg1;
         private T2 _arg2;
 
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Func<T1, T2, IDrivenSyncMethodResponse<MethodResult>> _preHandler;
+
+        [SocSerializableActionMember(nameof(_id), 1)]
         private Action<T1, T2, MethodResult> _postHandler;
 
         protected override IDrivenSyncMethodResponse<MethodResult> OnRunPreHandler()
@@ -96,7 +102,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class SyncCallCodeChunkWithoutResultForMethodWithResult<T1, T2, T3, MethodResult>
+    public class SyncCallCodeChunkWithoutResultForMethodWithResult<T1, T2, T3, MethodResult>
         : BaseSyncCallCodeChunkWithoutResultForMethodWithResult<MethodResult>,
         ISyncCallCodeChunkWithoutResultForMethodWithResult<T1, T2, T3>
     {
@@ -110,14 +116,16 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _postHandler = postHandler;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
         private T1 _arg1;
         private T2 _arg2;
         private T3 _arg3;
 
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Func<T1, T2, T3, IDrivenSyncMethodResponse<MethodResult>> _preHandler;
+
+        [SocSerializableActionMember(nameof(_id), 1)]
         private Action<T1, T2, T3, MethodResult> _postHandler;
 
         protected override IDrivenSyncMethodResponse<MethodResult> OnRunPreHandler()

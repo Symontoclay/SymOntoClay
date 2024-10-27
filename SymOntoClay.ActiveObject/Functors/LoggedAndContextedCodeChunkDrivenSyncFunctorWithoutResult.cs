@@ -30,9 +30,9 @@ namespace SymOntoClay.ActiveObject.Functors
             _globalContext = globalContext;
         }
 
-        [SocSerializableActionKey]
         private string _functorId;
 
+        [SocSerializableActionMember(nameof(_functorId), 0)]
         private Action<ICodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext>> _action;
         private CodeChunksContext<IMonitorLogger, TGlobalContext, TLocalContext> _codeChunksContext;
         private IMonitorLogger _logger;

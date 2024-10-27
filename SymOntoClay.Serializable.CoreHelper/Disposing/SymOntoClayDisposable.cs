@@ -2,7 +2,7 @@
 
 namespace SymOntoClay.Serializable.CoreHelper.Disposing
 {
-    public abstract partial class SymOntoClayDisposable : ISymOntoClayDisposable
+    public abstract class SymOntoClayDisposable : ISymOntoClayDisposable
     {
         /// <inheritdoc/>
         public void Dispose()

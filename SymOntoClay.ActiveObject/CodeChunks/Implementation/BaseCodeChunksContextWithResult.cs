@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public abstract partial class BaseCodeChunksContextWithResult<TResult>
+    public abstract class BaseCodeChunksContextWithResult<TResult>
     {
         private readonly List<IBaseCodeChunk> _chunks = new List<IBaseCodeChunk>();
 

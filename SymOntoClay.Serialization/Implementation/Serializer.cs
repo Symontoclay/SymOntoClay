@@ -441,7 +441,7 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"actionPlainObject = {actionPlainObject}");
 #endif
 
-                var fieldParentObjInfo = $"{parentObjInfo}.{type.FullName}.{field.Name}";
+                var fieldParentObjInfo = GetFieldParentObjInfo(parentObjInfo, type, field);
 
 #if DEBUG
                 _logger.Info($"fieldParentObjInfo = {fieldParentObjInfo}");
@@ -1336,14 +1336,19 @@ namespace SymOntoClay.Serialization.Implementation
             throw new NotImplementedException("D55AE149-D344-4855-8EC0-2AD18C0F90D5");
         }
 
+        private string GetFieldParentObjInfo(string parentObjInfo, Type type, FieldInfo field)
+        {
+            return $"{parentObjInfo}::{type.FullName}::{field.Name}";
+        }
+
         private string GetKeyParentObjInfo(string parentObjInfo)
         {
-            return $"{parentObjInfo}.key:";
+            return $"{parentObjInfo}::key:";
         }
 
         private string GetValueParentObjInfo(string parentObjInfo)
         {
-            return $"{parentObjInfo}.value:";
+            return $"{parentObjInfo}::value:";
         }
 
         private ObjectPtr NSerializeGenericDictionaryWithCompositeKeyAndCompositeValue(IDictionary dictionary, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)

@@ -39,7 +39,7 @@ namespace SymOntoClay.Serialization.Implementation
             }
 
             var rootObject = new RootObject();
-            rootObject.Data = GetSerializedObjectPtr(obj, null, string.Empty, KindOfSerialization.General, null, obj);
+            rootObject.Data = GetSerializedObjectPtr(obj, null, string.Empty, KindOfSerialization.General, null, obj, null);
 
 #if DEBUG
             _logger.Info($"rootObject = {rootObject}");
@@ -63,7 +63,7 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"rootObj = {rootObj}");
 #endif
 
-            var foundObject = GetSerializedObjectPtr(rootObj, null, string.Empty, KindOfSerialization.Searching, targetObject, rootObj);
+            var foundObject = GetSerializedObjectPtr(rootObj, null, string.Empty, KindOfSerialization.Searching, targetObject, rootObj, new List<object>());
 
 #if DEBUG
             _logger.Info($"foundObject = {foundObject}");
@@ -77,7 +77,7 @@ namespace SymOntoClay.Serialization.Implementation
             return foundObject;
         }
 
-        private ObjectPtr GetSerializedObjectPtr(object obj, object settingsParameter, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
+        private ObjectPtr GetSerializedObjectPtr(object obj, object settingsParameter, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj, List<object> visitedObjects)
         {
 #if DEBUG
             _logger.Info($"obj = {obj}");
@@ -103,6 +103,11 @@ namespace SymOntoClay.Serialization.Implementation
                     break;
 
                 case KindOfSerialization.Searching:
+                    if(visitedObjects.Contains(obj))
+                    {
+                        return null;
+                    }
+                    visitedObjects.Add(obj);
                     break;
 
                 default:
@@ -152,10 +157,10 @@ namespace SymOntoClay.Serialization.Implementation
             switch (type.Name)
             {
                 case "List`1":
-                    return NSerializeGenericList((IEnumerable)obj, parentObjInfo, kindOfSerialization, targetObject, rootObj);
+                    return NSerializeGenericList((IEnumerable)obj, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
                 case "Dictionary`2":
-                    return NSerializeGenericDictionary((IDictionary)obj, parentObjInfo, kindOfSerialization, targetObject, rootObj);
+                    return NSerializeGenericDictionary((IDictionary)obj, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
                 default:
                     if (type.FullName.StartsWith("System.Threading.") ||
@@ -164,13 +169,14 @@ namespace SymOntoClay.Serialization.Implementation
                         throw new NotImplementedException("4161028A-A2DB-41F0-8D53-6BCC81D317A4");
                     }
 
-                    return NSerializeComposite(obj, parentObjInfo, kindOfSerialization, targetObject, rootObj);
+                    return NSerializeComposite(obj, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
             }
         }
 
         private ObjectPtr NSerializeAction(object obj, ActionPo settingsParameter, Type type, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
 #if DEBUG
+            _logger.Info($"kindOfSerialization = {kindOfSerialization}");
             _logger.Info($"settingsParameter = {settingsParameter}");
 #endif
 
@@ -292,10 +298,11 @@ namespace SymOntoClay.Serialization.Implementation
             }
         }
 
-        private ObjectPtr NSerializeComposite(object obj, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
+        private ObjectPtr NSerializeComposite(object obj, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj, List<object> visitedObjects)
         {
 #if DEBUG
             _logger.Info($"obj = {obj}");
+            _logger.Info($"kindOfSerialization = {kindOfSerialization}");
 #endif
 
             var instanceId = CreateInstanceId();
@@ -451,7 +458,7 @@ namespace SymOntoClay.Serialization.Implementation
                 {
                     case KindOfSerialization.General:
                         {
-                            var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, settingsParameter ?? actionPlainObject, fieldParentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, settingsParameter ?? actionPlainObject, fieldParentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainValueResult = {plainValueResult}");
@@ -464,7 +471,7 @@ namespace SymOntoClay.Serialization.Implementation
                     case KindOfSerialization.Searching:
                         if (ReferenceEquals(obj, targetObject))
                         {
-                            var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, settingsParameter ?? actionPlainObject, fieldParentObjInfo, KindOfSerialization.General, targetObject, rootObj);
+                            var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, settingsParameter ?? actionPlainObject, fieldParentObjInfo, KindOfSerialization.General, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainValueResult = {plainValueResult}");
@@ -474,7 +481,7 @@ namespace SymOntoClay.Serialization.Implementation
                         }
                         else
                         {
-                            var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, settingsParameter ?? actionPlainObject, fieldParentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, settingsParameter ?? actionPlainObject, fieldParentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainValueResult = {plainValueResult}");
@@ -672,6 +679,7 @@ namespace SymOntoClay.Serialization.Implementation
         private ObjectPtr NSerializeCustomThreadPool(CustomThreadPool customThreadPool, CustomThreadPoolSerializationSettings settingsParameter, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
 #if DEBUG
+            _logger.Info($"kindOfSerialization = {kindOfSerialization}");
             _logger.Info($"settingsParameter = {settingsParameter}");
 #endif
             
@@ -758,13 +766,13 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    plainObject.Settings = GetSerializedObjectPtr(settingsParameter, null, parentObjInfo, kindOfSerialization, targetObject, rootObj);
+                    plainObject.Settings = GetSerializedObjectPtr(settingsParameter, null, parentObjInfo, kindOfSerialization, targetObject, rootObj, null);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(customThreadPool, targetObject))
                     {
-                        plainObject.Settings = GetSerializedObjectPtr(settingsParameter, null, parentObjInfo, kindOfSerialization, targetObject, rootObj);
+                        plainObject.Settings = GetSerializedObjectPtr(settingsParameter, null, parentObjInfo, KindOfSerialization.General, targetObject, rootObj, null);
                     }
                     break;
 
@@ -816,8 +824,10 @@ namespace SymOntoClay.Serialization.Implementation
         private ObjectPtr NSerializeCancellationTokenSource(CancellationTokenSource cancellationTokenSource, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
 #if DEBUG
+            _logger.Info($"kindOfSerialization = {kindOfSerialization}");
             _logger.Info($"cancellationTokenSource.IsCancellationRequested = {cancellationTokenSource.IsCancellationRequested}");
 #endif
+
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
@@ -911,6 +921,7 @@ namespace SymOntoClay.Serialization.Implementation
             string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
 #if DEBUG
+            _logger.Info($"kindOfSerialization = {kindOfSerialization}");
             _logger.Info($"settingsParameter = {settingsParameter}");
             _logger.Info($"cancellationTokenSource.IsCancellationRequested = {cancellationTokenSource.IsCancellationRequested}");
 #endif
@@ -996,13 +1007,13 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    plainObject.Settings = GetSerializedObjectPtr(settingsParameter, null, parentObjInfo, KindOfSerialization.General, null, rootObj);
+                    plainObject.Settings = GetSerializedObjectPtr(settingsParameter, null, parentObjInfo, KindOfSerialization.General, null, rootObj, null);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(cancellationTokenSource, targetObject))
                     {
-                        plainObject.Settings = GetSerializedObjectPtr(settingsParameter, null, parentObjInfo, KindOfSerialization.General, null, rootObj);
+                        plainObject.Settings = GetSerializedObjectPtr(settingsParameter, null, parentObjInfo, KindOfSerialization.General, null, rootObj, null);
                     }
                     break;
 
@@ -1053,6 +1064,10 @@ namespace SymOntoClay.Serialization.Implementation
 
         private ObjectPtr NSerializeCancellationToken(CancellationToken cancellationToken, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
+#if DEBUG
+            _logger.Info($"kindOfSerialization = {kindOfSerialization}");
+#endif
+
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
@@ -1099,13 +1114,13 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    plainObject.Source = GetSerializedObjectPtr(fieldValue, null, parentObjInfo, kindOfSerialization, targetObject, rootObj);
+                    plainObject.Source = GetSerializedObjectPtr(fieldValue, null, parentObjInfo, kindOfSerialization, targetObject, rootObj, null);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(cancellationToken, targetObject))
                     {
-                        plainObject.Source = GetSerializedObjectPtr(fieldValue, null, parentObjInfo, kindOfSerialization, targetObject, rootObj);
+                        plainObject.Source = GetSerializedObjectPtr(fieldValue, null, parentObjInfo, KindOfSerialization.General, targetObject, rootObj, null);
                     }
                     break;
 
@@ -1156,6 +1171,10 @@ namespace SymOntoClay.Serialization.Implementation
 
         private ObjectPtr NSerializeBareObject(object obj, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
+#if DEBUG
+            _logger.Info($"kindOfSerialization = {kindOfSerialization}");
+#endif
+
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
@@ -1244,8 +1263,12 @@ namespace SymOntoClay.Serialization.Implementation
             }
         }
 
-        private ObjectPtr NSerializeGenericDictionary(IDictionary dictionary, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
+        private ObjectPtr NSerializeGenericDictionary(IDictionary dictionary, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj, List<object> visitedObjects)
         {
+#if DEBUG
+            _logger.Info($"kindOfSerialization = {kindOfSerialization}");
+#endif
+
             var type = dictionary.GetType();
 
 #if DEBUG
@@ -1284,11 +1307,11 @@ namespace SymOntoClay.Serialization.Implementation
                     {
                         if(SerializationHelper.IsObject(valueGenericParameterType))
                         {
-                            return NSerializeGenericDictionaryWithPrimitiveKeyAndObjectValue(dictionary, keyGenericParameterType, parentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            return NSerializeGenericDictionaryWithPrimitiveKeyAndObjectValue(dictionary, keyGenericParameterType, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
                         }
                         else
                         {
-                            return NSerializeGenericDictionaryWithPrimitiveKeyAndCompositeValue(dictionary, keyGenericParameterType, parentObjInfo, kindOfSerialization, targetObject, rootObj);                            
+                            return NSerializeGenericDictionaryWithPrimitiveKeyAndCompositeValue(dictionary, keyGenericParameterType, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);                            
                         }
                     }
                 }
@@ -1298,17 +1321,17 @@ namespace SymOntoClay.Serialization.Implementation
                     {
                         if (SerializationHelper.IsPrimitiveType(valueGenericParameterType))
                         {
-                            return NSerializeGenericDictionaryWithObjectKeyAndPrimitiveValue(dictionary, valueGenericParameterType, parentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            return NSerializeGenericDictionaryWithObjectKeyAndPrimitiveValue(dictionary, valueGenericParameterType, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
                         }
                         else
                         {
                             if(SerializationHelper.IsObject(valueGenericParameterType))
                             {
-                                return NSerializeGenericDictionaryWithObjectKeyAndObjectValue(dictionary, parentObjInfo, kindOfSerialization, targetObject, rootObj);
+                                return NSerializeGenericDictionaryWithObjectKeyAndObjectValue(dictionary, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
                             }
                             else
                             {
-                                return NSerializeGenericDictionaryWithObjectKeyAndCompositeValue(dictionary, parentObjInfo, kindOfSerialization, targetObject, rootObj);
+                                return NSerializeGenericDictionaryWithObjectKeyAndCompositeValue(dictionary, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
                             }
                         }
                     }
@@ -1316,17 +1339,17 @@ namespace SymOntoClay.Serialization.Implementation
                     {
                         if (SerializationHelper.IsPrimitiveType(valueGenericParameterType))
                         {
-                            return NSerializeGenericDictionaryWithCompositeKeyAndPrimitiveValue(dictionary, valueGenericParameterType, parentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            return NSerializeGenericDictionaryWithCompositeKeyAndPrimitiveValue(dictionary, valueGenericParameterType, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
                         }
                         else
                         {
                             if (SerializationHelper.IsObject(valueGenericParameterType))
                             {
-                                return NSerializeGenericDictionaryWithCompositeKeyAndObjectValue(dictionary, parentObjInfo, kindOfSerialization, targetObject, rootObj);
+                                return NSerializeGenericDictionaryWithCompositeKeyAndObjectValue(dictionary, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
                             }
                             else
                             {
-                                return NSerializeGenericDictionaryWithCompositeKeyAndCompositeValue(dictionary, parentObjInfo, kindOfSerialization, targetObject, rootObj);
+                                return NSerializeGenericDictionaryWithCompositeKeyAndCompositeValue(dictionary, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
                             }
                         }
                     }
@@ -1351,8 +1374,12 @@ namespace SymOntoClay.Serialization.Implementation
             return $"{parentObjInfo}::value:";
         }
 
-        private ObjectPtr NSerializeGenericDictionaryWithCompositeKeyAndCompositeValue(IDictionary dictionary, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
+        private ObjectPtr NSerializeGenericDictionaryWithCompositeKeyAndCompositeValue(IDictionary dictionary, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj, List<object> visitedObjects)
         {
+#if DEBUG
+            _logger.Info($"kindOfSerialization = {kindOfSerialization}");
+#endif
+
             var instanceId = CreateInstanceId();
             
 #if DEBUG
@@ -1406,7 +1433,7 @@ namespace SymOntoClay.Serialization.Implementation
                 switch (kindOfSerialization)
                 {
                     case KindOfSerialization.General:
-                        plainKey = GetSerializedObjectPtr(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj);
+                        plainKey = GetSerializedObjectPtr(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                         _logger.Info($"plainKey = {plainKey}");
@@ -1416,7 +1443,7 @@ namespace SymOntoClay.Serialization.Implementation
                     case KindOfSerialization.Searching:
                         if (ReferenceEquals(dictionary, targetObject))
                         {
-                            plainKey = GetSerializedObjectPtr(itemKey, null, keyParentObjInfo, KindOfSerialization.General, targetObject, rootObj);
+                            plainKey = GetSerializedObjectPtr(itemKey, null, keyParentObjInfo, KindOfSerialization.General, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainKey = {plainKey}");
@@ -1424,7 +1451,7 @@ namespace SymOntoClay.Serialization.Implementation
                         }
                         else
                         {
-                            plainKey = GetSerializedObjectPtr(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            plainKey = GetSerializedObjectPtr(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainKey = {plainKey}");
@@ -1449,7 +1476,7 @@ namespace SymOntoClay.Serialization.Implementation
                 {
                     case KindOfSerialization.General:
                         {
-                            var plainValue = GetSerializedObjectPtr(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            var plainValue = GetSerializedObjectPtr(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainValue = {plainValue}");
@@ -1468,7 +1495,7 @@ namespace SymOntoClay.Serialization.Implementation
                     case KindOfSerialization.Searching:
                         if (ReferenceEquals(dictionary, targetObject))
                         {
-                            var plainValue = GetSerializedObjectPtr(itemValue, null, valueParentObjInfo, KindOfSerialization.General, targetObject, rootObj);
+                            var plainValue = GetSerializedObjectPtr(itemValue, null, valueParentObjInfo, KindOfSerialization.General, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainValue = {plainValue}");
@@ -1484,7 +1511,7 @@ namespace SymOntoClay.Serialization.Implementation
                         }
                         else
                         {
-                            var plainValue = GetSerializedObjectPtr(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            var plainValue = GetSerializedObjectPtr(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainValue = {plainValue}");
@@ -1548,8 +1575,12 @@ namespace SymOntoClay.Serialization.Implementation
             }
         }
 
-        private ObjectPtr NSerializeGenericDictionaryWithCompositeKeyAndObjectValue(IDictionary dictionary, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
+        private ObjectPtr NSerializeGenericDictionaryWithCompositeKeyAndObjectValue(IDictionary dictionary, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj, List<object> visitedObjects)
         {
+#if DEBUG
+            _logger.Info($"kindOfSerialization = {kindOfSerialization}");
+#endif
+
             var instanceId = CreateInstanceId();
             
 #if DEBUG
@@ -1603,7 +1634,7 @@ namespace SymOntoClay.Serialization.Implementation
                 switch (kindOfSerialization)
                 {
                     case KindOfSerialization.General:
-                        plainKey = GetSerializedObjectPtr(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj);
+                        plainKey = GetSerializedObjectPtr(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                         _logger.Info($"plainKey = {plainKey}");
@@ -1613,7 +1644,7 @@ namespace SymOntoClay.Serialization.Implementation
                     case KindOfSerialization.Searching:
                         if (ReferenceEquals(dictionary, targetObject))
                         {
-                            plainKey = GetSerializedObjectPtr(itemKey, null, keyParentObjInfo, KindOfSerialization.General, targetObject, rootObj);
+                            plainKey = GetSerializedObjectPtr(itemKey, null, keyParentObjInfo, KindOfSerialization.General, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainKey = {plainKey}");
@@ -1621,7 +1652,7 @@ namespace SymOntoClay.Serialization.Implementation
                         }
                         else
                         {
-                            plainKey = GetSerializedObjectPtr(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            plainKey = GetSerializedObjectPtr(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainKey = {plainKey}");
@@ -1648,7 +1679,7 @@ namespace SymOntoClay.Serialization.Implementation
                 {
                     case KindOfSerialization.General:
                         {
-                            plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainValueResult = {plainValueResult}");
@@ -1667,7 +1698,7 @@ namespace SymOntoClay.Serialization.Implementation
                     case KindOfSerialization.Searching:
                         if (ReferenceEquals(dictionary, targetObject))
                         {
-                            plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, null, valueParentObjInfo, KindOfSerialization.General, targetObject, rootObj);
+                            plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, null, valueParentObjInfo, KindOfSerialization.General, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainValueResult = {plainValueResult}");
@@ -1683,7 +1714,7 @@ namespace SymOntoClay.Serialization.Implementation
                         }
                         else
                         {
-                            plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainValueResult = {plainValueResult}");
@@ -1750,8 +1781,12 @@ namespace SymOntoClay.Serialization.Implementation
         }
 
         private ObjectPtr NSerializeGenericDictionaryWithCompositeKeyAndPrimitiveValue(IDictionary dictionary, Type valueGenericParameterType,
-            string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
+            string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj, List<object> visitedObjects)
         {
+#if DEBUG
+            _logger.Info($"kindOfSerialization = {kindOfSerialization}");
+#endif
+
             var instanceId = CreateInstanceId();
             
 #if DEBUG
@@ -1803,7 +1838,7 @@ namespace SymOntoClay.Serialization.Implementation
                 {
                     case KindOfSerialization.General:
                         {
-                            var plainKey = GetSerializedObjectPtr(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            var plainKey = GetSerializedObjectPtr(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainKey = {plainKey}");
@@ -1822,7 +1857,7 @@ namespace SymOntoClay.Serialization.Implementation
                     case KindOfSerialization.Searching:
                         if (ReferenceEquals(dictionary, targetObject))
                         {
-                            var plainKey = GetSerializedObjectPtr(itemKey, null, keyParentObjInfo, KindOfSerialization.General, targetObject, rootObj);
+                            var plainKey = GetSerializedObjectPtr(itemKey, null, keyParentObjInfo, KindOfSerialization.General, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainKey = {plainKey}");
@@ -1838,7 +1873,7 @@ namespace SymOntoClay.Serialization.Implementation
                         }
                         else
                         {
-                            var plainKey = GetSerializedObjectPtr(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            var plainKey = GetSerializedObjectPtr(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainKey = {plainKey}");
@@ -1902,8 +1937,12 @@ namespace SymOntoClay.Serialization.Implementation
             }
         }
 
-        private ObjectPtr NSerializeGenericDictionaryWithObjectKeyAndCompositeValue(IDictionary dictionary, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
+        private ObjectPtr NSerializeGenericDictionaryWithObjectKeyAndCompositeValue(IDictionary dictionary, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj, List<object> visitedObjects)
         {
+#if DEBUG
+            _logger.Info($"kindOfSerialization = {kindOfSerialization}");
+#endif
+
             var instanceId = CreateInstanceId();
             
 #if DEBUG
@@ -1957,7 +1996,7 @@ namespace SymOntoClay.Serialization.Implementation
                 switch (kindOfSerialization)
                 {
                     case KindOfSerialization.General:
-                        plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj);
+                        plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                         _logger.Info($"plainKeyResult = {plainKeyResult}");
@@ -1967,7 +2006,7 @@ namespace SymOntoClay.Serialization.Implementation
                     case KindOfSerialization.Searching:
                         if (ReferenceEquals(dictionary, targetObject))
                         {
-                            plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey, null, keyParentObjInfo, KindOfSerialization.General, targetObject, rootObj);
+                            plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey, null, keyParentObjInfo, KindOfSerialization.General, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainKeyResult = {plainKeyResult}");
@@ -1975,7 +2014,7 @@ namespace SymOntoClay.Serialization.Implementation
                         }
                         else
                         {
-                            plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainKeyResult = {plainKeyResult}");
@@ -2002,7 +2041,7 @@ namespace SymOntoClay.Serialization.Implementation
                 {
                     case KindOfSerialization.General:
                         {
-                            var plainValue = GetSerializedObjectPtr(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            var plainValue = GetSerializedObjectPtr(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainValue = {plainValue}");
@@ -2021,7 +2060,7 @@ namespace SymOntoClay.Serialization.Implementation
                     case KindOfSerialization.Searching:
                         if (ReferenceEquals(dictionary, targetObject))
                         {
-                            var plainValue = GetSerializedObjectPtr(itemValue, null, valueParentObjInfo, KindOfSerialization.General, targetObject, rootObj);
+                            var plainValue = GetSerializedObjectPtr(itemValue, null, valueParentObjInfo, KindOfSerialization.General, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainValue = {plainValue}");
@@ -2037,7 +2076,7 @@ namespace SymOntoClay.Serialization.Implementation
                         }
                         else
                         {
-                            var plainValue = GetSerializedObjectPtr(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            var plainValue = GetSerializedObjectPtr(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainValue = {plainValue}");
@@ -2101,8 +2140,12 @@ namespace SymOntoClay.Serialization.Implementation
             }
         }
 
-        private ObjectPtr NSerializeGenericDictionaryWithObjectKeyAndObjectValue(IDictionary dictionary, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
+        private ObjectPtr NSerializeGenericDictionaryWithObjectKeyAndObjectValue(IDictionary dictionary, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj, List<object> visitedObjects)
         {
+#if DEBUG
+            _logger.Info($"kindOfSerialization = {kindOfSerialization}");
+#endif
+
             var instanceId = CreateInstanceId();
             
 #if DEBUG
@@ -2156,7 +2199,7 @@ namespace SymOntoClay.Serialization.Implementation
                 switch (kindOfSerialization)
                 {
                     case KindOfSerialization.General:
-                        plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj);
+                        plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                         _logger.Info($"plainKeyResult = {plainKeyResult}");
@@ -2166,7 +2209,7 @@ namespace SymOntoClay.Serialization.Implementation
                     case KindOfSerialization.Searching:
                         if (ReferenceEquals(dictionary, targetObject))
                         {
-                            plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey, null, keyParentObjInfo, KindOfSerialization.General, targetObject, rootObj);
+                            plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey, null, keyParentObjInfo, KindOfSerialization.General, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainKeyResult = {plainKeyResult}");
@@ -2174,7 +2217,7 @@ namespace SymOntoClay.Serialization.Implementation
                         }
                         else
                         {
-                            plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainKeyResult = {plainKeyResult}");
@@ -2201,7 +2244,7 @@ namespace SymOntoClay.Serialization.Implementation
                 {
                     case KindOfSerialization.General:
                         {
-                            var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainValueResult = {plainValueResult}");
@@ -2220,7 +2263,7 @@ namespace SymOntoClay.Serialization.Implementation
                     case KindOfSerialization.Searching:
                         if (ReferenceEquals(dictionary, targetObject))
                         {
-                            var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, null, valueParentObjInfo, KindOfSerialization.General, targetObject, rootObj);
+                            var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, null, valueParentObjInfo, KindOfSerialization.General, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainValueResult = {plainValueResult}");
@@ -2236,7 +2279,7 @@ namespace SymOntoClay.Serialization.Implementation
                         }
                         else
                         {
-                            var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainValueResult = {plainValueResult}");
@@ -2303,8 +2346,12 @@ namespace SymOntoClay.Serialization.Implementation
         }
 
         private ObjectPtr NSerializeGenericDictionaryWithObjectKeyAndPrimitiveValue(IDictionary dictionary, Type valueGenericParameterType,
-            string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
+            string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj, List<object> visitedObjects)
         {
+#if DEBUG
+            _logger.Info($"kindOfSerialization = {kindOfSerialization}");
+#endif
+
             var instanceId = CreateInstanceId();
             
 #if DEBUG
@@ -2356,7 +2403,7 @@ namespace SymOntoClay.Serialization.Implementation
                 {
                     case KindOfSerialization.General:
                         {
-                            var plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            var plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainKeyResult = {plainKeyResult}");
@@ -2375,7 +2422,7 @@ namespace SymOntoClay.Serialization.Implementation
                     case KindOfSerialization.Searching:
                         if (ReferenceEquals(dictionary, targetObject))
                         {
-                            var plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey, null, keyParentObjInfo, KindOfSerialization.General, targetObject, rootObj);
+                            var plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey, null, keyParentObjInfo, KindOfSerialization.General, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainKeyResult = {plainKeyResult}");
@@ -2391,7 +2438,7 @@ namespace SymOntoClay.Serialization.Implementation
                         }
                         else
                         {
-                            var plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            var plainKeyResult = ConvertObjectCollectionValueToSerializableFormat(itemKey, null, keyParentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainKeyResult = {plainKeyResult}");
@@ -2458,8 +2505,12 @@ namespace SymOntoClay.Serialization.Implementation
         }
 
         private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndCompositeValue(IDictionary dictionary, Type keyGenericParameterType,
-            string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
+            string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj, List<object> visitedObjects)
         {
+#if DEBUG
+            _logger.Info($"kindOfSerialization = {kindOfSerialization}");
+#endif
+
             var instanceId = CreateInstanceId();
             
 #if DEBUG
@@ -2509,7 +2560,7 @@ namespace SymOntoClay.Serialization.Implementation
                 {
                     case KindOfSerialization.General:
                         {
-                            var plainValue = GetSerializedObjectPtr(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            var plainValue = GetSerializedObjectPtr(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainValue = {plainValue}");
@@ -2522,7 +2573,7 @@ namespace SymOntoClay.Serialization.Implementation
                     case KindOfSerialization.Searching:
                         if (ReferenceEquals(dictionary, targetObject))
                         {
-                            var plainValue = GetSerializedObjectPtr(itemValue, null, valueParentObjInfo, KindOfSerialization.General, targetObject, rootObj);
+                            var plainValue = GetSerializedObjectPtr(itemValue, null, valueParentObjInfo, KindOfSerialization.General, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainValue = {plainValue}");
@@ -2532,7 +2583,7 @@ namespace SymOntoClay.Serialization.Implementation
                         }
                         else
                         {
-                            var plainValue = GetSerializedObjectPtr(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            var plainValue = GetSerializedObjectPtr(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainValue = {plainValue}");
@@ -2596,8 +2647,12 @@ namespace SymOntoClay.Serialization.Implementation
         }
 
         private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndObjectValue(IDictionary dictionary, Type keyGenericParameterType,
-            string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
+            string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj, List<object> visitedObjects)
         {
+#if DEBUG
+            _logger.Info($"kindOfSerialization = {kindOfSerialization}");
+#endif
+
             var instanceId = CreateInstanceId();
             
 #if DEBUG
@@ -2647,7 +2702,7 @@ namespace SymOntoClay.Serialization.Implementation
                 {
                     case KindOfSerialization.General:
                         {
-                            var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainValueResult = {plainValueResult}");
@@ -2661,7 +2716,7 @@ namespace SymOntoClay.Serialization.Implementation
                     case KindOfSerialization.Searching:
                         if (ReferenceEquals(dictionary, targetObject))
                         {
-                            var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, null, valueParentObjInfo, KindOfSerialization.General, targetObject, rootObj);
+                            var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, null, valueParentObjInfo, KindOfSerialization.General, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainValueResult = {plainValueResult}");
@@ -2671,7 +2726,7 @@ namespace SymOntoClay.Serialization.Implementation
                         }
                         else
                         {
-                            var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            var plainValueResult = ConvertObjectCollectionValueToSerializableFormat(itemValue, null, valueParentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
 #if DEBUG
                             _logger.Info($"plainValueResult = {plainValueResult}");
@@ -2739,6 +2794,10 @@ namespace SymOntoClay.Serialization.Implementation
         private ObjectPtr NSerializeGenericDictionaryWithPrimitiveKeyAndPrimitiveValue(IDictionary dictionary,
             string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
+#if DEBUG
+            _logger.Info($"kindOfSerialization = {kindOfSerialization}");
+#endif
+
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
@@ -2825,8 +2884,12 @@ namespace SymOntoClay.Serialization.Implementation
             }
         }
 
-        private ObjectPtr NSerializeGenericList(IEnumerable enumerable, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
+        private ObjectPtr NSerializeGenericList(IEnumerable enumerable, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj, List<object> visitedObjects)
         {
+#if DEBUG
+            _logger.Info($"kindOfSerialization = {kindOfSerialization}");
+#endif
+
             var type = enumerable.GetType();
 
 #if DEBUG
@@ -2853,16 +2916,17 @@ namespace SymOntoClay.Serialization.Implementation
 
                 if (SerializationHelper.IsObject(genericParameterType))
                 {
-                    return NSerializeListWithObjectParameter(enumerable, parentObjInfo, kindOfSerialization, targetObject, rootObj);
+                    return NSerializeListWithObjectParameter(enumerable, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
                 }
             }
 
-            return NSerializeListWithCompositeParameter(enumerable, parentObjInfo, kindOfSerialization, targetObject, rootObj);
+            return NSerializeListWithCompositeParameter(enumerable, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
         }
 
-        private ObjectPtr NSerializeListWithCompositeParameter(IEnumerable enumerable, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
+        private ObjectPtr NSerializeListWithCompositeParameter(IEnumerable enumerable, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj, List<object> visitedObjects)
         {
 #if DEBUG
+            _logger.Info($"kindOfSerialization = {kindOfSerialization}");
             var type = enumerable.GetType();
             _logger.Info($"type.FullName = {type.FullName}");
             _logger.Info($"type.Name = {type.Name}");
@@ -2906,7 +2970,7 @@ namespace SymOntoClay.Serialization.Implementation
                 {
                     case KindOfSerialization.General:
                         {
-                            var itemObjectPtr = GetSerializedObjectPtr(item, null, parentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            var itemObjectPtr = GetSerializedObjectPtr(item, null, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
                             listWithPlainObjects.Add(itemObjectPtr);
                         }                        
@@ -2915,13 +2979,13 @@ namespace SymOntoClay.Serialization.Implementation
                     case KindOfSerialization.Searching:
                         if (ReferenceEquals(enumerable, targetObject))
                         {
-                            var itemObjectPtr = GetSerializedObjectPtr(item, null, parentObjInfo, KindOfSerialization.General, targetObject, rootObj);
+                            var itemObjectPtr = GetSerializedObjectPtr(item, null, parentObjInfo, KindOfSerialization.General, targetObject, rootObj, visitedObjects);
 
                             listWithPlainObjects.Add(itemObjectPtr);
                         }
                         else
                         {
-                            var itemObjectPtr = GetSerializedObjectPtr(item, null, parentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            var itemObjectPtr = GetSerializedObjectPtr(item, null, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
                             if (itemObjectPtr == null)
                             {
@@ -2979,9 +3043,10 @@ namespace SymOntoClay.Serialization.Implementation
             }
         }
 
-        private ObjectPtr NSerializeListWithObjectParameter(IEnumerable enumerable, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
+        private ObjectPtr NSerializeListWithObjectParameter(IEnumerable enumerable, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj, List<object> visitedObjects)
         {
 #if DEBUG
+            _logger.Info($"kindOfSerialization = {kindOfSerialization}");
             var type = enumerable.GetType();
             _logger.Info($"type.FullName = {type.FullName}");
             _logger.Info($"type.Name = {type.Name}");
@@ -3025,7 +3090,7 @@ namespace SymOntoClay.Serialization.Implementation
                 {
                     case KindOfSerialization.General:
                         {
-                            var itemResult = ConvertObjectCollectionValueToSerializableFormat(item, null, parentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            var itemResult = ConvertObjectCollectionValueToSerializableFormat(item, null, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
                             listWithPlainObjects.Add(itemResult.ConvertedObject);
                         }
@@ -3034,13 +3099,13 @@ namespace SymOntoClay.Serialization.Implementation
                     case KindOfSerialization.Searching:
                         if (ReferenceEquals(enumerable, targetObject))
                         {
-                            var itemResult = ConvertObjectCollectionValueToSerializableFormat(item, null, parentObjInfo, KindOfSerialization.General, targetObject, rootObj);
+                            var itemResult = ConvertObjectCollectionValueToSerializableFormat(item, null, parentObjInfo, KindOfSerialization.General, targetObject, rootObj, visitedObjects);
 
                             listWithPlainObjects.Add(itemResult.ConvertedObject);
                         }
                         else
                         {
-                            var itemResult = ConvertObjectCollectionValueToSerializableFormat(item, null, parentObjInfo, kindOfSerialization, targetObject, rootObj);
+                            var itemResult = ConvertObjectCollectionValueToSerializableFormat(item, null, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
                             var foundObject = itemResult.FoundObject;
 
@@ -3101,6 +3166,10 @@ namespace SymOntoClay.Serialization.Implementation
 
         private ObjectPtr NSerializeListWithPrimitiveParameter(IEnumerable enumerable, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
+#if DEBUG
+            _logger.Info($"kindOfSerialization = {kindOfSerialization}");
+#endif
+
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
@@ -3187,7 +3256,7 @@ namespace SymOntoClay.Serialization.Implementation
             }            
         }
 
-        private (object ConvertedObject, ObjectPtr FoundObject) ConvertObjectCollectionValueToSerializableFormat(object value, object settingsParameter, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
+        private (object ConvertedObject, ObjectPtr FoundObject) ConvertObjectCollectionValueToSerializableFormat(object value, object settingsParameter, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj, List<object> visitedObjects)
         {
             if(value == null)
             {
@@ -3199,7 +3268,7 @@ namespace SymOntoClay.Serialization.Implementation
                 return (value, null);
             }
 
-            var objPtr = GetSerializedObjectPtr(value, settingsParameter, parentObjInfo, kindOfSerialization, targetObject, rootObj);
+            var objPtr = GetSerializedObjectPtr(value, settingsParameter, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
             return (objPtr, objPtr);
         }

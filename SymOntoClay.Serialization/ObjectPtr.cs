@@ -1,6 +1,6 @@
 ﻿namespace SymOntoClay.Serialization
 {
-    public struct ObjectPtr
+    public class ObjectPtr
     {
         public ObjectPtr(bool isNull)
             : this(null, null, isNull)

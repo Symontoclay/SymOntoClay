@@ -7,7 +7,7 @@ using System;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
-    public partial class LoggedAndContextedCodeChunkSyncFunctorWithResult<TGlobalContext, TLocalContext, TResult> : IBaseFunctor
+    public class LoggedAndContextedCodeChunkSyncFunctorWithResult<TGlobalContext, TLocalContext, TResult> : IBaseFunctor
         where TLocalContext : class, new()
     {
         public static LoggedAndContextedCodeChunkSyncFunctorWithResult<TGlobalContext, TLocalContext, TResult> Run(IMonitorLogger logger, string functorId, TGlobalContext globalContext,
@@ -36,11 +36,11 @@ namespace SymOntoClay.ActiveObject.Functors
             _globalContext = globalContext;
         }
 
-        [SocSerializableActionKey]
         private string _functorId;
 
         private ISerializationAnchor _serializationAnchor;
 
+        [SocSerializableActionMember(nameof(_functorId), 0)]
         private Action<ICodeChunksContextWithResult<IMonitorLogger, TGlobalContext, TLocalContext, TResult>> _action;
         private CodeChunksContextWithResult<IMonitorLogger, TGlobalContext, TLocalContext, TResult> _codeChunksContext;
 

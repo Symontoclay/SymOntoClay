@@ -14,9 +14,9 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _action = action;
         }
         
-        [SocSerializableActionKey]
         private string _id;
 
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Action _action;
 
         /// <inheritdoc/>
@@ -36,11 +36,11 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _action = action;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
         private T _arg1;
 
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Action<T> _action;
 
         /// <inheritdoc/>
@@ -61,12 +61,12 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _action = action;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
         private T1 _arg1;
         private T2 _arg2;
 
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Action<T1, T2> _action;
 
         /// <inheritdoc/>
@@ -88,13 +88,13 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _action = action;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
         private T1 _arg1;
         private T2 _arg2;
         private T3 _arg3;
 
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Action<T1, T2, T3> _action;
 
         /// <inheritdoc/>

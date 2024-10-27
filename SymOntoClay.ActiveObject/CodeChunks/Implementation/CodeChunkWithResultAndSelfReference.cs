@@ -16,10 +16,11 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _action = action;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
         private ICodeChunksContextWithResult<TResult> _codeChunksContext;
+
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Action<ICodeChunkWithResultAndSelfReference<TResult>> _action;
 
         /// <inheritdoc/>
@@ -52,12 +53,13 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _action = action;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
         private T _arg1;
 
         private ICodeChunksContextWithResult<T, TResult> _codeChunksContext;
+
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Action<ICodeChunkWithResultAndSelfReference<T, TResult>, T> _action;
 
         /// <inheritdoc/>
@@ -91,13 +93,14 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _action = action;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
         private T1 _arg1;
         private T2 _arg2;
 
         private ICodeChunksContextWithResult<T1, T2, TResult> _codeChunksContext;
+
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Action<ICodeChunkWithResultAndSelfReference<T1, T2, TResult>, T1, T2> _action;
 
         /// <inheritdoc/>
@@ -132,7 +135,6 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _action = action;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
         private T1 _arg1;
@@ -140,6 +142,8 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         private T3 _arg3;
 
         private ICodeChunksContextWithResult<T1, T2, T3, TResult> _codeChunksContext;
+
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Action<ICodeChunkWithResultAndSelfReference<T1, T2, T3, TResult>, T1, T2, T3> _action;
 
         /// <inheritdoc/>

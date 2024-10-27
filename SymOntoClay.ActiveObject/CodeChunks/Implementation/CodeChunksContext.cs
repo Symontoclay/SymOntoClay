@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 
 namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public partial class CodeChunksContext : BaseCodeChunksContext, ICodeChunksContext
+    public class CodeChunksContext : BaseCodeChunksContext, ICodeChunksContext
     {
         /// <inheritdoc/>
         public void CreateCodeChunk(string chunkId, Action action)
@@ -57,7 +57,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class CodeChunksContext<T> : BaseCodeChunksContext, ICodeChunksContext<T>
+    public class CodeChunksContext<T> : BaseCodeChunksContext, ICodeChunksContext<T>
     {
         public CodeChunksContext(T arg1)
         {
@@ -115,7 +115,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class CodeChunksContext<T1, T2> : BaseCodeChunksContext, ICodeChunksContext<T1, T2>
+    public class CodeChunksContext<T1, T2> : BaseCodeChunksContext, ICodeChunksContext<T1, T2>
     {
         public CodeChunksContext(T1 arg1, T2 arg2)
         {
@@ -175,7 +175,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class CodeChunksContext<T1, T2, T3> : BaseCodeChunksContext, ICodeChunksContext<T1, T2, T3>
+    public class CodeChunksContext<T1, T2, T3> : BaseCodeChunksContext, ICodeChunksContext<T1, T2, T3>
     {
         public CodeChunksContext(T1 arg1, T2 arg2, T3 arg3)
         {

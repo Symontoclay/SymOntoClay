@@ -2,13 +2,14 @@
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Serialization;
 using System.Text;
+using System.Threading;
 
 namespace TestSandbox.Serialization
 {
-    [SocSerialization]
-    public partial class SerializedSubObject : IObjectToString
+    public class SerializedSubObject : IObjectToString
     {
         public int SomeField { get; set; }
+        public CancellationToken Token { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

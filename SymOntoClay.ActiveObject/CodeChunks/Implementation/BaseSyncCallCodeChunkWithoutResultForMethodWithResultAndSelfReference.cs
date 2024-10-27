@@ -2,7 +2,7 @@
 
 namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public abstract partial class BaseSyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<MethodResult>
+    public abstract class BaseSyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference<MethodResult>
     {
         protected BaseSyncCallCodeChunkWithoutResultForMethodWithResultAndSelfReference(IBaseCodeChunksContext codeChunksContext)
         {

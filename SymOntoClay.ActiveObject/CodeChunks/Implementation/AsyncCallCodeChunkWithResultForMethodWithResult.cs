@@ -4,7 +4,7 @@ using System;
 
 namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public partial class AsyncCallCodeChunkWithResultForMethodWithResult<TResult, MethodResult>
+    public class AsyncCallCodeChunkWithResultForMethodWithResult<TResult, MethodResult>
         : BaseAsyncCallCodeChunkWithResultForMethodWithResult<TResult, MethodResult>,
         IAsyncCallCodeChunkWithResultForMethodWithResult<TResult>
     {
@@ -16,10 +16,12 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _postHandler = postHandler;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Func<IAsyncMethodResponse<MethodResult>> _preHandler;
+
+        [SocSerializableActionMember(nameof(_id), 1)]
         private Action<MethodResult> _postHandler;
 
         protected override IAsyncMethodResponse<MethodResult> OnRunPreHandler()
@@ -33,7 +35,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class AsyncCallCodeChunkWithResultForMethodWithResult<T, TResult, MethodResult>
+    public class AsyncCallCodeChunkWithResultForMethodWithResult<T, TResult, MethodResult>
         : BaseAsyncCallCodeChunkWithResultForMethodWithResult<TResult, MethodResult>,
         IAsyncCallCodeChunkWithResultForMethodWithResult<T, TResult>
     {
@@ -46,12 +48,14 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _postHandler = postHandler;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
         private T _arg1;
 
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Func<T, IAsyncMethodResponse<MethodResult>> _preHandler;
+
+        [SocSerializableActionMember(nameof(_id), 1)]
         private Action<T, MethodResult> _postHandler;
 
         protected override IAsyncMethodResponse<MethodResult> OnRunPreHandler()
@@ -65,7 +69,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class AsyncCallCodeChunkWithResultForMethodWithResult<T1, T2, TResult, MethodResult>
+    public class AsyncCallCodeChunkWithResultForMethodWithResult<T1, T2, TResult, MethodResult>
         : BaseAsyncCallCodeChunkWithResultForMethodWithResult<TResult, MethodResult>,
         IAsyncCallCodeChunkWithResultForMethodWithResult<T1, T2, TResult>
     {
@@ -79,13 +83,15 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _postHandler = postHandler;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
         private T1 _arg1;
         private T2 _arg2;
 
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Func<T1, T2, IAsyncMethodResponse<MethodResult>> _preHandler;
+
+        [SocSerializableActionMember(nameof(_id), 1)]
         private Action<T1, T2, MethodResult> _postHandler;
 
         protected override IAsyncMethodResponse<MethodResult> OnRunPreHandler()
@@ -99,7 +105,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class AsyncCallCodeChunkWithResultForMethodWithResult<T1, T2, T3, TResult, MethodResult>
+    public class AsyncCallCodeChunkWithResultForMethodWithResult<T1, T2, T3, TResult, MethodResult>
         : BaseAsyncCallCodeChunkWithResultForMethodWithResult<TResult, MethodResult>,
         IAsyncCallCodeChunkWithResultForMethodWithResult<T1, T2, T3, TResult>
     {
@@ -114,14 +120,16 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _postHandler = postHandler;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
         private T1 _arg1;
         private T2 _arg2;
         private T3 _arg3;
 
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Func<T1, T2, T3, IAsyncMethodResponse<MethodResult>> _preHandler;
+
+        [SocSerializableActionMember(nameof(_id), 1)]
         private Action<T1, T2, T3, MethodResult> _postHandler;
 
         protected override IAsyncMethodResponse<MethodResult> OnRunPreHandler()

@@ -7,7 +7,7 @@
 
 //namespace SymOntoClay.ActiveObject.Functors.PlainObjects
 //{
-//    public partial class CodeChunkPo : IObjectToString
+//    public class CodeChunkPo : IObjectToString
 //    {
 //        public string _id;
 //        public bool _isFinished;
@@ -43,7 +43,7 @@
 
 //namespace SymOntoClay.ActiveObject.Functors
 //{
-//    public partial class CodeChunk : ISerializable
+//    public class CodeChunk : ISerializable
 //    {
 //        Type ISerializable.GetPlainObjectType() => typeof(PlainObjects.CodeChunkPo);
 

@@ -4,7 +4,7 @@ using System;
 
 namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public partial class SyncCallCodeChunkWithoutResultForMethodWithoutResult: 
+    public class SyncCallCodeChunkWithoutResultForMethodWithoutResult: 
         BaseSyncCallCodeChunkWithoutResultForMethodWithoutResult, 
         ISyncCallCodeChunkWithoutResultForMethodWithoutResult
     {
@@ -14,9 +14,9 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _handler = handler;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Func<IDrivenSyncMethodResponse> _handler;
 
         /// <inheritdoc/>
@@ -26,7 +26,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class SyncCallCodeChunkWithoutResultForMethodWithoutResult<T>
+    public class SyncCallCodeChunkWithoutResultForMethodWithoutResult<T>
         : BaseSyncCallCodeChunkWithoutResultForMethodWithoutResult, 
         ISyncCallCodeChunkWithoutResultForMethodWithoutResult<T>
     {
@@ -37,11 +37,11 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _handler = handler;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
         private T _arg1;
 
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Func<T, IDrivenSyncMethodResponse> _handler;
 
         /// <inheritdoc/>
@@ -51,7 +51,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class SyncCallCodeChunkWithoutResultForMethodWithoutResult<T1, T2> 
+    public class SyncCallCodeChunkWithoutResultForMethodWithoutResult<T1, T2> 
         : BaseSyncCallCodeChunkWithoutResultForMethodWithoutResult, 
         ISyncCallCodeChunkWithoutResultForMethodWithoutResult<T1, T2>
     {
@@ -63,12 +63,12 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _handler = handler;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
         private T1 _arg1;
         private T2 _arg2;
 
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Func<T1, T2, IDrivenSyncMethodResponse> _handler;
 
         /// <inheritdoc/>
@@ -78,7 +78,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class SyncCallCodeChunkWithoutResultForMethodWithoutResult<T1, T2, T3>
+    public class SyncCallCodeChunkWithoutResultForMethodWithoutResult<T1, T2, T3>
         : BaseSyncCallCodeChunkWithoutResultForMethodWithoutResult,
         ISyncCallCodeChunkWithoutResultForMethodWithoutResult<T1, T2, T3>
     {
@@ -91,13 +91,13 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _handler = handler;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
         private T1 _arg1;
         private T2 _arg2;
         private T3 _arg3;
 
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Func<T1, T2, T3, IDrivenSyncMethodResponse> _handler;
 
         /// <inheritdoc/>

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SymOntoClay.Serialization.Implementation.InternalPlainObjects
 {
-    public partial class LinkedCancellationTokenSourcePo : CancellationTokenSourcePo
+    public class LinkedCancellationTokenSourcePo : CancellationTokenSourcePo
     {
         public ObjectPtr Settings { get; set; }
 

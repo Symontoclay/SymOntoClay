@@ -4,7 +4,7 @@ using System;
 
 namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
 {
-    public partial class SyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<TResult, MethodResult> :
+    public class SyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<TResult, MethodResult> :
             BaseSyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<TResult, MethodResult>,
             ISyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<TResult, MethodResult>
     {
@@ -16,10 +16,12 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _postHandler = postHandler;
         }
 
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Func<IDrivenSyncMethodResponse<MethodResult>> _preHandler;
+
+        [SocSerializableActionMember(nameof(_id), 1)]
         private Action<ISyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<TResult, MethodResult>, MethodResult> _postHandler;
 
-        [SocSerializableActionKey]
         private string _id;
 
         protected override IDrivenSyncMethodResponse<MethodResult> OnRunPreHandler()
@@ -33,7 +35,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class SyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T, TResult, MethodResult> :
+    public class SyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T, TResult, MethodResult> :
         BaseSyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<TResult, MethodResult>,
         ISyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T, TResult, MethodResult>
     {
@@ -46,12 +48,14 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _postHandler = postHandler;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
         private T _arg1;
 
-        private Func<T, IDrivenSyncMethodResponse<MethodResult>> _preHandler; 
+        [SocSerializableActionMember(nameof(_id), 0)]
+        private Func<T, IDrivenSyncMethodResponse<MethodResult>> _preHandler;
+
+        [SocSerializableActionMember(nameof(_id), 1)]
         private Action<ISyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T, TResult, MethodResult>, T, MethodResult> _postHandler;
 
         protected override IDrivenSyncMethodResponse<MethodResult> OnRunPreHandler()
@@ -65,7 +69,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class SyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T1, T2, TResult, MethodResult> :
+    public class SyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T1, T2, TResult, MethodResult> :
         BaseSyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<TResult, MethodResult>,
         ISyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T1, T2, TResult, MethodResult>
     {
@@ -79,13 +83,15 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _postHandler = postHandler;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
         private T1 _arg1;
         private T2 _arg2;
 
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Func<T1, T2, IDrivenSyncMethodResponse<MethodResult>> _preHandler;
+
+        [SocSerializableActionMember(nameof(_id), 1)]
         private Action<ISyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T1, T2, TResult, MethodResult>, T1, T2, MethodResult> _postHandler;
 
         protected override IDrivenSyncMethodResponse<MethodResult> OnRunPreHandler()
@@ -99,7 +105,7 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
         }
     }
 
-    public partial class SyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T1, T2, T3, TResult, MethodResult> :
+    public class SyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T1, T2, T3, TResult, MethodResult> :
         BaseSyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<TResult, MethodResult>,
         ISyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T1, T2, T3, TResult, MethodResult>
     {
@@ -114,14 +120,16 @@ namespace SymOntoClay.ActiveObject.CodeChunks.Implementation
             _postHandler = postHandler;
         }
 
-        [SocSerializableActionKey]
         private string _id;
 
         private T1 _arg1;
         private T2 _arg2;
         private T3 _arg3;
 
+        [SocSerializableActionMember(nameof(_id), 0)]
         private Func<T1, T2, T3, IDrivenSyncMethodResponse<MethodResult>> _preHandler;
+
+        [SocSerializableActionMember(nameof(_id), 1)]
         private Action<ISyncCallCodeChunkWithResultForMethodWithResultAndSelfReference<T1, T2, T3, TResult, MethodResult>, T1, T2, T3, MethodResult> _postHandler;
 
         protected override IDrivenSyncMethodResponse<MethodResult> OnRunPreHandler()

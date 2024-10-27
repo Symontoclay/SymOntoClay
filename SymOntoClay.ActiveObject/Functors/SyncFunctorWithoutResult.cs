@@ -3,10 +3,11 @@ using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Serialization;
 using System;
+using System.Security.Cryptography;
 
 namespace SymOntoClay.ActiveObject.Functors
 {
-    public abstract partial class SyncFunctorWithoutResult : BaseSyncFunctorWithoutResult
+    public abstract class SyncFunctorWithoutResult : BaseSyncFunctorWithoutResult
     {
         protected SyncFunctorWithoutResult(IMonitorLogger logger, string functorId, Action action, IActiveObjectContext activeObjectContext, ISerializationAnchor serializationAnchor)
             : base(logger, activeObjectContext, serializationAnchor)
@@ -16,9 +17,9 @@ namespace SymOntoClay.ActiveObject.Functors
             _action = action;
         }
 
-        [SocSerializableActionKey]
         private string _functorId;
 
+        [SocSerializableActionMember(nameof(_functorId), 0)]
         private Action _action;
 
         /// <inheritdoc/>
@@ -28,7 +29,7 @@ namespace SymOntoClay.ActiveObject.Functors
         }
     }
 
-    public abstract partial class SyncFunctorWithoutResult<T> : BaseSyncFunctorWithoutResult
+    public abstract class SyncFunctorWithoutResult<T> : BaseSyncFunctorWithoutResult
     {
         protected SyncFunctorWithoutResult(IMonitorLogger logger, string functorId, T arg, Action<T> action, IActiveObjectContext activeObjectContext, ISerializationAnchor serializationAnchor)
             : base(logger, activeObjectContext, serializationAnchor)
@@ -39,9 +40,9 @@ namespace SymOntoClay.ActiveObject.Functors
             _arg = arg;
         }
 
-        [SocSerializableActionKey]
         private string _functorId;
 
+        [SocSerializableActionMember(nameof(_functorId), 0)]
         private Action<T> _action;
 
         private T _arg;
@@ -53,7 +54,7 @@ namespace SymOntoClay.ActiveObject.Functors
         }
     }
 
-    public abstract partial class SyncFunctorWithoutResult<T1, T2> : BaseSyncFunctorWithoutResult
+    public abstract class SyncFunctorWithoutResult<T1, T2> : BaseSyncFunctorWithoutResult
     {
         protected SyncFunctorWithoutResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, Action<T1, T2> action, IActiveObjectContext activeObjectContext, ISerializationAnchor serializationAnchor)
             : base(logger, activeObjectContext, serializationAnchor)
@@ -65,9 +66,9 @@ namespace SymOntoClay.ActiveObject.Functors
             _arg2 = arg2;
         }
 
-        [SocSerializableActionKey]
         private string _functorId;
 
+        [SocSerializableActionMember(nameof(_functorId), 0)]
         private Action<T1, T2> _action;
 
         private T1 _arg1;
@@ -80,7 +81,7 @@ namespace SymOntoClay.ActiveObject.Functors
         }
     }
 
-    public abstract partial class SyncFunctorWithoutResult<T1, T2, T3> : BaseSyncFunctorWithoutResult
+    public abstract class SyncFunctorWithoutResult<T1, T2, T3> : BaseSyncFunctorWithoutResult
     {
         protected SyncFunctorWithoutResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, T3 arg3, Action<T1, T2, T3> action, IActiveObjectContext activeObjectContext, ISerializationAnchor serializationAnchor)
             : base(logger, activeObjectContext, serializationAnchor)
@@ -93,9 +94,9 @@ namespace SymOntoClay.ActiveObject.Functors
             _arg3 = arg3;
         }
 
-        [SocSerializableActionKey]
         private string _functorId;
 
+        [SocSerializableActionMember(nameof(_functorId), 0)]
         private Action<T1, T2, T3> _action;
 
         private T1 _arg1;
@@ -109,7 +110,7 @@ namespace SymOntoClay.ActiveObject.Functors
         }
     }
 
-    public abstract partial class SyncFunctorWithoutResult<T1, T2, T3, T4> : BaseSyncFunctorWithoutResult
+    public abstract class SyncFunctorWithoutResult<T1, T2, T3, T4> : BaseSyncFunctorWithoutResult
     {
         protected SyncFunctorWithoutResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, T3 arg3, T4 arg4, Action<T1, T2, T3, T4> action, IActiveObjectContext activeObjectContext, ISerializationAnchor serializationAnchor)
             : base(logger, activeObjectContext, serializationAnchor)
@@ -123,9 +124,9 @@ namespace SymOntoClay.ActiveObject.Functors
             _arg4 = arg4;
         }
 
-        [SocSerializableActionKey]
         private string _functorId;
 
+        [SocSerializableActionMember(nameof(_functorId), 0)]
         private Action<T1, T2, T3, T4> _action;
 
         private T1 _arg1;

@@ -1,7 +1,6 @@
 ﻿namespace SymOntoClay.Serialization
 {
-    [SocSerialization]
-    public partial class SerializableRef<T>
+    public class SerializableRef<T>
     {
         public SerializableRef(T value)
         {

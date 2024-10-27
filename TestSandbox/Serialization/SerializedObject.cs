@@ -92,6 +92,11 @@ namespace TestSandbox.Serialization
             _list3.Add(_serializedSubObject);
         }
 
+        private bool _autoResetEventState = true;
+
+        [SocObjectSerializationSettings(nameof(_autoResetEventState))]
+        private readonly ManualResetEvent _autoResetEvent = new ManualResetEvent(true);
+
         private SerializedSubObject _serializedSubObject;
 
         public int IntField;
@@ -148,6 +153,7 @@ namespace TestSandbox.Serialization
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}{nameof(_autoResetEventState)} = {_autoResetEventState}");
             sb.PrintObjProp(n, nameof(_serializedSubObject), _serializedSubObject);
             sb.AppendLine($"{spaces}{nameof(IntField)} = {IntField}");
             //sb.AppendLine($"{spaces}{nameof(_cancellationTokenSource)}.{nameof(_cancellationTokenSource.IsCancellationRequested)} = {_cancellationTokenSource?.IsCancellationRequested}");
@@ -183,6 +189,7 @@ namespace TestSandbox.Serialization
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+            sb.AppendLine($"{spaces}{nameof(_autoResetEventState)} = {_autoResetEventState}");
             sb.AppendLine($"{spaces}{nameof(IntField)} = {IntField}");
             return sb.ToString();
         }

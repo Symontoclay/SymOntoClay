@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Core.Internal.Parsing.Internal;
 using SymOntoClay.Serialization;
 using SymOntoClay.Serialization.Settings;
 using SymOntoClay.Threading;
@@ -14,43 +15,6 @@ namespace TestSandbox.Serialization
     {
         public SerializedObject(bool value) 
         {
-            _serializedSubObject = new SerializedSubObject()
-            {
-                SomeField = 222
-            };
-
-            _dict1[1] = "Hi!";
-            _dict1[5] = "Hello!";
-
-            _dict2[3] = "Hi!";
-            _dict2[5] = 12;
-            _dict2[7] = new object();
-            _dict2[8] = true;
-            _dict2[9] = 1.23;
-            _dict2[10] = DateTime.Now;
-            _dict2[11] = _serializedSubObject;
-
-            _dict3[12] = _serializedSubObject;
-
-            _dict4[5] = 16;
-            _dict4["Hi"] = 2000;
-            _dict4[new object()] = 12;
-            _dict4[_serializedSubObject] = 56;
-
-            _dict5[5] = "Some value";
-
-            _dict6[7] = _serializedSubObject;
-
-            _dict7[_serializedSubObject] = 7;
-
-            _dict8[_serializedSubObject] = "Some value 16";
-
-            _dict9[_serializedSubObject] = _serializedSubObject;
-
-            _list1.Add(16);
-            _list2.Add("SomeValue");
-            _list3.Add(_serializedSubObject);
-
             _cancellationTokenSource = new CancellationTokenSource();
             _cancellationToken = _cancellationTokenSource.Token;
 
@@ -88,6 +52,44 @@ namespace TestSandbox.Serialization
             };
 
             _threadPool = new FakeCustomThreadPool(minThreadsCount, maxThreadsCount, _noneCancelationToken);
+
+            _serializedSubObject = new SerializedSubObject()
+            {
+                SomeField = 222,
+                Token = _linkedCancellationTokenSource2.Token
+            };
+
+            _dict1[1] = "Hi!";
+            _dict1[5] = "Hello!";
+
+            _dict2[3] = "Hi!";
+            _dict2[5] = 12;
+            _dict2[7] = new object();
+            _dict2[8] = true;
+            _dict2[9] = 1.23;
+            _dict2[10] = DateTime.Now;
+            _dict2[11] = _serializedSubObject;
+
+            _dict3[12] = _serializedSubObject;
+
+            _dict4[5] = 16;
+            _dict4["Hi"] = 2000;
+            _dict4[new object()] = 12;
+            _dict4[_serializedSubObject] = 56;
+
+            _dict5[5] = "Some value";
+
+            _dict6[7] = _serializedSubObject;
+
+            _dict7[_serializedSubObject] = 7;
+
+            _dict8[_serializedSubObject] = "Some value 16";
+
+            _dict9[_serializedSubObject] = _serializedSubObject;
+
+            _list1.Add(16);
+            _list2.Add("SomeValue");
+            _list3.Add(_serializedSubObject);
         }
 
         private SerializedSubObject _serializedSubObject;

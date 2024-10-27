@@ -179,7 +179,7 @@ namespace SymOntoClay.Serialization.Implementation
 
                             if (foundObject == null)
                             {
-                                var errorSb = new StringBuilder($"Serialization parameter is required for linked {nameof(CancellationTokenSource)}.");
+                                var errorSb = new StringBuilder($"Serialization parameter is required for linked {type.FullName}.");
 
                                 errorSb.Append(parentObjInfo);
 
@@ -190,9 +190,9 @@ namespace SymOntoClay.Serialization.Implementation
                                 return foundObject;
                             }
                         }
-                        break;
 
-                        d
+                     case KindOfSerialization.Searching:
+                        return null;
 
                     default:
                         throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
@@ -690,24 +690,32 @@ namespace SymOntoClay.Serialization.Implementation
             {
                 switch (kindOfSerialization)
                 {
+                    case KindOfSerialization.General:
+                        {
+                            var foundObject = SearchForMainFieldDeclaration(customThreadPool, rootObj);
+
+                            if (foundObject == null)
+                            {
+                                var errorSb = new StringBuilder($"Serialization parameter is required for type {nameof(CustomThreadPool)}.");
+
+                                errorSb.Append(parentObjInfo);
+
+                                throw new ArgumentNullException(nameof(settingsParameter), errorSb.ToString());
+                            }
+                            else
+                            {
+                                return foundObject;
+                            }
+                        }
+
+                    case KindOfSerialization.Searching:
+                        return null;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
                 }
 
-                var foundObject = SearchForMainFieldDeclaration();
 
-                if (foundObject == null)
-                {
-                    var errorSb = new StringBuilder($"Serialization parameter is required for type {nameof(CustomThreadPool)}.");
-
-                    errorSb.Append(parentObjInfo);
-
-                    throw new ArgumentNullException(nameof(settingsParameter), errorSb.ToString());
-                }
-                else
-                {
-                    return foundObject;
-                }
             }
 
             var instanceId = CreateInstanceId();
@@ -924,9 +932,9 @@ namespace SymOntoClay.Serialization.Implementation
                 {
                     case KindOfSerialization.General:
                         {
-                            var foundObjectPtr = SearchForMainFieldDeclaration();
+                            var foundObject = SearchForMainFieldDeclaration(cancellationTokenSource, rootObj);
 
-                            if (foundObjectPtr == null)
+                            if (foundObject == null)
                             {
                                 var errorSb = new StringBuilder($"Serialization parameter is required for linked {nameof(CancellationTokenSource)}.");
 
@@ -936,56 +944,12 @@ namespace SymOntoClay.Serialization.Implementation
                             }
                             else
                             {
-                                if (_serializationContext.TryGetObject(foundObjectPtr, out var foundObject))
-                                {
-                                    settingsParameter = (LinkedCancellationTokenSourceSerializationSettings)foundObject;
-                                }
-                                else
-                                {
-                                    var errorSb = new StringBuilder($"Serialization parameter is required for linked {nameof(CancellationTokenSource)}.");
-
-                                    errorSb.Append(parentObjInfo);
-
-                                    throw new ArgumentNullException(nameof(settingsParameter), errorSb.ToString());
-                                }                
+                                return foundObject;
                             }
                         }
-                        break;
 
                     case KindOfSerialization.Searching:
-                        if (ReferenceEquals(cancellationTokenSource, targetObject))
-                        {
-                            var foundObjectPtr = SearchForMainFieldDeclaration();
-
-                            if (foundObjectPtr == null)
-                            {
-                                var errorSb = new StringBuilder($"Serialization parameter is required for linked {nameof(CancellationTokenSource)}.");
-
-                                errorSb.Append(parentObjInfo);
-
-                                throw new ArgumentNullException(nameof(settingsParameter), errorSb.ToString());
-                            }
-                            else
-                            {
-                                if (_serializationContext.TryGetObject(foundObjectPtr, out var foundObject))
-                                {
-                                    settingsParameter = (LinkedCancellationTokenSourceSerializationSettings)foundObject;
-                                }
-                                else
-                                {
-                                    var errorSb = new StringBuilder($"Serialization parameter is required for linked {nameof(CancellationTokenSource)}.");
-
-                                    errorSb.Append(parentObjInfo);
-
-                                    throw new ArgumentNullException(nameof(settingsParameter), errorSb.ToString());
-                                }
-                            }
-                        }
-                        else
-                        {
-                            d
-                        }
-                        break;
+                        return null;
 
                     default:
                         throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);

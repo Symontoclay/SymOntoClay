@@ -163,6 +163,9 @@ namespace SymOntoClay.Serialization.Implementation
                 case "List`1":
                     return NSerializeGenericList((IEnumerable)obj, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
+                case "Stack`1":
+                    return NSerializeGenericStack((IEnumerable)obj, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
+
                 case "Dictionary`2":
                     return NSerializeGenericDictionary((IDictionary)obj, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
@@ -3049,9 +3052,11 @@ namespace SymOntoClay.Serialization.Implementation
                 {
                     return NSerializeListWithObjectParameter(enumerable, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
                 }
+
+                return NSerializeListWithCompositeParameter(enumerable, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
             }
 
-            return NSerializeListWithCompositeParameter(enumerable, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
+            throw new NotImplementedException("4046B64E-0FAA-41A3-9609-CF490275895D");
         }
 
         private ObjectPtr NSerializeListWithCompositeParameter(IEnumerable enumerable, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj, List<object> visitedObjects)
@@ -3386,6 +3391,82 @@ namespace SymOntoClay.Serialization.Implementation
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }            
+        }
+
+        private ObjectPtr NSerializeGenericStack(IEnumerable enumerable, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj, List<object> visitedObjects)
+        {
+#if DEBUG
+            _logger.Info($"kindOfSerialization = {kindOfSerialization}");
+#endif
+
+            var type = enumerable.GetType();
+
+#if DEBUG
+            _logger.Info($"type.FullName = {type.FullName}");
+            _logger.Info($"type.Name = {type.Name}");
+            _logger.Info($"type.IsGenericType = {type.IsGenericType}");
+#endif
+
+            if(type.IsGenericType)
+            {
+                var genericParameterType = type.GetGenericArguments()[0];
+
+#if DEBUG
+                _logger.Info($"genericParameterType.FullName = {genericParameterType.FullName}");
+                _logger.Info($"genericParameterType.Name = {genericParameterType.Name}");
+                _logger.Info($"genericParameterType.IsGenericType = {genericParameterType.IsGenericType}");
+                _logger.Info($"genericParameterType.IsPrimitive = {genericParameterType.IsPrimitive}");
+#endif
+
+                if (SerializationHelper.IsPrimitiveType(genericParameterType))
+                {
+                    return NSerializeGenericStackWithPrimitiveParameter(enumerable, parentObjInfo, kindOfSerialization, targetObject, rootObj);
+                }
+
+                if (SerializationHelper.IsObject(genericParameterType))
+                {
+                    return NSerializeGenericStackWithObjectParameter(enumerable, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
+                }
+
+                return NSerializeGenericStackWithCompositeParameter(enumerable, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
+            }
+
+            throw new NotImplementedException("A6356523-8EE9-4E7B-8C1C-2EC6FE9DE3EC");
+        }
+
+        private ObjectPtr NSerializeGenericStackWithCompositeParameter(IEnumerable enumerable, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj, List<object> visitedObjects)
+        {
+            throw new NotImplementedException("EF864031-A37A-461B-96E4-CBFAC2E5E482");
+        }
+
+        private ObjectPtr NSerializeGenericStackWithObjectParameter(IEnumerable enumerable, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj, List<object> visitedObjects)
+        {
+            throw new NotImplementedException("8C1CC382-5276-492A-B527-4442F4819012");
+        }
+
+        private ObjectPtr NSerializeGenericStackWithPrimitiveParameter(IEnumerable enumerable, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
+        {
+#if DEBUG
+            _logger.Info($"kindOfSerialization = {kindOfSerialization}");
+#endif
+
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    break;
+
+                case KindOfSerialization.Searching:
+                    if (!ReferenceEquals(enumerable, targetObject))
+                    {
+                        return null;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            throw new NotImplementedException("AD8721D5-D417-42A6-B2F9-90912E59E137");
         }
 
         private (object ConvertedObject, ObjectPtr FoundObject) ConvertObjectCollectionValueToSerializableFormat(object value, object settingsParameter, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj, List<object> visitedObjects)

@@ -2,6 +2,10 @@
 {
     public class ObjectPtr
     {
+        public ObjectPtr()
+        {
+        }
+
         public ObjectPtr(bool isNull)
             : this(null, null, isNull)
         {

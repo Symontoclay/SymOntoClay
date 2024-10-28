@@ -149,6 +149,10 @@ namespace SymOntoClay.Serialization.Implementation
                 case "System.Threading.CancellationToken":
                     return NSerializeCancellationToken((CancellationToken)obj, parentObjInfo, kindOfSerialization, targetObject, rootObj);
 
+                case "System.Threading.ManualResetEvent":
+                    return NSerializeManualResetEvent((System.Threading.ManualResetEvent)obj, settingsParameter as bool?, parentObjInfo,
+                        kindOfSerialization, targetObject, rootObj);
+
                 case "SymOntoClay.Threading.CustomThreadPool":
                     return NSerializeCustomThreadPool((CustomThreadPool)obj, settingsParameter as CustomThreadPoolSerializationSettings, parentObjInfo,
                         kindOfSerialization, targetObject, rootObj);
@@ -206,7 +210,7 @@ namespace SymOntoClay.Serialization.Implementation
 
                             if (foundObject == null)
                             {
-                                var errorSb = new StringBuilder($"Serialization parameter is required for linked {type.FullName}.");
+                                var errorSb = new StringBuilder($"Serialization parameter is required for {type.FullName}.");
 
                                 errorSb.Append(parentObjInfo);
 
@@ -1156,6 +1160,133 @@ namespace SymOntoClay.Serialization.Implementation
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(cancellationToken, targetObject))
+                    {
+                        return objectPtr;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+        }
+
+        private ObjectPtr NSerializeManualResetEvent(System.Threading.ManualResetEvent obj, bool? settingsParameter,
+            string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
+        {
+#if DEBUG
+            _logger.Info($"kindOfSerialization = {kindOfSerialization}");
+            _logger.Info($"settingsParameter = {settingsParameter}");
+#endif
+
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    break;
+
+                case KindOfSerialization.Searching:
+                    if (!ReferenceEquals(obj, targetObject))
+                    {
+                        return null;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            if (settingsParameter == null)
+            {
+                switch (kindOfSerialization)
+                {
+                    case KindOfSerialization.General:
+                        {
+                            var foundObject = SearchForMainFieldDeclaration(obj, rootObj);
+
+                            if (foundObject == null)
+                            {
+                                var errorSb = new StringBuilder($"Serialization parameter is required for {nameof(System.Threading.ManualResetEvent)}.");
+
+                                errorSb.Append(parentObjInfo);
+
+                                throw new ArgumentNullException(nameof(settingsParameter), errorSb.ToString());
+                            }
+                            else
+                            {
+                                return foundObject;
+                            }
+                        }
+
+                    case KindOfSerialization.Searching:
+                        return null;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+                }
+            }
+
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, obj.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    _serializationContext.RegObjectPtr(obj, objectPtr);
+                    break;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(obj, targetObject))
+                    {
+                        _serializationContext.RegObjectPtr(obj, objectPtr);
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            var plainObject = new ManualResetEventPo();
+            plainObject.State = settingsParameter.Value;
+
+#if DEBUG
+            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, Formatting.Indented)}");
+#endif
+
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    WriteToFile(plainObject, instanceId);
+                    break;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(obj, targetObject))
+                    {
+                        WriteToFile(plainObject, instanceId);
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    return objectPtr;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(obj, targetObject))
                     {
                         return objectPtr;
                     }
@@ -3010,6 +3141,7 @@ namespace SymOntoClay.Serialization.Implementation
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
+                    WriteToFile(listWithPlainObjects, instanceId);
                     break;
 
                 case KindOfSerialization.Searching:

@@ -343,10 +343,22 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"field.FieldType.Name = {field.FieldType.Name}");
 #endif
 
-                field.SetValue(instance, ChangeType(itemValue, field.FieldType));
+                SetFieldValue(instance, field, itemValue);
             }
 
             return instance;
+        }
+
+        private void SetFieldValue(object instance, FieldInfo field, object fieldValue)
+        {
+            try
+            {
+                field.SetValue(instance, fieldValue);
+            }
+            catch
+            {
+                field.SetValue(instance, ChangeType(fieldValue, field.FieldType));
+            }
         }
 
         private object ChangeType(object value, Type conversionType)

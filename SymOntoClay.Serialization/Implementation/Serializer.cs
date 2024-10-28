@@ -3420,7 +3420,7 @@ namespace SymOntoClay.Serialization.Implementation
 
                 if (SerializationHelper.IsPrimitiveType(genericParameterType))
                 {
-                    return NSerializeGenericStackWithPrimitiveParameter(enumerable, parentObjInfo, kindOfSerialization, targetObject, rootObj);
+                    return NSerializeGenericStackWithPrimitiveParameter(enumerable, genericParameterType, parentObjInfo, kindOfSerialization, targetObject, rootObj);
                 }
 
                 if (SerializationHelper.IsObject(genericParameterType))
@@ -3444,7 +3444,7 @@ namespace SymOntoClay.Serialization.Implementation
             throw new NotImplementedException("8C1CC382-5276-492A-B527-4442F4819012");
         }
 
-        private ObjectPtr NSerializeGenericStackWithPrimitiveParameter(IEnumerable enumerable, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
+        private ObjectPtr NSerializeGenericStackWithPrimitiveParameter(IEnumerable enumerable, Type genericParameterType, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
 #if DEBUG
             _logger.Info($"kindOfSerialization = {kindOfSerialization}");
@@ -3466,7 +3466,87 @@ namespace SymOntoClay.Serialization.Implementation
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
 
-            throw new NotImplementedException("AD8721D5-D417-42A6-B2F9-90912E59E137");
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, enumerable.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    _serializationContext.RegObjectPtr(enumerable, objectPtr);
+                    break;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(enumerable, targetObject))
+                    {
+                        _serializationContext.RegObjectPtr(enumerable, objectPtr);
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+#if DEBUG
+            _logger.Info($"enumerable = {JsonConvert.SerializeObject(enumerable, Formatting.Indented)}");
+#endif
+
+            var listWithPlainObjectsType = typeof(List<>).MakeGenericType(genericParameterType);
+
+            var listWithPlainObjects = (IList)Activator.CreateInstance(listWithPlainObjectsType);
+
+            foreach(var item in enumerable)
+            {
+                listWithPlainObjects.Add(item);
+            }
+
+#if DEBUG
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, Formatting.Indented)}");
+#endif
+
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    WriteToFile(listWithPlainObjects, instanceId);
+                    break;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(enumerable, targetObject))
+                    {
+                        WriteToFile(listWithPlainObjects, instanceId);
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    return objectPtr;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(enumerable, targetObject))
+                    {
+                        return objectPtr;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
         }
 
         private (object ConvertedObject, ObjectPtr FoundObject) ConvertObjectCollectionValueToSerializableFormat(object value, object settingsParameter, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj, List<object> visitedObjects)

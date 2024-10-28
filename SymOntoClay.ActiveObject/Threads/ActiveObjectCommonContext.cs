@@ -20,12 +20,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Serialization;
 using System.Threading;
 
 namespace SymOntoClay.ActiveObject.Threads
 {
     public class ActiveObjectCommonContext : IActiveObjectCommonContext
     {
+        private bool _autoResetEventState = true;
+
+        [SocObjectSerializationSettings(nameof(_autoResetEventState))]
         private readonly ManualResetEvent _autoResetEvent = new ManualResetEvent(true);
         private volatile bool _isNeedWating;
 
@@ -37,6 +41,7 @@ namespace SymOntoClay.ActiveObject.Threads
 
         public void Lock()
         {
+            _autoResetEventState = false;
             _autoResetEvent.Reset();
             _isNeedWating = true;
         }
@@ -44,6 +49,7 @@ namespace SymOntoClay.ActiveObject.Threads
         public void UnLock()
         {
             _isNeedWating = false;
+            _autoResetEventState = true;
             _autoResetEvent.Set();
         }
     }

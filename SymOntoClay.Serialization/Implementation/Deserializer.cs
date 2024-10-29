@@ -1276,7 +1276,48 @@ namespace SymOntoClay.Serialization.Implementation
 
         private object NDeserializeGenericStackWithObjectParameter(Type type, ObjectPtr objectPtr, string fullFileName)
         {
-            throw new NotImplementedException("98BA25BC-95B0-4B74-BA9F-565385A5BE91");
+            var instance = Activator.CreateInstance(type);
+
+#if DEBUG
+            _logger.Info($"instance = {instance}");
+#endif
+
+            _deserializationContext.RegDeserializedObject(objectPtr.Id, instance);
+
+            var listWithPlainObjects = JsonConvert.DeserializeObject<List<object>>(File.ReadAllText(fullFileName), SerializationHelper.JsonSerializerSettings);
+
+#if DEBUG
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, Formatting.Indented)}");
+#endif
+
+            listWithPlainObjects.Reverse();
+
+#if DEBUG
+            _logger.Info($"listWithPlainObjects (after) = {JsonConvert.SerializeObject(listWithPlainObjects, Formatting.Indented)}");
+#endif
+
+            var pushMethod = type.GetMethod("Push");
+
+            foreach (var plainObjectItem in listWithPlainObjects)
+            {
+#if DEBUG
+                _logger.Info($"plainObjectItem = {JsonConvert.SerializeObject(plainObjectItem, Formatting.Indented)}");
+#endif
+
+                var convertedItem = ConvertObjectCollectionValueFromSerializableFormat(plainObjectItem);
+
+#if DEBUG
+                _logger.Info($"convertedItem = {convertedItem}");
+#endif
+
+                pushMethod.Invoke(instance, new object[1] { convertedItem });
+            }
+
+#if DEBUG
+            _logger.Info($"instance = {JsonConvert.SerializeObject(instance, Formatting.Indented)}");
+#endif
+
+            return instance;
         }
 
         private object NDeserializeGenericStackWithPrimitiveParameter(Type type, Type genericParameterType, ObjectPtr objectPtr, string fullFileName)

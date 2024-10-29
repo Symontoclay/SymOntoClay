@@ -102,6 +102,8 @@ namespace TestSandbox.Serialization
             _stack2.Push("Hi 1");
             _stack2.Push("Hi 2");
             _stack2.Push("Hi 3");
+
+            _stack3.Push(_serializedSubObject);
         }
 
         private bool _autoResetEventState = true;
@@ -130,6 +132,7 @@ namespace TestSandbox.Serialization
 
         private Stack<int> _stack1 = new Stack<int>();
         private Stack<object> _stack2 = new Stack<object>();
+        private Stack<SerializedSubObject> _stack3 = new Stack<SerializedSubObject>();
 
         private object _lockObj = new object();
 
@@ -186,6 +189,7 @@ namespace TestSandbox.Serialization
             sb.PrintObjListProp(n, nameof(_list3), _list3);
             sb.PrintPODList(n, nameof(_stack1), _stack1);
             sb.PrintPODList(n, nameof(_stack2), _stack2);
+            sb.PrintObjListProp(n, nameof(_stack3), _stack3);
             return sb.ToString();
         }
 

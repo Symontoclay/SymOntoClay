@@ -1271,7 +1271,55 @@ namespace SymOntoClay.Serialization.Implementation
 
         private object NDeserializeGenericStackWithCompositeParameter(Type type, ObjectPtr objectPtr, string fullFileName)
         {
-            throw new NotImplementedException("1F4535FB-6E47-4E40-A2D3-354BF3A4896A");
+            var instance = Activator.CreateInstance(type);
+
+#if DEBUG
+            _logger.Info($"instance = {instance}");
+#endif
+
+            _deserializationContext.RegDeserializedObject(objectPtr.Id, instance);
+
+            var listWithPlainObjects = JsonConvert.DeserializeObject<List<ObjectPtr>>(File.ReadAllText(fullFileName), SerializationHelper.JsonSerializerSettings);
+
+#if DEBUG
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, Formatting.Indented)}");
+#endif
+
+            listWithPlainObjects.Reverse();
+
+#if DEBUG
+            _logger.Info($"listWithPlainObjects (after) = {JsonConvert.SerializeObject(listWithPlainObjects, Formatting.Indented)}");
+#endif
+
+            var pushMethod = type.GetMethod("Push");
+
+            foreach (var plainObjectItem in listWithPlainObjects)
+            {
+#if DEBUG
+                _logger.Info($"plainObjectItem = {JsonConvert.SerializeObject(plainObjectItem, Formatting.Indented)}");
+#endif
+
+#if DEBUG
+                var itemType = plainObjectItem.GetType();
+                _logger.Info($"itemType.FullName = {itemType.FullName}");
+                _logger.Info($"itemType.Name = {itemType.Name}");
+                _logger.Info($"itemType.IsGenericType = {itemType.IsGenericType}");
+#endif
+
+                var convertedItem = GetDeserializedObject((ObjectPtr)plainObjectItem);
+
+#if DEBUG
+                _logger.Info($"convertedItem = {convertedItem}");
+#endif
+
+                pushMethod.Invoke(instance, new object[1] { convertedItem });
+            }
+
+#if DEBUG
+            _logger.Info($"instance = {JsonConvert.SerializeObject(instance, Formatting.Indented)}");
+#endif
+
+            return instance;
         }
 
         private object NDeserializeGenericStackWithObjectParameter(Type type, ObjectPtr objectPtr, string fullFileName)

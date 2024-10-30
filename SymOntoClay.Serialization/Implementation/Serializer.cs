@@ -3894,16 +3894,29 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"enumerable = {JsonConvert.SerializeObject(enumerable, Formatting.Indented)}");
 #endif
 
+            var listWithPlainObjectsType = typeof(List<>).MakeGenericType(genericParameterType);
+
+            var listWithPlainObjects = (IList)Activator.CreateInstance(listWithPlainObjectsType);
+
+            foreach (var item in enumerable)
+            {
+                listWithPlainObjects.Add(item);
+            }
+
+#if DEBUG
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, Formatting.Indented)}");
+#endif
+
             switch (kindOfSerialization)
             {
                 case KindOfSerialization.General:
-                    WriteToFile(enumerable, instanceId);
+                    WriteToFile(listWithPlainObjects, instanceId);
                     break;
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(enumerable, targetObject))
                     {
-                        WriteToFile(enumerable, instanceId);
+                        WriteToFile(listWithPlainObjects, instanceId);
                     }
                     break;
 

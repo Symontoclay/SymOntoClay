@@ -143,6 +143,9 @@ namespace SymOntoClay.Serialization.Implementation
                 case "Stack`1":
                     return NDeserializeGenericStack(type, objectPtr, fullFileName);
 
+                case "Queue`1":
+                    return NDeserializeGenericQueue(type, objectPtr, fullFileName);
+
                 case "Dictionary`2":
                     return NDeserializeGenericDictionary(type, objectPtr, fullFileName);
 
@@ -1418,6 +1421,66 @@ namespace SymOntoClay.Serialization.Implementation
 #endif
 
             return dest;
+        }
+
+        private object NDeserializeGenericQueue(Type type, ObjectPtr objectPtr, string fullFileName)
+        {
+            if (type.IsGenericType)
+            {
+                var genericParameterType = type.GetGenericArguments()[0];
+
+#if DEBUG
+                _logger.Info($"genericParameterType.FullName = {genericParameterType.FullName}");
+                _logger.Info($"genericParameterType.Name = {genericParameterType.Name}");
+                _logger.Info($"genericParameterType.IsGenericType = {genericParameterType.IsGenericType}");
+                _logger.Info($"genericParameterType.IsPrimitive = {genericParameterType.IsPrimitive}");
+#endif
+
+                if (SerializationHelper.IsPrimitiveType(genericParameterType))
+                {
+                    return NDeserializeGenericQueueWithPrimitiveParameter(type, genericParameterType, objectPtr, fullFileName);
+                }
+
+                if (SerializationHelper.IsObject(genericParameterType))
+                {
+                    return NDeserializeGenericQueueWithObjectParameter(type, objectPtr, fullFileName);
+                }
+
+                return NDeserializeGenericQueueWithCompositeParameter(type, objectPtr, fullFileName);
+            }
+
+            throw new NotImplementedException("C50BD58A-3341-4A42-979F-54F84E2EC3D2");
+        }
+
+        private object NDeserializeGenericQueueWithCompositeParameter(Type type, ObjectPtr objectPtr, string fullFileName)
+        {
+            throw new NotImplementedException("C064CE61-B52C-45E5-8A33-D9AFB30BDCAD");
+        }
+
+        private object NDeserializeGenericQueueWithObjectParameter(Type type, ObjectPtr objectPtr, string fullFileName)
+        {
+            throw new NotImplementedException("9C84EC44-9450-48EB-8BFC-AA6B3BA2F3B7");
+        }
+
+        private object NDeserializeGenericQueueWithPrimitiveParameter(Type type, Type genericParameterType, ObjectPtr objectPtr, string fullFileName)
+        {
+            var listWithPlainObjectsType = typeof(List<>).MakeGenericType(genericParameterType);
+
+            var listWithPlainObjects = (IList)JsonConvert.DeserializeObject(File.ReadAllText(fullFileName), listWithPlainObjectsType, SerializationHelper.JsonSerializerSettings);
+
+#if DEBUG
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, Formatting.Indented)}");
+#endif
+
+            var instance = Activator.CreateInstance(type, listWithPlainObjects);
+
+#if DEBUG
+            _logger.Info($"instance = {JsonConvert.SerializeObject(instance, Formatting.Indented)}");
+#endif
+
+            _deserializationContext.RegDeserializedObject(objectPtr.Id, instance);
+
+            return instance;
         }
 
         private object ConvertObjectCollectionValueFromSerializableFormat(object value)

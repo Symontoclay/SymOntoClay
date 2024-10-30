@@ -1459,7 +1459,42 @@ namespace SymOntoClay.Serialization.Implementation
 
         private object NDeserializeGenericQueueWithObjectParameter(Type type, ObjectPtr objectPtr, string fullFileName)
         {
-            throw new NotImplementedException("9C84EC44-9450-48EB-8BFC-AA6B3BA2F3B7");
+            var instance = Activator.CreateInstance(type);
+
+#if DEBUG
+            _logger.Info($"instance = {instance}");
+#endif
+
+            _deserializationContext.RegDeserializedObject(objectPtr.Id, instance);
+
+            var listWithPlainObjects = JsonConvert.DeserializeObject<List<object>>(File.ReadAllText(fullFileName), SerializationHelper.JsonSerializerSettings);
+
+#if DEBUG
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, Formatting.Indented)}");
+#endif
+
+            var enqueueMethod = type.GetMethod("Enqueue");
+
+            foreach (var plainObjectItem in listWithPlainObjects)
+            {
+#if DEBUG
+                _logger.Info($"plainObjectItem = {JsonConvert.SerializeObject(plainObjectItem, Formatting.Indented)}");
+#endif
+
+                var convertedItem = ConvertObjectCollectionValueFromSerializableFormat(plainObjectItem);
+
+#if DEBUG
+                _logger.Info($"convertedItem = {convertedItem}");
+#endif
+
+                enqueueMethod.Invoke(instance, new object[1] { convertedItem });
+            }
+
+#if DEBUG
+            _logger.Info($"instance = {JsonConvert.SerializeObject(instance, Formatting.Indented)}");
+#endif
+
+            return instance;
         }
 
         private object NDeserializeGenericQueueWithPrimitiveParameter(Type type, Type genericParameterType, ObjectPtr objectPtr, string fullFileName)

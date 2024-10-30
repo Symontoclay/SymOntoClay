@@ -108,6 +108,10 @@ namespace TestSandbox.Serialization
             _queue1.Enqueue(1);
             _queue1.Enqueue(2);
             _queue1.Enqueue(3);
+
+            _queue2.Enqueue("Hi q 1");
+            _queue2.Enqueue("Hi q 2");
+            _queue2.Enqueue("Hi q 3");
         }
 
         private bool _autoResetEventState = true;
@@ -139,6 +143,7 @@ namespace TestSandbox.Serialization
         private Stack<SerializedSubObject> _stack3 = new Stack<SerializedSubObject>();
 
         private Queue<int> _queue1 = new Queue<int>();
+        private Queue<object> _queue2 = new Queue<object>();
 
         private object _lockObj = new object();
 
@@ -197,6 +202,7 @@ namespace TestSandbox.Serialization
             sb.PrintPODList(n, nameof(_stack2), _stack2);
             sb.PrintObjListProp(n, nameof(_stack3), _stack3);
             sb.PrintPODList(n, nameof(_queue1), _queue1);
+            sb.PrintPODList(n, nameof(_queue2), _queue2);
             return sb.ToString();
         }
 

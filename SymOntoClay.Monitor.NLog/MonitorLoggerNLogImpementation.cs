@@ -25,6 +25,7 @@ using SymOntoClay.Common.Disposing;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
+using SymOntoClay.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,7 +52,8 @@ namespace SymOntoClay.Monitor.NLog
             _logger = logger;
         }
 
-        private readonly Logger _logger;
+        [SocNoSerializable]
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         /// <inheritdoc/>
         public string Id => "MonitorLoggerNLogImpementation";

@@ -1454,7 +1454,49 @@ namespace SymOntoClay.Serialization.Implementation
 
         private object NDeserializeGenericQueueWithCompositeParameter(Type type, ObjectPtr objectPtr, string fullFileName)
         {
-            throw new NotImplementedException("C064CE61-B52C-45E5-8A33-D9AFB30BDCAD");
+            var instance = Activator.CreateInstance(type);
+
+#if DEBUG
+            _logger.Info($"instance = {instance}");
+#endif
+
+            _deserializationContext.RegDeserializedObject(objectPtr.Id, instance);
+
+            var listWithPlainObjects = JsonConvert.DeserializeObject<List<ObjectPtr>>(File.ReadAllText(fullFileName), SerializationHelper.JsonSerializerSettings);
+
+#if DEBUG
+            _logger.Info($"listWithPlainObjects = {JsonConvert.SerializeObject(listWithPlainObjects, Formatting.Indented)}");
+#endif
+
+            var enqueueMethod = type.GetMethod("Enqueue");
+
+            foreach (var plainObjectItem in listWithPlainObjects)
+            {
+#if DEBUG
+                _logger.Info($"plainObjectItem = {JsonConvert.SerializeObject(plainObjectItem, Formatting.Indented)}");
+#endif
+
+#if DEBUG
+                var itemType = plainObjectItem.GetType();
+                _logger.Info($"itemType.FullName = {itemType.FullName}");
+                _logger.Info($"itemType.Name = {itemType.Name}");
+                _logger.Info($"itemType.IsGenericType = {itemType.IsGenericType}");
+#endif
+
+                var convertedItem = GetDeserializedObject((ObjectPtr)plainObjectItem);
+
+#if DEBUG
+                _logger.Info($"convertedItem = {convertedItem}");
+#endif
+
+                enqueueMethod.Invoke(instance, new object[1] { convertedItem });
+            }
+
+#if DEBUG
+            _logger.Info($"instance = {JsonConvert.SerializeObject(instance, Formatting.Indented)}");
+#endif
+
+            return instance;
         }
 
         private object NDeserializeGenericQueueWithObjectParameter(Type type, ObjectPtr objectPtr, string fullFileName)

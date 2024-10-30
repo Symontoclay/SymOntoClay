@@ -94,6 +94,26 @@ namespace TestSandbox.Serialization
             _list1.Add(16);
             _list2.Add("SomeValue");
             _list3.Add(_serializedSubObject);
+
+            _stack1.Push(1);
+            _stack1.Push(2);
+            _stack1.Push(3);
+
+            _stack2.Push("Hi 1");
+            _stack2.Push("Hi 2");
+            _stack2.Push("Hi 3");
+
+            _stack3.Push(_serializedSubObject);
+
+            _queue1.Enqueue(1);
+            _queue1.Enqueue(2);
+            _queue1.Enqueue(3);
+
+            _queue2.Enqueue("Hi q 1");
+            _queue2.Enqueue("Hi q 2");
+            _queue2.Enqueue("Hi q 3");
+
+            _queue3.Enqueue(_serializedSubObject);
         }
 
         private bool _autoResetEventState = true;
@@ -119,6 +139,14 @@ namespace TestSandbox.Serialization
         private List<int> _list1 = new List<int>();
         private List<object> _list2 = new List<object>();
         private List<SerializedSubObject> _list3 = new List<SerializedSubObject>();
+
+        private Stack<int> _stack1 = new Stack<int>();
+        private Stack<object> _stack2 = new Stack<object>();
+        private Stack<SerializedSubObject> _stack3 = new Stack<SerializedSubObject>();
+
+        private Queue<int> _queue1 = new Queue<int>();
+        private Queue<object> _queue2 = new Queue<object>();
+        private Queue<SerializedSubObject> _queue3 = new Queue<SerializedSubObject>();
 
         private object _lockObj = new object();
 
@@ -173,6 +201,12 @@ namespace TestSandbox.Serialization
             sb.PrintPODList(n, nameof(_list1), _list1);
             sb.PrintPODList(n, nameof(_list2), _list2);
             sb.PrintObjListProp(n, nameof(_list3), _list3);
+            sb.PrintPODList(n, nameof(_stack1), _stack1);
+            sb.PrintPODList(n, nameof(_stack2), _stack2);
+            sb.PrintObjListProp(n, nameof(_stack3), _stack3);
+            sb.PrintPODList(n, nameof(_queue1), _queue1);
+            sb.PrintPODList(n, nameof(_queue2), _queue2);
+            sb.PrintObjListProp(n, nameof(_queue3), _queue3);
             return sb.ToString();
         }
 

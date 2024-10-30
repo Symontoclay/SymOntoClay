@@ -166,6 +166,9 @@ namespace SymOntoClay.Serialization.Implementation
                 case "Stack`1":
                     return NSerializeGenericStack((IEnumerable)obj, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
+                case "Queue`1":
+                    return NSerializeGenericQueue((IEnumerable)obj, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
+
                 case "Dictionary`2":
                     return NSerializeGenericDictionary((IDictionary)obj, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
@@ -3758,6 +3761,149 @@ namespace SymOntoClay.Serialization.Implementation
                     if (ReferenceEquals(enumerable, targetObject))
                     {
                         WriteToFile(listWithPlainObjects, instanceId);
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    return objectPtr;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(enumerable, targetObject))
+                    {
+                        return objectPtr;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+        }
+
+        private ObjectPtr NSerializeGenericQueue(IEnumerable enumerable, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj, List<object> visitedObjects)
+        {
+#if DEBUG
+            _logger.Info($"kindOfSerialization = {kindOfSerialization}");
+#endif
+
+            var type = enumerable.GetType();
+
+#if DEBUG
+            _logger.Info($"type.FullName = {type.FullName}");
+            _logger.Info($"type.Name = {type.Name}");
+            _logger.Info($"type.IsGenericType = {type.IsGenericType}");
+#endif
+
+            if (type.IsGenericType)
+            {
+                var genericParameterType = type.GetGenericArguments()[0];
+
+#if DEBUG
+                _logger.Info($"genericParameterType.FullName = {genericParameterType.FullName}");
+                _logger.Info($"genericParameterType.Name = {genericParameterType.Name}");
+                _logger.Info($"genericParameterType.IsGenericType = {genericParameterType.IsGenericType}");
+                _logger.Info($"genericParameterType.IsPrimitive = {genericParameterType.IsPrimitive}");
+#endif
+
+                if (SerializationHelper.IsPrimitiveType(genericParameterType))
+                {
+                    return NSerializeGenericQueueWithPrimitiveParameter(enumerable, genericParameterType, parentObjInfo, kindOfSerialization, targetObject, rootObj);
+                }
+
+                if (SerializationHelper.IsObject(genericParameterType))
+                {
+                    return NSerializeGenericQueueWithObjectParameter(enumerable, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
+                }
+
+                return NSerializeGenericQueueWithCompositeParameter(enumerable, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
+            }
+
+            throw new NotImplementedException("89E2EDB9-495D-4F75-9FDD-735941B8ED8A");
+        }
+
+        private ObjectPtr NSerializeGenericQueueWithCompositeParameter(IEnumerable enumerable, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj, List<object> visitedObjects)
+        {
+            throw new NotImplementedException("658D4F93-956C-4373-8A56-A40C5F91375D");
+        }
+
+        private ObjectPtr NSerializeGenericQueueWithObjectParameter(IEnumerable enumerable, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj, List<object> visitedObjects)
+        {
+            throw new NotImplementedException("19CDB3B8-7FE4-4FCC-A952-99683E6F5F93");
+        }
+
+        private ObjectPtr NSerializeGenericQueueWithPrimitiveParameter(IEnumerable enumerable, Type genericParameterType, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
+        {
+#if DEBUG
+            _logger.Info($"kindOfSerialization = {kindOfSerialization}");
+#endif
+
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    break;
+
+                case KindOfSerialization.Searching:
+                    if (!ReferenceEquals(enumerable, targetObject))
+                    {
+                        return null;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, enumerable.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    _serializationContext.RegObjectPtr(enumerable, objectPtr);
+                    break;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(enumerable, targetObject))
+                    {
+                        _serializationContext.RegObjectPtr(enumerable, objectPtr);
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+#if DEBUG
+            _logger.Info($"enumerable = {JsonConvert.SerializeObject(enumerable, Formatting.Indented)}");
+#endif
+
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    WriteToFile(enumerable, instanceId);
+                    break;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(enumerable, targetObject))
+                    {
+                        WriteToFile(enumerable, instanceId);
                     }
                     break;
 

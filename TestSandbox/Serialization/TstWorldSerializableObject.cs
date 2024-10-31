@@ -2,7 +2,10 @@
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Serialization;
+using SymOntoClay.Serialization.Implementation;
+using SymOntoClay.UnityAsset.Core.World;
 using System;
+using System.IO;
 using System.Text;
 
 namespace TestSandbox.Serialization
@@ -20,7 +23,35 @@ namespace TestSandbox.Serialization
 
         public void Save(SerializationSettings settings)
         {
-            throw new NotImplementedException("B0AD3C35-AAFD-4E6B-A6E8-665B2E672E03");
+#if DEBUG
+            _logger.Info($"settings = {settings}");
+#endif
+
+#if DEBUG
+            if (!Directory.Exists(settings.Path))
+            {
+                Directory.CreateDirectory(settings.Path);
+            }
+
+            var targetPath = Path.Combine(settings.Path, settings.ImageName);
+
+            _logger.Info($"targetPath = {targetPath}");
+
+            if (Directory.Exists(targetPath))
+            {
+                Directory.Delete(targetPath, true);
+            }
+
+            Directory.CreateDirectory(targetPath);
+
+            var serializationContext = new SerializationContext(targetPath);
+
+            var serializer = new Serializer(serializationContext);
+
+            serializer.Serialize(_internal);
+#endif
+
+            //throw new NotImplementedException("B0AD3C35-AAFD-4E6B-A6E8-665B2E672E03");
         }
 
         public void SetSomeValue(int value)

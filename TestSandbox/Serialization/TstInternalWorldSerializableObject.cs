@@ -1,6 +1,7 @@
 ﻿using NLog;
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Serialization.SmartValues;
 using System.Text;
 
 namespace TestSandbox.Serialization
@@ -15,11 +16,11 @@ namespace TestSandbox.Serialization
         {
             _context = new TstEngineContext();
 
-            _context.Prop1 = settings.Prop1;
+            _context.Prop1 = new ExternalSettingsSmartValue<string>(settings.Prop1, typeof(TstExternalSettings), GetType(), "2A297D8D-176A-433F-8DC5-C74674A8C45D");
 
             _sub = new TstWorldSubSerializableObject(_context);
         }
-
+        
         private TstEngineContext _context;
         private TstWorldSubSerializableObject _sub;
 

@@ -1,6 +1,7 @@
 ﻿using NLog;
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Serialization.SmartValues;
 using System.Speech.Synthesis;
 using System.Text;
 
@@ -12,7 +13,7 @@ namespace TestSandbox.Serialization
         private static ILogger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
-        public string Prop1 { get; set; }
+        public SmartValue<string> Prop1 { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -29,7 +30,8 @@ namespace TestSandbox.Serialization
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{nameof(Prop1)} = {Prop1}");
+            sb.PrintObjProp(n, nameof(Prop1), Prop1);
+            //sb.AppendLine($"{spaces}{nameof(Prop1)} = {Prop1}");
             //sb.AppendLine($"{spaces}{nameof()} = {}");
             return sb.ToString();
         }

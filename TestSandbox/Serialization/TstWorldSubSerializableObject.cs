@@ -1,6 +1,7 @@
 ﻿using NLog;
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Serialization.SmartValues;
 using System.Data;
 using System.Speech.Synthesis;
 using System.Text;
@@ -20,7 +21,7 @@ namespace TestSandbox.Serialization
         }
 
         private TstEngineContext _context;
-        private string Prop1 { get; set; }
+        private SmartValue<string> Prop1 { get; set; }
         private int SomeValueProp { get; set; }
 
         public void SetSomeValue(int value)
@@ -43,7 +44,8 @@ namespace TestSandbox.Serialization
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{nameof(Prop1)} = {Prop1}");
+            sb.PrintObjProp(n, nameof(Prop1), Prop1);
+            //sb.AppendLine($"{spaces}{nameof(Prop1)} = {Prop1}");
             sb.AppendLine($"{spaces}{nameof(SomeValueProp)} = {SomeValueProp}");
             sb.PrintObjProp(n, nameof(_context), _context);
             //sb.AppendLine($"{spaces}{nameof()} = {}");

@@ -6,6 +6,10 @@ namespace SymOntoClay.Serialization.SmartValues
 {
     public class ExternalSettingsSmartValue<T>: SmartValue<T>
     {
+        public ExternalSettingsSmartValue()
+        {
+        }
+
         public ExternalSettingsSmartValue(T value, Type settingType, Type holderType, string holderKey) 
         {
 #if DEBUG

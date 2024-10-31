@@ -631,7 +631,7 @@ namespace SymOntoClay.Serialization.Implementation
                 return false;
             }
 
-            var targetAttribute = customAttributes.SingleOrDefault(p => p.AttributeType == typeof(SocNoSerializable));
+            var targetAttribute = customAttributes.SingleOrDefault(p => p.AttributeType == typeof(SocNoSerializable) || p.AttributeType == typeof(SocSerializableExternalSettings));
 
             return targetAttribute != null;
         }

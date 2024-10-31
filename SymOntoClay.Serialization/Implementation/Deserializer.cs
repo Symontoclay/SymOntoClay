@@ -149,6 +149,9 @@ namespace SymOntoClay.Serialization.Implementation
                 case "Dictionary`2":
                     return NDeserializeGenericDictionary(type, objectPtr, fullFileName);
 
+                case "ExternalSettingsSmartValue`1":
+                    return NDeserializeExternalSettingsSmartValue(type, objectPtr, fullFileName);
+
                 default:
                     if (type.FullName.StartsWith("System.Threading.") ||
                         type.FullName.StartsWith("System.Collections."))
@@ -303,6 +306,7 @@ namespace SymOntoClay.Serialization.Implementation
         {
 #if DEBUG
             _logger.Info($"type.FullName = {type.FullName}");
+            _logger.Info($"type.Name = {type.Name}");
 #endif
 
             var instance = Activator.CreateInstance(type);
@@ -333,23 +337,24 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"field.FieldType?.FullName = {field.FieldType?.FullName}");
 #endif
 
-                var plainValue = plainObjectsDict[field.Name];
-
+                if(plainObjectsDict.TryGetValue(field.Name, out var plainValue))
+                {
 #if DEBUG
-                _logger.Info($"plainValue = {plainValue}");
+                    _logger.Info($"plainValue = {plainValue}");
 #endif
 
-                var itemValue = ConvertObjectCollectionValueFromSerializableFormat(plainValue);
+                    var itemValue = ConvertObjectCollectionValueFromSerializableFormat(plainValue);
 
 #if DEBUG
-                _logger.Info($"itemValue = {itemValue}");
-                _logger.Info($"itemValue?.GetType()?.FullName = {itemValue?.GetType()?.FullName}");
-                _logger.Info($"itemValue?.GetType()?.Name = {itemValue?.GetType()?.Name}");
-                _logger.Info($"field.FieldType.FullName = {field.FieldType.FullName}");
-                _logger.Info($"field.FieldType.Name = {field.FieldType.Name}");
+                    _logger.Info($"itemValue = {itemValue}");
+                    _logger.Info($"itemValue?.GetType()?.FullName = {itemValue?.GetType()?.FullName}");
+                    _logger.Info($"itemValue?.GetType()?.Name = {itemValue?.GetType()?.Name}");
+                    _logger.Info($"field.FieldType.FullName = {field.FieldType.FullName}");
+                    _logger.Info($"field.FieldType.Name = {field.FieldType.Name}");
 #endif
 
-                SetFieldValue(instance, field, itemValue);
+                    SetFieldValue(instance, field, itemValue);
+                }
             }
 
             return instance;
@@ -1558,6 +1563,11 @@ namespace SymOntoClay.Serialization.Implementation
             _deserializationContext.RegDeserializedObject(objectPtr.Id, instance);
 
             return instance;
+        }
+
+        private object NDeserializeExternalSettingsSmartValue(Type type, ObjectPtr objectPtr, string fullFileName)
+        {
+            throw new NotImplementedException("1D3E5F1A-261D-4B40-BED3-C3E33F128A32");
         }
 
         private object ConvertObjectCollectionValueFromSerializableFormat(object value)

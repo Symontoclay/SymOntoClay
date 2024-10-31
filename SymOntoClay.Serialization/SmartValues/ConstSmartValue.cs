@@ -6,6 +6,10 @@ namespace SymOntoClay.Serialization.SmartValues
 {
     public class ConstSmartValue<T>: SmartValue<T>
     {
+        public ConstSmartValue() 
+        { 
+        }
+
         public ConstSmartValue(T value)
         { 
             _value = value; 

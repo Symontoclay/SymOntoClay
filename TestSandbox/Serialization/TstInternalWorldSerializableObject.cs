@@ -15,6 +15,10 @@ namespace TestSandbox.Serialization
         private static ILogger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
+        public TstInternalWorldSerializableObject()
+        {
+        }
+
         public TstInternalWorldSerializableObject(TstExternalSettings settings) 
         {
             _settings = settings;

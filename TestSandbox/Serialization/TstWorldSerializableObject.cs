@@ -54,6 +54,25 @@ namespace TestSandbox.Serialization
             //throw new NotImplementedException("B0AD3C35-AAFD-4E6B-A6E8-665B2E672E03");
         }
 
+        public void Load(SerializationSettings settings)
+        {
+#if DEBUG
+            _logger.Info($"settings = {settings}");
+#endif
+
+#if DEBUG
+            var targetPath = Path.Combine(settings.Path, settings.ImageName);
+
+            _logger.Info($"targetPath = {targetPath}");
+
+            var deserializationContext = new DeserializationContext(targetPath);
+
+            var deserializer = new Deserializer(deserializationContext);
+
+            _internal = deserializer.Deserialize<TstInternalWorldSerializableObject>();
+#endif
+        }
+
         public void SetSomeValue(int value)
         {
             _internal.SetSomeValue(value);

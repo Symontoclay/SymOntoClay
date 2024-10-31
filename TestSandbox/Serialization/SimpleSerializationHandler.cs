@@ -18,8 +18,8 @@ namespace TestSandbox.Serialization
         {
             _logger.Info("Begin");
 
-            //DeserializeTstInternalWorldSerializableObject();
-            SerializeTstInternalWorldSerializableObject();
+            DeserializeTstInternalWorldSerializableObject();
+            //SerializeTstInternalWorldSerializableObject();
             //SimpleDictionarySerialization();
             //Deserialize();
             //Serialize();
@@ -29,9 +29,32 @@ namespace TestSandbox.Serialization
 
         private void DeserializeTstInternalWorldSerializableObject()
         {
+            var settings = new TstExternalSettings
+            {
+                Prop1 = "Hi from deserialization"
+            };
 
+#if DEBUG
+            _logger.Info($"settings = {settings}");
+#endif
 
+            var obj = new TstWorldSerializableObject(settings);
 
+#if DEBUG
+            _logger.Info($"obj = {obj}");
+#endif
+
+            var serializationDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Images");
+
+            obj.Load(new SymOntoClay.Serialization.SerializationSettings()
+            {
+                Path = serializationDirectory,
+                ImageName = "TmpImage"
+            });
+
+#if DEBUG
+            _logger.Info($"obj (after) = {obj}");
+#endif
         }
 
         private void SerializeTstInternalWorldSerializableObject()

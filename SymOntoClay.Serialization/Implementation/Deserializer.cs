@@ -2,6 +2,7 @@
 using NLog;
 using SymOntoClay.Serialization.Implementation.InternalPlainObjects;
 using SymOntoClay.Serialization.Settings;
+using SymOntoClay.Serialization.SmartValues;
 using SymOntoClay.Threading;
 using System;
 using System.Collections;
@@ -1569,10 +1570,10 @@ namespace SymOntoClay.Serialization.Implementation
 
         private object NDeserializeExternalSettingsSmartValue(Type type, ObjectPtr objectPtr, string fullFileName)
         {
-            //var instance = NDeserializeComposite(type, objectPtr, fullFileName);
+            var plainObject = JsonConvert.DeserializeObject<ExternalSettingsSmartValuePlainObject>(File.ReadAllText(fullFileName), SerializationHelper.JsonSerializerSettings);
 
 #if DEBUG
-            //_logger.Info($"instance = {instance}");
+            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, Formatting.Indented)}");
 #endif
 
             throw new NotImplementedException("1D3E5F1A-261D-4B40-BED3-C3E33F128A32");

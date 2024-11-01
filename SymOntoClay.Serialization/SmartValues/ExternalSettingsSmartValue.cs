@@ -2,11 +2,12 @@
 using SymOntoClay.Common.DebugHelpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Serialization.SmartValues
 {
-    public class ExternalSettingsSmartValue<T>: SmartValue<T>
+    public class ExternalSettingsSmartValue<T>: SmartValue<T>, INonGenericExternalSettingsSmartValue
     {
         public ExternalSettingsSmartValue()
         {
@@ -45,6 +46,17 @@ namespace SymOntoClay.Serialization.SmartValues
 
         /// <inheritdoc/>
         public override T Value => _value;
+
+        ExternalSettingsSmartValuePlainObject INonGenericExternalSettingsSmartValue.GetPlainObject()
+        {
+            return new ExternalSettingsSmartValuePlainObject
+            {
+                SettingType = _settingType?.FullName,
+                SettingsPropertyName = _settingsPropertyName.ToList(),
+                HolderType = _holderType?.FullName,
+                HolderKey = _holderKey
+            };
+        }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)

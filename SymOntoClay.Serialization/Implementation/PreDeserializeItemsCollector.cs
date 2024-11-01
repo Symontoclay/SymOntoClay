@@ -220,7 +220,7 @@ namespace SymOntoClay.Serialization.Implementation
                     _logger.Info($"externalSettings = {externalSettings}");
 #endif
 
-                    _deserializationContext.RegExternalSettings(externalSettings, type, settingsInstanceId);
+                    _deserializationContext.RegExternalSettings(externalSettings, field.FieldType, type, settingsInstanceId);
                 }
             }
         }

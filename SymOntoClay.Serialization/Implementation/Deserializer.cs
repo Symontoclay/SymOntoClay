@@ -1576,6 +1576,14 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, Formatting.Indented)}");
 #endif
 
+            //var 
+
+            //var type = GetType(objectPtr.TypeName);
+
+#if DEBUG
+            //_logger.Info($"type.FullName = {type.FullName}");
+#endif
+
             throw new NotImplementedException("1D3E5F1A-261D-4B40-BED3-C3E33F128A32");
         }
 

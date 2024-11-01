@@ -11,27 +11,41 @@ namespace SymOntoClay.Serialization.Implementation
 #endif
 
         /// <inheritdoc/>
-        public void RegExternalSettings(object settings, Type holderType, string holderKey)
+        public void RegExternalSettings(object settings, Type settingsType, Type holderType, string holderKey)
         {
 #if DEBUG
             _logger.Info($"settings = {settings}");
+            _logger.Info($"settingsType.FullName = {settingsType.FullName}");
             _logger.Info($"holderType.FullName = {holderType.FullName}");
             _logger.Info($"holderKey = {holderKey}");
 #endif
 
             if (_externalSettingsDict.TryGetValue(holderType, out var holderKeysDict))
             {
-                holderKeysDict[holderKey] = settings;
+                if(holderKeysDict.TryGetValue(holderKey, out var settingsTypeDict))
+                {
+                    settingsTypeDict[settingsType] = settings;
+                }
+                else
+                {
+                    settingsTypeDict = new Dictionary<Type, object>();
+                    settingsTypeDict[settingsType] = settings;
+
+                    holderKeysDict[holderKey] = settingsTypeDict;
+                }
             }
             else
             {
-                _externalSettingsDict[holderType] = new Dictionary<string, object>
-                {
-                    { holderKey, settings }
-                };
+                var settingsTypeDict = new Dictionary<Type, object>();
+                settingsTypeDict[settingsType] = settings;
+
+                holderKeysDict = new Dictionary<string, Dictionary<Type, object>>();
+                holderKeysDict[holderKey] = settingsTypeDict;
+
+                _externalSettingsDict[holderType] = holderKeysDict;
             }
         }
 
-        private Dictionary<Type, Dictionary<string, object>> _externalSettingsDict = new Dictionary<Type, Dictionary<string, object>>();
+        private Dictionary<Type, Dictionary<string, Dictionary<Type, object>>> _externalSettingsDict = new Dictionary<Type, Dictionary<string, Dictionary<Type, object>>>();
     }
 }

@@ -67,6 +67,10 @@ namespace TestSandbox.Serialization
 
             var deserializationContext = new DeserializationContext(targetPath);
 
+            var collector = new PreDeserializeItemsCollector(deserializationContext);
+
+            collector.Run(_internal);
+
             var deserializer = new Deserializer(deserializationContext);
 
             _internal = deserializer.Deserialize<TstInternalWorldSerializableObject>();

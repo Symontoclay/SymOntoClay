@@ -418,7 +418,7 @@ namespace SymOntoClay.Serialization.Implementation
 
                 var customAttributes = field.CustomAttributes;
 
-                var customAttributeDataFromProperties = GetCustomAttributeDataFromProperties(propertiesAttributesDict, field.Name);
+                var customAttributeDataFromProperties = SerializationHelper.GetCustomAttributeDataFromProperties(propertiesAttributesDict, field.Name);
 
 #if DEBUG
                 _logger.Info($"customAttributeDataFromProperties?.Count() = {customAttributeDataFromProperties?.Count()}");
@@ -553,37 +553,6 @@ namespace SymOntoClay.Serialization.Implementation
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
             }
-        }
-
-        private IEnumerable<CustomAttributeData> GetCustomAttributeDataFromProperties(Dictionary<string, IEnumerable<CustomAttributeData>> propertiesAttributesDict, string fieldName)
-        {
-#if DEBUG
-            _logger.Info($"fieldName = {fieldName}");
-#endif
-
-            var properyName = GetProperyName(fieldName);
-
-#if DEBUG
-            _logger.Info($"properyName = {properyName}");
-#endif
-
-            propertiesAttributesDict.TryGetValue(properyName, out var value);
-
-            return value ?? Enumerable.Empty<CustomAttributeData>();
-        }
-
-        private string GetProperyName(string fieldName)
-        {
-#if DEBUG
-            _logger.Info($"fieldName = {fieldName}");
-#endif
-
-            if(fieldName.EndsWith("k__BackingField"))
-            {
-                return fieldName.Substring(1, fieldName.IndexOf(">") - 1);
-            }
-
-            return string.Empty;
         }
 
         private object GetSettingsParameter(FieldInfo[] fields, object obj, string settingsParameterName)

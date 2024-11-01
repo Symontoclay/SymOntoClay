@@ -1,6 +1,6 @@
 ﻿namespace SymOntoClay.Serialization
 {
-    public interface IDeserializationContext: IDeserializedObjectPool, ISerializationDirs
+    public interface IDeserializationContext: IDeserializedObjectPool, ISerializationDirs, IDeserializedExternalSettings
     {
     }
 }

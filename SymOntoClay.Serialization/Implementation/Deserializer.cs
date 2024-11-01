@@ -15,7 +15,9 @@ namespace SymOntoClay.Serialization.Implementation
 {
     public class Deserializer : IDeserializer
     {
+#if DEBUG
         private static ILogger _logger = LogManager.GetCurrentClassLogger();
+#endif
 
         public Deserializer(IDeserializationContext deserializationContext)
         {
@@ -1567,6 +1569,12 @@ namespace SymOntoClay.Serialization.Implementation
 
         private object NDeserializeExternalSettingsSmartValue(Type type, ObjectPtr objectPtr, string fullFileName)
         {
+            //var instance = NDeserializeComposite(type, objectPtr, fullFileName);
+
+#if DEBUG
+            //_logger.Info($"instance = {instance}");
+#endif
+
             throw new NotImplementedException("1D3E5F1A-261D-4B40-BED3-C3E33F128A32");
         }
 

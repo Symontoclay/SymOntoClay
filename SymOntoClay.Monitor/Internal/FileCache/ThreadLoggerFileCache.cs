@@ -20,6 +20,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Serialization.SmartValues;
+using SymOntoClay.Serialization.SmartValues.Functors;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -35,8 +37,8 @@ namespace SymOntoClay.Monitor.Internal.FileCache
         //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        public ThreadLoggerFileCache(string absoluteDirectory, string relativeDirectory, string nodeId, string threadId)
-            : base(Path.Combine(absoluteDirectory, threadId), Path.Combine(relativeDirectory, threadId))
+        public ThreadLoggerFileCache(SmartValue<string> absoluteDirectory, string relativeDirectory, string nodeId, string threadId)
+            : base(new PathCombineSmartValue(absoluteDirectory, new ConstSmartValue<string>(threadId)), Path.Combine(relativeDirectory, threadId))
         {
 #if DEBUG
             //_globalLogger.Info($"absoluteDirectory = {absoluteDirectory}");

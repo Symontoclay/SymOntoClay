@@ -20,6 +20,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Serialization.SmartValues;
+using SymOntoClay.Serialization.SmartValues.Functors;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -37,8 +39,8 @@ namespace SymOntoClay.Monitor.Internal.FileCache
 
         private readonly string _nodeId;
 
-        public MonitorNodeFileCache(string absoluteDirectory, string relativeDirectory, string nodeId)
-            : base(Path.Combine(absoluteDirectory, nodeId), Path.Combine(relativeDirectory, nodeId))
+        public MonitorNodeFileCache(SmartValue<string> absoluteDirectory, string relativeDirectory, string nodeId)
+            : base(new PathCombineSmartValue(absoluteDirectory, new ConstSmartValue<string>(nodeId)), Path.Combine(relativeDirectory, nodeId))
         {
 #if DEBUG
             //_globalLogger.Info($"absoluteDirectory = {absoluteDirectory}");

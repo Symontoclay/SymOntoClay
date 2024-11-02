@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Serialization.SmartValues;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -35,19 +36,19 @@ namespace SymOntoClay.Monitor.Internal.FileCache
         private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        protected BaseFileCache(string absoluteDirectory, string relativeDirectory)
+        protected BaseFileCache(SmartValue<string> absoluteDirectory, string relativeDirectory)
         {
             _absoluteDirectory = absoluteDirectory;
             _relativeDirectory = relativeDirectory;
 
-            Directory.CreateDirectory(absoluteDirectory);
+            Directory.CreateDirectory(absoluteDirectory.Value);
         }
 
-        protected readonly string _absoluteDirectory;
+        protected readonly SmartValue<string> _absoluteDirectory;
         protected readonly string _relativeDirectory;
 
         /// <inheritdoc/>
-        public string AbsoluteDirectoryName => _absoluteDirectory;
+        public SmartValue<string> AbsoluteDirectoryName => _absoluteDirectory;
 
         /// <inheritdoc/>
         public string RelativeDirectoryName => _relativeDirectory;
@@ -60,7 +61,7 @@ namespace SymOntoClay.Monitor.Internal.FileCache
             //_globalLogger.Info($"messageText = {messageText}");
 #endif
 
-            var fullFileName = Path.Combine(_absoluteDirectory, fileName);
+            var fullFileName = Path.Combine(_absoluteDirectory.Value, fileName);
 
 #if DEBUG
             //_globalLogger.Info($"fullFileName = {fullFileName}");

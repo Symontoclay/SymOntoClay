@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Serialization.SmartValues;
+using SymOntoClay.Serialization.SmartValues.Functors;
 using System.IO;
 
 namespace SymOntoClay.Monitor.Internal.FileCache
@@ -32,7 +33,7 @@ namespace SymOntoClay.Monitor.Internal.FileCache
 #endif
 
         public MonitorFileCache(SmartValue<string> messagesDir, string sessionName)
-            : base(Path.Combine(messagesDir, sessionName), string.Empty)
+            : base(new PathCombineSmartValue(messagesDir, new ConstSmartValue<string>(sessionName)), string.Empty)
         {
 #if DEBUG
             //_globalLogger.Info($"messagesDir = {messagesDir}");

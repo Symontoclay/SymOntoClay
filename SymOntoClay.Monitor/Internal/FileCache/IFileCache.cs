@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Serialization.SmartValues;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace SymOntoClay.Monitor.Internal.FileCache
     public interface IFileCache
     {
         void WriteFile(string fileName, string messageText);
-        string AbsoluteDirectoryName { get; }
+        SmartValue<string> AbsoluteDirectoryName { get; }
         string RelativeDirectoryName { get; }
     }
 }

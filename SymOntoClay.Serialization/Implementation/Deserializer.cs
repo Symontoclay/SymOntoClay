@@ -414,8 +414,8 @@ namespace SymOntoClay.Serialization.Implementation
             _logger.Info($"settings = {JsonConvert.SerializeObject(settings, Formatting.Indented)}");
 #endif
 
-            var instance = new CustomThreadPool(settings.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
-                settings.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
+            var instance = new CustomThreadPool(settings.MinThreadsCount?.Value ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
+                settings.MaxThreadsCount?.Value ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
                 settings.CancellationToken ?? CancellationToken.None);
 
             _deserializationContext.RegDeserializedObject(objectPtr.Id, instance);

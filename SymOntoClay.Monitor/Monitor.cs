@@ -40,6 +40,8 @@ using SymOntoClay.Common.Disposing;
 using SymOntoClay.Threading;
 using SymOntoClay.Serialization.Settings;
 using SymOntoClay.Serialization;
+using SymOntoClay.Serialization.SmartValues;
+using System.Runtime;
 
 namespace SymOntoClay.Monitor
 {
@@ -49,10 +51,13 @@ namespace SymOntoClay.Monitor
         //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
+        [SocSerializableExternalSettings("")]
+        private readonly MonitorSettings _monitorSettings;
+
         private readonly MonitorContext _monitorContext;
-        private readonly IRemoteMonitor _remoteMonitor;
+        private readonly SmartValue<IRemoteMonitor> _remoteMonitor;
         private readonly MessageProcessor _messageProcessor;
-        private readonly MonitorFeatures _features;
+        private readonly SmartValue<MonitorFeatures> _features;
         private readonly MonitorFileCache _fileCache;
 
         private readonly CancellationTokenSource _cancellationTokenSource;
@@ -70,11 +75,12 @@ namespace SymOntoClay.Monitor
         private readonly MessageNumberGenerator _globalMessageNumberGenerator;
         private readonly MessageNumberGenerator _messageNumberGenerator = new MessageNumberGenerator();
 
-        private readonly IDictionary<string, BaseMonitorSettings> _nodesSettings;
-        private readonly bool _enableOnlyDirectlySetUpNodes;
+        private readonly SmartValue<IDictionary<string, BaseMonitorSettings>> _nodesSettings;
+        private readonly SmartValue<bool> _enableOnlyDirectlySetUpNodes;
 
         private readonly MonitorLogger _monitorLoggerImpl;
 
+        [Obsolete("Serialization refactoring", true)]
         private readonly BaseMonitorSettings _baseMonitorSettings;
 
         private readonly bool _TopSysEnable = true;
@@ -90,6 +96,8 @@ namespace SymOntoClay.Monitor
             //_globalLogger.Info($"monitorSettings = {monitorSettings}");
 #endif
 
+            _monitorSettings = monitorSettings;
+
             _cancellationTokenSource = new CancellationTokenSource();
 
             _linkedCancellationTokenSourceSettings = new LinkedCancellationTokenSourceSerializationSettings()
@@ -97,7 +105,7 @@ namespace SymOntoClay.Monitor
                 Token1 = _cancellationTokenSource.Token,
                 Token2 = monitorSettings.CancellationToken
             };
-
+            
             _linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, monitorSettings.CancellationToken);
 
             var threadingSettings = monitorSettings.ThreadingSettings;
@@ -116,10 +124,12 @@ namespace SymOntoClay.Monitor
                 maxThreadsCount,
                 _linkedCancellationTokenSource.Token);
 
-            _nodesSettings = monitorSettings.NodesSettings;
+            var nodesSettings = monitorSettings.NodesSettings;
+
+            _nodesSettings = new ExternalSettingsSmartValue<IDictionary<string, BaseMonitorSettings>>(nodesSettings, typeof(MonitorSettings), nameof(monitorSettings.NodesSettings), GetType(), string.Empty);
             _enableOnlyDirectlySetUpNodes = monitorSettings.EnableOnlyDirectlySetUpNodes;
 
-            if(_nodesSettings == null)
+            if(nodesSettings == null)
             {
                 _nodesSettings = new Dictionary<string, BaseMonitorSettings>();
 
@@ -130,7 +140,7 @@ namespace SymOntoClay.Monitor
             }
             else
             {
-                if(!_nodesSettings.ContainsKey(Id) && _enableOnlyDirectlySetUpNodes)
+                if(!nodesSettings.ContainsKey(Id) && _enableOnlyDirectlySetUpNodes)
                 {
                     _TopSysEnable = false;
                 }
@@ -138,9 +148,11 @@ namespace SymOntoClay.Monitor
 
             _baseMonitorSettings = monitorSettings.Clone();
 
+            var features = _baseMonitorSettings.Features;
+
             _features = _baseMonitorSettings.Features;
 
-            if (_features == null)
+            if (features == null)
             {
                 _features = new MonitorFeatures
                 {

@@ -25,6 +25,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.StandardLibrary;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Serialization.SmartValues;
 using SymOntoClay.Threading;
 
 namespace SymOntoClay.Core.Internal
@@ -40,10 +41,10 @@ namespace SymOntoClay.Core.Internal
         public StandardLibraryLoader StandardLibraryLoader { get; set; }
 
         /// <inheritdoc/>
-        public IHostSupport HostSupport { get; set; }
+        public SmartValue<IHostSupport> HostSupport { get; set; }
 
         /// <inheritdoc/>
-        public IHostListener HostListener { get; set; }
+        public SmartValue<IHostListener> HostListener { get; set; }
 
         /// <inheritdoc/>
         public IConditionalEntityHostSupport ConditionalEntityHostSupport { get; set; }

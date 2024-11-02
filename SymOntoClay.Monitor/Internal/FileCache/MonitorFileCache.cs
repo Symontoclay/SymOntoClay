@@ -20,12 +20,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using System;
-using System.Collections.Generic;
+using SymOntoClay.Serialization.SmartValues;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Monitor.Internal.FileCache
 {
@@ -35,7 +31,7 @@ namespace SymOntoClay.Monitor.Internal.FileCache
         //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        public MonitorFileCache(string messagesDir, string sessionName)
+        public MonitorFileCache(SmartValue<string> messagesDir, string sessionName)
             : base(Path.Combine(messagesDir, sessionName), string.Empty)
         {
 #if DEBUG

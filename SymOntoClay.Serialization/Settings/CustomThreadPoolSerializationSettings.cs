@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Serialization.SmartValues;
 using System.Text;
 using System.Threading;
 
@@ -7,8 +8,8 @@ namespace SymOntoClay.Serialization.Settings
 {
     public class CustomThreadPoolSerializationSettings : IObjectToString
     {
-        public int? MinThreadsCount { get; set; }
-        public int? MaxThreadsCount { get; set; }
+        public SmartValue<int?> MinThreadsCount { get; set; }
+        public SmartValue<int?> MaxThreadsCount { get; set; }
         public CancellationToken? CancellationToken { get; set; }
 
         /// <inheritdoc/>
@@ -27,8 +28,8 @@ namespace SymOntoClay.Serialization.Settings
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.PrintExisting(n, nameof(CancellationToken), CancellationToken);
-            sb.AppendLine($"{spaces}{nameof(MinThreadsCount)} = {MinThreadsCount}");
-            sb.AppendLine($"{spaces}{nameof(MaxThreadsCount)} = {MaxThreadsCount}");
+            sb.PrintObjProp(n, nameof(MinThreadsCount), MinThreadsCount);
+            sb.PrintObjProp(n, nameof(MaxThreadsCount), MaxThreadsCount);
             return sb.ToString();
         }
     }

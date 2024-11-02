@@ -41,7 +41,8 @@ namespace SymOntoClay.Monitor.Internal
         public MonitorFileCache FileCache { get; set; }
         public MessageProcessor MessageProcessor { get; set; }
         public MessageNumberGenerator GlobalMessageNumberGenerator { get; set; } = new MessageNumberGenerator();
-        
+
+        [Obsolete("Serialization refactoring", true)]
         public BaseMonitorSettings Settings { get; set; }
 
         /// <summary>

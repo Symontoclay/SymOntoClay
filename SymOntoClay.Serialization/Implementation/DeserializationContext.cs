@@ -55,5 +55,11 @@ namespace SymOntoClay.Serialization.Implementation
         {
             _deserializedExternalSettings.RegExternalSettings(settings, settingsType, holderType, holderKey);
         }
+
+        /// <inheritdoc/>
+        public object GetExternalSettings(Type settingsType, Type holderType, string holderKey)
+        {
+            return _deserializedExternalSettings.GetExternalSettings(settingsType, holderType, holderKey);
+        }
     }
 }

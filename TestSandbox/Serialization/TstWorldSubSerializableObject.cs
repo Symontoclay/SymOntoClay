@@ -14,6 +14,10 @@ namespace TestSandbox.Serialization
         private static ILogger _logger = LogManager.GetCurrentClassLogger();
 #endif
 
+        public TstWorldSubSerializableObject()
+        {
+        }
+
         public TstWorldSubSerializableObject(TstEngineContext context) 
         {
             _context = context;

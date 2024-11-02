@@ -25,6 +25,7 @@ using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Internal.FileCache;
+using SymOntoClay.Serialization.SmartValues;
 using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
@@ -37,22 +38,21 @@ namespace SymOntoClay.Monitor.Internal
 {
     public class MonitorContext : IObjectToString
     {
-        public MonitorFeatures Features { get; set; }
+        public SmartValue<MonitorFeatures> Features { get; set; }
         public MonitorFileCache FileCache { get; set; }
         public MessageProcessor MessageProcessor { get; set; }
         public MessageNumberGenerator GlobalMessageNumberGenerator { get; set; } = new MessageNumberGenerator();
 
-        [Obsolete("Serialization refactoring", true)]
-        public BaseMonitorSettings Settings { get; set; }
+        public SmartValue<BaseMonitorSettings> Settings { get; set; }
 
         /// <summary>
         /// Gets or sets list of platform specific loggers.
         /// It alows us to add, for example, console logger for Unity3D.
         /// </summary>
-        public IList<IPlatformLogger> PlatformLoggers { get; set; }
+        public SmartValue<IList<IPlatformLogger>> PlatformLoggers { get; set; }
 
         public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
-        public CustomThreadPoolSettings ThreadingSettings { get; set; }
+        public SmartValue<CustomThreadPoolSettings> ThreadingSettings { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -74,9 +74,9 @@ namespace SymOntoClay.Monitor.Internal
             sb.PrintObjProp(n, nameof(Features), Features);
             sb.PrintExisting(n, nameof(FileCache), FileCache);
             sb.PrintExisting(n, nameof(MessageProcessor), MessageProcessor);
-            var platformLoggersMark = PlatformLoggers == null ? "No" : PlatformLoggers.Any() ? "Yes" : "No";
+            var platformLoggersMark = PlatformLoggers.Value == null ? "No" : PlatformLoggers.Value.Any() ? "Yes" : "No";
             sb.AppendLine($"{spaces}{nameof(PlatformLoggers)} = {platformLoggersMark}");
-            sb.PrintExisting(n, nameof(Settings), Settings);
+            sb.PrintExisting(n, nameof(Settings), Settings.Value);
             sb.PrintExisting(n, nameof(CancellationToken), CancellationToken);
             sb.PrintObjProp(n, nameof(ThreadingSettings), ThreadingSettings);
             return sb.ToString();

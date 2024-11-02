@@ -80,8 +80,7 @@ namespace SymOntoClay.Monitor
 
         private readonly MonitorLogger _monitorLoggerImpl;
 
-        [Obsolete("Serialization refactoring", true)]
-        private readonly BaseMonitorSettings _baseMonitorSettings;
+        private readonly SmartValue<BaseMonitorSettings> _baseMonitorSettings;
 
         private readonly bool _TopSysEnable = true;
 
@@ -97,6 +96,8 @@ namespace SymOntoClay.Monitor
 #endif
 
             _monitorSettings = monitorSettings;
+            var settingType = typeof(MonitorSettings);
+            var holderKey = string.Empty;
 
             _cancellationTokenSource = new CancellationTokenSource();
 
@@ -110,8 +111,13 @@ namespace SymOntoClay.Monitor
 
             var threadingSettings = monitorSettings.ThreadingSettings;
 
-            var minThreadsCount = threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount;
-            var maxThreadsCount = threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount;
+            var minThreadsCount = new ExternalSettingsSmartValue<int?>(threadingSettings?.MinThreadsCount, settingType,
+                new List<string> { nameof(monitorSettings.ThreadingSettings), nameof(monitorSettings.ThreadingSettings.MinThreadsCount) },
+                GetType(), holderKey);
+
+            var maxThreadsCount = new ExternalSettingsSmartValue<int?>(threadingSettings?.MaxThreadsCount, settingType,
+                new List<string> { nameof(monitorSettings.ThreadingSettings), nameof(monitorSettings.ThreadingSettings.MaxThreadsCount) },
+                GetType(), holderKey);
 
             _threadPoolSerializationSettings = new CustomThreadPoolSerializationSettings()
             {
@@ -120,27 +126,27 @@ namespace SymOntoClay.Monitor
                 CancellationToken = _linkedCancellationTokenSource.Token
             };
 
-            _threadPool = new CustomThreadPool(minThreadsCount,
-                maxThreadsCount,
+            _threadPool = new CustomThreadPool(minThreadsCount.Value ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
+                maxThreadsCount.Value ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
                 _linkedCancellationTokenSource.Token);
 
-            var nodesSettings = monitorSettings.NodesSettings;
+            _nodesSettings = new ExternalSettingsSmartValue<IDictionary<string, BaseMonitorSettings>>(monitorSettings.NodesSettings, settingType, nameof(monitorSettings.NodesSettings), GetType(), holderKey);
+            
+            _enableOnlyDirectlySetUpNodes = new ExternalSettingsSmartValue<bool>(monitorSettings.EnableOnlyDirectlySetUpNodes, settingType,
+                nameof(monitorSettings.EnableOnlyDirectlySetUpNodes), GetType(), holderKey);
 
-            _nodesSettings = new ExternalSettingsSmartValue<IDictionary<string, BaseMonitorSettings>>(nodesSettings, typeof(MonitorSettings), nameof(monitorSettings.NodesSettings), GetType(), string.Empty);
-            _enableOnlyDirectlySetUpNodes = monitorSettings.EnableOnlyDirectlySetUpNodes;
-
-            if(nodesSettings == null)
+            if(_nodesSettings.Value == null)
             {
-                _nodesSettings = new Dictionary<string, BaseMonitorSettings>();
+                _nodesSettings.SetValue(new Dictionary<string, BaseMonitorSettings>());
 
-                if(_enableOnlyDirectlySetUpNodes)
+                if(_enableOnlyDirectlySetUpNodes.Value)
                 {
                     _TopSysEnable = false;
                 }
             }
             else
             {
-                if(!nodesSettings.ContainsKey(Id) && _enableOnlyDirectlySetUpNodes)
+                if(!_nodesSettings.Value.ContainsKey(Id) && _enableOnlyDirectlySetUpNodes.Value)
                 {
                     _TopSysEnable = false;
                 }
@@ -148,13 +154,11 @@ namespace SymOntoClay.Monitor
 
             _baseMonitorSettings = monitorSettings.Clone();
 
-            var features = _baseMonitorSettings.Features;
+            _features = new ExternalSettingsSmartValue<MonitorFeatures>(monitorSettings.Features, settingType, nameof(monitorSettings.Features), GetType(), holderKey);
 
-            _features = _baseMonitorSettings.Features;
-
-            if (features == null)
+            if (_features.Value == null)
             {
-                _features = new MonitorFeatures
+                _features.SetValue(new MonitorFeatures
                 {
                     EnableCallMethod = true,
                     EnableParameter = true,
@@ -202,9 +206,7 @@ namespace SymOntoClay.Monitor
                     EnableWarn = true,
                     EnableError = true,
                     EnableFatal = true
-                };
-
-                _baseMonitorSettings.Features = _features;
+                });
             }
 
             _monitorContext = new MonitorContext()
@@ -237,7 +239,7 @@ namespace SymOntoClay.Monitor
         public string SessionDirectoryName => _sessionName;
 
         /// <inheritdoc/>
-        public string SessionDirectoryFullName => _fileCache.AbsoluteDirectoryName;
+        public string SessionDirectoryFullName => _fileCache.AbsoluteDirectoryName.Value;
 
         MessageProcessor IMonitorLoggerContext.MessageProcessor => _messageProcessor;
         IMonitorFeatures IMonitorLoggerContext.Features => this;
@@ -261,7 +263,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableCallMethod;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableCallMethod;
             }
         }
 
@@ -269,7 +271,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableParameter;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableParameter;
             }
         }
 
@@ -277,7 +279,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableEndCallMethod;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableEndCallMethod;
             }
         }
 
@@ -286,7 +288,7 @@ namespace SymOntoClay.Monitor
         { 
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableMethodResolving;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableMethodResolving;
             }
         }
 
@@ -294,7 +296,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableEndMethodResolving;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableEndMethodResolving;
             }
         }
 
@@ -302,7 +304,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableActionResolving;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableActionResolving;
             }
         }
 
@@ -310,7 +312,7 @@ namespace SymOntoClay.Monitor
         { 
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableEndActionResolving;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableEndActionResolving;
             }
         }
 
@@ -318,7 +320,7 @@ namespace SymOntoClay.Monitor
         { 
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableHostMethodResolving;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableHostMethodResolving;
             }
         }
 
@@ -326,7 +328,7 @@ namespace SymOntoClay.Monitor
         { 
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableEndHostMethodResolving;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableEndHostMethodResolving;
             }
         }
 
@@ -334,7 +336,7 @@ namespace SymOntoClay.Monitor
         { 
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableHostMethodActivation;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableHostMethodActivation;
             }
         }
 
@@ -342,7 +344,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableEndHostMethodActivation;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableEndHostMethodActivation;
             }
         }
 
@@ -350,7 +352,7 @@ namespace SymOntoClay.Monitor
         { 
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableHostMethodStarting;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableHostMethodStarting;
             }
         }
 
@@ -358,7 +360,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableEndHostMethodStarting;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableEndHostMethodStarting;
             }
         }
 
@@ -366,7 +368,7 @@ namespace SymOntoClay.Monitor
         { 
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableHostMethodExecution;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableHostMethodExecution;
             }
         }
 
@@ -374,7 +376,7 @@ namespace SymOntoClay.Monitor
         { 
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableEndHostMethodExecution;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableEndHostMethodExecution;
             }
         }
 
@@ -382,7 +384,7 @@ namespace SymOntoClay.Monitor
         { 
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableSystemExpr;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableSystemExpr;
             }
         }
 
@@ -390,7 +392,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableCodeFrame;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableCodeFrame;
             }
         }
 
@@ -398,7 +400,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableLeaveThreadExecutor;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableLeaveThreadExecutor;
             }
         }
 
@@ -406,7 +408,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableGoBackToPrevCodeFrame;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableGoBackToPrevCodeFrame;
             }
         }
 
@@ -414,7 +416,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableStartProcessInfo;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableStartProcessInfo;
             }
         }
 
@@ -422,7 +424,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableCancelProcessInfo;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableCancelProcessInfo;
             }
         }
 
@@ -430,7 +432,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableWeakCancelProcessInfo;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableWeakCancelProcessInfo;
             }
         }
 
@@ -438,7 +440,7 @@ namespace SymOntoClay.Monitor
         { 
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableCancelInstanceExecution;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableCancelInstanceExecution;
             }
         }
 
@@ -446,7 +448,7 @@ namespace SymOntoClay.Monitor
         { 
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableSetExecutionCoordinatorStatus;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableSetExecutionCoordinatorStatus;
             }
         }
 
@@ -454,7 +456,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableSetProcessInfoStatus;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableSetProcessInfoStatus;
             }
         }
 
@@ -462,7 +464,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableWaitProcessInfo;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableWaitProcessInfo;
             }
         }
 
@@ -470,7 +472,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableRunLifecycleTrigger;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableRunLifecycleTrigger;
             }
         }
 
@@ -478,7 +480,7 @@ namespace SymOntoClay.Monitor
         { 
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableDoTriggerSearch;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableDoTriggerSearch;
             }
         }
 
@@ -486,7 +488,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableEndDoTriggerSearch;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableEndDoTriggerSearch;
             }
         }
 
@@ -494,7 +496,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableSetConditionalTrigger;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableSetConditionalTrigger;
             }
         }
 
@@ -502,7 +504,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableResetConditionalTrigger;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableResetConditionalTrigger;
             }
         }
 
@@ -510,7 +512,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableRunSetExprOfConditionalTrigger;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableRunSetExprOfConditionalTrigger;
             }
         }
 
@@ -518,7 +520,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableEndRunSetExprOfConditionalTrigger;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableEndRunSetExprOfConditionalTrigger;
             }
         }
 
@@ -526,7 +528,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableRunResetExprOfConditionalTrigger;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableRunResetExprOfConditionalTrigger;
             }
         }
 
@@ -534,7 +536,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableEndRunResetExprOfConditionalTrigger;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableEndRunResetExprOfConditionalTrigger;
             }
         }
 
@@ -542,9 +544,9 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && (_features.EnableDoTriggerSearch || _features.EnableEndDoTriggerSearch || _features.EnableSetConditionalTrigger ||
-                    _features.EnableResetConditionalTrigger || _features.EnableRunSetExprOfConditionalTrigger || _features.EnableEndRunSetExprOfConditionalTrigger || _features.EnableRunResetExprOfConditionalTrigger ||
-                    _features.EnableEndRunResetExprOfConditionalTrigger);
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && (_features.Value.EnableDoTriggerSearch || _features.Value.EnableEndDoTriggerSearch || _features.Value.EnableSetConditionalTrigger ||
+                    _features.Value.EnableResetConditionalTrigger || _features.Value.EnableRunSetExprOfConditionalTrigger || _features.Value.EnableEndRunSetExprOfConditionalTrigger || _features.Value.EnableRunResetExprOfConditionalTrigger ||
+                    _features.Value.EnableEndRunResetExprOfConditionalTrigger);
             }
         }
 
@@ -552,7 +554,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableActivateIdleAction;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableActivateIdleAction;
             }
         }
 
@@ -560,7 +562,7 @@ namespace SymOntoClay.Monitor
         { 
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableTasks;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableTasks;
             }
         }
 
@@ -568,7 +570,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableOutput;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableOutput;
             }
         }
 
@@ -576,7 +578,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableTrace;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableTrace;
             }
         }
 
@@ -584,7 +586,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableDebug;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableDebug;
             }
         }
 
@@ -592,7 +594,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableInfo;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableInfo;
             }
         }
 
@@ -600,7 +602,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableWarn;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableWarn;
             }
         }
 
@@ -608,7 +610,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableError;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableError;
             }
         }
 
@@ -616,7 +618,7 @@ namespace SymOntoClay.Monitor
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnableFatal;
+                return _TopSysEnable && _baseMonitorSettings.Value.Enable && _features.Value.EnableFatal;
             }
         }
 

@@ -36,7 +36,7 @@ namespace SymOntoClay.Serialization.SmartValues
         }
 
         [SocNoSerializable]
-        private readonly T _value;
+        private T _value;
 
 
         private readonly Type _settingType;

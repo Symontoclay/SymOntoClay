@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Internal.FileCache;
+using SymOntoClay.Serialization.SmartValues;
 using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
@@ -47,6 +48,6 @@ namespace SymOntoClay.Monitor.Internal
         bool EnableAddingRemovingFactLoggingInStorages { get; }
 
         CancellationToken CancellationToken { get; }
-        CustomThreadPoolSettings ThreadingSettings { get; }
+        SmartValue<CustomThreadPoolSettings> ThreadingSettings { get; }
     }
 }

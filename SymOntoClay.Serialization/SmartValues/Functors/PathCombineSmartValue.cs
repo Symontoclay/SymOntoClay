@@ -23,6 +23,12 @@ namespace SymOntoClay.Serialization.SmartValues.Functors
         public override string Value => Path.Combine(_path1.Value, _path2.Value);
 
         /// <inheritdoc/>
+        public override void SetValue(string value)
+        {
+            throw new System.NotSupportedException("102DD896-BCC8-40EA-918C-997848EFA747");
+        }
+
+        /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);

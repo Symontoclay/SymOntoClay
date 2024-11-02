@@ -13,6 +13,8 @@ namespace SymOntoClay.Serialization.SmartValues
 
         public abstract T Value { get; }
 
+        public abstract void SetValue(T value);
+
         /// <inheritdoc/>
         public override string ToString()
         {

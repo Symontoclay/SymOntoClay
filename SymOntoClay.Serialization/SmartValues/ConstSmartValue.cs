@@ -15,9 +15,15 @@ namespace SymOntoClay.Serialization.SmartValues
             _value = value; 
         }
 
-        private readonly T _value;
+        private T _value;
 
         /// <inheritdoc/>
         public override T Value => _value;
+
+        /// <inheritdoc/>
+        public override void SetValue(T value)
+        {
+            _value = value;
+        }
     }
 }

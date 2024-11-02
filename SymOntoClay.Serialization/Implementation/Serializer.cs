@@ -2,6 +2,7 @@
 using NLog;
 using SymOntoClay.Serialization.Implementation.InternalPlainObjects;
 using SymOntoClay.Serialization.Settings;
+using SymOntoClay.Serialization.SmartValues;
 using SymOntoClay.Threading;
 using System;
 using System.Collections;
@@ -171,6 +172,9 @@ namespace SymOntoClay.Serialization.Implementation
 
                 case "Dictionary`2":
                     return NSerializeGenericDictionary((IDictionary)obj, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
+
+                case "ExternalSettingsSmartValue`1":
+                    return NSerializeExternalSettingsSmartValue((INonGenericExternalSettingsSmartValue)obj, parentObjInfo, kindOfSerialization, targetObject, rootObj);
 
                 default:
                     if (type.FullName.StartsWith("System.Threading.") ||
@@ -418,7 +422,7 @@ namespace SymOntoClay.Serialization.Implementation
 
                 var customAttributes = field.CustomAttributes;
 
-                var customAttributeDataFromProperties = GetCustomAttributeDataFromProperties(propertiesAttributesDict, field.Name);
+                var customAttributeDataFromProperties = SerializationHelper.GetCustomAttributeDataFromProperties(propertiesAttributesDict, field.Name);
 
 #if DEBUG
                 _logger.Info($"customAttributeDataFromProperties?.Count() = {customAttributeDataFromProperties?.Count()}");
@@ -555,37 +559,6 @@ namespace SymOntoClay.Serialization.Implementation
             }
         }
 
-        private IEnumerable<CustomAttributeData> GetCustomAttributeDataFromProperties(Dictionary<string, IEnumerable<CustomAttributeData>> propertiesAttributesDict, string fieldName)
-        {
-#if DEBUG
-            _logger.Info($"fieldName = {fieldName}");
-#endif
-
-            var properyName = GetProperyName(fieldName);
-
-#if DEBUG
-            _logger.Info($"properyName = {properyName}");
-#endif
-
-            propertiesAttributesDict.TryGetValue(properyName, out var value);
-
-            return value ?? Enumerable.Empty<CustomAttributeData>();
-        }
-
-        private string GetProperyName(string fieldName)
-        {
-#if DEBUG
-            _logger.Info($"fieldName = {fieldName}");
-#endif
-
-            if(fieldName.EndsWith("k__BackingField"))
-            {
-                return fieldName.Substring(1, fieldName.IndexOf(">") - 1);
-            }
-
-            return string.Empty;
-        }
-
         private object GetSettingsParameter(FieldInfo[] fields, object obj, string settingsParameterName)
         {
 #if DEBUG
@@ -631,7 +604,7 @@ namespace SymOntoClay.Serialization.Implementation
                 return false;
             }
 
-            var targetAttribute = customAttributes.SingleOrDefault(p => p.AttributeType == typeof(SocNoSerializable));
+            var targetAttribute = customAttributes.SingleOrDefault(p => p.AttributeType == typeof(SocNoSerializable) || p.AttributeType == typeof(SocSerializableExternalSettings));
 
             return targetAttribute != null;
         }
@@ -4163,6 +4136,84 @@ namespace SymOntoClay.Serialization.Implementation
 
                 case KindOfSerialization.Searching:
                     if (ReferenceEquals(enumerable, targetObject))
+                    {
+                        return objectPtr;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+        }
+
+        private ObjectPtr NSerializeExternalSettingsSmartValue(INonGenericExternalSettingsSmartValue obj, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
+        {
+#if DEBUG
+            _logger.Info($"obj = {obj}");
+            _logger.Info($"kindOfSerialization = {kindOfSerialization}");
+#endif
+
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    break;
+
+                case KindOfSerialization.Searching:
+                    if (!ReferenceEquals(obj, targetObject))
+                    {
+                        return null;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            var instanceId = CreateInstanceId();
+
+#if DEBUG
+            _logger.Info($"instanceId = {instanceId}");
+#endif
+
+            var objectPtr = new ObjectPtr(instanceId, obj.GetType().FullName);
+
+#if DEBUG
+            _logger.Info($"objectPtr = {objectPtr}");
+#endif
+
+            var plainObject = obj.GetPlainObject();
+
+#if DEBUG
+            _logger.Info($"plainObject = {plainObject}");
+#endif
+
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    WriteToFile(plainObject, instanceId);
+                    break;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(obj, targetObject))
+                    {
+                        WriteToFile(plainObject, instanceId);
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSerialization), kindOfSerialization, null);
+            }
+
+            switch (kindOfSerialization)
+            {
+                case KindOfSerialization.General:
+                    return objectPtr;
+
+                case KindOfSerialization.Searching:
+                    if (ReferenceEquals(obj, targetObject))
                     {
                         return objectPtr;
                     }

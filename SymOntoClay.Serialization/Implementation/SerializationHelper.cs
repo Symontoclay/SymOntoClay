@@ -186,5 +186,36 @@ namespace SymOntoClay.Serialization.Implementation
 
             return result.ToArray();
         }
+
+        public static IEnumerable<CustomAttributeData> GetCustomAttributeDataFromProperties(Dictionary<string, IEnumerable<CustomAttributeData>> propertiesAttributesDict, string fieldName)
+        {
+#if DEBUG
+            _logger.Info($"fieldName = {fieldName}");
+#endif
+
+            var properyName = GetProperyName(fieldName);
+
+#if DEBUG
+            _logger.Info($"properyName = {properyName}");
+#endif
+
+            propertiesAttributesDict.TryGetValue(properyName, out var value);
+
+            return value ?? Enumerable.Empty<CustomAttributeData>();
+        }
+
+        public static string GetProperyName(string fieldName)
+        {
+#if DEBUG
+            _logger.Info($"fieldName = {fieldName}");
+#endif
+
+            if (fieldName.EndsWith("k__BackingField"))
+            {
+                return fieldName.Substring(1, fieldName.IndexOf(">") - 1);
+            }
+
+            return string.Empty;
+        }
     }
 }

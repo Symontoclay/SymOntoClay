@@ -36,7 +36,7 @@ namespace SymOntoClay.Serialization.SmartValues
         }
 
         [SocNoSerializable]
-        private readonly T _value;
+        private T _value;
 
 
         private readonly Type _settingType;
@@ -46,6 +46,12 @@ namespace SymOntoClay.Serialization.SmartValues
 
         /// <inheritdoc/>
         public override T Value => _value;
+
+        /// <inheritdoc/>
+        public override void SetValue(T value)
+        {
+            _value = value;
+        }
 
         ExternalSettingsSmartValuePlainObject INonGenericExternalSettingsSmartValue.GetPlainObject()
         {

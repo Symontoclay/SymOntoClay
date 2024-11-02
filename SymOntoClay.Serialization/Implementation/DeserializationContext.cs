@@ -1,4 +1,5 @@
 ﻿using NLog;
+using System;
 using System.Collections.Generic;
 
 namespace SymOntoClay.Serialization.Implementation
@@ -29,6 +30,7 @@ namespace SymOntoClay.Serialization.Implementation
         private string _rootDirName;
 
         private IDeserializedObjectPool _deserializedObjectPool;
+        private IDeserializedExternalSettings _deserializedExternalSettings = new DeserializedExternalSettings();
 
         /// <inheritdoc/>
         public string HeapDirName => _heapDirName;
@@ -46,6 +48,18 @@ namespace SymOntoClay.Serialization.Implementation
         public void RegDeserializedObject(string instanceId, object instance)
         {
             _deserializedObjectPool.RegDeserializedObject(instanceId, instance);
+        }
+
+        /// <inheritdoc/>
+        public void RegExternalSettings(object settings, Type settingsType, Type holderType, string holderKey)
+        {
+            _deserializedExternalSettings.RegExternalSettings(settings, settingsType, holderType, holderKey);
+        }
+
+        /// <inheritdoc/>
+        public object GetExternalSettings(Type settingsType, Type holderType, string holderKey)
+        {
+            return _deserializedExternalSettings.GetExternalSettings(settingsType, holderType, holderKey);
         }
     }
 }

@@ -2,6 +2,7 @@
 using NLog;
 using SymOntoClay.Serialization.Implementation.InternalPlainObjects;
 using SymOntoClay.Serialization.Settings;
+using SymOntoClay.Serialization.SmartValues;
 using SymOntoClay.Threading;
 using System;
 using System.Collections;
@@ -15,7 +16,9 @@ namespace SymOntoClay.Serialization.Implementation
 {
     public class Deserializer : IDeserializer
     {
+#if DEBUG
         private static ILogger _logger = LogManager.GetCurrentClassLogger();
+#endif
 
         public Deserializer(IDeserializationContext deserializationContext)
         {
@@ -148,6 +151,9 @@ namespace SymOntoClay.Serialization.Implementation
 
                 case "Dictionary`2":
                     return NDeserializeGenericDictionary(type, objectPtr, fullFileName);
+
+                case "ExternalSettingsSmartValue`1":
+                    return NDeserializeExternalSettingsSmartValue(type, objectPtr, fullFileName);
 
                 default:
                     if (type.FullName.StartsWith("System.Threading.") ||
@@ -303,6 +309,7 @@ namespace SymOntoClay.Serialization.Implementation
         {
 #if DEBUG
             _logger.Info($"type.FullName = {type.FullName}");
+            _logger.Info($"type.Name = {type.Name}");
 #endif
 
             var instance = Activator.CreateInstance(type);
@@ -333,23 +340,24 @@ namespace SymOntoClay.Serialization.Implementation
                 _logger.Info($"field.FieldType?.FullName = {field.FieldType?.FullName}");
 #endif
 
-                var plainValue = plainObjectsDict[field.Name];
-
+                if(plainObjectsDict.TryGetValue(field.Name, out var plainValue))
+                {
 #if DEBUG
-                _logger.Info($"plainValue = {plainValue}");
+                    _logger.Info($"plainValue = {plainValue}");
 #endif
 
-                var itemValue = ConvertObjectCollectionValueFromSerializableFormat(plainValue);
+                    var itemValue = ConvertObjectCollectionValueFromSerializableFormat(plainValue);
 
 #if DEBUG
-                _logger.Info($"itemValue = {itemValue}");
-                _logger.Info($"itemValue?.GetType()?.FullName = {itemValue?.GetType()?.FullName}");
-                _logger.Info($"itemValue?.GetType()?.Name = {itemValue?.GetType()?.Name}");
-                _logger.Info($"field.FieldType.FullName = {field.FieldType.FullName}");
-                _logger.Info($"field.FieldType.Name = {field.FieldType.Name}");
+                    _logger.Info($"itemValue = {itemValue}");
+                    _logger.Info($"itemValue?.GetType()?.FullName = {itemValue?.GetType()?.FullName}");
+                    _logger.Info($"itemValue?.GetType()?.Name = {itemValue?.GetType()?.Name}");
+                    _logger.Info($"field.FieldType.FullName = {field.FieldType.FullName}");
+                    _logger.Info($"field.FieldType.Name = {field.FieldType.Name}");
 #endif
 
-                SetFieldValue(instance, field, itemValue);
+                    SetFieldValue(instance, field, itemValue);
+                }
             }
 
             return instance;
@@ -1558,6 +1566,111 @@ namespace SymOntoClay.Serialization.Implementation
             _deserializationContext.RegDeserializedObject(objectPtr.Id, instance);
 
             return instance;
+        }
+
+        private object NDeserializeExternalSettingsSmartValue(Type type, ObjectPtr objectPtr, string fullFileName)
+        {
+            var plainObject = JsonConvert.DeserializeObject<ExternalSettingsSmartValuePlainObject>(File.ReadAllText(fullFileName), SerializationHelper.JsonSerializerSettings);
+
+#if DEBUG
+            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, Formatting.Indented)}");
+#endif
+
+            var settingType = GetType(plainObject.SettingType);
+
+#if DEBUG
+            _logger.Info($"settingType.FullName = {settingType.FullName}");
+#endif
+
+            var holderType = GetType(plainObject.HolderType);
+
+#if DEBUG
+            _logger.Info($"holderType = {holderType}");
+#endif
+
+            var externalSettings = _deserializationContext.GetExternalSettings(settingType, holderType, plainObject.HolderKey);
+
+#if DEBUG
+            _logger.Info($"externalSettings = {externalSettings}");
+#endif
+
+            var externalSettingsValue = GetTargetValueFromExternalSettings(externalSettings, settingType, plainObject.SettingsPropertyName);
+
+#if DEBUG
+            _logger.Info($"externalSettingsValue = {externalSettingsValue}");
+            _logger.Info($"type.FullName = {type.FullName}");
+#endif
+
+            var instance = Activator.CreateInstance(type, externalSettingsValue, settingType, plainObject.SettingsPropertyName, holderType, plainObject.HolderKey);
+
+#if DEBUG
+            _logger.Info($"instance = {instance}");
+#endif
+
+            _deserializationContext.RegDeserializedObject(objectPtr.Id, instance);
+
+            return instance;
+        }
+
+        private object GetTargetValueFromExternalSettings(object externalSettings, Type settingType, List<string> settingsPropertyName)
+        {
+#if DEBUG
+            _logger.Info($"externalSettings = {externalSettings}");
+            _logger.Info($"settingType = {settingType}");
+            _logger.Info($"settingsPropertyName = {JsonConvert.SerializeObject(settingsPropertyName, Formatting.Indented)}");
+#endif
+
+            var targetObject = externalSettings;
+            var targetType = settingType;
+
+            foreach(var itemName in settingsPropertyName)
+            {
+#if DEBUG
+                _logger.Info($"itemName = {itemName}");
+#endif
+
+                var property = targetType.GetProperty(itemName);
+
+#if DEBUG
+                _logger.Info($"property?.Name = {property?.Name}");
+#endif
+
+                if(property != null)
+                {
+                    targetObject = property.GetValue(targetObject);
+
+#if DEBUG
+                    _logger.Info($"targetObject = {targetObject}");
+#endif
+
+                    continue;
+                }
+
+                var field = targetType.GetField(itemName);
+
+#if DEBUG
+                _logger.Info($"field?.Name = {field?.Name}");
+#endif
+
+                if(field != null)
+                {
+                    targetObject = field.GetValue(targetObject);
+
+#if DEBUG
+                    _logger.Info($"targetObject = {targetObject}");
+#endif
+
+                    continue;
+                }
+
+                throw new NotImplementedException("8D4CAA77-978B-4AD0-AB4B-8DCAE6A187AC");
+            }
+
+#if DEBUG
+            _logger.Info($"targetObject = {targetObject}");
+#endif
+
+            return targetObject;
         }
 
         private object ConvertObjectCollectionValueFromSerializableFormat(object value)

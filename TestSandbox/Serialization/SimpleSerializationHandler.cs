@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Linq;
+using SymOntoClay.Serialization.SmartValues.Functors;
+using SymOntoClay.Serialization.SmartValues;
 
 namespace TestSandbox.Serialization
 {
@@ -18,13 +20,23 @@ namespace TestSandbox.Serialization
         {
             _logger.Info("Begin");
 
-            DeserializeTstInternalWorldSerializableObject();
+            TstPathCombineSmartValue();
+            //DeserializeTstInternalWorldSerializableObject();
             //SerializeTstInternalWorldSerializableObject();
             //SimpleDictionarySerialization();
             //Deserialize();
             //Serialize();
 
             _logger.Info("End");
+        }
+
+        private void TstPathCombineSmartValue()
+        {
+            var smartValue = new PathCombineSmartValue(new ConstSmartValue<string>(Directory.GetCurrentDirectory()), new ConstSmartValue<string>("SomeDir"));
+
+#if DEBUG
+            _logger.Info($"smartValue.Value = {smartValue.Value}");
+#endif
         }
 
         private void DeserializeTstInternalWorldSerializableObject()

@@ -30,6 +30,7 @@ using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.Internal.FileCache;
 using SymOntoClay.Serialization;
 using SymOntoClay.Serialization.Settings;
+using SymOntoClay.Serialization.SmartValues;
 using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
@@ -60,7 +61,7 @@ namespace SymOntoClay.Monitor.Internal
 
         private readonly MonitorLogger _monitorLoggerImpl;
 
-        private readonly BaseMonitorSettings _baseMonitorSettings;
+        private readonly SmartValue<BaseMonitorSettings> _baseMonitorSettings;
 
         private readonly CancellationTokenSource _cancellationTokenSource;
 
@@ -77,7 +78,7 @@ namespace SymOntoClay.Monitor.Internal
         /// <inheritdoc/>
         public string Id => _nodeId;
 
-        public MonitorNode(string nodeId, BaseMonitorSettings nodeSettings, MonitorContext monitorContext)
+        public MonitorNode(string nodeId, SmartValue<BaseMonitorSettings> nodeSettings, MonitorContext monitorContext)
         {
 #if DEBUG
             //_globalLogger.Info($"nodeId = {nodeId}");

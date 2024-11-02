@@ -791,7 +791,7 @@ namespace SymOntoClay.Monitor
             return new MonitorNode(nodeId, nodeSettings, _monitorContext);
         }
 
-        private BaseMonitorSettings GetMotitorNodeSettings(string nodeId)
+        private SmartValue<BaseMonitorSettings> GetMotitorNodeSettings(string nodeId)
         {
             if (_nodesSettings.ContainsKey(nodeId))
             {

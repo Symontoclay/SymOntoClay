@@ -51,7 +51,7 @@ namespace SymOntoClay.Monitor.Internal
         private readonly MonitorContext _monitorContext;
         private readonly MonitorNodeContext _monitorNodeContext;
         private readonly MessageProcessor _messageProcessor;
-        private readonly MonitorFeatures _features;
+        private readonly SmartValue<MonitorFeatures> _features;
         private readonly MonitorNodeFileCache _fileCache;
 
         private readonly MessageNumberGenerator _globalMessageNumberGenerator;

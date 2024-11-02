@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Monitor.Internal.FileCache;
+using SymOntoClay.Serialization.SmartValues;
 using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
@@ -36,13 +37,13 @@ namespace SymOntoClay.Monitor.Internal
         public MonitorContext MonitorContext { get; set; }
         public MonitorNodeFileCache FileCache { get; set; }
 
-        public MonitorFeatures Features { get; set; }
+        public SmartValue<MonitorFeatures> Features { get; set; }
 
         public string NodeId { get; set; }
 
-        public BaseMonitorSettings Settings { get; set; }
+        public SmartValue<BaseMonitorSettings> Settings { get; set; }
 
         public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
-        public CustomThreadPoolSettings ThreadingSettings { get; set; }
+        public SmartValue<CustomThreadPoolSettings> ThreadingSettings { get; set; }
     }
 }

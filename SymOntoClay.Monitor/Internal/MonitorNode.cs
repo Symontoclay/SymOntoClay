@@ -150,10 +150,10 @@ namespace SymOntoClay.Monitor.Internal
         CustomThreadPoolSettings IMonitorLoggerContext.ThreadingSettings => _monitorNodeContext.ThreadingSettings;
 
         /// <inheritdoc/>
-        public KindOfLogicalSearchExplain KindOfLogicalSearchExplain => _baseMonitorSettings.KindOfLogicalSearchExplain;
+        public KindOfLogicalSearchExplain KindOfLogicalSearchExplain => _baseMonitorSettings.Value.KindOfLogicalSearchExplain;
 
         /// <inheritdoc/>
-        public bool EnableAddingRemovingFactLoggingInStorages => _baseMonitorSettings.EnableAddingRemovingFactLoggingInStorages;
+        public bool EnableAddingRemovingFactLoggingInStorages => _baseMonitorSettings.Value.EnableAddingRemovingFactLoggingInStorages;
 
         /// <inheritdoc/>
         public bool IsReal => true;
@@ -161,13 +161,13 @@ namespace SymOntoClay.Monitor.Internal
         /// <inheritdoc/>
         public IMonitorFeatures MonitorFeatures => this;
 
-        bool IMonitorLoggerContext.EnableRemoteConnection => _baseMonitorSettings.EnableRemoteConnection && _monitorContext.Settings.Value.EnableRemoteConnection;
+        bool IMonitorLoggerContext.EnableRemoteConnection => _baseMonitorSettings.Value.EnableRemoteConnection && _monitorContext.Settings.Value.EnableRemoteConnection;
 
         bool IMonitorFeatures.EnableCallMethod
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableCallMethod;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableCallMethod;
             }
         }
 
@@ -175,7 +175,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableParameter;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableParameter;
             }
         }
 
@@ -183,7 +183,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableEndCallMethod;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableEndCallMethod;
             }
         }
 
@@ -191,7 +191,7 @@ namespace SymOntoClay.Monitor.Internal
         { 
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableMethodResolving;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableMethodResolving;
             }
         }
 
@@ -199,7 +199,7 @@ namespace SymOntoClay.Monitor.Internal
         { 
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableEndMethodResolving;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableEndMethodResolving;
             }
         }
 
@@ -207,7 +207,7 @@ namespace SymOntoClay.Monitor.Internal
         { 
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableActionResolving;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableActionResolving;
             }
         }
 
@@ -215,7 +215,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableEndActionResolving;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableEndActionResolving;
             }
         }
 
@@ -223,7 +223,7 @@ namespace SymOntoClay.Monitor.Internal
         { 
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableHostMethodResolving;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableHostMethodResolving;
             }
         }
 
@@ -231,7 +231,7 @@ namespace SymOntoClay.Monitor.Internal
         { 
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableEndHostMethodResolving;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableEndHostMethodResolving;
             }
         }
 
@@ -239,7 +239,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableHostMethodActivation;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableHostMethodActivation;
             }
         }
 
@@ -247,7 +247,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableEndHostMethodActivation;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableEndHostMethodActivation;
             }
         }
 
@@ -255,7 +255,7 @@ namespace SymOntoClay.Monitor.Internal
         { 
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableHostMethodStarting;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableHostMethodStarting;
             }
         }
 
@@ -263,7 +263,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableEndHostMethodStarting;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableEndHostMethodStarting;
             }
         }
 
@@ -271,7 +271,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableHostMethodExecution;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableHostMethodExecution;
             }
         }
 
@@ -279,7 +279,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableEndHostMethodExecution;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableEndHostMethodExecution;
             }
         }
 
@@ -287,7 +287,7 @@ namespace SymOntoClay.Monitor.Internal
         { 
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableSystemExpr;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableSystemExpr;
             }
         }
 
@@ -295,7 +295,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableCodeFrame;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableCodeFrame;
             }
         }
 
@@ -303,7 +303,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableLeaveThreadExecutor;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableLeaveThreadExecutor;
             }
         }
 
@@ -311,7 +311,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableGoBackToPrevCodeFrame;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableGoBackToPrevCodeFrame;
             }
         }
 
@@ -319,7 +319,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableStartProcessInfo;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableStartProcessInfo;
             }
         }
 
@@ -327,7 +327,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableCancelProcessInfo;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableCancelProcessInfo;
             }
         }
 
@@ -335,7 +335,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableWeakCancelProcessInfo;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableWeakCancelProcessInfo;
             }
         }
 
@@ -343,7 +343,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableCancelInstanceExecution;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableCancelInstanceExecution;
             }
         }
 
@@ -351,7 +351,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableSetExecutionCoordinatorStatus;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableSetExecutionCoordinatorStatus;
             }
         }
 
@@ -359,7 +359,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableSetProcessInfoStatus;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableSetProcessInfoStatus;
             }
         }
 
@@ -367,7 +367,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableWaitProcessInfo;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableWaitProcessInfo;
             }
         }
 
@@ -375,7 +375,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableRunLifecycleTrigger;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableRunLifecycleTrigger;
             }
         }
 
@@ -383,7 +383,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableDoTriggerSearch;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableDoTriggerSearch;
             }
         }
 
@@ -391,7 +391,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableEndDoTriggerSearch;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableEndDoTriggerSearch;
             }
         }
 
@@ -399,7 +399,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableSetConditionalTrigger;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableSetConditionalTrigger;
             }
         }
 
@@ -407,7 +407,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableResetConditionalTrigger;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableResetConditionalTrigger;
             }
         }
 
@@ -415,7 +415,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableRunSetExprOfConditionalTrigger;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableRunSetExprOfConditionalTrigger;
             }
         }
 
@@ -423,7 +423,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableEndRunSetExprOfConditionalTrigger;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableEndRunSetExprOfConditionalTrigger;
             }
         }
 
@@ -431,7 +431,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableRunResetExprOfConditionalTrigger;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableRunResetExprOfConditionalTrigger;
             }
         }
 
@@ -439,7 +439,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableEndRunResetExprOfConditionalTrigger;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableEndRunResetExprOfConditionalTrigger;
             }
         }
 
@@ -447,9 +447,9 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && (_features.EnableDoTriggerSearch || _features.EnableEndDoTriggerSearch || _features.EnableSetConditionalTrigger ||
-                    _features.EnableResetConditionalTrigger || _features.EnableRunSetExprOfConditionalTrigger || _features.EnableEndRunSetExprOfConditionalTrigger || _features.EnableRunResetExprOfConditionalTrigger ||
-                    _features.EnableEndRunResetExprOfConditionalTrigger);
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && (_features.Value.EnableDoTriggerSearch || _features.Value.EnableEndDoTriggerSearch || _features.Value.EnableSetConditionalTrigger ||
+                    _features.Value.EnableResetConditionalTrigger || _features.Value.EnableRunSetExprOfConditionalTrigger || _features.Value.EnableEndRunSetExprOfConditionalTrigger || _features.Value.EnableRunResetExprOfConditionalTrigger ||
+                    _features.Value.EnableEndRunResetExprOfConditionalTrigger);
             }
         }
 
@@ -457,7 +457,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableActivateIdleAction;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableActivateIdleAction;
             }
         }
 
@@ -465,7 +465,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableTasks;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableTasks;
             }
         }
 
@@ -473,7 +473,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableOutput;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableOutput;
             }
         }
 
@@ -481,7 +481,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableTrace;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableTrace;
             }
         }
 
@@ -489,7 +489,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableDebug;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableDebug;
             }
         }
 
@@ -497,7 +497,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableInfo;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableInfo;
             }
         }
 
@@ -505,7 +505,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableWarn;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableWarn;
             }
         }
 
@@ -513,7 +513,7 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableError;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableError;
             }
         }
 
@@ -521,21 +521,21 @@ namespace SymOntoClay.Monitor.Internal
         {
             get
             {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Value.Enable && _features.EnableFatal;
+                return _baseMonitorSettings.Value.Enable && _monitorContext.Settings.Value.Enable && _features.Value.EnableFatal;
             }
         }
 
         /// <inheritdoc/>
-        public bool Enable { get => _baseMonitorSettings.Enable; set => _baseMonitorSettings.Enable = value; }
+        public bool Enable { get => _baseMonitorSettings.Value.Enable; set => _baseMonitorSettings.Value.Enable = value; }
 
         /// <inheritdoc/>
-        public bool EnableRemoteConnection { get => _baseMonitorSettings.EnableRemoteConnection; set => _baseMonitorSettings.EnableRemoteConnection = value; }
+        public bool EnableRemoteConnection { get => _baseMonitorSettings.Value.EnableRemoteConnection; set => _baseMonitorSettings.Value.EnableRemoteConnection = value; }
 
         /// <inheritdoc/>
-        public bool EnableFullCallInfo => _baseMonitorSettings.EnableFullCallInfo && _monitorContext.Settings.EnableFullCallInfo;
+        public bool EnableFullCallInfo => _baseMonitorSettings.Value.EnableFullCallInfo && _monitorContext.Settings.Value.EnableFullCallInfo;
 
         /// <inheritdoc/>
-        public bool EnableAsyncMessageCreation => _baseMonitorSettings.EnableAsyncMessageCreation && _monitorContext.Settings.EnableAsyncMessageCreation;
+        public bool EnableAsyncMessageCreation => _baseMonitorSettings.Value.EnableAsyncMessageCreation && _monitorContext.Settings.Value.EnableAsyncMessageCreation;
 
         /// <inheritdoc/>
         public override string ToString()
@@ -700,12 +700,12 @@ namespace SymOntoClay.Monitor.Internal
                     //_globalLogger.Info($"NEXT");
 #endif
 
-                    _messageProcessor.ProcessMessage(messageInfo, _fileCache, _baseMonitorSettings.EnableRemoteConnection && _monitorContext.Settings.EnableRemoteConnection);
+                    _messageProcessor.ProcessMessage(messageInfo, _fileCache, _baseMonitorSettings.Value.EnableRemoteConnection && _monitorContext.Settings.Value.EnableRemoteConnection);
                 }, _threadPool, _linkedCancellationTokenSource.Token);
             }
             else
             {
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _baseMonitorSettings.EnableRemoteConnection && _monitorContext.Settings.EnableRemoteConnection);
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _baseMonitorSettings.Value.EnableRemoteConnection && _monitorContext.Settings.Value.EnableRemoteConnection);
             }
 
             return new ThreadLogger(threadId, _monitorNodeContext);

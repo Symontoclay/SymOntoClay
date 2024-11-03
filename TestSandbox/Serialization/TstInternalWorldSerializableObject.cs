@@ -25,7 +25,7 @@ namespace TestSandbox.Serialization
 
             _context = new TstEngineContext();
 
-            _context.Prop1 = new ExternalSettingsSmartValue<string>(settings.Prop1, typeof(TstExternalSettings), nameof(settings.Prop1), GetType(), "7E89A552-4527-4C1D-9792-5E0A99BF41B0");
+            _context.Prop1 = new ExternalSettingsFieldSmartValue<string>(settings.Prop1, typeof(TstExternalSettings), nameof(settings.Prop1), GetType(), "7E89A552-4527-4C1D-9792-5E0A99BF41B0");
 
             _sub = new TstWorldSubSerializableObject(_context);
         }

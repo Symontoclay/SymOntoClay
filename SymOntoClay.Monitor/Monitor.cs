@@ -209,21 +209,30 @@ namespace SymOntoClay.Monitor
                 });
             }
 
+            var platformLoggersSmartValue = new ExternalSettingsSmartValue<IList<IPlatformLogger>>(monitorSettings.PlatformLoggers, settingType, nameof(monitorSettings.PlatformLoggers), GetType(), holderKey);
+
+            if(platformLoggersSmartValue.Value == null)
+            {
+                platformLoggersSmartValue.SetValue(new List<IPlatformLogger>());
+            }
+
             _monitorContext = new MonitorContext()
             {
-                PlatformLoggers = monitorSettings.PlatformLoggers ?? new List<IPlatformLogger>(),
+                PlatformLoggers = platformLoggersSmartValue,
                 Features = _features,
                 Settings = _baseMonitorSettings,
                 CancellationToken = _linkedCancellationTokenSource.Token,
-                ThreadingSettings = monitorSettings.ThreadingSettings
+                ThreadingSettings = new ExternalSettingsSmartValue<CustomThreadPoolSettings>(monitorSettings.ThreadingSettings, settingType, nameof(monitorSettings.ThreadingSettings), GetType(), holderKey)
             };
 
-            _remoteMonitor = monitorSettings.RemoteMonitor;
+            _remoteMonitor = new ExternalSettingsSmartValue<IRemoteMonitor>(monitorSettings.RemoteMonitor, settingType, nameof(monitorSettings.RemoteMonitor), GetType(), holderKey);
 
             var now = DateTime.Now;
             _sessionName = $"{now.Year}_{now.Month:00}_{now.Day:00}_{now.Hour:00}_{now.Minute:00}_{now.Second:00}";
 
-            _fileCache = new MonitorFileCache(monitorSettings.MessagesDir, _sessionName);
+            _fileCache = new MonitorFileCache(new ExternalSettingsSmartValue<string>(monitorSettings.MessagesDir, settingType, nameof(monitorSettings.MessagesDir), GetType(), holderKey),
+                _sessionName);
+
             _monitorContext.FileCache = _fileCache;
 
             _messageProcessor = new MessageProcessor(_remoteMonitor);

@@ -152,6 +152,9 @@ namespace SymOntoClay.Serialization.Implementation
                 case "Dictionary`2":
                     return NDeserializeGenericDictionary(type, objectPtr, fullFileName);
 
+                case "ExternalSettingsSmartValue`1":
+                    return NDeserializeExternalSettingsSmartValue(type, objectPtr, fullFileName);
+
                 case "ExternalSettingsFieldSmartValue`1":
                     return NDeserializeExternalSettingsFieldSmartValue(type, objectPtr, fullFileName);
 
@@ -1561,6 +1564,43 @@ namespace SymOntoClay.Serialization.Implementation
 
 #if DEBUG
             _logger.Info($"instance = {JsonConvert.SerializeObject(instance, Formatting.Indented)}");
+#endif
+
+            _deserializationContext.RegDeserializedObject(objectPtr.Id, instance);
+
+            return instance;
+        }
+
+        private object NDeserializeExternalSettingsSmartValue(Type type, ObjectPtr objectPtr, string fullFileName)
+        {
+            var plainObject = JsonConvert.DeserializeObject<ExternalSettingsSmartValuePlainObject>(File.ReadAllText(fullFileName), SerializationHelper.JsonSerializerSettings);
+
+#if DEBUG
+            _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, Formatting.Indented)}");
+#endif
+
+            var settingType = GetType(plainObject.SettingType);
+
+#if DEBUG
+            _logger.Info($"settingType.FullName = {settingType.FullName}");
+#endif
+
+            var holderType = GetType(plainObject.HolderType);
+
+#if DEBUG
+            _logger.Info($"holderType = {holderType}");
+#endif
+
+            var externalSettings = _deserializationContext.GetExternalSettings(settingType, holderType, plainObject.HolderKey);
+
+#if DEBUG
+            _logger.Info($"externalSettings = {externalSettings}");
+#endif
+
+            var instance = Activator.CreateInstance(type, externalSettings, settingType, holderType, plainObject.HolderKey);
+
+#if DEBUG
+            _logger.Info($"instance = {instance}");
 #endif
 
             _deserializationContext.RegDeserializedObject(objectPtr.Id, instance);

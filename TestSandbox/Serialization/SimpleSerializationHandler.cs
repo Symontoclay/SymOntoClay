@@ -20,9 +20,9 @@ namespace TestSandbox.Serialization
         {
             _logger.Info("Begin");
 
-            TstFieldSmartValue();
+            //TstFieldSmartValue();
             //TstPathCombineSmartValue();
-            //DeserializeTstInternalWorldSerializableObject();
+            DeserializeTstInternalWorldSerializableObject();
             //SerializeTstInternalWorldSerializableObject();
             //SimpleDictionarySerialization();
             //Deserialize();

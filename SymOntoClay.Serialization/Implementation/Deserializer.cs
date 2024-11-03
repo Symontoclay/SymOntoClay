@@ -152,8 +152,8 @@ namespace SymOntoClay.Serialization.Implementation
                 case "Dictionary`2":
                     return NDeserializeGenericDictionary(type, objectPtr, fullFileName);
 
-                case "ExternalSettingsSmartValue`1":
-                    return NDeserializeExternalSettingsSmartValue(type, objectPtr, fullFileName);
+                case "ExternalSettingsFieldSmartValue`1":
+                    return NDeserializeExternalSettingsFieldSmartValue(type, objectPtr, fullFileName);
 
                 default:
                     if (type.FullName.StartsWith("System.Threading.") ||
@@ -1568,9 +1568,9 @@ namespace SymOntoClay.Serialization.Implementation
             return instance;
         }
 
-        private object NDeserializeExternalSettingsSmartValue(Type type, ObjectPtr objectPtr, string fullFileName)
+        private object NDeserializeExternalSettingsFieldSmartValue(Type type, ObjectPtr objectPtr, string fullFileName)
         {
-            var plainObject = JsonConvert.DeserializeObject<ExternalSettingsSmartValuePlainObject>(File.ReadAllText(fullFileName), SerializationHelper.JsonSerializerSettings);
+            var plainObject = JsonConvert.DeserializeObject<ExternalSettingsFieldSmartValuePlainObject>(File.ReadAllText(fullFileName), SerializationHelper.JsonSerializerSettings);
 
 #if DEBUG
             _logger.Info($"plainObject = {JsonConvert.SerializeObject(plainObject, Formatting.Indented)}");

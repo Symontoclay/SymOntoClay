@@ -7,18 +7,18 @@ using System.Text;
 
 namespace SymOntoClay.Serialization.SmartValues
 {
-    public class ExternalSettingsSmartValue<T>: SmartValue<T>, INonGenericExternalSettingsSmartValue
+    public class ExternalSettingsFieldSmartValue<T>: SmartValue<T>, INonGenericExternalSettingsSmartValue
     {
-        public ExternalSettingsSmartValue()
+        public ExternalSettingsFieldSmartValue()
         {
         }
 
-        public ExternalSettingsSmartValue(T value, Type settingType, string settingsPropertyName, Type holderType, string holderKey)
+        public ExternalSettingsFieldSmartValue(T value, Type settingType, string settingsPropertyName, Type holderType, string holderKey)
             : this(value, settingType, new List<string> { settingsPropertyName}, holderType, holderKey)
         {
         }
 
-        public ExternalSettingsSmartValue(T value, Type settingType, IEnumerable<string> settingsPropertyName, Type holderType, string holderKey) 
+        public ExternalSettingsFieldSmartValue(T value, Type settingType, IEnumerable<string> settingsPropertyName, Type holderType, string holderKey) 
         {
 #if DEBUG
             _logger.Info($"value = {value}");
@@ -53,9 +53,9 @@ namespace SymOntoClay.Serialization.SmartValues
             _value = value;
         }
 
-        ExternalSettingsSmartValuePlainObject INonGenericExternalSettingsSmartValue.GetPlainObject()
+        ExternalSettingsFieldSmartValuePlainObject INonGenericExternalSettingsSmartValue.GetPlainObject()
         {
-            return new ExternalSettingsSmartValuePlainObject
+            return new ExternalSettingsFieldSmartValuePlainObject
             {
                 SettingType = _settingType?.FullName,
                 SettingsPropertyName = _settingsPropertyName.ToList(),

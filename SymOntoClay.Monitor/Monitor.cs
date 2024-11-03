@@ -111,11 +111,11 @@ namespace SymOntoClay.Monitor
 
             var threadingSettings = monitorSettings.ThreadingSettings;
 
-            var minThreadsCount = new ExternalSettingsSmartValue<int?>(threadingSettings?.MinThreadsCount, settingType,
+            var minThreadsCount = new ExternalSettingsFieldSmartValue<int?>(threadingSettings?.MinThreadsCount, settingType,
                 new List<string> { nameof(monitorSettings.ThreadingSettings), nameof(monitorSettings.ThreadingSettings.MinThreadsCount) },
                 GetType(), holderKey);
 
-            var maxThreadsCount = new ExternalSettingsSmartValue<int?>(threadingSettings?.MaxThreadsCount, settingType,
+            var maxThreadsCount = new ExternalSettingsFieldSmartValue<int?>(threadingSettings?.MaxThreadsCount, settingType,
                 new List<string> { nameof(monitorSettings.ThreadingSettings), nameof(monitorSettings.ThreadingSettings.MaxThreadsCount) },
                 GetType(), holderKey);
 
@@ -130,9 +130,9 @@ namespace SymOntoClay.Monitor
                 maxThreadsCount.Value ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
                 _linkedCancellationTokenSource.Token);
 
-            _nodesSettings = new ExternalSettingsSmartValue<IDictionary<string, BaseMonitorSettings>>(monitorSettings.NodesSettings, settingType, nameof(monitorSettings.NodesSettings), GetType(), holderKey);
+            _nodesSettings = new ExternalSettingsFieldSmartValue<IDictionary<string, BaseMonitorSettings>>(monitorSettings.NodesSettings, settingType, nameof(monitorSettings.NodesSettings), GetType(), holderKey);
             
-            _enableOnlyDirectlySetUpNodes = new ExternalSettingsSmartValue<bool>(monitorSettings.EnableOnlyDirectlySetUpNodes, settingType,
+            _enableOnlyDirectlySetUpNodes = new ExternalSettingsFieldSmartValue<bool>(monitorSettings.EnableOnlyDirectlySetUpNodes, settingType,
                 nameof(monitorSettings.EnableOnlyDirectlySetUpNodes), GetType(), holderKey);
 
             if(_nodesSettings.Value == null)
@@ -154,7 +154,7 @@ namespace SymOntoClay.Monitor
 
             _baseMonitorSettings = monitorSettings.Clone();
 
-            _features = new ExternalSettingsSmartValue<MonitorFeatures>(monitorSettings.Features, settingType, nameof(monitorSettings.Features), GetType(), holderKey);
+            _features = new ExternalSettingsFieldSmartValue<MonitorFeatures>(monitorSettings.Features, settingType, nameof(monitorSettings.Features), GetType(), holderKey);
 
             if (_features.Value == null)
             {
@@ -209,7 +209,7 @@ namespace SymOntoClay.Monitor
                 });
             }
 
-            var platformLoggersSmartValue = new ExternalSettingsSmartValue<IList<IPlatformLogger>>(monitorSettings.PlatformLoggers, settingType, nameof(monitorSettings.PlatformLoggers), GetType(), holderKey);
+            var platformLoggersSmartValue = new ExternalSettingsFieldSmartValue<IList<IPlatformLogger>>(monitorSettings.PlatformLoggers, settingType, nameof(monitorSettings.PlatformLoggers), GetType(), holderKey);
 
             if(platformLoggersSmartValue.Value == null)
             {
@@ -222,15 +222,15 @@ namespace SymOntoClay.Monitor
                 Features = _features,
                 Settings = _baseMonitorSettings,
                 CancellationToken = _linkedCancellationTokenSource.Token,
-                ThreadingSettings = new ExternalSettingsSmartValue<CustomThreadPoolSettings>(monitorSettings.ThreadingSettings, settingType, nameof(monitorSettings.ThreadingSettings), GetType(), holderKey)
+                ThreadingSettings = new ExternalSettingsFieldSmartValue<CustomThreadPoolSettings>(monitorSettings.ThreadingSettings, settingType, nameof(monitorSettings.ThreadingSettings), GetType(), holderKey)
             };
 
-            _remoteMonitor = new ExternalSettingsSmartValue<IRemoteMonitor>(monitorSettings.RemoteMonitor, settingType, nameof(monitorSettings.RemoteMonitor), GetType(), holderKey);
+            _remoteMonitor = new ExternalSettingsFieldSmartValue<IRemoteMonitor>(monitorSettings.RemoteMonitor, settingType, nameof(monitorSettings.RemoteMonitor), GetType(), holderKey);
 
             var now = DateTime.Now;
             _sessionName = $"{now.Year}_{now.Month:00}_{now.Day:00}_{now.Hour:00}_{now.Minute:00}_{now.Second:00}";
 
-            _fileCache = new MonitorFileCache(new ExternalSettingsSmartValue<string>(monitorSettings.MessagesDir, settingType, nameof(monitorSettings.MessagesDir), GetType(), holderKey),
+            _fileCache = new MonitorFileCache(new ExternalSettingsFieldSmartValue<string>(monitorSettings.MessagesDir, settingType, nameof(monitorSettings.MessagesDir), GetType(), holderKey),
                 _sessionName);
 
             _monitorContext.FileCache = _fileCache;

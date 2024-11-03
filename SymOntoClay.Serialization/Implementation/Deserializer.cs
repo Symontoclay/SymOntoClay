@@ -1621,6 +1621,12 @@ namespace SymOntoClay.Serialization.Implementation
 #endif
 
             var targetObject = externalSettings;
+
+            if(targetObject == null)
+            {
+                return null;
+            }
+
             var targetType = settingType;
 
             foreach(var itemName in settingsPropertyName)
@@ -1643,6 +1649,13 @@ namespace SymOntoClay.Serialization.Implementation
                     _logger.Info($"targetObject = {targetObject}");
 #endif
 
+                    if (targetObject == null)
+                    {
+                        return null;
+                    }
+
+                    targetType = targetObject.GetType();
+
                     continue;
                 }
 
@@ -1659,6 +1672,13 @@ namespace SymOntoClay.Serialization.Implementation
 #if DEBUG
                     _logger.Info($"targetObject = {targetObject}");
 #endif
+
+                    if (targetObject == null)
+                    {
+                        return null;
+                    }
+
+                    targetType = targetObject.GetType();
 
                     continue;
                 }

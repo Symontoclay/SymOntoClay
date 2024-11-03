@@ -21,17 +21,24 @@ namespace TestSandbox.Serialization
 
         public TstInternalWorldSerializableObject(TstExternalSettings settings) 
         {
+            var holderKey = "7E89A552-4527-4C1D-9792-5E0A99BF41B0";
+            var settingsType = typeof(TstExternalSettings);
+
             _settings = settings;
+
+            _smartSettings = new ExternalSettingsSmartValue<TstExternalSettings>(settings, settingsType, GetType(), holderKey);
 
             _context = new TstEngineContext();
 
-            _context.Prop1 = new ExternalSettingsFieldSmartValue<string>(settings.Prop1, typeof(TstExternalSettings), nameof(settings.Prop1), GetType(), "7E89A552-4527-4C1D-9792-5E0A99BF41B0");
+            _context.Prop1 = new ExternalSettingsFieldSmartValue<string>(settings.Prop1, settingsType, nameof(settings.Prop1), GetType(), holderKey);
 
             _sub = new TstWorldSubSerializableObject(_context);
         }
         
         [SocSerializableExternalSettings("7E89A552-4527-4C1D-9792-5E0A99BF41B0")]
         private readonly TstExternalSettings _settings;
+
+        private readonly SmartValue<TstExternalSettings> _smartSettings;
 
         private TstEngineContext _context;
         private TstWorldSubSerializableObject _sub;
@@ -56,6 +63,7 @@ namespace TestSandbox.Serialization
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+            sb.PrintObjProp(n, nameof(_smartSettings), _smartSettings);
             sb.PrintObjProp(n, nameof(_context), _context);
             sb.PrintObjProp(n, nameof(_sub), _sub);
             //sb.AppendLine($"{spaces}{nameof()} = {}");

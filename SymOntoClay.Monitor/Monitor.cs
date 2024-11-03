@@ -152,7 +152,9 @@ namespace SymOntoClay.Monitor
                 }
             }
 
-            _baseMonitorSettings = monitorSettings.Clone();
+            var smartMonitorSettings = new ExternalSettingsSmartValue<MonitorSettings>(monitorSettings, settingType, GetType(), holderKey);
+
+            _baseMonitorSettings = smartMonitorSettings.Clone();
 
             _features = new ExternalSettingsFieldSmartValue<MonitorFeatures>(monitorSettings.Features, settingType, nameof(monitorSettings.Features), GetType(), holderKey);
 

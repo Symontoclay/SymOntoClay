@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SymOntoClay.Serialization.SmartValues
 {
-    public class ExternalSettingsSmartValuePlainObject : IObjectToString
+    public class ExternalSettingsFieldSmartValuePlainObject : IObjectToString
     {
         public string SettingType { get; set; }
         public List<string> SettingsPropertyName { get; set; }

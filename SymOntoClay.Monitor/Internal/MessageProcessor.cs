@@ -23,6 +23,7 @@ SOFTWARE.*/
 using Newtonsoft.Json;
 using SymOntoClay.Monitor.Common.Data;
 using SymOntoClay.Monitor.Internal.FileCache;
+using SymOntoClay.Serialization.SmartValues;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,13 +38,13 @@ namespace SymOntoClay.Monitor.Internal
         //private static readonly NLog.ILogger _globalLogger = NLog.LogManager.GetCurrentClassLogger();
 #endif
 
-        private readonly IRemoteMonitor _remoteMonitor;
+        private readonly SmartValue<IRemoteMonitor> _remoteMonitor;
         private readonly bool _hasRemoteMonitor;
 
-        public MessageProcessor(IRemoteMonitor remoteMonitor)
+        public MessageProcessor(SmartValue<IRemoteMonitor> remoteMonitor)
         {
             _remoteMonitor = remoteMonitor;
-            _hasRemoteMonitor = remoteMonitor != null;
+            _hasRemoteMonitor = remoteMonitor.Value != null;
         }
 
         public void ProcessMessage(BaseMessage message, IFileCache fileCache, bool enableRemoteConnection)
@@ -83,7 +84,7 @@ namespace SymOntoClay.Monitor.Internal
                 //_globalLogger.Info($"envelope = {envelope}");
 #endif
 
-                _remoteMonitor.WriteMessage(envelope);
+                _remoteMonitor.Value.WriteMessage(envelope);
             }
         }
     }

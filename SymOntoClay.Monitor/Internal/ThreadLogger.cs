@@ -108,7 +108,7 @@ namespace SymOntoClay.Monitor.Internal
 
         MessageProcessor IMonitorLoggerContext.MessageProcessor => _messageProcessor;
         IMonitorFeatures IMonitorLoggerContext.Features => this;
-        IList<IPlatformLogger> IMonitorLoggerContext.PlatformLoggers => _monitorNodeContext.MonitorContext.PlatformLoggers;
+        SmartValue<IList<IPlatformLogger>> IMonitorLoggerContext.PlatformLoggers => _monitorNodeContext.MonitorContext.PlatformLoggers;
         IFileCache IMonitorLoggerContext.FileCache => _fileCache;
         MessageNumberGenerator IMonitorLoggerContext.GlobalMessageNumberGenerator => _globalMessageNumberGenerator;
         MessageNumberGenerator IMonitorLoggerContext.MessageNumberGenerator => _messageNumberGenerator;
@@ -119,7 +119,7 @@ namespace SymOntoClay.Monitor.Internal
         public CancellationToken CancellationToken => _linkedCancellationTokenSource.Token;
 
         /// <inheritdoc/>
-        public CustomThreadPoolSettings ThreadingSettings => _monitorNodeContext.ThreadingSettings;
+        public SmartValue<CustomThreadPoolSettings> ThreadingSettings => _monitorNodeContext.ThreadingSettings;
 
         /// <inheritdoc/>
         public bool IsReal => true;

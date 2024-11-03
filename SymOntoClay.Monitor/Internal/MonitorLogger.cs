@@ -42,6 +42,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using SymOntoClay.Serialization.SmartValues;
 
 namespace SymOntoClay.Monitor.Internal
 {
@@ -109,7 +110,7 @@ namespace SymOntoClay.Monitor.Internal
         private IMonitorFeatures _features;
         private IFileCache _fileCache;
         private MessageNumberGenerator _globalMessageNumberGenerator;
-        private IList<IPlatformLogger> _platformLoggers;
+        private SmartValue<IList<IPlatformLogger>> _platformLoggers;
 
         private string _nodeId;
         private string _threadId;
@@ -3383,9 +3384,9 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            if (_platformLoggers.Any())
+            if (_platformLoggers.Value.Any())
             {
-                foreach (var platformLogger in _platformLoggers)
+                foreach (var platformLogger in _platformLoggers.Value)
                 {
                     platformLogger.WriteLnRawOutput(message);
                 }
@@ -3457,9 +3458,9 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            if (_platformLoggers.Any())
+            if (_platformLoggers.Value.Any())
             {
-                foreach (var platformLogger in _platformLoggers)
+                foreach (var platformLogger in _platformLoggers.Value)
                 {
                     platformLogger.WriteLnRawTrace(message);
                 }
@@ -3531,9 +3532,9 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            if (_platformLoggers.Any())
+            if (_platformLoggers.Value.Any())
             {
-                foreach (var platformLogger in _platformLoggers)
+                foreach (var platformLogger in _platformLoggers.Value)
                 {
                     platformLogger.WriteLnRawDebug(message);
                 }
@@ -3605,9 +3606,9 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            if (_platformLoggers.Any())
+            if (_platformLoggers.Value.Any())
             {
-                foreach (var platformLogger in _platformLoggers)
+                foreach (var platformLogger in _platformLoggers.Value)
                 {
                     platformLogger.WriteLnRawInfo(message);
                 }
@@ -3679,9 +3680,9 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            if (_platformLoggers.Any())
+            if (_platformLoggers.Value.Any())
             {
-                foreach (var platformLogger in _platformLoggers)
+                foreach (var platformLogger in _platformLoggers.Value)
                 {
                     platformLogger.WriteLnRawWarn(message);
                 }
@@ -3753,9 +3754,9 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            if (_platformLoggers.Any())
+            if (_platformLoggers.Value.Any())
             {
-                foreach (var platformLogger in _platformLoggers)
+                foreach (var platformLogger in _platformLoggers.Value)
                 {
                     platformLogger.WriteLnRawError(message);
                 }
@@ -3837,9 +3838,9 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            if (_platformLoggers.Any())
+            if (_platformLoggers.Value.Any())
             {
-                foreach (var platformLogger in _platformLoggers)
+                foreach (var platformLogger in _platformLoggers.Value)
                 {
                     platformLogger.WriteLnRawFatal(message);
                 }

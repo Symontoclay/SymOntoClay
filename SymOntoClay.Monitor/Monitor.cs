@@ -243,7 +243,7 @@ namespace SymOntoClay.Monitor
 
         MessageProcessor IMonitorLoggerContext.MessageProcessor => _messageProcessor;
         IMonitorFeatures IMonitorLoggerContext.Features => this;
-        IList<IPlatformLogger> IMonitorLoggerContext.PlatformLoggers => _monitorContext.PlatformLoggers;
+        SmartValue<IList<IPlatformLogger>> IMonitorLoggerContext.PlatformLoggers => _monitorContext.PlatformLoggers;
         IFileCache IMonitorLoggerContext.FileCache => _fileCache;
         MessageNumberGenerator IMonitorLoggerContext.GlobalMessageNumberGenerator => _globalMessageNumberGenerator;
         MessageNumberGenerator IMonitorLoggerContext.MessageNumberGenerator => _messageNumberGenerator;
@@ -251,7 +251,7 @@ namespace SymOntoClay.Monitor
         string IMonitorLoggerContext.ThreadId => string.Empty;
 
         CancellationToken IMonitorLoggerContext.CancellationToken => _linkedCancellationTokenSource.Token;
-        CustomThreadPoolSettings IMonitorLoggerContext.ThreadingSettings => _monitorContext.ThreadingSettings;
+        SmartValue<CustomThreadPoolSettings> IMonitorLoggerContext.ThreadingSettings => _monitorContext.ThreadingSettings;
 
         /// <inheritdoc/>
         public bool IsReal => true;
@@ -623,10 +623,10 @@ namespace SymOntoClay.Monitor
         }
 
         /// <inheritdoc/>
-        public bool EnableFullCallInfo => _baseMonitorSettings.EnableFullCallInfo;
+        public bool EnableFullCallInfo => _baseMonitorSettings.Value.EnableFullCallInfo;
 
         /// <inheritdoc/>
-        public bool EnableAsyncMessageCreation => _baseMonitorSettings.EnableAsyncMessageCreation;
+        public bool EnableAsyncMessageCreation => _baseMonitorSettings.Value.EnableAsyncMessageCreation;
 
         /// <inheritdoc/>
         public override string ToString()
@@ -698,16 +698,16 @@ namespace SymOntoClay.Monitor
         }
 
         /// <inheritdoc/>
-        public KindOfLogicalSearchExplain KindOfLogicalSearchExplain => _baseMonitorSettings.KindOfLogicalSearchExplain;
+        public KindOfLogicalSearchExplain KindOfLogicalSearchExplain => _baseMonitorSettings.Value.KindOfLogicalSearchExplain;
 
         /// <inheritdoc/>
-        public bool EnableAddingRemovingFactLoggingInStorages => _baseMonitorSettings.EnableAddingRemovingFactLoggingInStorages;
+        public bool EnableAddingRemovingFactLoggingInStorages => _baseMonitorSettings.Value.EnableAddingRemovingFactLoggingInStorages;
 
         /// <inheritdoc/>
-        public bool Enable { get => _baseMonitorSettings.Enable; set => _baseMonitorSettings.Enable = value; }
+        public bool Enable { get => _baseMonitorSettings.Value.Enable; set => _baseMonitorSettings.Value.Enable = value; }
 
         /// <inheritdoc/>
-        public bool EnableRemoteConnection { get => _baseMonitorSettings.EnableRemoteConnection; set => _baseMonitorSettings.EnableRemoteConnection = value; }
+        public bool EnableRemoteConnection { get => _baseMonitorSettings.Value.EnableRemoteConnection; set => _baseMonitorSettings.Value.EnableRemoteConnection = value; }
 
         /// <inheritdoc/>
         public string CreateThreadId()
@@ -778,12 +778,12 @@ namespace SymOntoClay.Monitor
                     //_globalLogger.Info($"NEXT");
 #endif
 
-                    _messageProcessor.ProcessMessage(messageInfo, _fileCache, _baseMonitorSettings.EnableRemoteConnection);
+                    _messageProcessor.ProcessMessage(messageInfo, _fileCache, _baseMonitorSettings.Value.EnableRemoteConnection);
                 }, _threadPool, _linkedCancellationTokenSource.Token);
             }
             else
             {
-                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _baseMonitorSettings.EnableRemoteConnection);
+                _messageProcessor.ProcessMessage(messageInfo, _fileCache, _baseMonitorSettings.Value.EnableRemoteConnection);
             }
 
             var nodeSettings = GetMotitorNodeSettings(nodeId);
@@ -800,7 +800,7 @@ namespace SymOntoClay.Monitor
 
             var nodeSettings = _baseMonitorSettings.Clone();
 
-            if (_enableOnlyDirectlySetUpNodes)
+            if (_enableOnlyDirectlySetUpNodes.Value)
             {
                 nodeSettings.Enable = false;
             }
@@ -1409,7 +1409,7 @@ namespace SymOntoClay.Monitor
         /// <inheritdoc/>
         protected override void OnDisposing()
         {
-            _remoteMonitor?.Dispose();
+            _remoteMonitor.Value?.Dispose();
             _cancellationTokenSource.Dispose();
             _threadPool.Dispose();
 

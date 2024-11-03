@@ -20,7 +20,8 @@ namespace TestSandbox.Serialization
         {
             _logger.Info("Begin");
 
-            TstPathCombineSmartValue();
+            TstFieldSmartValue();
+            //TstPathCombineSmartValue();
             //DeserializeTstInternalWorldSerializableObject();
             //SerializeTstInternalWorldSerializableObject();
             //SimpleDictionarySerialization();
@@ -28,6 +29,28 @@ namespace TestSandbox.Serialization
             //Serialize();
 
             _logger.Info("End");
+        }
+
+        private void TstFieldSmartValue()
+        {
+            var settings = new TstExternalSettings
+            {
+                Prop1 = "Hi from deserialization"
+            };
+
+            var sourceSmartValue = new ConstSmartValue<TstExternalSettings>(settings);
+
+            var propSmartValue = new FieldSmartValue<TstExternalSettings, string>(sourceSmartValue, nameof(settings.Prop1));
+
+#if DEBUG
+            _logger.Info($"propSmartValue = {propSmartValue}");
+#endif
+
+            var propValue = propSmartValue.Value;
+
+#if DEBUG
+            _logger.Info($"propValue = {propValue}");
+#endif
         }
 
         private void TstPathCombineSmartValue()

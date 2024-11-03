@@ -174,7 +174,7 @@ namespace SymOntoClay.Serialization.Implementation
                     return NSerializeGenericDictionary((IDictionary)obj, parentObjInfo, kindOfSerialization, targetObject, rootObj, visitedObjects);
 
                 case "ExternalSettingsFieldSmartValue`1":
-                    return NSerializeExternalSettingsFieldSmartValue((INonGenericExternalSettingsSmartValue)obj, parentObjInfo, kindOfSerialization, targetObject, rootObj);
+                    return NSerializeExternalSettingsFieldSmartValue((INonGenericExternalSettingsFieldSmartValue)obj, parentObjInfo, kindOfSerialization, targetObject, rootObj);
 
                 default:
                     if (type.FullName.StartsWith("System.Threading.") ||
@@ -4149,7 +4149,7 @@ namespace SymOntoClay.Serialization.Implementation
             }
         }
 
-        private ObjectPtr NSerializeExternalSettingsFieldSmartValue(INonGenericExternalSettingsSmartValue obj, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
+        private ObjectPtr NSerializeExternalSettingsFieldSmartValue(INonGenericExternalSettingsFieldSmartValue obj, string parentObjInfo, KindOfSerialization kindOfSerialization, object targetObject, object rootObj)
         {
 #if DEBUG
             _logger.Info($"obj = {obj}");

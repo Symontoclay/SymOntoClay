@@ -7,7 +7,7 @@ using System.Text;
 
 namespace SymOntoClay.Serialization.SmartValues
 {
-    public class ExternalSettingsFieldSmartValue<T>: SmartValue<T>, INonGenericExternalSettingsSmartValue
+    public class ExternalSettingsFieldSmartValue<T>: SmartValue<T>, INonGenericExternalSettingsFieldSmartValue
     {
         public ExternalSettingsFieldSmartValue()
         {
@@ -53,7 +53,7 @@ namespace SymOntoClay.Serialization.SmartValues
             _value = value;
         }
 
-        ExternalSettingsFieldSmartValuePlainObject INonGenericExternalSettingsSmartValue.GetPlainObject()
+        ExternalSettingsFieldSmartValuePlainObject INonGenericExternalSettingsFieldSmartValue.GetPlainObject()
         {
             return new ExternalSettingsFieldSmartValuePlainObject
             {

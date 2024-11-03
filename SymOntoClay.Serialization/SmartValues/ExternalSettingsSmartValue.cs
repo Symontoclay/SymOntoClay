@@ -1,36 +1,29 @@
-﻿using Newtonsoft.Json;
-using SymOntoClay.Common.DebugHelpers;
+﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using SymOntoClay.Common.DebugHelpers;
 using System.Text;
 
 namespace SymOntoClay.Serialization.SmartValues
 {
-    public class ExternalSettingsFieldSmartValue<T>: SmartValue<T>, INonGenericExternalSettingsFieldSmartValue
+    public class ExternalSettingsSmartValue<T> : SmartValue<T>, INonGenericExternalSettingsSmartValue
     {
-        public ExternalSettingsFieldSmartValue()
+        public ExternalSettingsSmartValue() 
         {
         }
 
-        public ExternalSettingsFieldSmartValue(T value, Type settingType, string settingsPropertyName, Type holderType, string holderKey)
-            : this(value, settingType, new List<string> { settingsPropertyName}, holderType, holderKey)
-        {
-        }
-
-        public ExternalSettingsFieldSmartValue(T value, Type settingType, IEnumerable<string> settingsPropertyName, Type holderType, string holderKey) 
+        public ExternalSettingsSmartValue(T value, Type settingType, Type holderType, string holderKey)
         {
 #if DEBUG
             _logger.Info($"value = {value}");
             _logger.Info($"settingType?.FullName = {settingType?.FullName}");
-            _logger.Info($"settingsPropertyName = {JsonConvert.SerializeObject(settingsPropertyName, Formatting.Indented)}");
             _logger.Info($"holderType?.FullName = {holderType?.FullName}");
             _logger.Info($"holderKey = {holderKey}");
 #endif
 
             _value = value;
             _settingType = settingType;
-            _settingsPropertyName = settingsPropertyName;
             _holderType = holderType;
             _holderKey = holderKey;
         }
@@ -40,7 +33,6 @@ namespace SymOntoClay.Serialization.SmartValues
 
 
         private readonly Type _settingType;
-        private readonly IEnumerable<string> _settingsPropertyName;
         private readonly Type _holderType;
         private readonly string _holderKey;
 
@@ -53,12 +45,11 @@ namespace SymOntoClay.Serialization.SmartValues
             _value = value;
         }
 
-        ExternalSettingsFieldSmartValuePlainObject INonGenericExternalSettingsFieldSmartValue.GetPlainObject()
+        ExternalSettingsSmartValuePlainObject INonGenericExternalSettingsSmartValue.GetPlainObject()
         {
-            return new ExternalSettingsFieldSmartValuePlainObject
+            return new ExternalSettingsSmartValuePlainObject
             {
                 SettingType = _settingType?.FullName,
-                SettingsPropertyName = _settingsPropertyName.ToList(),
                 HolderType = _holderType?.FullName,
                 HolderKey = _holderKey
             };
@@ -70,7 +61,6 @@ namespace SymOntoClay.Serialization.SmartValues
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(_settingType)} = {_settingType?.FullName}");
-            sb.PrintPODList(n, nameof(_settingsPropertyName), _settingsPropertyName);
             sb.AppendLine($"{spaces}{nameof(_holderType)} = {_holderType?.FullName}");
             sb.AppendLine($"{spaces}{nameof(_holderKey)} = {_holderKey}");
             sb.Append(base.PropertiesToString(n));
@@ -84,7 +74,6 @@ namespace SymOntoClay.Serialization.SmartValues
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(_settingType)} = {_settingType?.FullName}");
-            sb.PrintPODList(n, nameof(_settingsPropertyName), _settingsPropertyName);
             sb.AppendLine($"{spaces}{nameof(_holderType)} = {_holderType?.FullName}");
             sb.AppendLine($"{spaces}{nameof(_holderKey)} = {_holderKey}");
             sb.Append(base.PropertiesToShortString(n));
@@ -98,7 +87,6 @@ namespace SymOntoClay.Serialization.SmartValues
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.AppendLine($"{spaces}{nameof(_settingType)} = {_settingType?.FullName}");
-            sb.PrintPODList(n, nameof(_settingsPropertyName), _settingsPropertyName);
             sb.AppendLine($"{spaces}{nameof(_holderType)} = {_holderType?.FullName}");
             sb.AppendLine($"{spaces}{nameof(_holderKey)} = {_holderKey}");
             sb.Append(base.PropertiesToBriefString(n));

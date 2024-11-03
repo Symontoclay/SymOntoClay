@@ -31,6 +31,7 @@ using SymOntoClay.Monitor.Internal.FileCache;
 using SymOntoClay.Serialization;
 using SymOntoClay.Serialization.Settings;
 using SymOntoClay.Serialization.SmartValues;
+using SymOntoClay.Serialization.SmartValues.Functors;
 using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
@@ -98,8 +99,8 @@ namespace SymOntoClay.Monitor.Internal
 
             var threadingSettings = monitorContext.ThreadingSettings;
 
-            var minThreadsCount = threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount;
-            var maxThreadsCount = threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount;
+            var minThreadsCount = new FieldSmartValue<CustomThreadPoolSettings, int?>(threadingSettings, nameof(CustomThreadPoolSettings.MinThreadsCount));
+            var maxThreadsCount = new FieldSmartValue<CustomThreadPoolSettings, int?>(threadingSettings, nameof(CustomThreadPoolSettings.MaxThreadsCount));
 
             _threadPoolSerializationSettings = new CustomThreadPoolSerializationSettings()
             {
@@ -108,8 +109,8 @@ namespace SymOntoClay.Monitor.Internal
                 CancellationToken = _linkedCancellationTokenSource.Token
             };
 
-            _threadPool = new CustomThreadPool(minThreadsCount,
-                maxThreadsCount,
+            _threadPool = new CustomThreadPool(minThreadsCount.Value ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
+                maxThreadsCount.Value ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
                 _linkedCancellationTokenSource.Token);
 
             _monitorNodeContext = new MonitorNodeContext();
@@ -122,7 +123,7 @@ namespace SymOntoClay.Monitor.Internal
 
             _monitorNodeContext.Settings = _baseMonitorSettings;
 
-            _features = _baseMonitorSettings.Features;
+            _features = new FieldSmartValue<BaseMonitorSettings, MonitorFeatures>(_baseMonitorSettings, nameof(BaseMonitorSettings.Features));
 
             _monitorNodeContext.Features = _features;
 

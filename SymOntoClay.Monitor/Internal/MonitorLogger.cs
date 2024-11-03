@@ -43,6 +43,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using SymOntoClay.Serialization.SmartValues;
+using SymOntoClay.Serialization.SmartValues.Functors;
 
 namespace SymOntoClay.Monitor.Internal
 {
@@ -77,8 +78,8 @@ namespace SymOntoClay.Monitor.Internal
 
             var threadingSettings = context.ThreadingSettings;
 
-            var minThreadsCount = threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount;
-            var maxThreadsCount = threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount;
+            var minThreadsCount = new FieldSmartValue<CustomThreadPoolSettings, int?>(threadingSettings, nameof(CustomThreadPoolSettings.MinThreadsCount));
+            var maxThreadsCount = new FieldSmartValue<CustomThreadPoolSettings, int?>(threadingSettings, nameof(CustomThreadPoolSettings.MaxThreadsCount));
 
             _threadPoolSerializationSettings = new CustomThreadPoolSerializationSettings()
             {
@@ -87,8 +88,8 @@ namespace SymOntoClay.Monitor.Internal
                 CancellationToken = _linkedCancellationTokenSource.Token
             };
 
-            _threadPool = new CustomThreadPool(minThreadsCount,
-                maxThreadsCount,
+            _threadPool = new CustomThreadPool(minThreadsCount.Value ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
+                maxThreadsCount.Value ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
                 _linkedCancellationTokenSource.Token);
         }
 

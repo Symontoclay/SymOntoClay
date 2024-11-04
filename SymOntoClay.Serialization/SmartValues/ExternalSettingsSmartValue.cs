@@ -16,10 +16,10 @@ namespace SymOntoClay.Serialization.SmartValues
         public ExternalSettingsSmartValue(T value, Type settingType, Type holderType, string holderKey)
         {
 #if DEBUG
-            _logger.Info($"value = {value}");
-            _logger.Info($"settingType?.FullName = {settingType?.FullName}");
-            _logger.Info($"holderType?.FullName = {holderType?.FullName}");
-            _logger.Info($"holderKey = {holderKey}");
+            //_logger.Info($"value = {value}");
+            //_logger.Info($"settingType?.FullName = {settingType?.FullName}");
+            //_logger.Info($"holderType?.FullName = {holderType?.FullName}");
+            //_logger.Info($"holderKey = {holderKey}");
 #endif
 
             _value = value;

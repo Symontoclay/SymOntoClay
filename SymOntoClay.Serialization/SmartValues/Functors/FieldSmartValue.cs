@@ -49,6 +49,8 @@ namespace SymOntoClay.Serialization.SmartValues.Functors
                 {
                     _calculatedValue = default(T);
 
+                    _isCalculated = true;
+
                     return _calculatedValue;
                 }
 
@@ -78,6 +80,8 @@ namespace SymOntoClay.Serialization.SmartValues.Functors
                         {
                             _calculatedValue = default(T);
 
+                            _isCalculated = true;
+
                             return _calculatedValue;
                         }
 
@@ -104,6 +108,8 @@ namespace SymOntoClay.Serialization.SmartValues.Functors
                         {
                             _calculatedValue = default(T);
 
+                            _isCalculated = true;
+
                             return _calculatedValue;
                         }
 
@@ -120,6 +126,8 @@ namespace SymOntoClay.Serialization.SmartValues.Functors
 #endif
 
                 _calculatedValue = (T)targetObject;
+
+                _isCalculated = true;
 
                 return _calculatedValue;
             }

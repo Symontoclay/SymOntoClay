@@ -40,7 +40,7 @@ namespace TestSandbox.Serialization
 
             var sourceSmartValue = new ConstSmartValue<TstExternalSettings>(settings);
 
-            var propSmartValue = new FieldSmartValue<TstExternalSettings, string>(sourceSmartValue, nameof(settings.Prop1));
+            var propSmartValue = new FieldSmartValue<TstExternalSettings, string>(sourceSmartValue, nameof(settings.Prop1), true);
 
 #if DEBUG
             _logger.Info($"propSmartValue = {propSmartValue}");

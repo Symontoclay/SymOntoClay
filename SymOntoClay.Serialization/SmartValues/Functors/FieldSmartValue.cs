@@ -11,15 +11,16 @@ namespace SymOntoClay.Serialization.SmartValues.Functors
         {
         }
 
-        public FieldSmartValue(SmartValue<S> source, string settingsPropertyName)
-            : this(source, new List<string> { settingsPropertyName })
+        public FieldSmartValue(SmartValue<S> source, string settingsPropertyName, bool isCache)
+            : this(source, new List<string> { settingsPropertyName }, isCache)
         {
         }
 
-        public FieldSmartValue(SmartValue<S> source, IEnumerable<string> settingsPropertyName)
+        public FieldSmartValue(SmartValue<S> source, IEnumerable<string> settingsPropertyName, bool isCache)
         {
             _source = source;
             _settingsPropertyName = settingsPropertyName;
+            _isCache = isCache;
         }
 
         private readonly SmartValue<S> _source;

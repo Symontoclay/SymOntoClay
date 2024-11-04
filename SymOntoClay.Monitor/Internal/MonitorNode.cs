@@ -99,8 +99,8 @@ namespace SymOntoClay.Monitor.Internal
 
             var threadingSettings = monitorContext.ThreadingSettings;
 
-            var minThreadsCount = new FieldSmartValue<CustomThreadPoolSettings, int?>(threadingSettings, nameof(CustomThreadPoolSettings.MinThreadsCount));
-            var maxThreadsCount = new FieldSmartValue<CustomThreadPoolSettings, int?>(threadingSettings, nameof(CustomThreadPoolSettings.MaxThreadsCount));
+            var minThreadsCount = new FieldSmartValue<CustomThreadPoolSettings, int?>(threadingSettings, nameof(CustomThreadPoolSettings.MinThreadsCount), true);
+            var maxThreadsCount = new FieldSmartValue<CustomThreadPoolSettings, int?>(threadingSettings, nameof(CustomThreadPoolSettings.MaxThreadsCount), true);
 
             _threadPoolSerializationSettings = new CustomThreadPoolSerializationSettings()
             {
@@ -123,7 +123,7 @@ namespace SymOntoClay.Monitor.Internal
 
             _monitorNodeContext.Settings = _baseMonitorSettings;
 
-            _features = new FieldSmartValue<BaseMonitorSettings, MonitorFeatures>(_baseMonitorSettings, nameof(BaseMonitorSettings.Features));
+            _features = new FieldSmartValue<BaseMonitorSettings, MonitorFeatures>(_baseMonitorSettings, nameof(BaseMonitorSettings.Features), true);
 
             _monitorNodeContext.Features = _features;
 

@@ -52,6 +52,8 @@ namespace SymOntoClay.Monitor.Internal.SmartValues
                 {
                     _calculatedValue = nodesSettingsDict[_nodeId];
 
+                    _isCalculated = true;
+
                     return _calculatedValue;
                 }
 
@@ -63,6 +65,8 @@ namespace SymOntoClay.Monitor.Internal.SmartValues
                 }
 
                 _calculatedValue = _nodeSettings.Value;
+
+                _isCalculated = true;
 
                 return _calculatedValue;
             }

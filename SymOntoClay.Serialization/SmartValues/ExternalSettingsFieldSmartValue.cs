@@ -21,11 +21,11 @@ namespace SymOntoClay.Serialization.SmartValues
         public ExternalSettingsFieldSmartValue(T value, Type settingType, IEnumerable<string> settingsPropertyName, Type holderType, string holderKey) 
         {
 #if DEBUG
-            _logger.Info($"value = {value}");
-            _logger.Info($"settingType?.FullName = {settingType?.FullName}");
-            _logger.Info($"settingsPropertyName = {JsonConvert.SerializeObject(settingsPropertyName, Formatting.Indented)}");
-            _logger.Info($"holderType?.FullName = {holderType?.FullName}");
-            _logger.Info($"holderKey = {holderKey}");
+            //_logger.Info($"value = {value}");
+            //_logger.Info($"settingType?.FullName = {settingType?.FullName}");
+            //_logger.Info($"settingsPropertyName = {JsonConvert.SerializeObject(settingsPropertyName, Formatting.Indented)}");
+            //_logger.Info($"holderType?.FullName = {holderType?.FullName}");
+            //_logger.Info($"holderKey = {holderKey}");
 #endif
 
             _value = value;

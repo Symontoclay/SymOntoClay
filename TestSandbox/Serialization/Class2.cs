@@ -3,6 +3,7 @@ using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Serialization;
 using SymOntoClay.Serialization.Settings;
+using SymOntoClay.Serialization.SmartValues;
 using SymOntoClay.Threading;
 using System.Speech.Synthesis;
 using System.Text;
@@ -20,8 +21,8 @@ namespace TestSandbox.Serialization
         {
             _noneCancelationToken = CancellationToken.None;
 
-            var minThreadsCount = 1;
-            var maxThreadsCount = 5;
+            var minThreadsCount = new ConstSmartValue<int?>(1);
+            var maxThreadsCount = new ConstSmartValue<int?>(5);
 
             _customThreadPoolSerializationSettings = new CustomThreadPoolSerializationSettings()
             {
@@ -30,7 +31,7 @@ namespace TestSandbox.Serialization
                 CancellationToken = _noneCancelationToken
             };
 
-            _threadPool = new FakeCustomThreadPool(minThreadsCount, maxThreadsCount, _noneCancelationToken);
+            _threadPool = new FakeCustomThreadPool(minThreadsCount.Value.Value, maxThreadsCount.Value.Value, _noneCancelationToken);
         }
 
         private CancellationToken _noneCancelationToken;

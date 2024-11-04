@@ -41,10 +41,10 @@ namespace SymOntoClay.Core.Internal
         public StandardLibraryLoader StandardLibraryLoader { get; set; }
 
         /// <inheritdoc/>
-        public SmartValue<IHostSupport> HostSupport { get; set; }
+        public IHostSupport HostSupport { get; set; }//SmartValue
 
         /// <inheritdoc/>
-        public SmartValue<IHostListener> HostListener { get; set; }
+        public IHostListener HostListener { get; set; }//SmartValue
 
         /// <inheritdoc/>
         public IConditionalEntityHostSupport ConditionalEntityHostSupport { get; set; }

@@ -42,6 +42,7 @@ using SymOntoClay.Serialization.Settings;
 using SymOntoClay.Serialization;
 using SymOntoClay.Serialization.SmartValues;
 using System.Runtime;
+using SymOntoClay.Monitor.Internal.SmartValues;
 
 namespace SymOntoClay.Monitor
 {
@@ -154,7 +155,7 @@ namespace SymOntoClay.Monitor
 
             var smartMonitorSettings = new ExternalSettingsSmartValue<MonitorSettings>(monitorSettings, settingType, GetType(), holderKey);
 
-            _baseMonitorSettings = smartMonitorSettings.Clone();
+            _baseMonitorSettings = new CloneMonitorSettingsSmartValue(smartMonitorSettings, true);
 
             _features = new ExternalSettingsFieldSmartValue<MonitorFeatures>(monitorSettings.Features, settingType, nameof(monitorSettings.Features), GetType(), holderKey);
 
@@ -804,19 +805,7 @@ namespace SymOntoClay.Monitor
 
         private SmartValue<BaseMonitorSettings> GetMotitorNodeSettings(string nodeId)
         {
-            if (_nodesSettings.ContainsKey(nodeId))
-            {
-                return _nodesSettings[nodeId];
-            }
-
-            var nodeSettings = _baseMonitorSettings.Clone();
-
-            if (_enableOnlyDirectlySetUpNodes.Value)
-            {
-                nodeSettings.Enable = false;
-            }
-
-            return nodeSettings;
+            return new MotitorNodeSettingsDictionarySmartValue(_nodesSettings, _baseMonitorSettings, _enableOnlyDirectlySetUpNodes, nodeId, true);
         }
 
         /// <inheritdoc/>

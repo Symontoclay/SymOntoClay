@@ -95,11 +95,11 @@ namespace TestSandbox.Handlers
                 Directory.CreateDirectory(serializationDirectory);
             }
 
-            _world.Save(new SymOntoClay.Serialization.SerializationSettings()
-            {
-                Path = serializationDirectory,
-                ImageName = "PointNearSpawn"
-            });
+            //_world.Save(new SymOntoClay.Serialization.SerializationSettings()
+            //{
+            //    Path = serializationDirectory,
+            //    ImageName = "PointNearSpawn"
+            //});
 
             Thread.Sleep(500);
 

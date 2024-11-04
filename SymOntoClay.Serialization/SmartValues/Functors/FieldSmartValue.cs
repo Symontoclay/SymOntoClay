@@ -25,16 +25,30 @@ namespace SymOntoClay.Serialization.SmartValues.Functors
         private readonly SmartValue<S> _source;
         private readonly IEnumerable<string> _settingsPropertyName;
 
+        private readonly bool _isCache;
+        private bool _isCalculated;
+        private T _calculatedValue = default;
+
         /// <inheritdoc/>
         public override T Value
         {
             get
             {
+                if (_isCache)
+                {
+                    if (_isCalculated)
+                    {
+                        return _calculatedValue;
+                    }
+                }
+
                 object targetObject = _source.Value;
 
                 if(targetObject == null)
                 {
-                    return default(T);
+                    _calculatedValue = default(T);
+
+                    return _calculatedValue;
                 }
 
                 var targetType = typeof(S);
@@ -42,13 +56,13 @@ namespace SymOntoClay.Serialization.SmartValues.Functors
                 foreach (var itemName in _settingsPropertyName)
                 {
 #if DEBUG
-                    _logger.Info($"itemName = {itemName}");
+                    //_logger.Info($"itemName = {itemName}");
 #endif
 
                     var property = targetType.GetProperty(itemName);
 
 #if DEBUG
-                    _logger.Info($"property?.Name = {property?.Name}");
+                    //_logger.Info($"property?.Name = {property?.Name}");
 #endif
 
                     if (property != null)
@@ -56,12 +70,14 @@ namespace SymOntoClay.Serialization.SmartValues.Functors
                         targetObject = property.GetValue(targetObject);
 
 #if DEBUG
-                        _logger.Info($"targetObject = {targetObject}");
+                        //_logger.Info($"targetObject = {targetObject}");
 #endif
 
                         if (targetObject == null)
                         {
-                            return default(T);
+                            _calculatedValue = default(T);
+
+                            return _calculatedValue;
                         }
 
                         targetType = targetObject.GetType();
@@ -72,7 +88,7 @@ namespace SymOntoClay.Serialization.SmartValues.Functors
                     var field = targetType.GetField(itemName);
 
 #if DEBUG
-                    _logger.Info($"field?.Name = {field?.Name}");
+                    //_logger.Info($"field?.Name = {field?.Name}");
 #endif
 
                     if (field != null)
@@ -80,12 +96,14 @@ namespace SymOntoClay.Serialization.SmartValues.Functors
                         targetObject = field.GetValue(targetObject);
 
 #if DEBUG
-                        _logger.Info($"targetObject = {targetObject}");
+                        //_logger.Info($"targetObject = {targetObject}");
 #endif
 
                         if (targetObject == null)
                         {
-                            return default(T);
+                            _calculatedValue = default(T);
+
+                            return _calculatedValue;
                         }
 
                         targetType = targetObject.GetType();
@@ -97,10 +115,12 @@ namespace SymOntoClay.Serialization.SmartValues.Functors
                 }
 
 #if DEBUG
-                _logger.Info($"targetObject = {targetObject}");
+                //_logger.Info($"targetObject = {targetObject}");
 #endif
 
-                return (T)targetObject;
+                _calculatedValue = (T)targetObject;
+
+                return _calculatedValue;
             }
         }
 

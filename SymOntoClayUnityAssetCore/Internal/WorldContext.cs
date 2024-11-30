@@ -28,6 +28,9 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.CoreHelper;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Serialization;
+using SymOntoClay.Serialization.Settings;
+using SymOntoClay.Serialization.SmartValues;
 using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core.Internal.DateAndTime;
 using SymOntoClay.UnityAsset.Core.Internal.EndPoints.MainThread;
@@ -72,11 +75,25 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             Directory.CreateDirectory(_tmpDir);
 
             _cancellationTokenSource = new CancellationTokenSource();
+
+            _linkedCancellationTokenSourceSettings = new LinkedCancellationTokenSourceSerializationSettings()
+            {
+                Token1 = _cancellationTokenSource.Token,
+                Token2 = settings?.CancellationToken ?? CancellationToken.None
+            };
+
             _linkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_cancellationTokenSource.Token, settings?.CancellationToken ?? CancellationToken.None);
 
             ThreadingSettings = settings.ThreadingSettings;
 
             var threadingSettings = settings.ThreadingSettings?.AsyncEvents;
+
+            _asyncEventsThreadPoolSerializationSettings = new CustomThreadPoolSerializationSettings()
+            {
+                MinThreadsCount = minThreadsCount,
+                MaxThreadsCount = maxThreadsCount,
+                CancellationToken = _linkedCancellationTokenSource.Token
+            };
 
             AsyncEventsThreadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
                 threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
@@ -89,7 +106,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
         private void CreateMonitoring(WorldSettings settings)
         {
-            Monitor = settings.Monitor;            
+            Monitor = settings.Monitor;
             MonitorNode = Monitor.CreateMotitorNode("6B299F25-9FD9-46BE-A833-9C52B279444F", "world");
             Logger = MonitorNode;
         }
@@ -137,12 +154,18 @@ namespace SymOntoClay.UnityAsset.Core.Internal
             PlatformTypesConvertorsRegistry.AddConvertor(Logger, convertor);
         }
 
+        [SocSerializableExternalSettings("")]
+        private WorldSettings _settings;
+
+        private readonly Type _settingType = typeof(WorldSettings);
+        private readonly string _holderKey = string.Empty;
+
         private bool _isInitialized;
 
         public bool IsInitialized => _isInitialized;
 
-        private string _tmpDir;
-        public string TmpDir => _tmpDir;
+        private SmartValue<string> _tmpDir;
+        public SmartValue<string> TmpDir => _tmpDir;
 
         public IMonitor Monitor { get; private set; }
         public IMonitorNode MonitorNode { get; private set; }

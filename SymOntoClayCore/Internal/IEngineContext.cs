@@ -21,12 +21,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Serialization.SmartValues;
 using SymOntoClay.Threading;
 
 namespace SymOntoClay.Core.Internal
 {
     public interface IEngineContext: IMainStorageContext
-    {   
+    {
         ICodeExecutorComponent CodeExecutor { get; }
         IHostSupport HostSupport { get; }
         IHostListener HostListener { get; }

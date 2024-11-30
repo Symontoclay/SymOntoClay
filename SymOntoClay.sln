@@ -33,6 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		CommonDoc.xml = CommonDoc.xml
+		failed-serialization-readmy.txt = failed-serialization-readmy.txt
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SymOntoClayNLPBinaryDict", "SymOntoClayNLPBinaryDict\SymOntoClayNLPBinaryDict.csproj", "{AF825015-D064-405A-976C-B07D940039B6}"
@@ -67,9 +68,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CLI.CmdlParser.Tests", "CLI
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SymOntoClay.ActiveObject", "SymOntoClay.ActiveObject\SymOntoClay.ActiveObject.csproj", "{CA714B79-FC45-462B-9A47-9E859D9C7709}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SymOntoClay.Serialization", "SymOntoClay.Serialization\SymOntoClay.Serialization.csproj", "{A7044BB3-7720-4EBF-868C-7FB2D808DE45}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SymOntoClay.Serialization", "SymOntoClay.Serialization\SymOntoClay.Serialization.csproj", "{A7044BB3-7720-4EBF-868C-7FB2D808DE45}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SymOntoClay.SourceGenerator", "SymOntoClay.SourceGenerator\SymOntoClay.SourceGenerator.csproj", "{A2E69479-D818-484D-A242-00A4734FE359}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SymOntoClay.SourceGenerator", "SymOntoClay.SourceGenerator\SymOntoClay.SourceGenerator.csproj", "{A2E69479-D818-484D-A242-00A4734FE359}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SymOntoClay.Serializable.CoreHelper", "SymOntoClay.Serializable.CoreHelper\SymOntoClay.Serializable.CoreHelper.csproj", "{7FE1C4AC-522D-4D65-A8BE-1B844E26F8E1}"
 EndProject

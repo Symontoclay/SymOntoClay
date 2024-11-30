@@ -1,0 +1,9 @@
+0.5.5 -> 0.5.5-serialization -> 0.5.5-serialization-prep-to-migration -> 0.5.5-serialization-prep-to-migration-smart-value-ext
+
+0.5.5 -> 0.5.5-serialization -> 0.5.5-serialization-full-migraton -> 0.5.5-serialization-full-migraton-ser-attempt-reflection -> 0.5.5-serialization-full-migraton-ser-att-refl-ext-settings
+
+0.5.5 -> 0.5.5-serialization -> 0.5.5-serialization-full-migraton 
+
+0.5.5 -> 0.5.5-serialization-basis-investigation-fail
+
+0.5.5 -> 0.5.5-stop-fail-attempt

@@ -110,6 +110,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <summary>
         /// Special value for prediction.
         /// </summary>
-        NamedParameter
+        NamedParameter,
+        Root,
+        Task
     }
 }

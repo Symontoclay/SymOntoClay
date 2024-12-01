@@ -136,6 +136,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             Result.InheritanceItems.AddRange(parser.Result);
         }
 
+        /// <summary>
+        /// Processes general content of object
+        /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        /// <exception cref="UnexpectedTokenException"></exception>
         protected void ProcessGeneralContent()
         {
             switch (_currToken.TokenKind)
@@ -294,12 +299,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                                 break;
 
                                             default:
-                                                throw new UnexpectedTokenException(_currToken);
+                                                throw new UnexpectedTokenException(nextToken);
                                         }
                                         break;
 
                                     default:
-                                        throw new UnexpectedTokenException(_currToken);
+                                        throw new UnexpectedTokenException(nextToken);
                                 }
                             }
                             break;

@@ -7417,6 +7417,13 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.BaseObjectParser.OnFinish">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.BaseObjectParser.ProcessGeneralContent">
+            <summary>
+            Processes general content of object
+            </summary>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <exception cref="T:SymOntoClay.Core.Internal.Parsing.UnexpectedTokenException"></exception>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.BreakStatementParser.OnEnter">
             <inheritdoc/>
         </member>
@@ -7843,6 +7850,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.SetDirectiveParser.OnRun">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.SetRootTaskParser.OnRun">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.SetStatementParser.OnEnter">

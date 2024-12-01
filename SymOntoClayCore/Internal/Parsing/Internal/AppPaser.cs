@@ -118,7 +118,58 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case State.ContentStarted:
-                    ProcessGeneralContent();
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                            switch (_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Root:
+                                    {
+                                        var nextToken = _context.GetToken();
+
+#if DEBUG
+                                        Info("CFAC1423-B051-46F7-8ECA-B1064798B08B", $"nextToken = {nextToken}");
+#endif
+
+                                        switch (nextToken.TokenKind)
+                                        {
+                                            case TokenKind.Word:
+                                                switch (nextToken.KeyWordTokenKind)
+                                                {
+                                                    case KeyWordTokenKind.Task:
+                                                        {
+                                                            _context.Recovery(nextToken);
+                                                            _context.Recovery(_currToken);
+
+                                                            var parser = new SetRootTaskParser(_context);
+                                                            parser.Run();
+
+#if DEBUG
+                                                            Info("F6CA06F0-0631-4FBD-A070-5CDD9C6B1838", $"parser.Result = {parser.Result}");
+#endif
+
+                                                            throw new NotImplementedException("266C3814-34AF-4405-B935-C577C22971DD");
+                                                        }
+                                                        break;
+
+                                                    default:
+                                                        throw new UnexpectedTokenException(nextToken);
+                                                }
+                                                break;
+
+                                            default:
+                                                throw new UnexpectedTokenException(nextToken);
+                                        }
+                                    }
+                                    break;
+                            }
+                            break;
+
+                        default:
+                            ProcessGeneralContent();
+                            break;
+                    }
+                    
                     break;
 
                 default:

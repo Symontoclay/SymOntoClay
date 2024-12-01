@@ -120,11 +120,5 @@ namespace SymOntoClay.Core.Internal
         {
             _logger.Fatal(messagePointId, exception, memberName, sourceFilePath, sourceLineNumber);
         }
-
-        [Obsolete("Use Info", true)]
-        protected void Log(string message)
-        {
-            //_logger.Log(message);
-        }
     }
 }

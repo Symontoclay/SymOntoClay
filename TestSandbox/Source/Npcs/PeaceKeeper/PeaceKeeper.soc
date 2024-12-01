@@ -1,8 +1,22 @@
 ﻿app PeaceKeeper
 {
-    on Enter =>
-	{
-	    'Begin' >> @>log;
-		'End' >> @>log;
-	}
+    root task `SomeCompoundTask`;
+
+    fun SomeOperator()
+    {
+       wait 1;
+    }
+}
+
+compound task SomeCompoundTask
+{
+   case
+   {
+       SomePrimitiveTask;
+   }
+}
+
+primitive task SomePrimitiveTask
+{
+    operator SomeOperator();
 }

@@ -804,6 +804,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
                         }
 
+                        if (string.Equals(content, "operator", StringComparison.OrdinalIgnoreCase))
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Operator;
+                            break;
+                        }
+
                         if (string.Equals(content, "is", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Is;
@@ -1185,6 +1191,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         if (string.Equals(content, "once", StringComparison.OrdinalIgnoreCase))
                         {
                             kindOfKeyWord = KeyWordTokenKind.Once;
+                            break;
+                        }
+
+                        if (string.Equals(content, "root", StringComparison.OrdinalIgnoreCase))
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Root;
+                            break;
+                        }
+
+                        if (string.Equals(content, "task", StringComparison.OrdinalIgnoreCase))
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Task;
                             break;
                         }
                     }

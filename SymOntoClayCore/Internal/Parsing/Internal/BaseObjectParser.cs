@@ -143,6 +143,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <exception cref="UnexpectedTokenException"></exception>
         protected void ProcessGeneralContent()
         {
+#if DEBUG
+            Info("62DA50CF-1985-4CD1-BDF4-5E654AD4C6BD", $"62DA50CF-1985-4CD1-BDF4-5E654AD4C6BD _currToken = {_currToken}");
+            //sInfo("AF5D18E8-D25F-4E9B-8D1B-351532AB581C", $"AF5D18E8-D25F-4E9B-8D1B-351532AB581C Result = {Result}");
+#endif
+
             switch (_currToken.TokenKind)
             {
                 case TokenKind.CloseFigureBracket:

@@ -20,11 +20,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
@@ -38,6 +41,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.App;
+
+        public List<StrongIdentifierValue> RootTasks { get; set; } = new List<StrongIdentifierValue>();
 
         /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> context)
@@ -63,9 +68,47 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var result = new App();
             context[this] = result;
 
+            result.RootTasks = RootTasks?.Select(p => p.Clone(context))?.ToList() ?? new List<StrongIdentifierValue>();
+
             result.AppendCodeItem(this, context);
 
             return result;
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.PrintObjListProp(n, nameof(RootTasks), RootTasks);
+
+            sb.Append(base.PropertiesToString(n));
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToShortString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.PrintShortObjListProp(n, nameof(RootTasks), RootTasks);
+
+            sb.Append(base.PropertiesToShortString(n));
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToBriefString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.PrintBriefObjListProp(n, nameof(RootTasks), RootTasks);
+
+            sb.Append(base.PropertiesToBriefString(n));
+            return sb.ToString();
         }
 
         /// <inheritdoc/>

@@ -46,12 +46,28 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             : base(context, KindOfCodeEntity.App)
         {
         }
-        
+
+        private App _app;
+
         private State _state = State.Init;
+
+        /// <inheritdoc/>
+        protected override void OnEnter()
+        {
+            base.OnEnter();
+
+            _app = (App)Result;
+        }
 
         /// <inheritdoc/>
         protected override void OnRun()
         {
+#if DEBUG
+            Info("55063C1F-985F-4F33-8374-7760F707CA31", $"55063C1F-985F-4F33-8374-7760F707CA31 _state = {_state}");
+            Info("A3725C22-C133-468E-B62B-01D2631FB2C9", $"A3725C22-C133-468E-B62B-01D2631FB2C9 _currToken = {_currToken}");
+            //Info("AE8EB47A-1E18-4E4D-9C95-7188537DA7F0", $"AE8EB47A-1E18-4E4D-9C95-7188537DA7F0 Result = {Result}");
+#endif
+
             switch (_state)
             {
                 case State.Init:
@@ -148,7 +164,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                                             Info("F6CA06F0-0631-4FBD-A070-5CDD9C6B1838", $"parser.Result = {parser.Result}");
 #endif
 
-                                                            throw new NotImplementedException("266C3814-34AF-4405-B935-C577C22971DD");
+                                                            _app.RootTasks.Add(parser.Result);
                                                         }
                                                         break;
 
@@ -161,6 +177,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                                 throw new UnexpectedTokenException(nextToken);
                                         }
                                     }
+                                    break;
+
+                                default:
+                                    ProcessGeneralContent();
                                     break;
                             }
                             break;

@@ -45,7 +45,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override KindOfCodeEntity Kind => KindOfCodeEntity.IdleActionItem;
 
         /// <inheritdoc/>
-        public override bool IdleActionItemIs => true;
+        public override bool IsIdleActionItem => true;
         
         /// <inheritdoc/>
         public override IdleActionItem AsIdleActionItem => this;

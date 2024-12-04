@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SymOntoClay.Core.Internal.CodeModel;
+using System;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
@@ -18,16 +19,21 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
         }
 
+        private CompoundTask _compoundTask;
+
         /// <inheritdoc/>
         protected override void OnEnter()
         {
-            throw new NotImplementedException("9E053861-AF64-4264-8201-85FE6883DD3F");
+            _compoundTask = new CompoundTask();
+            Result = _compoundTask;
+
+            SetCurrentCodeItem(Result);
         }
 
         /// <inheritdoc/>
         protected override void OnFinish()
         {
-            throw new NotImplementedException("DB857224-277F-4F0A-9B0D-B92F2B7A46D2");
+            RemoveCurrentCodeEntity();
         }
 
         private State _state = State.Init;

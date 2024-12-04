@@ -165,8 +165,17 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsSynonym => false;
         public virtual Synonym AsSynonym => null;
 
-        public virtual bool IdleActionItemIs => false;
+        public virtual bool IsIdleActionItem => false;
         public virtual IdleActionItem AsIdleActionItem => null;
+
+        public virtual bool IsBaseTask => false;
+        public virtual BaseTask AsBaseTask => null;
+
+        public virtual bool IsBaseCompoundTask => false;
+        public virtual BaseCompoundTask AsBaseCompoundTask => null;
+
+        public virtual bool IsCompoundTask => false;
+        public virtual CompoundTask AsCompoundTask => null;
 
         /// <inheritdoc/>
         public override KindOfValue KindOfValue => KindOfValue.CodeItem;

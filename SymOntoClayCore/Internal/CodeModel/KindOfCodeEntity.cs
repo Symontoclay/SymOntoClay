@@ -49,6 +49,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         RelationDescription,
         Synonym,
         IdleActionItem,
-        AnonymousObject
+        AnonymousObject,
+        CompoundTask
     }
 }

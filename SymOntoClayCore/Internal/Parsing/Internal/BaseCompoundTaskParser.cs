@@ -1,4 +1,6 @@
-﻿namespace SymOntoClay.Core.Internal.Parsing.Internal
+﻿using SymOntoClay.Core.Internal.CodeModel;
+
+namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
     public abstract class BaseCompoundTaskParser : BaseInternalParser
     {
@@ -6,5 +8,7 @@
             : base(context)
         {
         }
+
+        public BaseCompoundTask Result { get; protected set; }
     }
 }

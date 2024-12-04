@@ -68,7 +68,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                 SetCurrentCodeItem(Result);
             }
-
         }
 
         private CodeItem ObjectFactory(KindOfCodeEntity kind)
@@ -105,7 +104,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnFinish()
         {
             RemoveCurrentCodeEntity();
-
         }
 
         protected virtual void OnAddInlineTrigger(InlineTrigger inlineTrigger)

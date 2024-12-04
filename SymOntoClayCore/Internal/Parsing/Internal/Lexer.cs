@@ -1205,6 +1205,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.Task;
                             break;
                         }
+
+                        if (string.Equals(content, "compound", StringComparison.OrdinalIgnoreCase))
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Compound;
+                            break;
+                        }
                     }
                     break;
 

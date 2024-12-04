@@ -33,9 +33,9 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class TaskValue : Value
+    public class ThreadTaskValue : Value
     {
-        public TaskValue(IThreadTask systemTask)
+        public ThreadTaskValue(IThreadTask systemTask)
         {
             SystemTask = systemTask;
             TaskId = Guid.NewGuid().ToString("D");
@@ -43,13 +43,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override KindOfValue KindOfValue => KindOfValue.TaskValue;
+        public override KindOfValue KindOfValue => KindOfValue.ThreadTaskValue;
 
         /// <inheritdoc/>
         public override bool IsTaskValue => true;
 
         /// <inheritdoc/>
-        public override TaskValue AsTaskValue => this;
+        public override ThreadTaskValue AsTaskValue => this;
 
         public string TaskId { get; set; }
         public IThreadTask SystemTask 
@@ -189,7 +189,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 return (Value)context[this];
             }
 
-            var result = new TaskValue(_systemTask);
+            var result = new ThreadTaskValue(_systemTask);
             context[this] = result;
 
             result.TaskId = TaskId;

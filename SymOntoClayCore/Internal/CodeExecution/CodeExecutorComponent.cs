@@ -208,7 +208,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     var task = threadExecutor.Start();
 
-                    return new TaskValue(task);
+                    return new ThreadTaskValue(task);
                 }
             }
         }

@@ -1160,7 +1160,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 var firstParameter = positionedParameters[0];
 
-                if (firstParameter.KindOfValue != KindOfValue.TaskValue)
+                if (firstParameter.KindOfValue != KindOfValue.ThreadTaskValue)
                 {
                     var timeoutSystemVal = _dateTimeResolver.ConvertTimeValueToTicks(Logger, firstParameter, DefaultTimeValues.TimeoutDefaultTimeValue, _currentCodeFrame.LocalContext);
 
@@ -1172,10 +1172,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 }
             }
 
-            if(positionedParameters.Any(p => p.KindOfValue == KindOfValue.TaskValue) ||
+            if(positionedParameters.Any(p => p.KindOfValue == KindOfValue.ThreadTaskValue) ||
                 positionedParameters.Any(p => p.KindOfValue == KindOfValue.ProcessInfoValue))
             {
-                if (positionedParameters.Any(p => p.KindOfValue == KindOfValue.TaskValue))
+                if (positionedParameters.Any(p => p.KindOfValue == KindOfValue.ThreadTaskValue))
                 {
                     _waitedTasksList = positionedParameters.Where(p => p.IsTaskValue).Select(p => p.AsTaskValue.SystemTask).ToList();
                 }

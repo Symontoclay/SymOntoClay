@@ -92,6 +92,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotCompoundTask:
                     switch (_currToken.TokenKind)
                     {
+                        case TokenKind.Word:
+                        case TokenKind.Identifier:
+                            Result.Name = ParseName(_currToken.Content);
+                            _state = State.GotName;
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
@@ -100,17 +106,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotName:
                     switch (_currToken.TokenKind)
                     {
+                        case TokenKind.OpenFigureBracket:
+                            _state = State.ContentStarted;
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
                     break;
 
                 case State.ContentStarted:
-                    switch (_currToken.TokenKind)
-                    {
-                        default:
-                            throw new UnexpectedTokenException(_currToken);
-                    }
+                    ProcessGeneralContent();
                     break;
 
                 default:

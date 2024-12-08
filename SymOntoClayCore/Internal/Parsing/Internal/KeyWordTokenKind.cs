@@ -113,6 +113,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         NamedParameter,
         Root,
         Task,
-        Compound
+        Compound,
+        Case
     }
 }

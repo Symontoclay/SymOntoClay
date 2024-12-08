@@ -151,9 +151,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 _context.Recovery(_currToken);
                                 var parser = new CompoundTaskParser(_context);
                                 parser.Run();
-                                //Result.Add(parser.Result);
-
-                                throw new NotImplementedException("48407890-8C92-4F7E-928A-8A8609322788");
+                                Result.Add(parser.Result);
                             }
                             break;
 

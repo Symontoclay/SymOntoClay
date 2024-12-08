@@ -50,6 +50,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         Synonym,
         IdleActionItem,
         AnonymousObject,
-        CompoundTask
+        CompoundTask,
+        CompoundTaskCase
     }
 }

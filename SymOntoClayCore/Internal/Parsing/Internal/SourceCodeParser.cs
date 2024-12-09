@@ -155,6 +155,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
+                        case KeyWordTokenKind.Primitive:
+                            {
+                                _context.Recovery(_currToken);
+                                var parser = new PrimitiveTaskParser(_context);
+                                parser.Run();
+
+                                throw new NotImplementedException("3DE3C20B-02DD-47BF-83F8-900D06BD79E6");
+                            }
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

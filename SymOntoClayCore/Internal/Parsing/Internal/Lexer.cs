@@ -1217,6 +1217,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.Case;
                             break;
                         }
+
+                        if (string.Equals(content, "primitive", StringComparison.OrdinalIgnoreCase))
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Primitive;
+                            break;
+                        }
                     }
                     break;
 

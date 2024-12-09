@@ -180,6 +180,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsCompoundTaskCase => false;
         public virtual CompoundTaskCase AsCompoundTaskCase => null;
 
+        public virtual bool IsPrimitiveTask => false;
+        public virtual PrimitiveTask AsPrimitiveTask => null;
+
         /// <inheritdoc/>
         public override KindOfValue KindOfValue => KindOfValue.CodeItem;
 

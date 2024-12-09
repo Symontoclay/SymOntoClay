@@ -114,6 +114,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Root,
         Task,
         Compound,
-        Case
+        Case,
+        Primitive
     }
 }

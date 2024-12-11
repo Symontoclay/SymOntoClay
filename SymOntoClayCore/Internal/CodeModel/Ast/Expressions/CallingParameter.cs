@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.CodeModel.Ast.Expressions
     {
         public AstExpression Name { get; set; }
         public AstExpression Value { get; set; }
-
+        
         public bool IsNamed => Name != null;
 
         /// <inheritdoc/>

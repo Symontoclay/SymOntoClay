@@ -124,6 +124,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         case TokenKind.Word:
                             switch (_currToken.KeyWordTokenKind)
                             {
+                                case KeyWordTokenKind.Operator:
+                                    {
+                                        _context.Recovery(_currToken);
+
+                                        var parser = new PrimitiveTaskOperatorParser(_context);
+                                        parser.Run();
+
+                                        throw new NotImplementedException("A37F38B5-68C9-49CE-9929-EF8436444D06");
+                                    }
+                                    break;
+
                                 default:
                                     throw new UnexpectedTokenException(_currToken);
                             }

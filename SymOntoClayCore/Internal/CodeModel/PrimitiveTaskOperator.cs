@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +10,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class PrimitiveTaskOperator : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
-        public StrongIdentifierValue Name { get; set; }
+        public AstExpression Expression { get; set; }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
         public PrimitiveTaskOperator Clone()
@@ -29,21 +30,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var result = new PrimitiveTaskOperator();
             context[this] = result;
 
-            return result;
-        }
-
-        public ulong GetLongHashCode(CheckDirtyOptions options)
-        {
-            Name.CheckDirty(options);
-
-            var result = Name.GetLongHashCode(options);
+            result.Expression = Expression.CloneAstExpression(context);
 
             return result;
         }
 
         public void DiscoverAllAnnotations(IList<Annotation> result)
         {
-            Name?.DiscoverAllAnnotations(result);
+            Expression?.DiscoverAllAnnotations(result);
         }
 
         /// <inheritdoc/>
@@ -63,7 +57,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.PrintObjProp(n, nameof(Name), Name);
+            sb.PrintObjProp(n, nameof(Expression), Expression);
 
             return sb.ToString();
         }
@@ -86,7 +80,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjProp(n, nameof(Name), Name);
+            sb.PrintShortObjProp(n, nameof(Expression), Expression);
 
             return sb.ToString();
         }
@@ -109,18 +103,28 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjProp(n, nameof(Name), Name);
+            sb.PrintBriefObjProp(n, nameof(Expression), Expression);
 
             return sb.ToString();
         }
 
         public string ToHumanizedString(DebugHelperOptions options)
         {
-            var sb = new StringBuilder(Name?.ToHumanizedString(options));
+            var sb = new StringBuilder();
 
-            //sb.Append(";");
+            if (Expression != null)
+            {
+                sb.Append(Expression.ToHumanizedString(options));
+            }
+
+            sb.Append(";");
 
             return sb.ToString();
+        }
+
+        public string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            return ToHumanizedString(options);
         }
     }
 }

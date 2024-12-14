@@ -45,7 +45,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnFinish()
         {
             Result = _nodePoint.BuildExpr<AstExpression>();
-
         }
 
         private IntermediateAstNodePoint _nodePoint = new IntermediateAstNodePoint();

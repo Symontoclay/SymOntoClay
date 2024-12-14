@@ -9,7 +9,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             Init,
             GotOperatorMark,
-            GotName,
             GotCallingExpr
         }
 
@@ -32,8 +31,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Info("37F9FBC3-94E5-4926-98B4-4B0C40D5A278", $"_state = {_state}");
-            Info("B3BC4040-868D-4647-B09A-25E54901EFC6", $"_currToken = {_currToken}");
+            //Info("37F9FBC3-94E5-4926-98B4-4B0C40D5A278", $"_state = {_state}");
+            //Info("B3BC4040-868D-4647-B09A-25E54901EFC6", $"_currToken = {_currToken}");
             //Info(, $"Result = {Result}");
 #endif
 
@@ -60,30 +59,30 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case State.GotOperatorMark:
-                    switch (_currToken.TokenKind)
                     {
-                        case TokenKind.Word:
-                        case TokenKind.Identifier:
-                            Result.Name = ParseName(_currToken.Content);
-                            _state = State.GotName;
-                            break;
+                        _context.Recovery(_currToken);
 
-                        default:
-                            throw new UnexpectedTokenException(_currToken);
-                    }
-                    break;
+                        var parser = new AstExpressionParser(_context, new TerminationToken(TokenKind.Semicolon, true));
+                        parser.Run();
 
-                case State.GotName:
-                    switch (_currToken.TokenKind)
-                    {
-                        default:
-                            throw new UnexpectedTokenException(_currToken);
+#if DEBUG
+                        //Info("743FE80C-35FB-4007-A029-0E1EFBEB8DDB", $"parser.Result = {parser.Result}");
+#endif
+
+                        Result.Expression = parser.Result;
+
+                        _state = State.GotCallingExpr;
+
                     }
                     break;
 
                 case State.GotCallingExpr:
                     switch (_currToken.TokenKind)
                     {
+                        case TokenKind.Semicolon:
+                            Exit();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

@@ -11,6 +11,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class PrimitiveTask : BaseTask
     {
+        public PrimitiveTaskOperator Operator { get; set; }
+
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.PrimitiveTask;
 
@@ -49,6 +51,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             var result = new PrimitiveTask();
             context[this] = result;
+
+            result.Operator = Operator.Clone(context);
 
             result.AppendCodeItem(this, context);
 
@@ -94,6 +98,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             base.DiscoverAllAnnotations(result);
 
+            Operator.DiscoverAllAnnotations(result);
+
             //if (!Cases.IsNullOrEmpty())
             //{
             //    foreach (var item in Cases)
@@ -109,6 +115,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.PrintObjProp(n, nameof(Operator), Operator);
+
             //sb.PrintObjListProp(n, nameof(Cases), Cases);
 
             sb.Append(base.PropertiesToString(n));
@@ -121,6 +129,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.PrintShortObjProp(n, nameof(Operator), Operator);
+
             //sb.PrintShortObjListProp(n, nameof(Cases), Cases);
 
             sb.Append(base.PropertiesToShortString(n));
@@ -132,6 +142,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintBriefObjProp(n, nameof(Operator), Operator);
 
             //sb.PrintBriefObjListProp(n, nameof(Cases), Cases);
 

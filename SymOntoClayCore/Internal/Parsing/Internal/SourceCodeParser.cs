@@ -160,8 +160,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 _context.Recovery(_currToken);
                                 var parser = new PrimitiveTaskParser(_context);
                                 parser.Run();
-
-                                throw new NotImplementedException("3DE3C20B-02DD-47BF-83F8-900D06BD79E6");
+                                Result.Add(parser.Result);
                             }
                             break;
 

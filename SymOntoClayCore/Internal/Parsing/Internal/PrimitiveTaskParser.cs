@@ -131,7 +131,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                         var parser = new PrimitiveTaskOperatorParser(_context);
                                         parser.Run();
 
-                                        throw new NotImplementedException("A37F38B5-68C9-49CE-9929-EF8436444D06");
+                                        Result.Operator = parser.Result;
                                     }
                                     break;
 

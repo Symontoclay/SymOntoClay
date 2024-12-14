@@ -297,6 +297,12 @@ namespace SymOntoClay.Core.Internal.Serialization
                 case KindOfCodeEntity.Synonym:
                     break;
 
+                case KindOfCodeEntity.PrimitiveTask:
+                    break;
+
+                case KindOfCodeEntity.CompoundTask:
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(codeEntity.Kind), codeEntity.Kind, null);
             }

@@ -41,8 +41,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Info("9AF1E157-908F-424F-8923-DF7D92660000", $"_state = {_state}");
-            Info("6E3464D7-0CAB-4149-A196-267E7D6CA8F0", $"_currToken = {_currToken}");
+            //Info("9AF1E157-908F-424F-8923-DF7D92660000", $"_state = {_state}");
+            //Info("6E3464D7-0CAB-4149-A196-267E7D6CA8F0", $"_currToken = {_currToken}");
             //Info(, $"Result = {Result}");
 #endif
 

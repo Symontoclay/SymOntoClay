@@ -29,11 +29,11 @@ namespace SymOntoClay.Monitor.Common
     public interface IPlatformLogger
     {
         void WriteLnRawOutput(string message);
-        void WriteLnRawTrace(string message);
-        void WriteLnRawDebug(string message);
-        void WriteLnRawInfo(string message);
-        void WriteLnRawWarn(string message);
-        void WriteLnRawError(string message);
-        void WriteLnRawFatal(string message);
+        void WriteLnRawTrace(string messagePointId, string message);
+        void WriteLnRawDebug(string messagePointId, string message);
+        void WriteLnRawInfo(string messagePointId, string message);
+        void WriteLnRawWarn(string messagePointId, string message);
+        void WriteLnRawError(string messagePointId, string message);
+        void WriteLnRawFatal(string messagePointId, string message);
     }
 }

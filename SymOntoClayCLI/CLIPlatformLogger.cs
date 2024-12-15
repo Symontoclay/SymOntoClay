@@ -38,39 +38,39 @@ namespace SymOntoClay.CLI
         }
 
         /// <inheritdoc/>
-        public void WriteLnRawTrace(string message)
+        public void WriteLnRawTrace(string messagePointId, string message)
         {
-            ConsoleWrapper.WriteText(message);
+            ConsoleWrapper.WriteText($"{messagePointId} {message}");
         }
 
         /// <inheritdoc/>
-        public void WriteLnRawDebug(string message)
+        public void WriteLnRawDebug(string messagePointId, string message)
         {
-            ConsoleWrapper.WriteText(message);
+            ConsoleWrapper.WriteText($"{messagePointId} {message}");
         }
 
         /// <inheritdoc/>
-        public void WriteLnRawInfo(string message)
+        public void WriteLnRawInfo(string messagePointId, string message)
         {
-            ConsoleWrapper.WriteText(message);
+            ConsoleWrapper.WriteText($"{messagePointId} {message}");
         }
 
         /// <inheritdoc/>
-        public void WriteLnRawWarn(string message)
+        public void WriteLnRawWarn(string messagePointId, string message)
         {
-            ConsoleWrapper.WriteText(message);
+            ConsoleWrapper.WriteText($"{messagePointId} {message}");
         }
 
         /// <inheritdoc/>
-        public void WriteLnRawError(string message)
+        public void WriteLnRawError(string messagePointId, string message)
         {
-            ConsoleWrapper.WriteError(message);
+            ConsoleWrapper.WriteError($"{messagePointId} {message}");
         }
 
         /// <inheritdoc/>
-        public void WriteLnRawFatal(string message)
+        public void WriteLnRawFatal(string messagePointId, string message)
         {
-            ConsoleWrapper.WriteError(message);
+            ConsoleWrapper.WriteError($"{messagePointId} {message}");
         }
     }
 }

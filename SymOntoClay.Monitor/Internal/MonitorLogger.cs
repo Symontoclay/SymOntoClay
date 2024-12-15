@@ -3442,7 +3442,7 @@ namespace SymOntoClay.Monitor.Internal
             {
                 foreach (var platformLogger in _platformLoggers)
                 {
-                    platformLogger.WriteLnRawTrace(message);
+                    platformLogger.WriteLnRawTrace(messagePointId, message);
                 }
             }
 
@@ -3516,7 +3516,7 @@ namespace SymOntoClay.Monitor.Internal
             {
                 foreach (var platformLogger in _platformLoggers)
                 {
-                    platformLogger.WriteLnRawDebug(message);
+                    platformLogger.WriteLnRawDebug(messagePointId, message);
                 }
             }
 
@@ -3590,7 +3590,7 @@ namespace SymOntoClay.Monitor.Internal
             {
                 foreach (var platformLogger in _platformLoggers)
                 {
-                    platformLogger.WriteLnRawInfo(message);
+                    platformLogger.WriteLnRawInfo(messagePointId, message);
                 }
             }
 
@@ -3664,7 +3664,7 @@ namespace SymOntoClay.Monitor.Internal
             {
                 foreach (var platformLogger in _platformLoggers)
                 {
-                    platformLogger.WriteLnRawWarn(message);
+                    platformLogger.WriteLnRawWarn(messagePointId, message);
                 }
             }
 
@@ -3740,7 +3740,7 @@ namespace SymOntoClay.Monitor.Internal
             {
                 foreach (var platformLogger in _platformLoggers)
                 {
-                    platformLogger.WriteLnRawError(message);
+                    platformLogger.WriteLnRawError(messagePointId, message);
                 }
             }
 
@@ -3826,7 +3826,7 @@ namespace SymOntoClay.Monitor.Internal
             {
                 foreach (var platformLogger in _platformLoggers)
                 {
-                    platformLogger.WriteLnRawFatal(message);
+                    platformLogger.WriteLnRawFatal(messagePointId, message);
                 }
             }
 

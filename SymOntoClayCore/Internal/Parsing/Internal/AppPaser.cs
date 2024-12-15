@@ -63,9 +63,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Info("55063C1F-985F-4F33-8374-7760F707CA31", $"55063C1F-985F-4F33-8374-7760F707CA31 _state = {_state}");
-            Info("A3725C22-C133-468E-B62B-01D2631FB2C9", $"A3725C22-C133-468E-B62B-01D2631FB2C9 _currToken = {_currToken}");
-            //Info("AE8EB47A-1E18-4E4D-9C95-7188537DA7F0", $"AE8EB47A-1E18-4E4D-9C95-7188537DA7F0 Result = {Result}");
+            //Info("55063C1F-985F-4F33-8374-7760F707CA31", $"_state = {_state}");
+            //Info("A3725C22-C133-468E-B62B-01D2631FB2C9", $"_currToken = {_currToken}");
+            //Info("AE8EB47A-1E18-4E4D-9C95-7188537DA7F0", $"Result = {Result}");
 #endif
 
             switch (_state)
@@ -144,7 +144,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                         var nextToken = _context.GetToken();
 
 #if DEBUG
-                                        Info("CFAC1423-B051-46F7-8ECA-B1064798B08B", $"nextToken = {nextToken}");
+                                        //Info("CFAC1423-B051-46F7-8ECA-B1064798B08B", $"nextToken = {nextToken}");
 #endif
 
                                         switch (nextToken.TokenKind)
@@ -161,7 +161,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                                             parser.Run();
 
 #if DEBUG
-                                                            Info("F6CA06F0-0631-4FBD-A070-5CDD9C6B1838", $"parser.Result = {parser.Result}");
+                                                            //Info("F6CA06F0-0631-4FBD-A070-5CDD9C6B1838", $"parser.Result = {parser.Result}");
 #endif
 
                                                             _app.RootTasks.Add(parser.Result);

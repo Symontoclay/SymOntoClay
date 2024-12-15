@@ -69,7 +69,7 @@ namespace SymOntoClay.Core.Internal.Instances
                         var unxpectedVarsList = varsList.Where(p => p != StrongIdentifierValue.LogicalVarBlankIdentifier);
 
 #if DEBUG
-                        Info("432176EA-72B9-4699-B784-7CF6C4041357", $"unxpectedVarsList = {unxpectedVarsList.WriteListToString()}");
+                        //Info("432176EA-72B9-4699-B784-7CF6C4041357", $"unxpectedVarsList = {unxpectedVarsList.WriteListToString()}");
 #endif
 
                         if (unxpectedVarsList.Count() == 1)

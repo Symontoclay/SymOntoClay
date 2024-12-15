@@ -52,44 +52,44 @@ namespace TestSandbox.PlatformImplementations
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void WriteLnRawTrace(string message)
+        public void WriteLnRawTrace(string messagePointId, string message)
         {
-            _logger.Trace(message);
+            _logger.Trace($"{messagePointId} {message}");
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void WriteLnRawDebug(string message)
+        public void WriteLnRawDebug(string messagePointId, string message)
         {
-            _logger.Debug(message);
+            _logger.Debug($"{messagePointId} {message}");
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void WriteLnRawInfo(string message)
+        public void WriteLnRawInfo(string messagePointId, string message)
         {
-            _logger.Info(message);
+            _logger.Info($"{messagePointId} {message}");
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void WriteLnRawWarn(string message)
+        public void WriteLnRawWarn(string messagePointId, string message)
         {
-            _logger.Warn(message);
+            _logger.Warn($"{messagePointId} {message}");
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void WriteLnRawError(string message)
+        public void WriteLnRawError(string messagePointId, string message)
         {
-            _logger.Error(message);
+            _logger.Error($"{messagePointId} {message}");
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void WriteLnRawFatal(string message)
+        public void WriteLnRawFatal(string messagePointId, string message)
         {
-            _logger.Fatal(message);
+            _logger.Fatal($"{messagePointId} {message}");
         }
     }
 }

@@ -37,6 +37,7 @@ using SymOntoClay.Core.Internal.Storage.OperatorsStoraging;
 using SymOntoClay.Core.Internal.Storage.RelationStoraging;
 using SymOntoClay.Core.Internal.Storage.StatesStoraging;
 using SymOntoClay.Core.Internal.Storage.SynonymsStoraging;
+using SymOntoClay.Core.Internal.Storage.TasksStoraging;
 using SymOntoClay.Core.Internal.Storage.TriggersStoraging;
 using SymOntoClay.Core.Internal.Storage.VarStoraging;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -122,6 +123,9 @@ namespace SymOntoClay.Core.Internal.Storage
 
             _realStorageContext.IdleActionItemsStorage = new IdleActionItemsStorage(_kind, _realStorageContext);
             _idleActionItemsStorage = _realStorageContext.IdleActionItemsStorage;
+
+            _realStorageContext.TasksStorage = new TasksStorage(_kind, _realStorageContext);
+            _tasksStorage = _realStorageContext.TasksStorage;
         }
 
         private readonly KindOfStorage _kind;
@@ -159,6 +163,7 @@ namespace SymOntoClay.Core.Internal.Storage
         private readonly VarStorage _varStorage;
         private readonly FuzzyLogicStorage _fuzzyLogicStorage;
         private readonly IdleActionItemsStorage _idleActionItemsStorage;
+        private readonly ITasksStorage _tasksStorage;
 
         /// <inheritdoc/>
         public ILogicalStorage LogicalStorage => _logicalStorage;
@@ -204,6 +209,9 @@ namespace SymOntoClay.Core.Internal.Storage
 
         /// <inheritdoc/>
         public IIdleActionItemsStorage IdleActionItemsStorage => _idleActionItemsStorage;
+
+        /// <inheritdoc/>
+        public ITasksStorage TasksStorage => _tasksStorage;
 
         public bool Enabled { get => !_realStorageContext.Disabled; set => _realStorageContext.Disabled = !value; }
 

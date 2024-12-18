@@ -35,6 +35,7 @@ using SymOntoClay.Core.Internal.Storage.OperatorsStoraging;
 using SymOntoClay.Core.Internal.Storage.RelationStoraging;
 using SymOntoClay.Core.Internal.Storage.StatesStoraging;
 using SymOntoClay.Core.Internal.Storage.SynonymsStoraging;
+using SymOntoClay.Core.Internal.Storage.TasksStoraging;
 using SymOntoClay.Core.Internal.Storage.TriggersStoraging;
 using SymOntoClay.Core.Internal.Storage.VarStoraging;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -63,6 +64,8 @@ namespace SymOntoClay.Core.Internal.Storage
         public VarStorage VarStorage { get; set; }
         public FuzzyLogicStorage FuzzyLogicStorage { get; set; }
         public IdleActionItemsStorage IdleActionItemsStorage { get; set; }
+        public TasksStorage TasksStorage { get; set; }
+
         public RealStorage Storage { get; set; }
         public ILocalCodeExecutionContext ParentCodeExecutionContext { get; set; }
         public IList<IStorage> Parents { get; set; }
@@ -101,6 +104,7 @@ namespace SymOntoClay.Core.Internal.Storage
             VarStorage.Dispose();
             FuzzyLogicStorage.Dispose();
             IdleActionItemsStorage.Dispose();
+            TasksStorage.Dispose();
         }
     }
 }

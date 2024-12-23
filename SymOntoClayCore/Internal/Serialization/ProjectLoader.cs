@@ -582,6 +582,8 @@ namespace SymOntoClay.Core.Internal.Serialization
                 case KindOfCodeEntity.Field:
                 case KindOfCodeEntity.MutuallyExclusiveStatesSet:
                 case KindOfCodeEntity.Synonym:
+                case KindOfCodeEntity.CompoundTask:
+                case KindOfCodeEntity.PrimitiveTask:
                     if (directives.Any())
                     {
                         throw new Exception($"Directives does not allowed for {kindOfEntity}.");

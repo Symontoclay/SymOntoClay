@@ -9,22 +9,35 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
         public TasksStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
         {
+            _compoundCommonTasksStorage = new CommonTasksStorage<CompoundTask>(realStorageContext.Logger);
+            _primitiveCommonTasksStorage = new CommonTasksStorage<PrimitiveTask>(realStorageContext.Logger);
         }
 
         #region CompoundTask
         /// <inheritdoc/>
         public void Append(IMonitorLogger logger, CompoundTask compoundTask)
         {
-            throw new NotImplementedException("C0CE8424-6036-494F-9C8A-016E641A1F55");
+            _compoundCommonTasksStorage.Append(logger, compoundTask);
         }
+
+        private CommonTasksStorage<CompoundTask> _compoundCommonTasksStorage;
         #endregion
 
         #region PrimitiveTask
         /// <inheritdoc/>
         public void Append(IMonitorLogger logger, PrimitiveTask primitiveTask)
         {
-            throw new NotImplementedException("68E70A07-A624-4CAE-A3F4-56CC56B6D36F");
+            _primitiveCommonTasksStorage.Append(logger, primitiveTask);
         }
+
+        private CommonTasksStorage<PrimitiveTask> _primitiveCommonTasksStorage;
         #endregion
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            _compoundCommonTasksStorage.Dispose();
+            _primitiveCommonTasksStorage.Dispose();
+        }
     }
 }

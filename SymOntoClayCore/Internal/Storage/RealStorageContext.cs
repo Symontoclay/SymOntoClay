@@ -66,6 +66,7 @@ namespace SymOntoClay.Core.Internal.Storage
         public IdleActionItemsStorage IdleActionItemsStorage { get; set; }
         public TasksStorage TasksStorage { get; set; }
 
+        public IMonitorLogger Logger { get; set; }
         public RealStorage Storage { get; set; }
         public ILocalCodeExecutionContext ParentCodeExecutionContext { get; set; }
         public IList<IStorage> Parents { get; set; }

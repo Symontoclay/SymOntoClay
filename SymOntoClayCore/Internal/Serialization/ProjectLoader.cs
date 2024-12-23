@@ -490,6 +490,14 @@ namespace SymOntoClay.Core.Internal.Serialization
                     targetStorage.SynonymsStorage.Append(logger, codeItem.AsSynonym);
                     break;
 
+                case KindOfCodeEntity.CompoundTask:
+                    targetStorage.TasksStorage.Append(logger, codeItem.AsCompoundTask);
+                    break;
+
+                case KindOfCodeEntity.PrimitiveTask:
+                    targetStorage.TasksStorage.Append(logger, codeItem.AsPrimitiveTask);
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfEntity), kindOfEntity, null);
             }

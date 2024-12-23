@@ -38,6 +38,7 @@ using SymOntoClay.Core.Internal.Storage.OperatorsStoraging;
 using SymOntoClay.Core.Internal.Storage.RelationStoraging;
 using SymOntoClay.Core.Internal.Storage.StatesStoraging;
 using SymOntoClay.Core.Internal.Storage.SynonymsStoraging;
+using SymOntoClay.Core.Internal.Storage.TasksStoraging;
 using SymOntoClay.Core.Internal.Storage.TriggersStoraging;
 using SymOntoClay.Core.Internal.Storage.VarStoraging;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -75,6 +76,7 @@ namespace SymOntoClay.Core.Internal.Storage
             _metadataStorage = new EmptyMetadataStorage(this, logger);
             _fuzzyLogicStorage = new EmptyFuzzyLogicStorage(this, logger);
             _idleActionItemsStorage = new EmptyIdleActionItemsStorage(this, logger);
+            _tasksStorage = new EmptyTasksStorage(this, logger);
         }
 
         private readonly object _lockObj = new object();
@@ -94,6 +96,7 @@ namespace SymOntoClay.Core.Internal.Storage
         private EmptyMetadataStorage _metadataStorage;
         private EmptyFuzzyLogicStorage _fuzzyLogicStorage;
         private EmptyIdleActionItemsStorage _idleActionItemsStorage;
+        private EmptyTasksStorage _tasksStorage;
 
         private readonly KindOfStorage _kind;
 
@@ -156,6 +159,9 @@ namespace SymOntoClay.Core.Internal.Storage
 
         /// <inheritdoc/>
         public IIdleActionItemsStorage IdleActionItemsStorage => _idleActionItemsStorage;
+
+        /// <inheritdoc/>
+        public ITasksStorage TasksStorage => _tasksStorage;
 
         /// <inheritdoc/>
         public DefaultSettingsOfCodeEntity DefaultSettingsOfCodeEntity { get => throw new NotImplementedException("0E8E2F74-C8E8-4899-B8B3-899850DD5271"); set => throw new NotImplementedException("6A2EFACE-3070-44CE-99B2-7BD7A28278B2"); }

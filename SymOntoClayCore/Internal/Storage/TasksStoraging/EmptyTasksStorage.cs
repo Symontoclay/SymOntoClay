@@ -1,13 +1,12 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
-using System;
 
 namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
 {
-    public class TasksStorage: BaseSpecificStorage, ITasksStorage
+    public class EmptyTasksStorage : BaseEmptySpecificStorage, ITasksStorage
     {
-        public TasksStorage(KindOfStorage kind, RealStorageContext realStorageContext)
-            : base(kind, realStorageContext)
+        public EmptyTasksStorage(IStorage storage, IMonitorLogger logger)
+            : base(storage, logger)
         {
         }
 
@@ -15,7 +14,6 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
         /// <inheritdoc/>
         public void Append(IMonitorLogger logger, CompoundTask compoundTask)
         {
-            throw new NotImplementedException("C0CE8424-6036-494F-9C8A-016E641A1F55");
         }
         #endregion
 
@@ -23,7 +21,6 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
         /// <inheritdoc/>
         public void Append(IMonitorLogger logger, PrimitiveTask primitiveTask)
         {
-            throw new NotImplementedException("68E70A07-A624-4CAE-A3F4-56CC56B6D36F");
         }
         #endregion
     }

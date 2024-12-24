@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.BaseTestLib;
 using SymOntoClay.Core;
+using SymOntoClay.Core.Internal.TasksExecution;
 using SymOntoClay.Monitor.LogFileBuilder;
 using SymOntoClay.Threading;
 using System;
@@ -70,6 +71,17 @@ namespace TestSandbox.Handlers
             _globalLogger.Info($"sourceDirectoryName = {sourceDirectoryName}");
 
             Thread.Sleep(100);
+            _logger.Info("EC6E70E3-294E-4492-8B7D-2F137D36628C", "-------------------------");
+
+            var tasksPlanner = new TasksPlanner(_npc.EngineContext);
+
+            var plan = tasksPlanner.BuildPlan();
+
+            _logger.Info("B7831523-8D1C-4BAB-8348-460656F67E90", $"plan = {plan}");
+
+            _logger.Info("EC6E70E3-294E-4492-8B7D-2F137D36628C", "|-|-|-|-|-|-|-|-|-|-|-|-|");
+
+            Thread.Sleep(5000);
 
             var logsOutputDirectory = Path.Combine(Directory.GetCurrentDirectory(), "logs");
 

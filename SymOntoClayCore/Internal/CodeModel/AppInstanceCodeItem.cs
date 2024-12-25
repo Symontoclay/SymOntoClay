@@ -1,52 +1,29 @@
-/*MIT License
-
-Copyright (c) 2020 - 2024 Sergiy Tolkachov
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.*/
-
-using SymOntoClay.Common.DebugHelpers;
-using SymOntoClay.Core.DebugHelpers;
-using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
-using SymOntoClay.Monitor.Common;
+﻿using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Monitor.Common.Models;
-using System;
+using SymOntoClay.Monitor.Common;
 using System.Collections.Generic;
+using System;
 using System.Linq;
+using SymOntoClay.Common.DebugHelpers;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class App : CodeItem
+    public class AppInstanceCodeItem : CodeItem
     {
-        public App()
+        public AppInstanceCodeItem()
         {
-            TypeOfAccess = DefaultTypeOfAccess;
+            TypeOfAccess = TypeOfAccess.Private;
         }
 
         /// <inheritdoc/>
-        public override KindOfCodeEntity Kind => KindOfCodeEntity.App;
+        public override bool IsAppInstanceCodeItem => true;
 
         /// <inheritdoc/>
-        public override bool IsApp => true;
+        public override AppInstanceCodeItem AsAppInstanceCodeItem => this;
 
         /// <inheritdoc/>
-        public override App AsApp => this;
+        public override KindOfCodeEntity Kind => KindOfCodeEntity.AppInstance;
 
         public List<StrongIdentifierValue> RootTasks { get; set; } = new List<StrongIdentifierValue>();
 
@@ -57,21 +34,21 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
-        public App Clone()
+        public AppInstanceCodeItem Clone()
         {
             var context = new Dictionary<object, object>();
             return Clone(context);
         }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="CloneWithContext"]/*' />
-        public App Clone(Dictionary<object, object> context)
+        public AppInstanceCodeItem Clone(Dictionary<object, object> context)
         {
             if (context.ContainsKey(this))
             {
-                return (App)context[this];
+                return (AppInstanceCodeItem)context[this];
             }
 
-            var result = new App();
+            var result = new AppInstanceCodeItem();
             context[this] = result;
 
             result.RootTasks = RootTasks?.Select(p => p.Clone(context))?.ToList() ?? new List<StrongIdentifierValue>();
@@ -120,19 +97,19 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            throw new NotImplementedException("1A6D95FA-638E-487C-AE6C-A8CA1FE4FB95");
+            throw new NotImplementedException("60C4CB89-48A3-41A8-B01A-CA6E45270CD0");
         }
 
         /// <inheritdoc/>
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
-            throw new NotImplementedException("8CFE9E67-63ED-4F1D-BF7A-3EB3B8A6841E");
+            throw new NotImplementedException("72C7E316-5D82-485A-AD99-C3D33A706645");
         }
 
         /// <inheritdoc/>
         public override MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
         {
-            throw new NotImplementedException("74FF1A16-4990-4624-BFFC-E194D6DBFCDC");
+            throw new NotImplementedException("1AF71BF0-8EE1-42E6-A23B-D0A1D2160737");
         }
     }
 }

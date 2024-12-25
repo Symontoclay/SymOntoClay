@@ -42,7 +42,7 @@ namespace SymOntoClay.Core.Internal.Instances
         void TryActivateDefaultState(IMonitorLogger logger);
 
         AppInstance MainEntity { get; }
-
+        
         Value CreateInstance(IMonitorLogger logger, StrongIdentifierValue prototypeName, ILocalCodeExecutionContext executionContext);
         Value CreateInstance(IMonitorLogger logger, InstanceValue instanceValue, ILocalCodeExecutionContext executionContext);
         Value CreateInstance(IMonitorLogger logger, CodeItem codeItem, ILocalCodeExecutionContext executionContext);

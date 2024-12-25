@@ -20,11 +20,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.Instances
@@ -71,31 +73,53 @@ namespace SymOntoClay.Core.Internal.Instances
             }
             else
             {
-                mainEntity = CreateAndSaveInstanceCodeItem(logger, mainEntity);
+                mainEntity = CreateAndSaveAppInstanceCodeItem(logger, mainEntity);
             }
 
             return mainEntity;
         }
 
-        protected CodeItem CreateAndSaveInstanceCodeItem(IMonitorLogger logger, CodeItem superCodeEntity)
+        protected CodeItem CreateAndSaveAppInstanceCodeItem(IMonitorLogger logger, CodeItem superCodeEntity)
         {
-            return CreateAndSaveInstanceCodeItem(logger, superCodeEntity, _commonNamesStorage.SelfName);
+            return CreateAndSaveAppInstanceCodeItem(logger, superCodeEntity, _commonNamesStorage.SelfName);
+        }
+
+        protected CodeItem CreateAndSaveAppInstanceCodeItem(IMonitorLogger logger, CodeItem superCodeEntity, StrongIdentifierValue name)
+        {
+#if DEBUG
+            Info("0885966D-3FAE-4C37-BBD1-567D592D47B4", $"superCodeEntity.GetType().Name = {superCodeEntity.GetType().Name}");
+#endif
+
+            var result = new AppInstanceCodeItem();
+
+            if (superCodeEntity.IsApp)
+            {
+#if DEBUG
+                Info("26BA035B-6FC0-4175-8613-F221AE88682B", $"superCodeEntity.AsApp.RootTasks = {superCodeEntity.AsApp.RootTasks.WriteListToString()}");
+#endif
+            
+                result.RootTasks = superCodeEntity.AsApp.RootTasks?.Select(p => p.Clone())?.ToList() ?? new List<StrongIdentifierValue>();
+            }
+
+            FillUpAndRegisterInstance(logger, result, superCodeEntity, name);
+
+            return result;
         }
 
         protected CodeItem CreateAndSaveInstanceCodeItem(IMonitorLogger logger, CodeItem superCodeEntity, StrongIdentifierValue name)
         {
             var result = new InstanceCodeItem();
 
-            result.Name = name;
-
-            FillUpAndRegisterInstance(logger, result, superCodeEntity);
+            FillUpAndRegisterInstance(logger, result, superCodeEntity, name);
 
             return result;
         }
 
-        protected void FillUpAndRegisterInstance(IMonitorLogger logger, CodeItem instance, CodeItem superCodeItem)
+        protected void FillUpAndRegisterInstance(IMonitorLogger logger, CodeItem instance, CodeItem superCodeItem, StrongIdentifierValue name)
         {
-            if(instance.Holder == null)
+            instance.Name = name;
+
+            if (instance.Holder == null)
             {
                 instance.Holder = _commonNamesStorage.DefaultHolder;
             }            

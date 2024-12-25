@@ -110,7 +110,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     throw new NotImplementedException("BB3F47F7-DF3A-4D50-AD62-76C0365669AF");
                 }
 
-                instanceInfo = new AppInstance(codeItem: mainEntity, context: _context, parentStorage: globalStorage);
+                instanceInfo = new AppInstance(codeItem: mainEntity.AsAppInstanceCodeItem, context: _context, parentStorage: globalStorage);
                 _rootInstanceInfo = instanceInfo;
                 _namesDict[mainEntityName] = instanceInfo;
 

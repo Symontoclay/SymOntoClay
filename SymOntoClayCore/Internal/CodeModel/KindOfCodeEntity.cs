@@ -34,6 +34,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         Lib,
         Class,
         Action,
+        AppInstance,
         Instance,
         InlineTrigger,
         Function,

@@ -48,7 +48,6 @@ namespace SymOntoClay.Core.Internal.Serialization
             var instancesStorage = _context.InstancesStorage;
 
             instancesStorage.ActivateMainEntity(Logger);
-
         }
 
         public virtual void LoadFromPaths(IList<string> sourceCodePaths)

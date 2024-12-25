@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
@@ -47,10 +48,14 @@ namespace SymOntoClay.Core.Internal.Instances
 #endif
 
             _statesResolver = _context.DataResolversFactory.GetStatesResolver();
+
+            RootTasks = codeItem.RootTasks?.Select(p => p.Clone())?.ToList() ?? new List<StrongIdentifierValue>();
         }
         
         /// <inheritdoc/>
         public override KindOfInstance KindOfInstance => KindOfInstance.AppInstance;
+
+        public List<StrongIdentifierValue> RootTasks { get; private set; } = new List<StrongIdentifierValue>();
 
         private StatesResolver _statesResolver;
 
@@ -282,6 +287,42 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 activatorInstance.Init(logger);
             }
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.PrintObjListProp(n, nameof(RootTasks), RootTasks);
+
+            sb.Append(base.PropertiesToString(n));
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToShortString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.PrintShortObjListProp(n, nameof(RootTasks), RootTasks);
+
+            sb.Append(base.PropertiesToShortString(n));
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToBriefString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.PrintBriefObjListProp(n, nameof(RootTasks), RootTasks);
+
+            sb.Append(base.PropertiesToBriefString(n));
+            return sb.ToString();
         }
 
         /// <inheritdoc/>

@@ -103,10 +103,6 @@ namespace SymOntoClay.Core.Internal.Serialization
 
             var filesList = FileHelper.GetParsedFilesFromPaths(logger, sourceCodePaths);
 
-#if DEBUG
-
-#endif
-
             var defferedLibsList = new List<string>();
 
             ProcessFilesList(logger, filesList, false, targetStorage, defferedLibsList);
@@ -119,32 +115,16 @@ namespace SymOntoClay.Core.Internal.Serialization
 
             var parsedFilesList = _context.Parser.Parse(filesList, _defaultSettingsOfCodeEntity);
 
-#if DEBUG
-
-#endif
-
             var parsedCodeEntitiesList = LinearizeSubItems(logger, parsedFilesList);
-
-#if DEBUG
-
-#endif
 
             if (detectMainCodeEntity)
             {
                 DetectMainCodeEntity(logger, parsedCodeEntitiesList);
             }
 
-#if DEBUG
-
-#endif
-
             CheckHolderAndTypeOfAccess(logger, parsedCodeEntitiesList);
 
             AddSystemDefinedSettings(logger, parsedCodeEntitiesList);
-
-#if DEBUG
-
-#endif
 
             SaveItems(logger, parsedCodeEntitiesList, targetStorage, defferedLibsList);
         }
@@ -154,10 +134,6 @@ namespace SymOntoClay.Core.Internal.Serialization
             var possibleMainCodeEntities = source.Where(p => p.Kind == KindOfCodeEntity.App || p.Kind == KindOfCodeEntity.World);
 
             var count = possibleMainCodeEntities.Count();
-
-#if DEBUG
-
-#endif
 
             if (count == 1)
             {

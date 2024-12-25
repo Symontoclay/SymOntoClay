@@ -13,11 +13,23 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
             _primitiveCommonTasksStorage = new CommonTasksStorage<PrimitiveTask>(realStorageContext.Logger);
         }
 
+        /// <inheritdoc/>
+        public BaseCompoundTask GetBaseCompoundTaskByName(IMonitorLogger logger, StrongIdentifierValue name)
+        {
+            return GetCompoundTaskByName(logger, name);
+        }
+
         #region CompoundTask
         /// <inheritdoc/>
         public void Append(IMonitorLogger logger, CompoundTask compoundTask)
         {
             _compoundCommonTasksStorage.Append(logger, compoundTask);
+        }
+
+        /// <inheritdoc/>
+        public CompoundTask GetCompoundTaskByName(IMonitorLogger logger, StrongIdentifierValue name)
+        {
+            return _compoundCommonTasksStorage.GetByName(logger, name);
         }
 
         private CommonTasksStorage<CompoundTask> _compoundCommonTasksStorage;
@@ -28,6 +40,12 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
         public void Append(IMonitorLogger logger, PrimitiveTask primitiveTask)
         {
             _primitiveCommonTasksStorage.Append(logger, primitiveTask);
+        }
+
+        /// <inheritdoc/>
+        public PrimitiveTask GetPrimitiveTaskByName(IMonitorLogger logger, StrongIdentifierValue name)
+        {
+            return _primitiveCommonTasksStorage.GetByName(logger, name);
         }
 
         private CommonTasksStorage<PrimitiveTask> _primitiveCommonTasksStorage;

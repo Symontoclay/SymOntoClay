@@ -1,5 +1,7 @@
-﻿using SymOntoClay.Common.DebugHelpers;
+﻿using SymOntoClay.Common.CollectionsHelpers;
+using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.Instances;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,9 +14,13 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             : base(context.Logger)
         {
             _context = context;
+            _mainEntity = _context.InstancesStorage.MainEntity;
+            _tasksStorage = _context.Storage.GlobalStorage.TasksStorage;
         }
 
         private readonly IEngineContext _context;
+        private readonly AppInstance _mainEntity;
+        private readonly ITasksStorage _tasksStorage;
 
         public TasksPlan BuildPlan()
         {
@@ -29,9 +35,36 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
         private List<BaseCompoundTask> GetRootTasks()
         {
+#if DEBUG
+            Info("47323362-D3B3-47FD-B346-D746771DB8C7", $"_mainEntity.Name = {_mainEntity.Name}");
+            Info("600EDBC3-9F4F-43AE-B900-C029F4BB1AEC", $"_mainEntity.GetType().Name = {_mainEntity.GetType().Name}");
+            Info("E40E6248-2A1C-4CF7-95AB-BBC82924C46E", $"_mainEntity.RootTasks = {_mainEntity.RootTasks.WriteListToString()}");
+#endif
 
+            var result = new List<BaseCompoundTask>();
 
-            throw new NotImplementedException("674582AD-17B6-4DB0-8DF0-CA13BA215C99");
+            var mainEntityRootTasksNames = _mainEntity.RootTasks;
+
+            if(!mainEntityRootTasksNames.IsNullOrEmpty())
+            {
+                foreach(var taskName in mainEntityRootTasksNames)
+                {
+                    var task = _tasksStorage.GetBaseCompoundTaskByName(Logger, taskName);
+
+#if DEBUG
+                    Info("627C7805-7915-4787-BB76-E7D2B2B7EE56", $"task = {task}");
+#endif
+
+                    if(task == null)
+                    {
+                        continue;
+                    }
+
+                    result.Add(task);
+                }
+            }
+
+            return result;
         }
     }
 }

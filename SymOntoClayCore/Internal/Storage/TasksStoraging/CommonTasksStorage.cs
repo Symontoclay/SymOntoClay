@@ -18,6 +18,16 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
             _tasksDict[task.Name] = task;
         }
 
+        public T GetByName(IMonitorLogger logger, StrongIdentifierValue name)
+        {
+            if(_tasksDict.TryGetValue(name, out var task))
+            {
+                return task;
+            }
+
+            return null;
+        }
+
         private Dictionary<StrongIdentifierValue, T> _tasksDict = new Dictionary<StrongIdentifierValue, T>();
     }
 }

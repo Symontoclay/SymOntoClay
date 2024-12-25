@@ -10,10 +10,22 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
         {
         }
 
+        /// <inheritdoc/>
+        public BaseCompoundTask GetBaseCompoundTaskByName(IMonitorLogger logger, StrongIdentifierValue name)
+        {
+            return null;
+        }
+
         #region CompoundTask
         /// <inheritdoc/>
         public void Append(IMonitorLogger logger, CompoundTask compoundTask)
         {
+        }
+
+        /// <inheritdoc/>
+        public CompoundTask GetCompoundTaskByName(IMonitorLogger logger, StrongIdentifierValue name)
+        {
+            return null;
         }
         #endregion
 
@@ -21,6 +33,12 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
         /// <inheritdoc/>
         public void Append(IMonitorLogger logger, PrimitiveTask primitiveTask)
         {
+        }
+
+        /// <inheritdoc/>
+        public PrimitiveTask GetPrimitiveTaskByName(IMonitorLogger logger, StrongIdentifierValue name)
+        {
+            return null;
         }
         #endregion
     }

@@ -1,0 +1,142 @@
+﻿using SymOntoClay.Common;
+using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeModel;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace SymOntoClay.Core.Internal.TasksExecution
+{
+    public class BuildPlanIterationContext : IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString
+    {
+        public int ProcessedIndex { get; set; } = -1;
+        public List<BuiltPlanItem> TasksToProcess { get; set; } = new List<BuiltPlanItem>();
+
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
+        public BuildPlanIterationContext Clone()
+        {
+            var context = new Dictionary<object, object>();
+            return Clone(context);
+        }
+
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="CloneWithContext"]/*' />
+        public BuildPlanIterationContext Clone(Dictionary<object, object> context)
+        {
+            if (context.ContainsKey(this))
+            {
+                return (BuildPlanIterationContext)context[this];
+            }
+
+            var result = new BuildPlanIterationContext();
+            context[this] = result;
+
+            result.ProcessedIndex = ProcessedIndex;
+            result.TasksToProcess = TasksToProcess.Select(p => p.Clone(context)).ToList();
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return ToString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToString(uint n)
+        {
+            return this.GetDefaultToStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToString.PropertiesToString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(ProcessedIndex)} = {ProcessedIndex}");
+            sb.PrintObjListProp(n, nameof(TasksToProcess), TasksToProcess);
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string ToShortString()
+        {
+            return ToShortString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToShortString(uint n)
+        {
+            return this.GetDefaultToShortStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToShortString.PropertiesToShortString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(ProcessedIndex)} = {ProcessedIndex}");
+            sb.PrintShortObjListProp(n, nameof(TasksToProcess), TasksToProcess);
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string ToBriefString()
+        {
+            return ToBriefString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToBriefString(uint n)
+        {
+            return this.GetDefaultToBriefStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToBriefString.PropertiesToBriefString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(ProcessedIndex)} = {ProcessedIndex}");
+            sb.PrintBriefObjListProp(n, nameof(TasksToProcess), TasksToProcess);
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public string ToDbgString()
+        {
+            return ToDbgString(0u);
+        }
+
+        /// <inheritdoc/>
+        public string ToDbgString(uint n)
+        {
+            return this.GetDefaultToDbgStringInformation(n);
+        }
+
+        /// <inheritdoc/>
+        string IObjectToDbgString.PropertiesToDbgString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+
+            var nextN = n + DisplayHelper.IndentationStep;
+
+            var nextNSpaces = DisplayHelper.Spaces(nextN);
+
+            var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(ProcessedIndex)}: {ProcessedIndex}");
+            sb.AppendLine($"{spaces}Tasks to process:");
+            sb.AppendLine($"{nextNSpaces}[{string.Join(", ", TasksToProcess.Select(p => p.ProcessedTask.Name.ToSystemString()))}]");
+
+            return sb.ToString();
+        }
+    }
+}

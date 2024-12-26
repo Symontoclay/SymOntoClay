@@ -1,22 +1,38 @@
 ﻿using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
-using SymOntoClay.Core.DebugHelpers;
-using SymOntoClay.Monitor.Common;
-using SymOntoClay.Monitor.Common.Models;
+using SymOntoClay.Core.Internal.CodeModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.TasksExecution
 {
-    public class TasksPlan: IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString, IObjectToHumanizedString, IMonitoredHumanizedObject
+    public class BuiltPlanItem : IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString
     {
-        /// <summary>
-        /// Represents empty plan.
-        /// </summary>
-        public static TasksPlan EmptyPlan { get; } = new TasksPlan();
+        public BaseTask ProcessedTask { get; set; }
 
-        public List<TasksPlanItem> Items { get; set; }
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
+        public BuiltPlanItem Clone()
+        {
+            var context = new Dictionary<object, object>();
+            return Clone(context);
+        }
+
+        /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="CloneWithContext"]/*' />
+        public BuiltPlanItem Clone(Dictionary<object, object> context)
+        {
+            if (context.ContainsKey(this))
+            {
+                return (BuiltPlanItem)context[this];
+            }
+
+            var result = new BuiltPlanItem();
+            context[this] = result;
+
+            result.ProcessedTask = ProcessedTask;
+
+            return result;
+        }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -36,7 +52,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjListProp(n, nameof(Items), Items);
+            sb.PrintObjProp(n, nameof(ProcessedTask), ProcessedTask);
 
             return sb.ToString();
         }
@@ -59,7 +75,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjListProp(n, nameof(Items), Items);
+            sb.PrintShortObjProp(n, nameof(ProcessedTask), ProcessedTask);
 
             return sb.ToString();
         }
@@ -82,7 +98,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjListProp(n, nameof(Items), Items);
+            sb.PrintBriefObjProp(n, nameof(ProcessedTask), ProcessedTask);
 
             return sb.ToString();
         }
@@ -106,53 +122,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             //var sb = new StringBuilder();
             //return sb.ToString();
 
-            throw new NotImplementedException("4FE95810-7561-4C23-8D02-486B62B8DA7C");
-        }
-
-        /// <inheritdoc/>
-        public string ToHumanizedString(HumanizedOptions options = HumanizedOptions.ShowAll)
-        {
-            var opt = new DebugHelperOptions()
-            {
-                HumanizedOptions = options
-            };
-
-            return ToHumanizedString(opt);
-        }
-
-        /// <inheritdoc/>
-        public string ToHumanizedString(DebugHelperOptions options)
-        {
-            throw new NotImplementedException("E47BC4FD-1AF6-43CA-9914-4EDDA10546BB");
-        }
-
-        /// <inheritdoc/>
-        public string ToHumanizedLabel(HumanizedOptions options = HumanizedOptions.ShowAll)
-        {
-            var opt = new DebugHelperOptions()
-            {
-                HumanizedOptions = options
-            };
-
-            return ToHumanizedLabel(opt);
-        }
-
-        /// <inheritdoc/>
-        public string ToHumanizedLabel(DebugHelperOptions options)
-        {
-            throw new NotImplementedException("049DC608-D1E5-4370-9E70-722C3983F2AE");
-        }
-
-        /// <inheritdoc/>
-        public string ToHumanizedString(IMonitorLogger logger)
-        {
-            throw new NotImplementedException("3A21267A-3900-4D75-9055-C2D13FC25365");
-        }
-
-        /// <inheritdoc/>
-        public MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
-        {
-            throw new NotImplementedException("78AABFFD-D82A-4027-ABFC-004151A5BDEE");
+            throw new NotImplementedException("EE6E92A2-37BA-4329-9525-339C97CAB4E9");
         }
     }
 }

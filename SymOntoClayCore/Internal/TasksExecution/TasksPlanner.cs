@@ -4,6 +4,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Instances;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.TasksExecution
@@ -30,7 +31,52 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             Info("54AF89ED-3EBB-4A31-86A9-577EE1AF5190", $"rootTasks = {rootTasks.WriteListToString()}");
 #endif
 
+            if(!rootTasks.Any())
+            {
+                return TasksPlan.EmptyPlan;
+            }
+
+            //TODO: make processing multiple root taks for working with voice commands.
+            var rootTask = rootTasks.Single();
+
+            var tasksPlannerGlobalContext = new TasksPlannerGlobalContext();
+
+            var buildPlanIterationContext = new BuildPlanIterationContext();
+            buildPlanIterationContext.TasksToProcess.Add(new BuiltPlanItem
+            {
+                ProcessedTask = rootTask
+            });
+
+#if DEBUG
+            Info("1E36D336-39B2-4548-BFCD-12E072D51755", $"buildPlanIterationContext = {buildPlanIterationContext}");
+            Info("D531DC15-FE0B-4134-AA25-953997E60221", $"buildPlanIterationContext = {buildPlanIterationContext.ToDbgString()}");
+#endif
+
+            ProcessIteration(tasksPlannerGlobalContext, buildPlanIterationContext);
+
             throw new NotImplementedException("FF8CD857-079E-49A1-8C06-32D475C38D56");
+        }
+
+        private void ProcessIteration(TasksPlannerGlobalContext tasksPlannerGlobalContext, BuildPlanIterationContext buildPlanIterationContext)
+        {
+#if DEBUG
+            Info("FDD9D703-6231-450A-9B55-AA2734952558", "Begin");
+#endif
+
+#if DEBUG
+            Info("8BA1B85B-A1DF-4ABB-9CE4-925E8190303A", $"buildPlanIterationContext.ProcessedIndex = {buildPlanIterationContext.ProcessedIndex}");
+#endif
+
+            while(true)
+            {
+                buildPlanIterationContext.ProcessedIndex++;
+
+#if DEBUG
+                Info("ABDE6F0C-CA9B-49DB-9377-DB3092F19827", $"buildPlanIterationContext.ProcessedIndex (after) = {buildPlanIterationContext.ProcessedIndex}");
+#endif
+
+                throw new NotImplementedException("2CDDF950-725E-45EC-8D3B-5BD2684F77FD");
+            }
         }
 
         private List<BaseCompoundTask> GetRootTasks()

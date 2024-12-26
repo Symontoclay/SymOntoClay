@@ -87,7 +87,7 @@ namespace SymOntoClay.Core.Internal.Instances
         protected CodeItem CreateAndSaveAppInstanceCodeItem(IMonitorLogger logger, CodeItem superCodeEntity, StrongIdentifierValue name)
         {
 #if DEBUG
-            Info("0885966D-3FAE-4C37-BBD1-567D592D47B4", $"superCodeEntity.GetType().Name = {superCodeEntity.GetType().Name}");
+            //Info("0885966D-3FAE-4C37-BBD1-567D592D47B4", $"superCodeEntity.GetType().Name = {superCodeEntity.GetType().Name}");
 #endif
 
             var result = new AppInstanceCodeItem();
@@ -95,7 +95,7 @@ namespace SymOntoClay.Core.Internal.Instances
             if (superCodeEntity.IsApp)
             {
 #if DEBUG
-                Info("26BA035B-6FC0-4175-8613-F221AE88682B", $"superCodeEntity.AsApp.RootTasks = {superCodeEntity.AsApp.RootTasks.WriteListToString()}");
+                //Info("26BA035B-6FC0-4175-8613-F221AE88682B", $"superCodeEntity.AsApp.RootTasks = {superCodeEntity.AsApp.RootTasks.WriteListToString()}");
 #endif
             
                 result.RootTasks = superCodeEntity.AsApp.RootTasks?.Select(p => p.Clone())?.ToList() ?? new List<StrongIdentifierValue>();

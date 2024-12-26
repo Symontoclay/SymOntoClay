@@ -36,9 +36,9 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         private List<BaseCompoundTask> GetRootTasks()
         {
 #if DEBUG
-            Info("47323362-D3B3-47FD-B346-D746771DB8C7", $"_mainEntity.Name = {_mainEntity.Name}");
-            Info("600EDBC3-9F4F-43AE-B900-C029F4BB1AEC", $"_mainEntity.GetType().Name = {_mainEntity.GetType().Name}");
-            Info("E40E6248-2A1C-4CF7-95AB-BBC82924C46E", $"_mainEntity.RootTasks = {_mainEntity.RootTasks.WriteListToString()}");
+            //Info("47323362-D3B3-47FD-B346-D746771DB8C7", $"_mainEntity.Name = {_mainEntity.Name}");
+            //Info("600EDBC3-9F4F-43AE-B900-C029F4BB1AEC", $"_mainEntity.GetType().Name = {_mainEntity.GetType().Name}");
+            //Info("E40E6248-2A1C-4CF7-95AB-BBC82924C46E", $"_mainEntity.RootTasks = {_mainEntity.RootTasks.WriteListToString()}");
 #endif
 
             var result = new List<BaseCompoundTask>();
@@ -52,7 +52,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                     var task = _tasksStorage.GetBaseCompoundTaskByName(Logger, taskName);
 
 #if DEBUG
-                    Info("627C7805-7915-4787-BB76-E7D2B2B7EE56", $"task = {task}");
+                    //Info("627C7805-7915-4787-BB76-E7D2B2B7EE56", $"task = {task}");
 #endif
 
                     if(task == null)

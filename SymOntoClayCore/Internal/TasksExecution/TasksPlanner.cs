@@ -143,7 +143,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                     continue;
                 }
 
-                throw new NotImplementedException("40A79CD7-9DCB-4B93-BDB2-A6F328E79CA4");
+                ProcessTaskCase(taskCase, processedTask, tasksPlannerGlobalContext, buildPlanIterationContext);
             }
 
             throw new NotImplementedException("20A515FC-9D9F-4185-B14E-12C80C5CFCDD");
@@ -153,6 +153,63 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         {
             //It will be implemented when case will have conditions.
             return true;
+        }
+
+        private void ProcessTaskCase(CompoundTaskCase taskCase, BaseCompoundTask processedTask, TasksPlannerGlobalContext tasksPlannerGlobalContext, BuildPlanIterationContext buildPlanIterationContext)
+        {
+#if DEBUG
+            Info("90913386-6F54-47D4-B1D6-EC49F29604FC", "Begin");
+#endif
+
+            var items = taskCase.Items;
+
+            if (items.IsNullOrEmpty())
+            {
+                return;
+            }
+
+            var clonnedBuildPlanIterationContext = buildPlanIterationContext.Clone();
+
+#if DEBUG
+            Info("FB034078-4FD7-4A5E-9BF4-37EB9C32E75D", $"clonnedBuildPlanIterationContext = {clonnedBuildPlanIterationContext}");
+#endif
+
+            var baseTasksList = new List<BaseTask>();
+
+            foreach (var item in items)
+            {
+#if DEBUG
+                Info("D99601A0-5F07-417D-921A-0B77E84956AB", $"item = {item}");
+#endif
+
+                var task = _tasksStorage.GetBaseTaskByName(Logger, item.Name);
+
+#if DEBUG
+                Info("2A728ED1-B0C8-4FC5-AB66-D978F97A91E3", $"task = {task}");
+#endif
+
+                if(task == null)
+                {
+                    return;
+                }
+
+                baseTasksList.Add(task);
+            }
+
+            ReplaceBuiltPlanItems(baseTasksList, clonnedBuildPlanIterationContext);
+
+            ProcessIteration(tasksPlannerGlobalContext, clonnedBuildPlanIterationContext);
+
+            throw new NotImplementedException("40A79CD7-9DCB-4B93-BDB2-A6F328E79CA4");
+        }
+
+        private void ReplaceBuiltPlanItems(List<BaseTask> baseTasks, BuildPlanIterationContext buildPlanIterationContext)
+        {
+#if DEBUG
+            Info("174DE9EE-0069-4F7F-991E-EF8AB0417996", $"buildPlanIterationContext.ProcessedIndex = {buildPlanIterationContext.ProcessedIndex}");
+#endif
+
+            throw new NotImplementedException("9C08E57B-F9A1-4041-9C6A-16BF2BCA188C");
         }
 
         private List<BaseCompoundTask> GetRootTasks()

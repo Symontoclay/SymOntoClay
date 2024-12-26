@@ -19,6 +19,19 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
             return GetCompoundTaskByName(logger, name);
         }
 
+        /// <inheritdoc/>
+        public BaseTask GetBaseTaskByName(IMonitorLogger logger, StrongIdentifierValue name)
+        {
+            var task = GetCompoundTaskByName(logger, name);
+
+            if(task != null)
+            {
+                return task;
+            }
+
+            return GetPrimitiveTaskByName(logger, name);
+        }
+
         #region CompoundTask
         /// <inheritdoc/>
         public void Append(IMonitorLogger logger, CompoundTask compoundTask)

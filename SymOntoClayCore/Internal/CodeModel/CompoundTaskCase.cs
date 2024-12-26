@@ -21,7 +21,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         /// <inheritdoc/>
         public override CompoundTaskCase AsCompoundTaskCase => this;
-
+        
         public List<CompoundTaskCaseItem> Items { get; set; } = new List<CompoundTaskCaseItem>();
 
         /// <inheritdoc/>

@@ -2493,6 +2493,15 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.BaseTask.AsBaseTask">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseTask.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseTask.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseTask.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.BindingVariableItem.Clone">
             <summary>
 			Clones the instance and returns cloned instance.
@@ -2777,6 +2786,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.CompoundTask.AsCompoundTask">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.CompoundTask.KindOfTask">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.CompoundTask.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
@@ -4782,6 +4794,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.PrimitiveTask.AsPrimitiveTask">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.PrimitiveTask.KindOfTask">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimitiveTask.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">

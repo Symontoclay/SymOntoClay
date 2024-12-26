@@ -18,6 +18,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override CompoundTask AsCompoundTask => this;
 
         /// <inheritdoc/>
+        public override KindOfTask KindOfTask => KindOfTask.Compound;
+
+        /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> context)
         {
             return Clone(context);

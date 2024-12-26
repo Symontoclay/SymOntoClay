@@ -75,8 +75,84 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                 Info("ABDE6F0C-CA9B-49DB-9377-DB3092F19827", $"buildPlanIterationContext.ProcessedIndex (after) = {buildPlanIterationContext.ProcessedIndex}");
 #endif
 
+                var currentBuiltPlanItem = buildPlanIterationContext.TasksToProcess[buildPlanIterationContext.ProcessedIndex];
+
+#if DEBUG
+                Info("25DD52E6-AD5B-4564-B521-2AD710FCA605", $"currentBuiltPlanItem = {currentBuiltPlanItem}");
+#endif
+
+                var kindOfCurrentTask = currentBuiltPlanItem.ProcessedTask.KindOfTask;
+
+#if DEBUG
+                Info("2B3D4EAE-A6F3-4340-AEBE-A7668EFC0BB0", $"kindOfCurrentTask = {kindOfCurrentTask}");
+#endif
+
+                switch(kindOfCurrentTask)
+                {
+                    case KindOfTask.Primitive:
+                        ProcessPrimitiveTask(currentBuiltPlanItem, tasksPlannerGlobalContext, buildPlanIterationContext);
+                        break;
+
+                    case KindOfTask.Compound:
+                        ProcessBaseCompoundTask(currentBuiltPlanItem, tasksPlannerGlobalContext, buildPlanIterationContext);
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(kindOfCurrentTask), kindOfCurrentTask, null);
+                }
+
                 throw new NotImplementedException("2CDDF950-725E-45EC-8D3B-5BD2684F77FD");
             }
+        }
+
+        private void ProcessPrimitiveTask(BuiltPlanItem builtPlanItem, TasksPlannerGlobalContext tasksPlannerGlobalContext, BuildPlanIterationContext buildPlanIterationContext)
+        {
+#if DEBUG
+            Info("2707CB78-462A-4BB8-A076-5527C51789DB", "Begin");
+#endif
+
+            var processedTask = builtPlanItem.ProcessedTask.AsPrimitiveTask;
+
+#if DEBUG
+            Info("5FED19BB-FF10-4804-8FBC-79C0FA1028E4", $"processedTask = {processedTask}");
+#endif
+
+            throw new NotImplementedException("774AF910-A2C3-4175-8A84-3A09BFBA87E9");
+        }
+
+        private void ProcessBaseCompoundTask(BuiltPlanItem builtPlanItem, TasksPlannerGlobalContext tasksPlannerGlobalContext, BuildPlanIterationContext buildPlanIterationContext)
+        {
+#if DEBUG
+            Info("DF3B0700-5B7E-4101-BB8B-FF159ADF9080", "Begin");
+#endif
+
+            var processedTask = builtPlanItem.ProcessedTask.AsBaseCompoundTask;
+
+#if DEBUG
+            Info("35B5E17A-C30E-4EF7-91F6-66D1F5E9950A", $"processedTask = {processedTask}");
+#endif
+
+            foreach(var taskCase in processedTask.Cases)
+            {
+#if DEBUG
+                Info("0BEBD584-A2F2-496E-800B-E04E6F5F7CED", $"taskCase = {taskCase}");
+#endif
+
+                if(!CheckTaskCase(taskCase))
+                {
+                    continue;
+                }
+
+                throw new NotImplementedException("40A79CD7-9DCB-4B93-BDB2-A6F328E79CA4");
+            }
+
+            throw new NotImplementedException("20A515FC-9D9F-4185-B14E-12C80C5CFCDD");
+        }
+
+        private bool CheckTaskCase(CompoundTaskCase taskCase)
+        {
+            //It will be implemented when case will have conditions.
+            return true;
         }
 
         private List<BaseCompoundTask> GetRootTasks()

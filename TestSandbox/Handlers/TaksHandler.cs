@@ -78,6 +78,7 @@ namespace TestSandbox.Handlers
             var plan = tasksPlanner.BuildPlan();
 
             _logger.Info("B7831523-8D1C-4BAB-8348-460656F67E90", $"plan = {plan}");
+            _logger.Info("A74AD3BB-4D8E-44EC-AEF0-820592069E87", $"plan = {plan.ToDbgString()}");
 
             _logger.Info("EC6E70E3-294E-4492-8B7D-2F137D36628C", "|-|-|-|-|-|-|-|-|-|-|-|-|");
 

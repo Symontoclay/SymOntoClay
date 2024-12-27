@@ -1,15 +1,20 @@
 ﻿using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.TasksExecution
 {
     public class TasksPlanItem: IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString, IObjectToHumanizedString, IMonitoredHumanizedObject
     {
+        public List<BaseCompoundTask> ParentTasks { get; set; } = new List<BaseCompoundTask>();
+        public PrimitiveTask ExecutedTask { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -27,6 +32,10 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintObjListProp(n, nameof(ParentTasks), ParentTasks);
+            sb.PrintObjProp(n, nameof(ExecutedTask), ExecutedTask);
+
             return sb.ToString();
         }
 
@@ -47,6 +56,10 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintShortObjListProp(n, nameof(ParentTasks), ParentTasks);
+            sb.PrintShortObjProp(n, nameof(ExecutedTask), ExecutedTask);
+
             return sb.ToString();
         }
 
@@ -67,6 +80,10 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintBriefObjListProp(n, nameof(ParentTasks), ParentTasks);
+            sb.PrintBriefObjProp(n, nameof(ExecutedTask), ExecutedTask);
+
             return sb.ToString();
         }
 

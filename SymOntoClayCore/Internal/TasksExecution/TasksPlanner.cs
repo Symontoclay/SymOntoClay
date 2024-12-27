@@ -82,7 +82,35 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             Info("0ACC770A-B3CD-4182-8E86-4D7CF4F660D5", $"completedIteration = {completedIteration}");
 #endif
 
-            throw new NotImplementedException("FF8CD857-079E-49A1-8C06-32D475C38D56");
+            var result = new TasksPlan();
+
+            var builtItems = new List<TasksPlanItem>();
+            result.Items = builtItems;
+
+            foreach (var builtItem in completedIteration.TasksToProcess)
+            {
+#if DEBUG
+                Info("EA3F4844-5C18-4F00-8C30-8BDB6BAD6DF2", $"builtItem = {builtItem.ToDbgString()}");
+#endif
+
+                var planItem = new TasksPlanItem()
+                {
+                    ExecutedTask = builtItem.ProcessedTask.AsPrimitiveTask,
+                    ParentTasks = builtItem.ParentTasks.Select(p => p.AsBaseCompoundTask).ToList()
+                };
+
+#if DEBUG
+                Info("225B84C4-C4A7-4F58-ADE4-0E1932083051", $"planItem = {planItem}");
+#endif
+
+                builtItems.Add(planItem);
+            }
+
+#if DEBUG
+            Info("B08C997D-DB54-482F-A5F7-90C408031B74", $"result = {result}");
+#endif
+
+            return result;
         }
 
         private BuildPlanIterationContext GetTargetCompletedIteration(List<BuildPlanIterationContext> completedIterations)

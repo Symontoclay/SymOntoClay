@@ -125,11 +125,12 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         /// <inheritdoc/>
         string IObjectToDbgString.PropertiesToDbgString(uint n)
         {
-            //var spaces = DisplayHelper.Spaces(n);
-            //var sb = new StringBuilder();
-            //return sb.ToString();
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
 
-            throw new NotImplementedException("EE6E92A2-37BA-4329-9525-339C97CAB4E9");
+            sb.AppendLine($"{spaces}{ProcessedTask.KindOfTask}:{ProcessedTask.Name.NameValue}");
+
+            return sb.ToString();
         }
     }
 }

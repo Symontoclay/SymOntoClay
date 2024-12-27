@@ -8,6 +8,8 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 {
     public class TasksPlannerGlobalContext: IObjectToString, IObjectToShortString, IObjectToBriefString
     {
+        public List<BuildPlanIterationContext> CompletedIterations { get; set; } = new List<BuildPlanIterationContext>();
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -25,6 +27,9 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintObjListProp(n, nameof(CompletedIterations), CompletedIterations);
+
             return sb.ToString();
         }
 
@@ -45,6 +50,9 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintShortObjListProp(n, nameof(CompletedIterations), CompletedIterations);
+
             return sb.ToString();
         }
 
@@ -65,6 +73,9 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.PrintBriefObjListProp(n, nameof(CompletedIterations), CompletedIterations);
+
             return sb.ToString();
         }
     }

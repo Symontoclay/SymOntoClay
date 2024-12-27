@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.TasksExecution
 {
@@ -31,9 +32,14 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             Info("54AF89ED-3EBB-4A31-86A9-577EE1AF5190", $"rootTasks = {rootTasks.WriteListToString()}");
 #endif
 
-            if(!rootTasks.Any())
+            if(rootTasks.Count == 0)
             {
                 return TasksPlan.EmptyPlan;
+            }
+
+            if(rootTasks.Count > 1)
+            {
+                throw new NotImplementedException("0A44F791-B382-4B29-8F48-B62EB772014E");
             }
 
             //TODO: make processing multiple root taks for working with voice commands.
@@ -54,7 +60,39 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
             ProcessIteration(tasksPlannerGlobalContext, buildPlanIterationContext);
 
+#if DEBUG
+            Info("75115FF7-6822-4AB7-AE76-633B44127845", $"tasksPlannerGlobalContext = {tasksPlannerGlobalContext}");
+#endif
+
+            var completedIterations = tasksPlannerGlobalContext.CompletedIterations;
+
+            if(completedIterations.Count == 0)
+            {
+                return TasksPlan.EmptyPlan;
+            }
+
+            var targetCompletedIteration = GetTargetCompletedIteration(completedIterations);
+
+            return ConvertCompletedIterationToTasksPlan(targetCompletedIteration);
+        }
+
+        private TasksPlan ConvertCompletedIterationToTasksPlan(BuildPlanIterationContext completedIteration)
+        {
+#if DEBUG
+            Info("0ACC770A-B3CD-4182-8E86-4D7CF4F660D5", $"completedIteration = {completedIteration}");
+#endif
+
             throw new NotImplementedException("FF8CD857-079E-49A1-8C06-32D475C38D56");
+        }
+
+        private BuildPlanIterationContext GetTargetCompletedIteration(List<BuildPlanIterationContext> completedIterations)
+        {
+            if (completedIterations.Count > 1)
+            {
+                throw new NotImplementedException("D6E4711B-5922-4BBC-BFA4-EC678A035B06");
+            }
+
+            return completedIterations[0];
         }
 
         private void ProcessIteration(TasksPlannerGlobalContext tasksPlannerGlobalContext, BuildPlanIterationContext buildPlanIterationContext)
@@ -64,6 +102,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 #endif
 
 #if DEBUG
+            Info("8BA1B85B-A1DF-4ABB-9CE4-925E8190303A", $"buildPlanIterationContext = {buildPlanIterationContext.ToDbgString()}");
             Info("8BA1B85B-A1DF-4ABB-9CE4-925E8190303A", $"buildPlanIterationContext.ProcessedIndex = {buildPlanIterationContext.ProcessedIndex}");
 #endif
 
@@ -75,7 +114,19 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                 Info("ABDE6F0C-CA9B-49DB-9377-DB3092F19827", $"buildPlanIterationContext.ProcessedIndex (after) = {buildPlanIterationContext.ProcessedIndex}");
 #endif
 
-                var currentBuiltPlanItem = buildPlanIterationContext.TasksToProcess[buildPlanIterationContext.ProcessedIndex];
+                var tasksToProcess = buildPlanIterationContext.TasksToProcess;
+
+                if (buildPlanIterationContext.ProcessedIndex == tasksToProcess.Count)
+                {
+                    if(tasksToProcess.All(p => p.ProcessedTask.IsPrimitiveTask))
+                    {
+                        tasksPlannerGlobalContext.CompletedIterations.Add(buildPlanIterationContext);
+                    }                   
+
+                    return;
+                }
+
+                var currentBuiltPlanItem = tasksToProcess[buildPlanIterationContext.ProcessedIndex];
 
 #if DEBUG
                 Info("25DD52E6-AD5B-4564-B521-2AD710FCA605", $"currentBuiltPlanItem = {currentBuiltPlanItem}");
@@ -101,7 +152,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                         throw new ArgumentOutOfRangeException(nameof(kindOfCurrentTask), kindOfCurrentTask, null);
                 }
 
-                throw new NotImplementedException("2CDDF950-725E-45EC-8D3B-5BD2684F77FD");
+                //throw new NotImplementedException("2CDDF950-725E-45EC-8D3B-5BD2684F77FD");
             }
         }
 
@@ -117,7 +168,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             Info("5FED19BB-FF10-4804-8FBC-79C0FA1028E4", $"processedTask = {processedTask}");
 #endif
 
-            throw new NotImplementedException("774AF910-A2C3-4175-8A84-3A09BFBA87E9");
+            //throw new NotImplementedException("774AF910-A2C3-4175-8A84-3A09BFBA87E9");
         }
 
         private void ProcessBaseCompoundTask(BuiltPlanItem builtPlanItem, TasksPlannerGlobalContext tasksPlannerGlobalContext, BuildPlanIterationContext buildPlanIterationContext)
@@ -143,10 +194,10 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                     continue;
                 }
 
-                ProcessTaskCase(taskCase, processedTask, tasksPlannerGlobalContext, buildPlanIterationContext);
+                ProcessTaskCase(taskCase, tasksPlannerGlobalContext, buildPlanIterationContext);
             }
 
-            throw new NotImplementedException("20A515FC-9D9F-4185-B14E-12C80C5CFCDD");
+            //throw new NotImplementedException("20A515FC-9D9F-4185-B14E-12C80C5CFCDD");
         }
 
         private bool CheckTaskCase(CompoundTaskCase taskCase)
@@ -155,7 +206,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             return true;
         }
 
-        private void ProcessTaskCase(CompoundTaskCase taskCase, BaseCompoundTask processedTask, TasksPlannerGlobalContext tasksPlannerGlobalContext, BuildPlanIterationContext buildPlanIterationContext)
+        private void ProcessTaskCase(CompoundTaskCase taskCase, TasksPlannerGlobalContext tasksPlannerGlobalContext, BuildPlanIterationContext buildPlanIterationContext)
         {
 #if DEBUG
             Info("90913386-6F54-47D4-B1D6-EC49F29604FC", "Begin");
@@ -174,7 +225,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             Info("FB034078-4FD7-4A5E-9BF4-37EB9C32E75D", $"clonnedBuildPlanIterationContext = {clonnedBuildPlanIterationContext}");
 #endif
 
-            var baseTasksList = new List<BaseTask>();
+            var tasksList = new List<BaseTask>();
 
             foreach (var item in items)
             {
@@ -193,23 +244,72 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                     return;
                 }
 
-                baseTasksList.Add(task);
+                tasksList.Add(task);
             }
 
-            ReplaceBuiltPlanItems(baseTasksList, clonnedBuildPlanIterationContext);
+            ReplaceBuiltPlanItems(tasksList, clonnedBuildPlanIterationContext);
 
             ProcessIteration(tasksPlannerGlobalContext, clonnedBuildPlanIterationContext);
 
-            throw new NotImplementedException("40A79CD7-9DCB-4B93-BDB2-A6F328E79CA4");
+            //throw new NotImplementedException("40A79CD7-9DCB-4B93-BDB2-A6F328E79CA4");
         }
 
-        private void ReplaceBuiltPlanItems(List<BaseTask> baseTasks, BuildPlanIterationContext buildPlanIterationContext)
+        private void ReplaceBuiltPlanItems(List<BaseTask> tasksList, BuildPlanIterationContext buildPlanIterationContext)
         {
 #if DEBUG
             Info("174DE9EE-0069-4F7F-991E-EF8AB0417996", $"buildPlanIterationContext.ProcessedIndex = {buildPlanIterationContext.ProcessedIndex}");
 #endif
 
-            throw new NotImplementedException("9C08E57B-F9A1-4041-9C6A-16BF2BCA188C");
+            var builtPlanItem = buildPlanIterationContext.TasksToProcess[buildPlanIterationContext.ProcessedIndex];
+
+#if DEBUG
+            Info("8A913405-9ABA-430E-964D-B0223B5BEF0F", $"builtPlanItem = {builtPlanItem}");
+#endif
+
+            var parentTasks = builtPlanItem.ParentTasks.ToList();
+            parentTasks.Add(builtPlanItem.ProcessedTask);
+
+#if DEBUG
+            Info("57DF1D77-3101-44D3-9F0A-826F0944FA18", $"parentTasks = {parentTasks.WriteListToString()}");
+#endif
+
+            var newBuiltPlanItems = new List<BuiltPlanItem>();
+
+            foreach(var task in tasksList)
+            {
+                newBuiltPlanItems.Add(new BuiltPlanItem
+                {
+                    ParentTasks = parentTasks.ToList(),
+                    ProcessedTask = task
+                });
+            }
+
+#if DEBUG
+            Info("EE36EF43-6AB6-41D1-8E7E-EC07DDB89BB2", $"newBuiltPlanItems = {newBuiltPlanItems.WriteListToString()}");
+#endif
+
+            ReplaceBuiltPlanItems(newBuiltPlanItems, buildPlanIterationContext.TasksToProcess, buildPlanIterationContext.ProcessedIndex);
+
+#if DEBUG
+            Info("B2424A2E-6B2F-4BC7-AC33-46853F5989A2", $"buildPlanIterationContext = {buildPlanIterationContext}");
+#endif
+
+            buildPlanIterationContext.ProcessedIndex--;
+        }
+
+        private void ReplaceBuiltPlanItems(List<BuiltPlanItem> newBuiltPlanItems, List<BuiltPlanItem> tasksToProcess, int index)
+        {
+#if DEBUG
+            Info("46D5D5CB-BEDC-4260-8DEC-4BA7E3890FAC", $"index = {index}");
+#endif
+
+            if(newBuiltPlanItems.Count == 1)
+            {
+                tasksToProcess[index] = newBuiltPlanItems[0];
+                return;
+            }
+
+            throw new NotImplementedException("C7088945-55F6-45D4-A384-38CC03A7C7BC");
         }
 
         private List<BaseCompoundTask> GetRootTasks()

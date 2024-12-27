@@ -3,12 +3,15 @@ using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.TasksExecution
 {
     public class BuiltPlanItem : IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString
     {
+        public List<BaseTask> ParentTasks { get; set; } = new List<BaseTask>();
+
         public BaseTask ProcessedTask { get; set; }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
@@ -29,6 +32,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             var result = new BuiltPlanItem();
             context[this] = result;
 
+            result.ParentTasks = ParentTasks?.Select(p => p.CloneBaseTask(context))?.ToList() ?? new List<BaseTask>();
             result.ProcessedTask = ProcessedTask;
 
             return result;
@@ -52,6 +56,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.PrintObjListProp(n, nameof(ParentTasks), ParentTasks);
             sb.PrintObjProp(n, nameof(ProcessedTask), ProcessedTask);
 
             return sb.ToString();
@@ -75,6 +80,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.PrintShortObjListProp(n, nameof(ParentTasks), ParentTasks);
             sb.PrintShortObjProp(n, nameof(ProcessedTask), ProcessedTask);
 
             return sb.ToString();
@@ -98,6 +104,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.PrintBriefObjListProp(n, nameof(ParentTasks), ParentTasks);
             sb.PrintBriefObjProp(n, nameof(ProcessedTask), ProcessedTask);
 
             return sb.ToString();

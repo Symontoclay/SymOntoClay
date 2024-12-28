@@ -5,6 +5,7 @@ using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.TasksExecution
@@ -102,11 +103,18 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         /// <inheritdoc/>
         string IObjectToDbgString.PropertiesToDbgString(uint n)
         {
-            //var spaces = DisplayHelper.Spaces(n);
-            //var sb = new StringBuilder();
-            //return sb.ToString();
+            var spaces = DisplayHelper.Spaces(n);
 
-            throw new NotImplementedException("4FE95810-7561-4C23-8D02-486B62B8DA7C");
+            var nextN = n + DisplayHelper.IndentationStep;
+
+            var nextNSpaces = DisplayHelper.Spaces(nextN);
+
+            var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}Tasks to execution:");
+            sb.AppendLine($"{nextNSpaces}[{string.Join(", ", Items.Select(p => p.ExecutedTask.Name.ToSystemString()))}]");
+
+            return sb.ToString();
         }
 
         /// <inheritdoc/>

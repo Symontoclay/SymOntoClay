@@ -26,7 +26,11 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             Info("2AC6C566-EA83-476B-92E6-8F955F0B0935", $"plan = {plan.ToDbgString()}");
 #endif
 
+            var tasksPlanFrame = ConvertTasksPlanToFrame(plan);
 
+#if DEBUG
+            Info("4C249182-C6F2-45B9-9ECC-1C883681ED67", $"tasksPlanFrame = {tasksPlanFrame.ToDbgString()}");
+#endif
 
             throw new NotImplementedException("03EEE01B-1763-49D4-AC9B-2A071C887248");
         }
@@ -47,6 +51,24 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
                 throw;
             }
+        }
+
+        private TasksPlanFrame ConvertTasksPlanToFrame(TasksPlan plan)
+        {
+            var frameItems = new Dictionary<int, TasksPlanItem>();
+
+            var n = 0;
+
+            foreach(var item in plan.Items)
+            {
+                frameItems[n] = item;
+                n++;
+            }
+
+            var frame = new TasksPlanFrame();
+            frame.Items = frameItems;
+
+            return frame;
         }
     }
 }

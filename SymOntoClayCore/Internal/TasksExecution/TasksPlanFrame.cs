@@ -1,7 +1,6 @@
 ﻿using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
-using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using System;
@@ -10,10 +9,10 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.TasksExecution
 {
-    public class TasksPlanItem: IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString, IObjectToHumanizedString, IMonitoredHumanizedObject
+    public class TasksPlanFrame : IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString, IObjectToHumanizedString, IMonitoredHumanizedObject
     {
-        public List<BaseCompoundTask> ParentTasks { get; set; } = new List<BaseCompoundTask>();
-        public PrimitiveTask ExecutedTask { get; set; }
+        public int CurrentPosition { get; set; }
+        public Dictionary<int, TasksPlanItem> Items { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -33,8 +32,9 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjListProp(n, nameof(ParentTasks), ParentTasks);
-            sb.PrintObjProp(n, nameof(ExecutedTask), ExecutedTask);
+            sb.AppendLine($"{spaces}{nameof(CurrentPosition)} = {CurrentPosition}");
+            sb.PrintObjDict_2_Prop(n, nameof(Items), Items);
+            //sb.PrintObjListProp(n, nameof(Items), Items);
 
             return sb.ToString();
         }
@@ -57,8 +57,10 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjListProp(n, nameof(ParentTasks), ParentTasks);
-            sb.PrintShortObjProp(n, nameof(ExecutedTask), ExecutedTask);
+            sb.AppendLine($"{spaces}{nameof(CurrentPosition)} = {CurrentPosition}");
+            sb.PrintShortObjDict_2_Prop(n, nameof(Items), Items);
+
+            //sb.PrintShortObjListProp(n, nameof(Items), Items);
 
             return sb.ToString();
         }
@@ -81,8 +83,10 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjListProp(n, nameof(ParentTasks), ParentTasks);
-            sb.PrintBriefObjProp(n, nameof(ExecutedTask), ExecutedTask);
+            sb.AppendLine($"{spaces}{nameof(CurrentPosition)} = {CurrentPosition}");
+            sb.PrintBriefObjDict_2_Prop(n, nameof(Items), Items);
+
+            //sb.PrintBriefObjListProp(n, nameof(Items), Items);
 
             return sb.ToString();
         }
@@ -103,8 +107,32 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         string IObjectToDbgString.PropertiesToDbgString(uint n)
         {
             var spaces = DisplayHelper.Spaces(n);
+
+            var nextN = n + DisplayHelper.IndentationStep;
+
+            var nextNSpaces = DisplayHelper.Spaces(nextN);
+
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{ExecutedTask.Name.ToSystemString()}");
+
+            sb.AppendLine($"{spaces}Begin Items");
+
+            foreach(var item in Items)
+            {
+                var currentMark = string.Empty;
+
+                if (item.Key == CurrentPosition)
+                {
+                    currentMark = "-> ";
+                }
+
+                sb.AppendLine($"{nextNSpaces}{currentMark}{item.Key}: {item.Value.ToDbgString()}");
+            }
+
+            sb.AppendLine($"{spaces}End Items");
+
+            //sb.AppendLine($"{spaces}Tasks to execution:");
+            //sb.AppendLine($"{nextNSpaces}[{string.Join(", ", Items.Select(p => p.ExecutedTask.Name.ToSystemString()))}]");
+
             return sb.ToString();
         }
 
@@ -122,7 +150,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         /// <inheritdoc/>
         public string ToHumanizedString(DebugHelperOptions options)
         {
-            throw new NotImplementedException("BC75B7FE-C68B-44B9-9E37-92ED37D78F4B");
+            throw new NotImplementedException("E47BC4FD-1AF6-43CA-9914-4EDDA10546BB");
         }
 
         /// <inheritdoc/>
@@ -139,19 +167,19 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         /// <inheritdoc/>
         public string ToHumanizedLabel(DebugHelperOptions options)
         {
-            throw new NotImplementedException("E30C7144-8ABD-4BE2-9FF2-1EFAB61E0BC8");
+            throw new NotImplementedException("049DC608-D1E5-4370-9E70-722C3983F2AE");
         }
 
         /// <inheritdoc/>
         public string ToHumanizedString(IMonitorLogger logger)
         {
-            throw new NotImplementedException("45A8A5F5-7153-436F-8392-8E6B559058DF");
+            throw new NotImplementedException("3A21267A-3900-4D75-9055-C2D13FC25365");
         }
 
         /// <inheritdoc/>
         public MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
         {
-            throw new NotImplementedException("6BB2065C-F9F0-4EED-85DA-9C0C1DE43202");
+            throw new NotImplementedException("78AABFFD-D82A-4027-ABFC-004151A5BDEE");
         }
     }
 }

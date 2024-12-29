@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.ActiveObject.Threads;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 
@@ -20,17 +21,21 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         private readonly IEngineContext _context;
         private readonly IActivePeriodicObject _activeObject;
 
+        private TasksPlanFrame _tasksPlanFrame;
+
         public void Run(TasksPlan plan)
         {
 #if DEBUG
             Info("2AC6C566-EA83-476B-92E6-8F955F0B0935", $"plan = {plan.ToDbgString()}");
 #endif
 
-            var tasksPlanFrame = ConvertTasksPlanToFrame(plan);
+            _tasksPlanFrame = ConvertTasksPlanToFrame(plan);
 
 #if DEBUG
-            Info("4C249182-C6F2-45B9-9ECC-1C883681ED67", $"tasksPlanFrame = {tasksPlanFrame.ToDbgString()}");
+            Info("4C249182-C6F2-45B9-9ECC-1C883681ED67", $"_tasksPlanFrame = {_tasksPlanFrame.ToDbgString()}");
 #endif
+
+            _activeObject.Start()?.Wait();
 
             throw new NotImplementedException("03EEE01B-1763-49D4-AC9B-2A071C887248");
         }
@@ -43,6 +48,39 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
             try
             {
+                var tasksPlanFrame = _tasksPlanFrame;
+
+#if DEBUG
+                Info("B3F39DA7-3638-4DC9-80EF-0C8C7C33CA8D", $"tasksPlanFrame = {tasksPlanFrame.ToDbgString()}");
+#endif
+
+                var currentPosition = tasksPlanFrame.CurrentPosition;
+
+#if DEBUG
+                Info("4DB03AB0-16D3-4A03-AA88-A9B2644E60B6", $"currentPosition = {currentPosition}");
+#endif
+
+                var tasksPlanFrameItems = tasksPlanFrame.Items;
+
+                if(currentPosition >= tasksPlanFrameItems.Count)
+                {
+                    return false;
+                }
+
+                var item = tasksPlanFrameItems[currentPosition];
+
+#if DEBUG
+                Info("49A45A6E-0F52-4FD3-9B12-376BCC93D70A", $"item = {item}");
+#endif
+
+                var executedTask = item.ExecutedTask;
+
+#if DEBUG
+                Info("8862EF80-9923-43C9-BBBF-B5E61EA42F98", $"executedTask = {executedTask}");
+#endif
+
+                tasksPlanFrame.CurrentPosition++;
+
                 return true;
             }
             catch (Exception e)
@@ -55,13 +93,19 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
         private TasksPlanFrame ConvertTasksPlanToFrame(TasksPlan plan)
         {
-            var frameItems = new Dictionary<int, TasksPlanItem>();
+            var frameItems = new Dictionary<int, TasksPlanFrameItem>();
 
             var n = 0;
 
             foreach(var item in plan.Items)
             {
-                frameItems[n] = item;
+                var frameItem = new TasksPlanFrameItem 
+                { 
+                    ExecutedTask = item.ExecutedTask,
+                    ParentTasks = item.ParentTasks.ToList()
+                };
+
+                frameItems[n] = frameItem;
                 n++;
             }
 

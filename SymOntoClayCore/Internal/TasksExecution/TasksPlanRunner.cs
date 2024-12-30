@@ -41,7 +41,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
             _activeObject.Start()?.Wait();
 
-            throw new NotImplementedException("03EEE01B-1763-49D4-AC9B-2A071C887248");
+            //throw new NotImplementedException("03EEE01B-1763-49D4-AC9B-2A071C887248");
         }
 
         private bool CommandLoop(CancellationToken cancellationToken)

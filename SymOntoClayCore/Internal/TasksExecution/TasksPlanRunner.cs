@@ -1,4 +1,6 @@
 ﻿using SymOntoClay.ActiveObject.Threads;
+using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.Instances;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +15,14 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             : base(context.Logger)
         {
             _context = context;
+            _mainEntity = _context.InstancesStorage.MainEntity;
 
             _activeObject = activeObject;
             activeObject.PeriodicMethod = CommandLoop;
         }
 
         private readonly IEngineContext _context;
+        private readonly AppInstance _mainEntity;
         private readonly IActivePeriodicObject _activeObject;
 
         private TasksPlanFrame _tasksPlanFrame;
@@ -78,6 +82,17 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 #if DEBUG
                 Info("8862EF80-9923-43C9-BBBF-B5E61EA42F98", $"executedTask = {executedTask}");
 #endif
+
+                var processInitialInfo = new ProcessInitialInfo();
+                processInitialInfo.CompiledFunctionBody = executedTask.Operator.CompiledFunctionBody;
+                processInitialInfo.LocalContext = _mainEntity.LocalCodeExecutionContext;
+                processInitialInfo.Metadata = executedTask;
+                processInitialInfo.Instance = _mainEntity;
+                processInitialInfo.ExecutionCoordinator = _mainEntity.ExecutionCoordinator;
+
+                var task = _context.CodeExecutor.ExecuteAsync(Logger, processInitialInfo);
+
+                task.Wait();
 
                 tasksPlanFrame.CurrentPosition++;
 

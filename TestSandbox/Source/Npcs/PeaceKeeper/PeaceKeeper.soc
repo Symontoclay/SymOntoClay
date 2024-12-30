@@ -4,6 +4,7 @@
 
     fun SomeOperator()
     {
+       'Run SomeOperator' >> @>log;
        wait 1;
     }
 }

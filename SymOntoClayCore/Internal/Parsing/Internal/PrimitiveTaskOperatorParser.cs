@@ -1,5 +1,7 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using System;
+using System.Collections.Generic;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
@@ -69,7 +71,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         //Info("743FE80C-35FB-4007-A029-0E1EFBEB8DDB", $"parser.Result = {parser.Result}");
 #endif
 
-                        Result.Expression = parser.Result;
+                        var statement = new AstExpressionStatement();
+                        Result.Statement = statement;
+
+                        statement.Expression = parser.Result;
+
+                        Result.CompiledFunctionBody = _context.Compiler.Compile(new List<AstStatement> { statement });
 
                         _state = State.GotCallingExpr;
 

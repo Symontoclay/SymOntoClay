@@ -33,6 +33,7 @@ using SymOntoClay.Core.Internal.Serialization;
 using SymOntoClay.Core.Internal.Services;
 using SymOntoClay.Core.Internal.StandardLibrary;
 using SymOntoClay.Core.Internal.Storage;
+using SymOntoClay.Core.Internal.TasksExecution;
 using SymOntoClay.Threading;
 using System.Threading;
 
@@ -55,6 +56,7 @@ namespace SymOntoClay.Core.Internal.Helpers
 
             context.StandardLibraryLoader = new StandardLibraryLoader(context);
             context.CodeExecutor = new CodeExecutorComponent(context);
+            context.TasksExecutor = new TasksExecutorComponent(context);
             
             context.LoaderFromSourceCode = new ActiveLoaderFromSourceCode(context);
             context.InstancesStorage = new InstancesStorageComponent(context);

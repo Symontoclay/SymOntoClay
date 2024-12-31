@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.StandardLibrary;
+using SymOntoClay.Core.Internal.TasksExecution;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 
@@ -36,7 +37,9 @@ namespace SymOntoClay.Core.Internal
         {
         }
 
-        public CodeExecutorComponent CodeExecutor { get; set; }       
+        public CodeExecutorComponent CodeExecutor { get; set; }
+        public TasksExecutorComponent TasksExecutor { get; set; }
+
         public StandardLibraryLoader StandardLibraryLoader { get; set; }
 
         /// <inheritdoc/>
@@ -61,6 +64,8 @@ namespace SymOntoClay.Core.Internal
         public ICustomThreadPool TriggersThreadPool { get; set; }
 
         ICodeExecutorComponent IEngineContext.CodeExecutor => CodeExecutor;
+
+        ITasksExecutorComponent IEngineContext.TasksExecutor => TasksExecutor;
 
         /// <inheritdoc/>
         public INLPConverterContext GetNLPConverterContext()
@@ -94,6 +99,7 @@ namespace SymOntoClay.Core.Internal
         public override void Die()
         {
             CodeExecutor.Dispose();
+            TasksExecutor.Dispose();
             CodeExecutionThreadPool.Dispose();
             TriggersThreadPool.Dispose();
 
@@ -104,6 +110,7 @@ namespace SymOntoClay.Core.Internal
         protected override void OnDisposed()
         {
             CodeExecutor.Dispose();
+            TasksExecutor.Dispose();
             CodeExecutionThreadPool.Dispose();
             TriggersThreadPool.Dispose();
 

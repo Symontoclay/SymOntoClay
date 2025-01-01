@@ -134,6 +134,11 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         }
 
         /// <inheritdoc/>
+        public virtual void EndStarting()
+        {
+        }
+
+        /// <inheritdoc/>
         public virtual bool IsWaited { get; }
 
         [MethodForLoggingSupport]

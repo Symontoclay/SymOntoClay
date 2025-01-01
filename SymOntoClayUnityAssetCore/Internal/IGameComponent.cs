@@ -37,6 +37,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
         string IdForFacts { get; }
         void LoadFromSourceCode();
         void BeginStarting();
+        void EndStarting();
         bool IsWaited { get; }
         void RunInMainThread(Action function);
         TResult RunInMainThread<TResult>(Func<TResult> function);

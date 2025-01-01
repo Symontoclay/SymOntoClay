@@ -157,6 +157,12 @@ namespace SymOntoClay.Core.Internal.Instances
         public virtual event Action OnIdle;
 
         /// <inheritdoc/>
+        public virtual void CheckCountOfActiveProcesses(IMonitorLogger logger)
+        {
+            throw new NotImplementedException("54CEF05C-EB52-4C53-A898-E864785DAEB1");
+        }
+
+        /// <inheritdoc/>
         public virtual int GetCountOfCurrentProcesses(IMonitorLogger logger)
         {
             throw new NotImplementedException("74323836-3AD0-444D-9036-ED6682D58E0A");

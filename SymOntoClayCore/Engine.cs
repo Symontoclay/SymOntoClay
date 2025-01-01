@@ -102,7 +102,6 @@ namespace SymOntoClay.Core
             }
         }
 
-        /// <inheritdoc/>
         public void BeginStarting()
         {
             lock (_stateLockObj)
@@ -117,6 +116,11 @@ namespace SymOntoClay.Core
                 throw new NotImplementedException("F8B0FEF1-C39D-469C-A8CA-BA94CD1C3EF0");
 #endif
             }
+        }
+
+        public void EndStarting()
+        {
+            _context.InstancesStorage.CheckCountOfActiveProcesses(Logger);
         }
 
         /// <inheritdoc/>

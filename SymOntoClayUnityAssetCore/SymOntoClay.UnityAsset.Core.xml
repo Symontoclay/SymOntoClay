@@ -398,6 +398,9 @@
         <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.BeginStarting">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.EndStarting">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC.HumanoidNPCGameComponent.IsWaited">
             <inheritdoc/>
         </member>
@@ -830,6 +833,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.BeginStarting">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.EndStarting">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.BaseGameComponent.IsWaited">

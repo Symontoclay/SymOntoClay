@@ -153,6 +153,21 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
         }
 
         /// <inheritdoc/>
+        public override void EndStarting()
+        {
+            try
+            {
+                _coreEngine.EndStarting();
+            }
+            catch (Exception e)
+            {
+                Error("3971D614-2C6A-4D57-9D5D-DCAC2805D9D1", e);
+
+                throw e;
+            }
+        }
+
+        /// <inheritdoc/>
         public override bool IsWaited
         {
             get

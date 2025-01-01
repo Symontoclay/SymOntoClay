@@ -459,6 +459,14 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
             _state = ComponentState.Started;
 
+            lock (_gameComponentsListLockObj)
+            {
+                foreach (var item in _gameComponentsList)
+                {
+                    item.EndStarting();
+                }
+            }
+
             var cancellationToken = _cancellationTokenSource.Token;
 
             ThreadTask.Run(() => {
@@ -474,6 +482,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal
                                 {
                                     component.LoadFromSourceCode();
                                     component.BeginStarting();
+                                    component.EndStarting();
                                 }
 
                                 _gameComponentsForLateInitializingList.Clear();

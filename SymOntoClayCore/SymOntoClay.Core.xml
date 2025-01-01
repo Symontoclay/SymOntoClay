@@ -210,9 +210,6 @@
         <member name="M:SymOntoClay.Core.Engine.SaveToImage(System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Engine.BeginStarting">
-            <inheritdoc/>
-        </member>
         <member name="P:SymOntoClay.Core.Engine.IsWaited">
             <inheritdoc/>
         </member>
@@ -7283,6 +7280,9 @@
         <member name="E:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.OnIdle">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.CheckCountOfActiveProcesses(SymOntoClay.Monitor.Common.IMonitorLogger)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.BaseInstancesStorageComponent.GetCountOfCurrentProcesses(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
@@ -7413,6 +7413,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.AppendAndTryStartProcessInfo(SymOntoClay.Monitor.Common.IMonitorLogger,System.String,SymOntoClay.Core.IProcessInfo)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.CheckCountOfActiveProcesses(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="E:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.OnIdle">

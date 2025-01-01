@@ -359,7 +359,8 @@ namespace SymOntoClay.Core.Internal.Instances
             }
         }
 
-        private void CheckCountOfActiveProcesses(IMonitorLogger logger)
+        /// <inheritdoc/>
+        public override void CheckCountOfActiveProcesses(IMonitorLogger logger)
         {
             var count = NGetCountOfCurrentProcesses(logger);
 
@@ -369,8 +370,9 @@ namespace SymOntoClay.Core.Internal.Instances
                 {
                     OnIdle?.Invoke();
                 }
-                catch
+                catch(Exception e)
                 {
+                    Error("F6FA8031-E0B5-4A92-93FF-8A75F2091F9C", e);
                 }
             }
         }

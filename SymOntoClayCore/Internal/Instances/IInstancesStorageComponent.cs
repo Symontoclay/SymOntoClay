@@ -37,6 +37,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         event Action OnIdle;
         int GetCountOfCurrentProcesses(IMonitorLogger logger);
+        void CheckCountOfActiveProcesses(IMonitorLogger logger);
 
         void ActivateState(IMonitorLogger logger, StateDef state);
         void TryActivateDefaultState(IMonitorLogger logger);

@@ -74,16 +74,16 @@ namespace TestSandbox.Handlers
             Thread.Sleep(100);
             _logger.Info("EC6E70E3-294E-4492-8B7D-2F137D36628C", "-------------------------");
 
-            var tasksPlanner = new TasksPlanner(_npc.EngineContext);
+            //var tasksPlanner = new TasksPlanner(_npc.EngineContext);
 
-            var plan = tasksPlanner.BuildPlan();
+            //var plan = tasksPlanner.BuildPlan();
 
-            _logger.Info("B7831523-8D1C-4BAB-8348-460656F67E90", $"plan = {plan}");
-            _logger.Info("A74AD3BB-4D8E-44EC-AEF0-820592069E87", $"plan = {plan.ToDbgString()}");
+            //_logger.Info("B7831523-8D1C-4BAB-8348-460656F67E90", $"plan = {plan}");
+            //_logger.Info("A74AD3BB-4D8E-44EC-AEF0-820592069E87", $"plan = {plan.ToDbgString()}");
 
-            var tasksPlanRunner = new TasksPlanRunner(_npc.EngineContext, new SyncActivePeriodicObject(_npc.EngineContext.GetCancellationToken()));
+            //var tasksPlanRunner = new TasksPlanRunner(_npc.EngineContext, new SyncActivePeriodicObject(_npc.EngineContext.GetCancellationToken()));
 
-            tasksPlanRunner.Run(plan);
+            //tasksPlanRunner.Run(plan);
 
             _logger.Info("EC6E70E3-294E-4492-8B7D-2F137D36628C", "|-|-|-|-|-|-|-|-|-|-|-|-|");
 

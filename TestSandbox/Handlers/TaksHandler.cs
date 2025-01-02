@@ -89,6 +89,8 @@ namespace TestSandbox.Handlers
 
             Thread.Sleep(5000);
 
+            _logger.Info("6FDE9DEF-C0F2-4500-BAD5-6F3FD56A3EF9", "|---|---|---|---|---|---|");
+
             var logsOutputDirectory = Path.Combine(Directory.GetCurrentDirectory(), "logs");
 
             _globalLogger.Info($"logsOutputDirectory = {logsOutputDirectory}");

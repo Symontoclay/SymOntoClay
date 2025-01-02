@@ -25,12 +25,12 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         private readonly AppInstance _mainEntity;
         private readonly IActivePeriodicObject _activeObject;
 
-        private TasksPlanFrame _tasksPlanFrame;
+        private volatile TasksPlanFrame _tasksPlanFrame;
 
         public void Run(TasksPlan plan)
         {
 #if DEBUG
-            Info("2AC6C566-EA83-476B-92E6-8F955F0B0935", $"plan = {plan.ToDbgString()}");
+            //Info("2AC6C566-EA83-476B-92E6-8F955F0B0935", $"plan = {plan.ToDbgString()}");
 #endif
 
             _tasksPlanFrame = ConvertTasksPlanToFrame(plan);
@@ -40,6 +40,10 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 #endif
 
             _activeObject.Start()?.Wait();
+
+#if DEBUG
+            Info("1D687F2D-4708-4753-B147-641B37AAF99B", "#####################################");
+#endif
 
             //throw new NotImplementedException("03EEE01B-1763-49D4-AC9B-2A071C887248");
         }
@@ -74,13 +78,13 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                 var item = tasksPlanFrameItems[currentPosition];
 
 #if DEBUG
-                Info("49A45A6E-0F52-4FD3-9B12-376BCC93D70A", $"item = {item}");
+                //Info("49A45A6E-0F52-4FD3-9B12-376BCC93D70A", $"item = {item}");
 #endif
 
                 var executedTask = item.ExecutedTask;
 
 #if DEBUG
-                Info("8862EF80-9923-43C9-BBBF-B5E61EA42F98", $"executedTask = {executedTask}");
+                //Info("8862EF80-9923-43C9-BBBF-B5E61EA42F98", $"executedTask = {executedTask}");
 #endif
 
                 var processInitialInfo = new ProcessInitialInfo();

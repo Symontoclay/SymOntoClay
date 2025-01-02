@@ -71,8 +71,6 @@ namespace SymOntoClay.Core.Internal.Helpers
                 threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
                 context.LinkedCancellationTokenSource.Token);
 
-            context.TasksExecutor.Init();
-
             return context;
         }
 

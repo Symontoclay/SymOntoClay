@@ -1,6 +1,4 @@
 ﻿using SymOntoClay.ActiveObject.Threads;
-using System;
-using System.Numerics;
 using System.Threading;
 
 namespace SymOntoClay.Core.Internal.TasksExecution

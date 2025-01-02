@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.Instances;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,14 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 {
     public class TasksPlanRunner: BaseComponent
     {
+        private enum ExecutionState
+        {
+            Init,
+            PrepareToItemExecution,
+            WaitingForFinishItemExecution,
+            FinishItemExecution
+        }
+
         public TasksPlanRunner(IEngineContext context, IActivePeriodicObject activeObject)
             : base(context.Logger)
         {
@@ -24,8 +33,10 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         private readonly IEngineContext _context;
         private readonly AppInstance _mainEntity;
         private readonly IActivePeriodicObject _activeObject;
+        private volatile ExecutionState _executionState = ExecutionState.Init;
 
         private volatile TasksPlanFrame _tasksPlanFrame;
+        private volatile IThreadTask _task;
 
         public void Run(TasksPlan plan)
         {
@@ -51,11 +62,16 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         private bool CommandLoop(CancellationToken cancellationToken)
         {
 #if DEBUG
-            Info("BB2C24F5-B3FA-4394-BC6F-7BD5EF4010B7", "Begin");
+            Info("BB2C24F5-B3FA-4394-BC6F-7BD5EF4010B7", $"_executionState = {_executionState}");
 #endif
 
             try
             {
+                if(_executionState == ExecutionState.Init)
+                {
+                    _executionState = ExecutionState.PrepareToItemExecution;
+                }
+
                 var tasksPlanFrame = _tasksPlanFrame;
 
 #if DEBUG
@@ -87,18 +103,33 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                 //Info("8862EF80-9923-43C9-BBBF-B5E61EA42F98", $"executedTask = {executedTask}");
 #endif
 
-                var processInitialInfo = new ProcessInitialInfo();
-                processInitialInfo.CompiledFunctionBody = executedTask.Operator.CompiledFunctionBody;
-                processInitialInfo.LocalContext = _mainEntity.LocalCodeExecutionContext;
-                processInitialInfo.Metadata = executedTask;
-                processInitialInfo.Instance = _mainEntity;
-                processInitialInfo.ExecutionCoordinator = _mainEntity.ExecutionCoordinator;
+                if(_executionState == ExecutionState.PrepareToItemExecution)
+                {
+                    var processInitialInfo = new ProcessInitialInfo();
+                    processInitialInfo.CompiledFunctionBody = executedTask.Operator.CompiledFunctionBody;
+                    processInitialInfo.LocalContext = _mainEntity.LocalCodeExecutionContext;
+                    processInitialInfo.Metadata = executedTask;
+                    processInitialInfo.Instance = _mainEntity;
+                    processInitialInfo.ExecutionCoordinator = _mainEntity.ExecutionCoordinator;
 
-                var task = _context.CodeExecutor.ExecuteAsync(Logger, processInitialInfo);
+                    _task = _context.CodeExecutor.ExecuteAsync(Logger, processInitialInfo);
 
-                task.Wait();
+                    _executionState = ExecutionState.WaitingForFinishItemExecution;
+                }
 
-                tasksPlanFrame.CurrentPosition++;
+                if(_executionState == ExecutionState.WaitingForFinishItemExecution)
+                {
+                    _task.Wait();
+
+                    _executionState = ExecutionState.FinishItemExecution;
+                }                
+
+                if(_executionState == ExecutionState.FinishItemExecution)
+                {
+                    tasksPlanFrame.CurrentPosition++;
+
+                    _executionState = ExecutionState.PrepareToItemExecution;
+                }
 
                 return true;
             }

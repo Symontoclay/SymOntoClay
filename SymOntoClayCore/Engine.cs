@@ -111,10 +111,7 @@ namespace SymOntoClay.Core
                     throw new ObjectDisposedException(null);
                 }
 
-#if IMAGINE_WORKING
-#else
-                throw new NotImplementedException("F8B0FEF1-C39D-469C-A8CA-BA94CD1C3EF0");
-#endif
+                _context.TasksExecutor.BeginStarting();
             }
         }
 

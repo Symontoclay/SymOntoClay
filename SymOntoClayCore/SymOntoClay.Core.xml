@@ -9917,6 +9917,9 @@
         <member name="M:SymOntoClay.Core.Internal.TasksExecution.BuiltPlanItem.SymOntoClay#Common#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksExecutorComponent.OnDisposed">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.TasksExecution.TasksPlan.EmptyPlan">
             <summary>
             Represents empty plan.
@@ -10163,6 +10166,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlannerGlobalContext.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.TasksExecution.TasksPlanRunner.OnDisposed">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Visitors.ContainsNullValueLogicalVisitor.VisitRuleInstance(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">

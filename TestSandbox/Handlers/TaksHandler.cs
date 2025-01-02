@@ -85,7 +85,7 @@ namespace TestSandbox.Handlers
 
             //tasksPlanRunner.Run(plan);
 
-            _logger.Info("EC6E70E3-294E-4492-8B7D-2F137D36628C", "|-|-|-|-|-|-|-|-|-|-|-|-|");
+            _logger.Info("6FDE9DEF-C0F2-4500-BAD5-6F3FD56A3EF9", "|-|-|-|-|-|-|-|-|-|-|-|-|");
 
             Thread.Sleep(5000);
 

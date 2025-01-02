@@ -24,6 +24,8 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         private readonly AppInstance _mainEntity;
         private readonly ITasksStorage _tasksStorage;
 
+        public bool HasRootTasks => GetRootTasks().Count > 0;
+
         public TasksPlan BuildPlan()
         {
             var rootTasks = GetRootTasks();

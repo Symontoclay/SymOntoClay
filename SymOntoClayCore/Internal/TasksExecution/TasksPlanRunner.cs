@@ -129,5 +129,13 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
             return frame;
         }
+
+        /// <inheritdoc/>
+        protected override void OnDisposed()
+        {
+            _activeObject.Dispose();
+
+            base.OnDisposed();
+        }
     }
 }

@@ -429,6 +429,38 @@ namespace SymOntoClay.Monitor.Internal
             }
         }
 
+        bool IMonitorFeatures.EnableBuildPlan
+        {
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableBuildPlan;
+            }
+        }
+
+        bool IMonitorFeatures.EnablePrimitiveTask
+        {
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnablePrimitiveTask;
+            }
+        }
+
+        bool IMonitorFeatures.EnablePlanItem
+        {
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnablePlanItem;
+            }
+        }
+
+        bool IMonitorFeatures.EnableLeaveTasksExecutor
+        {
+            get
+            {
+                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableLeaveTasksExecutor;
+            }
+        }
+
         bool IMonitorFeatures.EnableOutput
         {
             get
@@ -549,6 +581,10 @@ namespace SymOntoClay.Monitor.Internal
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.IsEnabledAnyConditionalTriggerFeature)} = {monitorFeatures.IsEnabledAnyConditionalTriggerFeature}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableActivateIdleAction)} = {monitorFeatures.EnableActivateIdleAction}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableTasks)} = {monitorFeatures.EnableTasks}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableBuildPlan)} = {monitorFeatures.EnableBuildPlan}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnablePrimitiveTask)} = {monitorFeatures.EnablePrimitiveTask}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnablePlanItem)} = {monitorFeatures.EnablePlanItem}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableLeaveTasksExecutor)} = {monitorFeatures.EnableLeaveTasksExecutor}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableOutput)} = {monitorFeatures.EnableOutput}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableTrace)} = {monitorFeatures.EnableTrace}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableDebug)} = {monitorFeatures.EnableDebug}");

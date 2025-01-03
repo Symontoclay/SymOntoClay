@@ -3150,24 +3150,24 @@ namespace SymOntoClay.Monitor.Internal
             ProcessMessage(messageInfo);
         }
 
-        private static readonly object _taskLockObj = new object();
+        private static readonly object _threadTaskLockObj = new object();
 
-        private static ulong _currentTaskId;
-        private static ulong _currentTasksCount;
+        private static ulong _currentThreadTaskId;
+        private static ulong _currentThreadTasksCount;
 
-        private static (ulong TaskId, ulong TasksCount) IncreaseTasksCount()
+        private static (ulong TaskId, ulong TasksCount) IncreaseThreadTasksCount()
         {
-            lock (_taskLockObj)
+            lock (_threadTaskLockObj)
             {
-                return (++_currentTaskId, ++_currentTasksCount);
+                return (++_currentThreadTaskId, ++_currentThreadTasksCount);
             }
         }
 
-        private static ulong DecreaseTasksCount()
+        private static ulong DecreaseThreadTasksCount()
         {
-            lock (_taskLockObj)
+            lock (_threadTaskLockObj)
             {
-                return --_currentTasksCount;
+                return --_currentThreadTasksCount;
             }
         }
 
@@ -3190,7 +3190,7 @@ namespace SymOntoClay.Monitor.Internal
                 return 0u;
             }
 
-            var tasksCountResult = IncreaseTasksCount();
+            var tasksCountResult = IncreaseThreadTasksCount();
 
 #if DEBUG
             //_globalLogger.Info($"tasksCountResult = {tasksCountResult}");
@@ -3265,7 +3265,7 @@ namespace SymOntoClay.Monitor.Internal
                 return;
             }
 
-            var tasksCount = DecreaseTasksCount();
+            var tasksCount = DecreaseThreadTasksCount();
 
 #if DEBUG
             //_globalLogger.Info($"tasksCount = {tasksCount}");
@@ -3337,7 +3337,49 @@ namespace SymOntoClay.Monitor.Internal
                 return;
             }
 
-            d
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            var messageInfo = new StartBuildPlanMessage
+            {
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
+
+#if DEBUG
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
@@ -3359,7 +3401,61 @@ namespace SymOntoClay.Monitor.Internal
                 return;
             }
 
-            d
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            var messageInfo = new StopBuildPlanMessage
+            {
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
+
+#if DEBUG
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+            ProcessMessage(messageInfo);
+        }
+
+        private static readonly object _primitiveTaskLockObj = new object();
+
+        private static ulong _currentPrimitiveTaskId;
+
+        private static ulong GetNewPrimitiveTaskId()
+        {
+            lock (_primitiveTaskLockObj)
+            {
+                return ++_currentPrimitiveTaskId;
+            } 
         }
 
         /// <inheritdoc/>
@@ -3378,10 +3474,61 @@ namespace SymOntoClay.Monitor.Internal
 
             if (!_features.EnablePrimitiveTask)
             {
-                return;
+                return 0u;
             }
 
-            d
+            var taskId = GetNewPrimitiveTaskId();
+
+#if DEBUG
+            _globalLogger.Info($"taskId = {taskId}");
+#endif
+
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            var messageInfo = new StartPrimitiveTaskMessage
+            {
+                TaskId = taskId,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
+
+#if DEBUG
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+            ProcessMessage(messageInfo);
+
+            return taskId;
         }
 
         /// <inheritdoc/>
@@ -3404,7 +3551,50 @@ namespace SymOntoClay.Monitor.Internal
                 return;
             }
 
-            d
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            var messageInfo = new StopPrimitiveTaskMessage
+            {
+                TaskId = taskId,
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
+
+#if DEBUG
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>
@@ -3492,7 +3682,49 @@ namespace SymOntoClay.Monitor.Internal
                 return;
             }
 
-            d
+            var messageNumber = _messageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"messageNumber = {messageNumber}");
+#endif
+
+            var globalMessageNumber = _globalMessageNumberGenerator.GetMessageNumber();
+
+#if DEBUG
+            //_globalLogger.Info($"globalMessageNumber = {globalMessageNumber}");
+#endif
+
+            var classFullName = string.Empty;
+
+            if (_context.EnableFullCallInfo)
+            {
+                var callInfo = DiagnosticsHelper.GetCallInfo();
+
+                classFullName = callInfo.ClassFullName;
+                memberName = callInfo.MethodName;
+            }
+
+            var now = DateTime.Now;
+
+            var messageInfo = new LeaveTasksExecutorMessage
+            {
+                DateTimeStamp = now,
+                NodeId = _nodeId,
+                ThreadId = _threadId,
+                GlobalMessageNumber = globalMessageNumber,
+                MessageNumber = messageNumber,
+                MessagePointId = messagePointId,
+                ClassFullName = classFullName,
+                MemberName = memberName,
+                SourceFilePath = sourceFilePath,
+                SourceLineNumber = sourceLineNumber
+            };
+
+#if DEBUG
+            //_globalLogger.Info($"messageInfo = {messageInfo}");
+#endif
+
+            ProcessMessage(messageInfo);
         }
 
         /// <inheritdoc/>

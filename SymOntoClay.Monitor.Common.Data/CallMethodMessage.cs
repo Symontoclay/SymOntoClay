@@ -40,7 +40,7 @@ namespace SymOntoClay.Monitor.Common.Data
         public MonitoredHumanizedLabel MethodLabel { get; set; }
         public string AltMethodName { get; set; }
         public List<MonitoredHumanizedLabel> ChainOfProcessInfo { get; set; }
-        public bool IsSynk { get; set; }
+        public bool IsSync { get; set; }
 
         /// <inheritdoc/>
         protected override string PropertiesToString(uint n)
@@ -52,7 +52,7 @@ namespace SymOntoClay.Monitor.Common.Data
             sb.PrintObjProp(n, nameof(MethodLabel), MethodLabel);
             sb.AppendLine($"{spaces}{nameof(AltMethodName)} = {AltMethodName}");
             sb.PrintObjListProp(n, nameof(ChainOfProcessInfo), ChainOfProcessInfo);
-            sb.AppendLine($"{spaces}{nameof(IsSynk)} = {IsSynk}");
+            sb.AppendLine($"{spaces}{nameof(IsSync)} = {IsSync}");
 
             sb.Append(base.PropertiesToString(n));
 

@@ -157,7 +157,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         private void EmitOnAddingFactForNewStorage(IMonitorLogger logger, ILogicalStorage storage)
         {
             ThreadTask.Run(() => {
-                var taskId = logger.StartTask("6EA7602B-F2EA-4204-B747-886EB25161E7");
+                var taskId = logger.StartThreadTask("6EA7602B-F2EA-4204-B747-886EB25161E7");
 
                 try
                 {
@@ -173,7 +173,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                     logger.Error("5505F9AC-F874-4843-91D6-9CF97045326D", e);
                 }
 
-                logger.StopTask("A1CE76A8-4CD5-49E2-90A8-D43FA04F8AD4", taskId);
+                logger.StopThreadTask("A1CE76A8-4CD5-49E2-90A8-D43FA04F8AD4", taskId);
             }, _mainStorageContext.AsyncEventsThreadPool, _mainStorageContext.GetCancellationToken());
         }
 
@@ -182,7 +182,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             if(OnAddingFact != null)
             {
                 ThreadTask.Run(() => {
-                    var taskId = logger.StartTask("612DB280-7EF8-4035-B6A5-229440E96F55");
+                    var taskId = logger.StartThreadTask("612DB280-7EF8-4035-B6A5-229440E96F55");
 
                     try
                     {
@@ -193,7 +193,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                         logger.Error("932FA4A1-3216-4B1F-8B5E-DB7EB08A42D4", e);
                     }
 
-                    logger.StopTask("76D7022F-2677-43F7-A1EC-519E00C60B25", taskId);
+                    logger.StopThreadTask("76D7022F-2677-43F7-A1EC-519E00C60B25", taskId);
                 }, _mainStorageContext.AsyncEventsThreadPool, _mainStorageContext.GetCancellationToken());
             }
 

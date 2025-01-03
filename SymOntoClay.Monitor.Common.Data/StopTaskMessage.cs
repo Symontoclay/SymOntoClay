@@ -29,6 +29,6 @@ namespace SymOntoClay.Monitor.Common.Data
     public class StopTaskMessage: BaseTaskMessage
     {
         /// <inheritdoc/>
-        public override KindOfMessage KindOfMessage => KindOfMessage.StopTask;
+        public override KindOfMessage KindOfMessage => KindOfMessage.StopThreadTask;
     }
 }

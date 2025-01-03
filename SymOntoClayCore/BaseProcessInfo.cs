@@ -287,7 +287,7 @@ namespace SymOntoClay.Core
             if(onFinishHandlersList.Any())
             {
                 ThreadTask.Run(() => {
-                    var taskId = logger.StartTask("F0A455C0-A6EB-4BAA-8D2A-0EE1DC112590");
+                    var taskId = logger.StartThreadTask("F0A455C0-A6EB-4BAA-8D2A-0EE1DC112590");
 
                     try
                     {
@@ -301,7 +301,7 @@ namespace SymOntoClay.Core
                         logger?.Error("C264171B-3DC3-446D-A051-26475CFDDC8D", e);
                     }
 
-                    logger.StopTask("AD80EB54-A648-4B05-9D4D-19933DA966C4", taskId);
+                    logger.StopThreadTask("AD80EB54-A648-4B05-9D4D-19933DA966C4", taskId);
                 }, _threadPool, _cancellationToken);
             }
 
@@ -325,7 +325,7 @@ namespace SymOntoClay.Core
             if (onCompleteHandlersList.Any())
             {
                 ThreadTask.Run(() => {
-                    var taskId = logger.StartTask("DD76FAB5-8781-4979-B885-6D3F73EA42BD");
+                    var taskId = logger.StartThreadTask("DD76FAB5-8781-4979-B885-6D3F73EA42BD");
 
                     try
                     {
@@ -339,7 +339,7 @@ namespace SymOntoClay.Core
                         logger?.Error("6D0C6064-16A3-4068-8CB2-9E9CBADF4A1F", e);
                     }
 
-                    logger.StopTask("64D55DB6-79B8-4999-B0A8-C8C4C68CE349", taskId);
+                    logger.StopThreadTask("64D55DB6-79B8-4999-B0A8-C8C4C68CE349", taskId);
                 }, _threadPool, _cancellationToken);
             }
 
@@ -362,7 +362,7 @@ namespace SymOntoClay.Core
             if (onWeakCanceledHandlersList.Any())
             {
                 ThreadTask.Run(() => {
-                    var taskId = logger.StartTask("F571FF35-20B0-4D29-A5C4-9D33ACF0B280");
+                    var taskId = logger.StartThreadTask("F571FF35-20B0-4D29-A5C4-9D33ACF0B280");
 
                     try
                     {
@@ -376,7 +376,7 @@ namespace SymOntoClay.Core
                         logger?.Error("84FFE90C-057B-4EFB-8DC5-34EB3B26C7B3", e);
                     }
 
-                    logger.StopTask("DBDEEE39-6612-445A-AD63-F42C5613078E", taskId);
+                    logger.StopThreadTask("DBDEEE39-6612-445A-AD63-F42C5613078E", taskId);
                 }, _threadPool, _cancellationToken);
             }
 

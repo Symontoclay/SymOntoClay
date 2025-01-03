@@ -111,7 +111,7 @@ namespace SymOntoClay.SoundBuses
                     var logger = receiver.Logger;
 
                     ThreadTask.Run(() => {
-                        var taskId = logger.StartTask("A513EA05-6D7D-4EAD-A9CE-EDC57E09B067");
+                        var taskId = logger.StartThreadTask("A513EA05-6D7D-4EAD-A9CE-EDC57E09B067");
 
                         try
                         {
@@ -122,7 +122,7 @@ namespace SymOntoClay.SoundBuses
                             logger.Error("A05B5697-3825-42D3-9CAD-3C07A8AE4BC0", e);
                         }
 
-                        logger.StopTask("C9EA86C3-305A-4B5C-8A44-645155B32619", taskId);
+                        logger.StopThreadTask("C9EA86C3-305A-4B5C-8A44-645155B32619", taskId);
                     }, _threadPool, _linkedCancellationTokenSource.Token);
                 }
             }
@@ -151,7 +151,7 @@ namespace SymOntoClay.SoundBuses
                     var logger = receiver.Logger;
 
                     ThreadTask.Run(() => {
-                        var taskId = logger.StartTask("3E6AB919-D75A-4A56-8C8A-D6F0C12C1B7E");
+                        var taskId = logger.StartThreadTask("3E6AB919-D75A-4A56-8C8A-D6F0C12C1B7E");
 
                         try
                         {
@@ -162,7 +162,7 @@ namespace SymOntoClay.SoundBuses
                             logger.Error("40199609-AAAF-4DFB-A694-14295A8B6EC0", e);
                         }
 
-                        logger.StopTask("FAB648D7-58F3-4986-A7A3-8C8BCC6D6DCB", taskId);
+                        logger.StopThreadTask("FAB648D7-58F3-4986-A7A3-8C8BCC6D6DCB", taskId);
                     }, _threadPool, _linkedCancellationTokenSource.Token);
                 }
             }

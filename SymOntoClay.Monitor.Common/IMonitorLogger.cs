@@ -49,20 +49,20 @@ namespace SymOntoClay.Monitor.Common
         string CreateThreadId();
 
         string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
-            bool isSynk,
+            bool isSync,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);
 
         string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
             List<MonitoredHumanizedLabel> chainOfProcessInfo,
-            bool isSynk,
+            bool isSync,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);
 
         string CallMethod(string messagePointId, string methodName,
-            bool isSynk,
+            bool isSync,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);
@@ -296,12 +296,12 @@ namespace SymOntoClay.Monitor.Common
            [CallerFilePath] string sourceFilePath = "",
            [CallerLineNumber] int sourceLineNumber = 0);
 
-        ulong StartTask(string messagePointId,
+        ulong StartThreadTask(string messagePointId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);
 
-        void StopTask(string messagePointId, ulong taskId,
+        void StopThreadTask(string messagePointId, ulong taskId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);

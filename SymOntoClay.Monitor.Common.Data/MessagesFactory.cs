@@ -176,10 +176,10 @@ namespace SymOntoClay.Monitor.Common.Data
                 case KindOfMessage.PutFactForRemovingFromLogicalStorage:
                     return JsonConvert.DeserializeObject<PutFactForRemovingFromLogicalStorageMessage>(content);
 
-                case KindOfMessage.StartTask:
+                case KindOfMessage.StartThreadTask:
                     return JsonConvert.DeserializeObject<StartTaskMessage>(content);
 
-                case KindOfMessage.StopTask:
+                case KindOfMessage.StopThreadTask:
                     return JsonConvert.DeserializeObject<StopTaskMessage>(content);
 
                 case KindOfMessage.Output:

@@ -71,7 +71,7 @@ namespace SymOntoClay.BaseTestLib.Monitoring
 
         /// <inheritdoc/>
         public string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
-            bool isSynk,
+            bool isSync,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
@@ -82,7 +82,7 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         /// <inheritdoc/>
         public string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
             List<MonitoredHumanizedLabel> chainOfProcessInfo,
-            bool isSynk,
+            bool isSync,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
@@ -92,7 +92,7 @@ namespace SymOntoClay.BaseTestLib.Monitoring
 
         /// <inheritdoc/>
         public string CallMethod(string messagePointId, string methodName,
-            bool isSynk,
+            bool isSync,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
@@ -467,7 +467,7 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         }
 
         /// <inheritdoc/>
-        public ulong StartTask(string messagePointId,
+        public ulong StartThreadTask(string messagePointId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
@@ -476,7 +476,7 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         }
 
         /// <inheritdoc/>
-        public void StopTask(string messagePointId, ulong taskId,
+        public void StopThreadTask(string messagePointId, ulong taskId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)

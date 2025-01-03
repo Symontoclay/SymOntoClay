@@ -76,7 +76,7 @@ namespace SymOntoClay.Monitor.NLog
         /// <inheritdoc/>
         [MethodForLoggingSupport]
         public string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
-            bool isSynk,
+            bool isSync,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
@@ -88,7 +88,7 @@ namespace SymOntoClay.Monitor.NLog
         [MethodForLoggingSupport]
         public string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
             List<MonitoredHumanizedLabel> chainOfProcessInfo,
-            bool isSynk,
+            bool isSync,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
@@ -99,7 +99,7 @@ namespace SymOntoClay.Monitor.NLog
         /// <inheritdoc/>
         [MethodForLoggingSupport]
         public string CallMethod(string messagePointId, string methodName,
-            bool isSynk,
+            bool isSync,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
@@ -563,7 +563,7 @@ namespace SymOntoClay.Monitor.NLog
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public ulong StartTask(string messagePointId,
+        public ulong StartThreadTask(string messagePointId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
@@ -573,7 +573,7 @@ namespace SymOntoClay.Monitor.NLog
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void StopTask(string messagePointId, ulong taskId,
+        public void StopThreadTask(string messagePointId, ulong taskId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)

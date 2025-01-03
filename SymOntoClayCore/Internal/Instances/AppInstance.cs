@@ -185,7 +185,7 @@ namespace SymOntoClay.Core.Internal.Instances
         public void ActivateState(IMonitorLogger logger, StateDef state, List<Var> varList)
         {
             ThreadTask.Run(() => {
-                var taskId = logger.StartTask("63ED542C-9E36-4AD9-97E7-58A613A604D3");
+                var taskId = logger.StartThreadTask("63ED542C-9E36-4AD9-97E7-58A613A604D3");
 
                 try
                 {
@@ -238,7 +238,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     logger.Error("847C55BE-261F-401D-A398-B6C81C1E0143", e);
                 }
 
-                logger.StopTask("124C8157-0A91-4D4B-AE79-BAE473C36972", taskId);
+                logger.StopThreadTask("124C8157-0A91-4D4B-AE79-BAE473C36972", taskId);
             }, _context.TriggersThreadPool, _context.GetCancellationToken());
         }
 

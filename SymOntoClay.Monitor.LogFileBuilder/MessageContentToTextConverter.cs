@@ -186,10 +186,10 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 case KindOfMessage.PutFactForRemovingFromLogicalStorage:
                     return GetPutFactForRemovingFromLogicalStorage(message as PutFactForRemovingFromLogicalStorageMessage);
 
-                case KindOfMessage.StartTask:
+                case KindOfMessage.StartThreadTask:
                     return GetStartTask(message as StartTaskMessage);
 
-                case KindOfMessage.StopTask:
+                case KindOfMessage.StopThreadTask:
                     return GetStopTask(message as StopTaskMessage);
 
                 case KindOfMessage.Output:
@@ -420,7 +420,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
             labelsStrList.Add(GetMonitoredHumanizedLabel(message.MethodLabel, message.AltMethodName));
 
-            return $"<{message.CallMethodId}> [{(message.IsSynk ? "sync" : "async")}] {string.Join(" -> ", labelsStrList)}";
+            return $"<{message.CallMethodId}> [{(message.IsSync ? "sync" : "async")}] {string.Join(" -> ", labelsStrList)}";
         }
 
         private string GetParameter(ParameterMessage message)

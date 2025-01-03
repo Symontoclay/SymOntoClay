@@ -29,6 +29,6 @@ namespace SymOntoClay.Monitor.Common.Data
     public class StartTaskMessage : BaseTaskMessage
     {
         /// <inheritdoc/>
-        public override KindOfMessage KindOfMessage => KindOfMessage.StartTask;
+        public override KindOfMessage KindOfMessage => KindOfMessage.StartThreadTask;
     }
 }

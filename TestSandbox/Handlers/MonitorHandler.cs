@@ -100,11 +100,11 @@ namespace TestSandbox.Handlers
 
             var npcId = "#020ED339-6313-459A-900D-92F809CEBDC5";
             //---------------
-            var nonitorNode = monitor.CreateMotitorNode("133776E5-AAAA-4896-AB6E-02C2902A5911", npcId);
+            var monitorNode = monitor.CreateMotitorNode("133776E5-AAAA-4896-AB6E-02C2902A5911", npcId);
 
-            var threadLogger = nonitorNode.CreateThreadLogger("8507C879-EE50-4E83-B72B-FDE9662D92BC", "f5f7ed91-77e5-45f5-88f5-b7530d111bd5");
+            var threadLogger = monitorNode.CreateThreadLogger("8507C879-EE50-4E83-B72B-FDE9662D92BC", "f5f7ed91-77e5-45f5-88f5-b7530d111bd5");
 
-            var taskId = threadLogger.StartTask("F1DEBD17-F691-4CBD-AD6F-6D845960E252");
+            var taskId = threadLogger.StartThreadTask("F1DEBD17-F691-4CBD-AD6F-6D845960E252");
 
             _globalLogger.Info($"taskId = {taskId}");
 
@@ -112,9 +112,9 @@ namespace TestSandbox.Handlers
 
             cancellationTokenSource.Cancel();
 
-            threadLogger.StopTask("B5E884FD-D8AD-414C-A6EE-BA971B248240", taskId);
+            threadLogger.StopThreadTask("B5E884FD-D8AD-414C-A6EE-BA971B248240", taskId);
 
-            //var taskId = logger.StartTask();
+            //var taskId = logger.StartThreadTask();
             //logger.StopTask(, taskId);
             //#if DEBUG
             //            logger.Info(, $" = {?.GetInvocationList().Length}");

@@ -121,7 +121,7 @@ namespace SymOntoClay.Monitor.Internal
         /// <inheritdoc/>
         [MethodForLoggingSupport]
         public string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
-            bool isSynk,
+            bool isSync,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
@@ -130,7 +130,7 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"messagePointId = {messagePointId}");
             //_globalLogger.Info($"methodIdentifier = {methodIdentifier.ToLabel()}");
             //_globalLogger.Info($"memberName = {memberName}");
-            //_globalLogger.Info($"isSynk = {isSynk}");
+            //_globalLogger.Info($"isSync = {isSync}");
             //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
             //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
@@ -142,14 +142,14 @@ namespace SymOntoClay.Monitor.Internal
                 return callMethodId;
             }
 
-            return NCallMethod(messagePointId, methodIdentifier, string.Empty, null, isSynk, callMethodId, memberName, sourceFilePath, sourceLineNumber);
+            return NCallMethod(messagePointId, methodIdentifier, string.Empty, null, isSync, callMethodId, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
         public string CallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier,
             List<MonitoredHumanizedLabel> chainOfProcessInfo,
-            bool isSynk,
+            bool isSync,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
@@ -158,7 +158,7 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"messagePointId = {messagePointId}");
             //_globalLogger.Info($"methodIdentifier = {methodIdentifier.ToLabel()}");
             //_globalLogger.Info($"memberName = {memberName}");
-            //_globalLogger.Info($"isSynk = {isSynk}");
+            //_globalLogger.Info($"isSync = {isSync}");
             //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
             //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
@@ -170,13 +170,13 @@ namespace SymOntoClay.Monitor.Internal
                 return callMethodId;
             }
 
-            return NCallMethod(messagePointId, methodIdentifier, string.Empty, chainOfProcessInfo, isSynk, callMethodId, memberName, sourceFilePath, sourceLineNumber);
+            return NCallMethod(messagePointId, methodIdentifier, string.Empty, chainOfProcessInfo, isSync, callMethodId, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
         public string CallMethod(string messagePointId, string methodName,
-            bool isSynk,
+            bool isSync,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
@@ -185,7 +185,7 @@ namespace SymOntoClay.Monitor.Internal
             //_globalLogger.Info($"messagePointId = {messagePointId}");
             //_globalLogger.Info($"methodName = {methodName}");
             //_globalLogger.Info($"memberName = {memberName}");
-            //_globalLogger.Info($"isSynk = {isSynk}");
+            //_globalLogger.Info($"isSync = {isSync}");
             //_globalLogger.Info($"sourceFilePath = {sourceFilePath}");
             //_globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
@@ -197,13 +197,13 @@ namespace SymOntoClay.Monitor.Internal
                 return callMethodId;
             }
 
-            return NCallMethod(messagePointId, null, methodName, null, isSynk, callMethodId, memberName, sourceFilePath, sourceLineNumber);
+            return NCallMethod(messagePointId, null, methodName, null, isSync, callMethodId, memberName, sourceFilePath, sourceLineNumber);
         }
 
         [MethodForLoggingSupport]
         private string NCallMethod(string messagePointId, IMonitoredMethodIdentifier methodIdentifier, string altMethodName,
             List<MonitoredHumanizedLabel> chainOfProcessInfo,
-            bool isSynk,
+            bool isSync,
             string callMethodId,
             string memberName,
             string sourceFilePath,
@@ -247,7 +247,7 @@ namespace SymOntoClay.Monitor.Internal
                 ClassFullName = classFullName,
                 CallMethodId = callMethodId,
                 MemberName = memberName,
-                IsSynk = isSynk,
+                IsSync = isSync,
                 SourceFilePath = sourceFilePath,
                 SourceLineNumber = sourceLineNumber
             };
@@ -3173,7 +3173,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public ulong StartTask(string messagePointId,
+        public ulong StartThreadTask(string messagePointId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
@@ -3247,7 +3247,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void StopTask(string messagePointId, ulong taskId,
+        public void StopThreadTask(string messagePointId, ulong taskId,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)

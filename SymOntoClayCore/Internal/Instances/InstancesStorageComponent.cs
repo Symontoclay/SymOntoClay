@@ -120,7 +120,7 @@ namespace SymOntoClay.Core.Internal.Instances
             instanceInfo.Init(logger);
 
             ThreadTask.Run(() => {
-                var taskId = logger.StartTask("B38CE583-4AE0-42ED-9043-59E038AF094E");
+                var taskId = logger.StartThreadTask("B38CE583-4AE0-42ED-9043-59E038AF094E");
 
                 try
                 {
@@ -133,14 +133,14 @@ namespace SymOntoClay.Core.Internal.Instances
                     logger.Error("0E28EFF2-FA4B-46F2-A1B5-7CDF5C9B4862", e);
                 }
 
-                logger.StopTask("54E83ADE-6CC4-4655-A1D8-68FDA40DBB22", taskId);
+                logger.StopThreadTask("54E83ADE-6CC4-4655-A1D8-68FDA40DBB22", taskId);
             }, _context.AsyncEventsThreadPool, _context.GetCancellationToken());
         }
 
         private void DispatchOnIdle()
         {
             ThreadTask.Run(() => {
-                var taskId = Logger.StartTask("F3A7C7F7-1D36-4321-9467-B5E075A04E6F");
+                var taskId = Logger.StartThreadTask("F3A7C7F7-1D36-4321-9467-B5E075A04E6F");
 
                 try
                 {
@@ -151,7 +151,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     Error("1617E55E-58BC-4B63-9418-D5967AD99678", e);
                 }
 
-                Logger.StopTask("97C0FBD9-7D7B-4E6B-BEA5-1D6D37FE2005", taskId);
+                Logger.StopThreadTask("97C0FBD9-7D7B-4E6B-BEA5-1D6D37FE2005", taskId);
             }, _context.AsyncEventsThreadPool, _context.GetCancellationToken());
         }
 
@@ -279,14 +279,14 @@ namespace SymOntoClay.Core.Internal.Instances
 
                     ThreadTask.Run(() =>
                     {
-                        var taskId = logger.StartTask("EDE8166B-FDC9-4DDB-8D5F-76CF87E61A4C");
+                        var taskId = logger.StartThreadTask("EDE8166B-FDC9-4DDB-8D5F-76CF87E61A4C");
 
                         foreach (var concurentProcessInfo in concurentProcessesInfoList)
                         {
                             concurentProcessInfo.Cancel(logger, "74AFBE25-AE89-4971-BC06-716048826194", ReasonOfChangeStatus.ByConcurrentProcess, new Changer(KindOfChanger.ProcessInfo, processInfo.Id), callMethodId);
                         }
 
-                        logger.StopTask("594DAE42-0F2E-42AC-8DA4-0F406DCC227A", taskId);
+                        logger.StopThreadTask("594DAE42-0F2E-42AC-8DA4-0F406DCC227A", taskId);
                     }, _context.AsyncEventsThreadPool, _context.GetCancellationToken());
 
                     logger.EndHostMethodStarting("A919AF23-C7E3-4678-97AA-1E2E596B9EE1", callMethodId);

@@ -750,12 +750,12 @@ namespace SymOntoClay.Monitor
                 _messageProcessor.ProcessMessage(messageInfo, _fileCache, _baseMonitorSettings.EnableRemoteConnection);
             }
 
-            var nodeSettings = GetMotitorNodeSettings(nodeId);
+            var nodeSettings = GetMonitorNodeSettings(nodeId);
 
             return new MonitorNode(nodeId, nodeSettings, _monitorContext);
         }
 
-        private BaseMonitorSettings GetMotitorNodeSettings(string nodeId)
+        private BaseMonitorSettings GetMonitorNodeSettings(string nodeId)
         {
             if (_nodesSettings.ContainsKey(nodeId))
             {
@@ -1278,6 +1278,66 @@ namespace SymOntoClay.Monitor
             [CallerLineNumber] int sourceLineNumber = 0)
         {
             _monitorLoggerImpl.StopThreadTask(messagePointId, taskId, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void StartBuildPlan(string messagePointId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.StartBuildPlan(messagePointId, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void StopBuildPlan(string messagePointId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.StopBuildPlan(messagePointId, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public ulong StartPrimitiveTask(string messagePointId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            return _monitorLoggerImpl.StartPrimitiveTask(messagePointId, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void StopPrimitiveTask(string messagePointId, ulong taskId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.StopPrimitiveTask(messagePointId, taskId, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void PlanItem(string messagePointId, string humanizedStr,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.PlanItem(messagePointId, humanizedStr, memberName, sourceFilePath, sourceLineNumber);
+        }
+
+        /// <inheritdoc/>
+        [MethodForLoggingSupport]
+        public void LeaveTasksExecutor(string messagePointId,
+            [CallerMemberName] string memberName = "",
+            [CallerFilePath] string sourceFilePath = "",
+            [CallerLineNumber] int sourceLineNumber = 0)
+        {
+            _monitorLoggerImpl.LeaveTasksExecutor(messagePointId, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>

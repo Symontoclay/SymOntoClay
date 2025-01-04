@@ -622,7 +622,7 @@ namespace SymOntoClay.Monitor.NLog
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void PlanItem(string messagePointId, string humanizedStr,
+        public void PlanFrame(string messagePointId, string humanizedStr,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)

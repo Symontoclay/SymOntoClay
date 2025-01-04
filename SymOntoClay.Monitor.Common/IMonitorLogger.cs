@@ -326,7 +326,7 @@ namespace SymOntoClay.Monitor.Common
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);
 
-        void PlanItem(string messagePointId, string humanizedStr,
+        void PlanFrame(string messagePointId, string humanizedStr,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);

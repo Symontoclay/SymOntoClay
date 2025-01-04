@@ -158,7 +158,7 @@ namespace SymOntoClay.Monitor
                     EnableTasks = true,
                     EnableBuildPlan = true,
                     EnablePrimitiveTask = true,
-                    EnablePlanItem = true,
+                    EnablePlanFrame = true,
                     EnableLeaveTasksExecutor = true,
 
                     EnableOutput = true,
@@ -550,11 +550,11 @@ namespace SymOntoClay.Monitor
             }
         }
 
-        bool IMonitorFeatures.EnablePlanItem
+        bool IMonitorFeatures.EnablePlanFrame
         {
             get
             {
-                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnablePlanItem;
+                return _TopSysEnable && _baseMonitorSettings.Enable && _features.EnablePlanFrame;
             }
         }
 
@@ -688,7 +688,7 @@ namespace SymOntoClay.Monitor
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableTasks)} = {monitorFeatures.EnableTasks}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableBuildPlan)} = {monitorFeatures.EnableBuildPlan}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnablePrimitiveTask)} = {monitorFeatures.EnablePrimitiveTask}");
-            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnablePlanItem)} = {monitorFeatures.EnablePlanItem}");
+            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnablePlanFrame)} = {monitorFeatures.EnablePlanFrame}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableLeaveTasksExecutor)} = {monitorFeatures.EnableLeaveTasksExecutor}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableOutput)} = {monitorFeatures.EnableOutput}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableTrace)} = {monitorFeatures.EnableTrace}");
@@ -1362,12 +1362,12 @@ namespace SymOntoClay.Monitor
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void PlanItem(string messagePointId, string humanizedStr,
+        public void PlanFrame(string messagePointId, string humanizedStr,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
         {
-            _monitorLoggerImpl.PlanItem(messagePointId, humanizedStr, memberName, sourceFilePath, sourceLineNumber);
+            _monitorLoggerImpl.PlanFrame(messagePointId, humanizedStr, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>

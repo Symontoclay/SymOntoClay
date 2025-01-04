@@ -81,7 +81,7 @@ namespace SymOntoClay.Monitor.Common.Data
         StopBuildPlan,
         StartPrimitiveTask,
         StopPrimitiveTask,
-        PlanItem,
+        PlanFrame,
         LeaveTasksExecutor,
         Output,
         Trace,

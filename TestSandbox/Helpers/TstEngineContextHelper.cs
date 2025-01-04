@@ -190,7 +190,7 @@ namespace TestSandbox.Helpers
 
                     EnableBuildPlan = true,
                     EnablePrimitiveTask = true,
-                    EnablePlanItem = true,
+                    EnablePlanFrame = true,
                     EnableLeaveTasksExecutor = true,
 
                     EnableOutput = true,

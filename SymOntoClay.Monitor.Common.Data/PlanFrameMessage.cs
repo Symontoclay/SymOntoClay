@@ -3,10 +3,10 @@ using System.Text;
 
 namespace SymOntoClay.Monitor.Common.Data
 {
-    public class PlanItemMessage : BaseMessage
+    public class PlanFrameMessage : BaseMessage
     {
         /// <inheritdoc/>
-        public override KindOfMessage KindOfMessage => KindOfMessage.PlanItem;
+        public override KindOfMessage KindOfMessage => KindOfMessage.PlanFrame;
 
         public string HumanizedStr { get; set; }
 

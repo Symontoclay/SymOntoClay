@@ -204,8 +204,8 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 case KindOfMessage.StopPrimitiveTask:
                     return GetStopPrimitiveTask(message as StopPrimitiveTaskMessage);
 
-                case KindOfMessage.PlanItem:
-                    return GetPlanItem(message as PlanItemMessage);
+                case KindOfMessage.PlanFrame:
+                    return GetFrame(message as PlanFrameMessage);
 
                 case KindOfMessage.LeaveTasksExecutor:
                     return GetLeaveTasksExecutor(message as LeaveTasksExecutorMessage);
@@ -915,12 +915,12 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            _tasksTime[message.TaskId] = message.DateTimeStamp;
+            _threadTasksTime[message.TaskId] = message.DateTimeStamp;
 
             return $"{message.TaskId} ({message.TasksCount} tasks)";
         }
 
-        private Dictionary<ulong, DateTime> _tasksTime = new Dictionary<ulong, DateTime>();
+        private Dictionary<ulong, DateTime> _threadTasksTime = new Dictionary<ulong, DateTime>();
 
         private string GetStopTask(StopTaskMessage message)
         {
@@ -928,61 +928,65 @@ namespace SymOntoClay.Monitor.LogFileBuilder
             //_globalLogger.Info($"message = {message}");
 #endif
 
-            return $"{message.TaskId} {(_tasksTime.TryGetValue(message.TaskId, out var date) ? message.DateTimeStamp.Subtract(date).ToString() : string.Empty)} ({message.TasksCount} tasks)";
+            return $"{message.TaskId} {(_threadTasksTime.TryGetValue(message.TaskId, out var date) ? message.DateTimeStamp.Subtract(date).ToString() : string.Empty)} ({message.TasksCount} tasks)";
         }
 
         private string GetStartBuildPlan(StartBuildPlanMessage message)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
-            throw new NotImplementedException("CC0A124C-8676-4E91-93F2-9D303105E044");
+            return string.Empty;
         }
 
         private string GetStopBuildPlan(StopBuildPlanMessage message)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
-            throw new NotImplementedException("FE387162-572F-441B-9E41-06F364C56F0D");
+            return string.Empty;
         }
+
+        private Dictionary<ulong, DateTime> _primitiveTasksTime = new Dictionary<ulong, DateTime>();
 
         private string GetStartPrimitiveTask(StartPrimitiveTaskMessage message)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
-            throw new NotImplementedException("5D9982B2-FCF8-4A33-887B-A75B9F33BF6D");
+            _primitiveTasksTime[message.TaskId] = message.DateTimeStamp;
+
+            return message.TaskId.ToString();
         }
 
         private string GetStopPrimitiveTask(StopPrimitiveTaskMessage message)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
-            throw new NotImplementedException("159E9850-084A-488E-9C72-05B472897AF3");
+            return $"{message.TaskId} {(_primitiveTasksTime.TryGetValue(message.TaskId, out var date) ? message.DateTimeStamp.Subtract(date).ToString() : string.Empty)}";
         }
 
-        private string GetPlanItem(PlanItemMessage message)
+        private string GetFrame(PlanFrameMessage message)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
-            throw new NotImplementedException("B0FAC88F-A029-4290-BC85-5CEBD7455115");
+            return $"\n{message.HumanizedStr}\n";
         }
 
         private string GetLeaveTasksExecutor(LeaveTasksExecutorMessage message)
         {
 #if DEBUG
-            _globalLogger.Info($"message = {message}");
+            //_globalLogger.Info($"message = {message}");
 #endif
 
-            throw new NotImplementedException("3AB50566-2D3F-4072-9D8F-9FB8253AFAC3");
+            return string.Empty;
         }
 
         private string GetOutput(OutputMessage message)

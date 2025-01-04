@@ -95,7 +95,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
                 var item = tasksPlanFrameItems[currentPosition];
 
-                Logger.PlanItem("850FC994-E31A-4736-8519-DDDED1F13858", item.ToDbgString());
+                Logger.PlanFrame("850FC994-E31A-4736-8519-DDDED1F13858", tasksPlanFrame.ToDbgString());
 
 #if DEBUG
                 //Info("49A45A6E-0F52-4FD3-9B12-376BCC93D70A", $"item = {item}");

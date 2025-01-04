@@ -70,7 +70,7 @@ namespace SymOntoClay.Monitor.Common
         bool EnableTasks { get; }
         bool EnableBuildPlan { get; }
         bool EnablePrimitiveTask { get; }
-        bool EnablePlanItem { get; }
+        bool EnablePlanFrame { get; }
         bool EnableLeaveTasksExecutor { get; }
 
         bool EnableOutput { get; }

@@ -3599,7 +3599,7 @@ namespace SymOntoClay.Monitor.Internal
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public void PlanItem(string messagePointId, string humanizedStr,
+        public void PlanFrame(string messagePointId, string humanizedStr,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)
@@ -3612,7 +3612,7 @@ namespace SymOntoClay.Monitor.Internal
             _globalLogger.Info($"sourceLineNumber = {sourceLineNumber}");
 #endif
 
-            if (!_features.EnablePlanItem)
+            if (!_features.EnablePlanFrame)
             {
                 return;
             }
@@ -3641,7 +3641,7 @@ namespace SymOntoClay.Monitor.Internal
 
             var now = DateTime.Now;
 
-            var messageInfo = new PlanItemMessage
+            var messageInfo = new PlanFrameMessage
             {
                 HumanizedStr = humanizedStr,
                 DateTimeStamp = now,

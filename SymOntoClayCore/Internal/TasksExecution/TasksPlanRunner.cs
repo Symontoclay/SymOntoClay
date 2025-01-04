@@ -45,7 +45,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 #endif
 
             _tasksPlanFrame = ConvertTasksPlanToFrame(plan);
-
+            
 #if DEBUG
             Info("4C249182-C6F2-45B9-9ECC-1C883681ED67", $"_tasksPlanFrame = {_tasksPlanFrame.ToDbgString()}");
 #endif
@@ -88,10 +88,14 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
                 if(currentPosition >= tasksPlanFrameItems.Count)
                 {
+                    Logger.LeaveTasksExecutor("E6F885F9-5D83-4B4C-BAE2-2ED2D7B9EFAD");
+
                     return false;
                 }
 
                 var item = tasksPlanFrameItems[currentPosition];
+
+                Logger.PlanItem("850FC994-E31A-4736-8519-DDDED1F13858", item.ToDbgString());
 
 #if DEBUG
                 //Info("49A45A6E-0F52-4FD3-9B12-376BCC93D70A", $"item = {item}");
@@ -103,8 +107,12 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                 //Info("8862EF80-9923-43C9-BBBF-B5E61EA42F98", $"executedTask = {executedTask}");
 #endif
 
+                var primitiveTaskId = 0ul;
+
                 if(_executionState == ExecutionState.PrepareToItemExecution)
                 {
+                    primitiveTaskId = Logger.StartPrimitiveTask("CCAF4110-C1C7-4999-9ECB-351F8DBD6DB6");
+
                     var processInitialInfo = new ProcessInitialInfo();
                     processInitialInfo.CompiledFunctionBody = executedTask.Operator.CompiledFunctionBody;
                     processInitialInfo.LocalContext = _mainEntity.LocalCodeExecutionContext;
@@ -121,8 +129,10 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                 {
                     _task.Wait();
 
+                    Logger.StopPrimitiveTask("E9AA3F24-8A81-4F4C-81A6-4FBC3C2CC286", primitiveTaskId);
+
                     _executionState = ExecutionState.FinishItemExecution;
-                }                
+                }
 
                 if(_executionState == ExecutionState.FinishItemExecution)
                 {

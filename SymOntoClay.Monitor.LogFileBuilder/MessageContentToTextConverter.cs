@@ -192,6 +192,24 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 case KindOfMessage.StopThreadTask:
                     return GetStopTask(message as StopTaskMessage);
 
+                case KindOfMessage.StartBuildPlan:
+                    return GetStartBuildPlan(message as StartBuildPlanMessage);
+
+                case KindOfMessage.StopBuildPlan:
+                    return GetStopBuildPlan(message as StopBuildPlanMessage);
+
+                case KindOfMessage.StartPrimitiveTask:
+                    return GetStartPrimitiveTask(message as StartPrimitiveTaskMessage);
+
+                case KindOfMessage.StopPrimitiveTask:
+                    return GetStopPrimitiveTask(message as StopPrimitiveTaskMessage);
+
+                case KindOfMessage.PlanItem:
+                    return GetPlanItem(message as PlanItemMessage);
+
+                case KindOfMessage.LeaveTasksExecutor:
+                    return GetLeaveTasksExecutor(message as LeaveTasksExecutorMessage);
+
                 case KindOfMessage.Output:
                     return GetOutput(message as OutputMessage);
 
@@ -911,6 +929,60 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 #endif
 
             return $"{message.TaskId} {(_tasksTime.TryGetValue(message.TaskId, out var date) ? message.DateTimeStamp.Subtract(date).ToString() : string.Empty)} ({message.TasksCount} tasks)";
+        }
+
+        private string GetStartBuildPlan(StartBuildPlanMessage message)
+        {
+#if DEBUG
+            _globalLogger.Info($"message = {message}");
+#endif
+
+            throw new NotImplementedException("CC0A124C-8676-4E91-93F2-9D303105E044");
+        }
+
+        private string GetStopBuildPlan(StopBuildPlanMessage message)
+        {
+#if DEBUG
+            _globalLogger.Info($"message = {message}");
+#endif
+
+            throw new NotImplementedException("FE387162-572F-441B-9E41-06F364C56F0D");
+        }
+
+        private string GetStartPrimitiveTask(StartPrimitiveTaskMessage message)
+        {
+#if DEBUG
+            _globalLogger.Info($"message = {message}");
+#endif
+
+            throw new NotImplementedException("5D9982B2-FCF8-4A33-887B-A75B9F33BF6D");
+        }
+
+        private string GetStopPrimitiveTask(StopPrimitiveTaskMessage message)
+        {
+#if DEBUG
+            _globalLogger.Info($"message = {message}");
+#endif
+
+            throw new NotImplementedException("159E9850-084A-488E-9C72-05B472897AF3");
+        }
+
+        private string GetPlanItem(PlanItemMessage message)
+        {
+#if DEBUG
+            _globalLogger.Info($"message = {message}");
+#endif
+
+            throw new NotImplementedException("B0FAC88F-A029-4290-BC85-5CEBD7455115");
+        }
+
+        private string GetLeaveTasksExecutor(LeaveTasksExecutorMessage message)
+        {
+#if DEBUG
+            _globalLogger.Info($"message = {message}");
+#endif
+
+            throw new NotImplementedException("3AB50566-2D3F-4072-9D8F-9FB8253AFAC3");
         }
 
         private string GetOutput(OutputMessage message)

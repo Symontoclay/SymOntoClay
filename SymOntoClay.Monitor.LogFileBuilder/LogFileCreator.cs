@@ -122,6 +122,7 @@ namespace SymOntoClay.Monitor.LogFileBuilder
 
 #if DEBUG
                     //_logger.Info($"text = {text}");
+                    _logger.Info($"fileName.Item1.KindOfMessage = {fileName.Item1.KindOfMessage}");
 #endif
 
                     message = MessagesFactory.ReadMessage(text, fileName.Item1.KindOfMessage);

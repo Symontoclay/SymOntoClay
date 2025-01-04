@@ -57,7 +57,11 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
             if(_executionState == ExecutionState.WaitingForPlanBuilding)
             {
+                Logger.StartBuildPlan("584A66AE-6592-4476-AA54-C283C9A65DBE");
+
                 _plan = _tasksPlanner.BuildPlan();
+
+                Logger.StopBuildPlan("CEB8C398-CFA8-4869-A6BC-5BFB32F89CBF");
 
                 _executionState = ExecutionState.WaitingForRunnerCreation;
             }

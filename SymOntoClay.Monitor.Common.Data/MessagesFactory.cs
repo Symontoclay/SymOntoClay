@@ -182,6 +182,24 @@ namespace SymOntoClay.Monitor.Common.Data
                 case KindOfMessage.StopThreadTask:
                     return JsonConvert.DeserializeObject<StopTaskMessage>(content);
 
+                case KindOfMessage.StartBuildPlan:
+                    return JsonConvert.DeserializeObject<StartBuildPlanMessage>(content);
+
+                case KindOfMessage.StopBuildPlan:
+                    return JsonConvert.DeserializeObject<StopBuildPlanMessage>(content);
+
+                case KindOfMessage.StartPrimitiveTask:
+                    return JsonConvert.DeserializeObject<StartPrimitiveTaskMessage>(content);
+
+                case KindOfMessage.StopPrimitiveTask:
+                    return JsonConvert.DeserializeObject<StopPrimitiveTaskMessage>(content);
+
+                case KindOfMessage.PlanItem:
+                    return JsonConvert.DeserializeObject<PlanItemMessage>(content);
+
+                case KindOfMessage.LeaveTasksExecutor:
+                    return JsonConvert.DeserializeObject<LeaveTasksExecutorMessage>(content);
+
                 case KindOfMessage.Output:
                     return JsonConvert.DeserializeObject<OutputMessage>(content);
 
@@ -202,7 +220,7 @@ namespace SymOntoClay.Monitor.Common.Data
 
                 case KindOfMessage.Fatal:
                     return JsonConvert.DeserializeObject<FatalMessage>(content);
-
+                    
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfMessage), kindOfMessage, null);
             }

@@ -1223,6 +1223,18 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.Primitive;
                             break;
                         }
+
+                        if (string.Equals(content, "strategic", StringComparison.OrdinalIgnoreCase))
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Strategic;
+                            break;
+                        }
+
+                        if (string.Equals(content, "tactical", StringComparison.OrdinalIgnoreCase))
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Tactical;
+                            break;
+                        }
                     }
                     break;
 

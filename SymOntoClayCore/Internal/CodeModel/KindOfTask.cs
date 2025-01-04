@@ -2,7 +2,10 @@
 {
     public enum KindOfTask
     {
-        Primitive,
-        Compound
+        Root,
+        Strategic,
+        Tactical,        
+        Compound,
+        Primitive
     }
 }

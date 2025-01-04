@@ -279,6 +279,15 @@ namespace SymOntoClay.Core.Internal.Serialization
                 case KindOfCodeEntity.CompoundTask:
                     break;
 
+                case KindOfCodeEntity.TacticalTask:
+                    break;
+
+                case KindOfCodeEntity.StrategicTask:
+                    break;
+
+                case KindOfCodeEntity.RootTask:
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(codeEntity.Kind), codeEntity.Kind, null);
             }
@@ -464,6 +473,18 @@ namespace SymOntoClay.Core.Internal.Serialization
 
                 case KindOfCodeEntity.Synonym:
                     targetStorage.SynonymsStorage.Append(logger, codeItem.AsSynonym);
+                    break;
+
+                case KindOfCodeEntity.RootTask:
+                    targetStorage.TasksStorage.Append(logger, codeItem.AsRootTask);
+                    break;
+
+                case KindOfCodeEntity.StrategicTask:
+                    targetStorage.TasksStorage.Append(logger, codeItem.AsStrategicTask);
+                    break;
+
+                case KindOfCodeEntity.TacticalTask:
+                    targetStorage.TasksStorage.Append(logger, codeItem.AsTacticalTask);
                     break;
 
                 case KindOfCodeEntity.CompoundTask:

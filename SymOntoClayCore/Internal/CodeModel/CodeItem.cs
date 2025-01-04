@@ -180,6 +180,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsBaseCompoundTask => false;
         public virtual BaseCompoundTask AsBaseCompoundTask => null;
 
+        public virtual bool IsRootTask => false;
+        public virtual RootTask AsRootTask => null;
+
+        public virtual bool IsStrategicTask => false;
+        public virtual StrategicTask AsStrategicTask => null;
+
+        public virtual bool IsTacticalTask => false;
+        public virtual TacticalTask AsTacticalTask => null;
+
         public virtual bool IsCompoundTask => false;
         public virtual CompoundTask AsCompoundTask => null;
 

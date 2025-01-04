@@ -146,6 +146,33 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             }
                             break;
 
+                        case KeyWordTokenKind.Root:
+                            {
+                                _context.Recovery(_currToken);
+                                var parser = new RootTaskParser(_context);
+                                parser.Run();
+                                Result.Add(parser.Result);
+                            }
+                            break;
+
+                        case KeyWordTokenKind.Strategic:
+                            {
+                                _context.Recovery(_currToken);
+                                var parser = new StrategicTaskParser(_context);
+                                parser.Run();
+                                Result.Add(parser.Result);
+                            }
+                            break;
+
+                        case KeyWordTokenKind.Tactical:
+                            {
+                                _context.Recovery(_currToken);
+                                var parser = new TacticalTaskParser(_context);
+                                parser.Run();
+                                Result.Add(parser.Result);
+                            }
+                            break;
+
                         case KeyWordTokenKind.Compound:
                             {
                                 _context.Recovery(_currToken);

@@ -115,6 +115,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         Task,
         Compound,
         Case,
-        Primitive
+        Primitive,
+        Strategic,
+        Tactical
     }
 }

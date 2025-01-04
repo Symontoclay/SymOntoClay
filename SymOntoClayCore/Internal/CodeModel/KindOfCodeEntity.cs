@@ -51,6 +51,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         Synonym,
         IdleActionItem,
         AnonymousObject,
+        RootTask,
+        StrategicTask,
+        TacticalTask,
         CompoundTask,
         CompoundTaskCase,
         PrimitiveTask

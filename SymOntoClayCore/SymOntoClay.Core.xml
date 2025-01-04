@@ -5105,6 +5105,46 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RelationParameterDescription.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RootTask.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RootTask.IsRootTask">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RootTask.AsRootTask">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.RootTask.KindOfTask">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RootTask.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RootTask.CloneBaseTask(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RootTask.CloneBaseCompoundTask(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RootTask.Clone">
+            <summary>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RootTask.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RootTask.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RootTask.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.RootTask.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.RuleInstance.Kind">
             <inheritdoc/>
         </member>
@@ -5477,6 +5517,46 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.StateDef.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.StrategicTask.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.StrategicTask.IsStrategicTask">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.StrategicTask.AsStrategicTask">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.StrategicTask.KindOfTask">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrategicTask.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrategicTask.CloneBaseTask(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrategicTask.CloneBaseCompoundTask(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrategicTask.Clone">
+            <summary>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrategicTask.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrategicTask.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrategicTask.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.StrategicTask.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.StringValue.KindOfValue">
             <inheritdoc/>
         </member>
@@ -5639,6 +5719,46 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Synonym.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.TacticalTask.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.TacticalTask.IsTacticalTask">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.TacticalTask.AsTacticalTask">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.TacticalTask.KindOfTask">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.TacticalTask.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.TacticalTask.CloneBaseTask(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.TacticalTask.CloneBaseCompoundTask(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.TacticalTask.Clone">
+            <summary>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.TacticalTask.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.TacticalTask.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.TacticalTask.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.TacticalTask.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.ThreadTaskValue.KindOfValue">
@@ -8197,6 +8317,15 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.ReturnStatementParser.OnRun">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RootTaskParser.OnEnter">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RootTaskParser.OnFinish">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RootTaskParser.OnRun">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RulePartParser.OnRun">
             <inheritdoc/>
         </member>
@@ -8235,10 +8364,28 @@
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.StatePaser.OnRun">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.StrategicTaskParser.OnEnter">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.StrategicTaskParser.OnFinish">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.StrategicTaskParser.OnRun">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.SynonymParser.OnEnter">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.SynonymParser.OnRun">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.TacticalTaskParser.OnEnter">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.TacticalTaskParser.OnFinish">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.TacticalTaskParser.OnRun">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.TerminationToken.Equals(SymOntoClay.Core.Internal.Parsing.Internal.TerminationToken)">

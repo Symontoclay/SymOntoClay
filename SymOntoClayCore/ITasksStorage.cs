@@ -11,6 +11,21 @@ namespace SymOntoClay.Core
         BaseCompoundTask GetBaseCompoundTaskByName(IMonitorLogger logger, StrongIdentifierValue name);
         BaseTask GetBaseTaskByName(IMonitorLogger logger, StrongIdentifierValue name);
 
+        #region RootTask
+        void Append(IMonitorLogger logger, RootTask rootTask);
+        RootTask
+        #endregion
+
+        #region StrategicTask
+        void Append(IMonitorLogger logger, StrategicTask strategicTask);
+        StrategicTask
+        #endregion
+
+        #region TacticalTask
+        void Append(IMonitorLogger logger, TacticalTask tacticalTask);
+        TacticalTask
+        #endregion
+
         #region CompoundTask
         void Append(IMonitorLogger logger, CompoundTask compoundTask);
         CompoundTask GetCompoundTaskByName(IMonitorLogger logger, StrongIdentifierValue name);

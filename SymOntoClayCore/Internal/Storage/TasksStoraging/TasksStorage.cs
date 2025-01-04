@@ -32,6 +32,30 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
             return GetPrimitiveTaskByName(logger, name);
         }
 
+        #region RootTask
+        /// <inheritdoc/>
+        public void Append(IMonitorLogger logger, RootTask rootTask);
+
+        /// <inheritdoc/>
+        public RootTask GetRootTask(IMonitorLogger logger, StrongIdentifierValue name);
+        #endregion
+
+        #region StrategicTask
+        /// <inheritdoc/>
+        public void Append(IMonitorLogger logger, StrategicTask strategicTask);
+
+        /// <inheritdoc/>
+        public StrategicTask GetStrategicTask(IMonitorLogger logger, StrongIdentifierValue name);
+        #endregion
+
+        #region TacticalTask
+        /// <inheritdoc/>
+        public void Append(IMonitorLogger logger, TacticalTask tacticalTask);
+
+        /// <inheritdoc/>
+        public TacticalTask GetTacticalTask(IMonitorLogger logger, StrongIdentifierValue name);
+        #endregion
+
         #region CompoundTask
         /// <inheritdoc/>
         public void Append(IMonitorLogger logger, CompoundTask compoundTask)

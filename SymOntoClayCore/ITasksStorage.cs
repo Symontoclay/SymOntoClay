@@ -13,17 +13,17 @@ namespace SymOntoClay.Core
 
         #region RootTask
         void Append(IMonitorLogger logger, RootTask rootTask);
-        RootTask
+        RootTask GetRootTask(IMonitorLogger logger, StrongIdentifierValue name);
         #endregion
 
         #region StrategicTask
         void Append(IMonitorLogger logger, StrategicTask strategicTask);
-        StrategicTask
+        StrategicTask GetStrategicTask(IMonitorLogger logger, StrongIdentifierValue name);
         #endregion
 
         #region TacticalTask
         void Append(IMonitorLogger logger, TacticalTask tacticalTask);
-        TacticalTask
+        TacticalTask GetTacticalTask(IMonitorLogger logger, StrongIdentifierValue name);
         #endregion
 
         #region CompoundTask

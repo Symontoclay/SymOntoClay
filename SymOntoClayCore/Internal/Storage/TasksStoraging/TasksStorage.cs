@@ -20,8 +20,8 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
         public BaseCompoundTask GetBaseCompoundTaskByName(IMonitorLogger logger, StrongIdentifierValue name, KindOfTask requestingKindOfTask)
         {
 #if DEBUG
-            logger.Info("BC884227-12CE-4881-A3D3-EC1551F1C0E1", $"name = {name}");
-            logger.Info("7DB2A28C-1044-4C71-B637-0A01D348FF20", $"requestingKindOfTask = {requestingKindOfTask}");
+            //logger.Info("BC884227-12CE-4881-A3D3-EC1551F1C0E1", $"name = {name}");
+            //logger.Info("7DB2A28C-1044-4C71-B637-0A01D348FF20", $"requestingKindOfTask = {requestingKindOfTask}");
 #endif
 
             BaseCompoundTask task = null;
@@ -85,8 +85,8 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
         public BaseTask GetBaseTaskByName(IMonitorLogger logger, StrongIdentifierValue name, KindOfTask requestingKindOfTask)
         {
 #if DEBUG
-            logger.Info("141DA781-3FB0-453F-BE69-1FEF36607336", $"name = {name}");
-            logger.Info("8B88B83A-0495-4278-B03E-E8B993406B88", $"requestingKindOfTask = {requestingKindOfTask}");
+            //logger.Info("141DA781-3FB0-453F-BE69-1FEF36607336", $"name = {name}");
+            //logger.Info("8B88B83A-0495-4278-B03E-E8B993406B88", $"requestingKindOfTask = {requestingKindOfTask}");
 #endif
 
             BaseTask task = null;

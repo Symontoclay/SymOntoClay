@@ -87,7 +87,7 @@ namespace TestSandbox.Handlers
 
             _logger.Info("6FDE9DEF-C0F2-4500-BAD5-6F3FD56A3EF9", "|-|-|-|-|-|-|-|-|-|-|-|-|");
 
-            Thread.Sleep(5000);
+            Thread.Sleep(10000);
 
             _logger.Info("6FDE9DEF-C0F2-4500-BAD5-6F3FD56A3EF9", "|---|---|---|---|---|---|");
 

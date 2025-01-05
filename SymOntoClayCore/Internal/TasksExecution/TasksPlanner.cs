@@ -345,6 +345,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 #if DEBUG
             //Info("C0DBD29A-0A46-4A4B-AAD8-384E2F259D29", $"newBuiltPlanItems = {newBuiltPlanItems.WriteListToString()}");
             //Info("C10A6C8F-50C1-4C14-B070-5995AF34E507", $"tasksToProcess = {tasksToProcess.WriteListToString()}");
+            //Info("03D510A6-5683-4B36-B9CB-BEF6EBF288BD", $"tasksToProcess.Count = {tasksToProcess.Count}");
 #endif
 
             List<BuiltPlanItem> oldTasksToProcess = null;
@@ -365,13 +366,18 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
 #if DEBUG
             //Info("4FE2C5E7-A17C-4B4C-BCF1-5EAAC04A8119", $"tasksToProcess (after) = {tasksToProcess.WriteListToString()}");
-            //Info("9A3797DD-C976-4A3A-BFE2-CB76567D8F3B", $"tasksToProcess.Count = {tasksToProcess.Count}");
+            //Info("9A3797DD-C976-4A3A-BFE2-CB76567D8F3B", $"tasksToProcess.Count (after) = {tasksToProcess.Count}");
 #endif
 
             if(oldTasksToProcess != null)
             {
-                for(var i = index + 1; i < tasksToProcess.Count - 1; i++)
+                for(var i = index + 1; i < oldTasksToProcess.Count; i++)
                 {
+#if DEBUG
+                    //Info("84448900-C8F8-44AE-9D64-10E3E0193561", $"i = {i}");
+                    //Info("4FEE5B45-CDF4-4044-925A-662BA87522FC", $"n = {n}");
+#endif
+
                     PutBuiltPlanItemToPosition(oldTasksToProcess[i], n, tasksToProcess);
 
                     n++;

@@ -170,12 +170,15 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
                 switch(kindOfCurrentTask)
                 {
-                    case KindOfTask.Primitive:
-                        ProcessPrimitiveTask(currentBuiltPlanItem, tasksPlannerGlobalContext, buildPlanIterationContext);
-                        break;
-
+                    case KindOfTask.Root:
+                    case KindOfTask.Strategic:
+                    case KindOfTask.Tactical:
                     case KindOfTask.Compound:
                         ProcessBaseCompoundTask(currentBuiltPlanItem, tasksPlannerGlobalContext, buildPlanIterationContext);
+                        break;
+
+                    case KindOfTask.Primitive:
+                        ProcessPrimitiveTask(currentBuiltPlanItem, tasksPlannerGlobalContext, buildPlanIterationContext);
                         break;
 
                     default:
@@ -224,7 +227,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                     continue;
                 }
 
-                ProcessTaskCase(taskCase, tasksPlannerGlobalContext, buildPlanIterationContext);
+                ProcessTaskCase(taskCase, processedTask.KindOfTask, tasksPlannerGlobalContext, buildPlanIterationContext);
             }
 
             //throw new NotImplementedException("20A515FC-9D9F-4185-B14E-12C80C5CFCDD");
@@ -236,7 +239,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             return true;
         }
 
-        private void ProcessTaskCase(CompoundTaskCase taskCase, TasksPlannerGlobalContext tasksPlannerGlobalContext, BuildPlanIterationContext buildPlanIterationContext)
+        private void ProcessTaskCase(CompoundTaskCase taskCase, KindOfTask requestingKindOfTask, TasksPlannerGlobalContext tasksPlannerGlobalContext, BuildPlanIterationContext buildPlanIterationContext)
         {
 #if DEBUG
             //Info("90913386-6F54-47D4-B1D6-EC49F29604FC", "Begin");
@@ -249,10 +252,10 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                 return;
             }
 
-            var clonnedBuildPlanIterationContext = buildPlanIterationContext.Clone();
+            var clonedBuildPlanIterationContext = buildPlanIterationContext.Clone();
 
 #if DEBUG
-            //Info("FB034078-4FD7-4A5E-9BF4-37EB9C32E75D", $"clonnedBuildPlanIterationContext = {clonnedBuildPlanIterationContext}");
+            //Info("FB034078-4FD7-4A5E-9BF4-37EB9C32E75D", $"clonedBuildPlanIterationContext = {clonedBuildPlanIterationContext}");
 #endif
 
             var tasksList = new List<BaseTask>();
@@ -263,7 +266,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                 //Info("D99601A0-5F07-417D-921A-0B77E84956AB", $"item = {item}");
 #endif
 
-                var task = _tasksStorage.GetBaseTaskByName(Logger, item.Name);
+                var task = _tasksStorage.GetBaseTaskByName(Logger, item.Name, requestingKindOfTask);
 
 #if DEBUG
                 //Info("2A728ED1-B0C8-4FC5-AB66-D978F97A91E3", $"task = {task}");
@@ -277,9 +280,9 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                 tasksList.Add(task);
             }
 
-            ReplaceBuiltPlanItems(tasksList, clonnedBuildPlanIterationContext);
+            ReplaceBuiltPlanItems(tasksList, clonedBuildPlanIterationContext);
 
-            ProcessIteration(tasksPlannerGlobalContext, clonnedBuildPlanIterationContext);
+            ProcessIteration(tasksPlannerGlobalContext, clonedBuildPlanIterationContext);
 
             //throw new NotImplementedException("40A79CD7-9DCB-4B93-BDB2-A6F328E79CA4");
         }
@@ -345,9 +348,9 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         private List<BaseCompoundTask> GetRootTasks()
         {
 #if DEBUG
-            //Info("47323362-D3B3-47FD-B346-D746771DB8C7", $"_mainEntity.Name = {_mainEntity.Name}");
-            //Info("600EDBC3-9F4F-43AE-B900-C029F4BB1AEC", $"_mainEntity.GetType().Name = {_mainEntity.GetType().Name}");
-            //Info("E40E6248-2A1C-4CF7-95AB-BBC82924C46E", $"_mainEntity.RootTasks = {_mainEntity.RootTasks.WriteListToString()}");
+            Info("47323362-D3B3-47FD-B346-D746771DB8C7", $"_mainEntity.Name = {_mainEntity.Name}");
+            Info("600EDBC3-9F4F-43AE-B900-C029F4BB1AEC", $"_mainEntity.GetType().Name = {_mainEntity.GetType().Name}");
+            Info("E40E6248-2A1C-4CF7-95AB-BBC82924C46E", $"_mainEntity.RootTasks = {_mainEntity.RootTasks.WriteListToString()}");
 #endif
 
             var result = new List<BaseCompoundTask>();
@@ -358,10 +361,10 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             {
                 foreach(var taskName in mainEntityRootTasksNames)
                 {
-                    var task = _tasksStorage.GetBaseCompoundTaskByName(Logger, taskName);
+                    var task = _tasksStorage.GetBaseCompoundTaskByName(Logger, taskName, KindOfTask.Root);
 
 #if DEBUG
-                    //Info("627C7805-7915-4787-BB76-E7D2B2B7EE56", $"task = {task}");
+                    Info("627C7805-7915-4787-BB76-E7D2B2B7EE56", $"task = {task}");
 #endif
 
                     if(task == null)

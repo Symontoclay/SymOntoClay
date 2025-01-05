@@ -7,6 +7,12 @@
        'Run SomeOperator' >> @>log;
        wait 1;
     }
+
+    fun SomeOperator2()
+    {
+       'Run SomeOperator2' >> @>log;
+       wait 1;
+    }
 }
 
 root task SomeRootTask
@@ -38,10 +44,16 @@ compound task SomeCompoundTask
    case
    {
        SomePrimitiveTask;
+       SomePrimitiveTask2;
    }
 }
 
 primitive task SomePrimitiveTask
 {
     operator SomeOperator();
+}
+
+primitive task SomePrimitiveTask2
+{
+    operator SomeOperator2();
 }

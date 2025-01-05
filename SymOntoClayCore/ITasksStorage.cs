@@ -8,8 +8,8 @@ namespace SymOntoClay.Core
 {
     public interface ITasksStorage : ISpecificStorage
     {
-        BaseCompoundTask GetBaseCompoundTaskByName(IMonitorLogger logger, StrongIdentifierValue name);
-        BaseTask GetBaseTaskByName(IMonitorLogger logger, StrongIdentifierValue name);
+        BaseCompoundTask GetBaseCompoundTaskByName(IMonitorLogger logger, StrongIdentifierValue name, KindOfTask requestingKindOfTask);
+        BaseTask GetBaseTaskByName(IMonitorLogger logger, StrongIdentifierValue name, KindOfTask requestingKindOfTask);
 
         #region RootTask
         void Append(IMonitorLogger logger, RootTask rootTask);

@@ -11,13 +11,13 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
         }
 
         /// <inheritdoc/>
-        public BaseCompoundTask GetBaseCompoundTaskByName(IMonitorLogger logger, StrongIdentifierValue name)
+        public BaseCompoundTask GetBaseCompoundTaskByName(IMonitorLogger logger, StrongIdentifierValue name, KindOfTask requestingKindOfTask)
         {
             return null;
         }
 
         /// <inheritdoc/>
-        public BaseTask GetBaseTaskByName(IMonitorLogger logger, StrongIdentifierValue name)
+        public BaseTask GetBaseTaskByName(IMonitorLogger logger, StrongIdentifierValue name, KindOfTask requestingKindOfTask)
         {
             return null;
         }

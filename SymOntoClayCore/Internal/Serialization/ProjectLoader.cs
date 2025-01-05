@@ -579,6 +579,9 @@ namespace SymOntoClay.Core.Internal.Serialization
                 case KindOfCodeEntity.Field:
                 case KindOfCodeEntity.MutuallyExclusiveStatesSet:
                 case KindOfCodeEntity.Synonym:
+                case KindOfCodeEntity.RootTask:
+                case KindOfCodeEntity.StrategicTask:
+                case KindOfCodeEntity.TacticalTask:
                 case KindOfCodeEntity.CompoundTask:
                 case KindOfCodeEntity.PrimitiveTask:
                     if (directives.Any())

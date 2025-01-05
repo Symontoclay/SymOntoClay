@@ -412,30 +412,32 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 #if DEBUG
             //Info("47323362-D3B3-47FD-B346-D746771DB8C7", $"_mainEntity.Name = {_mainEntity.Name}");
             //Info("600EDBC3-9F4F-43AE-B900-C029F4BB1AEC", $"_mainEntity.GetType().Name = {_mainEntity.GetType().Name}");
-            //Info("E40E6248-2A1C-4CF7-95AB-BBC82924C46E", $"_mainEntity.RootTasks = {_mainEntity.RootTasks.WriteListToString()}");
+            Info("E40E6248-2A1C-4CF7-95AB-BBC82924C46E", $"_mainEntity.RootTasks = {_mainEntity.RootTasks.WriteListToString()}");
 #endif
-
-            var result = new List<BaseCompoundTask>();
 
             var mainEntityRootTasksNames = _mainEntity.RootTasks;
 
-            if(!mainEntityRootTasksNames.IsNullOrEmpty())
+            if(mainEntityRootTasksNames.IsNullOrEmpty())
             {
-                foreach(var taskName in mainEntityRootTasksNames)
-                {
-                    var task = _tasksStorage.GetBaseCompoundTaskByName(Logger, taskName, KindOfTask.Root);
+                return _tasksStorage.GetAllRootTasks(Logger).Cast<BaseCompoundTask>().ToList();
+            }
+
+            var result = new List<BaseCompoundTask>();
+
+            foreach (var taskName in mainEntityRootTasksNames)
+            {
+                var task = _tasksStorage.GetBaseCompoundTaskByName(Logger, taskName, KindOfTask.Root);
 
 #if DEBUG
-                    //Info("627C7805-7915-4787-BB76-E7D2B2B7EE56", $"task = {task}");
+                //Info("627C7805-7915-4787-BB76-E7D2B2B7EE56", $"task = {task}");
 #endif
 
-                    if(task == null)
-                    {
-                        continue;
-                    }
-
-                    result.Add(task);
+                if (task == null)
+                {
+                    continue;
                 }
+
+                result.Add(task);
             }
 
             return result;

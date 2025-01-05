@@ -14,6 +14,7 @@ namespace SymOntoClay.Core
         #region RootTask
         void Append(IMonitorLogger logger, RootTask rootTask);
         RootTask GetRootTask(IMonitorLogger logger, StrongIdentifierValue name);
+        IEnumerable<RootTask> GetAllRootTasks(IMonitorLogger logger);
         #endregion
 
         #region StrategicTask

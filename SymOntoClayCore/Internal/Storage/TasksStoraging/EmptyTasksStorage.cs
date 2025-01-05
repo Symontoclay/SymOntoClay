@@ -1,5 +1,7 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
 {
@@ -32,6 +34,12 @@ namespace SymOntoClay.Core.Internal.Storage.TasksStoraging
         public RootTask GetRootTask(IMonitorLogger logger, StrongIdentifierValue name)
         {
             return null;
+        }
+
+        /// <inheritdoc/>
+        public IEnumerable<RootTask> GetAllRootTasks(IMonitorLogger logger)
+        {
+            return Enumerable.Empty<RootTask>();
         }
         #endregion
 

@@ -1,6 +1,6 @@
 ﻿app PeaceKeeper
 {
-    root task `SomeRootTask`;
+    //root task `SomeRootTask`;
 
     fun SomeOperator()
     {

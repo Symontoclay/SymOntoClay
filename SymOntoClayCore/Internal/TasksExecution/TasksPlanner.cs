@@ -342,15 +342,71 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                 return;
             }
 
-            throw new NotImplementedException("C7088945-55F6-45D4-A384-38CC03A7C7BC");
+#if DEBUG
+            //Info("C0DBD29A-0A46-4A4B-AAD8-384E2F259D29", $"newBuiltPlanItems = {newBuiltPlanItems.WriteListToString()}");
+            //Info("C10A6C8F-50C1-4C14-B070-5995AF34E507", $"tasksToProcess = {tasksToProcess.WriteListToString()}");
+#endif
+
+            List<BuiltPlanItem> oldTasksToProcess = null;
+
+            if(index < tasksToProcess.Count - 1)
+            {
+                oldTasksToProcess = tasksToProcess.ToList();
+            }
+
+            var n = index;
+
+            foreach (var item in newBuiltPlanItems)
+            {
+                PutBuiltPlanItemToPosition(item, n, tasksToProcess);
+
+                n++;
+            }
+
+#if DEBUG
+            //Info("4FE2C5E7-A17C-4B4C-BCF1-5EAAC04A8119", $"tasksToProcess (after) = {tasksToProcess.WriteListToString()}");
+            //Info("9A3797DD-C976-4A3A-BFE2-CB76567D8F3B", $"tasksToProcess.Count = {tasksToProcess.Count}");
+#endif
+
+            if(oldTasksToProcess != null)
+            {
+                for(var i = index + 1; i < tasksToProcess.Count - 1; i++)
+                {
+                    PutBuiltPlanItemToPosition(oldTasksToProcess[i], n, tasksToProcess);
+
+                    n++;
+                }
+
+                //throw new NotImplementedException("C7088945-55F6-45D4-A384-38CC03A7C7BC");
+            }
+        }
+
+        private void PutBuiltPlanItemToPosition(BuiltPlanItem item, int index, List<BuiltPlanItem> tasksToProcess)
+        {
+#if DEBUG
+            //Info("2859F8BD-B5F8-41D9-B8AA-2AE09F56B115", $"index = {index}");
+            //Info("5B2EAA94-5C53-4ED8-85DC-AA6382E28145", $"tasksToProcess.Count = {tasksToProcess.Count}");
+#endif
+
+            if(index >= tasksToProcess.Count)
+            {
+                tasksToProcess.Add(item);
+            }
+            else
+            {
+                tasksToProcess[index] = item;
+            }
+            
+
+            //throw new NotImplementedException("FF3B8DCF-DAAF-473D-96E8-A38359E75BBB");
         }
 
         private List<BaseCompoundTask> GetRootTasks()
         {
 #if DEBUG
-            Info("47323362-D3B3-47FD-B346-D746771DB8C7", $"_mainEntity.Name = {_mainEntity.Name}");
-            Info("600EDBC3-9F4F-43AE-B900-C029F4BB1AEC", $"_mainEntity.GetType().Name = {_mainEntity.GetType().Name}");
-            Info("E40E6248-2A1C-4CF7-95AB-BBC82924C46E", $"_mainEntity.RootTasks = {_mainEntity.RootTasks.WriteListToString()}");
+            //Info("47323362-D3B3-47FD-B346-D746771DB8C7", $"_mainEntity.Name = {_mainEntity.Name}");
+            //Info("600EDBC3-9F4F-43AE-B900-C029F4BB1AEC", $"_mainEntity.GetType().Name = {_mainEntity.GetType().Name}");
+            //Info("E40E6248-2A1C-4CF7-95AB-BBC82924C46E", $"_mainEntity.RootTasks = {_mainEntity.RootTasks.WriteListToString()}");
 #endif
 
             var result = new List<BaseCompoundTask>();
@@ -364,7 +420,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                     var task = _tasksStorage.GetBaseCompoundTaskByName(Logger, taskName, KindOfTask.Root);
 
 #if DEBUG
-                    Info("627C7805-7915-4787-BB76-E7D2B2B7EE56", $"task = {task}");
+                    //Info("627C7805-7915-4787-BB76-E7D2B2B7EE56", $"task = {task}");
 #endif
 
                     if(task == null)

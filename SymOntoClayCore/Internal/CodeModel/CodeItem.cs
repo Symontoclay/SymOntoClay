@@ -195,6 +195,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsCompoundTaskCase => false;
         public virtual CompoundTaskCase AsCompoundTaskCase => null;
 
+        public virtual bool IsBasePrimitiveTask => false;
+        public virtual BasePrimitiveTask AsBasePrimitiveTask => null;
+
         public virtual bool IsPrimitiveTask => false;
         public virtual PrimitiveTask AsPrimitiveTask => null;
 

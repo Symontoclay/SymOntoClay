@@ -2448,6 +2448,12 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.BaseEntityValue.SymOntoClay#Core#INavTarget#Entity">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.BasePrimitiveTask.IsBasePrimitiveTask">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.BasePrimitiveTask.AsBasePrimitiveTask">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.BaseRulePart.SymOntoClay#Core#Internal#ILogicalSearchItem#RuleInstance">
             <inheritdoc/>
         </member>

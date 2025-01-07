@@ -44,7 +44,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                 throw new NotImplementedException("0A44F791-B382-4B29-8F48-B62EB772014E");
             }
 
-            //TODO: make processing multiple root taks for working with voice commands.
+            //TODO: make processing multiple root task for working with voice commands.
             var rootTask = rootTasks.Single();
 
             var tasksPlannerGlobalContext = new TasksPlannerGlobalContext();
@@ -148,10 +148,10 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
                 if (buildPlanIterationContext.ProcessedIndex == tasksToProcess.Count)
                 {
-                    if(tasksToProcess.All(p => p.ProcessedTask.IsPrimitiveTask))
+                    if(tasksToProcess.All(p => p.ProcessedTask.IsBasePrimitiveTask))
                     {
                         tasksPlannerGlobalContext.CompletedIterations.Add(buildPlanIterationContext);
-                    }                   
+                    }
 
                     return;
                 }

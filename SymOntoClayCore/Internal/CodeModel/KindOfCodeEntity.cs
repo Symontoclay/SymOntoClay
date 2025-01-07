@@ -56,6 +56,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         TacticalTask,
         CompoundTask,
         CompoundTaskCase,
-        PrimitiveTask
+        PrimitiveTask,
+        BeginCompoundTask,
+        EndBeginCompoundTask,
+        NopPrimitiveTask,
+        JumpPrimitiveTask
     }
 }

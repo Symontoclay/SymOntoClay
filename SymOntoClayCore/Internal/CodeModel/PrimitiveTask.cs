@@ -10,7 +10,7 @@ using SymOntoClay.Core.Internal.Instances;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class PrimitiveTask : BaseTask
+    public class PrimitiveTask: BasePrimitiveTask
     {
         public PrimitiveTaskOperator Operator { get; set; }
 

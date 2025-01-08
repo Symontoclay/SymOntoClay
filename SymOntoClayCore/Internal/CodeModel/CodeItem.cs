@@ -201,6 +201,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsPrimitiveTask => false;
         public virtual PrimitiveTask AsPrimitiveTask => null;
 
+        public virtual bool IsBeginCompoundTask => false;
+        public virtual BeginCompoundTask AsBeginCompoundTask => null;
+
+        public virtual bool IsEndCompoundTask => false;
+        public virtual EndCompoundTask AsEndCompoundTask => null;
+
+        public virtual bool IsNopPrimitiveTask => false;
+        public virtual NopPrimitiveTask AsNopPrimitiveTask => null;
+
+        public virtual bool IsJumpPrimitiveTask => false;
+        public virtual JumpPrimitiveTask AsJumpPrimitiveTask => null;
+
         /// <inheritdoc/>
         public override KindOfValue KindOfValue => KindOfValue.CodeItem;
 

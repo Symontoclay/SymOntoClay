@@ -58,7 +58,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         CompoundTaskCase,
         PrimitiveTask,
         BeginCompoundTask,
-        EndBeginCompoundTask,
+        EndCompoundTask,
         NopPrimitiveTask,
         JumpPrimitiveTask
     }

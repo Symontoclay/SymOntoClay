@@ -6,6 +6,10 @@
         Strategic,
         Tactical,        
         Compound,
-        Primitive
+        Primitive,
+        BeginCompound,
+        EndCompound,
+        Jump,
+        Nop
     }
 }

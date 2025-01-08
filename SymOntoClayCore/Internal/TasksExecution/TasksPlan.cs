@@ -110,7 +110,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             var nextNSpaces = DisplayHelper.Spaces(nextN);
 
             var sb = new StringBuilder();
-
+            
             sb.AppendLine($"{spaces}Tasks to execution:");
             sb.AppendLine($"{nextNSpaces}[{string.Join(", ", Items.Select(p => p.ExecutedTask.Name.ToSystemString()))}]");
 

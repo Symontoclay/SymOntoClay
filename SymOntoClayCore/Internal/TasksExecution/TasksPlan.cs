@@ -112,7 +112,13 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             var sb = new StringBuilder();
             
             sb.AppendLine($"{spaces}Tasks to execution:");
-            sb.AppendLine($"{nextNSpaces}[{string.Join(", ", Items.Select(p => p.ExecutedTask.Name.ToSystemString()))}]");
+            var i = 0;
+            foreach(var item in Items)
+            {
+                sb.AppendLine($"{nextNSpaces}{i}:{item.ToHumanizedLabel()}");
+                i++;
+            }
+            //sb.AppendLine($"{nextNSpaces}[{string.Join(", ", Items.Select(p => p.ExecutedTask.Name.ToSystemString()))}]");
 
             return sb.ToString();
         }

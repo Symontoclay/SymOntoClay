@@ -104,7 +104,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{ExecutedTask.Name.ToSystemString()}");
+            sb.AppendLine($"{spaces}{ExecutedTask?.ToHumanizedLabel()}");
             return sb.ToString();
         }
 

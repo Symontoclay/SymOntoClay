@@ -139,7 +139,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         /// <inheritdoc/>
         public string ToHumanizedLabel(DebugHelperOptions options)
         {
-            throw new NotImplementedException("E30C7144-8ABD-4BE2-9FF2-1EFAB61E0BC8");
+            return ExecutedTask?.ToHumanizedLabel(options);
         }
 
         /// <inheritdoc/>

@@ -92,7 +92,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             foreach (var builtItem in completedIteration.TasksToProcess)
             {
 #if DEBUG
-                //Info("EA3F4844-5C18-4F00-8C30-8BDB6BAD6DF2", $"builtItem = {builtItem.ToDbgString()}");
+                Info("EA3F4844-5C18-4F00-8C30-8BDB6BAD6DF2", $"builtItem = {builtItem.ToDbgString()}");
 #endif
 
                 var planItem = new TasksPlanItem()
@@ -132,8 +132,8 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 #endif
 
 #if DEBUG
-            //Info("8BA1B85B-A1DF-4ABB-9CE4-925E8190303A", $"buildPlanIterationContext = {buildPlanIterationContext.ToDbgString()}");
-            //Info("8BA1B85B-A1DF-4ABB-9CE4-925E8190303A", $"buildPlanIterationContext.ProcessedIndex = {buildPlanIterationContext.ProcessedIndex}");
+            Info("8BA1B85B-A1DF-4ABB-9CE4-925E8190303A", $"buildPlanIterationContext = {buildPlanIterationContext.ToDbgString()}");
+            Info("8BA1B85B-A1DF-4ABB-9CE4-925E8190303A", $"buildPlanIterationContext.ProcessedIndex = {buildPlanIterationContext.ProcessedIndex}");
 #endif
 
             while(true)
@@ -141,7 +141,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                 buildPlanIterationContext.ProcessedIndex++;
 
 #if DEBUG
-                //Info("ABDE6F0C-CA9B-49DB-9377-DB3092F19827", $"buildPlanIterationContext.ProcessedIndex (after) = {buildPlanIterationContext.ProcessedIndex}");
+                Info("ABDE6F0C-CA9B-49DB-9377-DB3092F19827", $"buildPlanIterationContext.ProcessedIndex (after) = {buildPlanIterationContext.ProcessedIndex}");
 #endif
 
                 var tasksToProcess = buildPlanIterationContext.TasksToProcess;
@@ -165,7 +165,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                 var kindOfCurrentTask = currentBuiltPlanItem.ProcessedTask.KindOfTask;
 
 #if DEBUG
-                //Info("2B3D4EAE-A6F3-4340-AEBE-A7668EFC0BB0", $"kindOfCurrentTask = {kindOfCurrentTask}");
+                Info("2B3D4EAE-A6F3-4340-AEBE-A7668EFC0BB0", $"kindOfCurrentTask = {kindOfCurrentTask}");
 #endif
 
                 switch(kindOfCurrentTask)
@@ -179,6 +179,9 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
                     case KindOfTask.Primitive:
                         ProcessPrimitiveTask(currentBuiltPlanItem, tasksPlannerGlobalContext, buildPlanIterationContext);
+                        break;
+
+                    case KindOfTask.EndCompound:
                         break;
 
                     default:
@@ -216,7 +219,16 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             //Info("35B5E17A-C30E-4EF7-91F6-66D1F5E9950A", $"processedTask = {processedTask}");
 #endif
 
-            foreach(var taskCase in processedTask.Cases)
+            ReplaceBuiltPlanItems(new List<BaseTask> { new BeginCompoundTask() { CompoundTask = processedTask }, new EndCompoundTask() { CompoundTask = processedTask } }, buildPlanIterationContext);
+
+#if DEBUG
+            Info("7182C96F-E323-4F08-A053-EC7BD7345219", $"buildPlanIterationContext (--) = {buildPlanIterationContext}");
+            Info("BD768CC6-94F8-4888-B29D-3C8373751DD1", $"buildPlanIterationContext (--) = {buildPlanIterationContext.ToDbgString()}");
+#endif
+
+            throw new NotImplementedException("8C0447E9-6893-413E-9607-4CEBEC748519");
+
+            foreach (var taskCase in processedTask.Cases)
             {
 #if DEBUG
                 //Info("0BEBD584-A2F2-496E-800B-E04E6F5F7CED", $"taskCase = {taskCase}");
@@ -290,7 +302,8 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         private void ReplaceBuiltPlanItems(List<BaseTask> tasksList, BuildPlanIterationContext buildPlanIterationContext)
         {
 #if DEBUG
-            //Info("174DE9EE-0069-4F7F-991E-EF8AB0417996", $"buildPlanIterationContext.ProcessedIndex = {buildPlanIterationContext.ProcessedIndex}");
+            Info("3F772C3E-5E6D-4AB2-B1D2-085AF8589B62", $"buildPlanIterationContext.TasksToProcess.Count = {buildPlanIterationContext.TasksToProcess.Count}");
+            Info("174DE9EE-0069-4F7F-991E-EF8AB0417996", $"buildPlanIterationContext.ProcessedIndex = {buildPlanIterationContext.ProcessedIndex}");
 #endif
 
             var builtPlanItem = buildPlanIterationContext.TasksToProcess[buildPlanIterationContext.ProcessedIndex];
@@ -318,16 +331,16 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             }
 
 #if DEBUG
-            //Info("EE36EF43-6AB6-41D1-8E7E-EC07DDB89BB2", $"newBuiltPlanItems = {newBuiltPlanItems.WriteListToString()}");
+            Info("EE36EF43-6AB6-41D1-8E7E-EC07DDB89BB2", $"newBuiltPlanItems = {newBuiltPlanItems.WriteListToString()}");
 #endif
 
             ReplaceBuiltPlanItems(newBuiltPlanItems, buildPlanIterationContext.TasksToProcess, buildPlanIterationContext.ProcessedIndex);
 
 #if DEBUG
-            //Info("B2424A2E-6B2F-4BC7-AC33-46853F5989A2", $"buildPlanIterationContext = {buildPlanIterationContext}");
+            Info("B2424A2E-6B2F-4BC7-AC33-46853F5989A2", $"buildPlanIterationContext = {buildPlanIterationContext.ToDbgString()}");
 #endif
 
-            buildPlanIterationContext.ProcessedIndex--;
+            //buildPlanIterationContext.ProcessedIndex--;
         }
 
         private void ReplaceBuiltPlanItems(List<BuiltPlanItem> newBuiltPlanItems, List<BuiltPlanItem> tasksToProcess, int index)

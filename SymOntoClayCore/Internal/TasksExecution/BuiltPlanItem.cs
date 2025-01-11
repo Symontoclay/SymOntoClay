@@ -128,7 +128,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.AppendLine($"{spaces}{ProcessedTask.KindOfTask}:{ProcessedTask.Name.NameValue}");
+            sb.AppendLine($"{spaces}{ProcessedTask.KindOfTask}:{ProcessedTask.ToHumanizedLabel()}");
 
             return sb.ToString();
         }

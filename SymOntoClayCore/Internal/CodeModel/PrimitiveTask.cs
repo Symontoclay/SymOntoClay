@@ -69,7 +69,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            throw new NotImplementedException("818F06F8-E3EA-4DC7-97E0-D9D916BDF85D");
+            return NToHumanizedString();
         }
 
         /// <inheritdoc/>

@@ -134,8 +134,15 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
             sb.AppendLine($"{spaces}{nameof(ProcessedIndex)}: {ProcessedIndex}");
             sb.AppendLine($"{spaces}Tasks to process:");
-            sb.AppendLine($"{nextNSpaces}[{string.Join(", ", TasksToProcess.Select(p => p.ProcessedTask.Name.ToSystemString()))}]");
+            var i = 0;
+            foreach(var task in TasksToProcess)
+            {
+                var arrowMark = i == ProcessedIndex ? "->" : string.Empty;
 
+                sb.AppendLine($"{nextNSpaces}{arrowMark}{i}: {task.ProcessedTask?.ToHumanizedLabel()}");
+                i++;
+            }
+            
             return sb.ToString();
         }
     }

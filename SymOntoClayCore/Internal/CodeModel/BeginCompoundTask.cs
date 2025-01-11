@@ -25,6 +25,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override KindOfPrimitiveTask KindOfPrimitiveTask => KindOfPrimitiveTask.BeginCompound;
 
+        public BaseCompoundTask CompoundTask { get; set; }
+
         /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> context)
         {
@@ -55,7 +57,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var result = new BeginCompoundTask();
             context[this] = result;
 
-            
+            result.CompoundTask = CompoundTask?.CloneBaseCompoundTask(context);
 
             result.AppendCodeItem(this, context);
 
@@ -65,7 +67,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            throw new NotImplementedException("DDA3C2FA-CB14-41FB-B057-49F163989147");
+            return NToHumanizedString();
         }
 
         /// <inheritdoc/>
@@ -85,7 +87,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private string NToHumanizedString()
         {
-            throw new NotImplementedException("37EBF6B5-E5FD-4A8F-AB41-A72CDBE25369");
+            return $"Begin {CompoundTask?.ToHumanizedLabel()}";
         }
 
         /// <inheritdoc/>
@@ -109,7 +111,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             base.DiscoverAllAnnotations(result);
 
-            //Operator.DiscoverAllAnnotations(result);
+            CompoundTask.DiscoverAllAnnotations(result);
 
             //if (!Cases.IsNullOrEmpty())
             //{
@@ -126,7 +128,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.PrintObjProp(n, nameof(Operator), Operator);
+            sb.PrintObjProp(n, nameof(CompoundTask), CompoundTask);
 
             //sb.PrintObjListProp(n, nameof(Cases), Cases);
 
@@ -140,7 +142,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.PrintShortObjProp(n, nameof(Operator), Operator);
+            sb.PrintShortObjProp(n, nameof(CompoundTask), CompoundTask);
 
             //sb.PrintShortObjListProp(n, nameof(Cases), Cases);
 
@@ -154,7 +156,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.PrintBriefObjProp(n, nameof(Operator), Operator);
+            sb.PrintBriefObjProp(n, nameof(CompoundTask), CompoundTask);
 
             //sb.PrintBriefObjListProp(n, nameof(Cases), Cases);
 

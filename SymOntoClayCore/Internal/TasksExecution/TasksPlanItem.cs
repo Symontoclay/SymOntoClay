@@ -13,7 +13,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
     public class TasksPlanItem: IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString, IObjectToHumanizedString, IMonitoredHumanizedObject
     {
         public List<BaseCompoundTask> ParentTasks { get; set; } = new List<BaseCompoundTask>();
-        public PrimitiveTask ExecutedTask { get; set; }
+        public BasePrimitiveTask ExecutedTask { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

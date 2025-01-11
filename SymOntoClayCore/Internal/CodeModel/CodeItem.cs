@@ -192,6 +192,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsCompoundTask => false;
         public virtual CompoundTask AsCompoundTask => null;
 
+        public virtual bool IsReplacedCompoundTask => false;
+        public virtual ReplacedCompoundTask AsReplacedCompoundTask => null;
+
         public virtual bool IsCompoundTaskCase => false;
         public virtual CompoundTaskCase AsCompoundTaskCase => null;
 

@@ -6,6 +6,7 @@
         Strategic,
         Tactical,        
         Compound,
+        Replaced,
         Primitive,
         BeginCompound,
         EndCompound,

@@ -159,9 +159,11 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
             foreach(var item in plan.Items)
             {
+                throw new NotImplementedException("34F74B8F-4616-4DBD-B633-0FFBB3098F01");
+
                 var frameItem = new TasksPlanFrameItem 
                 { 
-                    ExecutedTask = item.ExecutedTask,
+                    //ExecutedTask = item.ExecutedTask,
                     ParentTasks = item.ParentTasks.ToList()
                 };
 

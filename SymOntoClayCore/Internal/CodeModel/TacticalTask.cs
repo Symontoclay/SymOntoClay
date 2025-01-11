@@ -64,19 +64,27 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            throw new NotImplementedException("39C1D57F-6948-4174-9DFF-7FEE623C709D");
+            return NToHumanizedString();
         }
 
         /// <inheritdoc/>
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
-            throw new NotImplementedException("F197755C-EF76-402A-833A-61174F674AAF");
+            return NToHumanizedString();
         }
 
         /// <inheritdoc/>
         public override MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
         {
-            throw new NotImplementedException("EE085A6F-3AA1-43B3-8B58-52CF3915E1A6");
+            return new MonitoredHumanizedLabel()
+            {
+                Label = NToHumanizedString()
+            };
+        }
+
+        private string NToHumanizedString()
+        {
+            return $"TacticalTask task: {Name?.ToSystemString()}";
         }
     }
 }

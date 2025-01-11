@@ -97,7 +97,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
                 var planItem = new TasksPlanItem()
                 {
-                    ExecutedTask = builtItem.ProcessedTask.AsPrimitiveTask,
+                    ExecutedTask = builtItem.ProcessedTask.AsBasePrimitiveTask,
                     ParentTasks = builtItem.ParentTasks.Select(p => p.AsBaseCompoundTask).ToList()
                 };
 
@@ -133,12 +133,15 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
 #if DEBUG
             Info("8BA1B85B-A1DF-4ABB-9CE4-925E8190303A", $"buildPlanIterationContext = {buildPlanIterationContext.ToDbgString()}");
-            Info("8BA1B85B-A1DF-4ABB-9CE4-925E8190303A", $"buildPlanIterationContext.ProcessedIndex = {buildPlanIterationContext.ProcessedIndex}");
+            Info("2CD7257B-DEA0-4C75-83B4-5F037BA1DDA0", $"buildPlanIterationContext.ProcessedIndex = {buildPlanIterationContext.ProcessedIndex}");
 #endif
 
             while(true)
             {
-                buildPlanIterationContext.ProcessedIndex++;
+                if(buildPlanIterationContext.ProcessedIndex == -1 || buildPlanIterationContext.TasksToProcess[buildPlanIterationContext.ProcessedIndex].ProcessedTask.IsBasePrimitiveTask)
+                {
+                    buildPlanIterationContext.ProcessedIndex++;
+                }
 
 #if DEBUG
                 Info("ABDE6F0C-CA9B-49DB-9377-DB3092F19827", $"buildPlanIterationContext.ProcessedIndex (after) = {buildPlanIterationContext.ProcessedIndex}");
@@ -184,6 +187,13 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                     case KindOfTask.EndCompound:
                         break;
 
+                    case KindOfTask.Replaced:
+#if DEBUG
+                        Info("AEBD1854-C814-457D-886F-6E280B781733", $"buildPlanIterationContext = {buildPlanIterationContext.ToDbgString()}");
+#endif
+
+                        return;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(kindOfCurrentTask), kindOfCurrentTask, null);
                 }
@@ -216,17 +226,28 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             var processedTask = builtPlanItem.ProcessedTask.AsBaseCompoundTask;
 
 #if DEBUG
-            //Info("35B5E17A-C30E-4EF7-91F6-66D1F5E9950A", $"processedTask = {processedTask}");
+            Info("35B5E17A-C30E-4EF7-91F6-66D1F5E9950A", $"processedTask = {processedTask.ToHumanizedLabel()}");
 #endif
 
-            ReplaceBuiltPlanItems(new List<BaseTask> { new BeginCompoundTask() { CompoundTask = processedTask }, new EndCompoundTask() { CompoundTask = processedTask } }, buildPlanIterationContext);
+            ReplaceBuiltPlanItems(new List<BaseTask> 
+                { 
+                    new BeginCompoundTask() { CompoundTask = processedTask },
+                    new ReplacedCompoundTask() { CompoundTask = processedTask },
+                    new EndCompoundTask() { CompoundTask = processedTask } 
+                },
+                buildPlanIterationContext);
+
+            buildPlanIterationContext.ProcessedIndex++;
 
 #if DEBUG
             Info("7182C96F-E323-4F08-A053-EC7BD7345219", $"buildPlanIterationContext (--) = {buildPlanIterationContext}");
             Info("BD768CC6-94F8-4888-B29D-3C8373751DD1", $"buildPlanIterationContext (--) = {buildPlanIterationContext.ToDbgString()}");
 #endif
 
-            throw new NotImplementedException("8C0447E9-6893-413E-9607-4CEBEC748519");
+            if(processedTask.IsStrategicTask)
+            {
+                //throw new NotImplementedException("8C0447E9-6893-413E-9607-4CEBEC748519");
+            }
 
             foreach (var taskCase in processedTask.Cases)
             {
@@ -267,7 +288,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             var clonedBuildPlanIterationContext = buildPlanIterationContext.Clone();
 
 #if DEBUG
-            //Info("FB034078-4FD7-4A5E-9BF4-37EB9C32E75D", $"clonedBuildPlanIterationContext = {clonedBuildPlanIterationContext}");
+            Info("FB034078-4FD7-4A5E-9BF4-37EB9C32E75D", $"clonedBuildPlanIterationContext = {clonedBuildPlanIterationContext.ToDbgString()}");
 #endif
 
             var tasksList = new List<BaseTask>();

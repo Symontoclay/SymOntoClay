@@ -17,7 +17,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         /// </summary>
         public static TasksPlan EmptyPlan { get; } = new TasksPlan();
 
-        public List<TasksPlanItem> Items { get; set; }
+        public List<TasksPlanItem> Items { get; set; } = new List<TasksPlanItem>();
 
         /// <inheritdoc/>
         public override string ToString()

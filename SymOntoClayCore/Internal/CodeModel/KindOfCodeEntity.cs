@@ -55,6 +55,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         StrategicTask,
         TacticalTask,
         CompoundTask,
+        ReplacedCompoundTask,
         CompoundTaskCase,
         PrimitiveTask,
         BeginCompoundTask,

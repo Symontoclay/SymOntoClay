@@ -228,9 +228,29 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             Info("35B5E17A-C30E-4EF7-91F6-66D1F5E9950A", $"processedTask = {processedTask.ToHumanizedLabel()}");
 #endif
 
+            if(buildPlanIterationContext.BeginCompoundTasks.ContainsKey(processedTask.Name))
+            {
+                var targetBeginCompoundTask = buildPlanIterationContext.BeginCompoundTasks[processedTask.Name];
+
+#if DEBUG
+                Info("BB0994C1-AAAC-49E9-9C3E-E2812BDC3645", $"targetBeginCompoundTask = {targetBeginCompoundTask.ToHumanizedLabel()}");
+#endif
+
+                ReplaceBuiltPlanItems(new List<BaseTask> { new JumpPrimitiveTask() { TargetBeginCompoundTask = targetBeginCompoundTask } }, buildPlanIterationContext);//???
+
+                throw new NotImplementedException("14E28337-A503-4388-8920-7E193B8676E0");
+
+                //return;
+            }
+
+            var beginCompoundTask = new BeginCompoundTask() 
+            { 
+                CompoundTask = processedTask 
+            };
+
             ReplaceBuiltPlanItems(new List<BaseTask> 
-                { 
-                    new BeginCompoundTask() { CompoundTask = processedTask },
+                {
+                    beginCompoundTask,
                     new ReplacedCompoundTask() { CompoundTask = processedTask },
                     new EndCompoundTask() { CompoundTask = processedTask } 
                 },
@@ -238,15 +258,17 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
             buildPlanIterationContext.ProcessedIndex++;
 
+            buildPlanIterationContext.BeginCompoundTasks[processedTask.Name] = beginCompoundTask;
+
 #if DEBUG
-            Info("7182C96F-E323-4F08-A053-EC7BD7345219", $"buildPlanIterationContext (--) = {buildPlanIterationContext}");
+            //Info("7182C96F-E323-4F08-A053-EC7BD7345219", $"buildPlanIterationContext (--) = {buildPlanIterationContext}");
             Info("BD768CC6-94F8-4888-B29D-3C8373751DD1", $"buildPlanIterationContext (--) = {buildPlanIterationContext.ToDbgString()}");
 #endif
 
-            if(processedTask.IsStrategicTask)
-            {
+            //if(processedTask.IsStrategicTask)
+            //{
                 //throw new NotImplementedException("8C0447E9-6893-413E-9607-4CEBEC748519");
-            }
+            //}
 
             foreach (var taskCase in processedTask.Cases)
             {
@@ -343,7 +365,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             }
 
 #if DEBUG
-            Info("EE36EF43-6AB6-41D1-8E7E-EC07DDB89BB2", $"newBuiltPlanItems = {newBuiltPlanItems.WriteListToString()}");
+            //Info("EE36EF43-6AB6-41D1-8E7E-EC07DDB89BB2", $"newBuiltPlanItems = {newBuiltPlanItems.WriteListToString()}");
 #endif
 
             ReplaceBuiltPlanItems(newBuiltPlanItems, buildPlanIterationContext.TasksToProcess, buildPlanIterationContext.ProcessedIndex);

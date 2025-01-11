@@ -163,8 +163,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
                 var frameItem = new TasksPlanFrameItem 
                 { 
-                    //ExecutedTask = item.ExecutedTask,
-                    ParentTasks = item.ParentTasks.ToList()
+                    //ExecutedTask = item.ExecutedTask
                 };
 
                 frameItems[n] = frameItem;

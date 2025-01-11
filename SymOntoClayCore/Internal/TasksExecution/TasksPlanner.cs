@@ -97,8 +97,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
                 var planItem = new TasksPlanItem()
                 {
-                    ExecutedTask = builtItem.ProcessedTask.AsBasePrimitiveTask,
-                    ParentTasks = builtItem.ParentTasks.Select(p => p.AsBaseCompoundTask).ToList()
+                    ExecutedTask = builtItem.ProcessedTask.AsBasePrimitiveTask
                 };
 
 #if DEBUG
@@ -333,20 +332,12 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             //Info("8A913405-9ABA-430E-964D-B0223B5BEF0F", $"builtPlanItem = {builtPlanItem}");
 #endif
 
-            var parentTasks = builtPlanItem.ParentTasks.ToList();
-            parentTasks.Add(builtPlanItem.ProcessedTask);
-
-#if DEBUG
-            //Info("57DF1D77-3101-44D3-9F0A-826F0944FA18", $"parentTasks = {parentTasks.WriteListToString()}");
-#endif
-
             var newBuiltPlanItems = new List<BuiltPlanItem>();
 
             foreach(var task in tasksList)
             {
                 newBuiltPlanItems.Add(new BuiltPlanItem
                 {
-                    ParentTasks = parentTasks.ToList(),
                     ProcessedTask = task
                 });
             }

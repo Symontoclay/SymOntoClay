@@ -41,6 +41,7 @@ strategic task SomeStrategicTask
    {
        SomeTacticalTask;
        SomeStrategicTask;
+       SomePrimitiveTask;
    }
 }
 

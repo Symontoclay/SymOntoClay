@@ -124,6 +124,130 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             return completedIterations[0];
         }
 
+        private enum PrepareBuildPlanIterationContextState
+        {
+            Init,
+            WasJump
+        }
+
+        private BuildPlanIterationContext PrepareBuildPlanIterationContext(BuildPlanIterationContext buildPlanIterationContext)
+        {
+#if DEBUG
+            Info("7774FEE2-D085-4388-88E1-373D4E1D03EC", $"buildPlanIterationContext = {buildPlanIterationContext.ToDbgString()}");
+#endif
+
+            var tasksToProcess = buildPlanIterationContext.TasksToProcess;
+
+            if (!tasksToProcess.Any(p => p.ProcessedTask.IsJumpPrimitiveTask))
+            {
+                return buildPlanIterationContext;
+            }
+
+            var state = PrepareBuildPlanIterationContextState.Init;
+
+            BuiltPlanItem jumpBuiltItem = null;
+            var currentIndex = 0;
+
+            while(true)
+            {
+#if DEBUG
+                Info("E2A7188A-D480-42CB-8914-FF4C818D96C7", $"currentIndex = {currentIndex}");
+                Info("1E64FDA7-89D5-4ABC-81BB-CDE15EA724A9", $"tasksToProcess.Count = {tasksToProcess.Count}");
+                Info("370C5A7F-8D17-4629-872C-56C03D91C918", $"state = {state}");
+                Info("2F4BDDD2-A71A-47FF-BAF8-12EA348B6E2F", $"jumpBuiltItem = {jumpBuiltItem?.ToDbgString()}");
+                Info("EF4F54AC-A238-48F0-9FCD-16C97B176615", $"buildPlanIterationContext = {buildPlanIterationContext.ToDbgString()}");
+#endif
+
+                if (currentIndex >= tasksToProcess.Count)
+                {
+                    break;
+                }
+
+                var currentItem = tasksToProcess[currentIndex];
+
+#if DEBUG
+                Info("9BF47F56-D67B-412E-A599-49FFDFE870CB", $"currentItem = {currentItem.ToDbgString()}");
+#endif
+
+                var currentTask = currentItem.ProcessedTask;
+
+                var kindOfProcessedTask = currentTask.KindOfTask;
+
+#if DEBUG
+                Info("DECBE823-98EE-4A2B-8EB4-FE0790A29B8D", $"kindOfProcessedTask = {kindOfProcessedTask}");
+#endif
+
+                switch (state)
+                {
+                    case PrepareBuildPlanIterationContextState.Init:
+                        switch(kindOfProcessedTask)
+                        {
+                            case KindOfTask.BeginCompound:
+                            case KindOfTask.EndCompound:
+                            case KindOfTask.Primitive:
+                                currentIndex++;
+                                break;
+
+                            case KindOfTask.Jump:
+                                jumpBuiltItem = currentItem;
+                                tasksToProcess.Remove(jumpBuiltItem);
+                                state = PrepareBuildPlanIterationContextState.WasJump;
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(kindOfProcessedTask), kindOfProcessedTask, null);
+                        }
+                        break;
+
+                    case PrepareBuildPlanIterationContextState.WasJump:
+                        switch(kindOfProcessedTask)
+                        {
+                            case KindOfTask.Primitive:
+                                tasksToProcess.Remove(currentItem);
+                                break;
+
+                            case KindOfTask.EndCompound:
+                                {
+                                    var targetIndex = currentIndex + 1;
+
+#if DEBUG
+                                    Info("7C5C45A5-A08A-4D21-85DA-E770559E8864", $"targetIndex = {targetIndex}");
+#endif
+
+                                    if (currentIndex >= tasksToProcess.Count)
+                                    {
+                                        tasksToProcess.Add(jumpBuiltItem);
+                                        currentIndex++;
+                                    }
+                                    else
+                                    {
+                                        tasksToProcess.Insert(targetIndex, jumpBuiltItem);
+                                        currentIndex += 2;
+                                    }
+                                    
+#if DEBUG
+                                    Info("CC9C16D8-EBB6-482A-B187-0263A2932ACA", $"buildPlanIterationContext = {buildPlanIterationContext.ToDbgString()}");
+#endif
+
+                                    jumpBuiltItem = null;
+
+                                    state = PrepareBuildPlanIterationContextState.Init;
+                                }
+                                break;
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(kindOfProcessedTask), kindOfProcessedTask, null);
+                        }
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(state), state, null);
+                }
+            }
+
+            return buildPlanIterationContext;
+        }
+
         private void ProcessIteration(TasksPlannerGlobalContext tasksPlannerGlobalContext, BuildPlanIterationContext buildPlanIterationContext)
         {
 #if DEBUG
@@ -152,7 +276,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                 {
                     if(tasksToProcess.All(p => p.ProcessedTask.IsBasePrimitiveTask))
                     {
-                        tasksPlannerGlobalContext.CompletedIterations.Add(buildPlanIterationContext);
+                        tasksPlannerGlobalContext.CompletedIterations.Add(PrepareBuildPlanIterationContext(buildPlanIterationContext));
                     }
 
                     return;
@@ -238,9 +362,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
                 ReplaceBuiltPlanItems(new List<BaseTask> { new JumpPrimitiveTask() { TargetBeginCompoundTask = targetBeginCompoundTask } }, buildPlanIterationContext);//???
 
-                throw new NotImplementedException("14E28337-A503-4388-8920-7E193B8676E0");
-
-                //return;
+                return;
             }
 
             var beginCompoundTask = new BeginCompoundTask() 

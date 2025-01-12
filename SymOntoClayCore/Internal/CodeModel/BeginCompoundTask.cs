@@ -65,32 +65,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         /// <inheritdoc/>
-        public override string ToHumanizedString(DebugHelperOptions options)
-        {
-            return NToHumanizedString();
-        }
-
-        /// <inheritdoc/>
-        public override string ToHumanizedLabel(DebugHelperOptions options)
-        {
-            return NToHumanizedString();
-        }
-
-        /// <inheritdoc/>
-        public override MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
-        {
-            return new MonitoredHumanizedLabel()
-            {
-                Label = NToHumanizedString()
-            };
-        }
-
-        private string NToHumanizedString()
-        {
-            return $"Begin {CompoundTask?.ToHumanizedLabel()}";
-        }
-
-        /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
             var result = base.CalculateLongHashCode(options);
@@ -162,6 +136,32 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedString(DebugHelperOptions options)
+        {
+            return NToHumanizedString();
+        }
+
+        /// <inheritdoc/>
+        public override string ToHumanizedLabel(DebugHelperOptions options)
+        {
+            return NToHumanizedString();
+        }
+
+        /// <inheritdoc/>
+        public override MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
+        {
+            return new MonitoredHumanizedLabel()
+            {
+                Label = NToHumanizedString()
+            };
+        }
+
+        private string NToHumanizedString()
+        {
+            return $"Begin: {CompoundTask?.ToHumanizedLabel()}";
         }
     }
 }

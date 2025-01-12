@@ -87,7 +87,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private string NToHumanizedString()
         {
-            return $"End {CompoundTask?.ToHumanizedLabel()}";
+            return $"End: {CompoundTask?.ToHumanizedLabel()}";
         }
 
         /// <inheritdoc/>

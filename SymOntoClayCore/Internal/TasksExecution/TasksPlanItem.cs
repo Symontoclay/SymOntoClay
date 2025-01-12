@@ -5,7 +5,6 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.TasksExecution
@@ -100,7 +99,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{ExecutedTask?.ToHumanizedLabel()}");
+            sb.AppendLine($"{spaces}{NToHumanizedString()}");
             return sb.ToString();
         }
 
@@ -118,7 +117,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         /// <inheritdoc/>
         public string ToHumanizedString(DebugHelperOptions options)
         {
-            throw new NotImplementedException("BC75B7FE-C68B-44B9-9E37-92ED37D78F4B");
+            return NToHumanizedString();
         }
 
         /// <inheritdoc/>
@@ -135,19 +134,27 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         /// <inheritdoc/>
         public string ToHumanizedLabel(DebugHelperOptions options)
         {
-            return ExecutedTask?.ToHumanizedLabel(options);
+            return NToHumanizedString();
         }
 
         /// <inheritdoc/>
         public string ToHumanizedString(IMonitorLogger logger)
         {
-            throw new NotImplementedException("45A8A5F5-7153-436F-8392-8E6B559058DF");
+            return NToHumanizedString();
         }
 
         /// <inheritdoc/>
         public MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
         {
-            throw new NotImplementedException("6BB2065C-F9F0-4EED-85DA-9C0C1DE43202");
+            return new MonitoredHumanizedLabel()
+            {
+                Label = NToHumanizedString()
+            };
+        }
+
+        private string NToHumanizedString()
+        {
+            return ExecutedTask?.ToHumanizedLabel();
         }
     }
 }

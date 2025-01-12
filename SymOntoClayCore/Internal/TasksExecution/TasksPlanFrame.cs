@@ -125,7 +125,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                     currentMark = "-> ";
                 }
 
-                sb.AppendLine($"{nextNSpaces}{currentMark}{item.Key}: {item.Value.ToDbgString()}");
+                sb.AppendLine($"{nextNSpaces}{currentMark}{item.Key}: {item.Value.ToHumanizedLabel()}");
             }
 
             sb.AppendLine($"{spaces}End Items");

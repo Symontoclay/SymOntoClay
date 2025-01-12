@@ -12,8 +12,10 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 {
     public class TasksPlanFrameItem : IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString, IObjectToHumanizedString, IMonitoredHumanizedObject
     {
-        public List<BaseCompoundTask> ParentTasks { get; set; } = new List<BaseCompoundTask>();
-        public PrimitiveTask ExecutedTask { get; set; }
+        public KindOfTasksPlanFrameItemCommand KindOfCommand { get; set; }
+        public int TargetPosition { get; set; }
+        public BasePrimitiveTask ExecutedTask { get; set; }
+        public BaseCompoundTask CompoundTask { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()
@@ -33,8 +35,10 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjListProp(n, nameof(ParentTasks), ParentTasks);
+            sb.AppendLine($"{spaces}{nameof(KindOfCommand)} = {KindOfCommand}");
+            sb.AppendLine($"{spaces}{nameof(TargetPosition)} = {TargetPosition}");
             sb.PrintObjProp(n, nameof(ExecutedTask), ExecutedTask);
+            sb.PrintObjProp(n, nameof(CompoundTask), CompoundTask);
 
             return sb.ToString();
         }
@@ -57,8 +61,10 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjListProp(n, nameof(ParentTasks), ParentTasks);
+            sb.AppendLine($"{spaces}{nameof(KindOfCommand)} = {KindOfCommand}");
+            sb.AppendLine($"{spaces}{nameof(TargetPosition)} = {TargetPosition}");
             sb.PrintShortObjProp(n, nameof(ExecutedTask), ExecutedTask);
+            sb.PrintShortObjProp(n, nameof(CompoundTask), CompoundTask);
 
             return sb.ToString();
         }
@@ -81,8 +87,10 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjListProp(n, nameof(ParentTasks), ParentTasks);
+            sb.AppendLine($"{spaces}{nameof(KindOfCommand)} = {KindOfCommand}");
+            sb.AppendLine($"{spaces}{nameof(TargetPosition)} = {TargetPosition}");
             sb.PrintBriefObjProp(n, nameof(ExecutedTask), ExecutedTask);
+            sb.PrintBriefObjProp(n, nameof(CompoundTask), CompoundTask);
 
             return sb.ToString();
         }
@@ -104,7 +112,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
-            sb.AppendLine($"{spaces}{ExecutedTask.Name.ToSystemString()}");
+            sb.AppendLine($"{spaces}{NToHumanizedString()}");
             return sb.ToString();
         }
 
@@ -139,19 +147,37 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         /// <inheritdoc/>
         public string ToHumanizedLabel(DebugHelperOptions options)
         {
-            throw new NotImplementedException("E30C7144-8ABD-4BE2-9FF2-1EFAB61E0BC8");
+            return NToHumanizedString();
         }
 
         /// <inheritdoc/>
         public string ToHumanizedString(IMonitorLogger logger)
         {
-            throw new NotImplementedException("45A8A5F5-7153-436F-8392-8E6B559058DF");
+            return NToHumanizedString();
         }
 
         /// <inheritdoc/>
         public MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
         {
-            throw new NotImplementedException("6BB2065C-F9F0-4EED-85DA-9C0C1DE43202");
+            return new MonitoredHumanizedLabel()
+            {
+                Label = NToHumanizedString()
+            };
+        }
+
+        private string NToHumanizedString()
+        {
+            switch (KindOfCommand)
+            {
+                case KindOfTasksPlanFrameItemCommand.Nop:
+                    return "NOP";
+
+                case KindOfTasksPlanFrameItemCommand.BeginCompoundTask:
+                    return $"Begin: {CompoundTask?.ToHumanizedLabel()}";
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(KindOfCommand), KindOfCommand, null);
+            }
         }
     }
 }

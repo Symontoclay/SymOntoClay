@@ -81,9 +81,9 @@ namespace TestSandbox.Handlers
             //_logger.Info("B7831523-8D1C-4BAB-8348-460656F67E90", $"plan = {plan}");
             _logger.Info("A74AD3BB-4D8E-44EC-AEF0-820592069E87", $"plan = {plan.ToDbgString()}");
 
-            //var tasksPlanRunner = new TasksPlanRunner(_npc.EngineContext, new SyncActivePeriodicObject(_npc.EngineContext.GetCancellationToken()));
+            var tasksPlanRunner = new TasksPlanRunner(_npc.EngineContext, new SyncActivePeriodicObject(_npc.EngineContext.GetCancellationToken()));
 
-            //tasksPlanRunner.Run(plan);
+            tasksPlanRunner.Run(plan);
 
             _logger.Info("6FDE9DEF-C0F2-4500-BAD5-6F3FD56A3EF9", "|-|-|-|-|-|-|-|-|-|-|-|-|");
 

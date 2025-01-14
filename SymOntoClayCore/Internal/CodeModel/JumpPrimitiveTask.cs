@@ -25,7 +25,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override KindOfPrimitiveTask KindOfPrimitiveTask => KindOfPrimitiveTask.Jump;
 
-        public BeginCompoundTask TargetBeginCompoundTask { get; set; }
+        public StrongIdentifierValue TargetTaskName { get; set; }
 
         /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> context)
@@ -57,7 +57,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var result = new JumpPrimitiveTask();
             context[this] = result;
 
-            result.TargetBeginCompoundTask = TargetBeginCompoundTask?.Clone(context);
+            result.TargetTaskName = TargetTaskName?.Clone(context);
 
             result.AppendCodeItem(this, context);
 
@@ -87,7 +87,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private string NToHumanizedString()
         {
-            return $"Jump to: {TargetBeginCompoundTask?.ToHumanizedLabel()}";
+            return $"Jump to: {TargetTaskName?.ToSystemString()}";
         }
 
         /// <inheritdoc/>
@@ -111,7 +111,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             base.DiscoverAllAnnotations(result);
 
-            TargetBeginCompoundTask.DiscoverAllAnnotations(result);
+            //TargetBeginCompoundTask.DiscoverAllAnnotations(result);
 
             //if (!Cases.IsNullOrEmpty())
             //{
@@ -128,7 +128,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjProp(n, nameof(TargetBeginCompoundTask), TargetBeginCompoundTask);
+            sb.PrintObjProp(n, nameof(TargetTaskName), TargetTaskName);
 
             //sb.PrintObjListProp(n, nameof(Cases), Cases);
 
@@ -142,7 +142,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjProp(n, nameof(TargetBeginCompoundTask), TargetBeginCompoundTask);
+            sb.PrintShortObjProp(n, nameof(TargetTaskName), TargetTaskName);
 
             //sb.PrintShortObjListProp(n, nameof(Cases), Cases);
 
@@ -156,7 +156,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjProp(n, nameof(TargetBeginCompoundTask), TargetBeginCompoundTask);
+            sb.PrintBriefObjProp(n, nameof(TargetTaskName), TargetTaskName);
 
             //sb.PrintBriefObjListProp(n, nameof(Cases), Cases);
 

@@ -12,7 +12,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
     {
         public int ProcessedIndex { get; set; } = -1;
         public List<BuiltPlanItem> TasksToProcess { get; set; } = new List<BuiltPlanItem>();
-        public Dictionary<StrongIdentifierValue, BeginCompoundTask> BeginCompoundTasks { get; set; } = new Dictionary<StrongIdentifierValue, BeginCompoundTask>();
+        public List<StrongIdentifierValue> VisitedCompoundTasks { get; set; } = new List<StrongIdentifierValue>();
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
         public BuildPlanIterationContext Clone()
@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
             result.ProcessedIndex = ProcessedIndex;
             result.TasksToProcess = TasksToProcess.Select(p => p.Clone(context)).ToList();
-            result.BeginCompoundTasks = BeginCompoundTasks.ToDictionary(p => p.Key.Clone(context), p => p.Value.Clone(context));
+            result.VisitedCompoundTasks = VisitedCompoundTasks.Select(p => p.Clone(context)).ToList();
 
             return result;
         }
@@ -59,7 +59,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
             sb.AppendLine($"{spaces}{nameof(ProcessedIndex)} = {ProcessedIndex}");
             sb.PrintObjListProp(n, nameof(TasksToProcess), TasksToProcess);
-            sb.PrintObjDict_1_Prop(n, nameof(BeginCompoundTasks), BeginCompoundTasks);
+            sb.PrintObjListProp(n, nameof(VisitedCompoundTasks), VisitedCompoundTasks);
 
             return sb.ToString();
         }
@@ -84,7 +84,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
             sb.AppendLine($"{spaces}{nameof(ProcessedIndex)} = {ProcessedIndex}");
             sb.PrintShortObjListProp(n, nameof(TasksToProcess), TasksToProcess);
-            sb.PrintObjDict_1_Prop(n, nameof(BeginCompoundTasks), BeginCompoundTasks);
+            sb.PrintObjListProp(n, nameof(VisitedCompoundTasks), VisitedCompoundTasks);
 
             return sb.ToString();
         }
@@ -109,7 +109,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
             sb.AppendLine($"{spaces}{nameof(ProcessedIndex)} = {ProcessedIndex}");
             sb.PrintBriefObjListProp(n, nameof(TasksToProcess), TasksToProcess);
-            sb.PrintObjDict_1_Prop(n, nameof(BeginCompoundTasks), BeginCompoundTasks);
+            sb.PrintObjListProp(n, nameof(VisitedCompoundTasks), VisitedCompoundTasks);
 
             return sb.ToString();
         }
@@ -148,7 +148,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                 i++;
             }
 
-            sb.AppendLine($"{spaces}Visited compound tasks: [{string.Join(", ", BeginCompoundTasks.Keys.Select(p => p.ToSystemString()))}]");
+            sb.AppendLine($"{spaces}Visited compound tasks: [{string.Join(", ", VisitedCompoundTasks.Select(p => p.ToSystemString()))}]");
 
             return sb.ToString();
         }

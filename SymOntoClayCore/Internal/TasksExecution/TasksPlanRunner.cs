@@ -1,4 +1,5 @@
-﻿using SymOntoClay.ActiveObject.Threads;
+﻿using Newtonsoft.Json;
+using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Instances;
@@ -159,6 +160,8 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
             var n = 0;
 
+            var beginTaskItems = new Dictionary<StrongIdentifierValue, int>();
+
             foreach(var item in plan.Items)
             {
                 var executedTask = item.ExecutedTask;
@@ -184,7 +187,30 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                     case KindOfPrimitiveTask.BeginCompound:
                         frameItem.KindOfCommand = KindOfTasksPlanFrameItemCommand.BeginCompoundTask;
                         frameItem.CompoundTask = executedTask.AsBeginCompoundTask.CompoundTask;
+                        beginTaskItems[frameItem.CompoundTask.Name] = n;
                         break;
+
+                    case KindOfPrimitiveTask.Primitive:
+                        frameItem.KindOfCommand = KindOfTasksPlanFrameItemCommand.ExecPrimitiveTask;
+                        frameItem.ExecutedTask = executedTask;
+                        break;
+
+                    case KindOfPrimitiveTask.EndCompound:
+                        frameItem.KindOfCommand = KindOfTasksPlanFrameItemCommand.EndCompoundTask;
+                        frameItem.CompoundTask = executedTask.AsEndCompoundTask.CompoundTask;
+                        break;
+
+                    case KindOfPrimitiveTask.Jump:
+                        frameItem.KindOfCommand = KindOfTasksPlanFrameItemCommand.JumpTo;
+
+#if DEBUG
+                        Info("20DE3F09-8824-4FD4-8060-1B34ED347F2F", $"beginTaskItems = {JsonConvert.SerializeObject(beginTaskItems.ToDictionary(p => p.Key.ToSystemString(), p => p.Value), Formatting.Indented)}");
+                        Info("40B6703F-E3AA-41CA-A76D-403C8AC1BBA4", $"executedTask.AsJumpPrimitiveTask.TargetTaskName.ToSystemString() = {executedTask.AsJumpPrimitiveTask.TargetTaskName.ToSystemString()}");
+#endif
+
+                        frameItem.TargetPosition = beginTaskItems[executedTask.AsJumpPrimitiveTask.TargetTaskName];
+                        break;
+                        //throw new NotImplementedException("31F63B96-CFC0-4C2F-B617-A84E38BE171A");
 
                     default:
                         throw new ArgumentOutOfRangeException(nameof(kindOfPrimitiveTask), kindOfPrimitiveTask, null);
@@ -205,7 +231,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             Info("D4B5A270-DF4C-4529-B44A-F3B5871430AD", $"frame = {frame.ToDbgString()}");
 #endif
 
-            throw new NotImplementedException("34F74B8F-4616-4DBD-B633-0FFBB3098F01");
+            //throw new NotImplementedException("34F74B8F-4616-4DBD-B633-0FFBB3098F01");
 
             return frame;
         }

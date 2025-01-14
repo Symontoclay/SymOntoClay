@@ -175,6 +175,15 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                 case KindOfTasksPlanFrameItemCommand.BeginCompoundTask:
                     return $"Begin: {CompoundTask?.ToHumanizedLabel()}";
 
+                case KindOfTasksPlanFrameItemCommand.ExecPrimitiveTask:
+                    return $"Exec: {ExecutedTask?.ToHumanizedLabel()}";
+
+                case KindOfTasksPlanFrameItemCommand.EndCompoundTask:
+                    return $"End: {CompoundTask?.ToHumanizedLabel()}";
+
+                case KindOfTasksPlanFrameItemCommand.JumpTo:
+                    return $"Jump To: {TargetPosition}";
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(KindOfCommand), KindOfCommand, null);
             }

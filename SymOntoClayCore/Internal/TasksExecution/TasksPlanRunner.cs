@@ -111,40 +111,68 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
                 var primitiveTaskId = 0ul;
 
-                //if(_executionState == ExecutionState.PrepareToItemExecution)
-                //{
-                //    primitiveTaskId = Logger.StartPrimitiveTask("CCAF4110-C1C7-4999-9ECB-351F8DBD6DB6");
+                if (_executionState == ExecutionState.PrepareToItemExecution)
+                {
+                    primitiveTaskId = Logger.StartPrimitiveTask("CCAF4110-C1C7-4999-9ECB-351F8DBD6DB6");
 
-                //    var processInitialInfo = new ProcessInitialInfo();
-                //    processInitialInfo.CompiledFunctionBody = executedTask.Operator.CompiledFunctionBody;
-                //    processInitialInfo.LocalContext = _mainEntity.LocalCodeExecutionContext;
-                //    processInitialInfo.Metadata = executedTask;
-                //    processInitialInfo.Instance = _mainEntity;
-                //    processInitialInfo.ExecutionCoordinator = _mainEntity.ExecutionCoordinator;
+                    var kindOfCommand = item.KindOfCommand;
 
-                //    _task = _context.CodeExecutor.ExecuteAsync(Logger, processInitialInfo);
+                    switch(kindOfCommand)
+                    {
+                        case KindOfTasksPlanFrameItemCommand.Nop:
+                            tasksPlanFrame.CurrentPosition++;
+                            break;
 
-                //    _executionState = ExecutionState.WaitingForFinishItemExecution;
-                //}
+                        case KindOfTasksPlanFrameItemCommand.ExecPrimitiveTask:
+                            {
+                                var processInitialInfo = new ProcessInitialInfo();
+                                processInitialInfo.CompiledFunctionBody = executedTask.AsPrimitiveTask.Operator.CompiledFunctionBody;
+                                processInitialInfo.LocalContext = _mainEntity.LocalCodeExecutionContext;
+                                processInitialInfo.Metadata = executedTask;
+                                processInitialInfo.Instance = _mainEntity;
+                                processInitialInfo.ExecutionCoordinator = _mainEntity.ExecutionCoordinator;
 
-                //if(_executionState == ExecutionState.WaitingForFinishItemExecution)
-                //{
-                //    _task.Wait();
+                                _task = _context.CodeExecutor.ExecuteAsync(Logger, processInitialInfo);
 
-                //    Logger.StopPrimitiveTask("E9AA3F24-8A81-4F4C-81A6-4FBC3C2CC286", primitiveTaskId);
+                                _executionState = ExecutionState.WaitingForFinishItemExecution;
+                            }
+                            break;
 
-                //    _executionState = ExecutionState.FinishItemExecution;
-                //}
+                        case KindOfTasksPlanFrameItemCommand.BeginCompoundTask:
+                            tasksPlanFrame.CurrentPosition++;
+                            break;
 
-                //if(_executionState == ExecutionState.FinishItemExecution)
-                //{
-                //    tasksPlanFrame.CurrentPosition++;
+                        case KindOfTasksPlanFrameItemCommand.EndCompoundTask:
+                            tasksPlanFrame.CurrentPosition++;
+                            break;
 
-                //    _executionState = ExecutionState.PrepareToItemExecution;
-                //}
+                        case KindOfTasksPlanFrameItemCommand.JumpTo:
+                            tasksPlanFrame.CurrentPosition = item.TargetPosition;
+                            break;
 
-                //return true;
-                return false;//tmp
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(kindOfCommand), kindOfCommand, null);
+                    }
+                }
+
+                if (_executionState == ExecutionState.WaitingForFinishItemExecution)
+                {
+                    _task.Wait();
+
+                    Logger.StopPrimitiveTask("E9AA3F24-8A81-4F4C-81A6-4FBC3C2CC286", primitiveTaskId);
+
+                    _executionState = ExecutionState.FinishItemExecution;
+                }
+
+                if (_executionState == ExecutionState.FinishItemExecution)
+                {
+                    tasksPlanFrame.CurrentPosition++;
+
+                    _executionState = ExecutionState.PrepareToItemExecution;
+                }
+
+                return true;
+                //return false;//tmp
             }
             catch (Exception e)
             {

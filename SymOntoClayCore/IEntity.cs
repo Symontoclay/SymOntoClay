@@ -36,7 +36,7 @@ namespace SymOntoClay.Core
     {
         /// <summary>
         /// Returns Instance ID on Unity game object.
-        /// It allows to bing SymOntoClay's entity to entity on game level.
+        /// It allows to bind SymOntoClay's entity to entity on game level.
         /// </summary>
         int InstanceId { get; }
 
@@ -92,7 +92,7 @@ namespace SymOntoClay.Core
 
         /// <summary>
         /// Resolves (finds) entity with constraints or backpack storage.
-        /// If entity has been previously resolved, the more fittable entity will has been found.
+        /// If entity has been previously resolved, the more suitable entity will has been found.
         /// </summary>
         /// <param name="logger">Logger.</param>
         void Resolve(IMonitorLogger logger);

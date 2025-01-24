@@ -5,6 +5,7 @@
     fun SomeOperator()
     {
        'Run SomeOperator' >> @>log;
+       @targetEnemy = ##@{: see(I, $_) & enemy($_) & state($_, alive) :};
        wait 1;
     }
 
@@ -25,6 +26,9 @@
        'Run SomeOperator4' >> @>log;
        wait 1;
     }
+
+	private:
+	    var @targetEnemy;
 }
 
 root task SomeRootTask
@@ -40,8 +44,8 @@ strategic task SomeStrategicTask
    case
    {
        SomeTacticalTask;
-       SomeStrategicTask;
-       SomePrimitiveTask;
+       //SomeStrategicTask;
+       //SomePrimitiveTask;
    }
 }
 

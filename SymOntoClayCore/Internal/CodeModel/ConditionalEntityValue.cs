@@ -44,13 +44,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             _isOnceResolved = isOnceResolved;
 
-#if DEBUG
-            if(isOnceResolved)
-            {
-                throw new NotImplementedException("AAF3C4BA-04EE-4A06-8CC5-FF402B78D2AA");
-            }
-#endif
-
             _context = context;
             _localContext = localContext;
 
@@ -106,6 +99,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         private readonly IStorage _storage;
         private LogicalSearchOptions _searchOptions;
         private bool _isOnceResolved;
+        private bool _isResolved;
 
         /// <inheritdoc/>
         public override bool NullValueEquals()
@@ -132,6 +126,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private void NResolve(IMonitorLogger logger)
         {
+            if(_isOnceResolved && _isResolved)
+            {
+                return;
+            }
+
             try
             {
                 _needUpdate = false;
@@ -182,7 +181,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
                     _constraints = null;
                     _specifiedOnce = false;
                 }
-                
+
+                _isResolved = true;
             }
             catch (Exception e)
             {

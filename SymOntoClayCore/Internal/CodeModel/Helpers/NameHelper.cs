@@ -78,6 +78,23 @@ namespace SymOntoClay.Core.Internal.CodeModel.Helpers
                 return source;
             }
 
+            if(source == "##@")
+            {
+                return source;
+            }
+
+            if (source.StartsWith("##@"))
+            {
+                var nameSubStr = source.Substring(2);
+
+                if (nameSubStr.All(p => char.IsLetterOrDigit(p) || p == '_') || nameSubStr.Contains("`"))
+                {
+                    return source;
+                }
+
+                return $"{source.Insert(3, "`")}`";
+            }
+
             if (source.StartsWith("#@"))
             {
                 var nameSubStr = source.Substring(2);

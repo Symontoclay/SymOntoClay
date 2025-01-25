@@ -1066,6 +1066,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var kindOfValue = value.KindOfValue;
 
+#if DEBUG
+            //Info("B3E9AD36-4058-43E0-9A15-845B13D2E1EE", $"kindOfValue = {kindOfValue}");
+#endif
+
             switch (kindOfValue)
             {
                 case KindOfValue.WaypointSourceValue:

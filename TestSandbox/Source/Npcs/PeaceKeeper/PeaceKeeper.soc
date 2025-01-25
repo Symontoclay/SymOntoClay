@@ -27,6 +27,8 @@
        wait 1;
     }
 
+    prop SomeProp1: number = 2;
+
 	private:
 	    var @targetEnemy;
 }
@@ -56,6 +58,8 @@ tactical task SomeTacticalTask
        SomeCompoundTask;
        SomeCompoundTask2;
    }
+
+   prop SomeProp2: number = 2;
 }
 
 compound task SomeCompoundTask

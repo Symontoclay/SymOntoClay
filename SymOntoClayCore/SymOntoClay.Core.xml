@@ -5174,6 +5174,46 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ProcessInfoValue.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Property.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Property.IsProperty">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.Property.AsProperty">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Property.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Property.Clone">
+            <summary>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Property.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Property.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Property.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Property.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Property.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Property.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Property.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RangeBoundary.Clone">
             <summary>
 			Clones the instance and returns cloned instance.
@@ -8550,6 +8590,12 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.PrimitiveTaskParser.OnRun">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.PropertyParser.OnEnter">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.PropertyParser.OnRun">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Parsing.Internal.RawStatements.SetRawStatement.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">

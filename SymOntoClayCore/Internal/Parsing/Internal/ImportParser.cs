@@ -33,7 +33,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotImportMark,
             GotLibName
         }
-
+        
         public ImportParser(InternalParserContext context)
             : base(context)
         {

@@ -693,6 +693,23 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             return result;
         }
 
+        protected Property CreateProperty()
+        {
+            var result = new Property();
+            result.TypeOfAccess = TypeOfAccess.Private;
+
+            DefaultSettingsOfCodeEntityHelper.SetUpAnnotatedItem(result, CurrentDefaultSetings);
+
+            FillUpCodeItem(result);
+
+            if (result.ParentCodeEntity != null)
+            {
+                result.Holder = result.ParentCodeEntity.Name;
+            }
+
+            return result;
+        }
+
         private void FillUpCodeItem(CodeItem codeItem)
         {
             codeItem.CodeFile = _context.CodeFile;

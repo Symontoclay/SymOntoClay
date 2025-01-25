@@ -2418,6 +2418,9 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.BaseEntityValue.IsEmpty">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.BaseEntityValue.IsOnceResolved">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseEntityValue.Specify(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.EntityConstraints[])">
             <inheritdoc/>
         </member>
@@ -2446,6 +2449,15 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.BaseEntityValue.SymOntoClay#Core#INavTarget#Entity">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseEntityValue.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseEntityValue.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.BaseEntityValue.PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.BasePrimitiveTask.IsBasePrimitiveTask">
@@ -3020,6 +3032,9 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntitySourceValue.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.IsOnceResolved">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.ConditionalEntityValue.NullValueEquals">
             <inheritdoc/>
         </member>
@@ -3264,6 +3279,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.EntityValue.BuiltInSuperTypes">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.EntityValue.IsOnceResolved">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.EntityValue.GetSystemValue">

@@ -39,9 +39,18 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class ConditionalEntityValue : BaseEntityValue
     {
-        public ConditionalEntityValue(EntityConditionExpressionNode entityConditionExpression, RuleInstance logicalQuery, StrongIdentifierValue name, IEngineContext context, ILocalCodeExecutionContext localContext)
+        public ConditionalEntityValue(EntityConditionExpressionNode entityConditionExpression, RuleInstance logicalQuery, StrongIdentifierValue name, IEngineContext context, ILocalCodeExecutionContext localContext, bool isOnceResolved)
             : base(context, localContext)
         {
+            _isOnceResolved = isOnceResolved;
+
+#if DEBUG
+            if(isOnceResolved)
+            {
+                throw new NotImplementedException("AAF3C4BA-04EE-4A06-8CC5-FF402B78D2AA");
+            }
+#endif
+
             _context = context;
             _localContext = localContext;
 
@@ -87,12 +96,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public StrongIdentifierValue Name { get; private set; }
         public RuleInstance LogicalQuery { get; private set; }
 
+        /// <inheritdoc/>
+        public override bool IsOnceResolved => _isOnceResolved;
+
         private IEngineContext _context;
         private ILocalCodeExecutionContext _localContext;
         private readonly LogicalSearchResolver _searcher;
         private readonly ILocalCodeExecutionContext _localCodeExecutionContext;
         private readonly IStorage _storage;
         private LogicalSearchOptions _searchOptions;
+        private bool _isOnceResolved;
 
         /// <inheritdoc/>
         public override bool NullValueEquals()
@@ -251,7 +264,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 return (Value)context[this];
             }
 
-            var result = new ConditionalEntityValue(Expression?.Clone(context), LogicalQuery?.Clone(context), Name?.Clone(context), _context, _localContext);
+            var result = new ConditionalEntityValue(Expression?.Clone(context), LogicalQuery?.Clone(context), Name?.Clone(context), _context, _localContext, _isOnceResolved);
             context[this] = result;
 
             result.AppendAnnotations(this, context);
@@ -340,7 +353,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
             else
             {
-                sb.Append("#@");
+                if (IsOnceResolved)
+                {
+                    sb.Append("##@");
+                }
+                else
+                {
+                    sb.Append("#@");
+                }
             }
 
             if (Expression == null)

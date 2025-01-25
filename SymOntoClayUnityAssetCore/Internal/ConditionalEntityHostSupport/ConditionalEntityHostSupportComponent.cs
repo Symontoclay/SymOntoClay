@@ -129,6 +129,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport
         }
 
         /// <inheritdoc/>
+        public bool IsOnceResolved => throw new NotImplementedException("D997A50F-3F55-4239-8B17-F06B7B355501");
+
+        /// <inheritdoc/>
         public void Specify(IMonitorLogger logger, params EntityConstraints[] constraints)
         {
         }

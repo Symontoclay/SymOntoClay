@@ -21,13 +21,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Common.CollectionsHelpers;
+using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.CodeModel.MonitorSerializableObjects;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Numerics;
+using System.Text;
+using System.Xml.Linq;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
@@ -102,6 +106,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 return _isEmpty;
             }
         }
+
+        /// <inheritdoc/>
+        public abstract bool IsOnceResolved { get; }
 
         /// <inheritdoc/>
         public void Specify(IMonitorLogger logger, params EntityConstraints[] constraints)
@@ -448,6 +455,42 @@ namespace SymOntoClay.Core.Internal.CodeModel
             obj.Constraints = _constraints?.Select(p => (int)p).ToArray();
             obj.SpecifiedOnce = _specifiedOnce;
             obj.OnceStorage = _onceStorage?.ToBriefString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(IsOnceResolved)} = {IsOnceResolved}");
+
+            sb.Append(base.PropertiesToString(n));
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToShortString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(IsOnceResolved)} = {IsOnceResolved}");
+
+            sb.Append(base.PropertiesToShortString(n));
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        protected override string PropertiesToBriefString(uint n)
+        {
+            var spaces = DisplayHelper.Spaces(n);
+            var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{nameof(IsOnceResolved)} = {IsOnceResolved}");
+
+            sb.Append(base.PropertiesToBriefString(n));
+            return sb.ToString();
         }
     }
 }

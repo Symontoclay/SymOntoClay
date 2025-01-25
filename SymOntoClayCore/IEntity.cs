@@ -61,6 +61,8 @@ namespace SymOntoClay.Core
         /// </summary>
         bool IsEmpty { get; }
 
+        bool IsOnceResolved { get; }
+
         /// <summary>
         /// Sets constraints that will be used during resolving.
         /// It allows to resolve entity in way which is fit for the host-method.

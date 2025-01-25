@@ -68,6 +68,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override IReadOnlyList<StrongIdentifierValue> BuiltInSuperTypes => _builtInSuperTypes;
 
         /// <inheritdoc/>
+        public override bool IsOnceResolved => false;
+
+        /// <inheritdoc/>
         public override object GetSystemValue()
         {
             throw new NotImplementedException("1045EB61-BF50-41A6-A840-CDD82085E03F");

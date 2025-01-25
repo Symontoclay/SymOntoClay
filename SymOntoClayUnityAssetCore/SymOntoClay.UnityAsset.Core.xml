@@ -886,6 +886,9 @@
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.DistanceTo(SymOntoClay.Monitor.Common.IMonitorLogger,System.Int32)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.IsOnceResolved">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.ConditionalEntityHostSupport.ConditionalEntityHostSupportComponent.Specify(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.EntityConstraints[])">
             <inheritdoc/>
         </member>

@@ -127,7 +127,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 }
             }
 
-            return new ConditionalEntityValue(Expression, LogicalQuery, Name, context, localContext);
+            return new ConditionalEntityValue(Expression, LogicalQuery, Name, context, localContext, IsOnceResolved);
         }
 
         private List<StrongIdentifierValue> _builtInSuperTypes;

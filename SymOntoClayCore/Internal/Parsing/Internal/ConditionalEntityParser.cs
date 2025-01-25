@@ -54,6 +54,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private Value _secondCoordinate;
         private EntityConditionExpressionNode _entityConditionExpression;
         private RuleInstance _entityConditionQuery;
+        private bool _isOnceResolved;
 
         /// <inheritdoc/>
         protected override void OnFinish()
@@ -66,7 +67,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             if(_entityConditionExpression != null)
             {
-                var result = new ConditionalEntitySourceValue(_entityConditionExpression, _name);
+                var result = new ConditionalEntitySourceValue(_entityConditionExpression, _name, _isOnceResolved);
 
                 if (_context.NeedCheckDirty)
                 {
@@ -78,7 +79,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             }
 
             {
-                var result = new ConditionalEntitySourceValue(_entityConditionQuery, _name);
+                var result = new ConditionalEntitySourceValue(_entityConditionQuery, _name, _isOnceResolved);
 
                 if (_context.NeedCheckDirty)
                 {
@@ -99,6 +100,20 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         case TokenKind.EntityCondition:
                             {
+                                _isOnceResolved = false;
+
+                                var name = NameHelper.CreateName(_currToken.Content);
+
+                                _name = name;
+
+                                _state = State.GotName;
+                            }
+                            break;
+
+                        case TokenKind.OnceEntityCondition:
+                            {
+                                _isOnceResolved = true;
+
                                 var name = NameHelper.CreateName(_currToken.Content);
 
                                 _name = name;

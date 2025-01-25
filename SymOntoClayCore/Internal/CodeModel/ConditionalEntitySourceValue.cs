@@ -40,12 +40,23 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public class ConditionalEntitySourceValue : Value
     {
         public ConditionalEntitySourceValue(EntityConditionExpressionNode entityConditionExpression)
-            : this(entityConditionExpression, null)
+            : this(entityConditionExpression, null, false)
+        {
+        }
+
+        public ConditionalEntitySourceValue(EntityConditionExpressionNode entityConditionExpression, bool isOnceResolved)
+            : this(entityConditionExpression, null, isOnceResolved)
         {
         }
 
         public ConditionalEntitySourceValue(EntityConditionExpressionNode entityConditionExpression, StrongIdentifierValue name)
+            : this(entityConditionExpression, name, false)
         {
+        }
+
+        public ConditionalEntitySourceValue(EntityConditionExpressionNode entityConditionExpression, StrongIdentifierValue name, bool isOnceResolved)
+        {
+            IsOnceResolved = isOnceResolved;
             Expression = entityConditionExpression;
             Name = name;
 
@@ -55,7 +66,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         public ConditionalEntitySourceValue(RuleInstance logicalQuery, StrongIdentifierValue name)
+            : this(logicalQuery, name, false)
         {
+        }
+
+        public ConditionalEntitySourceValue(RuleInstance logicalQuery, StrongIdentifierValue name, bool isOnceResolved)
+        {
+            IsOnceResolved = isOnceResolved;
             LogicalQuery = logicalQuery;
             Name = name;
 
@@ -73,6 +90,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public EntityConditionExpressionNode Expression { get; private set; }
         public StrongIdentifierValue Name { get; private set; }
         public RuleInstance LogicalQuery { get; private set; }
+        public bool IsOnceResolved { get; private set; }
+
         private bool _isLogicalQueryGenerated;
         private bool _isLongHashCodeRecalculatedWithEngineContext;
         private object _recalculatingLongHashCodeWithEngineContextLockObj = new object();
@@ -187,6 +206,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var result = new ConditionalEntitySourceValue();
             context[this] = result;
 
+            result.IsOnceResolved = IsOnceResolved;
             result.Name = Name?.Clone(context);
             result.Expression = Expression?.Clone(context);
             result.LogicalQuery = LogicalQuery?.Clone(context);
@@ -210,6 +230,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(IsOnceResolved)} = {IsOnceResolved}");
             sb.PrintObjProp(n, nameof(Expression), Expression);
             sb.PrintObjProp(n, nameof(LogicalQuery), LogicalQuery);
             sb.PrintObjProp(n, nameof(Name), Name);
@@ -224,6 +245,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(IsOnceResolved)} = {IsOnceResolved}");
             sb.PrintShortObjProp(n, nameof(Expression), Expression);
             sb.PrintShortObjProp(n, nameof(LogicalQuery), LogicalQuery);
             sb.PrintShortObjProp(n, nameof(Name), Name);
@@ -238,6 +260,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
+            sb.AppendLine($"{spaces}{nameof(IsOnceResolved)} = {IsOnceResolved}");
             sb.PrintBriefObjProp(n, nameof(Expression), Expression);
             sb.PrintBriefObjProp(n, nameof(LogicalQuery), LogicalQuery);
             sb.PrintBriefObjProp(n, nameof(Name), Name);
@@ -264,7 +287,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
             else
             {
-                sb.Append("#@");
+                if(IsOnceResolved)
+                {
+                    sb.Append("##@");
+                }
+                else
+                {
+                    sb.Append("#@");
+                }
             }
 
             if (Expression == null)

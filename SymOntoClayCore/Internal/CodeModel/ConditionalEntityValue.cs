@@ -42,7 +42,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public ConditionalEntityValue(EntityConditionExpressionNode entityConditionExpression, RuleInstance logicalQuery, StrongIdentifierValue name, IEngineContext context, ILocalCodeExecutionContext localContext)
             : base(context, localContext)
         {
-            _context = context;            
+            _context = context;
             _localContext = localContext;
 
             Expression = entityConditionExpression;

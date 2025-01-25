@@ -41,6 +41,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         SystemVar,
         LogicalVar,
         EntityCondition,
+        OnceEntityCondition,
         Entity,
         Point,
         Comma,

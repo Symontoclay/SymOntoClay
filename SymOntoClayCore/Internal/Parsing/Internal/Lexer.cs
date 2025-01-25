@@ -97,10 +97,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 _currentPos++;
 
 #if DEBUG
-                _logger.Info("63869F33-9EDD-4C0E-AD5C-0A40A2A7D247", $"tmpChar = {tmpChar}");
-                _logger.Info("2440A33D-A1F1-45BF-9AEC-2F5B05AF6CF6", $"_currentPos = {_currentPos}");
-                _logger.Info("2A1A450C-E1C9-4168-B124-423E1B5CB1AD", $"_state = {_state}");
-                _logger.Info("38B84256-148B-407F-AADB-1855BB8F2D9C", $"_kindOfPrefix = {_kindOfPrefix}");
+                //_logger.Info("63869F33-9EDD-4C0E-AD5C-0A40A2A7D247", $"tmpChar = {tmpChar}");
+                //_logger.Info("2440A33D-A1F1-45BF-9AEC-2F5B05AF6CF6", $"_currentPos = {_currentPos}");
+                //_logger.Info("2A1A450C-E1C9-4168-B124-423E1B5CB1AD", $"_state = {_state}");
+                //_logger.Info("38B84256-148B-407F-AADB-1855BB8F2D9C", $"_kindOfPrefix = {_kindOfPrefix}");
 #endif
 
                 switch (_state)
@@ -171,6 +171,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     switch(nextChar)
                                     {
                                         case '~':
+                                            _currentPos++;
+                                            buffer.Append(nextChar);
                                             _items.Dequeue();
                                             return CreateToken(TokenKind.DoubleAsyncMarker);
                                     }
@@ -185,6 +187,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     switch(nextChar)
                                     {
                                         case '∞':
+                                            _currentPos++;
+                                            buffer.Append(nextChar);
                                             _items.Dequeue();
                                             return CreateToken(TokenKind.PositiveInfinity);
                                     }
@@ -199,10 +203,14 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     switch(nextChar)
                                     {
                                         case '>':
+                                            _currentPos++;
+                                            buffer.Append(nextChar);
                                             _items.Dequeue();
                                             return CreateToken(TokenKind.LeftRightArrow);
 
                                         case '∞':
+                                            _currentPos++;
+                                            buffer.Append(nextChar);
                                             _items.Dequeue();
                                             return CreateToken(TokenKind.NegativeInfinity);
 
@@ -229,12 +237,16 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     switch(nextChar)
                                     {
                                         case '/':
+                                            _currentPos++;
+                                            buffer?.Append(nextChar);
                                             _items.Dequeue();
                                             _stateBeforeComment = _state;
                                             _state = State.InSingleLineComment;
                                             break;
 
                                         case '*':
+                                            _currentPos++;
+                                            buffer?.Append(nextChar);
                                             _items.Dequeue();
                                             _stateBeforeComment = _state;
                                             _state = State.InMultiLineComment;
@@ -256,6 +268,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     switch (nextChar)
                                     {
                                         case '=':
+                                            _currentPos++;
+                                            buffer?.Append(nextChar);
                                             _items.Dequeue();
                                             return CreateToken(TokenKind.MoreOrEqual);
 
@@ -271,6 +285,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     switch (nextChar)
                                     {
                                         case '=':
+                                            _currentPos++;
+                                            buffer?.Append(nextChar);
                                             _items.Dequeue();
                                             return CreateToken(TokenKind.LessOrEqual);
 
@@ -463,6 +479,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                                     if(nextChar == '/')
                                     {
+                                        _currentPos++;
+                                        buffer?.Append(nextChar);
                                         _items.Dequeue();
                                         _state = _stateBeforeComment;
                                     }
@@ -592,7 +610,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                             _state = State.Init;
 
                                             return CreateToken(TokenKind.EntityCondition, buffer.ToString());
-                                        }                                         
+                                        }
                                     }
                                 }
                                 break;
@@ -605,7 +623,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     var nextChar = _items.Peek();
 
 #if DEBUG
-                                    _logger.Info("11D91A9D-B8B8-4ECF-B70E-C638E9647910", $"nextChar = {nextChar}");
+                                    //_logger.Info("11D91A9D-B8B8-4ECF-B70E-C638E9647910", $"nextChar = {nextChar}");
 #endif
 
                                     if (nextChar == '`')
@@ -620,7 +638,20 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                         }
                                         else
                                         {
-                                            throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
+                                            if(nextChar == '@')
+                                            {
+                                                _currentPos++;
+                                                buffer.Append(nextChar);
+                                                _items.Dequeue();
+
+                                                _state = State.Init;
+
+                                                return CreateToken(TokenKind.OnceEntityCondition, buffer.ToString());
+                                            }
+                                            else
+                                            {
+                                                throw new UnexpectedSymbolException(tmpChar, _currentLine, _currentPos);
+                                            }                                            
                                         }
                                     }
                                 }
@@ -746,6 +777,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private Token CreateToken(TokenKind kind, string content = "")
         {
+#if DEBUG
+            //_logger.Info("C12D5E15-F3BA-4908-893A-43F979C5FC5B", $"kind = {kind}");
+            //_logger.Info("79D35261-8C2F-4FF4-88CE-898DA6969C69", $"content = {content}");
+#endif
+
             var kindOfKeyWord = KeyWordTokenKind.Unknown;
             var contentLength = 0;
 

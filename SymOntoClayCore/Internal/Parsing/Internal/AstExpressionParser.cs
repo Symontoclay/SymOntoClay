@@ -146,6 +146,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     break;
 
                 case TokenKind.EntityCondition:
+                case TokenKind.OnceEntityCondition:
                     ProcessEntityCondition();
                     break;
 

@@ -118,7 +118,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
-                    break;
+                    //break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);

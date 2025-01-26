@@ -710,7 +710,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     }
 
                 default:
-                    throw new Exception($"The vaule {prototypeValue.ToHumanizedString()} can not be instantiated.");
+                    throw new Exception($"The value {prototypeValue.ToHumanizedString()} can not be instantiated.");
             }            
         }
 

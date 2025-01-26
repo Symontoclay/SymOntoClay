@@ -162,6 +162,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsField => false;
         public virtual Field AsField => null;
 
+        public virtual bool IsProperty => false;
+        public virtual Property AsProperty => null;
+
         public virtual bool IsMutuallyExclusiveStatesSet => false;
         public virtual MutuallyExclusiveStatesSet AsMutuallyExclusiveStatesSet => null;
 

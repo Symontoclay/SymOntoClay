@@ -1282,6 +1282,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             kindOfKeyWord = KeyWordTokenKind.Tactical;
                             break;
                         }
+
+                        if (string.Equals(content, "prop", StringComparison.OrdinalIgnoreCase))
+                        {
+                            kindOfKeyWord = KeyWordTokenKind.Prop;
+                            break;
+                        }
                     }
                     break;
 

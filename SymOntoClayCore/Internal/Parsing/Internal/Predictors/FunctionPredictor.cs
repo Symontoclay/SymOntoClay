@@ -146,7 +146,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal.Predictors
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }
-                    break;
+                    //break;
 
                 case State.InFunctionBody:
                     if (IsUsualContentOfBody())

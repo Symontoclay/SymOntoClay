@@ -1005,8 +1005,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var varPtr = new Var();
 
-            var annotatioValue = annotation.AsAnnotationValue;
-            var annotatedItem = annotatioValue.AnnotatedItem;
+            var annotationValue = annotation.AsAnnotationValue;
+            var annotatedItem = annotationValue.AnnotatedItem;
 
             if(annotatedItem is Field)
             {
@@ -1022,7 +1022,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (!typeName.IsStrongIdentifierValue)
                 {
-                    throw new Exception($"Typename should be StrongIdentifierValue.");
+                    throw new Exception($"TypeName should be StrongIdentifierValue.");
                 }
 
                 varPtr.TypesList.Add(typeName.AsStrongIdentifierValue);
@@ -1034,7 +1034,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (!varName.IsStrongIdentifierValue)
             {
-                throw new Exception($"Varname should be StrongIdentifierValue.");
+                throw new Exception($"VarName should be StrongIdentifierValue.");
             }
 
             varPtr.Name = varName.AsStrongIdentifierValue;

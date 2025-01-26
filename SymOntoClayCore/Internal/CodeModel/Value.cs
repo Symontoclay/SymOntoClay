@@ -54,7 +54,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsStrongIdentifierValue => false;
         public virtual StrongIdentifierValue AsStrongIdentifierValue => null;
 
+        [Obsolete("Make code serializable")]
         public virtual bool IsTaskValue => false;
+
+        [Obsolete("Make code serializable")]
         public virtual TaskValue AsTaskValue => null;
 
         public virtual bool IsProcessInfoValue => false;

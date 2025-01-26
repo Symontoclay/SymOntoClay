@@ -33,8 +33,10 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
+    [Obsolete("Make code serializable")]
     public class TaskValue : Value
     {
+        [Obsolete("Make code serializable")]
         public TaskValue(IThreadTask systemTask)
         {
             SystemTask = systemTask;
@@ -46,12 +48,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override KindOfValue KindOfValue => KindOfValue.TaskValue;
 
         /// <inheritdoc/>
+        [Obsolete("Make code serializable")]
         public override bool IsTaskValue => true;
 
         /// <inheritdoc/>
+        [Obsolete("Make code serializable")]
         public override TaskValue AsTaskValue => this;
 
         public string TaskId { get; set; }
+
+        [Obsolete("Make code serializable")]
         public IThreadTask SystemTask 
         { 
             get

@@ -153,6 +153,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private bool _isCanceled;
 
         private long? _endOfTargetDuration;
+        [Obsolete("Make this property serializable")]
         private List<IThreadTask> _waitedTasksList;
         private List<IProcessInfo> _waitedProcessInfoList;
 
@@ -1863,6 +1864,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             CallExecutable(callMethodId, method, null, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
         }
 
+        [Obsolete("Make this method serializable")]
         private void CallHost(string callMethodId, StrongIdentifierValue methodName, 
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             Value annotation, SyncOption syncOption)
@@ -2485,8 +2487,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             var paramsList = TakePositionedParameters(4);
 
-            var inheritenceItem = new InheritanceItem();
-            DefaultSettingsOfCodeEntityHelper.SetUpInheritanceItem(inheritenceItem, _currentCodeFrame.LocalContext.Storage.DefaultSettingsOfCodeEntity);
+            var inheritanceItem = new InheritanceItem();
+            DefaultSettingsOfCodeEntityHelper.SetUpInheritanceItem(inheritanceItem, _currentCodeFrame.LocalContext.Storage.DefaultSettingsOfCodeEntity);
 
             var subName = _strongIdentifierLinearResolver.Resolve(Logger, paramsList[0], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
 
@@ -2494,11 +2496,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var rank = paramsList[2];//_logicalValueLinearResolver.Resolve(paramsList[2], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions(), true);
 
-            inheritenceItem.SubName = subName;
-            inheritenceItem.SuperName = superName;
-            inheritenceItem.Rank = rank;
+            inheritanceItem.SubName = subName;
+            inheritanceItem.SuperName = superName;
+            inheritanceItem.Rank = rank;
 
-            _globalStorage.InheritanceStorage.SetInheritance(Logger, inheritenceItem);
+            _globalStorage.InheritanceStorage.SetInheritance(Logger, inheritanceItem);
 
             _currentCodeFrame.CurrentPosition++;
         }
@@ -2507,8 +2509,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             var paramsList = TakePositionedParameters(4);
 
-            var inheritenceItem = new InheritanceItem();
-            DefaultSettingsOfCodeEntityHelper.SetUpInheritanceItem(inheritenceItem, _currentCodeFrame.LocalContext.Storage.DefaultSettingsOfCodeEntity);
+            var inheritanceItem = new InheritanceItem();
+            DefaultSettingsOfCodeEntityHelper.SetUpInheritanceItem(inheritanceItem, _currentCodeFrame.LocalContext.Storage.DefaultSettingsOfCodeEntity);
 
             var subName = paramsList[0].AsStrongIdentifierValue;
 
@@ -2516,11 +2518,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var rank = _logicalValueLinearResolver.Resolve(Logger, paramsList[2], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions(), true).Inverse();
 
-            inheritenceItem.SubName = subName;
-            inheritenceItem.SuperName = superName;
-            inheritenceItem.Rank = rank;
+            inheritanceItem.SubName = subName;
+            inheritanceItem.SuperName = superName;
+            inheritanceItem.Rank = rank;
 
-            _globalStorage.InheritanceStorage.SetInheritance(Logger, inheritenceItem);
+            _globalStorage.InheritanceStorage.SetInheritance(Logger, inheritanceItem);
 
             _currentCodeFrame.CurrentPosition++;
         }

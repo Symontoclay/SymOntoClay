@@ -27,6 +27,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Threading;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -60,6 +61,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public AnnotationSystemEvent CancelAnnotationSystemEvent { get; set; }
         public AnnotationSystemEvent WeakCancelAnnotationSystemEvent { get; set; }
         public AnnotationSystemEvent ErrorAnnotationSystemEvent { get; set; }
+
+        [Obsolete("Make this property serializable")]
         public IThreadTask PseudoSyncTask { get; set; }
 
         /// <inheritdoc/>

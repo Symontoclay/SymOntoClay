@@ -33,31 +33,33 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    [Obsolete("Make code serializable")]
+    [Obsolete("Make code serializable", true)]
     public class TaskValue : Value
     {
-        [Obsolete("Make code serializable")]
+        [Obsolete("Make code serializable", true)]
         public TaskValue(IThreadTask systemTask)
         {
-            SystemTask = systemTask;
-            TaskId = Guid.NewGuid().ToString("D");
-            _cancellationTokenSourceCancelHandler = new CancellationTokenSourceCancelHandler(systemTask.CancellationTokenSource);
+            throw new NotImplementedException("A51152AB-470E-44E9-86D4-33D76E44CCA7");
+
+            //SystemTask = systemTask;
+            //TaskId = Guid.NewGuid().ToString("D");
+            //_cancellationTokenSourceCancelHandler = new CancellationTokenSourceCancelHandler(systemTask.CancellationTokenSource);
         }
 
         /// <inheritdoc/>
         public override KindOfValue KindOfValue => KindOfValue.TaskValue;
 
         /// <inheritdoc/>
-        [Obsolete("Make code serializable")]
+        [Obsolete("Make code serializable", true)]
         public override bool IsTaskValue => true;
 
         /// <inheritdoc/>
-        [Obsolete("Make code serializable")]
+        [Obsolete("Make code serializable", true)]
         public override TaskValue AsTaskValue => this;
 
         public string TaskId { get; set; }
 
-        [Obsolete("Make code serializable")]
+        [Obsolete("Make code serializable", true)]
         public IThreadTask SystemTask 
         { 
             get
@@ -88,6 +90,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private IThreadTask _systemTask;
 
+        [Obsolete("Make code serializable", true)]
         public event Action OnComplete
         {
             add
@@ -111,6 +114,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private event Action InternalOnComplete;
 
+        [Obsolete("Make code serializable", true)]
         private object _checkOnCompleteLockObj = new object();
 
         private void OnCompleteHandler()
@@ -190,18 +194,20 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override Value CloneValue(Dictionary<object, object> context)
         {
-            if (context.ContainsKey(this))
-            {
-                return (Value)context[this];
-            }
+            throw new NotImplementedException("90FC62F8-7878-4086-A87C-A77C5A37D585");
 
-            var result = new TaskValue(_systemTask);
-            context[this] = result;
+            //if (context.ContainsKey(this))
+            //{
+            //    return (Value)context[this];
+            //}
 
-            result.TaskId = TaskId;
-            result.AppendAnnotations(this, context);
+            //var result = new TaskValue(_systemTask);
+            //context[this] = result;
 
-            return result;
+            //result.TaskId = TaskId;
+            //result.AppendAnnotations(this, context);
+
+            //return result;
         }
 
         /// <inheritdoc/>
@@ -261,7 +267,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private string NToHumanizedString()
         {
-            return $"Task: {TaskId} ({SystemTask?.Status})";
+            throw new NotImplementedException("4DA70DEF-7211-495A-B016-DE37E4ECFF87");
+            //return $"Task: {TaskId} ({SystemTask?.Status})";
         }
 
         /// <inheritdoc/>

@@ -41,7 +41,7 @@ using System.Threading;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
 {
-    public abstract class BaseThreadExecutor : BaseLoggedComponent
+    public abstract class BaseThreadExecutor : BaseLoggedComponent, IThreadExecutor
     {
         protected static (IMonitorLogger Logger, string ThreadId) CreateInitParams(IEngineContext context)
         {
@@ -153,8 +153,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private bool _isCanceled;
 
         private long? _endOfTargetDuration;
-        [Obsolete("Make this property serializable")]
-        private List<IThreadTask> _waitedTasksList;
+        private List<IThreadExecutor> _waitedThreadExecutorsList;
         private List<IProcessInfo> _waitedProcessInfoList;
 
         private readonly StrongIdentifierValue _defaultCtorName;
@@ -1140,15 +1139,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 return;
             }
 
-            if (!_waitedTasksList.IsNullOrEmpty() || !_waitedProcessInfoList.IsNullOrEmpty())
+            if (!_waitedThreadExecutorsList.IsNullOrEmpty() || !_waitedProcessInfoList.IsNullOrEmpty())
             {
-                if ((_waitedTasksList != null && _waitedTasksList.Any(p => p.Status == ThreadTaskStatus.Running)) || 
+                if ((_waitedThreadExecutorsList != null && _waitedThreadExecutorsList.Any(p => p.RunningStatus == ThreadTaskStatus.Running)) || 
                     (_waitedProcessInfoList != null && _waitedProcessInfoList.Any(p => p.Status == ProcessStatus.Running)))
                 {
                     return;
                 }
 
-                _waitedTasksList = null;
+                _waitedThreadExecutorsList = null;
                 _currentCodeFrame.CurrentPosition++;
                 return;
             }
@@ -1161,7 +1160,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 var firstParameter = positionedParameters[0];
 
-                if (firstParameter.KindOfValue != KindOfValue.TaskValue)
+                if (firstParameter.KindOfValue != KindOfValue.ThreadExecutorValue
+                    && firstParameter.KindOfValue != KindOfValue.ProcessInfoValue)
                 {
                     var timeoutSystemVal = _dateTimeResolver.ConvertTimeValueToTicks(Logger, firstParameter, DefaultTimeValues.TimeoutDefaultTimeValue, _currentCodeFrame.LocalContext);
 
@@ -1173,12 +1173,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 }
             }
 
-            if(positionedParameters.Any(p => p.KindOfValue == KindOfValue.TaskValue) ||
+            if(positionedParameters.Any(p => p.KindOfValue == KindOfValue.ThreadExecutorValue) ||
                 positionedParameters.Any(p => p.KindOfValue == KindOfValue.ProcessInfoValue))
             {
-                if (positionedParameters.Any(p => p.KindOfValue == KindOfValue.TaskValue))
+                if (positionedParameters.Any(p => p.KindOfValue == KindOfValue.ThreadExecutorValue))
                 {
-                    _waitedTasksList = positionedParameters.Where(p => p.IsTaskValue).Select(p => p.AsTaskValue.SystemTask).ToList();
+                    _waitedThreadExecutorsList = positionedParameters.Where(p => p.IsThreadExecutorValue).Select(p => p.AsThreadExecutorValue.ThreadExecutor).ToList();
                 }
 
                 if(positionedParameters.Any(p => p.KindOfValue == KindOfValue.ProcessInfoValue))

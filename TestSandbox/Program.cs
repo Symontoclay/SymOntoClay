@@ -416,17 +416,17 @@ namespace TestSandbox
                 _logger.Info("F812B258-8F6B-4066-8698-55DA609BD01D", "End Hi!");
             }, threadPool, token1);
 
-            var taskValue = new TaskValue(task);
+            //var taskValue = new TaskValue(task);
 
-            taskValue.OnComplete += () => 
-            {
-                _logger.Info("2CD55AB4-7F0D-49BE-B17F-455D69263E48", "taskValue.OnComplete!!!!!");
-            };
+            //taskValue.OnComplete += () => 
+            //{
+            //    _logger.Info("2CD55AB4-7F0D-49BE-B17F-455D69263E48", "taskValue.OnComplete!!!!!");
+            //};
 
-            taskValue.OnComplete += () =>
-            {
-                _logger.Info("674D6CA3-085C-4174-9B21-6AA992F99157", "(2) taskValue.OnComplete!!!!!");
-            };
+            //taskValue.OnComplete += () =>
+            //{
+            //    _logger.Info("674D6CA3-085C-4174-9B21-6AA992F99157", "(2) taskValue.OnComplete!!!!!");
+            //};
 
             Thread.Sleep(20000);
 

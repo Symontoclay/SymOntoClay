@@ -34,7 +34,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         NumberValue,
         StringValue,
         StrongIdentifierValue,
+        [Obsolete("Make code serializable")]
         TaskValue,
+        ThreadExecutorValue,
         ProcessInfoValue,
         AnnotationValue,
         WaypointValue,

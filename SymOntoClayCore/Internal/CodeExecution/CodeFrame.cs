@@ -62,8 +62,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public AnnotationSystemEvent WeakCancelAnnotationSystemEvent { get; set; }
         public AnnotationSystemEvent ErrorAnnotationSystemEvent { get; set; }
 
-        [Obsolete("Make this property serializable")]
-        public IThreadTask PseudoSyncTask { get; set; }
+        public IThreadExecutor PseudoSyncTask { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

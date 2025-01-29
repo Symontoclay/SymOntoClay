@@ -44,7 +44,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         {
             leftOperand = TryResolveFromVarOrExpr(logger, leftOperand, localCodeExecutionContext);
 
-            if ((leftOperand.IsHostValue || leftOperand.IsTaskValue || leftOperand.IsInstanceValue) && rightOperand.IsStrongIdentifierValue/* && rightOperand.AsStrongIdentifierValue.KindOfName == KindOfName.Concept*/)
+            if ((leftOperand.IsHostValue || leftOperand.IsThreadExecutorValue || leftOperand.IsInstanceValue) && rightOperand.IsStrongIdentifierValue/* && rightOperand.AsStrongIdentifierValue.KindOfName == KindOfName.Concept*/)
             {
                 var result = new PointRefValue(leftOperand, rightOperand);
                 result.CheckDirty();

@@ -201,9 +201,18 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _currentCodeFrame.ProcessInfo.SetStatus(Logger, "756FCA0C-6645-4CCA-B865-6A7220476D27", ProcessStatus.Running);
         }
 
+        /// <inheritdoc/>
         public IThreadTask Start()
         {
             return _activeObject.Start();
+        }
+
+        public ThreadTaskStatus RunningStatus => _activeObject.TaskValue?.Status ?? ThreadTaskStatus.Created;
+
+        /// <inheritdoc/>
+        public void Cancel()
+        {
+            _activeObject.TaskValue?.Cancel();
         }
 
         /// <inheritdoc/>
@@ -1700,7 +1709,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Info("51153D21-72AF-488E-A475-F40A667117CC", $"pseudoSyncTask?.Status = {pseudoSyncTask?.Status}");
 #endif
 
-            if (pseudoSyncTask.Status == ThreadTaskStatus.Running)
+            if (pseudoSyncTask.RunningStatus == ThreadTaskStatus.Running)
             {
                 return;
             }
@@ -2432,9 +2441,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         var threadExecutor = new AsyncThreadExecutor(_context, _context.CodeExecutionThreadPool);
                         threadExecutor.SetCodeFrame(codeFrame);
 
-                        var task = threadExecutor.Start();
+                        threadExecutor.Start();
 
-                        targetCurrentCodeFrame.PseudoSyncTask = task;
+                        targetCurrentCodeFrame.PseudoSyncTask = threadExecutor;
                     }
                     break;
 

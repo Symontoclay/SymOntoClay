@@ -53,7 +53,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public long? EndOfTargetDuration { get; set; }
         public TimeoutCancellationMode TimeoutCancellationMode { get; set; } = TimeoutCancellationMode.WeakCancel;
         public List<StrongIdentifierValue> CalledCtorsList { get; set; } = new List<StrongIdentifierValue>();
-        public Value PutToValueStackArterReturningBack { get; set; }
+        public Value PutToValueStackAfterReturningBack { get; set; }
 
         public bool NeedsExecCallEvent { get; set; }
         public ProcessStatus? LastProcessStatus { get; set; }
@@ -107,7 +107,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.AppendLine($"{spaces}{nameof(EndOfTargetDuration)} = {EndOfTargetDuration}");
             sb.AppendLine($"{spaces}{nameof(TimeoutCancellationMode)} = {TimeoutCancellationMode}");
             sb.PrintObjListProp(n, nameof(CalledCtorsList), CalledCtorsList);
-            sb.PrintObjProp(n, nameof(PutToValueStackArterReturningBack), PutToValueStackArterReturningBack);
+            sb.PrintObjProp(n, nameof(PutToValueStackAfterReturningBack), PutToValueStackAfterReturningBack);
 
             sb.AppendLine($"{spaces}{nameof(NeedsExecCallEvent)} = {NeedsExecCallEvent}");
             sb.AppendLine($"{spaces}{nameof(LastProcessStatus)} = {LastProcessStatus}");
@@ -163,7 +163,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.AppendLine($"{spaces}{nameof(EndOfTargetDuration)} = {EndOfTargetDuration}");
             sb.AppendLine($"{spaces}{nameof(TimeoutCancellationMode)} = {TimeoutCancellationMode}");
             sb.PrintShortObjListProp(n, nameof(CalledCtorsList), CalledCtorsList);
-            sb.PrintShortObjProp(n, nameof(PutToValueStackArterReturningBack), PutToValueStackArterReturningBack);
+            sb.PrintShortObjProp(n, nameof(PutToValueStackAfterReturningBack), PutToValueStackAfterReturningBack);
 
             sb.AppendLine($"{spaces}{nameof(NeedsExecCallEvent)} = {NeedsExecCallEvent}");
             sb.AppendLine($"{spaces}{nameof(LastProcessStatus)} = {LastProcessStatus}");
@@ -219,7 +219,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.AppendLine($"{spaces}{nameof(EndOfTargetDuration)} = {EndOfTargetDuration}");
             sb.AppendLine($"{spaces}{nameof(TimeoutCancellationMode)} = {TimeoutCancellationMode}");
             sb.PrintBriefObjListProp(n, nameof(CalledCtorsList), CalledCtorsList);
-            sb.PrintBriefObjProp(n, nameof(PutToValueStackArterReturningBack), PutToValueStackArterReturningBack);
+            sb.PrintBriefObjProp(n, nameof(PutToValueStackAfterReturningBack), PutToValueStackAfterReturningBack);
 
             sb.AppendLine($"{spaces}{nameof(NeedsExecCallEvent)} = {NeedsExecCallEvent}");
             sb.AppendLine($"{spaces}{nameof(LastProcessStatus)} = {LastProcessStatus}");

@@ -675,7 +675,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if(executionsList.Any())
             {
-                _currentCodeFrame.PutToValueStackArterReturningBack = instanceValue;
+                _currentCodeFrame.PutToValueStackAfterReturningBack = instanceValue;
 
                 ExecuteCodeFramesBatch(executionsList);
             }
@@ -1362,10 +1362,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _currentInstance = _currentCodeFrame.Instance;
             _currentVarStorage = _currentCodeFrame.LocalContext.Storage.VarStorage;
 
-            if(_currentCodeFrame.PutToValueStackArterReturningBack != null)
+            if(_currentCodeFrame.PutToValueStackAfterReturningBack != null)
             {
-                _currentCodeFrame.ValuesStack.Push(_currentCodeFrame.PutToValueStackArterReturningBack);
-                _currentCodeFrame.PutToValueStackArterReturningBack = null;
+                _currentCodeFrame.ValuesStack.Push(_currentCodeFrame.PutToValueStackAfterReturningBack);
+                _currentCodeFrame.PutToValueStackAfterReturningBack = null;
             }
 
             if(_currentCodeFrame.NeedsExecCallEvent)

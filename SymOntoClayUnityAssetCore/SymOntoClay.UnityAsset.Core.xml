@@ -751,15 +751,6 @@
         <member name="P:SymOntoClay.UnityAsset.Core.World.WorldCore.EnableCategories">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.Load(SymOntoClay.UnityAsset.Core.IRunTimeImageInfo)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.Load(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.Load">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.Start">
             <inheritdoc/>
         </member>
@@ -767,24 +758,6 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.World.WorldCore.IsActive">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.CreateImage(SymOntoClay.UnityAsset.Core.RunTimeImageSettings)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.CreateImage">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.World.WorldCore.CurrentImage">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.GetImages">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.DeleteImage(SymOntoClay.UnityAsset.Core.IRunTimeImageInfo)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.DeleteImage(System.String)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.World.WorldCore.Dispose">
@@ -1412,32 +1385,6 @@
             Represents Player.
             </summary>
         </member>
-        <member name="T:SymOntoClay.UnityAsset.Core.IRunTimeImageInfo">
-            <summary>
-            Represents runtime image of executed code.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.IRunTimeImageInfo.Id">
-            <summary>
-            Gets image id.
-            It should be Universally Unique Identifier (UUID).
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.IRunTimeImageInfo.CreationTime">
-            <summary>
-            Gets creation time.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.IRunTimeImageInfo.Description">
-            <summary>
-            Gets user defined description of the image.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.IRunTimeImageInfo.ParentId">
-            <summary>
-            Gets parent image id or <c>null</c> if the image was created directly from source code.
-            </summary>
-        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.ISoundReceiver.Threshold">
             <summary>
             Gets threshold of audibility in decibels.
@@ -1652,13 +1599,13 @@
         <member name="P:SymOntoClay.UnityAsset.Core.IWorld.EnableLogging">
             <summary>
             Gets or sets value of enable logging.
-            It alows enable or disable logging or remote connection for whole components synchronously.
+            It allows enable or disable logging or remote connection for whole components synchronously.
             </summary>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.IWorld.EnableRemoteConnection">
             <summary>
             Gets or sets value of enable remote connection.
-            It alows enable or disable remote connection for whole components synchronously.
+            It allows enable or disable remote connection for whole components synchronously.
             It doesn't touch local logging.
             </summary>
         </member>
@@ -1694,23 +1641,6 @@
             <param name="settings">Instance of settings.</param>
             <returns>Instance of agent.</returns>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.IWorld.Load(SymOntoClay.UnityAsset.Core.IRunTimeImageInfo)">
-            <summary>
-            Loads image by image info.
-            </summary>
-            <param name="imageInfo">Instance of image info.</param>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.IWorld.Load(System.String)">
-            <summary>
-            Loads image by Id.
-            </summary>
-            <param name="id">Image id.</param>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.IWorld.Load">
-            <summary>
-            Loads last image.
-            </summary>
-        </member>
         <member name="M:SymOntoClay.UnityAsset.Core.IWorld.Start">
             <summary>
             Starts execution loaded image.
@@ -1727,45 +1657,9 @@
             Returns <c>true</c> if execution was started, otherwise returns <c>false</c>.
             </summary>
         </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.IWorld.CreateImage(SymOntoClay.UnityAsset.Core.RunTimeImageSettings)">
-            <summary>
-            Creates (saves) image of execured code by settings.
-            </summary>
-            <param name="settings">Setting of created (saved) image.</param>
-            <returns>Instance of image info about created (saved) image.</returns>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.IWorld.CreateImage">
-            <summary>
-            Creates (saves) image of execured code.
-            </summary>
-            <returns>Instance of image info about created (saved) image.</returns>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.IWorld.CurrentImage">
-            <summary>
-            Returns image info about last created (saved) image.
-            </summary>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.IWorld.GetImages">
-            <summary>
-            Returns list of all available image info.
-            </summary>
-            <returns>Instnce of list of all available image info.</returns>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.IWorld.DeleteImage(SymOntoClay.UnityAsset.Core.IRunTimeImageInfo)">
-            <summary>
-            Deletes image by image info.
-            </summary>
-            <param name="imageInfo">Instance of image info.</param>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.IWorld.DeleteImage(System.String)">
-            <summary>
-            Deletes image by Id.
-            </summary>
-            <param name="id">Image id.</param>
-        </member>
         <member name="P:SymOntoClay.UnityAsset.Core.IWorld.WorldContext">
             <summary>
-            Gets world context. Onkly for debugging and testing!
+            Gets world context. Only for debugging and testing!
             </summary>
         </member>
         <member name="T:SymOntoClay.UnityAsset.Core.KindOfEndpointParam">
@@ -1792,25 +1686,6 @@
             <summary>
             Player settings.
             </summary>
-        </member>
-        <member name="T:SymOntoClay.UnityAsset.Core.RunTimeImageSettings">
-            <summary>
-            Settings for creation (saving) runtime image of executed code.
-            </summary>
-        </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.RunTimeImageSettings.Description">
-            <summary>
-            Gets or sets user defined description of the image.
-            </summary>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.RunTimeImageSettings.ToString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.RunTimeImageSettings.ToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.UnityAsset.Core.RunTimeImageSettings.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
-            <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.UnityAsset.Core.VisibleItem.InstanceId">
             <summary>

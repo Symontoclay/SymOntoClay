@@ -367,6 +367,12 @@
             It is not used in real <see cref="T:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator"/>.
             </summary>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.Start">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.Cancel">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.Dispose">
             <inheritdoc/>
         </member>
@@ -721,6 +727,54 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.SEHItem.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorValue.KindOfValue">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorValue.IsThreadExecutorValue">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorValue.AsThreadExecutorValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorValue.GetSystemValue">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorValue.ToSystemString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorValue.GetMethod(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.Dictionary{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value},System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorValue.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorValue.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorValue.CloneValue(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorValue.PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorValue.PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorValue.PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorValue.PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorValue.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.ThreadExecutorValue.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.UnaryOperatorSystemHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext)">
@@ -3395,10 +3449,10 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.BaseSpecialHandler.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.CancellationTokenSourceCancelHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.ThreadExecutorCancelHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.CancellationTokenSourceCancelHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Handlers.ThreadExecutorCancelHandler.Call(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IDictionary{System.String,SymOntoClay.Core.Internal.CodeModel.Value},SymOntoClay.Core.Internal.CodeModel.Value,SymOntoClay.Core.ILocalCodeExecutionContext)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.HostValue.KindOfValue">
@@ -5341,54 +5395,6 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Synonym.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.TaskValue.KindOfValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.TaskValue.IsTaskValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.TaskValue.AsTaskValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.GetSystemValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.ToSystemString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.GetMethod(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeExecution.KindOfFunctionParameters,System.Collections.Generic.Dictionary{SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value},System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Value})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.CloneValue(System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.PropertiesToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.TaskValue.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
-            <inheritdoc/>
-        </member>
         <member name="F:SymOntoClay.Core.Internal.CodeModel.TypeOfAccess.Local">
             <summary>
             Defined in body of function.
@@ -5436,6 +5442,9 @@
             </summary>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Var.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.Var.SetValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Var.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">

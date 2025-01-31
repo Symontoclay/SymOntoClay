@@ -1873,7 +1873,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             CallExecutable(callMethodId, method, null, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
         }
 
-        [Obsolete("Make this method serializable")]
         private void CallHost(string callMethodId, StrongIdentifierValue methodName, 
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
             Value annotation, SyncOption syncOption)

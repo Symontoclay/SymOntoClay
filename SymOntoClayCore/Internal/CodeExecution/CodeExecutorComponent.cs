@@ -206,9 +206,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     var threadExecutor = new AsyncThreadExecutor(_context, _context.CodeExecutionThreadPool);
                     threadExecutor.SetCodeFrame(newCodeFrame);
 
-                    var task = threadExecutor.Start();
+                    threadExecutor.Start();
 
-                    return new ThreadTaskValue(task);
+                    return new ThreadExecutorValue(threadExecutor);
                 }
             }
         }

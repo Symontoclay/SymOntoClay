@@ -119,10 +119,10 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         {
             throw new NotImplementedException("137A48A8-BA72-468A-89AF-062F929E3798");
 
-            var spaces = DisplayHelper.Spaces(n);
-            var sb = new StringBuilder();
+            //var spaces = DisplayHelper.Spaces(n);
+            //var sb = new StringBuilder();
 
-            return sb.ToString();
+            //return sb.ToString();
         }
     }
 }

@@ -113,10 +113,10 @@ namespace SymOntoClay.NLP.Internal.PhraseStructure
         {
             throw new NotImplementedException("ECAF3A27-DC18-4CF0-9E85-97615F3130BB");
 
-            var spaces = DisplayHelper.Spaces(n);
-            var sb = new StringBuilder();
+            //var spaces = DisplayHelper.Spaces(n);
+            //var sb = new StringBuilder();
 
-            return sb.ToString();
+            //return sb.ToString();
         }
     }
 }

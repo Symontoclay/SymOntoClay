@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         NumberValue,
         StringValue,
         StrongIdentifierValue,
-        ThreadTaskValue,
+        ThreadExecutorValue,
         ProcessInfoValue,
         AnnotationValue,
         WaypointValue,

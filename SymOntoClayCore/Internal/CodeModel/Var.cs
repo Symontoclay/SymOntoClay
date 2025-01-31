@@ -54,7 +54,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
         }
 
-        public void SetValue(IMonitorLogger logger, Value value)
+        /// <inheritdoc/>
+        public override void SetValue(IMonitorLogger logger, Value value)
         {
             lock (_lockObj)
             {

@@ -54,8 +54,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsStrongIdentifierValue => false;
         public virtual StrongIdentifierValue AsStrongIdentifierValue => null;
 
-        public virtual bool IsTaskValue => false;
-        public virtual ThreadTaskValue AsTaskValue => null;
+        public virtual bool IsThreadExecutorValue => false;
+        public virtual ThreadExecutorValue AsThreadExecutorValue => null;
 
         public virtual bool IsProcessInfoValue => false;
         public virtual ProcessInfoValue AsProcessInfoValue => null;

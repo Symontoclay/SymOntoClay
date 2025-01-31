@@ -41,7 +41,7 @@ using System.Threading;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
 {
-    public abstract class BaseThreadExecutor : BaseLoggedComponent
+    public abstract class BaseThreadExecutor : BaseLoggedComponent, IThreadExecutor
     {
         protected static (IMonitorLogger Logger, string ThreadId) CreateInitParams(IEngineContext context)
         {
@@ -153,7 +153,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private bool _isCanceled;
 
         private long? _endOfTargetDuration;
-        private List<IThreadTask> _waitedTasksList;
+        private List<IThreadExecutor> _waitedThreadExecutorsList;
         private List<IProcessInfo> _waitedProcessInfoList;
 
         private readonly StrongIdentifierValue _defaultCtorName;
@@ -201,9 +201,18 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _currentCodeFrame.ProcessInfo.SetStatus(Logger, "756FCA0C-6645-4CCA-B865-6A7220476D27", ProcessStatus.Running);
         }
 
+        /// <inheritdoc/>
         public IThreadTask Start()
         {
             return _activeObject.Start();
+        }
+
+        public ThreadTaskStatus RunningStatus => _activeObject.TaskValue?.Status ?? ThreadTaskStatus.Created;
+
+        /// <inheritdoc/>
+        public void Cancel()
+        {
+            _activeObject.TaskValue?.Cancel();
         }
 
         /// <inheritdoc/>
@@ -666,7 +675,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if(executionsList.Any())
             {
-                _currentCodeFrame.PutToValueStackArterReturningBack = instanceValue;
+                _currentCodeFrame.PutToValueStackAfterReturningBack = instanceValue;
 
                 ExecuteCodeFramesBatch(executionsList);
             }
@@ -710,7 +719,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     }
 
                 default:
-                    throw new Exception($"The vaule {prototypeValue.ToHumanizedString()} can not be instantiated.");
+                    throw new Exception($"The value {prototypeValue.ToHumanizedString()} can not be instantiated.");
             }            
         }
 
@@ -1005,8 +1014,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var varPtr = new Var();
 
-            var annotatioValue = annotation.AsAnnotationValue;
-            var annotatedItem = annotatioValue.AnnotatedItem;
+            var annotationValue = annotation.AsAnnotationValue;
+            var annotatedItem = annotationValue.AnnotatedItem;
 
             if(annotatedItem is Field)
             {
@@ -1022,7 +1031,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (!typeName.IsStrongIdentifierValue)
                 {
-                    throw new Exception($"Typename should be StrongIdentifierValue.");
+                    throw new Exception($"TypeName should be StrongIdentifierValue.");
                 }
 
                 varPtr.TypesList.Add(typeName.AsStrongIdentifierValue);
@@ -1034,7 +1043,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (!varName.IsStrongIdentifierValue)
             {
-                throw new Exception($"Varname should be StrongIdentifierValue.");
+                throw new Exception($"VarName should be StrongIdentifierValue.");
             }
 
             varPtr.Name = varName.AsStrongIdentifierValue;
@@ -1065,10 +1074,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var value = currentCommand.Value;
 
             var kindOfValue = value.KindOfValue;
-
-#if DEBUG
-            //Info("B3E9AD36-4058-43E0-9A15-845B13D2E1EE", $"kindOfValue = {kindOfValue}");
-#endif
 
             switch (kindOfValue)
             {
@@ -1143,15 +1148,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 return;
             }
 
-            if (!_waitedTasksList.IsNullOrEmpty() || !_waitedProcessInfoList.IsNullOrEmpty())
+            if (!_waitedThreadExecutorsList.IsNullOrEmpty() || !_waitedProcessInfoList.IsNullOrEmpty())
             {
-                if ((_waitedTasksList != null && _waitedTasksList.Any(p => p.Status == ThreadTaskStatus.Running)) || 
+                if ((_waitedThreadExecutorsList != null && _waitedThreadExecutorsList.Any(p => p.RunningStatus == ThreadTaskStatus.Running)) || 
                     (_waitedProcessInfoList != null && _waitedProcessInfoList.Any(p => p.Status == ProcessStatus.Running)))
                 {
                     return;
                 }
 
-                _waitedTasksList = null;
+                _waitedThreadExecutorsList = null;
                 _currentCodeFrame.CurrentPosition++;
                 return;
             }
@@ -1164,7 +1169,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 var firstParameter = positionedParameters[0];
 
-                if (firstParameter.KindOfValue != KindOfValue.ThreadTaskValue)
+                if (firstParameter.KindOfValue != KindOfValue.ThreadExecutorValue
+                    && firstParameter.KindOfValue != KindOfValue.ProcessInfoValue)
                 {
                     var timeoutSystemVal = _dateTimeResolver.ConvertTimeValueToTicks(Logger, firstParameter, DefaultTimeValues.TimeoutDefaultTimeValue, _currentCodeFrame.LocalContext);
 
@@ -1176,12 +1182,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 }
             }
 
-            if(positionedParameters.Any(p => p.KindOfValue == KindOfValue.ThreadTaskValue) ||
+            if(positionedParameters.Any(p => p.KindOfValue == KindOfValue.ThreadExecutorValue) ||
                 positionedParameters.Any(p => p.KindOfValue == KindOfValue.ProcessInfoValue))
             {
-                if (positionedParameters.Any(p => p.KindOfValue == KindOfValue.ThreadTaskValue))
+                if (positionedParameters.Any(p => p.KindOfValue == KindOfValue.ThreadExecutorValue))
                 {
-                    _waitedTasksList = positionedParameters.Where(p => p.IsTaskValue).Select(p => p.AsTaskValue.SystemTask).ToList();
+                    _waitedThreadExecutorsList = positionedParameters.Where(p => p.IsThreadExecutorValue).Select(p => p.AsThreadExecutorValue.ThreadExecutor).ToList();
                 }
 
                 if(positionedParameters.Any(p => p.KindOfValue == KindOfValue.ProcessInfoValue))
@@ -1356,10 +1362,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _currentInstance = _currentCodeFrame.Instance;
             _currentVarStorage = _currentCodeFrame.LocalContext.Storage.VarStorage;
 
-            if(_currentCodeFrame.PutToValueStackArterReturningBack != null)
+            if(_currentCodeFrame.PutToValueStackAfterReturningBack != null)
             {
-                _currentCodeFrame.ValuesStack.Push(_currentCodeFrame.PutToValueStackArterReturningBack);
-                _currentCodeFrame.PutToValueStackArterReturningBack = null;
+                _currentCodeFrame.ValuesStack.Push(_currentCodeFrame.PutToValueStackAfterReturningBack);
+                _currentCodeFrame.PutToValueStackAfterReturningBack = null;
             }
 
             if(_currentCodeFrame.NeedsExecCallEvent)
@@ -1703,7 +1709,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //Info("51153D21-72AF-488E-A475-F40A667117CC", $"pseudoSyncTask?.Status = {pseudoSyncTask?.Status}");
 #endif
 
-            if (pseudoSyncTask.Status == ThreadTaskStatus.Running)
+            if (pseudoSyncTask.RunningStatus == ThreadTaskStatus.Running)
             {
                 return;
             }
@@ -2434,9 +2440,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         var threadExecutor = new AsyncThreadExecutor(_context, _context.CodeExecutionThreadPool);
                         threadExecutor.SetCodeFrame(codeFrame);
 
-                        var task = threadExecutor.Start();
+                        threadExecutor.Start();
 
-                        targetCurrentCodeFrame.PseudoSyncTask = task;
+                        targetCurrentCodeFrame.PseudoSyncTask = threadExecutor;
                     }
                     break;
 
@@ -2489,8 +2495,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             var paramsList = TakePositionedParameters(4);
 
-            var inheritenceItem = new InheritanceItem();
-            DefaultSettingsOfCodeEntityHelper.SetUpInheritanceItem(inheritenceItem, _currentCodeFrame.LocalContext.Storage.DefaultSettingsOfCodeEntity);
+            var inheritanceItem = new InheritanceItem();
+            DefaultSettingsOfCodeEntityHelper.SetUpInheritanceItem(inheritanceItem, _currentCodeFrame.LocalContext.Storage.DefaultSettingsOfCodeEntity);
 
             var subName = _strongIdentifierLinearResolver.Resolve(Logger, paramsList[0], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions());
 
@@ -2498,11 +2504,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var rank = paramsList[2];//_logicalValueLinearResolver.Resolve(paramsList[2], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions(), true);
 
-            inheritenceItem.SubName = subName;
-            inheritenceItem.SuperName = superName;
-            inheritenceItem.Rank = rank;
+            inheritanceItem.SubName = subName;
+            inheritanceItem.SuperName = superName;
+            inheritanceItem.Rank = rank;
 
-            _globalStorage.InheritanceStorage.SetInheritance(Logger, inheritenceItem);
+            _globalStorage.InheritanceStorage.SetInheritance(Logger, inheritanceItem);
 
             _currentCodeFrame.CurrentPosition++;
         }
@@ -2511,8 +2517,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             var paramsList = TakePositionedParameters(4);
 
-            var inheritenceItem = new InheritanceItem();
-            DefaultSettingsOfCodeEntityHelper.SetUpInheritanceItem(inheritenceItem, _currentCodeFrame.LocalContext.Storage.DefaultSettingsOfCodeEntity);
+            var inheritanceItem = new InheritanceItem();
+            DefaultSettingsOfCodeEntityHelper.SetUpInheritanceItem(inheritanceItem, _currentCodeFrame.LocalContext.Storage.DefaultSettingsOfCodeEntity);
 
             var subName = paramsList[0].AsStrongIdentifierValue;
 
@@ -2520,11 +2526,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var rank = _logicalValueLinearResolver.Resolve(Logger, paramsList[2], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions(), true).Inverse();
 
-            inheritenceItem.SubName = subName;
-            inheritenceItem.SuperName = superName;
-            inheritenceItem.Rank = rank;
+            inheritanceItem.SubName = subName;
+            inheritanceItem.SuperName = superName;
+            inheritanceItem.Rank = rank;
 
-            _globalStorage.InheritanceStorage.SetInheritance(Logger, inheritenceItem);
+            _globalStorage.InheritanceStorage.SetInheritance(Logger, inheritanceItem);
 
             _currentCodeFrame.CurrentPosition++;
         }

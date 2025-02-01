@@ -6433,6 +6433,9 @@
         <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.Compile(System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Field})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.Compile(SymOntoClay.Core.Internal.TasksExecution.TasksPlan)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Compiling.Internal.IntermediateScriptCommand.ToString">
             <inheritdoc/>
         </member>

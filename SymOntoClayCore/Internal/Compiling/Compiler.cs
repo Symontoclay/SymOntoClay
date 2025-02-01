@@ -26,6 +26,7 @@ using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.Compiling.Internal;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
+using SymOntoClay.Core.Internal.TasksExecution;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using System;
 using System.Collections.Generic;
@@ -67,6 +68,12 @@ namespace SymOntoClay.Core.Internal.Compiling
             node.Run(fields);
 
             return ConvertToCompiledFunctionBody(node.Result);
+        }
+
+        /// <inheritdoc/>
+        public CompiledFunctionBody Compile(TasksPlan plan)
+        {
+            throw new NotImplementedException("8A4EB32D-751A-42E0-B13B-401025AB4182");
         }
 
         private CompiledFunctionBody ConvertToCompiledFunctionBody(List<IntermediateScriptCommand> resultCommandsList)

@@ -168,7 +168,8 @@ namespace TestSandbox
             //TstMonoBehaviourTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            TstGeneralStartHandler();//<=
+            TstTasksHandler();
+            //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
             //Thread.Sleep(10000);
@@ -369,7 +370,7 @@ namespace TestSandbox
             }
         }
 
-        private static void TstDetectDoninantItems()
+        private static void TstDetectDominantItems()
         {
             _logger.Info("51C3F12C-FE0A-4252-8CC1-704C0303292B", "Begin");
 
@@ -2106,6 +2107,16 @@ action Go
             handler.Run();
 
             _logger.Info("EABCDF37-04C2-467E-9865-0527479C5CCB", "End");
+        }
+
+        private static void TstTasksHandler()
+        {
+            _logger.Info("FF16064F-085D-423A-A269-3C671843A371", "Begin");
+
+            using var handler = new TasksHandler();
+            handler.Run();
+
+            _logger.Info("40211AAF-B1A6-4A2B-B8D2-E63CD9FC0928", "End");
         }
 
         private static void TstGeneralStartHandler()

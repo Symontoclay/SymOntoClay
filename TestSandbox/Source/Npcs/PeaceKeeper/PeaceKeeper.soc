@@ -5,7 +5,7 @@
     fun SomeOperator()
     {
        'Run SomeOperator' >> @>log;
-       @targetEnemy = ##@{: see(I, $_) & enemy($_) & state($_, alive) :};
+       //@targetEnemy = ##@{: see(I, $_) & enemy($_) & state($_, alive) :};
        wait 1;
     }
 
@@ -27,10 +27,10 @@
        wait 1;
     }
 
-    prop SomeProp1: number = 2;
+    //prop SomeProp1: number = 2;
 
-	private:
-	    var @targetEnemy;
+	//private:
+	    //var @targetEnemy;
 }
 
 root task SomeRootTask
@@ -59,7 +59,7 @@ tactical task SomeTacticalTask
        SomeCompoundTask2;
    }
 
-   prop SomeProp2: number = 2;
+   //prop SomeProp2: number = 2;
 }
 
 compound task SomeCompoundTask

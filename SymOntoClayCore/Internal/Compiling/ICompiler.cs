@@ -24,6 +24,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
+using SymOntoClay.Core.Internal.TasksExecution;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -35,5 +36,6 @@ namespace SymOntoClay.Core.Internal.Compiling
         CompiledFunctionBody Compile(List<AstStatement> statements);
         CompiledFunctionBody Compile(List<AstStatement> statements, List<AstExpression> callSuperClassConstructorsExpressions, KindOfCompilation kindOfCompilation);
         CompiledFunctionBody Compile(List<Field> fields);
+        CompiledFunctionBody Compile(TasksPlan plan);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.BaseTestLib;
 using SymOntoClay.Core;
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.TasksExecution;
 using SymOntoClay.Monitor.LogFileBuilder;
 using SymOntoClay.Threading;
@@ -81,9 +82,22 @@ namespace TestSandbox.Handlers
             //_logger.Info("B7831523-8D1C-4BAB-8348-460656F67E90", $"plan = {plan}");
             _logger.Info("A74AD3BB-4D8E-44EC-AEF0-820592069E87", $"plan = {plan.ToDbgString()}");
 
-            var compiledFunctionBody = _npc.EngineContext.Compiler.Compile(plan);
+            var context = _npc.EngineContext;
+
+            var compiledFunctionBody = context.Compiler.Compile(plan);
 
             _logger.Info("F71873F5-CBD9-46E2-8B8A-304303268462", $"compiledFunctionBody = {compiledFunctionBody.ToDbgString()}");
+
+            var mainEntity = context.InstancesStorage.MainEntity;
+
+            var processInitialInfo = new ProcessInitialInfo();
+            processInitialInfo.CompiledFunctionBody = compiledFunctionBody;
+            processInitialInfo.LocalContext = mainEntity.LocalCodeExecutionContext;
+            //processInitialInfo.Metadata = mainEntity.CodeItem;
+            processInitialInfo.Instance = mainEntity;
+            processInitialInfo.ExecutionCoordinator = mainEntity.ExecutionCoordinator;
+
+            var task = context.CodeExecutor.ExecuteAsync(context.Logger, processInitialInfo);
 
             //var tasksPlanRunner = new TasksPlanRunner(_npc.EngineContext, new SyncActivePeriodicObject(_npc.EngineContext.GetCancellationToken()));
 

@@ -125,7 +125,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 processInfo.CodeFrame = codeFrame;
                 codeFrame.Metadata = metadata;
 
-                var codeItemPriority = metadata.Priority;
+                var codeItemPriority = metadata?.Priority;
 
                 if (codeItemPriority != null)
                 {

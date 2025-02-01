@@ -39,6 +39,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         KindOfInstance KindOfInstance { get; }
         StrongIdentifierValue Name { get; }
         float Priority { get; }
+        CodeItem CodeItem { get; }
         IExecutionCoordinator ExecutionCoordinator { get; }
         ILocalCodeExecutionContext LocalCodeExecutionContext { get; }
         void CancelExecution(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, Changer changer = null, string callMethodId = "");

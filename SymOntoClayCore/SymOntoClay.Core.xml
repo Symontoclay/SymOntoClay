@@ -7664,6 +7664,9 @@
         <member name="P:SymOntoClay.Core.Internal.Instances.BaseInstance.KindOfInstance">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.BaseInstance.CodeItem">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.BaseInstance.Name">
             <inheritdoc/>
         </member>

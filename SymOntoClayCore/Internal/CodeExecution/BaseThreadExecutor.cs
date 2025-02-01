@@ -501,6 +501,22 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         ProcessAddLifeCycleEvent();
                         break;
 
+                    case OperationCode.BeginCompoundTask:
+                        currentCodeFrame.CurrentPosition++;
+                        break;
+
+                    case OperationCode.EndCompoundTask:
+                        currentCodeFrame.CurrentPosition++;
+                        break;
+
+                    case OperationCode.BeginPrimitiveTask:
+                        currentCodeFrame.CurrentPosition++;
+                        break;
+
+                    case OperationCode.EndPrimitiveTask:
+                        currentCodeFrame.CurrentPosition++;
+                        break;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(currentCommand.OperationCode), currentCommand.OperationCode, null);
                 }

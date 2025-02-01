@@ -61,7 +61,7 @@ namespace TestSandbox.CodeExecution
 
             var compiledFunctionBody = new CompiledFunctionBody();
             
-            var strVal = new StringValue("The beatles!");
+            var strVal = new StringValue("The Beatles!");
 
             var command = new ScriptCommand();
             command.OperationCode = OperationCode.PushVal;

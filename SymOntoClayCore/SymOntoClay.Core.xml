@@ -6424,10 +6424,22 @@
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.PriorityAttributeName">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.Compile(SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstStatement)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.CompileToIntermediateCommands(SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstStatement)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.Compile(System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstStatement})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.CompileToIntermediateCommands(System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstStatement})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.Compile(System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstStatement},System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.AstExpression},SymOntoClay.Core.Internal.Compiling.KindOfCompilation)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.CompileToIntermediateCommands(System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstStatement},System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Ast.Expressions.AstExpression},SymOntoClay.Core.Internal.Compiling.KindOfCompilation)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.Compile(System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Field})">

@@ -3,9 +3,11 @@ using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
+using SymOntoClay.Core.Internal.Compiling.Internal;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
@@ -13,7 +15,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
     public class PrimitiveTaskOperator : IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         public AstStatement Statement { get; set; }
-        public CompiledFunctionBody CompiledFunctionBody { get; set; }
+        public List<IntermediateScriptCommand> IntermediateCommandsList { get; set; }
 
         /// <include file = "..\CommonDoc.xml" path='extradoc/method[@name="Clone"]/*' />
         public PrimitiveTaskOperator Clone()
@@ -34,7 +36,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             context[this] = result;
 
             result.Statement = Statement.CloneAstStatement(context);
-            result.CompiledFunctionBody = CompiledFunctionBody?.Clone(context);
+            result.IntermediateCommandsList = IntermediateCommandsList?.ToList();
 
             return result;
         }
@@ -62,7 +64,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
             sb.PrintObjProp(n, nameof(Statement), Statement);
-            sb.PrintObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
+            sb.PrintObjListProp(n, nameof(IntermediateCommandsList), IntermediateCommandsList);
 
             return sb.ToString();
         }
@@ -86,7 +88,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintShortObjProp(n, nameof(Statement), Statement);
-            sb.PrintShortObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
+            sb.PrintShortObjListProp(n, nameof(IntermediateCommandsList), IntermediateCommandsList);
 
             return sb.ToString();
         }
@@ -110,7 +112,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var sb = new StringBuilder();
 
             sb.PrintBriefObjProp(n, nameof(Statement), Statement);
-            sb.PrintBriefObjProp(n, nameof(CompiledFunctionBody), CompiledFunctionBody);
+            sb.PrintBriefObjListProp(n, nameof(IntermediateCommandsList), IntermediateCommandsList);
 
             return sb.ToString();
         }

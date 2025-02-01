@@ -46,15 +46,20 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                             command.OperationCode = OperationCode.BeginPrimitiveTask;
                             AddCommand(command);
 
-                            var compiledFunctionBody = executedTask.AsPrimitiveTask.Operator.CompiledFunctionBody;
+                            var intermediateCommandsList = executedTask.AsPrimitiveTask.Operator.IntermediateCommandsList;
 
 #if DEBUG
-                            Info("AE5A761D-A7EF-4C9B-A993-C6BB2A8048BE", $"compiledFunctionBody = {compiledFunctionBody.ToDbgString()}");
+                            DbgPrintCommands(intermediateCommandsList);
 #endif
 
-                            foreach(var cmd in compiledFunctionBody.Commands)
+                            foreach (var intermediateCommand in intermediateCommandsList)
                             {
+                                AddCommand(intermediateCommand);
                             }
+
+                            command = new IntermediateScriptCommand();
+                            command.OperationCode = OperationCode.EndPrimitiveTask;
+                            AddCommand(command);
                         }
                         break;
 

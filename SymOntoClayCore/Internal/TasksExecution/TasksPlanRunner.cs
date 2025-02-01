@@ -126,7 +126,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                         case KindOfTasksPlanFrameItemCommand.ExecPrimitiveTask:
                             {
                                 var processInitialInfo = new ProcessInitialInfo();
-                                processInitialInfo.CompiledFunctionBody = executedTask.AsPrimitiveTask.Operator.CompiledFunctionBody;
+                                //processInitialInfo.CompiledFunctionBody = executedTask.AsPrimitiveTask.Operator.IntermediateCommandsList;
                                 processInitialInfo.LocalContext = _mainEntity.LocalCodeExecutionContext;
                                 processInitialInfo.Metadata = executedTask;
                                 processInitialInfo.Instance = _mainEntity;

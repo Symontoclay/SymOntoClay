@@ -47,18 +47,42 @@ namespace SymOntoClay.Core.Internal.Compiling
         private readonly IMainStorageContext _context;
 
         /// <inheritdoc/>
+        public CompiledFunctionBody Compile(AstStatement statement)
+        {
+            return Compile(new List<AstStatement> { statement}, null, KindOfCompilation.Usual);
+        }
+
+        /// <inheritdoc/>
+        public List<IntermediateScriptCommand> CompileToIntermediateCommands(AstStatement statement)
+        {
+            return CompileToIntermediateCommands(new List<AstStatement> { statement }, null, KindOfCompilation.Usual);
+        }
+
+        /// <inheritdoc/>
         public CompiledFunctionBody Compile(List<AstStatement> statements)
         {
             return Compile(statements, null, KindOfCompilation.Usual);
         }
 
         /// <inheritdoc/>
+        public List<IntermediateScriptCommand> CompileToIntermediateCommands(List<AstStatement> statements)
+        {
+            return CompileToIntermediateCommands(statements, null, KindOfCompilation.Usual);
+        }
+
+        /// <inheritdoc/>
         public CompiledFunctionBody Compile(List<AstStatement> statements, List<AstExpression> callSuperClassConstructorsExpressions, KindOfCompilation kindOfCompilation)
+        {
+            return ConvertToCompiledFunctionBody(CompileToIntermediateCommands(statements, callSuperClassConstructorsExpressions, kindOfCompilation));
+        }
+
+        /// <inheritdoc/>
+        public List<IntermediateScriptCommand> CompileToIntermediateCommands(List<AstStatement> statements, List<AstExpression> callSuperClassConstructorsExpressions, KindOfCompilation kindOfCompilation)
         {
             var node = new CodeBlockNode(_context);
             node.Run(statements, null, callSuperClassConstructorsExpressions, kindOfCompilation);
 
-            return ConvertToCompiledFunctionBody(node.Result);
+            return node.Result;
         }
 
         /// <inheritdoc/>

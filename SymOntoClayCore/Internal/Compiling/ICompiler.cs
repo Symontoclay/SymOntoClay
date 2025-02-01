@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
+using SymOntoClay.Core.Internal.Compiling.Internal;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Core.Internal.TasksExecution;
 using System;
@@ -33,8 +34,12 @@ namespace SymOntoClay.Core.Internal.Compiling
 {
     public interface ICompiler
     {
+        CompiledFunctionBody Compile(AstStatement statement);
+        List<IntermediateScriptCommand> CompileToIntermediateCommands(AstStatement statement);
         CompiledFunctionBody Compile(List<AstStatement> statements);
+        List<IntermediateScriptCommand> CompileToIntermediateCommands(List<AstStatement> statements);
         CompiledFunctionBody Compile(List<AstStatement> statements, List<AstExpression> callSuperClassConstructorsExpressions, KindOfCompilation kindOfCompilation);
+        List<IntermediateScriptCommand> CompileToIntermediateCommands(List<AstStatement> statements, List<AstExpression> callSuperClassConstructorsExpressions, KindOfCompilation kindOfCompilation);
         CompiledFunctionBody Compile(List<Field> fields);
         CompiledFunctionBody Compile(TasksPlan plan);
     }

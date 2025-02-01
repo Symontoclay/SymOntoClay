@@ -130,16 +130,33 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 #if DEBUG
         public void DbgPrintCommands()
         {
+            var sb = new StringBuilder();
+
+            NDbgPrintCommands(_result, sb);
+
+            Info("5F925DB0-28D5-4B20-8C56-C79625D56D4C", $"sb = {sb}");
+        }
+
+        public void DbgPrintCommands(List<IntermediateScriptCommand> intermediateCommandsList)
+        {
+            var sb = new StringBuilder();
+
+            NDbgPrintCommands(intermediateCommandsList, sb);
+
+            Info("2E299BD9-2409-4E8B-B110-C74293401147", $"sb = {sb}");
+        }
+
+        private void NDbgPrintCommands(List<IntermediateScriptCommand> intermediateCommandsList, StringBuilder sb)
+        {
             var spaces = DisplayHelper.Spaces(DisplayHelper.IndentationStep);
 
-            var sb = new StringBuilder();
             sb.AppendLine("Begin Code");
 
             var n = 0;
 
             var cmdDict = new Dictionary<IntermediateScriptCommand, int>();
-            
-            foreach (var commandItem in _result)
+
+            foreach (var commandItem in intermediateCommandsList)
             {
                 cmdDict[commandItem] = n;
                 n++;
@@ -147,7 +164,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
             n = 0;
 
-            foreach (var commandItem in _result)
+            foreach (var commandItem in intermediateCommandsList)
             {
 
                 sb.AppendLine($"{spaces}{n}: {IntermediateScriptCommandToRawDbgString(commandItem, cmdDict)}");
@@ -156,8 +173,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             }
 
             sb.AppendLine("End Code");
-
-            Info("5F925DB0-28D5-4B20-8C56-C79625D56D4C", $"sb = {sb}");
         }
 
         private string IntermediateScriptCommandToRawDbgString(IntermediateScriptCommand commandItem, Dictionary<IntermediateScriptCommand, int> cmdDict)
@@ -194,6 +209,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 case OperationCode.ExecCallEvent:
                 case OperationCode.AddLifeCycleEvent:
                 case OperationCode.BeginPrimitiveTask:
+                case OperationCode.EndPrimitiveTask:
                     return $"{operationCode}";
 
                 case OperationCode.PushVal:

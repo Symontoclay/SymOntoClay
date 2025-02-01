@@ -76,7 +76,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
                         statement.Expression = parser.Result;
 
-                        Result.CompiledFunctionBody = _context.Compiler.Compile(new List<AstStatement> { statement });
+                        Result.IntermediateCommandsList = _context.Compiler.CompileToIntermediateCommands(statement);
 
                         _state = State.GotCallingExpr;
 

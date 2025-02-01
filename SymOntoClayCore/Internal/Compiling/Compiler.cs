@@ -73,7 +73,10 @@ namespace SymOntoClay.Core.Internal.Compiling
         /// <inheritdoc/>
         public CompiledFunctionBody Compile(TasksPlan plan)
         {
-            throw new NotImplementedException("8A4EB32D-751A-42E0-B13B-401025AB4182");
+            var node = new TasksPlanNode(_context);
+            node.Run(plan);
+
+            return ConvertToCompiledFunctionBody(node.Result);
         }
 
         private CompiledFunctionBody ConvertToCompiledFunctionBody(List<IntermediateScriptCommand> resultCommandsList)

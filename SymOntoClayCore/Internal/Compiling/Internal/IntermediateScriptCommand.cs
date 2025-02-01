@@ -38,6 +38,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public int Position { get; set; }
         public Value Value { get; set; }
+        public BaseCompoundTask CompoundTask { get; set; }
         public IntermediateScriptCommand JumpToMe { get; set; }
         public KindOfOperator KindOfOperator { get; set; } = KindOfOperator.Unknown;
         public int CountParams { get; set; }
@@ -66,6 +67,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
 
             sb.PrintObjProp(n, nameof(Value), Value);
+            sb.PrintObjProp(n, nameof(CompoundTask), CompoundTask);
 
             sb.PrintBriefObjProp(n, nameof(JumpToMe), JumpToMe);
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
@@ -99,6 +101,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
 
             sb.PrintShortObjProp(n, nameof(Value), Value);
+            sb.PrintShortObjProp(n, nameof(CompoundTask), CompoundTask);
 
             sb.PrintBriefObjProp(n, nameof(JumpToMe), JumpToMe);
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
@@ -132,6 +135,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
 
             sb.PrintBriefObjProp(n, nameof(Value), Value);
+            sb.PrintBriefObjProp(n, nameof(CompoundTask), CompoundTask);
 
             sb.PrintBriefObjProp(n, nameof(JumpToMe), JumpToMe);
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");

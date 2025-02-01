@@ -193,6 +193,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 case OperationCode.CallDefaultCtors:
                 case OperationCode.ExecCallEvent:
                 case OperationCode.AddLifeCycleEvent:
+                case OperationCode.BeginPrimitiveTask:
                     return $"{operationCode}";
 
                 case OperationCode.PushVal:
@@ -237,6 +238,9 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
                 case OperationCode.VarDecl:
                     return $"{operationCode} {commandItem.CountParams}";
+
+                case OperationCode.BeginCompoundTask:
+                    return $"{operationCode} {commandItem.CompoundTask?.ToHumanizedLabel()}";
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(operationCode), operationCode, null);

@@ -137,6 +137,7 @@ namespace SymOntoClay.Core.Internal.Compiling
             result.OperationCode = initialCommand.OperationCode;
             result.Position = initialCommand.Position;
             result.Value = initialCommand.Value;
+            result.CompoundTask = initialCommand.CompoundTask;
 
             if(initialCommand.JumpToMe != null)
             {

@@ -38,6 +38,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
         public int Position { get; set; }
         public Value Value { get; set; }
+        public BaseCompoundTask CompoundTask { get; set; }
         public int TargetPosition { get; set; }
         public KindOfOperator KindOfOperator { get; set; } = KindOfOperator.Unknown;
         public int CountParams { get; set; }
@@ -63,6 +64,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
             result.OperationCode = OperationCode;
             result.Position = Position;
             result.Value = Value?.CloneValue(context);
+            result.CompoundTask = CompoundTask?.CloneBaseCompoundTask(context);
             result.TargetPosition = TargetPosition;
             result.KindOfOperator = KindOfOperator;
             result.CountParams = CountParams;
@@ -94,6 +96,8 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
             sb.PrintObjProp(n, nameof(Value), Value);
 
+            sb.PrintObjProp(n, nameof(CompoundTask), CompoundTask);
+
             sb.AppendLine($"{spaces}{nameof(TargetPosition)} = {TargetPosition}");
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
             sb.AppendLine($"{spaces}{nameof(CountParams)} = {CountParams}");
@@ -112,7 +116,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         {
             return this.GetDefaultToShortStringInformation(n);
         }
-
+        
         /// <inheritdoc/>
         string IObjectToShortString.PropertiesToShortString(uint n)
         {
@@ -124,6 +128,8 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
             sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
 
             sb.PrintShortObjProp(n, nameof(Value), Value);
+
+            sb.PrintShortObjProp(n, nameof(CompoundTask), CompoundTask);
 
             sb.AppendLine($"{spaces}{nameof(TargetPosition)} = {TargetPosition}");
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
@@ -155,6 +161,8 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
             sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
 
             sb.PrintBriefObjProp(n, nameof(Value), Value);
+
+            sb.PrintBriefObjProp(n, nameof(CompoundTask), CompoundTask);
 
             sb.AppendLine($"{spaces}{nameof(TargetPosition)} = {TargetPosition}");
             sb.AppendLine($"{spaces}{nameof(KindOfOperator)} = {KindOfOperator}");
@@ -209,6 +217,8 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                 case OperationCode.CallDefaultCtors:
                 case OperationCode.ExecCallEvent:
                 case OperationCode.AddLifeCycleEvent:
+                case OperationCode.BeginPrimitiveTask:
+                case OperationCode.EndPrimitiveTask:
                     return $"{spaces}{OperationCode}";
 
                 case OperationCode.PushVal:
@@ -246,6 +256,10 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
                 case OperationCode.VarDecl:
                     return $"{spaces}{OperationCode} {CountParams}";
+
+                case OperationCode.BeginCompoundTask:
+                case OperationCode.EndCompoundTask:
+                    return $"{spaces}{OperationCode} {CompoundTask?.ToHumanizedLabel()}";
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(OperationCode), OperationCode, null);

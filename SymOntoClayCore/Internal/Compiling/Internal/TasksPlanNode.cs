@@ -63,6 +63,16 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                         }
                         break;
 
+                    case KindOfPrimitiveTask.EndCompound:
+                        {
+                            var command = new IntermediateScriptCommand();
+                            command.OperationCode = OperationCode.EndCompoundTask;
+                            command.CompoundTask = executedTask.AsEndCompoundTask.CompoundTask;
+
+                            AddCommand(command);
+                        }
+                        break;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(kindOfPrimitiveTask), kindOfPrimitiveTask, null);
                 }
@@ -72,7 +82,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 #endif
             }
 
-            throw new NotImplementedException("D2001943-B737-4140-A864-50DF6E4CC056");
+            //throw new NotImplementedException("D2001943-B737-4140-A864-50DF6E4CC056");
         }
     }
 }

@@ -256,6 +256,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     return $"{operationCode} {commandItem.CountParams}";
 
                 case OperationCode.BeginCompoundTask:
+                case OperationCode.EndCompoundTask:
                     return $"{operationCode} {commandItem.CompoundTask?.ToHumanizedLabel()}";
 
                 default:

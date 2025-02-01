@@ -52,10 +52,10 @@ namespace SymOntoClay.Core.Internal.Compiling
         }
 
         /// <inheritdoc/>
-        public CompiledFunctionBody Compile(List<AstStatement> statements, List<AstExpression> callSuperClassContructorsExpressions, KindOfCompilation kindOfCompilation)
+        public CompiledFunctionBody Compile(List<AstStatement> statements, List<AstExpression> callSuperClassConstructorsExpressions, KindOfCompilation kindOfCompilation)
         {
             var node = new CodeBlockNode(_context);
-            node.Run(statements, null, callSuperClassContructorsExpressions, kindOfCompilation);
+            node.Run(statements, null, callSuperClassConstructorsExpressions, kindOfCompilation);
 
             return ConvertToCompiledFunctionBody(node.Result);
         }

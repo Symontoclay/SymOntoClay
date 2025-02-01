@@ -33,7 +33,7 @@ namespace SymOntoClay.Core.Internal.Compiling
     public interface ICompiler
     {
         CompiledFunctionBody Compile(List<AstStatement> statements);
-        CompiledFunctionBody Compile(List<AstStatement> statements, List<AstExpression> callSuperClassContructorsExpressions, KindOfCompilation kindOfCompilation);
+        CompiledFunctionBody Compile(List<AstStatement> statements, List<AstExpression> callSuperClassConstructorsExpressions, KindOfCompilation kindOfCompilation);
         CompiledFunctionBody Compile(List<Field> fields);
     }
 }

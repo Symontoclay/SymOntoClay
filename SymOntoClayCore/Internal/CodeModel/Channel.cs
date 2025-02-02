@@ -117,19 +117,27 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override string ToHumanizedString(DebugHelperOptions options)
         {
-            throw new NotImplementedException("54DA7C7C-FF57-423F-8981-DC75E6FA8E5A");
+            return NToHumanizedString();
         }
 
         /// <inheritdoc/>
         public override string ToHumanizedLabel(DebugHelperOptions options)
         {
-            throw new NotImplementedException("70661AA4-2B17-47B4-B210-53AFAE0C15E8");
+            return NToHumanizedString();
         }
 
         /// <inheritdoc/>
         public override MonitoredHumanizedLabel ToLabel(IMonitorLogger logger)
         {
-            throw new NotImplementedException("B2B82203-4EF1-4542-BA21-D4B33D2BAD4A");
+            return new MonitoredHumanizedLabel()
+            {
+                Label = NToHumanizedString()
+            };
+        }
+
+        private string NToHumanizedString()
+        {
+            return $"Channel: {Name.NameValue}";
         }
     }
 }

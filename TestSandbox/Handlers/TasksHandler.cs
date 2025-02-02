@@ -93,7 +93,7 @@ namespace TestSandbox.Handlers
             var processInitialInfo = new ProcessInitialInfo();
             processInitialInfo.CompiledFunctionBody = compiledFunctionBody;
             processInitialInfo.LocalContext = mainEntity.LocalCodeExecutionContext;
-            //processInitialInfo.Metadata = mainEntity.CodeItem;
+            processInitialInfo.Metadata = mainEntity.CodeItem;
             processInitialInfo.Instance = mainEntity;
             processInitialInfo.ExecutionCoordinator = mainEntity.ExecutionCoordinator;
 

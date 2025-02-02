@@ -602,46 +602,6 @@ namespace SymOntoClay.Monitor.NLog
 
         /// <inheritdoc/>
         [MethodForLoggingSupport]
-        public ulong StartPrimitiveTask(string messagePointId,
-            [CallerMemberName] string memberName = "",
-            [CallerFilePath] string sourceFilePath = "",
-            [CallerLineNumber] int sourceLineNumber = 0)
-        {
-            throw new NotImplementedException("1ED1F282-5D02-43B6-923F-A80BC7CE5554");
-        }
-
-        /// <inheritdoc/>
-        [MethodForLoggingSupport]
-        public void StopPrimitiveTask(string messagePointId, ulong taskId,
-            [CallerMemberName] string memberName = "",
-            [CallerFilePath] string sourceFilePath = "",
-            [CallerLineNumber] int sourceLineNumber = 0)
-        {
-            throw new NotImplementedException("98FECD4A-C8B8-4C52-BA5E-3072000A4CB2");
-        }
-
-        /// <inheritdoc/>
-        [MethodForLoggingSupport]
-        public void PlanFrame(string messagePointId, string humanizedStr,
-            [CallerMemberName] string memberName = "",
-            [CallerFilePath] string sourceFilePath = "",
-            [CallerLineNumber] int sourceLineNumber = 0)
-        {
-            throw new NotImplementedException("EE718710-B415-4E28-B8B7-AD22773EDF77");
-        }
-
-        /// <inheritdoc/>
-        [MethodForLoggingSupport]
-        public void LeaveTasksExecutor(string messagePointId,
-            [CallerMemberName] string memberName = "",
-            [CallerFilePath] string sourceFilePath = "",
-            [CallerLineNumber] int sourceLineNumber = 0)
-        {
-            throw new NotImplementedException("F8EC5015-7EB0-4DAE-AAA7-E9D6B25F9B2A");
-        }
-
-        /// <inheritdoc/>
-        [MethodForLoggingSupport]
         public void Output(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

@@ -198,18 +198,6 @@ namespace SymOntoClay.Monitor.LogFileBuilder
                 case KindOfMessage.StopBuildPlan:
                     return GetStopBuildPlan(message as StopBuildPlanMessage);
 
-                case KindOfMessage.StartPrimitiveTask:
-                    return GetStartPrimitiveTask(message as StartPrimitiveTaskMessage);
-
-                case KindOfMessage.StopPrimitiveTask:
-                    return GetStopPrimitiveTask(message as StopPrimitiveTaskMessage);
-
-                case KindOfMessage.PlanFrame:
-                    return GetFrame(message as PlanFrameMessage);
-
-                case KindOfMessage.LeaveTasksExecutor:
-                    return GetLeaveTasksExecutor(message as LeaveTasksExecutorMessage);
-
                 case KindOfMessage.Output:
                     return GetOutput(message as OutputMessage);
 
@@ -941,46 +929,6 @@ namespace SymOntoClay.Monitor.LogFileBuilder
         }
 
         private string GetStopBuildPlan(StopBuildPlanMessage message)
-        {
-#if DEBUG
-            //_globalLogger.Info($"message = {message}");
-#endif
-
-            return string.Empty;
-        }
-
-        private Dictionary<ulong, DateTime> _primitiveTasksTime = new Dictionary<ulong, DateTime>();
-
-        private string GetStartPrimitiveTask(StartPrimitiveTaskMessage message)
-        {
-#if DEBUG
-            //_globalLogger.Info($"message = {message}");
-#endif
-
-            _primitiveTasksTime[message.TaskId] = message.DateTimeStamp;
-
-            return message.TaskId.ToString();
-        }
-
-        private string GetStopPrimitiveTask(StopPrimitiveTaskMessage message)
-        {
-#if DEBUG
-            //_globalLogger.Info($"message = {message}");
-#endif
-
-            return $"{message.TaskId} {(_primitiveTasksTime.TryGetValue(message.TaskId, out var date) ? message.DateTimeStamp.Subtract(date).ToString() : string.Empty)}";
-        }
-
-        private string GetFrame(PlanFrameMessage message)
-        {
-#if DEBUG
-            //_globalLogger.Info($"message = {message}");
-#endif
-
-            return $"\n{message.HumanizedStr}\n";
-        }
-
-        private string GetLeaveTasksExecutor(LeaveTasksExecutorMessage message)
         {
 #if DEBUG
             //_globalLogger.Info($"message = {message}");

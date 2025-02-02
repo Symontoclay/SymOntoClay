@@ -188,18 +188,6 @@ namespace SymOntoClay.Monitor.Common.Data
                 case KindOfMessage.StopBuildPlan:
                     return JsonConvert.DeserializeObject<StopBuildPlanMessage>(content);
 
-                case KindOfMessage.StartPrimitiveTask:
-                    return JsonConvert.DeserializeObject<StartPrimitiveTaskMessage>(content);
-
-                case KindOfMessage.StopPrimitiveTask:
-                    return JsonConvert.DeserializeObject<StopPrimitiveTaskMessage>(content);
-
-                case KindOfMessage.PlanFrame:
-                    return JsonConvert.DeserializeObject<PlanFrameMessage>(content);
-
-                case KindOfMessage.LeaveTasksExecutor:
-                    return JsonConvert.DeserializeObject<LeaveTasksExecutorMessage>(content);
-
                 case KindOfMessage.Output:
                     return JsonConvert.DeserializeObject<OutputMessage>(content);
 

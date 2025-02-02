@@ -154,15 +154,6 @@ namespace SymOntoClay.Monitor.Internal
         public bool EnableBuildPlan { get; set; }
 
         /// <inheritdoc/>
-        public bool EnablePrimitiveTask { get; set; }
-
-        /// <inheritdoc/>
-        public bool EnablePlanFrame { get; set; }
-
-        /// <inheritdoc/>
-        public bool EnableLeaveTasksExecutor { get; set; }
-
-        /// <inheritdoc/>
         public bool EnableOutput { get; set; }
 
         /// <inheritdoc/>
@@ -225,9 +216,6 @@ namespace SymOntoClay.Monitor.Internal
             result.EnableActivateIdleAction = EnableActivateIdleAction;
             result.EnableTasks = EnableTasks;
             result.EnableBuildPlan = EnableBuildPlan;
-            result.EnablePrimitiveTask = EnablePrimitiveTask;
-            result.EnablePlanFrame = EnablePlanFrame;
-            result.EnableLeaveTasksExecutor = EnableLeaveTasksExecutor;
             result.EnableOutput = EnableOutput;
             result.EnableTrace = EnableTrace;
             result.EnableDebug = EnableDebug;
@@ -295,9 +283,6 @@ namespace SymOntoClay.Monitor.Internal
             sb.AppendLine($"{spaces}{nameof(EnableActivateIdleAction)} = {EnableActivateIdleAction}");
             sb.AppendLine($"{spaces}{nameof(EnableTasks)} = {EnableTasks}");
             sb.AppendLine($"{spaces}{nameof(EnableBuildPlan)} = {EnableBuildPlan}");
-            sb.AppendLine($"{spaces}{nameof(EnablePrimitiveTask)} = {EnablePrimitiveTask}");
-            sb.AppendLine($"{spaces}{nameof(EnablePlanFrame)} = {EnablePlanFrame}");
-            sb.AppendLine($"{spaces}{nameof(EnableLeaveTasksExecutor)} = {EnableLeaveTasksExecutor}");
             sb.AppendLine($"{spaces}{nameof(EnableOutput)} = {EnableOutput}");
             sb.AppendLine($"{spaces}{nameof(EnableTrace)} = {EnableTrace}");
             sb.AppendLine($"{spaces}{nameof(EnableDebug)} = {EnableDebug}");

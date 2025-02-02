@@ -497,39 +497,6 @@ namespace SymOntoClay.BaseTestLib.Monitoring
         }
 
         /// <inheritdoc/>
-        public ulong StartPrimitiveTask(string messagePointId,
-            [CallerMemberName] string memberName = "",
-            [CallerFilePath] string sourceFilePath = "",
-            [CallerLineNumber] int sourceLineNumber = 0)
-        {
-            return 0u;
-        }
-
-        /// <inheritdoc/>
-        public void StopPrimitiveTask(string messagePointId, ulong taskId,
-            [CallerMemberName] string memberName = "",
-            [CallerFilePath] string sourceFilePath = "",
-            [CallerLineNumber] int sourceLineNumber = 0)
-        {
-        }
-
-        /// <inheritdoc/>
-        public void PlanFrame(string messagePointId, string humanizedStr,
-            [CallerMemberName] string memberName = "",
-            [CallerFilePath] string sourceFilePath = "",
-            [CallerLineNumber] int sourceLineNumber = 0)
-        {
-        }
-
-        /// <inheritdoc/>
-        public void LeaveTasksExecutor(string messagePointId,
-            [CallerMemberName] string memberName = "",
-            [CallerFilePath] string sourceFilePath = "",
-            [CallerLineNumber] int sourceLineNumber = 0)
-        {
-        }
-
-        /// <inheritdoc/>
         public void Output(string messagePointId, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",

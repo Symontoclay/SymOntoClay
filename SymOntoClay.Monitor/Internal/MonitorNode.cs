@@ -455,30 +455,6 @@ namespace SymOntoClay.Monitor.Internal
             }
         }
 
-        bool IMonitorFeatures.EnablePrimitiveTask
-        {
-            get
-            {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnablePrimitiveTask;
-            }
-        }
-
-        bool IMonitorFeatures.EnablePlanFrame
-        {
-            get
-            {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnablePlanFrame;
-            }
-        }
-
-        bool IMonitorFeatures.EnableLeaveTasksExecutor
-        {
-            get
-            {
-                return _baseMonitorSettings.Enable && _monitorContext.Settings.Enable && _features.EnableLeaveTasksExecutor;
-            }
-        }
-
         bool IMonitorFeatures.EnableOutput
         {
             get
@@ -606,9 +582,6 @@ namespace SymOntoClay.Monitor.Internal
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableActivateIdleAction)} = {monitorFeatures.EnableActivateIdleAction}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableTasks)} = {monitorFeatures.EnableTasks}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableBuildPlan)} = {monitorFeatures.EnableBuildPlan}");
-            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnablePrimitiveTask)} = {monitorFeatures.EnablePrimitiveTask}");
-            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnablePlanFrame)} = {monitorFeatures.EnablePlanFrame}");
-            sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableLeaveTasksExecutor)} = {monitorFeatures.EnableLeaveTasksExecutor}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableOutput)} = {monitorFeatures.EnableOutput}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableTrace)} = {monitorFeatures.EnableTrace}");
             sb.AppendLine($"{spaces}{nameof(IMonitorFeatures.EnableDebug)} = {monitorFeatures.EnableDebug}");
@@ -1251,46 +1224,6 @@ namespace SymOntoClay.Monitor.Internal
             [CallerLineNumber] int sourceLineNumber = 0)
         {
             _monitorLoggerImpl.StopBuildPlan(messagePointId, memberName, sourceFilePath, sourceLineNumber);
-        }
-
-        /// <inheritdoc/>
-        [MethodForLoggingSupport]
-        public ulong StartPrimitiveTask(string messagePointId,
-            [CallerMemberName] string memberName = "",
-            [CallerFilePath] string sourceFilePath = "",
-            [CallerLineNumber] int sourceLineNumber = 0)
-        {
-            return _monitorLoggerImpl.StartPrimitiveTask(messagePointId, memberName, sourceFilePath, sourceLineNumber);
-        }
-
-        /// <inheritdoc/>
-        [MethodForLoggingSupport]
-        public void StopPrimitiveTask(string messagePointId, ulong taskId,
-            [CallerMemberName] string memberName = "",
-            [CallerFilePath] string sourceFilePath = "",
-            [CallerLineNumber] int sourceLineNumber = 0)
-        {
-            _monitorLoggerImpl.StopPrimitiveTask(messagePointId, taskId, memberName, sourceFilePath, sourceLineNumber);
-        }
-
-        /// <inheritdoc/>
-        [MethodForLoggingSupport]
-        public void PlanFrame(string messagePointId, string humanizedStr,
-            [CallerMemberName] string memberName = "",
-            [CallerFilePath] string sourceFilePath = "",
-            [CallerLineNumber] int sourceLineNumber = 0)
-        {
-            _monitorLoggerImpl.PlanFrame(messagePointId, humanizedStr, memberName, sourceFilePath, sourceLineNumber);
-        }
-
-        /// <inheritdoc/>
-        [MethodForLoggingSupport]
-        public void LeaveTasksExecutor(string messagePointId,
-            [CallerMemberName] string memberName = "",
-            [CallerFilePath] string sourceFilePath = "",
-            [CallerLineNumber] int sourceLineNumber = 0)
-        {
-            _monitorLoggerImpl.LeaveTasksExecutor(messagePointId, memberName, sourceFilePath, sourceLineNumber);
         }
 
         /// <inheritdoc/>

@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         private bool CommandLoop(CancellationToken cancellationToken)
         {
 #if DEBUG
-            Info("EB501AF1-9B30-4D5A-ACD1-C013DF7769B8", $"_executionState = {_executionState}");
+            //Info("EB501AF1-9B30-4D5A-ACD1-C013DF7769B8", $"_executionState = {_executionState}");
 #endif
 
             if (_executionState == ExecutionState.Init)
@@ -50,7 +50,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                 if (!_tasksPlanner.HasRootTasks)
                 {
 #if DEBUG
-                    Info("723CD4E5-CCF4-4C1E-AF2D-DCDA776CA721", "!_tasksPlanner.HasRootTasks");
+                    //Info("723CD4E5-CCF4-4C1E-AF2D-DCDA776CA721", "!_tasksPlanner.HasRootTasks");
 #endif
 
                     return false;
@@ -93,7 +93,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                 var runningStatus = _threadExecutor.RunningStatus;
 
 #if DEBUG
-                Info("8729B582-40C3-431E-9C27-C8413C1F94E0", $"runningStatus = {runningStatus}");
+                //Info("8729B582-40C3-431E-9C27-C8413C1F94E0", $"runningStatus = {runningStatus}");
 #endif
 
                 if(runningStatus == Threading.ThreadTaskStatus.RanToCompletion ||

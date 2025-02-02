@@ -69,10 +69,6 @@ namespace SymOntoClay.Monitor.Common
         bool EnableActivateIdleAction { get; }
         bool EnableTasks { get; }
         bool EnableBuildPlan { get; }
-        bool EnablePrimitiveTask { get; }
-        bool EnablePlanFrame { get; }
-        bool EnableLeaveTasksExecutor { get; }
-
         bool EnableOutput { get; }
         bool EnableTrace { get; }
         bool EnableDebug { get; }

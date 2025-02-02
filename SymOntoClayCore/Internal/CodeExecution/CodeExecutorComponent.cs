@@ -65,43 +65,47 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly ILocalCodeExecutionContext _globalExecutionContext;
 
         /// <inheritdoc/>
-        public IThreadTask ExecuteAsync(IMonitorLogger logger, ProcessInitialInfo processInitialInfo)
+        public IThreadExecutor ExecuteAsync(IMonitorLogger logger, ProcessInitialInfo processInitialInfo)
         {
             return ExecuteBatchAsync(logger, new List<ProcessInitialInfo>() { processInitialInfo });
         }
 
         /// <inheritdoc/>
-        public IThreadTask ExecuteAsync(IMonitorLogger logger, ProcessInitialInfo processInitialInfo, string parentThreadLoggerId)
+        public IThreadExecutor ExecuteAsync(IMonitorLogger logger, ProcessInitialInfo processInitialInfo, string parentThreadLoggerId)
         {
             return ExecuteBatchAsync(logger, new List<ProcessInitialInfo>() { processInitialInfo }, parentThreadLoggerId);
         }
 
         /// <inheritdoc/>
-        public IThreadTask ExecuteBatchAsync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList)
+        public IThreadExecutor ExecuteBatchAsync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList)
         {
             return ExecuteBatchAsync(logger, processInitialInfoList, string.Empty);
         }
 
         /// <inheritdoc/>
-        public IThreadTask ExecuteBatchAsync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList, string parentThreadLoggerId)
+        public IThreadExecutor ExecuteBatchAsync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList, string parentThreadLoggerId)
         {
             var codeFramesList = ConvertProcessInitialInfosToCodeFrames(logger, processInitialInfoList);
 
             var threadExecutor = new AsyncThreadExecutor(_context, _context.CodeExecutionThreadPool, parentThreadLoggerId);
             threadExecutor.SetCodeFrames(codeFramesList);
 
-            return threadExecutor.Start();
+            threadExecutor.Start();
+
+            return threadExecutor;
         }
 
         /// <inheritdoc/>
-        public IThreadTask ExecuteBatchSync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList)
+        public IThreadExecutor ExecuteBatchSync(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList)
         {
             var codeFramesList = ConvertProcessInitialInfosToCodeFrames(logger, processInitialInfoList);
 
             var threadExecutor = new SyncThreadExecutor(_context);
             threadExecutor.SetCodeFrames(codeFramesList);
 
-            return threadExecutor.Start();
+            threadExecutor.Start();
+
+            return threadExecutor;
         }
 
         private List<CodeFrame> ConvertProcessInitialInfosToCodeFrames(IMonitorLogger logger, List<ProcessInitialInfo> processInitialInfoList)

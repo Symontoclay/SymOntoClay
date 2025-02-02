@@ -207,12 +207,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             return _activeObject.Start();
         }
 
+        /// <inheritdoc/>
         public ThreadTaskStatus RunningStatus => _activeObject.TaskValue?.Status ?? ThreadTaskStatus.Created;
 
         /// <inheritdoc/>
         public void Cancel()
         {
             _activeObject.TaskValue?.Cancel();
+        }
+
+        /// <inheritdoc/>
+        public void Wait()
+        {
+            _activeObject.TaskValue?.Wait();
         }
 
         /// <inheritdoc/>

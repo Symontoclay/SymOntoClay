@@ -367,7 +367,13 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.Start">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.RunningStatus">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.Cancel">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.Wait">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.BaseThreadExecutor.Dispose">

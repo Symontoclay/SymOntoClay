@@ -12,6 +12,7 @@ using System.Threading;
 
 namespace SymOntoClay.Core.Internal.TasksExecution
 {
+    [Obsolete("", true)]
     public class TasksPlanRunner: BaseComponent
     {
         private enum ExecutionState
@@ -132,7 +133,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
                                 processInitialInfo.Instance = _mainEntity;
                                 processInitialInfo.ExecutionCoordinator = _mainEntity.ExecutionCoordinator;
 
-                                _task = _context.CodeExecutor.ExecuteAsync(Logger, processInitialInfo);
+                                //_task = _context.CodeExecutor.ExecuteAsync(Logger, processInitialInfo);
 
                                 _executionState = ExecutionState.WaitingForFinishItemExecution;
                             }

@@ -6,5 +6,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
     {
         ThreadTaskStatus RunningStatus { get; }
         void Cancel();
+        void Wait();
     }
 }

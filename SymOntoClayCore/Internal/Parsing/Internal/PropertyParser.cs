@@ -10,6 +10,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private enum State
         {
             Init,
+            GotPropMark
         }
 
         public PropertyParser(InternalParserContext context)
@@ -40,6 +41,26 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             switch (_state)
             {
                 case State.Init:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Word:
+                            switch(_currToken.KeyWordTokenKind)
+                            {
+                                case KeyWordTokenKind.Prop:
+                                    _state = State.GotPropMark;
+                                    break;
+
+                                default:
+                                    throw new UnexpectedTokenException(_currToken);
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotPropMark:
                     switch (_currToken.TokenKind)
                     {
                         default:

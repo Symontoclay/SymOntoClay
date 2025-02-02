@@ -25,6 +25,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override Property AsProperty => this;
 
+        public KindOfProperty KindOfProperty { get; set; } = KindOfProperty.Auto;
+
         /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> context)
         {
@@ -49,6 +51,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var result = new Property();
             context[this] = result;
 
+            result.KindOfProperty = KindOfProperty;
+
             result.AppendCodeItem(this, context);
 
             return result;
@@ -59,6 +63,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{KindOfProperty} = {KindOfProperty}");
+
             //sb.PrintObjProp(n, nameof(Value), Value);
             //sb.PrintObjListProp(n, nameof(TypesList), TypesList);
 
@@ -71,6 +78,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{KindOfProperty} = {KindOfProperty}");
+
             //sb.PrintShortObjProp(n, nameof(Value), Value);
             //sb.PrintShortObjListProp(n, nameof(TypesList), TypesList);
 
@@ -83,6 +93,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
+
+            sb.AppendLine($"{spaces}{KindOfProperty} = {KindOfProperty}");
+
             //sb.PrintBriefObjProp(n, nameof(Value), Value);
             //sb.PrintBriefObjListProp(n, nameof(TypesList), TypesList);
 

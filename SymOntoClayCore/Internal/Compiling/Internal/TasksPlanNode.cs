@@ -2,6 +2,7 @@
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Core.Internal.TasksExecution;
 using System;
+using System.Collections.Generic;
 
 namespace SymOntoClay.Core.Internal.Compiling.Internal
 {
@@ -14,7 +15,9 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(TasksPlan plan)
         {
-            foreach(var item in plan.Items)
+            var beginTaskItems = new Dictionary<StrongIdentifierValue, IntermediateScriptCommand>();
+
+            foreach (var item in plan.Items)
             {
                 var executedTask = item.ExecutedTask;
 
@@ -34,9 +37,14 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                         {
                             var command = new IntermediateScriptCommand();
                             command.OperationCode = OperationCode.BeginCompoundTask;
-                            command.CompoundTask = executedTask.AsBeginCompoundTask.CompoundTask;
+
+                            var compoundTask = executedTask.AsBeginCompoundTask.CompoundTask;
+
+                            command.CompoundTask = compoundTask;
 
                             AddCommand(command);
+
+                            beginTaskItems[compoundTask.Name] = command;
                         }
                         break;
 
@@ -68,6 +76,16 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                             var command = new IntermediateScriptCommand();
                             command.OperationCode = OperationCode.EndCompoundTask;
                             command.CompoundTask = executedTask.AsEndCompoundTask.CompoundTask;
+
+                            AddCommand(command);
+                        }
+                        break;
+
+                    case KindOfPrimitiveTask.Jump:
+                        {
+                            var command = new IntermediateScriptCommand();
+                            command.OperationCode = OperationCode.JumpTo;
+                            command.JumpToMe = beginTaskItems[executedTask.AsJumpPrimitiveTask.TargetTaskName];
 
                             AddCommand(command);
                         }

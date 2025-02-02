@@ -46,8 +46,8 @@ strategic task SomeStrategicTask
    case
    {
        SomeTacticalTask;
-       //SomeStrategicTask;
-       //SomePrimitiveTask;
+       SomeStrategicTask;
+       SomePrimitiveTask;
    }
 }
 

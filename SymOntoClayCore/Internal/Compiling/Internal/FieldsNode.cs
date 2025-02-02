@@ -40,13 +40,13 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             {
                 CompileVarDecl(field);
 
-                if(field.Value == null)
+                if(field.DefaultValue == null)
                 {
                     continue;
                 }
 
                 var node = new ExpressionNode(_context);
-                node.Run(field.Value);
+                node.Run(field.DefaultValue);
 
                 AddCommands(node.Result);
 

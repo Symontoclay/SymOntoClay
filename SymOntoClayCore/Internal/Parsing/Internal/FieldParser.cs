@@ -133,7 +133,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         var parser = new AstExpressionParser(_context, TokenKind.Semicolon);
                         parser.Run();
 
-                        _field.Value = parser.Result;
+                        _field.DefaultValue = parser.Result;
                         _state = State.GotValue;
                     }
                     break;

@@ -6,6 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using System.Linq;
+using SymOntoClay.Common.CollectionsHelpers;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
@@ -26,6 +29,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override Property AsProperty => this;
 
         public KindOfProperty KindOfProperty { get; set; } = KindOfProperty.Auto;
+
+        public List<StrongIdentifierValue> TypesList { get; set; } = new List<StrongIdentifierValue>();
+
+        public AstExpression DefaultValue { get; set; }
 
         /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> context)
@@ -52,6 +59,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             context[this] = result;
 
             result.KindOfProperty = KindOfProperty;
+            result.DefaultValue = DefaultValue?.CloneAstExpression(context);
+            result.TypesList = TypesList?.Select(p => p.Clone(context)).ToList();
 
             result.AppendCodeItem(this, context);
 
@@ -66,8 +75,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{KindOfProperty} = {KindOfProperty}");
 
-            //sb.PrintObjProp(n, nameof(Value), Value);
-            //sb.PrintObjListProp(n, nameof(TypesList), TypesList);
+            sb.PrintObjProp(n, nameof(DefaultValue), DefaultValue);
+            sb.PrintObjListProp(n, nameof(TypesList), TypesList);
 
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
@@ -81,8 +90,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{KindOfProperty} = {KindOfProperty}");
 
-            //sb.PrintShortObjProp(n, nameof(Value), Value);
-            //sb.PrintShortObjListProp(n, nameof(TypesList), TypesList);
+            sb.PrintShortObjProp(n, nameof(DefaultValue), DefaultValue);
+            sb.PrintShortObjListProp(n, nameof(TypesList), TypesList);
 
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
@@ -96,8 +105,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.AppendLine($"{spaces}{KindOfProperty} = {KindOfProperty}");
 
-            //sb.PrintBriefObjProp(n, nameof(Value), Value);
-            //sb.PrintBriefObjListProp(n, nameof(TypesList), TypesList);
+            sb.PrintBriefObjProp(n, nameof(DefaultValue), DefaultValue);
+            sb.PrintBriefObjListProp(n, nameof(TypesList), TypesList);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
@@ -124,10 +133,19 @@ namespace SymOntoClay.Core.Internal.CodeModel
             };
         }
 
+        private string TypesListToHumanizedString()
+        {
+            if (TypesList.IsNullOrEmpty())
+            {
+                return "(any)";
+            }
+
+            return $"({string.Join(" | ", TypesList.Select(p => p.NameValue))})";
+        }
+
         private string NToHumanizedString()
         {
-            return $"prop {Name.NameValue}";
-            //return $"{Name.NameValue}: {TypesListToHumanizedString()}";
+            return $"prop {Name.NameValue}: {TypesListToHumanizedString()}";
         }
     }
 }

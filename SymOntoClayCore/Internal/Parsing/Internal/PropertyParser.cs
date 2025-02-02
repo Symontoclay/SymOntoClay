@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using static System.Collections.Specialized.BitVector32;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
@@ -10,7 +11,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         private enum State
         {
             Init,
-            GotPropMark
+            GotPropMark,
+            GotName,
+            WaitForType,
+            GotType,
+            WaitForValue,
+            GotValue
         }
 
         public PropertyParser(InternalParserContext context)
@@ -63,6 +69,82 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 case State.GotPropMark:
                     switch (_currToken.TokenKind)
                     {
+                        case TokenKind.Word:
+                        case TokenKind.Identifier:
+                            {
+                                var name = ParseName(_currToken.Content);
+
+                                _property.Name = name;
+
+                                _state = State.GotName;
+                            }
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.GotName:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Semicolon:
+                            Exit();
+                            break;
+
+                        case TokenKind.Colon:
+                            _state = State.WaitForType;
+                            break;
+
+                        case TokenKind.Assign:
+                            _state = State.WaitForValue;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.WaitForType:
+                    _property.TypesList = ParseTypesOfParameterOrVar();
+                    _state = State.GotType;
+                    break;
+
+                case State.GotType:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Semicolon:
+                            Exit();
+                            break;
+
+                        case TokenKind.Assign:
+                            _state = State.WaitForValue;
+                            break;
+
+                        default:
+                            throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.WaitForValue:
+                    {
+                        _context.Recovery(_currToken);
+
+                        var parser = new AstExpressionParser(_context, TokenKind.Semicolon);
+                        parser.Run();
+
+                        _property.DefaultValue = parser.Result;
+                        _state = State.GotValue;
+                    }
+                    break;
+
+                case State.GotValue:
+                    switch (_currToken.TokenKind)
+                    {
+                        case TokenKind.Semicolon:
+                            Exit();
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
                     }

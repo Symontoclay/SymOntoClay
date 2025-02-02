@@ -48,11 +48,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override Field AsField => this;
 
-        public AstExpression Value { get; set; }
+        public AstExpression DefaultValue { get; set; }
 
         /// <inheritdoc/>
         public List<StrongIdentifierValue> TypesList { get; set; } = new List<StrongIdentifierValue>();
-
+        
         /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> context)
         {
@@ -84,7 +84,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         protected void AppendVar(Field source, Dictionary<object, object> context)
         {
-            Value = source.Value?.CloneAstExpression(context);
+            DefaultValue = source.DefaultValue?.CloneAstExpression(context);
             TypesList = source.TypesList?.Select(p => p.Clone(context)).ToList();
 
             AppendCodeItem(source, context);
@@ -96,7 +96,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjProp(n, nameof(Value), Value);
+            sb.PrintObjProp(n, nameof(DefaultValue), DefaultValue);
             sb.PrintObjListProp(n, nameof(TypesList), TypesList);
 
             sb.Append(base.PropertiesToString(n));
@@ -109,7 +109,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjProp(n, nameof(Value), Value);
+            sb.PrintShortObjProp(n, nameof(DefaultValue), DefaultValue);
             sb.PrintShortObjListProp(n, nameof(TypesList), TypesList);
 
             sb.Append(base.PropertiesToShortString(n));
@@ -122,14 +122,14 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjProp(n, nameof(Value), Value);
+            sb.PrintBriefObjProp(n, nameof(DefaultValue), DefaultValue);
             sb.PrintBriefObjListProp(n, nameof(TypesList), TypesList);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();
         }
 
-        public string TypesListToHumanizedString()
+        private string TypesListToHumanizedString()
         {
             if (TypesList.IsNullOrEmpty())
             {

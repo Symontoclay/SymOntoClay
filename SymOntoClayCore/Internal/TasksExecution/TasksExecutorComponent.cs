@@ -43,71 +43,71 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             //Info("EB501AF1-9B30-4D5A-ACD1-C013DF7769B8", $"_executionState = {_executionState}");
 #endif
 
-            if (_executionState == ExecutionState.Init)
-            {
-                _tasksPlanner = new TasksPlanner(_context);
+//            if (_executionState == ExecutionState.Init)
+//            {
+//                _tasksPlanner = new TasksPlanner(_context);
 
-                if (!_tasksPlanner.HasRootTasks)
-                {
-#if DEBUG
-                    //Info("723CD4E5-CCF4-4C1E-AF2D-DCDA776CA721", "!_tasksPlanner.HasRootTasks");
-#endif
+//                if (!_tasksPlanner.HasRootTasks)
+//                {
+//#if DEBUG
+//                    //Info("723CD4E5-CCF4-4C1E-AF2D-DCDA776CA721", "!_tasksPlanner.HasRootTasks");
+//#endif
 
-                    return false;
-                }
+//                    return false;
+//                }
 
-                _executionState = ExecutionState.WaitingForPlanBuilding;
-            }
+//                _executionState = ExecutionState.WaitingForPlanBuilding;
+//            }
 
-            if (_executionState == ExecutionState.WaitingForPlanBuilding)
-            {
-                Logger.StartBuildPlan("584A66AE-6592-4476-AA54-C283C9A65DBE");
+//            if (_executionState == ExecutionState.WaitingForPlanBuilding)
+//            {
+//                Logger.StartBuildPlan("584A66AE-6592-4476-AA54-C283C9A65DBE");
 
-                _plan = _tasksPlanner.BuildPlan();
+//                _plan = _tasksPlanner.BuildPlan();
 
-                Logger.StopBuildPlan("CEB8C398-CFA8-4869-A6BC-5BFB32F89CBF");
+//                Logger.StopBuildPlan("CEB8C398-CFA8-4869-A6BC-5BFB32F89CBF");
 
-                _executionState = ExecutionState.WaitingForStartPlanExecution;
-            }
+//                _executionState = ExecutionState.WaitingForStartPlanExecution;
+//            }
 
-            if (_executionState == ExecutionState.WaitingForStartPlanExecution)
-            {
-                var compiledFunctionBody = _compiler.Compile(_plan);
+//            if (_executionState == ExecutionState.WaitingForStartPlanExecution)
+//            {
+//                var compiledFunctionBody = _compiler.Compile(_plan);
 
-                var mainEntity = _context.InstancesStorage.MainEntity;
+//                var mainEntity = _context.InstancesStorage.MainEntity;
 
-                var processInitialInfo = new ProcessInitialInfo();
-                processInitialInfo.CompiledFunctionBody = compiledFunctionBody;
-                processInitialInfo.LocalContext = mainEntity.LocalCodeExecutionContext;
-                processInitialInfo.Metadata = mainEntity.CodeItem;
-                processInitialInfo.Instance = mainEntity;
-                processInitialInfo.ExecutionCoordinator = mainEntity.ExecutionCoordinator;
+//                var processInitialInfo = new ProcessInitialInfo();
+//                processInitialInfo.CompiledFunctionBody = compiledFunctionBody;
+//                processInitialInfo.LocalContext = mainEntity.LocalCodeExecutionContext;
+//                processInitialInfo.Metadata = mainEntity.CodeItem;
+//                processInitialInfo.Instance = mainEntity;
+//                processInitialInfo.ExecutionCoordinator = mainEntity.ExecutionCoordinator;
 
-                _threadExecutor = _context.CodeExecutor.ExecuteAsync(_context.Logger, processInitialInfo);
+//                _threadExecutor = _context.CodeExecutor.ExecuteAsync(_context.Logger, processInitialInfo);
 
-                _executionState = ExecutionState.WaitingForFinishPlanExecution;
-            }
+//                _executionState = ExecutionState.WaitingForFinishPlanExecution;
+//            }
 
-            if(_executionState == ExecutionState.WaitingForFinishPlanExecution)
-            {
-                var runningStatus = _threadExecutor.RunningStatus;
+//            if(_executionState == ExecutionState.WaitingForFinishPlanExecution)
+//            {
+//                var runningStatus = _threadExecutor.RunningStatus;
 
-#if DEBUG
-                //Info("8729B582-40C3-431E-9C27-C8413C1F94E0", $"runningStatus = {runningStatus}");
-#endif
+//#if DEBUG
+//                //Info("8729B582-40C3-431E-9C27-C8413C1F94E0", $"runningStatus = {runningStatus}");
+//#endif
 
-                if(runningStatus == Threading.ThreadTaskStatus.RanToCompletion ||
-                    runningStatus == Threading.ThreadTaskStatus.Canceled ||
-                    runningStatus == Threading.ThreadTaskStatus.Faulted)
-                {
-                    _threadExecutor = null;
-                    _executionState = ExecutionState.WaitingForPlanBuilding;
-                }
-            }
+//                if(runningStatus == Threading.ThreadTaskStatus.RanToCompletion ||
+//                    runningStatus == Threading.ThreadTaskStatus.Canceled ||
+//                    runningStatus == Threading.ThreadTaskStatus.Faulted)
+//                {
+//                    _threadExecutor = null;
+//                    _executionState = ExecutionState.WaitingForPlanBuilding;
+//                }
+//            }
 
-            return true;
+//            return true;
 
-            //return false;//tmp
+            return false;//tmp
         }
 
         /// <inheritdoc/>

@@ -15,7 +15,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             TypeOfAccess = DefaultTypeOfAccess;
         }
-
+        
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.Property;
 

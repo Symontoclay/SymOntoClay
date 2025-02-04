@@ -348,8 +348,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 parser.Run();
 
                                 Result.SubItems.Add(parser.Result);
-
-                                throw new NotImplementedException("567E9F7B-113D-4BEF-887D-591E772EA38F");
                             }
                             break;
 

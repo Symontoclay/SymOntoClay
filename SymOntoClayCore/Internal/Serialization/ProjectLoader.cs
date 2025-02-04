@@ -267,6 +267,9 @@ namespace SymOntoClay.Core.Internal.Serialization
                 case KindOfCodeEntity.Field:
                     break;
 
+                case KindOfCodeEntity.Property:
+                    break;
+
                 case KindOfCodeEntity.MutuallyExclusiveStatesSet:
                     break;
 

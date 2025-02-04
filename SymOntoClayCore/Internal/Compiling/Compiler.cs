@@ -103,7 +103,10 @@ namespace SymOntoClay.Core.Internal.Compiling
         /// <inheritdoc/>
         public List<IntermediateScriptCommand> CompileToIntermediateCommands(List<Property> properties)
         {
-            throw new NotImplementedException("B31892E2-8D57-49F8-B60D-6530CEE4F5F1");
+            var node = new PropertiesNode(_context);
+            node.Run(properties);
+
+            return node.Result;
         }
 
         /// <inheritdoc/>

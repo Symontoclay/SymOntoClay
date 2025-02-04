@@ -12,7 +12,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             : base(context)
         {
         }
-
+        
         public void Run(TasksPlan plan)
         {
             var beginTaskItems = new Dictionary<StrongIdentifierValue, IntermediateScriptCommand>();

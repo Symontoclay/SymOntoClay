@@ -88,10 +88,22 @@ namespace SymOntoClay.Core.Internal.Compiling
         /// <inheritdoc/>
         public CompiledFunctionBody Compile(List<Field> fields)
         {
+            return ConvertToCompiledFunctionBody(CompileToIntermediateCommands(fields));
+        }
+
+        /// <inheritdoc/>
+        public List<IntermediateScriptCommand> CompileToIntermediateCommands(List<Field> fields)
+        {
             var node = new FieldsNode(_context);
             node.Run(fields);
 
-            return ConvertToCompiledFunctionBody(node.Result);
+            return node.Result;
+        }
+
+        /// <inheritdoc/>
+        public List<IntermediateScriptCommand> CompileToIntermediateCommands(List<Property> properties)
+        {
+            throw new NotImplementedException("B31892E2-8D57-49F8-B60D-6530CEE4F5F1");
         }
 
         /// <inheritdoc/>
@@ -103,15 +115,16 @@ namespace SymOntoClay.Core.Internal.Compiling
             return ConvertToCompiledFunctionBody(node.Result);
         }
 
-        private CompiledFunctionBody ConvertToCompiledFunctionBody(List<IntermediateScriptCommand> resultCommandsList)
+        /// <inheritdoc/>
+        public CompiledFunctionBody ConvertToCompiledFunctionBody(List<IntermediateScriptCommand> intermediateCommandsList)
         {
-            NumerateSequence(resultCommandsList);
+            NumerateSequence(intermediateCommandsList);
 
             var sehIndex = 0;
 
             var result = new CompiledFunctionBody();
 
-            foreach (var command in resultCommandsList)
+            foreach (var command in intermediateCommandsList)
             {
                 result.Commands.Add(command.Position, ConvertIntermediateScriptCommandToScriptCommand(command, result.SEH, ref sehIndex));
             }

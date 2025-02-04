@@ -41,6 +41,9 @@ namespace SymOntoClay.Core.Internal.Compiling
         CompiledFunctionBody Compile(List<AstStatement> statements, List<AstExpression> callSuperClassConstructorsExpressions, KindOfCompilation kindOfCompilation);
         List<IntermediateScriptCommand> CompileToIntermediateCommands(List<AstStatement> statements, List<AstExpression> callSuperClassConstructorsExpressions, KindOfCompilation kindOfCompilation);
         CompiledFunctionBody Compile(List<Field> fields);
+        List<IntermediateScriptCommand> CompileToIntermediateCommands(List<Field> fields);
+        List<IntermediateScriptCommand> CompileToIntermediateCommands(List<Property> properties);
         CompiledFunctionBody Compile(TasksPlan plan);
+        CompiledFunctionBody ConvertToCompiledFunctionBody(List<IntermediateScriptCommand> intermediateCommandsList);
     }
 }

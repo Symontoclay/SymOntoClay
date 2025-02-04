@@ -24,6 +24,7 @@ using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.Compiling;
+using SymOntoClay.Core.Internal.Compiling.Internal;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.Parsing;
 using SymOntoClay.Monitor.Common;
@@ -528,27 +529,34 @@ namespace SymOntoClay.Core.Internal.Serialization
             if(!subItems.IsNullOrEmpty())
             {
                 var fieldsList = subItems.Where(p => p.IsField).Select(p => p.AsField).ToList();
+                var propertiesList = subItems.Where(p => p.IsProperty).Select(p => p.AsProperty).ToList();
 
-                if(fieldsList.Any())
+                if(fieldsList.Any() || propertiesList.Any())
                 {
-                    var compiledBody = _compiler.Compile(fieldsList);
+                    var preConstructor = new Constructor();
+                    preConstructor.Holder = codeItem.Name;
+
+                    var intermediateCommandsList = new List<IntermediateScriptCommand>();
+
+                    if (fieldsList.Any())
+                    {
+                        intermediateCommandsList.AddRange(_compiler.CompileToIntermediateCommands(fieldsList));
+                    }
+
+                    if (propertiesList.Any())
+                    {
+                        intermediateCommandsList.AddRange(_compiler.CompileToIntermediateCommands(propertiesList));
+                    }
+
+                    var compiledBody = _compiler.ConvertToCompiledFunctionBody(intermediateCommandsList);
 
 #if DEBUG
                     Info("558FAFA7-8244-47B2-8E4B-AAFA24A1104A", $"compiledBody = {compiledBody.ToDbgString()}");
 #endif
 
-                    var preConstructor = new Constructor();
                     preConstructor.CompiledFunctionBody = compiledBody;
-                    preConstructor.Holder = codeItem.Name;
 
                     targetStorage.ConstructorsStorage.AppendPreConstructor(logger, preConstructor);
-                }
-
-                var propertiesList = subItems.Where(p => p.IsProperty).Select(p => p.AsProperty).ToList();
-
-                if(propertiesList.Any())
-                {
-                    //throw new NotImplementedException("B31892E2-8D57-49F8-B60D-6530CEE4F5F1");
                 }
             }
         }

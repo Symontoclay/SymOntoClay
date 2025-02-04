@@ -6451,7 +6451,16 @@
         <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.Compile(System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Field})">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.CompileToIntermediateCommands(System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Field})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.CompileToIntermediateCommands(System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Property})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.Compile(SymOntoClay.Core.Internal.TasksExecution.TasksPlan)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.ConvertToCompiledFunctionBody(System.Collections.Generic.List{SymOntoClay.Core.Internal.Compiling.Internal.IntermediateScriptCommand})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Compiling.Internal.IntermediateScriptCommand.ToString">

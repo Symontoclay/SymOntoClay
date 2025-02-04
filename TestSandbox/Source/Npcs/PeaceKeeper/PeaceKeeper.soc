@@ -29,8 +29,8 @@
 
     prop SomeProp1: number = 2;
 
-	//private:
-	    //var @targetEnemy;
+	private:
+	    var @targetEnemy;
 }
 
 root task SomeRootTask

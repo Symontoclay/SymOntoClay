@@ -67,15 +67,15 @@ namespace SymOntoClay.Core.Internal.Serialization
 
         public void LoadCodeItem(IMonitorLogger logger, CodeItem codeItem, IStorage targetStorage)
         {
-            var defferedLibsList = new List<string>();
+            var deferredLibsList = new List<string>();
 
-            SaveItem(logger, codeItem, targetStorage, defferedLibsList);
+            SaveItem(logger, codeItem, targetStorage, deferredLibsList);
 
             var subItems = LinearizeSubItems(logger, codeItem);
 
             if(subItems.Any())
             {
-                SaveItems(logger, subItems, targetStorage, defferedLibsList);
+                SaveItems(logger, subItems, targetStorage, deferredLibsList);
             }
         }
 
@@ -90,11 +90,11 @@ namespace SymOntoClay.Core.Internal.Serialization
 
             var filesList = FileHelper.GetParsedFilesInfo(logger, projectFile, id);
 
-            var defferedLibsList = new List<string>();
+            var deferredLibsList = new List<string>();
 
-            ProcessFilesList(logger, filesList, true, targetStorage, defferedLibsList);
+            ProcessFilesList(logger, filesList, true, targetStorage, deferredLibsList);
 
-            return defferedLibsList;
+            return deferredLibsList;
         }
 
         public List<string> LoadFromPaths(IMonitorLogger logger, IStorage targetStorage, IList<string> sourceCodePaths)
@@ -103,14 +103,14 @@ namespace SymOntoClay.Core.Internal.Serialization
 
             var filesList = FileHelper.GetParsedFilesFromPaths(logger, sourceCodePaths);
 
-            var defferedLibsList = new List<string>();
+            var deferredLibsList = new List<string>();
 
-            ProcessFilesList(logger, filesList, false, targetStorage, defferedLibsList);
+            ProcessFilesList(logger, filesList, false, targetStorage, deferredLibsList);
 
-            return defferedLibsList;
+            return deferredLibsList;
         }
 
-        private void ProcessFilesList(IMonitorLogger logger, List<ParsedFileInfo> filesList, bool detectMainCodeEntity, IStorage targetStorage, List<string> defferedLibsList)
+        private void ProcessFilesList(IMonitorLogger logger, List<ParsedFileInfo> filesList, bool detectMainCodeEntity, IStorage targetStorage, List<string> deferredLibsList)
         {
 
             var parsedFilesList = _context.Parser.Parse(filesList, _defaultSettingsOfCodeEntity);
@@ -126,7 +126,7 @@ namespace SymOntoClay.Core.Internal.Serialization
 
             AddSystemDefinedSettings(logger, parsedCodeEntitiesList);
 
-            SaveItems(logger, parsedCodeEntitiesList, targetStorage, defferedLibsList);
+            SaveItems(logger, parsedCodeEntitiesList, targetStorage, deferredLibsList);
         }
 
         private void DetectMainCodeEntity(IMonitorLogger logger, List<CodeItem> source)
@@ -366,15 +366,15 @@ namespace SymOntoClay.Core.Internal.Serialization
             codeEntity.InheritanceItems.Add(inheritanceItem);
         }
 
-        private void SaveItems(IMonitorLogger logger, List<CodeItem> source, IStorage targetStorage, List<string> defferedLibsList)
+        private void SaveItems(IMonitorLogger logger, List<CodeItem> source, IStorage targetStorage, List<string> deferredLibsList)
         {
             foreach (var item in source)
             {
-                SaveItem(logger, item, targetStorage, defferedLibsList);
+                SaveItem(logger, item, targetStorage, deferredLibsList);
             }
         }
 
-        private void SaveItem(IMonitorLogger logger, CodeItem codeItem, IStorage targetStorage, List<string> defferedLibsList)
+        private void SaveItem(IMonitorLogger logger, CodeItem codeItem, IStorage targetStorage, List<string> deferredLibsList)
         {
             var codeEntityName = codeItem.Name;
 
@@ -394,17 +394,17 @@ namespace SymOntoClay.Core.Internal.Serialization
             switch (kindOfEntity)
             {
                 case KindOfCodeEntity.World:
-                    ProcessImport(logger, codeItem, targetStorage, defferedLibsList);
+                    ProcessImport(logger, codeItem, targetStorage, deferredLibsList);
                     GeneratePreConstructor(logger, codeItem, targetStorage);
                     break;
 
                 case KindOfCodeEntity.App:
-                    ProcessImport(logger, codeItem, targetStorage, defferedLibsList);
+                    ProcessImport(logger, codeItem, targetStorage, deferredLibsList);
                     GeneratePreConstructor(logger, codeItem, targetStorage);
                     break;
 
                 case KindOfCodeEntity.Lib:
-                    ProcessImport(logger, codeItem, targetStorage, defferedLibsList);
+                    ProcessImport(logger, codeItem, targetStorage, deferredLibsList);
                     GeneratePreConstructor(logger, codeItem, targetStorage);
                     break;
 
@@ -470,6 +470,9 @@ namespace SymOntoClay.Core.Internal.Serialization
                 case KindOfCodeEntity.Field:
                     break;
 
+                case KindOfCodeEntity.Property:
+                    break;
+
                 case KindOfCodeEntity.MutuallyExclusiveStatesSet:
                     targetStorage.StatesStorage.Append(logger, codeItem.AsMutuallyExclusiveStatesSet);
                     break;
@@ -530,11 +533,22 @@ namespace SymOntoClay.Core.Internal.Serialization
                 {
                     var compiledBody = _compiler.Compile(fieldsList);
 
+#if DEBUG
+                    Info("558FAFA7-8244-47B2-8E4B-AAFA24A1104A", $"compiledBody = {compiledBody.ToDbgString()}");
+#endif
+
                     var preConstructor = new Constructor();
                     preConstructor.CompiledFunctionBody = compiledBody;
                     preConstructor.Holder = codeItem.Name;
 
                     targetStorage.ConstructorsStorage.AppendPreConstructor(logger, preConstructor);
+                }
+
+                var propertiesList = subItems.Where(p => p.IsProperty).Select(p => p.AsProperty).ToList();
+
+                if(propertiesList.Any())
+                {
+                    //throw new NotImplementedException("B31892E2-8D57-49F8-B60D-6530CEE4F5F1");
                 }
             }
         }
@@ -580,6 +594,7 @@ namespace SymOntoClay.Core.Internal.Serialization
                 case KindOfCodeEntity.State:
                 case KindOfCodeEntity.Operator:
                 case KindOfCodeEntity.Field:
+                case KindOfCodeEntity.Property:
                 case KindOfCodeEntity.MutuallyExclusiveStatesSet:
                 case KindOfCodeEntity.Synonym:
                 case KindOfCodeEntity.RootTask:
@@ -598,7 +613,7 @@ namespace SymOntoClay.Core.Internal.Serialization
             }
         }
 
-        private void ProcessImport(IMonitorLogger logger, CodeItem codeItem, IStorage targetStorage, List<string> defferedLibsList)
+        private void ProcessImport(IMonitorLogger logger, CodeItem codeItem, IStorage targetStorage, List<string> deferredLibsList)
         {
             var importsList = codeItem.ImportsList;
 
@@ -609,7 +624,7 @@ namespace SymOntoClay.Core.Internal.Serialization
 
             if(_isDefferedImport)
             {
-                defferedLibsList.AddRange(importsList.Select(p => p.NameValue));
+                deferredLibsList.AddRange(importsList.Select(p => p.NameValue));
                 return;
             }
 

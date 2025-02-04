@@ -191,17 +191,17 @@ namespace SymOntoClay.Core
 
                 var storage = new LibStorage(storageSettings);
 
-                var defferedLibsList = _projectLoader.LoadFromSourceFiles(logger, storage, libFileName).Select(p => NameHelper.CreateName(p)).ToList();
+                var deferredLibsList = _projectLoader.LoadFromSourceFiles(logger, storage, libFileName).Select(p => NameHelper.CreateName(p)).ToList();
 
                 _storagesDict[name] = storage;
 
                 result.Add(storage);
 
-                if (defferedLibsList.Any())
+                if (deferredLibsList.Any())
                 {
-                    _dependenciesDict[name] = defferedLibsList;
+                    _dependenciesDict[name] = deferredLibsList;
 
-                    foreach (var defferedLib in defferedLibsList)
+                    foreach (var defferedLib in deferredLibsList)
                     {
                         NLoadLib(logger, defferedLib, result, loadedLibNames);
                     }

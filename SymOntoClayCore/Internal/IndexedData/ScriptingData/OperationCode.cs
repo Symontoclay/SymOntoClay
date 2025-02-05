@@ -94,6 +94,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         CancelAction,
         WeakCancelAction,
         VarDecl,
+        PropDecl,
         CodeItemDecl,
         SetState,
         SetDefaultState,

@@ -36,6 +36,7 @@ using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 
@@ -330,6 +331,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     case OperationCode.VarDecl:
                         ProcessVarDecl(currentCommand);
+                        break;
+
+                    case OperationCode.PropDecl:
+                        ProcessPropDecl(currentCommand);
                         break;
 
                     case OperationCode.CodeItemDecl:
@@ -1075,6 +1080,23 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             _currentCodeFrame.ValuesStack.Push(varName);
             _currentCodeFrame.CurrentPosition++;
+        }
+
+        private void ProcessPropDecl(ScriptCommand currentCommand)
+        {
+#if DEBUG
+            Info("C3432985-5661-43EF-9126-8F2700484675", $"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+#endif
+
+            var valueStack = _currentCodeFrame.ValuesStack;
+
+            var annotation = valueStack.Pop();
+
+            var typesCount = currentCommand.CountParams;
+
+
+
+            throw new NotImplementedException("EEC6043C-D675-4E21-83A3-72AEB3C38F2F");
         }
 
         private void ProcessCodeItemDecl(ScriptCommand currentCommand)

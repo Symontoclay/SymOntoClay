@@ -1,4 +1,6 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,16 +16,54 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(List<Property> properties)
         {
-            foreach (var item in properties)
+            foreach (var property in properties)
             {
+                CompilePropertyDecl(property);
 
+                if (property.DefaultValue == null)
+                {
+                    continue;
+                }
+
+                var node = new ExpressionNode(_context);
+                node.Run(property.DefaultValue);
+
+                AddCommands(node.Result);
+
+                CompilePushVal(property.Name);
+
+                CompilePushAnnotation(property);
+
+                var command = new IntermediateScriptCommand();
+                command.OperationCode = OperationCode.CallBinOp;
+                command.KindOfOperator = KindOfOperator.Assign;
+
+                AddCommand(command);
             }
 
 #if DEBUG
             DbgPrintCommands();
 #endif
 
-            throw new NotImplementedException("B31892E2-8D57-49F8-B60D-6530CEE4F5F1");
+            //throw new NotImplementedException("B31892E2-8D57-49F8-B60D-6530CEE4F5F1");
+        }
+
+        private void CompilePropertyDecl(Property property)
+        {
+            CompilePushVal(property.Name);
+
+            foreach (var typeItem in property.TypesList)
+            {
+                CompilePushVal(typeItem);
+            }
+
+            CompilePushAnnotation(property);
+
+            var command = new IntermediateScriptCommand();
+            command.OperationCode = OperationCode.PropDecl;
+            command.CountParams = property.TypesList.Count;
+
+            AddCommand(command);
         }
     }
 }

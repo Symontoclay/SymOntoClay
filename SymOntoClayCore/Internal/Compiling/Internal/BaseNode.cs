@@ -253,6 +253,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     return $"{operationCode} *";
 
                 case OperationCode.VarDecl:
+                case OperationCode.PropDecl:
                     return $"{operationCode} {commandItem.CountParams}";
 
                 case OperationCode.BeginCompoundTask:

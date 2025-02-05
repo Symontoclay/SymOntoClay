@@ -255,6 +255,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                     return $"{spaces}{OperationCode} {TargetPosition}";
 
                 case OperationCode.VarDecl:
+                case OperationCode.PropDecl:
                     return $"{spaces}{OperationCode} {CountParams}";
 
                 case OperationCode.BeginCompoundTask:

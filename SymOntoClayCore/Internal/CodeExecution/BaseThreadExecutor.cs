@@ -31,6 +31,7 @@ using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Core.Internal.Instances;
+using SymOntoClay.Core.Internal.Instances.TaskInstances;
 using SymOntoClay.Core.Internal.Serialization;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
@@ -514,19 +515,19 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     case OperationCode.BeginCompoundTask:
-                        currentCodeFrame.CurrentPosition++;
+                        ProcessBeginCompoundTask(currentCommand);
                         break;
 
                     case OperationCode.EndCompoundTask:
-                        currentCodeFrame.CurrentPosition++;
+                        ProcessEndCompoundTask(currentCommand);
                         break;
 
                     case OperationCode.BeginPrimitiveTask:
-                        currentCodeFrame.CurrentPosition++;
+                        ProcessBeginPrimitiveTask(currentCommand);
                         break;
 
                     case OperationCode.EndPrimitiveTask:
-                        currentCodeFrame.CurrentPosition++;
+                        ProcessEndPrimitiveTask(currentCommand);
                         break;
 
                     default:
@@ -573,6 +574,42 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 default:
                     throw new ArgumentOutOfRangeException(nameof(syncOption), syncOption, null);
             }
+        }
+
+        private void ProcessBeginCompoundTask(ScriptCommand currentCommand)
+        {
+            throw new NotImplementedException("FDFF427C-D17D-4959-AE52-6DB914582C7F");
+
+            //Please, save to stack this values. And return from stack in the ProcessEndCompoundTask.
+            //processInitialInfo.LocalContext = mainEntity.LocalCodeExecutionContext;
+            //processInitialInfo.Metadata = mainEntity.CodeItem;
+            //processInitialInfo.Instance = mainEntity;
+            //processInitialInfo.ExecutionCoordinator = mainEntity.ExecutionCoordinator;
+
+            //_currentCodeFrame.CurrentPosition++;
+        }
+
+        private BaseCompoundTaskInstance BaseCompoundTaskInstanceFactory()
+        {
+            throw new NotImplementedException("FBFB52C5-0799-47B1-A799-DD71EACD728B");
+        }
+
+        private void ProcessEndCompoundTask(ScriptCommand currentCommand)
+        {
+            throw new NotImplementedException("41581C88-B848-442B-A307-EEDBACD88768");
+            //_currentCodeFrame.CurrentPosition++;
+        }
+
+        private void ProcessBeginPrimitiveTask(ScriptCommand currentCommand)
+        {
+            throw new NotImplementedException("4BD115D5-5D76-43F1-9FA6-717C3BFE4B0D");
+            //_currentCodeFrame.CurrentPosition++;
+        }
+
+        private void ProcessEndPrimitiveTask(ScriptCommand currentCommand)
+        {
+            throw new NotImplementedException("8C569C91-95D9-44FC-9AF3-CB11C9201884");
+            //_currentCodeFrame.CurrentPosition++;
         }
 
         private void ProcessAddLifeCycleEvent()

@@ -551,7 +551,7 @@ namespace SymOntoClay.Core.Internal.Serialization
                     var compiledBody = _compiler.ConvertToCompiledFunctionBody(intermediateCommandsList);
 
 #if DEBUG
-                    Info("558FAFA7-8244-47B2-8E4B-AAFA24A1104A", $"compiledBody = {compiledBody.ToDbgString()}");
+                    //Info("558FAFA7-8244-47B2-8E4B-AAFA24A1104A", $"compiledBody = {compiledBody.ToDbgString()}");
 #endif
 
                     preConstructor.CompiledFunctionBody = compiledBody;

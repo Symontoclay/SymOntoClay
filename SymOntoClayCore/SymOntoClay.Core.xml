@@ -8162,6 +8162,18 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.StateInstance.OnDisposed">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.TaskInstances.CompoundTaskInstance.KindOfInstance">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.TaskInstances.RootTaskInstance.KindOfInstance">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.TaskInstances.StrategicTaskInstance.KindOfInstance">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.TaskInstances.TacticalTaskInstance.KindOfInstance">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.MainStorageContext.Id">
             <inheritdoc/>
         </member>

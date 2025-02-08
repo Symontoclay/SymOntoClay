@@ -32,6 +32,10 @@ namespace SymOntoClay.Core.Internal.Instances
         AppInstance,
         StateInstance,
         ActionInstance,
-        ObjectInstance
+        ObjectInstance,
+        RootTaskInstance,
+        TacticalTaskInstance,
+        StrategicTaskInstance,
+        CompoundTaskInstance
     }
 }

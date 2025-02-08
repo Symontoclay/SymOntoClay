@@ -7089,6 +7089,9 @@
         <member name="P:SymOntoClay.Core.Internal.EngineContext.NLPConverterFactory">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.EngineContext.StorageFactories">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.EngineContext.CodeExecutionThreadPool">
             <inheritdoc/>
         </member>
@@ -9327,9 +9330,6 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.ActionsStoraging.EmptyActionsStorage.GetActionsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Int32,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.ActionStorageFactory.CreateStorage(SymOntoClay.Core.Internal.Storage.RealStorageSettings)">
-            <inheritdoc/>
-        </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.BaseEmptySpecificStorage.Kind">
             <inheritdoc/>
         </member>
@@ -9523,6 +9523,54 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.EmptyConstructorsStorage.GetPreConstructorsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.Factories.ActionStorageFactory.CreateStorage(SymOntoClay.Core.Internal.Storage.RealStorageSettings)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.Factories.AppInstanceStorageFactory.CreateStorage(SymOntoClay.Core.Internal.Storage.RealStorageSettings)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.Factories.CompoundTaskInstanceStorageFactory.CreateStorage(SymOntoClay.Core.Internal.Storage.RealStorageSettings)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.Factories.ObjectStorageFactory.CreateStorage(SymOntoClay.Core.Internal.Storage.RealStorageSettings)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.Factories.RootTaskInstanceStorageFactory.CreateStorage(SymOntoClay.Core.Internal.Storage.RealStorageSettings)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.Factories.StateStorageFactory.CreateStorage(SymOntoClay.Core.Internal.Storage.RealStorageSettings)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.Factories.StorageFactories.AppInstanceStorageFactory">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.Factories.StorageFactories.ObjectStorageFactory">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.Factories.StorageFactories.StateStorageFactory">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.Factories.StorageFactories.ActionStorageFactory">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.Factories.StorageFactories.RootTaskInstanceStorageFactory">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.Factories.StorageFactories.StrategicTaskInstanceStorageFactory">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.Factories.StorageFactories.TacticalTaskInstanceStorageFactory">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Storage.Factories.StorageFactories.CompoundTaskInstanceStorageFactory">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.Factories.StrategicTaskInstanceStorageFactory.CreateStorage(SymOntoClay.Core.Internal.Storage.RealStorageSettings)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.Factories.TacticalTaskInstanceStorageFactory.CreateStorage(SymOntoClay.Core.Internal.Storage.RealStorageSettings)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.FuzzyLogic.EmptyFuzzyLogicStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.LinguisticVariable)">
@@ -9912,9 +9960,6 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.MethodsStoraging.MethodsStorage.OnDisposed">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.ObjectStorageFactory.CreateStorage(SymOntoClay.Core.Internal.Storage.RealStorageSettings)">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.OperatorsStoraging.EmptyOperatorsStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Operator)">
             <inheritdoc/>
         </member>
@@ -10129,9 +10174,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.StatesStoraging.StatesStorage.GetMutuallyExclusiveStatesSetsListDirectly(SymOntoClay.Monitor.Common.IMonitorLogger)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.StateStorageFactory.CreateStorage(SymOntoClay.Core.Internal.Storage.RealStorageSettings)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Storage.StorageComponent.GlobalStorage">

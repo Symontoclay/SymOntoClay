@@ -24,14 +24,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SymOntoClay.Core.Internal.Storage
+namespace SymOntoClay.Core.Internal.Storage.Factories
 {
-    public class ObjectStorageFactory : IStorageFactory
+    public class ActionStorageFactory : IStorageFactory
     {
         /// <inheritdoc/>
         public IStorage CreateStorage(RealStorageSettings settings)
         {
-            return new ObjectStorage(settings);
+            return new ActionStorage(settings);
         }
     }
 }

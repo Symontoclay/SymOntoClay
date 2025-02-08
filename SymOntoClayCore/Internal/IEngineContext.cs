@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.TasksExecution;
 using SymOntoClay.Threading;
 
@@ -36,6 +37,7 @@ namespace SymOntoClay.Core.Internal
         IConditionalEntityHostSupport ConditionalEntityHostSupport { get; }
         ISoundPublisherProvider SoundPublisherProvider { get; }
         INLPConverterFactory NLPConverterFactory { get; }
+        IStorageFactories StorageFactories { get; }
 
         INLPConverterContext GetNLPConverterContext();
         INLPConverterContext GetNLPConverterContext(ILocalCodeExecutionContext localCodeExecutionContext);

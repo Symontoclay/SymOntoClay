@@ -6,7 +6,7 @@ namespace SymOntoClay.Core.Internal.Instances.TaskInstances
     public class TacticalTaskInstance : BaseCompoundTaskInstance
     {
         public TacticalTaskInstance(TacticalTask codeItem, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext, IExecutionCoordinator parentExecutionCoordinator)
-            : base(codeItem, context, parentStorage, parentCodeExecutionContext, parentExecutionCoordinator)
+            : base(codeItem, context, parentStorage, parentCodeExecutionContext, parentExecutionCoordinator, context.StorageFactories.TacticalTaskInstanceStorageFactory)
         {
         }
 

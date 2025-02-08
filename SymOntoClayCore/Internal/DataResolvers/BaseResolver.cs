@@ -104,6 +104,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     case KindOfStorage.Action:
                     case KindOfStorage.State:
                     case KindOfStorage.Object:
+                    case KindOfStorage.AppInstance:
+                    case KindOfStorage.RootTaskInstance:
+                    case KindOfStorage.StrategicTaskInstance:
+                    case KindOfStorage.TacticalTaskInstance:
+                    case KindOfStorage.CompoundTaskInstance:
                         if (wasIsolatedStorage)
                         {
                             continue;

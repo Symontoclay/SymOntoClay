@@ -88,20 +88,16 @@ namespace TestSandbox.Handlers
 
             _logger.Info("F71873F5-CBD9-46E2-8B8A-304303268462", $"compiledFunctionBody = {compiledFunctionBody.ToDbgString()}");
 
-            //var mainEntity = context.InstancesStorage.MainEntity;
+            var mainEntity = context.InstancesStorage.MainEntity;
 
-            //var processInitialInfo = new ProcessInitialInfo();
-            //processInitialInfo.CompiledFunctionBody = compiledFunctionBody;
-            //processInitialInfo.LocalContext = mainEntity.LocalCodeExecutionContext;
-            //processInitialInfo.Metadata = mainEntity.CodeItem;
-            //processInitialInfo.Instance = mainEntity;
-            //processInitialInfo.ExecutionCoordinator = mainEntity.ExecutionCoordinator;
+            var processInitialInfo = new ProcessInitialInfo();
+            processInitialInfo.CompiledFunctionBody = compiledFunctionBody;
+            processInitialInfo.LocalContext = mainEntity.LocalCodeExecutionContext;
+            processInitialInfo.Metadata = mainEntity.CodeItem;
+            processInitialInfo.Instance = mainEntity;
+            processInitialInfo.ExecutionCoordinator = mainEntity.ExecutionCoordinator;
 
-            //var task = context.CodeExecutor.ExecuteAsync(context.Logger, processInitialInfo);
-
-            //var tasksPlanRunner = new TasksPlanRunner(_npc.EngineContext, new SyncActivePeriodicObject(_npc.EngineContext.GetCancellationToken()));
-
-            //tasksPlanRunner.Run(plan);
+            var task = context.CodeExecutor.ExecuteAsync(context.Logger, processInitialInfo);
 
             _logger.Info("6FDE9DEF-C0F2-4500-BAD5-6F3FD56A3EF9", "|-|-|-|-|-|-|-|-|-|-|-|-|");
 

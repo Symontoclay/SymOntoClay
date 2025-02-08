@@ -41,7 +41,7 @@ namespace SymOntoClay.Core.Internal.Instances
     public class AppInstance : BaseIndependentInstance
     {
         public AppInstance(AppInstanceCodeItem codeItem, IEngineContext context, IStorage parentStorage)
-            : base(codeItem, context, parentStorage, null, new ObjectStorageFactory(), null)
+            : base(codeItem, context, parentStorage, null, context.StorageFactories.AppInstanceStorageFactory, null)
         {
 #if DEBUG
             //Info("B89B059D-E73F-4422-AAD9-DE0BE2868FE1", $"codeItem.GetType().Name = {codeItem.GetType().Name}");

@@ -33,6 +33,7 @@ using SymOntoClay.Core.Internal.Serialization;
 using SymOntoClay.Core.Internal.Services;
 using SymOntoClay.Core.Internal.StandardLibrary;
 using SymOntoClay.Core.Internal.Storage;
+using SymOntoClay.Core.Internal.Storage.Factories;
 using SymOntoClay.Core.Internal.TasksExecution;
 using SymOntoClay.Threading;
 using System.Threading;
@@ -53,6 +54,8 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.ConditionalEntityHostSupport = settings.ConditionalEntityHostSupport;
             context.SoundPublisherProvider = settings.SoundPublisherProvider;
             context.NLPConverterFactory = settings.NLPConverterFactory;
+
+            context.StorageFactories = new StorageFactories();
 
             context.StandardLibraryLoader = new StandardLibraryLoader(context);
             context.CodeExecutor = new CodeExecutorComponent(context);

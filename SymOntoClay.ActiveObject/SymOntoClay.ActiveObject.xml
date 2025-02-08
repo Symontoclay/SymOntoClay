@@ -58,6 +58,13 @@
         <member name="M:SymOntoClay.ActiveObject.Threads.AsyncActivePeriodicObject.Dispose">
             <inheritdoc/>
         </member>
+        <member name="T:SymOntoClay.ActiveObject.Threads.SyncActivePeriodicObject">
+            <summary>
+            Executes PeriodicMethod in the same Thread as a caller.
+            It is helpful for short calculations.
+            The loop of the class must not be blocked with AutoResetEvent.
+            </summary>
+        </member>
         <member name="P:SymOntoClay.ActiveObject.Threads.SyncActivePeriodicObject.PeriodicMethod">
             <inheritdoc/>
         </member>

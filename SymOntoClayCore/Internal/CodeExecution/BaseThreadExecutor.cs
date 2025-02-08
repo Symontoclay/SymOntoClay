@@ -2414,12 +2414,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             return additionalSettings;
         }
 
-        private void ExecuteCodeFrame(CodeFrame codeFrame, IExecutionCoordinator coordinator, SyncOption syncOption, bool increaceCurrentFramePosition = true, AnnotationSystemEvent completeAnnotationSystemEvent = null, AnnotationSystemEvent cancelAnnotationSystemEvent = null, AnnotationSystemEvent weakCancelAnnotationSystemEvent = null, AnnotationSystemEvent errorAnnotationSystemEvent = null)
+        private void ExecuteCodeFrame(CodeFrame codeFrame, IExecutionCoordinator coordinator, SyncOption syncOption, bool increaseCurrentFramePosition = true, AnnotationSystemEvent completeAnnotationSystemEvent = null, AnnotationSystemEvent cancelAnnotationSystemEvent = null, AnnotationSystemEvent weakCancelAnnotationSystemEvent = null, AnnotationSystemEvent errorAnnotationSystemEvent = null)
         {
-            ExecuteCodeFrame(codeFrame, null, coordinator, syncOption, increaceCurrentFramePosition, completeAnnotationSystemEvent, cancelAnnotationSystemEvent, weakCancelAnnotationSystemEvent, errorAnnotationSystemEvent);
+            ExecuteCodeFrame(codeFrame, null, coordinator, syncOption, increaseCurrentFramePosition, completeAnnotationSystemEvent, cancelAnnotationSystemEvent, weakCancelAnnotationSystemEvent, errorAnnotationSystemEvent);
         }
 
-        private void ExecuteCodeFrame(CodeFrame codeFrame, CodeFrame currentCodeFrame, IExecutionCoordinator coordinator, SyncOption syncOption, bool increaceCurrentFramePosition = true, AnnotationSystemEvent completeAnnotationSystemEvent = null, AnnotationSystemEvent cancelAnnotationSystemEvent = null, AnnotationSystemEvent weakCancelAnnotationSystemEvent = null, AnnotationSystemEvent errorAnnotationSystemEvent = null)
+        private void ExecuteCodeFrame(CodeFrame codeFrame, CodeFrame currentCodeFrame, IExecutionCoordinator coordinator, SyncOption syncOption, bool increaseCurrentFramePosition = true, AnnotationSystemEvent completeAnnotationSystemEvent = null, AnnotationSystemEvent cancelAnnotationSystemEvent = null, AnnotationSystemEvent weakCancelAnnotationSystemEvent = null, AnnotationSystemEvent errorAnnotationSystemEvent = null)
         {
             var targetCurrentCodeFrame = _currentCodeFrame;
 
@@ -2440,7 +2440,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 case SyncOption.Ctor:
                     PrepareCodeFrameToSyncExecution(codeFrame, coordinator);
 
-                    if(increaceCurrentFramePosition)
+                    if(increaseCurrentFramePosition)
                     {
                         targetCurrentCodeFrame.CurrentPosition++;
                         targetCurrentCodeFrame.ProcessInfo.AddChild(Logger, currentProcessInfo);
@@ -2475,7 +2475,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 case SyncOption.IndependentAsync:
                 case SyncOption.ChildAsync:
-                    _codeFrameAsyncExecutor.AsyncExecuteCodeFrame(Logger, Logger.Id, codeFrame, targetCurrentCodeFrame, coordinator, syncOption, increaceCurrentFramePosition, completeAnnotationSystemEvent, cancelAnnotationSystemEvent, weakCancelAnnotationSystemEvent, errorAnnotationSystemEvent);
+                    _codeFrameAsyncExecutor.AsyncExecuteCodeFrame(Logger, Logger.Id, codeFrame, targetCurrentCodeFrame, coordinator, syncOption, increaseCurrentFramePosition, completeAnnotationSystemEvent, cancelAnnotationSystemEvent, weakCancelAnnotationSystemEvent, errorAnnotationSystemEvent);
                     break;
 
                 case SyncOption.PseudoSync:

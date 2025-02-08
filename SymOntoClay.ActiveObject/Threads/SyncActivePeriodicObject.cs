@@ -25,6 +25,11 @@ using System.Threading;
 
 namespace SymOntoClay.ActiveObject.Threads
 {
+    /// <summary>
+    /// Executes PeriodicMethod in the same Thread as a caller.
+    /// It is helpful for short calculations.
+    /// The loop of the class must not be blocked with AutoResetEvent.
+    /// </summary>
     public class SyncActivePeriodicObject : IActivePeriodicObject
     {
         public SyncActivePeriodicObject(CancellationToken cancellationToken)

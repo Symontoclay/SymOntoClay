@@ -160,7 +160,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private readonly StrongIdentifierValue _defaultCtorName;
         private readonly StrongIdentifierValue _timeoutName;
-        private readonly StrongIdentifierValue _priorityName;
+        private readonly StrongIdentifierValue _priorityName;        
 
         public Value ExternalReturn { get; private set; }
 
@@ -578,7 +578,43 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessBeginCompoundTask(ScriptCommand currentCommand)
         {
-            throw new NotImplementedException("FDFF427C-D17D-4959-AE52-6DB914582C7F");
+#if DEBUG
+            //Info("D2F278BA-4BA0-4C8D-A424-F929BB816100", $"currentCommand = {currentCommand.ToDbgString()}");
+#endif
+
+            var currentCodeFrame = _currentCodeFrame;
+
+            var compoundTask = currentCommand.CompoundTask;
+
+            var baseCompoundTaskInstance = BaseCompoundTaskInstanceFactory(compoundTask);
+            baseCompoundTaskInstance.Init(Logger);
+
+            var codeFrameEvnPart = new CodeFrameEvnPart
+            {
+                LocalContext = currentCodeFrame.LocalContext,
+                Metadata = currentCodeFrame.Metadata,
+                Instance = currentCodeFrame.Instance,
+                ExecutionCoordinator = currentCodeFrame.ExecutionCoordinator,
+                CompoundTaskInstance = currentCodeFrame.CompoundTaskInstance
+            };
+
+#if DEBUG
+            Info("B5BDC6F0-3845-43AE-9820-405B99957D93", $"codeFrameEvnPart = {codeFrameEvnPart.ToDbgString()}");
+#endif
+
+            currentCodeFrame.CodeFrameEvnPartsStack.Push(codeFrameEvnPart);
+
+            currentCodeFrame.LocalContext = baseCompoundTaskInstance.LocalCodeExecutionContext;
+            currentCodeFrame.Metadata = compoundTask;
+            currentCodeFrame.Instance = baseCompoundTaskInstance;
+            currentCodeFrame.ExecutionCoordinator = baseCompoundTaskInstance.ExecutionCoordinator;
+            currentCodeFrame.CompoundTaskInstance = baseCompoundTaskInstance;
+
+#if DEBUG
+            Info("ADDBA7B6-2766-497C-9B4B-1E1A9220BAF9", $"currentCodeFrame = {currentCodeFrame.ToDbgString()}");
+#endif
+
+            //throw new NotImplementedException("FDFF427C-D17D-4959-AE52-6DB914582C7F");
 
             //Please, save to stack this values. And return from stack in the ProcessEndCompoundTask.
             //processInitialInfo.LocalContext = mainEntity.LocalCodeExecutionContext;
@@ -586,30 +622,63 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             //processInitialInfo.Instance = mainEntity;
             //processInitialInfo.ExecutionCoordinator = mainEntity.ExecutionCoordinator;
 
-            //_currentCodeFrame.CurrentPosition++;
+            _currentCodeFrame.CurrentPosition++;
         }
 
-        private BaseCompoundTaskInstance BaseCompoundTaskInstanceFactory()
+        private BaseCompoundTaskInstance BaseCompoundTaskInstanceFactory(BaseCompoundTask compoundTask)
         {
-            throw new NotImplementedException("FBFB52C5-0799-47B1-A799-DD71EACD728B");
+            var currentCodeFrame = _currentCodeFrame;
+            var localContext = currentCodeFrame.LocalContext;
+
+            var kindOfTask = compoundTask.KindOfTask;
+
+            switch(kindOfTask)
+            {
+                case KindOfTask.Root:
+                    return new RootTaskInstance(compoundTask.AsRootTask, _context, localContext.Storage, localContext, currentCodeFrame.ExecutionCoordinator);
+
+                case KindOfTask.Strategic:
+                    return new StrategicTaskInstance(compoundTask.AsStrategicTask, _context, localContext.Storage, localContext, currentCodeFrame.ExecutionCoordinator);
+
+                case KindOfTask.Tactical:
+                    return new TacticalTaskInstance(compoundTask.AsTacticalTask, _context, localContext.Storage, localContext, currentCodeFrame.ExecutionCoordinator);
+
+                case KindOfTask.Compound:
+                    return new CompoundTaskInstance(compoundTask.AsCompoundTask, _context, localContext.Storage, localContext, currentCodeFrame.ExecutionCoordinator);
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfTask), kindOfTask, null);
+            }
         }
 
         private void ProcessEndCompoundTask(ScriptCommand currentCommand)
         {
-            throw new NotImplementedException("41581C88-B848-442B-A307-EEDBACD88768");
-            //_currentCodeFrame.CurrentPosition++;
+            var currentCodeFrame = _currentCodeFrame;
+
+            currentCodeFrame.CompoundTaskInstance.Dispose();
+
+            var codeFrameEvnPart = currentCodeFrame.CodeFrameEvnPartsStack.Pop();
+
+            currentCodeFrame.LocalContext = codeFrameEvnPart.LocalContext;
+            currentCodeFrame.Metadata = codeFrameEvnPart.Metadata;
+            currentCodeFrame.Instance = codeFrameEvnPart.Instance;
+            currentCodeFrame.ExecutionCoordinator = codeFrameEvnPart.ExecutionCoordinator;
+            currentCodeFrame.CompoundTaskInstance = codeFrameEvnPart.CompoundTaskInstance;
+
+            //throw new NotImplementedException("41581C88-B848-442B-A307-EEDBACD88768");
+            _currentCodeFrame.CurrentPosition++;
         }
 
         private void ProcessBeginPrimitiveTask(ScriptCommand currentCommand)
         {
-            throw new NotImplementedException("4BD115D5-5D76-43F1-9FA6-717C3BFE4B0D");
-            //_currentCodeFrame.CurrentPosition++;
+            //throw new NotImplementedException("4BD115D5-5D76-43F1-9FA6-717C3BFE4B0D");
+            _currentCodeFrame.CurrentPosition++;
         }
 
         private void ProcessEndPrimitiveTask(ScriptCommand currentCommand)
         {
-            throw new NotImplementedException("8C569C91-95D9-44FC-9AF3-CB11C9201884");
-            //_currentCodeFrame.CurrentPosition++;
+            //throw new NotImplementedException("8C569C91-95D9-44FC-9AF3-CB11C9201884");
+            _currentCodeFrame.CurrentPosition++;
         }
 
         private void ProcessAddLifeCycleEvent()

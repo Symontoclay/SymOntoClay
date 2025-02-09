@@ -258,9 +258,11 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
                 else
                 {
-                    throw new NotImplementedException("B2129DE0-A245-49CC-865A-A9DBEE77E2B2");
+                    if(_superClassesStorages.Count > 0)
+                    {
+                        throw new NotImplementedException("B2129DE0-A245-49CC-865A-A9DBEE77E2B2");
+                    }                    
                 }
-
             }
         }
 

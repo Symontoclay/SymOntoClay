@@ -445,6 +445,42 @@
         <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrame.SymOntoClay#Common#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrameEvnPart.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrameEvnPart.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrameEvnPart.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrameEvnPart.ToShortString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrameEvnPart.ToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrameEvnPart.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrameEvnPart.ToBriefString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrameEvnPart.ToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrameEvnPart.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrameEvnPart.ToDbgString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrameEvnPart.ToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeExecution.CodeFrameEvnPart.SymOntoClay#Common#IObjectToDbgString#PropertiesToDbgString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeExecution.Command.Name">
             <inheritdoc/>
         </member>

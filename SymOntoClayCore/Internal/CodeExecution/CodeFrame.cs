@@ -64,6 +64,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         public IThreadExecutor PseudoSyncTask { get; set; }
 
+        public Stack<CodeFrameEvnPart> CodeFrameEvnPartsStack { get; set; } = new Stack<CodeFrameEvnPart>();
+        public IInstance CompoundTaskInstance { get; set; }
+
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -116,6 +119,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintObjProp(n, nameof(WeakCancelAnnotationSystemEvent), WeakCancelAnnotationSystemEvent);
             sb.PrintObjProp(n, nameof(ErrorAnnotationSystemEvent), ErrorAnnotationSystemEvent);
             sb.PrintExisting(n, nameof(PseudoSyncTask), PseudoSyncTask);
+
+            sb.PrintObjListProp(n, nameof(CodeFrameEvnPartsStack), CodeFrameEvnPartsStack.ToList());
+
+            sb.PrintObjProp(n, nameof(CompoundTaskInstance), CompoundTaskInstance);
 
             return sb.ToString();
         }
@@ -173,6 +180,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintShortObjProp(n, nameof(ErrorAnnotationSystemEvent), ErrorAnnotationSystemEvent);
             sb.PrintExisting(n, nameof(PseudoSyncTask), PseudoSyncTask);
 
+            sb.PrintShortObjListProp(n, nameof(CodeFrameEvnPartsStack), CodeFrameEvnPartsStack.ToList());
+
+            sb.PrintShortObjProp(n, nameof(CompoundTaskInstance), CompoundTaskInstance);
+
             return sb.ToString();
         }
 
@@ -229,6 +240,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintExisting(n, nameof(ErrorAnnotationSystemEvent), ErrorAnnotationSystemEvent);
             sb.PrintExisting(n, nameof(PseudoSyncTask), PseudoSyncTask);
 
+            sb.PrintBriefObjListProp(n, nameof(CodeFrameEvnPartsStack), CodeFrameEvnPartsStack.ToList());
+
+            sb.PrintBriefObjProp(n, nameof(CompoundTaskInstance), CompoundTaskInstance);
+
             return sb.ToString();
         }
 
@@ -257,7 +272,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 sb.AppendLine($"{spaces}Instance: {Instance.Name.NameValue}");
             }
 
-            if(ExecutionCoordinator != null)
+            if (CompoundTaskInstance != null)
+            {
+                sb.AppendLine($"{spaces}CompoundTask Instance: {CompoundTaskInstance.Name.NameValue}");
+            }
+
+            if (ExecutionCoordinator != null)
             {
                 sb.AppendLine($"{spaces}ExecutionCoordinator: {ExecutionCoordinator.Id}");
             }
@@ -304,6 +324,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 sb.AppendLine($"{nextNSpaces}{stackItem.ToDbgString()}");
             }
             sb.AppendLine($"{spaces}End Values Stack");
+
+            sb.AppendLine($"{spaces}Begin CodeFrameEvnParts Stack");
+            foreach (var stackItem in CodeFrameEvnPartsStack)
+            {
+                sb.AppendLine(stackItem.ToDbgString(nextN));
+            }
+            sb.AppendLine($"{spaces}End CodeFrameEvnParts Stack");
+
             return sb.ToString();
         }
     }

@@ -512,6 +512,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         ITasksStorage IStorage.TasksStorage => throw new NotImplementedException("B0054D41-6AAB-4FB5-9646-99E0200EBA81");
 
         /// <inheritdoc/>
+        IPropertyStorage IStorage.PropertyStorage => throw new NotImplementedException("438657D2-2B3A-4004-80C8-CB255BAE8A35");
+
+        /// <inheritdoc/>
         void IStorage.AddParentStorage(IMonitorLogger logger, IStorage storage) => throw new NotImplementedException("07C2DCC9-C3BD-49D9-A430-809B60BC5229");
 
         /// <inheritdoc/>

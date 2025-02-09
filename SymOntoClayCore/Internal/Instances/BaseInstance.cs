@@ -545,7 +545,6 @@ namespace SymOntoClay.Core.Internal.Instances
             }
 
             Dispose();
-
         }
 
         /// <inheritdoc/>

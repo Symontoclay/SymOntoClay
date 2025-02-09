@@ -59,6 +59,7 @@ namespace SymOntoClay.Core
         IFuzzyLogicStorage FuzzyLogicStorage { get; }
         IIdleActionItemsStorage IdleActionItemsStorage { get; }
         ITasksStorage TasksStorage { get; }
+        IPropertyStorage PropertyStorage { get; }
 
         void AddParentStorage(IMonitorLogger logger, IStorage storage);
         void RemoveParentStorage(IMonitorLogger logger, IStorage storage);

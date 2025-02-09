@@ -142,7 +142,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
             {
                 dict = new Dictionary<StrongIdentifierValue, List<Var>>();
                 _variablesDict[holder] = dict;
-            }            
+            }
 
             if (dict.ContainsKey(name))
             {
@@ -277,10 +277,10 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
         private void RealStorageContext_OnAddParentStorage(IStorage storage)
         {
-            var varStroage = storage.VarStorage;
-            varStroage.OnChangedWithKeys += VarStorage_OnChangedWithKeys;
+            var varStorage = storage.VarStorage;
+            varStorage.OnChangedWithKeys += VarStorage_OnChangedWithKeys;
 
-            _parentVarStoragesList.Add(varStroage);
+            _parentVarStoragesList.Add(varStorage);
         }
 
         /// <inheritdoc/>

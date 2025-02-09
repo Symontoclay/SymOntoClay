@@ -50,18 +50,10 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         private void CompilePropertyDecl(Property property)
         {
-            CompilePushVal(property.Name);
-
-            foreach (var typeItem in property.TypesList)
-            {
-                CompilePushVal(typeItem);
-            }
-
             CompilePushAnnotation(property);
 
             var command = new IntermediateScriptCommand();
             command.OperationCode = OperationCode.PropDecl;
-            command.CountParams = property.TypesList.Count;
 
             AddCommand(command);
         }

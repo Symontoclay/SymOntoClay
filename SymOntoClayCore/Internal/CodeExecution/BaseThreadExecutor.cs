@@ -150,6 +150,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private IExecutionCoordinator _executionCoordinator;
         private IInstance _currentInstance;
         private IVarStorage _currentVarStorage;
+        private IPropertyStorage _currentPropertyStorage;
 
         private ErrorValue _currentError;
         private bool _isCanceled;
@@ -1190,11 +1191,27 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var annotation = valueStack.Pop();
 
-            var typesCount = currentCommand.CountParams;
+            var annotationValue = annotation.AsAnnotationValue;
+            var annotatedItem = annotationValue.AnnotatedItem;
 
+#if DEBUG
+            Info("8A246ADA-0F77-48CA-AA29-EF5FC65A09B8", $"annotatedItem?.GetType().FullName = {annotatedItem?.GetType().FullName}");
+#endif
 
+            var property = annotatedItem as Property;
 
-            throw new NotImplementedException("EEC6043C-D675-4E21-83A3-72AEB3C38F2F");
+#if DEBUG
+            Info("84064116-5A17-4521-B574-E2EA5009907E", $"property = {property}");
+#endif
+
+            var propertyInstance = new PropertyInstance(property, _context);
+
+            _currentPropertyStorage.Append(Logger, propertyInstance);
+
+            _currentCodeFrame.ValuesStack.Push(property.Name);
+            _currentCodeFrame.CurrentPosition++;
+
+            //throw new NotImplementedException("EEC6043C-D675-4E21-83A3-72AEB3C38F2F");
         }
 
         private void ProcessCodeItemDecl(ScriptCommand currentCommand)
@@ -1501,19 +1518,23 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void SetUpCurrentCodeFrame(ProcessStatus? lastProcessStatus = null)
         {
-            _executionCoordinator = _currentCodeFrame.ExecutionCoordinator;
-            _currentInstance = _currentCodeFrame.Instance;
-            _currentVarStorage = _currentCodeFrame.LocalContext.Storage.VarStorage;
+            var currentCodeFrame = _currentCodeFrame;
+            var storage = currentCodeFrame.LocalContext.Storage;
 
-            if(_currentCodeFrame.PutToValueStackAfterReturningBack != null)
+            _executionCoordinator = currentCodeFrame.ExecutionCoordinator;
+            _currentInstance = currentCodeFrame.Instance;
+            _currentVarStorage = storage.VarStorage;
+            _currentPropertyStorage = storage.PropertyStorage;
+
+            if (currentCodeFrame.PutToValueStackAfterReturningBack != null)
             {
-                _currentCodeFrame.ValuesStack.Push(_currentCodeFrame.PutToValueStackAfterReturningBack);
-                _currentCodeFrame.PutToValueStackAfterReturningBack = null;
+                currentCodeFrame.ValuesStack.Push(currentCodeFrame.PutToValueStackAfterReturningBack);
+                currentCodeFrame.PutToValueStackAfterReturningBack = null;
             }
 
-            if(_currentCodeFrame.NeedsExecCallEvent)
+            if(currentCodeFrame.NeedsExecCallEvent)
             {
-                _currentCodeFrame.LastProcessStatus = lastProcessStatus;
+                currentCodeFrame.LastProcessStatus = lastProcessStatus;
             }
         }
 

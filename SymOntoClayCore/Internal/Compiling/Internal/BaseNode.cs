@@ -210,6 +210,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 case OperationCode.AddLifeCycleEvent:
                 case OperationCode.BeginPrimitiveTask:
                 case OperationCode.EndPrimitiveTask:
+                case OperationCode.PropDecl:
                     return $"{operationCode}";
 
                 case OperationCode.PushVal:
@@ -252,8 +253,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
                     return $"{operationCode} *";
 
-                case OperationCode.VarDecl:
-                case OperationCode.PropDecl:
+                case OperationCode.VarDecl:                
                     return $"{operationCode} {commandItem.CountParams}";
 
                 case OperationCode.BeginCompoundTask:

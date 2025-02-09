@@ -75,6 +75,15 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                                     }
                                 }
 
+                            case KindOfName.Concept:
+                                {
+#if DEBUG
+                                    Info("9E484258-2A5E-4389-92CB-36BD6114BBBC", $"leftOperand = {leftOperand}");
+#endif
+
+                                    throw new NotImplementedException("4E4695A2-4FAC-4584-9890-21E6D624E9DF");
+                                }
+
                             default:
                                 throw new ArgumentOutOfRangeException(nameof(kindOfNameOfLeftIdentifierValue), kindOfNameOfLeftIdentifierValue, null);
                         }

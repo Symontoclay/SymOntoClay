@@ -599,7 +599,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             };
 
 #if DEBUG
-            Info("B5BDC6F0-3845-43AE-9820-405B99957D93", $"codeFrameEvnPart = {codeFrameEvnPart.ToDbgString()}");
+            //Info("B5BDC6F0-3845-43AE-9820-405B99957D93", $"codeFrameEvnPart = {codeFrameEvnPart.ToDbgString()}");
 #endif
 
             currentCodeFrame.CodeFrameEvnPartsStack.Push(codeFrameEvnPart);
@@ -611,16 +611,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             currentCodeFrame.CompoundTaskInstance = baseCompoundTaskInstance;
 
 #if DEBUG
-            Info("ADDBA7B6-2766-497C-9B4B-1E1A9220BAF9", $"currentCodeFrame = {currentCodeFrame.ToDbgString()}");
+            //Info("ADDBA7B6-2766-497C-9B4B-1E1A9220BAF9", $"currentCodeFrame = {currentCodeFrame.ToDbgString()}");
 #endif
-
-            //throw new NotImplementedException("FDFF427C-D17D-4959-AE52-6DB914582C7F");
-
-            //Please, save to stack this values. And return from stack in the ProcessEndCompoundTask.
-            //processInitialInfo.LocalContext = mainEntity.LocalCodeExecutionContext;
-            //processInitialInfo.Metadata = mainEntity.CodeItem;
-            //processInitialInfo.Instance = mainEntity;
-            //processInitialInfo.ExecutionCoordinator = mainEntity.ExecutionCoordinator;
 
             _currentCodeFrame.CurrentPosition++;
         }

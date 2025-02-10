@@ -36,6 +36,7 @@ using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.Storage.Factories;
 using SymOntoClay.Core.Internal.TasksExecution;
 using SymOntoClay.Threading;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Helpers
@@ -46,7 +47,9 @@ namespace SymOntoClay.Core.Internal.Helpers
         {
             var context = new EngineContext(settings.MonitorNode);
 
-            BaseInitMainStorageContext(context, settings, KindOfStorage.Global);
+            var baseContextComponents = new List<IBaseContextComponent>();
+
+            BaseInitMainStorageContext(context, settings, KindOfStorage.Global, baseContextComponents);
 
             context.HostSupport = settings.HostSupport;
             context.HostListener = settings.HostListener;
@@ -55,14 +58,29 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.SoundPublisherProvider = settings.SoundPublisherProvider;
             context.NLPConverterFactory = settings.NLPConverterFactory;
 
-            context.StorageFactories = new StorageFactories();
+            var storageFactories = new StorageFactories(context);
+            context.StorageFactories = storageFactories;
+            baseContextComponents.Add(storageFactories);
 
-            context.StandardLibraryLoader = new StandardLibraryLoader(context);
-            context.CodeExecutor = new CodeExecutorComponent(context);
-            context.TasksExecutor = new TasksExecutorComponent(context);
-            
-            context.LoaderFromSourceCode = new ActiveLoaderFromSourceCode(context);
-            context.InstancesStorage = new InstancesStorageComponent(context);
+            var standardLibraryLoader = new StandardLibraryLoader(context);
+            context.StandardLibraryLoader = standardLibraryLoader;
+            baseContextComponents.Add(standardLibraryLoader);
+
+            var codeExecutor = new CodeExecutorComponent(context);
+            context.CodeExecutor = codeExecutor;
+            baseContextComponents.Add(codeExecutor);
+
+            var tasksExecutor = new TasksExecutorComponent(context);
+            context.TasksExecutor = tasksExecutor;
+            baseContextComponents.Add(tasksExecutor);
+
+            var loaderFromSourceCode = new ActiveLoaderFromSourceCode(context);
+            context.LoaderFromSourceCode = loaderFromSourceCode;
+            baseContextComponents.Add(loaderFromSourceCode);
+
+            var instancesStorage = new InstancesStorageComponent(context);
+            context.InstancesStorage = instancesStorage;
+            baseContextComponents.Add(instancesStorage);
 
             var threadingSettings = settings.ThreadingSettings?.CodeExecution;
 
@@ -73,6 +91,8 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.TriggersThreadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
                 threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
                 context.LinkedCancellationTokenSource.Token);
+
+            InitComponents(baseContextComponents);
 
             return context;
         }
@@ -102,10 +122,17 @@ namespace SymOntoClay.Core.Internal.Helpers
         {
             var context = new MainStorageContext(settings.MonitorNode);
 
-            BaseInitMainStorageContext(context, settings, settings.IsWorld ? KindOfStorage.World : KindOfStorage.Host );
+            var baseContextComponents = new List<IBaseContextComponent>();
+
+            BaseInitMainStorageContext(context, settings, settings.IsWorld ? KindOfStorage.World : KindOfStorage.Host, baseContextComponents);
 
             context.InstancesStorage = new BaseInstancesStorageComponent(context);
+            baseContextComponents.Add();
+
             context.LoaderFromSourceCode = new BaseLoaderFromSourceCode(context);
+            baseContextComponents.Add();
+
+            InitComponents(baseContextComponents);
 
             return context;
         }
@@ -114,14 +141,18 @@ namespace SymOntoClay.Core.Internal.Helpers
         {
             var context = new BaseCoreContext(settings.MonitorNode);
 
-            BaseInitBaseCoreContext(context, settings);
+            var baseContextComponents = new List<IBaseContextComponent>();
+
+            BaseInitBaseCoreContext(context, settings, baseContextComponents);
+
+            InitComponents(baseContextComponents);
 
             return context;
         }
 
-        public static void BaseInitMainStorageContext(MainStorageContext context, BaseStorageSettings settings, KindOfStorage kindGlobalOfStorage)
+        public static void BaseInitMainStorageContext(MainStorageContext context, BaseStorageSettings settings, KindOfStorage kindGlobalOfStorage, List<IBaseContextComponent> baseContextComponents)
         {
-            BaseInitBaseCoreContext(context, settings);
+            BaseInitBaseCoreContext(context, settings, baseContextComponents);
 
             context.Id = settings.Id;
             context.SelfName = NameHelper.CreateName(settings.Id);
@@ -136,20 +167,31 @@ namespace SymOntoClay.Core.Internal.Helpers
             };
 
             context.Storage = new StorageComponent(context, settings.ParentStorage, kindGlobalOfStorage, storageComponentSettings);
+            baseContextComponents.Add();
 
             context.Parser = new Parser(context);
+            baseContextComponents.Add();
+
             context.Compiler = new Compiler(context);
+            baseContextComponents.Add();
+
             context.CommonNamesStorage = new CommonNamesStorage(context);
+            baseContextComponents.Add();
+
             context.DataResolversFactory = new DataResolversFactory(context);
+            baseContextComponents.Add();
+
             context.ConvertersFactory = new ConvertersFactory(context);
+            baseContextComponents.Add();
 
             context.ActiveObjectContext = new ActiveObjectContext(settings.SyncContext, context.LinkedCancellationTokenSource.Token);
             context.ModulesStorage = settings.ModulesStorage;
 
             context.ServicesFactory = new ServicesFactory(context);
+            baseContextComponents.Add();
         }
 
-        private static void BaseInitBaseCoreContext(BaseCoreContext context, BaseCoreSettings settings)
+        private static void BaseInitBaseCoreContext(BaseCoreContext context, BaseCoreSettings settings, List<IBaseContextComponent> baseContextComponents)
         {
             context.DateTimeProvider = settings.DateTimeProvider;
 
@@ -161,6 +203,19 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.AsyncEventsThreadPool = new CustomThreadPool(threadingSettings?.MinThreadsCount ?? DefaultCustomThreadPoolSettings.MinThreadsCount,
                 threadingSettings?.MaxThreadsCount ?? DefaultCustomThreadPoolSettings.MaxThreadsCount,
                 context.LinkedCancellationTokenSource.Token);
+        }
+
+        private static void InitComponents(List<IBaseContextComponent> baseContextComponents)
+        {
+            foreach(var item in baseContextComponents)
+            {
+                item.LinkWithOtherBaseContextComponents();
+            }
+
+            foreach (var item in baseContextComponents)
+            {
+                item.Init();
+            }
         }
     }
 }

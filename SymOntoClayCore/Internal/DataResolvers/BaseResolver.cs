@@ -33,7 +33,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.DataResolvers
 {
-    public class BaseResolver: BaseLoggedComponent
+    public class BaseResolver: BaseContextComponent
     {
         public BaseResolver(IMainStorageContext context)
             : base(context.Logger)
@@ -42,6 +42,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         }
 
         protected readonly IMainStorageContext _context;
+
+        protected InheritanceResolver _inheritanceResolver;
+
+        /// <inheritdoc/>
+        protected override void LinkWithOtherBaseContextComponents()
+        {
+            base.LinkWithOtherBaseContextComponents();
+
+            _inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
+        }
 
         public Dictionary<StrongIdentifierValue, IStorage> GetSuperClassStoragesDict(IMonitorLogger logger, IStorage storage, IInstance instance)
         {
@@ -211,7 +221,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var hasHolderInItems = source.Any(p => p.ResultItem.Holder == holder);
 
-            var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
+            var inheritanceResolver = _inheritanceResolver;
 
             foreach (var item in source)
             {
@@ -263,7 +273,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
             }
 
-            var inheritanceResolver = _context.DataResolversFactory.GetInheritanceResolver();
+            var inheritanceResolver = _inheritanceResolver;
 
             foreach (var item in source)
             {

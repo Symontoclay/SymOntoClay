@@ -46,21 +46,33 @@ namespace SymOntoClay.Core.Internal.Instances
             : base(context)
         {
             _context = context;
+        }
 
-            _metadataResolver = context.DataResolversFactory.GetMetadataResolver();
+        /// <inheritdoc/>
+        protected override void LinkWithOtherBaseContextComponents()
+        {
+            base.LinkWithOtherBaseContextComponents();
 
-            _projectLoader = new ProjectLoader(context);
+            _metadataResolver = _context.DataResolversFactory.GetMetadataResolver();
+        }
+
+        /// <inheritdoc/>
+        protected override void Init()
+        {
+            base.Init();
+
+            _projectLoader = new ProjectLoader(_context);
 
             OnIdle += DispatchOnIdle;
         }
 
         private readonly IEngineContext _context;
-        private readonly MetadataResolver _metadataResolver;
+        private MetadataResolver _metadataResolver;
 
         private readonly object _registryLockObj = new object();
         private readonly object _processLockObj = new object();
 
-        private readonly ProjectLoader _projectLoader;
+        private ProjectLoader _projectLoader;
 
         private Dictionary<StrongIdentifierValue, AppInstance> _namesDict;
         private AppInstance _rootInstanceInfo;

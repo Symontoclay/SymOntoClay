@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace SymOntoClay.Core.Internal.TasksExecution
 {
-    public class TasksExecutorComponent: BaseComponent, ITasksExecutorComponent
+    public class TasksExecutorComponent: BaseContextComponent, ITasksExecutorComponent
     {
         private enum ExecutionState
         {
@@ -19,15 +19,29 @@ namespace SymOntoClay.Core.Internal.TasksExecution
             : base(context.Logger)
         {
             _context = context;
-            _compiler = context.Compiler;
+        }
+
+        /// <inheritdoc/>
+        protected override void LinkWithOtherBaseContextComponents()
+        {
+            base.LinkWithOtherBaseContextComponents();
+
+            _compiler = _context.Compiler;
+        }
+
+        /// <inheritdoc/>
+        protected override void Init()
+        {
+            base.Init();
+
             _activeObject = new AsyncActivePeriodicObject(_context.ActiveObjectContext, _context.CodeExecutionThreadPool, _context.Logger);
             _activeObject.PeriodicMethod = CommandLoop;
         }
 
         private readonly IEngineContext _context;
-        private readonly IActivePeriodicObject _activeObject;
+        private IActivePeriodicObject _activeObject;
         private volatile TasksPlanner _tasksPlanner;
-        private readonly ICompiler _compiler;
+        private ICompiler _compiler;
         private volatile ExecutionState _executionState = ExecutionState.Init;
         private volatile TasksPlan _plan;
         private volatile IThreadExecutor _threadExecutor;

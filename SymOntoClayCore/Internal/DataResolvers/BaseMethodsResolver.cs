@@ -38,11 +38,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var dataResolversFactory = context.DataResolversFactory;
 
-            _inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
             _synonymsResolver = dataResolversFactory.GetSynonymsResolver();
         }
 
-        protected readonly InheritanceResolver _inheritanceResolver;
         protected readonly SynonymsResolver _synonymsResolver;
 
         private static readonly StrongIdentifierValue _fuzzyTypeIdentifier = NameHelper.CreateName(StandardNamesConstants.FuzzyTypeName);

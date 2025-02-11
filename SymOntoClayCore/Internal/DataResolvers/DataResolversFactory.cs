@@ -26,439 +26,291 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.DataResolvers
 {
-    public class DataResolversFactory : BaseLoggedComponent, IDataResolversFactory
+    public class DataResolversFactory : BaseContextComponent, IDataResolversFactory
     {
         public DataResolversFactory(IMainStorageContext context)
             : base(context.Logger)
         {
             _context = context;
+
+            _baseResolver = new BaseResolver(_context);
+            _baseContextComponents.Add(_baseResolver);
+
+            _channelsResolver = new ChannelsResolver(_context);
+            _baseContextComponents.Add(_channelsResolver);
+
+            throw new NotImplementedException("BB38DEE6-DBCC-432B-9D09-E53F925CBB7C");
+
+            _inheritanceResolver = new InheritanceResolver(_context);
+            _baseContextComponents.Add(_inheritanceResolver);
+
+            _logicalValueLinearResolver = new LogicalValueLinearResolver(_context);
+            _baseContextComponents.Add(_logicalValueLinearResolver);
+
+            _operatorsResolver = new OperatorsResolver(_context);
+            _baseContextComponents.Add(_operatorsResolver);
+
+            _numberValueLinearResolver = new NumberValueLinearResolver(_context);
+            _baseContextComponents.Add(_numberValueLinearResolver);
+
+            _strongIdentifierLinearResolver = new StrongIdentifierLinearResolver(_context);
+            _baseContextComponents.Add(_strongIdentifierLinearResolver);
+
+            _triggersResolver = new TriggersResolver(_context);
+            _baseContextComponents.Add(_triggersResolver);
+
+            _varsResolver = new VarsResolver(_context);
+            _baseContextComponents.Add(_varsResolver);
+
+            _logicalSearchResolver = new LogicalSearchResolver(_context);
+            _baseContextComponents.Add(_logicalSearchResolver);
+
+            _fuzzyLogicResolver = new FuzzyLogicResolver(_context);
+            _baseContextComponents.Add(_fuzzyLogicResolver);
+
+            _methodsResolver = new MethodsResolver(_context);
+            _baseContextComponents.Add(_methodsResolver);
+
+            _constructorsResolver = new ConstructorsResolver(_context);
+            _baseContextComponents.Add(_constructorsResolver);
+
+            _codeItemDirectivesResolver = new CodeItemDirectivesResolver(_context);
+            _baseContextComponents.Add(_codeItemDirectivesResolver);
+
+            _statesResolver = new StatesResolver(_context);
+            _baseContextComponents.Add(_statesResolver);
+
+            _toSystemBoolResolver = new ToSystemBoolResolver(_context.Logger);
+            _baseContextComponents.Add(_toSystemBoolResolver);
+
+            _relationsResolver = new RelationsResolver(_context);
+            _baseContextComponents.Add(_relationsResolver);
+
+            _logicalValueModalityResolver = new LogicalValueModalityResolver(_context);
+            _baseContextComponents.Add(_logicalValueModalityResolver);
+
+            _synonymsResolver = new SynonymsResolver(_context);
+            _baseContextComponents.Add(_synonymsResolver);
+
+            _idleActionsResolver = new IdleActionsResolver(_context);
+            _baseContextComponents.Add(_idleActionsResolver);
+
+            _annotationsResolver = new AnnotationsResolver(_context);
+            _baseContextComponents.Add(_annotationsResolver);
+
+            _valueResolvingHelper = new ValueResolvingHelper(_context);
+            _baseContextComponents.Add(_valueResolvingHelper);
+
+            _metadataResolver = new MetadataResolver(_context);
+            _baseContextComponents.Add(_metadataResolver);
+
+            _logicalSearchVarResultsItemInvertor = new LogicalSearchVarResultsItemInvertor(_context);
+            _baseContextComponents.Add(_logicalSearchVarResultsItemInvertor);
+
+            _dateTimeResolver = new DateTimeResolver(_context);
+            _baseContextComponents.Add(_dateTimeResolver);
+        }
+
+        /// <inheritdoc/>
+        protected override void LinkWithOtherBaseContextComponents()
+        {
+            base.LinkWithOtherBaseContextComponents();
+
+            foreach (var item in _baseContextComponents)
+            {
+                item.LinkWithOtherBaseContextComponents();
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void Init()
+        {
+            base.Init();
+
+            foreach (var item in _baseContextComponents)
+            {
+                item.Init();
+            }
         }
 
         private readonly IMainStorageContext _context;
 
+        private readonly List<IBaseContextComponent> _baseContextComponents = new List<IBaseContextComponent>();
+
         private BaseResolver _baseResolver;
-        private readonly object _baseResolverLockObj = new object();
-
         private ChannelsResolver _channelsResolver;
-        private readonly object _channelsResolverLockObj = new object();
-
         private InheritanceResolver _inheritanceResolver;
-        private readonly object _inheritanceResolverLockObj = new object();
-
         private LogicalValueLinearResolver _logicalValueLinearResolver;
-        private readonly object _logicalValueLinearResolverLockObj = new object();
-
         private OperatorsResolver _operatorsResolver;
-        private readonly object _operatorsResolverLockObj = new object();
-
         private NumberValueLinearResolver _numberValueLinearResolver;
-        private readonly object _numberValueLinearResolverLockObj = new object();
-
         private StrongIdentifierLinearResolver _strongIdentifierLinearResolver;
-        private readonly object _strongIdentifierLinearResolverLockObj = new object();
-
         private TriggersResolver _triggersResolver;
-        private readonly object _triggersResolverLockObj = new object();
-
         private VarsResolver _varsResolver;
-        private readonly object _varsResolverLockObj = new object();
-
         private LogicalSearchResolver _logicalSearchResolver;
-        private readonly object _logicalSearchResolverLockObj = new object();
-
         private FuzzyLogicResolver _fuzzyLogicResolver;
-        private readonly object _fuzzyLogicResolverLockObj = new object();
-
         private MethodsResolver _methodsResolver;
-        private readonly object _methodsResolverLockObj = new object();
-
         private ConstructorsResolver _constructorsResolver;
-        private readonly object _constructorsResolverLockObj = new object();
-
         private CodeItemDirectivesResolver _codeItemDirectivesResolver;
-        private readonly object _codeItemDirectivesResolverLockObj = new object();
-
         private StatesResolver _statesResolver;
-        private readonly object _statesResolverLockObj = new object();
-
         private ToSystemBoolResolver _toSystemBoolResolver;
-        private readonly object _toSystemBoolResolverLockObj = new object();
-
         private RelationsResolver _relationsResolver;
-        private readonly object _relationsResolverLockObj = new object();
-
         private LogicalValueModalityResolver _logicalValueModalityResolver;
-        private readonly object _logicalValueModalityResolverLockObj = new object();
-
         private SynonymsResolver _synonymsResolver;
-        private readonly object _synonymsResolverLockObj = new object();
-
         private IdleActionsResolver _idleActionsResolver;
-        private readonly object _idleActionsResolverLockObj = new object();
-
         private AnnotationsResolver _annotationsResolver;
-        private readonly object _annotationsResolverLockObj = new object();
-
         private ValueResolvingHelper _valueResolvingHelper;
-        private readonly object _valueResolvingHelperLockObj = new object();
-
         private MetadataResolver _metadataResolver;
-        private readonly object _metadataResolverLockObj = new object();
-
         private LogicalSearchVarResultsItemInvertor _logicalSearchVarResultsItemInvertor;
-        private readonly object _logicalSearchVarResultsItemInvertorLockObj = new object();
-
         private DateTimeResolver _dateTimeResolver;
-        private readonly object _dateTimeResolverLockObj = new object();
 
         /// <inheritdoc/>
         public BaseResolver GetBaseResolver()
         {
-            lock(_baseResolverLockObj)
-            {
-                if(_baseResolver == null)
-                {
-                    _baseResolver = new BaseResolver(_context);
-                }
-
-                return _baseResolver;
-            }
+            return _baseResolver;
         }
 
         /// <inheritdoc/>
         public ChannelsResolver GetChannelsResolver()
         {
-            lock (_channelsResolverLockObj)
-            {
-                if (_channelsResolver == null)
-                {
-                    _channelsResolver = new ChannelsResolver(_context);
-                }
-
-                return _channelsResolver;
-            }
+            return _channelsResolver;
         }
 
         /// <inheritdoc/>
         public InheritanceResolver GetInheritanceResolver()
         {
-            lock (_inheritanceResolverLockObj)
-            {
-                if (_inheritanceResolver == null)
-                {
-                    _inheritanceResolver = new InheritanceResolver(_context);
-                }
-
-                return _inheritanceResolver;
-            }
+            return _inheritanceResolver;
         }
 
         /// <inheritdoc/>
         public LogicalValueLinearResolver GetLogicalValueLinearResolver()
         {
-            lock (_logicalValueLinearResolverLockObj)
-            {
-                if (_logicalValueLinearResolver == null)
-                {
-                    _logicalValueLinearResolver = new LogicalValueLinearResolver(_context);
-                }
-
-                return _logicalValueLinearResolver;
-            }
+            return _logicalValueLinearResolver;
         }
 
         /// <inheritdoc/>
         public OperatorsResolver GetOperatorsResolver()
         {
-            lock (_operatorsResolverLockObj)
-            {
-                if (_operatorsResolver == null)
-                {
-                    _operatorsResolver = new OperatorsResolver(_context);
-                }
-
-                return _operatorsResolver;
-            }
+            return _operatorsResolver;
         }
 
         /// <inheritdoc/>
         public NumberValueLinearResolver GetNumberValueLinearResolver()
         {
-            lock (_numberValueLinearResolverLockObj)
-            {
-                if (_numberValueLinearResolver == null)
-                {
-                    _numberValueLinearResolver = new NumberValueLinearResolver(_context);
-                }
-
-                return _numberValueLinearResolver;
-            }
+            return _numberValueLinearResolver;
         }
 
         /// <inheritdoc/>
         public StrongIdentifierLinearResolver GetStrongIdentifierLinearResolver()
         {
-            lock (_strongIdentifierLinearResolverLockObj)
-            {
-                if (_strongIdentifierLinearResolver == null)
-                {
-                    _strongIdentifierLinearResolver = new StrongIdentifierLinearResolver(_context);
-                }
-
-                return _strongIdentifierLinearResolver;
-            }
+            return _strongIdentifierLinearResolver;
         }
 
         /// <inheritdoc/>
         public TriggersResolver GetTriggersResolver()
         {
-            lock (_triggersResolverLockObj)
-            {
-                if (_triggersResolver == null)
-                {
-                    _triggersResolver = new TriggersResolver(_context);
-                }
-
-                return _triggersResolver;
-            }
+            return _triggersResolver;
         }
 
         /// <inheritdoc/>
         public VarsResolver GetVarsResolver()
         {
-            lock (_varsResolverLockObj)
-            {
-                if (_varsResolver == null)
-                {
-                    _varsResolver = new VarsResolver(_context);
-                }
-
-                return _varsResolver;
-            }
+            return _varsResolver;
         }
 
         /// <inheritdoc/>
         public LogicalSearchResolver GetLogicalSearchResolver()
         {
-            lock (_logicalSearchResolverLockObj)
-            {
-                if (_logicalSearchResolver == null)
-                {
-                    _logicalSearchResolver = new LogicalSearchResolver(_context);
-                }
-
-                return _logicalSearchResolver;
-            }
+            return _logicalSearchResolver;
         }
 
         /// <inheritdoc/>
         public FuzzyLogicResolver GetFuzzyLogicResolver()
         {
-            lock (_fuzzyLogicResolverLockObj)
-            {
-                if (_fuzzyLogicResolver == null)
-                {
-                    _fuzzyLogicResolver = new FuzzyLogicResolver(_context);
-                }
-
-                return _fuzzyLogicResolver;
-            }
+            return _fuzzyLogicResolver;
         }
 
         /// <inheritdoc/>
         public MethodsResolver GetMethodsResolver()
         {
-            lock (_methodsResolverLockObj)
-            {
-                if (_methodsResolver == null)
-                {
-                    _methodsResolver = new MethodsResolver(_context);
-                }
-
-                return _methodsResolver;
-            }
+            return _methodsResolver;
         }
 
         /// <inheritdoc/>
         public ConstructorsResolver GetConstructorsResolver()
         {
-            lock(_constructorsResolverLockObj)
-            {
-                if(_constructorsResolver == null)
-                {
-                    _constructorsResolver = new ConstructorsResolver(_context);
-                }
-
-                return _constructorsResolver;
-            }
+            return _constructorsResolver;
         }
 
         /// <inheritdoc/>
         public CodeItemDirectivesResolver GetCodeItemDirectivesResolver()
         {
-            lock (_codeItemDirectivesResolverLockObj)
-            {
-                if (_codeItemDirectivesResolver == null)
-                {
-                    _codeItemDirectivesResolver = new CodeItemDirectivesResolver(_context);
-                }
-
-                return _codeItemDirectivesResolver;
-            }
+            return _codeItemDirectivesResolver;
         }
 
         /// <inheritdoc/>
         public StatesResolver GetStatesResolver()
         {
-            lock (_statesResolverLockObj)
-            {
-                if (_statesResolver == null)
-                {
-                    _statesResolver = new StatesResolver(_context);
-                }
-
-                return _statesResolver;
-            }
+            return _statesResolver;
         }
 
         /// <inheritdoc/>
         public ToSystemBoolResolver GetToSystemBoolResolver()
         {
-            lock (_toSystemBoolResolverLockObj)
-            {
-                if (_toSystemBoolResolver == null)
-                {
-                    _toSystemBoolResolver = new ToSystemBoolResolver(_context.Logger);
-                }
-
-                return _toSystemBoolResolver;
-            }
+            return _toSystemBoolResolver;
         }
 
         /// <inheritdoc/>
         public RelationsResolver GetRelationsResolver()
         {
-            lock (_relationsResolverLockObj)
-            {
-                if (_relationsResolver == null)
-                {
-                    _relationsResolver = new RelationsResolver(_context);
-                }
-
-                return _relationsResolver;
-            }
+            return _relationsResolver;
         }
 
         /// <inheritdoc/>
         public LogicalValueModalityResolver GetLogicalValueModalityResolver()
         {
-            lock(_logicalValueModalityResolverLockObj)
-            {
-                if (_logicalValueModalityResolver == null)
-                {
-                    _logicalValueModalityResolver = new LogicalValueModalityResolver(_context);
-                }
-
-                return _logicalValueModalityResolver;
-            }
+            return _logicalValueModalityResolver;
         }
 
         /// <inheritdoc/>
         public SynonymsResolver GetSynonymsResolver()
         {
-            lock(_synonymsResolverLockObj)
-            {
-                if(_synonymsResolver == null)
-                {
-                    _synonymsResolver = new SynonymsResolver(_context);
-                }
-
-                return _synonymsResolver;
-            }
+            return _synonymsResolver;
         }
 
         /// <inheritdoc/>
         public IdleActionsResolver GetIdleActionsResolver()
         {
-            lock(_idleActionsResolverLockObj)
-            {
-                if(_idleActionsResolver == null)
-                {
-                    _idleActionsResolver = new IdleActionsResolver(_context);
-                }
-
-                return _idleActionsResolver;
-            }
+            return _idleActionsResolver;
         }
 
         /// <inheritdoc/>
         public AnnotationsResolver GetAnnotationsResolver()
         {
-            lock(_annotationsResolverLockObj)
-            {
-                if(_annotationsResolver == null)
-                {
-                    _annotationsResolver = new AnnotationsResolver(_context);
-                }
-
-                return _annotationsResolver;
-            }
+            return _annotationsResolver;
         }
 
         /// <inheritdoc/>
         public ValueResolvingHelper GetValueResolvingHelper()
         {
-            lock(_valueResolvingHelperLockObj)
-            {
-                if(_valueResolvingHelper == null)
-                {
-                    _valueResolvingHelper = new ValueResolvingHelper(_context);
-                }
-
-                return _valueResolvingHelper;
-            }
+            return _valueResolvingHelper;
         }
 
         /// <inheritdoc/>
         public MetadataResolver GetMetadataResolver()
         {
-            lock(_metadataResolverLockObj)
-            {
-                if(_metadataResolver == null)
-                {
-                    _metadataResolver = new MetadataResolver(_context);
-                }
-
-                return _metadataResolver;
-            }
+            return _metadataResolver;
         }
 
         /// <inheritdoc/>
         public LogicalSearchVarResultsItemInvertor GetLogicalSearchVarResultsItemInvertor()
         {
-            lock(_logicalSearchVarResultsItemInvertorLockObj)
-            {
-                if(_logicalSearchVarResultsItemInvertor == null)
-                {
-                    _logicalSearchVarResultsItemInvertor = new LogicalSearchVarResultsItemInvertor(_context);
-                }
-
-                return _logicalSearchVarResultsItemInvertor;
-            }
+            return _logicalSearchVarResultsItemInvertor;
         }
 
         /// <inheritdoc/>
         public DateTimeResolver GetDateTimeResolver()
         {
-            lock(_dateTimeResolverLockObj)
-            {
-                if(_dateTimeResolver == null)
-                {
-                    _dateTimeResolver = new DateTimeResolver(_context);
-                }
-
-                return _dateTimeResolver;
-            }
+            return _dateTimeResolver;
         }
     }
 }

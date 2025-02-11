@@ -29,12 +29,45 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CommonNames
 {
-    public class CommonNamesStorage : BaseComponent, ICommonNamesStorage
+    public class CommonNamesStorage : BaseContextComponent, ICommonNamesStorage
     {
         public CommonNamesStorage(IMainStorageContext context)
             : base(context.Logger)
         {
             _context = context;
+        }
+
+        /// <inheritdoc/>
+        protected override void Init()
+        {
+            base.Init();
+
+            WorldName = NameHelper.CreateName(StandardNamesConstants.WorldTypeName);
+
+            AppName = NameHelper.CreateName(StandardNamesConstants.AppTypeName);
+
+            ClassName = NameHelper.CreateName(StandardNamesConstants.ClassTypeName);
+
+            ActionName = NameHelper.CreateName(StandardNamesConstants.ActionTypeName);
+
+            StateName = NameHelper.CreateName(StandardNamesConstants.StateTypeName);
+
+            DefaultHolder = new StrongIdentifierValue();
+
+            SelfSystemVarName = NameHelper.CreateName(StandardNamesConstants.SelfSystemVarName);
+
+            HostSystemVarName = NameHelper.CreateName(StandardNamesConstants.HostSystemVarName);
+
+            SelfName = _context.SelfName;
+
+            DefaultCtorName = NameHelper.CreateName(StandardNamesConstants.DefaultCtorName);
+
+            RandomConstraintName = NameHelper.CreateName(StandardNamesConstants.RandomConstraintName);
+
+            NearestConstraintName = NameHelper.CreateName(StandardNamesConstants.NearestConstraintName);
+
+            TimeoutAttributeName = NameHelper.CreateName(StandardNamesConstants.TimeoutAttributeName);
+            PriorityAttributeName = NameHelper.CreateName(StandardNamesConstants.PriorityAttributeName);
         }
 
         private readonly IMainStorageContext _context;
@@ -80,35 +113,5 @@ namespace SymOntoClay.Core.Internal.CommonNames
 
         /// <inheritdoc/>
         public StrongIdentifierValue PriorityAttributeName { get; private set; }
-
-        public void LoadFromSourceCode()
-        {
-            WorldName = NameHelper.CreateName(StandardNamesConstants.WorldTypeName);
-
-            AppName = NameHelper.CreateName(StandardNamesConstants.AppTypeName);
-
-            ClassName = NameHelper.CreateName(StandardNamesConstants.ClassTypeName);
-
-            ActionName = NameHelper.CreateName(StandardNamesConstants.ActionTypeName);
-
-            StateName = NameHelper.CreateName(StandardNamesConstants.StateTypeName);
-
-            DefaultHolder = new StrongIdentifierValue();
-
-            SelfSystemVarName = NameHelper.CreateName(StandardNamesConstants.SelfSystemVarName);
-
-            HostSystemVarName = NameHelper.CreateName(StandardNamesConstants.HostSystemVarName);
-
-            SelfName = _context.SelfName;
-
-            DefaultCtorName = NameHelper.CreateName(StandardNamesConstants.DefaultCtorName);
-
-            RandomConstraintName = NameHelper.CreateName(StandardNamesConstants.RandomConstraintName);
-
-            NearestConstraintName = NameHelper.CreateName(StandardNamesConstants.NearestConstraintName);
-
-            TimeoutAttributeName = NameHelper.CreateName(StandardNamesConstants.TimeoutAttributeName);
-            PriorityAttributeName = NameHelper.CreateName(StandardNamesConstants.PriorityAttributeName);
-        }
     }
 }

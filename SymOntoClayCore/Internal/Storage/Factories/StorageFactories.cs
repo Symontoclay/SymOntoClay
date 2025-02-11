@@ -1,7 +1,12 @@
 ﻿namespace SymOntoClay.Core.Internal.Storage.Factories
 {
-    public class StorageFactories: IStorageFactories
+    public class StorageFactories: BaseContextComponent, IStorageFactories
     {
+        public StorageFactories(IEngineContext context)
+            : base(context.Logger)
+        {
+        }
+
         private readonly IStorageFactory _appInstanceStorageFactory = new AppInstanceStorageFactory();
         private readonly IStorageFactory _objectStorageFactory = new ObjectStorageFactory();
         private readonly IStorageFactory _stateStorageFactory = new StateStorageFactory();

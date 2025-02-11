@@ -34,35 +34,48 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
 {
-    public class CodeExecutorComponent: BaseComponent, ICodeExecutorComponent
+    public class CodeExecutorComponent: BaseContextComponent, ICodeExecutorComponent
     {
         public CodeExecutorComponent(IEngineContext context)
             : base(context.Logger)
         {
             _context = context;
-            _codeFrameService = context.ServicesFactory.GetCodeFrameService();
+        }
 
-            var dataResolversFactory = context.DataResolversFactory;
+        /// <inheritdoc/>
+        protected override void LinkWithOtherBaseContextComponents()
+        {
+            base.LinkWithOtherBaseContextComponents();
+
+            _codeFrameService = _context.ServicesFactory.GetCodeFrameService();
+
+            var dataResolversFactory = _context.DataResolversFactory;
 
             _operatorsResolver = dataResolversFactory.GetOperatorsResolver();
             _methodsResolver = dataResolversFactory.GetMethodsResolver();
             _numberValueLinearResolver = dataResolversFactory.GetNumberValueLinearResolver();
+        }
+
+        /// <inheritdoc/>
+        protected override void Init()
+        {
+            base.Init();
 
             var globalExecutionContext = new LocalCodeExecutionContext();
-            globalExecutionContext.Storage = context.Storage.GlobalStorage;
-            globalExecutionContext.Holder = context.CommonNamesStorage.DefaultHolder;
+            globalExecutionContext.Storage = _context.Storage.GlobalStorage;
+            globalExecutionContext.Holder = _context.CommonNamesStorage.DefaultHolder;
 
             _globalExecutionContext = globalExecutionContext;
         }
 
         private readonly IEngineContext _context;
-        private readonly ICodeFrameService _codeFrameService;
+        private ICodeFrameService _codeFrameService;
 
-        private readonly OperatorsResolver _operatorsResolver;
-        private readonly MethodsResolver _methodsResolver;
-        private readonly NumberValueLinearResolver _numberValueLinearResolver;
+        private OperatorsResolver _operatorsResolver;
+        private MethodsResolver _methodsResolver;
+        private NumberValueLinearResolver _numberValueLinearResolver;
 
-        private readonly ILocalCodeExecutionContext _globalExecutionContext;
+        private ILocalCodeExecutionContext _globalExecutionContext;
 
         /// <inheritdoc/>
         public IThreadExecutor ExecuteAsync(IMonitorLogger logger, ProcessInitialInfo processInitialInfo)

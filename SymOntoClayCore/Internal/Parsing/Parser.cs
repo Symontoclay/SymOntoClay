@@ -31,7 +31,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing
 {
-    public class Parser : BaseComponent, IParser
+    public class Parser : BaseContextComponent, IParser
     {
         public Parser(IBaseCoreContext context)
             : base(context.Logger)

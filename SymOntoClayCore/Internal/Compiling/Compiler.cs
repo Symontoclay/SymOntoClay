@@ -36,14 +36,14 @@ using System.Xml.Linq;
 
 namespace SymOntoClay.Core.Internal.Compiling
 {
-    public class Compiler: BaseComponent, ICompiler
+    public class Compiler: BaseContextComponent, ICompiler
     {
         public Compiler(IMainStorageContext context)
             : base(context.Logger)
         {
             _context = context;
         }
-
+        
         private readonly IMainStorageContext _context;
 
         /// <inheritdoc/>

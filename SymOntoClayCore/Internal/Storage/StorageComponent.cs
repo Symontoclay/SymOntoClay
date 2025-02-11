@@ -36,7 +36,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace SymOntoClay.Core.Internal.Storage
 {
-    public class StorageComponent: BaseComponent, IStorageComponent
+    public class StorageComponent: BaseContextComponent, IStorageComponent
     {
         public StorageComponent(IMainStorageContext context, IStandaloneStorage parentStorage, KindOfStorage kindGlobalOfStorage, StorageComponentSettings settings)
             : base(context.Logger)
@@ -47,6 +47,15 @@ namespace SymOntoClay.Core.Internal.Storage
 
             _parentStorage = parentStorage;
             _kindGlobalOfStorage = kindGlobalOfStorage;
+        }
+
+        /// <inheritdoc/>
+        protected override void LinkWithOtherBaseContextComponents()
+        {
+            base.LinkWithOtherBaseContextComponents();
+
+            _logicQueryParseAndCache = _context.LogicQueryParseAndCache;
+            _parser = _context.Parser;
         }
 
         private readonly StorageComponentSettings _settings;
@@ -96,9 +105,6 @@ namespace SymOntoClay.Core.Internal.Storage
         {
             lock (_stateLockObj)
             {
-                _logicQueryParseAndCache = _context.LogicQueryParseAndCache;
-                _parser = _context.Parser;
-
                 var globalStorageSettings = new RealStorageSettings();
 
                 var parentStoragesList = new List<IStorage>();

@@ -31,17 +31,24 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public class BaseInstancesStorageComponent : BaseComponent, IInstancesStorageComponent
+    public class BaseInstancesStorageComponent : BaseContextComponent, IInstancesStorageComponent
     {
         public BaseInstancesStorageComponent(IMainStorageContext context)
             : base(context.Logger)
         {
             _context = context;
-            _commonNamesStorage = context.CommonNamesStorage;
+        }
+
+        /// <inheritdoc/>
+        protected override void LinkWithOtherBaseContextComponents()
+        {
+            base.LinkWithOtherBaseContextComponents();
+
+            _commonNamesStorage = _context.CommonNamesStorage;
         }
 
         private readonly IMainStorageContext _context;
-        protected readonly ICommonNamesStorage _commonNamesStorage;
+        protected ICommonNamesStorage _commonNamesStorage;
 
         public virtual void LoadFromSourceFiles()
         {

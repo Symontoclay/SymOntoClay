@@ -33,7 +33,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.StandardLibrary
 {
-    public class StandardLibraryLoader : BaseComponent
+    public class StandardLibraryLoader : BaseContextComponent
     {
         public StandardLibraryLoader(IEngineContext context)
             : base(context.Logger)

@@ -24,17 +24,25 @@ using System.Collections.Generic;
 
 namespace SymOntoClay.Core.Internal.Serialization
 {
-    public class BaseLoaderFromSourceCode : BaseComponent, ILoaderFromSourceCode
+    public class BaseLoaderFromSourceCode : BaseContextComponent, ILoaderFromSourceCode
     {
         public BaseLoaderFromSourceCode(IMainStorageContext context)
             : base(context.Logger)
         {
             _context = context;
-            _projectLoader = new ProjectLoader(context);
+            
+        }
+
+        /// <inheritdoc/>
+        protected override void Init()
+        {
+            base.Init();
+
+            _projectLoader = new ProjectLoader(_context);
         }
 
         private readonly IMainStorageContext _context;
-        private readonly ProjectLoader _projectLoader;
+        private ProjectLoader _projectLoader;
 
         public virtual void LoadFromSourceFiles()
         {

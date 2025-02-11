@@ -126,11 +126,13 @@ namespace SymOntoClay.Core.Internal.Helpers
 
             BaseInitMainStorageContext(context, settings, settings.IsWorld ? KindOfStorage.World : KindOfStorage.Host, baseContextComponents);
 
-            context.InstancesStorage = new BaseInstancesStorageComponent(context);
-            baseContextComponents.Add();
+            var instancesStorage = new BaseInstancesStorageComponent(context);
+            context.InstancesStorage = instancesStorage;
+            baseContextComponents.Add(instancesStorage);
 
-            context.LoaderFromSourceCode = new BaseLoaderFromSourceCode(context);
-            baseContextComponents.Add();
+            var loaderFromSourceCode = new BaseLoaderFromSourceCode(context);
+            context.LoaderFromSourceCode = loaderFromSourceCode;
+            baseContextComponents.Add(loaderFromSourceCode);
 
             InitComponents(baseContextComponents);
 
@@ -166,29 +168,36 @@ namespace SymOntoClay.Core.Internal.Helpers
                 EnableCategories = settings.EnableCategories
             };
 
-            context.Storage = new StorageComponent(context, settings.ParentStorage, kindGlobalOfStorage, storageComponentSettings);
-            baseContextComponents.Add();
+            var storage = new StorageComponent(context, settings.ParentStorage, kindGlobalOfStorage, storageComponentSettings);
+            context.Storage = storage;
+            baseContextComponents.Add(storage);
 
-            context.Parser = new Parser(context);
-            baseContextComponents.Add();
+            var parser = new Parser(context);
+            context.Parser = parser;
+            baseContextComponents.Add(parser);
 
-            context.Compiler = new Compiler(context);
-            baseContextComponents.Add();
+            var compiler = new Compiler(context);
+            context.Compiler = compiler;
+            baseContextComponents.Add(compiler);
 
-            context.CommonNamesStorage = new CommonNamesStorage(context);
-            baseContextComponents.Add();
+            var commonNamesStorage = new CommonNamesStorage(context);
+            context.CommonNamesStorage = commonNamesStorage;
+            baseContextComponents.Add(commonNamesStorage);
 
-            context.DataResolversFactory = new DataResolversFactory(context);
-            baseContextComponents.Add();
+            var dataResolversFactory = new DataResolversFactory(context);
+            context.DataResolversFactory = dataResolversFactory;
+            baseContextComponents.Add(dataResolversFactory);
 
-            context.ConvertersFactory = new ConvertersFactory(context);
-            baseContextComponents.Add();
+            var convertersFactory = new ConvertersFactory(context);
+            context.ConvertersFactory = convertersFactory;
+            baseContextComponents.Add(convertersFactory);
 
             context.ActiveObjectContext = new ActiveObjectContext(settings.SyncContext, context.LinkedCancellationTokenSource.Token);
             context.ModulesStorage = settings.ModulesStorage;
 
-            context.ServicesFactory = new ServicesFactory(context);
-            baseContextComponents.Add();
+            var servicesFactory = new ServicesFactory(context);
+            context.ServicesFactory = servicesFactory;
+            baseContextComponents.Add(servicesFactory);
         }
 
         private static void BaseInitBaseCoreContext(BaseCoreContext context, BaseCoreSettings settings, List<IBaseContextComponent> baseContextComponents)

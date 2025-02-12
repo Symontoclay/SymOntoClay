@@ -20,14 +20,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.DataResolvers
 {
@@ -36,14 +32,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public CodeItemDirectivesResolver(IMainStorageContext context)
             : base(context)
         {
-            var dataResolversFactory = context.DataResolversFactory;
+        }
 
-            _inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
+        /// <inheritdoc/>
+        protected override void LinkWithOtherBaseContextComponents()
+        {
+            base.LinkWithOtherBaseContextComponents();
+
+            var dataResolversFactory = _context.DataResolversFactory;
+
             _metadataResolver = dataResolversFactory.GetMetadataResolver();
         }
 
-        private readonly InheritanceResolver _inheritanceResolver;
-        private readonly MetadataResolver _metadataResolver;
+        private MetadataResolver _metadataResolver;
 
         public List<CodeItemDirective> Resolve(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext)
         {

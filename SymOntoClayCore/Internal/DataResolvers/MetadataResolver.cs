@@ -34,10 +34,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public MetadataResolver(IMainStorageContext context)
             : base(context)
         {
-            _synonymsResolver = context.DataResolversFactory.GetSynonymsResolver();
+            
         }
 
-        private readonly SynonymsResolver _synonymsResolver;
+        /// <inheritdoc/>
+        protected override void LinkWithOtherBaseContextComponents()
+        {
+            base.LinkWithOtherBaseContextComponents();
+
+            _synonymsResolver = _context.DataResolversFactory.GetSynonymsResolver();
+        }
+
+        private SynonymsResolver _synonymsResolver;
 
         public CodeItem Resolve(IMonitorLogger logger, StrongIdentifierValue prototypeName, ILocalCodeExecutionContext localCodeExecutionContext)
         {

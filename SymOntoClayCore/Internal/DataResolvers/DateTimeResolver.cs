@@ -20,12 +20,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using Newtonsoft.Json.Linq;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.DataResolvers
 {
@@ -34,10 +31,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public DateTimeResolver(IMainStorageContext context)
             : base(context)
         {
-            _dateTimeProvider = context.DateTimeProvider;
         }
 
-        private readonly IDateTimeProvider _dateTimeProvider;
+        /// <inheritdoc/>
+        protected override void LinkWithOtherBaseContextComponents()
+        {
+            base.LinkWithOtherBaseContextComponents();
+
+            _dateTimeProvider = _context.DateTimeProvider;
+        }
+
+        private IDateTimeProvider _dateTimeProvider;
 
         public long ConvertTimeValueToTicks(IMonitorLogger logger, Value value, KindOfDefaultTimeValue kindOfDefaultTimeValue, ILocalCodeExecutionContext localCodeExecutionContext)
         {

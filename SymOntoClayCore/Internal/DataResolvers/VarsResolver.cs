@@ -35,10 +35,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public VarsResolver(IMainStorageContext context)
             : base(context)
         {
-            _inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
         }
-
-        private readonly InheritanceResolver _inheritanceResolver;
 
         public void SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
@@ -199,9 +196,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return filteredList.Single().ResultItem;
             }
 
-            var minStogageDistance = filteredList.Min(p => p.StorageDistance);
+            var minStorageDistance = filteredList.Min(p => p.StorageDistance);
 
-            filteredList = filteredList.Where(p => p.StorageDistance == minStogageDistance).ToList();
+            filteredList = filteredList.Where(p => p.StorageDistance == minStorageDistance).ToList();
 
             if (filteredList.Count == 1)
             {

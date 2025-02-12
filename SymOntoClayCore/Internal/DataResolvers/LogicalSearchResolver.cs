@@ -38,19 +38,24 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 {
     public class LogicalSearchResolver : BaseResolver
     {
-        private readonly InheritanceResolver _inheritanceResolver;
-        private readonly FuzzyLogicResolver _fuzzyLogicResolver;
-        private readonly NumberValueLinearResolver _numberValueLinearResolver;
-        private readonly VarsResolver _varsResolver;
-        private readonly SynonymsResolver _synonymsResolver;
-        private readonly LogicalSearchVarResultsItemInvertor _logicalSearchVarResultsItemInvertor;
+        private FuzzyLogicResolver _fuzzyLogicResolver;
+        private NumberValueLinearResolver _numberValueLinearResolver;
+        private VarsResolver _varsResolver;
+        private SynonymsResolver _synonymsResolver;
+        private LogicalSearchVarResultsItemInvertor _logicalSearchVarResultsItemInvertor;
 
         public LogicalSearchResolver(IMainStorageContext context)
             : base(context)
         {
-            var dataResolversFactory = context.DataResolversFactory;
+        }
 
-            _inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
+        /// <inheritdoc/>
+        protected override void LinkWithOtherBaseContextComponents()
+        {
+            base.LinkWithOtherBaseContextComponents();
+
+            var dataResolversFactory = _context.DataResolversFactory;
+
             _fuzzyLogicResolver = dataResolversFactory.GetFuzzyLogicResolver();
             _numberValueLinearResolver = dataResolversFactory.GetNumberValueLinearResolver();
             _varsResolver = dataResolversFactory.GetVarsResolver();

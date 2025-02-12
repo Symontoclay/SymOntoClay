@@ -34,16 +34,21 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public RelationsResolver(IMainStorageContext context)
             : base(context)
         {
-            var dataResolversFactory = context.DataResolversFactory;
+        }
 
-            _inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
+        /// <inheritdoc/>
+        protected override void LinkWithOtherBaseContextComponents()
+        {
+            base.LinkWithOtherBaseContextComponents();
+
+            var dataResolversFactory = _context.DataResolversFactory;
+
             _synonymsResolver = dataResolversFactory.GetSynonymsResolver();
         }
 
         public readonly ResolverOptions DefaultOptions = ResolverOptions.GetDefaultOptions();
 
-        private readonly InheritanceResolver _inheritanceResolver;
-        private readonly SynonymsResolver _synonymsResolver;
+        private SynonymsResolver _synonymsResolver;
 
         public RelationDescription GetRelation(IMonitorLogger logger, StrongIdentifierValue name, int paramsCount, ILocalCodeExecutionContext localCodeExecutionContext)
         {

@@ -30,7 +30,7 @@ namespace SymOntoClay.Core.Internal
 {
     public interface IEntityConstraintsService
     {
-        void Init();
+        void LoadFromSourceFiles();
         IList<StrongIdentifierValue> GetConstraintsList();
         EntityConstraints ConvertToEntityConstraint(StrongIdentifierValue name);
     }

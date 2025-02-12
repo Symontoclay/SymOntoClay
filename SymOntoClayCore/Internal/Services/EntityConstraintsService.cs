@@ -29,12 +29,20 @@ using System.Collections.Generic;
 
 namespace SymOntoClay.Core.Internal.Services
 {
-    public class EntityConstraintsService : BaseComponent, IEntityConstraintsService
+    public class EntityConstraintsService : BaseContextComponent, IEntityConstraintsService
     {
         public EntityConstraintsService(IMainStorageContext context)
             : base(context.Logger)
         {
             _context = context;
+        }
+
+        /// <inheritdoc/>
+        protected override void LinkWithOtherBaseContextComponents()
+        {
+            base.LinkWithOtherBaseContextComponents();
+
+            _synonymsResolver = _context.DataResolversFactory.GetSynonymsResolver();
         }
 
         private readonly IMainStorageContext _context;
@@ -52,10 +60,8 @@ namespace SymOntoClay.Core.Internal.Services
         private List<StrongIdentifierValue> _constraintsList;
 
         /// <inheritdoc/>
-        public void Init()
+        public void LoadFromSourceFiles()
         {
-            _synonymsResolver = _context.DataResolversFactory.GetSynonymsResolver();
-
             var commonNamesStorage = _context.CommonNamesStorage;
 
             var globalExecutionContext = new LocalCodeExecutionContext();
@@ -72,7 +78,7 @@ namespace SymOntoClay.Core.Internal.Services
 
             var synonymsOfRandomConstraintName = _synonymsResolver.GetSynonyms(Logger, _randomConstraintName, _globalExecutionContext);
 
-            if(!synonymsOfRandomConstraintName.IsNullOrEmpty())
+            if (!synonymsOfRandomConstraintName.IsNullOrEmpty())
             {
                 _randomConstraintsList.AddRange(synonymsOfRandomConstraintName);
             }
@@ -91,7 +97,6 @@ namespace SymOntoClay.Core.Internal.Services
             }
 
             _constraintsList.AddRange(_nearestConstraintsList);
-
         }
 
         /// <inheritdoc/>

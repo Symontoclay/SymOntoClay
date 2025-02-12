@@ -36,12 +36,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         protected BaseMethodsResolver(IMainStorageContext context)
             : base(context)
         {
-            var dataResolversFactory = context.DataResolversFactory;
+        }
+
+        /// <inheritdoc/>
+        protected override void LinkWithOtherBaseContextComponents()
+        {
+            base.LinkWithOtherBaseContextComponents();
+
+            var dataResolversFactory = _context.DataResolversFactory;
 
             _synonymsResolver = dataResolversFactory.GetSynonymsResolver();
         }
 
-        protected readonly SynonymsResolver _synonymsResolver;
+        protected SynonymsResolver _synonymsResolver;
 
         private static readonly StrongIdentifierValue _fuzzyTypeIdentifier = NameHelper.CreateName(StandardNamesConstants.FuzzyTypeName);
         private static readonly StrongIdentifierValue _numberTypeIdentifier = NameHelper.CreateName(StandardNamesConstants.NumberTypeName);

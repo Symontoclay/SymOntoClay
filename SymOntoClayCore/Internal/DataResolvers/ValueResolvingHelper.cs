@@ -20,28 +20,31 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.DataResolvers
 {
-    public class ValueResolvingHelper : BaseLoggedComponent
+    public class ValueResolvingHelper : BaseContextComponent
     {
         public ValueResolvingHelper(IMainStorageContext context)
             : base(context.Logger)
         {
             _context = context;
-            var dataResolversFactory = context.DataResolversFactory;
+        }
+
+        /// <inheritdoc/>
+        protected override void LinkWithOtherBaseContextComponents()
+        {
+            base.LinkWithOtherBaseContextComponents();
+
+            var dataResolversFactory = _context.DataResolversFactory;
 
             _varsResolver = dataResolversFactory.GetVarsResolver();
         }
 
         private readonly IMainStorageContext _context;
-        private readonly VarsResolver _varsResolver;
+        private VarsResolver _varsResolver;
 
         public Value TryResolveFromVarOrExpr(IMonitorLogger logger, Value operand, ILocalCodeExecutionContext localCodeExecutionContext)
         {

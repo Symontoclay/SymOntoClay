@@ -39,8 +39,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             _channelsResolver = new ChannelsResolver(_context);
             _baseContextComponents.Add(_channelsResolver);
 
-            throw new NotImplementedException("BB38DEE6-DBCC-432B-9D09-E53F925CBB7C");
-
             _inheritanceResolver = new InheritanceResolver(_context);
             _baseContextComponents.Add(_inheritanceResolver);
 

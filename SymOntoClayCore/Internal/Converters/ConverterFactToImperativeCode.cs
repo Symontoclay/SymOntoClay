@@ -35,21 +35,28 @@ using System.Linq;
 
 namespace SymOntoClay.Core.Internal.Converters
 {
-    public class ConverterFactToImperativeCode : BaseLoggedComponent
+    public class ConverterFactToImperativeCode : BaseContextComponent
     {
         public ConverterFactToImperativeCode(IMainStorageContext context)
             : base(context.Logger)
         {
             _context = context;
-            _compiler = context.Compiler;
-            _relationsResolver = context.DataResolversFactory.GetRelationsResolver();
 
             _actName = NameHelper.CreateName("act");
         }
 
+        /// <inheritdoc/>
+        protected override void LinkWithOtherBaseContextComponents()
+        {
+            base.LinkWithOtherBaseContextComponents();
+
+            _compiler = _context.Compiler;
+            _relationsResolver = _context.DataResolversFactory.GetRelationsResolver();
+        }
+
         private readonly IMainStorageContext _context;
-        private readonly ICompiler _compiler;
-        private readonly RelationsResolver _relationsResolver;
+        private ICompiler _compiler;
+        private RelationsResolver _relationsResolver;
         private readonly StrongIdentifierValue _actName;
 
         public CompiledFunctionBody Convert(IMonitorLogger logger, RuleInstance ruleInstance, ILocalCodeExecutionContext localCodeExecutionContext)

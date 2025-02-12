@@ -20,14 +20,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
-using SymOntoClay.CoreHelper;
 using SymOntoClay.Monitor.Common;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.DataResolvers
 {
@@ -36,14 +32,21 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public LogicalValueModalityResolver(IMainStorageContext context)
             : base(context)
         {
-            var dataResolversFactory = context.DataResolversFactory;
+        }
+
+        /// <inheritdoc/>
+        protected override void LinkWithOtherBaseContextComponents()
+        {
+            base.LinkWithOtherBaseContextComponents();
+
+            var dataResolversFactory = _context.DataResolversFactory;
 
             _fuzzyLogicResolver = dataResolversFactory.GetFuzzyLogicResolver();
             _toSystemBoolResolver = dataResolversFactory.GetToSystemBoolResolver();
         }
 
-        private readonly FuzzyLogicResolver _fuzzyLogicResolver;
-        private readonly ToSystemBoolResolver _toSystemBoolResolver;
+        private FuzzyLogicResolver _fuzzyLogicResolver;
+        private ToSystemBoolResolver _toSystemBoolResolver;
 
         public bool IsHigh(IMonitorLogger logger, Value modalityValue, ILocalCodeExecutionContext localCodeExecutionContext)
         {

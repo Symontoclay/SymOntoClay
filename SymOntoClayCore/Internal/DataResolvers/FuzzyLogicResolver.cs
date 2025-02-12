@@ -36,18 +36,23 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public FuzzyLogicResolver(IMainStorageContext context)
             : base(context)
         {
-            var dataResolversFactory = context.DataResolversFactory;
+        }
 
-            _inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
+        /// <inheritdoc/>
+        protected override void LinkWithOtherBaseContextComponents()
+        {
+            base.LinkWithOtherBaseContextComponents();
+
+            var dataResolversFactory = _context.DataResolversFactory;
+
             _toSystemBoolResolver = dataResolversFactory.GetToSystemBoolResolver();
             _numberValueLinearResolver = dataResolversFactory.GetNumberValueLinearResolver();
             _synonymsResolver = dataResolversFactory.GetSynonymsResolver();
         }
 
-        private readonly ToSystemBoolResolver _toSystemBoolResolver;
-        private readonly InheritanceResolver _inheritanceResolver;
-        private readonly NumberValueLinearResolver _numberValueLinearResolver;
-        private readonly SynonymsResolver _synonymsResolver;
+        private ToSystemBoolResolver _toSystemBoolResolver;
+        private NumberValueLinearResolver _numberValueLinearResolver;
+        private SynonymsResolver _synonymsResolver;
 
         private readonly ResolverOptions _defaultOptions = ResolverOptions.GetDefaultOptions();
 

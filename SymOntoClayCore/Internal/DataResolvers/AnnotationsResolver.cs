@@ -20,12 +20,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.DataResolvers
 {
@@ -34,12 +30,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public AnnotationsResolver(IMainStorageContext context)
             : base(context)
         {
-            var dataResolversFactory = context.DataResolversFactory;
+        }
+
+        /// <inheritdoc/>
+        protected override void LinkWithOtherBaseContextComponents()
+        {
+            base.LinkWithOtherBaseContextComponents();
+
+            var dataResolversFactory = _context.DataResolversFactory;
 
             _synonymsResolver = dataResolversFactory.GetSynonymsResolver();
         }
 
-        private readonly SynonymsResolver _synonymsResolver;
+        private SynonymsResolver _synonymsResolver;
 
         public Value GetSettings(IMonitorLogger logger, Value annotatedItem, StrongIdentifierValue key, ILocalCodeExecutionContext localCodeExecutionContext)
         {

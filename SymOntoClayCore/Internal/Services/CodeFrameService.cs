@@ -36,17 +36,24 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Services
 {
-    public class CodeFrameService : BaseComponent, ICodeFrameService
+    public class CodeFrameService : BaseContextComponent, ICodeFrameService
     {
         public CodeFrameService(IMainStorageContext context)
             : base(context.Logger)
         {
             _context = context;
-            _baseResolver = context.DataResolversFactory.GetBaseResolver();
+        }
+
+        /// <inheritdoc/>
+        protected override void LinkWithOtherBaseContextComponents()
+        {
+            base.LinkWithOtherBaseContextComponents();
+
+            _baseResolver = _context.DataResolversFactory.GetBaseResolver();
         }
 
         private readonly IMainStorageContext _context;
-        private readonly BaseResolver _baseResolver;
+        private BaseResolver _baseResolver;
 
         /// <inheritdoc/>
         public CodeFrame ConvertCompiledFunctionBodyToCodeFrame(IMonitorLogger logger, CompiledFunctionBody compiledFunctionBody, ILocalCodeExecutionContext parentLocalCodeExecutionContext)

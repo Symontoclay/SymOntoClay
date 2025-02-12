@@ -35,14 +35,19 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public TriggersResolver(IMainStorageContext context)
             : base(context)
         {
-            var dataResolversFactory = context.DataResolversFactory;
+        }
 
-            _inheritanceResolver = dataResolversFactory.GetInheritanceResolver();
+        /// <inheritdoc/>
+        protected override void LinkWithOtherBaseContextComponents()
+        {
+            base.LinkWithOtherBaseContextComponents();
+
+            var dataResolversFactory = _context.DataResolversFactory;
+
             _synonymsResolver = dataResolversFactory.GetSynonymsResolver();
         }
 
-        private readonly InheritanceResolver _inheritanceResolver;
-        private readonly SynonymsResolver _synonymsResolver;
+        private SynonymsResolver _synonymsResolver;
 
         public List<InlineTrigger> ResolveLogicConditionalTriggersList(IMonitorLogger logger, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {

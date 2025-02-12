@@ -104,7 +104,7 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.InstancesStorage.LoadFromSourceFiles();
             context.LoaderFromSourceCode.LoadFromSourceFiles();
 
-            context.ServicesFactory.GetEntityConstraintsService().Init();
+            context.ServicesFactory.GetEntityConstraintsService().LoadFromSourceFiles();
         }
 
         public static void LoadFromSourceCode(MainStorageContext context)
@@ -113,7 +113,7 @@ namespace SymOntoClay.Core.Internal.Helpers
             context.InstancesStorage.LoadFromSourceFiles();
             context.LoaderFromSourceCode.LoadFromSourceFiles();
 
-            context.ServicesFactory.GetEntityConstraintsService().Init();
+            context.ServicesFactory.GetEntityConstraintsService().LoadFromSourceFiles();
         }
 
         public static MainStorageContext CreateAndInitMainStorageContext(StandaloneStorageSettings settings)
@@ -212,7 +212,7 @@ namespace SymOntoClay.Core.Internal.Helpers
                 context.LinkedCancellationTokenSource.Token);
         }
 
-        private static void InitComponents(List<IBaseContextComponent> baseContextComponents)
+        public static void InitComponents(List<IBaseContextComponent> baseContextComponents)
         {
             foreach(var item in baseContextComponents)
             {

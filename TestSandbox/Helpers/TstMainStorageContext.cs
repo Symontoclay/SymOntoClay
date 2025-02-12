@@ -37,7 +37,11 @@ namespace TestSandbox.Helpers
         public TstMainStorageContext()
             : base(new MonitorNodeNLogImpementation())
         {
-            EngineContextHelper.BaseInitMainStorageContext(this, new StandaloneStorageSettings(), KindOfStorage.Host);
+            var baseContextComponents = new List<IBaseContextComponent>();
+
+            EngineContextHelper.BaseInitMainStorageContext(this, new StandaloneStorageSettings(), KindOfStorage.Host, baseContextComponents);
+
+            EngineContextHelper.InitComponents(baseContextComponents);
         }
     }
 }

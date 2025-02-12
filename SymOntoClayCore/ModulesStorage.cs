@@ -201,9 +201,9 @@ namespace SymOntoClay.Core
                 {
                     _dependenciesDict[name] = deferredLibsList;
 
-                    foreach (var defferedLib in deferredLibsList)
+                    foreach (var deferredLib in deferredLibsList)
                     {
-                        NLoadLib(logger, defferedLib, result, loadedLibNames);
+                        NLoadLib(logger, deferredLib, result, loadedLibNames);
                     }
                 }                
             }

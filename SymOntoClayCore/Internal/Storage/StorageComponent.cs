@@ -80,9 +80,9 @@ namespace SymOntoClay.Core.Internal.Storage
 
         private List<(StrongIdentifierValue, string)> _deferredPublicFactsTexts = new List<(StrongIdentifierValue, string)>();
         private List<RuleInstance> _deferredPublicFactsInstances = new List<RuleInstance>();
-        private List<string> _defferedRemovedPublicFacts = new List<string>();
+        private List<string> _deferredRemovedPublicFacts = new List<string>();
         private List<(StrongIdentifierValue, string)> _deferredFactsTexts = new List<(StrongIdentifierValue, string)>();
-        private List<string> _defferedRemovedFacts = new List<string>();
+        private List<string> _deferredRemovedFacts = new List<string>();
         private List<string> _deferredAddedCategories = new List<string>();
         private List<string> _deferredRemovedCategories = new List<string>();
 
@@ -271,19 +271,19 @@ namespace SymOntoClay.Core.Internal.Storage
                     _deferredPublicFactsInstances = null;
                 }
 
-                if (_defferedRemovedPublicFacts.Any())
+                if (_deferredRemovedPublicFacts.Any())
                 {
-                    foreach (var item in _defferedRemovedPublicFacts)
+                    foreach (var item in _deferredRemovedPublicFacts)
                     {
                         NRemovePublicFact(Logger, item);
                     }
 
-                    _defferedRemovedPublicFacts.Clear();
-                    _defferedRemovedPublicFacts = null;
+                    _deferredRemovedPublicFacts.Clear();
+                    _deferredRemovedPublicFacts = null;
                 }
                 else
                 {
-                    _defferedRemovedPublicFacts = null;
+                    _deferredRemovedPublicFacts = null;
                 }
 
                 if (_deferredFactsTexts.Any())
@@ -301,19 +301,19 @@ namespace SymOntoClay.Core.Internal.Storage
                     _deferredFactsTexts = null;
                 }
 
-                if (_defferedRemovedFacts.Any())
+                if (_deferredRemovedFacts.Any())
                 {
-                    foreach (var item in _defferedRemovedFacts)
+                    foreach (var item in _deferredRemovedFacts)
                     {
                         _globalStorage.LogicalStorage.RemoveById(Logger, item);
                     }
 
-                    _defferedRemovedFacts.Clear();
-                    _defferedRemovedFacts = null;
+                    _deferredRemovedFacts.Clear();
+                    _deferredRemovedFacts = null;
                 }
                 else
                 {
-                    _defferedRemovedFacts = null;
+                    _deferredRemovedFacts = null;
                 }
 
                 if (_deferredAddedCategories.Any())
@@ -474,7 +474,7 @@ namespace SymOntoClay.Core.Internal.Storage
             {
                 if (_publicFactsStorage == null)
                 {
-                    _defferedRemovedPublicFacts.Add(id);
+                    _deferredRemovedPublicFacts.Add(id);
                     return;
                 }
 
@@ -556,7 +556,7 @@ namespace SymOntoClay.Core.Internal.Storage
             {
                 if (_publicFactsStorage == null)
                 {
-                    _defferedRemovedFacts.Add(id);
+                    _deferredRemovedFacts.Add(id);
                     return;
                 }
 

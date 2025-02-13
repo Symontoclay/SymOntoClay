@@ -47,18 +47,18 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             var leftOperand = paramsList[0];
             var rightOperand = paramsList[1];
-            var anotation = paramsList[2];
+            var annotation = paramsList[2];
 
-            return _operatorHandler.Call(logger, leftOperand, rightOperand, anotation, localCodeExecutionContext);
+            return _operatorHandler.Call(logger, leftOperand, rightOperand, annotation, localCodeExecutionContext);
         }
         
         /// <inheritdoc/>
-        public Value Call(IMonitorLogger logger, IDictionary<string, Value> paramsDict, Value anotation, ILocalCodeExecutionContext localCodeExecutionContext)
+        public Value Call(IMonitorLogger logger, IDictionary<string, Value> paramsDict, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var leftOperand = paramsDict[_leftOperandKey];
             var rightOperand = paramsDict[_rightOperandKey];
 
-            return _operatorHandler.Call(logger, leftOperand, rightOperand, anotation, localCodeExecutionContext);
+            return _operatorHandler.Call(logger, leftOperand, rightOperand, annotation, localCodeExecutionContext);
         }
     }
 }

@@ -37,7 +37,6 @@ using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 

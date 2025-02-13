@@ -159,6 +159,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsConstructor => false;
         public virtual Constructor AsConstructor => null;
 
+        public virtual bool IsPreConstructor => false;
+        public virtual PreConstructor AsPreConstructor => null;
+
         public virtual bool IsField => false;
         public virtual Field AsField => null;
 

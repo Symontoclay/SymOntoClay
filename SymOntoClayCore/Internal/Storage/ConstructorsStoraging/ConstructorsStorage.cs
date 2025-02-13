@@ -43,7 +43,7 @@ namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
         private readonly Dictionary<StrongIdentifierValue, Dictionary<int, List<Constructor>>> _constructorsDict = new Dictionary<StrongIdentifierValue, Dictionary<int, List<Constructor>>>();
 
         private readonly object _preConstructorsLockObj = new object();
-        private readonly Dictionary<StrongIdentifierValue, Constructor> _preConstructorsDict = new Dictionary<StrongIdentifierValue, Constructor>();
+        private readonly Dictionary<StrongIdentifierValue, PreConstructor> _preConstructorsDict = new Dictionary<StrongIdentifierValue, PreConstructor>();
 
         /// <inheritdoc/>
         public void Append(IMonitorLogger logger, Constructor constructor)
@@ -88,7 +88,7 @@ namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
             return dict;
         }
 
-        private static List<WeightedInheritanceResultItem<Constructor>> _emptyConstructorsList = new List<WeightedInheritanceResultItem<Constructor>>();
+        private static List<WeightedInheritanceResultItem<Constructor>> _emptyConstructorsList = new List<WeightedInheritanceResultItem<Constructor>>();        
 
         /// <inheritdoc/>
         public IList<WeightedInheritanceResultItem<Constructor>> GetConstructorsDirectly(IMonitorLogger logger, int paramsCount, IList<WeightedInheritanceItem> weightedInheritanceItems)
@@ -127,7 +127,7 @@ namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
         }
 
         /// <inheritdoc/>
-        public void AppendPreConstructor(IMonitorLogger logger, Constructor preConstructor)
+        public void AppendPreConstructor(IMonitorLogger logger, PreConstructor preConstructor)
         {
             lock(_preConstructorsLockObj)
             {
@@ -138,16 +138,16 @@ namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
         }
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<Constructor>> GetPreConstructorsDirectly(IMonitorLogger logger, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<PreConstructor>> GetPreConstructorsDirectly(IMonitorLogger logger, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             lock (_preConstructorsLockObj)
             {
                 if (_realStorageContext.Disabled)
                 {
-                    return _emptyConstructorsList;
+                    return _emptyPreConstructorsList;
                 }
 
-                var result = new List<WeightedInheritanceResultItem<Constructor>>();
+                var result = new List<WeightedInheritanceResultItem<PreConstructor>>();
 
                 foreach (var weightedInheritanceItem in weightedInheritanceItems)
                 {
@@ -157,13 +157,15 @@ namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
                     {
                         var targetVal = _preConstructorsDict[targetHolder];
 
-                        result.Add(new WeightedInheritanceResultItem<Constructor>(targetVal, weightedInheritanceItem));
+                        result.Add(new WeightedInheritanceResultItem<PreConstructor>(targetVal, weightedInheritanceItem));
                     }
                 }
 
                 return result;
             }
         }
+
+        private static List<WeightedInheritanceResultItem<PreConstructor>> _emptyPreConstructorsList = new List<WeightedInheritanceResultItem<PreConstructor>>();
 
         /// <inheritdoc/>
         protected override void OnDisposed()

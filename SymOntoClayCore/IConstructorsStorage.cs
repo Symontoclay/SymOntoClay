@@ -34,7 +34,7 @@ namespace SymOntoClay.Core
     {
         void Append(IMonitorLogger logger, Constructor constructor);
         IList<WeightedInheritanceResultItem<Constructor>> GetConstructorsDirectly(IMonitorLogger logger, int paramsCount, IList<WeightedInheritanceItem> weightedInheritanceItems);
-        void AppendPreConstructor(IMonitorLogger logger, Constructor preConstructor);
-        IList<WeightedInheritanceResultItem<Constructor>> GetPreConstructorsDirectly(IMonitorLogger logger, IList<WeightedInheritanceItem> weightedInheritanceItems);
+        void AppendPreConstructor(IMonitorLogger logger, PreConstructor preConstructor);
+        IList<WeightedInheritanceResultItem<PreConstructor>> GetPreConstructorsDirectly(IMonitorLogger logger, IList<WeightedInheritanceItem> weightedInheritanceItems);
     }
 }

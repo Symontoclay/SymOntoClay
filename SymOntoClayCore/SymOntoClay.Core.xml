@@ -5114,6 +5114,31 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PointRefValue.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.PreConstructor.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.PreConstructor.IsPreConstructor">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CodeModel.PreConstructor.AsPreConstructor">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PreConstructor.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PreConstructor.Clone">
+            <summary>
+			Clones the instance and returns cloned instance.
+		</summary><returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PreConstructor.Clone(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+			Clones the instance using special context and returns cloned instance.
+		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.CodeModel.PreConstructor.CloneFunction(System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart.GetNextPartsList(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
@@ -9693,7 +9718,7 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.ConstructorsStorage.GetConstructorsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,System.Int32,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.ConstructorsStorage.AppendPreConstructor(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Constructor)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.ConstructorsStorage.AppendPreConstructor(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.PreConstructor)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.ConstructorsStorage.GetPreConstructorsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
@@ -9708,7 +9733,7 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.EmptyConstructorsStorage.GetConstructorsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,System.Int32,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.EmptyConstructorsStorage.AppendPreConstructor(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Constructor)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.EmptyConstructorsStorage.AppendPreConstructor(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.PreConstructor)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.ConstructorsStoraging.EmptyConstructorsStorage.GetPreConstructorsDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">

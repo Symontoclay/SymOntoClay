@@ -626,7 +626,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             return result;
         }
-
+        
         protected Constructor CreateConstructor()
         {
             var result = new Constructor();

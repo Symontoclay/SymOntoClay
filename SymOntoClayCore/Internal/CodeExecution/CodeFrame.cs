@@ -291,6 +291,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     sb.AppendLine($"{spaces}Holder: {holder.NameValue}");
                 }
 
+                sb.AppendLine($"{spaces}{Metadata.Kind}");//tmp
                 sb.AppendLine($"{spaces}{Metadata.ToHumanizedLabel()}");
             }
 

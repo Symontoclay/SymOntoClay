@@ -533,7 +533,7 @@ namespace SymOntoClay.Core.Internal.Serialization
 
                 if(fieldsList.Any() || propertiesList.Any())
                 {
-                    var preConstructor = new Constructor();
+                    var preConstructor = new PreConstructor();
                     preConstructor.Holder = codeItem.Name;
 
                     var intermediateCommandsList = new List<IntermediateScriptCommand>();

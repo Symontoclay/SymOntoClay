@@ -34,6 +34,7 @@ namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
     public class EmptyConstructorsStorage : BaseEmptySpecificStorage, IConstructorsStorage
     {
         private static readonly List<WeightedInheritanceResultItem<Constructor>> EmptyConstructorsList = new List<WeightedInheritanceResultItem<Constructor>>();
+        private static readonly List<WeightedInheritanceResultItem<PreConstructor>> EmptyPreConstructorsList = new List<WeightedInheritanceResultItem<PreConstructor>>();
 
         public EmptyConstructorsStorage(IStorage storage, IMonitorLogger logger)
             : base(storage, logger)
@@ -52,14 +53,14 @@ namespace SymOntoClay.Core.Internal.Storage.ConstructorsStoraging
         }
 
         /// <inheritdoc/>
-        public void AppendPreConstructor(IMonitorLogger logger, Constructor preConstructor)
+        public void AppendPreConstructor(IMonitorLogger logger, PreConstructor preConstructor)
         {
         }
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<Constructor>> GetPreConstructorsDirectly(IMonitorLogger logger, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<PreConstructor>> GetPreConstructorsDirectly(IMonitorLogger logger, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
-            return EmptyConstructorsList;
+            return EmptyPreConstructorsList;
         }
     }
 }

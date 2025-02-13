@@ -36,6 +36,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         }
 
         private readonly List<Constructor> _emptyConstructorsList = new List<Constructor>();
+        private readonly List<PreConstructor> _emptyPreConstructorsList = new List<PreConstructor>();
 
         public Constructor ResolveOnlyOwn(IMonitorLogger logger, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
@@ -165,7 +166,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        public List<Constructor> ResolvePreConstructors(IMonitorLogger logger, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<PreConstructor> ResolvePreConstructors(IMonitorLogger logger, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storagesList = GetStoragesList(logger, localCodeExecutionContext.Storage, KindOfStoragesList.CodeItems);
 
@@ -178,7 +179,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if (!rawList.Any())
             {
-                return _emptyConstructorsList;
+                return _emptyPreConstructorsList;
             }
 
             return rawList.OrderByDescending(p => p.Distance).Select(p => p.ResultItem).ToList();
@@ -264,9 +265,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return GetTargetValueFromList(logger, filteredList, positionedParameters.Count, localCodeExecutionContext, options);
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<Constructor>> GetRawPreConstructorsList(IMonitorLogger logger, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        private List<WeightedInheritanceResultItemWithStorageInfo<PreConstructor>> GetRawPreConstructorsList(IMonitorLogger logger, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
-            var result = new List<WeightedInheritanceResultItemWithStorageInfo<Constructor>>();
+            var result = new List<WeightedInheritanceResultItemWithStorageInfo<PreConstructor>>();
 
             foreach (var storageItem in storagesList)
             {
@@ -282,7 +283,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 foreach (var item in itemsList)
                 {
-                    result.Add(new WeightedInheritanceResultItemWithStorageInfo<Constructor>(item, distance, storage));
+                    result.Add(new WeightedInheritanceResultItemWithStorageInfo<PreConstructor>(item, distance, storage));
                 }
             }
 

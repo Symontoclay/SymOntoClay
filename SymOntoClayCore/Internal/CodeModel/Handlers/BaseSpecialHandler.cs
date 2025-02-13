@@ -36,10 +36,10 @@ namespace SymOntoClay.Core.Internal.CodeModel.Handlers
     public abstract class BaseSpecialHandler : IExecutable, ISystemHandler
     {
         /// <inheritdoc/>
-        public abstract Value Call(IMonitorLogger logger, IList<Value> paramsList, ILocalCodeExecutionContext localCodeExecutionContext);
+        public abstract Value Call(IMonitorLogger logger, IList<Value> paramsList, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode);
 
         /// <inheritdoc/>
-        public abstract Value Call(IMonitorLogger logger, IDictionary<string, Value> paramsDict, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext);
+        public abstract Value Call(IMonitorLogger logger, IDictionary<string, Value> paramsDict, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode);
 
         /// <inheritdoc/>
         public bool IsSystemDefined => true;

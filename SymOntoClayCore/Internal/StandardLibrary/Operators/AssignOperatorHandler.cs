@@ -43,7 +43,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         private readonly VarsResolver _varsResolver;
 
         /// <inheritdoc/>
-        public Value Call(IMonitorLogger logger, Value rightOperand, Value leftOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
+        public Value Call(IMonitorLogger logger, Value rightOperand, Value leftOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
             rightOperand = TryResolveFromVarOrExpr(logger, rightOperand, localCodeExecutionContext);
 
@@ -79,6 +79,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                                 {
 #if DEBUG
                                     Info("9E484258-2A5E-4389-92CB-36BD6114BBBC", $"leftOperand = {leftOperand}");
+                                    Info("E981235C-808D-4F6B-AF59-97213B85599D", $"callMode = {callMode}");
 #endif
 
                                     throw new NotImplementedException("4E4695A2-4FAC-4584-9890-21E6D624E9DF");

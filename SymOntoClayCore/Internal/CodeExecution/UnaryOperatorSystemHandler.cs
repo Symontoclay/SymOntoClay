@@ -41,20 +41,20 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly IUnaryOperatorHandler _operatorHandler;
 
         /// <inheritdoc/>
-        public Value Call(IMonitorLogger logger, IList<Value> paramsList, ILocalCodeExecutionContext localCodeExecutionContext)
+        public Value Call(IMonitorLogger logger, IList<Value> paramsList, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
             var operand = paramsList[0];
-            var anotation = paramsList[1];
+            var annotation = paramsList[1];
 
-            return _operatorHandler.Call(logger, operand, anotation, localCodeExecutionContext);
+            return _operatorHandler.Call(logger, operand, annotation, localCodeExecutionContext);
         }
 
         /// <inheritdoc/>
-        public Value Call(IMonitorLogger logger, IDictionary<string, Value> paramsDict, Value anotation, ILocalCodeExecutionContext localCodeExecutionContext)
+        public Value Call(IMonitorLogger logger, IDictionary<string, Value> paramsDict, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
             var operand = paramsDict[_operandKey];
 
-            return _operatorHandler.Call(logger, operand, anotation, localCodeExecutionContext);
+            return _operatorHandler.Call(logger, operand, annotation, localCodeExecutionContext);
         }
     }
 }

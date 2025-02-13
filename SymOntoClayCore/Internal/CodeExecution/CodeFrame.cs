@@ -66,6 +66,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         public Stack<CodeFrameEvnPart> CodeFrameEvnPartsStack { get; set; } = new Stack<CodeFrameEvnPart>();
         public IInstance CompoundTaskInstance { get; set; }
+        public CallMode CallMode => Metadata?.Kind == KindOfCodeEntity.PreConstructor ? CallMode.PreConstructor : CallMode.Default;
 
         /// <inheritdoc/>
         public override string ToString()
@@ -123,6 +124,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             sb.PrintObjListProp(n, nameof(CodeFrameEvnPartsStack), CodeFrameEvnPartsStack.ToList());
 
             sb.PrintObjProp(n, nameof(CompoundTaskInstance), CompoundTaskInstance);
+
+            sb.AppendLine($"{spaces}{nameof(CallMode)} = {CallMode}");
 
             return sb.ToString();
         }
@@ -184,6 +187,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             sb.PrintShortObjProp(n, nameof(CompoundTaskInstance), CompoundTaskInstance);
 
+            sb.AppendLine($"{spaces}{nameof(CallMode)} = {CallMode}");
+
             return sb.ToString();
         }
 
@@ -244,6 +249,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             sb.PrintBriefObjProp(n, nameof(CompoundTaskInstance), CompoundTaskInstance);
 
+            sb.AppendLine($"{spaces}{nameof(CallMode)} = {CallMode}");
+
             return sb.ToString();
         }
 
@@ -291,8 +298,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     sb.AppendLine($"{spaces}Holder: {holder.NameValue}");
                 }
 
-                sb.AppendLine($"{spaces}{Metadata.Kind}");//tmp
                 sb.AppendLine($"{spaces}{Metadata.ToHumanizedLabel()}");
+                sb.AppendLine($"{spaces}CallMode: {CallMode}");
             }
 
             sb.AppendLine($"{spaces}Begin Arguments");

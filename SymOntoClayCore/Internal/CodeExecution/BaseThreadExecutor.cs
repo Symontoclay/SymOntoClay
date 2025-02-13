@@ -2415,15 +2415,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 switch(kindOfParameters)
                 {
                     case KindOfFunctionParameters.NoParameters:
-                        result = executable.SystemHandler.Call(Logger, new List<Value>(), targetLocalContext);
+                        result = executable.SystemHandler.Call(Logger, new List<Value>(), targetLocalContext, _currentCodeFrame.CallMode);
                         break;
 
                     case KindOfFunctionParameters.PositionedParameters:
-                        result = executable.SystemHandler.Call(Logger, positionedParameters, targetLocalContext);
+                        result = executable.SystemHandler.Call(Logger, positionedParameters, targetLocalContext, _currentCodeFrame.CallMode);
                         break;
 
                     case KindOfFunctionParameters.NamedParameters:
-                        result = executable.SystemHandler.Call(Logger, namedParameters.ToDictionary(p => p.Key.NameValue, p => p.Value), annotation, targetLocalContext);
+                        result = executable.SystemHandler.Call(Logger, namedParameters.ToDictionary(p => p.Key.NameValue, p => p.Value), annotation, targetLocalContext, _currentCodeFrame.CallMode);
                         break;
 
                     default:

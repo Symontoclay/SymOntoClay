@@ -163,20 +163,20 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         }
 
         /// <inheritdoc/>
-        public Value CallOperator(IMonitorLogger logger, KindOfOperator kindOfOperator, List<Value> paramsList, ILocalCodeExecutionContext parentLocalCodeExecutionContext)
+        public Value CallOperator(IMonitorLogger logger, KindOfOperator kindOfOperator, List<Value> paramsList, ILocalCodeExecutionContext parentLocalCodeExecutionContext, CallMode callMode)
         {
             var operatorInfo = _operatorsResolver.GetOperator(logger, kindOfOperator, parentLocalCodeExecutionContext);
 
-            return CallExecutableSync(logger, operatorInfo, paramsList, parentLocalCodeExecutionContext);
+            return CallExecutableSync(logger, operatorInfo, paramsList, parentLocalCodeExecutionContext, callMode);
         }
 
         /// <inheritdoc/>
-        public Value CallExecutableSync(IMonitorLogger logger, IExecutable executable, List<Value> positionedParameters, ILocalCodeExecutionContext parentLocalCodeExecutionContext)
+        public Value CallExecutableSync(IMonitorLogger logger, IExecutable executable, List<Value> positionedParameters, ILocalCodeExecutionContext parentLocalCodeExecutionContext, CallMode callMode)
         {
-            return CallExecutable(logger, executable, KindOfFunctionParameters.PositionedParameters, null, positionedParameters, true, parentLocalCodeExecutionContext);
+            return CallExecutable(logger, executable, KindOfFunctionParameters.PositionedParameters, null, positionedParameters, true, parentLocalCodeExecutionContext, callMode);
         }
 
-        private Value CallExecutable(IMonitorLogger logger, IExecutable executable, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, bool isSync, ILocalCodeExecutionContext parentLocalCodeExecutionContext)
+        private Value CallExecutable(IMonitorLogger logger, IExecutable executable, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, bool isSync, ILocalCodeExecutionContext parentLocalCodeExecutionContext, CallMode callMode)
         {
             if (executable == null)
             {
@@ -192,7 +192,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 switch (kindOfParameters)
                 {
                     case KindOfFunctionParameters.PositionedParameters:
-                        result = executable.SystemHandler.Call(logger, positionedParameters, parentLocalCodeExecutionContext);
+                        result = executable.SystemHandler.Call(logger, positionedParameters, parentLocalCodeExecutionContext, callMode);
                         break;
 
                     default:
@@ -332,7 +332,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 throw new Exception($"Method '{methodName.NameValue}' is not found.");
             }
 
-            return CallExecutable(logger, method, kindOfParameters, namedParameters, positionedParameters, isSync, parentLocalCodeExecutionContext);
+            return CallExecutable(logger, method, kindOfParameters, namedParameters, positionedParameters, isSync, parentLocalCodeExecutionContext, CallMode.Default);
         }
     }
 }

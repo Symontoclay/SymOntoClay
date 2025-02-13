@@ -73,7 +73,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
             paramsList.Add(rightResult.Value);
             paramsList.Add(NullValue.Instance);
 
-            return (_codeExecutor.CallOperator(Logger, kindOfOperator, paramsList, _localCodeExecutionContext), leftResult.IsPeriodic || rightResult.IsPeriodic);
+            return (_codeExecutor.CallOperator(Logger, kindOfOperator, paramsList, _localCodeExecutionContext, CallMode.Default), leftResult.IsPeriodic || rightResult.IsPeriodic);
         }
     }
 }

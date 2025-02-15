@@ -27,11 +27,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.DataResolvers;
-using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Monitor.Common;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using TestSandbox.Helpers;
 
 namespace TestSandbox.CodeExecution

@@ -10,6 +10,7 @@ using SymOntoClay.Monitor.Common.Models;
 using System.Xml.Linq;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.Common.CollectionsHelpers;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
@@ -22,13 +23,15 @@ namespace SymOntoClay.Core.Internal.Instances
             Name = codeItem.Name;
             Holder = codeItem.Holder;
             CodeItem = codeItem;
+            _inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
         }
 
+        private InheritanceResolver _inheritanceResolver;
         public StrongIdentifierValue Name { get; private set; }
         public StrongIdentifierValue Holder { get; private set; }
         public Property CodeItem { get; private set; }
 
-        public void SetValueDirectly(IMonitorLogger logger, Value value)
+        public void SetValueDirectly(IMonitorLogger logger, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             logger.Info("2C6EBD07-1417-4C62-90E1-441DB3CFFF73", $"value = {value}");
 
@@ -37,11 +40,37 @@ namespace SymOntoClay.Core.Internal.Instances
                 return;
             }
 
+            CheckFitVariableAndValue(logger, value, localCodeExecutionContext);
+
             _value = value;
 
             //throw new NotImplementedException("7D2B796B-C889-44B3-82D3-73A69884D2CD");
 
             OnChanged?.Invoke(Name);
+        }
+
+        private void CheckFitVariableAndValue(IMonitorLogger logger, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
+        {
+            var typesList = CodeItem.TypesList;
+
+            if (typesList.IsNullOrEmpty())
+            {
+                return;
+            }
+
+            if (value.IsNullValue)
+            {
+                return;
+            }
+
+            var isFit = _inheritanceResolver.IsFit(logger, typesList, value, localCodeExecutionContext);
+
+            if (isFit)
+            {
+                return;
+            }
+
+            throw new Exception($"The value '{value.ToHumanizedString()}' does not fit to variable {CodeItem.ToHumanizedString()}");
         }
 
         private Value _value;

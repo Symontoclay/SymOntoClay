@@ -98,7 +98,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                                             }
                                             else
                                             {
-                                                property.SetValueDirectly(logger, rightOperand);
+                                                property.SetValueDirectly(logger, rightOperand, localCodeExecutionContext);
                                                 return new CallResult(rightOperand);
                                             }
                                             

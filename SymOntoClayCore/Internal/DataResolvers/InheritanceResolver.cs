@@ -309,6 +309,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
+        public bool IsFit(IMonitorLogger logger, IList<StrongIdentifierValue> typeNamesList, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return IsFit(logger, typeNamesList, value, localCodeExecutionContext, DefaultOptions);
+        }
+
         public bool IsFit(IMonitorLogger logger, IList<StrongIdentifierValue> typeNamesList, Value value, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             if(GetDistance(logger, typeNamesList, value, localCodeExecutionContext, options).HasValue)

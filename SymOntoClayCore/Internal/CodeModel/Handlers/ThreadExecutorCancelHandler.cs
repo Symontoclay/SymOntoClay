@@ -15,22 +15,22 @@ namespace SymOntoClay.Core.Internal.CodeModel.Handlers
         private readonly IThreadExecutor _threadExecutor;
 
         /// <inheritdoc/>
-        public override Value Call(IMonitorLogger logger, IList<Value> paramsList, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
+        public override CallResult Call(IMonitorLogger logger, IList<Value> paramsList, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
             return NCall(logger);
         }
 
         /// <inheritdoc/>
-        public override Value Call(IMonitorLogger logger, IDictionary<string, Value> paramsDict, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
+        public override CallResult Call(IMonitorLogger logger, IDictionary<string, Value> paramsDict, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
             return NCall(logger);
         }
 
-        private Value NCall(IMonitorLogger logger)
+        private CallResult NCall(IMonitorLogger logger)
         {
             _threadExecutor.Cancel();
 
-            return NullValue.Instance;
+            return new CallResult(NullValue.Instance);
         }
     }
 }

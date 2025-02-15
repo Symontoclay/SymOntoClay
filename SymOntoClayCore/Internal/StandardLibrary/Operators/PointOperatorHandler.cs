@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         }
 
         /// <inheritdoc/>
-        public Value Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
+        public CallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
             leftOperand = TryResolveFromVarOrExpr(logger, leftOperand, localCodeExecutionContext);
 
@@ -48,7 +48,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             {
                 var result = new PointRefValue(leftOperand, rightOperand);
                 result.CheckDirty();
-                return result;
+                return new CallResult(result);
             }
 
             if (localCodeExecutionContext.Kind == KindOfLocalCodeExecutionContext.AddingFact)
@@ -63,7 +63,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                         var result = new PointRefValue(mutablePartValue, rightOperand);
                         result.CheckDirty();
-                        return result;
+                        return new CallResult(result);
                     }
 
                     throw new NotImplementedException("6E572A1D-F103-473A-B433-6ABBD6802375");

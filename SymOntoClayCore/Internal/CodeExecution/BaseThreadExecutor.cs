@@ -2415,15 +2415,51 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 switch(kindOfParameters)
                 {
                     case KindOfFunctionParameters.NoParameters:
-                        result = executable.SystemHandler.Call(Logger, new List<Value>(), targetLocalContext, _currentCodeFrame.CallMode);
+                        {
+                            var callResult = executable.SystemHandler.Call(Logger, new List<Value>(), targetLocalContext, _currentCodeFrame.CallMode);
+
+                            switch(callResult.KindOfResult)
+                            {
+                                case KindOfCallResult.Value:
+                                    result = callResult.Value;
+                                    break;
+
+                                default:
+                                    throw new ArgumentOutOfRangeException(nameof(callResult.KindOfResult), callResult.KindOfResult, null);
+                            }
+                        }                        
                         break;
 
                     case KindOfFunctionParameters.PositionedParameters:
-                        result = executable.SystemHandler.Call(Logger, positionedParameters, targetLocalContext, _currentCodeFrame.CallMode);
+                        {
+                            var callResult = executable.SystemHandler.Call(Logger, positionedParameters, targetLocalContext, _currentCodeFrame.CallMode);
+
+                            switch (callResult.KindOfResult)
+                            {
+                                case KindOfCallResult.Value:
+                                    result = callResult.Value;
+                                    break;
+
+                                default:
+                                    throw new ArgumentOutOfRangeException(nameof(callResult.KindOfResult), callResult.KindOfResult, null);
+                            }
+                        }
                         break;
 
                     case KindOfFunctionParameters.NamedParameters:
-                        result = executable.SystemHandler.Call(Logger, namedParameters.ToDictionary(p => p.Key.NameValue, p => p.Value), annotation, targetLocalContext, _currentCodeFrame.CallMode);
+                        {
+                            var callResult = executable.SystemHandler.Call(Logger, namedParameters.ToDictionary(p => p.Key.NameValue, p => p.Value), annotation, targetLocalContext, _currentCodeFrame.CallMode);
+
+                            switch (callResult.KindOfResult)
+                            {
+                                case KindOfCallResult.Value:
+                                    result = callResult.Value;
+                                    break;
+
+                                default:
+                                    throw new ArgumentOutOfRangeException(nameof(callResult.KindOfResult), callResult.KindOfResult, null);
+                            }
+                        }
                         break;
 
                     default:

@@ -188,11 +188,22 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 switch (kindOfParameters)
                 {
                     case KindOfFunctionParameters.PositionedParameters:
-                        result = executable.SystemHandler.Call(logger, positionedParameters, parentLocalCodeExecutionContext, callMode);
+                        {
+                            var callResult = executable.SystemHandler.Call(logger, positionedParameters, parentLocalCodeExecutionContext, callMode);
+
+                            switch(callResult.KindOfResult)
+                            {
+                                case KindOfCallResult.Value:
+                                    result = callResult.Value;
+                                    break;
+
+                                default:
+                                    throw new ArgumentOutOfRangeException(nameof(callResult.KindOfResult), callResult.KindOfResult, null);
+                            }                            
+                        }
                         break;
 
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
+
                 }
 
                 return result;

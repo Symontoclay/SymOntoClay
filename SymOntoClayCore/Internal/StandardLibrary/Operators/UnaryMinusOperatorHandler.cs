@@ -37,13 +37,13 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         }
 
         /// <inheritdoc/>
-        public Value Call(IMonitorLogger logger, Value operand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
+        public CallResult Call(IMonitorLogger logger, Value operand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             operand = TryResolveFromVarOrExpr(logger, operand, localCodeExecutionContext);
 
             if (operand.IsSystemNull)
             {
-                return new NullValue();
+                return new CallResult(NullValue.Instance);
             }
 
             if (operand.IsNumberValue)
@@ -54,10 +54,10 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                 {
                     systemValue *= -1;
 
-                    return new NumberValue(systemValue);
+                    return new CallResult(new NumberValue(systemValue));
                 }
 
-                return operand;
+                return new CallResult(operand);
             }
 
             throw new NotImplementedException("2D63922D-56C5-4C7B-BFFB-E0F0789BB541");

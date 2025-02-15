@@ -25,8 +25,6 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Monitor.Common;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 {

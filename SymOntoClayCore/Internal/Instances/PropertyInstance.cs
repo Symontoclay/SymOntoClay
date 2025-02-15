@@ -28,6 +28,13 @@ namespace SymOntoClay.Core.Internal.Instances
         public StrongIdentifierValue Holder { get; private set; }
         public Property CodeItem { get; private set; }
 
+        public void SetValue(IMonitorLogger logger, Value value)
+        {
+            logger.Info("2C6EBD07-1417-4C62-90E1-441DB3CFFF73", $"value = {value}");
+
+            throw new NotImplementedException("7D2B796B-C889-44B3-82D3-73A69884D2CD");
+        }
+
         public event Action<StrongIdentifierValue> OnChanged;
 
         /// <inheritdoc/>

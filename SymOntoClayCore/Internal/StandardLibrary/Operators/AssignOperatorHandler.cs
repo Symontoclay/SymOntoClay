@@ -88,8 +88,22 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                                     Info("1B9FF0A5-D834-409F-A555-4E447E8C71DE", $"property = {property}");
 #endif
 
+                                    if(property == null)
+                                    {
+                                        throw new NotImplementedException("C1DA392F-6F4F-4DB3-8DFA-AE49E3CD0354");
+                                    }
 
-                                    throw new NotImplementedException("4E4695A2-4FAC-4584-9890-21E6D624E9DF");
+                                    switch(callMode)
+                                    {
+                                        case CallMode.PreConstructor:
+                                            throw new NotImplementedException("7D2B796B-C889-44B3-82D3-73A69884D2CD");
+
+                                        case CallMode.Default:
+                                            throw new NotImplementedException("4E4695A2-4FAC-4584-9890-21E6D624E9DF");
+
+                                        default:
+                                            throw new ArgumentOutOfRangeException(nameof(callMode), callMode, null);
+                                    }
                                 }
 
                             default:

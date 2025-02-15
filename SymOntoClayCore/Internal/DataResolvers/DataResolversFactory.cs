@@ -60,6 +60,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             _varsResolver = new VarsResolver(_context);
             _baseContextComponents.Add(_varsResolver);
 
+            _propertiesResolver = new PropertiesResolver(_context);
+            _baseContextComponents.Add(_propertiesResolver);
+
             _logicalSearchResolver = new LogicalSearchResolver(_context);
             _baseContextComponents.Add(_logicalSearchResolver);
 
@@ -135,31 +138,32 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private readonly List<IBaseContextComponent> _baseContextComponents = new List<IBaseContextComponent>();
 
-        private BaseResolver _baseResolver;
-        private ChannelsResolver _channelsResolver;
-        private InheritanceResolver _inheritanceResolver;
-        private LogicalValueLinearResolver _logicalValueLinearResolver;
-        private OperatorsResolver _operatorsResolver;
-        private NumberValueLinearResolver _numberValueLinearResolver;
-        private StrongIdentifierLinearResolver _strongIdentifierLinearResolver;
-        private TriggersResolver _triggersResolver;
-        private VarsResolver _varsResolver;
-        private LogicalSearchResolver _logicalSearchResolver;
-        private FuzzyLogicResolver _fuzzyLogicResolver;
-        private MethodsResolver _methodsResolver;
-        private ConstructorsResolver _constructorsResolver;
-        private CodeItemDirectivesResolver _codeItemDirectivesResolver;
-        private StatesResolver _statesResolver;
-        private ToSystemBoolResolver _toSystemBoolResolver;
-        private RelationsResolver _relationsResolver;
-        private LogicalValueModalityResolver _logicalValueModalityResolver;
-        private SynonymsResolver _synonymsResolver;
-        private IdleActionsResolver _idleActionsResolver;
-        private AnnotationsResolver _annotationsResolver;
-        private ValueResolvingHelper _valueResolvingHelper;
-        private MetadataResolver _metadataResolver;
-        private LogicalSearchVarResultsItemInvertor _logicalSearchVarResultsItemInvertor;
-        private DateTimeResolver _dateTimeResolver;
+        private readonly BaseResolver _baseResolver;
+        private readonly ChannelsResolver _channelsResolver;
+        private readonly InheritanceResolver _inheritanceResolver;
+        private readonly LogicalValueLinearResolver _logicalValueLinearResolver;
+        private readonly OperatorsResolver _operatorsResolver;
+        private readonly NumberValueLinearResolver _numberValueLinearResolver;
+        private readonly StrongIdentifierLinearResolver _strongIdentifierLinearResolver;
+        private readonly TriggersResolver _triggersResolver;
+        private readonly VarsResolver _varsResolver;
+        private readonly PropertiesResolver _propertiesResolver;
+        private readonly LogicalSearchResolver _logicalSearchResolver;
+        private readonly FuzzyLogicResolver _fuzzyLogicResolver;
+        private readonly MethodsResolver _methodsResolver;
+        private readonly ConstructorsResolver _constructorsResolver;
+        private readonly CodeItemDirectivesResolver _codeItemDirectivesResolver;
+        private readonly StatesResolver _statesResolver;
+        private readonly ToSystemBoolResolver _toSystemBoolResolver;
+        private readonly RelationsResolver _relationsResolver;
+        private readonly LogicalValueModalityResolver _logicalValueModalityResolver;
+        private readonly SynonymsResolver _synonymsResolver;
+        private readonly IdleActionsResolver _idleActionsResolver;
+        private readonly AnnotationsResolver _annotationsResolver;
+        private readonly ValueResolvingHelper _valueResolvingHelper;
+        private readonly MetadataResolver _metadataResolver;
+        private readonly LogicalSearchVarResultsItemInvertor _logicalSearchVarResultsItemInvertor;
+        private readonly DateTimeResolver _dateTimeResolver;
 
         /// <inheritdoc/>
         public BaseResolver GetBaseResolver()
@@ -215,6 +219,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return _varsResolver;
         }
 
+        /// <inheritdoc/>
+        public PropertiesResolver GetPropertiesResolver()
+        {
+            return _propertiesResolver;
+        }
+        
         /// <inheritdoc/>
         public LogicalSearchResolver GetLogicalSearchResolver()
         {

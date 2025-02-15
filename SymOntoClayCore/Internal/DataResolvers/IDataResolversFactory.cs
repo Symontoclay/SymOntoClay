@@ -74,6 +74,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         /// <returns>Instance of Vars resolver.</returns>
         VarsResolver GetVarsResolver();
 
+        PropertiesResolver GetPropertiesResolver();
+
         /// <summary>
         /// Gets instance of LogicalSearch resolver.
         /// </summary>

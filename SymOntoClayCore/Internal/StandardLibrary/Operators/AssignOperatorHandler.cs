@@ -36,9 +36,11 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             var dataResolversFactory = engineContext.DataResolversFactory;
 
             _varsResolver = dataResolversFactory.GetVarsResolver();
+            _propertiesResolver = dataResolversFactory.GetPropertiesResolver();
         }
 
         private readonly VarsResolver _varsResolver;
+        private readonly PropertiesResolver _propertiesResolver;
 
         /// <inheritdoc/>
         public Value Call(IMonitorLogger logger, Value rightOperand, Value leftOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
@@ -79,6 +81,8 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                                     Info("9E484258-2A5E-4389-92CB-36BD6114BBBC", $"leftOperand = {leftOperand}");
                                     Info("E981235C-808D-4F6B-AF59-97213B85599D", $"callMode = {callMode}");
 #endif
+
+                                    //var property = _propertiesResolver
 
                                     throw new NotImplementedException("4E4695A2-4FAC-4584-9890-21E6D624E9DF");
                                 }

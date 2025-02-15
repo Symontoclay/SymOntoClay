@@ -48,7 +48,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         private readonly ChannelsResolver _channelsResolver;
 
         /// <inheritdoc/>
-        public Value Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
+        public CallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
             leftOperand = TryResolveFromVarOrExpr(logger, leftOperand, localCodeExecutionContext);
             rightOperand = TryResolveFromVarOrExpr(logger, rightOperand, localCodeExecutionContext);
@@ -85,7 +85,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                 {
                     var channel = _channelsResolver.GetChannel(logger, identifier, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
-                    return channel.Handler.Write(logger, valueFromSource, localCodeExecutionContext);
+                    return new CallResult(channel.Handler.Write(logger, valueFromSource, localCodeExecutionContext));
                 }
                 else
                 {

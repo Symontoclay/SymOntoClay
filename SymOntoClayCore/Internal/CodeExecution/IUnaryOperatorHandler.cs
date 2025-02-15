@@ -31,6 +31,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 {
     public interface IUnaryOperatorHandler
     {
-        Value Call(IMonitorLogger logger, Value operand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext);
+        CallResult Call(IMonitorLogger logger, Value operand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext);
     }
 }

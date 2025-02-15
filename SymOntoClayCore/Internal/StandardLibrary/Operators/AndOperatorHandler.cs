@@ -37,19 +37,19 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         }
 
         /// <inheritdoc/>
-        public Value Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
+        public CallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
             leftOperand = TryResolveFromVarOrExpr(logger, leftOperand, localCodeExecutionContext);
             rightOperand = TryResolveFromVarOrExpr(logger, rightOperand, localCodeExecutionContext);
 
             if (leftOperand.IsSystemNull || rightOperand.IsSystemNull)
             {
-                return new NullValue();
+                return new CallResult(NullValue.Instance);
             }
 
             if (leftOperand.IsLogicalValue && rightOperand.IsLogicalValue)
             {
-                return LogicalValue.And(leftOperand.AsLogicalValue, rightOperand.AsLogicalValue);
+                return new CallResult(LogicalValue.And(leftOperand.AsLogicalValue, rightOperand.AsLogicalValue));
             }
 
             throw new NotImplementedException("029A59D2-4CD5-4156-9BB3-11EAF85FE18E");

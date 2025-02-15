@@ -37,14 +37,14 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         }
 
         /// <inheritdoc/>
-        public Value Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
+        public CallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
             leftOperand = TryResolveFromVarOrExpr(logger, leftOperand, localCodeExecutionContext);
             rightOperand = TryResolveFromVarOrExpr(logger, rightOperand, localCodeExecutionContext);
 
             if (leftOperand.IsNullValue || rightOperand.IsNullValue)
             {
-                return new NullValue();
+                return new CallResult(NullValue.Instance);
             }
 
             if (leftOperand.IsNumberValue && rightOperand.IsNumberValue)
@@ -56,10 +56,10 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                 if(rightOperandNumSysValue == 0)
                 {
-                    return new NullValue();
+                    return new CallResult(NullValue.Instance);
                 }
 
-                return new NumberValue((double)leftOperandValue / rightOperandNumSysValue);
+                return new CallResult(new NumberValue((double)leftOperandValue / rightOperandNumSysValue));
             }
 
             throw new NotImplementedException("E4EB23C0-6E54-4A76-BA58-3B33BAB51FD9");

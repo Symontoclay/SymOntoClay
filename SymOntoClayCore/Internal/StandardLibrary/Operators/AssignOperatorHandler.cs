@@ -43,7 +43,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         private readonly PropertiesResolver _propertiesResolver;
 
         /// <inheritdoc/>
-        public Value Call(IMonitorLogger logger, Value rightOperand, Value leftOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
+        public CallResult Call(IMonitorLogger logger, Value rightOperand, Value leftOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
             rightOperand = TryResolveFromVarOrExpr(logger, rightOperand, localCodeExecutionContext);
 
@@ -67,11 +67,11 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                                     {
                                         case KindOfValue.StrongIdentifierValue:
                                             _varsResolver.SetVarValue(logger, leftIdentifierValue, rightOperand, localCodeExecutionContext);
-                                            return rightOperand;
+                                            return new CallResult(rightOperand);
 
                                         default:
                                             _varsResolver.SetVarValue(logger, leftIdentifierValue, rightOperand, localCodeExecutionContext);
-                                            return rightOperand;
+                                            return new CallResult(rightOperand);
                                     }
                                 }
 
@@ -113,7 +113,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                 case KindOfValue.PointRefValue:
                     leftOperand.SetValue(logger, rightOperand);
-                    return rightOperand;
+                    return new CallResult(rightOperand);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfLeftOperand), kindOfLeftOperand, null);

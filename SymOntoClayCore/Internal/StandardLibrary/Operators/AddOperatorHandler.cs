@@ -37,14 +37,14 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         }
 
         /// <inheritdoc/>
-        public Value Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
+        public CallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
             leftOperand = TryResolveFromVarOrExpr(logger, leftOperand, localCodeExecutionContext);
             rightOperand = TryResolveFromVarOrExpr(logger, rightOperand, localCodeExecutionContext);
 
             if (leftOperand.IsNullValue || rightOperand.IsNullValue)
             {
-                return new NullValue();
+                return new CallResult(NullValue.Instance);
             }
 
             if (leftOperand.IsNumberValue && rightOperand.IsNumberValue)
@@ -54,15 +54,15 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                 if (leftOperandValue == null || rightOperandValue == null)
                 {
-                    return new NullValue();
+                    return new CallResult(NullValue.Instance);
                 }
 
-                return new NumberValue((double)leftOperandValue + (double)rightOperandValue);
+                return new CallResult(new NumberValue((double)leftOperandValue + (double)rightOperandValue));
             }
 
             if(leftOperand.IsStringValue || rightOperand.IsStringValue)
             {
-                return new StringValue(leftOperand.ToSystemString() + rightOperand.ToSystemString());
+                return new CallResult(new StringValue(leftOperand.ToSystemString() + rightOperand.ToSystemString()));
             }
 
             throw new NotImplementedException("C47589B8-3736-4184-AE41-CF5D39E21899");

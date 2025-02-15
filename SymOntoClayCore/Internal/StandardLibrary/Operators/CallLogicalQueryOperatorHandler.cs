@@ -55,7 +55,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         private readonly ILogicalStorage _globalLogicalStorage;        
 
         /// <inheritdoc/>
-        public Value Call(IMonitorLogger logger, Value operand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
+        public CallResult Call(IMonitorLogger logger, Value operand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             operand = TryResolveFromVarOrExpr(logger, operand, localCodeExecutionContext);
 
@@ -81,7 +81,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             }
         }
 
-        private Value ProcessSelect(IMonitorLogger logger, LogicalQueryOperationValue operand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
+        private CallResult ProcessSelect(IMonitorLogger logger, LogicalQueryOperationValue operand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             if(operand.Target == null)
             {
@@ -115,10 +115,10 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
             var searchResult = _searcher.Run(logger, searchOptions);
 
-            return new LogicalSearchResultValue(searchResult);
+            return new CallResult(new LogicalSearchResultValue(searchResult));
         }
 
-        private Value ProcessInsert(IMonitorLogger logger, LogicalQueryOperationValue operand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
+        private CallResult ProcessInsert(IMonitorLogger logger, LogicalQueryOperationValue operand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             if (operand.Target == null)
             {
@@ -167,7 +167,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
             _globalLogicalStorage.Append(logger, ruleInstance);
 
-            return target;
+            return new CallResult(target);
         }
     }
 }

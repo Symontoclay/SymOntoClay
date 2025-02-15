@@ -53,14 +53,14 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         private readonly FuzzyLogicResolver _fuzzyLogicResolver;
 
         /// <inheritdoc/>
-        public Value Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
+        public CallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
             leftOperand = TryResolveFromVarOrExpr(logger, leftOperand, localCodeExecutionContext);
             rightOperand = TryResolveFromVarOrExpr(logger, rightOperand, localCodeExecutionContext);
 
             if (leftOperand.IsSystemNull && rightOperand.IsSystemNull)
             {
-                return new LogicalValue(1);
+                return new CallResult(LogicalValue.TrueValue);
             }
 
             if(leftOperand.IsNumberValue && rightOperand.IsNumberValue)
@@ -91,7 +91,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             throw new NotImplementedException("30F5F633-3254-454C-9CD9-1DD619001B9A");
         }
 
-        private LogicalValue CompareWithFuzzyLogic(IMonitorLogger logger, Value numOperand, Value fuzzyOperand, ILocalCodeExecutionContext localCodeExecutionContext)
+        private CallResult CompareWithFuzzyLogic(IMonitorLogger logger, Value numOperand, Value fuzzyOperand, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             NumberValue numVal = null;
 
@@ -130,12 +130,12 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                                 return CompareSystemValues(logger, (double)numVal.GetSystemValue(), 0);
 
                             default:
-                                return new LogicalValue(_fuzzyLogicResolver.Equals(logger, val, numVal, localCodeExecutionContext));
+                                return new CallResult(new LogicalValue(_fuzzyLogicResolver.Equals(logger, val, numVal, localCodeExecutionContext)));
                         }
                     }
 
                 case KindOfValue.FuzzyLogicNonNumericSequenceValue:
-                    return new LogicalValue(_fuzzyLogicResolver.Equals(logger, fuzzyOperand.AsFuzzyLogicNonNumericSequenceValue, numVal, localCodeExecutionContext));
+                    return new CallResult(new LogicalValue(_fuzzyLogicResolver.Equals(logger, fuzzyOperand.AsFuzzyLogicNonNumericSequenceValue, numVal, localCodeExecutionContext)));
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(fuzzyKindOfValue), fuzzyKindOfValue, null);
@@ -144,18 +144,18 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             throw new NotImplementedException("1A2F8243-F4DB-44BB-B34E-701A32D3BFF3");
         }
 
-        private LogicalValue CompareSystemValues(IMonitorLogger logger, double leftValue, double rightValue)
+        private CallResult CompareSystemValues(IMonitorLogger logger, double leftValue, double rightValue)
         {
-            return new LogicalValue(leftValue == rightValue);
+            return new CallResult(new LogicalValue(leftValue == rightValue));
         }
 
-        private Value GetInheritanceRank(IMonitorLogger logger, Value leftOperand, Value rightOperand, ILocalCodeExecutionContext localCodeExecutionContext)
+        private CallResult GetInheritanceRank(IMonitorLogger logger, Value leftOperand, Value rightOperand, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var subName = _strongIdentifierLinearResolver.Resolve(logger, leftOperand, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
             var superName = _strongIdentifierLinearResolver.Resolve(logger, rightOperand, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
 
-            return _inheritanceResolver.GetInheritanceRank(logger, subName, superName, localCodeExecutionContext, ResolverOptions.GetDefaultOptions());
+            return new CallResult(_inheritanceResolver.GetInheritanceRank(logger, subName, superName, localCodeExecutionContext, ResolverOptions.GetDefaultOptions()));
         }
     }
 }

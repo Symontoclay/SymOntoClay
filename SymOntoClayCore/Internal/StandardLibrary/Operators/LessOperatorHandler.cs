@@ -26,8 +26,6 @@ using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Monitor.Common;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 {
@@ -47,14 +45,14 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         private readonly FuzzyLogicResolver _fuzzyLogicResolver;
 
         /// <inheritdoc/>
-        public Value Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
+        public CallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
             leftOperand = TryResolveFromVarOrExpr(logger, leftOperand, localCodeExecutionContext);
             rightOperand = TryResolveFromVarOrExpr(logger, rightOperand, localCodeExecutionContext);
 
             if (leftOperand.IsNullValue || rightOperand.IsNullValue)
             {
-                return new NullValue();
+                return new CallResult(NullValue.Instance);
             }
 
             if (leftOperand.IsNumberValue && rightOperand.IsNumberValue)
@@ -111,7 +109,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                                             if (eqResult)
                                             {
-                                                return new LogicalValue(0);
+                                                return new CallResult(LogicalValue.FalseValue);
                                             }
 
                                             var deffuzzificatedValue = _fuzzyLogicResolver.Resolve(logger, val, localCodeExecutionContext);
@@ -120,7 +118,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                                             if (!systemDeffuzzificatedValue.HasValue)
                                             {
-                                                return new LogicalValue(false);
+                                                return new CallResult(LogicalValue.FalseValue);
                                             }
 
                                             return CompareSystemValues(logger, leftNumVal.SystemValue.Value, systemDeffuzzificatedValue.Value);
@@ -136,7 +134,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                                 if (eqResult)
                                 {
-                                    return new LogicalValue(0);
+                                    return new CallResult(LogicalValue.FalseValue);
                                 }
 
                                 var deffuzzificatedValue = _fuzzyLogicResolver.Resolve(logger, val, localCodeExecutionContext);
@@ -145,7 +143,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                                 if (!systemDeffuzzificatedValue.HasValue)
                                 {
-                                    return new LogicalValue(false);
+                                    return new CallResult(LogicalValue.FalseValue);
                                 }
 
                                 return CompareSystemValues(logger, leftNumVal.SystemValue.Value, systemDeffuzzificatedValue.Value);
@@ -202,7 +200,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                                             if (eqResult)
                                             {
-                                                return new LogicalValue(0);
+                                                return new CallResult(LogicalValue.FalseValue);
                                             }
 
                                             var deffuzzificatedValue = _fuzzyLogicResolver.Resolve(logger, val, localCodeExecutionContext);
@@ -211,7 +209,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                                             if (!systemDeffuzzificatedValue.HasValue)
                                             {
-                                                return new LogicalValue(false);
+                                                return new CallResult(LogicalValue.FalseValue);
                                             }
 
                                             return CompareSystemValues(logger, systemDeffuzzificatedValue.Value, rightNumVal.SystemValue.Value);
@@ -227,7 +225,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                                 if (eqResult)
                                 {
-                                    return new LogicalValue(0);
+                                    return new CallResult(LogicalValue.FalseValue);
                                 }
 
                                 var deffuzzificatedValue = _fuzzyLogicResolver.Resolve(logger, val, localCodeExecutionContext);
@@ -236,7 +234,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
 
                                 if (!systemDeffuzzificatedValue.HasValue)
                                 {
-                                    return new LogicalValue(false);
+                                    return new CallResult(LogicalValue.FalseValue);
                                 }
 
                                 return CompareSystemValues(logger, systemDeffuzzificatedValue.Value, rightNumVal.SystemValue.Value);
@@ -255,9 +253,9 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             throw new NotImplementedException("8489B320-7E9E-4F6B-A7FB-B4F1EA60C0D6");
         }
 
-        private LogicalValue CompareSystemValues(IMonitorLogger logger, double leftValue, double rightValue)
+        private CallResult CompareSystemValues(IMonitorLogger logger, double leftValue, double rightValue)
         {
-            return new LogicalValue(leftValue < rightValue);
+            return new CallResult(new LogicalValue(leftValue < rightValue));
         }
     }
 }

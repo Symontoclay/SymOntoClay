@@ -41,17 +41,17 @@ namespace SymOntoClay.Core.Internal.Serialization
         {
         }
 
-        public ProjectLoader(IMainStorageContext context, bool isDefferedImport)
+        public ProjectLoader(IMainStorageContext context, bool isDeferredImport)
             : base(context.Logger)
         {
             _context = context;
             _compiler = context.Compiler;
-            _isDefferedImport = isDefferedImport;
+            _isDeferredImport = isDeferredImport;
         }
 
         private readonly IMainStorageContext _context;
         private readonly ICompiler _compiler;
-        private readonly bool _isDefferedImport;
+        private readonly bool _isDeferredImport;
         private DefaultSettingsOfCodeEntity _defaultSettingsOfCodeEntity;
         private IStorage _globalStorage;
         private ICommonNamesStorage _commonNamesStorage;
@@ -630,7 +630,7 @@ namespace SymOntoClay.Core.Internal.Serialization
                 return;
             }
 
-            if(_isDefferedImport)
+            if(_isDeferredImport)
             {
                 deferredLibsList.AddRange(importsList.Select(p => p.NameValue));
                 return;

@@ -23,10 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Monitor.Common;
-using SymOntoClay.Threading;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeExecution
 {

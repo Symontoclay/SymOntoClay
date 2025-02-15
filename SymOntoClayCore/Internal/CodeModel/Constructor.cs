@@ -23,8 +23,6 @@ SOFTWARE.*/
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

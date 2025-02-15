@@ -8286,10 +8286,16 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.PropertyInstance.TypeOfAccess">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.PropertyInstance.GetLongHashCode">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.PropertyInstance.GetLongConditionalHashCode">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.PropertyInstance.HasConditionalSections">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.PropertyInstance.OnDisposed">
@@ -10195,6 +10201,9 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.PropertyStoraging.EmptyPropertyStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.Instances.PropertyInstance)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.PropertyStoraging.EmptyPropertyStorage.GetPropertyDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
+            <inheritdoc/>
+        </member>
         <member name="E:SymOntoClay.Core.Internal.Storage.PropertyStoraging.EmptyPropertyStorage.OnChanged">
             <inheritdoc/>
         </member>
@@ -10208,6 +10217,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.PropertyStoraging.PropertyStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.Instances.PropertyInstance)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.PropertyStoraging.PropertyStorage.GetPropertyDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.PropertyStoraging.PropertyStorage.OnDisposed">

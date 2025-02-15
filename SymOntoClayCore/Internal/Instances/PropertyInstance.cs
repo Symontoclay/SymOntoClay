@@ -9,10 +9,11 @@ using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Monitor.Common.Models;
 using System.Xml.Linq;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.DataResolvers;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public class PropertyInstance : BaseComponent,
+    public class PropertyInstance : BaseComponent, IFilteredCodeItem,
         ISymOntoClayDisposable, IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToHumanizedString, IMonitoredHumanizedObject, IObjectWithLongHashCodes
     {
         public PropertyInstance(Property codeItem, IEngineContext context)
@@ -30,6 +31,9 @@ namespace SymOntoClay.Core.Internal.Instances
         public event Action<StrongIdentifierValue> OnChanged;
 
         /// <inheritdoc/>
+        public TypeOfAccess TypeOfAccess => CodeItem.TypeOfAccess;
+
+        /// <inheritdoc/>
         public ulong GetLongHashCode()
         {
             return CodeItem.GetLongHashCode();
@@ -40,6 +44,9 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             return CodeItem.GetLongConditionalHashCode();
         }
+
+        /// <inheritdoc/>
+        public bool HasConditionalSections => CodeItem.HasConditionalSections;
 
         /// <inheritdoc/>
         protected override void OnDisposed()

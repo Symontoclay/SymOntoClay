@@ -67,6 +67,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return NGetStoragesList(logger, storage, options, kindOfStoragesList);
 
                 case KindOfStoragesList.Var:
+                case KindOfStoragesList.Property:
                     return FilterStoragesForVarResolving(logger, NGetStoragesList(logger, storage, options, KindOfStoragesList.CodeItems));
 
                 default:
@@ -190,13 +191,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         }
 
         protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterCodeItems<T>(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<T>> source, ILocalCodeExecutionContext localCodeExecutionContext)
-            where T : CodeItem
+            where T : IFilteredCodeItem
         {
             return FilterCodeItems<T>(logger, source, localCodeExecutionContext.Holder, localCodeExecutionContext);
         }
 
         protected List<WeightedInheritanceResultItemWithStorageInfo<T>> FilterCodeItems<T>(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<T>> source, StrongIdentifierValue holder, ILocalCodeExecutionContext localCodeExecutionContext)
-            where T : CodeItem
+            where T : IFilteredCodeItem
         {
             if (!source.Any())
             {
@@ -360,7 +361,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         }
 
         protected List<WeightedInheritanceResultItemWithStorageInfo<T>> Filter<T>(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<T>> source)
-            where T: AnnotatedItem
+            where T: IWeightedInheritanceResultItemParameter
         {
             if(!source.Any())
             {
@@ -384,7 +385,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         }
 
         protected List<T> Filter<T>(IMonitorLogger logger, List<T> source)
-            where T : AnnotatedItem
+            where T : IWeightedInheritanceResultItemParameter
         {
             if (!source.Any())
             {
@@ -408,7 +409,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         }
 
         protected List<WeightedInheritanceResultItemWithStorageInfo<T>> OrderAndDistinctByInheritance<T>(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<T>> source, ResolverOptions options)
-            where T : AnnotatedItem
+            where T : IWeightedInheritanceResultItemParameter
         {
             if(options.JustDistinct)
             {
@@ -419,7 +420,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         }
 
         protected virtual T ChooseTargetItem<T>(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<T>> source) 
-            where T : AnnotatedItem
+            where T : IWeightedInheritanceResultItemParameter
         {
             if(!source.Any())
             {

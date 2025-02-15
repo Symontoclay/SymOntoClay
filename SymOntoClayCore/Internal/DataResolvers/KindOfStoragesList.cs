@@ -30,6 +30,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
     {
         Full,
         CodeItems,
-        Var
+        Var,
+        Property
     }
 }

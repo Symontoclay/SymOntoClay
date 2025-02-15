@@ -1,7 +1,9 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Monitor.Common;
 using System;
+using System.Collections.Generic;
 
 namespace SymOntoClay.Core.Internal.Storage.PropertyStoraging
 {
@@ -15,6 +17,12 @@ namespace SymOntoClay.Core.Internal.Storage.PropertyStoraging
         /// <inheritdoc/>
         public void Append(IMonitorLogger logger, PropertyInstance propertyInstance)
         {
+        }
+
+        /// <inheritdoc/>
+        public IList<WeightedInheritanceResultItem<PropertyInstance>> GetPropertyDirectly(IMonitorLogger logger, StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        {
+            return null;
         }
 
         /// <inheritdoc/>

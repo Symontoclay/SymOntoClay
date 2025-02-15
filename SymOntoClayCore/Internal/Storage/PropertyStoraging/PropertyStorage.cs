@@ -1,5 +1,6 @@
 ﻿using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Monitor.Common;
 using System;
@@ -89,6 +90,44 @@ namespace SymOntoClay.Core.Internal.Storage.PropertyStoraging
             else
             {
                 dict[name] = new List<PropertyInstance> { propertyInstance };
+            }
+        }
+
+        private static List<WeightedInheritanceResultItem<PropertyInstance>> _emptyPropertiesList = new List<WeightedInheritanceResultItem<PropertyInstance>>();
+
+        /// <inheritdoc/>
+        public IList<WeightedInheritanceResultItem<PropertyInstance>> GetPropertyDirectly(IMonitorLogger logger, StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        {
+            lock (_lockObj)
+            {
+                if (_realStorageContext.Disabled)
+                {
+                    return _emptyPropertiesList;
+                }
+
+                var result = new List<WeightedInheritanceResultItem<PropertyInstance>>();
+
+                foreach (var weightedInheritanceItem in weightedInheritanceItems)
+                {
+                    var targetHolder = weightedInheritanceItem.SuperName;
+
+                    if (_propertiesDict.ContainsKey(targetHolder))
+                    {
+                        var targetDict = _propertiesDict[targetHolder];
+
+                        if (targetDict.ContainsKey(name))
+                        {
+                            var targetList = targetDict[name];
+
+                            foreach (var targetVal in targetList)
+                            {
+                                result.Add(new WeightedInheritanceResultItem<PropertyInstance>(targetVal, weightedInheritanceItem));
+                            }
+                        }
+                    }
+                }
+
+                return result;
             }
         }
 

@@ -25,6 +25,7 @@ using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Common.Disposing;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public abstract class AnnotatedItem : ItemWithLongHashCodes, IAnnotatedItem, IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString, IObjectToHumanizedString, ISymOntoClayDisposable
+    public abstract class AnnotatedItem : ItemWithLongHashCodes, IWeightedInheritanceResultItemParameter, IAnnotatedItem, IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString, IObjectToHumanizedString, ISymOntoClayDisposable
     {
         /// <summary>
         /// It is 'Clauses section' in the documentation.

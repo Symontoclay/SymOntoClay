@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public abstract class CodeItem: Value, IMemberAccess, IReadOnlyMemberAccess
+    public abstract class CodeItem: Value, IFilteredCodeItem, IMemberAccess, IReadOnlyMemberAccess
     {
         public static readonly TypeOfAccess DefaultTypeOfAccess = TypeOfAccess.Protected;
         

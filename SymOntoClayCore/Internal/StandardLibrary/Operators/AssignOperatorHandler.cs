@@ -82,7 +82,12 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                                     Info("E981235C-808D-4F6B-AF59-97213B85599D", $"callMode = {callMode}");
 #endif
 
-                                    //var property = _propertiesResolver
+                                    var property = _propertiesResolver.Resolve(logger, leftIdentifierValue, localCodeExecutionContext);
+
+#if DEBUG
+                                    Info("1B9FF0A5-D834-409F-A555-4E447E8C71DE", $"property = {property}");
+#endif
+
 
                                     throw new NotImplementedException("4E4695A2-4FAC-4584-9890-21E6D624E9DF");
                                 }

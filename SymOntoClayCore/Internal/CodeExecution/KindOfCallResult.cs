@@ -5,6 +5,8 @@
         Unknown,
         Value,
         NeenExecuteCode,
+        NeedExecuteSetProperty,
+        NeedExecuteGetProperty,
         WasSystemException,
         WasDslException
     }

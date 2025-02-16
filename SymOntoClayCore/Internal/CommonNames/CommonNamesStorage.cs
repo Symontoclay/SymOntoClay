@@ -38,9 +38,9 @@ namespace SymOntoClay.Core.Internal.CommonNames
         }
 
         /// <inheritdoc/>
-        protected override void Init()
+        protected override void LinkWithOtherBaseContextComponents()
         {
-            base.Init();
+            base.LinkWithOtherBaseContextComponents();
 
             WorldName = NameHelper.CreateName(StandardNamesConstants.WorldTypeName);
 
@@ -68,6 +68,8 @@ namespace SymOntoClay.Core.Internal.CommonNames
 
             TimeoutAttributeName = NameHelper.CreateName(StandardNamesConstants.TimeoutAttributeName);
             PriorityAttributeName = NameHelper.CreateName(StandardNamesConstants.PriorityAttributeName);
+
+            AnyTypeName = NameHelper.CreateName(StandardNamesConstants.AnyTypeName);
         }
 
         private readonly IMainStorageContext _context;
@@ -113,5 +115,8 @@ namespace SymOntoClay.Core.Internal.CommonNames
 
         /// <inheritdoc/>
         public StrongIdentifierValue PriorityAttributeName { get; private set; }
+
+        /// <inheritdoc/>
+        public StrongIdentifierValue AnyTypeName { get; private set; }
     }
 }

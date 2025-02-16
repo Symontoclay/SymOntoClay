@@ -55,5 +55,7 @@ namespace SymOntoClay.Core.Internal
 
         StrongIdentifierValue TimeoutAttributeName { get; }
         StrongIdentifierValue PriorityAttributeName { get; }
+
+        StrongIdentifierValue AnyTypeName { get; }
     }
 }

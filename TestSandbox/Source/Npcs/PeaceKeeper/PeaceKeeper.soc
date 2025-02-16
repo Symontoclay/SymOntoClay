@@ -27,7 +27,7 @@
        wait 1;
     }
 
-    prop SomeProp1: number = 2;
+    prop SomeProp1: any = 2;
 
 	private:
 	    var @targetEnemy;

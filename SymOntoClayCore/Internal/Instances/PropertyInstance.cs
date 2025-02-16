@@ -11,6 +11,7 @@ using System.Xml.Linq;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Common.CollectionsHelpers;
+using System.Linq;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
@@ -24,12 +25,16 @@ namespace SymOntoClay.Core.Internal.Instances
             Holder = codeItem.Holder;
             CodeItem = codeItem;
             _inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
+
+            _anyTypeName = context.CommonNamesStorage.AnyTypeName;
         }
 
         private InheritanceResolver _inheritanceResolver;
         public StrongIdentifierValue Name { get; private set; }
         public StrongIdentifierValue Holder { get; private set; }
         public Property CodeItem { get; private set; }
+
+        private StrongIdentifierValue _anyTypeName;
 
         public void SetValueDirectly(IMonitorLogger logger, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
@@ -51,6 +56,11 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void CheckFitVariableAndValue(IMonitorLogger logger, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
+            if (value.IsNullValue)
+            {
+                return;
+            }
+
             var typesList = CodeItem.TypesList;
 
             if (typesList.IsNullOrEmpty())
@@ -58,7 +68,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 return;
             }
 
-            if (value.IsNullValue)
+            if(typesList.All(p => p == _anyTypeName))
             {
                 return;
             }

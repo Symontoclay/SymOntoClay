@@ -6485,7 +6485,7 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.World.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.Init">
+        <member name="M:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.WorldName">
@@ -6528,6 +6528,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.PriorityAttributeName">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.AnyTypeName">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Compiling.Compiler.Compile(SymOntoClay.Core.Internal.CodeModel.Ast.Statements.AstStatement)">
@@ -7189,6 +7192,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.ValueResolvingHelper.LinkWithOtherBaseContextComponents">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.VarsResolver.Init">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.WeightedInheritanceResultItemWithStorageInfo`1.PropertiesToString(System.UInt32)">

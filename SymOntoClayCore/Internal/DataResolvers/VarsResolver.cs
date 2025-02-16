@@ -26,6 +26,7 @@ using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace SymOntoClay.Core.Internal.DataResolvers
@@ -36,6 +37,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             : base(context)
         {
         }
+
+        /// <inheritdoc/>
+        protected override void Init()
+        {
+            base.Init();
+
+            _anyTypeName = _context.CommonNamesStorage.AnyTypeName;
+        }
+
+        private StrongIdentifierValue _anyTypeName;
 
         public void SetVarValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
@@ -68,17 +79,24 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public void CheckFitVariableAndValue(IMonitorLogger logger, Var varItem, Value value, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-            if(varItem.TypesList.IsNullOrEmpty())
+            if (value.IsNullValue)
             {
                 return;
             }
 
-            if(value.IsNullValue)
+            var typesList = varItem.TypesList;
+
+            if (typesList.IsNullOrEmpty())
             {
                 return;
             }
 
-            var isFit = _inheritanceResolver.IsFit(logger, varItem.TypesList, value, localCodeExecutionContext, options);
+            if (typesList.All(p => p == _anyTypeName))
+            {
+                return;
+            }
+
+            var isFit = _inheritanceResolver.IsFit(logger, typesList, value, localCodeExecutionContext, options);
 
             if (isFit)
             {

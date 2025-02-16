@@ -5,7 +5,7 @@
     fun SomeOperator()
     {
        'Run SomeOperator' >> @>log;
-       //@targetEnemy = ##@{: see(I, $_) & enemy($_) & state($_, alive) :};
+       @targetEnemy = ##@{: see(I, $_) & enemy($_) & state($_, alive) :};
        wait 1;
     }
 
@@ -28,6 +28,8 @@
     }
 
     prop SomeProp1: any = 2;
+
+    prop TargetEnemy: any => @targetEnemy;
 
 	private:
 	    var @targetEnemy;

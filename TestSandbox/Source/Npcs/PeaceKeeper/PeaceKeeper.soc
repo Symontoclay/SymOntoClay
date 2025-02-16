@@ -1,106 +1,11 @@
 ﻿app PeaceKeeper
 {
-    //root task `SomeRootTask`;
+    var @b: number = 2;
 
-    fun SomeOperator()
+    on Enter =>
     {
-       'Run SomeOperator' >> @>log;
-       @targetEnemy = ##@{: see(I, $_) & enemy($_) & state($_, alive) :};
-       wait 1;
+        'Begin' >> @>log;
+        @b >> @>log;
+        'End' >> @>log;
     }
-
-    fun SomeOperator2()
-    {
-       'Run SomeOperator2' >> @>log;
-       wait 1;
-    }
-
-    fun SomeOperator3()
-    {
-       'Run SomeOperator3' >> @>log;
-       wait 1;
-    }
-
-    fun SomeOperator4()
-    {
-       'Run SomeOperator4' >> @>log;
-
-       TargetEnemy >> @>log;
-
-       wait 1;
-    }
-
-    prop SomeProp1: any = 2;
-
-    prop TargetEnemy: any => @targetEnemy;
-
-	private:
-	    var @targetEnemy;
-}
-
-root task SomeRootTask
-{
-   case
-   {
-       SomeStrategicTask;
-   }
-}
-
-strategic task SomeStrategicTask
-{
-   case
-   {
-       SomeTacticalTask;
-       //SomeStrategicTask;
-       //SomePrimitiveTask;
-   }
-}
-
-tactical task SomeTacticalTask
-{
-   case
-   {
-       SomeCompoundTask;
-       SomeCompoundTask2;
-   }
-
-   //prop SomeProp2: number = 2;
-}
-
-compound task SomeCompoundTask
-{
-   case
-   {
-       SomePrimitiveTask;
-       SomePrimitiveTask2;
-   }
-}
-
-compound task SomeCompoundTask2
-{
-   case
-   {
-       SomePrimitiveTask3;
-       SomePrimitiveTask4;
-   }
-}
-
-primitive task SomePrimitiveTask
-{
-    operator SomeOperator();
-}
-
-primitive task SomePrimitiveTask2
-{
-    operator SomeOperator2();
-}
-
-primitive task SomePrimitiveTask3
-{
-    operator SomeOperator3();
-}
-
-primitive task SomePrimitiveTask4
-{
-    operator SomeOperator4();
 }

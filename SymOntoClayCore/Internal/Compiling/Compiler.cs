@@ -86,6 +86,15 @@ namespace SymOntoClay.Core.Internal.Compiling
         }
 
         /// <inheritdoc/>
+        public CompiledFunctionBody CompileLambda(AstStatement statement)
+        {
+            var node = new LambdaNode(_context);
+            node.Run(statement);
+
+            return ConvertToCompiledFunctionBody(node.Result);
+        }
+
+        /// <inheritdoc/>
         public CompiledFunctionBody Compile(List<Field> fields)
         {
             return ConvertToCompiledFunctionBody(CompileToIntermediateCommands(fields));

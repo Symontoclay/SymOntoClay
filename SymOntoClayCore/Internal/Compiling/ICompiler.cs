@@ -40,6 +40,7 @@ namespace SymOntoClay.Core.Internal.Compiling
         List<IntermediateScriptCommand> CompileToIntermediateCommands(List<AstStatement> statements);
         CompiledFunctionBody Compile(List<AstStatement> statements, List<AstExpression> callSuperClassConstructorsExpressions, KindOfCompilation kindOfCompilation);
         List<IntermediateScriptCommand> CompileToIntermediateCommands(List<AstStatement> statements, List<AstExpression> callSuperClassConstructorsExpressions, KindOfCompilation kindOfCompilation);
+        CompiledFunctionBody CompileLambda(AstStatement statement);
         CompiledFunctionBody Compile(List<Field> fields);
         List<IntermediateScriptCommand> CompileToIntermediateCommands(List<Field> fields);
         List<IntermediateScriptCommand> CompileToIntermediateCommands(List<Property> properties);

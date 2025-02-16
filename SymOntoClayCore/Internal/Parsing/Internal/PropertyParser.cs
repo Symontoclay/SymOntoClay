@@ -15,6 +15,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             GotName,
             WaitForType,
             GotType,
+            WaitForLambdaGetCode,
             WaitForValue,
             GotValue
         }
@@ -121,8 +122,32 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             _state = State.WaitForValue;
                             break;
 
+                        case TokenKind.Lambda:
+                            _state = State.WaitForLambdaGetCode;
+                            break;
+
                         default:
                             throw new UnexpectedTokenException(_currToken);
+                    }
+                    break;
+
+                case State.WaitForLambdaGetCode:
+                    {
+                        _context.Recovery(_currToken);
+                        var parser = new CodeExpressionStatementParser(_context);
+                        parser.Run();
+
+                        _property.KindOfProperty = KindOfProperty.Readonly;
+
+#if DEBUG
+                        Info("CFC03BA9-895D-44C7-A6FD-3B127CDCA5E9", $"parser.Result = {parser.Result}");
+#endif
+
+                        _property.GetStatements.Add(parser.Result);
+
+                        _property.GetCompiledFunctionBody = _context.Compiler.CompileLambda(parser.Result);
+
+                        Exit();
                     }
                     break;
 

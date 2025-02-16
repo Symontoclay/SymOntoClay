@@ -9,6 +9,8 @@ using System.Text;
 using System.Linq;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
+using SymOntoClay.Core.Internal.CodeModel.Ast.Statements;
+using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
@@ -33,6 +35,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public List<StrongIdentifierValue> TypesList { get; set; } = new List<StrongIdentifierValue>();
 
         public AstExpression DefaultValue { get; set; }
+
+        public List<AstStatement> GetStatements { get; set; } = new List<AstStatement>();
+        public CompiledFunctionBody GetCompiledFunctionBody { get; set; }
 
         /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> context)
@@ -62,6 +67,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.DefaultValue = DefaultValue?.CloneAstExpression(context);
             result.TypesList = TypesList?.Select(p => p.Clone(context)).ToList();
 
+            result.GetStatements = GetStatements.Select(p => p.CloneAstStatement(context)).ToList();
+            result.GetCompiledFunctionBody = GetCompiledFunctionBody?.Clone(context);
+
             result.AppendCodeItem(this, context);
 
             return result;
@@ -78,6 +86,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjProp(n, nameof(DefaultValue), DefaultValue);
             sb.PrintObjListProp(n, nameof(TypesList), TypesList);
 
+            sb.PrintObjListProp(n, nameof(GetStatements), GetStatements);
+            sb.PrintObjProp(n, nameof(GetCompiledFunctionBody), GetCompiledFunctionBody);
+
             sb.Append(base.PropertiesToString(n));
             return sb.ToString();
         }
@@ -93,6 +104,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjProp(n, nameof(DefaultValue), DefaultValue);
             sb.PrintShortObjListProp(n, nameof(TypesList), TypesList);
 
+            sb.PrintShortObjListProp(n, nameof(GetStatements), GetStatements);
+            sb.PrintShortObjProp(n, nameof(GetCompiledFunctionBody), GetCompiledFunctionBody);
+
             sb.Append(base.PropertiesToShortString(n));
             return sb.ToString();
         }
@@ -107,6 +121,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintBriefObjProp(n, nameof(DefaultValue), DefaultValue);
             sb.PrintBriefObjListProp(n, nameof(TypesList), TypesList);
+
+
+            sb.PrintBriefObjListProp(n, nameof(GetStatements), GetStatements);
+            sb.PrintBriefObjProp(n, nameof(GetCompiledFunctionBody), GetCompiledFunctionBody);
 
             sb.Append(base.PropertiesToBriefString(n));
             return sb.ToString();

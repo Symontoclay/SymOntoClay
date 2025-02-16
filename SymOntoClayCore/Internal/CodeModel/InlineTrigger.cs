@@ -271,7 +271,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
 #if DEBUG
-        //private static IMonitorLogger _logger = MonitorLoggerNLogImpementation.Instance;
+        //private static IMonitorLogger _logger = MonitorLoggerNLogImplementation.Instance;
 #endif
 
         /// <inheritdoc/>

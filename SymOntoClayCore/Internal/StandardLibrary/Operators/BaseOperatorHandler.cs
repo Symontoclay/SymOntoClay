@@ -43,6 +43,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         private readonly ValueResolvingHelper _valueResolvingHelper;
 
         /// <inheritdoc/>
+        [Obsolete("It have to be resolved by resolve cmd")]
         protected Value TryResolveFromVarOrExpr(IMonitorLogger logger, Value operand, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             return _valueResolvingHelper.TryResolveFromVarOrExpr(logger, operand, localCodeExecutionContext);

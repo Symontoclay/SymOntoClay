@@ -53,6 +53,11 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             leftOperand = TryResolveFromVarOrExpr(logger, leftOperand, localCodeExecutionContext);
             rightOperand = TryResolveFromVarOrExpr(logger, rightOperand, localCodeExecutionContext);
 
+#if DEBUG
+            Info("C1C8D33E-AC4C-4C0A-9328-6A320AD57291", $"leftOperand = {leftOperand}");
+            Info("FC6F4EC4-4CE9-45EE-97B7-898DD8D83051", $"rightOperand = {rightOperand}");
+#endif
+
             Value valueFromSource = null;
 
             if(leftOperand.KindOfValue == KindOfValue.StrongIdentifierValue)

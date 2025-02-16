@@ -24,6 +24,9 @@
     fun SomeOperator4()
     {
        'Run SomeOperator4' >> @>log;
+
+       TargetEnemy >> @>log;
+
        wait 1;
     }
 

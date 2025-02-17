@@ -53,7 +53,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 firstElseCommand = new IntermediateScriptCommand() { OperationCode = OperationCode.Nop };
             }
 
-            var ifConditionCodeBlockNode = new ExpressionNode(_context);
+            var ifConditionCodeBlockNode = new ExpressionNode(_context, KindOfCompilePushVal.GetProp);
             ifConditionCodeBlockNode.Run(statement.Condition);
 
             AddCommands(ifConditionCodeBlockNode.Result);
@@ -98,7 +98,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 {
                     AddCommand(firstElifCommand);
 
-                    var elifConditionCodeBlockNode = new ExpressionNode(_context);
+                    var elifConditionCodeBlockNode = new ExpressionNode(_context, KindOfCompilePushVal.GetProp);
                     elifConditionCodeBlockNode.Run(elifStatement.Condition);
                     AddCommands(elifConditionCodeBlockNode.Result);
 

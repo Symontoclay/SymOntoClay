@@ -45,7 +45,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
             var loopCompilingContext = new LoopCompilingContext() { FirstCommand = firstCommand, AfterCommand = afterCommand };
 
-            var conditionCodeBlockNode = new ExpressionNode(_context);
+            var conditionCodeBlockNode = new ExpressionNode(_context, KindOfCompilePushVal.GetProp);
             conditionCodeBlockNode.Run(statement.Condition);
 
             AddCommands(conditionCodeBlockNode.Result);

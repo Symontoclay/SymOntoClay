@@ -85,23 +85,23 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 {
                     if (isNamed)
                     {
-                        var node = new ExpressionNode(_context);
+                        var node = new ExpressionNode(_context, KindOfCompilePushVal.Direct);
                         node.Run(parameter.Name);
                         AddCommands(node.Result);
-                        node = new ExpressionNode(_context);
+                        node = new ExpressionNode(_context, KindOfCompilePushVal.GetProp);
                         node.Run(parameter.Value);
                         AddCommands(node.Result);
                     }
                     else
                     {
-                        var node = new ExpressionNode(_context);
+                        var node = new ExpressionNode(_context, KindOfCompilePushVal.GetProp);
                         node.Run(parameter.Value);
                         AddCommands(node.Result);
                     }
                 }
             }
 
-            var leftNode = new ExpressionNode(_context);
+            var leftNode = new ExpressionNode(_context, KindOfCompilePushVal.GetProp);
             leftNode.Run(expression.Left);
             AddCommands(leftNode.Result);
 

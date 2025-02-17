@@ -38,7 +38,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(CodeItemAstExpression expression)
         {
-            CompilePushVal(expression.CodeItem);
+            CompilePushVal(expression.CodeItem, KindOfCompilePushVal.Direct);
 
             CompilePushAnnotation(expression);
            

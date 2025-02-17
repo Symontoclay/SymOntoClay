@@ -37,9 +37,9 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(AstSetInheritanceStatement statement)
         {
-            CompileValue(statement.SubName);
-            CompileValue(statement.SuperName);
-            CompileValue(statement.Rank);
+            CompilePushVal(statement.SubName, KindOfCompilePushVal.Direct);
+            CompilePushVal(statement.SuperName, KindOfCompilePushVal.Direct);
+            CompilePushVal(statement.Rank, KindOfCompilePushVal.Direct);
 
             var command = new IntermediateScriptCommand();
             command.OperationCode = OperationCode.PushVal;

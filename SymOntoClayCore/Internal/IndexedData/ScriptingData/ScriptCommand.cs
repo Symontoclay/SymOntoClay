@@ -220,6 +220,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                 case OperationCode.BeginPrimitiveTask:
                 case OperationCode.EndPrimitiveTask:
                 case OperationCode.PropDecl:
+                case OperationCode.LoadFromVar:
                     return $"{spaces}{OperationCode}";
 
                 case OperationCode.PushVal:

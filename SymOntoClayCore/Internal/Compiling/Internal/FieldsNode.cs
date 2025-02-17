@@ -45,12 +45,12 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     continue;
                 }
 
-                var node = new ExpressionNode(_context);
+                var node = new ExpressionNode(_context, null);
                 node.Run(field.DefaultValue);
 
                 AddCommands(node.Result);
 
-                CompilePushVal(field.Name);
+                CompilePushVal(field.Name, KindOfCompilePushVal.Direct);
 
                 CompilePushAnnotation(field);
 

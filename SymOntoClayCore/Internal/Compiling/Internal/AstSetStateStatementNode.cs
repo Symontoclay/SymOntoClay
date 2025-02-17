@@ -37,7 +37,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         
         public void Run(AstSetStateStatement statement)
         {
-            CompileValue(statement.StateName);
+            CompilePushVal(statement.StateName, KindOfCompilePushVal.Direct);
 
             AddCommand(new IntermediateScriptCommand()
             {

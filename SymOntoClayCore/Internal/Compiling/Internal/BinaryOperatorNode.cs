@@ -56,15 +56,15 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         private void RunAssignBinaryOperator(BinaryOperatorAstExpression expression)
         {
-            var rightNode = new ExpressionNode(_context);
+            var rightNode = new ExpressionNode(_context, KindOfCompilePushVal.GetProp);
             rightNode.Run(expression.Right);
             AddCommands(rightNode.Result);
 
-            RunLeftAssingNode(expression.Left);
+            RunLeftAssignNode(expression.Left);
 
         }
 
-        private void RunLeftAssingNode(AstExpression expression)
+        private void RunLeftAssignNode(AstExpression expression)
         {
             var kind = expression.Kind;
 
@@ -72,7 +72,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             {
                 case KindOfAstExpression.Var:
                     {
-                        var leftNode = new ExpressionNode(_context);
+                        var leftNode = new ExpressionNode(_context, KindOfCompilePushVal.Direct);
                         leftNode.Run(expression);
                         AddCommands(leftNode.Result);
 
@@ -113,7 +113,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                         {
                             case KindOfOperator.Assign:
                                 {
-                                    var rightNode = new ExpressionNode(_context);
+                                    var rightNode = new ExpressionNode(_context, null);
                                     rightNode.Run(binOpExpr.Right);
                                     AddCommands(rightNode.Result);
 
@@ -125,7 +125,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
                                     AddCommand(command);
 
-                                    RunLeftAssingNode(binOpExpr.Left);
+                                    RunLeftAssignNode(binOpExpr.Left);
                                 }
                                 break;
 
@@ -154,11 +154,11 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         private void RunUsualBinaryOperator(BinaryOperatorAstExpression expression)
         {
-            var leftNode = new ExpressionNode(_context);
+            var leftNode = new ExpressionNode(_context, KindOfCompilePushVal.GetProp);
             leftNode.Run(expression.Left);
             AddCommands(leftNode.Result);
 
-            var rightNode = new ExpressionNode(_context);
+            var rightNode = new ExpressionNode(_context, null);
             rightNode.Run(expression.Right);
             AddCommands(rightNode.Result);
 

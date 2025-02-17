@@ -54,7 +54,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                             break;
                         }
 
-                        CompileValue(statement.RuleInstance);
+                        CompilePushVal(statement.RuleInstance, KindOfCompilePushVal.Direct);
 
                         AddCommand(new IntermediateScriptCommand()
                         {
@@ -84,7 +84,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                             break;
                         }
 
-                        CompileValue(statement.RuleInstance);
+                        CompilePushVal(statement.RuleInstance, KindOfCompilePushVal.Direct);
 
                         AddCommand(new IntermediateScriptCommand()
                         {

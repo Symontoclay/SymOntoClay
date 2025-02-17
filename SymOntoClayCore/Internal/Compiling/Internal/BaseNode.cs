@@ -56,48 +56,48 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             _result.AddRange(commands);
         }
         
-        protected void CompileValue(Value value)
-        {
-            if(value.IsStrongIdentifierValue)
-            {
-                var name = value.AsStrongIdentifierValue;
+        //protected void CompileValue(Value value)
+        //{
+        //    if(value.IsStrongIdentifierValue)
+        //    {
+        //        var name = value.AsStrongIdentifierValue;
 
-                var kindOfName = name.KindOfName;
+        //        var kindOfName = name.KindOfName;
 
-                switch(kindOfName)
-                {
-                    case KindOfName.Concept:
-                    case KindOfName.Channel:
-                    case KindOfName.Entity:
-                        CompilePushVal(value);
-                        break;
+        //        switch(kindOfName)
+        //        {
+        //            case KindOfName.Concept:
+        //            case KindOfName.Channel:
+        //            case KindOfName.Entity:
+        //                CompilePushVal(value);
+        //                break;
 
-                    case KindOfName.SystemVar:
-                    case KindOfName.Var:
-                        CompilePushVal(value);
-                        break;
+        //            case KindOfName.SystemVar:
+        //            case KindOfName.Var:
+        //                CompilePushVal(value);
+        //                break;
 
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
-                }
+        //            default:
+        //                throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
+        //        }
 
-                return;
-            }
+        //        return;
+        //    }
 
-            var command = new IntermediateScriptCommand();
-            command.OperationCode = OperationCode.PushVal;
-            command.Value = value;
+        //    var command = new IntermediateScriptCommand();
+        //    command.OperationCode = OperationCode.PushVal;
+        //    command.Value = value;
 
-            AddCommand(command);
-        }
+        //    AddCommand(command);
+        //}
 
         protected void CompileVarDecl(IVarDecl varDeclAstExpression)
         {
-            CompilePushVal(varDeclAstExpression.Name);
+            CompilePushVal(varDeclAstExpression.Name, KindOfCompilePushVal.Direct);
 
             foreach (var typeItem in varDeclAstExpression.TypesList)
             {
-                CompilePushVal(typeItem);
+                CompilePushVal(typeItem, KindOfCompilePushVal.Direct);
             }
             
             CompilePushAnnotation(varDeclAstExpression);
@@ -109,13 +109,53 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             AddCommand(command);
         }
 
-        protected void CompilePushVal(Value value)
+        protected void CompilePushVal(Value value, KindOfCompilePushVal kindOfCompilePushVal)
         {
             var command = new IntermediateScriptCommand();
             command.OperationCode = OperationCode.PushVal;
             command.Value = value;
 
             AddCommand(command);
+
+            switch(kindOfCompilePushVal)
+            {
+                case KindOfCompilePushVal.Direct:
+                    break;
+
+                case KindOfCompilePushVal.GetProp:
+                    {
+#if DEBUG
+                        Info("CEA034BE-D83D-4DCF-8C1A-EB21B3594B65", $"value = {value}");
+#endif
+
+                        switch(value.KindOfValue)
+                        {
+                            case KindOfValue.StrongIdentifierValue:
+                                {
+                                    var name = value.AsStrongIdentifierValue;
+
+                                    switch (name.KindOfName)
+                                    {
+                                        case KindOfName.Var:
+                                            {
+                                                var cmd = new IntermediateScriptCommand();
+                                                cmd.OperationCode = OperationCode.LoadFromVar;
+                                                
+                                                AddCommand(cmd);
+                                            }
+                                            break;
+                                    }
+                                }
+                                break;
+                        }
+
+                        //throw new NotImplementedException();
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfCompilePushVal), kindOfCompilePushVal, null);
+            }
         }
 
         protected void CompilePushAnnotation(IAnnotatedItem annotatedItem)
@@ -211,6 +251,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 case OperationCode.BeginPrimitiveTask:
                 case OperationCode.EndPrimitiveTask:
                 case OperationCode.PropDecl:
+                case OperationCode.LoadFromVar:
                     return $"{operationCode}";
 
                 case OperationCode.PushVal:

@@ -37,7 +37,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         public void Run(AstErrorStatement statement)
         {
-            CompileValue(statement.RuleInstance);
+            CompilePushVal(statement.RuleInstance, KindOfCompilePushVal.Direct);
 
             var command = new IntermediateScriptCommand();
             command.OperationCode = OperationCode.Error;

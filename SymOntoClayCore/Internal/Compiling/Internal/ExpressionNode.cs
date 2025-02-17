@@ -30,11 +30,14 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 {
     public class ExpressionNode : BaseNode
     {
-        public ExpressionNode(IMainStorageContext context)
+        public ExpressionNode(IMainStorageContext context, KindOfCompilePushVal? kindOfCompilePushVal)
             : base(context)
         {
+            _kindOfCompilePushVal = kindOfCompilePushVal;
         }
-        
+
+        private readonly KindOfCompilePushVal? _kindOfCompilePushVal;
+
         public void Run(AstExpression expression)
         {
             var kind = expression.Kind;
@@ -58,11 +61,11 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     break;
 
                 case KindOfAstExpression.ConstValue:
-                    CompilePushVal((expression as ConstValueAstExpression).Value);
+                    CompilePushVal((expression as ConstValueAstExpression).Value, _kindOfCompilePushVal ?? KindOfCompilePushVal.GetProp);
                     break;
 
                 case KindOfAstExpression.Var:
-                    CompilePushVal((expression as VarAstExpression).Name);
+                    CompilePushVal((expression as VarAstExpression).Name, _kindOfCompilePushVal ?? KindOfCompilePushVal.GetProp);
                     break;
 
                 case KindOfAstExpression.CallingFunction:
@@ -79,7 +82,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
                 case KindOfAstExpression.Group:
                     {
-                        var node = new ExpressionNode(_context);
+                        var node = new ExpressionNode(_context, null);
                         node.Run((expression as GroupAstExpression).Expression);
                         AddCommands(node.Result);
                     }

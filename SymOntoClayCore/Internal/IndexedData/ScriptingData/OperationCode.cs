@@ -37,6 +37,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         /// Pushes a constant value into a current stack.
         /// </summary>
         PushVal,
+        LoadFromVar,
 
         /// <summary>
         /// Calls an unary operator.

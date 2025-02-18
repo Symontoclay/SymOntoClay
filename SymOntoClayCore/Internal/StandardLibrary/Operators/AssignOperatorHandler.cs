@@ -45,8 +45,6 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         /// <inheritdoc/>
         public CallResult Call(IMonitorLogger logger, Value rightOperand, Value leftOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
-            rightOperand = TryResolveFromVarOrExpr(logger, rightOperand, localCodeExecutionContext);
-
             var kindOfLeftOperand = leftOperand.KindOfValue;
 
             switch(kindOfLeftOperand)

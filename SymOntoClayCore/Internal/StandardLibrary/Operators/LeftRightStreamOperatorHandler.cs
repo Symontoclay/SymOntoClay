@@ -51,14 +51,6 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         public CallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
 #if DEBUG
-            Info("7D8B34D2-6CF6-47AE-8251-B26176A5BDB1", $"leftOperand (before) = {leftOperand}");
-            Info("07CE3EEB-8480-4D28-A55F-DA3F75227E16", $"rightOperand (before) = {rightOperand}");
-#endif
-
-            leftOperand = TryResolveFromVarOrExpr(logger, leftOperand, localCodeExecutionContext);
-            rightOperand = TryResolveFromVarOrExpr(logger, rightOperand, localCodeExecutionContext);
-
-#if DEBUG
             Info("C1C8D33E-AC4C-4C0A-9328-6A320AD57291", $"leftOperand = {leftOperand}");
             Info("FC6F4EC4-4CE9-45EE-97B7-898DD8D83051", $"rightOperand = {rightOperand}");
 #endif

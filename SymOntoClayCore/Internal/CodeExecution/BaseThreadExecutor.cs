@@ -330,6 +330,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         ProcessPushVal(currentCommand);
                         break;
 
+                    case OperationCode.LoadFromVar:
+                        ProcessLoadFromVar();
+                        break;
+
                     case OperationCode.VarDecl:
                         ProcessVarDecl(currentCommand);
                         break;
@@ -1257,6 +1261,25 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 default:
                     break;
             }
+
+            _currentCodeFrame.ValuesStack.Push(value);
+            _currentCodeFrame.CurrentPosition++;
+        }
+
+        private void ProcessLoadFromVar()
+        {
+            var varName = _currentCodeFrame.ValuesStack.Pop();
+
+#if DEBUG
+            Info("ABCC2FF2-9EB1-47A9-9B8D-14C98AC1C87F", $"currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+            Info("F71F0BB0-E32C-455C-A996-86628BCBF465", $"varName = {varName}");
+#endif
+
+            var value = _varsResolver.GetVarValue(Logger, varName.AsStrongIdentifierValue, _currentCodeFrame.LocalContext);
+
+#if DEBUG
+            Info("F6C7FB1C-BFA9-4871-9090-5EF56C8462AF", $"value = {value}");
+#endif
 
             _currentCodeFrame.ValuesStack.Push(value);
             _currentCodeFrame.CurrentPosition++;

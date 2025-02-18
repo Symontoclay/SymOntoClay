@@ -137,6 +137,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                                     switch (name.KindOfName)
                                     {
                                         case KindOfName.Var:
+                                        case KindOfName.SystemVar:
                                             {
                                                 var cmd = new IntermediateScriptCommand();
                                                 cmd.OperationCode = OperationCode.LoadFromVar;

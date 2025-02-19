@@ -7,6 +7,9 @@
         'Begin' >> @>log;
         @b >> @>log;
         @b + 3 >> @>log;
+        SomeAutoProp >> @>log;
         'End' >> @>log;
     }
+
+    prop SomeAutoProp: number = 16;
 }

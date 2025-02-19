@@ -57,8 +57,6 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         /// <inheritdoc/>
         public CallResult Call(IMonitorLogger logger, Value operand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            operand = TryResolveFromVarOrExpr(logger, operand, localCodeExecutionContext);
-
             if (!operand.IsLogicalQueryOperationValue)
             {
                 throw new NotSupportedException();

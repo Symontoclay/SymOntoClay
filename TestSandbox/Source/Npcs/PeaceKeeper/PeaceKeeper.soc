@@ -6,6 +6,7 @@
     {
         'Begin' >> @>log;
         @b >> @>log;
+        @b + 3 >> @>log;
         'End' >> @>log;
     }
 }

@@ -34,19 +34,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
     {
         protected BaseOperatorHandler(IEngineContext engineContext)
             : base(engineContext.Logger)
-        {
-            var dataResolversFactory = engineContext.DataResolversFactory;
-
-            _valueResolvingHelper = dataResolversFactory.GetValueResolvingHelper();            
-        }
-
-        private readonly ValueResolvingHelper _valueResolvingHelper;
-
-        /// <inheritdoc/>
-        [Obsolete("It have to be resolved by resolve cmd", true)]
-        protected Value TryResolveFromVarOrExpr(IMonitorLogger logger, Value operand, ILocalCodeExecutionContext localCodeExecutionContext)
-        {
-            return _valueResolvingHelper.TryResolveFromVarOrExpr(logger, operand, localCodeExecutionContext);
+        {       
         }
     }
 }

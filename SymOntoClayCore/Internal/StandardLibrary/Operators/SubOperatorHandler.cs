@@ -39,9 +39,6 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         /// <inheritdoc/>
         public CallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
-            leftOperand = TryResolveFromVarOrExpr(logger, leftOperand, localCodeExecutionContext);
-            rightOperand = TryResolveFromVarOrExpr(logger, rightOperand, localCodeExecutionContext);
-
             if (leftOperand.IsSystemNull || rightOperand.IsSystemNull)
             {
                 return new CallResult(NullValue.Instance);

@@ -42,8 +42,6 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         /// <inheritdoc/>
         public CallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
-            leftOperand = TryResolveFromVarOrExpr(logger, leftOperand, localCodeExecutionContext);
-
             if ((leftOperand.IsHostValue || leftOperand.IsThreadExecutorValue || leftOperand.IsInstanceValue) && rightOperand.IsStrongIdentifierValue/* && rightOperand.AsStrongIdentifierValue.KindOfName == KindOfName.Concept*/)
             {
                 var result = new PointRefValue(leftOperand, rightOperand);

@@ -641,7 +641,9 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     break;
 
                                 default:
-                                    throw new UnexpectedTokenException(_currToken);
+                                    _context.Recovery(_currToken);
+                                    Exit();
+                                    break;
                             }
                             break;
 

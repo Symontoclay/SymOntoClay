@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
+using System;
 
 namespace SymOntoClay.Core.Internal.DataResolvers
 {
@@ -46,6 +47,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private readonly IMainStorageContext _context;
         private VarsResolver _varsResolver;
 
+        [Obsolete("Implement compilation instead of this one")]
         public Value TryResolveFromVarOrExpr(IMonitorLogger logger, Value operand, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             if (operand.IsStrongIdentifierValue)

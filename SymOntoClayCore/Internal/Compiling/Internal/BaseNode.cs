@@ -148,6 +148,10 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                                     }
                                 }
                                 break;
+
+                            case KindOfValue.PointRefValue:
+                                //Check TryResolveFromVarOrExpr in the ValueResolvingHelper
+                                throw new NotImplementedException("18036216-1223-4190-8DC3-A17FC4522D24");
                         }
 
                         //throw new NotImplementedException();

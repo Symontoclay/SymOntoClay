@@ -20,7 +20,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Monitor.Common;
 using System;
 
@@ -77,6 +79,24 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             return operand;
+        }
+
+        public void CheckWrongValue(IMonitorLogger logger, Value operand)
+        {
+            if (operand.IsStrongIdentifierValue)
+            {
+                var identifier = operand.AsStrongIdentifierValue;
+
+                if (identifier.KindOfName == KindOfName.Var || identifier.KindOfName == KindOfName.SystemVar)
+                {
+                    throw new NotSupportedException($"Unresolved value {operand.ToHumanizedString()}. {identifier.KindOfName} has to be resolved by command {nameof(OperationCode.LoadFromVar)}");
+                }
+            }
+
+            if (operand.IsPointRefValue)
+            {
+                throw new NotSupportedException($"Unresolved value {operand.ToHumanizedString()}. {operand.KindOfValue} has to be resolved by some new command.");
+            }
         }
     }
 }

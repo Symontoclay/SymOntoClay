@@ -38,6 +38,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
         /// </summary>
         PushVal,
         LoadFromVar,
+        TryLoadFromProperty,
 
         /// <summary>
         /// Calls an unary operator.

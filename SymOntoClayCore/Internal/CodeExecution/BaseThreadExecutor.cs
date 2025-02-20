@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using Newtonsoft.Json.Linq;
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
@@ -89,6 +90,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _logicalValueLinearResolver = dataResolversFactory.GetLogicalValueLinearResolver();
             _numberValueLinearResolver = dataResolversFactory.GetNumberValueLinearResolver();
             _strongIdentifierLinearResolver = dataResolversFactory.GetStrongIdentifierLinearResolver();
+            _propertiesResolver = dataResolversFactory.GetPropertiesResolver();
             _varsResolver = dataResolversFactory.GetVarsResolver();
             _methodsResolver = dataResolversFactory.GetMethodsResolver();
             _constructorsResolver = dataResolversFactory.GetConstructorsResolver();
@@ -130,6 +132,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private readonly NumberValueLinearResolver _numberValueLinearResolver;
         private readonly StrongIdentifierLinearResolver _strongIdentifierLinearResolver;
         private readonly VarsResolver _varsResolver;
+        private readonly PropertiesResolver _propertiesResolver;
         private readonly MethodsResolver _methodsResolver;
         private readonly ConstructorsResolver _constructorsResolver;
         private readonly LogicalSearchResolver _logicalSearchResolver;
@@ -332,6 +335,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     case OperationCode.LoadFromVar:
                         ProcessLoadFromVar();
+                        break;
+
+                    case OperationCode.TryLoadFromProperty:
+                        ProcessTryLoadFromProperty();
                         break;
 
                     case OperationCode.VarDecl:
@@ -1283,6 +1290,48 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             _currentCodeFrame.ValuesStack.Push(value);
             _currentCodeFrame.CurrentPosition++;
+        }
+
+        private void ProcessTryLoadFromProperty()
+        {
+            var conceptValue = _currentCodeFrame.ValuesStack.Pop();
+
+#if DEBUG
+            Info("06DB4D55-8036-4404-AF04-8D4819E34024", $"currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+            Info("70359123-3D0B-444B-B9E3-44F75BF3AB36", $"conceptValue = {conceptValue}");
+#endif
+
+            var property = _propertiesResolver.Resolve(Logger, conceptValue.AsStrongIdentifierValue, _currentCodeFrame.LocalContext);
+
+#if DEBUG
+            Info("D7C11381-C110-411C-A2F4-3A704359E2F8", $"property?.KindOfProperty = {property?.KindOfProperty}");
+#endif
+
+            if(property == null)
+            {
+                _currentCodeFrame.ValuesStack.Push(conceptValue);
+                _currentCodeFrame.CurrentPosition++;
+
+                return;
+            }
+
+            var kindOfProperty = property.KindOfProperty;
+
+            switch(kindOfProperty)
+            {
+                case KindOfProperty.Auto:
+                    {
+                        _currentCodeFrame.ValuesStack.Push(property.GetValue());
+                        _currentCodeFrame.CurrentPosition++;
+
+                        return;
+                    }
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfProperty), kindOfProperty, null);
+            }
+
+            //throw new NotImplementedException("4EB61280-1522-422E-88F8-301A9ACA25AD");
         }
 
         private void ProcessClearStack()

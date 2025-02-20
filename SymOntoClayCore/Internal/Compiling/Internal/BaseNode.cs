@@ -145,6 +145,15 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                                                 AddCommand(cmd);
                                             }
                                             break;
+
+                                        case KindOfName.Concept:
+                                            {
+                                                var cmd = new IntermediateScriptCommand();
+                                                cmd.OperationCode = OperationCode.TryLoadFromProperty;
+
+                                                AddCommand(cmd);
+                                            }
+                                            break;
                                     }
                                 }
                                 break;
@@ -257,6 +266,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 case OperationCode.EndPrimitiveTask:
                 case OperationCode.PropDecl:
                 case OperationCode.LoadFromVar:
+                case OperationCode.TryLoadFromProperty:
                     return $"{operationCode}";
 
                 case OperationCode.PushVal:

@@ -30,13 +30,15 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         private InheritanceResolver _inheritanceResolver;
+
+        public KindOfProperty KindOfProperty => CodeItem.KindOfProperty;
         public StrongIdentifierValue Name { get; private set; }
         public StrongIdentifierValue Holder { get; private set; }
         public Property CodeItem { get; private set; }
 
         private StrongIdentifierValue _anyTypeName;
 
-        public void SetValueDirectly(IMonitorLogger logger, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
+        public void SetValue(IMonitorLogger logger, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             logger.Info("2C6EBD07-1417-4C62-90E1-441DB3CFFF73", $"value = {value}");
 
@@ -83,7 +85,12 @@ namespace SymOntoClay.Core.Internal.Instances
             throw new Exception($"The value '{value.ToHumanizedString()}' does not fit to variable {CodeItem.ToHumanizedString()}");
         }
 
-        private Value _value;
+        public Value GetValue()
+        {
+            return _value;
+        }
+
+        private Value _value = NullValue.Instance;
 
         public event Action<StrongIdentifierValue> OnChanged;
 
@@ -134,7 +141,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.AppendLine($"{spaces}{nameof(KindOfInstance)} = {KindOfInstance}");
+            sb.AppendLine($"{spaces}{nameof(KindOfProperty)} = {KindOfProperty}");
             sb.PrintObjProp(n, nameof(Name), Name);
             sb.PrintObjProp(n, nameof(Holder), Holder);
             //sb.AppendLine($"{spaces}{nameof(_instanceState)} = {_instanceState}");
@@ -165,7 +172,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.AppendLine($"{spaces}{nameof(KindOfInstance)} = {KindOfInstance}");
+            sb.AppendLine($"{spaces}{nameof(KindOfProperty)} = {KindOfProperty}");
             sb.PrintShortObjProp(n, nameof(Name), Name);
             sb.PrintShortObjProp(n, nameof(Holder), Holder);
             //sb.AppendLine($"{spaces}{nameof(_instanceState)} = {_instanceState}");
@@ -196,7 +203,7 @@ namespace SymOntoClay.Core.Internal.Instances
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            //sb.AppendLine($"{spaces}{nameof(KindOfInstance)} = {KindOfInstance}");
+            sb.AppendLine($"{spaces}{nameof(KindOfProperty)} = {KindOfProperty}");
             sb.PrintBriefObjProp(n, nameof(Name), Name);
             sb.PrintBriefObjProp(n, nameof(Holder), Holder);
             //sb.AppendLine($"{spaces}{nameof(_instanceState)} = {_instanceState}");

@@ -1327,6 +1327,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         return;
                     }
 
+                case KindOfProperty.Readonly:
+                case KindOfProperty.GetSet:
+                    {
+                        var executable = property.GetMethodExecutable;
+
+                        CallExecutable(executable);
+                    }
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfProperty), kindOfProperty, null);
             }
@@ -2377,7 +2386,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private TimeoutCancellationMode GetTimeoutCancellationModeFromAnnotation(Value annotation)
         {
-            var meaningRoles = annotation.MeaningRolesList;
+            var meaningRoles = annotation?.MeaningRolesList;
 
             if(meaningRoles.IsNullOrEmpty())
             {
@@ -2445,9 +2454,15 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             return initialValue;
         }
 
+
         private void CallOperator(Operator op, List<Value> positionedParameters)
         {
             CallExecutable(op, positionedParameters);
+        }
+
+        private void CallExecutable(IExecutable executable)
+        {
+            CallExecutable(executable, null, KindOfFunctionParameters.NoParameters, null, null, null, SyncOption.Sync);
         }
 
         private void CallExecutable(IExecutable executable, List<Value> positionedParameters)

@@ -12,6 +12,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Common.CollectionsHelpers;
 using System.Linq;
+using SymOntoClay.Core.Internal.CodeExecution;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
@@ -27,6 +28,19 @@ namespace SymOntoClay.Core.Internal.Instances
             _inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
 
             _anyTypeName = context.CommonNamesStorage.AnyTypeName;
+
+            var kindOfCodeEntity = codeItem.KindOfProperty;
+
+            switch(kindOfCodeEntity)
+            {
+                case KindOfProperty.Readonly:
+                    _propertyGetMethodExecutable = new PropertyGetMethodExecutable(this, context);
+                    break;
+
+                case KindOfProperty.GetSet:
+                    _propertyGetMethodExecutable = new PropertyGetMethodExecutable(this, context);
+                    break;
+            }
         }
 
         private InheritanceResolver _inheritanceResolver;
@@ -35,6 +49,10 @@ namespace SymOntoClay.Core.Internal.Instances
         public StrongIdentifierValue Name { get; private set; }
         public StrongIdentifierValue Holder { get; private set; }
         public Property CodeItem { get; private set; }
+
+        private PropertyGetMethodExecutable _propertyGetMethodExecutable;
+
+        public IExecutable GetMethodExecutable => _propertyGetMethodExecutable;
 
         private StrongIdentifierValue _anyTypeName;
 

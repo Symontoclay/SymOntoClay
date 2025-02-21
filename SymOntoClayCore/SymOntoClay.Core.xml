@@ -8295,6 +8295,75 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.ProcessInfo.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.PropertyGetMethodExecutable.IsSystemDefined">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.PropertyGetMethodExecutable.Arguments">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.PropertyGetMethodExecutable.CompiledFunctionBody">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.PropertyGetMethodExecutable.CodeItem">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.PropertyGetMethodExecutable.SystemHandler">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.PropertyGetMethodExecutable.OwnLocalCodeExecutionContext">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.PropertyGetMethodExecutable.Holder">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.PropertyGetMethodExecutable.NeedActivation">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.PropertyGetMethodExecutable.IsActivated">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.PropertyGetMethodExecutable.UsingLocalCodeExecutionContextPreferences">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.PropertyGetMethodExecutable.IsInstance">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.PropertyGetMethodExecutable.AsInstance">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.PropertyGetMethodExecutable.GetCoordinator(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.IEngineContext,SymOntoClay.Core.ILocalCodeExecutionContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.PropertyGetMethodExecutable.ContainsArgument(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.PropertyGetMethodExecutable.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.PropertyGetMethodExecutable.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.PropertyGetMethodExecutable.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.PropertyGetMethodExecutable.ToShortString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.PropertyGetMethodExecutable.ToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.PropertyGetMethodExecutable.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.PropertyGetMethodExecutable.ToBriefString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.PropertyGetMethodExecutable.ToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.PropertyGetMethodExecutable.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.PropertyInstance.TypeOfAccess">
             <inheritdoc/>
         </member>

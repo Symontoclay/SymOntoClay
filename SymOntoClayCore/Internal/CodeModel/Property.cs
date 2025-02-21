@@ -38,7 +38,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         public List<AstStatement> GetStatements { get; set; } = new List<AstStatement>();
         public CompiledFunctionBody GetCompiledFunctionBody { get; set; }
-
+        
         /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> context)
         {

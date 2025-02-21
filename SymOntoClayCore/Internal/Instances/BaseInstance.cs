@@ -150,7 +150,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _executionCoordinator.SetExecutionStatus(logger, "64A3F029-7F5D-4DB7-9ECC-83DD59A2973C", ActionExecutionStatus.Canceled);
         }
-
+        
         public virtual void Init(IMonitorLogger logger)
         {
             if (_parentExecutionCoordinator != null)

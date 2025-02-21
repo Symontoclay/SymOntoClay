@@ -5,14 +5,9 @@
     on Enter =>
     {
         'Begin' >> @>log;
-        @b >> @>log;
-        @b + 3 >> @>log;
-        SomeAutoProp >> @>log;
         SomeGetProp >> @>log;
         'End' >> @>log;
     }
-
-    prop SomeAutoProp: number = 16;
 
     prop SomeGetProp: number => @b;
 }

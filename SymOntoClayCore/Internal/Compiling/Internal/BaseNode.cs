@@ -125,10 +125,11 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 case KindOfCompilePushVal.GetProp:
                     {
 #if DEBUG
-                        Info("CEA034BE-D83D-4DCF-8C1A-EB21B3594B65", $"value = {value}");
+                        //Info("CEA034BE-D83D-4DCF-8C1A-EB21B3594B65", $"value = {value}");
+                        //Info("011FD653-DA69-4481-AA7D-E1CE9B33492C", $"kindOfCompilePushVal = {kindOfCompilePushVal}");
 #endif
 
-                        switch(value.KindOfValue)
+                        switch (value.KindOfValue)
                         {
                             case KindOfValue.StrongIdentifierValue:
                                 {

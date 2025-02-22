@@ -1194,7 +1194,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void ProcessPropDecl(ScriptCommand currentCommand)
         {
 #if DEBUG
-            Info("C3432985-5661-43EF-9126-8F2700484675", $"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+            //Info("C3432985-5661-43EF-9126-8F2700484675", $"_currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
 #endif
 
             var valueStack = _currentCodeFrame.ValuesStack;
@@ -1205,13 +1205,13 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var annotatedItem = annotationValue.AnnotatedItem;
 
 #if DEBUG
-            Info("8A246ADA-0F77-48CA-AA29-EF5FC65A09B8", $"annotatedItem?.GetType().FullName = {annotatedItem?.GetType().FullName}");
+            //Info("8A246ADA-0F77-48CA-AA29-EF5FC65A09B8", $"annotatedItem?.GetType().FullName = {annotatedItem?.GetType().FullName}");
 #endif
 
             var property = annotatedItem as Property;
 
 #if DEBUG
-            Info("84064116-5A17-4521-B574-E2EA5009907E", $"property = {property}");
+            //Info("84064116-5A17-4521-B574-E2EA5009907E", $"property = {property}");
 #endif
 
             var propertyInstance = new PropertyInstance(property, _context);
@@ -1278,14 +1278,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var varName = _currentCodeFrame.ValuesStack.Pop();
 
 #if DEBUG
-            Info("ABCC2FF2-9EB1-47A9-9B8D-14C98AC1C87F", $"currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-            Info("F71F0BB0-E32C-455C-A996-86628BCBF465", $"varName = {varName}");
+            //Info("ABCC2FF2-9EB1-47A9-9B8D-14C98AC1C87F", $"currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+            //Info("F71F0BB0-E32C-455C-A996-86628BCBF465", $"varName = {varName}");
 #endif
 
             var value = _varsResolver.GetVarValue(Logger, varName.AsStrongIdentifierValue, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-            Info("F6C7FB1C-BFA9-4871-9090-5EF56C8462AF", $"value = {value}");
+            //Info("F6C7FB1C-BFA9-4871-9090-5EF56C8462AF", $"value = {value}");
 #endif
 
             _currentCodeFrame.ValuesStack.Push(value);
@@ -1297,14 +1297,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             var conceptValue = _currentCodeFrame.ValuesStack.Pop();
 
 #if DEBUG
-            Info("06DB4D55-8036-4404-AF04-8D4819E34024", $"currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
-            Info("70359123-3D0B-444B-B9E3-44F75BF3AB36", $"conceptValue = {conceptValue}");
+            //Info("06DB4D55-8036-4404-AF04-8D4819E34024", $"currentCodeFrame = {_currentCodeFrame.ToDbgString()}");
+            //Info("70359123-3D0B-444B-B9E3-44F75BF3AB36", $"conceptValue = {conceptValue}");
 #endif
 
             var property = _propertiesResolver.Resolve(Logger, conceptValue.AsStrongIdentifierValue, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-            Info("D7C11381-C110-411C-A2F4-3A704359E2F8", $"property?.KindOfProperty = {property?.KindOfProperty}");
+            //Info("D7C11381-C110-411C-A2F4-3A704359E2F8", $"property?.KindOfProperty = {property?.KindOfProperty}");
 #endif
 
             if(property == null)

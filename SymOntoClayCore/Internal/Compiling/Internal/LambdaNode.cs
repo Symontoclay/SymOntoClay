@@ -14,7 +14,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         public void Run(AstStatement statement)
         {
 #if DEBUG
-            Info("D86974B2-295C-4F9C-AD8B-29B48AF85CB7", $"statement.GetType().Name = {statement.GetType().Name}");
+            //Info("D86974B2-295C-4F9C-AD8B-29B48AF85CB7", $"statement.GetType().Name = {statement.GetType().Name}");
 #endif
 
             var astExpressionStatement = statement as AstExpressionStatement;
@@ -30,7 +30,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             });
 
 #if DEBUG
-            DbgPrintCommands();
+            //DbgPrintCommands();
 #endif
         }
     }

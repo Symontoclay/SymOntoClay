@@ -42,7 +42,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             }
 
 #if DEBUG
-            DbgPrintCommands();
+            //DbgPrintCommands();
 #endif
 
             //throw new NotImplementedException("B31892E2-8D57-49F8-B60D-6530CEE4F5F1");

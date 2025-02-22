@@ -25,13 +25,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public PropertyInstance Resolve(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Info("F003D1F2-A299-411F-932C-7C226A0D13CC", $"propertyName = {propertyName}");
+            //Info("F003D1F2-A299-411F-932C-7C226A0D13CC", $"propertyName = {propertyName}");
 #endif
 
             var storagesList = GetStoragesList(logger, localCodeExecutionContext.Storage, KindOfStoragesList.Property);
 
 #if DEBUG
-            Info("C6A2F71F-4B86-4418-B806-82114687C6B4", $"storagesList.Count = {storagesList.Count}");
+            //Info("C6A2F71F-4B86-4418-B806-82114687C6B4", $"storagesList.Count = {storagesList.Count}");
 #endif
 
             var optionsForInheritanceResolver = options.Clone();
@@ -40,13 +40,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, localCodeExecutionContext, optionsForInheritanceResolver);
 
 #if DEBUG
-            Info("35C3DF0D-8B07-4F45-8741-1526A7AE5C64", $"weightedInheritanceItems.Count = {weightedInheritanceItems.Count}");
+            //Info("35C3DF0D-8B07-4F45-8741-1526A7AE5C64", $"weightedInheritanceItems.Count = {weightedInheritanceItems.Count}");
 #endif
 
             var rawList = GetRawPropertiesList(logger, propertyName, storagesList, weightedInheritanceItems);
 
 #if DEBUG
-            Info("971B9D45-54A7-4D6C-8939-66FCE52F227D", $"rawList.Count = {rawList.Count}");
+            //Info("971B9D45-54A7-4D6C-8939-66FCE52F227D", $"rawList.Count = {rawList.Count}");
 #endif
 
             if (!rawList.Any())
@@ -57,7 +57,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var filteredList = FilterCodeItems(logger, rawList, localCodeExecutionContext.Holder, localCodeExecutionContext);
 
 #if DEBUG
-            Info("A5B248B1-2917-4940-9B9A-37DF79146444", $"filteredList.Count = {filteredList.Count}");
+            //Info("A5B248B1-2917-4940-9B9A-37DF79146444", $"filteredList.Count = {filteredList.Count}");
 #endif
 
             if (!filteredList.Any())

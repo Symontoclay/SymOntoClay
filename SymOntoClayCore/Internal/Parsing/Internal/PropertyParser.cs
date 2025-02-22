@@ -41,8 +41,8 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnRun()
         {
 #if DEBUG
-            Info("9A4B06EC-8658-4B3B-9D65-A97DAD9C59A1", $"_state = {_state}");
-            Info("584F3684-A578-4E83-AADE-38FF794F372F", $"_currToken = {_currToken}");
+            //Info("9A4B06EC-8658-4B3B-9D65-A97DAD9C59A1", $"_state = {_state}");
+            //Info("584F3684-A578-4E83-AADE-38FF794F372F", $"_currToken = {_currToken}");
 #endif
 
             switch (_state)
@@ -140,7 +140,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                         _property.KindOfProperty = KindOfProperty.Readonly;
 
 #if DEBUG
-                        Info("CFC03BA9-895D-44C7-A6FD-3B127CDCA5E9", $"parser.Result = {parser.Result}");
+                        //Info("CFC03BA9-895D-44C7-A6FD-3B127CDCA5E9", $"parser.Result = {parser.Result}");
 #endif
 
                         _property.GetStatements.Add(parser.Result);

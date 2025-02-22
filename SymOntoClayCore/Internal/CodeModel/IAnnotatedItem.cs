@@ -35,6 +35,5 @@ namespace SymOntoClay.Core.Internal.CodeModel
         IList<RuleInstance> AnnotationFacts { get; }
         IList<Value> MeaningRolesList { get; }
         Value GetSettings(StrongIdentifierValue key);
-        Value GetAnnotationValue();
     }
 }

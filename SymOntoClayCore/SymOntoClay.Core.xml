@@ -1184,9 +1184,6 @@
 			Clones the instance using special context and returns cloned instance.
 		</summary><param name="context">Special context for providing references continuity.</param><returns>Cloned instance.</returns>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotatedItem.GetAnnotationValue">
-            <inheritdoc/>
-        </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.AnnotatedItem.IsDisposed">
             <inheritdoc/>
         </member>
@@ -1361,69 +1358,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationSystemEvent.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.KindOfValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.IsAnnotationValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.AsAnnotationValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.Annotations">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.AddAnnotation(SymOntoClay.Core.Internal.CodeModel.Annotation)">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.AnnotationFacts">
-            <inheritdoc/>
-        </member>
-        <member name="P:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.MeaningRolesList">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.GetSettings(SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.GetSystemValue">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.ToSystemString">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.CalculateLongHashCode(SymOntoClay.Core.Internal.CodeModel.CheckDirtyOptions)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.CloneAnnotatedItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.CloneValue(System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.DiscoverAllAnnotations(System.Collections.Generic.IList{SymOntoClay.Core.Internal.CodeModel.Annotation})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.PropertiesToString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.PropertiesToShortString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.PropertiesToBriefString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.PropertiesToDbgString(System.UInt32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.AnnotationValue.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CodeModel.AnonymousObject.Kind">

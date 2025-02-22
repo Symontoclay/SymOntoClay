@@ -269,20 +269,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         private Value _annotationValue;
         private readonly object _annotationValueLockObj = new object();
 
-        /// <inheritdoc/>
-        public virtual Value GetAnnotationValue()
-        {
-            lock(_annotationValueLockObj)
-            {
-                if(_annotationValue == null)
-                {
-                    _annotationValue = new AnnotationValue() { AnnotatedItem = this};
-                }
-
-                return _annotationValue;
-            }            
-        }
-
         private readonly object _disposingLockObj = new object();
         private bool _isDisposed;
 

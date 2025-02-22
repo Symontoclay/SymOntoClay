@@ -60,9 +60,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public virtual bool IsProcessInfoValue => false;
         public virtual ProcessInfoValue AsProcessInfoValue => null;
 
-        public virtual bool IsAnnotationValue => false;
-        public virtual AnnotationValue AsAnnotationValue => null;
-
         public virtual bool IsWaypointValue => false;
         public virtual WaypointValue AsWaypointValue => null;
 

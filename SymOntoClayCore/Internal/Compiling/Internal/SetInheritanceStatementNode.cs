@@ -42,12 +42,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             CompilePushVal(statement.Rank, KindOfCompilePushVal.Direct);
 
             var command = new IntermediateScriptCommand();
-            command.OperationCode = OperationCode.PushVal;
-            command.Value = statement.GetAnnotationValue();
-
-            AddCommand(command);
-
-            command = new IntermediateScriptCommand();
+            command.AnnotatedItem = statement;
 
             if (statement.HasNot)
             {

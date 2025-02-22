@@ -58,7 +58,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         public void SetValue(IMonitorLogger logger, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            logger.Info("2C6EBD07-1417-4C62-90E1-441DB3CFFF73", $"value = {value}");
+            //logger.Info("2C6EBD07-1417-4C62-90E1-441DB3CFFF73", $"value = {value}");
 
             if(_value == value)
             {

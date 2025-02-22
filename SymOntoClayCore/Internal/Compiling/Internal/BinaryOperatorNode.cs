@@ -68,8 +68,14 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         {
             var kind = expression.Kind;
 
+#if DEBUG
+            //Info("465E1C24-D9C6-4124-8574-2378803CBA55", $"kind = {kind}");
+            //Info("CC50F18A-656F-4BFC-9A0B-9F495BD44EB5", $"expression = {expression}");
+#endif
+
             switch (kind)
             {
+                case KindOfAstExpression.ConstValue:
                 case KindOfAstExpression.Var:
                     {
                         var leftNode = new ExpressionNode(_context, KindOfCompilePushVal.Direct);

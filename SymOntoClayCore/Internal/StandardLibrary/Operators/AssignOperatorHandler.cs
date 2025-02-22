@@ -113,8 +113,20 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                                             }
                                             else
                                             {
-                                                throw new NotImplementedException("4E4695A2-4FAC-4584-9890-21E6D624E9DF");
-                                            }                                            
+                                                var kindOfProperty = property.KindOfProperty;
+
+                                                switch(kindOfProperty)
+                                                {
+                                                    case KindOfProperty.Auto:
+                                                        property.SetValue(logger, rightOperand, localCodeExecutionContext);
+                                                        return new CallResult(rightOperand);
+
+                                                    default:
+                                                        throw new ArgumentOutOfRangeException(nameof(kindOfProperty), kindOfProperty, null);
+                                                }
+
+                                                //throw new NotImplementedException("4E4695A2-4FAC-4584-9890-21E6D624E9DF");
+                                            }
 
                                         default:
                                             throw new ArgumentOutOfRangeException(nameof(callMode), callMode, null);

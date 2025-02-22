@@ -40,13 +40,12 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         {
             CompilePushVal(expression.CodeItem, KindOfCompilePushVal.Direct);
 
-            CompilePushAnnotation(expression);
-           
             if(expression.CodeItem.IsAnonymous)
             {
                 var command = new IntermediateScriptCommand();
 
                 command.OperationCode = OperationCode.Instantiate;
+                command.AnnotatedItem = expression;
 
                 AddCommand(command);
             }
@@ -55,6 +54,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 var command = new IntermediateScriptCommand();
 
                 command.OperationCode = OperationCode.CodeItemDecl;
+                command.AnnotatedItem = expression;
 
                 AddCommand(command);
 

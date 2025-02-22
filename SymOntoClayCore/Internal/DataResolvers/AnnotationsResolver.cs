@@ -44,7 +44,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private SynonymsResolver _synonymsResolver;
 
-        public Value GetSettings(IMonitorLogger logger, Value annotatedItem, StrongIdentifierValue key, ILocalCodeExecutionContext localCodeExecutionContext)
+        public Value GetSettings(IMonitorLogger logger, IAnnotatedItem annotatedItem, StrongIdentifierValue key, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var value = annotatedItem.GetSettings(key);
 

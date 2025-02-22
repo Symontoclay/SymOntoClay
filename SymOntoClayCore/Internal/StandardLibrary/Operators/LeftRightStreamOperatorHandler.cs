@@ -48,7 +48,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         private readonly ChannelsResolver _channelsResolver;
 
         /// <inheritdoc/>
-        public CallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
+        public CallResult Call(IMonitorLogger logger, Value leftOperand, Value rightOperand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
 #if DEBUG
             //Info("C1C8D33E-AC4C-4C0A-9328-6A320AD57291", $"leftOperand = {leftOperand}");

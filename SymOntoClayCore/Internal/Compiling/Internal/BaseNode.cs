@@ -56,41 +56,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             _result.AddRange(commands);
         }
         
-        //protected void CompileValue(Value value)
-        //{
-        //    if(value.IsStrongIdentifierValue)
-        //    {
-        //        var name = value.AsStrongIdentifierValue;
-
-        //        var kindOfName = name.KindOfName;
-
-        //        switch(kindOfName)
-        //        {
-        //            case KindOfName.Concept:
-        //            case KindOfName.Channel:
-        //            case KindOfName.Entity:
-        //                CompilePushVal(value);
-        //                break;
-
-        //            case KindOfName.SystemVar:
-        //            case KindOfName.Var:
-        //                CompilePushVal(value);
-        //                break;
-
-        //            default:
-        //                throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
-        //        }
-
-        //        return;
-        //    }
-
-        //    var command = new IntermediateScriptCommand();
-        //    command.OperationCode = OperationCode.PushVal;
-        //    command.Value = value;
-
-        //    AddCommand(command);
-        //}
-
         protected void CompileVarDecl(IVarDecl varDeclAstExpression)
         {
             CompilePushVal(varDeclAstExpression.Name, KindOfCompilePushVal.Direct);
@@ -100,11 +65,10 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 CompilePushVal(typeItem, KindOfCompilePushVal.Direct);
             }
             
-            CompilePushAnnotation(varDeclAstExpression);
-
             var command = new IntermediateScriptCommand();
             command.OperationCode = OperationCode.VarDecl;
             command.CountParams = varDeclAstExpression.TypesList.Count;
+            command.AnnotatedItem = varDeclAstExpression;
 
             AddCommand(command);
         }
@@ -171,16 +135,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfCompilePushVal), kindOfCompilePushVal, null);
             }
-        }
-
-        [Obsolete("It is refactored", true)]
-        protected void CompilePushAnnotation(IAnnotatedItem annotatedItem)
-        {
-            var command = new IntermediateScriptCommand();
-            command.OperationCode = OperationCode.PushVal;
-            command.Value = annotatedItem.GetAnnotationValue();
-
-            AddCommand(command);
         }
 
 #if DEBUG

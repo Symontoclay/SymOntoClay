@@ -52,8 +52,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
                 CompilePushVal(field.Name, KindOfCompilePushVal.Direct);
 
-                CompilePushAnnotation(field);
-
                 var command = new IntermediateScriptCommand();
                 command.OperationCode = OperationCode.CallBinOp;
                 command.KindOfOperator = KindOfOperator.Assign;

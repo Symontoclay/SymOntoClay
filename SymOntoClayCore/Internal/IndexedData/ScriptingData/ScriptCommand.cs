@@ -38,6 +38,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
         public int Position { get; set; }
         public Value Value { get; set; }
+        public IAnnotatedItem AnnotatedItem { get; set; }
         public BaseCompoundTask CompoundTask { get; set; }
         public int TargetPosition { get; set; }
         public KindOfOperator KindOfOperator { get; set; } = KindOfOperator.Unknown;
@@ -63,8 +64,9 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
 
             result.OperationCode = OperationCode;
             result.Position = Position;
-            result.Value = Value?.CloneValue(context);
-            result.CompoundTask = CompoundTask?.CloneBaseCompoundTask(context);
+            result.Value = Value;
+            result.AnnotatedItem = result.AnnotatedItem;
+            result.CompoundTask = CompoundTask;
             result.TargetPosition = TargetPosition;
             result.KindOfOperator = KindOfOperator;
             result.CountParams = CountParams;
@@ -95,7 +97,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
             sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
 
             sb.PrintObjProp(n, nameof(Value), Value);
-
+            sb.PrintObjProp(n, nameof(AnnotatedItem), AnnotatedItem);
             sb.PrintObjProp(n, nameof(CompoundTask), CompoundTask);
 
             sb.AppendLine($"{spaces}{nameof(TargetPosition)} = {TargetPosition}");
@@ -128,7 +130,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
             sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
 
             sb.PrintShortObjProp(n, nameof(Value), Value);
-
+            sb.PrintShortObjProp(n, nameof(AnnotatedItem), AnnotatedItem);
             sb.PrintShortObjProp(n, nameof(CompoundTask), CompoundTask);
 
             sb.AppendLine($"{spaces}{nameof(TargetPosition)} = {TargetPosition}");
@@ -161,7 +163,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
             sb.AppendLine($"{spaces}{nameof(Position)} = {Position}");
 
             sb.PrintBriefObjProp(n, nameof(Value), Value);
-
+            sb.PrintBriefObjProp(n, nameof(AnnotatedItem), AnnotatedItem);
             sb.PrintBriefObjProp(n, nameof(CompoundTask), CompoundTask);
 
             sb.AppendLine($"{spaces}{nameof(TargetPosition)} = {TargetPosition}");

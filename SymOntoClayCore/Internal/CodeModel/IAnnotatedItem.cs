@@ -20,13 +20,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Common;
+using SymOntoClay.Core.DebugHelpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public interface IAnnotatedItem
+    public interface IAnnotatedItem: IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToDbgString, IObjectToHumanizedString
     {
         IList<Annotation> Annotations { get; }
         void AddAnnotation(Annotation annotation);

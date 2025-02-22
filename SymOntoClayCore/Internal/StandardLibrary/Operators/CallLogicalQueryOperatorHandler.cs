@@ -55,7 +55,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         private readonly ILogicalStorage _globalLogicalStorage;        
 
         /// <inheritdoc/>
-        public CallResult Call(IMonitorLogger logger, Value operand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
+        public CallResult Call(IMonitorLogger logger, Value operand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             if (!operand.IsLogicalQueryOperationValue)
             {
@@ -69,17 +69,17 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             switch(kindOfLogicalQueryOperation)
             {
                 case KindOfLogicalQueryOperation.Select:
-                    return ProcessSelect(logger, val, annotation, localCodeExecutionContext);
+                    return ProcessSelect(logger, val, annotatedItem, localCodeExecutionContext);
 
                 case KindOfLogicalQueryOperation.Insert:
-                    return ProcessInsert(logger, val, annotation, localCodeExecutionContext);
+                    return ProcessInsert(logger, val, annotatedItem, localCodeExecutionContext);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfLogicalQueryOperation), kindOfLogicalQueryOperation, null);
             }
         }
 
-        private CallResult ProcessSelect(IMonitorLogger logger, LogicalQueryOperationValue operand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
+        private CallResult ProcessSelect(IMonitorLogger logger, LogicalQueryOperationValue operand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             if(operand.Target == null)
             {
@@ -116,7 +116,7 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
             return new CallResult(new LogicalSearchResultValue(searchResult));
         }
 
-        private CallResult ProcessInsert(IMonitorLogger logger, LogicalQueryOperationValue operand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext)
+        private CallResult ProcessInsert(IMonitorLogger logger, LogicalQueryOperationValue operand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             if (operand.Target == null)
             {

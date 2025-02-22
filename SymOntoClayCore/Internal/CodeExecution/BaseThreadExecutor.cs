@@ -362,51 +362,51 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                         break;
 
                     case OperationCode.Call:
-                        CallFunction(KindOfFunctionParameters.NoParameters, 0, SyncOption.Sync);
+                        CallFunction(KindOfFunctionParameters.NoParameters, 0, SyncOption.Sync, currentCommand.AnnotatedItem);
                         break;
 
                     case OperationCode.Call_P:
-                        CallFunction(KindOfFunctionParameters.PositionedParameters, currentCommand.CountParams, SyncOption.Sync);
+                        CallFunction(KindOfFunctionParameters.PositionedParameters, currentCommand.CountParams, SyncOption.Sync, currentCommand.AnnotatedItem);
                         break;
 
                     case OperationCode.Call_N:
-                        CallFunction(KindOfFunctionParameters.NamedParameters, currentCommand.CountParams, SyncOption.Sync);
+                        CallFunction(KindOfFunctionParameters.NamedParameters, currentCommand.CountParams, SyncOption.Sync, currentCommand.AnnotatedItem);
                         break;
 
                     case OperationCode.AsyncCall:
-                        CallFunction(KindOfFunctionParameters.NoParameters, 0, SyncOption.IndependentAsync);
+                        CallFunction(KindOfFunctionParameters.NoParameters, 0, SyncOption.IndependentAsync, currentCommand.AnnotatedItem);
                         break;
 
                     case OperationCode.AsyncCall_P:
-                        CallFunction(KindOfFunctionParameters.PositionedParameters, currentCommand.CountParams, SyncOption.IndependentAsync);
+                        CallFunction(KindOfFunctionParameters.PositionedParameters, currentCommand.CountParams, SyncOption.IndependentAsync, currentCommand.AnnotatedItem);
                         break;
 
                     case OperationCode.AsyncCall_N:
-                        CallFunction(KindOfFunctionParameters.NamedParameters, currentCommand.CountParams, SyncOption.IndependentAsync);
+                        CallFunction(KindOfFunctionParameters.NamedParameters, currentCommand.CountParams, SyncOption.IndependentAsync, currentCommand.AnnotatedItem);
                         break;
 
                     case OperationCode.AsyncChildCall:
-                        CallFunction(KindOfFunctionParameters.NoParameters, 0, SyncOption.ChildAsync);
+                        CallFunction(KindOfFunctionParameters.NoParameters, 0, SyncOption.ChildAsync, currentCommand.AnnotatedItem);
                         break;
 
                     case OperationCode.AsyncChildCall_P:
-                        CallFunction(KindOfFunctionParameters.PositionedParameters, currentCommand.CountParams, SyncOption.ChildAsync);
+                        CallFunction(KindOfFunctionParameters.PositionedParameters, currentCommand.CountParams, SyncOption.ChildAsync, currentCommand.AnnotatedItem);
                         break;
 
                     case OperationCode.AsyncChildCall_N:
-                        CallFunction(KindOfFunctionParameters.NamedParameters, currentCommand.CountParams, SyncOption.ChildAsync);
+                        CallFunction(KindOfFunctionParameters.NamedParameters, currentCommand.CountParams, SyncOption.ChildAsync, currentCommand.AnnotatedItem);
                         break;
 
                     case OperationCode.CallCtor:
-                        CallConstructor(KindOfFunctionParameters.NoParameters, 0);
+                        CallConstructor(KindOfFunctionParameters.NoParameters, 0, currentCommand.AnnotatedItem);
                         break;
 
                     case OperationCode.CallCtor_N:
-                        CallConstructor(KindOfFunctionParameters.NamedParameters, currentCommand.CountParams);
+                        CallConstructor(KindOfFunctionParameters.NamedParameters, currentCommand.CountParams, currentCommand.AnnotatedItem);
                         break;
 
                     case OperationCode.CallCtor_P:
-                        CallConstructor(KindOfFunctionParameters.PositionedParameters, currentCommand.CountParams);
+                        CallConstructor(KindOfFunctionParameters.PositionedParameters, currentCommand.CountParams, currentCommand.AnnotatedItem);
                         break;
 
                     case OperationCode.CallDefaultCtors:
@@ -688,8 +688,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             var valuesStack = _currentCodeFrame.ValuesStack;
 
-            var annotationValue = TryGetAnnotationValue();
-
             var handlerValue = TryResolveFromVarOrExpr(valuesStack.Pop());
 
             var kindOfLifeCycleEventValue = TryResolveFromVarOrExpr(valuesStack.Pop());
@@ -723,8 +721,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void ProcessInstantiate(KindOfFunctionParameters kindOfParameters, int parametersCount)
         {
             var valuesStack = _currentCodeFrame.ValuesStack;
-
-            var annotationValue = valuesStack.Pop();
 
             var prototypeValue = valuesStack.Pop();
 
@@ -1106,7 +1102,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessCallUnOp(ScriptCommand currentCommand)
         {
-            var paramsList = TakePositionedParameters(2);
+            var paramsList = TakePositionedParameters(1);
 
             var kindOfOperator = currentCommand.KindOfOperator;
 
@@ -1118,7 +1114,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessCallBinOp(ScriptCommand currentCommand)
         {
-            var paramsList = TakePositionedParameters(3);
+            var paramsList = TakePositionedParameters(2);
 
             var kindOfOperator = currentCommand.KindOfOperator;
 
@@ -1145,14 +1141,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             var valueStack = _currentCodeFrame.ValuesStack;
 
-            var annotation = valueStack.Pop();
-
             var typesCount = currentCommand.CountParams;
 
             var varPtr = new Var();
 
-            var annotationValue = annotation.AsAnnotationValue;
-            var annotatedItem = annotationValue.AnnotatedItem;
+            var annotatedItem = currentCommand.AnnotatedItem;
 
             if(annotatedItem is Field)
             {
@@ -1199,10 +1192,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var valueStack = _currentCodeFrame.ValuesStack;
 
-            var annotation = valueStack.Pop();
-
-            var annotationValue = annotation.AsAnnotationValue;
-            var annotatedItem = annotationValue.AnnotatedItem;
+            var annotatedItem = currentCommand.AnnotatedItem;
 
 #if DEBUG
             //Info("8A246ADA-0F77-48CA-AA29-EF5FC65A09B8", $"annotatedItem?.GetType().FullName = {annotatedItem?.GetType().FullName}");
@@ -1227,8 +1217,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private void ProcessCodeItemDecl(ScriptCommand currentCommand)
         {
             var valuesStack = _currentCodeFrame.ValuesStack;
-
-            var annotationValue = valuesStack.Pop();
 
             var prototypeValue = valuesStack.Pop();
 
@@ -1354,19 +1342,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _currentCodeFrame.CurrentPosition++;
         }
 
-        private AnnotationValue TryGetAnnotationValue()
-        {
-            var value = _currentCodeFrame.ValuesStack.Peek();
-
-            if(value.IsAnnotationValue)
-            {
-                _currentCodeFrame.ValuesStack.Pop();
-                return value.AsAnnotationValue;
-            }
-
-            return null;
-        }
-
         private Value TryResolveFromVarOrExpr(Value operand)
         {
             return _valueResolvingHelper.TryResolveFromVarOrExpr(Logger, operand, _currentCodeFrame.LocalContext);
@@ -1400,8 +1375,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 _currentCodeFrame.CurrentPosition++;
                 return;
             }
-
-            var annotation = _currentCodeFrame.ValuesStack.Pop();
 
             var positionedParameters = TakePositionedParameters(currentCommand.CountParams, true);
 
@@ -1775,11 +1748,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             return result;
         }
 
-        private void CallConstructor(KindOfFunctionParameters kindOfParameters, int parametersCount)
+        private void CallConstructor(KindOfFunctionParameters kindOfParameters, int parametersCount, IAnnotatedItem annotatedItem)
         {
             var valueStack = _currentCodeFrame.ValuesStack;
-
-            var annotation = valueStack.Pop();
 
             var caller = TryResolveFromVarOrExpr(valueStack.Pop());
 
@@ -1832,7 +1803,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     throw new ArgumentOutOfRangeException(nameof(kindOfParameters), kindOfParameters, null);
             }
 
-            CallExecutable(constructor, null, kindOfParameters, namedParameters, positionedParameters, annotation, SyncOption.Ctor);
+            CallExecutable(constructor, null, kindOfParameters, namedParameters, positionedParameters, annotatedItem, SyncOption.Ctor);
         }
 
         private void CallDefaultCtors()
@@ -1984,7 +1955,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
         }
 
-        private void CallFunction(KindOfFunctionParameters kindOfParameters, int parametersCount, SyncOption syncOption)
+        private void CallFunction(KindOfFunctionParameters kindOfParameters, int parametersCount, SyncOption syncOption, IAnnotatedItem annotatedItem)
         {
 #if DEBUG
             //Info("7F3384D3-5741-41D8-89CD-4A0A515AA647", "Begin");
@@ -1995,9 +1966,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var valueStack = _currentCodeFrame.ValuesStack;
 
-            var annotation = valueStack.Pop();
-
-            var caller = TryResolveFromVarOrExpr(valueStack.Pop());
+            var caller = valueStack.Pop();
 
 #if DEBUG
             //Info("B480D9AB-70E4-4D5B-BFC0-AB9274AD0A64", $"caller = {caller}");
@@ -2055,7 +2024,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (caller.IsPointRefValue)
             {
-                CallPointRefValue(callMethodId, caller.AsPointRefValue, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
+                CallPointRefValue(callMethodId, caller.AsPointRefValue, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
 
                 Logger.EndCallMethod("A96D8714-A701-4367-844C-51B0F2AD95F5", callMethodId);
 
@@ -2064,7 +2033,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (caller.IsStrongIdentifierValue)
             {
-                CallStrongIdentifierValue(callMethodId, caller.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption, true);
+                CallStrongIdentifierValue(callMethodId, caller.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption, true);
 
                 Logger.EndCallMethod("EAEBB22E-DAD3-4359-9EA6-B5B73EF65587", callMethodId);
 
@@ -2073,7 +2042,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if(caller.IsInstanceValue)
             {
-                CallInstanceValue(callMethodId, caller.AsInstanceValue, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
+                CallInstanceValue(callMethodId, caller.AsInstanceValue, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
 
                 Logger.EndCallMethod("8AFEC685-DFF0-4C36-9942-A475C4313BEF", callMethodId);
 
@@ -2085,23 +2054,23 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void CallInstanceValue(string callMethodId, InstanceValue caller,
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
-            Value annotation, SyncOption syncOption)
+            IAnnotatedItem annotatedItem, SyncOption syncOption)
         {
             var executable = caller.GetExecutable(Logger, kindOfParameters, namedParameters, positionedParameters);
 
-            CallExecutable(callMethodId, executable, executable.OwnLocalCodeExecutionContext, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
+            CallExecutable(callMethodId, executable, executable.OwnLocalCodeExecutionContext, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
         }
 
         private void CallPointRefValue(string callMethodId, PointRefValue caller,
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
-            Value annotation, SyncOption syncOption)
+            IAnnotatedItem annotatedItem, SyncOption syncOption)
         {
             var callerLeftOperand = caller.LeftOperand;
             var callerRightOperand = caller.RightOperand;
 
             if (callerLeftOperand.IsHostValue)
             {
-                CallHost(callMethodId, callerRightOperand.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
+                CallHost(callMethodId, callerRightOperand.AsStrongIdentifierValue, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
                 return;
             }
 
@@ -2114,12 +2083,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var method = callerLeftOperand.GetMethod(Logger, methodName, kindOfParameters, namedParameters, positionedParameters);
 
-            CallExecutable(callMethodId, method, null, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
+            CallExecutable(callMethodId, method, null, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
         }
 
         private void CallHost(string callMethodId, StrongIdentifierValue methodName, 
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
-            Value annotation, SyncOption syncOption)
+            IAnnotatedItem annotatedItem, SyncOption syncOption)
         {
 #if DEBUG
             //Log($"methodName = {methodName.ToHumanizedString()}");
@@ -2150,9 +2119,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             AnnotationSystemEvent weakCancelAnnotationSystemEvent = null;
             AnnotationSystemEvent errorAnnotationSystemEvent = null;
 
-            if (annotation != null)
+            if (annotatedItem != null)
             {
-                var annotationSystemEventsDict = AnnotationsHelper.GetAnnotationSystemEventsDictFromAnnotaion(annotation);
+                var annotationSystemEventsDict = AnnotationsHelper.GetAnnotationSystemEventsDict(annotatedItem);
 
                 annotationSystemEventsDict.TryGetValue(KindOfAnnotationSystemEvent.Complete, out completeAnnotationSystemEvent);
                 annotationSystemEventsDict.TryGetValue(KindOfAnnotationSystemEvent.Cancel, out cancelAnnotationSystemEvent);
@@ -2179,8 +2148,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 _instancesStorage.AppendAndTryStartProcessInfo(Logger, callMethodId, processInfo);
 
-                var timeout = GetTimeoutFromAnnotation(annotation);
-                var timeoutCancellationMode = GetTimeoutCancellationModeFromAnnotation(annotation);
+                var timeout = GetTimeoutFromAnnotation(annotatedItem);
+                var timeoutCancellationMode = GetTimeoutCancellationModeFromAnnotation(annotatedItem);
 
                 if (syncOption == SyncOption.Sync)
                 {
@@ -2317,7 +2286,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void CallStrongIdentifierValue(string callMethodId, StrongIdentifierValue methodName,
             KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters,
-            Value annotation, SyncOption syncOption, bool mayCallHost)
+            IAnnotatedItem annotatedItem, SyncOption syncOption, bool mayCallHost)
         {
 #if DEBUG
             //Info("03ED4F39-8D56-49C9-9E33-80B4C7674FEA", $"methodName = {methodName}");
@@ -2351,14 +2320,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             {
                 if(mayCallHost)
                 {
-                    CallHost(callMethodId, methodName, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
+                    CallHost(callMethodId, methodName, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
                     return;
                 }
 
                 throw new Exception($"Method '{methodName.NameValue}' is not found.");
             }
 
-            CallExecutable(callMethodId, method, null, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
+            CallExecutable(callMethodId, method, null, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
         }
 
         private void ExecRuleInstanceValue(RuleInstance ruleInstance)
@@ -2370,9 +2339,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             ExecuteCodeFrame(codeFrame, null, SyncOption.Sync);
         }
 
-        private long? GetTimeoutFromAnnotation(Value annotation)
+        private long? GetTimeoutFromAnnotation(IAnnotatedItem annotatedItem)
         {
-            var initialValue = GetInitialSettingsValueFromAnnotation(annotation, _timeoutName);
+            var initialValue = GetInitialSettingsValueFromAnnotation(annotatedItem, _timeoutName);
 
             if(initialValue == null)
             {
@@ -2384,9 +2353,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private TimeoutCancellationMode _defaultTimeoutCancellationMode = TimeoutCancellationMode.WeakCancel;
 
-        private TimeoutCancellationMode GetTimeoutCancellationModeFromAnnotation(Value annotation)
+        private TimeoutCancellationMode GetTimeoutCancellationModeFromAnnotation(IAnnotatedItem annotatedItem)
         {
-            var meaningRoles = annotation?.MeaningRolesList;
+            var meaningRoles = annotatedItem?.MeaningRolesList;
 
             if(meaningRoles.IsNullOrEmpty())
             {
@@ -2406,9 +2375,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             return _defaultTimeoutCancellationMode;
         }
 
-        private float? GetPriorityFromAnnotation(Value annotation)
+        private float? GetPriorityFromAnnotation(IAnnotatedItem annotatedItem)
         {
-            var numberValue = GetSettingsFromAnnotation(annotation, _priorityName);
+            var numberValue = GetSettingsFromAnnotation(annotatedItem, _priorityName);
 
             if (numberValue == null)
             {
@@ -2418,9 +2387,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             return Convert.ToSingle(numberValue.SystemValue.Value);
         }
 
-        private NumberValue GetSettingsFromAnnotation(Value annotation, StrongIdentifierValue settingName)
+        private NumberValue GetSettingsFromAnnotation(IAnnotatedItem annotatedItem, StrongIdentifierValue settingName)
         {
-            var initialValue = GetInitialSettingsValueFromAnnotation(annotation, settingName);
+            var initialValue = GetInitialSettingsValueFromAnnotation(annotatedItem, settingName);
 
             if (initialValue == null)
             {
@@ -2437,14 +2406,14 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             return numberValue;
         }
 
-        private Value GetInitialSettingsValueFromAnnotation(Value annotation, StrongIdentifierValue settingName)
+        private Value GetInitialSettingsValueFromAnnotation(IAnnotatedItem annotatedItem, StrongIdentifierValue settingName)
         {
-            if (annotation == null)
+            if (annotatedItem == null)
             {
                 return null;
             }
 
-            var initialValue = _annotationsResolver.GetSettings(Logger, annotation, settingName, _currentCodeFrame.LocalContext);
+            var initialValue = _annotationsResolver.GetSettings(Logger, annotatedItem, settingName, _currentCodeFrame.LocalContext);
 
             if (initialValue == null || initialValue.KindOfValue == KindOfValue.NullValue)
             {
@@ -2470,12 +2439,12 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             CallExecutable(executable, null, KindOfFunctionParameters.PositionedParameters, null, positionedParameters, null, SyncOption.Sync);
         }
 
-        private void CallExecutable(IExecutable executable, ILocalCodeExecutionContext ownLocalCodeExecutionContext, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, Value annotation, SyncOption syncOption)
+        private void CallExecutable(IExecutable executable, ILocalCodeExecutionContext ownLocalCodeExecutionContext, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, IAnnotatedItem annotatedItem, SyncOption syncOption)
         {
-            CallExecutable(string.Empty, executable, ownLocalCodeExecutionContext, kindOfParameters, namedParameters, positionedParameters, annotation, syncOption);
+            CallExecutable(string.Empty, executable, ownLocalCodeExecutionContext, kindOfParameters, namedParameters, positionedParameters, annotatedItem, syncOption);
         }
 
-        private void CallExecutable(string callMethodId, IExecutable executable, ILocalCodeExecutionContext ownLocalCodeExecutionContext, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, Value annotation, SyncOption syncOption)
+        private void CallExecutable(string callMethodId, IExecutable executable, ILocalCodeExecutionContext ownLocalCodeExecutionContext, KindOfFunctionParameters kindOfParameters, Dictionary<StrongIdentifierValue, Value> namedParameters, List<Value> positionedParameters, IAnnotatedItem annotatedItem, SyncOption syncOption)
         {
 #if DEBUG
             //Info("B39E497B-B02E-41DD-AC8F-A69910597590", $"Begin");
@@ -2503,7 +2472,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 {
                     case KindOfFunctionParameters.NoParameters:
                         {
-                            var callResult = executable.SystemHandler.Call(Logger, new List<Value>(), targetLocalContext, _currentCodeFrame.CallMode);
+                            var callResult = executable.SystemHandler.Call(Logger, new List<Value>(), annotatedItem, targetLocalContext, _currentCodeFrame.CallMode);
 
                             switch(callResult.KindOfResult)
                             {
@@ -2519,7 +2488,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     case KindOfFunctionParameters.PositionedParameters:
                         {
-                            var callResult = executable.SystemHandler.Call(Logger, positionedParameters, targetLocalContext, _currentCodeFrame.CallMode);
+                            var callResult = executable.SystemHandler.Call(Logger, positionedParameters, annotatedItem, targetLocalContext, _currentCodeFrame.CallMode);
 
                             switch (callResult.KindOfResult)
                             {
@@ -2535,7 +2504,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                     case KindOfFunctionParameters.NamedParameters:
                         {
-                            var callResult = executable.SystemHandler.Call(Logger, namedParameters.ToDictionary(p => p.Key.NameValue, p => p.Value), annotation, targetLocalContext, _currentCodeFrame.CallMode);
+                            var callResult = executable.SystemHandler.Call(Logger, namedParameters.ToDictionary(p => p.Key.NameValue, p => p.Value), annotatedItem, targetLocalContext, _currentCodeFrame.CallMode);
 
                             switch (callResult.KindOfResult)
                             {
@@ -2566,9 +2535,9 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 AnnotationSystemEvent weakCancelAnnotationSystemEvent = null;
                 AnnotationSystemEvent errorAnnotationSystemEvent = null;
 
-                if (annotation != null)
+                if (annotatedItem != null)
                 {
-                    var annotationSystemEventsDict = AnnotationsHelper.GetAnnotationSystemEventsDictFromAnnotaion(annotation);
+                    var annotationSystemEventsDict = AnnotationsHelper.GetAnnotationSystemEventsDict(annotatedItem);
 
                     annotationSystemEventsDict.TryGetValue(KindOfAnnotationSystemEvent.Complete, out completeAnnotationSystemEvent);
                     annotationSystemEventsDict.TryGetValue(KindOfAnnotationSystemEvent.Cancel, out cancelAnnotationSystemEvent);
@@ -2588,7 +2557,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     targetLocalContext = executable.OwnLocalCodeExecutionContext;
                 }
 
-                var additionalSettings = GetAdditionalSettingsFromAnnotation(annotation, ownLocalCodeExecutionContext);
+                var additionalSettings = GetAdditionalSettingsFromAnnotation(annotatedItem, ownLocalCodeExecutionContext);
 
                 var newCodeFrame = _codeFrameService.ConvertExecutableToCodeFrame(Logger, callMethodId, executable, kindOfParameters, namedParameters, positionedParameters, targetLocalContext, 
                     additionalSettings);
@@ -2623,11 +2592,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
         }
 
-        private ConversionExecutableToCodeFrameAdditionalSettings GetAdditionalSettingsFromAnnotation(Value annotation, ILocalCodeExecutionContext ownLocalCodeExecutionContext)
+        private ConversionExecutableToCodeFrameAdditionalSettings GetAdditionalSettingsFromAnnotation(IAnnotatedItem annotatedItem, ILocalCodeExecutionContext ownLocalCodeExecutionContext)
         {
-            var timeout = GetTimeoutFromAnnotation(annotation);
-            var timeoutCancellationMode = GetTimeoutCancellationModeFromAnnotation(annotation);
-            var priority = GetPriorityFromAnnotation(annotation);
+            var timeout = GetTimeoutFromAnnotation(annotatedItem);
+            var timeoutCancellationMode = GetTimeoutCancellationModeFromAnnotation(annotatedItem);
+            var priority = GetPriorityFromAnnotation(annotatedItem);
 
             ConversionExecutableToCodeFrameAdditionalSettings additionalSettings = null;
 

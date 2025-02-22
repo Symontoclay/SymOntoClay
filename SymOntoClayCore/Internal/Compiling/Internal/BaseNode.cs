@@ -173,6 +173,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             }
         }
 
+        [Obsolete("It is refactored", true)]
         protected void CompilePushAnnotation(IAnnotatedItem annotatedItem)
         {
             var command = new IntermediateScriptCommand();

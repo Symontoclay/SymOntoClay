@@ -1,12 +1,11 @@
 ﻿app PeaceKeeper
 {
+    var @b: number = 2;
+
     on Enter =>
     {
         'Begin' >> @>log;
-        SomeAutoProp = 15;
-        SomeAutoProp >> @>log;
+        @b >> @>log;
         'End' >> @>log;
     }
-
-    prop SomeAutoProp: number;
 }

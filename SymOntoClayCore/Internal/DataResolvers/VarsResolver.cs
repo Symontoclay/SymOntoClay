@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
@@ -72,12 +73,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             varPtr.SetValue(logger, value);
         }
 
-        public void CheckFitVariableAndValue(IMonitorLogger logger, Var varItem, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
+        public void CheckFitVariableAndValue(IMonitorLogger logger, VarInstance varItem, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             CheckFitVariableAndValue(logger, varItem, value, localCodeExecutionContext, _defaultOptions);
         }
 
-        public void CheckFitVariableAndValue(IMonitorLogger logger, Var varItem, Value value, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public void CheckFitVariableAndValue(IMonitorLogger logger, VarInstance varItem, Value value, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             if (value.IsNullValue)
             {
@@ -106,11 +107,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             throw new Exception($"The value '{value.ToHumanizedString()}' does not fit to variable {varItem.ToHumanizedString()}");
         }
 
-        private Var CreateAndSaveLocalVariable(IMonitorLogger logger, StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext)
+        private VarInstance CreateAndSaveLocalVariable(IMonitorLogger logger, StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            var result = new Var();
-            result.Name = varName;
-            result.TypeOfAccess = TypeOfAccess.Local;
+            var result = new VarInstance(varName, TypeOfAccess.Local, _context);
 
             localCodeExecutionContext.Storage.VarStorage.Append(logger, result);
 
@@ -163,9 +162,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return varPtr.Value;
         }
 
-        public Var Resolve(IMonitorLogger logger, StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public VarInstance Resolve(IMonitorLogger logger, StrongIdentifierValue varName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-            Var varPtr = null;
+            VarInstance varPtr = null;
 
             if (localCodeExecutionContext.OwnerStorage != null)
             {
@@ -180,7 +179,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return NResolve(logger, varName, localCodeExecutionContext.Holder, localCodeExecutionContext.Storage, false, localCodeExecutionContext, options);
         }
 
-        private Var NResolve(IMonitorLogger logger, StrongIdentifierValue varName, StrongIdentifierValue holder, IStorage storage, bool privateOnly, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        private VarInstance NResolve(IMonitorLogger logger, StrongIdentifierValue varName, StrongIdentifierValue holder, IStorage storage, bool privateOnly, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             var storagesList = GetStoragesList(logger, storage, KindOfStoragesList.Var);
 
@@ -226,14 +225,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return OrderAndDistinctByInheritance(logger, filteredList, options).FirstOrDefault()?.ResultItem;
         }
 
-        private List<WeightedInheritanceResultItemWithStorageInfo<Var>> GetRawVarsList(IMonitorLogger logger, StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        private List<WeightedInheritanceResultItemWithStorageInfo<VarInstance>> GetRawVarsList(IMonitorLogger logger, StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             if (!storagesList.Any())
             {
-                return new List<WeightedInheritanceResultItemWithStorageInfo<Var>>();
+                return new List<WeightedInheritanceResultItemWithStorageInfo<VarInstance>>();
             }
 
-            var result = new List<WeightedInheritanceResultItemWithStorageInfo<Var>>();
+            var result = new List<WeightedInheritanceResultItemWithStorageInfo<VarInstance>>();
 
             foreach (var storageItem in storagesList)
             {
@@ -249,7 +248,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 foreach (var item in itemsList)
                 {
-                    result.Add(new WeightedInheritanceResultItemWithStorageInfo<Var>(item, distance, storage));
+                    result.Add(new WeightedInheritanceResultItemWithStorageInfo<VarInstance>(item, distance, storage));
                 }
             }
 

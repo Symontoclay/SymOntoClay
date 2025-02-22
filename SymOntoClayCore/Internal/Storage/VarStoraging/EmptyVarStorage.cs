@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using System;
@@ -49,18 +50,18 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
         }
 
         /// <inheritdoc/>
-        public void Append(IMonitorLogger logger, Var varItem)
+        public void Append(IMonitorLogger logger, VarInstance varItem)
         {
         }
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<Var>> GetVarDirectly(IMonitorLogger logger, StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<VarInstance>> GetVarDirectly(IMonitorLogger logger, StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
-            return new List<WeightedInheritanceResultItem<Var>>();
+            return new List<WeightedInheritanceResultItem<VarInstance>>();
         }
 
         /// <inheritdoc/>
-        public Var GetLocalVarDirectly(IMonitorLogger logger, StrongIdentifierValue name)
+        public VarInstance GetLocalVarDirectly(IMonitorLogger logger, StrongIdentifierValue name)
         {
             return null;
         }

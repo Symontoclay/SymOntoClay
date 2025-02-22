@@ -40,40 +40,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override KindOfCodeEntity Kind => KindOfCodeEntity.Var;
 
-        public Value Value
-        { 
-            get
-            {
-                lock(_lockObj)
-                {
-                    return _value;
-                }
-            }
-        }
-
-        /// <inheritdoc/>
-        public override void SetValue(IMonitorLogger logger, Value value)
-        {
-            lock (_lockObj)
-            {
-                if (_value == value)
-                {
-                    return;
-                }
-
-                _value = value;
-
-                OnChanged?.Invoke(Name);
-            }
-        }
-
-        private Value _value = new NullValue();
-
         public List<StrongIdentifierValue> TypesList { get; set; } = new List<StrongIdentifierValue>();
-
-        public event Action<StrongIdentifierValue> OnChanged;
-
-        private readonly object _lockObj = new object();
 
         /// <inheritdoc/>
         public override CodeItem CloneCodeItem(Dictionary<object, object> context)
@@ -106,7 +73,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         protected void AppendVar(Var source, Dictionary<object, object> context)
         {
-            SetValue(null, source.Value?.CloneValue(context));
             TypesList = source.TypesList?.Select(p => p.Clone(context)).ToList();
 
             AppendCodeItem(source, context);
@@ -118,7 +84,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintObjProp(n, nameof(Value), Value);
+            //sb.PrintObjProp(n, nameof(Value), Value);
             sb.PrintObjListProp(n, nameof(TypesList), TypesList);
 
             sb.Append(base.PropertiesToString(n));
@@ -131,7 +97,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintShortObjProp(n, nameof(Value), Value);
+            //sb.PrintShortObjProp(n, nameof(Value), Value);
             sb.PrintShortObjListProp(n, nameof(TypesList), TypesList);
 
             sb.Append(base.PropertiesToShortString(n));
@@ -144,7 +110,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             var spaces = DisplayHelper.Spaces(n);
             var sb = new StringBuilder();
 
-            sb.PrintBriefObjProp(n, nameof(Value), Value);
+            //sb.PrintBriefObjProp(n, nameof(Value), Value);
             sb.PrintBriefObjListProp(n, nameof(TypesList), TypesList);
 
             sb.Append(base.PropertiesToBriefString(n));
@@ -175,7 +141,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private string NToHumanizedString(DebugHelperOptions options)
         {
-            return $"{Name.NameValue}: {TypesListToHumanizedString()} = {(Value == null ? "NULL" : Value.ToHumanizedLabel(options))}";
+            return $"{Name.NameValue}: {TypesListToHumanizedString()}";// = {(Value == null ? "NULL" : Value.ToHumanizedLabel(options))}
         }
 
         /// <inheritdoc/>

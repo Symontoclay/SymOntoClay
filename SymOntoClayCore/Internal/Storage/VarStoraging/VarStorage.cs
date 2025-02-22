@@ -24,6 +24,7 @@ using Newtonsoft.Json;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
@@ -59,10 +60,10 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
         private List<IVarStorage> _parentVarStoragesList = new List<IVarStorage>();
 
-        private Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<Var>>> _variablesDict = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<Var>>>();
-        private Dictionary<StrongIdentifierValue, Var> _localVariablesDict = new Dictionary<StrongIdentifierValue, Var>();
+        private Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<VarInstance>>> _variablesDict = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<VarInstance>>>();
+        private Dictionary<StrongIdentifierValue, VarInstance> _localVariablesDict = new Dictionary<StrongIdentifierValue, VarInstance>();
 
-        private List<Var> _allVariablesList = new List<Var>();
+        private List<VarInstance> _allVariablesList = new List<VarInstance>();
 
         private Dictionary<StrongIdentifierValue, Value> _systemVariables = new Dictionary<StrongIdentifierValue, Value>();
         
@@ -95,7 +96,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
         }
 
         /// <inheritdoc/>
-        public void Append(IMonitorLogger logger, Var varItem)
+        public void Append(IMonitorLogger logger, VarInstance varItem)
         {
             lock (_lockObj)
             {
@@ -103,7 +104,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
             }
         }
 
-        private void NAppendVar(IMonitorLogger logger, Var varItem)
+        private void NAppendVar(IMonitorLogger logger, VarInstance varItem)
         {
             if(_allVariablesList.Contains(varItem))
             {
@@ -114,12 +115,10 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
             if (varItem.TypeOfAccess != TypeOfAccess.Local)
             {
-                AnnotatedItemHelper.CheckAndFillUpHolder(logger, varItem, _realStorageContext.MainStorageContext.CommonNamesStorage);
+                AnnotatedItemHelper.CheckAndFillUpHolder(logger, varItem.CodeItem, _realStorageContext.MainStorageContext.CommonNamesStorage);
             }
 
             varItem.OnChanged += VarItem_OnChanged;
-
-            varItem.CheckDirty();
 
             var name = varItem.Name;
 
@@ -132,7 +131,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
             var holder = varItem.Holder;
 
-            Dictionary<StrongIdentifierValue, List<Var>> dict = null;
+            Dictionary<StrongIdentifierValue, List<VarInstance>> dict = null;
 
             if (_variablesDict.ContainsKey(holder))
             {
@@ -140,7 +139,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
             }
             else
             {
-                dict = new Dictionary<StrongIdentifierValue, List<Var>>();
+                dict = new Dictionary<StrongIdentifierValue, List<VarInstance>>();
                 _variablesDict[holder] = dict;
             }
 
@@ -160,14 +159,14 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
             }
             else
             {
-                dict[name] = new List<Var> { varItem };
+                dict[name] = new List<VarInstance> { varItem };
             }
         }
 
-        private static List<WeightedInheritanceResultItem<Var>> _emptyVarsList = new List<WeightedInheritanceResultItem<Var>>();
+        private static List<WeightedInheritanceResultItem<VarInstance>> _emptyVarsList = new List<WeightedInheritanceResultItem<VarInstance>>();
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<Var>> GetVarDirectly(IMonitorLogger logger, StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
+        public IList<WeightedInheritanceResultItem<VarInstance>> GetVarDirectly(IMonitorLogger logger, StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             lock (_lockObj)
             {
@@ -176,7 +175,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
                     return _emptyVarsList;
                 }
 
-                var result = new List<WeightedInheritanceResultItem<Var>>();
+                var result = new List<WeightedInheritanceResultItem<VarInstance>>();
 
                 foreach (var weightedInheritanceItem in weightedInheritanceItems)
                 {
@@ -192,7 +191,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
                             foreach (var targetVal in targetList)
                             {
-                                result.Add(new WeightedInheritanceResultItem<Var>(targetVal, weightedInheritanceItem));
+                                result.Add(new WeightedInheritanceResultItem<VarInstance>(targetVal, weightedInheritanceItem));
                             }
                         }
                     }
@@ -202,7 +201,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
                 {
                     var targetVar = _localVariablesDict[name];
 
-                    result.Add(new WeightedInheritanceResultItem<Var>(targetVar, null));
+                    result.Add(new WeightedInheritanceResultItem<VarInstance>(targetVar, null));
                 }
 
                 return result;
@@ -210,7 +209,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
         }
 
         /// <inheritdoc/>
-        public Var GetLocalVarDirectly(IMonitorLogger logger, StrongIdentifierValue name)
+        public VarInstance GetLocalVarDirectly(IMonitorLogger logger, StrongIdentifierValue name)
         {
             lock (_lockObj)
             {
@@ -239,10 +238,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
                     return;
                 }
 
-                var varItem = new Var();
-                varItem.Name = varName;
-                
-                varItem.TypeOfAccess = TypeOfAccess.Local;
+                var varItem = new VarInstance(varName, TypeOfAccess.Local, _mainStorageContext);
 
                 NAppendVar(logger, varItem);
 

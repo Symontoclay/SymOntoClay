@@ -20,18 +20,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors;
 using SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers;
-using SymOntoClay.Core.Internal.Storage;
-using SymOntoClay.Core.Internal.Storage.LogicalStoraging;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
@@ -63,7 +55,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 _processedItems.Add(ruleInstance);
             }
 
-            var setResult = _setConditionalTriggerExecutor.Run(out List<List<Var>> varsList, ruleInstance);
+            var setResult = _setConditionalTriggerExecutor.Run(out List<List<VarInstance>> varsList, ruleInstance);
 
             if(!setResult.IsSuccess)
             {

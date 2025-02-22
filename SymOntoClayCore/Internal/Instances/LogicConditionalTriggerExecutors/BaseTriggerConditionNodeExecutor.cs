@@ -21,11 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 {
@@ -36,6 +33,6 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         {
         }
 
-        public abstract (Value Value, bool IsPeriodic) Run(List<List<Var>> varList, RuleInstance processedRuleInstance);
+        public abstract (Value Value, bool IsPeriodic) Run(List<List<VarInstance>> varList, RuleInstance processedRuleInstance);
     }
 }

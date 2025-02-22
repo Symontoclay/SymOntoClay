@@ -221,6 +221,7 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                 case OperationCode.AddLifeCycleEvent:
                 case OperationCode.BeginPrimitiveTask:
                 case OperationCode.EndPrimitiveTask:
+                case OperationCode.VarDecl:
                 case OperationCode.PropDecl:
                 case OperationCode.LoadFromVar:
                 case OperationCode.TryLoadFromProperty:
@@ -258,9 +259,6 @@ namespace SymOntoClay.Core.Internal.IndexedData.ScriptingData
                 case OperationCode.JumpToIfTrue:
                 case OperationCode.JumpToIfFalse:
                     return $"{spaces}{OperationCode} {TargetPosition}";
-
-                case OperationCode.VarDecl:                
-                    return $"{spaces}{OperationCode} {CountParams}";
 
                 case OperationCode.BeginCompoundTask:
                 case OperationCode.EndCompoundTask:

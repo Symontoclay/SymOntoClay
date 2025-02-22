@@ -35,7 +35,7 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class StateInstance : BaseIndependentInstance
     {
-        public StateInstance(StateDef codeItem, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext, List<Var> varList)
+        public StateInstance(StateDef codeItem, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext, List<VarInstance> varList)
             : base(codeItem, context, parentStorage, parentCodeExecutionContext, context.StorageFactories.StateStorageFactory, varList)
         {
         }

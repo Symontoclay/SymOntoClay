@@ -68,7 +68,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         public List<BaseTriggerConditionNodeExecutor> ParamsList { get; set; }
 
         /// <inheritdoc/>
-        public override (Value Value, bool IsPeriodic) Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
+        public override (Value Value, bool IsPeriodic) Run(List<List<VarInstance>> varList, RuleInstance processedRuleInstance)
         {
             if(_kindOfOperator == KindOfOperator.CallFunction)
             {
@@ -78,7 +78,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
             return RunUnaryOperator(varList, processedRuleInstance);
         }
 
-        private (Value Value, bool IsPeriodic) RunCallFunction(List<List<Var>> varList, RuleInstance processedRuleInstance)
+        private (Value Value, bool IsPeriodic) RunCallFunction(List<List<VarInstance>> varList, RuleInstance processedRuleInstance)
         {
             var caller = Left.Run(varList, processedRuleInstance).Value;
 
@@ -95,7 +95,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
             return (_codeExecutor.CallFunctionSync(Logger, caller, _kindOfparameters, paramsList, _localCodeExecutionContext), false);
         }
 
-        private (Value Value, bool IsPeriodic) RunUnaryOperator(List<List<Var>> varList, RuleInstance processedRuleInstance)
+        private (Value Value, bool IsPeriodic) RunUnaryOperator(List<List<VarInstance>> varList, RuleInstance processedRuleInstance)
         {
             var paramsList = new List<Value>();
 

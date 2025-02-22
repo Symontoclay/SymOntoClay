@@ -26,7 +26,6 @@ using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 {
@@ -60,7 +59,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         private bool _wasRun;
 
         /// <inheritdoc/>
-        public override (Value Value, bool IsPeriodic) Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
+        public override (Value Value, bool IsPeriodic) Run(List<List<VarInstance>> varList, RuleInstance processedRuleInstance)
         {
             if (_wasRun)
             {

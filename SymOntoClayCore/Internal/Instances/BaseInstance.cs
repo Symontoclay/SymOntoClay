@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal.Instances
     public abstract class BaseInstance : BaseComponent, IInstance, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         protected BaseInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext, 
-            IExecutionCoordinator parentExecutionCoordinator, IStorageFactory storageFactory, List<Var> varList)
+            IExecutionCoordinator parentExecutionCoordinator, IStorageFactory storageFactory, List<VarInstance> varList)
             : base(context.Logger)
         {
             _codeItem = codeItem;

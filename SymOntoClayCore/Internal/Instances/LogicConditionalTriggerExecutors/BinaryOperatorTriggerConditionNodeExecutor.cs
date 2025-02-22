@@ -25,11 +25,7 @@ using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
 using SymOntoClay.Core.Internal.DataResolvers;
-using SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 {
@@ -56,7 +52,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         public BaseTriggerConditionNodeExecutor Right { get; set; }
 
         /// <inheritdoc/>
-        public override (Value Value, bool IsPeriodic) Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
+        public override (Value Value, bool IsPeriodic) Run(List<List<VarInstance>> varList, RuleInstance processedRuleInstance)
         {
             var kindOfOperator = _kindOfOperator;
 

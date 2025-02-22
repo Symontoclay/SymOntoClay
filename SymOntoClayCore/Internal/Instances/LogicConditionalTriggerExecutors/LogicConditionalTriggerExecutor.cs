@@ -20,17 +20,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
 using SymOntoClay.Core.Internal.DataResolvers;
-using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 {
@@ -56,14 +51,14 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 
         public ILocalCodeExecutionContext LocalCodeExecutionContext => _localCodeExecutionContext;
 
-        public (bool IsSuccess, bool IsPeriodic) Run(out List<List<Var>> varList)
+        public (bool IsSuccess, bool IsPeriodic) Run(out List<List<VarInstance>> varList)
         {
             return Run(out varList, null);
         }
 
-        public (bool IsSuccess, bool IsPeriodic) Run(out List<List<Var>> varList, RuleInstance processedRuleInstance)
+        public (bool IsSuccess, bool IsPeriodic) Run(out List<List<VarInstance>> varList, RuleInstance processedRuleInstance)
         {
-            varList = new List<List<Var>>();
+            varList = new List<List<VarInstance>>();
 
             var initialResult = _node.Run(varList, processedRuleInstance);
 

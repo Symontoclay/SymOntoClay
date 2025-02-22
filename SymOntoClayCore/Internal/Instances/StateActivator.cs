@@ -75,7 +75,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 var varNamesList = _bindingVariables.GetDestList();
 
-                var varList = new List<Var>();
+                var varList = new List<VarInstance>();
 
                 foreach(var varName in varNamesList)
                 {

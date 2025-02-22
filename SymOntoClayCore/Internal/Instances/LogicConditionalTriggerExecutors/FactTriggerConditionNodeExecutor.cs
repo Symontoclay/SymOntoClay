@@ -20,17 +20,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using NLog;
-using SymOntoClay.Core.DebugHelpers;
-using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Helpers;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
 {
@@ -65,7 +60,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         private List<string> _foundKeys = new List<string>();
 
         /// <inheritdoc/>
-        public override (Value Value, bool IsPeriodic) Run(List<List<Var>> varList, RuleInstance processedRuleInstance)
+        public override (Value Value, bool IsPeriodic) Run(List<List<VarInstance>> varList, RuleInstance processedRuleInstance)
         {
             LogicalSearchOptions targetLogicalSearchOptions = null;
 
@@ -110,7 +105,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
                     {
                         var resultVarsList = foundResultItem.ResultOfVarOfQueryToRelationList;
 
-                        var resultVarList = new List<Var>();
+                        var resultVarList = new List<VarInstance>();
                         varList.Add(resultVarList);
 
                         if (processedRuleInstance != null)
@@ -121,10 +116,9 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
                             {
                                 processedRuleInstance.CheckDirty();
 
-                                var varItem = new Var();
-                                varItem.Name = destVar;
-                                varItem.SetValue(Logger, processedRuleInstance);
-                                varItem.TypeOfAccess = TypeOfAccess.Local;
+                                var varItem = new VarInstance(destVar, TypeOfAccess.Local, _engineContext);
+                                
+                                varItem.SetValue(Logger, processedRuleInstance);                                
 
                                 resultVarList.Add(varItem);
                             }                            
@@ -141,11 +135,9 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
                                 continue;
                             }
 
-                            var varItem = new Var();
-                            varItem.Name = destVar;
+                            var varItem = new VarInstance(destVar, TypeOfAccess.Local, _engineContext);
                             varItem.SetValue(Logger, value);
-                            varItem.TypeOfAccess = TypeOfAccess.Local;
-
+                            
                             resultVarList.Add(varItem);
                         }
                     }

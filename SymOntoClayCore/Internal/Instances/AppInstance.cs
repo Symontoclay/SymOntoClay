@@ -182,7 +182,7 @@ namespace SymOntoClay.Core.Internal.Instances
             ActivateState(logger, state, null);
         }
 
-        public void ActivateState(IMonitorLogger logger, StateDef state, List<Var> varList)
+        public void ActivateState(IMonitorLogger logger, StateDef state, List<VarInstance> varList)
         {
             ThreadTask.Run(() => {
                 var taskId = logger.StartThreadTask("63ED542C-9E36-4AD9-97E7-58A613A604D3");

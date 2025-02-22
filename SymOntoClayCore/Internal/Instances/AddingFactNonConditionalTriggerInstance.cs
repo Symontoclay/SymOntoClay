@@ -40,7 +40,7 @@ namespace SymOntoClay.Core.Internal.Instances
         {
         }
 
-        private readonly List<List<Var>> EmptyVarsList = new List<List<Var>>();
+        private readonly List<List<VarInstance>> EmptyVarsList = new List<List<VarInstance>>();
         private List<RuleInstance> _processedItems = new List<RuleInstance>();
         private readonly object _checkProcessedItemsLockObj = new object();
 

@@ -304,7 +304,7 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             logger.RunSetExprOfConditionalTrigger("A086FCF0-5824-48A4-A7E9-EC01A47EC153", doTriggerSearchId, _trigger.SetCondition.ToLabel(logger));
 
-            var setResult = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
+            var setResult = _setConditionalTriggerExecutor.Run(out List<List<VarInstance>> setVarList);
 
             logger.EndRunSetExprOfConditionalTrigger("BA00EF62-0857-41D7-AD90-50716AAA1342", doTriggerSearchId, _trigger.SetCondition.ToLabel(logger), setResult.IsSuccess, setResult.IsPeriodic, setVarList.Select(p => p.Select(x => x.ToLabel(logger)).ToList()).ToList());
 
@@ -322,7 +322,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             logger.RunResetExprOfConditionalTrigger("C9EC20E0-ED95-4C49-A878-2F9FFE9B3891", doTriggerSearchId, _trigger.SetCondition.ToLabel(logger));
 
-            var resetResult = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList);
+            var resetResult = _resetConditionalTriggerExecutor.Run(out List<List<VarInstance>> resetVarList);
 
             logger.EndRunResetExprOfConditionalTrigger("235D11A4-0374-47C1-B7CD-CB6D7FC53BFF", doTriggerSearchId, _trigger.SetCondition.ToLabel(logger), resetResult.IsSuccess, resetResult.IsPeriodic, resetVarList.Select(p => p.Select(x => x.ToLabel(logger)).ToList()).ToList());
 
@@ -350,7 +350,7 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             logger.RunSetExprOfConditionalTrigger("DE4F238D-59EB-4463-A549-3A52BA64EEEB", doTriggerSearchId, _trigger.SetCondition.ToLabel(logger));
 
-            var setResult = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
+            var setResult = _setConditionalTriggerExecutor.Run(out List<List<VarInstance>> setVarList);
 
             logger.EndRunSetExprOfConditionalTrigger("B8DEBAFF-87B5-4305-87B1-5E27CFB4E5A0", doTriggerSearchId, _trigger.SetCondition.ToLabel(logger), setResult.IsSuccess, setResult.IsPeriodic, setVarList.Select(p => p.Select(x => x.ToLabel(logger)).ToList()).ToList());
 
@@ -375,7 +375,7 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             logger.RunResetExprOfConditionalTrigger("22CA222E-ABB4-42E0-A0E2-4A2DCE2AD5A4", doTriggerSearchId, _trigger.SetCondition.ToLabel(logger));
 
-            var resetResult = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList);
+            var resetResult = _resetConditionalTriggerExecutor.Run(out List<List<VarInstance>> resetVarList);
 
             logger.EndRunResetExprOfConditionalTrigger("36EED605-9DAC-4706-A880-4734648535C9", doTriggerSearchId, _trigger.SetCondition.ToLabel(logger), resetResult.IsSuccess, resetResult.IsPeriodic, resetVarList.Select(p => p.Select(x => x.ToLabel(logger)).ToList()).ToList());
 
@@ -399,7 +399,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 {
                     logger.RunSetExprOfConditionalTrigger("1A43B211-4EA2-492C-A4F2-E4EA44C21E09", doTriggerSearchId, _trigger.SetCondition.ToLabel(logger));
 
-                    var setResult = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
+                    var setResult = _setConditionalTriggerExecutor.Run(out List<List<VarInstance>> setVarList);
 
                     logger.EndRunSetExprOfConditionalTrigger("BA80E9DA-39C0-4E5A-8527-BD97FA711919", doTriggerSearchId, _trigger.SetCondition.ToLabel(logger), setResult.IsSuccess, setResult.IsPeriodic, setVarList.Select(p => p.Select(x => x.ToLabel(logger)).ToList()).ToList());
 
@@ -422,7 +422,7 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             logger.RunResetExprOfConditionalTrigger("6AFE26AA-AC1B-4286-B8B9-2EEB53A9B973", doTriggerSearchId, _trigger.SetCondition.ToLabel(logger));
 
-            var resetResult = _resetConditionalTriggerExecutor.Run(out List<List<Var>> resetVarList);
+            var resetResult = _resetConditionalTriggerExecutor.Run(out List<List<VarInstance>> resetVarList);
 
             logger.EndRunResetExprOfConditionalTrigger("92237553-81D4-4123-B98A-F350D9087024", doTriggerSearchId, _trigger.SetCondition.ToLabel(logger), resetResult.IsSuccess, resetResult.IsPeriodic, resetVarList.Select(p => p.Select(x => x.ToLabel(logger)).ToList()).ToList());
 
@@ -446,7 +446,7 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             logger.RunSetExprOfConditionalTrigger("E5C33894-4D43-41C5-86AF-FB31ABCF9699", doTriggerSearchId, _trigger.SetCondition.ToLabel(logger));
 
-            var setResult = _setConditionalTriggerExecutor.Run(out List<List<Var>> setVarList);
+            var setResult = _setConditionalTriggerExecutor.Run(out List<List<VarInstance>> setVarList);
 
             logger.EndRunSetExprOfConditionalTrigger("6BEB4E66-8CD3-4A08-923E-1D0B2CB93A98", doTriggerSearchId, _trigger.SetCondition.ToLabel(logger), setResult.IsSuccess, setResult.IsPeriodic, setVarList.Select(p => p.Select(x => x.ToLabel(logger)).ToList()).ToList());
 
@@ -518,7 +518,7 @@ namespace SymOntoClay.Core.Internal.Instances
             RunSetHandler(logger, doTriggerSearchId, localCodeExecutionContext);
         }
 
-        private void ProcessSetResultWithItems(IMonitorLogger logger, string doTriggerSearchId, List<List<Var>> varList)
+        private void ProcessSetResultWithItems(IMonitorLogger logger, string doTriggerSearchId, List<List<VarInstance>> varList)
         {
             SetIsOn(logger, "C91DAF33-135D-44C9-B6DE-155F59D1DB80", doTriggerSearchId, true);
 
@@ -569,7 +569,7 @@ namespace SymOntoClay.Core.Internal.Instances
             RunResetHandler(logger, doTriggerSearchId, localCodeExecutionContext);
         }
 
-        private void ProcessResetResultWithItems(IMonitorLogger logger, string doTriggerSearchId, List<List<Var>> varList)
+        private void ProcessResetResultWithItems(IMonitorLogger logger, string doTriggerSearchId, List<List<VarInstance>> varList)
         {
             SetIsOn(logger, "ABF47267-915E-467E-93D1-E44A548A3D1D", doTriggerSearchId, false);
 

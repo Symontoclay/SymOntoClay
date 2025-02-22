@@ -6252,9 +6252,6 @@
         <member name="P:SymOntoClay.Core.Internal.CodeModel.Var.Kind">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.CodeModel.Var.SetValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value)">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.Var.CloneCodeItem(System.Collections.Generic.Dictionary{System.Object,System.Object})">
             <inheritdoc/>
         </member>
@@ -8046,37 +8043,37 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.InstancesStorageComponent.OnDisposed">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.BinaryOperatorTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Var}},SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.BinaryOperatorTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.Instances.VarInstance}},SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.ConceptTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Var}},SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.ConceptTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.Instances.VarInstance}},SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.DurationTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Var}},SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.DurationTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.Instances.VarInstance}},SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.EachTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Var}},SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.EachTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.Instances.VarInstance}},SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.FactTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Var}},SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.FactTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.Instances.VarInstance}},SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.GroupTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Var}},SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.GroupTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.Instances.VarInstance}},SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.OnceTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Var}},SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.OnceTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.Instances.VarInstance}},SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.TriggerNameTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Var}},SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.TriggerNameTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.Instances.VarInstance}},SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.UnaryOperatorTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Var}},SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.UnaryOperatorTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.Instances.VarInstance}},SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.ValueTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Var}},SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.ValueTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.Instances.VarInstance}},SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.VarTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.CodeModel.Var}},SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors.VarTriggerConditionNodeExecutor.Run(System.Collections.Generic.List{System.Collections.Generic.List{SymOntoClay.Core.Internal.Instances.VarInstance}},SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.NamesList">
@@ -8392,6 +8389,69 @@
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.Instances.TaskInstances.TacticalTaskInstance.KindOfInstance">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.VarInstance.SetValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Value)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.VarInstance.TypeOfAccess">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.VarInstance.GetLongHashCode">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.VarInstance.GetLongConditionalHashCode">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.Instances.VarInstance.HasConditionalSections">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.VarInstance.OnDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.VarInstance.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.VarInstance.ToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.VarInstance.SymOntoClay#Common#IObjectToString#PropertiesToString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.VarInstance.ToShortString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.VarInstance.ToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.VarInstance.SymOntoClay#Common#IObjectToShortString#PropertiesToShortString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.VarInstance.ToBriefString">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.VarInstance.ToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.VarInstance.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.VarInstance.ToHumanizedString(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.VarInstance.ToHumanizedString(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.VarInstance.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.HumanizedOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.VarInstance.ToHumanizedLabel(SymOntoClay.Core.DebugHelpers.DebugHelperOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.VarInstance.ToHumanizedString(SymOntoClay.Monitor.Common.IMonitorLogger)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.VarInstance.ToLabel(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.MainStorageContext.Id">
@@ -10684,7 +10744,7 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.GetSystemValueDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Var)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.Instances.VarInstance)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.GetVarDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
@@ -10717,7 +10777,7 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.GetSystemValueDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.Var)">
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.Instances.VarInstance)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.GetVarDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">

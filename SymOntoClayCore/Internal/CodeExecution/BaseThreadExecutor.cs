@@ -1141,47 +1141,78 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             var valueStack = _currentCodeFrame.ValuesStack;
 
-            var typesCount = currentCommand.CountParams;
-
-            var varPtr = new Var();
-
             var annotatedItem = currentCommand.AnnotatedItem;
 
-            if(annotatedItem is Field)
-            {
-                var field = (Field)annotatedItem;
+#if DEBUG
+            //Info("FAE862E7-9313-4F14-A950-D3F243046302", $"annotatedItem?.GetType().FullName = {annotatedItem?.GetType().FullName}");
+#endif
 
-                varPtr.Holder = field.Holder;
-                varPtr.TypeOfAccess = field.TypeOfAccess;
+            VarInstance varInstance = null;
+
+            if(annotatedItem is Var)
+            {
+                varInstance = new VarInstance(annotatedItem as Var, _context);
             }
-
-            while (typesCount > 0)
+            else
             {
-                var typeName = valueStack.Pop();
-
-                if (!typeName.IsStrongIdentifierValue)
+                if(annotatedItem is Field)
                 {
-                    throw new Exception($"TypeName should be StrongIdentifierValue.");
+                    varInstance = new VarInstance(annotatedItem as Field, _context);
                 }
-
-                varPtr.TypesList.Add(typeName.AsStrongIdentifierValue);
-
-                typesCount--;
+                else
+                {
+                    throw new NotSupportedException($"A95A0763-5F1D-4A72-BAD8-E11EE69506C1: Can not create {nameof(VarInstance)} by {annotatedItem?.GetType().FullName}.");
+                }
             }
 
-            var varName = valueStack.Pop();
+            _currentVarStorage.Append(Logger, varInstance);
 
-            if (!varName.IsStrongIdentifierValue)
-            {
-                throw new Exception($"VarName should be StrongIdentifierValue.");
-            }
-
-            varPtr.Name = varName.AsStrongIdentifierValue;
-
-            _currentVarStorage.Append(Logger, varPtr);
-
-            _currentCodeFrame.ValuesStack.Push(varName);
+            _currentCodeFrame.ValuesStack.Push(varInstance.Name);
             _currentCodeFrame.CurrentPosition++;
+
+            //throw new NotImplementedException("AA206960-E5A1-4691-844D-F8CB43F7357C");
+
+            //var typesCount = currentCommand.CountParams;
+
+            //var varPtr = new Var();
+
+            //var annotatedItem = currentCommand.AnnotatedItem;
+
+            //if(annotatedItem is Field)
+            //{
+            //    var field = (Field)annotatedItem;
+
+            //    varPtr.Holder = field.Holder;
+            //    varPtr.TypeOfAccess = field.TypeOfAccess;
+            //}
+
+            //while (typesCount > 0)
+            //{
+            //    var typeName = valueStack.Pop();
+
+            //    if (!typeName.IsStrongIdentifierValue)
+            //    {
+            //        throw new Exception($"TypeName should be StrongIdentifierValue.");
+            //    }
+
+            //    varPtr.TypesList.Add(typeName.AsStrongIdentifierValue);
+
+            //    typesCount--;
+            //}
+
+            //var varName = valueStack.Pop();
+
+            //if (!varName.IsStrongIdentifierValue)
+            //{
+            //    throw new Exception($"VarName should be StrongIdentifierValue.");
+            //}
+
+            //varPtr.Name = varName.AsStrongIdentifierValue;
+
+            //_currentVarStorage.Append(Logger, varPtr);
+
+            //_currentCodeFrame.ValuesStack.Push(varName);
+            //_currentCodeFrame.CurrentPosition++;
         }
 
         private void ProcessPropDecl(ScriptCommand currentCommand)

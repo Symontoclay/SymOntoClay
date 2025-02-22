@@ -108,7 +108,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         protected abstract IAddFactOrRuleResult LogicalStorage_OnAddingFact(RuleInstance ruleInstance);
 
-        protected IAddFactOrRuleResult ProcessAction(List<List<Var>> varsList, RuleInstance ruleInstance)
+        protected IAddFactOrRuleResult ProcessAction(List<List<VarInstance>> varsList, RuleInstance ruleInstance)
         {
             var localCodeExecutionContext = new LocalCodeExecutionContext(_parentCodeExecutionContext);
             localCodeExecutionContext.Storage = _storage;

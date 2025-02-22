@@ -57,17 +57,9 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
         }
         
         protected void CompileVarDecl(IVarDecl varDeclAstExpression)
-        {
-            CompilePushVal(varDeclAstExpression.Name, KindOfCompilePushVal.Direct);
-
-            foreach (var typeItem in varDeclAstExpression.TypesList)
-            {
-                CompilePushVal(typeItem, KindOfCompilePushVal.Direct);
-            }
-            
+        {            
             var command = new IntermediateScriptCommand();
             command.OperationCode = OperationCode.VarDecl;
-            command.CountParams = varDeclAstExpression.TypesList.Count;
             command.AnnotatedItem = varDeclAstExpression;
 
             AddCommand(command);
@@ -220,6 +212,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 case OperationCode.AddLifeCycleEvent:
                 case OperationCode.BeginPrimitiveTask:
                 case OperationCode.EndPrimitiveTask:
+                case OperationCode.VarDecl:
                 case OperationCode.PropDecl:
                 case OperationCode.LoadFromVar:
                 case OperationCode.TryLoadFromProperty:
@@ -264,9 +257,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                     }
 
                     return $"{operationCode} *";
-
-                case OperationCode.VarDecl:                
-                    return $"{operationCode} {commandItem.CountParams}";
 
                 case OperationCode.BeginCompoundTask:
                 case OperationCode.EndCompoundTask:

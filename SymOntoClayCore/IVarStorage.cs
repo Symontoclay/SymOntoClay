@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
+using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
@@ -34,9 +35,9 @@ namespace SymOntoClay.Core
         void SetSystemValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value);
         Value GetSystemValueDirectly(IMonitorLogger logger, StrongIdentifierValue varName);
         
-        void Append(IMonitorLogger logger, Var varItem);
-        IList<WeightedInheritanceResultItem<Var>> GetVarDirectly(IMonitorLogger logger, StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems);
-        Var GetLocalVarDirectly(IMonitorLogger logger, StrongIdentifierValue name);
+        void Append(IMonitorLogger logger, VarInstance varItem);
+        IList<WeightedInheritanceResultItem<VarInstance>> GetVarDirectly(IMonitorLogger logger, StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems);
+        VarInstance GetLocalVarDirectly(IMonitorLogger logger, StrongIdentifierValue name);
 
         void SetValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value);
         

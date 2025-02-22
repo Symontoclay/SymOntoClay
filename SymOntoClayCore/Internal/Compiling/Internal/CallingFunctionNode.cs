@@ -105,7 +105,7 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             leftNode.Run(expression.Left);
             AddCommands(leftNode.Result);
 
-            CompilePushAnnotation(expression);
+            command.AnnotatedItem = expression;
 
             switch(kindOfCallingFunction)
             {

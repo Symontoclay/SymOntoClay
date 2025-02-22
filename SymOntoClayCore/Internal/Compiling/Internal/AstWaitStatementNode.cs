@@ -46,12 +46,11 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                 AddCommands(node.Result);
             }
 
-            CompilePushAnnotation(statement);
-
             var command = new IntermediateScriptCommand();
 
             command.CountParams = statement.Items.Count;
             command.OperationCode = OperationCode.Wait;
+            command.AnnotatedItem = statement;
 
             AddCommand(command);
 

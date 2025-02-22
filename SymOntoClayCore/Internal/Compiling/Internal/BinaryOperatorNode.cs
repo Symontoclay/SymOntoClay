@@ -76,11 +76,10 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                         leftNode.Run(expression);
                         AddCommands(leftNode.Result);
 
-                        CompilePushAnnotation(expression);
-
                         var command = new IntermediateScriptCommand();
                         command.OperationCode = OperationCode.CallBinOp;
                         command.KindOfOperator =  KindOfOperator.Assign;
+                        command.AnnotatedItem = expression;
 
                         AddCommand(command);
                     }
@@ -92,11 +91,10 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
                         CompileVarDecl(varDeclAstExpression);
 
-                        CompilePushAnnotation(expression);
-
                         var command = new IntermediateScriptCommand();
                         command.OperationCode = OperationCode.CallBinOp;
                         command.KindOfOperator = KindOfOperator.Assign;
+                        command.AnnotatedItem = expression;
 
                         AddCommand(command);
 
@@ -117,11 +115,10 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                                     rightNode.Run(binOpExpr.Right);
                                     AddCommands(rightNode.Result);
 
-                                    CompilePushAnnotation(expression);
-
                                     var command = new IntermediateScriptCommand();
                                     command.OperationCode = OperationCode.CallBinOp;
                                     command.KindOfOperator = KindOfOperator.Assign;
+                                    command.AnnotatedItem = expression;
 
                                     AddCommand(command);
 
@@ -133,11 +130,10 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
                                 {
                                     RunUsualBinaryOperator(expression as BinaryOperatorAstExpression);
 
-                                    CompilePushAnnotation(expression);
-
                                     var command = new IntermediateScriptCommand();
                                     command.OperationCode = OperationCode.CallBinOp;
                                     command.KindOfOperator = KindOfOperator.Assign;
+                                    command.AnnotatedItem = expression;
 
                                     AddCommand(command);
                                 }                                
@@ -162,11 +158,10 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             rightNode.Run(expression.Right);
             AddCommands(rightNode.Result);
 
-            CompilePushAnnotation(expression);
-
             var command = new IntermediateScriptCommand();
             command.OperationCode = OperationCode.CallBinOp;
             command.KindOfOperator = expression.KindOfOperator;
+            command.AnnotatedItem = expression;
 
             AddCommand(command);
         }

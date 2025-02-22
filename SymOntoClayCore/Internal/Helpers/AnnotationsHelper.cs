@@ -32,12 +32,7 @@ namespace SymOntoClay.Core.Internal.Helpers
     {
         private static Dictionary<KindOfAnnotationSystemEvent, AnnotationSystemEvent> EmptyAnnotationSystemEventsDict = new Dictionary<KindOfAnnotationSystemEvent, AnnotationSystemEvent>();
 
-        public static Dictionary<KindOfAnnotationSystemEvent, AnnotationSystemEvent> GetAnnotationSystemEventsDictFromAnnotaion(Value annotation)
-        {
-            return GetAnnotationSystemEventsDict(annotation?.AsAnnotationValue?.AnnotatedItem);
-        }
-
-        public static Dictionary<KindOfAnnotationSystemEvent, AnnotationSystemEvent> GetAnnotationSystemEventsDict(AnnotatedItem annotatedItem)
+        public static Dictionary<KindOfAnnotationSystemEvent, AnnotationSystemEvent> GetAnnotationSystemEventsDict(IAnnotatedItem annotatedItem)
         {
             var annotationSystemEventsDict = annotatedItem?.Annotations?.SelectMany(p => p.AnnotationSystemEventsDict).GroupBy(p => p.Key).ToDictionary(p => p.Key, p => p.Last().Value);
 

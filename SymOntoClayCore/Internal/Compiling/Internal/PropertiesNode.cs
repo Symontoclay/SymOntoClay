@@ -32,8 +32,6 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
                 CompilePushVal(property.Name, KindOfCompilePushVal.Direct);
 
-                CompilePushAnnotation(property);
-
                 var command = new IntermediateScriptCommand();
                 command.OperationCode = OperationCode.CallBinOp;
                 command.KindOfOperator = KindOfOperator.Assign;
@@ -50,10 +48,9 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
         private void CompilePropertyDecl(Property property)
         {
-            CompilePushAnnotation(property);
-
             var command = new IntermediateScriptCommand();
             command.OperationCode = OperationCode.PropDecl;
+            command.AnnotatedItem = property;
 
             AddCommand(command);
         }

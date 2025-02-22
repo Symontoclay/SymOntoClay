@@ -46,11 +46,10 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
 
             CompilePushVal(statement.Handler, KindOfCompilePushVal.Direct);
 
-            CompilePushAnnotation(statement);
-
             AddCommand(new IntermediateScriptCommand()
             {
-                OperationCode = OperationCode.AddLifeCycleEvent
+                OperationCode = OperationCode.AddLifeCycleEvent,
+                AnnotatedItem = statement
             });
 
             AddCommand(new IntermediateScriptCommand()

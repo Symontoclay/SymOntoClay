@@ -43,8 +43,14 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
         private readonly PropertiesResolver _propertiesResolver;
 
         /// <inheritdoc/>
-        public CallResult Call(IMonitorLogger logger, Value rightOperand, Value leftOperand, Value annotation, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
+        public CallResult Call(IMonitorLogger logger, Value rightOperand, Value leftOperand, IAnnotatedItem annotatedItem, ILocalCodeExecutionContext localCodeExecutionContext, CallMode callMode)
         {
+#if DEBUG
+            //Info("7313472E-E3BC-4724-9083-629F1017E0E5", $"leftOperand = {leftOperand}");
+            //Info("51F20A26-2F61-4129-BB92-DB538A43A7C2", $"callMode = {callMode}");
+            //Info("AA897067-F227-481B-9AA5-072BA7723338", $"rightOperand = {rightOperand}");
+#endif
+
             var kindOfLeftOperand = leftOperand.KindOfValue;
 
             switch(kindOfLeftOperand)
@@ -76,15 +82,15 @@ namespace SymOntoClay.Core.Internal.StandardLibrary.Operators
                             case KindOfName.Concept:
                                 {
 #if DEBUG
-                                    Info("9E484258-2A5E-4389-92CB-36BD6114BBBC", $"leftOperand = {leftOperand}");
-                                    Info("E981235C-808D-4F6B-AF59-97213B85599D", $"callMode = {callMode}");
-                                    Info("489E4FD3-8244-42B5-B73C-D5B03B9C2165", $"rightOperand = {rightOperand}");
+                                    //Info("9E484258-2A5E-4389-92CB-36BD6114BBBC", $"leftOperand = {leftOperand}");
+                                    //Info("E981235C-808D-4F6B-AF59-97213B85599D", $"callMode = {callMode}");
+                                    //Info("489E4FD3-8244-42B5-B73C-D5B03B9C2165", $"rightOperand = {rightOperand}");
 #endif
 
                                     var property = _propertiesResolver.Resolve(logger, leftIdentifierValue, localCodeExecutionContext);
 
 #if DEBUG
-                                    Info("1B9FF0A5-D834-409F-A555-4E447E8C71DE", $"property = {property}");
+                                    //Info("1B9FF0A5-D834-409F-A555-4E447E8C71DE", $"property = {property}");
 #endif
 
                                     switch(callMode)

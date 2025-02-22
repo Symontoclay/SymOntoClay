@@ -41,11 +41,10 @@ namespace SymOntoClay.Core.Internal.Compiling.Internal
             leftNode.Run(expression.Left);
             AddCommands(leftNode.Result);
 
-            CompilePushAnnotation(expression);
-
             var command = new IntermediateScriptCommand();
             command.OperationCode = OperationCode.CallUnOp;
             command.KindOfOperator = expression.KindOfOperator;
+            command.AnnotatedItem = expression;
 
             AddCommand(command);
 

@@ -2,6 +2,7 @@
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Common.Disposing;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Monitor.Common;
@@ -76,13 +77,49 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 _value = value;
 
-                OnChanged?.Invoke(Name);
+                EmitOnChangedHandlers(Name);
             }
         }
 
         private Value _value = new NullValue();
 
-        public event Action<StrongIdentifierValue> OnChanged;
+        public void AddOnChangedHandler(IOnChangedVarHandler handler)
+        {
+            lock (_onChangedHandlersLockObj)
+            {
+                if (_onChangedHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onChangedHandlers.Add(handler);
+            }
+        }
+
+        public void RemoveOnChangedHandler(IOnChangedVarHandler handler)
+        {
+            lock (_onChangedHandlersLockObj)
+            {
+                if (_onChangedHandlers.Contains(handler))
+                {
+                    _onChangedHandlers.Remove(handler);
+                }
+            }
+        }
+
+        private void EmitOnChangedHandlers(StrongIdentifierValue value)
+        {
+            lock (_onChangedHandlersLockObj)
+            {
+                foreach (var hander in _onChangedHandlers)
+                {
+                    hander.Invoke(value);
+                }
+            }
+        }
+
+        private object _onChangedHandlersLockObj = new object();
+        private List<IOnChangedVarHandler> _onChangedHandlers = new List<IOnChangedVarHandler>();
 
         private readonly object _lockObj = new object();
 

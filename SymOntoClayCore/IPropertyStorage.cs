@@ -1,4 +1,5 @@
-﻿using SymOntoClay.Core.Internal.CodeModel;
+﻿using SymOntoClay.Core.EventsInterfaces;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Monitor.Common;
@@ -13,7 +14,10 @@ namespace SymOntoClay.Core
 
         IList<WeightedInheritanceResultItem<PropertyInstance>> GetPropertyDirectly(IMonitorLogger logger, StrongIdentifierValue name, IList<WeightedInheritanceItem> weightedInheritanceItems);
 
-        event Action OnChanged;
-        event Action<StrongIdentifierValue> OnChangedWithKeys;
+        void AddOnChangedHandler(IOnChangedPropertyStorageHandler handler);
+        void RemoveOnChangedHandler(IOnChangedPropertyStorageHandler handler);
+
+        void AddOnChangedWithKeysHandler(IOnChangedWithKeysPropertyStorageHandler handler);
+        void RemoveOnChangedWithKeysHandler(IOnChangedWithKeysPropertyStorageHandler handler);
     }
 }

@@ -25,13 +25,13 @@
         <member name="M:SymOntoClay.ActiveObject.Functors.SerializationAnchor.Dispose">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.ActiveObject.Threads.ActiveObjectCommonContext.IsNeedWating">
+        <member name="P:SymOntoClay.ActiveObject.Threads.ActiveObjectCommonContext.IsNeedWaiting">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.ActiveObject.Threads.ActiveObjectCommonContext.WaitEvent">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.ActiveObject.Threads.ActiveObjectContext.IsNeedWating">
+        <member name="P:SymOntoClay.ActiveObject.Threads.ActiveObjectContext.IsNeedWaiting">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.ActiveObject.Threads.ActiveObjectContext.WaitEvent">

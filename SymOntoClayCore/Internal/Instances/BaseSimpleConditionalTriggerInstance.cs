@@ -20,15 +20,18 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.Functors;
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -36,14 +39,13 @@ using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public abstract class BaseSimpleConditionalTriggerInstance : BaseComponent, IObjectToString, IObjectToShortString, IObjectToBriefString
+    public abstract class BaseSimpleConditionalTriggerInstance : BaseComponent, IOnChangedLogicalStorageHandler, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         protected BaseSimpleConditionalTriggerInstance(RuleInstance condition, BaseInstance parent, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext)
             : base(context.Logger)
         {
             _context = context;
             _parent = parent;
-
 
             _condition = condition;
 
@@ -60,11 +62,15 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _localCodeExecutionContext = localCodeExecutionContext;
 
-            _storage.LogicalStorage.OnChanged += LogicalStorage_OnChanged;
+            _storage.LogicalStorage.AddOnChangedHandler(this);
 
             _searchOptions = new LogicalSearchOptions();
             _searchOptions.QueryExpression = _condition;
             _searchOptions.LocalCodeExecutionContext = _localCodeExecutionContext;
+
+            _activeObjectContext = context.ActiveObjectContext;
+            _threadPool = context.AsyncEventsThreadPool;
+            _serializationAnchor = new SerializationAnchor();
 
             _activeObject = new AsyncActivePeriodicObject(context.ActiveObjectContext, context.TriggersThreadPool, Logger);
             _activeObject.PeriodicMethod = Handler;
@@ -85,8 +91,9 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private int _runInterval = 100;
 
-        private bool _isBusy;
-        private bool _needRepeat;
+        private IActiveObjectContext _activeObjectContext;
+        private ICustomThreadPool _threadPool;
+        private SerializationAnchor _serializationAnchor;
 
         private IActivePeriodicObject _activeObject;
 
@@ -109,7 +116,21 @@ namespace SymOntoClay.Core.Internal.Instances
             return true;
         }
 
+        void IOnChangedLogicalStorageHandler.Invoke()
+        {
+            LogicalStorage_OnChanged();
+        }
+
         private void LogicalStorage_OnChanged()
+        {
+            LoggedFunctorWithoutResult<BaseSimpleConditionalTriggerInstance>.Run(Logger, "3F83EE57-5F84-4B5E-9C7A-BAC8D4F225AC", this,
+                (IMonitorLogger loggerValue, BaseSimpleConditionalTriggerInstance instanceValue) => {
+                    instanceValue.NLogicalStorage_OnChanged();
+                },
+                _activeObjectContext, _threadPool, _serializationAnchor);
+        }
+
+        public void NLogicalStorage_OnChanged()
         {
             lock (_lockObj)
             {
@@ -246,7 +267,7 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
-            _storage.LogicalStorage.OnChanged -= LogicalStorage_OnChanged;
+            _storage.LogicalStorage.RemoveOnChangedHandler(this);
 
             base.OnDisposed();
         }

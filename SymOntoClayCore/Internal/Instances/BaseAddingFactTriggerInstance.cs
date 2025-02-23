@@ -22,12 +22,14 @@ SOFTWARE.*/
 
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Core.Internal.Storage.LogicalStoraging;
 using SymOntoClay.CoreHelper.DebugHelpers;
+using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +37,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public abstract class BaseAddingFactTriggerInstance : BaseComponent, IObjectToString, IObjectToShortString, IObjectToBriefString
+    public abstract class BaseAddingFactTriggerInstance : BaseComponent, IOnAddingFactHandler, IObjectToString, IObjectToShortString, IObjectToBriefString
     {
         protected BaseAddingFactTriggerInstance(InlineTrigger trigger, BaseInstance parent, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext, bool allowAddionalVariablesInBinding)
             : base(context.Logger)
@@ -66,18 +68,18 @@ namespace SymOntoClay.Core.Internal.Instances
                 {
                     if (varsList.Any(p => p != StrongIdentifierValue.LogicalVarBlankIdentifier))
                     {
-                        var unxpectedVarsList = varsList.Where(p => p != StrongIdentifierValue.LogicalVarBlankIdentifier);
+                        var unexpectedVarsList = varsList.Where(p => p != StrongIdentifierValue.LogicalVarBlankIdentifier);
 
 #if DEBUG
-                        //Info("432176EA-72B9-4699-B784-7CF6C4041357", $"unxpectedVarsList = {unxpectedVarsList.WriteListToString()}");
+                        //Info("432176EA-72B9-4699-B784-7CF6C4041357", $"unexpectedVarsList = {unexpectedVarsList.WriteListToString()}");
 #endif
 
-                        if (unxpectedVarsList.Count() == 1)
+                        if (unexpectedVarsList.Count() == 1)
                         {
-                            throw new Exception($"The var `{unxpectedVarsList.Single().NameValue}` can not be bound in unconditional add fact trigger.");
+                            throw new Exception($"The var `{unexpectedVarsList.Single().NameValue}` can not be bound in unconditional add fact trigger.");
                         }
 
-                        throw new Exception($"The vars {string.Join(", ", unxpectedVarsList.Select(p => $"`{p.NameValue}`"))} can not be bound in unconditional add fact trigger.");
+                        throw new Exception($"The vars {string.Join(", ", unexpectedVarsList.Select(p => $"`{p.NameValue}`"))} can not be bound in unconditional add fact trigger.");
                     }
 
                     _factBindingVariable = setBindingVariables.GetDest(StrongIdentifierValue.LogicalVarBlankIdentifier);
@@ -103,7 +105,12 @@ namespace SymOntoClay.Core.Internal.Instances
 
         public void Init()
         {
-            _storage.LogicalStorage.OnAddingFact += LogicalStorage_OnAddingFact;
+            _storage.LogicalStorage.AddOnAddingFactHandler(this);
+        }
+
+        IAddFactOrRuleResult IOnAddingFactHandler.OnAddingFact(IMonitorLogger logger, RuleInstance fact)
+        {
+            return LogicalStorage_OnAddingFact(fact);
         }
 
         protected abstract IAddFactOrRuleResult LogicalStorage_OnAddingFact(RuleInstance ruleInstance);
@@ -172,7 +179,7 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
-            _storage.LogicalStorage.OnAddingFact -= LogicalStorage_OnAddingFact;
+            _storage.LogicalStorage.RemoveOnAddingFactHandler(this);
 
             base.OnDisposed();
         }

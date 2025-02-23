@@ -26,7 +26,7 @@ namespace SymOntoClay.ActiveObject.Threads
 {
     public interface IActiveObjectCommonContext
     {
-        bool IsNeedWating { get; }
+        bool IsNeedWaiting { get; }
         EventWaitHandle WaitEvent { get; }
     }
 }

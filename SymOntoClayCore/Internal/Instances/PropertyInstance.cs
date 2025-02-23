@@ -13,6 +13,7 @@ using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Common.CollectionsHelpers;
 using System.Linq;
 using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.EventsInterfaces;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
@@ -71,7 +72,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             //throw new NotImplementedException("7D2B796B-C889-44B3-82D3-73A69884D2CD");
 
-            OnChanged?.Invoke(Name);
+            EmitOnChangedHandlers(Name);
         }
 
         private void CheckFitVariableAndValue(IMonitorLogger logger, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
@@ -110,7 +111,43 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private Value _value = NullValue.Instance;
 
-        public event Action<StrongIdentifierValue> OnChanged;
+        public void AddOnChangedHandler(IOnChangedPropertyHandler handler)
+        {
+            lock (_onChangedHandlersLockObj)
+            {
+                if (_onChangedHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onChangedHandlers.Add(handler);
+            }
+        }
+
+        public void RemoveOnChangedHandler(IOnChangedPropertyHandler handler)
+        {
+            lock (_onChangedHandlersLockObj)
+            {
+                if (_onChangedHandlers.Contains(handler))
+                {
+                    _onChangedHandlers.Remove(handler);
+                }
+            }
+        }
+
+        private void EmitOnChangedHandlers(StrongIdentifierValue value)
+        {
+            lock (_onChangedHandlersLockObj)
+            {
+                foreach (var hander in _onChangedHandlers)
+                {
+                    hander.Invoke(value);
+                }
+            }
+        }
+
+        private object _onChangedHandlersLockObj = new object();
+        private List<IOnChangedPropertyHandler> _onChangedHandlers = new List<IOnChangedPropertyHandler>();
 
         /// <inheritdoc/>
         public TypeOfAccess TypeOfAccess => CodeItem.TypeOfAccess;

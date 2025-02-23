@@ -52,6 +52,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         {
             _activeObjectContext = _mainStorageContext.ActiveObjectContext;
             _threadPool = _mainStorageContext.AsyncEventsThreadPool;
+            _serializationAnchor = new SerializationAnchor();
 
             var logger = _mainStorageContext.Logger;
 
@@ -124,6 +125,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private IActiveObjectContext _activeObjectContext;
         private ICustomThreadPool _threadPool;
+        private SerializationAnchor _serializationAnchor;
 
         private AsyncActivePeriodicObject _activeObject;
 

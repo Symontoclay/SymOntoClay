@@ -30,7 +30,7 @@ namespace SymOntoClay.ActiveObject.Threads
         private volatile bool _isNeedWating;
 
         /// <inheritdoc/>
-        public bool IsNeedWating => _isNeedWating;
+        public bool IsNeedWaiting => _isNeedWating;
 
         /// <inheritdoc/>
         public EventWaitHandle WaitEvent => _autoResetEvent;

@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Instances;
@@ -40,9 +41,12 @@ namespace SymOntoClay.Core
         VarInstance GetLocalVarDirectly(IMonitorLogger logger, StrongIdentifierValue name);
 
         void SetValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value);
-        
-        event Action OnChanged;
-        event Action<StrongIdentifierValue> OnChangedWithKeys;
+
+        void AddOnChangedHandler(IOnChangedVarStorageHandler handler);
+        void RemoveOnChangedHandler(IOnChangedVarStorageHandler handler);
+
+        void AddOnChangedWithKeysHandler(IOnChangedWithKeysVarStorageHandler handler);
+        void RemoveOnChangedWithKeysHandler(IOnChangedWithKeysVarStorageHandler handler);
 
 #if DEBUG
         void DbgPrintVariables(IMonitorLogger logger);

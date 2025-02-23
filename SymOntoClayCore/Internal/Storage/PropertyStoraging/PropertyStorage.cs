@@ -1,37 +1,126 @@
-﻿using SymOntoClay.Core.Internal.CodeModel;
+﻿using SymOntoClay.ActiveObject.Functors;
+using SymOntoClay.ActiveObject.Threads;
+using SymOntoClay.Core.EventsInterfaces;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Instances;
+using SymOntoClay.Core.Internal.Storage.VarStoraging;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Storage.PropertyStoraging
 {
-    public class PropertyStorage: BaseSpecificStorage, IPropertyStorage
+    public class PropertyStorage: BaseSpecificStorage, IPropertyStorage,
+        IOnAddParentStorageRealStorageContextHandler, IOnRemoveParentStorageRealStorageContextHandler, IOnChangedWithKeysPropertyStorageHandler, IOnChangedPropertyHandler
     {
         public PropertyStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
         {
+            _activeObjectContext = _mainStorageContext.ActiveObjectContext;
+            _threadPool = _mainStorageContext.AsyncEventsThreadPool;
+            _serializationAnchor = new SerializationAnchor();
+
             _parentPropertyStoragesList = realStorageContext.Parents.Select(p => p.PropertyStorage).ToList();
 
             foreach (var parentStorage in _parentPropertyStoragesList)
             {
-                parentStorage.OnChangedWithKeys += PropertyStorage_OnChangedWithKeys;
+                parentStorage.AddOnChangedWithKeysHandler(this);
             }
 
-            realStorageContext.OnAddParentStorage += RealStorageContext_OnAddParentStorage;
-            realStorageContext.OnRemoveParentStorage += RealStorageContext_OnRemoveParentStorage;
+            realStorageContext.AddOnAddParentStorageHandler(this);
+            realStorageContext.AddOnRemoveParentStorageHandler(this);
         }
+
+        private IActiveObjectContext _activeObjectContext;
+        private ICustomThreadPool _threadPool;
+        private SerializationAnchor _serializationAnchor;
 
         private readonly object _lockObj = new object();
 
         /// <inheritdoc/>
-        public event Action OnChanged;
+        public void AddOnChangedHandler(IOnChangedPropertyStorageHandler handler)
+        {
+            lock (_onChangedHandlersLockObj)
+            {
+                if (_onChangedHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onChangedHandlers.Add(handler);
+            }
+        }
 
         /// <inheritdoc/>
-        public event Action<StrongIdentifierValue> OnChangedWithKeys;
+        public void RemoveOnChangedHandler(IOnChangedPropertyStorageHandler handler)
+        {
+            lock (_onChangedHandlersLockObj)
+            {
+                if (_onChangedHandlers.Contains(handler))
+                {
+                    _onChangedHandlers.Remove(handler);
+                }
+            }
+        }
+
+        private void EmitOnChangedHandlers()
+        {
+            lock (_onChangedHandlersLockObj)
+            {
+                foreach (var handler in _onChangedHandlers)
+                {
+                    handler.Invoke();
+                }
+            }
+        }
+
+        private object _onChangedHandlersLockObj = new object();
+        private List<IOnChangedPropertyStorageHandler> _onChangedHandlers = new List<IOnChangedPropertyStorageHandler>();
+
+        /// <inheritdoc/>
+        public void AddOnChangedWithKeysHandler(IOnChangedWithKeysPropertyStorageHandler handler)
+        {
+            lock (_onChangedWithKeysHandlersLockObj)
+            {
+                if (_onChangedWithKeysHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onChangedWithKeysHandlers.Add(handler);
+            }
+        }
+
+        /// <inheritdoc/>
+        public void RemoveOnChangedWithKeysHandler(IOnChangedWithKeysPropertyStorageHandler handler)
+        {
+            lock (_onChangedWithKeysHandlersLockObj)
+            {
+                if (_onChangedWithKeysHandlers.Contains(handler))
+                {
+                    _onChangedWithKeysHandlers.Remove(handler);
+                }
+            }
+        }
+
+        private void EmitOnChangedWithKeysHandlers(StrongIdentifierValue value)
+        {
+            lock (_onChangedWithKeysHandlersLockObj)
+            {
+                foreach (var handler in _onChangedWithKeysHandlers)
+                {
+                    handler.Invoke(value);
+                }
+            }
+        }
+
+        private object _onChangedWithKeysHandlersLockObj = new object();
+        private List<IOnChangedWithKeysPropertyStorageHandler> _onChangedWithKeysHandlers = new List<IOnChangedWithKeysPropertyStorageHandler>();
 
         private List<IPropertyStorage> _parentPropertyStoragesList = new List<IPropertyStorage>();
 
@@ -58,6 +147,8 @@ namespace SymOntoClay.Core.Internal.Storage.PropertyStoraging
 
             AnnotatedItemHelper.CheckAndFillUpHolder(logger, propertyInstance.CodeItem, _realStorageContext.MainStorageContext.CommonNamesStorage);
 
+            propertyInstance.AddOnChangedHandler(this);
+
             var name = propertyInstance.Name;
             var holder = propertyInstance.Holder;
 
@@ -81,7 +172,7 @@ namespace SymOntoClay.Core.Internal.Storage.PropertyStoraging
 
                 foreach (var itemForRemoving in itemsForRemoving)
                 {
-                    itemForRemoving.OnChanged -= PropertyItem_OnChanged;
+                    itemForRemoving.RemoveOnChangedHandler(this);
                     _allPropertiesList.Remove(itemForRemoving);
                 }
 
@@ -131,6 +222,11 @@ namespace SymOntoClay.Core.Internal.Storage.PropertyStoraging
             }
         }
 
+        void IOnChangedPropertyHandler.Invoke(StrongIdentifierValue value)
+        {
+            PropertyItem_OnChanged(value);
+        }
+
         private void PropertyItem_OnChanged(StrongIdentifierValue name)
         {
             EmitOnChanged(Logger, name);
@@ -138,9 +234,14 @@ namespace SymOntoClay.Core.Internal.Storage.PropertyStoraging
 
         protected void EmitOnChanged(IMonitorLogger logger, StrongIdentifierValue propertyName)
         {
-            OnChanged?.Invoke();
+            EmitOnChangedHandlers();
 
-            OnChangedWithKeys?.Invoke(propertyName);
+            EmitOnChangedWithKeysHandlers(propertyName);
+        }
+
+        void IOnChangedWithKeysPropertyStorageHandler.Invoke(StrongIdentifierValue value)
+        {
+            PropertyStorage_OnChangedWithKeys(value);
         }
 
         private void PropertyStorage_OnChangedWithKeys(StrongIdentifierValue propertyName)
@@ -148,18 +249,46 @@ namespace SymOntoClay.Core.Internal.Storage.PropertyStoraging
             EmitOnChanged(Logger, propertyName);
         }
 
+        void IOnRemoveParentStorageRealStorageContextHandler.Invoke(IStorage storage)
+        {
+            RealStorageContext_OnRemoveParentStorage(storage);
+        }
+
         private void RealStorageContext_OnRemoveParentStorage(IStorage storage)
         {
+            LoggedFunctorWithoutResult<PropertyStorage, IStorage>.Run(Logger, "B0E0BA4D-6F0D-4C69-BC14-0FEC022DE01C", this, storage,
+                (IMonitorLogger loggerValue, PropertyStorage instanceValue, IStorage storageValue) => {
+                    instanceValue.NRealStorageContext_OnRemoveParentStorage(storageValue);
+                },
+                _activeObjectContext, _threadPool, _serializationAnchor);
+        }
+
+        public void NRealStorageContext_OnRemoveParentStorage(IStorage storage)
+        {
             var propertyStorage = storage.PropertyStorage;
-            propertyStorage.OnChangedWithKeys -= PropertyStorage_OnChangedWithKeys;
+            propertyStorage.RemoveOnChangedWithKeysHandler(this);
 
             _parentPropertyStoragesList.Remove(propertyStorage);
         }
 
+        void IOnAddParentStorageRealStorageContextHandler.Invoke(IStorage storage)
+        {
+            RealStorageContext_OnAddParentStorage(storage);
+        }
+
         private void RealStorageContext_OnAddParentStorage(IStorage storage)
         {
+            LoggedFunctorWithoutResult<PropertyStorage, IStorage>.Run(Logger, "2C400FE9-AFAE-4819-AC7B-35D9DFFB687A", this, storage,
+                (IMonitorLogger loggerValue, PropertyStorage instanceValue, IStorage storageValue) => {
+                    instanceValue.NRealStorageContext_OnAddParentStorage(storageValue);
+                },
+                _activeObjectContext, _threadPool, _serializationAnchor);
+        }
+
+        public void NRealStorageContext_OnAddParentStorage(IStorage storage)
+        {
             var propertyStorage = storage.PropertyStorage;
-            propertyStorage.OnChangedWithKeys += PropertyStorage_OnChangedWithKeys;
+            propertyStorage.AddOnChangedWithKeysHandler(this);
 
             _parentPropertyStoragesList.Add(propertyStorage);
         }
@@ -169,13 +298,16 @@ namespace SymOntoClay.Core.Internal.Storage.PropertyStoraging
         {
             foreach (var parentStorage in _parentPropertyStoragesList)
             {
-                parentStorage.OnChangedWithKeys -= PropertyStorage_OnChangedWithKeys;
+                parentStorage.RemoveOnChangedWithKeysHandler(this);
             }
 
             foreach (var propertyItem in _allPropertiesList)
             {
-                propertyItem.OnChanged -= PropertyItem_OnChanged;
+                propertyItem.RemoveOnChangedHandler(this);
             }
+
+            _realStorageContext.RemoveOnAddParentStorageHandler(this);
+            _realStorageContext.RemoveOnRemoveParentStorageHandler(this);
 
             _allPropertiesList.Clear();
             //_systemVariables.Clear();

@@ -121,7 +121,7 @@ namespace SymOntoClay.ActiveObject.Threads
                             return;
                         }
 
-                        if (_context.IsNeedWating)
+                        if (_context.IsNeedWaiting)
                         {
                             _isWaited = true;
                             autoResetEvent.WaitOne();
@@ -316,7 +316,7 @@ namespace SymOntoClay.ActiveObject.Threads
                             return default;
                         }
 
-                        if (_context.IsNeedWating)
+                        if (_context.IsNeedWaiting)
                         {
                             _isWaited = true;
                             autoResetEvent.WaitOne();

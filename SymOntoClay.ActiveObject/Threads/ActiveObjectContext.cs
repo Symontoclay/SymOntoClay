@@ -39,7 +39,7 @@ namespace SymOntoClay.ActiveObject.Threads
         private readonly CancellationToken _cancellationToken;
 
         /// <inheritdoc/>
-        public bool IsNeedWating => _commonContext.IsNeedWating;
+        public bool IsNeedWaiting => _commonContext.IsNeedWaiting;
 
         /// <inheritdoc/>
         public EventWaitHandle WaitEvent => _commonContext.WaitEvent;

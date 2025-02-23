@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.Functors;
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common;
 using SymOntoClay.Common.CollectionsHelpers;
@@ -625,7 +626,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 (IMonitorLogger loggerValue, LogicalStorage instanceValue, IStorage storageValue) => {
                     instanceValue.NRealStorageContext_OnAddParentStorage(storageValue);
                 },
-                _activeObjectContext, _threadPool);
+                _activeObjectContext, _threadPool, _serializationAnchor);
         }
 
         public void NRealStorageContext_OnAddParentStorage(IStorage storage)
@@ -649,7 +650,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 (IMonitorLogger loggerValue, LogicalStorage instanceValue, IStorage storageValue) => {
                     instanceValue.NRealStorageContext_OnRemoveParentStorage(storageValue);
                 },
-                _activeObjectContext, _threadPool);
+                _activeObjectContext, _threadPool, _serializationAnchor);
         }
 
         public void NRealStorageContext_OnRemoveParentStorage(IStorage storage)

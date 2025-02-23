@@ -32,6 +32,7 @@ using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,7 +49,10 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
         public LogicalStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
         {
-            var logger = realStorageContext.MainStorageContext.Logger;
+            _activeObjectContext = _mainStorageContext.ActiveObjectContext;
+            _threadPool = _mainStorageContext.AsyncEventsThreadPool;
+
+            var logger = _mainStorageContext.Logger;
 
             _parentLogicalStoragesList = realStorageContext.Parents.Select(p => p.LogicalStorage).ToList();
 
@@ -116,6 +120,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private readonly CommonPersistIndexedLogicalData _commonPersistIndexedLogicalData;
         private List<ILogicalStorage> _parentLogicalStoragesList = new List<ILogicalStorage>();
+
+        private IActiveObjectContext _activeObjectContext;
+        private ICustomThreadPool _threadPool;
 
         private AsyncActivePeriodicObject _activeObject;
 
@@ -228,11 +235,11 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 return true;
             }
 
-            if(_enableOnAddingFactEvent && OnAddingFact != null)
+            if(_enableOnAddingFactEvent && _onAddingFactHandlers.Count > 0)
             {
                 if(isPrimary && ruleInstance.KindOfRuleInstance == KindOfRuleInstance.Fact)
                 {
-                    var approvingRez = AddingFactHelper.CallEvent(logger, OnAddingFact, ruleInstance, _fuzzyLogicResolver, _localCodeExecutionContext);
+                    var approvingRez = AddingFactHelper.CallEvent(logger, _onAddingFactHandlers, ruleInstance, _fuzzyLogicResolver, _localCodeExecutionContext);
 
                     if(_enableAddingRemovingFactLoggingInStorages)
                     {
@@ -597,14 +604,14 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             return LogicalStorage_OnAddingFact(logger, fact);
         }
 
-        private IAddFactOrRuleResult LogicalStorage_OnAddingFact(RuleInstance ruleInstance)
+        private IAddFactOrRuleResult LogicalStorage_OnAddingFact(IMonitorLogger logger, RuleInstance ruleInstance)
         {
             if(_onAddingFactHandlers.Count == 0)
             {
                 return null;
             }
 
-            return AddingFactHelper.CallEvent(Logger, _onAddingFactHandlers, ruleInstance, _fuzzyLogicResolver, _localCodeExecutionContext);
+            return AddingFactHelper.CallEvent(logger, _onAddingFactHandlers, ruleInstance, _fuzzyLogicResolver, _localCodeExecutionContext);
         }
 
         void IOnAddParentStorageRealStorageContextHandler.Invoke(IStorage storage)
@@ -618,7 +625,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 (IMonitorLogger loggerValue, LogicalStorage instanceValue, IStorage storageValue) => {
                     instanceValue.NRealStorageContext_OnAddParentStorage(storageValue);
                 },
-                _activeObjectContext, _threadPool, _serializationAnchor);
+                _activeObjectContext, _threadPool);
         }
 
         public void NRealStorageContext_OnAddParentStorage(IStorage storage)
@@ -642,7 +649,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 (IMonitorLogger loggerValue, LogicalStorage instanceValue, IStorage storageValue) => {
                     instanceValue.NRealStorageContext_OnRemoveParentStorage(storageValue);
                 },
-                _activeObjectContext, _threadPool, _serializationAnchor);
+                _activeObjectContext, _threadPool);
         }
 
         public void NRealStorageContext_OnRemoveParentStorage(IStorage storage)

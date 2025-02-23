@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.Compiling;
 using SymOntoClay.Core.Internal.Storage.ActionsStoraging;
@@ -79,16 +80,89 @@ namespace SymOntoClay.Core.Internal.Storage
 
         public void EmitOnAddParentStorage(IMonitorLogger logger, IStorage storage)
         {
-            OnAddParentStorage?.Invoke(storage);
+            EmitOnAddParentStorageHandlers(storage);
         }
 
         public void EmitOnRemoveParentStorage(IMonitorLogger logger, IStorage storage)
         {
-            OnRemoveParentStorage?.Invoke(storage);
+            EmitOnRemoveParentStorageHandlers(storage);
         }
 
-        public event Action<IStorage> OnAddParentStorage;
-        public event Action<IStorage> OnRemoveParentStorage;
+        public void AddOnAddParentStorageHandler(IOnAddParentStorageRealStorageContextHandler handler)
+        {
+            lock (_onAddParentStorageHandlersLockObj)
+            {
+                if (_onAddParentStorageHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onAddParentStorageHandlers.Add(handler);
+            }
+        }
+
+        public void RemoveOnAddParentStorageHandler(IOnAddParentStorageRealStorageContextHandler handler)
+        {
+            lock (_onAddParentStorageHandlersLockObj)
+            {
+                if (_onAddParentStorageHandlers.Contains(handler))
+                {
+                    _onAddParentStorageHandlers.Remove(handler);
+                }
+            }
+        }
+
+        public void EmitOnAddParentStorageHandlers(IStorage storage)
+        {
+            lock (_onAddParentStorageHandlersLockObj)
+            {
+                foreach (var handler in _onAddParentStorageHandlers)
+                {
+                    handler.Invoke(storage);
+                }
+            }
+        }
+
+        private object _onAddParentStorageHandlersLockObj = new object();
+        private List<IOnAddParentStorageRealStorageContextHandler> _onAddParentStorageHandlers = new List<IOnAddParentStorageRealStorageContextHandler>();
+
+        public void AddOnRemoveParentStorageHandler(IOnRemoveParentStorageRealStorageContextHandler handler)
+        {
+            lock (_onRemoveParentStorageHandlersLockObj)
+            {
+                if (_onRemoveParentStorageHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onRemoveParentStorageHandlers.Add(handler);
+            }
+        }
+
+        public void RemoveOnRemoveParentStorageHandler(IOnRemoveParentStorageRealStorageContextHandler handler)
+        {
+            lock (_onRemoveParentStorageHandlersLockObj)
+            {
+                if (_onRemoveParentStorageHandlers.Contains(handler))
+                {
+                    _onRemoveParentStorageHandlers.Remove(handler);
+                }
+            }
+        }
+
+        public void EmitOnRemoveParentStorageHandlers(IStorage storage)
+        {
+            lock (_onRemoveParentStorageHandlersLockObj)
+            {
+                foreach (var handler in _onRemoveParentStorageHandlers)
+                {
+                    handler.Invoke(storage);
+                }
+            }
+        }
+
+        private object _onRemoveParentStorageHandlersLockObj = new object();
+        private List<IOnRemoveParentStorageRealStorageContextHandler> _onRemoveParentStorageHandlers = new List<IOnRemoveParentStorageRealStorageContextHandler>();
 
         public void Dispose()
         {
@@ -109,6 +183,9 @@ namespace SymOntoClay.Core.Internal.Storage
             IdleActionItemsStorage.Dispose();
             TasksStorage.Dispose();
             PropertyStorage.Dispose();
+
+            _onAddParentStorageHandlers.Clear();
+            _onRemoveParentStorageHandlers.Clear();
         }
     }
 }

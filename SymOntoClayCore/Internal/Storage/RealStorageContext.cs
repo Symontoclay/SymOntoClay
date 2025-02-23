@@ -72,7 +72,7 @@ namespace SymOntoClay.Core.Internal.Storage
         {
             EmitOnAddParentStorageHandlers(storage);
         }
-
+        
         public void EmitOnRemoveParentStorage(IMonitorLogger logger, IStorage storage)
         {
             EmitOnRemoveParentStorageHandlers(storage);

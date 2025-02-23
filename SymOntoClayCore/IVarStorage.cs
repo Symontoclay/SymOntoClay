@@ -39,7 +39,7 @@ namespace SymOntoClay.Core
         Var GetLocalVarDirectly(IMonitorLogger logger, StrongIdentifierValue name);
 
         void SetValue(IMonitorLogger logger, StrongIdentifierValue varName, Value value);
-
+        
         void AddOnChangedHandler(IOnChangedVarStorageHandler handler);
         void RemoveOnChangedHandler(IOnChangedVarStorageHandler handler);
 

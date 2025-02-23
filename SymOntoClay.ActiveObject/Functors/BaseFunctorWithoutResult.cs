@@ -29,7 +29,7 @@ namespace SymOntoClay.ActiveObject.Functors
             _action();
         }
     }
-
+    
     public class BaseFunctorWithoutResult<T> : BaseFunctor
     {
         public BaseFunctorWithoutResult(IMonitorLogger logger, string functorId, T arg, Action<T> action, IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)

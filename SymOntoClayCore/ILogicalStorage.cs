@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Common;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
@@ -45,10 +46,14 @@ namespace SymOntoClay.Core
         void Remove(IMonitorLogger logger, IList<RuleInstance> ruleInstancesList);
         void RemoveById(IMonitorLogger logger, string id);
 
-        event Action OnChanged;
-        event Action<IList<StrongIdentifierValue>> OnChangedWithKeys;
+        void AddOnChangedHandler(IOnChangedLogicalStorageHandler handler);
+        void RemoveOnChangedHandler(IOnChangedLogicalStorageHandler handler);
 
-        event Func<RuleInstance, IAddFactOrRuleResult> OnAddingFact;
+        void AddOnChangedWithKeysHandler(IOnChangedWithKeysLogicalStorageHandler handler);
+        void RemoveOnChangedWithKeysHandler(IOnChangedWithKeysLogicalStorageHandler handler);
+
+        void AddOnAddingFactHandler(IOnAddingFactHandler handler);
+        void RemoveOnAddingFactHandler(IOnAddingFactHandler handler);
 
         IList<LogicalQueryNode> GetAllRelations(IMonitorLogger logger, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode);
         IList<RuleInstance> GetAllOriginFacts(IMonitorLogger logger);

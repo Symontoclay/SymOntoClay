@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
@@ -36,18 +37,18 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 {
     public static class AddingFactHelper
     {
-        public static IAddFactOrRuleResult CallEvent(IMonitorLogger logger, MulticastDelegate onAddingFactEvent, RuleInstance ruleInstance, FuzzyLogicResolver fuzzyLogicResolver, ILocalCodeExecutionContext localCodeExecutionContext)
+        public static IAddFactOrRuleResult CallEvent(IMonitorLogger logger, IList<IOnAddingFactHandler> onAddingFactHandlers, RuleInstance ruleInstance, FuzzyLogicResolver fuzzyLogicResolver, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var resultsOfCallList = new List<IAddFactOrRuleResult>();
 
             var rawObligationsModalitiesList = new List<Value>();
             var rawSelfObligationsModalitiesList = new List<Value>();
 
-            foreach (var item in onAddingFactEvent.GetInvocationList())
+            foreach (var item in onAddingFactHandlers)
             {
                 try
                 {
-                    var rawResultOfCall = item.DynamicInvoke(ruleInstance);
+                    var rawResultOfCall = item.OnAddingFact(logger, ruleInstance);
 
                     if (rawResultOfCall == null)
                     {

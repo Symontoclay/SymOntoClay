@@ -23,6 +23,7 @@ SOFTWARE.*/
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Converters;
 using SymOntoClay.Core.Internal.DataResolvers;
@@ -591,14 +592,29 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         void ILogicalStorage.RemoveById(IMonitorLogger logger, string id) => throw new NotImplementedException("918EDBB9-8D25-4A79-8205-BB88C484DC6B");
 
-        /// <inheritdoc/>
-        public event Action OnChanged;
+        void ILogicalStorage.AddOnChangedHandler(IOnChangedLogicalStorageHandler handler)
+        {
+        }
 
-        /// <inheritdoc/>
-        public event Action<IList<StrongIdentifierValue>> OnChangedWithKeys;
+        void ILogicalStorage.RemoveOnChangedHandler(IOnChangedLogicalStorageHandler handler)
+        {
+        }
 
-        /// <inheritdoc/>
-        public event Func<RuleInstance, IAddFactOrRuleResult> OnAddingFact;
+        void ILogicalStorage.AddOnChangedWithKeysHandler(IOnChangedWithKeysLogicalStorageHandler handler)
+        {
+        }
+
+        void ILogicalStorage.RemoveOnChangedWithKeysHandler(IOnChangedWithKeysLogicalStorageHandler handler)
+        {
+        }
+
+        void ILogicalStorage.AddOnAddingFactHandler(IOnAddingFactHandler handler)
+        {
+        }
+
+        void ILogicalStorage.RemoveOnAddingFactHandler(IOnAddingFactHandler handler)
+        {
+        }
 
         /// <inheritdoc/>
         IList<LogicalQueryNode> ILogicalStorage.GetAllRelations(IMonitorLogger logger, ILogicalSearchStorageContext logicalSearchStorageContext, LogicalSearchExplainNode parentExplainNode, LogicalSearchExplainNode rootParentExplainNode)

@@ -25,6 +25,7 @@ using SymOntoClay.Common;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
@@ -39,7 +40,8 @@ using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 {
-    public class LogicalStorage: BaseSpecificStorage, ILogicalStorage
+    public class LogicalStorage: BaseSpecificStorage, ILogicalStorage,
+        IOnAddingFactHandler, IOnAddParentStorageRealStorageContextHandler, IOnRemoveParentStorageRealStorageContextHandler, IOnChangedLogicalStorageHandler, IOnChangedWithKeysLogicalStorageHandler
     {
         private const int DEFAULT_INITIAL_TIME = 20;
 
@@ -62,13 +64,13 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             foreach (var parentStorage in _parentLogicalStoragesList)
             {
-                parentStorage.OnChangedWithKeys += LogicalStorage_OnChangedWithKeys;
-                parentStorage.OnChanged += LogicalStorage_OnChanged;
-                parentStorage.OnAddingFact += LogicalStorage_OnAddingFact;
+                parentStorage.AddOnChangedWithKeysHandler(this);
+                parentStorage.AddOnChangedHandler(this);
+                parentStorage.AddOnAddingFactHandler(this);
             }
 
-            realStorageContext.OnAddParentStorage += RealStorageContext_OnAddParentStorage;
-            realStorageContext.OnRemoveParentStorage += RealStorageContext_OnRemoveParentStorage;
+            realStorageContext.AddOnAddParentStorageHandler(this);
+            realStorageContext.AddOnRemoveParentStorageHandler(this);
 
             _enableOnAddingFactEvent = realStorageContext.EnableOnAddingFactEvent;
 
@@ -308,8 +310,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                                     inheritanceItem.SuperName = inheritanceRelation.ParamsList[1].Name;
                                     inheritanceItem.SubName = inheritanceRelation.ParamsList[0].Name;
                                     var thirdParameter = inheritanceRelation.ParamsList[2];
-                                    var kindOfthirdParameter = thirdParameter.Kind;
-                                    switch (kindOfthirdParameter)
+                                    var kindOfThirdParameter = thirdParameter.Kind;
+                                    switch (kindOfThirdParameter)
                                     {
                                         case KindOfLogicalQueryNode.Concept:
                                             inheritanceItem.Rank = thirdParameter.Name;
@@ -324,7 +326,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                                             break;
 
                                         default:
-                                            throw new ArgumentOutOfRangeException(nameof(kindOfthirdParameter), kindOfthirdParameter, null);
+                                            throw new ArgumentOutOfRangeException(nameof(kindOfThirdParameter), kindOfThirdParameter, null);
                                     }
                                     break;
 
@@ -453,25 +455,21 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             return ruleInstance.UsedKeysList;
         }
 
-        /// <inheritdoc/>
-        public event Action OnChanged;
-
-        /// <inheritdoc/>
-        public event Action<IList<StrongIdentifierValue>> OnChangedWithKeys;
-
-        /// <inheritdoc/>
-        public event Func<RuleInstance, IAddFactOrRuleResult> OnAddingFact;
-
         protected void EmitOnChanged(IMonitorLogger logger, IList<StrongIdentifierValue> usedKeysList)
         {
             EmitOnChanged(logger);
 
-            OnChangedWithKeys?.Invoke(usedKeysList);
+            EmitOnChangedWithKeysHandlers(usedKeysList);
         }
 
         protected void EmitOnChanged(IMonitorLogger logger)
         {
-            OnChanged?.Invoke();
+            EmitOnChangedHandlers();
+        }
+
+        void IOnChangedWithKeysLogicalStorageHandler.Invoke(IList<StrongIdentifierValue> value)
+        {
+            LogicalStorage_OnChangedWithKeys(value);
         }
 
         private void LogicalStorage_OnChangedWithKeys(IList<StrongIdentifierValue> changedKeysList)
@@ -479,37 +477,180 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             EmitOnChanged(Logger, changedKeysList);
         }
 
+        void IOnChangedLogicalStorageHandler.Invoke()
+        {
+            LogicalStorage_OnChanged();
+        }
+
         private void LogicalStorage_OnChanged()
         {
             EmitOnChanged(Logger);
         }
 
+        void ILogicalStorage.AddOnChangedHandler(IOnChangedLogicalStorageHandler handler)
+        {
+            lock (_onChangedHandlersLockObj)
+            {
+                if (_onChangedHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onChangedHandlers.Add(handler);
+            }
+        }
+
+        void ILogicalStorage.RemoveOnChangedHandler(IOnChangedLogicalStorageHandler handler)
+        {
+            lock (_onChangedHandlersLockObj)
+            {
+                if (_onChangedHandlers.Contains(handler))
+                {
+                    _onChangedHandlers.Remove(handler);
+                }
+            }
+        }
+
+        private void EmitOnChangedHandlers()
+        {
+            lock (_onChangedHandlersLockObj)
+            {
+                foreach (var handler in _onChangedHandlers)
+                {
+                    handler.Invoke();
+                }
+            }
+        }
+
+        private object _onChangedHandlersLockObj = new object();
+        private List<IOnChangedLogicalStorageHandler> _onChangedHandlers = new List<IOnChangedLogicalStorageHandler>();
+
+        void ILogicalStorage.AddOnChangedWithKeysHandler(IOnChangedWithKeysLogicalStorageHandler handler)
+        {
+            lock (_onChangedWithKeysHandlersLockObj)
+            {
+                if (_onChangedWithKeysHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onChangedWithKeysHandlers.Add(handler);
+            }
+        }
+
+        void ILogicalStorage.RemoveOnChangedWithKeysHandler(IOnChangedWithKeysLogicalStorageHandler handler)
+        {
+            lock (_onChangedWithKeysHandlersLockObj)
+            {
+                if (_onChangedWithKeysHandlers.Contains(handler))
+                {
+                    _onChangedWithKeysHandlers.Remove(handler);
+                }
+            }
+        }
+
+        private void EmitOnChangedWithKeysHandlers(IList<StrongIdentifierValue> value)
+        {
+            lock (_onChangedWithKeysHandlersLockObj)
+            {
+                foreach (var handler in _onChangedWithKeysHandlers)
+                {
+                    handler.Invoke(value);
+                }
+            }
+        }
+
+        private object _onChangedWithKeysHandlersLockObj = new object();
+        private List<IOnChangedWithKeysLogicalStorageHandler> _onChangedWithKeysHandlers = new List<IOnChangedWithKeysLogicalStorageHandler>();
+
+        private object _onAddingFactHandlerLockObj = new object();
+        private List<IOnAddingFactHandler> _onAddingFactHandlers = new List<IOnAddingFactHandler>();
+
+        /// <inheritdoc/>
+        public void AddOnAddingFactHandler(IOnAddingFactHandler handler)
+        {
+            lock (_onAddingFactHandlerLockObj)
+            {
+                if (_onAddingFactHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onAddingFactHandlers.Add(handler);
+            }
+        }
+
+        /// <inheritdoc/>
+        public void RemoveOnAddingFactHandler(IOnAddingFactHandler handler)
+        {
+            lock (_onAddingFactHandlerLockObj)
+            {
+                if (_onAddingFactHandlers.Contains(handler))
+                {
+                    _onAddingFactHandlers.Remove(handler);
+                }
+            }
+        }
+
+        IAddFactOrRuleResult IOnAddingFactHandler.OnAddingFact(IMonitorLogger logger, RuleInstance fact)
+        {
+            return LogicalStorage_OnAddingFact(logger, fact);
+        }
+
         private IAddFactOrRuleResult LogicalStorage_OnAddingFact(RuleInstance ruleInstance)
         {
-            if(OnAddingFact == null)
+            if(_onAddingFactHandlers.Count == 0)
             {
                 return null;
             }
 
-            return AddingFactHelper.CallEvent(Logger, OnAddingFact, ruleInstance, _fuzzyLogicResolver, _localCodeExecutionContext);
+            return AddingFactHelper.CallEvent(Logger, _onAddingFactHandlers, ruleInstance, _fuzzyLogicResolver, _localCodeExecutionContext);
+        }
+
+        void IOnAddParentStorageRealStorageContextHandler.Invoke(IStorage storage)
+        {
+            RealStorageContext_OnAddParentStorage(storage);
         }
 
         private void RealStorageContext_OnAddParentStorage(IStorage storage)
         {
+            LoggedFunctorWithoutResult<LogicalStorage, IStorage>.Run(Logger, "B0A51B85-F56B-4A35-A310-6616A97899DB", this, storage,
+                (IMonitorLogger loggerValue, LogicalStorage instanceValue, IStorage storageValue) => {
+                    instanceValue.NRealStorageContext_OnAddParentStorage(storageValue);
+                },
+                _activeObjectContext, _threadPool, _serializationAnchor);
+        }
+
+        public void NRealStorageContext_OnAddParentStorage(IStorage storage)
+        {
             var logicalStorage = storage.LogicalStorage;
-            logicalStorage.OnChangedWithKeys += LogicalStorage_OnChangedWithKeys;
-            logicalStorage.OnChanged += LogicalStorage_OnChanged;
-            logicalStorage.OnAddingFact += LogicalStorage_OnAddingFact;
+            logicalStorage.AddOnChangedWithKeysHandler(this);
+            logicalStorage.AddOnChangedHandler(this);
+            logicalStorage.AddOnAddingFactHandler(this);
 
             _parentLogicalStoragesList.Add(logicalStorage);
         }
 
+        void IOnRemoveParentStorageRealStorageContextHandler.Invoke(IStorage storage)
+        {
+            RealStorageContext_OnRemoveParentStorage(storage);
+        }
+
         private void RealStorageContext_OnRemoveParentStorage(IStorage storage)
         {
+            LoggedFunctorWithoutResult<LogicalStorage, IStorage>.Run(Logger, "1A999A30-68D4-4166-99FE-A02569B22854", this, storage,
+                (IMonitorLogger loggerValue, LogicalStorage instanceValue, IStorage storageValue) => {
+                    instanceValue.NRealStorageContext_OnRemoveParentStorage(storageValue);
+                },
+                _activeObjectContext, _threadPool, _serializationAnchor);
+        }
+
+        public void NRealStorageContext_OnRemoveParentStorage(IStorage storage)
+        {
             var logicalStorage = storage.LogicalStorage;
-            logicalStorage.OnChangedWithKeys -= LogicalStorage_OnChangedWithKeys;
-            logicalStorage.OnChanged -= LogicalStorage_OnChanged;
-            logicalStorage.OnAddingFact -= LogicalStorage_OnAddingFact;
+            logicalStorage.RemoveOnChangedWithKeysHandler(this);
+            logicalStorage.RemoveOnChangedHandler(this);
+            logicalStorage.RemoveOnAddingFactHandler(this);
 
             _parentLogicalStoragesList.Remove(logicalStorage);
         }
@@ -824,13 +965,19 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             foreach (var parentStorage in _parentLogicalStoragesList)
             {
-                parentStorage.OnChangedWithKeys -= LogicalStorage_OnChangedWithKeys;
-                parentStorage.OnChanged -= LogicalStorage_OnChanged;
-                parentStorage.OnAddingFact -= LogicalStorage_OnAddingFact;
+                parentStorage.RemoveOnChangedWithKeysHandler(this);
+                parentStorage.RemoveOnChangedHandler(this);
+                parentStorage.RemoveOnAddingFactHandler(this);
             }
 
-            _realStorageContext.OnAddParentStorage -= RealStorageContext_OnAddParentStorage;
-            _realStorageContext.OnRemoveParentStorage -= RealStorageContext_OnRemoveParentStorage;
+            _parentLogicalStoragesList.Clear();
+
+            _realStorageContext.RemoveOnAddParentStorageHandler(this);
+            _realStorageContext.RemoveOnRemoveParentStorageHandler(this);
+
+            _onChangedHandlers.Clear();
+            _onChangedWithKeysHandlers.Clear();
+            _onAddingFactHandlers.Clear();
 
             base.OnDisposed();
         }

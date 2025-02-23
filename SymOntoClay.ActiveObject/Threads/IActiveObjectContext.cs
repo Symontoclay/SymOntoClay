@@ -30,8 +30,11 @@ namespace SymOntoClay.ActiveObject.Threads
         void AddChildActiveObject(IActivePeriodicObject activeObject);
         void RemoveChildActiveObject(IActivePeriodicObject activeObject);
 
-        void WaitWhenAllIsNotWaited();
+        void AddChildActiveObject(IActiveOnceObject activeObject);
+        void RemoveChildActiveObject(IActiveOnceObject activeObject);
 
+        void WaitWhenAllIsNotWaited();
+        
         void StartAll();
         void StopAll();
 

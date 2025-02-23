@@ -3,6 +3,7 @@ using SymOntoClay.Threading;
 using System.Collections.Generic;
 using System.Threading;
 using System;
+using SymOntoClay.ActiveObject.EventsInterfaces;
 
 namespace SymOntoClay.ActiveObject.Threads
 {

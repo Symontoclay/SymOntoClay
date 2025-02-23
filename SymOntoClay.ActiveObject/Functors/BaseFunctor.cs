@@ -1,4 +1,5 @@
-﻿using SymOntoClay.ActiveObject.Threads;
+﻿using SymOntoClay.ActiveObject.EventsInterfaces;
+using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Threading;
 using System.Threading;
@@ -91,10 +92,5 @@ namespace SymOntoClay.ActiveObject.Functors
         private TResult _result = default(TResult);
 
         public TResult Result => _asyncActiveOnceObject == null ? _result : _asyncActiveOnceObject.Result;
-
-        public IAsyncMethodResponse<TResult> ToMethodResponse()
-        {
-            return new AsyncMethodResponseOfBaseFunctor<TResult>(this);
-        }
     }
 }

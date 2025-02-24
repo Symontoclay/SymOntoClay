@@ -51,13 +51,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         /// <inheritdoc/>
         protected override void OnEnter()
         {
-            _prevTypeOfAccess = _context.CurrentDefaultSetings.TypeOfAccess;
+            _prevTypeOfAccess = _context.CurrentDefaultSettings.TypeOfAccess;
         }
 
         /// <inheritdoc/>
         protected override void OnFinish()
         {
-            _context.CurrentDefaultSetings.TypeOfAccess = _prevTypeOfAccess;
+            _context.CurrentDefaultSettings.TypeOfAccess = _prevTypeOfAccess;
         }
 
         /// <inheritdoc/>
@@ -72,17 +72,17 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             switch(_currToken.KeyWordTokenKind)
                             {
                                 case KeyWordTokenKind.Public:
-                                    _context.CurrentDefaultSetings.TypeOfAccess = TypeOfAccess.Public;
+                                    _context.CurrentDefaultSettings.TypeOfAccess = TypeOfAccess.Public;
                                     _state = State.GotAccessibilityAreasMark;
                                     break;
 
                                 case KeyWordTokenKind.Protected:
-                                    _context.CurrentDefaultSetings.TypeOfAccess = TypeOfAccess.Protected;
+                                    _context.CurrentDefaultSettings.TypeOfAccess = TypeOfAccess.Protected;
                                     _state = State.GotAccessibilityAreasMark;
                                     break;
 
                                 case KeyWordTokenKind.Private:
-                                    _context.CurrentDefaultSetings.TypeOfAccess = TypeOfAccess.Private;
+                                    _context.CurrentDefaultSettings.TypeOfAccess = TypeOfAccess.Private;
                                     _state = State.GotAccessibilityAreasMark;
                                     break;
 

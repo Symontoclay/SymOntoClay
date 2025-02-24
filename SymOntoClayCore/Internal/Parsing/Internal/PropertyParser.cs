@@ -34,7 +34,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnEnter()
         {
             _property = CreateProperty();
-            _property.TypeOfAccess = _context.CurrentDefaultSetings.TypeOfAccess;
+            _property.TypeOfAccess = _context.CurrentDefaultSettings.TypeOfAccess;
         }
 
         /// <inheritdoc/>

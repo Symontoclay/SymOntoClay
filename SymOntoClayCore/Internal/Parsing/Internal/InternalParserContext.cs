@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Compiling;
@@ -33,7 +34,7 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.Parsing.Internal
 {
-    public class InternalParserContext
+    public class InternalParserContext : IOnNameChangedCodeItemHandler
     {
         private InternalParserContext()
         {
@@ -67,12 +68,12 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             if(_currCodeItem != null)
             {
-                _currCodeItem.OnNameChanged -= OnNameOfCurrentCodeItemChanged;
+                _currCodeItem.RemoveOnNameChangedHandler(this);
             }
 
             _currCodeItem = codeEntity;
 
-            _currCodeItem.OnNameChanged += OnNameOfCurrentCodeItemChanged;
+            _currCodeItem.AddOnNameChangedHandler(this);
         }
 
         public void RemoveCurrentCodeItem()
@@ -81,30 +82,35 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             if (_currCodeItem != null)
             {
-                _currCodeItem.OnNameChanged -= OnNameOfCurrentCodeItemChanged;
+                _currCodeItem.RemoveOnNameChangedHandler(this);
             }
 
             if(_codeItems.Count == 0)
             {
                 _currCodeItem = null;
 
-                if(CurrentDefaultSetings != null)
+                if(CurrentDefaultSettings != null)
                 {
-                    CurrentDefaultSetings.Holder = null;
+                    CurrentDefaultSettings.Holder = null;
                 }                
             }
             else
             {
                 _currCodeItem = _codeItems.Peek();
-                _currCodeItem.OnNameChanged += OnNameOfCurrentCodeItemChanged;
+                _currCodeItem.AddOnNameChangedHandler(this);
             }
+        }
+
+        void IOnNameChangedCodeItemHandler.Invoke(StrongIdentifierValue value)
+        {
+            OnNameOfCurrentCodeItemChanged(value);
         }
 
         private void OnNameOfCurrentCodeItemChanged(StrongIdentifierValue name)
         {
-            if(CurrentDefaultSetings != null)
+            if(CurrentDefaultSettings != null)
             {
-                CurrentDefaultSetings.Holder = name;
+                CurrentDefaultSettings.Holder = name;
             }            
         }
 
@@ -122,22 +128,22 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         }
 
         private Stack<DefaultSettingsOfCodeEntity> _defaultSettingsOfCodeEntity = new Stack<DefaultSettingsOfCodeEntity>();
-        private DefaultSettingsOfCodeEntity _currentDefaultSetings;
+        private DefaultSettingsOfCodeEntity _currentDefaultSettings;
 
-        public DefaultSettingsOfCodeEntity CurrentDefaultSetings => _currentDefaultSetings;
+        public DefaultSettingsOfCodeEntity CurrentDefaultSettings => _currentDefaultSettings;
 
         public void SetCurrentDefaultSetings(DefaultSettingsOfCodeEntity defaultSettings)
         {
             if (!_defaultSettingsOfCodeEntity.Any())
             {
                 _defaultSettingsOfCodeEntity.Push(defaultSettings);
-                _currentDefaultSetings = defaultSettings;
+                _currentDefaultSettings = defaultSettings;
                 return;
             }
 
-            DefaultSettingsOfCodeEntityHelper.Mix(_currentDefaultSetings, defaultSettings);
+            DefaultSettingsOfCodeEntityHelper.Mix(_currentDefaultSettings, defaultSettings);
             _defaultSettingsOfCodeEntity.Push(defaultSettings);
-            _currentDefaultSetings = defaultSettings;
+            _currentDefaultSettings = defaultSettings;
         }
 
         public void RemoveCurrentDefaultSetings()
@@ -151,11 +157,11 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             if(_defaultSettingsOfCodeEntity.Any())
             {
-                _currentDefaultSetings = _defaultSettingsOfCodeEntity.Peek();
+                _currentDefaultSettings = _defaultSettingsOfCodeEntity.Peek();
             }
             else
             {
-                _currentDefaultSetings = null;
+                _currentDefaultSettings = null;
             }
         }
 
@@ -211,7 +217,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
             result._codeItems = new Stack<CodeItem>(_codeItems.Select(p => p.CloneCodeItem()).Reverse().ToList());
 
             result._defaultSettingsOfCodeEntity = new Stack<DefaultSettingsOfCodeEntity>(_defaultSettingsOfCodeEntity.Select(p => p.Clone()).Reverse().ToList());
-            result._currentDefaultSetings = result._defaultSettingsOfCodeEntity.Peek();
+            result._currentDefaultSettings = result._defaultSettingsOfCodeEntity.Peek();
 
             return result;
         }

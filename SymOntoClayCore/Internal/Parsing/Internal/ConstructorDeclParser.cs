@@ -54,7 +54,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnEnter()
         {
             Result = CreateConstructorAndSetAsCurrentCodeItem();
-            Result.TypeOfAccess = _context.CurrentDefaultSetings.TypeOfAccess;
+            Result.TypeOfAccess = _context.CurrentDefaultSettings.TypeOfAccess;
         }
 
         /// <inheritdoc/>

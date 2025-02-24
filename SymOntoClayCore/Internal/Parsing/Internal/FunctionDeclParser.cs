@@ -56,7 +56,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _namedFunction = CreateNamedFunctionAndSetAsCurrentCodeItem();
 
-            _namedFunction.TypeOfAccess = _context.CurrentDefaultSetings.TypeOfAccess;
+            _namedFunction.TypeOfAccess = _context.CurrentDefaultSettings.TypeOfAccess;
         }
 
         /// <inheritdoc/>

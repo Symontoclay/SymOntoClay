@@ -47,10 +47,10 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             _ruleInstance = parser.Result;
 
-            if (_context.CurrentDefaultSetings != null)
+            if (_context.CurrentDefaultSettings != null)
             {
-                _ruleInstance.TypeOfAccess = _context.CurrentDefaultSetings.TypeOfAccess;
-                _ruleInstance.Holder = _context.CurrentDefaultSetings.Holder;
+                _ruleInstance.TypeOfAccess = _context.CurrentDefaultSettings.TypeOfAccess;
+                _ruleInstance.Holder = _context.CurrentDefaultSettings.Holder;
             }
 
             Exit();            

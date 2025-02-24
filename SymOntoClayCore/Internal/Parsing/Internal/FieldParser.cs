@@ -53,7 +53,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         protected override void OnEnter()
         {
             _field = CreateField();
-            _field.TypeOfAccess = _context.CurrentDefaultSetings.TypeOfAccess;
+            _field.TypeOfAccess = _context.CurrentDefaultSettings.TypeOfAccess;
         }
 
         /// <inheritdoc/>

@@ -434,7 +434,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         protected CodeItem CurrentCodeItem => _context.CurrentCodeItem;
 
-        protected DefaultSettingsOfCodeEntity CurrentDefaultSetings => _context.CurrentDefaultSetings;
+        protected DefaultSettingsOfCodeEntity CurrentDefaultSetings => _context.CurrentDefaultSettings;
 
         protected void SetCurrentDefaultSetings(DefaultSettingsOfCodeEntity defaultSettings)
         {

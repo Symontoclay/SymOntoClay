@@ -22,15 +22,13 @@ SOFTWARE.*/
 
 using SymOntoClay.Common;
 using SymOntoClay.Common.Disposing;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
-using SymOntoClay.CoreHelper;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core
 {
@@ -70,7 +68,8 @@ namespace SymOntoClay.Core
 
         List<StorageUsingOptions> CodeItemsStoragesList { get; set; }
 
-        event Action OnParentStorageChanged;
+        void AddOnParentStorageChangedHandler(IOnParentStorageChangedStorageHandler handler);
+        void RemoveOnParentStorageChangedHandler(IOnParentStorageChangedStorageHandler handler);
 
 #if DEBUG
         void DbgPrintFactsAndRules(IMonitorLogger logger);

@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.CoreHelper.DebugHelpers;
@@ -71,10 +72,24 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
         }
 
         /// <inheritdoc/>
-        public event Action OnNamedTriggerInstanceChanged;
+        public void AddOnNamedTriggerInstanceChangedHandler(IOnNamedTriggerInstanceChangedTriggersStorageHandler handler)
+        {
+        }
 
         /// <inheritdoc/>
-        public event Action<IList<StrongIdentifierValue>> OnNamedTriggerInstanceChangedWithKeys;
+        public void RemoveOnNamedTriggerInstanceChangedHandler(IOnNamedTriggerInstanceChangedTriggersStorageHandler handler)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void AddOnNamedTriggerInstanceChangedWithKeysHandler(IOnNamedTriggerInstanceChangedWithKeysTriggersStorageHandler handler)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void RemoveOnNamedTriggerInstanceChangedWithKeysHandler(IOnNamedTriggerInstanceChangedWithKeysTriggersStorageHandler handler)
+        {
+        }
 
         /// <inheritdoc/>
         public IList<INamedTriggerInstance> GetNamedTriggerInstancesDirectly(IMonitorLogger logger, StrongIdentifierValue name)

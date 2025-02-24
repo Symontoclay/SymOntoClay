@@ -20,32 +20,47 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.Functors;
+using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.CollectionsHelpers;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 {
-    public class TriggersStorage: BaseSpecificStorage, ITriggersStorage
+    public class TriggersStorage: BaseSpecificStorage, ITriggersStorage,
+        IOnAddParentStorageRealStorageContextHandler, IOnRemoveParentStorageRealStorageContextHandler,
+        IOnChangedNamedTriggerInstanceHandler, IOnNamedTriggerInstanceChangedWithKeysTriggersStorageHandler
     {
         public TriggersStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
         {
+            _activeObjectContext = _mainStorageContext.ActiveObjectContext;
+            _threadPool = _mainStorageContext.AsyncEventsThreadPool;
+            _serializationAnchor = new SerializationAnchor();
+
             _parentTriggersStoragesList = realStorageContext.Parents.Select(p => p.TriggersStorage).ToList();
 
             foreach (var parentStorage in _parentTriggersStoragesList)
             {
-                parentStorage.OnNamedTriggerInstanceChangedWithKeys += TriggersStorage_OnNamedTriggerInstanceChangedWithKeys;
+                parentStorage.AddOnNamedTriggerInstanceChangedWithKeysHandler(this);
             }
 
-            realStorageContext.OnAddParentStorage += RealStorageContext_OnAddParentStorage;
-            realStorageContext.OnRemoveParentStorage += RealStorageContext_OnRemoveParentStorage;
+            realStorageContext.AddOnAddParentStorageHandler(this);
+            realStorageContext.AddOnRemoveParentStorageHandler(this);
         }
+
+        private IActiveObjectContext _activeObjectContext;
+        private ICustomThreadPool _threadPool;
+        private SerializationAnchor _serializationAnchor;
 
         private readonly object _lockObj = new object();
 
@@ -264,9 +279,9 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
                 _namedTriggerInstancesList.Add(namedTriggerInstance);
 
-                namedTriggerInstance.OnChanged += NamedTriggerInstance_OnChanged;
+                namedTriggerInstance.AddOnChangedHandler(this);
 
-                foreach(var name in namesList)
+                foreach (var name in namesList)
                 {
                     if(_namedTriggerInstancesDict.ContainsKey(name))
                     {
@@ -276,7 +291,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
                         foreach (var itemForRemoving in itemsForRemoving)
                         {
-                            itemForRemoving.OnChanged -= NamedTriggerInstance_OnChanged;
+                            itemForRemoving.RemoveOnChangedHandler(this);
                             _namedTriggerInstancesList.Remove(itemForRemoving);
                         }
 
@@ -309,7 +324,7 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
                 _namedTriggerInstancesList.Remove(namedTriggerInstance);
 
-                namedTriggerInstance.OnChanged -= NamedTriggerInstance_OnChanged;
+                namedTriggerInstance.RemoveOnChangedHandler(this);
 
                 foreach (var name in namesList)
                 {
@@ -347,10 +362,89 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
         }
 
         /// <inheritdoc/>
-        public event Action OnNamedTriggerInstanceChanged;
+        public void AddOnNamedTriggerInstanceChangedHandler(IOnNamedTriggerInstanceChangedTriggersStorageHandler handler)
+        {
+            lock (_onNamedTriggerInstanceChangedHandlersLockObj)
+            {
+                if (_onNamedTriggerInstanceChangedHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onNamedTriggerInstanceChangedHandlers.Add(handler);
+            }
+        }
 
         /// <inheritdoc/>
-        public event Action<IList<StrongIdentifierValue>> OnNamedTriggerInstanceChangedWithKeys;
+        public void RemoveOnNamedTriggerInstanceChangedHandler(IOnNamedTriggerInstanceChangedTriggersStorageHandler handler)
+        {
+            lock (_onNamedTriggerInstanceChangedHandlersLockObj)
+            {
+                if (_onNamedTriggerInstanceChangedHandlers.Contains(handler))
+                {
+                    _onNamedTriggerInstanceChangedHandlers.Remove(handler);
+                }
+            }
+        }
+
+        private void EmitOnNamedTriggerInstanceChangedHandlers()
+        {
+            lock (_onNamedTriggerInstanceChangedHandlersLockObj)
+            {
+                foreach (var handler in _onNamedTriggerInstanceChangedHandlers)
+                {
+                    handler.Invoke();
+                }
+            }
+        }
+
+        private object _onNamedTriggerInstanceChangedHandlersLockObj = new object();
+        private List<IOnNamedTriggerInstanceChangedTriggersStorageHandler> _onNamedTriggerInstanceChangedHandlers = new List<IOnNamedTriggerInstanceChangedTriggersStorageHandler>();
+
+        /// <inheritdoc/>
+        public void AddOnNamedTriggerInstanceChangedWithKeysHandler(IOnNamedTriggerInstanceChangedWithKeysTriggersStorageHandler handler)
+        {
+            lock (_onNamedTriggerInstanceChangedWithKeysHandlersLockObj)
+            {
+                if (_onNamedTriggerInstanceChangedWithKeysHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onNamedTriggerInstanceChangedWithKeysHandlers.Add(handler);
+            }
+        }
+
+        /// <inheritdoc/>
+        public void RemoveOnNamedTriggerInstanceChangedWithKeysHandler(IOnNamedTriggerInstanceChangedWithKeysTriggersStorageHandler handler)
+        {
+            lock (_onNamedTriggerInstanceChangedWithKeysHandlersLockObj)
+            {
+                if (_onNamedTriggerInstanceChangedWithKeysHandlers.Contains(handler))
+                {
+                    _onNamedTriggerInstanceChangedWithKeysHandlers.Remove(handler);
+                }
+            }
+        }
+
+        private void EmitOnNamedTriggerInstanceChangedWithKeysHandlers(IList<StrongIdentifierValue> value)
+        {
+            lock (_onNamedTriggerInstanceChangedWithKeysHandlersLockObj)
+            {
+                foreach (var handler in _onNamedTriggerInstanceChangedWithKeysHandlers)
+                {
+                    handler.Invoke(value);
+                }
+            }
+        }
+
+        private object _onNamedTriggerInstanceChangedWithKeysHandlersLockObj = new object();
+        private List<IOnNamedTriggerInstanceChangedWithKeysTriggersStorageHandler> _onNamedTriggerInstanceChangedWithKeysHandlers = new List<IOnNamedTriggerInstanceChangedWithKeysTriggersStorageHandler>();
+
+        void IOnChangedNamedTriggerInstanceHandler.Invoke(IList<StrongIdentifierValue> value)
+        {
+            NamedTriggerInstance_OnChanged(value);
+        }
 
         private void NamedTriggerInstance_OnChanged(IList<StrongIdentifierValue> namesList)
         {
@@ -359,28 +453,56 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
         protected void EmitOnChanged(IMonitorLogger logger, IList<StrongIdentifierValue> namesList)
         {
-            OnNamedTriggerInstanceChanged?.Invoke();
+            EmitOnNamedTriggerInstanceChangedHandlers();
 
-            OnNamedTriggerInstanceChangedWithKeys?.Invoke(namesList);
+            EmitOnNamedTriggerInstanceChangedWithKeysHandlers(namesList);
         }
 
-        private void TriggersStorage_OnNamedTriggerInstanceChangedWithKeys(IList<StrongIdentifierValue> namesList)
+        void IOnNamedTriggerInstanceChangedWithKeysTriggersStorageHandler.Invoke(IList<StrongIdentifierValue> value)
         {
-            EmitOnChanged(Logger, namesList);
+            EmitOnChanged(Logger, value);
+        }
+
+        void IOnRemoveParentStorageRealStorageContextHandler.Invoke(IStorage storage)
+        {
+            RealStorageContext_OnRemoveParentStorage(storage);
         }
 
         private void RealStorageContext_OnRemoveParentStorage(IStorage storage)
         {
+            LoggedFunctorWithoutResult<TriggersStorage, IStorage>.Run(Logger, "CE9E5E18-3D8B-47B7-874C-FD1E6F985354", this, storage,
+                (IMonitorLogger loggerValue, TriggersStorage instanceValue, IStorage storageValue) => {
+                    instanceValue.NRealStorageContext_OnRemoveParentStorage(storageValue);
+                },
+                _activeObjectContext, _threadPool, _serializationAnchor);
+        }
+
+        public void NRealStorageContext_OnRemoveParentStorage(IStorage storage)
+        {
             var triggersStorage = storage.TriggersStorage;
-            triggersStorage.OnNamedTriggerInstanceChangedWithKeys -= TriggersStorage_OnNamedTriggerInstanceChangedWithKeys;
+            triggersStorage.RemoveOnNamedTriggerInstanceChangedWithKeysHandler(this);
 
             _parentTriggersStoragesList.Remove(triggersStorage);
         }
 
+        void IOnAddParentStorageRealStorageContextHandler.Invoke(IStorage storage)
+        {
+            RealStorageContext_OnAddParentStorage(storage);
+        }
+
         private void RealStorageContext_OnAddParentStorage(IStorage storage)
         {
+            LoggedFunctorWithoutResult<TriggersStorage, IStorage>.Run(Logger, "403E1946-20F0-40DD-B587-C17B408BA842", this, storage,
+                (IMonitorLogger loggerValue, TriggersStorage instanceValue, IStorage storageValue) => {
+                    instanceValue.NRealStorageContext_OnAddParentStorage(storageValue);
+                },
+                _activeObjectContext, _threadPool, _serializationAnchor);
+        }
+
+        public void NRealStorageContext_OnAddParentStorage(IStorage storage)
+        {
             var triggersStorage = storage.TriggersStorage;
-            triggersStorage.OnNamedTriggerInstanceChangedWithKeys += TriggersStorage_OnNamedTriggerInstanceChangedWithKeys;
+            triggersStorage.AddOnNamedTriggerInstanceChangedWithKeysHandler(this);
 
             _parentTriggersStoragesList.Add(triggersStorage);
         }
@@ -390,16 +512,24 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
         {
             foreach (var parentStorage in _parentTriggersStoragesList)
             {
-                parentStorage.OnNamedTriggerInstanceChangedWithKeys -= TriggersStorage_OnNamedTriggerInstanceChangedWithKeys;
+                parentStorage.RemoveOnNamedTriggerInstanceChangedWithKeysHandler(this);
             }
 
             foreach (var item in _namedTriggerInstancesList)
             {
-                item.OnChanged -= NamedTriggerInstance_OnChanged;
+                item.RemoveOnChangedHandler(this);
             }
+
+            _realStorageContext.RemoveOnAddParentStorageHandler(this);
+            _realStorageContext.RemoveOnRemoveParentStorageHandler(this);
 
             _systemEventsInfoDict.Clear();
             _logicConditionalsDict.Clear();
+
+            _onNamedTriggerInstanceChangedHandlers.Clear();
+            _onNamedTriggerInstanceChangedWithKeysHandlers.Clear();
+
+            _serializationAnchor.Dispose();
 
             base.OnDisposed();
         }

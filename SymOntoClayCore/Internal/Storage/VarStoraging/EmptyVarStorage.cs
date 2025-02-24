@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Instances;
@@ -72,10 +73,24 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
         }
 
         /// <inheritdoc/>
-        public event Action OnChanged;
+        public void AddOnChangedHandler(IOnChangedVarStorageHandler handler)
+        {
+        }
 
         /// <inheritdoc/>
-        public event Action<StrongIdentifierValue> OnChangedWithKeys;
+        public void RemoveOnChangedHandler(IOnChangedVarStorageHandler handler)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void AddOnChangedWithKeysHandler(IOnChangedWithKeysVarStorageHandler handler)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void RemoveOnChangedWithKeysHandler(IOnChangedWithKeysVarStorageHandler handler)
+        {
+        }
 
 #if DEBUG
         /// <inheritdoc/>

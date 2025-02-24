@@ -1,8 +1,8 @@
-﻿using SymOntoClay.Core.Internal.CodeModel;
+﻿using SymOntoClay.Core.EventsInterfaces;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Monitor.Common;
-using System;
 using System.Collections.Generic;
 
 namespace SymOntoClay.Core.Internal.Storage.PropertyStoraging
@@ -26,9 +26,23 @@ namespace SymOntoClay.Core.Internal.Storage.PropertyStoraging
         }
 
         /// <inheritdoc/>
-        public event Action OnChanged;
+        public void AddOnChangedHandler(IOnChangedPropertyStorageHandler handler)
+        {
+        }
 
         /// <inheritdoc/>
-        public event Action<StrongIdentifierValue> OnChangedWithKeys;
+        public void RemoveOnChangedHandler(IOnChangedPropertyStorageHandler handler)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void AddOnChangedWithKeysHandler(IOnChangedWithKeysPropertyStorageHandler handler)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void RemoveOnChangedWithKeysHandler(IOnChangedWithKeysPropertyStorageHandler handler)
+        {
+        }
     }
 }

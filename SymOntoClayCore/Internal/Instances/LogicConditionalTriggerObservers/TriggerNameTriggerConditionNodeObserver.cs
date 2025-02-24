@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
 using SymOntoClay.Core.Internal.DataResolvers;
@@ -28,7 +29,8 @@ using System.Linq;
 
 namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 {
-    public class TriggerNameTriggerConditionNodeObserver : BaseTriggerConditionNodeObserver
+    public class TriggerNameTriggerConditionNodeObserver : BaseTriggerConditionNodeObserver,
+        IOnNamedTriggerInstanceChangedWithKeysTriggersStorageHandler
     {
         public TriggerNameTriggerConditionNodeObserver(IEngineContext engineContext, IStorage storage, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition)
             : base(engineContext.Logger)
@@ -40,13 +42,18 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
             _synonymsList = _synonymsResolver.GetSynonyms(Logger, _triggerName, storage);
 
-            storage.TriggersStorage.OnNamedTriggerInstanceChangedWithKeys += TriggersStorage_OnNamedTriggerInstanceChangedWithKeys;
+            storage.TriggersStorage.AddOnNamedTriggerInstanceChangedWithKeysHandler(this);
         }
 
         private readonly StrongIdentifierValue _triggerName;
         private readonly List<StrongIdentifierValue> _synonymsList;
         private readonly IStorage _storage;
         private readonly SynonymsResolver _synonymsResolver;
+
+        void IOnNamedTriggerInstanceChangedWithKeysTriggersStorageHandler.Invoke(IList<StrongIdentifierValue> value)
+        {
+            TriggersStorage_OnNamedTriggerInstanceChangedWithKeys(value);
+        }
 
         private void TriggersStorage_OnNamedTriggerInstanceChangedWithKeys(IList<StrongIdentifierValue> namesList)
         {
@@ -66,7 +73,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
-            _storage.TriggersStorage.OnNamedTriggerInstanceChangedWithKeys -= TriggersStorage_OnNamedTriggerInstanceChangedWithKeys;
+            _storage.TriggersStorage.RemoveOnNamedTriggerInstanceChangedWithKeysHandler(this);
 
             base.OnDisposed();
         }

@@ -20,18 +20,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel.Ast.Expressions;
 using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 {
-    public class UnaryOperatorTriggerConditionNodeObserver : BaseTriggerConditionNodeObserver
+    public class UnaryOperatorTriggerConditionNodeObserver : BaseTriggerConditionNodeObserver, IOnChangedVarStorageHandler
     {
         public UnaryOperatorTriggerConditionNodeObserver(IMonitorLogger logger, IStorage storage, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition)
             : base(logger)
@@ -40,7 +36,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
             if (_kindOfOperator == KindOfOperator.CallFunction)
             {
-                storage.VarStorage.OnChangedWithKeys += VarStorage_OnChangedWithKeys;
+                storage.VarStorage.AddOnChangedHandler(this);
             }
 
             _storage = storage;
@@ -49,7 +45,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
         private readonly KindOfOperator _kindOfOperator;
         private readonly IStorage _storage;
 
-        private void VarStorage_OnChangedWithKeys(StrongIdentifierValue varName)
+        void IOnChangedVarStorageHandler.Invoke()
         {
             EmitOnChanged();
         }
@@ -59,7 +55,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
         {
             if(_kindOfOperator == KindOfOperator.CallFunction)
             {
-                _storage.VarStorage.OnChangedWithKeys -= VarStorage_OnChangedWithKeys;
+                _storage.VarStorage.RemoveOnChangedHandler(this);
             }
 
             base.OnDisposed();

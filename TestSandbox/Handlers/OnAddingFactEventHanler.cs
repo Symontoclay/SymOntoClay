@@ -41,9 +41,9 @@ using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.Handlers
 {
-    public class OnAddingFactEventHanler
+    public class OnAddingFactEventHandler
     {
-        public OnAddingFactEventHanler()
+        public OnAddingFactEventHandler()
         {
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.UseDefaultAppFiles = false;
@@ -80,9 +80,9 @@ namespace TestSandbox.Handlers
             localCodeExecutionContext.Storage = _engineContext.Storage.GlobalStorage;
             localCodeExecutionContext.Holder = NameHelper.CreateName(_engineContext.Id);
 
-            var result = AddingFactHelper.CallEvent(_logger, OnAddingFact, ruleInstance, fuzzyLogicResolver, localCodeExecutionContext);
+            //var result = AddingFactHelper.CallEvent(_logger, OnAddingFact, ruleInstance, fuzzyLogicResolver, localCodeExecutionContext);
 
-            _logger.Info("2DA20890-14D0-4755-BB63-C23648366632", $"result = {result}");
+            //_logger.Info("2DA20890-14D0-4755-BB63-C23648366632", $"result = {result}");
         }
 
         private IAddFactOrRuleResult Handler1(RuleInstance ruleInstance)

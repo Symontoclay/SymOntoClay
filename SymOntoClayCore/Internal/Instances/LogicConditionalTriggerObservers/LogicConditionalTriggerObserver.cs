@@ -21,13 +21,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Common.CollectionsHelpers;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
 using System;
 using System.Collections.Generic;
 
 namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 {
-    public class LogicConditionalTriggerObserver : BaseComponent
+    public class LogicConditionalTriggerObserver : BaseComponent,
+        IOnChangedBaseTriggerConditionNodeObserverHandler
     {
         public LogicConditionalTriggerObserver(TriggerConditionNodeObserverContext context, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition, ILocalCodeExecutionContext localCodeExecutionContext)
             : base(context.EngineContext.Logger)
@@ -36,17 +38,53 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
             foreach (var observer in _observersList)
             {
-                observer.OnChanged += Observer_OnChanged;
+                observer.AddOnChangedHandler(this);
+            }
+        }
+        
+        private List<BaseTriggerConditionNodeObserver> _observersList;
+
+        public void AddOnChangedHandler(IOnChangedLogicConditionalTriggerObserverHandler handler)
+        {
+            lock (_onChangedHandlersLockObj)
+            {
+                if (_onChangedHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onChangedHandlers.Add(handler);
             }
         }
 
-        private List<BaseTriggerConditionNodeObserver> _observersList;
-
-        public event Action OnChanged;
-
-        private void Observer_OnChanged()
+        public void RemoveOnChangedHandler(IOnChangedLogicConditionalTriggerObserverHandler handler)
         {
-            OnChanged?.Invoke();
+            lock (_onChangedHandlersLockObj)
+            {
+                if (_onChangedHandlers.Contains(handler))
+                {
+                    _onChangedHandlers.Remove(handler);
+                }
+            }
+        }
+
+        private void EmitOnChangedHandlers()
+        {
+            lock (_onChangedHandlersLockObj)
+            {
+                foreach (var handler in _onChangedHandlers)
+                {
+                    handler.Invoke();
+                }
+            }
+        }
+
+        private object _onChangedHandlersLockObj = new object();
+        private List<IOnChangedLogicConditionalTriggerObserverHandler> _onChangedHandlers = new List<IOnChangedLogicConditionalTriggerObserverHandler>();
+
+        void IOnChangedBaseTriggerConditionNodeObserverHandler.Invoke()
+        {
+            EmitOnChangedHandlers();
         }
 
         /// <inheritdoc/>
@@ -56,10 +94,12 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
             {
                 foreach(var observer in _observersList)
                 {
-                    observer.OnChanged -= Observer_OnChanged;
+                    observer.RemoveOnChangedHandler(this);
                     observer.Dispose();
                 }
             }
+
+            _onChangedHandlers.Clear();
 
             base.OnDisposed();
         }

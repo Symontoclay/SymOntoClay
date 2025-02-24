@@ -661,7 +661,7 @@ namespace TestSandbox
         {
             _logger.Info("A42581B7-AF6A-404D-A955-FF1D7BE94579", "Begin");
 
-            var handler = new OnAddingFactEventHanler();
+            var handler = new OnAddingFactEventHandler();
             handler.Run();
 
             _logger.Info("3F8D1A27-A27D-4D2A-9EBD-A2470BC923DF", "End");

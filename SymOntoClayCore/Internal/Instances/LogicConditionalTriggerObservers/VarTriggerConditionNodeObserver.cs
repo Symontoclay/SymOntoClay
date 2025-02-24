@@ -20,29 +20,31 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.ConditionOfTriggerExpr;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 {
-    public class VarTriggerConditionNodeObserver : BaseTriggerConditionNodeObserver
+    public class VarTriggerConditionNodeObserver : BaseTriggerConditionNodeObserver, IOnChangedWithKeysVarStorageHandler
     {
         public VarTriggerConditionNodeObserver(IMonitorLogger logger, IStorage storage, TriggerConditionNode condition, KindOfTriggerCondition kindOfTriggerCondition)
             : base(logger)
         {
             _varName = condition.Name;
-            
-            storage.VarStorage.OnChangedWithKeys += VarStorage_OnChangedWithKeys;
+
+            storage.VarStorage.AddOnChangedWithKeysHandler(this);
             _storage = storage;
         }
 
         private readonly StrongIdentifierValue _varName;
         private readonly IStorage _storage;
+
+        void IOnChangedWithKeysVarStorageHandler.Invoke(StrongIdentifierValue value)
+        {
+            VarStorage_OnChangedWithKeys(value);
+        }
 
         private void VarStorage_OnChangedWithKeys(StrongIdentifierValue varName)
         {
@@ -55,7 +57,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
         /// <inheritdoc/>
         protected override void OnDisposed()
         {
-            _storage.VarStorage.OnChangedWithKeys -= VarStorage_OnChangedWithKeys;
+            _storage.VarStorage.RemoveOnChangedWithKeysHandler(this);
 
             base.OnDisposed();
         }

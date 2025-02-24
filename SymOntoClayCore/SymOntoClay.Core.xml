@@ -5759,15 +5759,6 @@
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#RemoveById(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="E:SymOntoClay.Core.Internal.CodeModel.RuleInstance.OnChanged">
-            <inheritdoc/>
-        </member>
-        <member name="E:SymOntoClay.Core.Internal.CodeModel.RuleInstance.OnChangedWithKeys">
-            <inheritdoc/>
-        </member>
-        <member name="E:SymOntoClay.Core.Internal.CodeModel.RuleInstance.OnAddingFact">
-            <inheritdoc/>
-        </member>
         <member name="M:SymOntoClay.Core.Internal.CodeModel.RuleInstance.SymOntoClay#Core#ILogicalStorage#GetAllRelations(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.ILogicalSearchStorageContext,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
             <inheritdoc/>
         </member>
@@ -8088,7 +8079,10 @@
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.GetLongConditionalHashCode">
             <inheritdoc/>
         </member>
-        <member name="E:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.OnChanged">
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.AddOnChangedHandler(SymOntoClay.Core.EventsInterfaces.IOnChangedNamedTriggerInstanceHandler)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.RemoveOnChangedHandler(SymOntoClay.Core.EventsInterfaces.IOnChangedNamedTriggerInstanceHandler)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.OnDisposed">
@@ -8119,6 +8113,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerInstance.SymOntoClay#Common#IObjectToBriefString#PropertiesToBriefString(System.UInt32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers.BaseTriggerConditionNodeObserver.OnDisposed">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers.DurationTriggerConditionNodeObserver.OnDisposed">
@@ -10012,13 +10009,10 @@
         <member name="P:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.Storage">
             <inheritdoc/>
         </member>
-        <member name="E:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.OnChanged">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.AddOnAddingFactHandler(SymOntoClay.Core.EventsInterfaces.IOnAddingFactHandler)">
             <inheritdoc/>
         </member>
-        <member name="E:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.OnChangedWithKeys">
-            <inheritdoc/>
-        </member>
-        <member name="E:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.OnAddingFact">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.RemoveOnAddingFactHandler(SymOntoClay.Core.EventsInterfaces.IOnAddingFactHandler)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.ConsolidatedPublicFactsLogicalStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
@@ -10132,13 +10126,10 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.RemoveById(SymOntoClay.Monitor.Common.IMonitorLogger,System.String)">
             <inheritdoc/>
         </member>
-        <member name="E:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.OnChanged">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.AddOnAddingFactHandler(SymOntoClay.Core.EventsInterfaces.IOnAddingFactHandler)">
             <inheritdoc/>
         </member>
-        <member name="E:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.OnChangedWithKeys">
-            <inheritdoc/>
-        </member>
-        <member name="E:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.OnAddingFact">
+        <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.RemoveOnAddingFactHandler(SymOntoClay.Core.EventsInterfaces.IOnAddingFactHandler)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.LogicalStoraging.LogicalStorage.GetAllRelations(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.ILogicalSearchStorageContext,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode,SymOntoClay.Core.Internal.DataResolvers.LogicalSearchExplainNode)">
@@ -10273,16 +10264,28 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.PropertyStoraging.EmptyPropertyStorage.GetPropertyDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,System.Collections.Generic.IList{SymOntoClay.Core.Internal.IndexedData.WeightedInheritanceItem})">
             <inheritdoc/>
         </member>
-        <member name="E:SymOntoClay.Core.Internal.Storage.PropertyStoraging.EmptyPropertyStorage.OnChanged">
+        <member name="M:SymOntoClay.Core.Internal.Storage.PropertyStoraging.EmptyPropertyStorage.AddOnChangedHandler(SymOntoClay.Core.EventsInterfaces.IOnChangedPropertyStorageHandler)">
             <inheritdoc/>
         </member>
-        <member name="E:SymOntoClay.Core.Internal.Storage.PropertyStoraging.EmptyPropertyStorage.OnChangedWithKeys">
+        <member name="M:SymOntoClay.Core.Internal.Storage.PropertyStoraging.EmptyPropertyStorage.RemoveOnChangedHandler(SymOntoClay.Core.EventsInterfaces.IOnChangedPropertyStorageHandler)">
             <inheritdoc/>
         </member>
-        <member name="E:SymOntoClay.Core.Internal.Storage.PropertyStoraging.PropertyStorage.OnChanged">
+        <member name="M:SymOntoClay.Core.Internal.Storage.PropertyStoraging.EmptyPropertyStorage.AddOnChangedWithKeysHandler(SymOntoClay.Core.EventsInterfaces.IOnChangedWithKeysPropertyStorageHandler)">
             <inheritdoc/>
         </member>
-        <member name="E:SymOntoClay.Core.Internal.Storage.PropertyStoraging.PropertyStorage.OnChangedWithKeys">
+        <member name="M:SymOntoClay.Core.Internal.Storage.PropertyStoraging.EmptyPropertyStorage.RemoveOnChangedWithKeysHandler(SymOntoClay.Core.EventsInterfaces.IOnChangedWithKeysPropertyStorageHandler)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.PropertyStoraging.PropertyStorage.AddOnChangedHandler(SymOntoClay.Core.EventsInterfaces.IOnChangedPropertyStorageHandler)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.PropertyStoraging.PropertyStorage.RemoveOnChangedHandler(SymOntoClay.Core.EventsInterfaces.IOnChangedPropertyStorageHandler)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.PropertyStoraging.PropertyStorage.AddOnChangedWithKeysHandler(SymOntoClay.Core.EventsInterfaces.IOnChangedWithKeysPropertyStorageHandler)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.PropertyStoraging.PropertyStorage.RemoveOnChangedWithKeysHandler(SymOntoClay.Core.EventsInterfaces.IOnChangedWithKeysPropertyStorageHandler)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.PropertyStoraging.PropertyStorage.Append(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.Instances.PropertyInstance)">
@@ -10699,10 +10702,16 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.Remove(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.INamedTriggerInstance)">
             <inheritdoc/>
         </member>
-        <member name="E:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.OnNamedTriggerInstanceChanged">
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.AddOnNamedTriggerInstanceChangedHandler(SymOntoClay.Core.EventsInterfaces.IOnNamedTriggerInstanceChangedTriggersStorageHandler)">
             <inheritdoc/>
         </member>
-        <member name="E:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.OnNamedTriggerInstanceChangedWithKeys">
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.RemoveOnNamedTriggerInstanceChangedHandler(SymOntoClay.Core.EventsInterfaces.IOnNamedTriggerInstanceChangedTriggersStorageHandler)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.AddOnNamedTriggerInstanceChangedWithKeysHandler(SymOntoClay.Core.EventsInterfaces.IOnNamedTriggerInstanceChangedWithKeysTriggersStorageHandler)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.RemoveOnNamedTriggerInstanceChangedWithKeysHandler(SymOntoClay.Core.EventsInterfaces.IOnNamedTriggerInstanceChangedWithKeysTriggersStorageHandler)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.EmptyTriggersStorage.GetNamedTriggerInstancesDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
@@ -10729,10 +10738,16 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.GetNamedTriggerInstancesDirectly(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue)">
             <inheritdoc/>
         </member>
-        <member name="E:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.OnNamedTriggerInstanceChanged">
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.AddOnNamedTriggerInstanceChangedHandler(SymOntoClay.Core.EventsInterfaces.IOnNamedTriggerInstanceChangedTriggersStorageHandler)">
             <inheritdoc/>
         </member>
-        <member name="E:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.OnNamedTriggerInstanceChangedWithKeys">
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.RemoveOnNamedTriggerInstanceChangedHandler(SymOntoClay.Core.EventsInterfaces.IOnNamedTriggerInstanceChangedTriggersStorageHandler)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.AddOnNamedTriggerInstanceChangedWithKeysHandler(SymOntoClay.Core.EventsInterfaces.IOnNamedTriggerInstanceChangedWithKeysTriggersStorageHandler)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.RemoveOnNamedTriggerInstanceChangedWithKeysHandler(SymOntoClay.Core.EventsInterfaces.IOnNamedTriggerInstanceChangedWithKeysTriggersStorageHandler)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.TriggersStoraging.TriggersStorage.OnDisposed">
@@ -10756,19 +10771,31 @@
         <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.SetValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">
             <inheritdoc/>
         </member>
-        <member name="E:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.OnChanged">
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.AddOnChangedHandler(SymOntoClay.Core.EventsInterfaces.IOnChangedVarStorageHandler)">
             <inheritdoc/>
         </member>
-        <member name="E:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.OnChangedWithKeys">
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.RemoveOnChangedHandler(SymOntoClay.Core.EventsInterfaces.IOnChangedVarStorageHandler)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.AddOnChangedWithKeysHandler(SymOntoClay.Core.EventsInterfaces.IOnChangedWithKeysVarStorageHandler)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.RemoveOnChangedWithKeysHandler(SymOntoClay.Core.EventsInterfaces.IOnChangedWithKeysVarStorageHandler)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.EmptyVarStorage.DbgPrintVariables(SymOntoClay.Monitor.Common.IMonitorLogger)">
             <inheritdoc/>
         </member>
-        <member name="E:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.OnChanged">
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.AddOnChangedHandler(SymOntoClay.Core.EventsInterfaces.IOnChangedVarStorageHandler)">
             <inheritdoc/>
         </member>
-        <member name="E:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.OnChangedWithKeys">
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.RemoveOnChangedHandler(SymOntoClay.Core.EventsInterfaces.IOnChangedVarStorageHandler)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.AddOnChangedWithKeysHandler(SymOntoClay.Core.EventsInterfaces.IOnChangedWithKeysVarStorageHandler)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.RemoveOnChangedWithKeysHandler(SymOntoClay.Core.EventsInterfaces.IOnChangedWithKeysVarStorageHandler)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Storage.VarStoraging.VarStorage.SetSystemValue(SymOntoClay.Monitor.Common.IMonitorLogger,SymOntoClay.Core.Internal.CodeModel.StrongIdentifierValue,SymOntoClay.Core.Internal.CodeModel.Value)">

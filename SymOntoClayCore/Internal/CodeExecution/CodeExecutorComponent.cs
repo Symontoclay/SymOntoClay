@@ -130,7 +130,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 codeFrame.Instance = processInitialInfo.Instance;
                 codeFrame.ExecutionCoordinator = processInitialInfo.ExecutionCoordinator;
 
-                var processInfo = new ProcessInfo(_context.GetCancellationToken(), _context.AsyncEventsThreadPool);
+                var processInfo = new ProcessInfo(_context.GetCancellationToken(), _context.AsyncEventsThreadPool, _context.ActiveObjectContext);
 
                 var metadata = processInitialInfo.Metadata;
 

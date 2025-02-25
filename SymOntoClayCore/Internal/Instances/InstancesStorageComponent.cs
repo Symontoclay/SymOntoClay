@@ -38,7 +38,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
@@ -336,7 +335,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
             _processesInfoList.Add(processInfo);
 
-            processInfo.OnFinish += OnFinishProcessWithoutDevicesHandler;
+            processInfo.AddOnFinishHandler(_instancesStorageComponentOnFinishProcessWithoutDevicesHandler);
 
             return true;
         }
@@ -373,7 +372,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 _processesInfoByDevicesDict[device] = processInfo;
             }
 
-            processInfo.OnFinish += OnFinishProcessWithDevicesHandler;
+            processInfo.AddOnFinishHandler(_instancesStorageComponentOnFinishProcessWithDevicesHandler);
 
             processInfo.Start(logger, "5E6C3B30-3111-49AC-BE18-2CCC6C523277");
 

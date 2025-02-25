@@ -22,14 +22,12 @@ SOFTWARE.*/
 
 using SymOntoClay.Common;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeExecution;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Core
 {
@@ -51,9 +49,16 @@ namespace SymOntoClay.Core
         void Cancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, List<Changer> changers, string callMethodId = "");
         void WeakCancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, Changer changer = null, string callMethodId = "");
         void WeakCancel(IMonitorLogger logger, string messagePointId, ReasonOfChangeStatus reasonOfChangeStatus, List<Changer> changers, string callMethodId = "");
-        event ProcessInfoEvent OnFinish;
-        event ProcessInfoEvent OnComplete;
-        event ProcessInfoEvent OnWeakCanceled;
+
+        void AddOnFinishHandler(IOnFinishProcessInfoHandler handler);
+        void RemoveOnFinishHandler(IOnFinishProcessInfoHandler handler);
+
+        void AddOnCompleteHandler(IOnCompleteProcessInfoHandler handler);
+        void RemoveOnCompleteHandler(IOnCompleteProcessInfoHandler handler);
+
+        void AddOnWeakCanceledHandler(IOnWeakCanceledProcessInfoHandler handler);
+        void RemoveOnWeakCanceledHandler(IOnWeakCanceledProcessInfoHandler handler);
+
         float Priority { get; }
         IReadOnlyList<string> Friends { get; }
         bool IsFriend(IMonitorLogger logger, IProcessInfo other);

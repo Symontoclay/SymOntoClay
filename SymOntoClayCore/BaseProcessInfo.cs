@@ -20,46 +20,45 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using Newtonsoft.Json.Linq;
-using NLog;
-using NLog.Fluent;
+using SymOntoClay.ActiveObject.Functors;
+using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeExecution;
-using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
-using SymOntoClay.Core.Internal.Instances;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.NLog;
 using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.Core
 {
-    public abstract class BaseProcessInfo : IProcessInfo
+    public abstract class BaseProcessInfo : IProcessInfo,
+        IOnFinishProcessInfoHandler
     {
         protected static IMonitorLogger _logger = MonitorLoggerNLogImpementation.Instance;
         
-        protected BaseProcessInfo(CancellationToken cancellationToken, ICustomThreadPool threadPool)
+        protected BaseProcessInfo(CancellationToken cancellationToken, ICustomThreadPool threadPool, IActiveObjectContext activeObjectContext)
         {
             _cancellationToken = cancellationToken;
             _threadPool = threadPool;
+            _activeObjectContext = activeObjectContext;
+            _serializationAnchor = new SerializationAnchor();
 
             Id = NameHelper.GetNewEntityNameString();
         }
 
         protected readonly CancellationToken _cancellationToken;
         protected readonly ICustomThreadPool _threadPool;
+        protected IActiveObjectContext _activeObjectContext;
+        protected SerializationAnchor _serializationAnchor;
 
         /// <inheritdoc/>
         public string Id { get; private set; }
@@ -273,114 +272,53 @@ namespace SymOntoClay.Core
 
         private void EmitOnFinish(IMonitorLogger logger)
         {
-            List<IProcessInfoEventHandler> onFinishHandlersList = null;
-
             lock (_parentAndChildrenLockObj)
             {
-                onFinishHandlersList = _onFinishHandlersList.ToList();
-            }
-
 #if DEBUG
-            //logger.Info("D85A951B-E74F-42CA-B7AF-1C8E15677C49", $"onFinishHandlersList.Count = {onFinishHandlersList.Count}");
+                //logger.Info("D85A951B-E74F-42CA-B7AF-1C8E15677C49", $"_onFinishHandlersList.Count = {_onFinishHandlersList.Count}");
 #endif
 
-            if(onFinishHandlersList.Any())
-            {
-                ThreadTask.Run(() => {
-                    var taskId = logger.StartThreadTask("F0A455C0-A6EB-4BAA-8D2A-0EE1DC112590");
-
-                    try
-                    {
-                        foreach (var item in onFinishHandlersList)
-                        {
-                            item.Run(logger);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        logger?.Error("C264171B-3DC3-446D-A051-26475CFDDC8D", e);
-                    }
-
-                    logger.StopThreadTask("AD80EB54-A648-4B05-9D4D-19933DA966C4", taskId);
-                }, _threadPool, _cancellationToken);
+                foreach (var item in _onFinishHandlersList)
+                {
+                    item.Run(logger);
+                }
             }
 
-
-            InternalOnFinish?.Invoke(this);
+            EmitOnFinishHandlers(this);
         }
 
         private void EmitOnComplete(IMonitorLogger logger)
         {
-            List<IProcessInfoEventHandler> onCompleteHandlersList = null;
-
             lock (_parentAndChildrenLockObj)
             {
-                onCompleteHandlersList = _onCompleteHandlersList.ToList();
-            }
-
 #if DEBUG
-            //logger.Info("3758404B-0C33-4D48-BE14-0D123BA961C4", $"onCompleteHandlersList.Count = {onCompleteHandlersList.Count}");
+                //logger.Info("3758404B-0C33-4D48-BE14-0D123BA961C4", $"_onCompleteHandlersList.Count = {_onCompleteHandlersList.Count}");
 #endif
 
-            if (onCompleteHandlersList.Any())
-            {
-                ThreadTask.Run(() => {
-                    var taskId = logger.StartThreadTask("DD76FAB5-8781-4979-B885-6D3F73EA42BD");
-
-                    try
-                    {
-                        foreach (var item in onCompleteHandlersList)
-                        {
-                            item.Run(logger);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        logger?.Error("6D0C6064-16A3-4068-8CB2-9E9CBADF4A1F", e);
-                    }
-
-                    logger.StopThreadTask("64D55DB6-79B8-4999-B0A8-C8C4C68CE349", taskId);
-                }, _threadPool, _cancellationToken);
+                foreach (var item in _onCompleteHandlersList)
+                {
+                    item.Run(logger);
+                }
             }
 
-            InternalOnComplete?.Invoke(this);
+            EmitOnCompleteHandlers(this);
         }
 
         private void EmitOnWeakCanceled(IMonitorLogger logger)
         {
-            List<IProcessInfoEventHandler> onWeakCanceledHandlersList = null;
-
             lock (_parentAndChildrenLockObj)
             {
-                onWeakCanceledHandlersList = _onWeakCanceledHandlersList.ToList();
-            }
-
 #if DEBUG
-            //logger.Info("C77B12A1-0A22-41F5-BC6A-50A292DEB768", $"onWeakCanceledHandlersList.Count = {onWeakCanceledHandlersList.Count}");
+                //logger.Info("C77B12A1-0A22-41F5-BC6A-50A292DEB768", $"_onWeakCanceledHandlersList.Count = {_onWeakCanceledHandlersList.Count}");
 #endif
 
-            if (onWeakCanceledHandlersList.Any())
-            {
-                ThreadTask.Run(() => {
-                    var taskId = logger.StartThreadTask("F571FF35-20B0-4D29-A5C4-9D33ACF0B280");
-
-                    try
-                    {
-                        foreach (var item in onWeakCanceledHandlersList)
-                        {
-                            item.Run(logger);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        logger?.Error("84FFE90C-057B-4EFB-8DC5-34EB3B26C7B3", e);
-                    }
-
-                    logger.StopThreadTask("DBDEEE39-6612-445A-AD63-F42C5613078E", taskId);
-                }, _threadPool, _cancellationToken);
+                foreach (var item in _onWeakCanceledHandlersList)
+                {
+                    item.Run(logger);
+                }
             }
 
-            InternalOnWeakCanceled?.Invoke(this);
+            EmitOnWeakCanceledHandlers(this);
         }
 
         private void ProcessGeneralFinishStatuses(IMonitorLogger logger, ProcessStatus status, string callMethodId)
@@ -415,76 +353,139 @@ namespace SymOntoClay.Core
         }
 
         /// <inheritdoc/>
-        public event ProcessInfoEvent OnFinish
+        public void AddOnFinishHandler(IOnFinishProcessInfoHandler handler)
         {
-            add
+            lock (_onFinishHandlersLockObj)
             {
-                lock (_statusLockObj)
+                if (_onFinishHandlers.Contains(handler))
                 {
-                    InternalOnFinish += value;
-
-                    CheckOnFinishStatus(_logger);
+                    return;
                 }
-            }
 
-            remove
-            {
-                lock (_statusLockObj)
+                _onFinishHandlers.Add(handler);
+
+                if (NIsFinished(_logger))
                 {
-                    InternalOnFinish -= value;
+                    handler.Invoke(this);
                 }
             }
         }
-
-        private event ProcessInfoEvent InternalOnFinish;
 
         /// <inheritdoc/>
-        public event ProcessInfoEvent OnComplete
+        public void RemoveOnFinishHandler(IOnFinishProcessInfoHandler handler)
         {
-            add
+            lock (_onFinishHandlersLockObj)
             {
-                lock (_statusLockObj)
+                if (_onFinishHandlers.Contains(handler))
                 {
-                    InternalOnComplete += value;
-
-                    CheckOnCompleteStatus(_logger);
-                }
-            }
-
-            remove
-            {
-                lock (_statusLockObj)
-                {
-                    InternalOnComplete -= value;
+                    _onFinishHandlers.Remove(handler);
                 }
             }
         }
 
-        private event ProcessInfoEvent InternalOnComplete;
+        private void EmitOnFinishHandlers(IProcessInfo sender)
+        {
+            lock (_onFinishHandlersLockObj)
+            {
+                foreach (var handler in _onFinishHandlers)
+                {
+                    handler.Invoke(sender);
+                }
+            }
+        }
+
+        private object _onFinishHandlersLockObj = new object();
+        private List<IOnFinishProcessInfoHandler> _onFinishHandlers = new List<IOnFinishProcessInfoHandler>();
 
         /// <inheritdoc/>
-        public event ProcessInfoEvent OnWeakCanceled
+        public void AddOnCompleteHandler(IOnCompleteProcessInfoHandler handler)
         {
-            add
+            lock (_onCompleteHandlersLockObj)
             {
-                lock (_statusLockObj)
+                if (_onCompleteHandlers.Contains(handler))
                 {
-                    InternalOnWeakCanceled += value;
-
-                    CheckOnWeakCanceledStatus(_logger);
+                    return;
                 }
-            }
 
-            remove
-            {
-                lock (_statusLockObj)
+                _onCompleteHandlers.Add(handler);
+
+                if (_status == ProcessStatus.Completed)
                 {
-                    InternalOnWeakCanceled -= value;
+                    handler.Invoke(this);
                 }
             }
         }
 
-        private event ProcessInfoEvent InternalOnWeakCanceled;
+        /// <inheritdoc/>
+        public void RemoveOnCompleteHandler(IOnCompleteProcessInfoHandler handler)
+        {
+            lock (_onCompleteHandlersLockObj)
+            {
+                if (_onCompleteHandlers.Contains(handler))
+                {
+                    _onCompleteHandlers.Remove(handler);
+                }
+            }
+        }
+
+        private void EmitOnCompleteHandlers(IProcessInfo sender)
+        {
+            lock (_onCompleteHandlersLockObj)
+            {
+                foreach (var handler in _onCompleteHandlers)
+                {
+                    handler.Invoke(sender);
+                }
+            }
+        }
+
+        private object _onCompleteHandlersLockObj = new object();
+        private List<IOnCompleteProcessInfoHandler> _onCompleteHandlers = new List<IOnCompleteProcessInfoHandler>();
+
+        /// <inheritdoc/>
+        public void AddOnWeakCanceledHandler(IOnWeakCanceledProcessInfoHandler handler)
+        {
+            lock (_onWeakCanceledHandlersLockObj)
+            {
+                if (_onWeakCanceledHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onWeakCanceledHandlers.Add(handler);
+
+                if (_status == ProcessStatus.WeakCanceled)
+                {
+                    handler.Invoke(this);
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public void RemoveOnWeakCanceledHandler(IOnWeakCanceledProcessInfoHandler handler)
+        {
+            lock (_onWeakCanceledHandlersLockObj)
+            {
+                if (_onWeakCanceledHandlers.Contains(handler))
+                {
+                    _onWeakCanceledHandlers.Remove(handler);
+                }
+            }
+        }
+
+        private void EmitOnWeakCanceledHandlers(IProcessInfo sender)
+        {
+            lock (_onWeakCanceledHandlersLockObj)
+            {
+                foreach (var handler in _onWeakCanceledHandlers)
+                {
+                    handler.Invoke(sender);
+                }
+            }
+        }
+
+        private object _onWeakCanceledHandlersLockObj = new object();
+        private List<IOnWeakCanceledProcessInfoHandler> _onWeakCanceledHandlers = new List<IOnWeakCanceledProcessInfoHandler>();
 
         protected void CheckOnFinishStatus(IMonitorLogger logger)
         {
@@ -601,7 +602,7 @@ namespace SymOntoClay.Core
 
                 _childrenProcessInfoList.Add(processInfo);
 
-                processInfo.OnFinish += ProcessInfo_OnFinish;
+                processInfo.AddOnFinishHandler(this);
 
                 if (processInfo.ParentProcessInfo != this)
                 {
@@ -610,7 +611,16 @@ namespace SymOntoClay.Core
             }
         }
 
-        private void ProcessInfo_OnFinish(IProcessInfo processInfo)
+        void IOnFinishProcessInfoHandler.Invoke(IProcessInfo sender)
+        {
+            LoggedFunctorWithoutResult<BaseProcessInfo, IProcessInfo>.Run(_logger, "54EEC6FF-3764-4F05-A28A-158B48FB2309", this, sender,
+                (IMonitorLogger loggerValue, BaseProcessInfo instanceValue, IProcessInfo senderValue) => {
+                    instanceValue.NProcessInfoOnFinish(senderValue);
+                },
+                _activeObjectContext, _threadPool, _serializationAnchor);
+        }
+
+        public void NProcessInfoOnFinish(IProcessInfo processInfo)
         {
             lock (_parentAndChildrenLockObj)
             {
@@ -637,7 +647,7 @@ namespace SymOntoClay.Core
             _childrenProcessInfoList.Remove(processInfo);
             _removedChildrenProcessInfoList.Add(processInfo);
 
-            processInfo.OnFinish -= ProcessInfo_OnFinish;
+            processInfo.RemoveOnFinishHandler(this);
 
             if (processInfo.ParentProcessInfo == this)
             {
@@ -844,6 +854,10 @@ namespace SymOntoClay.Core
             }
 
             _onWeakCanceledHandlersList.Clear();
+
+            _onFinishHandlers.Clear();
+            _onCompleteHandlers.Clear();
+            _onWeakCanceledHandlers.Clear();
         }
 
         /// <inheritdoc/>

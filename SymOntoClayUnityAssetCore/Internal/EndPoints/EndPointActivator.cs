@@ -79,7 +79,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.EndPoints
 #endif
 
             ThreadTask task = null;
-            var processInfo = new PlatformProcessInfo(cancellationTokenSource, context.GetCancellationToken(), context.AsyncEventsThreadPool, endpointInfo.Name, mapParamsResult.Item2, endpointInfo.Devices, endpointInfo.Friends, callMethodId);
+            var processInfo = new PlatformProcessInfo(cancellationTokenSource, context.GetCancellationToken(), context.AsyncEventsThreadPool, context.ActiveObjectContext, endpointInfo.Name, mapParamsResult.Item2, endpointInfo.Devices, endpointInfo.Friends, callMethodId);
 
 #if DEBUG
             //Log($"processInfo != null = {processInfo != null}");

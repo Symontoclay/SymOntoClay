@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
@@ -35,8 +36,8 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class ProcessInfo: BaseProcessInfo
     {
-        public ProcessInfo(CancellationToken cancellationToken, ICustomThreadPool threadPool)
-            : base(cancellationToken, threadPool)
+        public ProcessInfo(CancellationToken cancellationToken, ICustomThreadPool threadPool, IActiveObjectContext activeObjectContext)
+            : base(cancellationToken, threadPool, activeObjectContext)
         {
         }
 

@@ -48,13 +48,22 @@
         <member name="M:SymOntoClay.Core.BaseProcessInfo.WeakCancel(SymOntoClay.Monitor.Common.IMonitorLogger,System.String,SymOntoClay.Core.ReasonOfChangeStatus,System.Collections.Generic.List{SymOntoClay.Monitor.Common.Changer},System.String)">
             <inheritdoc/>
         </member>
-        <member name="E:SymOntoClay.Core.BaseProcessInfo.OnFinish">
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.AddOnFinishHandler(SymOntoClay.Core.EventsInterfaces.IOnFinishProcessInfoHandler)">
             <inheritdoc/>
         </member>
-        <member name="E:SymOntoClay.Core.BaseProcessInfo.OnComplete">
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.RemoveOnFinishHandler(SymOntoClay.Core.EventsInterfaces.IOnFinishProcessInfoHandler)">
             <inheritdoc/>
         </member>
-        <member name="E:SymOntoClay.Core.BaseProcessInfo.OnWeakCanceled">
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.AddOnCompleteHandler(SymOntoClay.Core.EventsInterfaces.IOnCompleteProcessInfoHandler)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.RemoveOnCompleteHandler(SymOntoClay.Core.EventsInterfaces.IOnCompleteProcessInfoHandler)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.AddOnWeakCanceledHandler(SymOntoClay.Core.EventsInterfaces.IOnWeakCanceledProcessInfoHandler)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.BaseProcessInfo.RemoveOnWeakCanceledHandler(SymOntoClay.Core.EventsInterfaces.IOnWeakCanceledProcessInfoHandler)">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.BaseProcessInfo.Devices">

@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using NLog;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.Storage;
@@ -62,14 +63,50 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         /// <inheritdoc/>
-        protected override void ExecutionCoordinator_OnFinished()
+        public override void ExecutionCoordinator_OnFinished()
         {
-            OnStateInstanceFinished?.Invoke(this);
+            EmitOnStateInstanceFinishedHandlers(this);
 
             base.ExecutionCoordinator_OnFinished();
         }
 
-        public event Action<StateInstance> OnStateInstanceFinished;
+        public void AddOnStateInstanceFinishedHandler(IOnStateInstanceFinishedStateInstanceHandler handler)
+        {
+            lock (_onStateInstanceFinishedHandlersLockObj)
+            {
+                if (_onStateInstanceFinishedHandlers.Contains(handler))
+                {
+                    return;
+                }
+
+                _onStateInstanceFinishedHandlers.Add(handler);
+            }
+        }
+
+        public void RemoveOnStateInstanceFinishedHandler(IOnStateInstanceFinishedStateInstanceHandler handler)
+        {
+            lock (_onStateInstanceFinishedHandlersLockObj)
+            {
+                if (_onStateInstanceFinishedHandlers.Contains(handler))
+                {
+                    _onStateInstanceFinishedHandlers.Remove(handler);
+                }
+            }
+        }
+
+        private void EmitOnStateInstanceFinishedHandlers(StateInstance value)
+        {
+            lock (_onStateInstanceFinishedHandlersLockObj)
+            {
+                foreach (var handler in _onStateInstanceFinishedHandlers)
+                {
+                    handler.Invoke(value);
+                }
+            }
+        }
+
+        private object _onStateInstanceFinishedHandlersLockObj = new object();
+        private List<IOnStateInstanceFinishedStateInstanceHandler> _onStateInstanceFinishedHandlers = new List<IOnStateInstanceFinishedStateInstanceHandler>();
 
         /// <inheritdoc/>
         protected override void OnDisposed()
@@ -83,6 +120,8 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 stateDeactivator.Dispose();
             }
+
+            _onStateInstanceFinishedHandlers.Clear();
 
             base.OnDisposed();
         }

@@ -20,7 +20,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.Functors;
+using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.DebugHelpers;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
@@ -38,7 +41,8 @@ using System.Threading.Tasks;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public class AppInstance : BaseIndependentInstance
+    public class AppInstance : BaseIndependentInstance,
+        IOnStateInstanceFinishedStateInstanceHandler
     {
         public AppInstance(AppInstanceCodeItem codeItem, IEngineContext context, IStorage parentStorage)
             : base(codeItem, context, parentStorage, null, context.StorageFactories.AppInstanceStorageFactory, null)
@@ -46,6 +50,9 @@ namespace SymOntoClay.Core.Internal.Instances
 #if DEBUG
             //Info("B89B059D-E73F-4422-AAD9-DE0BE2868FE1", $"codeItem.GetType().Name = {codeItem.GetType().Name}");
 #endif
+
+            _activeObjectContext = context.ActiveObjectContext;
+            _serializationAnchor = new SerializationAnchor();
 
             _statesResolver = _context.DataResolversFactory.GetStatesResolver();
 
@@ -56,6 +63,9 @@ namespace SymOntoClay.Core.Internal.Instances
         public override KindOfInstance KindOfInstance => KindOfInstance.AppInstance;
 
         public List<StrongIdentifierValue> RootTasks { get; private set; } = new List<StrongIdentifierValue>();
+
+        private IActiveObjectContext _activeObjectContext;
+        private SerializationAnchor _serializationAnchor;
 
         private StatesResolver _statesResolver;
 
@@ -220,7 +230,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
                         _activeStatesDict[stateName] = stateInstance;
 
-                        stateInstance.OnStateInstanceFinished += ChildStateInstance_OnFinished;
+                        stateInstance.AddOnStateInstanceFinishedHandler(this);
                     }
 
                     if (statesForDeactivating.Any())
@@ -254,9 +264,18 @@ namespace SymOntoClay.Core.Internal.Instances
             }
         }
 
-        private void ChildStateInstance_OnFinished(StateInstance stateInstance)
+        void IOnStateInstanceFinishedStateInstanceHandler.Invoke(StateInstance value)
         {
-            stateInstance.OnStateInstanceFinished -= ChildStateInstance_OnFinished;
+            LoggedFunctorWithoutResult<AppInstance, StateInstance>.Run(Logger, "18D1B4E5-7692-42ED-8831-7364DFF6A14F", this, value,
+                (IMonitorLogger loggerValue, AppInstance instanceValue, StateInstance stateInstanceValue) => {
+                    instanceValue.NChildStateInstance_OnFinished(stateInstanceValue);
+                },
+                _activeObjectContext, _threadPool, _serializationAnchor);
+        }
+
+        public void NChildStateInstance_OnFinished(StateInstance stateInstance)
+        {
+            stateInstance.RemoveOnStateInstanceFinishedHandler(this);
 
             lock(_statesLockObj)
             {

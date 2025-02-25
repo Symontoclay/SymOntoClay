@@ -20,24 +20,31 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.Functors;
+using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.Common.Models;
+using SymOntoClay.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public abstract class BaseInstance : BaseComponent, IInstance, IObjectToString, IObjectToShortString, IObjectToBriefString
+    public abstract class BaseInstance : BaseComponent, IInstance,
+        IObjectToString, IObjectToShortString, IObjectToBriefString,
+        IOnFinishedExecutionCoordinatorHandler
     {
         protected BaseInstance(CodeItem codeItem, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext, 
             IExecutionCoordinator parentExecutionCoordinator, IStorageFactory storageFactory, List<VarInstance> varList)
@@ -49,6 +56,10 @@ namespace SymOntoClay.Core.Internal.Instances
             _context = context;
             _parentStorage = parentStorage;
 
+            _activeObjectContext = context.ActiveObjectContext;
+            _threadPool = context.AsyncEventsThreadPool;
+            _serializationAnchor = new SerializationAnchor();
+
             var dataResolversFactory = context.DataResolversFactory;
 
             _triggersResolver = dataResolversFactory.GetTriggersResolver();
@@ -58,7 +69,9 @@ namespace SymOntoClay.Core.Internal.Instances
             _globalTriggersStorage = context.Storage.GlobalStorage.TriggersStorage;
 
             _executionCoordinator = new ExecutionCoordinator(this);
-            _executionCoordinator.OnFinished += ExecutionCoordinator_OnFinished;
+            _executionCoordinator.AddOnFinishedHandler(this);
+
+            _baseInstanceParentExecutionCoordinatorOnFinishedHandler = new BaseInstanceParentExecutionCoordinatorOnFinishedHandler(Logger, _executionCoordinator, _activeObjectContext, _threadPool, _serializationAnchor);
 
             _parentExecutionCoordinator = parentExecutionCoordinator;
 
@@ -106,6 +119,10 @@ namespace SymOntoClay.Core.Internal.Instances
         /// <inheritdoc/>
         public virtual float Priority => 0f;
 
+        private IActiveObjectContext _activeObjectContext;
+        private SerializationAnchor _serializationAnchor;
+        protected ICustomThreadPool _threadPool;
+
         protected readonly IEngineContext _context;
         private readonly ITriggersStorage _globalTriggersStorage;
         private readonly IStorage _parentStorage;
@@ -123,6 +140,8 @@ namespace SymOntoClay.Core.Internal.Instances
         private List<AddingFactConditionalTriggerInstance> _addingFactConditionalTriggerInstancesList = new List<AddingFactConditionalTriggerInstance>();
 
         protected IExecutionCoordinator _executionCoordinator;
+
+        private BaseInstanceParentExecutionCoordinatorOnFinishedHandler _baseInstanceParentExecutionCoordinatorOnFinishedHandler;
 
         private List<IInstance> _childInstances = new List<IInstance>();
         private IInstance _parentInstance;
@@ -162,7 +181,7 @@ namespace SymOntoClay.Core.Internal.Instances
                     return;
                 }
 
-                _parentExecutionCoordinator.OnFinished += ParentExecutionCoordinator_OnFinished;
+                _parentExecutionCoordinator.AddOnFinishedHandler(_baseInstanceParentExecutionCoordinatorOnFinishedHandler);
             }
 
             _instanceState = InstanceState.Initializing;
@@ -511,7 +530,7 @@ namespace SymOntoClay.Core.Internal.Instances
         {
         }
 
-        protected virtual void RunFinalizationTrigges(IMonitorLogger logger)
+        protected virtual void RunFinalizationTriggers(IMonitorLogger logger)
         {
             var finalizationExecutionCoordinator = new ExecutionCoordinator(this);
             finalizationExecutionCoordinator.SetExecutionStatus(logger, "86865B32-9839-4442-8EEF-5522E6DAADB4", ActionExecutionStatus.Executing);
@@ -519,12 +538,16 @@ namespace SymOntoClay.Core.Internal.Instances
             RunLifecycleTriggers(logger, KindOfSystemEventOfInlineTrigger.Leave, finalizationExecutionCoordinator, false);
         }
 
-        private void ParentExecutionCoordinator_OnFinished()
+        void IOnFinishedExecutionCoordinatorHandler.Invoke()
         {
-            _executionCoordinator.SetExecutionStatus(Logger, "898C6E87-54F5-41CA-8B3F-08B8BBF95135", ActionExecutionStatus.WeakCanceled);
+            LoggedFunctorWithoutResult<BaseInstance>.Run(Logger, "F79DC0DC-545C-4664-8530-71CBC0B20E77", this,
+                (IMonitorLogger loggerValue, BaseInstance instanceValue) => {
+                    instanceValue.ExecutionCoordinator_OnFinished();
+                },
+                _activeObjectContext, _threadPool, _serializationAnchor);
         }
 
-        protected virtual void ExecutionCoordinator_OnFinished()
+        public virtual void ExecutionCoordinator_OnFinished()
         {
             if (_parentInstance != null)
             {
@@ -532,7 +555,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 _parentInstance = null;
             }
 
-            RunFinalizationTrigges(Logger);
+            RunFinalizationTriggers(Logger);
 
             if(_childInstances.Any())
             {
@@ -582,8 +605,10 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             if(_parentExecutionCoordinator != null)
             {
-                _parentExecutionCoordinator.OnFinished -= ParentExecutionCoordinator_OnFinished;
+                _parentExecutionCoordinator.RemoveOnFinishedHandler(_baseInstanceParentExecutionCoordinatorOnFinishedHandler);
             }
+
+            _serializationAnchor.Dispose();
 
             foreach (var triggerInstance in _logicConditionalTriggersList)
             {

@@ -7944,7 +7944,10 @@
         <member name="P:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator.RuleInstance">
             <inheritdoc/>
         </member>
-        <member name="E:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator.OnFinished">
+        <member name="M:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator.AddOnFinishedHandler(SymOntoClay.Core.EventsInterfaces.IOnFinishedExecutionCoordinatorHandler)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator.RemoveOnFinishedHandler(SymOntoClay.Core.EventsInterfaces.IOnFinishedExecutionCoordinatorHandler)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Instances.ExecutionCoordinator.AddProcessInfo(SymOntoClay.Core.IProcessInfo)">

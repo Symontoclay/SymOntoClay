@@ -20,6 +20,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.ActiveObject.Functors;
+using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
@@ -46,12 +48,17 @@ namespace SymOntoClay.Core.Internal.Instances
             : base(context)
         {
             _context = context;
+
+            _serializationAnchor = new SerializationAnchor();
         }
 
         /// <inheritdoc/>
         protected override void LinkWithOtherBaseContextComponents()
         {
             base.LinkWithOtherBaseContextComponents();
+
+            _activeObjectContext = _context.ActiveObjectContext;
+            _threadPool = _context.AsyncEventsThreadPool;
 
             _metadataResolver = _context.DataResolversFactory.GetMetadataResolver();
         }
@@ -61,13 +68,21 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             base.Init();
 
-            _projectLoader = new ProjectLoader(_context);
+            _instancesStorageComponentOnFinishProcessWithoutDevicesHandler = new InstancesStorageComponentOnFinishProcessWithoutDevicesHandler(this);
+            _instancesStorageComponentOnFinishProcessWithDevicesHandler = new InstancesStorageComponentOnFinishProcessWithDevicesHandler(this);
 
-            OnIdle += DispatchOnIdle;
+            _projectLoader = new ProjectLoader(_context);
         }
+
+        private InstancesStorageComponentOnFinishProcessWithoutDevicesHandler _instancesStorageComponentOnFinishProcessWithoutDevicesHandler;
+        private InstancesStorageComponentOnFinishProcessWithDevicesHandler _instancesStorageComponentOnFinishProcessWithDevicesHandler;
 
         private readonly IEngineContext _context;
         private MetadataResolver _metadataResolver;
+
+        private IActiveObjectContext _activeObjectContext;
+        private ICustomThreadPool _threadPool;
+        private SerializationAnchor _serializationAnchor;
 
         private readonly object _registryLockObj = new object();
         private readonly object _processLockObj = new object();
@@ -236,16 +251,16 @@ namespace SymOntoClay.Core.Internal.Instances
                     return;
                 }
 
-                var concurentProcessesInfoList = NGetConcurrentProcessesInfo(logger, processInfo);
+                var concurrentProcessesInfoList = NGetConcurrentProcessesInfo(logger, processInfo);
 
-                logger.SystemExpr("CDB5B558-4B52-45B6-8895-1363D5C9CC9A", callMethodId, "concurentProcessesInfoList?.Count", concurentProcessesInfoList?.Count);
+                logger.SystemExpr("CDB5B558-4B52-45B6-8895-1363D5C9CC9A", callMethodId, "concurrentProcessesInfoList?.Count", concurrentProcessesInfoList?.Count);
 
 #if DEBUG
-                //Log($"concurentProcessesInfoList?.Count = {concurentProcessesInfoList?.Count}");
+                //Log($"concurrentProcessesInfoList?.Count = {concurrentProcessesInfoList?.Count}");
                 //Info("DE893262-B4D1-4E7D-AA83-418A86546F3B", processInfo.WriteIProcessInfoToToHumanizedString());
 #endif
 
-                if (concurentProcessesInfoList.IsNullOrEmpty())
+                if (concurrentProcessesInfoList.IsNullOrEmpty())
                 {
                     NAppendAndTryStartProcessInfoWithDevices(logger, processInfo);
 
@@ -263,19 +278,19 @@ namespace SymOntoClay.Core.Internal.Instances
                 //logger.SystemExpr("753A6B07-2245-4665-AFED-D604167812E0", callMethodId, "processInfo.Priority", processInfo.Priority);
                 //logger.SystemExpr("D68CB34F-4DFC-4E5D-B195-E7CFF77E6FCD", callMethodId, "processInfo.GlobalPriority", processInfo.GlobalPriority);
 
-                foreach (var concurentProcessInfo in concurentProcessesInfoList)
+                foreach (var concurrentProcessInfo in concurrentProcessesInfoList)
                 {
-                    logger.SystemExpr("A815BA9A-C55F-4342-BE3D-1356FC79F277", callMethodId, "concurentProcessInfo", concurentProcessInfo.WriteIProcessInfoToToHumanizedString(logger));
-                    //logger.SystemExpr("FE0EF35D-0350-40FE-9CBB-74A5A621A0D7", callMethodId, "concurentProcessInfo.Id", concurentProcessInfo.Id);
-                    //logger.SystemExpr("24ACC2B2-813D-4C0E-B090-1A4F93589311", callMethodId, "concurentProcessInfo.EndPointName", concurentProcessInfo.EndPointName);
-                    //logger.SystemExpr("85D18388-F4AC-4C83-82B5-5B6BC1574170", callMethodId, "concurentProcessInfo.ParentProcessInfo?.Id", concurentProcessInfo.ParentProcessInfo?.Id);
-                    //logger.SystemExpr("B1C490A2-54A9-49D9-9B0D-D474B37784A8", callMethodId, "concurentProcessInfo.ParentProcessInfo?.EndPointName", concurentProcessInfo.ParentProcessInfo?.EndPointName);
-                    //logger.SystemExpr("DC95F5D5-2D3F-41F9-B115-E824919E4EF9", callMethodId, "concurentProcessInfo.Priority", concurentProcessInfo.Priority);
-                    //logger.SystemExpr("4FD9E70B-C7A0-4BD6-8831-C9D189016C64", callMethodId, "concurentProcessInfo.GlobalPriority", concurentProcessInfo.GlobalPriority);
+                    logger.SystemExpr("A815BA9A-C55F-4342-BE3D-1356FC79F277", callMethodId, "concurrentProcessInfo", concurrentProcessInfo.WriteIProcessInfoToToHumanizedString(logger));
+                    //logger.SystemExpr("FE0EF35D-0350-40FE-9CBB-74A5A621A0D7", callMethodId, "concurrentProcessInfo.Id", concurrentProcessInfo.Id);
+                    //logger.SystemExpr("24ACC2B2-813D-4C0E-B090-1A4F93589311", callMethodId, "concurrentProcessInfo.EndPointName", concurrentProcessInfo.EndPointName);
+                    //logger.SystemExpr("85D18388-F4AC-4C83-82B5-5B6BC1574170", callMethodId, "concurrentProcessInfo.ParentProcessInfo?.Id", concurrentProcessInfo.ParentProcessInfo?.Id);
+                    //logger.SystemExpr("B1C490A2-54A9-49D9-9B0D-D474B37784A8", callMethodId, "concurrentProcessInfo.ParentProcessInfo?.EndPointName", concurrentProcessInfo.ParentProcessInfo?.EndPointName);
+                    //logger.SystemExpr("DC95F5D5-2D3F-41F9-B115-E824919E4EF9", callMethodId, "concurrentProcessInfo.Priority", concurrentProcessInfo.Priority);
+                    //logger.SystemExpr("4FD9E70B-C7A0-4BD6-8831-C9D189016C64", callMethodId, "concurrentProcessInfo.GlobalPriority", concurrentProcessInfo.GlobalPriority);
                 }
 
 #if DEBUG
-                //foreach(var tmpProcessInfo in concurentProcessesInfoList)
+                //foreach(var tmpProcessInfo in concurrentProcessesInfoList)
                 //{
                 //    Log($"tmpProcessInfo.EndPointName = {tmpProcessInfo.EndPointName};tmpProcessInfo.GlobalPriority = {tmpProcessInfo.GlobalPriority}");
                 //}
@@ -285,7 +300,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 //Log($"globalPriority = {globalPriority}");
 #endif
 
-                if(concurentProcessesInfoList.All(y => ProcessInfoHelper.Compare(logger, processInfo, y) >=0))
+                if(concurrentProcessesInfoList.All(y => ProcessInfoHelper.Compare(logger, processInfo, y) >=0))
                 {
                     NAppendAndTryStartProcessInfoWithDevices(logger, processInfo);
 
@@ -293,9 +308,9 @@ namespace SymOntoClay.Core.Internal.Instances
                     {
                         var taskId = logger.StartThreadTask("EDE8166B-FDC9-4DDB-8D5F-76CF87E61A4C");
 
-                        foreach (var concurentProcessInfo in concurentProcessesInfoList)
+                        foreach (var concurrentProcessInfo in concurrentProcessesInfoList)
                         {
-                            concurentProcessInfo.Cancel(logger, "74AFBE25-AE89-4971-BC06-716048826194", ReasonOfChangeStatus.ByConcurrentProcess, new Changer(KindOfChanger.ProcessInfo, processInfo.Id), callMethodId);
+                            concurrentProcessInfo.Cancel(logger, "74AFBE25-AE89-4971-BC06-716048826194", ReasonOfChangeStatus.ByConcurrentProcess, new Changer(KindOfChanger.ProcessInfo, processInfo.Id), callMethodId);
                         }
 
                         logger.StopThreadTask("594DAE42-0F2E-42AC-8DA4-0F406DCC227A", taskId);

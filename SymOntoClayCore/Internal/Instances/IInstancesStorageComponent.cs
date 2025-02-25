@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
@@ -35,7 +36,9 @@ namespace SymOntoClay.Core.Internal.Instances
         void AppendProcessInfo(IMonitorLogger logger, IProcessInfo processInfo);
         void AppendAndTryStartProcessInfo(IMonitorLogger logger, string callMethodId, IProcessInfo processInfo);
 
-        event Action OnIdle;
+        void AddOnIdleHandler(IOnIdleInstancesStorageComponentHandler handler);
+        void RemoveOnIdleHandler(IOnIdleInstancesStorageComponentHandler handler);
+
         int GetCountOfCurrentProcesses(IMonitorLogger logger);
         void CheckCountOfActiveProcesses(IMonitorLogger logger);
 

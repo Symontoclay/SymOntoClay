@@ -1,4 +1,6 @@
-﻿namespace SymOntoClay.Core.Internal.Instances
+﻿using SymOntoClay.Core.EventsInterfaces;
+
+namespace SymOntoClay.Core.Internal.Instances
 {
     public class InstancesStorageComponentOnFinishProcessWithDevicesHandler : IOnFinishProcessInfoHandler
     {

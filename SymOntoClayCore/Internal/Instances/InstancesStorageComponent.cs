@@ -341,7 +341,16 @@ namespace SymOntoClay.Core.Internal.Instances
             return true;
         }
 
-        private void OnFinishProcessWithoutDevicesHandler(IProcessInfo sender)
+        public void OnFinishProcessWithoutDevicesHandler(IProcessInfo sender)
+        {
+            LoggedFunctorWithoutResult<InstancesStorageComponent, IProcessInfo>.Run(Logger, "4B1CAD26-CE50-43EF-84ED-56008CF2914C", this, sender,
+                (IMonitorLogger loggerValue, InstancesStorageComponent instanceValue, IProcessInfo senderValue) => {
+                    instanceValue.NOnFinishProcessWithoutDevicesHandler(senderValue);
+                },
+                _activeObjectContext, _threadPool, _serializationAnchor);
+        }
+
+        public void NOnFinishProcessWithoutDevicesHandler(IProcessInfo sender)
         {
             lock (_processLockObj)
             {
@@ -370,13 +379,22 @@ namespace SymOntoClay.Core.Internal.Instances
 
         }
 
-        private void OnFinishProcessWithDevicesHandler(IProcessInfo sender)
+        public void OnFinishProcessWithDevicesHandler(IProcessInfo sender)
+        {
+            LoggedFunctorWithoutResult<InstancesStorageComponent, IProcessInfo>.Run(Logger, "45A122AD-559E-4AB6-B348-767E0DC0C6BD", this, sender,
+                (IMonitorLogger loggerValue, InstancesStorageComponent instanceValue, IProcessInfo senderValue) => {
+                    instanceValue.NOnFinishProcessWithDevicesHandler(senderValue);
+                },
+                _activeObjectContext, _threadPool, _serializationAnchor);
+        }
+
+        public void NOnFinishProcessWithDevicesHandler(IProcessInfo sender)
         {
             lock (_processLockObj)
             {
                 foreach (var device in sender.Devices)
                 {
-                    if(_processesInfoByDevicesDict.ContainsKey(device) && _processesInfoByDevicesDict[device] == sender)
+                    if (_processesInfoByDevicesDict.ContainsKey(device) && _processesInfoByDevicesDict[device] == sender)
                     {
                         _processesInfoByDevicesDict.Remove(device);
                     }
@@ -395,7 +413,7 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 try
                 {
-                    OnIdle?.Invoke();
+                    EmitOnIdleHandlers();
                 }
                 catch(Exception e)
                 {
@@ -408,9 +426,6 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             return _processesInfoByDevicesDict.Count + _processesInfoList.Count; 
         }
-
-        /// <inheritdoc/>
-        public override event Action OnIdle;
 
         /// <inheritdoc/>
         public override int GetCountOfCurrentProcesses(IMonitorLogger logger)

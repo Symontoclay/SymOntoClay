@@ -55,7 +55,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return result;
         }
 
-        public ulong GetLongHashCode(CheckDirtyOptions options)
+        /// <inheritdoc/>
+        public override ulong GetLongHashCode(CheckDirtyOptions options)
         {
             var result = base.CalculateLongHashCode(options);
 
@@ -70,7 +71,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return result;
         }
 
-        public void DiscoverAllAnnotations(IList<Annotation> result)
+        /// <inheritdoc/>
+        public override void DiscoverAllAnnotations(IList<Annotation> result)
         {
             base.DiscoverAllAnnotations(result);
 

@@ -111,7 +111,7 @@ namespace SymOntoClay.Core.Internal.Instances
         protected readonly CodeItem _codeItem;
 
         /// <inheritdoc/>
-        public CodeItem CodeItem => _codeItem;
+        public virtual CodeItem CodeItem => _codeItem;
 
         /// <inheritdoc/>
         public StrongIdentifierValue Name { get; private set; }

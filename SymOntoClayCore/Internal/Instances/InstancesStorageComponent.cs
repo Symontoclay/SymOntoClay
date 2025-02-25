@@ -163,22 +163,32 @@ namespace SymOntoClay.Core.Internal.Instances
             }, _context.AsyncEventsThreadPool, _context.GetCancellationToken());
         }
 
-        private void DispatchOnIdle()
+        /// <inheritdoc/>
+        protected override void DispatchOnIdle()
         {
-            ThreadTask.Run(() => {
-                var taskId = Logger.StartThreadTask("F3A7C7F7-1D36-4321-9467-B5E075A04E6F");
+            base.DispatchOnIdle();
 
-                try
-                {
-                    DispatchIdleActions(Logger);
-                }
-                catch (Exception e)
-                {
-                    Error("1617E55E-58BC-4B63-9418-D5967AD99678", e);
-                }
+            LoggedFunctorWithoutResult<InstancesStorageComponent>.Run(Logger, "DA5D128E-7568-4186-97A5-847FE7FB68E8", this,
+                (IMonitorLogger loggerValue, InstancesStorageComponent instanceValue) => {
+                    instanceValue.NDispatchOnIdle();
+                },
+                _activeObjectContext, _threadPool, _serializationAnchor);
+        }
 
-                Logger.StopThreadTask("97C0FBD9-7D7B-4E6B-BEA5-1D6D37FE2005", taskId);
-            }, _context.AsyncEventsThreadPool, _context.GetCancellationToken());
+        public void NDispatchOnIdle()
+        {
+            var taskId = Logger.StartThreadTask("F3A7C7F7-1D36-4321-9467-B5E075A04E6F");
+
+            try
+            {
+                DispatchIdleActions(Logger);
+            }
+            catch (Exception e)
+            {
+                Error("1617E55E-58BC-4B63-9418-D5967AD99678", e);
+            }
+
+            Logger.StopThreadTask("97C0FBD9-7D7B-4E6B-BEA5-1D6D37FE2005", taskId);
         }
 
         private void DispatchIdleActions(IMonitorLogger logger)

@@ -60,7 +60,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         protected ulong? _longHashCode;
 
         /// <inheritdoc/>
-        public ulong GetLongHashCode()
+        public virtual ulong GetLongHashCode()
         {
             return GetLongHashCode(null);
         }

@@ -10,7 +10,7 @@
     <FileVersion>0.5.5</FileVersion>
     <Copyright>Copyright (c) 2020 - 2024 Sergiy Tolkachov aka metatypeman</Copyright>
     <AssemblyName>SymOntoClay.CoreHelper</AssemblyName>
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>SymOntoClay.CoreHelper.xml</DocumentationFile>

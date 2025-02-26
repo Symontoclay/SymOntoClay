@@ -49,7 +49,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
         private IntermediateAstNodePoint _nodePoint = new IntermediateAstNodePoint();
 
-        private bool _hasSomething;
+        //private bool _hasSomething;
         private BinaryOperatorAstExpression _lastIsOperator;
         private BinaryOperatorAstExpression _lastBinaryOperator;
 
@@ -193,7 +193,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _lastBinaryOperator = null;
             _lastIsOperator = null;
-            _hasSomething = true;
+            //_hasSomething = true;
 
             _context.Recovery(_currToken);
 
@@ -231,7 +231,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
 
             _lastBinaryOperator = null;
             _lastIsOperator = null;
-            _hasSomething = true;
+            //_hasSomething = true;
 
             _context.Recovery(_currToken);
 
@@ -252,7 +252,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _lastBinaryOperator = null;
             _lastIsOperator = null;
-            _hasSomething = true;
+            //_hasSomething = true;
 
             _context.Recovery(_currToken);
             var parser = new NumberParser(_context);
@@ -270,7 +270,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _lastBinaryOperator = null;
             _lastIsOperator = null;
-            _hasSomething = true;
+            //_hasSomething = true;
 
             _context.Recovery(_currToken);
 
@@ -289,7 +289,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _lastBinaryOperator = null;
             _lastIsOperator = null;
-            _hasSomething = true;
+            //_hasSomething = true;
 
             var node = new ConstValueAstExpression();
             var value = new StringValue(_currToken.Content);
@@ -305,7 +305,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _lastBinaryOperator = null;
             _lastIsOperator = null;
-            _hasSomething = true;
+            //_hasSomething = true;
 
             _context.Recovery(_currToken);
 
@@ -419,7 +419,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _lastBinaryOperator = null;
             _lastIsOperator = null;
-            _hasSomething = true;
+            //_hasSomething = true;
 
             _context.Recovery(_currToken);
 
@@ -435,7 +435,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _lastBinaryOperator = null;
             _lastIsOperator = null;
-            _hasSomething = true;
+            //_hasSomething = true;
 
             var parser = new LogicalQueryOperationParser(_context);
             parser.Run();
@@ -463,7 +463,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _lastBinaryOperator = null;
             _lastIsOperator = null;
-            _hasSomething = true;
+            //_hasSomething = true;
 
             _context.Recovery(_currToken);
 
@@ -489,7 +489,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _lastBinaryOperator = null;
             _lastIsOperator = null;
-            _hasSomething = true;
+            //_hasSomething = true;
 
             _context.Recovery(_currToken);
 
@@ -505,7 +505,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _lastBinaryOperator = null;
             _lastIsOperator = null;
-            _hasSomething = true;
+            //_hasSomething = true;
 
             var value = NameHelper.CreateName(_currToken.Content);
 
@@ -534,7 +534,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _lastBinaryOperator = null;
             _lastIsOperator = null;
-            _hasSomething = true;
+            //_hasSomething = true;
 
             var parser = new AstExpressionParser(_context, TokenKind.CloseRoundBracket);
             parser.Run();
@@ -558,7 +558,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
         {
             _lastBinaryOperator = null;
             _lastIsOperator = null;
-            _hasSomething = true;
+            //_hasSomething = true;
 
             var value = NameHelper.CreateName(_currToken.Content);
 

@@ -40,11 +40,11 @@ namespace SymOntoClay.Core.Internal.TasksExecution
 
         private readonly IEngineContext _context;
         private IActivePeriodicObject _activeObject;
-        private volatile TasksPlanner _tasksPlanner;
+        //private volatile TasksPlanner _tasksPlanner;
         private ICompiler _compiler;
-        private volatile ExecutionState _executionState = ExecutionState.Init;
-        private volatile TasksPlan _plan;
-        private volatile IThreadExecutor _threadExecutor;
+        //private volatile ExecutionState _executionState = ExecutionState.Init;
+        //private volatile TasksPlan _plan;
+        //private volatile IThreadExecutor _threadExecutor;
 
         public void BeginStarting()
         {
@@ -128,7 +128,7 @@ namespace SymOntoClay.Core.Internal.TasksExecution
         protected override void OnDisposed()
         {
             _activeObject.Dispose();
-            _tasksPlanner?.Dispose();
+            //_tasksPlanner?.Dispose();
             
             base.OnDisposed();
         }

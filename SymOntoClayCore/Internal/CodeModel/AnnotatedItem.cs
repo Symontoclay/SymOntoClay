@@ -90,7 +90,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         }
 
         private readonly object _annotationsLockObj = new object();
-        private int? _isAnnotationsCount;
+        //private int? _isAnnotationsCount;
 
         /// <inheritdoc/>
         public virtual IList<RuleInstance> AnnotationFacts
@@ -142,10 +142,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         private void CheckAnnotationsPreparation()
         {
-            if(_isAnnotationsCount.HasValue && _isAnnotationsCount.Value == Annotations.Count)
-            {
-                return;
-            }
+            //if(_isAnnotationsCount.HasValue && _isAnnotationsCount.Value == Annotations.Count)
+            //{
+            //    return;
+            //}
 
             if(!Annotations.IsNullOrEmpty())
             {
@@ -266,7 +266,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             }
         }
 
-        private Value _annotationValue;
+        //private Value _annotationValue;
         private readonly object _annotationValueLockObj = new object();
 
         private readonly object _disposingLockObj = new object();

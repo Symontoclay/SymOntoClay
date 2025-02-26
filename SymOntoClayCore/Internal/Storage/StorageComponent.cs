@@ -72,7 +72,7 @@ namespace SymOntoClay.Core.Internal.Storage
         private RealStorage _listenedFactsStorage;
         private ConsolidatedPublicFactsStorage _visibleFactsStorage;
         private ConsolidatedPublicFactsStorage _worldPublicFactsStorage;
-        private ConsolidatedPublicFactsStorage _additionalPublicFactsStorage;
+        //private ConsolidatedPublicFactsStorage _additionalPublicFactsStorage;
         private InheritancePublicFactsReplicator _inheritancePublicFactsReplicator;
         private CategoriesStorage _categoriesStorage;
 

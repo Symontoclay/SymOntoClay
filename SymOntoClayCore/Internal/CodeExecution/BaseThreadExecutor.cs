@@ -688,11 +688,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             var valuesStack = _currentCodeFrame.ValuesStack;
 
-            var handlerValue = TryResolveFromVarOrExpr(valuesStack.Pop());
+            var handlerValue = valuesStack.Pop();
 
-            var kindOfLifeCycleEventValue = TryResolveFromVarOrExpr(valuesStack.Pop());
+            var kindOfLifeCycleEventValue = valuesStack.Pop();
 
-            var targetObjectValue = TryResolveFromVarOrExpr(valuesStack.Pop());
+            var targetObjectValue = valuesStack.Pop();
 
             var kindOfLifeCycleEventName = kindOfLifeCycleEventValue.AsStrongIdentifierValue.NormalizedNameValue;
 
@@ -733,11 +733,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     break;
 
                 case KindOfFunctionParameters.NamedParameters:
-                    namedParameters = TakeNamedParameters(parametersCount, true);
+                    namedParameters = TakeNamedParameters(parametersCount);
                     break;
 
                 case KindOfFunctionParameters.PositionedParameters:
-                    positionedParameters = TakePositionedParameters(parametersCount, true);
+                    positionedParameters = TakePositionedParameters(parametersCount);
                     break;
 
                 default:
@@ -824,8 +824,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private Value CreateInstance(Value prototypeValue)
         {
-            prototypeValue = TryResolveFromVarOrExpr(prototypeValue);
-
             var kindOfValue = prototypeValue.KindOfValue;
 
             switch (kindOfValue)
@@ -941,7 +939,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessReturnVal()
         {
-            var currentValue = TryResolveFromVarOrExpr(_currentCodeFrame.ValuesStack.Pop());
+            var currentValue = _currentCodeFrame.ValuesStack.Pop();
 
             _currentCodeFrame.ProcessInfo.SetStatus(Logger, "17EFD6A4-C466-4A2E-AB3E-E7C90CC3547C", ProcessStatus.Completed);
 
@@ -1071,7 +1069,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private void ProcessExec()
         {
-            var currentValue = TryResolveFromVarOrExpr(_currentCodeFrame.ValuesStack.Pop());
+            var currentValue = _currentCodeFrame.ValuesStack.Pop();
 
             var kindOfCurrentValue = currentValue.KindOfValue;
 
@@ -1373,11 +1371,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             _currentCodeFrame.CurrentPosition++;
         }
 
-        private Value TryResolveFromVarOrExpr(Value operand)
-        {
-            return _valueResolvingHelper.TryResolveFromVarOrExpr(Logger, operand, _currentCodeFrame.LocalContext);
-        }
-
         private void Wait(ScriptCommand currentCommand)
         {
             if (_endOfTargetDuration.HasValue)
@@ -1407,7 +1400,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 return;
             }
 
-            var positionedParameters = TakePositionedParameters(currentCommand.CountParams, true);
+            var positionedParameters = TakePositionedParameters(currentCommand.CountParams);
 
             if (positionedParameters.Count == 1)
             {
@@ -1461,7 +1454,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
         private float? GetLogicalValueFromCurrentStackValue()
         {
-            var currentValue = TryResolveFromVarOrExpr(_currentCodeFrame.ValuesStack.Pop());
+            var currentValue = _currentCodeFrame.ValuesStack.Pop();
 
             var kindOfValue = currentValue.KindOfValue;
 
@@ -1729,7 +1722,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
         }
 
-        private List<Value> TakePositionedParameters(int count, bool resolveValueFromVar = false)
+        private List<Value> TakePositionedParameters(int count)
         {
             var result = new List<Value>();
 
@@ -1737,14 +1730,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             for (var i = 0; i < count; i++)
             {
-                if (resolveValueFromVar)
-                {
-                    result.Add(TryResolveFromVarOrExpr(valueStack.Pop()));
-                }
-                else
-                {
-                    result.Add(valueStack.Pop());
-                }
+                result.Add(valueStack.Pop());
             }
 
             result.Reverse();
@@ -1752,7 +1738,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             return result;
         }
 
-        private Dictionary<StrongIdentifierValue, Value> TakeNamedParameters(int count, bool resolveValueFromVar = false)
+        private Dictionary<StrongIdentifierValue, Value> TakeNamedParameters(int count)
         {
             var rawParamsList = TakePositionedParameters(count * 2);
 
@@ -1768,11 +1754,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 var value = enumerator.Current;
 
-                if (resolveValueFromVar)
-                {
-                    value = TryResolveFromVarOrExpr(value);
-                }
-
                 result[name] = value;
             }
 
@@ -1783,7 +1764,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             var valueStack = _currentCodeFrame.ValuesStack;
 
-            var caller = TryResolveFromVarOrExpr(valueStack.Pop());
+            var caller = valueStack.Pop();
 
             Dictionary<StrongIdentifierValue, Value> namedParameters = null;
             List<Value> positionedParameters = null;
@@ -1794,11 +1775,11 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     break;
 
                 case KindOfFunctionParameters.NamedParameters:
-                    namedParameters = TakeNamedParameters(parametersCount, true);
+                    namedParameters = TakeNamedParameters(parametersCount);
                     break;
 
                 case KindOfFunctionParameters.PositionedParameters:
-                    positionedParameters = TakePositionedParameters(parametersCount, true);
+                    positionedParameters = TakePositionedParameters(parametersCount);
                     break;
 
                 default:
@@ -2028,7 +2009,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     break;
 
                 case KindOfFunctionParameters.NamedParameters:
-                    namedParameters = TakeNamedParameters(parametersCount, true);
+                    namedParameters = TakeNamedParameters(parametersCount);
                     foreach(var item in namedParameters)
                     {
                         Logger.Parameter("1DF0F0FD-D7CE-49E1-91A7-A62A5A75C4CD", callMethodId, item.Key, item.Value);
@@ -2036,7 +2017,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                     break;
 
                 case KindOfFunctionParameters.PositionedParameters:
-                    positionedParameters = TakePositionedParameters(parametersCount, true);
+                    positionedParameters = TakePositionedParameters(parametersCount);
                     {
                         var n = 0;
 

@@ -123,15 +123,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private void LogicalStorage_OnChanged()
         {
-            LoggedFunctorWithoutResult<BaseSimpleConditionalTriggerInstance>.Run(Logger, "3F83EE57-5F84-4B5E-9C7A-BAC8D4F225AC", this,
-                (IMonitorLogger loggerValue, BaseSimpleConditionalTriggerInstance instanceValue) => {
-                    instanceValue.NLogicalStorage_OnChanged();
-                },
-                _activeObjectContext, _threadPool, _serializationAnchor);
-        }
-
-        public void NLogicalStorage_OnChanged()
-        {
             lock (_lockObj)
             {
                 _needRun = true;

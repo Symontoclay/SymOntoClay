@@ -41,7 +41,8 @@ using System.Threading;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public class InstancesStorageComponent: BaseInstancesStorageComponent
+    public class InstancesStorageComponent: BaseInstancesStorageComponent,
+        IInstancesStorageComponentSerializedEventsHandler
     {
         public InstancesStorageComponent(IEngineContext context)
             : base(context)
@@ -168,14 +169,14 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             base.DispatchOnIdle();
 
-            LoggedFunctorWithoutResult<InstancesStorageComponent>.Run(Logger, "DA5D128E-7568-4186-97A5-847FE7FB68E8", this,
-                (IMonitorLogger loggerValue, InstancesStorageComponent instanceValue) => {
+            LoggedFunctorWithoutResult<IInstancesStorageComponentSerializedEventsHandler>.Run(Logger, "DA5D128E-7568-4186-97A5-847FE7FB68E8", this,
+                (IMonitorLogger loggerValue, IInstancesStorageComponentSerializedEventsHandler instanceValue) => {
                     instanceValue.NDispatchOnIdle();
                 },
                 _activeObjectContext, _threadPool, _serializationAnchor);
         }
 
-        public void NDispatchOnIdle()
+        void IInstancesStorageComponentSerializedEventsHandler.NDispatchOnIdle()
         {
             var taskId = Logger.StartThreadTask("F3A7C7F7-1D36-4321-9467-B5E075A04E6F");
 
@@ -336,6 +337,8 @@ namespace SymOntoClay.Core.Internal.Instances
             logger.EndHostMethodStarting("1510E6AF-F4EB-4BA3-AC44-78BDE3E92EE7", callMethodId);
         }
 
+        //d
+
         private bool NTryAppendProcessInfo(IMonitorLogger logger, IProcessInfo processInfo)
         {
             if (_processesInfoList.Contains(processInfo))
@@ -390,14 +393,14 @@ namespace SymOntoClay.Core.Internal.Instances
 
         public void OnFinishProcessWithDevicesHandler(IProcessInfo sender)
         {
-            LoggedFunctorWithoutResult<InstancesStorageComponent, IProcessInfo>.Run(Logger, "45A122AD-559E-4AB6-B348-767E0DC0C6BD", this, sender,
-                (IMonitorLogger loggerValue, InstancesStorageComponent instanceValue, IProcessInfo senderValue) => {
+            LoggedFunctorWithoutResult<IInstancesStorageComponentSerializedEventsHandler, IProcessInfo>.Run(Logger, "45A122AD-559E-4AB6-B348-767E0DC0C6BD", this, sender,
+                (IMonitorLogger loggerValue, IInstancesStorageComponentSerializedEventsHandler instanceValue, IProcessInfo senderValue) => {
                     instanceValue.NOnFinishProcessWithDevicesHandler(senderValue);
                 },
                 _activeObjectContext, _threadPool, _serializationAnchor);
         }
 
-        public void NOnFinishProcessWithDevicesHandler(IProcessInfo sender)
+        void IInstancesStorageComponentSerializedEventsHandler.NOnFinishProcessWithDevicesHandler(IProcessInfo sender)
         {
             lock (_processLockObj)
             {
@@ -568,6 +571,8 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 processInfo.Dispose();
             }
+
+            _serializationAnchor.Dispose();
 
             base.OnDisposed();
         }

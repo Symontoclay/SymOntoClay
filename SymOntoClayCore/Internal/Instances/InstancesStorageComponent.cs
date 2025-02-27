@@ -315,14 +315,11 @@ namespace SymOntoClay.Core.Internal.Instances
                 {
                     NAppendAndTryStartProcessInfoWithDevices(logger, processInfo);
 
-                    ThreadTask.Run(() =>
-                    {
-                        LoggedFunctorWithoutResult<IInstancesStorageComponentSerializedEventsHandler, string, IProcessInfo, List<IProcessInfo>>.Run(Logger, "457B9CA5-7FDA-4233-9FD2-B43086458CAD", this, callMethodId, processInfo, concurrentProcessesInfoList,
-                            (IMonitorLogger loggerValue, IInstancesStorageComponentSerializedEventsHandler instanceValue, string callMethodIdValue, IProcessInfo processInfoValue, List<IProcessInfo> concurrentProcessesInfoListValue) => {
-                                instanceValue.NCancelConcurrentProcesses(loggerValue, callMethodIdValue, processInfoValue, concurrentProcessesInfoListValue);
-                            },
-                            _activeObjectContext, _threadPool, _serializationAnchor);
-                    }, _context.AsyncEventsThreadPool, _context.GetCancellationToken());
+                    LoggedFunctorWithoutResult<IInstancesStorageComponentSerializedEventsHandler, string, IProcessInfo, List<IProcessInfo>>.Run(Logger, "457B9CA5-7FDA-4233-9FD2-B43086458CAD", this, callMethodId, processInfo, concurrentProcessesInfoList,
+                        (IMonitorLogger loggerValue, IInstancesStorageComponentSerializedEventsHandler instanceValue, string callMethodIdValue, IProcessInfo processInfoValue, List<IProcessInfo> concurrentProcessesInfoListValue) => {
+                            instanceValue.NCancelConcurrentProcesses(loggerValue, callMethodIdValue, processInfoValue, concurrentProcessesInfoListValue);
+                        },
+                        _activeObjectContext, _threadPool, _serializationAnchor);
 
                     logger.EndHostMethodStarting("A919AF23-C7E3-4678-97AA-1E2E596B9EE1", callMethodId);
 

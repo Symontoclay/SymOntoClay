@@ -7,6 +7,7 @@ namespace SymOntoClay.Core.Internal.Instances
     {
         void NDispatchOnIdle();
         void NOnFinishProcessWithDevicesHandler(IProcessInfo sender);
+        void NOnFinishProcessWithoutDevicesHandler(IProcessInfo sender);
         void NCancelConcurrentProcesses(IMonitorLogger logger, string callMethodId, IProcessInfo processInfo, List<IProcessInfo> concurrentProcessesInfoList);
     }
 }

@@ -363,14 +363,14 @@ namespace SymOntoClay.Core.Internal.Instances
 
         public void OnFinishProcessWithoutDevicesHandler(IProcessInfo sender)
         {
-            LoggedFunctorWithoutResult<InstancesStorageComponent, IProcessInfo>.Run(Logger, "4B1CAD26-CE50-43EF-84ED-56008CF2914C", this, sender,
-                (IMonitorLogger loggerValue, InstancesStorageComponent instanceValue, IProcessInfo senderValue) => {
+            LoggedFunctorWithoutResult<IInstancesStorageComponentSerializedEventsHandler, IProcessInfo>.Run(Logger, "4B1CAD26-CE50-43EF-84ED-56008CF2914C", this, sender,
+                (IMonitorLogger loggerValue, IInstancesStorageComponentSerializedEventsHandler instanceValue, IProcessInfo senderValue) => {
                     instanceValue.NOnFinishProcessWithoutDevicesHandler(senderValue);
                 },
                 _activeObjectContext, _threadPool, _serializationAnchor);
         }
 
-        public void NOnFinishProcessWithoutDevicesHandler(IProcessInfo sender)
+        void IInstancesStorageComponentSerializedEventsHandler.NOnFinishProcessWithoutDevicesHandler(IProcessInfo sender)
         {
             lock (_processLockObj)
             {

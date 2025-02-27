@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using NLog;
 using SymOntoClay.ActiveObject.Functors;
 using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Common.CollectionsHelpers;
@@ -316,14 +317,11 @@ namespace SymOntoClay.Core.Internal.Instances
 
                     ThreadTask.Run(() =>
                     {
-                        var taskId = logger.StartThreadTask("EDE8166B-FDC9-4DDB-8D5F-76CF87E61A4C");
-
-                        foreach (var concurrentProcessInfo in concurrentProcessesInfoList)
-                        {
-                            concurrentProcessInfo.Cancel(logger, "74AFBE25-AE89-4971-BC06-716048826194", ReasonOfChangeStatus.ByConcurrentProcess, new Changer(KindOfChanger.ProcessInfo, processInfo.Id), callMethodId);
-                        }
-
-                        logger.StopThreadTask("594DAE42-0F2E-42AC-8DA4-0F406DCC227A", taskId);
+                        LoggedFunctorWithoutResult<IInstancesStorageComponentSerializedEventsHandler, string, IProcessInfo, List<IProcessInfo>>.Run(Logger, "457B9CA5-7FDA-4233-9FD2-B43086458CAD", this, callMethodId, processInfo, concurrentProcessesInfoList,
+                            (IMonitorLogger loggerValue, IInstancesStorageComponentSerializedEventsHandler instanceValue, string callMethodIdValue, IProcessInfo processInfoValue, List<IProcessInfo> concurrentProcessesInfoListValue) => {
+                                instanceValue.NCancelConcurrentProcesses(loggerValue, callMethodIdValue, processInfoValue, concurrentProcessesInfoListValue);
+                            },
+                            _activeObjectContext, _threadPool, _serializationAnchor);
                     }, _context.AsyncEventsThreadPool, _context.GetCancellationToken());
 
                     logger.EndHostMethodStarting("A919AF23-C7E3-4678-97AA-1E2E596B9EE1", callMethodId);
@@ -337,7 +335,17 @@ namespace SymOntoClay.Core.Internal.Instances
             logger.EndHostMethodStarting("1510E6AF-F4EB-4BA3-AC44-78BDE3E92EE7", callMethodId);
         }
 
-        //d
+        void IInstancesStorageComponentSerializedEventsHandler.NCancelConcurrentProcesses(IMonitorLogger logger, string callMethodId, IProcessInfo processInfo, List<IProcessInfo> concurrentProcessesInfoList)
+        {
+            var taskId = logger.StartThreadTask("EDE8166B-FDC9-4DDB-8D5F-76CF87E61A4C");
+
+            foreach (var concurrentProcessInfo in concurrentProcessesInfoList)
+            {
+                concurrentProcessInfo.Cancel(logger, "74AFBE25-AE89-4971-BC06-716048826194", ReasonOfChangeStatus.ByConcurrentProcess, new Changer(KindOfChanger.ProcessInfo, processInfo.Id), callMethodId);
+            }
+
+            logger.StopThreadTask("594DAE42-0F2E-42AC-8DA4-0F406DCC227A", taskId);
+        }
 
         private bool NTryAppendProcessInfo(IMonitorLogger logger, IProcessInfo processInfo)
         {

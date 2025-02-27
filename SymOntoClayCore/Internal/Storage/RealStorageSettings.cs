@@ -22,10 +22,6 @@ SOFTWARE.*/
 
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
-using SymOntoClay.Core.Internal.CodeExecution;
-using SymOntoClay.Core.Internal.Compiling;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using System;
 using System.Collections.Generic;
 using System.Text;
 

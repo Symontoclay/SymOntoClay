@@ -52,30 +52,30 @@ namespace SymOntoClay.ActiveObject.Functors
 
     public class LoggedFunctorWithoutResult<T1, T2, T3> : BaseFunctorWithoutResult<IMonitorLogger, T1, T2, T3>
     {
-        public static LoggedFunctorWithoutResult<T1, T2> Run(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, T3 arg3, Action<IMonitorLogger, T1, T2, T3> action, IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
+        public static LoggedFunctorWithoutResult<T1, T2, T3> Run(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, T3 arg3, Action<IMonitorLogger, T1, T2, T3> action, IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
         {
-            var functor = new LoggedFunctorWithoutResult<T1, T2>(logger, functorId, arg1, arg2, action, context, threadPool, serializationAnchor);
+            var functor = new LoggedFunctorWithoutResult<T1, T2, T3>(logger, functorId, arg1, arg2, arg3, action, context, threadPool, serializationAnchor);
             functor.Run();
             return functor;
         }
 
-        public LoggedFunctorWithoutResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, Action<IMonitorLogger, T1, T2> action, IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
-            : base(logger, functorId, logger, arg1, arg2, action, context, threadPool, serializationAnchor)
+        public LoggedFunctorWithoutResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, T3 arg3, Action<IMonitorLogger, T1, T2, T3> action, IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
+            : base(logger, functorId, logger, arg1, arg2, arg3, action, context, threadPool, serializationAnchor)
         {
         }
     }
 
     public class LoggedFunctorWithoutResult<T1, T2, T3, T4> : BaseFunctorWithoutResult<IMonitorLogger, T1, T2, T3, T4>
     {
-        public static LoggedFunctorWithoutResult<T1, T2> Run(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, T3 arg3, T4 arg4, Action<IMonitorLogger, T1, T2, T3, T4> action, IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
+        public static LoggedFunctorWithoutResult<T1, T2, T3, T4> Run(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, T3 arg3, T4 arg4, Action<IMonitorLogger, T1, T2, T3, T4> action, IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
         {
-            var functor = new LoggedFunctorWithoutResult<T1, T2>(logger, functorId, arg1, arg2, action, context, threadPool, serializationAnchor);
+            var functor = new LoggedFunctorWithoutResult<T1, T2, T3, T4>(logger, functorId, arg1, arg2, arg3, arg4, action, context, threadPool, serializationAnchor);
             functor.Run();
             return functor;
         }
 
-        public LoggedFunctorWithoutResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, Action<IMonitorLogger, T1, T2> action, IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
-            : base(logger, functorId, logger, arg1, arg2, action, context, threadPool, serializationAnchor)
+        public LoggedFunctorWithoutResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, T3 arg3, T4 arg4, Action<IMonitorLogger, T1, T2> action, IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
+            : base(logger, functorId, logger, arg1, arg2, arg3, arg4, action, context, threadPool, serializationAnchor)
         {
         }
     }

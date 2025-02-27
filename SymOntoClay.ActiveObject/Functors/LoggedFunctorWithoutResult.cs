@@ -74,7 +74,7 @@ namespace SymOntoClay.ActiveObject.Functors
             return functor;
         }
 
-        public LoggedFunctorWithoutResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, T3 arg3, T4 arg4, Action<IMonitorLogger, T1, T2> action, IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
+        public LoggedFunctorWithoutResult(IMonitorLogger logger, string functorId, T1 arg1, T2 arg2, T3 arg3, T4 arg4, Action<IMonitorLogger, T1, T2, T3, T4> action, IActiveObjectContext context, ICustomThreadPool threadPool, ISerializationAnchor serializationAnchor)
             : base(logger, functorId, logger, arg1, arg2, arg3, arg4, action, context, threadPool, serializationAnchor)
         {
         }

@@ -147,22 +147,29 @@ namespace SymOntoClay.Core.Internal.Instances
 
             instanceInfo.Init(logger);
 
-            ThreadTask.Run(() => {
-                var taskId = logger.StartThreadTask("B38CE583-4AE0-42ED-9043-59E038AF094E");
+            LoggedFunctorWithoutResult<IInstancesStorageComponentSerializedEventsHandler>.Run(Logger, "B9914EB7-3FBA-449D-9E1E-7A89BE7C25DF", this,
+                (IMonitorLogger loggerValue, IInstancesStorageComponentSerializedEventsHandler instanceValue) => {
+                    instanceValue.NDelayedInitialDispatchIdleActions(loggerValue);
+                },
+                _activeObjectContext, _threadPool, _serializationAnchor);
+        }
 
-                try
-                {
-                    Thread.Sleep(100);
+        void IInstancesStorageComponentSerializedEventsHandler.NDelayedInitialDispatchIdleActions(IMonitorLogger logger)
+        {
+            var taskId = logger.StartThreadTask("B38CE583-4AE0-42ED-9043-59E038AF094E");
 
-                    DispatchIdleActions(logger);
-                }
-                catch (Exception e)
-                {
-                    logger.Error("0E28EFF2-FA4B-46F2-A1B5-7CDF5C9B4862", e);
-                }
+            try
+            {
+                Thread.Sleep(100);
 
-                logger.StopThreadTask("54E83ADE-6CC4-4655-A1D8-68FDA40DBB22", taskId);
-            }, _context.AsyncEventsThreadPool, _context.GetCancellationToken());
+                DispatchIdleActions(logger);
+            }
+            catch (Exception e)
+            {
+                logger.Error("0E28EFF2-FA4B-46F2-A1B5-7CDF5C9B4862", e);
+            }
+
+            logger.StopThreadTask("54E83ADE-6CC4-4655-A1D8-68FDA40DBB22", taskId);
         }
 
         /// <inheritdoc/>

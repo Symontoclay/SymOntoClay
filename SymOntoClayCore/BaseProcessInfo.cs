@@ -41,7 +41,8 @@ using System.Threading;
 namespace SymOntoClay.Core
 {
     public abstract class BaseProcessInfo : IProcessInfo,
-        IOnFinishProcessInfoHandler
+        IOnFinishProcessInfoHandler,
+        IBaseProcessInfoSerializedEventsHandler
     {
         protected static IMonitorLogger _logger = MonitorLoggerNLogImpementation.Instance;
         
@@ -613,14 +614,14 @@ namespace SymOntoClay.Core
 
         void IOnFinishProcessInfoHandler.Invoke(IProcessInfo sender)
         {
-            LoggedFunctorWithoutResult<BaseProcessInfo, IProcessInfo>.Run(_logger, "54EEC6FF-3764-4F05-A28A-158B48FB2309", this, sender,
-                (IMonitorLogger loggerValue, BaseProcessInfo instanceValue, IProcessInfo senderValue) => {
+            LoggedFunctorWithoutResult<IBaseProcessInfoSerializedEventsHandler, IProcessInfo>.Run(_logger, "54EEC6FF-3764-4F05-A28A-158B48FB2309", this, sender,
+                (IMonitorLogger loggerValue, IBaseProcessInfoSerializedEventsHandler instanceValue, IProcessInfo senderValue) => {
                     instanceValue.NProcessInfoOnFinish(senderValue);
                 },
                 _activeObjectContext, _threadPool, _serializationAnchor);
         }
 
-        public void NProcessInfoOnFinish(IProcessInfo processInfo)
+        void IBaseProcessInfoSerializedEventsHandler.NProcessInfoOnFinish(IProcessInfo processInfo)
         {
             lock (_parentAndChildrenLockObj)
             {

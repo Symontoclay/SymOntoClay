@@ -53,7 +53,8 @@ using System.Text;
 namespace SymOntoClay.Core.Internal.Storage
 {
     public class RealStorage : BaseLoggedComponent, IStorage,
-        IOnParentStorageChangedStorageHandler
+        IOnParentStorageChangedStorageHandler,
+        IRealStorageSerializedEventsHandler
     {
         public RealStorage(KindOfStorage kind, RealStorageSettings settings)
             : base(settings.MainStorageContext.Logger)
@@ -321,14 +322,14 @@ namespace SymOntoClay.Core.Internal.Storage
 
         private void OnParentStorageChangedHandler()
         {
-            LoggedFunctorWithoutResult<RealStorage>.Run(Logger, "B941A0F5-D2A1-4DEB-A588-5E379E867FA2", this,
-                (IMonitorLogger loggerValue, RealStorage instanceValue) => {
+            LoggedFunctorWithoutResult<IRealStorageSerializedEventsHandler>.Run(Logger, "B941A0F5-D2A1-4DEB-A588-5E379E867FA2", this,
+                (IMonitorLogger loggerValue, IRealStorageSerializedEventsHandler instanceValue) => {
                     instanceValue.NOnParentStorageChangedHandler();
                 },
                 _activeObjectContext, _threadPool, _serializationAnchor);
         }
 
-        public void NOnParentStorageChangedHandler()
+        void IRealStorageSerializedEventsHandler.NOnParentStorageChangedHandler()
         {
             CodeItemsStoragesList = null;
 

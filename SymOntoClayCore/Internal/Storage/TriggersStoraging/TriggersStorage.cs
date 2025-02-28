@@ -38,7 +38,8 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 {
     public class TriggersStorage: BaseSpecificStorage, ITriggersStorage,
         IOnAddParentStorageRealStorageContextHandler, IOnRemoveParentStorageRealStorageContextHandler,
-        IOnChangedNamedTriggerInstanceHandler, IOnNamedTriggerInstanceChangedWithKeysTriggersStorageHandler
+        IOnChangedNamedTriggerInstanceHandler, IOnNamedTriggerInstanceChangedWithKeysTriggersStorageHandler,
+        ITriggersStorageSerializedEventsHandler
     {
         public TriggersStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
@@ -470,14 +471,14 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
         private void RealStorageContext_OnRemoveParentStorage(IStorage storage)
         {
-            LoggedFunctorWithoutResult<TriggersStorage, IStorage>.Run(Logger, "CE9E5E18-3D8B-47B7-874C-FD1E6F985354", this, storage,
-                (IMonitorLogger loggerValue, TriggersStorage instanceValue, IStorage storageValue) => {
+            LoggedFunctorWithoutResult<ITriggersStorageSerializedEventsHandler, IStorage>.Run(Logger, "CE9E5E18-3D8B-47B7-874C-FD1E6F985354", this, storage,
+                (IMonitorLogger loggerValue, ITriggersStorageSerializedEventsHandler instanceValue, IStorage storageValue) => {
                     instanceValue.NRealStorageContext_OnRemoveParentStorage(storageValue);
                 },
                 _activeObjectContext, _threadPool, _serializationAnchor);
         }
 
-        public void NRealStorageContext_OnRemoveParentStorage(IStorage storage)
+        void ITriggersStorageSerializedEventsHandler.NRealStorageContext_OnRemoveParentStorage(IStorage storage)
         {
             var triggersStorage = storage.TriggersStorage;
             triggersStorage.RemoveOnNamedTriggerInstanceChangedWithKeysHandler(this);
@@ -492,14 +493,14 @@ namespace SymOntoClay.Core.Internal.Storage.TriggersStoraging
 
         private void RealStorageContext_OnAddParentStorage(IStorage storage)
         {
-            LoggedFunctorWithoutResult<TriggersStorage, IStorage>.Run(Logger, "403E1946-20F0-40DD-B587-C17B408BA842", this, storage,
-                (IMonitorLogger loggerValue, TriggersStorage instanceValue, IStorage storageValue) => {
+            LoggedFunctorWithoutResult<ITriggersStorageSerializedEventsHandler, IStorage>.Run(Logger, "403E1946-20F0-40DD-B587-C17B408BA842", this, storage,
+                (IMonitorLogger loggerValue, ITriggersStorageSerializedEventsHandler instanceValue, IStorage storageValue) => {
                     instanceValue.NRealStorageContext_OnAddParentStorage(storageValue);
                 },
                 _activeObjectContext, _threadPool, _serializationAnchor);
         }
 
-        public void NRealStorageContext_OnAddParentStorage(IStorage storage)
+        void ITriggersStorageSerializedEventsHandler.NRealStorageContext_OnAddParentStorage(IStorage storage)
         {
             var triggersStorage = storage.TriggersStorage;
             triggersStorage.AddOnNamedTriggerInstanceChangedWithKeysHandler(this);

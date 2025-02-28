@@ -36,7 +36,8 @@ using System.Text;
 namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 {
     public class VarStorage: BaseSpecificStorage, IVarStorage,
-        IOnAddParentStorageRealStorageContextHandler, IOnRemoveParentStorageRealStorageContextHandler, IOnChangedWithKeysVarStorageHandler, IOnChangedVarHandler
+        IOnAddParentStorageRealStorageContextHandler, IOnRemoveParentStorageRealStorageContextHandler, IOnChangedWithKeysVarStorageHandler, IOnChangedVarHandler,
+        IVarStorageSerializedEventsHandler
     {
         public VarStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
@@ -364,14 +365,14 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
         private void RealStorageContext_OnRemoveParentStorage(IStorage storage)
         {
-            LoggedFunctorWithoutResult<VarStorage, IStorage>.Run(Logger, "B0E0BA4D-6F0D-4C69-BC14-0FEC022DE01C", this, storage,
-                (IMonitorLogger loggerValue, VarStorage instanceValue, IStorage storageValue) => {
+            LoggedFunctorWithoutResult<IVarStorageSerializedEventsHandler, IStorage>.Run(Logger, "B0E0BA4D-6F0D-4C69-BC14-0FEC022DE01C", this, storage,
+                (IMonitorLogger loggerValue, IVarStorageSerializedEventsHandler instanceValue, IStorage storageValue) => {
                     instanceValue.NRealStorageContext_OnRemoveParentStorage(storageValue);
                 },
                 _activeObjectContext, _threadPool, _serializationAnchor);
         }
 
-        public void NRealStorageContext_OnRemoveParentStorage(IStorage storage)
+        void IVarStorageSerializedEventsHandler.NRealStorageContext_OnRemoveParentStorage(IStorage storage)
         {
             var varStorage = storage.VarStorage;
             varStorage.RemoveOnChangedWithKeysHandler(this);
@@ -386,14 +387,14 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
         private void RealStorageContext_OnAddParentStorage(IStorage storage)
         {
-            LoggedFunctorWithoutResult<VarStorage, IStorage>.Run(Logger, "2C400FE9-AFAE-4819-AC7B-35D9DFFB687A", this, storage,
-                (IMonitorLogger loggerValue, VarStorage instanceValue, IStorage storageValue) => {
+            LoggedFunctorWithoutResult<IVarStorageSerializedEventsHandler, IStorage>.Run(Logger, "2C400FE9-AFAE-4819-AC7B-35D9DFFB687A", this, storage,
+                (IMonitorLogger loggerValue, IVarStorageSerializedEventsHandler instanceValue, IStorage storageValue) => {
                     instanceValue.NRealStorageContext_OnAddParentStorage(storageValue);
                 },
                 _activeObjectContext, _threadPool, _serializationAnchor);
         }
 
-        public void NRealStorageContext_OnAddParentStorage(IStorage storage)
+        void IVarStorageSerializedEventsHandler.NRealStorageContext_OnAddParentStorage(IStorage storage)
         {
             var varStorage = storage.VarStorage;
             varStorage.AddOnChangedWithKeysHandler(this);

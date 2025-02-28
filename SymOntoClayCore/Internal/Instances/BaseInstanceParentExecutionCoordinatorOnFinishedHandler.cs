@@ -7,7 +7,8 @@ using SymOntoClay.Threading;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
-    public class BaseInstanceParentExecutionCoordinatorOnFinishedHandler : IOnFinishedExecutionCoordinatorHandler
+    public class BaseInstanceParentExecutionCoordinatorOnFinishedHandler : IOnFinishedExecutionCoordinatorHandler,
+        IBaseInstanceParentExecutionCoordinatorOnFinishedHandlerSerializedEventsHandler
     {
         public BaseInstanceParentExecutionCoordinatorOnFinishedHandler(IMonitorLogger logger, IExecutionCoordinator executionCoordinator,
             IActiveObjectContext activeObjectContext, ICustomThreadPool threadPool, SerializationAnchor serializationAnchor)
@@ -27,14 +28,14 @@ namespace SymOntoClay.Core.Internal.Instances
 
         void IOnFinishedExecutionCoordinatorHandler.Invoke()
         {
-            LoggedFunctorWithoutResult<BaseInstanceParentExecutionCoordinatorOnFinishedHandler>.Run(_logger, "008333AA-D2FE-4DF7-8874-E0325A0767EA", this,
-                (IMonitorLogger loggerValue, BaseInstanceParentExecutionCoordinatorOnFinishedHandler instanceValue) => {
+            LoggedFunctorWithoutResult<IBaseInstanceParentExecutionCoordinatorOnFinishedHandlerSerializedEventsHandler>.Run(_logger, "008333AA-D2FE-4DF7-8874-E0325A0767EA", this,
+                (IMonitorLogger loggerValue, IBaseInstanceParentExecutionCoordinatorOnFinishedHandlerSerializedEventsHandler instanceValue) => {
                     instanceValue.NParentExecutionCoordinator_OnFinished();
                 },
                 _activeObjectContext, _threadPool, _serializationAnchor);
         }
 
-        public void NParentExecutionCoordinator_OnFinished()
+        void IBaseInstanceParentExecutionCoordinatorOnFinishedHandlerSerializedEventsHandler.NParentExecutionCoordinator_OnFinished()
         {
             _executionCoordinator.SetExecutionStatus(_logger, "898C6E87-54F5-41CA-8B3F-08B8BBF95135", ActionExecutionStatus.WeakCanceled);
         }

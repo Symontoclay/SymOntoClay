@@ -16,7 +16,8 @@ using System.Threading;
 namespace SymOntoClay.Core.Internal.Storage.PropertyStoraging
 {
     public class PropertyStorage: BaseSpecificStorage, IPropertyStorage,
-        IOnAddParentStorageRealStorageContextHandler, IOnRemoveParentStorageRealStorageContextHandler, IOnChangedWithKeysPropertyStorageHandler, IOnChangedPropertyHandler
+        IOnAddParentStorageRealStorageContextHandler, IOnRemoveParentStorageRealStorageContextHandler, IOnChangedWithKeysPropertyStorageHandler, IOnChangedPropertyHandler,
+        IPropertyStorageSerializedEventsHandler
     {
         public PropertyStorage(KindOfStorage kind, RealStorageContext realStorageContext)
             : base(kind, realStorageContext)
@@ -256,14 +257,14 @@ namespace SymOntoClay.Core.Internal.Storage.PropertyStoraging
 
         private void RealStorageContext_OnRemoveParentStorage(IStorage storage)
         {
-            LoggedFunctorWithoutResult<PropertyStorage, IStorage>.Run(Logger, "B0E0BA4D-6F0D-4C69-BC14-0FEC022DE01C", this, storage,
-                (IMonitorLogger loggerValue, PropertyStorage instanceValue, IStorage storageValue) => {
+            LoggedFunctorWithoutResult<IPropertyStorageSerializedEventsHandler, IStorage>.Run(Logger, "B0E0BA4D-6F0D-4C69-BC14-0FEC022DE01C", this, storage,
+                (IMonitorLogger loggerValue, IPropertyStorageSerializedEventsHandler instanceValue, IStorage storageValue) => {
                     instanceValue.NRealStorageContext_OnRemoveParentStorage(storageValue);
                 },
                 _activeObjectContext, _threadPool, _serializationAnchor);
         }
 
-        public void NRealStorageContext_OnRemoveParentStorage(IStorage storage)
+        void IPropertyStorageSerializedEventsHandler.NRealStorageContext_OnRemoveParentStorage(IStorage storage)
         {
             var propertyStorage = storage.PropertyStorage;
             propertyStorage.RemoveOnChangedWithKeysHandler(this);
@@ -278,14 +279,14 @@ namespace SymOntoClay.Core.Internal.Storage.PropertyStoraging
 
         private void RealStorageContext_OnAddParentStorage(IStorage storage)
         {
-            LoggedFunctorWithoutResult<PropertyStorage, IStorage>.Run(Logger, "2C400FE9-AFAE-4819-AC7B-35D9DFFB687A", this, storage,
-                (IMonitorLogger loggerValue, PropertyStorage instanceValue, IStorage storageValue) => {
+            LoggedFunctorWithoutResult<IPropertyStorageSerializedEventsHandler, IStorage>.Run(Logger, "2C400FE9-AFAE-4819-AC7B-35D9DFFB687A", this, storage,
+                (IMonitorLogger loggerValue, IPropertyStorageSerializedEventsHandler instanceValue, IStorage storageValue) => {
                     instanceValue.NRealStorageContext_OnAddParentStorage(storageValue);
                 },
                 _activeObjectContext, _threadPool, _serializationAnchor);
         }
 
-        public void NRealStorageContext_OnAddParentStorage(IStorage storage)
+        void IPropertyStorageSerializedEventsHandler.NRealStorageContext_OnAddParentStorage(IStorage storage)
         {
             var propertyStorage = storage.PropertyStorage;
             propertyStorage.AddOnChangedWithKeysHandler(this);

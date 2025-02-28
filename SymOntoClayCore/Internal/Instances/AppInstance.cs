@@ -274,14 +274,14 @@ namespace SymOntoClay.Core.Internal.Instances
 
         void IOnStateInstanceFinishedStateInstanceHandler.Invoke(StateInstance value)
         {
-            LoggedFunctorWithoutResult<AppInstance, StateInstance>.Run(Logger, "18D1B4E5-7692-42ED-8831-7364DFF6A14F", this, value,
-                (IMonitorLogger loggerValue, AppInstance instanceValue, StateInstance stateInstanceValue) => {
+            LoggedFunctorWithoutResult<IAppInstanceSerializedEventsHandler, StateInstance>.Run(Logger, "18D1B4E5-7692-42ED-8831-7364DFF6A14F", this, value,
+                (IMonitorLogger loggerValue, IAppInstanceSerializedEventsHandler instanceValue, StateInstance stateInstanceValue) => {
                     instanceValue.NChildStateInstance_OnFinished(stateInstanceValue);
                 },
                 _activeObjectContext, _threadPool, _serializationAnchor);
         }
 
-        public void NChildStateInstance_OnFinished(StateInstance stateInstance)
+        void IAppInstanceSerializedEventsHandler.NChildStateInstance_OnFinished(StateInstance stateInstance)
         {
             stateInstance.RemoveOnStateInstanceFinishedHandler(this);
 

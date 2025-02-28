@@ -44,7 +44,8 @@ namespace SymOntoClay.Core.Internal.Instances
 {
     public class LogicConditionalTriggerInstance : BaseComponent, INamedTriggerInstance,
         IObjectToString, IObjectToShortString, IObjectToBriefString,
-        IOnChangedLogicConditionalTriggerObserverHandler
+        IOnChangedLogicConditionalTriggerObserverHandler,
+        ILogicConditionalTriggerInstanceSerializedEventsHandler
     {
         public LogicConditionalTriggerInstance(InlineTrigger trigger, BaseInstance parent, IEngineContext context, IStorage parentStorage, ILocalCodeExecutionContext parentCodeExecutionContext)
             : base(context.Logger)
@@ -229,14 +230,14 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
             }
 
-            LoggedFunctorWithoutResult<LogicConditionalTriggerInstance>.Run(Logger, "F5C7D84D-770E-40D0-AE92-48E497F75A82", this,
-                (IMonitorLogger loggerValue, LogicConditionalTriggerInstance instanceValue) => {
+            LoggedFunctorWithoutResult<ILogicConditionalTriggerInstanceSerializedEventsHandler>.Run(Logger, "F5C7D84D-770E-40D0-AE92-48E497F75A82", this,
+                (IMonitorLogger loggerValue, ILogicConditionalTriggerInstanceSerializedEventsHandler instanceValue) => {
                     instanceValue.NObserver_OnChanged();
                 },
                 _activeObjectContext, _threadPool, _serializationAnchor);
         }
 
-        public void NObserver_OnChanged()
+        void ILogicConditionalTriggerInstanceSerializedEventsHandler.NObserver_OnChanged()
         {
 #if DEBUG
             //Info("5AF67C00-E174-436C-9BB0-95889FCE46F9", $"Observer_OnChanged();{_trigger.ToHumanizedLabel()}");

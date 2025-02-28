@@ -42,7 +42,8 @@ using System.Threading.Tasks;
 namespace SymOntoClay.Core.Internal.Instances
 {
     public class AppInstance : BaseIndependentInstance,
-        IOnStateInstanceFinishedStateInstanceHandler
+        IOnStateInstanceFinishedStateInstanceHandler,
+        IAppInstanceSerializedEventsHandler
     {
         public AppInstance(AppInstanceCodeItem codeItem, IEngineContext context, IStorage parentStorage)
             : base(codeItem, context, parentStorage, null, context.StorageFactories.AppInstanceStorageFactory, null)
@@ -194,62 +195,69 @@ namespace SymOntoClay.Core.Internal.Instances
 
         public void ActivateState(IMonitorLogger logger, StateDef state, List<VarInstance> varList)
         {
-            ThreadTask.Run(() => {
-                var taskId = logger.StartThreadTask("63ED542C-9E36-4AD9-97E7-58A613A604D3");
+            LoggedFunctorWithoutResult<IAppInstanceSerializedEventsHandler, StateDef, List<VarInstance>>.Run(Logger, "EF69CDC1-13EF-44DC-A0A8-5C01EC8B5FFB", this, state, varList,
+                (IMonitorLogger loggerValue, IAppInstanceSerializedEventsHandler instanceValue, StateDef stateValue, List<VarInstance> varListValue) => {
+                    instanceValue.NActivateState(loggerValue, stateValue, varListValue);
+                },
+                _activeObjectContext, _threadPool, _serializationAnchor);
+        }
 
-                try
+        void IAppInstanceSerializedEventsHandler.NActivateState(IMonitorLogger logger, StateDef state, List<VarInstance> varList)
+        {
+            var taskId = logger.StartThreadTask("63ED542C-9E36-4AD9-97E7-58A613A604D3");
+
+            try
+            {
+                StateInstance stateInstance = null;
+
+                var statesForDeactivating = new List<StateInstance>();
+
+                lock (_statesLockObj)
                 {
-                    StateInstance stateInstance = null;
+                    var stateName = state.Name;
 
-                    var statesForDeactivating = new List<StateInstance>();
-
-                    lock (_statesLockObj)
+                    if (_activeStatesDict.ContainsKey(stateName))
                     {
-                        var stateName = state.Name;
+                        return;
+                    }
 
-                        if (_activeStatesDict.ContainsKey(stateName))
+                    if (_mutuallyExclusiveStatesSet.ContainsKey(stateName))
+                    {
+                        var initialMutuallyExclusiveStatesSet = _mutuallyExclusiveStatesSet[stateName];
+
+                        foreach (var nameItem in initialMutuallyExclusiveStatesSet)
                         {
-                            return;
-                        }
-
-                        if (_mutuallyExclusiveStatesSet.ContainsKey(stateName))
-                        {
-                            var initialMutuallyExclusiveStatesSet = _mutuallyExclusiveStatesSet[stateName];
-
-                            foreach (var nameItem in initialMutuallyExclusiveStatesSet)
+                            if (_activeStatesDict.ContainsKey(nameItem))
                             {
-                                if (_activeStatesDict.ContainsKey(nameItem))
-                                {
-                                    statesForDeactivating.Add(_activeStatesDict[nameItem]);
-                                    _activeStatesDict.Remove(nameItem);
-                                }
+                                statesForDeactivating.Add(_activeStatesDict[nameItem]);
+                                _activeStatesDict.Remove(nameItem);
                             }
                         }
-
-                        stateInstance = new StateInstance(state, _context, _storage, _localCodeExecutionContext, varList);
-
-                        _activeStatesDict[stateName] = stateInstance;
-
-                        stateInstance.AddOnStateInstanceFinishedHandler(this);
                     }
 
-                    if (statesForDeactivating.Any())
-                    {
-                        foreach (var stateForDeactivating in statesForDeactivating)
-                        {
-                            stateForDeactivating.Dispose();
-                        }
-                    }
+                    stateInstance = new StateInstance(state, _context, _storage, _localCodeExecutionContext, varList);
 
-                    stateInstance.Init(logger);
+                    _activeStatesDict[stateName] = stateInstance;
+
+                    stateInstance.AddOnStateInstanceFinishedHandler(this);
                 }
-                catch(Exception e)
+
+                if (statesForDeactivating.Any())
                 {
-                    logger.Error("847C55BE-261F-401D-A398-B6C81C1E0143", e);
+                    foreach (var stateForDeactivating in statesForDeactivating)
+                    {
+                        stateForDeactivating.Dispose();
+                    }
                 }
 
-                logger.StopThreadTask("124C8157-0A91-4D4B-AE79-BAE473C36972", taskId);
-            }, _context.TriggersThreadPool, _context.GetCancellationToken());
+                stateInstance.Init(logger);
+            }
+            catch (Exception e)
+            {
+                logger.Error("847C55BE-261F-401D-A398-B6C81C1E0143", e);
+            }
+
+            logger.StopThreadTask("124C8157-0A91-4D4B-AE79-BAE473C36972", taskId);
         }
 
         public void TryActivateDefaultState(IMonitorLogger logger)

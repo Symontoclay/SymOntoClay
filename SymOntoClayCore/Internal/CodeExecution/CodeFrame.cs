@@ -26,8 +26,6 @@ using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData.ScriptingData;
 using SymOntoClay.Core.Internal.Instances;
-using SymOntoClay.Threading;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -49,8 +47,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         public IInstance Instance { get; set; }
         public IExecutionCoordinator ExecutionCoordinator { get; set; }
         public SpecialMarkOfCodeFrame SpecialMark { get; set; } = SpecialMarkOfCodeFrame.None;
-        public long? TargetDuration { get; set; }
-        public long? EndOfTargetDuration { get; set; }
+        public ulong? TargetDuration { get; set; }
+        public ulong? EndOfTargetDuration { get; set; }
         public TimeoutCancellationMode TimeoutCancellationMode { get; set; } = TimeoutCancellationMode.WeakCancel;
         public List<StrongIdentifierValue> CalledCtorsList { get; set; } = new List<StrongIdentifierValue>();
         public Value PutToValueStackAfterReturningBack { get; set; }

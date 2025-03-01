@@ -54,7 +54,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
         private readonly DateTimeResolver _dateTimeResolver;
         private readonly IDateTimeProvider _dateTimeProvider;
 
-        private readonly long _targetDuration;
+        private readonly ulong _targetDuration;
 
         private bool _wasRun;
 
@@ -71,7 +71,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
                 return (LogicalValue.FalseValue, false);
             }
 
-            var ticksNow = _dateTimeProvider.CurrentTiñks;
+            var ticksNow = _dateTimeProvider.CurrentTicks;
 
             if (ticksNow > _context.InitialSetTime + _targetDuration)
             {

@@ -892,7 +892,7 @@
         <member name="P:SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider.MillisecondsToTicksMultiplicator">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider.CurrentTiks">
+        <member name="P:SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider.CurrentTicks">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.UnityAsset.Core.Internal.DateAndTime.DateTimeProvider.Start">

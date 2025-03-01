@@ -43,7 +43,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         private IDateTimeProvider _dateTimeProvider;
 
-        public long ConvertTimeValueToTicks(IMonitorLogger logger, Value value, KindOfDefaultTimeValue kindOfDefaultTimeValue, ILocalCodeExecutionContext localCodeExecutionContext)
+        public ulong ConvertTimeValueToTicks(IMonitorLogger logger, Value value, KindOfDefaultTimeValue kindOfDefaultTimeValue, ILocalCodeExecutionContext localCodeExecutionContext)
         {
             var kindOfValue = value.KindOfValue;
 
@@ -71,9 +71,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
         }
 
-        private long ConvertNumberValueToTicks(IMonitorLogger logger, NumberValue value, KindOfDefaultTimeValue kindOfDefaultTimeValue)
+        private ulong ConvertNumberValueToTicks(IMonitorLogger logger, NumberValue value, KindOfDefaultTimeValue kindOfDefaultTimeValue)
         {
-            var sysValue = Convert.ToInt64(value.SystemValue);
+            var sysValue = Convert.ToUInt64(value.SystemValue);
 
             switch(kindOfDefaultTimeValue)
             {
@@ -81,10 +81,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     return sysValue;
 
                 case KindOfDefaultTimeValue.Seconds:
-                    return Convert.ToInt32(sysValue * _dateTimeProvider.SecondsToTicksMultiplicator);
+                    return Convert.ToUInt64(sysValue * _dateTimeProvider.SecondsToTicksMultiplicator);
 
                 case KindOfDefaultTimeValue.Milliseconds:
-                    return Convert.ToInt32(sysValue * _dateTimeProvider.MillisecondsToTicksMultiplicator);
+                    return Convert.ToUInt64(sysValue * _dateTimeProvider.MillisecondsToTicksMultiplicator);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(kindOfDefaultTimeValue), kindOfDefaultTimeValue, null);

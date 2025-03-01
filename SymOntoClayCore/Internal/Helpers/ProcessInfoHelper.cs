@@ -37,7 +37,7 @@ namespace SymOntoClay.Core.Internal.Helpers
             Wait(logger, string.Empty, null, null, null, TimeoutCancellationMode.WeakCancel, null, processes);
         }
 
-        public static void Wait(IMonitorLogger logger, string callMethodId, IProcessInfo waitingProcess, List<IExecutionCoordinator> executionCoordinators, long? cancelAfter, TimeoutCancellationMode timeoutCancellationMode, IDateTimeProvider dateTimeProvider, params IProcessInfo[] processes)
+        public static void Wait(IMonitorLogger logger, string callMethodId, IProcessInfo waitingProcess, List<IExecutionCoordinator> executionCoordinators, ulong? cancelAfter, TimeoutCancellationMode timeoutCancellationMode, IDateTimeProvider dateTimeProvider, params IProcessInfo[] processes)
         {
             if(processes.IsNullOrEmpty())
             {
@@ -48,7 +48,7 @@ namespace SymOntoClay.Core.Internal.Helpers
 
             if(cancelAfter.HasValue)
             {
-                initialTicks = dateTimeProvider.CurrentTiñks;
+                initialTicks = dateTimeProvider.CurrentTicks;
             }
 
             while(true)
@@ -93,7 +93,7 @@ namespace SymOntoClay.Core.Internal.Helpers
 
                 if(cancelAfter.HasValue)
                 {
-                    var currentTick = dateTimeProvider.CurrentTiñks;
+                    var currentTick = dateTimeProvider.CurrentTicks;
                     
                     var delta = currentTick - initialTicks;
 

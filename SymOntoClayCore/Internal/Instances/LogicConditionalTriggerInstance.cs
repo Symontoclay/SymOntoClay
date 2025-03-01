@@ -312,14 +312,16 @@ namespace SymOntoClay.Core.Internal.Instances
                 DoSearchWithNoResetCondition(logger, doTriggerSearchId);
             }
 
-            if(_triggerConditionNodeObserverContext.IsOn)
+            var currentTicks = _dateTimeProvider.CurrentTicks;
+
+            if (_triggerConditionNodeObserverContext.IsOn)
             {
                 if(!_triggerConditionNodeObserverContext.InitialResetTime.HasValue)
                 {
-                    _triggerConditionNodeObserverContext.InitialResetTime = _dateTimeProvider.CurrentTiñks;
+                    _triggerConditionNodeObserverContext.InitialResetTime = currentTicks;
                 }
 
-                _triggerConditionNodeObserverContext.InitialSetTime = _dateTimeProvider.CurrentTiñks;
+                _triggerConditionNodeObserverContext.InitialSetTime = currentTicks;
             }
             else
             {
@@ -330,7 +332,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
                 if(!_triggerConditionNodeObserverContext.InitialSetTime.HasValue)
                 {
-                    _triggerConditionNodeObserverContext.InitialSetTime = _dateTimeProvider.CurrentTiñks;
+                    _triggerConditionNodeObserverContext.InitialSetTime = currentTicks;
                 }
             }
 
@@ -561,7 +563,7 @@ namespace SymOntoClay.Core.Internal.Instances
             }
             else
             {
-                _triggerConditionNodeObserverContext.InitialSetTime = _dateTimeProvider.CurrentTiñks;
+                _triggerConditionNodeObserverContext.InitialSetTime = _dateTimeProvider.CurrentTicks;
             }
 
 #if DEBUG

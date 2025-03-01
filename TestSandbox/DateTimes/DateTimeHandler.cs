@@ -50,7 +50,7 @@ namespace TestSandbox.DateTimes
 
             Thread.Sleep(10000);
 
-            _logger.Info("CA8ABEE8-6991-49CA-B002-DAAC33B90B1A", $"dateTimeProvider.CurrentTiñks = {dateTimeProvider.CurrentTiñks}");
+            _logger.Info("CA8ABEE8-6991-49CA-B002-DAAC33B90B1A", $"dateTimeProvider.CurrentTicks = {dateTimeProvider.CurrentTicks}");
 
             _logger.Info("7250B82C-E27B-4139-BD88-EF70629095D4", "End");
         }

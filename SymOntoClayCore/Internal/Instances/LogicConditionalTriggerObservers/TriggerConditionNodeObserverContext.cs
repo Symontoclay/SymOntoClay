@@ -45,9 +45,9 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
 
         public bool IsOn { get; set; }
 
-        public long? InitialResetTime { get; set; }
+        public ulong? InitialResetTime { get; set; }
 
-        public long? InitialSetTime { get; set; }
+        public ulong? InitialSetTime { get; set; }
 
         /// <inheritdoc/>
         public override string ToString()

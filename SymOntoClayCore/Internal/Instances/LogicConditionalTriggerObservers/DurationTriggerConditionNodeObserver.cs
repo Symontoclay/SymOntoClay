@@ -56,7 +56,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
         private readonly IDateTimeProvider _dateTimeProvider;
         private readonly TriggerConditionNodeObserverContext _context;
 
-        private readonly long _targetDuration;
+        private readonly ulong _targetDuration;
 
         private bool NRun(CancellationToken cancellationToken)
         {
@@ -67,7 +67,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerObservers
                 return true;
             }
 
-            var ticksNow = _dateTimeProvider.CurrentTiñks;
+            var ticksNow = _dateTimeProvider.CurrentTicks;
 
             if (ticksNow > _context.InitialResetTime + _targetDuration)
             {

@@ -31,7 +31,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution.Helpers
 {
     public class ConversionExecutableToCodeFrameAdditionalSettings: IObjectToString
     {
-        public long? Timeout { get; set; }
+        public ulong? Timeout { get; set; }
         public TimeoutCancellationMode TimeoutCancellationMode { get; set; } = TimeoutCancellationMode.WeakCancel;
         public float? Priority { get; set; }
         public bool AllowParentLocalStorages { get; set; }

@@ -157,7 +157,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         private ErrorValue _currentError;
         private bool _isCanceled;
 
-        private long? _endOfTargetDuration;
+        private ulong? _endOfTargetDuration;
         private List<IThreadExecutor> _waitedThreadExecutorsList;
         private List<IProcessInfo> _waitedProcessInfoList;
 
@@ -175,7 +175,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (timeout.HasValue)
             {
-                var currentTick = _dateTimeProvider.CurrentTiñks;
+                var currentTick = _dateTimeProvider.CurrentTicks;
 
                 codeFrame.EndOfTargetDuration = currentTick + timeout.Value;
             }
@@ -268,7 +268,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (endOfTargetDuration.HasValue)
                 {
-                    var currentTick = _dateTimeProvider.CurrentTiñks;
+                    var currentTick = _dateTimeProvider.CurrentTicks;
 
                     if (currentTick >= endOfTargetDuration.Value)
                     {
@@ -1375,7 +1375,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             if (_endOfTargetDuration.HasValue)
             {
-                var currentTick = _dateTimeProvider.CurrentTiñks;
+                var currentTick = _dateTimeProvider.CurrentTicks;
 
                 if (currentTick >= _endOfTargetDuration.Value)
                 {
@@ -1411,7 +1411,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 {
                     var timeoutSystemVal = _dateTimeResolver.ConvertTimeValueToTicks(Logger, firstParameter, DefaultTimeValues.TimeoutDefaultTimeValue, _currentCodeFrame.LocalContext);
 
-                    var currentTick = _dateTimeProvider.CurrentTiñks;
+                    var currentTick = _dateTimeProvider.CurrentTicks;
 
                     _endOfTargetDuration = currentTick + timeoutSystemVal;
 
@@ -2352,7 +2352,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             ExecuteCodeFrame(codeFrame, null, SyncOption.Sync);
         }
 
-        private long? GetTimeoutFromAnnotation(IAnnotatedItem annotatedItem)
+        private ulong? GetTimeoutFromAnnotation(IAnnotatedItem annotatedItem)
         {
             var initialValue = GetInitialSettingsValueFromAnnotation(annotatedItem, _timeoutName);
 

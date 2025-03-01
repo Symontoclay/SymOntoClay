@@ -45,7 +45,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.DateAndTime
 
         private readonly object _lockObj = new object();
         private readonly IActivePeriodicObject _activeObject;
-        private long _ticks = 0;
+        private ulong _ticks = 0;
 
         /// <inheritdoc/>
         public float TicksToSecondsMultiplicator => 0.001F;
@@ -60,6 +60,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.DateAndTime
         public float MillisecondsToTicksMultiplicator => 1F;
 
         private int _millisecondsTimeout = 100;
+        private ulong _ulongMillisecondsTimeout = 100;
 
         public void LoadFromSourceCode()
         {
@@ -70,7 +71,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.DateAndTime
         }
 
         /// <inheritdoc/>
-        public long CurrentTicks
+        public ulong CurrentTicks
         {
             get
             {
@@ -85,7 +86,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.DateAndTime
         {
             lock (_lockObj)
             {
-                _ticks += _millisecondsTimeout;
+                _ticks += _ulongMillisecondsTimeout;
             }
 
             Thread.Sleep(_millisecondsTimeout);

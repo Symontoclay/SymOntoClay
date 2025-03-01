@@ -32,6 +32,6 @@ namespace SymOntoClay.Core
         float SecondsToTicksMultiplicator { get; }
         float TicksToMillisecondsMultiplicator { get; }
         float MillisecondsToTicksMultiplicator { get; }
-        long CurrentTiks { get; }
+        long CurrentTiñks { get; }
     }
 }

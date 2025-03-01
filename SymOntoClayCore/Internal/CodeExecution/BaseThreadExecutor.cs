@@ -175,7 +175,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if (timeout.HasValue)
             {
-                var currentTick = _dateTimeProvider.CurrentTiks;
+                var currentTick = _dateTimeProvider.CurrentTiñks;
 
                 codeFrame.EndOfTargetDuration = currentTick + timeout.Value;
             }
@@ -268,7 +268,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
                 if (endOfTargetDuration.HasValue)
                 {
-                    var currentTick = _dateTimeProvider.CurrentTiks;
+                    var currentTick = _dateTimeProvider.CurrentTiñks;
 
                     if (currentTick >= endOfTargetDuration.Value)
                     {
@@ -1375,7 +1375,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
         {
             if (_endOfTargetDuration.HasValue)
             {
-                var currentTick = _dateTimeProvider.CurrentTiks;
+                var currentTick = _dateTimeProvider.CurrentTiñks;
 
                 if (currentTick >= _endOfTargetDuration.Value)
                 {
@@ -1411,7 +1411,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 {
                     var timeoutSystemVal = _dateTimeResolver.ConvertTimeValueToTicks(Logger, firstParameter, DefaultTimeValues.TimeoutDefaultTimeValue, _currentCodeFrame.LocalContext);
 
-                    var currentTick = _dateTimeProvider.CurrentTiks;
+                    var currentTick = _dateTimeProvider.CurrentTiñks;
 
                     _endOfTargetDuration = currentTick + timeoutSystemVal;
 

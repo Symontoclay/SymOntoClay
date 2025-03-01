@@ -70,7 +70,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.DateAndTime
         }
 
         /// <inheritdoc/>
-        public long CurrentTiks 
+        public long CurrentTicks
         {
             get
             {

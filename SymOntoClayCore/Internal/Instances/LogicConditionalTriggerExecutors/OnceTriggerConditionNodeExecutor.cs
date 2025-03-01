@@ -71,7 +71,7 @@ namespace SymOntoClay.Core.Internal.Instances.LogicConditionalTriggerExecutors
                 return (LogicalValue.FalseValue, false);
             }
 
-            var ticksNow = _dateTimeProvider.CurrentTiks;
+            var ticksNow = _dateTimeProvider.CurrentTiñks;
 
             if (ticksNow > _context.InitialSetTime + _targetDuration)
             {

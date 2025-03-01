@@ -66,6 +66,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         [ResolveToType(typeof(LogicalValue))]
         public Value SelfObligationModality { get; set; }
 
+        public uint? TimeStamp { get; set; }
+
         public List<StrongIdentifierValue> UsedKeysList { get; set; }
 
         public List<LogicalQueryNode> LeavesList { get; set; }
@@ -74,6 +76,26 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public RuleInstance Normalized { get; set; }
 
         private readonly CommonPersistIndexedLogicalData _commonPersistIndexedLogicalData = new CommonPersistIndexedLogicalData();
+
+        public void AddLogicalStorage(ILogicalStorage logicalStorage)
+        {
+            if(LogicalStorages.Contains(logicalStorage))
+            {
+                return;
+            }
+
+            LogicalStorages.Add(logicalStorage);
+        }
+
+        public void RemoveFromLogicalStorage(ILogicalStorage logicalStorage)
+        {
+            if(LogicalStorages.Contains(logicalStorage))
+            {
+                LogicalStorages.Remove(logicalStorage);
+            }
+        }
+
+        public List<ILogicalStorage> LogicalStorages { get; private set; } = new List<ILogicalStorage>();
 
         public void Accept(ILogicalVisitor logicalVisitor)
         {
@@ -277,6 +299,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             result.IsParameterized = IsParameterized;
             result.ObligationModality = ObligationModality;
             result.SelfObligationModality = SelfObligationModality;
+            result.TimeStamp = TimeStamp;
+            result.LogicalStorages = LogicalStorages?.ToList();
             result.UsedKeysList = UsedKeysList?.ToList();
             result.LeavesList = LeavesList?.ToList();
 
@@ -336,7 +360,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjListProp(n, nameof(SecondaryParts), SecondaryParts);
 
             sb.PrintObjProp(n, nameof(ObligationModality), ObligationModality);
-            sb.PrintObjProp(n, nameof(SelfObligationModality), SelfObligationModality); 
+            sb.PrintObjProp(n, nameof(SelfObligationModality), SelfObligationModality);
+
+            sb.AppendLine($"{spaces}{nameof(TimeStamp)} = {TimeStamp}");
+
+            sb.PrintBriefObjListProp(n, nameof(LogicalStorages), LogicalStorages);
 
             sb.PrintObjListProp(n, nameof(UsedKeysList), UsedKeysList);
             sb.PrintObjListProp(n, nameof(LeavesList), LeavesList);
@@ -365,6 +393,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjProp(n, nameof(ObligationModality), ObligationModality);
             sb.PrintShortObjProp(n, nameof(SelfObligationModality), SelfObligationModality);
 
+            sb.AppendLine($"{spaces}{nameof(TimeStamp)} = {TimeStamp}");
+
+            sb.PrintBriefObjListProp(n, nameof(LogicalStorages), LogicalStorages);
+
             sb.PrintShortObjListProp(n, nameof(UsedKeysList), UsedKeysList);
             sb.PrintShortObjListProp(n, nameof(LeavesList), LeavesList);
 
@@ -391,6 +423,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintExisting(n, nameof(ObligationModality), ObligationModality);
             sb.PrintExisting(n, nameof(SelfObligationModality), SelfObligationModality);
+
+            sb.AppendLine($"{spaces}{nameof(TimeStamp)} = {TimeStamp}");
+
+            sb.PrintBriefObjListProp(n, nameof(LogicalStorages), LogicalStorages);
 
             sb.PrintBriefObjListProp(n, nameof(UsedKeysList), UsedKeysList);
             sb.PrintBriefObjListProp(n, nameof(LeavesList), LeavesList);

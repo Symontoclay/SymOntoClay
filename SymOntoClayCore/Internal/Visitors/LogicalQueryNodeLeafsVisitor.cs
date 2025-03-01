@@ -29,14 +29,14 @@ using System.Collections.Generic;
 
 namespace SymOntoClay.Core.Internal.Visitors
 {
-    public class LogicalQueryNodeLeafsVisitor : BaseLoggedComponent, ILogicalVisitor
+    public class LogicalQueryNodeLeavesVisitor : BaseLoggedComponent, ILogicalVisitor
     {
-        public LogicalQueryNodeLeafsVisitor()
+        public LogicalQueryNodeLeavesVisitor()
             : this(MonitorLoggerNLogImpementation.Instance)
         {
         }
 
-        public LogicalQueryNodeLeafsVisitor(IMonitorLogger logger)
+        public LogicalQueryNodeLeavesVisitor(IMonitorLogger logger)
             : base(logger)
         {
         }

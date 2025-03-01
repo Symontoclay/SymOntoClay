@@ -11090,16 +11090,16 @@
         <member name="M:SymOntoClay.Core.Internal.Visitors.ContainsNullValueLogicalVisitor.VisitLogicalQueryNode(SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Visitors.LogicalQueryNodeLeafsVisitor.VisitRuleInstance(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
+        <member name="M:SymOntoClay.Core.Internal.Visitors.LogicalQueryNodeLeavesVisitor.VisitRuleInstance(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Visitors.LogicalQueryNodeLeafsVisitor.VisitPrimaryRulePart(SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart)">
+        <member name="M:SymOntoClay.Core.Internal.Visitors.LogicalQueryNodeLeavesVisitor.VisitPrimaryRulePart(SymOntoClay.Core.Internal.CodeModel.PrimaryRulePart)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Visitors.LogicalQueryNodeLeafsVisitor.VisitSecondaryRulePart(SymOntoClay.Core.Internal.CodeModel.SecondaryRulePart)">
+        <member name="M:SymOntoClay.Core.Internal.Visitors.LogicalQueryNodeLeavesVisitor.VisitSecondaryRulePart(SymOntoClay.Core.Internal.CodeModel.SecondaryRulePart)">
             <inheritdoc/>
         </member>
-        <member name="M:SymOntoClay.Core.Internal.Visitors.LogicalQueryNodeLeafsVisitor.VisitLogicalQueryNode(SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode)">
+        <member name="M:SymOntoClay.Core.Internal.Visitors.LogicalQueryNodeLeavesVisitor.VisitLogicalQueryNode(SymOntoClay.Core.Internal.CodeModel.LogicalQueryNode)">
             <inheritdoc/>
         </member>
         <member name="M:SymOntoClay.Core.Internal.Visitors.ResolveVariablesLogicalVisitor.VisitRuleInstance(SymOntoClay.Core.Internal.CodeModel.RuleInstance)">

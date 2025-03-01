@@ -66,6 +66,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         [ResolveToType(typeof(LogicalValue))]
         public Value SelfObligationModality { get; set; }
 
+        public ulong FrameId { get; set; }
+
         public List<StrongIdentifierValue> UsedKeysList { get; set; }
 
         public List<LogicalQueryNode> LeavesList { get; set; }
@@ -336,7 +338,9 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintObjListProp(n, nameof(SecondaryParts), SecondaryParts);
 
             sb.PrintObjProp(n, nameof(ObligationModality), ObligationModality);
-            sb.PrintObjProp(n, nameof(SelfObligationModality), SelfObligationModality);
+            sb.PrintObjProp(n, nameof(SelfObligationModality), SelfObligationModality); 
+
+            sb.AppendLine($"{spaces}{nameof(FrameId)} = {FrameId}");
 
             sb.PrintObjListProp(n, nameof(UsedKeysList), UsedKeysList);
             sb.PrintObjListProp(n, nameof(LeavesList), LeavesList);
@@ -365,6 +369,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             sb.PrintShortObjProp(n, nameof(ObligationModality), ObligationModality);
             sb.PrintShortObjProp(n, nameof(SelfObligationModality), SelfObligationModality);
 
+            sb.AppendLine($"{spaces}{nameof(FrameId)} = {FrameId}");
+
             sb.PrintShortObjListProp(n, nameof(UsedKeysList), UsedKeysList);
             sb.PrintShortObjListProp(n, nameof(LeavesList), LeavesList);
 
@@ -391,6 +397,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             sb.PrintExisting(n, nameof(ObligationModality), ObligationModality);
             sb.PrintExisting(n, nameof(SelfObligationModality), SelfObligationModality);
+
+            sb.AppendLine($"{spaces}{nameof(FrameId)} = {FrameId}");
 
             sb.PrintBriefObjListProp(n, nameof(UsedKeysList), UsedKeysList);
             sb.PrintBriefObjListProp(n, nameof(LeavesList), LeavesList);

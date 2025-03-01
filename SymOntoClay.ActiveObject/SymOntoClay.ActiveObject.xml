@@ -16,6 +16,12 @@
         <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`3.OnRun(System.Threading.CancellationToken)">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`4.OnRun(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SymOntoClay.ActiveObject.Functors.BaseFunctorWithoutResult`5.OnRun(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.ActiveObject.Functors.SerializationAnchor.AddFunctor(SymOntoClay.ActiveObject.Functors.IBaseFunctor)">
             <inheritdoc/>
         </member>

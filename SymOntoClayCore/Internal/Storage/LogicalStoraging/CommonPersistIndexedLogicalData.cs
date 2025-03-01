@@ -64,7 +64,7 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private static LogicalQueryNodeEqualityComparer _logicalQueryNodeEqualityComparer = new LogicalQueryNodeEqualityComparer();
 
-        public void NSetIndexedRuleInstanceToIndexData(IMonitorLogger logger, RuleInstance indexedRuleInstance, bool registerLeafs)
+        public void NSetIndexedRuleInstanceToIndexData(IMonitorLogger logger, RuleInstance indexedRuleInstance, bool registerLeaves)
         {
             IndexedRuleInstancesDict[indexedRuleInstance.Name] = indexedRuleInstance;
 
@@ -112,23 +112,23 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }
 
-            if(registerLeafs)
+            if(registerLeaves)
             {
-                NRegisterLogicalQueryNodeLeafs(logger, indexedRuleInstance);
+                NRegisterLogicalQueryNodeLeaves(logger, indexedRuleInstance);
             }
         }
 
-        private void NRegisterLogicalQueryNodeLeafs(IMonitorLogger logger, RuleInstance indexedRuleInstance)
+        private void NRegisterLogicalQueryNodeLeaves(IMonitorLogger logger, RuleInstance indexedRuleInstance)
         {
-            var leafsDict = indexedRuleInstance.LeafsList.GroupBy(p => p.Kind).ToDictionary(p => p.Key, p => p.ToList());
+            var leafsDict = indexedRuleInstance.LeavesList.GroupBy(p => p.Kind).ToDictionary(p => p.Key, p => p.ToList());
 
             foreach(var leafsDictKVPItem in leafsDict)
             {
-                NRegisterLogicalQueryNodeLeafs(logger, leafsDictKVPItem.Key, leafsDictKVPItem.Value);
+                NRegisterLogicalQueryNodeLeaves(logger, leafsDictKVPItem.Key, leafsDictKVPItem.Value);
             }
         }
 
-        private void NRegisterLogicalQueryNodeLeafs(IMonitorLogger logger, KindOfLogicalQueryNode kind, List<LogicalQueryNode> leafs)
+        private void NRegisterLogicalQueryNodeLeaves(IMonitorLogger logger, KindOfLogicalQueryNode kind, List<LogicalQueryNode> leafs)
         {
             if(_leafsDict.ContainsKey(kind))
             {

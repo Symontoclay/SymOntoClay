@@ -86,21 +86,21 @@ namespace SymOntoClay.NLP.Internal.Dot
             return $"cluster_{mClusterN}";
         }
 
-        private Dictionary<ICGNode, BaseLeaf> mLeafsDict = new Dictionary<ICGNode, BaseLeaf>();
+        private Dictionary<ICGNode, BaseLeaf> mLeavesDict = new Dictionary<ICGNode, BaseLeaf>();
 
         public void RegLeaf(ICGNode node, BaseLeaf leaf)
         {
-            if (mLeafsDict.ContainsKey(node))
+            if (mLeavesDict.ContainsKey(node))
             {
                 return;
             }
 
-            mLeafsDict.Add(node, leaf);
+            mLeavesDict.Add(node, leaf);
         }
 
         public BaseLeaf GetLeaf(ICGNode node)
         {
-            return mLeafsDict[node];
+            return mLeavesDict[node];
         }
     }
 }

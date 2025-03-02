@@ -61,7 +61,7 @@ namespace TestSandbox.Handlers
 
         private void Case2()
         {
-            var factStr = "{: parent(#Piter, #Tom) o: very middle so: 0.5 :}";
+            var factStr = "{: parent(#Peter, #Tom) o: very middle so: 0.5 :}";
 
             var fact = _engineContext.Parser.ParseRuleInstance(factStr);
 

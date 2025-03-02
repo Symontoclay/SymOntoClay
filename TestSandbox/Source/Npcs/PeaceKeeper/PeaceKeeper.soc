@@ -1,11 +1,12 @@
 ﻿app PeaceKeeper
 {
-    var @b: number = 2;
+    var SomeVal: number = 2;
 
     on Enter =>
     {
         'Begin' >> @>log;
-        @b >> @>log;
+        SomeVal >> @>log;
+
         'End' >> @>log;
     }
 }

@@ -38,7 +38,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
             var text = @"app PeaceKeeper
 {
 	{: male(#Tom) :}
-	{: parent(#Piter, #Tom) :}
+	{: parent(#Peter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -53,7 +53,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
                             break;
 
@@ -72,7 +72,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 app PeaceKeeper
 {
 	{: male(#Tom) :}
-	{: procreator(#Piter, #Tom) :}
+	{: procreator(#Peter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -87,7 +87,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
                             break;
 
@@ -107,7 +107,7 @@ synonym #Tom for #Person123;
 app PeaceKeeper
 {
 	{: male(#Tom) :}
-	{: procreator(#Piter, #Person123) :}
+	{: procreator(#Peter, #Person123) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -122,7 +122,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
                             break;
 
@@ -141,7 +141,7 @@ app PeaceKeeper
     import 'stdlib';
 
 	{: male(#Tom) :}
-	{: parent(#Piter, #Tom) :}
+	{: parent(#Peter, #Tom) :}
 	
 	on Enter => {
 	    select {: son($x, $y) :} >> @>log;
@@ -155,7 +155,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
                             break;
 
@@ -172,7 +172,7 @@ app PeaceKeeper
             var text = @"app PeaceKeeper
 {
 	{: male(#Tom) :}
-	{: parent(#Piter, #Tom) :}
+	{: parent(#Peter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -187,7 +187,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(true, message.Contains("<yes>"));
-                            Assert.AreEqual(true, message.Contains("$y = #piter"));
+                            Assert.AreEqual(true, message.Contains("$y = #peter"));
                             break;
 
                         default:
@@ -203,7 +203,7 @@ app PeaceKeeper
             var text = @"app PeaceKeeper
 {
 	{: male(#Tom) :}
-	{: parent(#Piter, #Tom) :}
+	{: parent(#Peter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
     @a = #Tom;
 	on Enter => {
@@ -218,7 +218,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), false);
                             break;
 
@@ -235,7 +235,7 @@ app PeaceKeeper
             var text = @"app PeaceKeeper
 {
 	{: male(#Tom) :}
-	{: parent(#Piter, #Tom) :}
+	{: parent(#Peter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -250,7 +250,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), false);
                             break;
 
@@ -2642,7 +2642,7 @@ app PeaceKeeper
             var text = @"app PeaceKeeper
 {
 	{: male(#Tom) o: 1 :}
-	{: parent(#Piter, #Tom) o: 1 :}
+	{: parent(#Peter, #Tom) o: 1 :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -2657,7 +2657,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
                             break;
 
@@ -2676,7 +2676,7 @@ app PeaceKeeper
     import 'stdlib';
 
 	{: male(#Tom) o: middle :}
-	{: parent(#Piter, #Tom) o: middle :}
+	{: parent(#Peter, #Tom) o: middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -2691,7 +2691,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
                             break;
 
@@ -2710,7 +2710,7 @@ app PeaceKeeper
     import 'stdlib';
 
 	{: male(#Tom) o: 0.5 :}
-	{: parent(#Piter, #Tom) o: 0.5 :}
+	{: parent(#Peter, #Tom) o: 0.5 :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -2725,7 +2725,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
                             break;
 
@@ -2744,7 +2744,7 @@ app PeaceKeeper
     import 'stdlib';
 
 	{: male(#Tom) o: 0.5 :}
-	{: parent(#Piter, #Tom) o: 0.5 :}
+	{: parent(#Peter, #Tom) o: 0.5 :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -2759,7 +2759,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
                             break;
 
@@ -2778,7 +2778,7 @@ app PeaceKeeper
     import 'stdlib';
 
  	{: male(#Tom) o: very middle :}
-	{: parent(#Piter, #Tom) o: very middle :}
+	{: parent(#Peter, #Tom) o: very middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -2793,7 +2793,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
                             break;
 
@@ -2812,7 +2812,7 @@ app PeaceKeeper
     import 'stdlib';
 
 	{: male(#Tom) o: very middle :}
-	{: parent(#Piter, #Tom) o: very middle :}
+	{: parent(#Peter, #Tom) o: very middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -2827,7 +2827,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
                             break;
 
@@ -2844,7 +2844,7 @@ app PeaceKeeper
             var text = @"app PeaceKeeper
 {
 	{: male(#Tom) :}
-	{: parent(#Piter, #Tom) :}
+	{: parent(#Peter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -2876,7 +2876,7 @@ app PeaceKeeper
     import 'stdlib';
 
 	{: male(#Tom) o: very middle :}
-	{: parent(#Piter, #Tom) o: very middle :}
+	{: parent(#Peter, #Tom) o: very middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -2891,7 +2891,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
                             break;
 
@@ -2910,7 +2910,7 @@ app PeaceKeeper
     import 'stdlib';
 
 	{: male(#Tom) o: very middle :}
-	{: parent(#Piter, #Tom) o: very middle :}
+	{: parent(#Peter, #Tom) o: very middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -2925,7 +2925,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
                             break;
 
@@ -2942,7 +2942,7 @@ app PeaceKeeper
             var text = @"app PeaceKeeper
 {
 	{: male(#Tom) o: very middle :}
-	{: parent(#Piter, #Tom) o: very middle :}
+	{: parent(#Peter, #Tom) o: very middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -2957,7 +2957,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
                             break;
 
@@ -2976,7 +2976,7 @@ app PeaceKeeper
     import 'stdlib';
 
 	{: male(#Tom) o: very middle :}
-	{: parent(#Piter, #Tom) o: very middle :}
+	{: parent(#Peter, #Tom) o: very middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -3006,7 +3006,7 @@ app PeaceKeeper
             var text = @"app PeaceKeeper
 {
 	{: male(#Tom) o: very middle :}
-	{: parent(#Piter, #Tom) o: very middle :}
+	{: parent(#Peter, #Tom) o: very middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -3021,7 +3021,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
                             break;
 
@@ -3040,7 +3040,7 @@ app PeaceKeeper
     import 'stdlib';
 
 	{: male(#Tom) o: very middle :}
-	{: parent(#Piter, #Tom) o: very middle :}
+	{: parent(#Peter, #Tom) o: very middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -3055,7 +3055,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
                             break;
 
@@ -3074,7 +3074,7 @@ app PeaceKeeper
     import 'stdlib';
 
 	{: male(#Tom) o: very middle :}
-	{: parent(#Piter, #Tom) o: very middle :}
+	{: parent(#Peter, #Tom) o: very middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -3089,7 +3089,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
                             break;
 
@@ -3108,7 +3108,7 @@ app PeaceKeeper
     import 'stdlib';
 
 	{: male(#Tom) o: very middle :}
-	{: parent(#Piter, #Tom) o: very middle :}
+	{: parent(#Peter, #Tom) o: very middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -3123,7 +3123,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
                             break;
 
@@ -3142,7 +3142,7 @@ app PeaceKeeper
     import 'stdlib';
 
 	{: male(#Tom) o: very middle :}
-	{: parent(#Piter, #Tom) o: very middle :}
+	{: parent(#Peter, #Tom) o: very middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -3157,7 +3157,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
                             break;
 
@@ -3176,7 +3176,7 @@ app PeaceKeeper
     import 'stdlib';
 
 	{: male(#Tom) o: very middle :}
-	{: parent(#Piter, #Tom) o: very middle :}
+	{: parent(#Peter, #Tom) o: very middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -3208,7 +3208,7 @@ app PeaceKeeper
     import 'stdlib';
 
 	{: male(#Tom) o: very middle :}
-	{: parent(#Piter, #Tom) o: very middle :}
+	{: parent(#Peter, #Tom) o: very middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -3240,7 +3240,7 @@ app PeaceKeeper
     import 'stdlib';
 
 	{: male(#Tom) o: very middle :}
-	{: parent(#Piter, #Tom) o: very middle :}
+	{: parent(#Peter, #Tom) o: very middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -3255,7 +3255,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
                             break;
 
@@ -3274,7 +3274,7 @@ app PeaceKeeper
     import 'stdlib';
 
 	{: male(#Tom) o: very middle :}
-	{: parent(#Piter, #Tom) o: very middle :}
+	{: parent(#Peter, #Tom) o: very middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -3289,7 +3289,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
                             break;
 
@@ -3308,7 +3308,7 @@ app PeaceKeeper
     import 'stdlib';
 
 	{: male(#Tom) o: very middle :}
-	{: parent(#Piter, #Tom) o: very middle :}
+	{: parent(#Peter, #Tom) o: very middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -3323,7 +3323,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
                             break;
 
@@ -3342,7 +3342,7 @@ app PeaceKeeper
     import 'stdlib';
 
 	{: male(#Tom) o: very middle :}
-	{: parent(#Piter, #Tom) o: very middle :}
+	{: parent(#Peter, #Tom) o: very middle :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -3357,7 +3357,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
                             break;
 
@@ -3557,7 +3557,7 @@ app PeaceKeeper
 	{: female(#Mary) :}
 	{: male(#Tom) :}
 	{: male(#Mark) :}
-	{: parent(#Piter, #Tom) :}
+	{: parent(#Peter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -3572,7 +3572,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #mark"), true);
                             break;
 
@@ -3591,7 +3591,7 @@ app PeaceKeeper
 	{: female(#Mary) :}
 	{: male(#Tom) :}
 	{: male(#Mark) :}
-	{: parent(#Piter, #Tom) :}
+	{: parent(#Peter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -3606,7 +3606,7 @@ app PeaceKeeper
                     {
                         case 1:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #mark"), true);
                             break;
 
@@ -3626,7 +3626,7 @@ app PeaceKeeper
 	{: male(#Tom) :}
 	{: male(#Mark) :}
 	{: male(null) :}
-	{: parent(#Piter, #Tom) :}
+	{: parent(#Peter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -3662,7 +3662,7 @@ app PeaceKeeper
 	{: male(#Tom) :}
 	{: male(#Mark) :}
 	{: male(null) :}
-	{: parent(#Piter, #Tom) :}
+	{: parent(#Peter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -3698,7 +3698,7 @@ app PeaceKeeper
 	{: male(#Tom) :}
 	{: male(#Mark) :}
 	{: male(null) :}
-	{: parent(#Piter, #Tom) :}
+	{: parent(#Peter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -3733,7 +3733,7 @@ app PeaceKeeper
 	{: male(#Tom) :}
 	{: male(#Mark) :}
 	{: male(null) :}
-	{: parent(#Piter, #Tom) :}
+	{: parent(#Peter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -3769,7 +3769,7 @@ app PeaceKeeper
 	{: male(#Tom) :}
 	{: male(#Mark) :}
 	{: male(null) :}
-	{: parent(#Piter, #Tom) :}
+	{: parent(#Peter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -3804,7 +3804,7 @@ app PeaceKeeper
 	{: male(#Tom) :}
 	{: male(#Mark) :}
 	{: male(null) :}
-	{: parent(#Piter, #Tom) :}
+	{: parent(#Peter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -3837,7 +3837,7 @@ app PeaceKeeper
 	{: male(#Tom) :}
 	{: male(#Mark) :}
 	{: male(null) :}
-	{: parent(#Piter, #Tom) :}
+	{: parent(#Peter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {

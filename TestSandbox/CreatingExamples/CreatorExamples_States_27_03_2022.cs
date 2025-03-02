@@ -267,7 +267,7 @@ state Patrolling
     set Idling as default state;
 
     {: male(#Tom) :}
-	{: parent(#Piter, #Tom) :}
+	{: parent(#Peter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 }
 
@@ -304,7 +304,7 @@ state Idling
 state Idling
 {
     {: male(#Tom) :}
-	{: parent(#Piter, #Tom) :}
+	{: parent(#Peter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
     on Enter

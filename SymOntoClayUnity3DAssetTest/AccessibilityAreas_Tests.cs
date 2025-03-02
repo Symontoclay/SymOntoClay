@@ -40,7 +40,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 {
 private:
 	{: male(#Tom) :}
-	{: parent(#Piter, #Tom) :}
+	{: parent(#Peter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
 	on Enter => {
@@ -64,7 +64,7 @@ private:
 
                         case 2:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             break;
 
                         case 3:
@@ -264,7 +264,7 @@ private:
 {
 private:
 	{: male(#Tom) :}
-	{: parent(#Piter, #Tom) :}
+	{: parent(#Peter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 }
 
@@ -310,7 +310,7 @@ private:
 {
 protected:
 	{: male(#Tom) :}
-	{: parent(#Piter, #Tom) :}
+	{: parent(#Peter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 }
 
@@ -336,7 +336,7 @@ private:
 
                         case 2:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
                             break;
 
@@ -358,7 +358,7 @@ private:
 {
 public:
 	{: male(#Tom) :}
-	{: parent(#Piter, #Tom) :}
+	{: parent(#Peter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 }
 
@@ -384,7 +384,7 @@ private:
 
                         case 2:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
                             break;
 

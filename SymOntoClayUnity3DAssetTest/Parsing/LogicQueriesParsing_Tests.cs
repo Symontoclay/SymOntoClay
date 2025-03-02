@@ -89,11 +89,11 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
         [Parallelizable]
         public void Case1_b()
         {
-            var factStr = "{: parent(#Piter, #Tom) o: 1 :}";
+            var factStr = "{: parent(#Peter, #Tom) o: 1 :}";
 
             var ruleInstance = Parse(factStr);
 
-            Assert.AreEqual("{: >: { parent(#piter,#tom) } o: 1 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { parent(#peter,#tom) } o: 1 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
@@ -144,44 +144,44 @@ namespace SymOntoClay.UnityAsset.Core.Tests.Parsing
         [Parallelizable]
         public void Case4()
         {
-            var factStr = "{: parent(#Piter, #Tom) o: middle :}";
+            var factStr = "{: parent(#Peter, #Tom) o: middle :}";
 
             var ruleInstance = Parse(factStr);
 
-            Assert.AreEqual("{: >: { parent(#piter,#tom) } o: middle :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { parent(#peter,#tom) } o: middle :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
         [Parallelizable]
         public void Case4_a()
         {
-            var factStr = "{: parent(#Piter, #Tom) o: very middle :}";
+            var factStr = "{: parent(#Peter, #Tom) o: very middle :}";
 
             var ruleInstance = Parse(factStr);
 
-            Assert.AreEqual("{: >: { parent(#piter,#tom) } o: very middle :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { parent(#peter,#tom) } o: very middle :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
         [Parallelizable]
         public void Case5()
         {
-            var factStr = "{: parent(#Piter, #Tom) o: middle so: 0.5 :}";
+            var factStr = "{: parent(#Peter, #Tom) o: middle so: 0.5 :}";
 
             var ruleInstance = Parse(factStr);
 
-            Assert.AreEqual("{: >: { parent(#piter,#tom) } o: middle so: 0.5 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { parent(#peter,#tom) } o: middle so: 0.5 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
 
         [Test]
         [Parallelizable]
         public void Case5_a()
         {
-            var factStr = "{: parent(#Piter, #Tom) o: very middle so: 0.5 :}";
+            var factStr = "{: parent(#Peter, #Tom) o: very middle so: 0.5 :}";
 
             var ruleInstance = Parse(factStr);
 
-            Assert.AreEqual("{: >: { parent(#piter,#tom) } o: very middle so: 0.5 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+            Assert.AreEqual("{: >: { parent(#peter,#tom) } o: very middle so: 0.5 :}", ruleInstance.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
     }
 }

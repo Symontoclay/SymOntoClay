@@ -172,7 +172,7 @@ namespace TestSandbox.LogicalDatabase
             queryStr = "{: male(#Tom) :}";
             ParseQueryString(queryStr);
 
-            queryStr = "{: parent(#Piter, #Tom) :}";
+            queryStr = "{: parent(#Peter, #Tom) :}";
             ParseQueryString(queryStr);
 
             queryStr = "{: { son($x, $y) } -> { male($x) & parent($y, $x)} :}";
@@ -180,7 +180,7 @@ namespace TestSandbox.LogicalDatabase
 
 
 
-            queryStr = "{: son(#Tom, #Piter) :}";
+            queryStr = "{: son(#Tom, #Peter) :}";
             Search(queryStr);
 
 

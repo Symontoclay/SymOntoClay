@@ -113,7 +113,7 @@ private:
 {
 private:
 	{: male(#Tom) :}
-	{: parent(#Piter, #Tom) :}
+	{: parent(#Peter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 }
 
@@ -136,7 +136,7 @@ private:
 {
 protected:
 	{: male(#Tom) :}
-	{: parent(#Piter, #Tom) :}
+	{: parent(#Peter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 }
 

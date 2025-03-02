@@ -1245,7 +1245,7 @@ state Idling
 state Idling
 {
     {: male(#Tom) :}
-	{: parent(#Piter, #Tom) :}
+	{: parent(#Peter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 
     on Enter
@@ -1548,7 +1548,7 @@ state Patrolling
     set Idling as default state;
 
     {: male(#Tom) :}
-	{: parent(#Piter, #Tom) :}
+	{: parent(#Peter, #Tom) :}
 	{: {son($x, $y)} -> { male($x) & parent($y, $x)} :}
 }
 
@@ -1575,7 +1575,7 @@ state Idling
 
                         case 2:
                             Assert.AreEqual(message.Contains("<yes>"), true);
-                            Assert.AreEqual(message.Contains("$y = #piter"), true);
+                            Assert.AreEqual(message.Contains("$y = #peter"), true);
                             Assert.AreEqual(message.Contains("$x = #tom"), true);
                             break;
 

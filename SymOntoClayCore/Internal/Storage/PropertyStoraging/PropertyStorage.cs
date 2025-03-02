@@ -148,6 +148,7 @@ namespace SymOntoClay.Core.Internal.Storage.PropertyStoraging
 
             AnnotatedItemHelper.CheckAndFillUpHolder(logger, propertyInstance.CodeItem, _realStorageContext.MainStorageContext.CommonNamesStorage);
 
+            propertyInstance.SetPropertyStorage(this);
             propertyInstance.AddOnChangedHandler(this);
 
             var name = propertyInstance.Name;

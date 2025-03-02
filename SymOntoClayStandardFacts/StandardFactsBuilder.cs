@@ -760,12 +760,6 @@ namespace SymOntoClay.StandardFacts
             return sb.ToString();
         }
 
-        /// <inheritdoc/>
-        public RuleInstance BuildPropertyFactInstance(string propertyName, string propertyValue)
-        {
-            throw new NotImplementedException("BC732C46-B14C-497A-A49C-E676D890FA76");
-        }
-
         protected virtual string GetTargetVarName(string factStr)
         {
             return RuleInstanceHelper.GetNewUniqueVarNameWithPrefix("$x", factStr);

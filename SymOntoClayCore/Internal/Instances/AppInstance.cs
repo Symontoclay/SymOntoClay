@@ -26,6 +26,7 @@ using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.DataResolvers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Storage;
@@ -50,12 +51,19 @@ namespace SymOntoClay.Core.Internal.Instances
         {
 #if DEBUG
             //Info("B89B059D-E73F-4422-AAD9-DE0BE2868FE1", $"codeItem.GetType().Name = {codeItem.GetType().Name}");
+            //Info("C268AA31-5EFB-43CA-BD95-AE26695F6A93", $"Name = {Name}");
 #endif
 
             _activeObjectContext = context.ActiveObjectContext;
             _serializationAnchor = new SerializationAnchor();
 
             _statesResolver = _context.DataResolversFactory.GetStatesResolver();
+
+            context.Storage.GlobalStorage.SynonymsStorage.Append(context.Logger, new Synonym()
+            {
+                Name = NameHelper.CreateName("i"),
+                Object = Name
+            });
 
             RootTasks = codeItem.RootTasks?.Select(p => p.Clone())?.ToList() ?? new List<StrongIdentifierValue>();
         }

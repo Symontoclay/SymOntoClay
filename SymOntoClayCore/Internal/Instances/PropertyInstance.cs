@@ -29,7 +29,7 @@ namespace SymOntoClay.Core.Internal.Instances
             Holder = codeItem.Holder;
 
 #if DEBUG
-            Info("32E2E46B-EC84-416D-A78B-74DB54EA509F", $"Holder = {Holder}");
+            //Info("32E2E46B-EC84-416D-A78B-74DB54EA509F", $"Holder = {Holder}");
 #endif
 
             CodeItem = codeItem;
@@ -37,8 +37,8 @@ namespace SymOntoClay.Core.Internal.Instances
             _context = context;
 
 #if DEBUG
-            var selfName = context.CommonNamesStorage.SelfName;
-            Info("E6A2620B-B34A-4ACB-B256-F2B9E1D0252C", $"selfName = {selfName}");
+            //var selfName = context.CommonNamesStorage.SelfName;
+            //Info("E6A2620B-B34A-4ACB-B256-F2B9E1D0252C", $"selfName = {selfName}");
 #endif
 
             _inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
@@ -61,6 +61,7 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private IInstance _instance;
         private IEngineContext _context;
+        private ILogicalStorage _logicalStorage;
 
         private InheritanceResolver _inheritanceResolver;
 
@@ -92,16 +93,22 @@ namespace SymOntoClay.Core.Internal.Instances
             {
                 case KindOfProperty.Auto:
                     {
+                        if(!string.IsNullOrWhiteSpace(_factId))
+                        {
+                            _logicalStorage.RemoveById(logger, _factId);
+                        }
+
                         var fact = BuildPropertyFactInstance(Name, _value);
 
 #if DEBUG
-                        Info("C02870F3-6784-4F04-8B2E-D010373AED9D", $"fact = {fact.ToHumanizedString()}");
+                        //Info("C02870F3-6784-4F04-8B2E-D010373AED9D", $"fact = {fact.ToHumanizedString()}");
 #endif
 
-                        _context.Storage.GlobalStorage.LogicalStorage.Append(logger, fact);
+                        _logicalStorage.Append(logger, fact);
+
+                        _factId = fact.Name.NameValue;
                     }
                     break;
-                    //throw new NotImplementedException("5B236B9D-E24B-49C9-A6F1-2FCDA19E767C");
 
                 default:
                     break;
@@ -114,11 +121,6 @@ namespace SymOntoClay.Core.Internal.Instances
 
         private RuleInstance BuildPropertyFactInstance(StrongIdentifierValue propertyName, Value propertyValue)
         {
-#if DEBUG
-            Info("FF8A6D2E-34E0-4562-ADD6-252D430D7147", $"propertyName = {propertyName}");
-            Info("6D7CA946-20E4-4738-9860-533B89DC5E25", $"propertyValue = {propertyValue}");
-#endif
-
             var result = new RuleInstance();
             var primaryPart = new PrimaryRulePart();
             result.PrimaryPart = primaryPart;
@@ -136,7 +138,7 @@ namespace SymOntoClay.Core.Internal.Instances
                 new LogicalQueryNode()
                 {
                     Kind = KindOfLogicalQueryNode.Entity,
-                    Name = NameHelper.CreateName("i")//_instance.Name
+                    Name = _instance.Name
                 },
                 new LogicalQueryNode()
                 {
@@ -183,6 +185,12 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         private Value _value = NullValue.Instance;
+        private string _factId;
+
+        public void SetPropertyStorage(IPropertyStorage propertyStorage)
+        {
+            _logicalStorage = propertyStorage.Storage.LogicalStorage;
+        }
 
         public void AddOnChangedHandler(IOnChangedPropertyHandler handler)
         {

@@ -216,6 +216,5 @@ namespace SymOntoClay.UnityAsset.Core
         string BuildSeeFactString(string seenObjId);
         string BuildFocusFactString(string seenObjId);
         string BuildDefaultInheritanceFactString(string obj, string superObj);
-        RuleInstance BuildPropertyFactInstance(string propertyName, string propertyValue);
     }
 }

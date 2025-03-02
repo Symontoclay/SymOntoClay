@@ -14,18 +14,26 @@ using SymOntoClay.Common.CollectionsHelpers;
 using System.Linq;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.EventsInterfaces;
+using SymOntoClay.Core.Internal.CommonNames;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
     public class PropertyInstance : BaseComponent, IFilteredCodeItem,
         ISymOntoClayDisposable, IObjectToString, IObjectToShortString, IObjectToBriefString, IObjectToHumanizedString, IMonitoredHumanizedObject, IObjectWithLongHashCodes
     {
-        public PropertyInstance(Property codeItem, IEngineContext context)
+        public PropertyInstance(Property codeItem, IInstance instance, IEngineContext context)
             : base(context.Logger)
         {
             Name = codeItem.Name;
             Holder = codeItem.Holder;
             CodeItem = codeItem;
+            _instance = instance;
+
+#if DEBUG
+            var selfName = context.CommonNamesStorage.SelfName;
+            Info("E6A2620B-B34A-4ACB-B256-F2B9E1D0252C", $"selfName = {selfName}");
+#endif
+
             _inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
 
             _anyTypeName = context.CommonNamesStorage.AnyTypeName;
@@ -43,6 +51,8 @@ namespace SymOntoClay.Core.Internal.Instances
                     break;
             }
         }
+
+        private IInstance _instance;
 
         private InheritanceResolver _inheritanceResolver;
 
@@ -69,6 +79,15 @@ namespace SymOntoClay.Core.Internal.Instances
             CheckFitVariableAndValue(logger, value, localCodeExecutionContext);
 
             _value = value;
+
+            switch(KindOfProperty)
+            {
+                case KindOfProperty.Auto:
+                    throw new NotImplementedException();
+
+                default:
+                    break;
+            }
 
             //throw new NotImplementedException("7D2B796B-C889-44B3-82D3-73A69884D2CD");
 

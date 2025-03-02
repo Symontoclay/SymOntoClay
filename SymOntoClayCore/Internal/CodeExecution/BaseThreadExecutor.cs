@@ -1231,9 +1231,10 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
 #if DEBUG
             //Info("84064116-5A17-4521-B574-E2EA5009907E", $"property = {property}");
+            Info("E1AB6C23-EB91-44B8-BC9C-BFF3EF8B45FF", $"_currentCodeFrame.Instance.Name = {_currentCodeFrame.Instance.Name}");
 #endif
 
-            var propertyInstance = new PropertyInstance(property, _context);
+            var propertyInstance = new PropertyInstance(property, _currentCodeFrame.Instance, _context);
 
             _currentPropertyStorage.Append(Logger, propertyInstance);
 

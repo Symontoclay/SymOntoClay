@@ -15,6 +15,7 @@ using System.Linq;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.EventsInterfaces;
 using SymOntoClay.Core.Internal.CommonNames;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 
 namespace SymOntoClay.Core.Internal.Instances
 {
@@ -26,8 +27,14 @@ namespace SymOntoClay.Core.Internal.Instances
         {
             Name = codeItem.Name;
             Holder = codeItem.Holder;
+
+#if DEBUG
+            Info("32E2E46B-EC84-416D-A78B-74DB54EA509F", $"Holder = {Holder}");
+#endif
+
             CodeItem = codeItem;
             _instance = instance;
+            _context = context;
 
 #if DEBUG
             var selfName = context.CommonNamesStorage.SelfName;
@@ -53,6 +60,7 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         private IInstance _instance;
+        private IEngineContext _context;
 
         private InheritanceResolver _inheritanceResolver;
 
@@ -83,7 +91,17 @@ namespace SymOntoClay.Core.Internal.Instances
             switch(KindOfProperty)
             {
                 case KindOfProperty.Auto:
-                    throw new NotImplementedException();
+                    {
+                        var fact = BuildPropertyFactInstance(Name, _value);
+
+#if DEBUG
+                        Info("C02870F3-6784-4F04-8B2E-D010373AED9D", $"fact = {fact.ToHumanizedString()}");
+#endif
+
+                        _context.Storage.GlobalStorage.LogicalStorage.Append(logger, fact);
+                    }
+                    break;
+                    //throw new NotImplementedException("5B236B9D-E24B-49C9-A6F1-2FCDA19E767C");
 
                 default:
                     break;
@@ -92,6 +110,42 @@ namespace SymOntoClay.Core.Internal.Instances
             //throw new NotImplementedException("7D2B796B-C889-44B3-82D3-73A69884D2CD");
 
             EmitOnChangedHandlers(Name);
+        }
+
+        private RuleInstance BuildPropertyFactInstance(StrongIdentifierValue propertyName, Value propertyValue)
+        {
+#if DEBUG
+            Info("FF8A6D2E-34E0-4562-ADD6-252D430D7147", $"propertyName = {propertyName}");
+            Info("6D7CA946-20E4-4738-9860-533B89DC5E25", $"propertyValue = {propertyValue}");
+#endif
+
+            var result = new RuleInstance();
+            var primaryPart = new PrimaryRulePart();
+            result.PrimaryPart = primaryPart;
+
+            var sayRelation = new LogicalQueryNode()
+            {
+                Kind = KindOfLogicalQueryNode.Relation,
+                Name = propertyName
+            };
+
+            primaryPart.Expression = sayRelation;
+
+            sayRelation.ParamsList = new List<LogicalQueryNode>()
+            {
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Entity,
+                    Name = NameHelper.CreateName("i")//_instance.Name
+                },
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Value,
+                    Value = propertyValue
+                }
+            };
+
+            return result;
         }
 
         private void CheckFitVariableAndValue(IMonitorLogger logger, Value value, ILocalCodeExecutionContext localCodeExecutionContext)

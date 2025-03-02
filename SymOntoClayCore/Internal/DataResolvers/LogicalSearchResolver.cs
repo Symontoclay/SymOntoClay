@@ -98,9 +98,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 collectChainOfStoragesOptions.InitialPriority = maxPriority;
                 collectChainOfStoragesOptions.UseFacts = false;
 
-                var additinalStoragesList = GetStoragesList(logger, options.LocalCodeExecutionContext.Storage, collectChainOfStoragesOptions);
+                var additionalStoragesList = GetStoragesList(logger, options.LocalCodeExecutionContext.Storage, collectChainOfStoragesOptions);
 
-                targetStorageList.AddRange(additinalStoragesList);
+                targetStorageList.AddRange(additionalStoragesList);
 
                 storagesList = targetStorageList;
 
@@ -139,7 +139,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             queryExpression = queryExpression.Normalized;
 
 #if DEBUG
-            //Log($"queryExpression = {queryExpression.ToHumanizedString()}");
+            Info("36FA8142-FFAF-488E-96A7-14209A0C432B", $"queryExpression = {queryExpression.ToHumanizedString()}");
 #endif
 
             var kindOfLogicalSearchExplain = logger.KindOfLogicalSearchExplain;

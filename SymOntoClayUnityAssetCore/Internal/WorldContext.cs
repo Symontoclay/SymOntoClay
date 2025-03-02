@@ -99,13 +99,13 @@ namespace SymOntoClay.UnityAsset.Core.Internal
 
             ImagesRegistry = new ImagesRegistry(this);
             ThreadsComponent = new ThreadsCoreComponent(this);
+            PlatformTypesConvertorsRegistry = new PlatformTypesConvertersRegistry(Logger);
+            DateTimeProvider = new DateTimeProvider(Logger, ThreadsComponent, AsyncEventsThreadPool, _linkedCancellationTokenSource.Token);
+            LogicQueryParseAndCache = new LogicQueryParseAndCache(settings, this);
 
             ModulesStorage = new ModulesStorageComponent(settings, this);
             StandaloneStorage = new StandaloneStorageComponent(settings, this);
             ModulesStorage.Init(StandaloneStorage.StandaloneStorage.Context);
-            PlatformTypesConvertorsRegistry = new PlatformTypesConvertersRegistry(Logger);
-            DateTimeProvider = new DateTimeProvider(Logger, ThreadsComponent, AsyncEventsThreadPool, _linkedCancellationTokenSource.Token);
-            LogicQueryParseAndCache = new LogicQueryParseAndCache(settings, this);
         }
         
         private void LoadTypesPlatformTypesConvertors()

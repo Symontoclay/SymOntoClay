@@ -55,6 +55,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             _threadPool = _mainStorageContext.AsyncEventsThreadPool;
             _serializationAnchor = new SerializationAnchor();
 
+            _dateTimeProvider = _mainStorageContext.DateTimeProvider;
+            _fuzzyLogicResolver = _mainStorageContext.DataResolversFactory.GetFuzzyLogicResolver();
+
             var logger = _mainStorageContext.Logger;
 
             _parentLogicalStoragesList = realStorageContext.Parents.Select(p => p.LogicalStorage).ToList();
@@ -83,13 +86,9 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
             if(_enableOnAddingFactEvent)
             {
-                var mainStorageContext = realStorageContext.MainStorageContext;
-
-                _fuzzyLogicResolver = mainStorageContext.DataResolversFactory.GetFuzzyLogicResolver();
-
                 var localCodeExecutionContext = new LocalCodeExecutionContext(realStorageContext.ParentCodeExecutionContext);
-                localCodeExecutionContext.Storage = mainStorageContext.Storage.GlobalStorage;
-                localCodeExecutionContext.Holder = NameHelper.CreateName(mainStorageContext.Id);
+                localCodeExecutionContext.Storage = _mainStorageContext.Storage.GlobalStorage;
+                localCodeExecutionContext.Holder = NameHelper.CreateName(_mainStorageContext.Id);
 
                 _localCodeExecutionContext = localCodeExecutionContext;
             }
@@ -134,6 +133,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
 
         private readonly FuzzyLogicResolver _fuzzyLogicResolver;
         private readonly ILocalCodeExecutionContext _localCodeExecutionContext;
+
+        private IDateTimeProvider _dateTimeProvider;
 
         private void InitGCByTimeOut()
         {
@@ -239,7 +240,14 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
                 return true;
             }
 
-            if(_enableOnAddingFactEvent && _onAddingFactHandlers.Count > 0)
+            ruleInstance.AddLogicalStorage(this);
+
+            if(!ruleInstance.TimeStamp.HasValue)
+            {
+                ruleInstance.TimeStamp = _dateTimeProvider.CurrentTicks;
+            }            
+
+            if (_enableOnAddingFactEvent && _onAddingFactHandlers.Count > 0)
             {
                 if(isPrimary && ruleInstance.KindOfRuleInstance == KindOfRuleInstance.Fact)
                 {
@@ -435,6 +443,8 @@ namespace SymOntoClay.Core.Internal.Storage.LogicalStoraging
             {
                 return null;
             }
+
+            ruleInstance.RemoveFromLogicalStorage(this);
 
             _ruleInstancesList.Remove(ruleInstance);
 

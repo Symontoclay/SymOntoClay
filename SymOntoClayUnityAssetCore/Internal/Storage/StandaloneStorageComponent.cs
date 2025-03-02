@@ -21,9 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.Core;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.Internal.Storage
 {
@@ -48,6 +46,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Storage
 
             standaloneStorageSettings.ThreadingSettings = settings?.ThreadingSettings ?? coreContext.ThreadingSettings;
             standaloneStorageSettings.CancellationToken = coreContext.GetCancellationToken();
+
+            standaloneStorageSettings.DateTimeProvider = coreContext.DateTimeProvider;
 
             _standaloneStorage = new StandaloneStorage(standaloneStorageSettings);
         }

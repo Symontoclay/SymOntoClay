@@ -66,7 +66,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         [ResolveToType(typeof(LogicalValue))]
         public Value SelfObligationModality { get; set; }
 
-        public uint? TimeStamp { get; set; }
+        public ulong? TimeStamp { get; set; }
 
         public List<StrongIdentifierValue> UsedKeysList { get; set; }
 

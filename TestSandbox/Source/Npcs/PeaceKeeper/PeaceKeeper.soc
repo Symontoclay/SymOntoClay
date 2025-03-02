@@ -1,12 +1,12 @@
 ﻿app PeaceKeeper
 {
-    var SomeVal: number = 2;
+    SomeVal: number = 2;
 
     on Enter =>
     {
         'Begin' >> @>log;
         SomeVal >> @>log;
-
+        select {: SomeVal(I, $x) :} >> @>log;
         'End' >> @>log;
     }
 }

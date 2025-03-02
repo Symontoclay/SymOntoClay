@@ -341,6 +341,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                             break;
 
                         case KeyWordTokenKind.Prop:
+                        default:
                             {
                                 _context.Recovery(_currToken);
 
@@ -350,9 +351,6 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                 Result.SubItems.Add(parser.Result);
                             }
                             break;
-
-                        default:
-                            throw new UnexpectedTokenException(_currToken);
                     }
                     break;
 

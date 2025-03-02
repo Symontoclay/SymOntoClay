@@ -58,8 +58,13 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                                     break;
 
                                 default:
-                                    throw new UnexpectedTokenException(_currToken);
+                                    ParsePropertyName();
+                                    break;
                             }
+                            break;
+
+                        case TokenKind.Identifier:
+                            ParsePropertyName();
                             break;
 
                         default:
@@ -72,13 +77,7 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                     {
                         case TokenKind.Word:
                         case TokenKind.Identifier:
-                            {
-                                var name = ParseName(_currToken.Content);
-
-                                _property.Name = name;
-
-                                _state = State.GotName;
-                            }
+                            ParsePropertyName();
                             break;
 
                         default:
@@ -178,6 +177,15 @@ namespace SymOntoClay.Core.Internal.Parsing.Internal
                 default:
                     throw new ArgumentOutOfRangeException(nameof(_state), _state, null);
             }
+        }
+
+        private void ParsePropertyName()
+        {
+            var name = ParseName(_currToken.Content);
+
+            _property.Name = name;
+
+            _state = State.GotName;
         }
     }
 }

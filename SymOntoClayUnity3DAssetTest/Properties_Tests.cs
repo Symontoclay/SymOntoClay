@@ -8,7 +8,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
     {
         [Test]
         [Parallelizable]
-        public void AutoProperty_Get_Test_Case1()
+        public void AutoProperty_Get_Case1()
         {
             var text = @"app PeaceKeeper
 {
@@ -46,7 +46,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
         [Test]
         [Parallelizable]
-        public void AutoProperty_Get_Test_Case2()
+        public void AutoProperty_Get_Case2()
         {
             var text = @"app PeaceKeeper
 {
@@ -84,7 +84,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
         [Test]
         [Parallelizable]
-        public void AutoProperty_Set_Test_Case1()
+        public void AutoProperty_Set_Case1()
         {
             var text = @"app PeaceKeeper
 {
@@ -123,7 +123,51 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
         [Test]
         [Parallelizable]
-        public void ReadOnlyProperty_Get_Test_Case1()
+        public void AutoProperty_Use_As_Fact_Case1()
+        {
+            var text = @"app PeaceKeeper
+{
+    SomeVal: number = 2;
+
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        SomeVal >> @>log;
+        select {: SomeVal(I, $x) :} >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "2");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$x = 2"), true);
+                            break;
+
+                        case 4:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void ReadOnlyProperty_Get_Case1()
         {
             var text = @"app PeaceKeeper
 {
@@ -163,7 +207,7 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
         [Test]
         [Parallelizable]
-        public void ReadOnlyProperty_Get_Test_Case2()
+        public void ReadOnlyProperty_Get_Case2()
         {
             var text = @"app PeaceKeeper
 {

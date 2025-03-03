@@ -6,7 +6,7 @@
     {
         'Begin' >> @>log;
         ReadOnlyProp >> @>log;
-        select {: SomeVal(I, $x) :} >> @>log;
+        select {: ReadOnlyProp(I, $x) :} >> @>log;
         'End' >> @>log;
     }
 }

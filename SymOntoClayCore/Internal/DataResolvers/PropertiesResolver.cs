@@ -82,6 +82,68 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return OrderAndDistinctByInheritance(logger, filteredList, options).FirstOrDefault()?.ResultItem;
         }
 
+        public List<PropertyInstance> GetReadOnlyPropertiesList(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return GetReadOnlyPropertiesList(logger, propertyName, localCodeExecutionContext, DefaultOptions);
+        }
+
+        public List<PropertyInstance> GetReadOnlyPropertiesList(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+#if DEBUG
+            Info("8B0595DD-33EA-48EB-8AAC-428911BC6001", $"propertyName = {propertyName}");
+#endif
+
+            var storagesList = GetStoragesList(logger, localCodeExecutionContext.Storage, KindOfStoragesList.Property);
+
+#if DEBUG
+            Info("4C93F0C7-4978-42E4-9E50-84D712A276CA", $"storagesList.Count = {storagesList.Count}");
+#endif
+
+            var optionsForInheritanceResolver = options.Clone();
+            optionsForInheritanceResolver.AddSelf = true;
+
+            var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, localCodeExecutionContext, optionsForInheritanceResolver);
+
+#if DEBUG
+            Info("AA78B437-AA60-4900-AA81-771387B650A7", $"weightedInheritanceItems.Count = {weightedInheritanceItems.Count}");
+#endif
+
+            var rawList = GetRawPropertiesList(logger, propertyName, storagesList, weightedInheritanceItems).Where(p => p.ResultItem.KindOfProperty == KindOfProperty.Readonly).ToList();
+
+#if DEBUG
+            Info("47A0DA6A-C8B9-473C-9CCB-FA92B2853FE9", $"rawList.Count = {rawList.Count}");
+#endif
+
+            if (!rawList.Any())
+            {
+                return null;
+            }
+
+            var filteredList = FilterCodeItems(logger, rawList, localCodeExecutionContext.Holder, localCodeExecutionContext);
+
+#if DEBUG
+            Info("04357540-F863-4D7E-B7DC-3786CD3D5F8C", $"filteredList.Count = {filteredList.Count}");
+#endif
+
+            throw new NotImplementedException("1F5218E3-840B-4F43-BBB8-81DA3390A3E2");
+        }
+
+        public List<(StrongIdentifierValue PropInstanceName, Value PropValue)> GetReadOnlyPropertyAsVirtualRelationParamsList(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return GetReadOnlyPropertyAsVirtualRelationParamsList(logger, propertyName, localCodeExecutionContext, DefaultOptions);
+        }
+
+        public List<(StrongIdentifierValue PropInstanceName, Value PropValue)> GetReadOnlyPropertyAsVirtualRelationParamsList(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var readonlyPropertiesList = GetReadOnlyPropertiesList(logger, propertyName, localCodeExecutionContext, options);
+
+#if DEBUG
+            Info("8803E3C2-E5A6-4C40-964E-B0F0A7D67BAA", $"readonlyPropertiesList.Count = {readonlyPropertiesList.Count}");
+#endif
+
+            throw new NotImplementedException("38D6A45E-8D2D-47F2-B7F8-7148E355E336");
+        }
+
         private List<WeightedInheritanceResultItemWithStorageInfo<PropertyInstance>> GetRawPropertiesList(IMonitorLogger logger, StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)
         {
             if (!storagesList.Any())

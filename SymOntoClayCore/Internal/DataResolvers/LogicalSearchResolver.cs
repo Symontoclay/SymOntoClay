@@ -42,6 +42,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         private NumberValueLinearResolver _numberValueLinearResolver;
         private VarsResolver _varsResolver;
         private SynonymsResolver _synonymsResolver;
+        private PropertiesResolver _propertiesResolver;
         private LogicalSearchVarResultsItemInvertor _logicalSearchVarResultsItemInvertor;
 
         public LogicalSearchResolver(IMainStorageContext context)
@@ -59,6 +60,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             _fuzzyLogicResolver = dataResolversFactory.GetFuzzyLogicResolver();
             _numberValueLinearResolver = dataResolversFactory.GetNumberValueLinearResolver();
             _varsResolver = dataResolversFactory.GetVarsResolver();
+            _propertiesResolver = dataResolversFactory.GetPropertiesResolver();
             _synonymsResolver = dataResolversFactory.GetSynonymsResolver();
             _logicalSearchVarResultsItemInvertor = dataResolversFactory.GetLogicalSearchVarResultsItemInvertor();
         }
@@ -781,16 +783,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     var leftNumberValue = numberValueLinearResolver.Resolve(logger, leftValue, localCodeExecutionContext);
                     var rightNumberValue = numberValueLinearResolver.Resolve(logger, rightValue, localCodeExecutionContext);
 
-                    var leftSystemNullaleValue = leftNumberValue.SystemValue;
-                    var rightSystemNullaleValue = rightNumberValue.SystemValue;
+                    var leftSystemNullableValue = leftNumberValue.SystemValue;
+                    var rightSystemNullableValue = rightNumberValue.SystemValue;
 
-                    if (leftSystemNullaleValue.HasValue && rightSystemNullaleValue.HasValue)
+                    if (leftSystemNullableValue.HasValue && rightSystemNullableValue.HasValue)
                     {
-                        return CompareSystemValues(logger, kindOfOperator, leftSystemNullaleValue.Value, rightSystemNullaleValue.Value, options);
+                        return CompareSystemValues(logger, kindOfOperator, leftSystemNullableValue.Value, rightSystemNullableValue.Value, options);
                     }
                     else
                     {
-                        if(!leftSystemNullaleValue.HasValue && !rightSystemNullaleValue.HasValue)
+                        if(!leftSystemNullableValue.HasValue && !rightSystemNullableValue.HasValue)
                         {
                             return true;
                         }
@@ -1474,7 +1476,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            //Log($"processedExpr.Name = {processedExpr.Name}");
+            Info("A5CCCBF8-D8BB-4428-AE9E-CFAEB0460C96", $"processedExpr.Name = {processedExpr.Name}");
 #endif
 
             queryExecutingCard.UsedRelations.Add(processedExpr);
@@ -1563,6 +1565,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
             var mergingResult = QueryExecutingCardAboutKnownInfoHelper.Merge(logger, processedExpr.KnownInfoList, processedExpr.VarsInfoList, queryExecutingCard.KnownInfoList, false);
+
+#if DEBUG
+            Info("63421748-72D6-4821-BEC5-70EF610FC1E4", $"mergingResult = {mergingResult}");
+#endif
 
             if (!mergingResult.IsSuccess)
             {
@@ -1713,6 +1719,67 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
             }
 
+            {
+                LogicalSearchExplainNode localResultExplainNode = null;
+
+                if (productionResultsCollectorExplainNode != null)
+                {
+                    localResultExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
+                    {
+                        Kind = KindOfLogicalSearchExplainNode.Result
+                    };
+
+                    LogicalSearchExplainNode.LinkNodes(productionResultsCollectorExplainNode, localResultExplainNode);
+                }
+
+                var queryExecutingCardForVirtualRelation = new QueryExecutingCardForIndexedPersistLogicalData();
+                queryExecutingCardForVirtualRelation.TargetRelationName = targetRelationName;
+
+                queryExecutingCardForVirtualRelation.CountParams = processedExpr.CountParams;
+                queryExecutingCardForVirtualRelation.VarsInfoList = processedExpr.VarsInfoList;
+                queryExecutingCardForVirtualRelation.KnownInfoList = targetKnownInfoList;
+                queryExecutingCardForVirtualRelation.IsFetchingAllValuesForResolvingExpressionParam = queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam;
+                queryExecutingCardForVirtualRelation.RootParentExplainNode = rootParentExplainNode;
+                queryExecutingCardForVirtualRelation.ParentExplainNode = localResultExplainNode;
+                queryExecutingCardForVirtualRelation.UsedRelations.AddRange(queryExecutingCard.UsedRelations);
+
+                FillExecutingCardForVirtualRelationLogicalQueryNode(logger, queryExecutingCardForVirtualRelation, dataSource, options);
+            }
+        }
+
+        //See FillExecutingCardForCallingFromRelationForFact as example
+        private void FillExecutingCardForVirtualRelationLogicalQueryNode(IMonitorLogger logger, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
+        {
+            LogicalSearchExplainNode currentExplainNode = null;
+
+            var rootParentExplainNode = queryExecutingCard.RootParentExplainNode;
+            var parentExplainNode = queryExecutingCard.ParentExplainNode;
+
+            if (parentExplainNode != null)
+            {
+                currentExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
+                {
+                    Kind = KindOfLogicalSearchExplainNode.VirtualRelation
+                };
+
+                LogicalSearchExplainNode.LinkNodes(parentExplainNode, currentExplainNode);
+
+                currentExplainNode.TargetRelation = queryExecutingCard.TargetRelationName;
+            }
+
+            var targetRelationName = queryExecutingCard.TargetRelationName;
+
+#if DEBUG
+            Info("F6CE2FED-83A1-40A2-9A30-4FA60310C73B", $"targetRelationName = {targetRelationName.ToHumanizedString()}");
+#endif
+
+            var targetPropertyAsVirtualRelationParamsList = _propertiesResolver.GetReadOnlyPropertyAsVirtualRelationParamsList(logger, targetRelationName, options.LocalCodeExecutionContext);
+
+#if DEBUG
+            Info("A5BCA078-0F56-45CC-B44F-845A1D8D77E2", $"targetPropertyAsVirtualRelationParamsList.Count = {targetPropertyAsVirtualRelationParamsList.Count}");
+#endif
+
+            throw new NotImplementedException("C34EDE8D-4866-4EFE-AB66-5E47FB1DC56A");
         }
 
         private void FillExecutingCardForQuestion(IMonitorLogger logger, LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)

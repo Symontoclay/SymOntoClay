@@ -101,16 +101,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     result.AddRange(targetRelationsList);
                 }
 
-#if DEBUG
-
-
-
-
-
-
-
-#endif
-
                 return result;
             }
         }

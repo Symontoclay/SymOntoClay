@@ -53,6 +53,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         RelationWithProductionNextPart,
         RelationWithDirectFactQuery,
         RelationWithDirectFactQueryProcessTargetRelation,
+        VirtualRelation,
         PostFilterWithAndStrategy,
         OperatorQuery,
         GroupQuery,

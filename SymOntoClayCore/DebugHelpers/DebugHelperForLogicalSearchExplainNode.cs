@@ -716,6 +716,11 @@ namespace SymOntoClay.Core.DebugHelpers
                         return sb.ToString();
                     }
 
+                case KindOfLogicalSearchExplainNode.VirtualRelation:
+                    {
+                        throw new NotImplementedException("8CA5B47A-3578-4BF4-AA26-BB553E1D3CE0");
+                    }
+
                 case KindOfLogicalSearchExplainNode.PostFilterWithAndStrategy:
                     {
                         var targetProcessedItem = source.ProcessedLogicalQueryNode;

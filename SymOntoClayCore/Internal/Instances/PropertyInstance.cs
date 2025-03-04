@@ -60,6 +60,9 @@ namespace SymOntoClay.Core.Internal.Instances
         }
 
         private IInstance _instance;
+
+        public IInstance Instance => _instance;
+
         private IEngineContext _context;
         private ILogicalStorage _logicalStorage;
 

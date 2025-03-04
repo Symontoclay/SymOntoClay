@@ -39,6 +39,7 @@ namespace SymOntoClay.Core.Internal
         }
 
         public CodeExecutorComponent CodeExecutor { get; set; }
+
         public TasksExecutorComponent TasksExecutor { get; set; }
 
         public StandardLibraryLoader StandardLibraryLoader { get; set; }
@@ -67,6 +68,7 @@ namespace SymOntoClay.Core.Internal
         /// <inheritdoc/>
         public ICustomThreadPool TriggersThreadPool { get; set; }
 
+        ICodeExecutorComponent IMainStorageContext.CodeExecutor => CodeExecutor;
         ICodeExecutorComponent IEngineContext.CodeExecutor => CodeExecutor;
 
         ITasksExecutorComponent IEngineContext.TasksExecutor => TasksExecutor;

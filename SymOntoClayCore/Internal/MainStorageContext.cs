@@ -21,6 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using SymOntoClay.ActiveObject.Threads;
+using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CommonNames;
 using SymOntoClay.Core.Internal.Converters;
@@ -54,6 +55,9 @@ namespace SymOntoClay.Core.Internal
 
         public StorageComponent Storage { get; set; }
         public Parser Parser { get; set; }
+
+        ICodeExecutorComponent IMainStorageContext.CodeExecutor => null;
+
         public DataResolversFactory DataResolversFactory { get; set; }
         public ConvertersFactory ConvertersFactory { get; set; }
         public CommonNamesStorage CommonNamesStorage { get; set; }

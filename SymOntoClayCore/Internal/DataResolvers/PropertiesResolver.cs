@@ -1,4 +1,6 @@
-﻿using SymOntoClay.Core.Internal.CodeModel;
+﻿using Newtonsoft.Json;
+using SymOntoClay.Core.Internal.CodeExecution;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Monitor.Common;
@@ -14,6 +16,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             : base(context)
         {
         }
+
+        /// <inheritdoc/>
+        protected override void LinkWithOtherBaseContextComponents()
+        {
+            base.LinkWithOtherBaseContextComponents();
+
+            _codeExecutorComponent = _context.CodeExecutor;
+        }
+
+        private ICodeExecutorComponent _codeExecutorComponent;
 
         public ResolverOptions DefaultOptions { get; private set; } = ResolverOptions.GetDefaultOptions();
 
@@ -125,7 +137,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             Info("04357540-F863-4D7E-B7DC-3786CD3D5F8C", $"filteredList.Count = {filteredList.Count}");
 #endif
 
-            throw new NotImplementedException("1F5218E3-840B-4F43-BBB8-81DA3390A3E2");
+            return filteredList.Select(p => p.ResultItem).ToList();
         }
 
         public List<(StrongIdentifierValue PropInstanceName, Value PropValue)> GetReadOnlyPropertyAsVirtualRelationParamsList(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext)
@@ -135,13 +147,40 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         public List<(StrongIdentifierValue PropInstanceName, Value PropValue)> GetReadOnlyPropertyAsVirtualRelationParamsList(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
+            if(_codeExecutorComponent == null)
+            {
+                return null;
+            }
+
             var readonlyPropertiesList = GetReadOnlyPropertiesList(logger, propertyName, localCodeExecutionContext, options);
 
 #if DEBUG
-            Info("8803E3C2-E5A6-4C40-964E-B0F0A7D67BAA", $"readonlyPropertiesList.Count = {readonlyPropertiesList.Count}");
+            Info("8803E3C2-E5A6-4C40-964E-B0F0A7D67BAA", $"readonlyPropertiesList?.Count = {readonlyPropertiesList?.Count}");
 #endif
 
-            throw new NotImplementedException("38D6A45E-8D2D-47F2-B7F8-7148E355E336");
+            if((readonlyPropertiesList?.Count ?? 0) == 0)
+            {
+                return null;
+            }
+
+            var result = new List<(StrongIdentifierValue PropInstanceName, Value PropValue)>();
+
+            foreach(var propInstance in readonlyPropertiesList)
+            {
+                var value = _codeExecutorComponent.CallExecutableSync(logger, propInstance.GetMethodExecutable, null, localCodeExecutionContext, CallMode.Default);
+
+#if DEBUG
+            Info("57E80E8A-8AF3-486D-A5E9-57B2AB6E8E2A", $"value = {value}");
+#endif
+
+                result.Add((propInstance.Instance.Name, value));
+            }
+
+#if DEBUG
+            Info("54AB3CB3-9719-40ED-95B0-3E0135534F62", $"result = {JsonConvert.SerializeObject(result.Select(p => (p.PropInstanceName?.ToHumanizedString(), p.PropValue?.ToHumanizedString())), Formatting.Indented)}");
+#endif
+
+            return result;
         }
 
         private List<WeightedInheritanceResultItemWithStorageInfo<PropertyInstance>> GetRawPropertiesList(IMonitorLogger logger, StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)

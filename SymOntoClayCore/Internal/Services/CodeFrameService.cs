@@ -196,6 +196,11 @@ namespace SymOntoClay.Core.Internal.Services
 
         private void FillUpPositionedParameters(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, IExecutable function, List<Value> positionedParameters, ref Dictionary<StrongIdentifierValue, Value> codeFrameArguments)
         {
+            if(positionedParameters == null)
+            {
+                return;
+            }
+
             var varsStorage = localCodeExecutionContext.Storage.VarStorage;
 
             var positionedParametersEnumerator = positionedParameters.GetEnumerator();

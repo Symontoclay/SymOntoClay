@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using Newtonsoft.Json;
 using SymOntoClay.Common.CollectionsHelpers;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeModel;
@@ -1777,7 +1778,15 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
 #if DEBUG
             Info("A5BCA078-0F56-45CC-B44F-845A1D8D77E2", $"targetPropertyAsVirtualRelationParamsList.Count = {targetPropertyAsVirtualRelationParamsList.Count}");
+            Info("A26E31E3-04E9-4782-AC00-1D0EBD27543D", $"targetPropertyAsVirtualRelationParamsList = {JsonConvert.SerializeObject(targetPropertyAsVirtualRelationParamsList.Select(p => (p.PropInstanceName?.ToHumanizedString(), p.PropValue?.ToHumanizedString())), Formatting.Indented)}");
 #endif
+
+            if((targetPropertyAsVirtualRelationParamsList?.Count ?? 0) == 0)
+            {
+                return;
+            }
+
+
 
             throw new NotImplementedException("C34EDE8D-4866-4EFE-AB66-5E47FB1DC56A");
         }

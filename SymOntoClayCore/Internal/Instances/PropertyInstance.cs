@@ -128,15 +128,15 @@ namespace SymOntoClay.Core.Internal.Instances
             var primaryPart = new PrimaryRulePart();
             result.PrimaryPart = primaryPart;
 
-            var sayRelation = new LogicalQueryNode()
+            var relation = new LogicalQueryNode()
             {
                 Kind = KindOfLogicalQueryNode.Relation,
                 Name = propertyName
             };
 
-            primaryPart.Expression = sayRelation;
+            primaryPart.Expression = relation;
 
-            sayRelation.ParamsList = new List<LogicalQueryNode>()
+            relation.ParamsList = new List<LogicalQueryNode>()
             {
                 new LogicalQueryNode()
                 {

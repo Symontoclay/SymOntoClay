@@ -1720,6 +1720,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
             }
 
+            if(processedExpr.CountParams == 2)
             {
                 LogicalSearchExplainNode localResultExplainNode = null;
 
@@ -1774,19 +1775,24 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             Info("F6CE2FED-83A1-40A2-9A30-4FA60310C73B", $"targetRelationName = {targetRelationName.ToHumanizedString()}");
 #endif
 
-            var targetPropertyAsVirtualRelationParamsList = _propertiesResolver.GetReadOnlyPropertyAsVirtualRelationParamsList(logger, targetRelationName, options.LocalCodeExecutionContext);
+            var targetPropertyAsVirtualRelationsList = _propertiesResolver.GetReadOnlyPropertyAsVirtualRelationsList(logger, targetRelationName, options.LocalCodeExecutionContext);
 
 #if DEBUG
-            Info("A5BCA078-0F56-45CC-B44F-845A1D8D77E2", $"targetPropertyAsVirtualRelationParamsList.Count = {targetPropertyAsVirtualRelationParamsList.Count}");
-            Info("A26E31E3-04E9-4782-AC00-1D0EBD27543D", $"targetPropertyAsVirtualRelationParamsList = {JsonConvert.SerializeObject(targetPropertyAsVirtualRelationParamsList.Select(p => (p.PropInstanceName?.ToHumanizedString(), p.PropValue?.ToHumanizedString())), Formatting.Indented)}");
+            Info("A5BCA078-0F56-45CC-B44F-845A1D8D77E2", $"targetPropertyAsVirtualRelationsList.Count = {targetPropertyAsVirtualRelationsList.Count}");
+            Info("A26E31E3-04E9-4782-AC00-1D0EBD27543D", $"targetPropertyAsVirtualRelationsList = {targetPropertyAsVirtualRelationsList.WriteListToToHumanizedString()}");
 #endif
 
-            if((targetPropertyAsVirtualRelationParamsList?.Count ?? 0) == 0)
+            if((targetPropertyAsVirtualRelationsList?.Count ?? 0) == 0)
             {
                 return;
             }
 
-
+            foreach(var targetPropertyAsVirtualRelation in targetPropertyAsVirtualRelationsList)
+            {
+#if DEBUG
+                Info("864F1A96-1CAB-4B6B-B689-97884A382B00", $"targetPropertyAsVirtualRelation = {targetPropertyAsVirtualRelation}");
+#endif
+            }
 
             throw new NotImplementedException("C34EDE8D-4866-4EFE-AB66-5E47FB1DC56A");
         }

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.IndexedData;
@@ -140,12 +141,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return filteredList.Select(p => p.ResultItem).ToList();
         }
 
-        public List<(StrongIdentifierValue PropInstanceName, Value PropValue)> GetReadOnlyPropertyAsVirtualRelationParamsList(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext)
+        public List<LogicalQueryNode> GetReadOnlyPropertyAsVirtualRelationsList(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            return GetReadOnlyPropertyAsVirtualRelationParamsList(logger, propertyName, localCodeExecutionContext, DefaultOptions);
+            return GetReadOnlyPropertyAsVirtualRelationsList(logger, propertyName, localCodeExecutionContext, DefaultOptions);
         }
 
-        public List<(StrongIdentifierValue PropInstanceName, Value PropValue)> GetReadOnlyPropertyAsVirtualRelationParamsList(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public List<LogicalQueryNode> GetReadOnlyPropertyAsVirtualRelationsList(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             if(_codeExecutorComponent == null)
             {
@@ -163,21 +164,47 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return null;
             }
 
-            var result = new List<(StrongIdentifierValue PropInstanceName, Value PropValue)>();
+            var result = new List<LogicalQueryNode>();
 
             foreach(var propInstance in readonlyPropertiesList)
             {
-                var value = _codeExecutorComponent.CallExecutableSync(logger, propInstance.GetMethodExecutable, null, localCodeExecutionContext, CallMode.Default);
+                var propertyValue = _codeExecutorComponent.CallExecutableSync(logger, propInstance.GetMethodExecutable, null, localCodeExecutionContext, CallMode.Default);
 
 #if DEBUG
-            Info("57E80E8A-8AF3-486D-A5E9-57B2AB6E8E2A", $"value = {value}");
+                Info("57E80E8A-8AF3-486D-A5E9-57B2AB6E8E2A", $"propertyValue = {propertyValue}");
 #endif
 
-                result.Add((propInstance.Instance.Name, value));
+                var fact = new RuleInstance();
+                var primaryPart = new PrimaryRulePart();
+                fact.PrimaryPart = primaryPart;
+
+                var relation = new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Relation,
+                    Name = propertyName
+                };
+
+                primaryPart.Expression = relation;
+
+                relation.ParamsList = new List<LogicalQueryNode>()
+                {
+                    new LogicalQueryNode()
+                    {
+                        Kind = KindOfLogicalQueryNode.Entity,
+                        Name = propInstance.Instance.Name
+                    },
+                    new LogicalQueryNode()
+                    {
+                        Kind = KindOfLogicalQueryNode.Value,
+                        Value = propertyValue
+                    }
+                };
+
+                result.Add(relation);
             }
 
 #if DEBUG
-            Info("54AB3CB3-9719-40ED-95B0-3E0135534F62", $"result = {JsonConvert.SerializeObject(result.Select(p => (p.PropInstanceName?.ToHumanizedString(), p.PropValue?.ToHumanizedString())), Formatting.Indented)}");
+            Info("54AB3CB3-9719-40ED-95B0-3E0135534F62", $"result = {result.WriteListToToHumanizedString()}");
 #endif
 
             return result;

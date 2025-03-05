@@ -1746,6 +1746,31 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 queryExecutingCardForVirtualRelation.UsedRelations.AddRange(queryExecutingCard.UsedRelations);
 
                 FillExecutingCardForVirtualRelationLogicalQueryNode(logger, queryExecutingCardForVirtualRelation, dataSource, options);
+
+                if (queryExecutingCardForVirtualRelation.IsSuccess)
+                {
+                    if (queryExecutingCardForVirtualRelation.IsNegative)
+                    {
+                        throw new NotImplementedException("56677A20-BFD2-4404-B523-0EAA567C0BCE");
+                    }
+
+                    if (queryExecutingCardForVirtualRelation.IsPostFiltersListOnly)
+                    {
+                        throw new NotImplementedException("21C438FE-C4F1-4BE8-BEEF-53958085282D");
+                    }
+
+                    if (queryExecutingCardForVirtualRelation.PostFiltersList.Any())
+                    {
+                        throw new NotImplementedException("D757418D-ECB5-43D6-8B78-8057F1363DCB");
+                    }
+
+                    AppendResults(logger, queryExecutingCardForVirtualRelation, queryExecutingCard);
+                }
+
+                if (localResultExplainNode != null)
+                {
+                    FillUpResultToExplainNode(logger, queryExecutingCardForVirtualRelation, localResultExplainNode);
+                }
             }
         }
 
@@ -1794,7 +1819,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             foreach (var targetPropertyAsVirtualRelation in targetPropertyAsVirtualRelationsList)
             {
 #if DEBUG
-                Info("864F1A96-1CAB-4B6B-B689-97884A382B00", $"targetPropertyAsVirtualRelation = {targetPropertyAsVirtualRelation}");
+                //Info("864F1A96-1CAB-4B6B-B689-97884A382B00", $"targetPropertyAsVirtualRelation = {targetPropertyAsVirtualRelation}");
 #endif
 
                 FillExecutingCardForCallingFromOneRelationForFact(logger, targetPropertyAsVirtualRelation, queryExecutingCard, dataSource, options, currentExplainNode, reasonOfFuzzyLogicResolving);
@@ -3092,7 +3117,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            //Log($"targetRelation = {targetRelation.ToHumanizedString()}");
+            Info("BD618E41-6950-41F4-9A20-0A41C0F410CF", $"targetRelation = {targetRelation.ToHumanizedString()}");
 #endif
 
             usedKeysList.Add(targetRelation.Name);
@@ -3103,7 +3128,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var comparisonQueryExecutingCard = isFitByKnownInfoResult.ComparisonQueryExecutingCard;
 
 #if DEBUG
-            //Log($"isFit = {isFit}");
+            Info("85DDBE8A-C19B-4CA8-A8CA-9D52A8C1C7DE", $"isFit = {isFit}");
 #endif
 
             if (relationWithDirectFactQueryProcessTargetRelationExplainNode != null)
@@ -3122,6 +3147,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
 
                 }
+
+#if DEBUG
+                Info("5B67EBFA-671C-4E70-9364-F169D052AB33", $"queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam = {queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam}");
+#endif
 
                 if (queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam)
                 {
@@ -3147,6 +3176,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
                 else
                 {
+#if DEBUG
+                    Info("1B6BB2B9-9EC8-4D52-AD93-DCCE06328775", $"queryExecutingCard.VarsInfoList.Any() = {queryExecutingCard.VarsInfoList.Any()}");
+#endif
+
                     if (queryExecutingCard.VarsInfoList.Any())
                     {
                         var paramsListOfTargetRelation = targetRelation.ParamsList;
@@ -3251,10 +3284,18 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         }
                         else
                         {
+#if DEBUG
+                            Info("C98F1C8A-38C2-455D-B8AC-D0DEC048B881", "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+#endif
+
                             var resultOfQueryToRelation = new ResultOfQueryToRelation();
 
                             foreach (var varItem in queryExecutingCard.VarsInfoList)
                             {
+#if DEBUG
+                                Info("9433F5DD-82F9-4FBA-B755-43D5BB141157", $"varItem.Position = {varItem.Position}");
+#endif
+
                                 var paramOfTargetRelation = paramsListOfTargetRelation[varItem.Position];
 
                                 if (isEntityIdOnly && !paramOfTargetRelation.IsEntityRef)
@@ -3279,6 +3320,12 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                                     resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Add(resultOfVarOfQueryToRelation);
                                 }
                             }
+
+#if DEBUG
+                            Info("0A055627-55F6-457F-927A-115E1C1456A9", $"resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Count = {resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Count}");
+                            Info("D05B3841-0157-442D-8729-88E828179317", $"queryExecutingCard.VarsInfoList.Count = {queryExecutingCard.VarsInfoList.Count}");
+                            Info("6608F9BF-B64E-4F68-A855-7BDE65F11359", $"resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Count != queryExecutingCard.VarsInfoList.Count = {resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Count != queryExecutingCard.VarsInfoList.Count}");
+#endif
 
                             if (resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Count != queryExecutingCard.VarsInfoList.Count)
                             {

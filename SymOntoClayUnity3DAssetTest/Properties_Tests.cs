@@ -244,5 +244,49 @@ namespace SymOntoClay.UnityAsset.Core.Tests
                     }
                 }), true);
         }
+
+        [Test]
+        [Parallelizable]
+        public void ReadOnlyProperty_GetAsFact_Case1()
+        {
+            var text = @"app PeaceKeeper
+{
+    prop ReadOnlyProp: number => 16;
+
+    on Enter =>
+    {
+        'Begin' >> @>log;
+        ReadOnlyProp >> @>log;
+        select {: ReadOnlyProp(I, $x) :} >> @>log;
+        'End' >> @>log;
+    }
+}";
+
+            Assert.AreEqual(BehaviorTestEngineInstance.Run(text,
+                (n, message) => {
+                    switch (n)
+                    {
+                        case 1:
+                            Assert.AreEqual(message, "Begin");
+                            break;
+
+                        case 2:
+                            Assert.AreEqual(message, "16");
+                            break;
+
+                        case 3:
+                            Assert.AreEqual(message.Contains("<yes>"), true);
+                            Assert.AreEqual(message.Contains("$x = 16"), true);
+                            break;
+
+                        case 4:
+                            Assert.AreEqual(message, "End");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(n), n, null);
+                    }
+                }), true);
+        }
     }
 }

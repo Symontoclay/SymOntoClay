@@ -103,13 +103,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public List<PropertyInstance> GetReadOnlyPropertiesList(IMonitorLogger logger, StrongIdentifierValue propertyName, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
 #if DEBUG
-            Info("8B0595DD-33EA-48EB-8AAC-428911BC6001", $"propertyName = {propertyName}");
+            //Info("8B0595DD-33EA-48EB-8AAC-428911BC6001", $"propertyName = {propertyName}");
 #endif
 
             var storagesList = GetStoragesList(logger, localCodeExecutionContext.Storage, KindOfStoragesList.Property);
 
 #if DEBUG
-            Info("4C93F0C7-4978-42E4-9E50-84D712A276CA", $"storagesList.Count = {storagesList.Count}");
+            //Info("4C93F0C7-4978-42E4-9E50-84D712A276CA", $"storagesList.Count = {storagesList.Count}");
 #endif
 
             var optionsForInheritanceResolver = options.Clone();
@@ -118,13 +118,13 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var weightedInheritanceItems = _inheritanceResolver.GetWeightedInheritanceItems(logger, localCodeExecutionContext, optionsForInheritanceResolver);
 
 #if DEBUG
-            Info("AA78B437-AA60-4900-AA81-771387B650A7", $"weightedInheritanceItems.Count = {weightedInheritanceItems.Count}");
+            //Info("AA78B437-AA60-4900-AA81-771387B650A7", $"weightedInheritanceItems.Count = {weightedInheritanceItems.Count}");
 #endif
 
             var rawList = GetRawPropertiesList(logger, propertyName, storagesList, weightedInheritanceItems).Where(p => p.ResultItem.KindOfProperty == KindOfProperty.Readonly).ToList();
 
 #if DEBUG
-            Info("47A0DA6A-C8B9-473C-9CCB-FA92B2853FE9", $"rawList.Count = {rawList.Count}");
+            //Info("47A0DA6A-C8B9-473C-9CCB-FA92B2853FE9", $"rawList.Count = {rawList.Count}");
 #endif
 
             if (!rawList.Any())
@@ -135,7 +135,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var filteredList = FilterCodeItems(logger, rawList, localCodeExecutionContext.Holder, localCodeExecutionContext);
 
 #if DEBUG
-            Info("04357540-F863-4D7E-B7DC-3786CD3D5F8C", $"filteredList.Count = {filteredList.Count}");
+            //Info("04357540-F863-4D7E-B7DC-3786CD3D5F8C", $"filteredList.Count = {filteredList.Count}");
 #endif
 
             return filteredList.Select(p => p.ResultItem).ToList();
@@ -156,7 +156,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             var readonlyPropertiesList = GetReadOnlyPropertiesList(logger, propertyName, localCodeExecutionContext, options);
 
 #if DEBUG
-            Info("8803E3C2-E5A6-4C40-964E-B0F0A7D67BAA", $"readonlyPropertiesList?.Count = {readonlyPropertiesList?.Count}");
+            //Info("8803E3C2-E5A6-4C40-964E-B0F0A7D67BAA", $"readonlyPropertiesList?.Count = {readonlyPropertiesList?.Count}");
 #endif
 
             if((readonlyPropertiesList?.Count ?? 0) == 0)
@@ -171,7 +171,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 var propertyValue = _codeExecutorComponent.CallExecutableSync(logger, propInstance.GetMethodExecutable, null, localCodeExecutionContext, CallMode.Default);
 
 #if DEBUG
-                Info("57E80E8A-8AF3-486D-A5E9-57B2AB6E8E2A", $"propertyValue = {propertyValue}");
+                //Info("57E80E8A-8AF3-486D-A5E9-57B2AB6E8E2A", $"propertyValue = {propertyValue}");
 #endif
 
                 var fact = new RuleInstance();
@@ -206,7 +206,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             }
 
 #if DEBUG
-            Info("54AB3CB3-9719-40ED-95B0-3E0135534F62", $"result = {result.WriteListToToHumanizedString()}");
+            //Info("54AB3CB3-9719-40ED-95B0-3E0135534F62", $"result = {result.WriteListToToHumanizedString()}");
 #endif
 
             return result;

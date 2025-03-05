@@ -1787,14 +1787,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 return;
             }
 
-            foreach(var targetPropertyAsVirtualRelation in targetPropertyAsVirtualRelationsList)
+            var reasonOfFuzzyLogicResolving = new ReasonOfFuzzyLogicResolving();
+            reasonOfFuzzyLogicResolving.Kind = KindOfReasonOfFuzzyLogicResolving.Relation;
+            reasonOfFuzzyLogicResolving.RelationName = targetRelationName;
+
+            foreach (var targetPropertyAsVirtualRelation in targetPropertyAsVirtualRelationsList)
             {
 #if DEBUG
                 Info("864F1A96-1CAB-4B6B-B689-97884A382B00", $"targetPropertyAsVirtualRelation = {targetPropertyAsVirtualRelation}");
 #endif
+
+                FillExecutingCardForCallingFromOneRelationForFact(logger, targetPropertyAsVirtualRelation, queryExecutingCard, dataSource, options, currentExplainNode, reasonOfFuzzyLogicResolving);
             }
 
-            throw new NotImplementedException("C34EDE8D-4866-4EFE-AB66-5E47FB1DC56A");
+            //throw new NotImplementedException("C34EDE8D-4866-4EFE-AB66-5E47FB1DC56A");
         }
 
         private void FillExecutingCardForQuestion(IMonitorLogger logger, LogicalQueryNode processedExpr, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options)
@@ -3045,11 +3051,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             //Log($"targetRelationName = {targetRelationName.ToHumanizedString()}");
 #endif
 
-            var usedKeysList = queryExecutingCard.UsedKeysList;
-
-            var useInheritance = options.UseInheritance;
-            var inheritanceResolver = _inheritanceResolver;
-
             var targetRelationsList = processedExpr.RelationsDict[targetRelationName];
 
             var reasonOfFuzzyLogicResolving = new ReasonOfFuzzyLogicResolving();
@@ -3058,238 +3059,246 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var targetRelation in targetRelationsList)
             {
-                LogicalSearchExplainNode relationWithDirectFactQueryProcessTargetRelationExplainNode = null;
+                FillExecutingCardForCallingFromOneRelationForFact(logger, targetRelation, queryExecutingCard, dataSource, options, currentExplainNode, reasonOfFuzzyLogicResolving);
+            }
+        }
 
-                if (currentExplainNode != null)
+        private void FillExecutingCardForCallingFromOneRelationForFact(IMonitorLogger logger, LogicalQueryNode targetRelation, QueryExecutingCardForIndexedPersistLogicalData queryExecutingCard, ConsolidatedDataSource dataSource, OptionsOfFillExecutingCard options, LogicalSearchExplainNode currentExplainNode, ReasonOfFuzzyLogicResolving reasonOfFuzzyLogicResolving)
+        {
+            var rootParentExplainNode = queryExecutingCard.RootParentExplainNode;
+            var usedKeysList = queryExecutingCard.UsedKeysList;
+
+            LogicalSearchExplainNode relationWithDirectFactQueryProcessTargetRelationExplainNode = null;
+
+            if (currentExplainNode != null)
+            {
+                relationWithDirectFactQueryProcessTargetRelationExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
                 {
-                    relationWithDirectFactQueryProcessTargetRelationExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
-                    {
-                        Kind = KindOfLogicalSearchExplainNode.RelationWithDirectFactQueryProcessTargetRelation,
-                        ProcessedLogicalQueryNode = targetRelation
-                    };
+                    Kind = KindOfLogicalSearchExplainNode.RelationWithDirectFactQueryProcessTargetRelation,
+                    ProcessedLogicalQueryNode = targetRelation
+                };
 
-                    LogicalSearchExplainNode.LinkNodes(currentExplainNode, relationWithDirectFactQueryProcessTargetRelationExplainNode);
-                }
+                LogicalSearchExplainNode.LinkNodes(currentExplainNode, relationWithDirectFactQueryProcessTargetRelationExplainNode);
+            }
 
-                if (targetRelation.CountParams != queryExecutingCard.CountParams)
-                {
-                    if (relationWithDirectFactQueryProcessTargetRelationExplainNode != null)
-                    {
-                        relationWithDirectFactQueryProcessTargetRelationExplainNode.AdditionalInformation.Add($"targetRelation.ParamsList.Count != queryExecutingCard.CountParams: {targetRelation.ParamsList.Count} != {queryExecutingCard.CountParams}");
-                    }
-
-                    continue;
-                }
-
-#if DEBUG
-                //Log($"targetRelation = {targetRelation.ToHumanizedString()}");
-#endif
-
-                usedKeysList.Add(targetRelation.Name);
-
-                var isFitByKnownInfoResult = IsFitByKnownInfo(logger, targetRelation, queryExecutingCard, dataSource, options, rootParentExplainNode, reasonOfFuzzyLogicResolving);
-
-                var isFit = isFitByKnownInfoResult.IsFit;
-                var comparisonQueryExecutingCard = isFitByKnownInfoResult.ComparisonQueryExecutingCard;
-
-#if DEBUG
-                //Log($"isFit = {isFit}");
-#endif
-
+            if (targetRelation.CountParams != queryExecutingCard.CountParams)
+            {
                 if (relationWithDirectFactQueryProcessTargetRelationExplainNode != null)
                 {
-                    relationWithDirectFactQueryProcessTargetRelationExplainNode.IsFit = isFit;
+                    relationWithDirectFactQueryProcessTargetRelationExplainNode.AdditionalInformation.Add($"targetRelation.ParamsList.Count != queryExecutingCard.CountParams: {targetRelation.ParamsList.Count} != {queryExecutingCard.CountParams}");
                 }
 
-                if (isFit)
+                return;
+            }
+
+#if DEBUG
+            //Log($"targetRelation = {targetRelation.ToHumanizedString()}");
+#endif
+
+            usedKeysList.Add(targetRelation.Name);
+
+            var isFitByKnownInfoResult = IsFitByKnownInfo(logger, targetRelation, queryExecutingCard, dataSource, options, rootParentExplainNode, reasonOfFuzzyLogicResolving);
+
+            var isFit = isFitByKnownInfoResult.IsFit;
+            var comparisonQueryExecutingCard = isFitByKnownInfoResult.ComparisonQueryExecutingCard;
+
+#if DEBUG
+            //Log($"isFit = {isFit}");
+#endif
+
+            if (relationWithDirectFactQueryProcessTargetRelationExplainNode != null)
+            {
+                relationWithDirectFactQueryProcessTargetRelationExplainNode.IsFit = isFit;
+            }
+
+            if (isFit)
+            {
+                var isEntityIdOnly = options.EntityIdOnly;
+                var useAccessPolicy = options.UseAccessPolicy;
+
+                if (useAccessPolicy)
                 {
-                    var isEntityIdOnly = options.EntityIdOnly;
-                    var useAccessPolicy = options.UseAccessPolicy;
+                    throw new NotImplementedException("EBC9DE50-E25F-4F85-B772-F0CCB4C70722");
 
-                    if (useAccessPolicy)
+
+                }
+
+                if (queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam)
+                {
+                    var resultOfQueryToRelation = new ResultOfQueryToRelation();
+
+                    foreach (var paramOfTargetRelation in targetRelation.ParamsList)
                     {
-                        throw new NotImplementedException("EBC9DE50-E25F-4F85-B772-F0CCB4C70722");
-
-
-                    }
-
-                    if(queryExecutingCard.IsFetchingAllValuesForResolvingExpressionParam)
-                    {
-                        var resultOfQueryToRelation = new ResultOfQueryToRelation();
-
-                        foreach (var paramOfTargetRelation in targetRelation.ParamsList)
+                        if (paramOfTargetRelation.IsExpression)
                         {
-                            if(paramOfTargetRelation.IsExpression)
-                            {
-                                throw new NotImplementedException("EC6C6A41-CA5C-47A0-9077-B7F981911869");
-                            }
-                            else
-                            {
-                                var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
-                                resultOfVarOfQueryToRelation.NameOfVar = NameHelper.CreateLogicalVarName();
-                                resultOfVarOfQueryToRelation.FoundExpression = paramOfTargetRelation;
-                                resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Add(resultOfVarOfQueryToRelation);
-                            }
+                            throw new NotImplementedException("EC6C6A41-CA5C-47A0-9077-B7F981911869");
                         }
-
-                        queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);
-                        queryExecutingCard.IsSuccess = true;
-                    }
-                    else
-                    {
-                        if (queryExecutingCard.VarsInfoList.Any())
+                        else
                         {
-                            var paramsListOfTargetRelation = targetRelation.ParamsList;
+                            var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
+                            resultOfVarOfQueryToRelation.NameOfVar = NameHelper.CreateLogicalVarName();
+                            resultOfVarOfQueryToRelation.FoundExpression = paramOfTargetRelation;
+                            resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Add(resultOfVarOfQueryToRelation);
+                        }
+                    }
 
-                            if (DetectExpressionInParamOfRelation(logger, queryExecutingCard.VarsInfoList, paramsListOfTargetRelation))
+                    queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);
+                    queryExecutingCard.IsSuccess = true;
+                }
+                else
+                {
+                    if (queryExecutingCard.VarsInfoList.Any())
+                    {
+                        var paramsListOfTargetRelation = targetRelation.ParamsList;
+
+                        if (DetectExpressionInParamOfRelation(logger, queryExecutingCard.VarsInfoList, paramsListOfTargetRelation))
+                        {
+                            var resultCache = new List<List<IResultOfVarOfQueryToRelation>>();
+
+                            foreach (var varItem in queryExecutingCard.VarsInfoList)
                             {
-                                var resultCache = new List<List<IResultOfVarOfQueryToRelation>>();
+                                var resultCacheItem = new List<IResultOfVarOfQueryToRelation>();
+                                resultCache.Add(resultCacheItem);
 
-                                foreach (var varItem in queryExecutingCard.VarsInfoList)
-                                {
-                                    var resultCacheItem = new List<IResultOfVarOfQueryToRelation>();
-                                    resultCache.Add(resultCacheItem);
+                                var paramOfTargetRelation = paramsListOfTargetRelation[varItem.Position];
 
-                                    var paramOfTargetRelation = paramsListOfTargetRelation[varItem.Position];
-
-                                    if (isEntityIdOnly && !paramOfTargetRelation.IsEntityRef)
-                                    {
-                                        continue;
-                                    }
-
-                                    if (paramOfTargetRelation.IsExpression)
-                                    {
-                                        LogicalSearchExplainNode fetchingAllValuesForResolvingExpressionParamExplainNode = null;
-                                        LogicalSearchExplainNode fetchingAllValuesForResolvingExpressionParamResultExplainNode = null;
-
-                                        if (relationWithDirectFactQueryProcessTargetRelationExplainNode != null)
-                                        {
-                                            fetchingAllValuesForResolvingExpressionParamExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
-                                            {
-                                                Kind = KindOfLogicalSearchExplainNode.FetchingAllValuesForResolvingExpressionParam
-                                            };
-
-                                            LogicalSearchExplainNode.LinkNodes(relationWithDirectFactQueryProcessTargetRelationExplainNode, fetchingAllValuesForResolvingExpressionParamExplainNode);
-
-                                            fetchingAllValuesForResolvingExpressionParamResultExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
-                                            {
-                                                Kind = KindOfLogicalSearchExplainNode.Result
-                                            };
-
-                                            LogicalSearchExplainNode.LinkNodes(fetchingAllValuesForResolvingExpressionParamExplainNode, fetchingAllValuesForResolvingExpressionParamResultExplainNode);
-                                        }
-
-                                        var queryExecutingCardForExprInParameter = new QueryExecutingCardForIndexedPersistLogicalData();
-
-                                        queryExecutingCardForExprInParameter.IsFetchingAllValuesForResolvingExpressionParam = true;
-                                        queryExecutingCardForExprInParameter.RootParentExplainNode = rootParentExplainNode;
-                                        queryExecutingCardForExprInParameter.ParentExplainNode = fetchingAllValuesForResolvingExpressionParamResultExplainNode;
-
-                                        FillExecutingCard(logger, paramOfTargetRelation, queryExecutingCardForExprInParameter, dataSource, options);
-
-                                        if (fetchingAllValuesForResolvingExpressionParamResultExplainNode != null)
-                                        {
-                                            FillUpResultToExplainNode(logger, queryExecutingCardForExprInParameter, fetchingAllValuesForResolvingExpressionParamResultExplainNode);
-                                        }
-
-                                        if (queryExecutingCardForExprInParameter.IsNegative)
-                                        {
-                                            throw new NotImplementedException("93E85ADD-5A26-43CE-A476-49192890E462");
-                                        }
-
-                                        queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForExprInParameter.UsedKeysList);
-
-                                        if(queryExecutingCardForExprInParameter.IsSuccess && queryExecutingCardForExprInParameter.ResultsOfQueryToRelationList.Any())
-                                        {
-                                            foreach(var resultItem in queryExecutingCardForExprInParameter.ResultsOfQueryToRelationList)
-                                            {
-                                                foreach(var resultVarItem in resultItem.ResultOfVarOfQueryToRelationList)
-                                                {
-                                                    var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
-                                                    resultOfVarOfQueryToRelation.NameOfVar = varItem.NameOfVar;
-                                                    resultOfVarOfQueryToRelation.FoundExpression = resultVarItem.FoundExpression;
-                                                    resultCacheItem.Add(resultOfVarOfQueryToRelation);
-                                                }
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (paramOfTargetRelation.IsKeyRef)
-                                        {
-                                            usedKeysList.Add(paramOfTargetRelation.Name);
-                                        }
-
-                                        var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
-                                        resultOfVarOfQueryToRelation.NameOfVar = varItem.NameOfVar;
-                                        resultOfVarOfQueryToRelation.FoundExpression = paramOfTargetRelation;
-                                        resultCacheItem.Add(resultOfVarOfQueryToRelation);
-                                    }
-                                }
-
-                                var linearizedItems = CollectionCombinationHelper.Combine(resultCache);
-
-                                foreach(var linearizedItem in linearizedItems)
-                                {
-                                    var resultOfQueryToRelation = new ResultOfQueryToRelation();
-                                    resultOfQueryToRelation.ResultOfVarOfQueryToRelationList = linearizedItem;
-
-                                    queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);
-                                }
-
-                                queryExecutingCard.IsSuccess = true;
-                            }
-                            else
-                            {
-                                var resultOfQueryToRelation = new ResultOfQueryToRelation();
-
-                                foreach (var varItem in queryExecutingCard.VarsInfoList)
-                                {
-                                    var paramOfTargetRelation = paramsListOfTargetRelation[varItem.Position];
-
-                                    if (isEntityIdOnly && !paramOfTargetRelation.IsEntityRef)
-                                    {
-                                        continue;
-                                    }
-
-                                    if (paramOfTargetRelation.IsExpression)
-                                    {
-                                        throw new NotImplementedException("12FFD862-060B-4B3A-8100-0D76FBDC0780");
-                                    }
-                                    else
-                                    {
-                                        if (paramOfTargetRelation.IsKeyRef)
-                                        {
-                                            usedKeysList.Add(paramOfTargetRelation.Name);
-                                        }
-
-                                        var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
-                                        resultOfVarOfQueryToRelation.NameOfVar = varItem.NameOfVar;
-                                        resultOfVarOfQueryToRelation.FoundExpression = paramOfTargetRelation;
-                                        resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Add(resultOfVarOfQueryToRelation);
-                                    }
-                                }
-
-                                if (resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Count != queryExecutingCard.VarsInfoList.Count)
+                                if (isEntityIdOnly && !paramOfTargetRelation.IsEntityRef)
                                 {
                                     continue;
                                 }
 
-                                queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);
+                                if (paramOfTargetRelation.IsExpression)
+                                {
+                                    LogicalSearchExplainNode fetchingAllValuesForResolvingExpressionParamExplainNode = null;
+                                    LogicalSearchExplainNode fetchingAllValuesForResolvingExpressionParamResultExplainNode = null;
 
-                                queryExecutingCard.IsSuccess = true;
+                                    if (relationWithDirectFactQueryProcessTargetRelationExplainNode != null)
+                                    {
+                                        fetchingAllValuesForResolvingExpressionParamExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
+                                        {
+                                            Kind = KindOfLogicalSearchExplainNode.FetchingAllValuesForResolvingExpressionParam
+                                        };
+
+                                        LogicalSearchExplainNode.LinkNodes(relationWithDirectFactQueryProcessTargetRelationExplainNode, fetchingAllValuesForResolvingExpressionParamExplainNode);
+
+                                        fetchingAllValuesForResolvingExpressionParamResultExplainNode = new LogicalSearchExplainNode(rootParentExplainNode)
+                                        {
+                                            Kind = KindOfLogicalSearchExplainNode.Result
+                                        };
+
+                                        LogicalSearchExplainNode.LinkNodes(fetchingAllValuesForResolvingExpressionParamExplainNode, fetchingAllValuesForResolvingExpressionParamResultExplainNode);
+                                    }
+
+                                    var queryExecutingCardForExprInParameter = new QueryExecutingCardForIndexedPersistLogicalData();
+
+                                    queryExecutingCardForExprInParameter.IsFetchingAllValuesForResolvingExpressionParam = true;
+                                    queryExecutingCardForExprInParameter.RootParentExplainNode = rootParentExplainNode;
+                                    queryExecutingCardForExprInParameter.ParentExplainNode = fetchingAllValuesForResolvingExpressionParamResultExplainNode;
+
+                                    FillExecutingCard(logger, paramOfTargetRelation, queryExecutingCardForExprInParameter, dataSource, options);
+
+                                    if (fetchingAllValuesForResolvingExpressionParamResultExplainNode != null)
+                                    {
+                                        FillUpResultToExplainNode(logger, queryExecutingCardForExprInParameter, fetchingAllValuesForResolvingExpressionParamResultExplainNode);
+                                    }
+
+                                    if (queryExecutingCardForExprInParameter.IsNegative)
+                                    {
+                                        throw new NotImplementedException("93E85ADD-5A26-43CE-A476-49192890E462");
+                                    }
+
+                                    queryExecutingCard.UsedKeysList.AddRange(queryExecutingCardForExprInParameter.UsedKeysList);
+
+                                    if (queryExecutingCardForExprInParameter.IsSuccess && queryExecutingCardForExprInParameter.ResultsOfQueryToRelationList.Any())
+                                    {
+                                        foreach (var resultItem in queryExecutingCardForExprInParameter.ResultsOfQueryToRelationList)
+                                        {
+                                            foreach (var resultVarItem in resultItem.ResultOfVarOfQueryToRelationList)
+                                            {
+                                                var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
+                                                resultOfVarOfQueryToRelation.NameOfVar = varItem.NameOfVar;
+                                                resultOfVarOfQueryToRelation.FoundExpression = resultVarItem.FoundExpression;
+                                                resultCacheItem.Add(resultOfVarOfQueryToRelation);
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (paramOfTargetRelation.IsKeyRef)
+                                    {
+                                        usedKeysList.Add(paramOfTargetRelation.Name);
+                                    }
+
+                                    var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
+                                    resultOfVarOfQueryToRelation.NameOfVar = varItem.NameOfVar;
+                                    resultOfVarOfQueryToRelation.FoundExpression = paramOfTargetRelation;
+                                    resultCacheItem.Add(resultOfVarOfQueryToRelation);
+                                }
                             }
+
+                            var linearizedItems = CollectionCombinationHelper.Combine(resultCache);
+
+                            foreach (var linearizedItem in linearizedItems)
+                            {
+                                var resultOfQueryToRelation = new ResultOfQueryToRelation();
+                                resultOfQueryToRelation.ResultOfVarOfQueryToRelationList = linearizedItem;
+
+                                queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);
+                            }
+
+                            queryExecutingCard.IsSuccess = true;
                         }
                         else
                         {
+                            var resultOfQueryToRelation = new ResultOfQueryToRelation();
+
+                            foreach (var varItem in queryExecutingCard.VarsInfoList)
+                            {
+                                var paramOfTargetRelation = paramsListOfTargetRelation[varItem.Position];
+
+                                if (isEntityIdOnly && !paramOfTargetRelation.IsEntityRef)
+                                {
+                                    continue;
+                                }
+
+                                if (paramOfTargetRelation.IsExpression)
+                                {
+                                    throw new NotImplementedException("12FFD862-060B-4B3A-8100-0D76FBDC0780");
+                                }
+                                else
+                                {
+                                    if (paramOfTargetRelation.IsKeyRef)
+                                    {
+                                        usedKeysList.Add(paramOfTargetRelation.Name);
+                                    }
+
+                                    var resultOfVarOfQueryToRelation = new ResultOfVarOfQueryToRelation();
+                                    resultOfVarOfQueryToRelation.NameOfVar = varItem.NameOfVar;
+                                    resultOfVarOfQueryToRelation.FoundExpression = paramOfTargetRelation;
+                                    resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Add(resultOfVarOfQueryToRelation);
+                                }
+                            }
+
+                            if (resultOfQueryToRelation.ResultOfVarOfQueryToRelationList.Count != queryExecutingCard.VarsInfoList.Count)
+                            {
+                                return;
+                            }
+
+                            queryExecutingCard.ResultsOfQueryToRelationList.Add(resultOfQueryToRelation);
+
                             queryExecutingCard.IsSuccess = true;
                         }
                     }
-
-                    queryExecutingCard.UsedKeysList.AddRange(comparisonQueryExecutingCard.UsedKeysList);
-                    queryExecutingCard.ResultsOfQueryToRelationList.AddRange(comparisonQueryExecutingCard.ResultsOfQueryToRelationList);
-
+                    else
+                    {
+                        queryExecutingCard.IsSuccess = true;
+                    }
                 }
+
+                queryExecutingCard.UsedKeysList.AddRange(comparisonQueryExecutingCard.UsedKeysList);
+                queryExecutingCard.ResultsOfQueryToRelationList.AddRange(comparisonQueryExecutingCard.ResultsOfQueryToRelationList);
+
             }
         }
 

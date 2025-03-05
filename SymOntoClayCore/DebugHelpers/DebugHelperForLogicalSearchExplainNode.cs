@@ -683,6 +683,19 @@ namespace SymOntoClay.Core.DebugHelpers
                         return sb.ToString();
                     }
 
+                case KindOfLogicalSearchExplainNode.VirtualRelation:
+                    {
+                        var sb = new StringBuilder();
+
+                        sb.AppendLine("<TABLE border=\"0\" cellspacing=\"0\" cellborder=\"0\">");
+                        sb.AppendLine("<TR><TD>Process virtual fact:</TD></TR>");
+                        sb.AppendLine($"<TR><TD>Target relation: <b>{source.TargetRelation.NameValue}</b></TD></TR>");
+                        PrintAdditionalInformation(source, sb);
+                        sb.AppendLine("</TABLE>");
+
+                        return sb.ToString();
+                    }
+
                 case KindOfLogicalSearchExplainNode.RelationWithDirectFactQueryProcessTargetRelation:
                     {
                         var targetProcessedItem = source.ProcessedLogicalQueryNode;
@@ -714,11 +727,6 @@ namespace SymOntoClay.Core.DebugHelpers
                         sb.AppendLine("</TABLE>");
 
                         return sb.ToString();
-                    }
-
-                case KindOfLogicalSearchExplainNode.VirtualRelation:
-                    {
-                        throw new NotImplementedException("8CA5B47A-3578-4BF4-AA26-BB553E1D3CE0");
                     }
 
                 case KindOfLogicalSearchExplainNode.PostFilterWithAndStrategy:

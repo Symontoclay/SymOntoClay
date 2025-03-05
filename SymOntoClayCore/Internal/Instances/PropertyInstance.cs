@@ -150,6 +150,8 @@ namespace SymOntoClay.Core.Internal.Instances
                 }
             };
 
+            result.CheckDirty();
+
             return result;
         }
 

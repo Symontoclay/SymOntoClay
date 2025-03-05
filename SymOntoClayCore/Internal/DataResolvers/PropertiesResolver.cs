@@ -200,6 +200,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     }
                 };
 
+                fact.CheckDirty();
+
                 result.Add(relation);
             }
 

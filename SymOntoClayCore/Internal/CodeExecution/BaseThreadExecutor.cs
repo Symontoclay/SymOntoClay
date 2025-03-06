@@ -1327,7 +1327,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if(property == null)
             {
-                _currentCodeFrame.ValuesStack.Push(conceptValue);
+                _currentCodeFrame.ValuesStack.Push(NullValue.Instance);
                 _currentCodeFrame.CurrentPosition++;
 
                 return;

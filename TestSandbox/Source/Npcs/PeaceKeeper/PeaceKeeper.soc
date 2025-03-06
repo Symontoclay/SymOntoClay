@@ -1,12 +1,11 @@
 ﻿app PeaceKeeper
 {
-    prop ReadOnlyProp: number => 16;
+    {: ReadOnlyProp(I, 16) :}
 
     on Enter =>
     {
         'Begin' >> @>log;
         ReadOnlyProp >> @>log;
-        select {: ReadOnlyProp(I, $x) :} >> @>log;
         'End' >> @>log;
     }
 }

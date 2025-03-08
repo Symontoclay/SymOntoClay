@@ -36,6 +36,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         public bool EntityIdOnly { get; set; }
         public bool IgnoreAccessPolicy { get; set; } = true;
         public bool UseInheritance { get; set; } = true;
+        public bool ResolveVirtualRelationsFromPropetyHook { get; set; } = true;
         public bool IgnoreIfNullValueInImperativeVariables { get; set; }
         public ResolvingNotResultsStrategy ResolvingNotResultsStrategy { get; set; } = ResolvingNotResultsStrategy.NotSupport;
         public ReplacingNotResultsStrategy ReplacingNotResultsStrategy { get; set; } = ReplacingNotResultsStrategy.AllKindOfItems;
@@ -52,6 +53,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.AppendLine($"{spaces}{nameof(EntityIdOnly)} = {EntityIdOnly}");
             sb.AppendLine($"{spaces}{nameof(IgnoreAccessPolicy)} = {IgnoreAccessPolicy}");
             sb.AppendLine($"{spaces}{nameof(UseInheritance)} = {UseInheritance}");
+            sb.AppendLine($"{spaces}{nameof(ResolveVirtualRelationsFromPropetyHook)} = {ResolveVirtualRelationsFromPropetyHook}");
             sb.AppendLine($"{spaces}{nameof(IgnoreIfNullValueInImperativeVariables)} = {IgnoreIfNullValueInImperativeVariables}");
             sb.AppendLine($"{spaces}{nameof(ResolvingNotResultsStrategy)} = {ResolvingNotResultsStrategy}");
             sb.AppendLine($"{spaces}{nameof(ReplacingNotResultsStrategy)} = {ReplacingNotResultsStrategy}");
@@ -73,6 +75,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.AppendLine($"{spaces}{nameof(EntityIdOnly)} = {EntityIdOnly}");
             sb.AppendLine($"{spaces}{nameof(IgnoreAccessPolicy)} = {IgnoreAccessPolicy}");
             sb.AppendLine($"{spaces}{nameof(UseInheritance)} = {UseInheritance}");
+            sb.AppendLine($"{spaces}{nameof(ResolveVirtualRelationsFromPropetyHook)} = {ResolveVirtualRelationsFromPropetyHook}");
             sb.AppendLine($"{spaces}{nameof(IgnoreIfNullValueInImperativeVariables)} = {IgnoreIfNullValueInImperativeVariables}");
             sb.AppendLine($"{spaces}{nameof(ResolvingNotResultsStrategy)} = {ResolvingNotResultsStrategy}");
             sb.AppendLine($"{spaces}{nameof(ReplacingNotResultsStrategy)} = {ReplacingNotResultsStrategy}");
@@ -94,6 +97,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             sb.AppendLine($"{spaces}{nameof(EntityIdOnly)} = {EntityIdOnly}");
             sb.AppendLine($"{spaces}{nameof(IgnoreAccessPolicy)} = {IgnoreAccessPolicy}");
             sb.AppendLine($"{spaces}{nameof(UseInheritance)} = {UseInheritance}");
+            sb.AppendLine($"{spaces}{nameof(ResolveVirtualRelationsFromPropetyHook)} = {ResolveVirtualRelationsFromPropetyHook}");
             sb.AppendLine($"{spaces}{nameof(IgnoreIfNullValueInImperativeVariables)} = {IgnoreIfNullValueInImperativeVariables}");
             sb.AppendLine($"{spaces}{nameof(ResolvingNotResultsStrategy)} = {ResolvingNotResultsStrategy}");
             sb.AppendLine($"{spaces}{nameof(ReplacingNotResultsStrategy)} = {ReplacingNotResultsStrategy}");

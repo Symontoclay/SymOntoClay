@@ -26,6 +26,7 @@ using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.CodeModel.MonitorSerializableObjects;
 using SymOntoClay.Core.Internal.DataResolvers;
+using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Storage;
 using SymOntoClay.Monitor.Common;
@@ -199,13 +200,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             foreach (var foundResultItem in searchResult.Items)
             {
-                foreach(var resultOfVarOfQueryToRelation in foundResultItem.ResultOfVarOfQueryToRelationList)
-                {
-                    if(resultOfVarOfQueryToRelation.NameOfVar == _targetLogicalVarName && resultOfVarOfQueryToRelation.FoundExpression.Kind == KindOfLogicalQueryNode.Entity)
-                    {
-                        foundIdsList.Add(resultOfVarOfQueryToRelation.FoundExpression.Name);
-                    }
-                }
+                var foundValues = foundResultItem.ResultOfVarOfQueryToRelationList
+                    .Where(p => p.NameOfVar == _targetLogicalVarName && p.FoundExpression.Kind == KindOfLogicalQueryNode.Entity)
+                    .Select(p => LogicalQueryNodeHelper.ToValue(p.FoundExpression).AsStrongIdentifierValue)
+                    .Where(p => p != null);
+
+                foundIdsList.AddRange(foundValues);
             }
 
 #if DEBUG

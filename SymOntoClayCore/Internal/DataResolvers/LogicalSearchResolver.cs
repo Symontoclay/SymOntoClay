@@ -157,6 +157,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 optionsOfFillExecutingCard.EntityIdOnly = options.EntityIdOnly;
                 optionsOfFillExecutingCard.UseAccessPolicy = !options.IgnoreAccessPolicy;
                 optionsOfFillExecutingCard.UseInheritance = options.UseInheritance;
+                optionsOfFillExecutingCard.ResolveVirtualRelationsFromPropetyHook = options.ResolveVirtualRelationsFromPropetyHook;
                 optionsOfFillExecutingCard.LocalCodeExecutionContext = options.LocalCodeExecutionContext;
                 optionsOfFillExecutingCard.MainStorageContext = _context;
                 optionsOfFillExecutingCard.LogicalSearchStorageContext = logicalSearchStorageContext;
@@ -1720,7 +1721,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 }
             }
 
-            if(processedExpr.CountParams == 2)
+            if(options.ResolveVirtualRelationsFromPropetyHook && processedExpr.CountParams == 2)
             {
                 LogicalSearchExplainNode localResultExplainNode = null;
 

@@ -36,6 +36,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
         public bool EntityIdOnly { get; set; }
         public bool UseAccessPolicy { get; set; }
         public bool UseInheritance { get; set; }
+        public bool ResolveVirtualRelationsFromPropetyHook { get; set; }
         public ReplacingNotResultsStrategy ReplacingNotResultsStrategy { get; set; } = ReplacingNotResultsStrategy.AllKindOfItems;
         public ILocalCodeExecutionContext LocalCodeExecutionContext { get; set; }
         public IMainStorageContext MainStorageContext { get; set; }
@@ -62,6 +63,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.AppendLine($"{spaces}{nameof(EntityIdOnly)} = {EntityIdOnly}");
             sb.AppendLine($"{spaces}{nameof(UseAccessPolicy)} = {UseAccessPolicy}");
             sb.AppendLine($"{spaces}{nameof(UseInheritance)} = {UseInheritance}");
+            sb.AppendLine($"{spaces}{nameof(ResolveVirtualRelationsFromPropetyHook)} = {ResolveVirtualRelationsFromPropetyHook}");
             sb.AppendLine($"{spaces}{nameof(ReplacingNotResultsStrategy)} = {ReplacingNotResultsStrategy}");
 
             return sb.ToString();
@@ -88,6 +90,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.AppendLine($"{spaces}{nameof(EntityIdOnly)} = {EntityIdOnly}");
             sb.AppendLine($"{spaces}{nameof(UseAccessPolicy)} = {UseAccessPolicy}");
             sb.AppendLine($"{spaces}{nameof(UseInheritance)} = {UseInheritance}");
+            sb.AppendLine($"{spaces}{nameof(ResolveVirtualRelationsFromPropetyHook)} = {ResolveVirtualRelationsFromPropetyHook}");
             sb.AppendLine($"{spaces}{nameof(ReplacingNotResultsStrategy)} = {ReplacingNotResultsStrategy}");
 
             return sb.ToString();
@@ -114,6 +117,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.AppendLine($"{spaces}{nameof(EntityIdOnly)} = {EntityIdOnly}");
             sb.AppendLine($"{spaces}{nameof(UseAccessPolicy)} = {UseAccessPolicy}");
             sb.AppendLine($"{spaces}{nameof(UseInheritance)} = {UseInheritance}");
+            sb.AppendLine($"{spaces}{nameof(ResolveVirtualRelationsFromPropetyHook)} = {ResolveVirtualRelationsFromPropetyHook}");
             sb.AppendLine($"{spaces}{nameof(ReplacingNotResultsStrategy)} = {ReplacingNotResultsStrategy}");
 
             return sb.ToString();

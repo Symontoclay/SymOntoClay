@@ -1331,51 +1331,21 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             if(property == null)
             {
-                var searchOptions = new LogicalSearchOptions();
-                searchOptions.QueryExpression = BuildPropertyQuery(propertyName, _currentInstance);
-                searchOptions.LocalCodeExecutionContext = _currentCodeFrame.LocalContext;
+                var value = _propertiesResolver.ResolveImplicitProperty(Logger, propertyName, _currentInstance, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-                Info("EFD16AF0-7849-4552-AE5C-C72650148AE0", $"searchOptions.QueryExpression = {searchOptions.QueryExpression.ToHumanizedString()}");
+                Info("C383590A-6041-4175-8CF4-F478E552C5E6", $"value = {value}");
 #endif
 
-                var searchResult = _logicalSearchResolver.Run(Logger, searchOptions);
-
-#if DEBUG
-                Info("2D009976-5734-4A07-83B7-4601D25F52FC", $"searchResult = {searchResult}");
-#endif
-
-                if(searchResult.IsSuccess)
-                {
-                    var items = searchResult.Items;
-
-                    //move this one to name storage
-                    var targetVarName = NameHelper.CreateName("$_");
-
-                    if (items.Count == 1)
-                    {
-                        var foundLogicalQueryNode = items.SelectMany(p => p.ResultOfVarOfQueryToRelationList).Where(p => p.NameOfVar == targetVarName).Single().FoundExpression;
-
-                        //Make resolver for this one
-                        if(foundLogicalQueryNode.Kind == KindOfLogicalQueryNode.Value)
-                        {
-                            _currentCodeFrame.ValuesStack.Push(foundLogicalQueryNode.Value);
-                        }
-                        else
-                        {
-                            _currentCodeFrame.ValuesStack.Push(foundLogicalQueryNode.Name);
-                        }
-                    }
-                    else
-                    {
-                        throw new NotImplementedException("43AA7A7B-F43E-48BE-ACA0-FAF5C69CAD59");
-                    }                        
-                }
-                else
+                if(value == null)
                 {
                     _currentCodeFrame.ValuesStack.Push(NullValue.Instance);
                 }
-                
+                else
+                {
+                    _currentCodeFrame.ValuesStack.Push(value);
+                }
+
                 _currentCodeFrame.CurrentPosition++;
 
                 return;
@@ -1407,45 +1377,6 @@ namespace SymOntoClay.Core.Internal.CodeExecution
             }
 
             //throw new NotImplementedException("4EB61280-1522-422E-88F8-301A9ACA25AD");
-        }
-
-        [Obsolete("Move this one to Fact builder")]
-        private RuleInstance BuildPropertyQuery(StrongIdentifierValue propertyName, IInstance instance)
-        {
-#if DEBUG
-            Info("F1579C4F-1396-4ED9-8046-255FCB22C5FA", $"propertyName = {propertyName}");
-            Info("15963BBB-40B3-4D3B-BADD-A3A057AD512E", $"instance.Name = {instance.Name}");
-#endif
-
-            var fact = new RuleInstance();
-            var primaryPart = new PrimaryRulePart();
-            fact.PrimaryPart = primaryPart;
-
-            var relation = new LogicalQueryNode()
-            {
-                Kind = KindOfLogicalQueryNode.Relation,
-                Name = propertyName
-            };
-
-            primaryPart.Expression = relation;
-
-            relation.ParamsList = new List<LogicalQueryNode>()
-                {
-                    new LogicalQueryNode()
-                    {
-                        Kind = KindOfLogicalQueryNode.Entity,
-                        Name = instance.Name
-                    },
-                    new LogicalQueryNode()
-                    {
-                        Kind = KindOfLogicalQueryNode.LogicalVar,
-                        Name = NameHelper.CreateName("$_")
-                    }
-                };
-
-            fact.CheckDirty();
-
-            return fact;
         }
 
         private void ProcessClearStack()

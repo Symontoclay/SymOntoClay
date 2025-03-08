@@ -2,6 +2,8 @@
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal.CodeExecution;
 using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.Core.Internal.IndexedData;
 using SymOntoClay.Core.Internal.Instances;
 using SymOntoClay.Monitor.Common;
@@ -24,9 +26,20 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             base.LinkWithOtherBaseContextComponents();
 
             _codeExecutorComponent = _context.CodeExecutor;
+            _logicalSearchResolver = _context.DataResolversFactory.GetLogicalSearchResolver();
+        }
+
+        /// <inheritdoc/>
+        protected override void Init()
+        {
+            base.Init();
+
+            _targetLogicalVarName = _context.CommonNamesStorage.TargetLogicalVarName;
         }
 
         private ICodeExecutorComponent _codeExecutorComponent;
+        private LogicalSearchResolver _logicalSearchResolver;
+        private StrongIdentifierValue _targetLogicalVarName;
 
         public ResolverOptions DefaultOptions { get; private set; } = ResolverOptions.GetDefaultOptions();
 
@@ -210,6 +223,88 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 #endif
 
             return result;
+        }
+
+        public Value ResolveImplicitProperty(IMonitorLogger logger, StrongIdentifierValue propertyName, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return ResolveImplicitProperty(logger, propertyName, instance, localCodeExecutionContext, DefaultOptions);
+        }
+
+        public Value ResolveImplicitProperty(IMonitorLogger logger, StrongIdentifierValue propertyName, IInstance instance, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        {
+            var searchOptions = new LogicalSearchOptions();
+            searchOptions.ResolveVirtualRelationsFromPropetyHook = false;
+            searchOptions.QueryExpression = BuildPropertyQuery(propertyName, instance);
+            searchOptions.LocalCodeExecutionContext = localCodeExecutionContext;
+
+#if DEBUG
+            Info("EFD16AF0-7849-4552-AE5C-C72650148AE0", $"searchOptions.QueryExpression = {searchOptions.QueryExpression.ToHumanizedString()}");
+#endif
+
+            var searchResult = _logicalSearchResolver.Run(Logger, searchOptions);
+
+#if DEBUG
+            Info("2D009976-5734-4A07-83B7-4601D25F52FC", $"searchResult = {searchResult}");
+#endif
+
+            if (searchResult.IsSuccess)
+            {
+                var items = searchResult.Items;
+
+                if (items.Count == 1)
+                {
+                    var foundLogicalQueryNode = items.SelectMany(p => p.ResultOfVarOfQueryToRelationList).Where(p => p.NameOfVar == _targetLogicalVarName).Single().FoundExpression;
+
+                    return LogicalQueryNodeHelper.ToValue(foundLogicalQueryNode);
+                }
+                else
+                {
+                    throw new NotImplementedException("43AA7A7B-F43E-48BE-ACA0-FAF5C69CAD59");
+                }
+            }
+            else
+            {
+                return NullValue.Instance;
+            }
+        }
+
+        [Obsolete("Move this one to Fact builder")]
+        private RuleInstance BuildPropertyQuery(StrongIdentifierValue propertyName, IInstance instance)
+        {
+#if DEBUG
+            Info("F1579C4F-1396-4ED9-8046-255FCB22C5FA", $"propertyName = {propertyName}");
+            Info("15963BBB-40B3-4D3B-BADD-A3A057AD512E", $"instance.Name = {instance.Name}");
+#endif
+
+            var fact = new RuleInstance();
+            var primaryPart = new PrimaryRulePart();
+            fact.PrimaryPart = primaryPart;
+
+            var relation = new LogicalQueryNode()
+            {
+                Kind = KindOfLogicalQueryNode.Relation,
+                Name = propertyName
+            };
+
+            primaryPart.Expression = relation;
+
+            relation.ParamsList = new List<LogicalQueryNode>()
+                {
+                    new LogicalQueryNode()
+                    {
+                        Kind = KindOfLogicalQueryNode.Entity,
+                        Name = instance.Name
+                    },
+                    new LogicalQueryNode()
+                    {
+                        Kind = KindOfLogicalQueryNode.LogicalVar,
+                        Name = NameHelper.CreateName("$_")
+                    }
+                };
+
+            fact.CheckDirty();
+
+            return fact;
         }
 
         private List<WeightedInheritanceResultItemWithStorageInfo<PropertyInstance>> GetRawPropertiesList(IMonitorLogger logger, StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)

@@ -7049,6 +7049,9 @@
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.PropertiesResolver.LinkWithOtherBaseContextComponents">
             <inheritdoc/>
         </member>
+        <member name="M:SymOntoClay.Core.Internal.DataResolvers.PropertiesResolver.Init">
+            <inheritdoc/>
+        </member>
         <member name="M:SymOntoClay.Core.Internal.DataResolvers.ReasonOfFuzzyLogicResolving.ToString">
             <inheritdoc/>
         </member>

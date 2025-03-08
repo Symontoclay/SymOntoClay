@@ -46,6 +46,10 @@ namespace SymOntoClay.Core.Internal
 
         StrongIdentifierValue HostSystemVarName { get; }
 
+        StrongIdentifierValue DiscardLogicalVarName { get; }
+
+        StrongIdentifierValue TargetLogicalVarName { get; }
+
         StrongIdentifierValue SelfName { get; }
 
         StrongIdentifierValue DefaultCtorName { get; }

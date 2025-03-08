@@ -6446,6 +6446,12 @@
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.HostSystemVarName">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.DiscardLogicalVarName">
+            <inheritdoc/>
+        </member>
+        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.TargetLogicalVarName">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.SelfName">
             <inheritdoc/>
         </member>

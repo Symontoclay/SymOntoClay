@@ -54,6 +54,10 @@ namespace SymOntoClay.Core.Internal.CommonNames
 
             HostSystemVarName = NameHelper.CreateName(StandardNamesConstants.HostSystemVarName);
 
+            DiscardLogicalVarName = NameHelper.CreateName(StandardNamesConstants.DiscardLogicalVarName);
+
+            TargetLogicalVarName = NameHelper.CreateName(StandardNamesConstants.TargetLogicalVarName);
+
             SelfName = _context.SelfName;
 
             DefaultCtorName = NameHelper.CreateName(StandardNamesConstants.DefaultCtorName);
@@ -93,6 +97,12 @@ namespace SymOntoClay.Core.Internal.CommonNames
 
         /// <inheritdoc/>
         public StrongIdentifierValue HostSystemVarName { get; private set; }
+
+        /// <inheritdoc/>
+        public StrongIdentifierValue DiscardLogicalVarName { get; private set; }
+
+        /// <inheritdoc/>
+        public StrongIdentifierValue TargetLogicalVarName { get; private set; }
 
         /// <inheritdoc/>
         public StrongIdentifierValue SelfName { get; private set; }

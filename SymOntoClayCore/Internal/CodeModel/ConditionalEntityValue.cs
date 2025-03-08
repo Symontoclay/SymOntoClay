@@ -47,6 +47,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
             _context = context;
             _localContext = localContext;
 
+            _targetLogicalVarName = context.CommonNamesStorage.TargetLogicalVarName;
+
             Expression = entityConditionExpression;
             LogicalQuery = logicalQuery;
             Name = name;
@@ -100,6 +102,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         private LogicalSearchOptions _searchOptions;
         private bool _isOnceResolved;
         private bool _isResolved;
+        private StrongIdentifierValue _targetLogicalVarName;
 
         /// <inheritdoc/>
         public override bool NullValueEquals()
@@ -194,13 +197,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var foundIdsList = new List<StrongIdentifierValue>();
 
-            var targetVarName = "$_";
-
             foreach (var foundResultItem in searchResult.Items)
             {
                 foreach(var resultOfVarOfQueryToRelation in foundResultItem.ResultOfVarOfQueryToRelationList)
                 {
-                    if(resultOfVarOfQueryToRelation.NameOfVar.NameValue == targetVarName && resultOfVarOfQueryToRelation.FoundExpression.Kind == KindOfLogicalQueryNode.Entity)
+                    if(resultOfVarOfQueryToRelation.NameOfVar == _targetLogicalVarName && resultOfVarOfQueryToRelation.FoundExpression.Kind == KindOfLogicalQueryNode.Entity)
                     {
                         foundIdsList.Add(resultOfVarOfQueryToRelation.FoundExpression.Name);
                     }

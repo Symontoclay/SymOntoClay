@@ -26,6 +26,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             base.LinkWithOtherBaseContextComponents();
 
             _codeExecutorComponent = _context.CodeExecutor;
+            _standardCoreFactsBuilder = _context.StandardFactsBuilder;
             _logicalSearchResolver = _context.DataResolversFactory.GetLogicalSearchResolver();
         }
 
@@ -38,6 +39,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         }
 
         private ICodeExecutorComponent _codeExecutorComponent;
+        private IStandardCoreFactsBuilder _standardCoreFactsBuilder;
         private LogicalSearchResolver _logicalSearchResolver;
         private StrongIdentifierValue _targetLogicalVarName;
 
@@ -187,33 +189,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 //Info("57E80E8A-8AF3-486D-A5E9-57B2AB6E8E2A", $"propertyValue = {propertyValue}");
 #endif
 
-                var fact = new RuleInstance();
-                var primaryPart = new PrimaryRulePart();
-                fact.PrimaryPart = primaryPart;
-
-                var relation = new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Relation,
-                    Name = propertyName
-                };
-
-                primaryPart.Expression = relation;
-
-                relation.ParamsList = new List<LogicalQueryNode>()
-                {
-                    new LogicalQueryNode()
-                    {
-                        Kind = KindOfLogicalQueryNode.Entity,
-                        Name = propInstance.Instance.Name
-                    },
-                    new LogicalQueryNode()
-                    {
-                        Kind = KindOfLogicalQueryNode.Value,
-                        Value = propertyValue
-                    }
-                };
-
-                fact.CheckDirty();
+                var relation = _standardCoreFactsBuilder.BuildPropertyVirtualRelationInstance(propertyName, propInstance.Instance.Name, propertyValue);
 
                 result.Add(relation);
             }
@@ -234,17 +210,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
             var searchOptions = new LogicalSearchOptions();
             searchOptions.ResolveVirtualRelationsFromPropetyHook = false;
-            searchOptions.QueryExpression = BuildPropertyQuery(propertyName, instance);
+            searchOptions.QueryExpression = _standardCoreFactsBuilder.BuildImplicitPropertyQueryInstance(propertyName, instance.Name);
             searchOptions.LocalCodeExecutionContext = localCodeExecutionContext;
 
 #if DEBUG
-            Info("EFD16AF0-7849-4552-AE5C-C72650148AE0", $"searchOptions.QueryExpression = {searchOptions.QueryExpression.ToHumanizedString()}");
+            //Info("EFD16AF0-7849-4552-AE5C-C72650148AE0", $"searchOptions.QueryExpression = {searchOptions.QueryExpression.ToHumanizedString()}");
 #endif
 
             var searchResult = _logicalSearchResolver.Run(Logger, searchOptions);
 
 #if DEBUG
-            Info("2D009976-5734-4A07-83B7-4601D25F52FC", $"searchResult = {searchResult}");
+            //Info("2D009976-5734-4A07-83B7-4601D25F52FC", $"searchResult = {searchResult}");
 #endif
 
             if (searchResult.IsSuccess)
@@ -266,45 +242,6 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 return NullValue.Instance;
             }
-        }
-
-        [Obsolete("Move this one to Fact builder")]
-        private RuleInstance BuildPropertyQuery(StrongIdentifierValue propertyName, IInstance instance)
-        {
-#if DEBUG
-            Info("F1579C4F-1396-4ED9-8046-255FCB22C5FA", $"propertyName = {propertyName}");
-            Info("15963BBB-40B3-4D3B-BADD-A3A057AD512E", $"instance.Name = {instance.Name}");
-#endif
-
-            var fact = new RuleInstance();
-            var primaryPart = new PrimaryRulePart();
-            fact.PrimaryPart = primaryPart;
-
-            var relation = new LogicalQueryNode()
-            {
-                Kind = KindOfLogicalQueryNode.Relation,
-                Name = propertyName
-            };
-
-            primaryPart.Expression = relation;
-
-            relation.ParamsList = new List<LogicalQueryNode>()
-                {
-                    new LogicalQueryNode()
-                    {
-                        Kind = KindOfLogicalQueryNode.Entity,
-                        Name = instance.Name
-                    },
-                    new LogicalQueryNode()
-                    {
-                        Kind = KindOfLogicalQueryNode.LogicalVar,
-                        Name = NameHelper.CreateName("$_")
-                    }
-                };
-
-            fact.CheckDirty();
-
-            return fact;
         }
 
         private List<WeightedInheritanceResultItemWithStorageInfo<PropertyInstance>> GetRawPropertiesList(IMonitorLogger logger, StrongIdentifierValue name, List<StorageUsingOptions> storagesList, IList<WeightedInheritanceItem> weightedInheritanceItems)

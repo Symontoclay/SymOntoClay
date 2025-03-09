@@ -36,6 +36,79 @@ namespace SymOntoClay.StandardFacts
     public class StandardFactsBuilder : IStandardFactsBuilder
     {
         /// <inheritdoc/>
+        public virtual LogicalQueryNode BuildPropertyVirtualRelationInstance(StrongIdentifierValue propertyName, StrongIdentifierValue propertyInstanceName, Value propertyValue)
+        {
+            var fact = new RuleInstance()
+            {
+                Name = NameHelper.CreateRuleOrFactName()
+            };
+            var primaryPart = new PrimaryRulePart();
+            fact.PrimaryPart = primaryPart;
+
+            var relation = new LogicalQueryNode()
+            {
+                Kind = KindOfLogicalQueryNode.Relation,
+                Name = propertyName
+            };
+
+            primaryPart.Expression = relation;
+
+            relation.ParamsList = new List<LogicalQueryNode>()
+                {
+                    new LogicalQueryNode()
+                    {
+                        Kind = KindOfLogicalQueryNode.Entity,
+                        Name = propertyInstanceName
+                    },
+                    new LogicalQueryNode()
+                    {
+                        Kind = KindOfLogicalQueryNode.Value,
+                        Value = propertyValue
+                    }
+                };
+
+            fact.CheckDirty();
+
+            return relation;
+        }
+
+        public virtual RuleInstance BuildImplicitPropertyQueryInstance(StrongIdentifierValue propertyName, StrongIdentifierValue propertyInstanceName)
+        {
+            var fact = new RuleInstance()
+            {
+                Name = NameHelper.CreateRuleOrFactName()
+            };
+            var primaryPart = new PrimaryRulePart();
+            fact.PrimaryPart = primaryPart;
+
+            var relation = new LogicalQueryNode()
+            {
+                Kind = KindOfLogicalQueryNode.Relation,
+                Name = propertyName
+            };
+
+            primaryPart.Expression = relation;
+
+            relation.ParamsList = new List<LogicalQueryNode>()
+                {
+                    new LogicalQueryNode()
+                    {
+                        Kind = KindOfLogicalQueryNode.Entity,
+                        Name = propertyInstanceName
+                    },
+                    new LogicalQueryNode()
+                    {
+                        Kind = KindOfLogicalQueryNode.LogicalVar,
+                        Name = NameHelper.CreateName("$_")
+                    }
+                };
+
+            fact.CheckDirty();
+
+            return fact;
+        }
+
+        /// <inheritdoc/>
         public virtual string BuildSayFactString(string selfId, string factStr)
         {
             var sb = new StringBuilder();
@@ -318,7 +391,7 @@ namespace SymOntoClay.StandardFacts
         }
 
         /// <inheritdoc/>
-        public string BuildDeadFactString(string selfId)
+        public virtual string BuildDeadFactString(string selfId)
         {
             var sb = new StringBuilder();
 
@@ -330,7 +403,7 @@ namespace SymOntoClay.StandardFacts
         }
 
         /// <inheritdoc/>
-        public RuleInstance BuildDeadFactInstance(string selfId)
+        public virtual RuleInstance BuildDeadFactInstance(string selfId)
         {
             var result = new RuleInstance()
             {
@@ -367,7 +440,7 @@ namespace SymOntoClay.StandardFacts
         }
 
         /// <inheritdoc/>
-        public string BuildStopFactString(string selfId)
+        public virtual string BuildStopFactString(string selfId)
         {
             var sb = new StringBuilder();
 
@@ -379,7 +452,7 @@ namespace SymOntoClay.StandardFacts
         }
 
         /// <inheritdoc/>
-        public RuleInstance BuildStopFactInstance(string selfId)
+        public virtual RuleInstance BuildStopFactInstance(string selfId)
         {
             var result = new RuleInstance()
             {
@@ -416,7 +489,7 @@ namespace SymOntoClay.StandardFacts
         }
 
         /// <inheritdoc/>
-        public string BuildWalkFactString(string selfId)
+        public virtual string BuildWalkFactString(string selfId)
         {
             var sb = new StringBuilder();
 
@@ -428,7 +501,7 @@ namespace SymOntoClay.StandardFacts
         }
 
         /// <inheritdoc/>
-        public RuleInstance BuildWalkFactInstance(string selfId)
+        public virtual RuleInstance BuildWalkFactInstance(string selfId)
         {
             var result = new RuleInstance()
             {
@@ -465,13 +538,13 @@ namespace SymOntoClay.StandardFacts
         }
 
         /// <inheritdoc/>
-        public string BuildWalkSoundFactString()
+        public virtual string BuildWalkSoundFactString()
         {
             return "{: act(someone, walk) :}";
         }
 
         /// <inheritdoc/>
-        public RuleInstance BuildWalkSoundFactInstance()
+        public virtual RuleInstance BuildWalkSoundFactInstance()
         {
             var result = new RuleInstance()
             {
@@ -508,7 +581,7 @@ namespace SymOntoClay.StandardFacts
         }
 
         /// <inheritdoc/>
-        public string BuildRunFactString(string selfId)
+        public virtual string BuildRunFactString(string selfId)
         {
             var sb = new StringBuilder();
 
@@ -520,7 +593,7 @@ namespace SymOntoClay.StandardFacts
         }
 
         /// <inheritdoc/>
-        public RuleInstance BuildRunFactInstance(string selfId)
+        public virtual RuleInstance BuildRunFactInstance(string selfId)
         {
             var result = new RuleInstance()
             {
@@ -557,13 +630,13 @@ namespace SymOntoClay.StandardFacts
         }
 
         /// <inheritdoc/>
-        public string BuildRunSoundFactString()
+        public virtual string BuildRunSoundFactString()
         {
             return "{: act(someone, run) :}";
         }
         
         /// <inheritdoc/>
-        public RuleInstance BuildRunSoundFactInstance()
+        public virtual RuleInstance BuildRunSoundFactInstance()
         {
             var result = new RuleInstance()
             {
@@ -600,7 +673,7 @@ namespace SymOntoClay.StandardFacts
         }
 
         /// <inheritdoc/>
-        public string BuildHoldFactString(string selfId, string heldThingId)
+        public virtual string BuildHoldFactString(string selfId, string heldThingId)
         {
             var sb = new StringBuilder();
 
@@ -614,7 +687,7 @@ namespace SymOntoClay.StandardFacts
         }
 
         /// <inheritdoc/>
-        public RuleInstance BuildHoldFactInstance(string selfId, string heldThingId)
+        public virtual RuleInstance BuildHoldFactInstance(string selfId, string heldThingId)
         {
             var result = new RuleInstance()
             {
@@ -651,7 +724,7 @@ namespace SymOntoClay.StandardFacts
         }
 
         /// <inheritdoc/>
-        public string BuildShootFactString(string selfId)
+        public virtual string BuildShootFactString(string selfId)
         {
             var sb = new StringBuilder();
 
@@ -663,7 +736,7 @@ namespace SymOntoClay.StandardFacts
         }
 
         /// <inheritdoc/>
-        public RuleInstance BuildShootFactInstance(string selfId)
+        public virtual RuleInstance BuildShootFactInstance(string selfId)
         {
             var result = new RuleInstance()
             {
@@ -700,13 +773,13 @@ namespace SymOntoClay.StandardFacts
         }
 
         /// <inheritdoc/>
-        public string BuildShootSoundFactString()
+        public virtual string BuildShootSoundFactString()
         {
             return "{: act(someone, shoot) :}";
         }
 
         /// <inheritdoc/>
-        public RuleInstance BuildShootSoundFactInstance()
+        public virtual RuleInstance BuildShootSoundFactInstance()
         {
             var result = new RuleInstance()
             {
@@ -743,7 +816,7 @@ namespace SymOntoClay.StandardFacts
         }
 
         /// <inheritdoc/>
-        public string BuildReadyForShootFactString(string selfId)
+        public virtual string BuildReadyForShootFactString(string selfId)
         {
             var sb = new StringBuilder();
 
@@ -755,7 +828,7 @@ namespace SymOntoClay.StandardFacts
         }
 
         /// <inheritdoc/>
-        public RuleInstance BuildReadyForShootFactInstance(string selfId)
+        public virtual RuleInstance BuildReadyForShootFactInstance(string selfId)
         {
             var result = new RuleInstance()
             {
@@ -792,7 +865,7 @@ namespace SymOntoClay.StandardFacts
         }
 
         /// <inheritdoc/>
-        public string BuildSeeFactString(string seenObjId)
+        public virtual string BuildSeeFactString(string seenObjId)
         {
             var sb = new StringBuilder();
             sb.Append("{: see(I, ");
@@ -803,7 +876,7 @@ namespace SymOntoClay.StandardFacts
         }
 
         /// <inheritdoc/>
-        public RuleInstance BuildSeeFactInstance(string seenObjId)
+        public virtual RuleInstance BuildSeeFactInstance(string seenObjId)
         {
             var result = new RuleInstance()
             {
@@ -840,7 +913,7 @@ namespace SymOntoClay.StandardFacts
         }
 
         /// <inheritdoc/>
-        public string BuildFocusFactString(string seenObjId)
+        public virtual string BuildFocusFactString(string seenObjId)
         {
             var sb = new StringBuilder();
             sb.Append("{: focus(I, ");
@@ -851,7 +924,7 @@ namespace SymOntoClay.StandardFacts
         }
 
         /// <inheritdoc/>
-        public RuleInstance BuildFocusFactInstance(string seenObjId)
+        public virtual RuleInstance BuildFocusFactInstance(string seenObjId)
         {
             var result = new RuleInstance()
             {
@@ -888,30 +961,36 @@ namespace SymOntoClay.StandardFacts
         }
 
         /// <inheritdoc/>
-        public string BuildDistanceFactString(string objId, float distance)
+        public virtual string BuildDistanceFactString(string objId, float distance)
         {
             return NBuildDistanceFactString(objId, distance.ToString(CultureInfo.InvariantCulture));
         }
 
         /// <inheritdoc/>
-        public string BuildDistanceFactString(string objId, double distance)
+        public virtual string BuildDistanceFactString(string objId, double distance)
         {
             return NBuildDistanceFactString(objId, distance.ToString(CultureInfo.InvariantCulture));
         }
 
-        private string NBuildDistanceFactString(string objId, string distanceStrValue)
+        protected virtual string NBuildDistanceFactString(string objId, string distanceStrValue)
         {
             return $"distance(I, {objId}, {distanceStrValue})";
         }
 
         /// <inheritdoc/>
-        public RuleInstance BuildDistanceFactInstance(string objId, float distance)
+        public virtual RuleInstance BuildDistanceFactInstance(string objId, float distance)
         {
-            return BuildDistanceFactInstance(objId, (double)distance);
+            return BuildDistanceFactInstance(objId, new NumberValue(distance));
         }
 
         /// <inheritdoc/>
-        public RuleInstance BuildDistanceFactInstance(string objId, double distance)
+        public virtual RuleInstance BuildDistanceFactInstance(string objId, double distance)
+        {
+            return BuildDistanceFactInstance(objId, new NumberValue(distance));
+        }
+
+        /// <inheritdoc/>
+        public virtual RuleInstance BuildDistanceFactInstance(string objId, Value distance)
         {
             var result = new RuleInstance()
             {
@@ -943,7 +1022,7 @@ namespace SymOntoClay.StandardFacts
                 new LogicalQueryNode()
                 {
                     Kind = KindOfLogicalQueryNode.Value,
-                    Value = new NumberValue(distance)
+                    Value = distance
                 }
             };
 
@@ -953,7 +1032,7 @@ namespace SymOntoClay.StandardFacts
         }
 
         /// <inheritdoc/>
-        public string BuildDefaultInheritanceFactString(string obj, string superObj)
+        public virtual string BuildDefaultInheritanceFactString(string obj, string superObj)
         {
             var sb = new StringBuilder();
             sb.Append("{: is (");

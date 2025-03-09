@@ -24,12 +24,9 @@ using NUnit.Framework;
 using SymOntoClay.BaseTestLib;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
+using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.StandardFacts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SymOntoClay.UnityAsset.Core.Tests
 {
@@ -55,6 +52,24 @@ namespace SymOntoClay.UnityAsset.Core.Tests
         private ComplexTestEngineContext _testEngineContext;
         private IEngineContext _engineContext;
         private IStandardFactsBuilder _standardFactsBuilder;
+
+        [Test]
+        [Parallelizable]
+        public void BuildPropertyVirtualRelationInstance()
+        {
+            var relation = _standardFactsBuilder.BuildPropertyVirtualRelationInstance(NameHelper.CreateName("someprop"), NameHelper.CreateName("#123"), new NumberValue(16));
+
+            Assert.AreEqual("someprop(#123,16)", relation.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+        }
+
+        [Test]
+        [Parallelizable]
+        public void BuildImplicitPropertyQueryInstance()
+        {
+            var fact = _standardFactsBuilder.BuildImplicitPropertyQueryInstance(NameHelper.CreateName("someprop"), NameHelper.CreateName("#123"));
+
+            Assert.AreEqual("{: >: { someprop(#123,$_) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+        }
 
         [Test]
         [Parallelizable]

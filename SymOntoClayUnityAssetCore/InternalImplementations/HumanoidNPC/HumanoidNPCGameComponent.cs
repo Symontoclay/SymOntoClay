@@ -81,6 +81,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC
                 coreEngineSettings.AppFile = settings.LogicFile;
                 coreEngineSettings.MonitorNode = MonitorNode;
                 coreEngineSettings.SyncContext = worldContext.SyncContext;
+                coreEngineSettings.StandardFactsBuilder = worldContext.StandardFactsBuilder;
                 
                 coreEngineSettings.ModulesStorage = worldContext.ModulesStorage;
                 coreEngineSettings.ParentStorage = worldContext.StandaloneStorage;

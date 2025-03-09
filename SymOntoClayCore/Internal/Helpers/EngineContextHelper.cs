@@ -201,6 +201,7 @@ namespace SymOntoClay.Core.Internal.Helpers
         private static void BaseInitBaseCoreContext(BaseCoreContext context, BaseCoreSettings settings, List<IBaseContextComponent> baseContextComponents)
         {
             context.DateTimeProvider = settings.DateTimeProvider;
+            context.StandardFactsBuilder = settings.StandardFactsBuilder;
 
             context.CancellationTokenSource = new CancellationTokenSource();
             context.LinkedCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(context.CancellationTokenSource.Token, settings.CancellationToken);

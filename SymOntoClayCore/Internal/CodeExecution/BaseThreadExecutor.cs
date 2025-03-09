@@ -1334,7 +1334,7 @@ namespace SymOntoClay.Core.Internal.CodeExecution
                 var value = _propertiesResolver.ResolveImplicitProperty(Logger, propertyName, _currentInstance, _currentCodeFrame.LocalContext);
 
 #if DEBUG
-                Info("C383590A-6041-4175-8CF4-F478E552C5E6", $"value = {value}");
+                //Info("C383590A-6041-4175-8CF4-F478E552C5E6", $"value = {value}");
 #endif
 
                 if(value == null)

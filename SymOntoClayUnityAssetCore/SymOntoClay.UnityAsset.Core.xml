@@ -1643,6 +1643,14 @@
             <param name="distance">The distance value.</param>
             <returns>Instance of the built fact.</returns>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildDistanceFactInstance(System.String,SymOntoClay.Core.Internal.CodeModel.Value)">
+            <summary>
+            Builds fact about the distance between the NPC and some object.
+            </summary>
+            <param name="objId">Id of the object.</param>
+            <param name="distance">The distance value.</param>
+            <returns>Instance of the built fact.</returns>
+        </member>
         <member name="T:SymOntoClay.UnityAsset.Core.IWorld">
             <summary>
             Represents core of a game world.

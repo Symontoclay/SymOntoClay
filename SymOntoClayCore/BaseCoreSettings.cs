@@ -22,10 +22,7 @@ SOFTWARE.*/
 
 using SymOntoClay.Common;
 using SymOntoClay.Common.DebugHelpers;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
-using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
@@ -39,6 +36,8 @@ namespace SymOntoClay.Core
         public IMonitorNode MonitorNode { get; set; }
 
         public IDateTimeProvider DateTimeProvider { get; set; }
+
+        public IStandardCoreFactsBuilder StandardFactsBuilder { get; set; }
 
         public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
 
@@ -70,6 +69,7 @@ namespace SymOntoClay.Core
 
             sb.PrintExisting(n, nameof(MonitorNode), MonitorNode);
             sb.PrintExisting(n, nameof(DateTimeProvider), DateTimeProvider);
+            sb.PrintExisting(n, nameof(StandardFactsBuilder), StandardFactsBuilder);
             sb.PrintExisting(n, nameof(CancellationToken), CancellationToken);
             sb.PrintObjProp(n, nameof(ThreadingSettings), ThreadingSettings);
 

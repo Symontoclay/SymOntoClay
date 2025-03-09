@@ -358,6 +358,9 @@
         <member name="P:SymOntoClay.Core.Internal.BaseCoreContext.DateTimeProvider">
             <inheritdoc/>
         </member>
+        <member name="P:SymOntoClay.Core.Internal.BaseCoreContext.StandardFactsBuilder">
+            <inheritdoc/>
+        </member>
         <member name="P:SymOntoClay.Core.Internal.BaseCoreContext.AsyncEventsThreadPool">
             <inheritdoc/>
         </member>
@@ -6446,7 +6449,7 @@
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.HostSystemVarName">
             <inheritdoc/>
         </member>
-        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.DiscardLogicalVarName">
+        <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.AnonymousLogicalVarName">
             <inheritdoc/>
         </member>
         <member name="P:SymOntoClay.Core.Internal.CommonNames.CommonNamesStorage.TargetLogicalVarName">

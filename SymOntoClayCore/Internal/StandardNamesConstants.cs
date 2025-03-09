@@ -41,7 +41,7 @@ namespace SymOntoClay.Core.Internal
         public const string ConditionalEntityTypeName = "conditional entity";
         public const string EntityTypeName = "entity";
         public const string SequenceTypeName = "sequence";
-        public const string DiscardLogicalVarName = "$_";
+        public const string AnonymousLogicalVarName = "$";
         public const string TargetLogicalVarName = "$_";
         public const string SelfSystemVarName = "@@self";
         public const string HostSystemVarName = "@@host";

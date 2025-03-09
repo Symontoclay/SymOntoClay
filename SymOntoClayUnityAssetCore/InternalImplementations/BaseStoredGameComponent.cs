@@ -20,7 +20,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using NLog;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Monitor.Common;
@@ -29,7 +28,6 @@ using SymOntoClay.UnityAsset.Core.Internal.HostSupport;
 using SymOntoClay.UnityAsset.Core.Internal.SoundPerception;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core.InternalImplementations
 {
@@ -48,6 +46,7 @@ namespace SymOntoClay.UnityAsset.Core.InternalImplementations
                 standaloneStorageSettings.IsWorld = false;
                 standaloneStorageSettings.AppFile = settings.HostFile;
                 standaloneStorageSettings.MonitorNode = MonitorNode;
+                standaloneStorageSettings.StandardFactsBuilder = worldContext.StandardFactsBuilder;
                 
                 standaloneStorageSettings.ModulesStorage = worldContext.ModulesStorage;
                 standaloneStorageSettings.ParentStorage = worldContext.StandaloneStorage;

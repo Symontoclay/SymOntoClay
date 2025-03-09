@@ -25,6 +25,8 @@ using SymOntoClay.BaseTestLib;
 using SymOntoClay.Core;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal;
+using SymOntoClay.Core.Internal.CodeModel;
+using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Helpers;
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
@@ -68,8 +70,10 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("8DED6357-C08E-4FF4-80ED-5AC352FA45C9", "Begin");
 
-            Case29_1();
-            Case29();
+            Case31();
+            //Case30();
+            //Case29_1();
+            //Case29();
             //Case28();
             //Case27();
             //Case26();
@@ -100,6 +104,22 @@ namespace TestSandbox.Handlers
             //Case1();
 
             _logger.Info("624BEA0D-792E-4DE2-8128-AF4547977A7F", "End");
+        }
+
+        private void Case31()
+        {
+            var fact = _standardFactsBuilder.BuildImplicitPropertyQueryInstance(NameHelper.CreateName("someprop"), NameHelper.CreateName("#123"));
+
+            _logger.Info("5D63A028-F53B-4575-ACFE-E5E5D1353DF3", $"fact = '{fact.ToHumanizedString()}'");
+            _logger.Info("87B6F264-F522-4248-8DED-FDEFB52D47CB", $"fact = '{fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}'");
+        }
+
+        private void Case30()
+        {
+            var fact = _standardFactsBuilder.BuildPropertyVirtualRelationInstance(NameHelper.CreateName("someprop"), NameHelper.CreateName("#123"), new NumberValue(16));
+
+            _logger.Info("5D63A028-F53B-4575-ACFE-E5E5D1353DF3", $"fact = '{fact.ToHumanizedString()}'");
+            _logger.Info("87B6F264-F522-4248-8DED-FDEFB52D47CB", $"fact = '{fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}'");
         }
 
         private void Case29_1()

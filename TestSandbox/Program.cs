@@ -103,7 +103,7 @@ namespace TestSandbox
             //TstGetFullBaseTypesListInCSharpReflection();
             //TstConvertFactToImperativeCode();
             //TstFactToHtml();
-            TstStandardFactsBuilder();
+            //TstStandardFactsBuilder();
             //TstStandardFactsBuilderGetTargetVarNameHandler();
             //TstShieldString();
             //TstSampleSpeechSynthesis();
@@ -168,7 +168,7 @@ namespace TestSandbox
             //TstMonoBehaviorTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            //TstTasksHandler();
+            TstTasksHandler();
             //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 

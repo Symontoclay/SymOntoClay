@@ -274,6 +274,14 @@ namespace SymOntoClay.UnityAsset.Core
         /// <returns>Instance of the built fact.</returns>
         RuleInstance BuildDistanceFactInstance(string objId, double distance);
 
+        /// <summary>
+        /// Builds fact about the distance between the NPC and some object.
+        /// </summary>
+        /// <param name="objId">Id of the object.</param>
+        /// <param name="distance">The distance value.</param>
+        /// <returns>Instance of the built fact.</returns>
+        RuleInstance BuildDistanceFactInstance(string objId, Value distance);
+
         string BuildDefaultInheritanceFactString(string obj, string superObj);
     }
 }

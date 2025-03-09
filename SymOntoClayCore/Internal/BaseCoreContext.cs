@@ -51,6 +51,9 @@ namespace SymOntoClay.Core.Internal
         public IDateTimeProvider DateTimeProvider { get; set; }
 
         /// <inheritdoc/>
+        public IStandardCoreFactsBuilder StandardFactsBuilder { get; set; }
+
+        /// <inheritdoc/>
         public ICustomThreadPool AsyncEventsThreadPool { get; set; }
         public CancellationTokenSource CancellationTokenSource { get; set; }
         public CancellationTokenSource LinkedCancellationTokenSource { get; set; }

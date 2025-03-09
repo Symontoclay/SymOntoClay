@@ -36,6 +36,7 @@ namespace SymOntoClay.Core.Internal
         IMonitorLogger Logger { get; }
         IMonitorNode MonitorNode { get; }
         ICompiler Compiler { get; }
+        IStandardCoreFactsBuilder StandardFactsBuilder { get; }
         IDateTimeProvider DateTimeProvider { get; }
         ICustomThreadPool AsyncEventsThreadPool { get; }
         CancellationToken GetCancellationToken();

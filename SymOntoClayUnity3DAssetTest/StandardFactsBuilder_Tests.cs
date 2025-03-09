@@ -333,5 +333,41 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("{: >: { focus(i,#123) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
+
+        [Test]
+        [Parallelizable]
+        public void BuildDistanceFactString_Case1()
+        {
+            var factStr = _standardFactsBuilder.BuildDistanceFactString("#123", 12);
+
+            Assert.AreEqual("distance(I, #123, 12)", factStr);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void BuildDistanceFactInstance_Case1()
+        {
+            var fact = _standardFactsBuilder.BuildDistanceFactInstance("#123", 12);
+
+            Assert.AreEqual("{: >: { distance(i,#123,12) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+        }
+
+        [Test]
+        [Parallelizable]
+        public void BuildDistanceFactString_Case2()
+        {
+            var factStr = _standardFactsBuilder.BuildDistanceFactString("#123", 12.6);
+
+            Assert.AreEqual("distance(I, #123, 12.6)", factStr);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void BuildDistanceFactInstance_Case2()
+        {
+            var fact = _standardFactsBuilder.BuildDistanceFactInstance("#123", 12.6);
+
+            Assert.AreEqual("{: >: { distance(i,#123,12.6) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+        }
     }
 }

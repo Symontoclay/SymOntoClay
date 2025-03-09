@@ -28,6 +28,7 @@ using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace SymOntoClay.StandardFacts
@@ -878,6 +879,71 @@ namespace SymOntoClay.StandardFacts
                 {
                     Kind = KindOfLogicalQueryNode.Concept,
                     Name = NameHelper.CreateName(seenObjId)
+                }
+            };
+
+            result.CheckDirty();
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public string BuildDistanceFactString(string objId, float distance)
+        {
+            return NBuildDistanceFactString(objId, distance.ToString(CultureInfo.InvariantCulture));
+        }
+
+        /// <inheritdoc/>
+        public string BuildDistanceFactString(string objId, double distance)
+        {
+            return NBuildDistanceFactString(objId, distance.ToString(CultureInfo.InvariantCulture));
+        }
+
+        private string NBuildDistanceFactString(string objId, string distanceStrValue)
+        {
+            return $"distance(I, {objId}, {distanceStrValue})";
+        }
+
+        /// <inheritdoc/>
+        public RuleInstance BuildDistanceFactInstance(string objId, float distance)
+        {
+            return BuildDistanceFactInstance(objId, (double)distance);
+        }
+
+        /// <inheritdoc/>
+        public RuleInstance BuildDistanceFactInstance(string objId, double distance)
+        {
+            var result = new RuleInstance()
+            {
+                Name = NameHelper.CreateRuleOrFactName()
+            };
+            var primaryPart = new PrimaryRulePart();
+            result.PrimaryPart = primaryPart;
+
+            var sayRelation = new LogicalQueryNode()
+            {
+                Kind = KindOfLogicalQueryNode.Relation,
+                Name = NameHelper.CreateName("distance")
+            };
+
+            primaryPart.Expression = sayRelation;
+
+            sayRelation.ParamsList = new List<LogicalQueryNode>()
+            {
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Entity,
+                    Name = NameHelper.CreateName("I")
+                },
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Concept,
+                    Name = NameHelper.CreateName(objId)
+                },
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Value,
+                    Value = new NumberValue(distance)
                 }
             };
 

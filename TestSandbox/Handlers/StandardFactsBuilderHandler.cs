@@ -68,7 +68,9 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("8DED6357-C08E-4FF4-80ED-5AC352FA45C9", "Begin");
 
-            Case28();
+            Case29_1();
+            Case29();
+            //Case28();
             //Case27();
             //Case26();
             //Case25();
@@ -98,6 +100,30 @@ namespace TestSandbox.Handlers
             //Case1();
 
             _logger.Info("624BEA0D-792E-4DE2-8128-AF4547977A7F", "End");
+        }
+
+        private void Case29_1()
+        {
+            var fact = _standardFactsBuilder.BuildDistanceFactInstance("#123", 12.6);
+
+            _logger.Info("5D63A028-F53B-4575-ACFE-E5E5D1353DF3", $"fact = '{fact.ToHumanizedString()}'");
+            _logger.Info("87B6F264-F522-4248-8DED-FDEFB52D47CB", $"fact = '{fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}'");
+
+            var factStr = _standardFactsBuilder.BuildDistanceFactString("#123", 12.6);
+
+            _logger.Info("2675EC5A-AB19-4543-9B11-740F6A28FF62", $"factStr = '{factStr}'");
+        }
+
+        private void Case29()
+        {
+            var fact = _standardFactsBuilder.BuildDistanceFactInstance("#123", 12);
+
+            _logger.Info("5D63A028-F53B-4575-ACFE-E5E5D1353DF3", $"fact = '{fact.ToHumanizedString()}'");
+            _logger.Info("87B6F264-F522-4248-8DED-FDEFB52D47CB", $"fact = '{fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}'");
+
+            var factStr = _standardFactsBuilder.BuildDistanceFactString("#123", 12);
+
+            _logger.Info("2675EC5A-AB19-4543-9B11-740F6A28FF62", $"factStr = '{factStr}'");
         }
 
         private void Case28()

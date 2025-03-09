@@ -35,7 +35,7 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         /// <param name="selfId">Id of the NPC.</param>
         /// <param name="factStr">Fact which is said by the NPC.</param>
-        /// <returns>String that represents built fact.</returns>
+        /// <returns>String that represents the built fact.</returns>
         string BuildSayFactString(string selfId, string factStr);
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         /// <param name="selfId">Id of the NPC.</param>
         /// <param name="fact">Fact which is said by the NPC.</param>
-        /// <returns>Instance of built fact.</returns>
+        /// <returns>Instance of the built fact.</returns>
         RuleInstance BuildSayFactInstance(string selfId, RuleInstance fact);
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace SymOntoClay.UnityAsset.Core
         /// <param name="distance">Distance to sound source.</param>
         /// <param name="directionToPosition">Direction to to sound source.</param>
         /// <param name="factStr">Fact which represents a sound.</param>
-        /// <returns>String that represents built fact.</returns>
+        /// <returns>String that represents the built fact.</returns>
         string BuildSoundFactString(double distance, float directionToPosition, string factStr);
 
         /// <summary>
@@ -61,101 +61,101 @@ namespace SymOntoClay.UnityAsset.Core
         /// <param name="distance">Distance to sound source.</param>
         /// <param name="directionToPosition">Direction to to sound source.</param>
         /// <param name="fact">Fact which represents a sound.</param>
-        /// <returns>Instance of built fact.</returns>
+        /// <returns>Instance of the built fact.</returns>
         RuleInstance BuildSoundFactInstance(double distance, float directionToPosition, RuleInstance fact);
 
         /// <summary>
         /// Builds fact that the NPC is alive.
         /// </summary>
         /// <param name="selfId">Id of the NPC.</param>
-        /// <returns>String that represents built fact.</returns>
+        /// <returns>String that represents the built fact.</returns>
         string BuildAliveFactString(string selfId);
 
         /// <summary>
         /// Builds fact that the NPC is alive.
         /// </summary>
         /// <param name="selfId">Id of the NPC.</param>
-        /// <returns>Instance of built fact.</returns>
+        /// <returns>Instance of the built fact.</returns>
         RuleInstance BuildAliveFactInstance(string selfId);
 
         /// <summary>
         /// Builds fact that the NPC is dead.
         /// </summary>
         /// <param name="selfId">Id of the NPC.</param>
-        /// <returns>String that represents built fact.</returns>
+        /// <returns>String that represents the built fact.</returns>
         string BuildDeadFactString(string selfId);
 
         /// <summary>
         /// Builds fact that the NPC is dead.
         /// </summary>
         /// <param name="selfId">Id of the NPC.</param>
-        /// <returns>Instance of built fact.</returns>
+        /// <returns>Instance of the built fact.</returns>
         RuleInstance BuildDeadFactInstance(string selfId);
 
         /// <summary>
         /// Builds fact that the NPC has stopped itself.
         /// </summary>
         /// <param name="selfId">Id of the NPC.</param>
-        /// <returns>String that represents built fact.</returns>
+        /// <returns>String that represents the built fact.</returns>
         string BuildStopFactString(string selfId);
 
         /// <summary>
         /// Builds fact that the NPC has stopped itself.
         /// </summary>
         /// <param name="selfId">Id of the NPC.</param>
-        /// <returns>Instance of built fact.</returns>
+        /// <returns>Instance of the built fact.</returns>
         RuleInstance BuildStopFactInstance(string selfId);
 
         /// <summary>
         /// Builds fact that the NPC has started walking.
         /// </summary>
         /// <param name="selfId">Id of the NPC.</param>
-        /// <returns>String that represents built fact.</returns>
+        /// <returns>String that represents the built fact.</returns>
         string BuildWalkFactString(string selfId);
 
         /// <summary>
         /// Builds fact that the NPC has started walking.
         /// </summary>
         /// <param name="selfId">Id of the NPC.</param>
-        /// <returns>Instance of built fact.</returns>
+        /// <returns>Instance of the built fact.</returns>
         RuleInstance BuildWalkFactInstance(string selfId);
 
         /// <summary>
         /// Builds fact which represents sound of someone's walking.
         /// </summary>
-        /// <returns>String that represents built fact.</returns>
+        /// <returns>String that represents the built fact.</returns>
         string BuildWalkSoundFactString();
 
         /// <summary>
         /// Builds fact which represents sound of someone's walking.
         /// </summary>
-        /// <returns>Instance of built fact.</returns>
+        /// <returns>Instance of the built fact.</returns>
         RuleInstance BuildWalkSoundFactInstance();
 
         /// <summary>
         /// Builds fact that the NPC has started running.
         /// </summary>
         /// <param name="selfId">Id of the NPC.</param>
-        /// <returns>String that represents built fact.</returns>
+        /// <returns>String that represents the built fact.</returns>
         string BuildRunFactString(string selfId);
 
         /// <summary>
         /// Builds fact that the NPC has started running.
         /// </summary>
         /// <param name="selfId">Id of the NPC.</param>
-        /// <returns>Instance of built fact.</returns>
+        /// <returns>Instance of built the fact.</returns>
         RuleInstance BuildRunFactInstance(string selfId);
 
         /// <summary>
         /// Builds fact which represents sound of someone's running.
         /// </summary>
-        /// <returns>String that represents built fact.</returns>
+        /// <returns>String that represents the built fact.</returns>
         string BuildRunSoundFactString();
 
         /// <summary>
         /// Builds fact which represents sound of someone's running.
         /// </summary>
-        /// <returns>Instance of built fact.</returns>
+        /// <returns>Instance of the built fact.</returns>
         RuleInstance BuildRunSoundFactInstance();
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         /// <param name="selfId">Id of the NPC.</param>
         /// <param name="heldThingId">Id of held thing.</param>
-        /// <returns>String that represents built fact.</returns>
+        /// <returns>String that represents the built fact.</returns>
         string BuildHoldFactString(string selfId, string heldThingId);
 
         /// <summary>
@@ -171,76 +171,108 @@ namespace SymOntoClay.UnityAsset.Core
         /// </summary>
         /// <param name="selfId">Id of the NPC.</param>
         /// <param name="heldThingId">Id of held thing.</param>
-        /// <returns>Instance of built fact.</returns>
+        /// <returns>Instance of the built fact.</returns>
         RuleInstance BuildHoldFactInstance(string selfId, string heldThingId);
 
         /// <summary>
         /// Builds fact that the NPC shoots.
         /// </summary>
         /// <param name="selfId">Id of the NPC.</param>
-        /// <returns>String that represents built fact.</returns>
+        /// <returns>String that represents the built fact.</returns>
         string BuildShootFactString(string selfId);
 
         /// <summary>
         /// Builds fact that the NPC shoots.
         /// </summary>
         /// <param name="selfId">Id of the NPC.</param>
-        /// <returns>Instance of built fact.</returns>
+        /// <returns>Instance of the built fact.</returns>
         RuleInstance BuildShootFactInstance(string selfId);
 
         /// <summary>
         /// Builds fact which represents sound of someone's shooting.
         /// </summary>
-        /// <returns>String that represents built fact.</returns>
+        /// <returns>String that represents the built fact.</returns>
         string BuildShootSoundFactString();
 
         /// <summary>
         /// Builds fact which represents sound of someone's shooting.
         /// </summary>
-        /// <returns>Instance of built fact.</returns>
+        /// <returns>Instance of the built fact.</returns>
         RuleInstance BuildShootSoundFactInstance();
 
         /// <summary>
         /// Builds fact that the NPC is ready for shooting.
         /// </summary>
         /// <param name="selfId">Id of the NPC.</param>
-        /// <returns>String that represents built fact.</returns>
+        /// <returns>String that represents the built fact.</returns>
         string BuildReadyForShootFactString(string selfId);
 
         /// <summary>
         /// Builds fact that the NPC is ready for shooting.
         /// </summary>
         /// <param name="selfId">Id of the NPC.</param>
-        /// <returns>Instance of built fact.</returns>
+        /// <returns>Instance of the built fact.</returns>
         RuleInstance BuildReadyForShootFactInstance(string selfId);
 
         /// <summary>
         /// Builds fact that the NPC sees something or somebody.
         /// </summary>
         /// <param name="seenObjId">Id of the seen object.</param>
-        /// <returns>String that represents built fact.</returns>
+        /// <returns>String that represents the built fact.</returns>
         string BuildSeeFactString(string seenObjId);
 
         /// <summary>
         /// Builds fact that the NPC sees something or somebody.
         /// </summary>
         /// <param name="seenObjId">Id of the seen object.</param>
-        /// <returns>Instance of built fact.</returns>
+        /// <returns>Instance of the built fact.</returns>
         RuleInstance BuildSeeFactInstance(string seenObjId);
 
         /// <summary>
         /// Builds fact that there is something or somebody in the center of their field of view.
         /// </summary>
         /// <param name="seenObjId">Id of the seen object.</param>
-        /// <returns>String that represents built fact.</returns>
+        /// <returns>String that represents the built fact.</returns>
         string BuildFocusFactString(string seenObjId);
 
         /// <summary>
         /// Builds fact that there is something or somebody in the center of their field of view.
         /// </summary>
         /// <param name="seenObjId">Id of the seen object.</param>
-        /// <returns>Instance of built fact.</returns>
+        /// <returns>Instance of the built fact.</returns>
         RuleInstance BuildFocusFactInstance(string seenObjId);
+
+        /// <summary>
+        /// Builds fact about the distance between the NPC and some object.
+        /// </summary>
+        /// <param name="objId">Id of the object.</param>
+        /// <param name="distance">The distance value.</param>
+        /// <returns>String that represents the built fact.</returns>
+        string BuildDistanceFactString(string objId, float distance);
+
+        /// <summary>
+        /// Builds fact about the distance between the NPC and some object.
+        /// </summary>
+        /// <param name="objId">Id of the object.</param>
+        /// <param name="distance">The distance value.</param>
+        /// <returns>String that represents the built fact.</returns>
+        string BuildDistanceFactString(string objId, double distance);
+
+        /// <summary>
+        /// Builds fact about the distance between the NPC and some object.
+        /// </summary>
+        /// <param name="objId">Id of the object.</param>
+        /// <param name="distance">The distance value.</param>
+        /// <returns>Instance of the built fact.</returns>
+        RuleInstance BuildDistanceFactInstance(string objId, float distance);
+
+        /// <summary>
+        /// Builds fact about the distance between the NPC and some object.
+        /// </summary>
+        /// <param name="objId">Id of the object.</param>
+        /// <param name="distance">The distance value.</param>
+        /// <returns>Instance of the built fact.</returns>
+        RuleInstance BuildDistanceFactInstance(string objId, double distance);
 
         string BuildDefaultInheritanceFactString(string obj, string superObj);
     }

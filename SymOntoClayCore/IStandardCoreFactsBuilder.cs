@@ -6,5 +6,8 @@ namespace SymOntoClay.Core
     {
         LogicalQueryNode BuildPropertyVirtualRelationInstance(StrongIdentifierValue propertyName, StrongIdentifierValue propertyInstanceName, Value propertyValue);
         RuleInstance BuildImplicitPropertyQueryInstance(StrongIdentifierValue propertyName, StrongIdentifierValue propertyInstanceName);
+        string BuildDefaultInheritanceFactString(string obj, string superObj);
+        RuleInstance BuildDefaultInheritanceFactInstance(string obj, string superObj);
+        RuleInstance BuildDefaultInheritanceFactInstance(StrongIdentifierValue obj, StrongIdentifierValue superObj);
     }
 }

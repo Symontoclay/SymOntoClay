@@ -23,18 +23,19 @@ SOFTWARE.*/
 using SymOntoClay.Core.Internal.CodeModel;
 using SymOntoClay.Core.Internal.CodeModel.Helpers;
 using SymOntoClay.Core.Internal.Helpers;
-using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Security.Cryptography;
 using System.Text;
 
 namespace SymOntoClay.StandardFacts
 {
     public class StandardFactsBuilder : IStandardFactsBuilder
     {
+        private StrongIdentifierValue _targetLogicalVarName = NameHelper.CreateName("$_");
+        private NumberValue _defaultInheritanceRank = new NumberValue(1);
+
         /// <inheritdoc/>
         public virtual LogicalQueryNode BuildPropertyVirtualRelationInstance(StrongIdentifierValue propertyName, StrongIdentifierValue propertyInstanceName, Value propertyValue)
         {
@@ -55,16 +56,8 @@ namespace SymOntoClay.StandardFacts
 
             relation.ParamsList = new List<LogicalQueryNode>()
                 {
-                    new LogicalQueryNode()
-                    {
-                        Kind = KindOfLogicalQueryNode.Entity,
-                        Name = propertyInstanceName
-                    },
-                    new LogicalQueryNode()
-                    {
-                        Kind = KindOfLogicalQueryNode.Value,
-                        Value = propertyValue
-                    }
+                    StrongIdentifierNameToLogicalQueryNode(propertyInstanceName),
+                    ValueToLogicalQueryNode(propertyValue)
                 };
 
             fact.CheckDirty();
@@ -91,21 +84,62 @@ namespace SymOntoClay.StandardFacts
 
             relation.ParamsList = new List<LogicalQueryNode>()
                 {
-                    new LogicalQueryNode()
-                    {
-                        Kind = KindOfLogicalQueryNode.Entity,
-                        Name = propertyInstanceName
-                    },
-                    new LogicalQueryNode()
-                    {
-                        Kind = KindOfLogicalQueryNode.LogicalVar,
-                        Name = NameHelper.CreateName("$_")
-                    }
+                    StrongIdentifierNameToLogicalQueryNode(propertyInstanceName),
+                    StrongIdentifierNameToLogicalQueryNode(_targetLogicalVarName)
                 };
 
             fact.CheckDirty();
 
             return fact;
+        }
+
+        /// <inheritdoc/>
+        public virtual string BuildDefaultInheritanceFactString(string obj, string superObj)
+        {
+            var sb = new StringBuilder();
+            sb.Append("{: is (");
+            sb.Append(obj);
+            sb.Append(",");
+            sb.Append(superObj);
+            sb.Append(", 1) :}");
+
+            return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public virtual RuleInstance BuildDefaultInheritanceFactInstance(string obj, string superObj)
+        {
+            return BuildDefaultInheritanceFactInstance(NameHelper.CreateName(obj), NameHelper.CreateName(superObj));
+        }
+
+        /// <inheritdoc/>
+        public virtual RuleInstance BuildDefaultInheritanceFactInstance(StrongIdentifierValue obj, StrongIdentifierValue superObj)
+        {
+            var result = new RuleInstance()
+            {
+                Name = NameHelper.CreateRuleOrFactName()
+            };
+            var primaryPart = new PrimaryRulePart();
+            result.PrimaryPart = primaryPart;
+
+            var sayRelation = new LogicalQueryNode()
+            {
+                Kind = KindOfLogicalQueryNode.Relation,
+                Name = NameHelper.CreateName("is")
+            };
+
+            primaryPart.Expression = sayRelation;
+
+            sayRelation.ParamsList = new List<LogicalQueryNode>()
+            {
+                StrongIdentifierNameToLogicalQueryNode(obj),
+                StrongIdentifierNameToLogicalQueryNode(superObj),
+                ValueToLogicalQueryNode(_defaultInheritanceRank)
+            };
+
+            result.CheckDirty();
+
+            return result;
         }
 
         /// <inheritdoc/>
@@ -142,11 +176,7 @@ namespace SymOntoClay.StandardFacts
 
             sayRelation.ParamsList = new List<LogicalQueryNode>()
             {
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Entity,
-                    Name = NameHelper.CreateName(selfId)
-                },
+                StringNameToLogicalQueryNode(selfId),
                 new LogicalQueryNode()
                 {
                     Kind = KindOfLogicalQueryNode.Fact,
@@ -235,11 +265,7 @@ namespace SymOntoClay.StandardFacts
 
             factNode.LinkedVars = new List<LogicalQueryNode>()
             {
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.LogicalVar,
-                    Name = varName
-                }
+                StrongIdentifierNameToLogicalQueryNode(varName)
             };
 
             andOp4.Left = factNode;
@@ -252,17 +278,9 @@ namespace SymOntoClay.StandardFacts
 
             andOp4.Right = hearRelation;
 
-            hearRelation.ParamsList = new List<LogicalQueryNode>() { 
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Concept,
-                    Name = NameHelper.CreateName("i")
-                },
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.LogicalVar,
-                    Name = varName
-                }
+            hearRelation.ParamsList = new List<LogicalQueryNode>() {
+                StringNameToLogicalQueryNode("i"),
+                StrongIdentifierNameToLogicalQueryNode(varName)
             };
 
             var distanceRelation = new LogicalQueryNode()
@@ -275,21 +293,9 @@ namespace SymOntoClay.StandardFacts
 
             distanceRelation.ParamsList = new List<LogicalQueryNode>()
             {
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Concept,
-                    Name = NameHelper.CreateName("i")
-                },
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.LogicalVar,
-                    Name = varName
-                },
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Value,
-                    Value = new NumberValue(distance)
-                }
+                StringNameToLogicalQueryNode("i"),
+                StrongIdentifierNameToLogicalQueryNode(varName),
+                ValueToLogicalQueryNode(new NumberValue(distance))
             };
 
             var directionRelation = new LogicalQueryNode()
@@ -302,16 +308,8 @@ namespace SymOntoClay.StandardFacts
 
             directionRelation.ParamsList = new List<LogicalQueryNode>()
             {
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.LogicalVar,
-                    Name = varName
-                },
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Value,
-                    Value = new NumberValue(directionToPosition)
-                }
+                StrongIdentifierNameToLogicalQueryNode(varName),
+                ValueToLogicalQueryNode(new NumberValue(directionToPosition))
             };
 
             var pointRelation = new LogicalQueryNode()
@@ -324,16 +322,8 @@ namespace SymOntoClay.StandardFacts
 
             pointRelation.ParamsList = new List<LogicalQueryNode>()
             {
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.LogicalVar,
-                    Name = varName
-                },
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Value,
-                    Value = new WaypointSourceValue(new NumberValue(distance), new NumberValue(directionToPosition), NameHelper.CreateName("#@"))
-                }
+                StrongIdentifierNameToLogicalQueryNode(varName),
+                ValueToLogicalQueryNode(new WaypointSourceValue(new NumberValue(distance), new NumberValue(directionToPosition), NameHelper.CreateName("#@")))
             };
 
             result.CheckDirty();
@@ -373,16 +363,8 @@ namespace SymOntoClay.StandardFacts
 
             sayRelation.ParamsList = new List<LogicalQueryNode>()
             {
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Entity,
-                    Name = NameHelper.CreateName(selfId)
-                },
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Concept,
-                    Name = NameHelper.CreateName("alive")
-                }
+                StringNameToLogicalQueryNode(selfId),
+                StringNameToLogicalQueryNode("alive")
             };
 
             result.CheckDirty();
@@ -422,16 +404,8 @@ namespace SymOntoClay.StandardFacts
 
             sayRelation.ParamsList = new List<LogicalQueryNode>()
             {
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Entity,
-                    Name = NameHelper.CreateName(selfId)
-                },
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Concept,
-                    Name = NameHelper.CreateName("dead")
-                }
+                StringNameToLogicalQueryNode(selfId),
+                StringNameToLogicalQueryNode("dead")
             };
 
             result.CheckDirty();
@@ -471,16 +445,8 @@ namespace SymOntoClay.StandardFacts
 
             sayRelation.ParamsList = new List<LogicalQueryNode>()
             {
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Entity,
-                    Name = NameHelper.CreateName(selfId)
-                },
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Concept,
-                    Name = NameHelper.CreateName("stop")
-                }
+                StringNameToLogicalQueryNode(selfId),
+                StringNameToLogicalQueryNode("stop")
             };
 
             result.CheckDirty();
@@ -520,16 +486,8 @@ namespace SymOntoClay.StandardFacts
 
             sayRelation.ParamsList = new List<LogicalQueryNode>()
             {
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Entity,
-                    Name = NameHelper.CreateName(selfId)
-                },
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Concept,
-                    Name = NameHelper.CreateName("walk")
-                }
+                StringNameToLogicalQueryNode(selfId),
+                StringNameToLogicalQueryNode("walk")
             };
 
             result.CheckDirty();
@@ -563,16 +521,8 @@ namespace SymOntoClay.StandardFacts
 
             sayRelation.ParamsList = new List<LogicalQueryNode>()
             {
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Concept,
-                    Name = NameHelper.CreateName("someone")
-                },
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Concept,
-                    Name = NameHelper.CreateName("walk")
-                }
+                StringNameToLogicalQueryNode("someone"),
+                StringNameToLogicalQueryNode("walk")
             };
 
             result.CheckDirty();
@@ -612,16 +562,8 @@ namespace SymOntoClay.StandardFacts
 
             sayRelation.ParamsList = new List<LogicalQueryNode>()
             {
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Entity,
-                    Name = NameHelper.CreateName(selfId)
-                },
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Concept,
-                    Name = NameHelper.CreateName("run")
-                }
+                StringNameToLogicalQueryNode(selfId),
+                StringNameToLogicalQueryNode("run")
             };
 
             result.CheckDirty();
@@ -655,16 +597,8 @@ namespace SymOntoClay.StandardFacts
 
             sayRelation.ParamsList = new List<LogicalQueryNode>()
             {
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Concept,
-                    Name = NameHelper.CreateName("someone")
-                },
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Concept,
-                    Name = NameHelper.CreateName("run")
-                }
+                StringNameToLogicalQueryNode("someone"),
+                StringNameToLogicalQueryNode("run")
             };
 
             result.CheckDirty();
@@ -706,16 +640,8 @@ namespace SymOntoClay.StandardFacts
 
             sayRelation.ParamsList = new List<LogicalQueryNode>()
             {
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Entity,
-                    Name = NameHelper.CreateName(selfId)
-                },
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Entity,
-                    Name = NameHelper.CreateName(heldThingId)
-                }
+                StringNameToLogicalQueryNode(selfId),
+                StringNameToLogicalQueryNode(heldThingId)
             };
 
             result.CheckDirty();
@@ -755,16 +681,8 @@ namespace SymOntoClay.StandardFacts
 
             sayRelation.ParamsList = new List<LogicalQueryNode>()
             {
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Entity,
-                    Name = NameHelper.CreateName(selfId)
-                },
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Concept,
-                    Name = NameHelper.CreateName("shoot")
-                }
+                StringNameToLogicalQueryNode(selfId),
+                StringNameToLogicalQueryNode("shoot")
             };
 
             result.CheckDirty();
@@ -798,16 +716,8 @@ namespace SymOntoClay.StandardFacts
 
             sayRelation.ParamsList = new List<LogicalQueryNode>()
             {
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Concept,
-                    Name = NameHelper.CreateName("someone")
-                },
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Concept,
-                    Name = NameHelper.CreateName("shoot")
-                }
+                StringNameToLogicalQueryNode("someone"),
+                StringNameToLogicalQueryNode("shoot")
             };
 
             result.CheckDirty();
@@ -847,16 +757,8 @@ namespace SymOntoClay.StandardFacts
 
             sayRelation.ParamsList = new List<LogicalQueryNode>()
             {
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Entity,
-                    Name = NameHelper.CreateName(selfId)
-                },
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Concept,
-                    Name = NameHelper.CreateName("shoot")
-                }
+                StringNameToLogicalQueryNode(selfId),
+                StringNameToLogicalQueryNode("shoot")
             };
 
             result.CheckDirty();
@@ -895,16 +797,8 @@ namespace SymOntoClay.StandardFacts
 
             sayRelation.ParamsList = new List<LogicalQueryNode>()
             {
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Entity,
-                    Name = NameHelper.CreateName("I")
-                },
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Concept,
-                    Name = NameHelper.CreateName(seenObjId)
-                }
+                StringNameToLogicalQueryNode("I"),
+                StringNameToLogicalQueryNode(seenObjId)
             };
 
             result.CheckDirty();
@@ -943,16 +837,8 @@ namespace SymOntoClay.StandardFacts
 
             sayRelation.ParamsList = new List<LogicalQueryNode>()
             {
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Entity,
-                    Name = NameHelper.CreateName("I")
-                },
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Concept,
-                    Name = NameHelper.CreateName(seenObjId)
-                }
+                StringNameToLogicalQueryNode("I"),
+                StringNameToLogicalQueryNode(seenObjId)
             };
 
             result.CheckDirty();
@@ -1009,39 +895,14 @@ namespace SymOntoClay.StandardFacts
 
             sayRelation.ParamsList = new List<LogicalQueryNode>()
             {
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Entity,
-                    Name = NameHelper.CreateName("I")
-                },
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Concept,
-                    Name = NameHelper.CreateName(objId)
-                },
-                new LogicalQueryNode()
-                {
-                    Kind = KindOfLogicalQueryNode.Value,
-                    Value = distance
-                }
+                StringNameToLogicalQueryNode("I"),
+                StringNameToLogicalQueryNode(objId),
+                ValueToLogicalQueryNode(distance)
             };
 
             result.CheckDirty();
 
             return result;
-        }
-
-        /// <inheritdoc/>
-        public virtual string BuildDefaultInheritanceFactString(string obj, string superObj)
-        {
-            var sb = new StringBuilder();
-            sb.Append("{: is (");
-            sb.Append(obj);
-            sb.Append(",");
-            sb.Append(superObj);
-            sb.Append(", 1) :}");
-
-            return sb.ToString();
         }
 
         protected virtual string GetTargetVarName(string factStr)
@@ -1052,6 +913,50 @@ namespace SymOntoClay.StandardFacts
         protected virtual string GetTargetVarName(RuleInstance fact)
         {
             return RuleInstanceHelper.GetNewUniqueVarNameWithPrefix("$x", fact);
+        }
+
+        protected virtual LogicalQueryNode StringNameToLogicalQueryNode(string name)
+        {
+            return StrongIdentifierNameToLogicalQueryNode(NameHelper.CreateName(name));
+        }
+
+        protected virtual LogicalQueryNode StrongIdentifierNameToLogicalQueryNode(StrongIdentifierValue value)
+        {
+            var node = new LogicalQueryNode()
+            {
+                Name = value
+            };
+
+            var kindOfName = value.KindOfName;
+
+            switch(kindOfName)
+            {
+                case KindOfName.Entity:
+                    node.Kind = KindOfLogicalQueryNode.Entity;
+                    break;
+
+                case KindOfName.Concept:
+                    node.Kind = KindOfLogicalQueryNode.Concept;
+                    break;
+
+                case KindOfName.LogicalVar:
+                    node.Kind = KindOfLogicalQueryNode.LogicalVar;
+                    break;
+                     
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(kindOfName), kindOfName, null);
+            }
+
+            return node;
+        }
+
+        protected virtual LogicalQueryNode ValueToLogicalQueryNode(Value value)
+        {
+            return new LogicalQueryNode()
+            {
+                Kind = KindOfLogicalQueryNode.Value,
+                Value = value
+            };
         }
     }
 }

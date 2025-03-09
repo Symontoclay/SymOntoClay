@@ -70,7 +70,9 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("8DED6357-C08E-4FF4-80ED-5AC352FA45C9", "Begin");
 
-            Case31();
+            Case32_1();
+            //Case32();
+            //Case31();
             //Case30();
             //Case29_1();
             //Case29();
@@ -104,6 +106,59 @@ namespace TestSandbox.Handlers
             //Case1();
 
             _logger.Info("624BEA0D-792E-4DE2-8128-AF4547977A7F", "End");
+        }
+
+        private void Case32_1()
+        {
+            var factStr = _standardFactsBuilder.BuildDefaultInheritanceFactString("#123", "Cat");
+
+            _logger.Info("FD6582A7-0B91-455C-B557-3530DB594DF4", $"factStr = '{factStr}'");
+
+            var fact = _standardFactsBuilder.BuildDefaultInheritanceFactInstance("#123", "Cat");
+
+            _logger.Info("B676C352-3C30-4121-8F5A-B0558980E8FC", $"fact = '{fact.ToHumanizedString()}'");
+            _logger.Info("CC603B42-DE43-4CED-8B0C-1B6D8518443B", $"fact = '{fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}'");
+            //_logger.Info("6A402082-C6EA-4308-8434-0B93B16A1A59", $"fact = {fact}");
+
+            factStr = _standardFactsBuilder.BuildDefaultInheritanceFactString("Cat", "Animal");
+
+            _logger.Info("946DB353-3F90-4652-A005-B9B248991F77", $"factStr = '{factStr}'");
+
+            fact = _standardFactsBuilder.BuildDefaultInheritanceFactInstance("Cat", "Animal");
+
+            _logger.Info("8A2500BA-C15F-421A-B72E-D9DC1AE7AAF9", $"fact = '{fact.ToHumanizedString()}'");
+            _logger.Info("7FCDF75E-72AA-4C08-B06C-78FBFECEA9D2", $"fact = '{fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}'");
+            //_logger.Info("566FBADC-827E-4262-9BCF-EA4BC659D214", $"fact = {fact}");
+        }
+
+        private void Case32()
+        {
+            var factStr = _standardFactsBuilder.BuildDefaultInheritanceFactString("#123", "Cat");
+
+            _logger.Info("C6CF2020-9F6C-4A0A-BA89-E99E5575E5E7", $"factStr = '{factStr}'");
+
+            var fact = _engineContext.Parser.ParseRuleInstance(factStr);
+
+            _logger.Info("A1CF0A11-00C8-4FCB-88FC-1AEBD89BD08E", $"fact = '{fact.ToHumanizedString()}'");
+            _logger.Info("BF2C5AE8-AC8A-42D8-8E7E-E161F1C30609", $"fact = {fact}");
+
+            factStr = _standardFactsBuilder.BuildDefaultInheritanceFactString("Cat", "Animal");
+
+            _logger.Info("3B8F311E-B370-46A8-BBCA-19204CC833F8", $"factStr = '{factStr}'");
+
+            fact = _engineContext.Parser.ParseRuleInstance(factStr);
+
+            _logger.Info("695F49C6-3245-4288-9935-ABE89DF49505", $"fact = '{fact.ToHumanizedString()}'");
+            _logger.Info("5452505B-54E8-4D75-A615-00B358E8DA94", $"fact = {fact}");
+
+            factStr = "{: see(I, $x) :}";
+
+            _logger.Info("CCAC180E-38DD-4E1C-8469-5EA1F66E3DF3", $"factStr = '{factStr}'");
+
+            fact = _engineContext.Parser.ParseRuleInstance(factStr);
+
+            _logger.Info("CD3A11F7-FA62-4D74-9522-3D9757903FCB", $"fact = '{fact.ToHumanizedString()}'");
+            _logger.Info("D88A905D-8DB9-4A2C-A0EA-F504496269DD", $"fact = {fact}");
         }
 
         private void Case31()

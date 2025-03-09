@@ -281,7 +281,5 @@ namespace SymOntoClay.UnityAsset.Core
         /// <param name="distance">The distance value.</param>
         /// <returns>Instance of the built fact.</returns>
         RuleInstance BuildDistanceFactInstance(string objId, Value distance);
-
-        string BuildDefaultInheritanceFactString(string obj, string superObj);
     }
 }

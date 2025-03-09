@@ -41,6 +41,7 @@ namespace SymOntoClay.Core.Internal.Storage
             _publicInheritanceStorage = publicFactsStorage.InheritanceStorage;
             _inheritanceResolver = context.DataResolversFactory.GetInheritanceResolver();
             _resolverOptions = new ResolverOptions() { AddTopType = false };
+            _standardCoreFactsBuilder = _context.StandardFactsBuilder;
         }
 
         private readonly object _lockObj = new object();
@@ -49,9 +50,11 @@ namespace SymOntoClay.Core.Internal.Storage
         private readonly IInheritanceStorage _publicInheritanceStorage;
         private readonly InheritanceResolver _inheritanceResolver;
         private readonly ResolverOptions _resolverOptions;
+        private IStandardCoreFactsBuilder _standardCoreFactsBuilder;
         private List<StrongIdentifierValue> _foundInheritanceKeysList = new List<StrongIdentifierValue>();
         private ILocalCodeExecutionContext _localCodeExecutionContext;
         private ILogicQueryParseAndCache _logicQueryParseAndCache;
+
         private StrongIdentifierValue _selfName;
         private string _selfNameForFacts;
         private Dictionary<string, string> _factsIdDict = new Dictionary<string, string>();
@@ -132,9 +135,7 @@ namespace SymOntoClay.Core.Internal.Storage
 
                     var initialAddedInheritanceItem = inheritanceItemsDict[id];
 
-                    var factStr = $"{{: >:{{ is({_selfNameForFacts}, {name}, 1) }} :}}";
-
-                    var fact = _logicQueryParseAndCache.GetLogicRuleOrFact(logger, factStr);
+                    var fact = _standardCoreFactsBuilder.BuildDefaultInheritanceFactInstance(_selfNameForFacts, name);
 
                     _publicFactsStorage.Append(logger, fact);
 

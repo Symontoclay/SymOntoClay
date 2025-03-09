@@ -73,6 +73,42 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
         [Test]
         [Parallelizable]
+        public void BuildDefaultInheritanceFactString_Case1()
+        {
+            var factStr = _standardFactsBuilder.BuildDefaultInheritanceFactString("#123", "Cat");
+
+            Assert.AreEqual("{: is (#123,Cat, 1) :}", factStr);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void BuildDefaultInheritanceFactString_Case2()
+        {
+            var factStr = _standardFactsBuilder.BuildDefaultInheritanceFactString("Cat", "Animal");
+
+            Assert.AreEqual("{: is (Cat,Animal, 1) :}", factStr);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void BuildDefaultInheritanceFactInstance_Case1()
+        {
+            var fact = _standardFactsBuilder.BuildDefaultInheritanceFactInstance("#123", "Cat");
+
+            Assert.AreEqual("{: >: { is(#123,cat,1) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+        }
+
+        [Test]
+        [Parallelizable]
+        public void BuildDefaultInheritanceFactInstance_Case2()
+        {
+            var fact = _standardFactsBuilder.BuildDefaultInheritanceFactInstance("Cat", "Animal");
+
+            Assert.AreEqual("{: >: { is(cat,animal,1) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+        }
+
+        [Test]
+        [Parallelizable]
         public void BuildSayFactString()
         {
             var factStr = _standardFactsBuilder.BuildSayFactString("#123", "{: act(M16, shoot) :}");

@@ -51,7 +51,10 @@ namespace SymOntoClay.StandardFacts
         /// <inheritdoc/>
         public virtual RuleInstance BuildSayFactInstance(string selfId, RuleInstance fact)
         {
-            var result = new RuleInstance();
+            var result = new RuleInstance()
+            {
+                Name = NameHelper.CreateRuleOrFactName()
+            };
             var primaryPart = new PrimaryRulePart();
             result.PrimaryPart = primaryPart;
 
@@ -76,6 +79,8 @@ namespace SymOntoClay.StandardFacts
                     Fact = fact
                 }
             };
+
+            result.CheckDirty();
 
             return result;
         }
@@ -108,7 +113,10 @@ namespace SymOntoClay.StandardFacts
         {
             var varName = NameHelper.CreateName(GetTargetVarName(fact));
 
-            var result = new RuleInstance();
+            var result = new RuleInstance()
+            {
+                Name = NameHelper.CreateRuleOrFactName()
+            };
             var primaryPart = new PrimaryRulePart();
             result.PrimaryPart = primaryPart;
 
@@ -254,6 +262,8 @@ namespace SymOntoClay.StandardFacts
                 }
             };
 
+            result.CheckDirty();
+
             return result;
         }
 
@@ -272,7 +282,10 @@ namespace SymOntoClay.StandardFacts
         /// <inheritdoc/>
         public virtual RuleInstance BuildAliveFactInstance(string selfId)
         {
-            var result = new RuleInstance();
+            var result = new RuleInstance()
+            {
+                Name = NameHelper.CreateRuleOrFactName()
+            };
             var primaryPart = new PrimaryRulePart();
             result.PrimaryPart = primaryPart;
 
@@ -298,6 +311,8 @@ namespace SymOntoClay.StandardFacts
                 }
             };
 
+            result.CheckDirty();
+
             return result;
         }
 
@@ -316,7 +331,10 @@ namespace SymOntoClay.StandardFacts
         /// <inheritdoc/>
         public RuleInstance BuildDeadFactInstance(string selfId)
         {
-            var result = new RuleInstance();
+            var result = new RuleInstance()
+            {
+                Name = NameHelper.CreateRuleOrFactName()
+            };
             var primaryPart = new PrimaryRulePart();
             result.PrimaryPart = primaryPart;
 
@@ -342,6 +360,8 @@ namespace SymOntoClay.StandardFacts
                 }
             };
 
+            result.CheckDirty();
+
             return result;
         }
 
@@ -360,7 +380,10 @@ namespace SymOntoClay.StandardFacts
         /// <inheritdoc/>
         public RuleInstance BuildStopFactInstance(string selfId)
         {
-            var result = new RuleInstance();
+            var result = new RuleInstance()
+            {
+                Name = NameHelper.CreateRuleOrFactName()
+            };
             var primaryPart = new PrimaryRulePart();
             result.PrimaryPart = primaryPart;
 
@@ -386,6 +409,8 @@ namespace SymOntoClay.StandardFacts
                 }
             };
 
+            result.CheckDirty();
+
             return result;
         }
 
@@ -404,7 +429,10 @@ namespace SymOntoClay.StandardFacts
         /// <inheritdoc/>
         public RuleInstance BuildWalkFactInstance(string selfId)
         {
-            var result = new RuleInstance();
+            var result = new RuleInstance()
+            {
+                Name = NameHelper.CreateRuleOrFactName()
+            };
             var primaryPart = new PrimaryRulePart();
             result.PrimaryPart = primaryPart;
 
@@ -430,6 +458,8 @@ namespace SymOntoClay.StandardFacts
                 }
             };
 
+            result.CheckDirty();
+
             return result;
         }
 
@@ -442,7 +472,10 @@ namespace SymOntoClay.StandardFacts
         /// <inheritdoc/>
         public RuleInstance BuildWalkSoundFactInstance()
         {
-            var result = new RuleInstance();
+            var result = new RuleInstance()
+            {
+                Name = NameHelper.CreateRuleOrFactName()
+            };
             var primaryPart = new PrimaryRulePart();
             result.PrimaryPart = primaryPart;
 
@@ -467,6 +500,8 @@ namespace SymOntoClay.StandardFacts
                     Name = NameHelper.CreateName("walk")
                 }
             };
+
+            result.CheckDirty();
 
             return result;
         }
@@ -486,7 +521,10 @@ namespace SymOntoClay.StandardFacts
         /// <inheritdoc/>
         public RuleInstance BuildRunFactInstance(string selfId)
         {
-            var result = new RuleInstance();
+            var result = new RuleInstance()
+            {
+                Name = NameHelper.CreateRuleOrFactName()
+            };
             var primaryPart = new PrimaryRulePart();
             result.PrimaryPart = primaryPart;
 
@@ -512,6 +550,8 @@ namespace SymOntoClay.StandardFacts
                 }
             };
 
+            result.CheckDirty();
+
             return result;
         }
 
@@ -524,7 +564,10 @@ namespace SymOntoClay.StandardFacts
         /// <inheritdoc/>
         public RuleInstance BuildRunSoundFactInstance()
         {
-            var result = new RuleInstance();
+            var result = new RuleInstance()
+            {
+                Name = NameHelper.CreateRuleOrFactName()
+            };
             var primaryPart = new PrimaryRulePart();
             result.PrimaryPart = primaryPart;
 
@@ -549,6 +592,8 @@ namespace SymOntoClay.StandardFacts
                     Name = NameHelper.CreateName("run")
                 }
             };
+
+            result.CheckDirty();
 
             return result;
         }
@@ -570,7 +615,10 @@ namespace SymOntoClay.StandardFacts
         /// <inheritdoc/>
         public RuleInstance BuildHoldFactInstance(string selfId, string heldThingId)
         {
-            var result = new RuleInstance();
+            var result = new RuleInstance()
+            {
+                Name = NameHelper.CreateRuleOrFactName()
+            };
             var primaryPart = new PrimaryRulePart();
             result.PrimaryPart = primaryPart;
 
@@ -596,6 +644,8 @@ namespace SymOntoClay.StandardFacts
                 }
             };
 
+            result.CheckDirty();
+
             return result;
         }
 
@@ -614,7 +664,10 @@ namespace SymOntoClay.StandardFacts
         /// <inheritdoc/>
         public RuleInstance BuildShootFactInstance(string selfId)
         {
-            var result = new RuleInstance();
+            var result = new RuleInstance()
+            {
+                Name = NameHelper.CreateRuleOrFactName()
+            };
             var primaryPart = new PrimaryRulePart();
             result.PrimaryPart = primaryPart;
 
@@ -640,6 +693,8 @@ namespace SymOntoClay.StandardFacts
                 }
             };
 
+            result.CheckDirty();
+
             return result;
         }
 
@@ -652,7 +707,10 @@ namespace SymOntoClay.StandardFacts
         /// <inheritdoc/>
         public RuleInstance BuildShootSoundFactInstance()
         {
-            var result = new RuleInstance();
+            var result = new RuleInstance()
+            {
+                Name = NameHelper.CreateRuleOrFactName()
+            };
             var primaryPart = new PrimaryRulePart();
             result.PrimaryPart = primaryPart;
 
@@ -678,6 +736,8 @@ namespace SymOntoClay.StandardFacts
                 }
             };
 
+            result.CheckDirty();
+
             return result;
         }
 
@@ -696,7 +756,10 @@ namespace SymOntoClay.StandardFacts
         /// <inheritdoc/>
         public RuleInstance BuildReadyForShootFactInstance(string selfId)
         {
-            var result = new RuleInstance();
+            var result = new RuleInstance()
+            {
+                Name = NameHelper.CreateRuleOrFactName()
+            };
             var primaryPart = new PrimaryRulePart();
             result.PrimaryPart = primaryPart;
 
@@ -722,6 +785,8 @@ namespace SymOntoClay.StandardFacts
                 }
             };
 
+            result.CheckDirty();
+
             return result;
         }
 
@@ -739,7 +804,10 @@ namespace SymOntoClay.StandardFacts
         /// <inheritdoc/>
         public RuleInstance BuildSeeFactInstance(string seenObjId)
         {
-            var result = new RuleInstance();
+            var result = new RuleInstance()
+            {
+                Name = NameHelper.CreateRuleOrFactName()
+            };
             var primaryPart = new PrimaryRulePart();
             result.PrimaryPart = primaryPart;
 
@@ -765,6 +833,8 @@ namespace SymOntoClay.StandardFacts
                 }
             };
 
+            result.CheckDirty();
+
             return result;
         }
 
@@ -777,6 +847,43 @@ namespace SymOntoClay.StandardFacts
             sb.Append(") :}");
 
             return sb.ToString();
+        }
+
+        /// <inheritdoc/>
+        public RuleInstance BuildFocusFactInstance(string seenObjId)
+        {
+            var result = new RuleInstance()
+            {
+                Name = NameHelper.CreateRuleOrFactName()
+            };
+            var primaryPart = new PrimaryRulePart();
+            result.PrimaryPart = primaryPart;
+
+            var sayRelation = new LogicalQueryNode()
+            {
+                Kind = KindOfLogicalQueryNode.Relation,
+                Name = NameHelper.CreateName("focus")
+            };
+
+            primaryPart.Expression = sayRelation;
+
+            sayRelation.ParamsList = new List<LogicalQueryNode>()
+            {
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Entity,
+                    Name = NameHelper.CreateName("I")
+                },
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Concept,
+                    Name = NameHelper.CreateName(seenObjId)
+                }
+            };
+
+            result.CheckDirty();
+
+            return result;
         }
 
         /// <inheritdoc/>

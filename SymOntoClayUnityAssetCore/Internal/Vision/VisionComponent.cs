@@ -24,6 +24,7 @@ using SymOntoClay.ActiveObject.Threads;
 using SymOntoClay.Core;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Monitor.Common;
+using SymOntoClay.UnityAsset.Core.Internal.DateAndTime;
 using SymOntoClay.UnityAsset.Core.InternalImplementations.HumanoidNPC;
 using System.Collections.Generic;
 using System.Globalization;
@@ -42,6 +43,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
             _selfInstanceId = internalContext.SelfInstanceId;
             _worldContext = worldContext;
             _visionProvider = visionProvider;
+            _dateTimeProvider = worldContext.DateTimeProvider;
             _standardFactsBuilder = worldContext.StandardFactsBuilder;
 
             _activeObjectContext = new ActiveObjectContext(worldContext.SyncContext, internalContext.CancellationToken);
@@ -54,6 +56,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
         private readonly IStandardFactsBuilder _standardFactsBuilder;
         private readonly int _selfInstanceId;
         private readonly IVisionProvider _visionProvider;
+        private readonly IDateTimeProvider _dateTimeProvider;
         private readonly IActiveObjectContext _activeObjectContext;
         private readonly AsyncActivePeriodicObject _activeObject;
         private readonly object _lockObj = new object();
@@ -108,7 +111,9 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
         private bool CommandLoop(CancellationToken cancellationToken)
         {
             Thread.Sleep(200);
-            
+
+            var currentTimeStamp = _dateTimeProvider.CurrentTicks;
+
             var visibleItemsList = _visionProvider.GetCurrentVisibleItems();
 
             var availableInstanceIdList = _worldContext.AvailableInstanceIdList.Where(p => p != _selfInstanceId).ToList();
@@ -254,13 +259,15 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
 
                     _visibleObjectsIdForFactsRegistry[instanceId] = idForFacts;
 
-                    var seeFactStr = $"see(I, {idForFacts})";
+                    var seeFact = _standardFactsBuilder.BuildFocusFactInstance(idForFacts);
+                    seeFact.TimeStamp = currentTimeStamp;
 
-                    _visibleObjectsSeeFactsIdRegistry[instanceId] = _coreEngine.InsertPerceptedFact(Logger, seeFactStr);
+                    _visibleObjectsSeeFactsIdRegistry[instanceId] = _coreEngine.InsertPerceptedFact(Logger, seeFact);
 
                     if (newVisibleItem.IsInFocus)
                     {
-                        var focusFactStr = $"focus(I, {idForFacts})";
+                        var focusFact = $"focus(I, {idForFacts})";
+                        focusFact.TimeStamp = currentTimeStamp;
 
                         _visibleObjectsFocusFactsIdRegistry[instanceId] = _coreEngine.InsertPerceptedFact(Logger, focusFactStr);
                     }
@@ -279,7 +286,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
 
                     var idForFacts = _visibleObjectsIdForFactsRegistry[instanceId];
 
-                    var focusFactStr = $"focus(I, {idForFacts})";
+                    var focusFact = $"focus(I, {idForFacts})";
+                    focusFact.TimeStamp = currentTimeStamp;
 
                     _visibleObjectsFocusFactsIdRegistry[instanceId] = _coreEngine.InsertPerceptedFact(Logger, focusFactStr);
                 }
@@ -308,7 +316,8 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
 
                     var idForFacts = _worldContext.GetIdForFactsByInstanceId(instanceId);
 
-                    var distanceFactStr = $"distance(I, {idForFacts}, {item.MinDistance.ToString("G", CultureInfo.InvariantCulture)})";
+                    var distanceFact = $"distance(I, {idForFacts}, {item.MinDistance.ToString("G", CultureInfo.InvariantCulture)})";
+                    distanceFact.TimeStamp = currentTimeStamp;
 
                     _visibleObjectsDistanceFactsIdRegistry[instanceId] = _coreEngine.InsertPerceptedFact(Logger, distanceFactStr);
                 }

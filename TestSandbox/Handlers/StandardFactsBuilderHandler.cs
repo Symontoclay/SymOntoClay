@@ -68,7 +68,8 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("8DED6357-C08E-4FF4-80ED-5AC352FA45C9", "Begin");
 
-            Case27();
+            Case28();
+            //Case27();
             //Case26();
             //Case25();
             //Case24();
@@ -99,12 +100,28 @@ namespace TestSandbox.Handlers
             _logger.Info("624BEA0D-792E-4DE2-8128-AF4547977A7F", "End");
         }
 
+        private void Case28()
+        {
+            var fact = _standardFactsBuilder.BuildFocusFactInstance("#123");
+
+            _logger.Info("A48106BE-546B-4967-92D8-0904A73BCDA4", $"fact = '{fact.ToHumanizedString()}'");
+            _logger.Info("23FB361E-6CD7-4718-9557-280F2103541E", $"fact = '{fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}'");
+
+            var factStr = _standardFactsBuilder.BuildFocusFactString("#123");
+
+            _logger.Info("194D579B-D32F-42AF-9274-4AFFAF8EDBED", $"factStr = '{factStr}'");
+        }
+
         private void Case27()
         {
             var fact = _standardFactsBuilder.BuildSeeFactInstance("#123");
 
             _logger.Info("5BA2388B-AEB8-40A0-AB7C-4F503890521A", $"fact = '{fact.ToHumanizedString()}'");
             _logger.Info("6DCED42E-6A24-4FF6-95B4-CD9B3AD5A10E", $"fact = '{fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}'");
+
+            var factStr = _standardFactsBuilder.BuildSeeFactString("#123");
+
+            _logger.Info("287CD4B5-6544-4B5A-86D8-29B1C5ED0CCB", $"factStr = '{factStr}'");
         }
 
         private void Case26()

@@ -297,5 +297,41 @@ namespace SymOntoClay.UnityAsset.Core.Tests
 
             Assert.AreEqual("{: >: { ready(#123,shoot) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
         }
+
+        [Test]
+        [Parallelizable]
+        public void BuildSeeFactString()
+        {
+            var factStr = _standardFactsBuilder.BuildSeeFactString("#123");
+
+            Assert.AreEqual("{: see(I, #123) :}", factStr);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void BuildSeeFactInstance()
+        {
+            var fact = _standardFactsBuilder.BuildSeeFactInstance("#123");
+
+            Assert.AreEqual("{: >: { see(i,#123) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+        }
+
+        [Test]
+        [Parallelizable]
+        public void BuildFocusFactString()
+        {
+            var factStr = _standardFactsBuilder.BuildFocusFactString("#123");
+
+            Assert.AreEqual("{: focus(I, #123) :}", factStr);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void BuildFocusFactInstance()
+        {
+            var fact = _standardFactsBuilder.BuildFocusFactInstance("#123");
+
+            Assert.AreEqual("{: >: { focus(i,#123) } :}", fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent));
+        }
     }
 }

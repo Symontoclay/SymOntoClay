@@ -194,6 +194,11 @@ namespace SymOntoClay.Core
             return _context.Storage.InsertPerceptedFact(logger, text);
         }
 
+        public string InsertPerceptedFact(IMonitorLogger logger, RuleInstance fact)
+        {
+            return _context.Storage.InsertPerceptedFact(logger, fact);
+        }
+
         public void RemovePerceptedFact(IMonitorLogger logger, string id)
         {
             _context.Storage.RemovePerceptedFact(logger, id);

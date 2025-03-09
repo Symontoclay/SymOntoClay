@@ -604,6 +604,11 @@ namespace SymOntoClay.Core.Internal.Storage
 
             var fact = _logicQueryParseAndCache.GetLogicRuleOrFact(logger, text);
 
+            return InsertPerceptedFact(logger, fact);
+        }
+
+        public string InsertPerceptedFact(IMonitorLogger logger, RuleInstance fact)
+        {
             _perceptedFactsStorage.LogicalStorage.Append(logger, fact);
 
             return fact.Name.NameValue;

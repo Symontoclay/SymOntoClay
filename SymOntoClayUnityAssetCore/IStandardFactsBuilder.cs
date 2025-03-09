@@ -215,20 +215,33 @@ namespace SymOntoClay.UnityAsset.Core
         RuleInstance BuildReadyForShootFactInstance(string selfId);
 
         /// <summary>
-        /// Builds fact that the NPC sees something.
+        /// Builds fact that the NPC sees something or somebody.
         /// </summary>
-        /// <param name="seenObjId">Id of seen NPC.</param>
+        /// <param name="seenObjId">Id of the seen object.</param>
         /// <returns>String that represents built fact.</returns>
         string BuildSeeFactString(string seenObjId);
 
         /// <summary>
-        /// Builds fact that the NPC sees something.
+        /// Builds fact that the NPC sees something or somebody.
         /// </summary>
-        /// <param name="seenObjId">Id of seen NPC.</param>
+        /// <param name="seenObjId">Id of the seen object.</param>
         /// <returns>Instance of built fact.</returns>
         RuleInstance BuildSeeFactInstance(string seenObjId);
 
+        /// <summary>
+        /// Builds fact that there is something or somebody in the center of their field of view.
+        /// </summary>
+        /// <param name="seenObjId">Id of the seen object.</param>
+        /// <returns>String that represents built fact.</returns>
         string BuildFocusFactString(string seenObjId);
+
+        /// <summary>
+        /// Builds fact that there is something or somebody in the center of their field of view.
+        /// </summary>
+        /// <param name="seenObjId">Id of the seen object.</param>
+        /// <returns>Instance of built fact.</returns>
+        RuleInstance BuildFocusFactInstance(string seenObjId);
+
         string BuildDefaultInheritanceFactString(string obj, string superObj);
     }
 }

@@ -32,7 +32,7 @@ using TestSandbox.PlatformImplementations;
 
 namespace TestSandbox.Handlers
 {
-    public class EventHanler
+    public class EventHandler
     {
         private static readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
         

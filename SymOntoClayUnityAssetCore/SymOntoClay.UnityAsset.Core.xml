@@ -1583,6 +1583,20 @@
             <param name="selfId">Id of the NPC.</param>
             <returns>Instance of built fact.</returns>
         </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildSeeFactString(System.String)">
+            <summary>
+            Builds fact that the NPC sees something.
+            </summary>
+            <param name="seenObjId">Id of seen NPC.</param>
+            <returns>String that represents built fact.</returns>
+        </member>
+        <member name="M:SymOntoClay.UnityAsset.Core.IStandardFactsBuilder.BuildSeeFactInstance(System.String)">
+            <summary>
+            Builds fact that the NPC sees something.
+            </summary>
+            <param name="seenObjId">Id of seen NPC.</param>
+            <returns>Instance of built fact.</returns>
+        </member>
         <member name="T:SymOntoClay.UnityAsset.Core.IWorld">
             <summary>
             Represents core of a game world.

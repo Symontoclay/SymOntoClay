@@ -34,7 +34,7 @@ using TestSandbox.PlatformImplementations;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
 
-namespace TestSandbox.MonoBehaviourTesting
+namespace TestSandbox.MonoBehaviorTesting
 {
     public class TstHumanoidNPC: TstMonoBehaviour
     {

@@ -23,62 +23,49 @@ SOFTWARE.*/
 using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
+using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
-using System.Threading;
+using TestSandbox.CoreHostListener;
 using TestSandbox.PlatformImplementations;
 
-namespace TestSandbox.MonoBehaviourTesting
+namespace TestSandbox.MonoBehaviorTesting
 {
-    public class MonoBehaviourTestingHandler
+    public class TstGameObject : TstMonoBehaviour
     {
         private readonly IMonitorLogger _logger = new MonitorLoggerNLogImpementation();
 
-        public void Run()
+        private IGameObject _gameObject;
+        private string _id;
+
+        public override void Awake()
         {
-            _logger.Info("38BEAB64-097F-4511-82B5-37FF1530CB1C", "Begin");
+            _logger.Info("3D5AF0B4-068B-468D-86BD-B091862A9B0A", "Begin");
 
-            var componentsList = new List<TstMonoBehaviour>() { new TstHumanoidNPC(), new TstWord(), new TstGameObject() };
-            ExecuteList(componentsList);
+            var platformListener = new TstPlatformHostListener();
 
-            _logger.Info("B0A32DCB-7F52-44BC-AA3C-B58819DAAF96", "End");
+            var settings = new GameObjectSettings();
+
+            _id = "#a";
+            settings.Id = _id;
+            settings.InstanceId = 2;
+            settings.HostFile = Path.Combine(Directory.GetCurrentDirectory(), @"Source\Things\Barrel\Barrel.sobj");
+            settings.HostListener = platformListener;
+
+            _gameObject = WorldFactory.WorldInstance.GetGameObject(settings);
+
+            _logger.Info("930C4944-BC9E-4F83-8258-04F3983BB94F", "End");
         }
 
-        private void ExecuteList(List<TstMonoBehaviour> componentsList)
+        public override void Stop()
         {
-            _logger.Info("70700B3E-F972-4C7E-AADA-A3576AB56749", "Begin");
+            _logger.Info("EC1CDFDD-C28B-44A7-9EC9-CDF80092C928", "Begin");
 
-            foreach(var component in componentsList)
-            {
-                component.Awake();
-            }
+            _gameObject.Dispose();
 
-            foreach (var component in componentsList)
-            {
-                component.Start();
-            }
-
-            Thread.Sleep(5000);
-
-            for (var i = 1; i <= 100; i++)
-            {
-                foreach (var component in componentsList)
-                {
-                    component.Update();
-                }
-
-                Thread.Sleep(100);
-            }
-
-            Thread.Sleep(50000);
-
-            foreach (var component in componentsList)
-            {
-                component.Stop();
-            }
-
-            _logger.Info("03A0E19B-4578-4E81-B4C8-31D15D81CAD4", "End");
+            _logger.Info("2845399D-87AB-4471-804F-A6DBED9435CC", "End");
         }
     }
 }

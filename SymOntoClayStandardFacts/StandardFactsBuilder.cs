@@ -737,6 +737,38 @@ namespace SymOntoClay.StandardFacts
         }
 
         /// <inheritdoc/>
+        public RuleInstance BuildSeeFactInstance(string seenObjId)
+        {
+            var result = new RuleInstance();
+            var primaryPart = new PrimaryRulePart();
+            result.PrimaryPart = primaryPart;
+
+            var sayRelation = new LogicalQueryNode()
+            {
+                Kind = KindOfLogicalQueryNode.Relation,
+                Name = NameHelper.CreateName("see")
+            };
+
+            primaryPart.Expression = sayRelation;
+
+            sayRelation.ParamsList = new List<LogicalQueryNode>()
+            {
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Entity,
+                    Name = NameHelper.CreateName("I")
+                },
+                new LogicalQueryNode()
+                {
+                    Kind = KindOfLogicalQueryNode.Concept,
+                    Name = NameHelper.CreateName(seenObjId)
+                }
+            };
+
+            return result;
+        }
+
+        /// <inheritdoc/>
         public string BuildFocusFactString(string seenObjId)
         {
             var sb = new StringBuilder();

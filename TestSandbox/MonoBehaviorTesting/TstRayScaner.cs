@@ -32,7 +32,7 @@ using System.Numerics;
 using System.Text;
 using TestSandbox.PlatformImplementations;
 
-namespace TestSandbox.MonoBehaviourTesting
+namespace TestSandbox.MonoBehaviorTesting
 {
     public class TstRayScaner : IVisionProvider
     {

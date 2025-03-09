@@ -36,7 +36,7 @@ using SymOntoClay.Core;
 using SymOntoClay.Threading;
 using System.Threading;
 
-namespace TestSandbox.MonoBehaviourTesting
+namespace TestSandbox.MonoBehaviorTesting
 {
     public class TstWord: TstMonoBehaviour
     {

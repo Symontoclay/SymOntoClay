@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TestSandbox.MonoBehaviourTesting
+namespace TestSandbox.MonoBehaviorTesting
 {
     public abstract class TstMonoBehaviour
     {

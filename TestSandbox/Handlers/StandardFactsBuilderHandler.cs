@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using Newtonsoft.Json;
 using SymOntoClay.BaseTestLib;
+using SymOntoClay.Core;
 using SymOntoClay.Core.DebugHelpers;
 using SymOntoClay.Core.Internal;
 using SymOntoClay.Core.Internal.Helpers;
@@ -29,6 +30,7 @@ using SymOntoClay.CoreHelper.DebugHelpers;
 using SymOntoClay.Monitor.Common;
 using SymOntoClay.Monitor.NLog;
 using SymOntoClay.StandardFacts;
+using SymOntoClay.Threading;
 using SymOntoClay.UnityAsset.Core;
 using System;
 using System.Collections.Generic;
@@ -48,6 +50,11 @@ namespace TestSandbox.Handlers
             var factorySettings = new UnityTestEngineContextFactorySettings();
             factorySettings.UseDefaultNLPSettings = false;
             factorySettings.UseDefaultAppFiles = false;
+            factorySettings.ThreadingSettings = new ThreadingSettings()
+            {
+                CodeExecution = new CustomThreadPoolSettings(),
+                AsyncEvents = new CustomThreadPoolSettings()
+            };
             _engineContext = TstEngineContextHelper.CreateAndInitContext(factorySettings).EngineContext;
 
             _standardFactsBuilder = new StandardFactsBuilder();
@@ -61,10 +68,43 @@ namespace TestSandbox.Handlers
         {
             _logger.Info("8DED6357-C08E-4FF4-80ED-5AC352FA45C9", "Begin");
 
-            Case26();
-            Case25();
+            Case27();
+            //Case26();
+            //Case25();
+            //Case24();
+            //Case23();
+            //Case22();
+            //Case21();
+            //Case20();
+            //Case19();
+            //Case18();
+            //Case17();
+            //Case16();
+            //Case15();
+            //Case14();
+            //Case13();
+            //Case12();
+            //Case11();
+            //Case10();
+            //Case9();
+            //Case8();
+            //Case7();
+            //Case6();
+            //Case5();
+            //Case4();
+            //Case3();
+            //Case2();
+            //Case1();
 
             _logger.Info("624BEA0D-792E-4DE2-8128-AF4547977A7F", "End");
+        }
+
+        private void Case27()
+        {
+            var fact = _standardFactsBuilder.BuildSeeFactInstance("#123");
+
+            _logger.Info("5BA2388B-AEB8-40A0-AB7C-4F503890521A", $"fact = '{fact.ToHumanizedString()}'");
+            _logger.Info("6DCED42E-6A24-4FF6-95B4-CD9B3AD5A10E", $"fact = '{fact.ToHumanizedString(HumanizedOptions.ShowOnlyMainContent)}'");
         }
 
         private void Case26()

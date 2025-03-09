@@ -209,6 +209,11 @@ namespace SymOntoClay.Core.Internal.Instances
                 return;
             }
 
+            if(_rootInstanceInfo == null)
+            {
+                return;
+            }
+
             var rawListOfTopIndependentInstances = _rootInstanceInfo.GetTopIndependentInstances(logger);
 
             if(rawListOfTopIndependentInstances.Count == 1)

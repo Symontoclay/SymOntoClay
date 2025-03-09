@@ -42,6 +42,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
             _selfInstanceId = internalContext.SelfInstanceId;
             _worldContext = worldContext;
             _visionProvider = visionProvider;
+            _standardFactsBuilder = worldContext.StandardFactsBuilder;
 
             _activeObjectContext = new ActiveObjectContext(worldContext.SyncContext, internalContext.CancellationToken);
             _activeObject = new AsyncActivePeriodicObject(_activeObjectContext, internalContext.AsyncEventsThreadPool, logger);
@@ -50,6 +51,7 @@ namespace SymOntoClay.UnityAsset.Core.Internal.Vision
 
         private readonly HumanoidNPCGameComponentContext _internalContext;
         private readonly IWorldCoreGameComponentContext _worldContext;
+        private readonly IStandardFactsBuilder _standardFactsBuilder;
         private readonly int _selfInstanceId;
         private readonly IVisionProvider _visionProvider;
         private readonly IActiveObjectContext _activeObjectContext;

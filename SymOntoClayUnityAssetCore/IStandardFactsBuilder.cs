@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Core;
 using SymOntoClay.Core.Internal.CodeModel;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ using System.Text;
 
 namespace SymOntoClay.UnityAsset.Core
 {
-    public interface IStandardFactsBuilder
+    public interface IStandardFactsBuilder: IStandardCoreFactsBuilder
     {
         /// <summary>
         /// Builds fact that the NPC says something.
@@ -213,7 +214,20 @@ namespace SymOntoClay.UnityAsset.Core
         /// <returns>Instance of built fact.</returns>
         RuleInstance BuildReadyForShootFactInstance(string selfId);
 
+        /// <summary>
+        /// Builds fact that the NPC sees something.
+        /// </summary>
+        /// <param name="seenObjId">Id of seen NPC.</param>
+        /// <returns>String that represents built fact.</returns>
         string BuildSeeFactString(string seenObjId);
+
+        /// <summary>
+        /// Builds fact that the NPC sees something.
+        /// </summary>
+        /// <param name="seenObjId">Id of seen NPC.</param>
+        /// <returns>Instance of built fact.</returns>
+        RuleInstance BuildSeeFactInstance(string seenObjId);
+
         string BuildFocusFactString(string seenObjId);
         string BuildDefaultInheritanceFactString(string obj, string superObj);
     }

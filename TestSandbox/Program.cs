@@ -62,7 +62,7 @@ using TestSandbox.DateTimes;
 using TestSandbox.Handlers;
 using TestSandbox.Helpers;
 using TestSandbox.LogicalDatabase;
-using TestSandbox.MonoBehaviourTesting;
+using TestSandbox.MonoBehaviorTesting;
 using TestSandbox.Navigations;
 using TestSandbox.Parsing;
 using TestSandbox.SoundBusHandler;
@@ -93,7 +93,7 @@ namespace TestSandbox
             //TstLogFileBuilder();
             //TstMonitor();
             //TstCreateListByVarsDict();
-            //TstDetectDoninantItems();
+            //TstDetectDominantItems();
             //TstSerializeValue();
             //TstWaitAsync();
             //TstWaitAsync_2();
@@ -103,12 +103,12 @@ namespace TestSandbox
             //TstGetFullBaseTypesListInCSharpReflection();
             //TstConvertFactToImperativeCode();
             //TstFactToHtml();
-            //TstStandardFactsBuilder();
+            TstStandardFactsBuilder();
             //TstStandardFactsBuilderGetTargetVarNameHandler();
             //TstShieldString();
             //TstSampleSpeechSynthesis();
-            //TstOnAddingFactEventHanler();
-            //TstEventHanler();
+            //TstOnAddingFactEventHandler();
+            //TstEventHandler();
             //TstStrCollectionCombination();
             //TstIntCollectionCombination();
             //TstModalitiesHandler();
@@ -143,7 +143,7 @@ namespace TestSandbox
             //TstLogicalDatabase();//!
             //TstProcessInfoChildren();
             //TstWaitIProcessInfo();
-            //TstKindOfParametersSсaffolder();
+            //TstKindOfParametersScaffolder();
             //TstDateTimeHandler();
             //TstBaseManualControllingGameComponent();
             //TstLoadTypesPlatformTypesConvertors();
@@ -165,10 +165,10 @@ namespace TestSandbox
             //TstParsing();
             //TstBattleRoyaleHandler();//<==
             //TstPlacesHandler();//<==
-            //TstMonoBehaviourTestingHandler();//VT<=
+            //TstMonoBehaviorTestingHandler();//VT<=
             //TstSoundStartHandler();//<==
             //TstAddingFactTriggerHandler();
-            TstTasksHandler();
+            //TstTasksHandler();
             //TstGeneralStartHandler();//<=
             //TstGetParsedFilesInfo();
 
@@ -657,7 +657,7 @@ namespace TestSandbox
             _logger.Info("E1B00B6D-5432-420D-BFAF-B679A9E6CAD3", "End");
         }
 
-        private static void TstOnAddingFactEventHanler()
+        private static void TstOnAddingFactEventHandler()
         {
             _logger.Info("A42581B7-AF6A-404D-A955-FF1D7BE94579", "Begin");
 
@@ -667,11 +667,11 @@ namespace TestSandbox
             _logger.Info("3F8D1A27-A27D-4D2A-9EBD-A2470BC923DF", "End");
         }
 
-        private static void TstEventHanler()
+        private static void TstEventHandler()
         {
             _logger.Info("802C193A-95BE-40B1-BB18-421668003039", "Begin");
 
-            var handler = new EventHanler();
+            var handler = new Handlers.EventHandler();
             handler.Run();
 
             _logger.Info("0918FFF7-E3F7-467B-A52C-C1D6F9AD3C6F", "End");
@@ -1715,7 +1715,7 @@ action Go
             PositionedParameters
         }
 
-        private static void TstKindOfParametersSсaffolder()
+        private static void TstKindOfParametersScaffolder()
         {
             _logger.Info("5A037CCC-0FD3-49E8-B274-6AB36FA47AAC", "Begin");
 
@@ -2079,11 +2079,11 @@ action Go
             _logger.Info("2BD6E59D-1CD6-432F-9427-CDB04F69190A", "End");
         }
 
-        private static void TstMonoBehaviourTestingHandler()
+        private static void TstMonoBehaviorTestingHandler()
         {
             _logger.Info("E3BE2386-3885-4B2C-8A0F-A6E71AE3B7A6", "Begin");
 
-            var handler = new MonoBehaviourTestingHandler();
+            var handler = new MonoBehaviorTestingHandler();
             handler.Run();
 
             _logger.Info("5229A73C-405A-413D-AB44-DDDEBE840D31", "End");

@@ -115,7 +115,7 @@ namespace SymOntoClay.Core.Internal.Storage.FuzzyLogic
 
                     foreach (var weightedInheritanceItem in weightedInheritanceItems)
                     {
-                        var targetHolder = weightedInheritanceItem.SuperName;
+                        var targetHolder = weightedInheritanceItem.SuperType;
 
                         if (dict.ContainsKey(targetHolder))
                         {

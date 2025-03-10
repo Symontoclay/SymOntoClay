@@ -71,7 +71,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             foreach (var weightedInheritanceItem in weightedInheritanceItems)
             {
-                var codeItem = _metadataResolver.Resolve(logger, weightedInheritanceItem.SuperName, localCodeExecutionContext);
+                var codeItem = _metadataResolver.Resolve(logger, weightedInheritanceItem.SuperType, localCodeExecutionContext);
 
                 if(codeItem == null)
                 {

@@ -77,7 +77,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
         }
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<InheritanceItem>> GetItemsDirectly(IMonitorLogger logger, StrongIdentifierValue subName)
+        public IList<WeightedInheritanceResultItem<InheritanceItem>> GetItemsDirectly(IMonitorLogger logger, TypeInfo subType)
         {
             lock(_lockObj)
             {
@@ -85,7 +85,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
 
                 foreach(var storage in _inheritanceStorages)
                 {
-                    var targetList = storage.GetItemsDirectly(logger, subName);
+                    var targetList = storage.GetItemsDirectly(logger, subType);
 
                     if(targetList == null)
                     {

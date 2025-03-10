@@ -119,7 +119,7 @@ namespace SymOntoClay.Core.Internal.Storage.RelationStoraging
 
                 foreach (var weightedInheritanceItem in weightedInheritanceItems)
                 {
-                    var targetHolder = weightedInheritanceItem.SuperName;
+                    var targetHolder = weightedInheritanceItem.SuperType;
 
                     if (_itemsDict.ContainsKey(targetHolder))
                     {

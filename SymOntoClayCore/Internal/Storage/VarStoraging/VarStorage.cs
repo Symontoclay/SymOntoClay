@@ -264,7 +264,7 @@ namespace SymOntoClay.Core.Internal.Storage.VarStoraging
 
                 foreach (var weightedInheritanceItem in weightedInheritanceItems)
                 {
-                    var targetHolder = weightedInheritanceItem.SuperName;
+                    var targetHolder = weightedInheritanceItem.SuperType;
 
                     if(_variablesDict.ContainsKey(targetHolder))
                     {

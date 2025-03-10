@@ -121,9 +121,9 @@ namespace SymOntoClay.Core.Internal.Storage
                 return;
             }
 
-            var inheritanceItemsDict = weightedInheritanceItemsList.Where(p => p.OriginalItem != null).ToDictionary(p => p.SuperName, p => p.OriginalItem);
+            var inheritanceItemsDict = weightedInheritanceItemsList.Where(p => p.OriginalItem != null).ToDictionary(p => p.SuperType, p => p.OriginalItem);
 
-            var idsList = weightedInheritanceItemsList.Select(p => p.SuperName).Distinct().ToList();
+            var idsList = weightedInheritanceItemsList.Select(p => p.SuperType).Distinct().ToList();
 
             var newIdsList = idsList.Except(_foundInheritanceKeysList);
 

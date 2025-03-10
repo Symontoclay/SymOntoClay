@@ -43,7 +43,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             {
                 IsSelf = source.IsSelf;
                 Distance = source.Distance;
-                SuperName = source.SuperName;
+                SuperType = source.SuperType;
                 Rank = source.Rank;
                 OriginalItem = source.OriginalItem;
             }
@@ -51,7 +51,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
         public bool IsSelf { get; set; }
         public uint Distance { get; set; }
-        public StrongIdentifierValue SuperName { get; set; }
+        public TypeInfo SuperType { get; set; }
         public float Rank { get; set; }
         public InheritanceItem OriginalItem { get; set; }
 
@@ -80,7 +80,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
 
             sb.AppendLine($"{spaces}{nameof(IsSelf)} = {IsSelf}");
             sb.AppendLine($"{spaces}{nameof(Distance)} = {Distance}");
-            sb.PrintObjProp(n, nameof(SuperName), SuperName);
+            sb.PrintObjProp(n, nameof(SuperType), SuperType);
            
             sb.AppendLine($"{spaces}{nameof(Rank)} = {Rank}");
 
@@ -113,7 +113,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.AppendLine($"{spaces}{nameof(IsSelf)} = {IsSelf}");
             sb.AppendLine($"{spaces}{nameof(Distance)} = {Distance}");
 
-            sb.PrintShortObjProp(n, nameof(SuperName), SuperName);
+            sb.PrintShortObjProp(n, nameof(SuperType), SuperType);
 
             sb.AppendLine($"{spaces}{nameof(Rank)} = {Rank}");
 
@@ -146,7 +146,7 @@ namespace SymOntoClay.Core.Internal.IndexedData
             sb.AppendLine($"{spaces}{nameof(IsSelf)} = {IsSelf}");
             sb.AppendLine($"{spaces}{nameof(Distance)} = {Distance}");
 
-            sb.PrintBriefObjProp(n, nameof(SuperName), SuperName);
+            sb.PrintBriefObjProp(n, nameof(SuperType), SuperType);
 
             sb.AppendLine($"{spaces}{nameof(Rank)} = {Rank}");
 

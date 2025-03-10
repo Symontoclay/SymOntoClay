@@ -274,8 +274,8 @@ namespace TestSandbox.LogicalDatabase
 
                 var inheritanceItem = new InheritanceItem();
 
-                inheritanceItem.SuperName = inheritanceRelation.Name;
-                inheritanceItem.SubName = inheritanceRelation.ParamsList.Single().Name;
+                inheritanceItem.SuperType = inheritanceRelation.Name;
+                inheritanceItem.SubType = inheritanceRelation.ParamsList.Single().Name;
                 inheritanceItem.Rank = new LogicalValue(1);
 
                 inheritanceItem.KeysOfPrimaryRecords.Add(ruleInstanceName);

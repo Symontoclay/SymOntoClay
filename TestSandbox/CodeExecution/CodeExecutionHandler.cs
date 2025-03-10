@@ -53,8 +53,8 @@ namespace TestSandbox.CodeExecution
                 IsSystemDefined = true
             };
 
-            applicationInheritanceItem.SubName = NameHelper.CreateName("PeaseKeeper");
-            applicationInheritanceItem.SuperName = context.CommonNamesStorage.AppName;
+            applicationInheritanceItem.SubType = NameHelper.CreateName("PeaseKeeper");
+            applicationInheritanceItem.SuperType = context.CommonNamesStorage.AppName;
             applicationInheritanceItem.Rank = new LogicalValue(1.0F);
 
             context.Storage.GlobalStorage.InheritanceStorage.SetInheritance(_logger, applicationInheritanceItem);

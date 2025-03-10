@@ -51,8 +51,8 @@ namespace TestSandbox.Handlers
             var superName = NameHelper.CreateName("SuperClass");
 
             var inheritanceItem = new InheritanceItem();
-            inheritanceItem.SubName = subName;
-            inheritanceItem.SuperName = superName;
+            inheritanceItem.SubType = subName;
+            inheritanceItem.SuperType = superName;
             inheritanceItem.Rank = new LogicalValue(1);
 
             _logger.Info("EF5322F5-8263-47B6-A95B-A39249B41A29", $"inheritanceItem = {inheritanceItem}");
@@ -60,8 +60,8 @@ namespace TestSandbox.Handlers
             inheritanceStorage.SetInheritance(_logger, inheritanceItem);
 
             inheritanceItem = new InheritanceItem();
-            inheritanceItem.SubName = subName;
-            inheritanceItem.SuperName = superName;
+            inheritanceItem.SubType = subName;
+            inheritanceItem.SuperType = superName;
             inheritanceItem.Rank = new LogicalValue(0.5F);
 
             _logger.Info("1FF978A6-CDAA-46DD-A5BE-CFB2A561C68F", $"inheritanceItem = {inheritanceItem}");
@@ -69,8 +69,8 @@ namespace TestSandbox.Handlers
             inheritanceStorage.SetInheritance(_logger, inheritanceItem);
 
             inheritanceItem = new InheritanceItem();
-            inheritanceItem.SubName = subName;
-            inheritanceItem.SuperName = superName;
+            inheritanceItem.SubType = subName;
+            inheritanceItem.SuperType = superName;
             inheritanceItem.Rank = new LogicalValue(0);
 
             _logger.Info("83E54C8F-F3A5-44DB-8E20-C4880A4F6162", $"inheritanceItem = {inheritanceItem}");

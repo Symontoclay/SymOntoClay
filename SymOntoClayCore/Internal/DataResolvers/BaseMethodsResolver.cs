@@ -503,10 +503,10 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        protected Dictionary<int, StrongIdentifierValue> CheckSpecialCasesInParameters<T>(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<T>> source)
+        protected Dictionary<int, TypeInfo> CheckSpecialCasesInParameters<T>(IMonitorLogger logger, List<WeightedInheritanceResultItemWithStorageInfo<T>> source)
             where T : AnnotatedItem, IExecutable
         {
-            var result = new Dictionary<int, StrongIdentifierValue>();
+            var result = new Dictionary<int, TypeInfo>();
 
             foreach (var function in source)
             {

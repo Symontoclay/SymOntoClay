@@ -46,7 +46,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return Resolve(logger, source, localCodeExecutionContext, options, false);
         }
 
-        public LogicalValue Resolve(IMonitorLogger logger, Value source, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options, bool forInheritance)
+        public LogicalValue Resolve(IMonitorLogger logger, Value source, ILocalCodeExecutionContext localCodeExecutionContext, bool forInheritance)
         {
             return Resolve(logger, source, localCodeExecutionContext, DefaultOptions, forInheritance);
         }

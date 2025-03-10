@@ -41,12 +41,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         
         public string Id { get; set; }
 
-        public StrongIdentifierValue SubName { get; set; } = new StrongIdentifierValue();
+        public TypeInfo SubType { get; set; } = TypeInfo.Empty;
 
         /// <summary>
         /// Represents ancestor.
         /// </summary>
-        public StrongIdentifierValue SuperName { get; set; } = new StrongIdentifierValue();
+        public TypeInfo SuperType { get; set; } = TypeInfo.Empty;
 
         /// <summary>
         /// Represents rank of inheritance between two objects.
@@ -61,7 +61,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            var result = base.CalculateLongHashCode(options) ^ SubName.GetLongHashCode(options) ^ SuperName.GetLongHashCode(options);
+            var result = base.CalculateLongHashCode(options) ^ SubType.GetLongHashCode(options) ^ SuperType.GetLongHashCode(options);
 
             if (Rank != null)
             {
@@ -94,8 +94,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             var result = new InheritanceItem();
             context[this] = result;
-            result.SubName = SubName.Clone(context);
-            result.SuperName = SuperName.Clone(context);
+            result.SubType = SubType.Clone(context);
+            result.SuperType = SuperType.Clone(context);
             result.Rank = Rank.CloneValue(context);
             result.IsSystemDefined = IsSystemDefined;
             result.KeysOfPrimaryRecords = KeysOfPrimaryRecords;
@@ -110,16 +110,16 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             base.DiscoverAllAnnotations(result);
 
-            SubName?.DiscoverAllAnnotations(result);
-            SuperName?.DiscoverAllAnnotations(result);
+            SubType?.DiscoverAllAnnotations(result);
+            SuperType?.DiscoverAllAnnotations(result);
             Rank?.DiscoverAllAnnotations(result);
         }
 
         private void PrintHeader(StringBuilder sb, uint n, string spaces)
         {
             sb.AppendLine($"{spaces}{nameof(Id)} = {Id}");
-            sb.PrintObjProp(n, nameof(SubName), SubName);
-            sb.PrintObjProp(n, nameof(SuperName), SuperName);
+            sb.PrintObjProp(n, nameof(SubType), SubType);
+            sb.PrintObjProp(n, nameof(SuperType), SuperType);
             sb.PrintObjProp(n, nameof(Rank), Rank);
             sb.AppendLine($"{spaces}{nameof(IsSystemDefined)} = {IsSystemDefined}");
             sb.PrintObjListProp(n, nameof(KeysOfPrimaryRecords), KeysOfPrimaryRecords);
@@ -161,10 +161,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
             if(Rank != LogicalValue.TrueValue)
             {
-                sb.Append($"[{Rank.ToHumanizedString(options)}] ");
+                sb.Append($"[[{Rank.ToHumanizedString(options)}]] ");
             }
 
-            sb.Append(SuperName.NameValue);
+            sb.Append(SuperType.ToHumanizedString(options));
 
             return sb.ToString();
         }
@@ -174,15 +174,15 @@ namespace SymOntoClay.Core.Internal.CodeModel
         {
             var sb = new StringBuilder();
 
-            sb.Append(SuperName.NameValue);
+            sb.Append(SuperType.ToHumanizedString(options));
             sb.Append(" is ");
 
             if (Rank != LogicalValue.TrueValue)
             {
-                sb.Append($"[{Rank.ToHumanizedString(options)}] ");
+                sb.Append($"[[{Rank.ToHumanizedString(options)}]] ");
             }
 
-            sb.Append(SuperName.NameValue);
+            sb.Append(SuperType.ToHumanizedString(options));
 
             return sb.ToString();
         }

@@ -119,8 +119,8 @@ namespace SymOntoClay.Core.Internal.Storage
                 IsSystemDefined = false
             };
 
-            inheritanceItem.SubName = _selfName;
-            inheritanceItem.SuperName = categoryName;
+            inheritanceItem.SubType = _selfName;
+            inheritanceItem.SuperType = categoryName;
             inheritanceItem.Rank = new LogicalValue(1.0F);
 
             _categoriesDict.Add(categoryName, inheritanceItem);

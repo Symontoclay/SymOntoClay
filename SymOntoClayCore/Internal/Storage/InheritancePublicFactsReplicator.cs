@@ -143,8 +143,8 @@ namespace SymOntoClay.Core.Internal.Storage
 
                     var addedInheritanceItem = new InheritanceItem();
 
-                    addedInheritanceItem.SuperName = initialAddedInheritanceItem.SuperName;
-                    addedInheritanceItem.SubName = _selfName;
+                    addedInheritanceItem.SuperType = initialAddedInheritanceItem.SuperType;
+                    addedInheritanceItem.SubType = _selfName;
                     addedInheritanceItem.Rank = new LogicalValue(1);
 
                     _inheritanceItemsDict[name] = addedInheritanceItem;

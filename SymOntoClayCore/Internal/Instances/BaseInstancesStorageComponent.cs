@@ -137,8 +137,8 @@ namespace SymOntoClay.Core.Internal.Instances
                 IsSystemDefined = false
             };
 
-            inheritanceItem.SubName = instance.Name;
-            inheritanceItem.SuperName = superCodeItem.Name;
+            inheritanceItem.SubType = instance.Name;
+            inheritanceItem.SuperType = superCodeItem.Name;
             inheritanceItem.Rank = new LogicalValue(1.0F);
 
             instance.InheritanceItems.Add(inheritanceItem);

@@ -9,8 +9,9 @@ using System.Text;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
-    public class TypeInfo : Value
+    public class TypeInfo : Value, IEquatable<TypeInfo>
     {
+        public static TypeInfo Empty = new TypeInfo();
         public static TypeInfo NullTypeInfo = new TypeInfo(NameHelper.CreateName(StandardNamesConstants.NullTypeName));
         public static TypeInfo NumberTypeInfo = new TypeInfo(NameHelper.CreateName(StandardNamesConstants.NumberTypeName));
         public static TypeInfo FuzzyTypeInfo = new TypeInfo(NameHelper.CreateName(StandardNamesConstants.FuzzyTypeName));
@@ -41,6 +42,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             Name = Name;
             IsArray = IsArray;
             Capacity = capacity;
+            _isEmpty = false;
         }
 
         /// <inheritdoc/>
@@ -57,6 +59,10 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public bool IsArray { get; private set; }
         public int? Capacity { get; private set; }
 
+        private readonly bool _isEmpty = true;
+
+        public bool IsEmpty => _isEmpty || (Name?.IsEmpty ?? true);
+
         /// <inheritdoc/>
         public override object GetSystemValue()
         {
@@ -67,6 +73,99 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override string ToSystemString()
         {
             return null;
+        }
+
+        /// <inheritdoc/>
+        public bool Equals(TypeInfo other)
+        {
+            return NEquals(other);
+        }
+
+        private bool NEquals(TypeInfo other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            if(IsAnonymous != other.IsAnonymous)
+            {
+                return false;
+            }
+
+            if(!Name.Equals(other.Name))
+            {
+                return false;
+            }
+
+            if(IsArray != other.IsArray)
+            {
+                return false;
+            }
+
+            if(Capacity != other.Capacity)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            var personObj = obj as TypeInfo;
+            if (personObj == null)
+            {
+                return false;
+            }
+
+            return Equals(personObj);
+        }
+
+        public static bool operator == (TypeInfo a, TypeInfo b)
+        {
+            if (ReferenceEquals(a, b))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(a, null))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(b, null))
+            {
+                return false;
+            }
+
+            return a.Equals(b);
+        }
+
+        public static bool operator != (TypeInfo a, TypeInfo b)
+        {
+            if (ReferenceEquals(a, b))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(a, null))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(b, null))
+            {
+                return true;
+            }
+
+            return !a.Equals(b); 
         }
 
         /// <inheritdoc/>

@@ -34,6 +34,6 @@ namespace SymOntoClay.Core
         void SetInheritance(IMonitorLogger logger, InheritanceItem inheritanceItem);
         void SetInheritance(IMonitorLogger logger, InheritanceItem inheritanceItem, bool isPrimary);
         void RemoveInheritance(IMonitorLogger logger, InheritanceItem inheritanceItem);
-        IList<WeightedInheritanceResultItem<InheritanceItem>> GetItemsDirectly(IMonitorLogger logger, StrongIdentifierValue subName);
+        IList<WeightedInheritanceResultItem<InheritanceItem>> GetItemsDirectly(IMonitorLogger logger, TypeInfo subType);
     }
 }

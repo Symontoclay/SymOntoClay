@@ -247,11 +247,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                     continue;
                 }
 
-                var superName = targetItem.SuperName;
+                var superType = targetItem.SuperType;
 
-                if (result.ContainsKey(superName))
+                if (result.ContainsKey(superType))
                 {
-                    var item = result[superName];
+                    var item = result[superType];
 
                     if(item.Rank < calculatedRank)
                     {
@@ -264,17 +264,17 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                 else
                 {
                     var item = new WeightedInheritanceItem();
-                    item.SuperName = superName;
+                    item.SuperName = superType;
                     item.Distance = currentDistance;
                     item.Rank = calculatedRank;
                     item.OriginalItem = targetItem;
 
-                    result[superName] = item;
+                    result[superType] = item;
                 }
 
                 if(allInheritance)
                 {
-                    FillUpWeightedInheritanceItemsBySubName(logger, targetItem.SuperName, localCodeExecutionContext, result, calculatedRank, currentDistance, storagesList, true);
+                    FillUpWeightedInheritanceItemsBySubName(logger, targetItem.SuperType, localCodeExecutionContext, result, calculatedRank, currentDistance, storagesList, true);
                 }
             }
         }

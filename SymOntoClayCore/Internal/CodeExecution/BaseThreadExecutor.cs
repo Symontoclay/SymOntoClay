@@ -2791,8 +2791,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var rank = paramsList[2];//_logicalValueLinearResolver.Resolve(paramsList[2], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions(), true);
 
-            inheritanceItem.SubName = subName;
-            inheritanceItem.SuperName = superName;
+            inheritanceItem.SubType = subName;
+            inheritanceItem.SuperType = superName;
             inheritanceItem.Rank = rank;
 
             _globalStorage.InheritanceStorage.SetInheritance(Logger, inheritanceItem);
@@ -2813,8 +2813,8 @@ namespace SymOntoClay.Core.Internal.CodeExecution
 
             var rank = _logicalValueLinearResolver.Resolve(Logger, paramsList[2], _currentCodeFrame.LocalContext, ResolverOptions.GetDefaultOptions(), true).Inverse();
 
-            inheritanceItem.SubName = subName;
-            inheritanceItem.SuperName = superName;
+            inheritanceItem.SubType = subName;
+            inheritanceItem.SuperType = superName;
             inheritanceItem.Rank = rank;
 
             _globalStorage.InheritanceStorage.SetInheritance(Logger, inheritanceItem);

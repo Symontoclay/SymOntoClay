@@ -251,7 +251,7 @@ namespace SymOntoClay.Core.Internal.Converters
 
                         var relationInfo = _relationsResolver.GetRelation(logger, node.Name, paramsCount, localCodeExecutionContext);
 
-                        var isAct = relationInfo.InheritanceItems.Any(p => p.SuperName == _actName);
+                        var isAct = relationInfo.InheritanceItems.Any(p => p.SuperType == _actName);
 
                         if(isAct)
                         {
@@ -317,7 +317,7 @@ namespace SymOntoClay.Core.Internal.Converters
                     continue;
                 }
 
-                var isAct = relationInfo.InheritanceItems.Any(p => p.SuperName == _actName);
+                var isAct = relationInfo.InheritanceItems.Any(p => p.SuperType == _actName);
 
                 if(isAct)
                 {

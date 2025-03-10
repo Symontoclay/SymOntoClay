@@ -42,7 +42,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
 
         private IInheritancePublicFactsReplicator _inheritancePublicFactsReplicator;
 
-        private readonly Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<InheritanceItem>>> _nonIndexedInfo = new Dictionary<StrongIdentifierValue, Dictionary<StrongIdentifierValue, List<InheritanceItem>>>();
+        private readonly Dictionary<TypeInfo, Dictionary<TypeInfo, List<InheritanceItem>>> _nonIndexedInfo = new Dictionary<TypeInfo, Dictionary<TypeInfo, List<InheritanceItem>>>();
         private readonly Dictionary<InheritanceItem, string> _factsIdRegistry = new Dictionary<InheritanceItem, string>();
 
         /// <inheritdoc/>
@@ -54,25 +54,23 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
         /// <inheritdoc/>
         public void SetInheritance(IMonitorLogger logger, InheritanceItem inheritanceItem, bool isPrimary)
         {
-            var subItem = inheritanceItem.SubName;
-
             lock (_lockObj)
             {
-                var subName = inheritanceItem.SubName;
-                var superName = inheritanceItem.SuperName;
+                var subType = inheritanceItem.SubType;
+                var superType = inheritanceItem.SuperType;
 
-                if (subName.IsEmpty || superName.IsEmpty)
+                if (subType.IsEmpty || superType.IsEmpty)
                 {
                     return;
                 }
 
-                if (_nonIndexedInfo.ContainsKey(subName))
+                if (_nonIndexedInfo.ContainsKey(subType))
                 {
-                    var dict = _nonIndexedInfo[subName];
+                    var dict = _nonIndexedInfo[subType];
 
-                    if (dict.ContainsKey(superName))
+                    if (dict.ContainsKey(superType))
                     {
-                        var targetList = dict[superName];
+                        var targetList = dict[superType];
 
                         StorageHelper.RemoveSameItems(logger, targetList, inheritanceItem);
 
@@ -80,14 +78,14 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
                     }
                     else
                     {
-                        dict[superName] = new List<InheritanceItem>() { inheritanceItem };
+                        dict[superType] = new List<InheritanceItem>() { inheritanceItem };
                     }
                 }
                 else
                 {
-                    var dict = new Dictionary<StrongIdentifierValue, List<InheritanceItem>>();
-                    _nonIndexedInfo[subName] = dict;
-                    dict[superName] = new List<InheritanceItem>() { inheritanceItem };
+                    var dict = new Dictionary<TypeInfo, List<InheritanceItem>>();
+                    _nonIndexedInfo[subType] = dict;
+                    dict[superType] = new List<InheritanceItem>() { inheritanceItem };
                 }
             }
 
@@ -104,7 +102,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
 
                 if(_kind == KindOfStorage.Global || _kind ==  KindOfStorage.Host || _kind == KindOfStorage.Categories)
                 {
-                    _inheritancePublicFactsReplicator.ProcessChangeInheritance(logger, inheritanceItem.SubName, inheritanceItem.SuperName);
+                    _inheritancePublicFactsReplicator.ProcessChangeInheritance(logger, inheritanceItem.SubType, inheritanceItem.SuperType);
                 }
             }
 
@@ -115,8 +113,8 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
         {
             lock (_lockObj)
             {
-                var subName = inheritanceItem.SubName;
-                var superName = inheritanceItem.SuperName;
+                var subName = inheritanceItem.SubType;
+                var superName = inheritanceItem.SuperType;
 
                 if (subName.IsEmpty || superName.IsEmpty)
                 {
@@ -134,13 +132,13 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
 
                         targetList.Remove(inheritanceItem);
 
-                        NRemoveIngeritanceFact(logger, inheritanceItem);
+                        NRemoveInheritanceFact(logger, inheritanceItem);
                     }
                 }
             }
         }
 
-        private void NRemoveIngeritanceFact(IMonitorLogger logger, InheritanceItem inheritanceItem)
+        private void NRemoveInheritanceFact(IMonitorLogger logger, InheritanceItem inheritanceItem)
         {
             lock (_factsIdRegistryLockObj)
             {
@@ -178,12 +176,12 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
             var subItemNode = new LogicalQueryNode();
             isRelation.ParamsList.Add(subItemNode);
             subItemNode.Kind = KindOfLogicalQueryNode.Concept;
-            subItemNode.Name = inheritanceItem.SubName;
+            subItemNode.Name = inheritanceItem.SubType;
 
             var superItemNode = new LogicalQueryNode();
             isRelation.ParamsList.Add(superItemNode);
             superItemNode.Kind = KindOfLogicalQueryNode.Concept;
-            superItemNode.Name = inheritanceItem.SuperName;
+            superItemNode.Name = inheritanceItem.SuperType;
 
             var rankNode = new LogicalQueryNode();
             isRelation.ParamsList.Add(rankNode);
@@ -196,7 +194,7 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
         private static List<WeightedInheritanceResultItem<InheritanceItem>> _emptyItemsList = new List<WeightedInheritanceResultItem<InheritanceItem>>();
 
         /// <inheritdoc/>
-        public IList<WeightedInheritanceResultItem<InheritanceItem>> GetItemsDirectly(IMonitorLogger logger, StrongIdentifierValue subName)
+        public IList<WeightedInheritanceResultItem<InheritanceItem>> GetItemsDirectly(IMonitorLogger logger, TypeInfo subType)
         {
             lock (_lockObj)
             {
@@ -205,14 +203,14 @@ namespace SymOntoClay.Core.Internal.Storage.InheritanceStoraging
                     return _emptyItemsList;
                 }
 
-                if (subName == null || subName.IsEmpty)
+                if (subType == null || subType.IsEmpty)
                 {
                     return _emptyItemsList;
                 }
 
-                if(_nonIndexedInfo.ContainsKey(subName))
+                if(_nonIndexedInfo.ContainsKey(subType))
                 {
-                    var rawResult = _nonIndexedInfo[subName].SelectMany(p => p.Value).ToList();
+                    var rawResult = _nonIndexedInfo[subType].SelectMany(p => p.Value).ToList();
 
                     var result = new List<WeightedInheritanceResultItem<InheritanceItem>>();
 

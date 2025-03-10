@@ -40,6 +40,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class ConditionalEntityValue : BaseEntityValue
     {
+        static ConditionalEntityValue()
+        {
+            _builtInSuperTypes = new List<TypeInfo>() { TypeInfo.ConditionalEntityTypeInfo };
+        }
+
+        private static List<TypeInfo> _builtInSuperTypes;
+
         public ConditionalEntityValue(EntityConditionExpressionNode entityConditionExpression, RuleInstance logicalQuery, StrongIdentifierValue name, IEngineContext context, ILocalCodeExecutionContext localContext, bool isOnceResolved)
             : base(context, localContext)
         {
@@ -224,8 +231,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override ConditionalEntityValue AsConditionalEntityValue => this;
 
-        private List<TypeInfo> _builtInSuperTypes;
-
         /// <inheritdoc/>
         public override IReadOnlyList<TypeInfo> BuiltInSuperTypes => _builtInSuperTypes;
 
@@ -244,8 +249,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            _builtInSuperTypes = new List<StrongIdentifierValue>() { NameHelper.CreateName(StandardNamesConstants.ConditionalEntityTypeName) };
-
             LogicalQuery.CheckDirty(options);
 
             return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.BaseFunctionWeight ^ (Name?.GetLongHashCode(options) ?? 0) ^ LongHashCodeWeights.BaseParamWeight ^ LogicalQuery.GetLongHashCode(options);

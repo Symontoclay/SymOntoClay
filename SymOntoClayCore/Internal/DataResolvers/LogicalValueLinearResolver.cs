@@ -34,9 +34,21 @@ namespace SymOntoClay.Core.Internal.DataResolvers
         {
         }
 
+        public ResolverOptions DefaultOptions { get; private set; } = ResolverOptions.GetDefaultOptions();
+
+        public LogicalValue Resolve(IMonitorLogger logger, Value source, ILocalCodeExecutionContext localCodeExecutionContext)
+        {
+            return Resolve(logger, source, localCodeExecutionContext, DefaultOptions);
+        }
+
         public LogicalValue Resolve(IMonitorLogger logger, Value source, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
             return Resolve(logger, source, localCodeExecutionContext, options, false);
+        }
+
+        public LogicalValue Resolve(IMonitorLogger logger, Value source, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options, bool forInheritance)
+        {
+            return Resolve(logger, source, localCodeExecutionContext, DefaultOptions, forInheritance);
         }
 
         public LogicalValue Resolve(IMonitorLogger logger, Value source, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options, bool forInheritance)

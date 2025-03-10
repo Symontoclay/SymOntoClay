@@ -20,22 +20,25 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
+using SymOntoClay.Common.DebugHelpers;
 using SymOntoClay.Core.DebugHelpers;
-using SymOntoClay.Core.Internal.CodeModel.Helpers;
-using SymOntoClay.Core.Internal.IndexedData;
-using SymOntoClay.CoreHelper.DebugHelpers;
-using SymOntoClay.Monitor.Common.Models;
 using SymOntoClay.Monitor.Common;
-using System;
+using SymOntoClay.Monitor.Common.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SymOntoClay.Common.DebugHelpers;
 
 namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class SequenceValue : Value
     {
+        static SequenceValue()
+        {
+            _builtInSuperTypes = new List<TypeInfo>() { TypeInfo.SequenceTypeInfo };
+        }
+
+        private static List<TypeInfo> _builtInSuperTypes;
+
         public SequenceValue()
         {
         }
@@ -75,16 +78,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return string.Join(" ", _values.Select(p => p.ToSystemString()));
         }
 
-        private List<TypeInfo> _builtInSuperTypes;
-
         /// <inheritdoc/>
         public override IReadOnlyList<TypeInfo> BuiltInSuperTypes => _builtInSuperTypes;
 
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            _builtInSuperTypes = new List<TypeInfo>() { NameHelper.CreateName(StandardNamesConstants.SequenceTypeName) };
-
             var result = base.CalculateLongHashCode(options);
 
             foreach(var value in _values)

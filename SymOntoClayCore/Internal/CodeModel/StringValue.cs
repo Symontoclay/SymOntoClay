@@ -39,8 +39,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         static StringValue()
         {
-            _builtInSuperTypes = new List<TypeInfo>();
-            _builtInSuperTypes.Add(NameHelper.CreateName(StandardNamesConstants.StringTypeName));
+            _builtInSuperTypes = new List<TypeInfo>() { TypeInfo.StringTypeInfo };
         }
 
         public StringValue(string systemValue)

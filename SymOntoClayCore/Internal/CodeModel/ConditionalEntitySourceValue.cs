@@ -39,6 +39,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class ConditionalEntitySourceValue : Value
     {
+        static ConditionalEntitySourceValue()
+        {
+            _builtInSuperTypes = new List<TypeInfo>() { TypeInfo.ConditionalEntityTypeInfo };
+        }
+
+        private static List<TypeInfo> _builtInSuperTypes;
+
         public ConditionalEntitySourceValue(EntityConditionExpressionNode entityConditionExpression)
             : this(entityConditionExpression, null, false)
         {
@@ -130,8 +137,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return new ConditionalEntityValue(Expression, LogicalQuery, Name, context, localContext, IsOnceResolved);
         }
 
-        private List<TypeInfo> _builtInSuperTypes;
-
         /// <inheritdoc/>
         public override IReadOnlyList<TypeInfo> BuiltInSuperTypes => _builtInSuperTypes;
 
@@ -156,8 +161,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            _builtInSuperTypes = new List<StrongIdentifierValue>() { NameHelper.CreateName(StandardNamesConstants.ConditionalEntityTypeName) };
-
             CheckDirtyOptions convertOptions = null;
             
             if(options == null)

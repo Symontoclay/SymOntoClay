@@ -38,6 +38,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class EntityValue : BaseEntityValue
     {
+        static EntityValue()
+        {
+            _builtInSuperTypes = new List<TypeInfo>() { TypeInfo.EntityTypeInfo };
+        }
+
+        private static List<TypeInfo> _builtInSuperTypes;
+
         public EntityValue(StrongIdentifierValue identifier, IEngineContext context, ILocalCodeExecutionContext localContext)
             : base(context, localContext)
         {
@@ -60,9 +67,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override bool IsEntityValue => true;
 
         /// <inheritdoc/>
-        public override EntityValue AsEntityValue => this;
-
-        private List<TypeInfo> _builtInSuperTypes;
+        public override EntityValue AsEntityValue => this;       
 
         /// <inheritdoc/>
         public override IReadOnlyList<TypeInfo> BuiltInSuperTypes => _builtInSuperTypes;
@@ -85,8 +90,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            _builtInSuperTypes = new List<StrongIdentifierValue>() { NameHelper.CreateName(StandardNamesConstants.EntityTypeName) };
-
             return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.BaseFunctionWeight ^ Identifier.GetLongHashCode(options);
         }
 

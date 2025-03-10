@@ -37,8 +37,11 @@ namespace SymOntoClay.Core.Internal.CodeModel
 
         static NullValue()
         {
+            _builtInSuperTypes = new List<TypeInfo>() { TypeInfo.NullTypeInfo };
             Instance.CheckDirty();
         }
+
+        private static List<TypeInfo> _builtInSuperTypes;
 
         /// <inheritdoc/>
         public override KindOfValue KindOfValue => KindOfValue.NullValue;
@@ -68,9 +71,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override string ToSystemString()
         {
             return string.Empty;
-        }
-
-        private List<TypeInfo> _builtInSuperTypes;
+        }       
 
         /// <inheritdoc/>
         public override IReadOnlyList<TypeInfo> BuiltInSuperTypes => _builtInSuperTypes;
@@ -78,8 +79,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            _builtInSuperTypes = new List<TypeInfo>() { TypeInfo.NullTypeInfo };
-
             return LongHashCodeWeights.NullWeight ^ base.CalculateLongHashCode(options);
         }
 

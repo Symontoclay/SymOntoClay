@@ -50,8 +50,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
         protected SynonymsResolver _synonymsResolver;
 
-        private static readonly StrongIdentifierValue _fuzzyTypeIdentifier = NameHelper.CreateName(StandardNamesConstants.FuzzyTypeName);
-        private static readonly StrongIdentifierValue _numberTypeIdentifier = NameHelper.CreateName(StandardNamesConstants.NumberTypeName);
+        //private static readonly TypeInfo _numberTypeIdentifier = TypeInfo.NumberTypeInfo NameHelper.CreateName(StandardNamesConstants.NumberTypeName);
 
         protected T EnumerableLocalCodeExecutionContext<T>(IMonitorLogger logger, ILocalCodeExecutionContext localCodeExecutionContext, Func<ILocalCodeExecutionContext, T> func)
         {
@@ -471,9 +470,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         continue;
                     }
 
-                    if (checkedTypeName == _fuzzyTypeIdentifier)
+                    if (checkedTypeName == TypeInfo.FuzzyTypeInfo)
                     {
-                        if (typesList.Contains(_numberTypeIdentifier))
+                        if (typesList.Contains(TypeInfo.NumberTypeInfo))
                         {
                             parametersRankMatrix[position]++;
 
@@ -530,9 +529,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
                         continue;
                     }
 
-                    if (typesList.Contains(_fuzzyTypeIdentifier))
+                    if (typesList.Contains(TypeInfo.FuzzyTypeInfo))
                     {
-                        result[i] = _fuzzyTypeIdentifier;
+                        result[i] = TypeInfo.FuzzyTypeInfo;
                     }
                 }
             }

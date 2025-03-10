@@ -216,7 +216,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public string ToHumanizedString(DebugHelperOptions options)
         {
-            var sb = new StringBuilder(Name.NameValue);
+            var sb = new StringBuilder(Name.ToHumanizedString(options));
 
             if(TypesList.IsNullOrEmpty())
             {
@@ -225,7 +225,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
             else
             {
                 sb.Append(": (");
-                sb.Append(string.Join("|", TypesList.Select(p => p.NameValue)));
+                sb.Append(string.Join("|", TypesList.Select(p => p.ToHumanizedString(options))));
                 sb.Append(")");
             }
 

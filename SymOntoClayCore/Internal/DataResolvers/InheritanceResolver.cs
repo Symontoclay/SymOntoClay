@@ -126,7 +126,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             if(options == null || options.SkipRealSearching == false)
             {
-                GetWeightedInheritanceItemsBySubName(logger, subName, localCodeExecutionContext, rawResult, 1, 0, storagesList, !(options?.OnlyDirectInheritance ?? false));
+                FillUpWeightedInheritanceItemsBySubName(logger, subName, localCodeExecutionContext, rawResult, 1, 0, storagesList, !(options?.OnlyDirectInheritance ?? false));
             }
 
             foreach (var resultItem in rawResult.ToList())
@@ -210,7 +210,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return source.OrderByDescending(p => p.IsSelf).ToList();
         }
 
-        private void GetWeightedInheritanceItemsBySubName(IMonitorLogger logger, StrongIdentifierValue subName, ILocalCodeExecutionContext localCodeExecutionContext, Dictionary<StrongIdentifierValue, WeightedInheritanceItem> result, float currentRank, uint currentDistance, List<StorageUsingOptions> storagesList, bool allInheritance)
+        private void FillUpWeightedInheritanceItemsBySubName(IMonitorLogger logger, StrongIdentifierValue subName, ILocalCodeExecutionContext localCodeExecutionContext, Dictionary<StrongIdentifierValue, WeightedInheritanceItem> result, float currentRank, uint currentDistance, List<StorageUsingOptions> storagesList, bool allInheritance)
         {
             currentDistance++;
             var rawList = GetRawList(logger, subName, storagesList);
@@ -231,7 +231,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             {
                 var targetItem = filteredItem.ResultItem;
 
-                var resolvedRankValue = _logicalValueLinearResolver.Resolve(logger, targetItem.Rank, localCodeExecutionContext, ResolverOptions.GetDefaultOptions(), true);
+                var resolvedRankValue = _logicalValueLinearResolver.Resolve(logger, targetItem.Rank, localCodeExecutionContext, true);
 
                 var systemValue = resolvedRankValue.SystemValue;
 
@@ -274,8 +274,8 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
                 if(allInheritance)
                 {
-                    GetWeightedInheritanceItemsBySubName(logger, targetItem.SuperName, localCodeExecutionContext, result, calculatedRank, currentDistance, storagesList, true);
-                }                
+                    FillUpWeightedInheritanceItemsBySubName(logger, targetItem.SuperName, localCodeExecutionContext, result, calculatedRank, currentDistance, storagesList, true);
+                }
             }
         }
 
@@ -309,14 +309,14 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return result;
         }
 
-        public bool IsFit(IMonitorLogger logger, IList<StrongIdentifierValue> typeNamesList, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
+        public bool IsFit(IMonitorLogger logger, IList<TypeInfo> typeInfoList, Value value, ILocalCodeExecutionContext localCodeExecutionContext)
         {
-            return IsFit(logger, typeNamesList, value, localCodeExecutionContext, DefaultOptions);
+            return IsFit(logger, typeInfoList, value, localCodeExecutionContext, DefaultOptions);
         }
 
-        public bool IsFit(IMonitorLogger logger, IList<StrongIdentifierValue> typeNamesList, Value value, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public bool IsFit(IMonitorLogger logger, IList<TypeInfo> typeInfoList, Value value, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-            if(GetDistance(logger, typeNamesList, value, localCodeExecutionContext, options).HasValue)
+            if(GetDistance(logger, typeInfoList, value, localCodeExecutionContext, options).HasValue)
             {
                 return true;
             }
@@ -324,9 +324,9 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return false;
         }
 
-        public uint? GetDistance(IMonitorLogger logger, IList<StrongIdentifierValue> typeNamesList, Value value, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public uint? GetDistance(IMonitorLogger logger, IList<TypeInfo> typeInfoList, Value value, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-            if(typeNamesList.IsNullOrEmpty())
+            if(typeInfoList.IsNullOrEmpty())
             {
                 return TopTypeDistance;
             }
@@ -335,7 +335,7 @@ namespace SymOntoClay.Core.Internal.DataResolvers
 
             var distancesList = new List<uint>();
 
-            foreach(var typeName in typeNamesList)
+            foreach(var typeName in typeInfoList)
             {
                 var typeDistance = GetDistance(logger, typeName, value, localCodeExecutionContext, options);
 
@@ -353,11 +353,11 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             return distancesList.Min();
         }
 
-        public uint? GetDistance(IMonitorLogger logger, StrongIdentifierValue typeName, Value value, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
+        public uint? GetDistance(IMonitorLogger logger, TypeInfo typeInfo, Value value, ILocalCodeExecutionContext localCodeExecutionContext, ResolverOptions options)
         {
-            var biltInSuperTypesList = value.BuiltInSuperTypes;
+            var builtInSuperTypesList = value.BuiltInSuperTypes;
 
-            if(biltInSuperTypesList.Contains(typeName))
+            if(builtInSuperTypesList.Contains(typeInfo))
             {
                 return 0u;
             }
@@ -368,16 +368,16 @@ namespace SymOntoClay.Core.Internal.DataResolvers
             newOptions.AddTopType = false;
             newOptions.AddSelf = false;
 
-            foreach (var buildInSuperType in biltInSuperTypesList)
+            foreach (var builtInSuperType in builtInSuperTypesList)
             {
-                var weightedInheritanceItemsList = GetWeightedInheritanceItems(logger, buildInSuperType, localCodeExecutionContext, newOptions);
+                var weightedInheritanceItemsList = GetWeightedInheritanceItems(logger, builtInSuperType, localCodeExecutionContext, newOptions);
 
                 if(!weightedInheritanceItemsList.Any())
                 {
                     return null;
                 }
 
-                var targetWeightedInheritanceItemsList = weightedInheritanceItemsList.Where(p => p.SuperName.Equals(typeName)).ToList();
+                var targetWeightedInheritanceItemsList = weightedInheritanceItemsList.Where(p => p.SuperName.Equals(typeInfo)).ToList();
 
                 if (!targetWeightedInheritanceItemsList.Any())
                 {

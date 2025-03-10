@@ -14,6 +14,12 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public static TypeInfo NullTypeInfo = new TypeInfo(NameHelper.CreateName(StandardNamesConstants.NullTypeName));
         public static TypeInfo NumberTypeInfo = new TypeInfo(NameHelper.CreateName(StandardNamesConstants.NumberTypeName));
         public static TypeInfo FuzzyTypeInfo = new TypeInfo(NameHelper.CreateName(StandardNamesConstants.FuzzyTypeName));
+        public static TypeInfo StringTypeInfo = new TypeInfo(NameHelper.CreateName(StandardNamesConstants.StringTypeName));
+        public static TypeInfo SequenceTypeInfo = new TypeInfo(NameHelper.CreateName(StandardNamesConstants.SequenceTypeName));
+        public static TypeInfo EntityTypeInfo = new TypeInfo(NameHelper.CreateName(StandardNamesConstants.EntityTypeName));
+        public static TypeInfo StrongIdentifierTypeInfo = new TypeInfo(NameHelper.CreateName(StandardNamesConstants.StrongIdentifierTypeName));
+        public static TypeInfo WaypointTypeInfo = new TypeInfo(NameHelper.CreateName(StandardNamesConstants.WaypointTypeName));
+        public static TypeInfo ConditionalEntityTypeInfo = new TypeInfo(NameHelper.CreateName(StandardNamesConstants.ConditionalEntityTypeName));
 
         public TypeInfo()
         {

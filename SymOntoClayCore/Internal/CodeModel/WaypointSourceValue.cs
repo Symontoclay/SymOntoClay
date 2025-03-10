@@ -38,6 +38,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class WaypointSourceValue : Value
     {
+        static WaypointSourceValue()
+        {
+            _builtInSuperTypes = new List<TypeInfo>() { TypeInfo.WaypointTypeInfo };
+        }
+
+        private static List<TypeInfo> _builtInSuperTypes;
+
         public WaypointSourceValue(Value distance, Value horizontalAngle, StrongIdentifierValue name)
         {
             Distance = distance;
@@ -89,8 +96,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
             return result;
         }
 
-        private List<TypeInfo> _builtInSuperTypes;
-
         /// <inheritdoc/>
         public override IReadOnlyList<TypeInfo> BuiltInSuperTypes => _builtInSuperTypes;
 
@@ -109,8 +114,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            _builtInSuperTypes = new List<StrongIdentifierValue>() { NameHelper.CreateName(StandardNamesConstants.WaypointTypeName) };
-
             Distance.CheckDirty(options);
             HorizontalAngle.CheckDirty(options);
 

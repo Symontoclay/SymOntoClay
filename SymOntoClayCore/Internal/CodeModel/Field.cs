@@ -136,7 +136,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
                 return "(any)";
             }
 
-            return $"({string.Join(" | ", TypesList.Select(p => p.NameValue))})";
+            return $"({string.Join(" | ", TypesList.Select(p => p.ToHumanizedString()))})";
         }
 
         /// <inheritdoc/>

@@ -38,6 +38,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class WaypointValue : LoggedValue, INavTarget
     {
+        static WaypointValue()
+        {
+            _builtInSuperTypes = new List<TypeInfo>() { TypeInfo.WaypointTypeInfo };
+        }
+
+        private static List<TypeInfo> _builtInSuperTypes;
+
         public WaypointValue(float distance, IEngineContext context)
             : this(distance, 0f, new StrongIdentifierValue(), context)
         {
@@ -84,9 +91,7 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public Vector3 AbsoluteCoordinates { get; private set; }
         public StrongIdentifierValue Name { get; private set; }
 
-        private IEngineContext _context;
-
-        private List<TypeInfo> _builtInSuperTypes;
+        private IEngineContext _context;        
 
         /// <inheritdoc/>
         public override IReadOnlyList<TypeInfo> BuiltInSuperTypes => _builtInSuperTypes;
@@ -106,8 +111,6 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         protected override ulong CalculateLongHashCode(CheckDirtyOptions options)
         {
-            _builtInSuperTypes = new List<StrongIdentifierValue>() { NameHelper.CreateName(StandardNamesConstants.WaypointTypeName) };
-
             return base.CalculateLongHashCode(options) ^ LongHashCodeWeights.BaseFunctionWeight ^ (Name?.GetLongHashCode(options) ?? 0) ^ LongHashCodeWeights.BaseParamWeight ^ (ulong)Math.Abs(AbsoluteCoordinates.GetHashCode()) ^ (ulong)Math.Abs(Distance.GetHashCode()) ^ (ulong)Math.Abs(HorizontalAngle.GetHashCode());
         }
 

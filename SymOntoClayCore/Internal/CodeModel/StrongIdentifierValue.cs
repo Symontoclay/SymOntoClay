@@ -34,6 +34,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
 {
     public class StrongIdentifierValue: Value, IEquatable<StrongIdentifierValue>
     {
+        static StrongIdentifierValue()
+        {
+            _builtInSuperTypes = new List<TypeInfo>() { TypeInfo.StrongIdentifierTypeInfo };
+        }
+
+        private static List<TypeInfo> _builtInSuperTypes;
+
         public static readonly StrongIdentifierValue LogicalVarBlankIdentifier = NameHelper.CreateName("$_");
         public static readonly StrongIdentifierValue Empty = new StrongIdentifierValue();
 
@@ -55,21 +62,8 @@ namespace SymOntoClay.Core.Internal.CodeModel
         /// <inheritdoc/>
         public override StrongIdentifierValue AsStrongIdentifierValue => this;
 
-        private List<TypeInfo> _builtInSuperTypes;
-
         /// <inheritdoc/>
-        public override IReadOnlyList<TypeInfo> BuiltInSuperTypes
-        {
-            get
-            {
-                if(_builtInSuperTypes == null)
-                {
-                    _builtInSuperTypes = new List<TypeInfo>() { this };
-                }
-
-                return _builtInSuperTypes;
-            }
-        }
+        public override IReadOnlyList<TypeInfo> BuiltInSuperTypes => _builtInSuperTypes;
 
         /// <inheritdoc/>
         public override object GetSystemValue()
@@ -81,6 +75,13 @@ namespace SymOntoClay.Core.Internal.CodeModel
         public override string ToSystemString()
         {
             return NameValue;
+        }
+
+        public TypeInfo ToTypeInfo()
+        {
+            var typeInfo = new TypeInfo(this);
+            typeInfo.CheckDirty();
+            return typeInfo;
         }
 
         /// <inheritdoc/>
